@@ -5855,7 +5855,7 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
 Les types de "hooks" suivants autorisent une priorité : command, command_run,
-signal, config, completion, modifier, info, infolist.
+signal, hsignal, config, completion, modifier, info, infolist.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -6842,6 +6842,129 @@ weechat.hook_signal_send(signal, type_data, signal_data)
 
 # exemple
 weechat.hook_signal_send("mon_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, ma_chaine)
+----------------------------------------
+
+weechat_hook_hsignal
+^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+S'accroche à un hsignal (signal avec une hashtable).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_hsignal (const char *signal,
+                                     int (*callback)(void *data,
+                                                     const char *signal,
+                                                     struct t_hashtable *hashtable),
+                                     void *callback_data);
+----------------------------------------
+
+Paramètres :
+
+* 'signal': signal à intercepter, peut commencer ou se terminer par "*"
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
+
+[width="100%",cols="^1,^3,5",options="header"]
+|========================================
+| Extension | Signal | Paramètres
+
+| irc | irc_redirection_xxx_yyy ^(1)^ |
+  sortie de la redirection
+|========================================
+
+[NOTE]
+^(1)^ 'xxx' est l'argument "signal" utilisé dans la redirection, 'yyy' est le
+modèle de redirection ("pattern").
+
+* 'callback' : fonction appelée quand le signal est reçu, paramètres :
+** 'void *data' : pointeur
+** 'const char *signal' : signal reçu
+** 'struct t_hashtable *hashtable' : hashtable
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Return value:
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int
+my_hsignal_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
+                                                       &my_hsignal_cb, NULL);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+hook = weechat.hook_hsignal(signal, callback, callback_data)
+
+# exemple
+def my_hsignal_cb(data, signal, hashtable):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
+----------------------------------------
+
+weechat_hook_hsignal_send
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Envoie un hsignal (signal avec hashtable).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
+----------------------------------------
+
+Paramètres :
+
+* 'signal' : signal à envoyer
+* 'hashtable' : hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "clé", "valeur");
+    weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.hook_hsignal_send(signal, hashtable)
+
+# example
+weechat.hook_hsignal_send("my_hsignal", { "clé": "valeur" })
 ----------------------------------------
 
 weechat_hook_config

@@ -4249,6 +4249,136 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
 }
 
 /*
+ * weechat_ruby_api_hook_hsignal_cb: callback for hsignal hooked
+ */
+
+int
+weechat_ruby_api_hook_hsignal_cb (void *data, const char *signal,
+                                  struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *ruby_argv[3];
+    char empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = (signal) ? (char *)signal : empty_arg;
+        ruby_argv[2] = (void *)weechat_ruby_hashtable_to_hash (hashtable);
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        "ssh", ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_ruby_api_hook_hsignal: hook a hsignal
+ */
+
+static VALUE
+weechat_ruby_api_hook_hsignal (VALUE class, VALUE signal, VALUE function,
+                               VALUE data)
+{
+    char *c_signal, *c_function, *c_data, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_signal = NULL;
+    c_function = NULL;
+    c_data = NULL;
+    
+    if (NIL_P (signal) || NIL_P (function) || NIL_P (data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (signal, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+    
+    c_signal = StringValuePtr (signal);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+    
+    result = script_ptr2str (script_api_hook_hsignal (weechat_ruby_plugin,
+                                                      ruby_current_script,
+                                                      c_signal,
+                                                      &weechat_ruby_api_hook_hsignal_cb,
+                                                      c_function,
+                                                      c_data));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_hsignal_send: send a hsignal
+ */
+
+static VALUE
+weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
+{
+    char *c_signal;
+    struct t_hashtable *c_hashtable;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_signal = NULL;
+    
+    if (NIL_P (signal) || NIL_P (hashtable))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (signal, T_STRING);
+    Check_Type (hashtable, T_HASH);
+    
+    c_signal = StringValuePtr (signal);
+    c_hashtable = weechat_ruby_hash_to_hashtable (hashtable,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    weechat_hook_hsignal_send (c_signal, c_hashtable);
+    
+    if (c_hashtable)
+        weechat_hashtable_free (c_hashtable);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_hook_config_cb: callback for config option hooked
  */
 
@@ -7482,6 +7612,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 6);
     rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 3);
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_hsignal", &weechat_ruby_api_hook_hsignal, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_hsignal_send", &weechat_ruby_api_hook_hsignal_send, 2);
     rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 3);
     rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 4);
     rb_define_module_function (ruby_mWeechat, "hook_completion_list_add", &weechat_ruby_api_hook_completion_list_add, 4);

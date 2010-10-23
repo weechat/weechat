@@ -1046,6 +1046,43 @@ script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_hook_hsignal: hook a hsignal
+ *                          return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
+                         struct t_plugin_script *script,
+                         const char *signal,
+                         int (*callback)(void *data, const char *signal,
+                                         struct t_hashtable *hashtable),
+                         const char *function,
+                         const char *data)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+    
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_hook = weechat_hook_hsignal (signal, callback, new_script_callback);
+    if (!new_hook)
+    {
+        script_callback_free_data (new_script_callback);
+        free (new_script_callback);
+        return NULL;
+    }
+    
+    script_callback_init (new_script_callback, script, function, data);
+    new_script_callback->hook = new_hook;
+    
+    script_callback_add (script, new_script_callback);
+    
+    return new_hook;
+}
+
+/*
  * script_api_hook_config: hook a config option
  *                         return new hook, NULL if error
  */

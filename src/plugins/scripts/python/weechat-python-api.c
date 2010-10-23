@@ -3681,6 +3681,128 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hook_hsignal_cb: callback for hsignal hooked
+ */
+
+int
+weechat_python_api_hook_hsignal_cb (void *data, const char *signal,
+                                    struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *python_argv[3];
+    char empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        python_argv[1] = (signal) ? (char *)signal : empty_arg;
+        python_argv[2] = weechat_python_hashtable_to_dict (hashtable);
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          "ssO", python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (python_argv[2])
+        {
+            Py_XDECREF((PyObject *)python_argv[2]);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_python_api_hook_hsignal: hook a hsignal
+ */
+
+static PyObject *
+weechat_python_api_hook_hsignal (PyObject *self, PyObject *args)
+{
+    char *signal, *function, *data, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    signal = NULL;
+    function = NULL;
+    data = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &signal, &function, &data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_hsignal (weechat_python_plugin,
+                                                      python_current_script,
+                                                      signal,
+                                                      &weechat_python_api_hook_hsignal_cb,
+                                                      function,
+                                                      data));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_hsignal_send: send a hsignal
+ */
+
+static PyObject *
+weechat_python_api_hook_hsignal_send (PyObject *self, PyObject *args)
+{
+    char *signal;
+    struct t_hashtable *hashtable;
+    PyObject *dict;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    signal = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sO", &signal, &dict))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    hashtable = weechat_python_dict_to_hashtable (dict,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    weechat_hook_hsignal_send (signal, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_hook_config_cb: callback for config option hooked
  */
 
@@ -6496,6 +6618,8 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_print", &weechat_python_api_hook_print, METH_VARARGS, "" },
     { "hook_signal", &weechat_python_api_hook_signal, METH_VARARGS, "" },
     { "hook_signal_send", &weechat_python_api_hook_signal_send, METH_VARARGS, "" },
+    { "hook_hsignal", &weechat_python_api_hook_hsignal, METH_VARARGS, "" },
+    { "hook_hsignal_send", &weechat_python_api_hook_hsignal_send, METH_VARARGS, "" },
     { "hook_config", &weechat_python_api_hook_config, METH_VARARGS, "" },
     { "hook_completion", &weechat_python_api_hook_completion, METH_VARARGS, "" },
     { "hook_completion_list_add", &weechat_python_api_hook_completion_list_add, METH_VARARGS, "" },

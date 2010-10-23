@@ -588,6 +588,8 @@ plugin_load (const char *filename)
         new_plugin->hook_print = &hook_print;
         new_plugin->hook_signal = &hook_signal;
         new_plugin->hook_signal_send = &hook_signal_send;
+        new_plugin->hook_hsignal = &hook_hsignal;
+        new_plugin->hook_hsignal_send = &hook_hsignal_send;
         new_plugin->hook_config = &hook_config;
         new_plugin->hook_completion = &hook_completion;
         new_plugin->hook_completion_list_add = &hook_completion_list_add;

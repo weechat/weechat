@@ -53,8 +53,8 @@
 
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "command_run", "timer", "fd", "process", "connect", "print",
-  "signal", "config", "completion", "modifier", "info", "info_hashtable",
-  "infolist" };
+  "signal", "hsignal", "config", "completion", "modifier",
+  "info", "info_hashtable", "infolist" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
@@ -1876,6 +1876,77 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 }
 
 /*
+ * hook_hsignal: hook a hsignal (signal with hashtable)
+ */
+
+struct t_hook *
+hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
+              t_hook_callback_hsignal *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_hsignal *new_hook_hsignal;
+    int priority;
+    const char *ptr_signal;
+    
+    if (!signal || !signal[0] || !callback)
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_hsignal = malloc (sizeof (*new_hook_hsignal));
+    if (!new_hook_hsignal)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_get_priority_and_name (signal, &priority, &ptr_signal);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_HSIGNAL, priority,
+                    callback_data);
+    
+    new_hook->hook_data = new_hook_hsignal;
+    new_hook_hsignal->callback = callback;
+    new_hook_hsignal->signal = strdup ((ptr_signal) ? ptr_signal : signal);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_hsignal_send: send a hsignal (signal with hashtable)
+ */
+
+void
+hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    
+    hook_exec_start ();
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_HSIGNAL];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (string_match (signal, HOOK_HSIGNAL(ptr_hook, signal), 0)))
+        {
+            ptr_hook->running = 1;
+            (void) (HOOK_HSIGNAL(ptr_hook, callback))
+                (ptr_hook->callback_data, signal, hashtable);
+            ptr_hook->running = 0;
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    hook_exec_end ();
+}
+
+/*
  * hook_config: hook a config option
  */
 
@@ -2553,6 +2624,10 @@ unhook (struct t_hook *hook)
                 if (HOOK_SIGNAL(hook, signal))
                     free (HOOK_SIGNAL(hook, signal));
                 break;
+            case HOOK_TYPE_HSIGNAL:
+                if (HOOK_HSIGNAL(hook, signal))
+                    free (HOOK_HSIGNAL(hook, signal));
+                break;
             case HOOK_TYPE_CONFIG:
                 if (HOOK_CONFIG(hook, option))
                     free (HOOK_CONFIG(hook, option));
@@ -2862,6 +2937,15 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_SIGNAL(ptr_hook, callback)))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "signal", HOOK_SIGNAL(ptr_hook, signal)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_HSIGNAL:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_HSIGNAL(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "signal", HOOK_HSIGNAL(ptr_hook, signal)))
                         return 0;
                 }
                 break;
@@ -3179,6 +3263,14 @@ hook_print_log ()
                         log_printf ("  signal data:");
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_SIGNAL(ptr_hook, callback));
                         log_printf ("    signal. . . . . . . . : '%s'",  HOOK_SIGNAL(ptr_hook, signal));
+                    }
+                    break;
+                case HOOK_TYPE_HSIGNAL:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  signal data:");
+                        log_printf ("    callback. . . . . . . : 0x%lx", HOOK_HSIGNAL(ptr_hook, callback));
+                        log_printf ("    signal. . . . . . . . : '%s'",  HOOK_HSIGNAL(ptr_hook, signal));
                     }
                     break;
                 case HOOK_TYPE_CONFIG:

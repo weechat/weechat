@@ -43,6 +43,7 @@ enum t_hook_type
     HOOK_TYPE_CONNECT,                 /* connect to peer with fork         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_SIGNAL,                  /* signal                            */
+    HOOK_TYPE_HSIGNAL,                 /* signal (using hashtable)          */
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
     HOOK_TYPE_MODIFIER,                /* string modifier                   */
@@ -76,6 +77,7 @@ enum t_hook_type
 #define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
+#define HOOK_HSIGNAL(hook, var) (((struct t_hook_hsignal *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
 #define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
 #define HOOK_MODIFIER(hook, var) (((struct t_hook_modifier *)hook->hook_data)->var)
@@ -252,6 +254,18 @@ struct t_hook_signal
                                        /* with "*", "*" == any signal)      */
 };
 
+/* hook hsignal */
+
+typedef int (t_hook_callback_hsignal)(void *data, const char *signal,
+                                      struct t_hashtable *hashtable);
+
+struct t_hook_hsignal
+{
+    t_hook_callback_hsignal *callback; /* signal callback                   */
+    char *signal;                      /* signal selected (may begin or end */
+                                       /* with "*", "*" == any signal)      */
+};
+
 /* hook config */
 
 typedef int (t_hook_callback_config)(void *data, const char *option,
@@ -409,6 +423,12 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    void *callback_data);
 extern void hook_signal_send (const char *signal, const char *type_data,
                               void *signal_data);
+extern struct t_hook *hook_hsignal (struct t_weechat_plugin *plugin,
+                                    const char *signal,
+                                    t_hook_callback_hsignal *callback,
+                                    void *callback_data);
+extern void hook_hsignal_send (const char *signal,
+                               struct t_hashtable *hashtable);
 extern struct t_hook *hook_config (struct t_weechat_plugin *plugin,
                                    const char *option,
                                    t_hook_callback_config *callback,

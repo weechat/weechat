@@ -4122,6 +4122,135 @@ weechat_lua_api_hook_signal_send (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hook_hsignal_cb: callback for hsignal hooked
+ */
+
+int
+weechat_lua_api_hook_hsignal_cb (void *data, const char *signal,
+                                 struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *lua_argv[3];
+    char empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = (signal) ? (char *)signal : empty_arg;
+        lua_argv[2] = hashtable;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       "ssh", lua_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_lua_api_hook_hsignal: hook a hsignal
+ */
+
+static int
+weechat_lua_api_hook_hsignal (lua_State *L)
+{
+    const char *signal, *function, *data;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        LUA_RETURN_EMPTY;
+    }
+    
+    signal = NULL;
+    function = NULL;
+    data = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        LUA_RETURN_EMPTY;
+    }
+    
+    signal = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_hsignal (weechat_lua_plugin,
+                                                      lua_current_script,
+                                                      signal,
+                                                      &weechat_lua_api_hook_hsignal_cb,
+                                                      function,
+                                                      data));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_hsignal_send: send a hsignal
+ */
+
+static int
+weechat_lua_api_hook_hsignal_send (lua_State *L)
+{
+    const char *signal;
+    struct t_hashtable *hashtable;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        LUA_RETURN_ERROR;
+    }
+    
+    signal = NULL;
+    hashtable = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        LUA_RETURN_ERROR;
+    }
+    
+    signal = lua_tostring (lua_current_interpreter, -2);
+    hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    weechat_hook_hsignal_send (signal, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_hook_config_cb: callback for config option hooked
  */
 
@@ -7683,6 +7812,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_print", &weechat_lua_api_hook_print },
     { "hook_signal", &weechat_lua_api_hook_signal },
     { "hook_signal_send", &weechat_lua_api_hook_signal_send },
+    { "hook_hsignal", &weechat_lua_api_hook_hsignal },
+    { "hook_hsignal_send", &weechat_lua_api_hook_hsignal_send },
     { "hook_config", &weechat_lua_api_hook_config },
     { "hook_completion", &weechat_lua_api_hook_completion },
     { "hook_completion_list_add", &weechat_lua_api_hook_completion_list_add },

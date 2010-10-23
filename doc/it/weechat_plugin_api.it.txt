@@ -5841,7 +5841,7 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
 I tipi di hook che seguono consentono la priorità: command, command_run,
-signal, config.
+signal, hsignal, config.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -6824,6 +6824,130 @@ weechat.hook_signal_send(signal, type_data, signal_data)
 
 # esempio
 weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_hook_hsignal
+^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.4._
+
+Hook a hsignal (signal with hashtable).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_hsignal (const char *signal,
+                                     int (*callback)(void *data,
+                                                     const char *signal,
+                                                     struct t_hashtable *hashtable),
+                                     void *callback_data);
+----------------------------------------
+
+Arguments:
+
+* 'signal': signal to catch, can begin or end with "*"
+  (priority allowed, see note about <<hook_priority,priority>>):
+
+[width="100%",cols="^1,^3,5",options="header"]
+|========================================
+| Plugin | Signal | Arguments
+
+| irc | irc_redirection_xxx_yyy ^(1)^ |
+  redirection output
+|========================================
+
+[NOTE]
+^(1)^ 'xxx' is signal argument used in redirection, 'yyy' is redirection
+pattern.
+
+* 'callback': function called when signal is received, arguments:
+** 'void *data': pointer
+** 'const char *signal': signal received
+** 'struct t_hashtable *hashtable': hashtable
+* 'callback_data': pointer given to callback when it is called by WeeChat
+
+Return value:
+
+* pointer to new hook, NULL if error occured
+
+C example:
+
+[source,C]
+----------------------------------------
+int
+my_hsignal_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+{
+    /* ... */
+    return WEECHAT_RC_OK;
+}
+
+struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
+                                                       &my_hsignal_cb, NULL);
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+hook = weechat.hook_hsignal(signal, callback, callback_data)
+
+# example
+def my_hsignal_cb(data, signal, hashtable):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_hook_hsignal_send
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.4._
+
+Send a hsignal (signal with hashtable).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
+----------------------------------------
+
+Arguments:
+
+* 'signal': signal to send
+* 'hashtable': hashtable
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "key", "value");
+    weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.hook_hsignal_send(signal, hashtable)
+
+# example
+weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----------------------------------------
 
 weechat_hook_config

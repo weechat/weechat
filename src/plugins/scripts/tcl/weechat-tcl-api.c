@@ -3950,6 +3950,127 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hook_hsignal_cb: callback for hsignal hooked
+ */
+
+int
+weechat_tcl_api_hook_hsignal_cb (void *data, const char *signal,
+                                 struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *tcl_argv[3];
+    char empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        tcl_argv[1] = (signal) ? (char *)signal : empty_arg;
+        tcl_argv[2] = hashtable;
+        
+        rc = (int *) weechat_tcl_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       "ssh", tcl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat_tcl_api_hook_hsignal: hook a hsignal
+ */
+
+static int
+weechat_tcl_api_hook_hsignal (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result, *signal, *function, *data;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        TCL_RETURN_EMPTY;
+    }
+    
+    signal = Tcl_GetStringFromObj (objv[1], &i);
+    function = Tcl_GetStringFromObj (objv[2], &i);
+    data = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (script_api_hook_hsignal (weechat_tcl_plugin,
+                                                      tcl_current_script,
+                                                      signal,
+                                                      &weechat_tcl_api_hook_hsignal_cb,
+                                                      function,
+                                                      data));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hook_hsignal_send: send a hsignal
+ */
+
+static int
+weechat_tcl_api_hook_hsignal_send (ClientData clientData, Tcl_Interp *interp,
+                                   int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *signal;
+    struct t_hashtable *hashtable;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        TCL_RETURN_ERROR;
+    }
+    
+    signal = Tcl_GetStringFromObj (objv[1], &i);
+    hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    weechat_hook_hsignal_send (signal, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    TCL_RETURN_OK;
+}
+
+/*
  * weechat_tcl_api_hook_config_cb: callback for config option hooked
  */
 
@@ -7044,6 +7165,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_hook_signal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_signal_send",
                           weechat_tcl_api_hook_signal_send, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hook_hsignal",
+                          weechat_tcl_api_hook_hsignal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hook_hsignal_send",
+                          weechat_tcl_api_hook_hsignal_send, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_config",
                           weechat_tcl_api_hook_config, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_completion",

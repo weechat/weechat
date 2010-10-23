@@ -206,6 +206,14 @@ extern struct t_hook *script_api_hook_signal (struct t_weechat_plugin *weechat_p
                                                               void *signal_data),
                                               const char *function,
                                               const char *data);
+extern struct t_hook *script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
+                                               struct t_plugin_script *script,
+                                               const char *signal,
+                                               int (*callback)(void *data,
+                                                               const char *signal,
+                                                               struct t_hashtable *hashtable),
+                                               const char *function,
+                                               const char *data);
 extern struct t_hook *script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script *script,
                                               const char *option,

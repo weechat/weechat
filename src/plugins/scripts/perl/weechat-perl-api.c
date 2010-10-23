@@ -3487,6 +3487,121 @@ XS (XS_weechat_api_hook_signal_send)
 }
 
 /*
+ * weechat_perl_api_hook_hsignal_cb: callback for hsignal hooked
+ */
+
+int
+weechat_perl_api_hook_hsignal_cb (void *data, const char *signal,
+                                  struct t_hashtable *hashtable)
+{
+    struct t_script_callback *script_callback;
+    void *perl_argv[3];
+    char empty_arg[1] = { '\0' };
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        perl_argv[1] = (signal) ? (char *)signal : empty_arg;
+        perl_argv[2] = hashtable;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        "ssh", perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        
+        return ret;
+    }
+    
+    return WEECHAT_RC_ERROR;
+}
+
+/*
+ * weechat::hook_hsignal: hook a hsignal
+ */
+
+XS (XS_weechat_api_hook_hsignal)
+{
+    char *result, *signal, *function, *data;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hook_hsignal");
+        PERL_RETURN_EMPTY;
+    }
+    
+    signal = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
+    data = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (script_api_hook_hsignal (weechat_perl_plugin,
+                                                      perl_current_script,
+                                                      signal,
+                                                      &weechat_perl_api_hook_hsignal_cb,
+                                                      function,
+                                                      data));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hook_hsignal_send: send a hsignal
+ */
+
+XS (XS_weechat_api_hook_hsignal_send)
+{
+    char *signal;
+    struct t_hashtable *hashtable;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hook_hsignal_send");
+        PERL_RETURN_ERROR;
+    }
+    
+    signal = SvPV (ST (0), PL_na);
+    hashtable = weechat_perl_hash_to_hashtable (ST (1),
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    weechat_hook_hsignal_send (signal, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat_perl_api_hook_config_cb: callback for config option hooked
  */
 
@@ -6176,6 +6291,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_print", XS_weechat_api_hook_print, "weechat");
     newXS ("weechat::hook_signal", XS_weechat_api_hook_signal, "weechat");
     newXS ("weechat::hook_signal_send", XS_weechat_api_hook_signal_send, "weechat");
+    newXS ("weechat::hook_hsignal", XS_weechat_api_hook_hsignal, "weechat");
+    newXS ("weechat::hook_hsignal_send", XS_weechat_api_hook_hsignal_send, "weechat");
     newXS ("weechat::hook_config", XS_weechat_api_hook_config, "weechat");
     newXS ("weechat::hook_completion", XS_weechat_api_hook_completion, "weechat");
     newXS ("weechat::hook_completion_list_add", XS_weechat_api_hook_completion_list_add, "weechat");

@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101017-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101023-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -487,6 +487,14 @@ struct t_weechat_plugin
                                    void *callback_data);
     void (*hook_signal_send) (const char *signal, const char *type_data,
                               void *signal_data);
+    struct t_hook *(*hook_hsignal) (struct t_weechat_plugin *plugin,
+                                    const char *signal,
+                                    int (*callback)(void *data,
+                                                    const char *signal,
+                                                    struct t_hashtable *hashtable),
+                                    void *callback_data);
+    void (*hook_hsignal_send) (const char *signal,
+                               struct t_hashtable *hashtable);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *plugin,
                                    const char *option,
                                    int (*callback)(void *data,
@@ -1112,6 +1120,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_hook_signal_send(__signal, __type_data, __signal_data)  \
     weechat_plugin->hook_signal_send(__signal, __type_data,             \
                                      __signal_data)
+#define weechat_hook_hsignal(__signal, __callback, __data)              \
+    weechat_plugin->hook_hsignal(weechat_plugin, __signal, __callback,  \
+                                __data)
+#define weechat_hook_hsignal_send(__signal, __hashtable)                \
+    weechat_plugin->hook_hsignal_send(__signal, __hashtable)
 #define weechat_hook_config(__option, __callback, __data)               \
     weechat_plugin->hook_config(weechat_plugin, __option, __callback,   \
                                 __data)
