@@ -68,6 +68,7 @@ struct t_gui_bar_item_hook
 extern struct t_gui_bar_item *gui_bar_items;
 extern struct t_gui_bar_item *last_gui_bar_item;
 extern char *gui_bar_item_names[];
+extern char *gui_bar_items_default_for_bars[][2];
 
 /* functions */
 

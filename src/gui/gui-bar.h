@@ -25,8 +25,8 @@ struct t_gui_window;
 struct t_gui_buffer;
 
 #define GUI_BAR_DEFAULT_NAME_INPUT    "input"
-#define GUI_BAR_DEFAULT_NAME_STATUS   "status"
 #define GUI_BAR_DEFAULT_NAME_TITLE    "title"
+#define GUI_BAR_DEFAULT_NAME_STATUS   "status"
 #define GUI_BAR_DEFAULT_NAME_NICKLIST "nicklist"
 
 enum t_gui_bar_option

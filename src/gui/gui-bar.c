@@ -1199,6 +1199,29 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 }
 
 /*
+ * gui_bar_default_items: return default items for a bar name
+ *                        default bars (input, title, status, nicklist) have
+ *                        default items, all other bars have empty default
+ *                        items
+ */
+
+const char *
+gui_bar_default_items (const char *bar_name)
+{
+    int i;
+    static char empty_items[1] = { '\0' };
+    
+    for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
+    {
+        if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
+            return gui_bar_items_default_for_bars[i][1];
+    }
+    
+    /* no default items in bar */
+    return empty_items;
+}
+
+/*
  * gui_bar_create_option: create an option for a bar
  */
 
@@ -1347,7 +1370,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "string",
                     N_("items of bar"),
-                    NULL, 0, 0, value, NULL, 0,
+                    NULL, 0, 0, gui_bar_default_items (bar_name), value, 0,
                     NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
                 break;
             case GUI_BAR_NUM_OPTIONS:
@@ -1758,45 +1781,24 @@ gui_bar_create_default_input ()
         else
         {
             /* create input bar */
-            length = 1 /* "[" */
-                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT])
-                + 3 /* "]+(" */
-                + 4 /* "away" */
-                + 3 /* "),[" */
-                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH])
-                + 3 /* "],[" */
-                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE])
-                + 2 /* "]," */
-                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT])
-                + 1 /* \0 */;
-            buf = malloc (length);
-            if (buf)
+            if (gui_bar_new (GUI_BAR_DEFAULT_NAME_INPUT,
+                             "0",          /* hidden */
+                             "1000",       /* priority */
+                             "window",     /* type */
+                             "",           /* conditions */
+                             "bottom",     /* position */
+                             "horizontal", /* filling_top_bottom */
+                             "vertical",   /* filling_left_right */
+                             "1",          /* size */
+                             "0",          /* size_max */
+                             "default",    /* color fg */
+                             "cyan",       /* color delim */
+                             "default",    /* color bg */
+                             "0",          /* separators */
+                             gui_bar_default_items (GUI_BAR_DEFAULT_NAME_INPUT))) /* items */
             {
-                snprintf (buf, length, "[%s]+(away),[%s],[%s],%s",
-                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
-                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
-                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
-                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
-                if (gui_bar_new (GUI_BAR_DEFAULT_NAME_INPUT,
-                                 "0",          /* hidden */
-                                 "1000",       /* priority */
-                                 "window",     /* type */
-                                 "",           /* conditions */
-                                 "bottom",     /* position */
-                                 "horizontal", /* filling_top_bottom */
-                                 "vertical",   /* filling_left_right */
-                                 "1",          /* size */
-                                 "0",          /* size_max */
-                                 "default",    /* color fg */
-                                 "cyan",       /* color delim */
-                                 "default",    /* color bg */
-                                 "0",          /* separators */
-                                 buf))         /* items */
-                {
-                    gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                     GUI_BAR_DEFAULT_NAME_INPUT);
-                }
-                free (buf);
+                gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                                 GUI_BAR_DEFAULT_NAME_INPUT);
             }
         }
     }
@@ -1830,7 +1832,7 @@ gui_bar_create_default_title ()
                          "cyan",       /* color delim */
                          "blue",       /* color bg */
                          "0",          /* separators */
-                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE])) /* items */
+                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_TITLE))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
                              GUI_BAR_DEFAULT_NAME_TITLE);
@@ -1846,62 +1848,30 @@ void
 gui_bar_create_default_status ()
 {
     struct t_gui_bar *ptr_bar;
-    int length;
-    char *buf;
     
     /* search status bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_STATUS);
     if (!ptr_bar)
     {
         /* create status bar */
-        length = strlen (gui_bar_item_names[GUI_BAR_ITEM_TIME])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER])
-            + 1 /* ":" */
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
-            + 3 /* "lag" */
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_HOTLIST])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_COMPLETION])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_SCROLL])
-            + (12 * 4) /* all items delimiters: ",:+[]()" */
-            + 1;
-        buf = malloc (length);
-        if (buf)
+        if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,
+                         "0",          /* hidden */
+                         "500",        /* priority */
+                         "window",     /* type */
+                         "",           /* conditions */
+                         "bottom",     /* position */
+                         "horizontal", /* filling_top_bottom */
+                         "vertical",   /* filling_left_right */
+                         "1",          /* size */
+                         "0",          /* size_max */
+                         "default",    /* color fg */
+                         "cyan",       /* color delim */
+                         "blue",       /* color bg */
+                         "0",          /* separators */
+                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_STATUS))) /* items */
         {
-            snprintf (buf, length, "[%s],[%s],[%s],%s+:+%s+{%s}+%s,[lag],[%s],%s,%s",
-                      gui_bar_item_names[GUI_BAR_ITEM_TIME],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
-                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
-                      gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
-                      gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
-                      gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
-            if (gui_bar_new (GUI_BAR_DEFAULT_NAME_STATUS,
-                             "0",          /* hidden */
-                             "500",        /* priority */
-                             "window",     /* type */
-                             "",           /* conditions */
-                             "bottom",     /* position */
-                             "horizontal", /* filling_top_bottom */
-                             "vertical",   /* filling_left_right */
-                             "1",          /* size */
-                             "0",          /* size_max */
-                             "default",    /* color fg */
-                             "cyan",       /* color delim */
-                             "blue",       /* color bg */
-                             "0",          /* separators */
-                             buf))         /* items */
-            {
-                gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                 GUI_BAR_DEFAULT_NAME_STATUS);
-            }
-            free (buf);
+            gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                             GUI_BAR_DEFAULT_NAME_STATUS);
         }
     }
 }
@@ -1934,7 +1904,7 @@ gui_bar_create_default_nicklist ()
                          "cyan",             /* color delim */
                          "default",          /* color bg */
                          "1",                /* separators */
-                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST])) /* items */
+                         gui_bar_default_items (GUI_BAR_DEFAULT_NAME_NICKLIST))) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
                              GUI_BAR_DEFAULT_NAME_NICKLIST);

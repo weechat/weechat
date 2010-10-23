@@ -61,6 +61,20 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist", "completion",
   "buffer_title", "buffer_nicklist"
 };
+char *gui_bar_items_default_for_bars[][2] =
+{ { GUI_BAR_DEFAULT_NAME_INPUT,
+    "[input_prompt]+(away),[input_search],[input_paste],input_text" },
+  { GUI_BAR_DEFAULT_NAME_TITLE,
+    "buffer_title" },
+  { GUI_BAR_DEFAULT_NAME_STATUS,
+    "[time],[buffer_count],[buffer_plugin],buffer_number+:+"
+    "buffer_name+{buffer_nicklist_count}+buffer_filter,[lag],[hotlist],"
+    "completion,scroll" },
+  { GUI_BAR_DEFAULT_NAME_NICKLIST,
+    "buffer_nicklist" },
+  { NULL,
+    NULL },
+};
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
 
