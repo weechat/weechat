@@ -20,11 +20,18 @@
 #ifndef __WEECHAT_IRC_RAW_H
 #define __WEECHAT_IRC_RAW_H 1
 
-#define IRC_RAW_BUFFER_NAME     "irc_raw"
-#define IRC_RAW_PREFIX_RECV     "-->"
-#define IRC_RAW_PREFIX_RECV_MOD "==>"
-#define IRC_RAW_PREFIX_SEND     "<--"
-#define IRC_RAW_PREFIX_SEND_MOD "<=="
+#define IRC_RAW_BUFFER_NAME "irc_raw"
+
+#define IRC_RAW_PREFIX_RECV          "-->"
+#define IRC_RAW_PREFIX_RECV_MODIFIED "==>"
+#define IRC_RAW_PREFIX_RECV_REDIRECT "R>>"
+#define IRC_RAW_PREFIX_SEND          "<--"
+#define IRC_RAW_PREFIX_SEND_MODIFIED "<=="
+
+#define IRC_RAW_FLAG_RECV     1
+#define IRC_RAW_FLAG_SEND     2
+#define IRC_RAW_FLAG_MODIFIED 4
+#define IRC_RAW_FLAG_REDIRECT 8
 
 struct t_irc_raw_message
 {
@@ -45,8 +52,8 @@ extern void irc_raw_open (int switch_to_buffer);
 extern struct t_irc_raw_message *irc_raw_message_add_to_list (time_t date,
                                                               const char *prefix,
                                                               const char *message);
-extern void irc_raw_print (struct t_irc_server *server, int send,
-                           int modified, const char *message);
+extern void irc_raw_print (struct t_irc_server *server, int flags,
+                           const char *message);
 extern void irc_raw_message_free_all ();
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
                                     struct t_irc_raw_message *raw_message);

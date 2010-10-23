@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-13 08:38+0200\n"
+"POT-Creation-Date: 2010-10-23 09:47+0200\n"
 "PO-Revision-Date: 2010-08-07 10:46+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5071,6 +5071,36 @@ msgstr "%s \"%s\" команда получена без хоста\n"
 #, fuzzy
 msgid "IRC raw messages"
 msgstr "выводить отладочные сообщения"
+
+#, fuzzy, c-format
+msgid "%s%s: missing argument \"%s\" for redirect pattern"
+msgstr "%s нет аргументов для \"%s\" команды\n"
+
+#, fuzzy, c-format
+msgid "%s%s: redirect pattern \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "%s%s: no connection to server \"%s\" for redirect"
+msgstr "%s не подключен к серверу \"%s\"!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing argument \"%s\" for redirect"
+msgstr "%s нет аргументов для \"%s\" команды\n"
+
+#, fuzzy, c-format
+msgid "%s%s: redirect pattern \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, c-format
+msgid ""
+"%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
+"pattern: \"%s\")"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for redirect"
+msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"

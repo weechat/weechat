@@ -61,6 +61,8 @@ irc_la_SOURCES = irc.c \
                  irc-protocol.h \
                  irc-raw.c \
                  irc-raw.h \
+                 irc-redirect.c \
+                 irc-redirect.h \
                  irc-sasl.c \
                  irc-sasl.h \
                  irc-server.c \

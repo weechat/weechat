@@ -40,6 +40,7 @@
 #include "irc-channel.h"
 #include "irc-nick.h"
 #include "irc-raw.h"
+#include "irc-redirect.h"
 #include "irc-upgrade.h"
 
 
@@ -164,6 +165,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     irc_info_init ();
     
+    irc_redirect_init ();
+    
     /* hook some signals */
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
@@ -172,6 +175,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
     weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
     weechat_hook_signal ("irc_input_send", &irc_input_send_cb, NULL);
+    
+    /* hook hsignals for redirection */
+    weechat_hook_hsignal ("irc_redirect_pattern", &irc_redirect_pattern_hsignal_cb, NULL);
+    weechat_hook_hsignal ("irc_redirect_command", &irc_redirect_command_hsignal_cb, NULL);
     
     /* modifiers */
     weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
@@ -261,6 +268,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     irc_server_free_all ();
     
     irc_config_free ();
+    
+    irc_redirect_end ();
     
     return WEECHAT_RC_OK;
 }

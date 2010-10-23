@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-13 08:38+0200\n"
+"POT-Creation-Date: 2010-10-23 09:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4364,6 +4364,36 @@ msgid "%s%s: \"%s\" command received without host"
 msgstr ""
 
 msgid "IRC raw messages"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect pattern"
+msgstr ""
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no connection to server \"%s\" for redirect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
+"pattern: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for redirect"
 msgstr ""
 
 #, c-format

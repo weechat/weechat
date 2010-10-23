@@ -34,6 +34,7 @@
 #include "irc-channel.h"
 #include "irc-nick.h"
 #include "irc-raw.h"
+#include "irc-redirect.h"
 
 
 struct t_irc_server *irc_upgrade_current_server = NULL;
@@ -51,6 +52,8 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_redirect *ptr_redirect;
+    struct t_irc_redirect_pattern *ptr_redirect_pattern;
     struct t_irc_raw_message *ptr_raw_message;
     int rc;
     
@@ -73,6 +76,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
         
+        /* save server channels and nicks */
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
@@ -112,6 +116,27 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                     return 0;
             }
         }
+        
+        /* save server redirects */
+        for (ptr_redirect = ptr_server->redirects; ptr_redirect;
+             ptr_redirect = ptr_redirect->next_redirect)
+        {
+            /* save channel */
+            infolist = weechat_infolist_new ();
+            if (!infolist)
+                return 0;
+            if (!irc_redirect_add_to_infolist (infolist, ptr_redirect))
+            {
+                weechat_infolist_free (infolist);
+                return 0;
+            }
+            rc = weechat_upgrade_write_object (upgrade_file,
+                                               IRC_UPGRADE_TYPE_REDIRECT,
+                                               infolist);
+            weechat_infolist_free (infolist);
+            if (!rc)
+                return 0;
+        }
     }
     
     /* save raw messages */
@@ -132,6 +157,30 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         weechat_infolist_free (infolist);
         if (!rc)
             return 0;
+    }
+    
+    /* save redirect patterns */
+    for (ptr_redirect_pattern = irc_redirect_patterns; ptr_redirect_pattern;
+         ptr_redirect_pattern = ptr_redirect_pattern->next_redirect)
+    {
+        /* save only temporary patterns (created by other plugins/scripts) */
+        if (ptr_redirect_pattern->temp_pattern)
+        {
+            infolist = weechat_infolist_new ();
+            if (!infolist)
+                return 0;
+            if (!irc_redirect_pattern_add_to_infolist (infolist, ptr_redirect_pattern))
+            {
+                weechat_infolist_free (infolist);
+                return 0;
+            }
+            rc = weechat_upgrade_write_object (upgrade_file,
+                                               IRC_UPGRADE_TYPE_REDIRECT_PATTERN,
+                                               infolist);
+            weechat_infolist_free (infolist);
+            if (!rc)
+                return 0;
+        }
     }
     
     return 1;
@@ -204,6 +253,7 @@ irc_upgrade_read_cb (void *data,
     char *buf, option_name[64];
     const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_redirect *ptr_redirect;
     struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
@@ -381,6 +431,45 @@ irc_upgrade_read_cb (void *data,
                             ptr_nick->host = strdup (str);
                     }
                 }
+                break;
+            case IRC_UPGRADE_TYPE_REDIRECT:
+                if (irc_upgrade_current_server)
+                {
+                    ptr_redirect = irc_redirect_new_with_commands (
+                        irc_upgrade_current_server,
+                        weechat_infolist_string (infolist, "pattern"),
+                        weechat_infolist_string (infolist, "signal"),
+                        weechat_infolist_integer (infolist, "count"),
+                        weechat_infolist_string (infolist, "string"),
+                        weechat_infolist_integer (infolist, "timeout"),
+                        weechat_infolist_string (infolist, "cmd_start"),
+                        weechat_infolist_string (infolist, "cmd_stop"),
+                        weechat_infolist_string (infolist, "cmd_extra"),
+                        weechat_infolist_string (infolist, "cmd_filter"));
+                    if (ptr_redirect)
+                    {
+                        ptr_redirect->current_count = weechat_infolist_integer (infolist, "current_count");
+                        str = weechat_infolist_string (infolist, "command");
+                        if (str)
+                            ptr_redirect->command = strdup (str);
+                        ptr_redirect->start_time = weechat_infolist_time (infolist, "start_time");
+                        ptr_redirect->cmd_start_received = weechat_infolist_integer (infolist, "cmd_start_received");
+                        ptr_redirect->cmd_stop_received = weechat_infolist_integer (infolist, "cmd_stop_received");
+                        str = weechat_infolist_string (infolist, "output");
+                        if (str)
+                            ptr_redirect->output = strdup (str);
+                        ptr_redirect->output_size = weechat_infolist_integer (infolist, "output_size");
+                    }
+                }
+                break;
+            case IRC_UPGRADE_TYPE_REDIRECT_PATTERN:
+                irc_redirect_pattern_new (
+                    weechat_infolist_string (infolist, "name"),
+                    weechat_infolist_integer (infolist, "temp_pattern"),
+                    weechat_infolist_integer (infolist, "timeout"),
+                    weechat_infolist_string (infolist, "cmd_start"),
+                    weechat_infolist_string (infolist, "cmd_stop"),
+                    weechat_infolist_string (infolist, "cmd_extra"));
                 break;
             case IRC_UPGRADE_TYPE_RAW_MESSAGE:
                 irc_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),

@@ -108,6 +108,7 @@ struct t_irc_outqueue
     char *message_after_mod;              /* msg after modifier(s)           */
     int modified;                         /* msg was modified by modifier(s) */
     char *tags;                           /* tags (used by Relay plugin)     */
+    struct t_irc_redirect *redirect;      /* command redirection             */
     struct t_irc_outqueue *next_outqueue; /* link to next msg in queue       */
     struct t_irc_outqueue *prev_outqueue; /* link to prev msg in queue       */
 };
@@ -169,6 +170,8 @@ struct t_irc_server
     struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
     struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
+    struct t_irc_redirect *redirects;        /* command redirections         */
+    struct t_irc_redirect *last_redirect;    /* last command redirection     */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */

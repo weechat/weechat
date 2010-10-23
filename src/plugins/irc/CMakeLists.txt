@@ -37,6 +37,7 @@ irc-msgbuffer.c irc-msgbuffer.h
 irc-nick.c irc-nick.h
 irc-protocol.c irc-protocol.h
 irc-raw.c irc-raw.h
+irc-redirect.c irc-redirect.h
 irc-sasl.c irc-sasl.h
 irc-server.c irc-server.h
 irc-upgrade.c irc-upgrade.h)

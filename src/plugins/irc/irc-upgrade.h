@@ -30,6 +30,8 @@ enum t_irc_upgrade_type
     IRC_UPGRADE_TYPE_CHANNEL,
     IRC_UPGRADE_TYPE_NICK,
     IRC_UPGRADE_TYPE_RAW_MESSAGE,
+    IRC_UPGRADE_TYPE_REDIRECT_PATTERN,
+    IRC_UPGRADE_TYPE_REDIRECT,
 };
 
 extern int irc_upgrade_save ();

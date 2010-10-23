@@ -52,6 +52,7 @@
 #include "irc-nick.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
+#include "irc-redirect.h"
 #include "irc-sasl.h"
 
 
@@ -467,6 +468,8 @@ irc_server_alloc (const char *name)
         new_server->outqueue[i] = NULL;
         new_server->last_outqueue[i] = NULL;
     }
+    new_server->redirects = NULL;
+    new_server->last_redirect = NULL;
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -768,7 +771,8 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
 void
 irc_server_outqueue_add (struct t_irc_server *server, int priority,
                          const char *command, const char *msg1,
-                         const char *msg2, int modified, const char *tags)
+                         const char *msg2, int modified, const char *tags,
+                         struct t_irc_redirect *redirect)
 {
     struct t_irc_outqueue *new_outqueue;
 
@@ -780,6 +784,7 @@ irc_server_outqueue_add (struct t_irc_server *server, int priority,
         new_outqueue->message_after_mod = (msg2) ? strdup (msg2) : NULL;
         new_outqueue->modified = modified;
         new_outqueue->tags = (tags) ? strdup (tags) : NULL;
+        new_outqueue->redirect = redirect;
         
         new_outqueue->prev_outqueue = server->last_outqueue[priority];
         new_outqueue->next_outqueue = NULL;
@@ -902,6 +907,7 @@ irc_server_free_data (struct t_irc_server *server)
     {
         irc_server_outqueue_free_all (server, i);
     }
+    irc_redirect_free_all (server);
     if (server->channels)
         irc_channel_free_all (server);
     if (server->buffer_as_string)
@@ -1267,7 +1273,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
                               '\r');
                 if (pos)
                     pos[0] = '\0';
-                irc_raw_print (server, 1, 0,
+                irc_raw_print (server, IRC_RAW_FLAG_SEND,
                                server->outqueue[priority]->message_before_mod);
                 if (pos)
                     pos[0] = '\r';
@@ -1278,7 +1284,8 @@ irc_server_outqueue_send (struct t_irc_server *server)
                               '\r');
                 if (pos)
                     pos[0] = '\0';
-                irc_raw_print (server, 1, server->outqueue[priority]->modified,
+                irc_raw_print (server, IRC_RAW_FLAG_SEND |
+                               ((server->outqueue[priority]->modified) ? IRC_RAW_FLAG_MODIFIED : 0),
                                server->outqueue[priority]->message_after_mod);
                 if (pos)
                     pos[0] = '\r';
@@ -1300,6 +1307,13 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 irc_server_send (server, server->outqueue[priority]->message_after_mod,
                                  strlen (server->outqueue[priority]->message_after_mod));
                 server->last_user_message = time_now;
+
+                /* start redirection if redirect is set */
+                if (server->outqueue[priority]->redirect)
+                {
+                    irc_redirect_init_command (server->outqueue[priority]->redirect,
+                                               server->outqueue[priority]->message_after_mod);
+                }
             }
             irc_server_outqueue_free (server, priority,
                                       server->outqueue[priority]);
@@ -1468,16 +1482,11 @@ irc_server_parse_message_to_hashtable (const char *message)
     if (!hashtable)
         return NULL;
     
-    weechat_hashtable_set (hashtable, "nick",
-                           (nick) ? (void *)nick : (void *)empty_str);
-    weechat_hashtable_set (hashtable, "host",
-                           (host) ? (void *)host : (void *)empty_str);
-    weechat_hashtable_set (hashtable, "command",
-                           (command) ? (void *)command : (void *)empty_str);
-    weechat_hashtable_set (hashtable, "channel",
-                           (channel) ? (void *)channel : (void *)empty_str);
-    weechat_hashtable_set (hashtable, "arguments",
-                           (arguments) ? (void *)arguments : (void *)empty_str);
+    weechat_hashtable_set (hashtable, "nick", (nick) ? nick : empty_str);
+    weechat_hashtable_set (hashtable, "host", (host) ? host : empty_str);
+    weechat_hashtable_set (hashtable, "command", (command) ? command : empty_str);
+    weechat_hashtable_set (hashtable, "channel", (channel) ? channel : empty_str);
+    weechat_hashtable_set (hashtable, "arguments", (arguments) ? arguments : empty_str);
     
     return hashtable;
 }
@@ -1505,6 +1514,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     char str_modifier[64], modifier_data[256];
     int rc, queue_msg, add_to_queue, first_message, anti_flood;
     time_t time_now;
+    struct t_irc_redirect *ptr_redirect;
     
     rc = 1;
     
@@ -1596,6 +1606,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             
             tags_to_send = irc_server_get_tags_to_send (tags);
             
+            ptr_redirect = irc_redirect_search_available (server);
+            
             if (add_to_queue > 0)
             {
                 /* queue message (do not send anything now) */
@@ -1603,14 +1615,21 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                                          (new_msg && first_message) ? message : NULL,
                                          buffer,
                                          (new_msg) ? 1 : 0,
-                                         tags_to_send);
+                                         tags_to_send,
+                                         ptr_redirect);
             }
             else
             {
                 if (first_message)
-                    irc_raw_print (server, 1, 0, message);
+                {
+                    irc_raw_print (server, IRC_RAW_FLAG_SEND, message);
+                }
                 if (new_msg)
-                    irc_raw_print (server, 1, 1, ptr_msg);
+                {
+                    irc_raw_print (server,
+                                   IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED,
+                                   ptr_msg);
+                }
                 
                 /* send signal with command that will be sent to server */
                 irc_server_send_signal (server, "irc_out",
@@ -1629,6 +1648,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                     if (queue_msg > 0)
                         server->last_user_message = time_now;
                 }
+                if (ptr_redirect)
+                    irc_redirect_init_command (ptr_redirect, buffer);
             }
             
             if (tags_to_send)
@@ -1648,7 +1669,10 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             free (msg_encoded);
     }
     else
-        irc_raw_print (server, 1, 1, _("(message dropped)"));
+    {
+        irc_raw_print (server, IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED,
+                       _("(message dropped)"));
+    }
     
     if (nick)
         free (nick);
@@ -1849,7 +1873,8 @@ irc_server_msgq_flush ()
             
             if (ptr_data[0])
             {
-                irc_raw_print (irc_recv_msgq->server, 0, 0, ptr_data);
+                irc_raw_print (irc_recv_msgq->server, IRC_RAW_FLAG_RECV,
+                               ptr_data);
                 
                 irc_server_parse_message (ptr_data, NULL, NULL, &command,
                                           NULL, NULL);
@@ -1882,8 +1907,11 @@ irc_server_msgq_flush ()
                             pos[0] = '\0';
                         
                         if (new_msg)
-                            irc_raw_print (irc_recv_msgq->server, 0, 1,
+                        {
+                            irc_raw_print (irc_recv_msgq->server,
+                                           IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED,
                                            ptr_msg);
+                        }
                         
                         irc_server_parse_message (ptr_msg, &nick, &host,
                                                   &command, &channel,
@@ -1926,11 +1954,22 @@ irc_server_msgq_flush ()
                                                          "?");
                         
                         /* parse and execute command */
-                        irc_protocol_recv_command (irc_recv_msgq->server,
-                                                   (msg_decoded_without_color) ?
-                                                   msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
-                                                   command,
-                                                   channel);
+                        if (irc_redirect_message (irc_recv_msgq->server,
+                                                  (msg_decoded_without_color) ?
+                                                  msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
+                                                  command))
+                        {
+                            /* message redirected, we'll not display it! */
+                        }
+                        else
+                        {
+                            /* message not redirected, display it */
+                            irc_protocol_recv_command (irc_recv_msgq->server,
+                                                       (msg_decoded_without_color) ?
+                                                       msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
+                                                       command,
+                                                       channel);
+                        }
                         
                         if (nick)
                             free (nick);
@@ -1956,7 +1995,8 @@ irc_server_msgq_flush ()
                 }
                 else
                 {
-                    irc_raw_print (irc_recv_msgq->server, 0, 1,
+                    irc_raw_print (irc_recv_msgq->server,
+                                   IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED,
                                    _("(message dropped)"));
                 }
                 if (new_msg)
@@ -2125,7 +2165,8 @@ int
 irc_server_timer_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
-    time_t new_time;
+    struct t_irc_redirect *ptr_redirect, *ptr_next_redirect;
+    time_t current_time;
     static struct timeval tv;
     int away_check;
     
@@ -2133,7 +2174,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
     (void) data;
     (void) remaining_calls;
     
-    new_time = time (NULL);
+    current_time = time (NULL);
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -2141,7 +2182,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
         /* check if reconnection is pending */
         if ((!ptr_server->is_connected)
             && (ptr_server->reconnect_start > 0)
-            && (new_time >= (ptr_server->reconnect_start + ptr_server->reconnect_delay)))
+            && (current_time >= (ptr_server->reconnect_start + ptr_server->reconnect_delay)))
         {
             irc_server_reconnect (ptr_server);
         }
@@ -2155,7 +2196,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                 /* check for lag */
                 if ((weechat_config_integer (irc_config_network_lag_check) > 0)
                     && (ptr_server->lag_check_time.tv_sec == 0)
-                    && (new_time >= ptr_server->lag_next_check))
+                    && (current_time >= ptr_server->lag_next_check))
                 {
                     irc_server_sendf (ptr_server, 0, NULL, "PING %s",
                                       (ptr_server->current_address) ?
@@ -2171,7 +2212,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     if (away_check > 0)
                     {
                         if ((ptr_server->last_away_check == 0)
-                            || (new_time >= ptr_server->last_away_check + (away_check * 60)))
+                            || (current_time >= ptr_server->last_away_check + (away_check * 60)))
                         {
                             irc_server_check_away (ptr_server);
                         }
@@ -2180,7 +2221,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                 
                 /* check if it's time to autojoin channels (after command delay) */
                 if ((ptr_server->command_time != 0)
-                    && (new_time >= ptr_server->command_time +
+                    && (current_time >= ptr_server->command_time +
                         IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_COMMAND_DELAY)))
                 {
                     irc_server_autojoin_channels (ptr_server);
@@ -2195,10 +2236,10 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                                                        &tv);
                     /* refresh lag item if needed */
                     if (((ptr_server->lag_last_refresh == 0)
-                         || (new_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))
+                         || (current_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))
                         && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
                     {
-                        ptr_server->lag_last_refresh = new_time;
+                        ptr_server->lag_last_refresh = current_time;
                         weechat_bar_item_update ("lag");
                     }
                     /* lag timeout? => disconnect */
@@ -2211,6 +2252,21 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                         IRC_PLUGIN_NAME);
                         irc_server_disconnect (ptr_server, 0, 1);
                     }
+                }
+                
+                /* remove redirects if timeout occurs */
+                ptr_redirect = ptr_server->redirects;
+                while (ptr_redirect)
+                {
+                    ptr_next_redirect = ptr_redirect->next_redirect;
+                    
+                    if ((ptr_redirect->start_time > 0)
+                        && (ptr_redirect->start_time + ptr_redirect->timeout < current_time))
+                    {
+                        irc_redirect_stop (ptr_redirect, "timeout");
+                    }
+                    
+                    ptr_redirect = ptr_next_redirect;
                 }
             }
         }
@@ -2284,6 +2340,9 @@ irc_server_close_connection (struct t_irc_server *server)
     {
         irc_server_outqueue_free_all (server, i);
     }
+    
+    /* remove all redirects */
+    irc_redirect_free_all (server);
     
     /* server is now disconnected */
     server->is_connected = 0;
@@ -4230,12 +4289,16 @@ irc_server_print_log ()
             weechat_log_printf ("  outqueue[%02d] . . . . : 0x%lx", i, ptr_server->outqueue[i]);
             weechat_log_printf ("  last_outqueue[%02d]. . : 0x%lx", i, ptr_server->last_outqueue[i]);
         }
+        weechat_log_printf ("  redirects. . . . . . : 0x%lx", ptr_server->redirects);
+        weechat_log_printf ("  last_redirect. . . . : 0x%lx", ptr_server->last_redirect);
         weechat_log_printf ("  buffer . . . . . . . : 0x%lx", ptr_server->buffer);
         weechat_log_printf ("  buffer_as_string . . : 0x%lx", ptr_server->buffer_as_string);
         weechat_log_printf ("  channels . . . . . . : 0x%lx", ptr_server->channels);
         weechat_log_printf ("  last_channel . . . . : 0x%lx", ptr_server->last_channel);
         weechat_log_printf ("  prev_server. . . . . : 0x%lx", ptr_server->prev_server);
         weechat_log_printf ("  next_server. . . . . : 0x%lx", ptr_server->next_server);
+        
+        irc_redirect_print_log (ptr_server);
         
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

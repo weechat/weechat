@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-13 08:38+0200\n"
-"PO-Revision-Date: 2010-10-13 08:39+0200\n"
+"POT-Creation-Date: 2010-10-23 09:47+0200\n"
+"PO-Revision-Date: 2010-10-23 09:02+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -5405,6 +5405,38 @@ msgstr "%s%s: commande \"%s\" reçue sans hôte"
 
 msgid "IRC raw messages"
 msgstr "Messages bruts IRC"
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect pattern"
+msgstr "%s%s: paramètre \"%s\" manquant pour le modèle de redirection"
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" already exists"
+msgstr "%s%s: le modèle de redirection \"%s\" existe déjà"
+
+#, c-format
+msgid "%s%s: no connection to server \"%s\" for redirect"
+msgstr "%s%s: pas de connexion au serveur \"%s\" pour la redirection"
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect"
+msgstr "%s%s: paramètre \"%s\" manquant pour la redirection"
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" not found"
+msgstr "%s%s: modèle de redirection \"%s\" non trouvé"
+
+#, c-format
+msgid ""
+"%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
+"pattern: \"%s\")"
+msgstr ""
+"%s: démarrage de la redirection pour la commande \"%s\" sur le serveur \"%s"
+"\" (modèle de redirection: \"%s\")"
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for redirect"
+msgstr "%s%s: serveur \"%s\" non trouvé pour la redirection"
 
 #, c-format
 msgid "%s%s: error when allocating new server"

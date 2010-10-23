@@ -23,6 +23,7 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable, hook_hsignal, hook_hsignal_send
+* irc: add command redirection (task #6703)
 * irc: add new options irc.color.nick_prefix and irc.color.nick_suffix
 * irc: add new option irc.look.item_away_message
 * irc: add tag "nick_xxx" in user messages

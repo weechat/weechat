@@ -920,7 +920,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     struct t_irc_nick *ptr_nick;
     
     weechat_log_printf ("");
-    weechat_log_printf ("  => channel %s (addr:0x%lx)]", channel->name, channel);
+    weechat_log_printf ("  => channel %s (addr:0x%lx):", channel->name, channel);
     weechat_log_printf ("       type . . . . . . . . . . : %d",    channel->type);
     weechat_log_printf ("       topic. . . . . . . . . . : '%s'",  channel->topic);
     weechat_log_printf ("       modes. . . . . . . . . . : '%s'",  channel->modes);

@@ -211,10 +211,10 @@ irc_raw_message_add_to_list (time_t date, const char *prefix,
  */
 
 struct t_irc_raw_message *
-irc_raw_message_add (struct t_irc_server *server, int send, int modified,
+irc_raw_message_add (struct t_irc_server *server, int flags,
                      const char *message)
 {
-    char *buf, *buf2, prefix[256];
+    char *buf, *buf2, prefix[256], prefix_arrow[16];
     const unsigned char *ptr_buf;
     const char *hexa = "0123456789ABCDEF";
     int pos_buf, pos_buf2, char_size, i;
@@ -247,16 +247,43 @@ irc_raw_message_add (struct t_irc_server *server, int send, int modified,
         }
         buf2[pos_buf2] = '\0';
     }
+
+    /* build prefix with arrow */
+    prefix_arrow[0] = '\0';
+    switch (flags & (IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_SEND
+                     | IRC_RAW_FLAG_MODIFIED | IRC_RAW_FLAG_REDIRECT))
+    {
+        case IRC_RAW_FLAG_RECV:
+            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
+            break;
+        case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED:
+            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_MODIFIED);
+            break;
+        case IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_REDIRECT:
+            strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV_REDIRECT);
+            break;
+        case IRC_RAW_FLAG_SEND:
+            strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
+            break;
+        case IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED:
+            strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND_MODIFIED);
+            break;
+        default:
+            if (flags && IRC_RAW_FLAG_RECV)
+                strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
+            else
+                strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
+            break;
+    }
+    
     snprintf (prefix, sizeof (prefix), "%s%s%s%s%s",
               (server) ? weechat_color ("chat_server") : "",
               (server) ? server->name : "",
               (server) ? " " : "",
-              (send) ?
+              (flags & IRC_RAW_FLAG_SEND) ?
               weechat_color ("chat_prefix_quit") :
               weechat_color ("chat_prefix_join"),
-              (send) ?
-              ((modified) ? IRC_RAW_PREFIX_SEND_MOD : IRC_RAW_PREFIX_SEND) :
-              ((modified) ? IRC_RAW_PREFIX_RECV_MOD : IRC_RAW_PREFIX_RECV));
+              prefix_arrow);
     
     new_raw_message = irc_raw_message_add_to_list (time (NULL),
                                                    prefix,
@@ -275,7 +302,7 @@ irc_raw_message_add (struct t_irc_server *server, int send, int modified,
  */
 
 void
-irc_raw_print (struct t_irc_server *server, int send, int modified,
+irc_raw_print (struct t_irc_server *server, int flags,
                const char *message)
 {
     struct t_irc_raw_message *new_raw_message;
@@ -287,7 +314,7 @@ irc_raw_print (struct t_irc_server *server, int send, int modified,
     if (!irc_raw_buffer && (weechat_irc_plugin->debug >= 1))
         irc_raw_open (0);
     
-    new_raw_message = irc_raw_message_add (server, send, modified, message);
+    new_raw_message = irc_raw_message_add (server, flags, message);
     if (new_raw_message)
     {
         if (irc_raw_buffer)
