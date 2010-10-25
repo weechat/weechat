@@ -71,8 +71,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *               extra: 329: channel creation date
        */
       NULL,
-      "324:3,403:3,442:3,479:3",
-      "329:3",
+      "324:1,403:1,442:1,479:1",
+      "329:1",
       NULL, NULL,
     },
     { "mode_channel_ban", 0, 0, /* mode #channel b */
@@ -84,8 +84,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *                          479: cannot join channel (illegal name)
        *                   extra: -
        */
-      "367:3",
-      "368:3,403:3,442:3,479:3",
+      "367:1",
+      "368:1,403:1,442:1,479:1",
       NULL,
       NULL, NULL,
     },
@@ -100,8 +100,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *                                    482: you're not channel operator
        *                             extra: -
        */
-      "348:3",
-      "349:3,403:3,442:3,472,479:3,482:3",
+      "348:1",
+      "349:1,403:1,442:1,472,479:1,482:1",
       NULL,
       NULL, NULL,
     },
@@ -116,8 +116,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *                             482: you're not channel operator
        *                      extra: -
        */
-      "346:3",
-      "347:3,403:3,442:3,472,479:3,482:3",
+      "346:1",
+      "347:1,403:1,442:1,472,479:1,482:1",
       NULL,
       NULL, NULL,
     },
@@ -132,7 +132,7 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *            extra; -
        */
       NULL,
-      "mode:2,221:3,403:3,501,502",
+      "mode:0,221:0,403:1,501,502",
       NULL,
       NULL, NULL,
     },
@@ -142,8 +142,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *         stop: 366: end of /names list
        *        extra; -
        */
-      "353:4",
-      "366:3",
+      "353:2",
+      "366:1",
       NULL,
       NULL, NULL,
     },
@@ -179,8 +179,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *        extra: 333: infos about topic (nick and date changed)
        */
       NULL,
-      "331:3,332:3,403:3",
-      "333:3",
+      "331:1,332:1,403:1",
+      "333:1",
       NULL, NULL,
     },
     { "userhost", 0, 0,
@@ -190,7 +190,7 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *                  461: not enough parameters
        *           extra: -
        */
-      "401:3",
+      "401:1",
       "302,461",
       NULL,
       NULL, NULL,
@@ -204,8 +204,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *             403: no such channel
        *      extra: -
        */
-      "352:3,354,401:3",
-      "315:3,403:3",
+      "352:1,354,401:1",
+      "315:1,403:1",
       NULL,
       NULL, NULL,
     },
@@ -219,9 +219,9 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *               461: not enough parameters
        *        extra: 318: whois (end)
        */
-      "311:3",
-      "318:3,401:3,402:3,431:3,461",
-      "318:3",
+      "311:1",
+      "318:1,401:1,402:1,431:1,461",
+      "318:1",
       NULL, NULL,
     },
     { "whowas", 0, 0,
@@ -231,8 +231,8 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
        *          stop: 369: end of whowas
        *         extra: -
        */
-      "314:3,406:3",
-      "369:3",
+      "314:1,406:1",
+      "369:1",
       NULL,
       NULL, NULL,
     },
@@ -614,8 +614,8 @@ irc_redirect_init_command (struct t_irc_redirect *redirect,
 
 int
 irc_redirect_message_match_hash (struct t_irc_redirect *redirect,
-                                 char **message_argv, int message_argc,
                                  const char *command,
+                                 char **arguments_argv, int arguments_argc,
                                  struct t_hashtable *cmd_hash)
 {
     int *value;
@@ -630,10 +630,10 @@ irc_redirect_message_match_hash (struct t_irc_redirect *redirect,
      */
     if (redirect->string && redirect->string[0] && (*value >= 0))
     {
-        if (*value >= message_argc)
+        if (!arguments_argv || (*value >= arguments_argc))
             return 0;
         
-        if (strcmp (message_argv[*value], redirect->string) != 0)
+        if (strcmp (arguments_argv[*value], redirect->string) != 0)
             return 0;
     }
     
@@ -747,18 +747,27 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
 
 int
 irc_redirect_message (struct t_irc_server *server, const char *message,
-                      const char *command)
+                      const char *command, const char *arguments)
 {
     struct t_irc_redirect *ptr_redirect, *ptr_next_redirect;
-    int rc, match_stop, message_argc;
-    char **message_argv;
+    int rc, match_stop, arguments_argc;
+    char **arguments_argv;
     
     if (!server || !server->redirects || !message || !command)
         return 0;
     
     rc = 0;
-    
-    message_argv = weechat_string_split (message, " ", 0, 0, &message_argc);
+
+    if (arguments && arguments[0])
+    {
+        arguments_argv = weechat_string_split (arguments, " ", 0, 0,
+                                               &arguments_argc);
+    }
+    else
+    {
+        arguments_argv = NULL;
+        arguments_argc = 0;
+    }
     
     ptr_redirect = server->redirects;
     while (ptr_redirect)
@@ -771,9 +780,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
             {
                 if (ptr_redirect->cmd_extra
                     && irc_redirect_message_match_hash (ptr_redirect,
-                                                        message_argv,
-                                                        message_argc,
                                                         command,
+                                                        arguments_argv,
+                                                        arguments_argc,
                                                         ptr_redirect->cmd_extra))
                 {
                     irc_redirect_message_add (ptr_redirect, message, command);
@@ -789,9 +798,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                 if (ptr_redirect->cmd_start
                     && !ptr_redirect->cmd_start_received
                     && irc_redirect_message_match_hash (ptr_redirect,
-                                                        message_argv,
-                                                        message_argc,
                                                         command,
+                                                        arguments_argv,
+                                                        arguments_argc,
                                                         ptr_redirect->cmd_start))
                 {
                     /*
@@ -810,9 +819,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                  * if matching stop command
                  */
                 match_stop = irc_redirect_message_match_hash (ptr_redirect,
-                                                              message_argv,
-                                                              message_argc,
                                                               command,
+                                                              arguments_argv,
+                                                              arguments_argc,
                                                               ptr_redirect->cmd_stop);
                 if (match_stop || ptr_redirect->cmd_start_received)
                 {
@@ -827,9 +836,9 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                         if (ptr_redirect->cmd_extra)
                         {
                             if (irc_redirect_message_match_hash (ptr_redirect,
-                                                                 message_argv,
-                                                                 message_argc,
                                                                  command,
+                                                                 arguments_argv,
+                                                                 arguments_argc,
                                                                  ptr_redirect->cmd_extra))
                             {
                                 /*
@@ -858,8 +867,8 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
     }
     
 end:
-    if (message_argv)
-        weechat_string_free_split (message_argv);
+    if (arguments_argv)
+        weechat_string_free_split (arguments_argv);
     
     return rc;
 }

@@ -97,7 +97,8 @@ extern void irc_redirect_init_command (struct t_irc_redirect *redirect,
 extern void irc_redirect_stop (struct t_irc_redirect *redirect,
                                const char *error);
 extern int irc_redirect_message (struct t_irc_server *server,
-                                 const char *message, const char *command);
+                                 const char *message, const char *command,
+                                 const char *arguments);
 extern void irc_redirect_free (struct t_irc_redirect *redirect);
 extern void irc_redirect_free_all (struct t_irc_server *server);
 extern int irc_redirect_pattern_add_to_infolist (struct t_infolist *infolist,

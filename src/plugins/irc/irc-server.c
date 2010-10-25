@@ -1857,7 +1857,7 @@ irc_server_msgq_flush ()
 {
     struct t_irc_message *next;
     char *ptr_data, *new_msg, *ptr_msg, *pos;
-    char *nick, *host, *command, *channel;
+    char *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[64], modifier_data[256];
     
@@ -1915,7 +1915,7 @@ irc_server_msgq_flush ()
                         
                         irc_server_parse_message (ptr_msg, &nick, &host,
                                                   &command, &channel,
-                                                  NULL);
+                                                  &arguments);
                         
                         /* convert charset for message */
                         if (channel)
@@ -1957,7 +1957,7 @@ irc_server_msgq_flush ()
                         if (irc_redirect_message (irc_recv_msgq->server,
                                                   (msg_decoded_without_color) ?
                                                   msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
-                                                  command))
+                                                  command, arguments))
                         {
                             /* message redirected, we'll not display it! */
                         }
