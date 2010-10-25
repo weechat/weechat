@@ -279,9 +279,10 @@ Elenco di funzioni nelle API per gli script:
   prnt_date_tags), print_y (for python: prnt_y), log_print
 | hook                   |
   hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
-  hook_connect, hook_print, hook_signal, hook_signal_send, hook_config,
-  hook_completion, hook_completion_list_add, hook_modifier, hook_modifier_exec,
-  hook_info, hook_info_hashtable, hook_infolist, unhook, unhook_all
+  hook_connect, hook_print, hook_signal, hook_signal_send, hook_hsignal,
+  hook_hsignal_send, hook_config, hook_completion, hook_completion_list_add,
+  hook_modifier, hook_modifier_exec, hook_info, hook_info_hashtable,
+  hook_infolist, unhook, unhook_all
 | buffer                 |
   buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
   buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
@@ -698,6 +699,46 @@ def join_cb(data, signal, signal_data):
 # può essere utile qui utilizzare "*" come server, per catturare
 # i messaggi JOIN su tutti i server IRC
 weechat.hook_signal("*,irc_in2_join", "join_cb", "")
+----------------------------------------
+
+// TRANSLATION MISSING
+[[irc_modify_messages]]
+Modify messages
+^^^^^^^^^^^^^^^
+
+IRC plugin sends a "modifier" called "irc_in_xxx" ("xxx" is IRC command) for a
+message received, so that you can modify it.
+
+[source,python]
+----------------------------------------
+def modifier_cb(data, modifier, modifier_data, string):
+    # add server name to all messages received
+    # (ok that's not very useful, but that's just an example!)
+    return "%s %s" % (string, modifier_data)
+
+weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
+----------------------------------------
+
+[WARNING]
+A malformed message could crash WeeChat or cause severe problems!
+
+// TRANSLATION MISSING
+[[irc_parse_message]]
+Parse message
+^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+You can parse an IRC message with info_hashtable called "irc_parse_message".
+
+[source,python]
+----------------------------------------
+dict = weechat.info_get_hashtable("irc_parse_message",
+                                  { "message": ":nick!user@host PRIVMSG #weechat :message here" })
+weechat.prnt("", "dict: %s" % dict)
+
+# output:
+#   dict: {'nick': 'nick', 'host': 'nick!user@host', 'command': 'PRIVMSG', 'arguments': '#weechat :message here', 'channel': '#weechat'}
 ----------------------------------------
 
 [[infos]]
