@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-23
+v0.3.4-dev, 2010-10-26
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: fix bug with message "day changed to", sometimes displayed several
+  times wrongly
 * core: fix default value of bar items options (bug #31422)
 * core: fix bug with buffer name in "/bar scroll" command
 * core: add new option weechat.look.hotlist_unique_numbers (task #10691)
