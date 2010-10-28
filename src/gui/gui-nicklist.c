@@ -651,23 +651,36 @@ gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_nicklist_compute_visible_count: compute visible_count variable for a buffer
+ * gui_nicklist_compute_visible_count: compute visible_count variable for a
+ *                                     buffer
  */
 
 void
 gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                     struct t_gui_nick_group *group)
 {
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    
     if (!buffer || !group)
         return;
     
     /* count for childs */
-    if (group->childs)
-        gui_nicklist_compute_visible_count (buffer, group->childs);
+    for (ptr_group = group->childs; ptr_group;
+         ptr_group = ptr_group->next_group)
+    {
+        gui_nicklist_compute_visible_count (buffer, ptr_group);
+    }
     
     /* count current group */
     if (buffer->nicklist_display_groups && group->visible)
         buffer->nicklist_visible_count++;
+    
+    /* count nicks in group */
+    for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        buffer->nicklist_visible_count++;
+    }
 }
 
 /*
