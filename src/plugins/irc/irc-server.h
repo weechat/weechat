@@ -150,7 +150,8 @@ struct t_irc_server
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
-    char *prefix;                   /* nick prefix allowed (from msg 005)    */
+    char *prefix_modes;             /* prefix modes from msg 005 (eg "aohv") */
+    char *prefix_chars;             /* prefix chars from msg 005 (eg "&@%+") */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -209,6 +210,18 @@ extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern int irc_server_get_nick_index (struct t_irc_server *server);
 extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
                                                   const char *feature);
+extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
+                                               const char *prefix);
+extern const char *irc_server_get_prefix_modes (struct t_irc_server *server);
+extern const char *irc_server_get_prefix_chars (struct t_irc_server *server);
+extern int irc_server_get_prefix_mode_index (struct t_irc_server *server,
+                                             char mode);
+extern int irc_server_get_prefix_char_index (struct t_irc_server *server,
+                                             char prefix_char);
+extern char irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
+                                                 char prefix_char);
+extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
+                                                 char mode);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern int irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,

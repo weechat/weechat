@@ -21,6 +21,7 @@
  * irc-upgrade.c: save/restore IRC plugin data when upgrading WeeChat
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -103,7 +104,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                 infolist = weechat_infolist_new ();
                 if (!infolist)
                     return 0;
-                if (!irc_nick_add_to_infolist (infolist, ptr_server, ptr_nick))
+                if (!irc_nick_add_to_infolist (infolist, ptr_nick))
                 {
                     weechat_infolist_free (infolist);
                     return 0;
@@ -324,9 +325,30 @@ irc_upgrade_read_cb (void *data,
                     str = weechat_infolist_string (infolist, "isupport");
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);
+                    /*
+                     * "prefix" is not any more in this infolist (since
+                     * WeeChat 0.3.4), but we read it to keep compatibility
+                     * with old WeeChat versions, on /upgrade)
+                     */
                     str = weechat_infolist_string (infolist, "prefix");
                     if (str)
-                        irc_upgrade_current_server->prefix = strdup (str);
+                        irc_server_set_prefix_modes_chars (irc_upgrade_current_server, str);
+                    /* "prefix_modes" is new in WeeChat 0.3.4 */
+                    str = weechat_infolist_string (infolist, "prefix_modes");
+                    if (str)
+                    {
+                        if (irc_upgrade_current_server->prefix_modes)
+                            free (irc_upgrade_current_server->prefix_modes);
+                        irc_upgrade_current_server->prefix_modes = strdup (str);
+                    }
+                    /* "prefix_chars" is new in WeeChat 0.3.4 */
+                    str = weechat_infolist_string (infolist, "prefix_chars");
+                    if (str)
+                    {
+                        if (irc_upgrade_current_server->prefix_chars)
+                            free (irc_upgrade_current_server->prefix_chars);
+                        irc_upgrade_current_server->prefix_chars = strdup (str);
+                    }
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
@@ -412,23 +434,88 @@ irc_upgrade_read_cb (void *data,
             case IRC_UPGRADE_TYPE_NICK:
                 if (irc_upgrade_current_server && irc_upgrade_current_channel)
                 {
-                    flags = weechat_infolist_integer (infolist, "flags");
                     ptr_nick = irc_nick_new (irc_upgrade_current_server,
                                              irc_upgrade_current_channel,
                                              weechat_infolist_string (infolist, "name"),
-                                             flags & IRC_NICK_CHANOWNER,
-                                             flags & IRC_NICK_CHANADMIN,
-                                             flags & IRC_NICK_CHANADMIN2,
-                                             flags & IRC_NICK_OP,
-                                             flags & IRC_NICK_HALFOP,
-                                             flags & IRC_NICK_VOICE,
-                                             flags & IRC_NICK_CHANUSER,
-                                             flags & IRC_NICK_AWAY);
+                                             weechat_infolist_string (infolist, "prefixes"),
+                                             weechat_infolist_integer (infolist, "away"));
                     if (ptr_nick)
                     {
                         str = weechat_infolist_string (infolist, "host");
                         if (str)
                             ptr_nick->host = strdup (str);
+
+                        /*
+                         * "flags" is not any more in this infolist (since
+                         * WeeChat 0.3.4), but we read it to keep compatibility
+                         * with old WeeChat versions, on /upgrade)
+                         * We try to restore prefixes with old flags, but
+                         * this is approximation, it's not sure we will
+                         * restore good prefixes here (a /names on channel
+                         * will fix problem if prefixes are wrong).
+                         * Flags were defined in irc-nick.h:
+                         *   #define IRC_NICK_CHANOWNER  1
+                         *   #define IRC_NICK_CHANADMIN  2
+                         *   #define IRC_NICK_CHANADMIN2 4
+                         *   #define IRC_NICK_OP         8
+                         *   #define IRC_NICK_HALFOP     16
+                         *   #define IRC_NICK_VOICE      32
+                         *   #define IRC_NICK_AWAY       64
+                         *   #define IRC_NICK_CHANUSER   128
+                         */
+                        flags = weechat_infolist_integer (infolist, "flags");
+                        if (flags > 0)
+                        {
+                            /* channel owner */
+                            if (flags & 1)
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'q');
+                            }
+                            /* channel admin */
+                            if ((flags & 2) || (flags & 4))
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'a');
+                            }
+                            /* op */
+                            if (flags & 8)
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'o');
+                            }
+                            /* half-op */
+                            if (flags & 16)
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'h');
+                            }
+                            /* voice */
+                            if (flags & 32)
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'v');
+                            }
+                            /* away */
+                            if (flags & 64)
+                            {
+                                irc_nick_set_away (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1);
+                            }
+                            /* channel user */
+                            if (flags & 128)
+                            {
+                                irc_nick_set_mode (irc_upgrade_current_server,
+                                                   irc_upgrade_current_channel,
+                                                   ptr_nick, 1, 'u');
+                            }
+                        }
                     }
                 }
                 break;

@@ -604,7 +604,7 @@ IRC_PROTOCOL_CALLBACK(join)
     }
     
     /* add nick in channel */
-    ptr_nick = irc_nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0, 0, 0);
+    ptr_nick = irc_nick_new (server, ptr_channel, nick, NULL, 0);
     if (ptr_nick)
         ptr_nick->host = strdup (address);
     
@@ -2007,9 +2007,7 @@ IRC_PROTOCOL_CALLBACK(005)
         pos2 = strchr (pos, ' ');
         if (pos2)
             pos2[0] = '\0';
-        if (server->prefix)
-            free (server->prefix);
-        server->prefix = strdup (pos);
+        irc_server_set_prefix_modes_chars (server, pos);
         if (pos2)
             pos2[0] = ' ';
     }
@@ -3497,11 +3495,9 @@ IRC_PROTOCOL_CALLBACK(352)
 
 IRC_PROTOCOL_CALLBACK(353)
 {
-    char *pos_channel, *pos_nick, *pos_host, *nickname;
-    const char *color;
-    int args, i, prefix_found;
-    int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
-    int has_voice, is_chanuser, is_away;
+    char *pos_channel, *pos_nick, *pos_nick_orig, *pos_host, *nickname;
+    char *prefixes;
+    int args, i, away;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     
@@ -3527,84 +3523,36 @@ IRC_PROTOCOL_CALLBACK(353)
     
     ptr_channel = irc_channel_search (server, pos_channel);
     
-    for (i = args; i < argc; i++)
+    if (ptr_channel && ptr_channel->nicks)
     {
-        pos_nick = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
-        
-        is_chanowner = 0;
-        is_chanadmin = 0;
-        is_chanadmin2 = 0;
-        is_op = 0;
-        is_halfop = 0;
-        has_voice = 0;
-        is_chanuser = 0;
-        is_away = 0;
-        prefix_found = 1;
-        
-        while (prefix_found)
+        for (i = args; i < argc; i++)
         {
-            prefix_found = 0;
+            pos_nick = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
+            pos_nick_orig = pos_nick;
             
-            if (irc_mode_get_nick_attr (server, NULL, pos_nick[0]) >= 0)
+            /* skip prefix(es) */
+            while (pos_nick[0]
+                   && (irc_server_get_prefix_char_index (server, pos_nick[0]) >= 0))
             {
-                prefix_found = 1;
-                switch (pos_nick[0])
-                {
-                    case '@': /* op */
-                        is_op = 1;
-                        color = IRC_COLOR_NICK_PREFIX_OP;
-                        break;
-                    case '~': /* channel owner */
-                        is_chanowner = 1;
-                        color = IRC_COLOR_NICK_PREFIX_OP;
-                        break;
-                    case '*': /* channel owner */
-                        is_chanowner = 1;
-                        color = IRC_COLOR_NICK_PREFIX_OP;
-                        break;
-                    case '&': /* channel admin */
-                        is_chanadmin = 1;
-                        color = IRC_COLOR_NICK_PREFIX_OP;
-                        break;
-                    case '!': /* channel admin (2) */
-                        is_chanadmin2 = 1;
-                        color = IRC_COLOR_NICK_PREFIX_OP;
-                        break;
-                    case '%': /* half-op */
-                        is_halfop = 1;
-                        color = IRC_COLOR_NICK_PREFIX_HALFOP;
-                        break;
-                    case '+': /* voice */
-                        has_voice = 1;
-                        color = IRC_COLOR_NICK_PREFIX_VOICE;
-                        break;
-                    case '-': /* channel user */
-                        is_chanuser = 1;
-                        color = IRC_COLOR_NICK_PREFIX_USER;
-                        break;
-                    default:
-                        color = IRC_COLOR_CHAT;
-                        break;
-                }
-            }
-            if (prefix_found)
                 pos_nick++;
-        }
-        if (ptr_channel && ptr_channel->nicks)
-        {
+            }
+            
+            /* extract nick from host */
             pos_host = strchr (pos_nick, '!');
             if (pos_host)
                 nickname = weechat_strndup (pos_nick, pos_host - pos_nick);
             else
                 nickname = strdup (pos_nick);
+            
+            /* add or update nick on channel */
             if (nickname)
             {
                 ptr_nick = irc_nick_search (ptr_channel, nickname);
-                is_away = (ptr_nick && (ptr_nick->flags & IRC_NICK_AWAY)) ? 1 : 0;
-                if (!irc_nick_new (server, ptr_channel, nickname,
-                                   is_chanowner, is_chanadmin, is_chanadmin2,
-                                   is_op, is_halfop, has_voice, is_chanuser,
-                                   is_away))
+                away = (ptr_nick && ptr_nick->away) ? 1 : 0;
+                prefixes = (pos_nick > pos_nick_orig) ?
+                    weechat_strndup (pos_nick_orig, pos_nick - pos_nick_orig) : NULL;
+                if (!irc_nick_new (server, ptr_channel, nickname, prefixes,
+                                   away))
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot create nick \"%s\" "
@@ -3613,6 +3561,8 @@ IRC_PROTOCOL_CALLBACK(353)
                                     IRC_PLUGIN_NAME, nickname, ptr_channel->name);
                 }
                 free (nickname);
+                if (prefixes)
+                    free (prefixes);
             }
         }
     }
@@ -3724,7 +3674,7 @@ IRC_PROTOCOL_CALLBACK(366)
         }
         
         /* display number of nicks, ops, halfops & voices on the channel */
-        irc_nick_count (ptr_channel, &num_nicks, &num_op, &num_halfop,
+        irc_nick_count (server, ptr_channel, &num_nicks, &num_op, &num_halfop,
                         &num_voice, &num_normal);
         weechat_printf_tags (ptr_channel->buffer,
                              irc_protocol_tags (command, "irc_numeric", NULL),

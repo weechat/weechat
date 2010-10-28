@@ -422,7 +422,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     struct t_irc_server *server;
     struct t_irc_channel *channel;
     struct t_irc_nick *ptr_nick;
-    char *buf, prefix[2], str_prefix[64];
+    char *buf, str_prefix[64];
     int length, prefix_color;
     
     /* make C compiler happy */
@@ -449,15 +449,12 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
             ptr_nick = irc_nick_search (channel, server->nick);
             if (ptr_nick)
             {
-                prefix[0] = '\0';
-                prefix[1] = '\0';
-                irc_nick_get_gui_infos (server, ptr_nick,
-                                        &prefix[0], &prefix_color, NULL, NULL);
-                if (prefix[0] != ' ')
+                if (ptr_nick->prefix[0] != ' ')
                 {
+                    prefix_color = irc_nick_get_prefix_color (server, ptr_nick);
                     snprintf (str_prefix, sizeof (str_prefix), "%s%s",
                               weechat_color (weechat_config_string (weechat_config_get (irc_nick_get_prefix_color_name (prefix_color)))),
-                              prefix);
+                              ptr_nick->prefix);
                 }
             }
         }

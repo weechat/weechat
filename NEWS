@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-12
+v0.3.4-dev, 2010-10-28
 
 
 Version 0.3.4 (under dev!)
@@ -9,6 +9,8 @@ Version 0.3.4 (under dev!)
 
 Important release notes:
 
+* if you are using `/upgrade` from a previous release, some nick prefixes can
+  be wrong, so it is recommended to do `/allchan names`.
 * some IRC options have been renamed, before upgrading to this version, note
   value for old options, and set them again with new name:
 ** options moved from 'network' section to servers (with global value, and server

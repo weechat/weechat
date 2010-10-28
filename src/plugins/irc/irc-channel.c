@@ -150,8 +150,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
-    int buffer_created, current_buffer_number, buffer_position;
-    char *buffer_name, str_number[32];;
+    int i, buffer_created, current_buffer_number, buffer_position;
+    char *buffer_name, str_number[32], str_group[32];
+    const char *prefix_modes;
     
     /* alloc memory for new channel */
     if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
@@ -234,21 +235,15 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANOWNER,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANADMIN,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANADMIN2,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OP,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_HALFOP,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_VOICE,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANUSER,
-                                    "weechat.color.nicklist_group", 1);
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_NORMAL,
+        prefix_modes = irc_server_get_prefix_modes (server);
+        for (i = 0; prefix_modes[i]; i++)
+        {
+            snprintf (str_group, sizeof (str_group),
+                      "%03d|%c", i, prefix_modes[i]);
+            weechat_nicklist_add_group (new_buffer, NULL, str_group,
+                                        "weechat.color.nicklist_group", 1);
+        }
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OTHER,
                                     "weechat.color.nicklist_group", 1);
     }
     
@@ -367,7 +362,7 @@ irc_channel_remove_away (struct t_irc_server *server,
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
-            irc_nick_set (server, channel, ptr_nick, 0, IRC_NICK_AWAY);
+            irc_nick_set_away (server, channel, ptr_nick, 0);
         }
     }
 }

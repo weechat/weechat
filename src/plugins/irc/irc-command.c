@@ -4212,7 +4212,7 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                if (IRC_NICK_IS_OP(ptr_nick)
+                if (irc_nick_is_op (ptr_server, ptr_nick)
                     && (strcmp (ptr_nick->name, ptr_server->nick) != 0))
                 {
                     irc_server_sendf (ptr_server,

@@ -88,6 +88,9 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "WeeChat %v", "WeeChat %v",
 };
 
+char *irc_server_prefix_modes_default = "qaohvu";
+char *irc_server_prefix_chars_default = "~&@%+-";
+
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
                                                   /* sending a message       */
 
@@ -385,6 +388,182 @@ irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 }
 
 /*
+ * irc_server_set_prefix_modes_chars: set "prefix_modes" and "prefix_chars" in
+ *                                    server using value of PREFIX in IRC
+ *                                    message 005
+ *                                    for example, if prefix is "(aohv)&@%+",
+ *                                    prefix_modes = "aohv"
+ *                                    prefix_chars = "&@%+"
+ */
+
+void
+irc_server_set_prefix_modes_chars (struct t_irc_server *server,
+                                   const char *prefix)
+{
+    char *pos;
+    int i, length_modes, length_chars;
+    
+    if (!server || !prefix)
+        return;
+    
+    /* free previous values */
+    if (server->prefix_modes)
+    {
+        free (server->prefix_modes);
+        server->prefix_modes = NULL;
+    }
+    if (server->prefix_chars)
+    {
+        free (server->prefix_chars);
+        server->prefix_chars = NULL;
+    }
+    
+    /* assign new values */
+    pos = strchr (prefix, ')');
+    if (pos)
+    {
+        server->prefix_modes = weechat_strndup (prefix + 1,
+                                                pos - prefix - 1);
+        if (server->prefix_modes)
+        {
+            pos++;
+            length_modes = strlen (server->prefix_modes);
+            length_chars = strlen (pos);
+            server->prefix_chars = malloc (length_modes + 1);
+            if (server->prefix_chars)
+            {
+                for (i = 0; i < length_modes; i++)
+                {
+                    server->prefix_chars[i] = (i < length_chars) ? pos[i] : ' ';
+                }
+                server->prefix_chars[length_modes] = '\0';
+            }
+            else
+            {
+                free (server->prefix_modes);
+                server->prefix_modes = NULL;
+            }
+        }
+    }
+}
+
+/*
+ * irc_server_get_prefix_modes: get prefix_modes for server (return default
+ *                              modes if prefix_modes is not set)
+ */
+
+const char *
+irc_server_get_prefix_modes (struct t_irc_server *server)
+{
+    return (server && server->prefix_modes) ?
+        server->prefix_modes : irc_server_prefix_modes_default;
+}
+
+/*
+ * irc_server_get_prefix_chars: get prefix_chars for server (return default
+ *                              chars if prefix_chars is not set)
+ */
+
+const char *
+irc_server_get_prefix_chars (struct t_irc_server *server)
+{
+    return (server && server->prefix_chars) ?
+        server->prefix_chars : irc_server_prefix_chars_default;
+}
+
+/*
+ * irc_server_get_prefix_mode_index: get index of mode in prefix_modes
+ *                                   return -1 if mode does not exist in server
+ */
+
+int
+irc_server_get_prefix_mode_index (struct t_irc_server *server, char mode)
+{
+    const char *prefix_modes;
+    char *pos;
+    
+    if (server)
+    {
+        prefix_modes = irc_server_get_prefix_modes (server);
+        pos = strchr (prefix_modes, mode);
+        if (pos)
+            return pos - prefix_modes;
+    }
+    
+    return -1;
+}
+
+/*
+ * irc_server_get_prefix_char_index: get index of prefix_char in prefix_chars
+ *                                   return -1 if prefix_char does not exist in
+ *                                   server
+ */
+
+int
+irc_server_get_prefix_char_index (struct t_irc_server *server,
+                                  char prefix_char)
+{
+    const char *prefix_chars;
+    char *pos;
+    
+    if (server)
+    {
+        prefix_chars = irc_server_get_prefix_chars (server);
+        pos = strchr (prefix_chars, prefix_char);
+        if (pos)
+            return pos - prefix_chars;
+    }
+    
+    return -1;
+}
+
+/*
+ * irc_server_get_prefix_mode_for_char: get mode for prefix char
+ *                                      return ' ' (space) if prefix char is
+ *                                      not found
+ */
+
+char
+irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
+                                     char prefix_char)
+{
+    const char *prefix_modes;
+    int index;
+    
+    if (server)
+    {
+        prefix_modes = irc_server_get_prefix_modes (server);
+        index = irc_server_get_prefix_char_index (server, prefix_char);
+        if (index >= 0)
+            return prefix_modes[index];
+    }
+    
+    return ' ';
+}
+
+/*
+ * irc_server_get_prefix_mode_for_char: get prefix char for mode
+ *                                      return ' ' (space) if mode is not found
+ */
+
+char
+irc_server_get_prefix_char_for_mode (struct t_irc_server *server, char mode)
+{
+    const char *prefix_chars;
+    int index;
+    
+    if (server)
+    {
+        prefix_chars = irc_server_get_prefix_chars (server);
+        index = irc_server_get_prefix_mode_index (server, mode);
+        if (index >= 0)
+            return prefix_chars[index];
+    }
+    
+    return ' ';
+}
+
+/*
  * irc_server_alloc: allocate a new server and add it to the servers queue
  */
 
@@ -445,7 +624,8 @@ irc_server_alloc (const char *name)
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
     new_server->isupport = NULL;
-    new_server->prefix = NULL;
+    new_server->prefix_modes = NULL;
+    new_server->prefix_chars = NULL;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -894,8 +1074,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->nick_modes);
     if (server->isupport)
         free (server->isupport);
-    if (server->prefix)
-        free (server->prefix);
+    if (server->prefix_modes)
+        free (server->prefix_modes);
+    if (server->prefix_chars)
+        free (server->prefix_chars);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
@@ -3350,10 +3532,15 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         free (server->isupport);
         server->isupport = NULL;
     }
-    if (server->prefix)
+    if (server->prefix_modes)
     {
-        free (server->prefix);
-        server->prefix = NULL;
+        free (server->prefix_modes);
+        server->prefix_modes = NULL;
+    }
+    if (server->prefix_chars)
+    {
+        free (server->prefix_chars);
+        server->prefix_chars = NULL;
     }
     server->is_away = 0;
     server->away_time = 0;
@@ -3972,7 +4159,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "prefix", server->prefix))
+    if (!weechat_infolist_new_var_string (ptr_item, "prefix_modes", server->prefix_modes))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "prefix_chars", server->prefix_chars))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -4266,7 +4455,8 @@ irc_server_print_log ()
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
         weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
-        weechat_log_printf ("  prefix . . . . . . . : '%s'",  ptr_server->prefix);
+        weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
+        weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);

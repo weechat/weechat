@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_IRC_MODE_H
 #define __WEECHAT_IRC_MODE_H 1
 
-#define IRC_MODE_NICK_DEFAULT_PREFIXES_LIST "@%+~*&!-"
-
 struct t_irc_server;
 struct t_irc_channel;
 
@@ -29,9 +27,5 @@ extern int irc_mode_channel_set (struct t_irc_server *server,
                                  struct t_irc_channel *channel,
                                  const char *modes);
 extern void irc_mode_user_set (struct t_irc_server *server, const char *modes);
-extern int irc_mode_get_nick_attr (struct t_irc_server *server, char *mode,
-                                   char prefix);
-extern char irc_mode_get_prefix (struct t_irc_server *server, char mode,
-                                 char default_prefix);
 
 #endif /* __WEECHAT_IRC_MODE_H */
