@@ -910,6 +910,7 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    gui_window_refresh_windows ();
 }
 
 /*
