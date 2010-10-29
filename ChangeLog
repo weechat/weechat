@@ -29,6 +29,7 @@ Version 0.3.4 (under dev!)
   nicklist_group_get_integer, nicklist_group_get_string,
   nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
   nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
+* irc: add new option irc.look.nick_color_force
 * irc: improve nick prefixes, all modes (even unknown) are used with PREFIX
   value from message 005
 * irc: add command redirection (task #6703)

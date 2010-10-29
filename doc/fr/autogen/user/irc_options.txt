@@ -188,6 +188,11 @@
 ** type: entier
 ** valeurs: none, next, near_server (valeur par défaut: `none`)
 
+* *irc.look.nick_color_force*
+** description: `force la couleur pour certains pseudos: le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est: "pseudo1:couleur1;pseudo2:couleur2")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
 * *irc.look.nick_color_stop_chars*
 ** description: `caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple: le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")`
 ** type: chaîne

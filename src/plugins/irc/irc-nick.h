@@ -36,7 +36,7 @@ struct t_irc_nick
     char prefix[2];                 /* current prefix (higher prefix set in  */
                                     /* prefixes)                             */
     int away;                       /* 1 if nick is away                     */
-    const char *color;              /* color for nickname in chat window     */
+    char *color;                    /* color for nickname in chat window     */
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };

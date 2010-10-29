@@ -82,6 +82,8 @@ extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;
+extern struct t_config_option *irc_config_look_nick_color_force;
+extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_ctcp_blocked;
@@ -102,7 +104,6 @@ extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
-extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_raw_messages;
@@ -139,6 +140,8 @@ extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_send_unknown_commands;
 
 extern struct t_config_option *irc_config_server_default[];
+
+extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 
 extern void irc_config_server_change_cb (void *data,
                                          struct t_config_option *option);

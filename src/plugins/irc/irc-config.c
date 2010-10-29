@@ -56,6 +56,8 @@ struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
 struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
+struct t_config_option *irc_config_look_nick_color_force;
+struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_ctcp_blocked;
@@ -76,7 +78,6 @@ struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
-struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_raw_messages;
@@ -121,6 +122,7 @@ struct t_config_option *irc_config_network_send_unknown_commands;
 struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS];
 
 struct t_hook *hook_config_color_nicks_number = NULL;
+struct t_hashtable *irc_config_hashtable_nick_color_force = NULL;
 
 int irc_config_write_temp_servers = 0;
 
@@ -171,7 +173,9 @@ irc_config_compute_nick_colors ()
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                ptr_nick->color = irc_nick_find_color (ptr_nick->name);
+                if (ptr_nick->color)
+                    free (ptr_nick->color);
+                ptr_nick->color = strdup (irc_nick_find_color (ptr_nick->name));
             }
         }
     }
@@ -360,6 +364,54 @@ irc_config_change_look_highlight_tags (void *data,
             }
         }
     }
+}
+
+/*
+ * irc_config_change_look_nick_color_force: called when the "nick color force"
+ *                                          option is changed
+ */
+
+void
+irc_config_change_look_nick_color_force (void *data,
+                                         struct t_config_option *option)
+{
+    char **items, *pos;
+    int num_items, i;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (!irc_config_hashtable_nick_color_force)
+    {
+        irc_config_hashtable_nick_color_force = weechat_hashtable_new (8,
+                                                                       WEECHAT_HASHTABLE_STRING,
+                                                                       WEECHAT_HASHTABLE_STRING,
+                                                                       NULL,
+                                                                       NULL);
+    }
+    else
+        weechat_hashtable_remove_all (irc_config_hashtable_nick_color_force);
+    
+    items = weechat_string_split (weechat_config_string (irc_config_look_nick_color_force),
+                                  ";", 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                weechat_hashtable_set (irc_config_hashtable_nick_color_force,
+                                       items[i],
+                                       pos + 1);
+            }
+        }
+        weechat_string_free_split (items);
+    }
+    
+    irc_config_compute_nick_colors ();
 }
 
 /*
@@ -1591,6 +1643,12 @@ irc_config_init ()
 {
     struct t_config_section *ptr_section;
     
+    irc_config_hashtable_nick_color_force = weechat_hashtable_new (8,
+                                                                   WEECHAT_HASHTABLE_STRING,
+                                                                   WEECHAT_HASHTABLE_STRING,
+                                                                   NULL,
+                                                                   NULL);
+    
     irc_config_file = weechat_config_new (IRC_CONFIG_NAME,
                                           &irc_config_reload, NULL);
     if (!irc_config_file)
@@ -1655,6 +1713,23 @@ irc_config_init ()
         "nick_suffix", "string",
         N_("text to display after nick in chat window"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_nick_color_force = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_color_force", "string",
+        N_("force color for some nicks: hash computed with nickname "
+           "to find color will not be used for these nicks (format is: "
+           "\"nick1:color1;nick2:color2\")"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &irc_config_change_look_nick_color_force, NULL, NULL, NULL);
+    irc_config_look_nick_color_stop_chars = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_color_stop_chars", "string",
+        N_("chars used to stop in nick when computing color with letters of "
+           "nick (at least one char outside this list must be in string before "
+           "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
+           "return color of nick \"|nick\")"),
+        NULL, 0, 0, "_|[", NULL, 0, NULL, NULL,
+        &irc_config_change_look_nick_color_stop_chars, NULL, NULL, NULL);
     irc_config_look_nick_completion_smart = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_completion_smart", "integer",
@@ -1778,15 +1853,6 @@ irc_config_init ()
            "private and that private buffer is not found"),
         "current|server", 0, 0, "current", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    irc_config_look_nick_color_stop_chars = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_color_stop_chars", "string",
-        N_("chars used to stop in nick when computing color with letters of "
-           "nick (at least one char outside this list must be in string before "
-           "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
-           "return color of nick \"|nick\")"),
-        NULL, 0, 0, "_|[", NULL, 0, NULL, NULL,
-        &irc_config_change_look_nick_color_stop_chars, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "integer",
@@ -2120,5 +2186,11 @@ irc_config_free ()
     {
         weechat_unhook (hook_config_color_nicks_number);
         hook_config_color_nicks_number = NULL;
+    }
+
+    if (irc_config_hashtable_nick_color_force)
+    {
+        weechat_hashtable_free (irc_config_hashtable_nick_color_force);
+        irc_config_hashtable_nick_color_force = NULL;
     }
 }
