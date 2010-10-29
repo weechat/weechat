@@ -407,6 +407,24 @@ irc_nick_nicklist_remove (struct t_irc_server *server,
 }
 
 /*
+ * irc_nick_nicklist_set: set a property for nick in buffer nicklist
+ */
+
+void
+irc_nick_nicklist_set (struct t_irc_channel *channel,
+                       struct t_irc_nick *nick,
+                       const char *property, const char *value)
+{
+    struct t_gui_nick *ptr_nick;
+
+    ptr_nick = weechat_nicklist_search_nick (channel->buffer, NULL, nick->name);
+    if (ptr_nick)
+    {
+        weechat_nicklist_nick_set (channel->buffer, ptr_nick, property, value);
+    }
+}
+
+/*
  * irc_nick_get_prefix_color_name: return name of color with a prefix number
  */
 
@@ -700,9 +718,10 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
     {
         if ((is_away && !nick->away) || (!is_away && nick->away))
         {
-            irc_nick_nicklist_remove (server, channel, nick);
             nick->away = is_away;
-            irc_nick_nicklist_add (server, channel, nick);
+            irc_nick_nicklist_set (channel, nick, "color",
+                                   (nick->away) ?
+                                   "weechat.color.nicklist_away" : "bar_fg");
         }
     }
 }
