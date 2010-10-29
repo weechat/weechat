@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-28
+v0.3.4-dev, 2010-10-29
 
 
 Version 0.3.4 (under dev!)
@@ -25,7 +25,10 @@ Version 0.3.4 (under dev!)
   (bug #30759)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
-  info_get_hashtable, hook_hsignal, hook_hsignal_send
+  info_get_hashtable, hook_hsignal, hook_hsignal_send,
+  nicklist_group_get_integer, nicklist_group_get_string,
+  nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
+  nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
 * irc: improve nick prefixes, all modes (even unknown) are used with PREFIX
   value from message 005
 * irc: add command redirection (task #6703)

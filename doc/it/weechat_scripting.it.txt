@@ -294,7 +294,9 @@ Elenco di funzioni nelle API per gli script:
 | lista nick             |
   nicklist_add_group, nicklist_search_group, nicklist_add_nick,
   nicklist_search_nick, nicklist_remove_group, nicklist_remove_nick,
-  nicklist_remove_all
+  nicklist_remove_all, nicklist_group_get_integer, nicklist_group_get_string,
+  nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
+  nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
 | barre                  |
   bar_item_search, bar_item_new, bar_item_update, bar_item_remove, bar_search,
   bar_new, bar_set, bar_update, bar_remove

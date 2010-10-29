@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101023-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101029-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -617,6 +617,30 @@ struct t_weechat_plugin
     void (*nicklist_remove_nick) (struct t_gui_buffer *buffer,
                                   struct t_gui_nick *nick);
     void (*nicklist_remove_all) (struct t_gui_buffer *buffer);
+    int (*nicklist_group_get_integer) (struct t_gui_buffer *buffer,
+                                       struct t_gui_nick_group *group,
+                                       const char *property);
+    const char *(*nicklist_group_get_string) (struct t_gui_buffer *buffer,
+                                              struct t_gui_nick_group *group,
+                                              const char *property);
+    void *(*nicklist_group_get_pointer) (struct t_gui_buffer *buffer,
+                                         struct t_gui_nick_group *group,
+                                         const char *property);
+    void (*nicklist_group_set) (struct t_gui_buffer *buffer,
+                                struct t_gui_nick_group *group,
+                                const char *property, const char *value);
+    int (*nicklist_nick_get_integer) (struct t_gui_buffer *buffer,
+                                      struct t_gui_nick *nick,
+                                      const char *property);
+    const char *(*nicklist_nick_get_string) (struct t_gui_buffer *buffer,
+                                             struct t_gui_nick *nick,
+                                             const char *property);
+    void *(*nicklist_nick_get_pointer) (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick *nick,
+                                        const char *property);
+    void (*nicklist_nick_set) (struct t_gui_buffer *buffer,
+                               struct t_gui_nick *nick,
+                               const char *property, const char *value);
     
     /* bars */
     struct t_gui_bar_item *(*bar_item_search) (const char *name);
@@ -1239,6 +1263,35 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->nicklist_remove_nick(__buffer, __nick)
 #define weechat_nicklist_remove_all(__buffer)                           \
     weechat_plugin->nicklist_remove_all(__buffer)
+#define weechat_nicklist_group_get_integer(__buffer, __group,           \
+                                           __property)                  \
+    weechat_plugin->nicklist_group_get_integer(__buffer, __group,       \
+                                               __property)
+#define weechat_nicklist_group_get_string(__buffer, __group,            \
+                                          __property)                   \
+    weechat_plugin->nicklist_group_get_string(__buffer, __group,        \
+                                              __property)
+#define weechat_nicklist_group_get_pointer(__buffer, __group,           \
+                                           __property)                  \
+    weechat_plugin->nicklist_group_get_pointer(__buffer, __group,       \
+                                               __property)
+#define weechat_nicklist_group_set(__buffer, __group, __property,       \
+                                   __value)                             \
+    weechat_plugin->nicklist_group_set(__buffer, __group, __property,   \
+                                       __value)
+#define weechat_nicklist_nick_get_integer(__buffer, __nick, __property) \
+    weechat_plugin->nicklist_nick_get_integer(__buffer, __nick,         \
+                                              __property)
+#define weechat_nicklist_nick_get_string(__buffer, __nick, __property)  \
+    weechat_plugin->nicklist_nick_get_string(__buffer, __nick,          \
+                                             __property)
+#define weechat_nicklist_nick_get_pointer(__buffer, __nick, __property) \
+    weechat_plugin->nicklist_nick_get_pointer(__buffer, __nick,         \
+                                              __property)
+#define weechat_nicklist_nick_set(__buffer, __nick, __property,         \
+                                  __value)                              \
+    weechat_plugin->nicklist_nick_set(__buffer, __nick, __property,     \
+                                      __value)
 
 /* bars */
 #define weechat_bar_item_search(__name)                                 \

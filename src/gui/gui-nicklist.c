@@ -684,6 +684,238 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_nicklist_group_get_integer: get a group property as integer
+ */
+
+int
+gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
+                                struct t_gui_nick_group *group,
+                                const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (group && property)
+    {
+        if (string_strcasecmp (property, "visible") == 0)
+            return group->visible;
+        else if (string_strcasecmp (property, "level") == 0)
+            return group->level;
+    }
+    
+    return 0;
+}
+
+/*
+ * gui_nicklist_group_get_string: get a group property as string
+ */
+
+const char *
+gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
+                               struct t_gui_nick_group *group,
+                               const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (group && property)
+    {
+        if (string_strcasecmp (property, "name") == 0)
+            return group->name;
+        else if (string_strcasecmp (property, "color") == 0)
+            return group->color;
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_nicklist_group_get_pointer: get a group property as pointer
+ */
+
+void *
+gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
+                                struct t_gui_nick_group *group,
+                                const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (group && property)
+    {
+        if (string_strcasecmp (property, "parent") == 0)
+            return group->parent;
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_nicklist_group_set: set a group property (string)
+ */
+
+void
+gui_nicklist_group_set (struct t_gui_buffer *buffer,
+                        struct t_gui_nick_group *group,
+                        const char *property, const char *value)
+{
+    long number;
+    char *error;
+    int group_changed;
+    
+    if (!buffer || !group || !property || !value)
+        return;
+    
+    group_changed = 0;
+    
+    if (string_strcasecmp (property, "color") == 0)
+    {
+        if (group->color)
+            free (group->color);
+        group->color = (value[0]) ? strdup (value) : NULL;
+        group_changed = 1;
+    }
+    else if (string_strcasecmp (property, "visible") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            group->visible = (number) ? 1 : 0;
+        group_changed = 1;
+    }
+    
+    if (group_changed)
+    {
+        gui_nicklist_send_signal ("nicklist_group_changed", buffer,
+                                  group->name);
+    }
+}
+
+/*
+ * gui_nicklist_nick_get_integer: get a nick property as integer
+ */
+
+int
+gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
+                               struct t_gui_nick *nick,
+                               const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (nick && property)
+    {
+        if (string_strcasecmp (property, "visible") == 0)
+            return nick->visible;
+    }
+    
+    return 0;
+}
+
+/*
+ * gui_nicklist_nick_get_string: get a nick property as string
+ */
+
+const char *
+gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
+                              struct t_gui_nick *nick,
+                              const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (nick && property)
+    {
+        if (string_strcasecmp (property, "name") == 0)
+            return nick->name;
+        else if (string_strcasecmp (property, "color") == 0)
+            return nick->color;
+        else if (string_strcasecmp (property, "prefix") == 0)
+            return nick->prefix;
+        else if (string_strcasecmp (property, "prefix_color") == 0)
+            return nick->prefix_color;
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_nicklist_nick_get_pointer: get a nick property as pointer
+ */
+
+void *
+gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
+                               struct t_gui_nick *nick,
+                               const char *property)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    
+    if (nick && property)
+    {
+        if (string_strcasecmp (property, "group") == 0)
+            return nick->group;
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_nicklist_nick_set: set a nick property (string)
+ */
+
+void
+gui_nicklist_nick_set (struct t_gui_buffer *buffer,
+                       struct t_gui_nick *nick,
+                       const char *property, const char *value)
+{
+    long number;
+    char *error;
+    int nick_changed;
+    
+    if (!buffer || !nick || !property || !value)
+        return;
+    
+    nick_changed = 0;
+    
+    if (string_strcasecmp (property, "color") == 0)
+    {
+        if (nick->color)
+            free (nick->color);
+        nick->color = (value[0]) ? strdup (value) : NULL;
+        nick_changed = 1;
+    }
+    else if (string_strcasecmp (property, "prefix") == 0)
+    {
+        if (nick->prefix)
+            free (nick->prefix);
+        nick->prefix = (value[0]) ? strdup (value) : NULL;
+        nick_changed = 1;
+    }
+    else if (string_strcasecmp (property, "prefix_color") == 0)
+    {
+        if (nick->prefix_color)
+            free (nick->prefix_color);
+        nick->prefix_color = (value[0]) ? strdup (value) : NULL;
+        nick_changed = 1;
+    }
+    else if (string_strcasecmp (property, "visible") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            nick->visible = (number) ? 1 : 0;
+        nick_changed = 1;
+    }
+    
+    if (nick_changed)
+    {
+        gui_nicklist_send_signal ("nicklist_nick_changed", buffer,
+                                  nick->name);
+    }
+}
+
+/*
  * gui_nicklist_add_group_to_infolist: add a group in an infolist
  *                                     return 1 if ok, 0 if error
  */

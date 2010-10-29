@@ -81,6 +81,33 @@ extern void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
 extern char *gui_nicklist_get_group_start (const char *name);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *group);
+
+
+
+extern int gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
+                                           struct t_gui_nick_group *group,
+                                           const char *property);
+extern const char *gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
+                                                  struct t_gui_nick_group *group,
+                                                  const char *property);
+extern void *gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
+                                             struct t_gui_nick_group *group,
+                                             const char *property);
+extern void gui_nicklist_group_set (struct t_gui_buffer *buffer,
+                                    struct t_gui_nick_group *group,
+                                    const char *property, const char *value);
+extern int gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
+                                          struct t_gui_nick *nick,
+                                          const char *property);
+extern const char *gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
+                                                 struct t_gui_nick *nick,
+                                                 const char *property);
+extern void *gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
+                                            struct t_gui_nick *nick,
+                                            const char *property);
+extern void gui_nicklist_nick_set (struct t_gui_buffer *buffer,
+                                   struct t_gui_nick *nick,
+                                   const char *property, const char *value);
 extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_buffer *buffer,
                                          const char *name);

@@ -5129,7 +5129,7 @@ weechat_tcl_api_buffer_get_pointer (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    if (objc < 2)
+    if (objc < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "buffer_get_pointer");
         TCL_RETURN_EMPTY;
@@ -5336,7 +5336,7 @@ weechat_tcl_api_window_get_pointer (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_EMPTY;
     }
     
-    if (objc < 2)
+    if (objc < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "window_get_pointer");
         TCL_RETURN_EMPTY;
@@ -5372,7 +5372,7 @@ weechat_tcl_api_window_set_title (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_ERROR;
     }
     
-    if (objc < 1)
+    if (objc < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "window_set_title");
         TCL_RETURN_ERROR;
@@ -5479,7 +5479,7 @@ weechat_tcl_api_nicklist_add_nick (ClientData clientData, Tcl_Interp *interp,
                                    int objc, Tcl_Obj *CONST objv[])
 {
     Tcl_Obj *objp;
-    char *prefix, *result, *buffer, *group, *name, *color, *prefix_color;
+    char *result, *buffer, *group, *name, *color, *prefix, *prefix_color;
     int i, visible;
     
     /* make C compiler happy */
@@ -5658,6 +5658,324 @@ weechat_tcl_api_nicklist_remove_all (ClientData clientData, Tcl_Interp *interp,
     }
     
     weechat_nicklist_remove_all (script_str2ptr (Tcl_GetStringFromObj (objv[1], &i))); /* buffer */
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_nicklist_group_get_integer: get a group property as integer
+ */
+
+static int
+weechat_tcl_api_nicklist_group_get_integer (ClientData clientData,
+                                            Tcl_Interp *interp,
+                                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *group, *property;
+    int result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        TCL_RETURN_INT(-1);
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        TCL_RETURN_INT(-1);
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    group = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_nicklist_group_get_integer (script_str2ptr (buffer),
+                                                 script_str2ptr (group),
+                                                 property);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_group_get_string: get a group property as string
+ */
+
+static int
+weechat_tcl_api_nicklist_group_get_string (ClientData clientData,
+                                           Tcl_Interp *interp,
+                                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *group, *property;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    group = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_nicklist_group_get_string (script_str2ptr (buffer),
+                                                script_str2ptr (group),
+                                                property);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_group_get_pointer: get a group property as pointer
+ */
+
+static int
+weechat_tcl_api_nicklist_group_get_pointer (ClientData clientData,
+                                            Tcl_Interp *interp,
+                                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *group, *property, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    group = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (buffer),
+                                                                 script_str2ptr (group),
+                                                                 property));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_group_set: set a group property
+ */
+
+static int
+weechat_tcl_api_nicklist_group_set (ClientData clientData, Tcl_Interp *interp,
+                                    int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *group, *property, *value;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 5)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        TCL_RETURN_ERROR;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    group = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    value = Tcl_GetStringFromObj (objv[4], &i);
+    
+    weechat_nicklist_group_set (script_str2ptr (buffer),
+                                script_str2ptr (group),
+                                property,
+                                value);
+    
+    TCL_RETURN_OK;
+}
+
+/*
+ * weechat_tcl_api_nicklist_nick_get_integer: get a nick property as integer
+ */
+
+static int
+weechat_tcl_api_nicklist_nick_get_integer (ClientData clientData,
+                                           Tcl_Interp *interp,
+                                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *nick, *property;
+    int result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        TCL_RETURN_INT(-1);
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        TCL_RETURN_INT(-1);
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    nick = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_nicklist_nick_get_integer (script_str2ptr (buffer),
+                                                script_str2ptr (nick),
+                                                property);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_nick_get_string: get a nick property as string
+ */
+
+static int
+weechat_tcl_api_nicklist_nick_get_string (ClientData clientData,
+                                          Tcl_Interp *interp,
+                                          int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *nick, *property;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    nick = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_nicklist_nick_get_string (script_str2ptr (buffer),
+                                               script_str2ptr (nick),
+                                               property);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_nick_get_pointer: get a nick property as pointer
+ */
+
+static int
+weechat_tcl_api_nicklist_nick_get_pointer (ClientData clientData,
+                                           Tcl_Interp *interp,
+                                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *nick, *property, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    nick = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (buffer),
+                                                                script_str2ptr (nick),
+                                                                property));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_nicklist_nick_set: set a nick property
+ */
+
+static int
+weechat_tcl_api_nicklist_nick_set (ClientData clientData, Tcl_Interp *interp,
+                                   int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *nick, *property, *value;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 5)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        TCL_RETURN_ERROR;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    nick = Tcl_GetStringFromObj (objv[2], &i);
+    property = Tcl_GetStringFromObj (objv[3], &i);
+    value = Tcl_GetStringFromObj (objv[4], &i);
+    
+    weechat_nicklist_nick_set (script_str2ptr (buffer),
+                               script_str2ptr (nick),
+                               property,
+                               value);
     
     TCL_RETURN_OK;
 }
@@ -6190,7 +6508,7 @@ weechat_tcl_api_infolist_new_item (ClientData clientData, Tcl_Interp *interp,
         TCL_RETURN_INT(0);
     }
     
-    if (objc < 1)
+    if (objc < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_item");
         TCL_RETURN_INT(0);
@@ -6223,7 +6541,7 @@ weechat_tcl_api_infolist_new_var_integer (ClientData clientData, Tcl_Interp *int
         TCL_RETURN_INT(0);
     }
     
-    if (objc < 3)
+    if (objc < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_integer");
         TCL_RETURN_INT(0);
@@ -6264,7 +6582,7 @@ weechat_tcl_api_infolist_new_var_string (ClientData clientData, Tcl_Interp *inte
         TCL_RETURN_INT(0);
     }
     
-    if (objc < 3)
+    if (objc < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_string");
         TCL_RETURN_INT(0);
@@ -6298,7 +6616,7 @@ weechat_tcl_api_infolist_new_var_pointer (ClientData clientData, Tcl_Interp *int
         TCL_RETURN_INT(0);
     }
     
-    if (objc < 3)
+    if (objc < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_pointer");
         TCL_RETURN_INT(0);
@@ -6332,7 +6650,7 @@ weechat_tcl_api_infolist_new_var_time (ClientData clientData, Tcl_Interp *interp
         TCL_RETURN_INT(0);
     }
     
-    if (objc < 3)
+    if (objc < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "infolist_new_var_time");
         TCL_RETURN_INT(0);
@@ -7239,6 +7557,22 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_nicklist_remove_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_all",
                           weechat_tcl_api_nicklist_remove_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_integer",
+                          weechat_tcl_api_nicklist_group_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_string",
+                          weechat_tcl_api_nicklist_group_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_pointer",
+                          weechat_tcl_api_nicklist_group_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_set",
+                          weechat_tcl_api_nicklist_group_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_integer",
+                          weechat_tcl_api_nicklist_nick_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_string",
+                          weechat_tcl_api_nicklist_nick_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_pointer",
+                          weechat_tcl_api_nicklist_nick_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_set",
+                          weechat_tcl_api_nicklist_nick_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::bar_item_search",
                           weechat_tcl_api_bar_item_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::bar_item_new",

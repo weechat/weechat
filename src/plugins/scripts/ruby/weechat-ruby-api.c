@@ -5527,7 +5527,7 @@ weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
     c_property = StringValuePtr (property);
     
     result = weechat_buffer_get_string (script_str2ptr (c_buffer),
-                                       c_property);
+                                        c_property);
     
     RUBY_RETURN_STRING(result);
 }
@@ -6129,6 +6129,348 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
     c_buffer = StringValuePtr (buffer);
     
     weechat_nicklist_remove_all (script_str2ptr (c_buffer));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_nicklist_group_get_integer: get a group property as integer
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_group_get_integer (VALUE class, VALUE buffer,
+                                             VALUE group, VALUE property)
+{
+    char *c_buffer, *c_group, *c_property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (group, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_group = StringValuePtr (group);
+    c_property = StringValuePtr (property);
+    
+    value = weechat_nicklist_group_get_integer (script_str2ptr (c_buffer),
+                                                script_str2ptr (c_group),
+                                                c_property);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_nicklist_group_get_string: get a group property as string
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_group_get_string (VALUE class, VALUE buffer,
+                                            VALUE group, VALUE property)
+{
+    char *c_buffer, *c_group, *c_property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (group, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_group = StringValuePtr (group);
+    c_property = StringValuePtr (property);
+    
+    result = weechat_nicklist_group_get_string (script_str2ptr (c_buffer),
+                                                script_str2ptr (c_group),
+                                                c_property);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_nicklist_group_get_pointer: get a group property as pointer
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_group_get_pointer (VALUE class, VALUE buffer,
+                                             VALUE group, VALUE property)
+{
+    char *c_buffer, *c_group, *c_property, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (buffer) || NIL_P (group) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (group, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_group = StringValuePtr (group);
+    c_property = StringValuePtr (property);
+    
+    result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (c_buffer),
+                                                                 script_str2ptr (c_group),
+                                                                 c_property));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_nicklist_group_set: set a group property
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_group_set (VALUE class, VALUE buffer, VALUE group,
+                                     VALUE property, VALUE value)
+{
+    char *c_buffer, *c_group, *c_property, *c_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_group = NULL;
+    c_property = NULL;
+    c_value = NULL;
+    
+    if (NIL_P (buffer) || NIL_P (group) || NIL_P (property) || NIL_P (value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (group, T_STRING);
+    Check_Type (property, T_STRING);
+    Check_Type (value, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_group = StringValuePtr (group);
+    c_property = StringValuePtr (property);
+    c_value = StringValuePtr (value);
+    
+    weechat_nicklist_group_set (script_str2ptr (c_buffer),
+                                script_str2ptr (c_group),
+                                c_property,
+                                c_value);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_nicklist_nick_get_integer: get a nick property as integer
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_nick_get_integer (VALUE class, VALUE buffer,
+                                            VALUE nick, VALUE property)
+{
+    char *c_buffer, *c_nick, *c_property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (nick, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_nick = StringValuePtr (nick);
+    c_property = StringValuePtr (property);
+    
+    value = weechat_nicklist_nick_get_integer (script_str2ptr (c_buffer),
+                                               script_str2ptr (c_nick),
+                                               c_property);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_nicklist_nick_get_string: get a nick property as string
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_nick_get_string (VALUE class, VALUE buffer,
+                                           VALUE nick, VALUE property)
+{
+    char *c_buffer, *c_nick, *c_property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (nick, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_nick = StringValuePtr (nick);
+    c_property = StringValuePtr (property);
+    
+    result = weechat_nicklist_nick_get_string (script_str2ptr (c_buffer),
+                                               script_str2ptr (c_nick),
+                                               c_property);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_nicklist_nick_get_pointer: get a nick property as pointer
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_nick_get_pointer (VALUE class, VALUE buffer,
+                                            VALUE nick, VALUE property)
+{
+    char *c_buffer, *c_nick, *c_property, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (nick, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_nick = StringValuePtr (nick);
+    c_property = StringValuePtr (property);
+    
+    result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (c_buffer),
+                                                                script_str2ptr (c_nick),
+                                                                c_property));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_nicklist_nick_set: set a nick property
+ */
+
+static VALUE
+weechat_ruby_api_nicklist_nick_set (VALUE class, VALUE buffer, VALUE nick,
+                                    VALUE property, VALUE value)
+{
+    char *c_buffer, *c_nick, *c_property, *c_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_nick = NULL;
+    c_property = NULL;
+    c_value = NULL;
+    
+    if (NIL_P (buffer) || NIL_P (nick) || NIL_P (property) || NIL_P (value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (nick, T_STRING);
+    Check_Type (property, T_STRING);
+    Check_Type (value, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    c_nick = StringValuePtr (nick);
+    c_property = StringValuePtr (property);
+    c_value = StringValuePtr (value);
+    
+    weechat_nicklist_nick_set (script_str2ptr (c_buffer),
+                               script_str2ptr (c_nick),
+                               c_property,
+                               c_value);
     
     RUBY_RETURN_OK;
 }
@@ -7649,6 +7991,14 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_group", &weechat_ruby_api_nicklist_remove_group, 2);
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_nick", &weechat_ruby_api_nicklist_remove_nick, 2);
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_all", &weechat_ruby_api_nicklist_remove_all, 1);
+    rb_define_module_function (ruby_mWeechat, "nicklist_group_get_integer", &weechat_ruby_api_nicklist_group_get_integer, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_group_get_string", &weechat_ruby_api_nicklist_group_get_string, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_group_get_pointer", &weechat_ruby_api_nicklist_group_get_pointer, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_group_set", &weechat_ruby_api_nicklist_group_set, 4);
+    rb_define_module_function (ruby_mWeechat, "nicklist_nick_get_integer", &weechat_ruby_api_nicklist_nick_get_integer, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_nick_get_string", &weechat_ruby_api_nicklist_nick_get_string, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_nick_get_pointer", &weechat_ruby_api_nicklist_nick_get_pointer, 3);
+    rb_define_module_function (ruby_mWeechat, "nicklist_nick_set", &weechat_ruby_api_nicklist_nick_set, 4);
     rb_define_module_function (ruby_mWeechat, "bar_item_search", &weechat_ruby_api_bar_item_search, 1);
     rb_define_module_function (ruby_mWeechat, "bar_item_new", &weechat_ruby_api_bar_item_new, 3);
     rb_define_module_function (ruby_mWeechat, "bar_item_update", &weechat_ruby_api_bar_item_update, 1);

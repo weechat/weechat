@@ -8126,8 +8126,8 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-const char *weechat_buffer_pointer (struct t_gui_buffer *buffer,
-                                    const char *property);
+void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
+                              const char *property);
 ----------------------------------------
 
 Argomenti:
@@ -8972,6 +8972,438 @@ weechat.nicklist_remove_all(buffer)
 
 # esempio
 weechat.nicklist_remove_all(my_buffer)
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_group_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return integer value of a group property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick_group *group,
+                                        const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'group': group pointer
+* 'property': property name:
+** 'visible': 1 if group is visible, otherwise 0
+** 'level': group level (root is 0)
+
+Return value:
+
+* integer value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_integer(buffer, group, property)
+
+# example
+visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_group_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return string value of a group property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
+                                               struct t_gui_nick_group *group,
+                                               const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'group': group pointer
+* 'property': property name:
+** 'name': name of group
+** 'color': group color in nicklist
+
+Return value:
+
+* string value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_string(buffer, group, property)
+
+# example
+color = weechat.nicklist_group_get_string(buffer, group, "color")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_group_get_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return pointer value of a group property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
+                                          struct t_gui_nick_group *group,
+                                          const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'group': group pointer
+* 'property': property name:
+** 'parent': pointer to parent group
+
+Return value:
+
+* pointer value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, group, "parent");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_pointer(buffer, group, property)
+
+# example
+parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_group_set
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Set string value of a group property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
+                                 struct t_gui_nick_group *group,
+                                 const char *property,
+                                 const char *value);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'group': group pointer
+* 'property' and 'value': property name, with its value:
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Name | Value | Description
+
+| color | WeeChat color option name |
+  see argument "color" of function
+  <<_weechat_nicklist_add_group,weechat_nicklist_add_group>>
+
+| visible | "0", "1" |
+  "0" = hidden group, "1" = visible group
+|========================================
+
+C examples:
+
+[source,C]
+----------------------------------------
+/* change group color to "bar_fg" */
+weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
+
+/* change group color to yellow */
+weechat_nicklist_group_set (buffer, group, "color", "yellow");
+
+/* hide group in nicklist */
+weechat_nicklist_group_set (buffer, group, "visible", "0");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.nicklist_group_set(buffer, group, property, value)
+
+# examples
+
+# change group color to "bar_fg"
+weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
+
+# change group color to yellow
+weechat.nicklist_group_set(buffer, group, "color", "yellow")
+
+# hide group in nicklist
+weechat.nicklist_group_set(buffer, group, "visible", "0")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_nick_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return integer value of a nick property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
+                                       struct t_gui_nick *nick,
+                                       const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'nick': nick pointer
+* 'property': property name:
+** 'visible': 1 if nick is visible, otherwise 0
+
+Return value:
+
+* integer value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_integer(buffer, nick, property)
+
+# example
+visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_nick_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return string value of a nick property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
+                                              struct t_gui_nick *nick,
+                                              const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'nick': nick pointer
+* 'property': property name:
+** 'name': name of nick
+** 'color': nick color in nicklist
+** 'prefix': prefix of nick
+** 'prefix_color': prefix color in nicklist
+
+Return value:
+
+* string value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_string(buffer, nick, property)
+
+# example
+color = weechat.nicklist_nick_get_string(buffer, nick, "color")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_nick_get_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Return pointer value of a nick property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
+                                         struct t_gui_nick *nick,
+                                         const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'nick': nick pointer
+* 'property': property name:
+** 'group': pointer to group containing this nick
+
+Return value:
+
+* pointer value of property
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick, "group");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
+
+# example
+group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_nicklist_nick_set
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Set string value of a nick property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
+                                struct t_gui_nick *nick,
+                                const char *property,
+                                const char *value);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'nick': nick pointer
+* 'property' and 'value': property name, with its value:
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Name | Value | Description
+
+| color | WeeChat color option name |
+  see argument "color" of function
+  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+
+| prefix | any string |
+  prefix of nick
+
+| prefix_color | WeeChat color option name |
+  see argument "prefix_color" of function
+  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+
+| visible | "0", "1" |
+  "0" = hidden nick, "1" = visible nick
+|========================================
+
+C examples:
+
+[source,C]
+----------------------------------------
+/* change nick color to cyan */
+weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
+
+/* change prefix to "+" */
+weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
+
+/* change prefix color to yellow */
+weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
+
+/* hide nick in nicklist */
+weechat_nicklist_nick_set (buffer, nick, "visible", "0");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.nicklist_nick_set(buffer, nick, property, value)
+
+# examples
+
+# change nick color to cyan
+weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
+
+# change prefix to "+"
+weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
+
+# change prefix color to yellow
+weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
+
+# hide nick in nicklist
+weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----------------------------------------
 
 [[bars]]

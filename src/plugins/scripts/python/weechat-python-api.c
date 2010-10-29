@@ -5331,6 +5331,296 @@ weechat_python_api_nicklist_remove_all (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_nicklist_group_get_integer get a group property as integer
+ */
+
+static PyObject *
+weechat_python_api_nicklist_group_get_integer (PyObject *self, PyObject *args)
+{
+    char *buffer, *group, *property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    buffer = NULL;
+    group = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &group, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    value = weechat_nicklist_group_get_integer (script_str2ptr (buffer),
+                                                script_str2ptr (group),
+                                                property);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_nicklist_group_get_string: get a group property as string
+ */
+
+static PyObject *
+weechat_python_api_nicklist_group_get_string (PyObject *self, PyObject *args)
+{
+    char *buffer, *group, *property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    group = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &group, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_nicklist_group_get_string (script_str2ptr (buffer),
+                                                script_str2ptr (group),
+                                                property);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_nicklist_group_get_pointer: get a group property as pointer
+ */
+
+static PyObject *
+weechat_python_api_nicklist_group_get_pointer (PyObject *self, PyObject *args)
+{
+    char *buffer, *group, *property, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    buffer = NULL;
+    group = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &group, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (buffer),
+                                                                 script_str2ptr (group),
+                                                                 property));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_nicklist_group_set: set a group property
+ */
+
+static PyObject *
+weechat_python_api_nicklist_group_set (PyObject *self, PyObject *args)
+{
+    char *buffer, *group, *property, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    group = NULL;
+    property = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ssss", &buffer, &group, &property, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_nicklist_group_set (script_str2ptr (buffer),
+                                script_str2ptr (group),
+                                property,
+                                value);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_nicklist_nick_get_integer get a nick property as integer
+ */
+
+static PyObject *
+weechat_python_api_nicklist_nick_get_integer (PyObject *self, PyObject *args)
+{
+    char *buffer, *nick, *property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    buffer = NULL;
+    nick = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &nick, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    value = weechat_nicklist_nick_get_integer (script_str2ptr (buffer),
+                                               script_str2ptr (nick),
+                                               property);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_nicklist_nick_get_string: get a nick property as string
+ */
+
+static PyObject *
+weechat_python_api_nicklist_nick_get_string (PyObject *self, PyObject *args)
+{
+    char *buffer, *nick, *property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    nick = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &nick, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_nicklist_nick_get_string (script_str2ptr (buffer),
+                                               script_str2ptr (nick),
+                                               property);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_nicklist_nick_get_pointer: get a nick property as pointer
+ */
+
+static PyObject *
+weechat_python_api_nicklist_nick_get_pointer (PyObject *self, PyObject *args)
+{
+    char *buffer, *nick, *property, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    buffer = NULL;
+    nick = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &buffer, &nick, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (buffer),
+                                                                script_str2ptr (nick),
+                                                                property));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_nicklist_nick_set: set a nick property
+ */
+
+static PyObject *
+weechat_python_api_nicklist_nick_set (PyObject *self, PyObject *args)
+{
+    char *buffer, *nick, *property, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    nick = NULL;
+    property = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ssss", &buffer, &nick, &property, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_nicklist_nick_set (script_str2ptr (buffer),
+                               script_str2ptr (nick),
+                               property,
+                               value);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_bar_item_search: search a bar item
  */
 
@@ -6655,6 +6945,14 @@ PyMethodDef weechat_python_funcs[] =
     { "nicklist_remove_group", &weechat_python_api_nicklist_remove_group, METH_VARARGS, "" },
     { "nicklist_remove_nick", &weechat_python_api_nicklist_remove_nick, METH_VARARGS, "" },
     { "nicklist_remove_all", &weechat_python_api_nicklist_remove_all, METH_VARARGS, "" },
+    { "nicklist_group_get_integer", &weechat_python_api_nicklist_group_get_integer, METH_VARARGS, "" },
+    { "nicklist_group_get_string", &weechat_python_api_nicklist_group_get_string, METH_VARARGS, "" },
+    { "nicklist_group_get_pointer", &weechat_python_api_nicklist_group_get_pointer, METH_VARARGS, "" },
+    { "nicklist_group_set", &weechat_python_api_nicklist_group_set, METH_VARARGS, "" },
+    { "nicklist_nick_get_integer", &weechat_python_api_nicklist_nick_get_integer, METH_VARARGS, "" },
+    { "nicklist_nick_get_string", &weechat_python_api_nicklist_nick_get_string, METH_VARARGS, "" },
+    { "nicklist_nick_get_pointer", &weechat_python_api_nicklist_nick_get_pointer, METH_VARARGS, "" },
+    { "nicklist_nick_set", &weechat_python_api_nicklist_nick_set, METH_VARARGS, "" },
     { "bar_item_search", &weechat_python_api_bar_item_search, METH_VARARGS, "" },
     { "bar_item_new", &weechat_python_api_bar_item_new, METH_VARARGS, "" },
     { "bar_item_update", &weechat_python_api_bar_item_update, METH_VARARGS, "" },

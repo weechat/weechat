@@ -5061,6 +5061,294 @@ XS (XS_weechat_api_nicklist_remove_all)
 }
 
 /*
+ * weechat::nicklist_group_get_integer: get a group property as integer
+ */
+
+XS (XS_weechat_api_nicklist_group_get_integer)
+{
+    char *buffer, *group, *property;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    group = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    value = weechat_nicklist_group_get_integer (script_str2ptr (buffer),
+                                                script_str2ptr (group),
+                                                property);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::nicklist_group_get_string: get a group property as string
+ */
+
+XS (XS_weechat_api_nicklist_group_get_string)
+{
+    char *buffer, *group, *property;
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    group = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    result = weechat_nicklist_group_get_string (script_str2ptr (buffer),
+                                                script_str2ptr (group),
+                                                property);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::nicklist_group_get_pointer: get a group property as pointer
+ */
+
+XS (XS_weechat_api_nicklist_group_get_pointer)
+{
+    char *result, *buffer, *group, *property;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    group = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (buffer),
+                                                                 script_str2ptr (group),
+                                                                 property));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::nicklist_group_set: set a group property
+ */
+
+XS (XS_weechat_api_nicklist_group_set)
+{
+    char *buffer, *group, *property, *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_group_set");
+        PERL_RETURN_ERROR;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    group = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    value = SvPV (ST (3), PL_na);
+    
+    weechat_nicklist_group_set (script_str2ptr (buffer),
+                                script_str2ptr (group),
+                                property,
+                                value);
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::nicklist_nick_get_integer: get a nick property as integer
+ */
+
+XS (XS_weechat_api_nicklist_nick_get_integer)
+{
+    char *buffer, *nick, *property;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    nick = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    value = weechat_nicklist_nick_get_integer (script_str2ptr (buffer),
+                                               script_str2ptr (nick),
+                                               property);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::nicklist_nick_get_string: get a nick property as string
+ */
+
+XS (XS_weechat_api_nicklist_nick_get_string)
+{
+    char *buffer, *nick, *property;
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    nick = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    result = weechat_nicklist_nick_get_string (script_str2ptr (buffer),
+                                               script_str2ptr (nick),
+                                               property);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::nicklist_nick_get_pointer: get a nick property as pointer
+ */
+
+XS (XS_weechat_api_nicklist_nick_get_pointer)
+{
+    char *result, *buffer, *nick, *property;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    nick = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (buffer),
+                                                                script_str2ptr (nick),
+                                                                property));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::nicklist_nick_set: set a nick property
+ */
+
+XS (XS_weechat_api_nicklist_nick_set)
+{
+    char *buffer, *nick, *property, *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "nicklist_nick_set");
+        PERL_RETURN_ERROR;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    nick = SvPV (ST (1), PL_na);
+    property = SvPV (ST (2), PL_na);
+    value = SvPV (ST (3), PL_na);
+    
+    weechat_nicklist_nick_set (script_str2ptr (buffer),
+                               script_str2ptr (nick),
+                               property,
+                               value);
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::bar_item_search: search a bar item
  */
 
@@ -6328,6 +6616,14 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::nicklist_remove_group", XS_weechat_api_nicklist_remove_group, "weechat");
     newXS ("weechat::nicklist_remove_nick", XS_weechat_api_nicklist_remove_nick, "weechat");
     newXS ("weechat::nicklist_remove_all", XS_weechat_api_nicklist_remove_all, "weechat");
+    newXS ("weechat::nicklist_group_get_integer", XS_weechat_api_nicklist_group_get_integer, "weechat");
+    newXS ("weechat::nicklist_group_get_string", XS_weechat_api_nicklist_group_get_string, "weechat");
+    newXS ("weechat::nicklist_group_get_pointer", XS_weechat_api_nicklist_group_get_pointer, "weechat");
+    newXS ("weechat::nicklist_group_set", XS_weechat_api_nicklist_group_set, "weechat");
+    newXS ("weechat::nicklist_nick_get_integer", XS_weechat_api_nicklist_nick_get_integer, "weechat");
+    newXS ("weechat::nicklist_nick_get_string", XS_weechat_api_nicklist_nick_get_string, "weechat");
+    newXS ("weechat::nicklist_nick_get_pointer", XS_weechat_api_nicklist_nick_get_pointer, "weechat");
+    newXS ("weechat::nicklist_nick_set", XS_weechat_api_nicklist_nick_set, "weechat");
     newXS ("weechat::bar_item_search", XS_weechat_api_bar_item_search, "weechat");
     newXS ("weechat::bar_item_new", XS_weechat_api_bar_item_new, "weechat");
     newXS ("weechat::bar_item_update", XS_weechat_api_bar_item_update, "weechat");

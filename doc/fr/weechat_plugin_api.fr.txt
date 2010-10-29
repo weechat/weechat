@@ -809,7 +809,7 @@ char *weechat_string_expand_home (const char *path);
 
 Paramètres :
 
-* 'path': chemin
+* 'path' : chemin
 
 Valeur de retour :
 
@@ -1295,9 +1295,9 @@ void weechat_string_encode_base64 (const char *from, int length, char *to);
 
 Paramètres :
 
-* 'from': chaîne à encoder
-* 'length': longueur de chaîne à encoder (par exemple `strlen(from)`)
-* 'to': pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
+* 'from' : chaîne à encoder
+* 'length' : longueur de chaîne à encoder (par exemple `strlen(from)`)
+* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
   long, le résultat est plus long que la chaîne initiale)
 
 Exemple en C :
@@ -1328,8 +1328,8 @@ int weechat_string_decode_base64 (const char *from, char *to);
 
 Paramètres :
 
-* 'from': chaîne à décoder
-* 'to': pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
+* 'from' : chaîne à décoder
+* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
   long, le résultat est plus court que la chaîne initiale)
 
 Valeur de retour :
@@ -1366,7 +1366,7 @@ int weechat_string_is_command_char (const char *string);
 
 Paramètres :
 
-* 'string': chaîne
+* 'string' : chaîne
 
 Valeur de retour :
 
@@ -1409,7 +1409,7 @@ const char *weechat_string_input_for_buffer (const char *string);
 
 Paramètres :
 
-* 'string': chaîne
+* 'string' : chaîne
 
 Valeur de retour :
 
@@ -2178,7 +2178,7 @@ char *weechat_file_get_content (const char *filename);
 
 Paramètres :
 
-* 'filename': chemin et nom du fichier
+* 'filename' : chemin et nom du fichier
 
 Valeur de retour :
 
@@ -2315,7 +2315,7 @@ char *weechat_util_get_time_string (const time_t *date);
 
 Paramètres :
 
-* 'date': pointeur vers la date
+* 'date' : pointeur vers la date
 
 Exemple en C :
 
@@ -3136,7 +3136,7 @@ _Nouveau dans la version 0.3.4._
 
 Retourne une valeur pour une propriété d'une hashtable sous forme de chaîne.
 
-Prototype:
+Prototype :
 
 [source,C]
 ----------------------------------------
@@ -3144,7 +3144,7 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
                                           void *property);
 ----------------------------------------
 
-Arguments:
+Paramètres :
 
 * 'hashtable' : pointeur vers la hashtable
 * 'property' : nom de la propriété :
@@ -3154,16 +3154,16 @@ Arguments:
 *** 'pointer' : pointeur
 *** 'buffer' : buffer
 *** 'time' : heure
-** 'type_values': type pour les valeurs :
+** 'type_values' : type pour les valeurs :
 *** 'integer' : entier
 *** 'string' : chaîne
 *** 'pointer' : pointeur
 *** 'buffer' : buffer
 *** 'time' : heure
-** 'keys': chaîne avec la liste des clés (format: "clé1,clé2,clé3")
-** 'values': chaîne avec la liste des valeurs (format: "valeur1,valeur2,valeur3")
-** 'keys_values': chaîne avec la liste des clés et valeurs
-   (format: "clé1:valeur1,clé2:valeur2,clé3:valeur3")
+** 'keys' : chaîne avec la liste des clés (format : "clé1,clé2,clé3")
+** 'values' : chaîne avec la liste des valeurs (format : "valeur1,valeur2,valeur3")
+** 'keys_values' : chaîne avec la liste des clés et valeurs
+   (format : "clé1:valeur1,clé2:valeur2,clé3:valeur3")
 
 Valeur en retour :
 
@@ -6324,7 +6324,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 
 Paramètres :
 
-* 'proxy': nom du proxy à utiliser pour la connexion (optionnel, NULL signifie
+* 'proxy' : nom du proxy à utiliser pour la connexion (optionnel, NULL signifie
   une connexion sans proxy)
 * 'address' : nom ou adresse IP de la machine à laquelle se connecter
 * 'port' : numéro de port
@@ -6332,9 +6332,10 @@ Paramètres :
 * 'ipv6' : 1 pour utiliser IPv6, 0 pour utiliser IPv4
 * 'gnutls_sess' : GnuTLS session (optionnel)
 * 'gnutls_cb' : callback pour GnuTLS (optionnel)
-* 'gnutls_dhkey_size': taille de clé utilisée pour l'échange de clé
+* 'gnutls_dhkey_size' : taille de clé utilisée pour l'échange de clé
   Diffie-Hellman (GnuTLS)
-* 'local_hostname': nom de machine local à utiliser pour la connexion (optionnel)
+* 'local_hostname' : nom de machine local à utiliser pour la connexion
+  (optionnel)
 * 'callback' : fonction appelée lorsque la connexion est ok ou a échoué,
   paramètres :
 ** 'void *data' : pointeur
@@ -6655,7 +6656,7 @@ Paramètres :
 | weechat | day_changed | chaîne : nouvelle date, format : "2010-01-31" |
   le jour de la date système a changé
 
-| weechat | debug_dump | chaîne: nom d'extension |
+| weechat | debug_dump | chaîne : nom d'extension |
   requête de "dump"
 
 | weechat | filter_added | pointeur : filtre |
@@ -6691,16 +6692,16 @@ Paramètres :
 | weechat | key_pressed | chaîne : touche appuyée |
   touche appuyée
 
-| weechat | nicklist_group_added | chaîne: pointeur tampon + "," + nom du groupe |
+| weechat | nicklist_group_added | chaîne : pointeur tampon + "," + nom du groupe |
   groupe ajouté dans la liste des pseudos
 
-| weechat | nicklist_group_removed | chaîne: pointeur tampon + "," + nom du groupe |
+| weechat | nicklist_group_removed | chaîne : pointeur tampon + "," + nom du groupe |
   groupe supprimé de la liste des pseudos
 
-| weechat | nicklist_nick_added | chaîne: pointeur tampon + "," + pseudo |
+| weechat | nicklist_nick_added | chaîne : pointeur tampon + "," + pseudo |
   pseudo ajouté dans la liste des pseudos
 
-| weechat | nicklist_nick_removed | chaîne: pointeur tampon + "," + pseudo |
+| weechat | nicklist_nick_removed | chaîne : pointeur tampon + "," + pseudo |
   pseudo supprimé de la liste des pseudos
 
 | weechat | partial_completion | - |
@@ -6864,7 +6865,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Paramètres :
 
-* 'signal': signal à intercepter, peut commencer ou se terminer par "*"
+* 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
 
 [width="100%",cols="^1,^3,5",options="header"]
@@ -6886,7 +6887,7 @@ modèle de redirection ("pattern").
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
 
-Return value:
+Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
@@ -6963,7 +6964,7 @@ Script (Python) :
 # prototype
 weechat.hook_hsignal_send(signal, hashtable)
 
-# example
+# exemple
 weechat.hook_hsignal_send("my_hsignal", { "clé": "valeur" })
 ----------------------------------------
 
@@ -7055,7 +7056,7 @@ Paramètres :
 * 'completion_item' : nom de l'objet de complétion, après vous pouvez utiliser
   '%(nom)' dans une commande (paramètre 'completion')
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
-* 'description': description de la complétion
+* 'description' : description de la complétion
 * 'callback' : fonction appelée lorsque la complétion est utilisée
   (l'utilisateur est en train de compléter quelque chose qui fait appel à cette
   complétion), paramètres :
@@ -7452,7 +7453,7 @@ Paramètres :
   (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres :
 ** 'void *data' : pointeur
-** 'const char *info_name': nom de l'information
+** 'const char *info_name' : nom de l'information
 ** 'struct t_hashtable *hashtable' : hashtable, dépendant de l'information
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -8026,32 +8027,32 @@ Paramètres :
 * 'buffer' : pointeur vers le tampon
 * 'property' : nom de la propriété :
 ** 'number' : numéro du tampon (commence à 1)
-** 'layout_number': numéro du tampon sauvegardé dans le "layout"
-** 'type': type de tampon (0: formaté, 1: contenu libre)
+** 'layout_number' : numéro du tampon sauvegardé dans le "layout"
+** 'type' : type de tampon (0 : formaté, 1 : contenu libre)
 ** 'notify' : niveau de notification du tampon
 ** 'num_displayed' : nombre de fenêtres affichant ce tampon
-** 'active': 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas
+** 'active' : 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas
    sélectionné
-** 'print_hooks_enabled': 1 si les hooks "print" sont activés, sinon 0
+** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
 ** 'time_for_each_line' : 1 si l'heure est affichée pour chaque ligne du tampon
    (par défaut), sinon 0
-** 'nicklist': 1 si la liste de pseudos est activée, sinon 0
-** 'nicklist_case_sensitive': 1 si les pseudos sont sensibles à la casse,
+** 'nicklist' : 1 si la liste de pseudos est activée, sinon 0
+** 'nicklist_case_sensitive' : 1 si les pseudos sont sensibles à la casse,
    sinon 0
-** 'nicklist_max_length': longueur maxi d'un pseudo
-** 'nicklist_display_groups': 1 si les groupes sont affichés, sinon 0
-** 'nicklist_visible_count': nombre de pseudos/groupes affichés
-** 'input': 1 si la zone de saisie est activée, sinon 0
-** 'input_get_unknown_commands': 1 si les commandes inconnues sont envoyées
+** 'nicklist_max_length' : longueur maxi d'un pseudo
+** 'nicklist_display_groups' : 1 si les groupes sont affichés, sinon 0
+** 'nicklist_visible_count' : nombre de pseudos/groupes affichés
+** 'input' : 1 si la zone de saisie est activée, sinon 0
+** 'input_get_unknown_commands' : 1 si les commandes inconnues sont envoyées
    au "callback input", sinon 0
-** 'input_size': taille de la zone de saisie (en octets)
-** 'input_length': longueur de la zone de saisie (nombre de caractères)
-** 'input_pos': position du curseur dans la zone de saisie
-** 'input_1st_display': premier caractère affiché à l'écran
-** 'num_history': nombre de commandes dans l'historique
+** 'input_size' : taille de la zone de saisie (en octets)
+** 'input_length' : longueur de la zone de saisie (nombre de caractères)
+** 'input_pos' : position du curseur dans la zone de saisie
+** 'input_1st_display' : premier caractère affiché à l'écran
+** 'num_history' : nombre de commandes dans l'historique
 ** 'text_search' : type de recherche de texte :
 *** 0 : pas de recherche en cours
 *** 1 : recherche arrière (vers les messages les plus anciens)
@@ -8105,10 +8106,10 @@ Paramètres :
 ** 'short_name' : nom court du tampon
 ** 'title' : titre du tampon
 ** 'input' : texte saisi
-** 'text_search_input': texte saisi sauvegardé avant la recherche de texte
-** 'highlight_words': liste des mots pour le highlight
-** 'highlight_tags': liste des étiquettes pour le highlight
-** 'no_highlight_nicks': liste des pseudos à NE PAS mettre en valeur (highlight)
+** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
+** 'highlight_words' : liste des mots pour le highlight
+** 'highlight_tags' : liste des étiquettes pour le highlight
+** 'no_highlight_nicks' : liste des pseudos à NE PAS mettre en valeur (highlight)
 ** 'localvar_xxx' : contenu de la variable locale "xxx" (remplacer "xxx" par le
    nom de la variable locale à lire)
 
@@ -8147,8 +8148,8 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-const char *weechat_buffer_pointer (struct t_gui_buffer *buffer,
-                                    const char *property);
+void *weechat_buffer_pointer (struct t_gui_buffer *buffer,
+                              const char *property);
 ----------------------------------------
 
 Paramètres :
@@ -8638,7 +8639,7 @@ void weechat_window_set_title (const char *title);
 
 Paramètres :
 
-* 'title': nouveau titre pour le terminal (NULL pour réinitialiser le titre)
+* 'title' : nouveau titre pour le terminal (NULL pour réinitialiser le titre)
 
 Exemple en C :
 
@@ -8998,6 +8999,430 @@ weechat.nicklist_remove_all(buffer)
 
 # exemple
 weechat.nicklist_remove_all(my_buffer)
+----------------------------------------
+
+weechat_nicklist_group_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne une valeur entière pour une propriété du groupe.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick_group *group,
+                                        const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'group' : pointeur vers le groupe
+* 'property' : nom de la propriété :
+** 'visible' : 1 si le groupe est visible, sinon 0
+** 'level' : niveau du groupe (la racine est 0)
+
+Valeur de retour :
+
+* valeur entière de la propriété
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_integer(buffer, group, property)
+
+# exemple
+visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
+----------------------------------------
+
+weechat_nicklist_group_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne la valeur d'une propriété du groupe sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
+                                               struct t_gui_nick_group *group,
+                                               const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'group' : pointeur vers le groupe
+* 'property' : nom de la propriété :
+** 'name' : nom du groupe
+** 'color' : couleur du groupe dans la liste des pseudos
+
+Valeur de retour :
+
+* valeur de la propriété, sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_string(buffer, group, property)
+
+# exemple
+color = weechat.nicklist_group_get_string(buffer, group, "color")
+----------------------------------------
+
+weechat_nicklist_group_get_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne la valeur d'une propriété du groupe sous forme d'un pointeur.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
+                                          struct t_gui_nick_group *group,
+                                          const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'group' : pointeur vers le groupe
+* 'property' : nom de la propriété :
+** 'parent' : pointeur vers le groupe parent
+
+Valeur de retour :
+
+* valeur de la propriété, sous forme de pointeur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, group, "parent");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_group_get_pointer(buffer, group, property)
+
+# exemple
+parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
+----------------------------------------
+
+weechat_nicklist_group_set
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Affecte une valeur à une propriété d'un groupe.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
+                                 struct t_gui_nick_group *group,
+                                 const char *property,
+                                 const char *value);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'group' : pointeur vers le groupe
+* 'property' et 'value' : nom de la propriété, avec sa valeur :
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Nom | Valeur | Description
+
+| color | nom d'option de couleur WeeChat |
+  voir le paramètre "color" de la fonction
+  <<_weechat_nicklist_add_group,weechat_nicklist_add_group>>
+
+| visible | "0", "1" |
+  "0" = groupe caché, "1" = groupe visible
+|========================================
+
+Exemples en C :
+
+[source,C]
+----------------------------------------
+/* changer la couleur du groupe en "bar_fg" */
+weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
+
+/* changer la couleur du groupe en jaune */
+weechat_nicklist_group_set (buffer, group, "color", "yellow");
+
+/* cacher le groupe dans la liste des pseudos */
+weechat_nicklist_group_set (buffer, group, "visible", "0");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.nicklist_group_set(buffer, group, property, value)
+
+# exemples
+
+# changer la couleur du groupe en "bar_fg"
+weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
+
+# changer la couleur du groupe en jaune
+weechat.nicklist_group_set(buffer, group, "color", "yellow")
+
+# cacher le groupe dans la liste des pseudos
+weechat.nicklist_group_set(buffer, group, "visible", "0")
+----------------------------------------
+
+weechat_nicklist_nick_get_integer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne une valeur entière pour une propriété du pseudo.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
+                                       struct t_gui_nick *nick,
+                                       const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'nick' : pointeur vers le pseudo
+* 'property' : nom de la propriété :
+** 'visible' : 1 si le pseudo est visible, sinon 0
+
+Valeur de retour :
+
+* valeur entière de la propriété
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_integer(buffer, nick, property)
+
+# exemple
+visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
+----------------------------------------
+
+weechat_nicklist_nick_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne la valeur d'une propriété du pseudo sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
+                                              struct t_gui_nick *nick,
+                                              const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'nick' : pointeur vers le pseudo
+* 'property' : nom de la propriété :
+** 'name' : nom du pseudo
+** 'color' : couleur du pseudo dans la liste des pseudos
+** 'prefix' : préfixe du pseudo
+** 'prefix_color' : couleur du préfixe dans la liste des pseudos
+
+Valeur de retour :
+
+* valeur de la propriété, sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_string(buffer, nick, property)
+
+# exemple
+color = weechat.nicklist_nick_get_string(buffer, nick, "color")
+----------------------------------------
+
+weechat_nicklist_nick_get_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne la valeur d'une propriété du pseudo sous forme d'un pointeur.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
+                                         struct t_gui_nick *nick,
+                                         const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'nick' : pointeur vers le pseudo
+* 'property' : nom de la propriété :
+** 'group' : pointeur vers le groupe contenant ce pseudo
+
+Valeur de retour :
+
+* valeur de la propriété, sous forme de pointeur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick, "group");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
+
+# exemple
+group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
+----------------------------------------
+
+weechat_nicklist_nick_set
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Affecte une valeur à une propriété d'un pseudo.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
+                                struct t_gui_nick *nick,
+                                const char *property,
+                                const char *value);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'nick' : pointeur vers le pseudo
+* 'property' et 'value' : nom de la propriété, avec sa valeur :
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Nom | Valeur | Description
+
+| color | nom d'option de couleur WeeChat |
+  voir le paramètre "color" de la fonction
+  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+
+| prefix | toute chaîne |
+  préfixe du pseudo
+
+| prefix_color | nom d'option de couleur WeeChat |
+  voir le paramètre "prefix_color" de la fonction
+  <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
+
+| visible | "0", "1" |
+  "0" = pseudo caché, "1" = pseudo visible
+|========================================
+
+Exemples en C :
+
+[source,C]
+----------------------------------------
+/* changer la couleur du pseudo en cyan */
+weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
+
+/* changer le préfixe en "+" */
+weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
+
+/* changer la couleur du préfixe en jaune */
+weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
+
+/* cacher le pseudo dans la liste des pseudos */
+weechat_nicklist_nick_set (buffer, nick, "visible", "0");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.nicklist_nick_set(buffer, nick, property, value)
+
+# exemples
+
+# changer la couleur du pseudo en cyan
+weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
+
+# changer le préfixe en "+"
+weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
+
+# changer la couleur du préfixe en jaune
+weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
+
+# cacher le pseudo dans la liste des pseudos
+weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----------------------------------------
 
 [[bars]]
@@ -9638,7 +10063,7 @@ _Nouveau dans la version 0.3.4._
 
 Retourne une information, sous forme de hashtable, de WeeChat ou d'une extension.
 
-Prototype:
+Prototype :
 
 [source,C]
 ----------------------------------------
@@ -9687,14 +10112,14 @@ if (hashtable_in)
 }
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
 # prototype
 dict = weechat.info_get_hashtable(info_name, dict_in)
 
-# example
+# exemple
 dict_in = { "message": ":nick!user@host PRIVMSG #weechat :message ici" }
 weechat.prnt("", "message analysé: %s"
              % weechat.info_get_hashtable("irc_parse_message", dict_in))

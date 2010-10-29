@@ -627,6 +627,14 @@ plugin_load (const char *filename)
         new_plugin->nicklist_remove_group = &gui_nicklist_remove_group;
         new_plugin->nicklist_remove_nick = &gui_nicklist_remove_nick;
         new_plugin->nicklist_remove_all = &gui_nicklist_remove_all;
+        new_plugin->nicklist_group_get_integer = &gui_nicklist_group_get_integer;
+        new_plugin->nicklist_group_get_string = &gui_nicklist_group_get_string;
+        new_plugin->nicklist_group_get_pointer = &gui_nicklist_group_get_pointer;
+        new_plugin->nicklist_group_set = &gui_nicklist_group_set;
+        new_plugin->nicklist_nick_get_integer = &gui_nicklist_nick_get_integer;
+        new_plugin->nicklist_nick_get_string = &gui_nicklist_nick_get_string;
+        new_plugin->nicklist_nick_get_pointer = &gui_nicklist_nick_get_pointer;
+        new_plugin->nicklist_nick_set = &gui_nicklist_nick_set;
         
         new_plugin->bar_item_search = &gui_bar_item_search;
         new_plugin->bar_item_new = &gui_bar_item_new;
