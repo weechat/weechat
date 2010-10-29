@@ -1211,7 +1211,8 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
     while (ptr_group || ptr_nick)
     {
         if ((ptr_nick && ptr_nick->visible)
-            || (ptr_group && window->buffer->nicklist_display_groups
+            || (ptr_group && !ptr_nick
+                && window->buffer->nicklist_display_groups
                 && ptr_group->visible))
         {
             if (ptr_nick)
@@ -1236,7 +1237,8 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
         while (ptr_group || ptr_nick)
         {
             if ((ptr_nick && ptr_nick->visible)
-                || (ptr_group && window->buffer->nicklist_display_groups
+                || (ptr_group && !ptr_nick
+                    && window->buffer->nicklist_display_groups
                     && ptr_group->visible))
             {
                 if (buf[0])
