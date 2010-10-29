@@ -208,23 +208,32 @@ gui_color_get_custom (const char *color_name)
         {
             fg = gui_color_search (str_fg);
             bg = gui_color_search (pos_bg);
-            snprintf (color[index_color], sizeof (color[index_color]),
-                      "%s*%02d,%02d",
-                      GUI_COLOR_COLOR_STR, fg, bg);
+            if ((fg >= 0) && (bg >= 0))
+            {
+                snprintf (color[index_color], sizeof (color[index_color]),
+                          "%s*%02d,%02d",
+                          GUI_COLOR_COLOR_STR, fg, bg);
+            }
         }
         else if (str_fg && !pos_bg)
         {
             fg = gui_color_search (str_fg);
-            snprintf (color[index_color], sizeof (color[index_color]),
-                      "%sF%02d",
-                      GUI_COLOR_COLOR_STR, fg);
+            if (fg >= 0)
+            {
+                snprintf (color[index_color], sizeof (color[index_color]),
+                          "%sF%02d",
+                          GUI_COLOR_COLOR_STR, fg);
+            }
         }
         else if (!str_fg && pos_bg)
         {
             bg = gui_color_search (pos_bg);
-            snprintf (color[index_color], sizeof (color[index_color]),
-                      "%sB%02d",
-                      GUI_COLOR_COLOR_STR, bg);
+            if (bg >= 0)
+            {
+                snprintf (color[index_color], sizeof (color[index_color]),
+                          "%sB%02d",
+                          GUI_COLOR_COLOR_STR, bg);
+            }
         }
         
         if (str_fg)
