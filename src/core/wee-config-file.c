@@ -2818,7 +2818,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                                         return 0;
                                     }
                                 }
-                                if (ptr_option->value)
+                                if (ptr_option->default_value)
                                 {
                                     if (!infolist_new_var_string (ptr_item,
                                                                   "default_value",
