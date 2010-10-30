@@ -2681,7 +2681,7 @@ IRC_PROTOCOL_CALLBACK(327)
     
     if (pos_realname && pos_realname[0])
     {
-        weechat_printf_tags (server->buffer,
+        weechat_printf_tags (ptr_buffer,
                              irc_protocol_tags (command, "irc_numeric", NULL),
                              "%s%s[%s%s%s] %s%s %s %s(%s%s%s)",
                              weechat_prefix ("network"),
@@ -2699,7 +2699,7 @@ IRC_PROTOCOL_CALLBACK(327)
     }
     else
     {
-        weechat_printf_tags (server->buffer,
+        weechat_printf_tags (ptr_buffer,
                              irc_protocol_tags (command, "irc_numeric", NULL),
                              "%s%s[%s%s%s] %s%s %s",
                              weechat_prefix ("network"),
