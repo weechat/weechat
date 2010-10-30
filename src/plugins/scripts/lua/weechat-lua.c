@@ -393,7 +393,7 @@ weechat_lua_unload (struct t_plugin_script *script)
     
     script_remove (weechat_lua_plugin, &lua_scripts, &last_lua_script, script);
     
-    lua_close (script->interpreter);
+    lua_close (interpreter);
 }
 
 /*
