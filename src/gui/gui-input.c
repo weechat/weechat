@@ -130,7 +130,8 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
                                     buffer->input_buffer : "");
     if (new_input)
     {
-        if (strcmp (new_input, buffer->input_buffer) != 0)
+        if (!buffer->input_buffer
+            || strcmp (new_input, buffer->input_buffer) != 0)
         {
             /* input has been changed by modifier, use it */
             gui_input_replace_input (buffer, new_input);
@@ -163,22 +164,6 @@ gui_input_search_signal ()
 }
 
 /*
- * gui_input_move: move data in input buffer
- */
-
-void
-gui_input_move (struct t_gui_buffer *buffer, char *target, const char *source,
-                int size)
-{
-    int pos_source, pos_target;
-    
-    pos_target = target - buffer->input_buffer;
-    pos_source = source - buffer->input_buffer;
-    
-    memmove (target, source, size);
-}
-
-/*
  * gui_input_set_pos: set position in input line
  */
 
@@ -205,7 +190,7 @@ int
 gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
                          int pos)
 {
-    int pos_start, size, length;
+    int size, length;
     char *ptr_start;
     
     if (buffer->input)
@@ -224,12 +209,10 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         
         /* move end of string to the right */
         ptr_start = utf8_add_offset (buffer->input_buffer, pos);
-        pos_start = ptr_start - buffer->input_buffer;
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
         
         /* insert new string */
         ptr_start = utf8_add_offset (buffer->input_buffer, pos);
-        pos_start = ptr_start - buffer->input_buffer;
         strncpy (ptr_start, string, size);
         
         buffer->input_buffer_pos += length;
@@ -551,7 +534,7 @@ gui_input_delete_previous_char (struct t_gui_window *window)
         pos_last = utf8_prev_char (window->buffer->input_buffer, pos);
         char_size = pos - pos_last;
         size_to_move = strlen (pos);
-        gui_input_move (window->buffer, pos_last, pos, size_to_move);
+        memmove (pos_last, pos, size_to_move);
         window->buffer->input_buffer_size -= char_size;
         window->buffer->input_buffer_length--;
         window->buffer->input_buffer_pos--;
@@ -581,7 +564,7 @@ gui_input_delete_next_char (struct t_gui_window *window)
         pos_next = utf8_next_char (pos);
         char_size = pos_next - pos;
         size_to_move = strlen (pos_next);
-        gui_input_move (window->buffer, pos, pos_next, size_to_move);
+        memmove (pos, pos_next, size_to_move);
         window->buffer->input_buffer_size -= char_size;
         window->buffer->input_buffer_length--;
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
@@ -636,8 +619,7 @@ gui_input_delete_previous_word (struct t_gui_window *window)
         
         gui_input_clipboard_copy (string, size_deleted);
         
-        gui_input_move (window->buffer, string, string + size_deleted,
-                        strlen (string + size_deleted));
+        memmove (string, string + size_deleted, strlen (string + size_deleted));
         
         window->buffer->input_buffer_size -= size_deleted;
         window->buffer->input_buffer_length -= length_deleted;
@@ -677,7 +659,7 @@ gui_input_delete_next_word (struct t_gui_window *window)
         
         gui_input_clipboard_copy (start, size_deleted);
         
-        gui_input_move (window->buffer, start, string, strlen (string));
+        memmove (start, string, strlen (string));
         
         window->buffer->input_buffer_size -= size_deleted;
         window->buffer->input_buffer_length -= length_deleted;
@@ -697,7 +679,7 @@ gui_input_delete_next_word (struct t_gui_window *window)
 void
 gui_input_delete_beginning_of_line (struct t_gui_window *window)
 {
-    int length_deleted, size_deleted, pos_start;
+    int length_deleted, size_deleted;
     char *start;
     
     if (window->buffer->input && (window->buffer->input_buffer_pos > 0))
@@ -705,14 +687,12 @@ gui_input_delete_beginning_of_line (struct t_gui_window *window)
         gui_buffer_undo_snap (window->buffer);
         start = utf8_add_offset (window->buffer->input_buffer,
                                  window->buffer->input_buffer_pos);
-        pos_start = start - window->buffer->input_buffer;
         size_deleted = start - window->buffer->input_buffer;
         length_deleted = utf8_strnlen (window->buffer->input_buffer, size_deleted);
         gui_input_clipboard_copy (window->buffer->input_buffer,
                                   start - window->buffer->input_buffer);
         
-        gui_input_move (window->buffer, window->buffer->input_buffer,
-                        start, strlen (start));
+        memmove (window->buffer->input_buffer, start, strlen (start));
         
         window->buffer->input_buffer_size -= size_deleted;
         window->buffer->input_buffer_length -= length_deleted;
@@ -733,16 +713,14 @@ void
 gui_input_delete_end_of_line (struct t_gui_window *window)
 {
     char *start;
-    int size_deleted, length_deleted, pos_start;
+    int size_deleted;
     
     if (window->buffer->input)
     {
         gui_buffer_undo_snap (window->buffer);
         start = utf8_add_offset (window->buffer->input_buffer,
                                  window->buffer->input_buffer_pos);
-        pos_start = start - window->buffer->input_buffer;
         size_deleted = strlen (start);
-        length_deleted = utf8_strlen (start);
         gui_input_clipboard_copy (start, size_deleted);
         start[0] = '\0';
         window->buffer->input_buffer_size = strlen (window->buffer->input_buffer);
@@ -783,7 +761,6 @@ gui_input_transpose_chars (struct t_gui_window *window)
 {
     char *start, *prev_char, saved_char[5];
     int size_prev_char, size_start_char;
-    int pos_prev_char, pos_start;
     
     if (window->buffer->input && (window->buffer->input_buffer_pos > 0)
         && (window->buffer->input_buffer_length > 1))
@@ -795,9 +772,7 @@ gui_input_transpose_chars (struct t_gui_window *window)
         
         start = utf8_add_offset (window->buffer->input_buffer,
                                  window->buffer->input_buffer_pos);
-        pos_start = start - window->buffer->input_buffer;
         prev_char = utf8_prev_char (window->buffer->input_buffer, start);
-        pos_prev_char = prev_char - window->buffer->input_buffer;
         size_prev_char = start - prev_char;
         size_start_char = utf8_char_size (start);
         
