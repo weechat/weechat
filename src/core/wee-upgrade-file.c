@@ -479,7 +479,10 @@ int
 upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
                           void **buffer, int *size)
 {
-    if (buffer && *buffer)
+    if (!buffer)
+        return 0;
+    
+    if (*buffer)
     {
         free (*buffer);
         *buffer = NULL;
@@ -495,7 +498,7 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
         
         *buffer = malloc (*size);
         
-        if (buffer && *buffer)
+        if (*buffer)
         {
             if (fread (*buffer, *size, 1, upgrade_file->file) <= 0)
                 return 0;
