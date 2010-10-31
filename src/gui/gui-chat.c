@@ -581,7 +581,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                                      tags, pos_prefix, ptr_msg);
             if (ptr_line)
             {
-                if (buffer->print_hooks_enabled)
+                if (buffer && buffer->print_hooks_enabled)
                     hook_print_exec (buffer, ptr_line);
                 if (ptr_line->data->displayed)
                     at_least_one_message_printed = 1;

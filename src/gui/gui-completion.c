@@ -1977,10 +1977,14 @@ gui_completion_complete (struct t_gui_completion *completion)
                                                                 NULL);
     }
     
-    if (completion->direction < 0)
-        ptr_item = completion->completion_list->last_item;
-    else
-        ptr_item = completion->completion_list->items;
+    ptr_item = NULL;
+    if (completion->completion_list)
+    {
+        if (completion->direction < 0)
+            ptr_item = completion->completion_list->last_item;
+        else
+            ptr_item = completion->completion_list->items;
+    }
     
     if (partial_completion
         && completion->word_found

@@ -296,6 +296,9 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     struct t_gui_bar_item *ptr_item;
     struct t_weechat_plugin *ptr_plugin;
     
+    if (!name)
+        return NULL;
+    
     start = NULL;
     end = NULL;
     prefix = NULL;
@@ -303,7 +306,7 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     suffix = NULL;
     
     ptr = name;
-    while (ptr && ptr[0])
+    while (ptr[0])
     {
         valid_char = gui_bar_item_valid_char_name (ptr[0]);
         if (!start && valid_char)
