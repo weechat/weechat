@@ -251,6 +251,8 @@ weechat_create_home_dirs ()
             string_iconv_fprintf (stderr,
                                   _("Error: unable to get HOME directory\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
         }
         dir_length = strlen (ptr_home) + 10;
         weechat_home = malloc (dir_length);
@@ -260,6 +262,8 @@ weechat_create_home_dirs ()
                                   _("Error: not enough memory for home "
                                     "directory\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
         }
         snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
                   DIR_SEPARATOR);
