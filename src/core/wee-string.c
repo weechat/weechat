@@ -677,7 +677,6 @@ string_has_highlight (const char *string, const char *highlight_words)
             /* highlight found! */
             while ((match = strstr (msg_pos, pos)) != NULL)
             {
-                match_pre = match - 1;
                 match_pre = utf8_prev_char (msg, match);
                 if (!match_pre)
                     match_pre = match - 1;
@@ -813,7 +812,6 @@ string_split (const char *string, const char *separators, int keep_eol,
         return NULL;
     
     ptr1 = string2;
-    ptr2 = string2;
     
     for (i = 0; i < n_items; i++)
     {

@@ -908,7 +908,6 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
         if (argv[i][0] == '-')
         {
             pos = strchr (argv[i], '=');
-            ptr_value = value_boolean[0];
             if (pos)
             {
                 option_name = weechat_strndup (argv[i] + 1, pos - argv[i] - 1);

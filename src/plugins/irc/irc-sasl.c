@@ -146,8 +146,6 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
         goto end;
     data_server_pub_key = gcry_mpi_new (size * 8);
     gcry_mpi_scan (&data_server_pub_key, GCRYMPI_FMT_USG, ptr_data, size, NULL);
-    ptr_data += size;
-    length_data -= size;
     
     /* generate keys */
     pub_key = gcry_mpi_new (num_bits_prime_number);
@@ -208,7 +206,6 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     memcpy (ptr_answer, sasl_username, length_username + 1);
     ptr_answer += length_username + 1;
     memcpy (ptr_answer, password_crypted, length_password);
-    ptr_answer += length_password;
     
     /* encode answer to base64 */
     answer_base64 = malloc (length_answer * 2);

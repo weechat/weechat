@@ -238,8 +238,6 @@ alias_config_cmd_create_option_cb (void *data,
     (void) config_file;
     (void) section;
     
-    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
     /* create config option */
     alias_config_cmd_new_option (option_name, value);
     

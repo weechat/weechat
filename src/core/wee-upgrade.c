@@ -511,7 +511,7 @@ upgrade_weechat_read_cb (void *data,
                                     ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
                                                                            NULL,
                                                                            group_name);
-                                ptr_group = gui_nicklist_add_group (
+                                gui_nicklist_add_group (
                                     upgrade_current_buffer,
                                     ptr_group,
                                     name,

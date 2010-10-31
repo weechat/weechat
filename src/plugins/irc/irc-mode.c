@@ -104,8 +104,6 @@ irc_mode_channel_set (struct t_irc_server *server,
                     set_flag = '-';
                     break;
                 case 'b': /* ban (ignored) */
-                    ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
-                        argv[current_arg] : NULL;
                     current_arg++;
                     break;
                 case 'k': /* channel key */

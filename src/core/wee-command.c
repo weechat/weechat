@@ -155,7 +155,6 @@ command_bar (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
     int type, position;
-    long number;
     char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
@@ -254,7 +253,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         error = NULL;
-        number = strtol (argv[5], &error, 10);
+        (void) strtol (argv[5], &error, 10);
         if (error && !error[0])
         {
             /* create bar */
@@ -3035,7 +3034,6 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
                int argc, char **argv, char **argv_eol)
 {
     int type;
-    long number;
     char *error;
     struct t_proxy *ptr_proxy;
     
@@ -3074,7 +3072,7 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         error = NULL;
-        number = strtol (argv[5], &error, 10);
+        (void) strtol (argv[5], &error, 10);
         if (error && !error[0])
         {
             /* create proxy */

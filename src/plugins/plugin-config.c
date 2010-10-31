@@ -84,8 +84,6 @@ plugin_config_set_internal (const char *option, const char *value)
     int rc;
     struct t_config_option *ptr_option;
     
-    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
     ptr_option = config_file_search_option (plugin_config_file,
                                             plugin_config_section_var,
                                             option);

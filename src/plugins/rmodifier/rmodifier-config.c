@@ -183,8 +183,6 @@ rmodifier_config_modifier_create_option_cb (void *data,
     (void) config_file;
     (void) section;
     
-    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
     /* create rmodifier */
     ptr_rmodifier = rmodifier_search (option_name);
     if (ptr_rmodifier)
