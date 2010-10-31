@@ -169,7 +169,6 @@ struct t_hashtable *
 weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
 {
     struct t_hashtable *hashtable;
-    struct st_table *st;
     
     hashtable = weechat_hashtable_new (hashtable_size,
                                        WEECHAT_HASHTABLE_STRING,
@@ -178,13 +177,6 @@ weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
                                        NULL);
     if (!hashtable)
         return NULL;
-    
-    /* RHASH_TBL exists in ruby 1.8.7 but not ruby 1.8.6 */
-#ifdef RHASH_TBL
-    st = RHASH_TBL(hash);
-#else
-    st = RHASH(hash)->tbl;
-#endif
     
     rb_hash_foreach (hash, &weechat_ruby_hash_foreach_cb,
                      (unsigned long)hashtable);
@@ -554,8 +546,8 @@ weechat_ruby_load (const char *filename)
         return 0;
     }
     
-    ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"),
-                                       &ruby_error, 0, NULL);
+    (void) rb_protect_funcall (curModule, rb_intern("weechat_init"),
+                               &ruby_error, 0, NULL);
     
     if (ruby_error)
     {

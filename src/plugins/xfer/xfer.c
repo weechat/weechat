@@ -705,12 +705,10 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     struct t_infolist *infolist;
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
-    int type, protocol;
+    int type, protocol, args, port_start, port_end, sock, port;
     const char *weechat_dir;
     char *dir1, *dir2, *filename2, *short_filename, *pos;
-    int spaces, args, port_start, port_end;
     struct stat st;
-    int sock, port;
     struct hostent *host;
     struct sockaddr_in addr;
     socklen_t length;
@@ -743,7 +741,6 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
 
     filename2 = NULL;
     short_filename = NULL;
-    spaces = 0;
     
     sock = -1;
     port = 0;
@@ -998,15 +995,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         
         /* convert spaces to underscore if asked and needed */
         pos = short_filename;
-        spaces = 0;
         while (pos[0])
         {
             if (pos[0] == ' ')
             {
                 if (weechat_config_boolean (xfer_config_file_convert_spaces))
                     pos[0] = '_';
-                else
-                    spaces = 1;
             }
             pos++;
         }

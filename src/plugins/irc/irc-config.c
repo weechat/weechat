@@ -782,7 +782,6 @@ irc_config_msgbuffer_create_option (void *data,
 {
     struct t_config_option *ptr_option;
     int rc;
-    const char *pos_name;
     
     /* make C compiler happy */
     (void) data;
@@ -807,9 +806,6 @@ irc_config_msgbuffer_create_option (void *data,
         {
             if (value)
             {
-                pos_name = strchr (option_name, '.');
-                pos_name = (pos_name) ? pos_name + 1 : option_name;
-                
                 ptr_option = weechat_config_new_option (
                     config_file, section,
                     option_name, "integer",

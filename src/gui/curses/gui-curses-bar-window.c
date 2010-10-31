@@ -422,7 +422,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int length_on_screen;
     int chars_available, index, size;
     int length_screen_before_cursor, length_screen_after_cursor;
-    int total_length_screen, diff, max_length, optimal_number_of_lines;
+    int diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed;
     
     if (!gui_init_ok)
@@ -562,8 +562,6 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             length_screen_before_cursor = gui_chat_strlen_screen (items[line]);
                             length_screen_after_cursor = 0;
                         }
-                        
-                        total_length_screen = length_screen_before_cursor + length_screen_after_cursor;
                         
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)

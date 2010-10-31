@@ -440,8 +440,8 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
     int index_content, content_length, i, first_sub_item, sub, j, k, index;
-    int length_reinit_color, length_reinit_color_space;
-    int length, max_length, max_length_screen, total_items, columns, lines;
+    int length_reinit_color_space, length, max_length, max_length_screen;
+    int total_items, columns, lines;
     
     if (!bar_window->items_subcount || !bar_window->items_content
         || !bar_window->items_refresh_needed)
@@ -450,7 +450,6 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     snprintf (reinit_color, sizeof (reinit_color),
               "%c",
               GUI_COLOR_RESET_CHAR);
-    length_reinit_color = strlen (reinit_color);
     
     snprintf (reinit_color_space, sizeof (reinit_color_space),
               "%c ",
@@ -1147,7 +1146,8 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     {
         log_printf ("    items_subcount[%03d]. . : %d",
                     i, bar_window->items_subcount[i]);
-        if (bar_window->items_content && bar_window->bar->items_array)
+        if (bar_window->items_content && bar_window->bar
+            && bar_window->bar->items_array)
         {
             for (j = 0; j < bar_window->items_subcount[i]; j++)
             {

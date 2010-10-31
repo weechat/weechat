@@ -2314,7 +2314,6 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
     char **targets;
     int num_targets, i, arg_target, arg_text;
     char *msg_pwd_hidden;
-    struct t_irc_nick *ptr_nick;
     char *string;
     
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -2361,10 +2360,6 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                     IRC_PLUGIN_NAME, "msg *");
                     return WEECHAT_RC_OK;
                 }
-                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                    ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-                else
-                    ptr_nick = NULL;
                 string = irc_color_decode (argv_eol[arg_text],
                                            weechat_config_boolean (irc_config_network_colors_receive));
                 irc_input_user_message_display (ptr_channel->buffer,
@@ -2385,10 +2380,6 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                                       targets[i]);
                     if (ptr_channel)
                     {
-                        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                            ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-                        else
-                            ptr_nick = NULL;
                         string = irc_color_decode (argv_eol[arg_text],
                                                    weechat_config_boolean (irc_config_network_colors_receive));
                         irc_input_user_message_display (ptr_channel->buffer,

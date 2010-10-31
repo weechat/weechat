@@ -330,11 +330,10 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
 void
 gui_window_set_custom_color_fg (WINDOW *window, int fg)
 {
-    int current_attr, current_bg;
+    int current_bg;
     
     if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS))
     {
-        current_attr = window_current_style_attr;
         current_bg = window_current_style_bg;
         gui_window_remove_color_style (window, A_BOLD);
         gui_window_set_color_style (window, gui_weechat_colors[fg].attributes);

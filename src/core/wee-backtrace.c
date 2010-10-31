@@ -81,7 +81,6 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
     char cmd_line[1024];
     char line[1024], *ptr_line, *pos;
     char function_name[1024];
-    int file_line;
     
     rc = dladdr (address, &info);
     if ((rc == 0) || !info.dli_fname || !info.dli_fname[0])
@@ -106,7 +105,6 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
         return;
     }
     function_name[0] = '\0';
-    file_line = 0;
     while (!feof (output))
     {
         ptr_line = fgets (line, sizeof (line) - 1, output);
@@ -117,7 +115,6 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
                 pos[0] = '\0';
             if (strchr (ptr_line, ':'))
             {
-                file_line = 1;
                 weechat_backtrace_printf ("%03d  %s%s%s%s",
                                           number,
                                           ptr_line,

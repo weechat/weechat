@@ -188,7 +188,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
                   const char *nick, const char *host)
 {
     struct t_irc_ignore *ptr_ignore;
-    int server_match, channel_match, regex_match;
+    int server_match, channel_match;
     
     if (!server)
         return 0;
@@ -205,7 +205,6 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
     {
         server_match = 0;
         channel_match = 0;
-        regex_match = 0;
         
         if (!server || (strcmp (ptr_ignore->server, "*") == 0))
             server_match = 1;
