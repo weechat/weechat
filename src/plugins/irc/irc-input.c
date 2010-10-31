@@ -114,7 +114,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
         {
             pos = message;
             pos_max = message + max_length;
-            while (pos && pos[0])
+            while (pos[0])
             {
                 if (pos[0] == ' ')
                     last_space = pos;
