@@ -3501,7 +3501,10 @@ my_section_read_cb (void *data, struct t_config_file *config_file,
 {
     /* ... */
     
-    return WEECHAT_RC_OK;
+    return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+    /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
+    /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
+    /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
 }
 
 int
@@ -3581,7 +3584,10 @@ section = weechat.config_new_section(config_file, name,
 # esempio
 def my_section_read_cb(data, config_file, section, option_name, value):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
+    # return weechat.WEECHAT_CONFIG_OPTION_SET_ERROR
 
 def my_section_write_cb(data, config_file, section_name):
     # ...
@@ -3809,15 +3815,14 @@ option = weechat.config_new_option(config_file, section, name, type, description
 # esempio
 def option4_check_value_cb(data, option, value):
     # ...
-    return weechat.WEECHAT_RC_OK
+    return 1
+    # return 0
 
 def option4_change_cb(data, option):
     # ...
-    return weechat.WEECHAT_RC_OK
 
 def option4_delete_cb(data, option):
     # ...
-    return weechat.WEECHAT_RC_OK
 
 option1 = weechat.config_new_option(config_file, section, "option1", "boolean",
     "My option, type boolean",
