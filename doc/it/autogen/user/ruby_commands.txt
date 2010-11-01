@@ -6,6 +6,6 @@
   nome_file: file script da attivare
         nome: il nome dello script
   
-  Senza argomenti, il comando elenca tutti gli script caricati
+  Senza argomenti, il comando elenca tutti gli script attivati
 ........................................
 

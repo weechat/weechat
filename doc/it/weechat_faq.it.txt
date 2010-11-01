@@ -145,16 +145,15 @@ Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
 
-// TRANSLATION MISSING
 [[osx_display_broken]]
-I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ho compilato WeeChat su OS X, e vedo "(null)" dovunque sullo schermo, cosa non va?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you compiled ncursesw yourself, try to use standard ncurses (that comes with
-system).
+Se ncursesw è stato compilato manualmente, utilizzare ncurses standard (incluse
+col sistema).
 
-Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
-manager.
+Inoltre, su OS X, si raccomanda di installare WeeChat con il gestore pacchetti
+Homebrew.
 
 
 [[buffer_vs_window]]
@@ -349,8 +348,7 @@ massimo 25 nick:
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+Per WeeChat < = 0.3.3, le opzioni sono 'irc.network.away_check' e
 'irc.network.away_check_max_nicks'.
 
 

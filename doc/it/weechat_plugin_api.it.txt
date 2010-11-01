@@ -3018,8 +3018,7 @@ weechat_hashtable_has_key
 
 _Novità nella versione 0.3.4._
 
-// TRANSLATION MISSING
-Return 1 if hashtable has key, otherwise 0.
+Restituisce 1 se la tabella hash ha una chiave, altrimenti 0.
 
 Prototipo:
 
@@ -3035,23 +3034,21 @@ Argomenti:
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* 1 if key is in hashtable, 0 if key is not in hashtable
+* 1 se la chiave si trova nella tabella hash, 0 in caso contrario
 
 Esempio in C:
 
-// TRANSLATION MISSING
 [source,C]
 ----------------------------------------
 if (weechat_hashtable_has_key (hashtable, "my_key"))
 {
-    /* key is in hashtable */
+    /* la chiave è nella tabella hash */
     /* ... */
 }
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
@@ -3149,31 +3146,30 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
                                           void *property);
 ----------------------------------------
 
-// TRANSLATION MISSING
-Arguments:
+Argomenti:
 
-* 'hashtable': hashtable pointer
-* 'property': property name:
-** 'type_keys': type for keys:
-*** 'integer': integer
-*** 'string': string
-*** 'pointer': pointer
+* 'hashtable': puntatore alla tabella hash
+* 'property': nome della proprietà:
+** 'type_keys': tipo per le chiavi:
+*** 'integer': intero
+*** 'string': stringa
+*** 'pointer': puntatore
 *** 'buffer': buffer
-*** 'time': time
-** 'type_values': type for values:
-*** 'integer': integer
-*** 'string': string
-*** 'pointer': pointer
+*** 'time': tempo
+** 'type_values': tipo per i valori:
+*** 'integer': intero
+*** 'string': stringa
+*** 'pointer': puntatore
 *** 'buffer': buffer
-*** 'time': time
-** 'keys': string with list of keys (format: "key1,key2,key3")
-** 'values': string with list of values (format: "value1,value2,value3")
-** 'keys_values': string with list of keys and values
-   (format: "key1:value1,key2:value2,key3:value3")
+*** 'time': tempo
+** 'keys': stringa con la lista di chiavi (formato: "chiave1,chiave2,chiave3")
+** 'values': stringa  con la lista di valori (formato: "valore1,valore2,valore3")
+** 'keys_values': stringa con la lista di valori e chiavi
+   (formato: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
 
-Return value:
+Valore restituito:
 
-* string value of property
+* valore stringa della proprietà
 
 Esempio in C:
 
@@ -6831,15 +6827,14 @@ weechat.hook_signal_send(signal, type_data, signal_data)
 weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hook_hsignal
 ^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-Hook a hsignal (signal with hashtable).
+Hook su hsignal (segnale con tabella hash).
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -6850,34 +6845,34 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
                                      void *callback_data);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'signal': signal to catch, can begin or end with "*"
-  (priority allowed, see note about <<hook_priority,priority>>):
+* 'signal': segnale da catturare, può iniziare o terminare con "*"
+  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>):
 
 [width="100%",cols="^1,^3,5",options="header"]
 |========================================
-| Plugin | Signal | Arguments
+| Plugin | Segnale | Argomenti
 
 | irc | irc_redirection_xxx_yyy ^(1)^ |
   redirection output
 |========================================
 
 [NOTE]
-^(1)^ 'xxx' is signal argument used in redirection, 'yyy' is redirection
-pattern.
+^(1)^ 'xxx' è l'argomento del segnale usato nella redirezione, 'yyy' è lo schema
+di redirezione.
 
-* 'callback': function called when signal is received, arguments:
-** 'void *data': pointer
-** 'const char *signal': signal received
-** 'struct t_hashtable *hashtable': hashtable
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'callback': funzione chiamata a segnale ricevuto, argomenti:
+** 'void *data': puntatore
+** 'const char *signal': segnale ricevuto
+** 'struct t_hashtable *hashtable': tabella hash
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
-Return value:
+Valore restituito:
 
-* pointer to new hook, NULL if error occured
+* puntatore al nuovo hook, NULL in caso di errore
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -6896,10 +6891,10 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 hook = weechat.hook_hsignal(signal, callback, callback_data)
 
-# example
+# esempio
 def my_hsignal_cb(data, signal, hashtable):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -6907,27 +6902,26 @@ def my_hsignal_cb(data, signal, hashtable):
 hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hook_hsignal_send
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
-Send a hsignal (signal with hashtable).
+Invia un hsignal (segnale con tabella hash).
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'signal': signal to send
-* 'hashtable': hashtable
+* 'signal': segnale da inviare
+* 'hashtable': tabella hash
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -6948,10 +6942,10 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 weechat.hook_hsignal_send(signal, hashtable)
 
-# example
+# esempio
 weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----------------------------------------
 
@@ -8091,8 +8085,7 @@ Argomenti:
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
 ** 'highlight_tags': elenco di tag da evidenziare
-// TRANSLATION MISSING
-** 'no_highlight_nicks': list of nicks to NOT highlight
+** 'no_highlight_nicks': lista di nick da NON evidenziare
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
 
@@ -8258,19 +8251,16 @@ Argomenti:
 | highlight_tags | elenco separato da virgole di tag |
   elenco separato da virgole di tag da evidenziare in questo buffer
 
-// TRANSLATION MISSING
-| no_highlight_nicks | comma separated list of nicks |
-  comma separated list of nicks to NOT highlight in this buffer, for example:
+| no_highlight_nicks | elenco separato da virgole di nick |
+  elenco separato da virgole di nick da NON evidenziare in questo buffer, ad esempio:
   "joe,mike,robert"
 
-// TRANSLATION MISSING
-| no_highlight_nicks_add | comma separated list of nicks |
-  comma separated list of nicks to NOT highlight in this buffer, these words are
-  added to existing nicks in buffer
+| no_highlight_nicks_add | elenco separato da virgole di nick |
+  elenco separato da virgole di nick da NON evidenziare in questo buffer, queste
+  parole vengono aggiunte ai nick esistenti nel buffer
 
-// TRANSLATION MISSING
-| no_highlight_nicks_del | comma separated list of nicks |
-  comma separated list of nicks to remove from non highlighted nicks on buffer
+| no_highlight_nicks_del | elenco separato da virgole di nick |
+  elenco separato da virgole di nick da rimuovere dai nick non evidenziati nel buffer
 
 | key_bind_xxx | qualsiasi stringa |
   assegna un nuovo tasto 'xxx', specifico per questo buffer, il valore è il
@@ -8979,15 +8969,14 @@ weechat.nicklist_remove_all(buffer)
 weechat.nicklist_remove_all(my_buffer)
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_group_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return integer value of a group property.
+Restituisce un valore intero della proprietà di un gruppo.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -8996,19 +8985,19 @@ int weechat_nicklist_group_get_integer (struct t_gui_buffer *buffer,
                                         const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'group': group pointer
-* 'property': property name:
-** 'visible': 1 if group is visible, otherwise 0
-** 'level': group level (root is 0)
+* 'buffer': puntatore al buffer
+* 'group': puntatore al gruppo
+* 'property': nome della proprietà:
+** 'visible': 1 se il gruppo è visibile, altrimenti 0
+** 'level': livello del gruppo (root è 0)
 
-Return value:
+Valore restituito:
 
-* integer value of property
+* valore intero della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9019,22 +9008,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_group_get_integer(buffer, group, property)
 
-# example
+# esempio
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_group_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return string value of a group property.
+Restituisce il valore stringa della proprietà di un gruppo.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9043,19 +9031,19 @@ const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
                                                const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'group': group pointer
-* 'property': property name:
-** 'name': name of group
-** 'color': group color in nicklist
+* 'buffer': puntatore al buffer
+* 'group': puntatore al gruppo
+* 'property': nome della proprietà:
+** 'name': nome del gruppo
+** 'color': colore del gruppo nella lista nick
 
-Return value:
+Valore restituito:
 
-* string value of property
+* valore stringa della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9066,22 +9054,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_group_get_string(buffer, group, property)
 
-# example
+# esempio
 color = weechat.nicklist_group_get_string(buffer, group, "color")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_group_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return pointer value of a group property.
+Restituisce il valore puntatore della proprietà di un gruppo.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9090,18 +9077,18 @@ void *weechat_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
                                           const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'group': group pointer
-* 'property': property name:
-** 'parent': pointer to parent group
+* 'buffer': puntatore al buffer
+* 'group': puntatore al gruppo
+* 'property': nome della proprietà:
+** 'parent': puntatore al gruppo genitore
 
-Return value:
+Valore restituito:
 
-* pointer value of property
+* valore puntatore della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9112,22 +9099,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_group_get_pointer(buffer, group, property)
 
-# example
+# esempio
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_group_set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Set string value of a group property.
+Imposta il valore stringa della proprietà di un gruppo.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9137,35 +9123,35 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
                                  const char *value);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'group': group pointer
-* 'property' and 'value': property name, with its value:
+* 'buffer': puntatore al buffer
+* 'group': puntatore al gruppo
+* 'property' e 'value': nome della proprietà, con il suo valore:
 
 [width="100%",cols="^2,4,8",options="header"]
 |========================================
-| Name | Value | Description
+| Nome | Valore | Descrizione
 
-| color | WeeChat color option name |
-  see argument "color" of function
+| color | nome per l'opzione del colore per WeeChat |
+  consultare l'argomento "color" della funzione
   <<_weechat_nicklist_add_group,weechat_nicklist_add_group>>
 
 | visible | "0", "1" |
-  "0" = hidden group, "1" = visible group
+  "0" = gruppo nascosto, "1" = gruppo visibile
 |========================================
 
 C examples:
 
 [source,C]
 ----------------------------------------
-/* change group color to "bar_fg" */
+/* cambia colore del gruppo a "bar_fg" */
 weechat_nicklist_group_set (buffer, group, "color", "bar_fg");
 
-/* change group color to yellow */
+/* cambia il colore del gruppo a giallo */
 weechat_nicklist_group_set (buffer, group, "color", "yellow");
 
-/* hide group in nicklist */
+/* nasconde gruppo nella lista nick */
 weechat_nicklist_group_set (buffer, group, "visible", "0");
 ----------------------------------------
 
@@ -9173,30 +9159,29 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 weechat.nicklist_group_set(buffer, group, property, value)
 
-# examples
+# esempi
 
-# change group color to "bar_fg"
+# cambia colore del gruppo a "bar_fg"
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
 
-# change group color to yellow
+# cambia colore del gruppo a giallo
 weechat.nicklist_group_set(buffer, group, "color", "yellow")
 
-# hide group in nicklist
+# nasconde gruppo nella lista nick
 weechat.nicklist_group_set(buffer, group, "visible", "0")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_nick_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return integer value of a nick property.
+Restituisce il valore intero della proprietà di un nick.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9205,18 +9190,18 @@ int weechat_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
                                        const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'nick': nick pointer
-* 'property': property name:
-** 'visible': 1 if nick is visible, otherwise 0
+* 'buffer': puntatore al buffer
+* 'nick': puntatore al nick
+* 'property': nome della proprietà:
+** 'visible': 1 se il nick è visibile, altrimenti 0
 
-Return value:
+Valore restituito:
 
-* integer value of property
+* valore intero della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9227,22 +9212,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_nick_get_integer(buffer, nick, property)
 
-# example
+# esempio
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_nick_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return string value of a nick property.
+Restituisce il valore stringa della proprietà di un nick.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9251,21 +9235,21 @@ const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
                                               const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'nick': nick pointer
-* 'property': property name:
-** 'name': name of nick
-** 'color': nick color in nicklist
-** 'prefix': prefix of nick
-** 'prefix_color': prefix color in nicklist
+* 'buffer': puntatore al buffer
+* 'nick': puntatore al nick
+* 'property': nome della proprietà:
+** 'name': nome del nick
+** 'color': colore del nick nella lista nick
+** 'prefix': prefisso del nick
+** 'prefix_color': colore del prefisso nella lista nick
 
-Return value:
+Valore restituito:
 
-* string value of property
+* valore stringa della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9276,22 +9260,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_nick_get_string(buffer, nick, property)
 
-# example
+# esempio
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_nick_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Return pointer value of a nick property.
+Restituisce il valore puntatore della proprietà di un nick.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9300,18 +9283,18 @@ void *weechat_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
                                          const char *property);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'nick': nick pointer
-* 'property': property name:
-** 'group': pointer to group containing this nick
+* 'buffer': puntatore al buffer
+* 'nick': puntatore al nick
+* 'property': nome proprietà:
+** 'group': puntatore al gruppo che contiene questo nick
 
-Return value:
+Valore restituito:
 
-* pointer value of property
+* valore puntatore della proprietà
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -9322,22 +9305,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
 
-# example
+# esempio
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_nicklist_nick_set
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Set string value of a nick property.
+Imposta il valore stringa della proprietà di un nick.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -9347,45 +9329,45 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
                                 const char *value);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'buffer': buffer pointer
-* 'nick': nick pointer
-* 'property' and 'value': property name, with its value:
+* 'buffer': puntatore al buffer
+* 'nick': puntatore al nick
+* 'property' and 'value': nome della proprietà, con il suo valore:
 
 [width="100%",cols="^2,4,8",options="header"]
 |========================================
-| Name | Value | Description
+| Nome | Valore | Descrizione
 
-| color | WeeChat color option name |
-  see argument "color" of function
+| color | nome per l'opzione del colore di WeeChat |
+  consultare l'argomento "color" della funzione
   <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
 
-| prefix | any string |
-  prefix of nick
+| prefix | qualsiasi stringa |
+  prefisso del nick
 
-| prefix_color | WeeChat color option name |
-  see argument "prefix_color" of function
+| prefix_color | nome per l'opzione del colore di WeeChat |
+  consultare l'argomento "prefix_color" della funzione
   <<_weechat_nicklist_add_nick,weechat_nicklist_add_nick>>
 
 | visible | "0", "1" |
-  "0" = hidden nick, "1" = visible nick
+  "0" = nick nascosto, "1" = nick visibile
 |========================================
 
-C examples:
+Esempi in C:
 
 [source,C]
 ----------------------------------------
-/* change nick color to cyan */
+/* cambia colore del nick in azzurro */
 weechat_nicklist_nick_set (buffer, nick, "color", "cyan");
 
-/* change prefix to "+" */
+/* cambia prefisso in "+" */
 weechat_nicklist_nick_set (buffer, nick, "prefix", "+");
 
-/* change prefix color to yellow */
+/* cambia colore del prefisso in giallo */
 weechat_nicklist_nick_set (buffer, nick, "prefix_color", "yellow");
 
-/* hide nick in nicklist */
+/* nascondi nick nella lista nick */
 weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 ----------------------------------------
 
@@ -9393,21 +9375,21 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 weechat.nicklist_nick_set(buffer, nick, property, value)
 
-# examples
+# esempi
 
-# change nick color to cyan
+# cambia colore del nick in azzurro
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
 
-# change prefix to "+"
+# cambia prefisso in "+"
 weechat.nicklist_nick_set(buffer, nick, "prefix", "+")
 
-# change prefix color to yellow
+# cambia colore del prefisso in giallo
 weechat.nicklist_nick_set(buffer, nick, "prefix_color", "yellow")
 
-# hide nick in nicklist
+# nascondi nick nella lista nick
 weechat.nicklist_nick_set(buffer, nick, "visible", "0")
 ----------------------------------------
 

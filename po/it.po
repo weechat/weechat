@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-10-29 22:58+0200\n"
-"PO-Revision-Date: 2010-10-10 19:30+0200\n"
+"POT-Creation-Date: 2010-11-01 18:38+0100\n"
+"PO-Revision-Date: 2010-10-30 20:30+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -464,7 +464,7 @@ msgid "Layout reset for windows"
 msgstr "Reset del layout per le finestre"
 
 msgid "Plugins loaded:"
-msgstr "Plugin caricati:"
+msgstr "Plugin attivati:"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
@@ -1043,7 +1043,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [nome]] | [add nome plugin.buffer tag regex] "
 "| [del nome|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1116,9 +1115,10 @@ msgstr ""
 "Il tasto predefinito alt+'=' abilita/disabilita il filtro.\n"
 "\n"
 "Tag utilizzati di frequente:\n"
-"  no_filter, no_highlight, log0..log9 (livello di log),\n"
+"  no_filter, no_highlight, no_log, log0..log9 (livello di log),\n"
 "  notify_message, notify_private, notify_highlight,\n"
-"  irc_xxx (xxx è il nome comando o il numero, consultare /server raw), "
+"  nick_xxx (xxx è il nick nel messaggio),\n"
+"  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   "
 "irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "\n"
@@ -1836,21 +1836,24 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-#, fuzzy
 msgid ""
 "keep only unique numbers in hotlist (this applies only on hotlist items "
 "where name is NOT displayed after number)"
 msgstr ""
-"numero massimo di nomi nella hotlist (0 = nessun nome visualizzato, solo "
-"numeri dei buffer)"
+"mantiene solo numeri univoci nella hotlist (vale solo per gli elementi della "
+"hotlist per cui il nome NON viene visualizzato dopo il numero)"
 
 msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
 "history for each buffer)"
 msgstr ""
+"condivide comandi, testo o entrambi in input per tutti i buffer (resta "
+"tuttavia la cronologia locale per ogni buffer)"
 
 msgid "if set and input is shared, always overwrite input in target buffer"
 msgstr ""
+"se impostato e con l'input condiviso, sovrascrive sempre l'input nel buffer "
+"di destinazione"
 
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
@@ -1908,9 +1911,8 @@ msgstr "allineamento prefisso (none, left, right (predefinito))"
 msgid "max size for prefix (0 = no max size)"
 msgstr "dimensione massima prefisso (0 = nessuna dimensione massima)"
 
-#, fuzzy
 msgid "min size for prefix"
-msgstr "stringa visualizzata dopo il prefisso"
+msgstr "dimensione minima per il prefisso"
 
 msgid "display '+' if prefix is truncated"
 msgstr "mostra '+' se il prefisso è troncato"
@@ -4610,12 +4612,18 @@ msgid ""
 "(should be last buffer)r, next = current buffer + 1, near_server = after "
 "last channel/pv of server)"
 msgstr ""
+"forza la posizione del nuovo canale nell'elenco dei buffer (none = posizione "
+"predefinita (dovrebbe essere l'ultimo buffer)r, next = buffer corrente + 1, "
+"near_server = dopo l'ultimo canale/privato del server)"
 
 msgid ""
 "force position of new private in list of buffers (none = default position "
 "(should be last buffer)r, next = current buffer + 1, near_server = after "
 "last channel/pv of server)"
 msgstr ""
+"forza la posizione del nuovo buffer privato nell'elenco dei buffer (none = "
+"posizione predefinita (dovrebbe essere l'ultimo buffer)r, next = buffer "
+"corrente + 1, near_server = dopo l'ultimo canale/privato del server)"
 
 msgid "text to display before nick in chat window"
 msgstr "testo da visualizzare prima del nick nella finestra di chat"
@@ -4627,6 +4635,9 @@ msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
 msgstr ""
+"forza colore per alcuni nick: l'hash calcolato con il nick per trovare il "
+"colore non verrà usato per questi nick (il formato è: \"nick1:color1;nick2:"
+"color2\")"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -4676,9 +4687,8 @@ msgstr ""
 "visualizza un messaggio in privato quando l'utente è tornato (dopo l'uscita "
 "dal server)"
 
-#, fuzzy
 msgid "display server away message in away bar item"
-msgstr "mostra il messaggio di assenza remota una sola volta in privato"
+msgstr "mostra il messaggio di assenza del server nell'elemento barra di away"
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "visualizza le modalità canale nell'elemento barra \"buffer_name\""
@@ -4785,9 +4795,13 @@ msgstr "colore per il prefisso del nick che è utente sul canale"
 
 msgid "color for nick prefix (prefix is custom string displayed before nick)"
 msgstr ""
+"colore per il prefisso del nick (il prefisso è la stringa personalizzata "
+"visualizzata prima del nick)"
 
 msgid "color for nick suffix (suffix is custom string displayed after nick)"
 msgstr ""
+"colore per il suffisso del nick (il suffisso è la stringa personalizzata "
+"visualizzata dopo il nick)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "colore per il testo \"Notifica\" nelle notifiche"
@@ -5139,9 +5153,10 @@ msgstr "%s%s%s%s ha cambiato l'argomento per %s%s%s da \"%s%s\" a \"%s%s\""
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
-msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
+msgstr ""
+"%s%s%s%s ha rimosso l'argomento per %s%s%s (argomento precedente: \"%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
@@ -5366,35 +5381,37 @@ msgstr "%s%s: comando \"%s\" ricevuto senza il nome host"
 msgid "IRC raw messages"
 msgstr "messaggi raw IRC"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
-msgstr "%s%s: argomento mancante per il comando \"%s\""
+msgstr "%s%s: argomento \"%s\" mancante per lo schema di redirezione"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%s%s: errore: il relay per \"%s\" esiste già"
+msgstr "%s%s: lo schema di redirezione \"%s\" esiste già"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
-msgstr "%s%s: non connesso al server \"%s\"!"
+msgstr "%s%s: nessuna connessione al server \"%s\" per la redirezione"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: argomento mancante per il comando \"%s\""
+msgstr "%s%s: argomento \"%s\"  mancante per la redirezione"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
-msgstr "%s%s: server \"%s\" non trovato"
+msgstr "%s%s: schema di redirezione \"%s\" non trovato"
 
 #, c-format
 msgid ""
 "%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
 "pattern: \"%s\")"
 msgstr ""
+"%s: avvio redirezione per il comando \"%s\" sul server \"%s\" (schema di "
+"redirezione: \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: server \"%s\" not found for redirect"
-msgstr "%s%s: server \"%s\" non trovato"
+msgstr "%s%s: server \"%s\" non trovato per la redirezione"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -5466,9 +5483,9 @@ msgstr "%s: riconnessione al server tra %d %s"
 msgid "%s: switching address to %s/%d"
 msgstr "%s: cambio indirizzo in %s/%d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: connected to %s/%d (%s)"
-msgstr "%s: connesso a %s (%s)"
+msgstr "%s: connesso a %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -5592,9 +5609,9 @@ msgstr " - info sul certificato (%s) del client:"
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: impossibile leggere il certificato \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown address server \"%s\", cannot connect"
-msgstr "%s%s: nick non definiti per il server\"%s\", impossibile connettersi"
+msgstr "%s%s: indirizzo server \"%s\" sconosciuto, impossibile connettersi"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
@@ -6065,7 +6082,7 @@ msgid "%sError: plugin \"%s\" not found"
 msgstr "%sErrore: plugin \"%s\" non trovato"
 
 msgid "Plugins unloaded"
-msgstr "Plugin scaricati"
+msgstr "Plugin disattivati"
 
 msgid "Actions (letter+enter):"
 msgstr "Azioni (lettera+invio)"
@@ -6582,7 +6599,7 @@ msgstr ""
 "nome_file: file script da attivare\n"
 "      nome: il nome dello script\n"
 "\n"
-"Senza argomenti, il comando elenca tutti gli script caricati"
+"Senza argomenti, il comando elenca tutti gli script attivati"
 
 msgid "list of scripts"
 msgstr "elenco degli script"
@@ -6633,7 +6650,7 @@ msgstr "%s%s: impossibile spostare lo script %s in %s (%s)"
 #. TRANSLATORS: "%s" is language (for example "perl")
 #, c-format
 msgid "%s scripts loaded:"
-msgstr "script %s caricati:"
+msgstr "script %s attivati:"
 
 #, c-format
 msgid "    file: %s"
