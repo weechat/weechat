@@ -27,6 +27,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-debug.h"
+#include "irc-ignore.h"
 #include "irc-redirect.h"
 #include "irc-server.h"
 
@@ -52,7 +53,7 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
                             weechat_plugin->name);
         
         irc_server_print_log ();
-        
+        irc_ignore_print_log ();
         irc_redirect_pattern_print_log ();
         
         weechat_log_printf ("");

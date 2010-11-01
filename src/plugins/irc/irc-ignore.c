@@ -272,7 +272,7 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     if (ignore->channel)
         free (ignore->channel);
     
-    /* remove filter from filters list */
+    /* remove ignore from list */
     if (ignore->prev_ignore)
         (ignore->prev_ignore)->next_ignore = ignore->next_ignore;
     if (ignore->next_ignore)
@@ -327,4 +327,28 @@ irc_ignore_add_to_infolist (struct t_infolist *infolist,
         return 0;
     
     return 1;
+}
+
+/*
+ * irc_ignore_print_log: print ignore infos in log (usually for crash dump)
+ */
+
+void
+irc_ignore_print_log ()
+{
+    struct t_irc_ignore *ptr_ignore;
+    
+    for (ptr_ignore = irc_ignore_list; ptr_ignore;
+         ptr_ignore = ptr_ignore->next_ignore)
+    {
+        weechat_log_printf ("");
+        weechat_log_printf ("[ignore (addr:0x%lx)]", ptr_ignore);
+        weechat_log_printf ("  number . . . . . . . : %d",    ptr_ignore->number);
+        weechat_log_printf ("  mask . . . . . . . . : '%s'",  ptr_ignore->mask);
+        weechat_log_printf ("  regex_mask . . . . . : 0x%lx", ptr_ignore->regex_mask);
+        weechat_log_printf ("  server . . . . . . . : '%s'",  ptr_ignore->server);
+        weechat_log_printf ("  channel. . . . . . . : '%s'",  ptr_ignore->channel);
+        weechat_log_printf ("  prev_ignore. . . . . : 0x%lx", ptr_ignore->prev_ignore);
+        weechat_log_printf ("  next_ignore. . . . . : 0x%lx", ptr_ignore->next_ignore);
+    }
 }
