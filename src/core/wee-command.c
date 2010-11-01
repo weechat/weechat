@@ -3247,7 +3247,7 @@ command_reload_file (struct t_config_file *config_file)
     else
         rc = config_file_reload (config_file);
     
-    if (rc == 0)
+    if (rc == WEECHAT_RC_OK)
     {
         gui_chat_printf (NULL,
                          _("Options reloaded from %s"),
