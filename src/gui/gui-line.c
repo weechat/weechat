@@ -799,6 +799,10 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->data->message = (message) ? strdup (message) : strdup ("");
     new_line->data->highlight = gui_line_has_highlight (new_line);
     
+    notify_level = gui_line_get_notify_level (new_line);
+    if (notify_level == GUI_HOTLIST_HIGHLIGHT)
+        new_line->data->highlight = 1;
+    
     /* add line to lines list */
     gui_line_add_to_list (buffer->own_lines, new_line);
     
@@ -823,7 +827,6 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         }
         else
         {
-            notify_level = gui_line_get_notify_level (new_line);
             if (!weechat_upgrading && (notify_level == GUI_HOTLIST_PRIVATE))
             {
                 message_for_signal = gui_chat_build_string_prefix_message (new_line);
