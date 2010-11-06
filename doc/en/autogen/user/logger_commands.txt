@@ -10,6 +10,13 @@
   
   Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
   
+  Log levels used by IRC plugin:
+    1: user message, notice, private
+    2: nick change
+    3: server message
+    4: join/part/quit
+    9: all other messages
+  
   Examples:
     set level to 5 for current buffer:
       /logger set 5
@@ -21,12 +28,5 @@
       /set logger.level.core.weechat 0
     use a directory per IRC server and a file per channel inside:
       /set logger.mask.irc "$server/$channel.weechatlog"
-  
-  Log levels used by IRC plugin:
-    1: user message, notice, private
-    2: nick change
-    3: server message
-    4: join/part/quit
-    9: all other messages
 ........................................
 

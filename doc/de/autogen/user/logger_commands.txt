@@ -10,6 +10,13 @@
   
   Die Optionen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
   
+  Level der Protokollierung, die die IRC Erweiterung unterstützt:
+    1: Nachrichten von Usern, private Nachrichten und Bemerkungen
+    2: Wechsel von Nicks (/nick)
+    3: Nachrichten vom Server
+    4: join/part/quit Nachrichten
+    9: alle Nachrichten
+  
   Beispiele:
     Stellt den Level für den aktuellen Buffer auf 5 ein:
       /logger set 5
@@ -21,12 +28,5 @@
       /set logger.level.core.weechat 0
     Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
       /set logger.mask.irc "$server/$channel.weechatlog"
-  
-  Level der Protokollierung, die die IRC Erweiterung unterstützt:
-    1: Nachrichten von Usern, private Nachrichten und Bemerkungen
-    2: Wechsel von Nicks (/nick)
-    3: Nachrichten vom Server
-    4: join/part/quit Nachrichten
-    9: alle Nachrichten
 ........................................
 

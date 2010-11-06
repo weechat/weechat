@@ -10,6 +10,13 @@
   
   Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.
   
+  Niveaux de log utilisés par l'extension IRC:
+    1: message d'utilisateur, notice, privé
+    2: changement de pseudo
+    3: message du serveur
+    4: join/part/quit
+    9: tous les autres messages
+  
   Exemples:
     définir le niveau d'enregistrement à 5 pour le tampon courant:
         /logger set 5
@@ -21,12 +28,5 @@
       /set logger.level.core.weechat 0
     utiliser un répertoire par serveur IRC et un fichier par canal dedans:
       /set logger.mask.irc "$server/$channel.weechatlog"
-  
-  Niveaux de log utilisés par l'extension IRC:
-    1: message d'utilisateur, notice, privé
-    2: changement de pseudo
-    3: message du serveur
-    4: join/part/quit
-    9: tous les autres messages
 ........................................
 
