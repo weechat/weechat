@@ -18,6 +18,8 @@
 
 | irc | irc_msg_part | messaggio di uscita predefinito per il canale IRC
 
+| irc | irc_notify_nicks | nicks in notify list
+
 | irc | irc_privates | privati su tutti i server IRC
 
 | irc | irc_server | server IRC corrente

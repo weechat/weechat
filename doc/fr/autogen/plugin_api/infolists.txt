@@ -10,6 +10,8 @@
 
 | irc | irc_nick | liste des pseudos pour un canal IRC | pointeur vers le pseudo (optionnel) | serveur,canal,pseudo (canal et pseudo sont optionnels)
 
+| irc | irc_notify | liste des notifications | pointeur vers la notification (optionnel) | nom de serveur (peut démarrer ou se terminer par "*" comme joker) (optionnel)
+
 | irc | irc_server | liste des serveurs IRC | pointeur vers le serveur (optionnel) | nom de serveur (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
 | logger | logger_buffer | liste des enregistreurs de tampons (loggers) | pointeur vers le logger (optionnel) | -

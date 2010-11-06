@@ -32,6 +32,7 @@ enum t_irc_upgrade_type
     IRC_UPGRADE_TYPE_RAW_MESSAGE,
     IRC_UPGRADE_TYPE_REDIRECT_PATTERN,
     IRC_UPGRADE_TYPE_REDIRECT,
+    IRC_UPGRADE_TYPE_NOTIFY,
 };
 
 extern int irc_upgrade_save ();

@@ -152,8 +152,8 @@
   ignore nicks/hosts from servers or channels
 
        list: list all ignores
-        add: add a ignore
-        del: del a ignore
+        add: add an ignore
+        del: delete an ignore
      number: number of ignore to delete (look at list to find it)
        -all: delete all ignores
   nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
@@ -362,6 +362,29 @@
     server: send to this server (internal name)
   nickname: user to send notice to
       text: text to send
+........................................
+
+&bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::
+
+........................................
+  add a notification for presence or away status of nicks on servers
+
+     add: add a notification
+    nick: nickname
+  server: internal server name (by default current server)
+   -away: notify when away message is changed (by doing whois on nick)
+     del: delete a notification
+    -all: delete all notifications
+  
+  Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
+  
+  Examples:
+    notify when "toto" joins/quits current server:
+      /notify add toto
+    notify when "toto" joins/quits freenode server:
+      /notify add toto freenode
+    notify when "toto" is away or back on freenode server:
+      /notify add toto freenode -away
 ........................................
 
 &bull; *`/op`* `nickname [nickname]`::

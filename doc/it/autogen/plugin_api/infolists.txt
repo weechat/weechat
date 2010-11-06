@@ -10,6 +10,8 @@
 
 | irc | irc_nick | elenco dei nick per un canale IRC | puntatore al nick (opzionale) | server,canale,nick (canale e nick sono opzionali)
 
+| irc | irc_notify | list of notify | notify pointer (optional) | nome server (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+
 | irc | irc_server | elenco di server IRC | puntatore al server (opzionale) | nome server (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | logger | logger_buffer | elenco dei buffer logger | puntatore al logger (opzionale) | -

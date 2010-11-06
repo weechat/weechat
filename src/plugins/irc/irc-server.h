@@ -64,6 +64,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS, /* max nicks for away check      */
     IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
     IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
+    IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -173,6 +174,8 @@ struct t_irc_server
     struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
     struct t_irc_redirect *redirects;        /* command redirections         */
     struct t_irc_redirect *last_redirect;    /* last command redirection     */
+    struct t_irc_notify *notify_list;        /* list of notify               */
+    struct t_irc_notify *last_notify;        /* last notify                  */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */
@@ -234,6 +237,9 @@ extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,
                                     const char *full_message,
                                     const char *tags);
+extern void irc_server_parse_message (const char *message, char **nick,
+                                      char **host, char **command,
+                                      char **channel, char **arguments);
 extern struct t_hashtable *irc_server_parse_message_to_hashtable (const char *message);
 extern void irc_server_set_send_default_tags (const char *tags);
 extern void irc_server_sendf (struct t_irc_server *server, int flags,

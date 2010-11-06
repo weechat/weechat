@@ -57,6 +57,8 @@ irc_la_SOURCES = irc.c \
                  irc-msgbuffer.h \
                  irc-nick.c \
                  irc-nick.h \
+                 irc-notify.c \
+                 irc-notify.h \
                  irc-protocol.c \
                  irc-protocol.h \
                  irc-raw.c \

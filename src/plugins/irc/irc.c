@@ -29,6 +29,7 @@
 #include "irc.h"
 #include "irc-bar-item.h"
 #include "irc-buffer.h"
+#include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-command.h"
 #include "irc-completion.h"
@@ -36,11 +37,11 @@
 #include "irc-debug.h"
 #include "irc-info.h"
 #include "irc-input.h"
-#include "irc-server.h"
-#include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-raw.h"
 #include "irc-redirect.h"
+#include "irc-server.h"
 #include "irc-upgrade.h"
 
 
@@ -167,6 +168,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     irc_redirect_init ();
     
+    irc_notify_init ();
+    
     /* hook some signals */
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
@@ -268,6 +271,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     irc_server_free_all ();
     
     irc_config_free ();
+    
+    irc_notify_end ();
     
     irc_redirect_end ();
     

@@ -29,13 +29,14 @@
 #include "irc.h"
 #include "irc-upgrade.h"
 #include "irc-buffer.h"
+#include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-input.h"
-#include "irc-server.h"
-#include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-raw.h"
 #include "irc-redirect.h"
+#include "irc-server.h"
 
 
 struct t_irc_server *irc_upgrade_current_server = NULL;
@@ -55,6 +56,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     struct t_irc_nick *ptr_nick;
     struct t_irc_redirect *ptr_redirect;
     struct t_irc_redirect_pattern *ptr_redirect_pattern;
+    struct t_irc_notify *ptr_notify;
     struct t_irc_raw_message *ptr_raw_message;
     int rc;
     
@@ -122,7 +124,6 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         for (ptr_redirect = ptr_server->redirects; ptr_redirect;
              ptr_redirect = ptr_redirect->next_redirect)
         {
-            /* save channel */
             infolist = weechat_infolist_new ();
             if (!infolist)
                 return 0;
@@ -133,6 +134,26 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
             }
             rc = weechat_upgrade_write_object (upgrade_file,
                                                IRC_UPGRADE_TYPE_REDIRECT,
+                                               infolist);
+            weechat_infolist_free (infolist);
+            if (!rc)
+                return 0;
+        }
+        
+        /* save server notify list */
+        for (ptr_notify = ptr_server->notify_list; ptr_notify;
+             ptr_notify = ptr_notify->next_notify)
+        {
+            infolist = weechat_infolist_new ();
+            if (!infolist)
+                return 0;
+            if (!irc_notify_add_to_infolist (infolist, ptr_notify))
+            {
+                weechat_infolist_free (infolist);
+                return 0;
+            }
+            rc = weechat_upgrade_write_object (upgrade_file,
+                                               IRC_UPGRADE_TYPE_NOTIFY,
                                                infolist);
             weechat_infolist_free (infolist);
             if (!rc)
@@ -255,6 +276,7 @@ irc_upgrade_read_cb (void *data,
     const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
     struct t_irc_redirect *ptr_redirect;
+    struct t_irc_notify *ptr_notify;
     struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
@@ -557,6 +579,20 @@ irc_upgrade_read_cb (void *data,
                     weechat_infolist_string (infolist, "cmd_start"),
                     weechat_infolist_string (infolist, "cmd_stop"),
                     weechat_infolist_string (infolist, "cmd_extra"));
+                break;
+            case IRC_UPGRADE_TYPE_NOTIFY:
+                if (irc_upgrade_current_server)
+                {
+                    ptr_notify = irc_notify_search (irc_upgrade_current_server,
+                                                    weechat_infolist_string (infolist, "nick"));
+                    if (ptr_notify)
+                    {
+                        ptr_notify->is_on_server = weechat_infolist_integer (infolist, "is_on_server");
+                        str = weechat_infolist_string (infolist, "away_message");
+                        if (str)
+                            ptr_notify->away_message = strdup (str);
+                    }
+                }
                 break;
             case IRC_UPGRADE_TYPE_RAW_MESSAGE:
                 irc_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),

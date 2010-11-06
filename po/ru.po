@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-01 18:38+0100\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-11-06 11:25+0100\n"
+"PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -3041,6 +3041,40 @@ msgid "Notice"
 msgstr ""
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
+#, fuzzy, c-format
+msgid "%s%s: notify already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s"
+msgstr "%s IP адрес не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding notification"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%s: all notifications deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%s: no notification in list"
+msgstr "%s игнорирования не найдены\n"
+
+#, fuzzy, c-format
+msgid "%s: notification deleted"
+msgstr "Игнорирования не заданы.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: notification not found"
+msgstr "подпись не найдена"
+
+#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s невозможно создать новый буфер привата \"%s\"\n"
 
@@ -3327,8 +3361,8 @@ msgstr ""
 
 msgid ""
 "     list: list all ignores\n"
-"      add: add a ignore\n"
-"      del: del a ignore\n"
+"      add: add an ignore\n"
+"      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
@@ -3605,6 +3639,32 @@ msgid ""
 msgstr ""
 "  ник: адресат уведомления\n"
 "текст: отправляемый текст"
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+
+msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgstr ""
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nickname\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
 
 #, fuzzy
 msgid "give channel operator status to nickname(s)"
@@ -4137,6 +4197,10 @@ msgstr "список ников на канале"
 msgid "numbers for defined ignores"
 msgstr ""
 
+#, fuzzy
+msgid "nicks in notify list"
+msgstr "%s игнорирования не найдены\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -4306,6 +4370,11 @@ msgid ""
 "WeeChat version in string)"
 msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
 
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -4433,6 +4502,18 @@ msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
 msgstr "отображать notice'ы в виде личных сообщений"
 
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
 msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
@@ -4521,6 +4602,17 @@ msgstr ""
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
 
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
+
+#, fuzzy
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+"позволить отправлять цвета специальными кодами (^Cb=жирный, ^Ccxx=цветной, "
+"^Ccxx,yy=цветной+фон, ^Cu=подчёркнутый, ^Cr=инвертированный)"
+
 #, fuzzy
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
@@ -4541,20 +4633,22 @@ msgid ""
 msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
 
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
-
-#, fuzzy
-msgid ""
-"allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
-msgstr ""
-"позволить отправлять цвета специальными кодами (^Cb=жирный, ^Ccxx=цветной, "
-"^Ccxx,yy=цветной+фон, ^Cu=подчёркнутый, ^Cr=инвертированный)"
-
 #, fuzzy
 msgid "send unknown commands to server"
 msgstr "отсылать неизвестные команды IRC серверу"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr ""
+"интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr ""
+"интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
 
 #, fuzzy, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -4733,6 +4827,14 @@ msgstr "порт IRC сервера"
 msgid "ignore pointer (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "list of notify"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "notify pointer (optional)"
+msgstr "Сохраняю конфигурацию\n"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s вы не подключены к серверу\n"
@@ -4740,6 +4842,46 @@ msgstr "%s вы не подключены к серверу\n"
 #, fuzzy, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Это окно не является каналом!\n"
+
+msgid "offline"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Notify list for %s%s%s:"
+msgstr "очистить хотлист"
+
+msgid "Notify list is empty on this server"
+msgstr ""
+
+#, fuzzy
+msgid "Notify list for all servers:"
+msgstr "очистить хотлист"
+
+msgid "Notify list is empty on all servers"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has joined %s%s"
+msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has quit %s%s"
+msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr "%s%s%s отсутствует: %s\n"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr "Тема канала %s%s%s: "
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr "%s%s%s отсутствует: %s\n"
 
 #, c-format
 msgid ""
@@ -6682,54 +6824,3 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
-
-#, fuzzy
-#~ msgid "open new channels near server"
-#~ msgstr "открывать новые каналы/приваты рядом с сервером"
-
-#, fuzzy
-#~ msgid "open new privates near server"
-#~ msgstr "открывать новые каналы/приваты рядом с сервером"
-
-#, fuzzy
-#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-#~ msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
-
-#, fuzzy
-#~ msgid "list of regex modifiers"
-#~ msgstr "Список сокращений:\n"
-
-#, fuzzy
-#~ msgid "List of regex modifiers:"
-#~ msgstr "Список сокращений:\n"
-
-#, fuzzy
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "цвет ника"
-
-#, fuzzy
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "цвет ника"
-
-#, fuzzy
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "цвет ника"
-
-#, fuzzy
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "цвет ника"
-
-#, fuzzy
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "цвет ника"
-
-#~ msgid ""
-#~ "channel: channel name to join\n"
-#~ "    key: key to join the channel"
-#~ msgstr ""
-#~ "канал: название канала\n"
-#~ " ключ: ключ для входа на канал"
-
-#, fuzzy
-#~ msgid "color for buffer name when connected using SSL to server"
-#~ msgstr "%s вы не подключены к серверу\n"

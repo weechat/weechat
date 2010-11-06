@@ -218,6 +218,16 @@
 ** type: integer
 ** values: auto, never, always (default value: `auto`)
 
+* *irc.look.notify_tags_ison*
+** description: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highglight", "notify_message" or "notify_private"`
+** type: string
+** values: any string (default value: `"notify_message"`)
+
+* *irc.look.notify_tags_whois*
+** description: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highglight", "notify_message" or "notify_private"`
+** type: string
+** values: any string (default value: `"notify_message"`)
+
 * *irc.look.part_closes_buffer*
 ** description: `close buffer when /part is issued on a channel`
 ** type: boolean
@@ -297,6 +307,16 @@
 ** description: `interval between two refreshs of lag item, when lag is increasing (in seconds)`
 ** type: integer
 ** values: 1 .. 3600 (default value: `1`)
+
+* *irc.network.notify_check_ison*
+** description: `interval between two checks for notify with IRC command "ison" (in minutes)`
+** type: integer
+** values: 1 .. 10080 (default value: `1`)
+
+* *irc.network.notify_check_whois*
+** description: `interval between two checks for notify with IRC command "whois" (in minutes)`
+** type: integer
+** values: 1 .. 10080 (default value: `5`)
 
 * *irc.network.send_unknown_commands*
 ** description: `send unknown commands to server`
@@ -395,6 +415,11 @@
 
 * *irc.server_default.nicks*
 ** description: `nicknames to use on server (separated by comma)`
+** type: string
+** values: any string (default value: `""`)
+
+* *irc.server_default.notify*
+** description: `notify list for server (you should not change this option but use /notify command instead)`
 ** type: string
 ** values: any string (default value: `""`)
 

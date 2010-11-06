@@ -18,6 +18,8 @@
 
 | irc | irc_msg_part | default part message for IRC channel
 
+| irc | irc_notify_nicks | nicks in notify list
+
 | irc | irc_privates | privates on all IRC servers
 
 | irc | irc_server | current IRC server

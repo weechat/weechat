@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-10-30
+v0.3.4-dev, 2010-11-06
 
 
 Version 0.3.4 (under dev!)
@@ -29,6 +29,10 @@ Version 0.3.4 (under dev!)
   nicklist_group_get_integer, nicklist_group_get_string,
   nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
   nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
+* irc: add command /notify, new options irc.look.notify_tags_ison,
+  irc.look.notify_tags_whois, irc.network.notify_check_ison,
+  irc.network.notify_check_whois, new option "notify" in servers, new infolist
+  "irc_notify" (task #5441)
 * irc: add new option irc.look.nick_color_force (task #7374)
 * irc: improve nick prefixes, all modes (even unknown) are used with PREFIX
   value from message 005

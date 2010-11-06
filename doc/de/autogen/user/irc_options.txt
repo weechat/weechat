@@ -218,6 +218,16 @@
 ** Typ: integer
 ** Werte: auto, never, always (Standardwert: `auto`)
 
+* *irc.look.notify_tags_ison*
+** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highglight", "notify_message" or "notify_private"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
+
+* *irc.look.notify_tags_whois*
+** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highglight", "notify_message" or "notify_private"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
+
 * *irc.look.part_closes_buffer*
 ** Beschreibung: `Schließt den Buffer wenn "/part" im Channel ausgeführt wird`
 ** Typ: boolesch
@@ -297,6 +307,16 @@
 ** Beschreibung: `Intervall zwischen zwei Aktualisierungen des Lag-Items, wenn die Verzögerungszeit sich erhöht (in Sekunden)`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `1`)
+
+* *irc.network.notify_check_ison*
+** Beschreibung: `interval between two checks for notify with IRC command "ison" (in minutes)`
+** Typ: integer
+** Werte: 1 .. 10080 (Standardwert: `1`)
+
+* *irc.network.notify_check_whois*
+** Beschreibung: `interval between two checks for notify with IRC command "whois" (in minutes)`
+** Typ: integer
+** Werte: 1 .. 10080 (Standardwert: `5`)
 
 * *irc.network.send_unknown_commands*
 ** Beschreibung: `Sende unbekannte Befehle an den Server`
@@ -395,6 +415,11 @@
 
 * *irc.server_default.nicks*
 ** Beschreibung: `Nicknamen, die auf dem IRC-Server benutzt werden sollen (durch Komma getrennt)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* *irc.server_default.notify*
+** Beschreibung: `notify list for server (you should not change this option but use /notify command instead)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

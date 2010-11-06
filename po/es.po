@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-01 18:38+0100\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-11-06 11:25+0100\n"
+"PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -3254,6 +3254,42 @@ msgstr ""
 msgid "Notice"
 msgstr ""
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr ""
+"%s%s: el comando \"%s\" debe ser ejecutado en un buffer irc (canal o "
+"servidor)"
+
+#, fuzzy, c-format
+msgid "%s%s: notify already exists"
+msgstr "%s%s: ya se encuentra ignorado"
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s"
+msgstr "%s: cambiando dirección a %s/%d"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding notification"
+msgstr "%s%s: error al actualizar la lista de ignorados"
+
+#, fuzzy, c-format
+msgid "%s: all notifications deleted"
+msgstr "%s: lista de ignorados borrada"
+
+#, fuzzy, c-format
+msgid "%s: no notification in list"
+msgstr "%s: lista de ignorados vacía"
+
+#, fuzzy, c-format
+msgid "%s: notification deleted"
+msgstr "%s: borrado de la lista de ignorados"
+
+#, fuzzy, c-format
+msgid "%s%s: notification not found"
+msgstr "%s%s: no se encontró el ignorado"
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: no es posible crear la conversación privada \"%s\""
@@ -3567,10 +3603,11 @@ msgstr "ignorar apodos/hosts en servidores o canales"
 msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr "[list] | [add [re:]apodo/host [servidor [canal]]] | [del número|-all]"
 
+#, fuzzy
 msgid ""
 "     list: list all ignores\n"
-"      add: add a ignore\n"
-"      del: del a ignore\n"
+"      add: add an ignore\n"
+"      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
@@ -3890,6 +3927,33 @@ msgstr ""
 "servidor: enviar a este servidor (nombre interno)\n"
 "   apodo: apodo del destinatario\n"
 "   texto: texto a enviar"
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+
+#, fuzzy
+msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgstr "[list] | [add [re:]apodo/host [servidor [canal]]] | [del número|-all]"
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nickname\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
 
 msgid "give channel operator status to nickname(s)"
 msgstr "dar el estado de operador del canal a el/los usuario(s)"
@@ -4399,6 +4463,10 @@ msgstr "mensaje de abandono por defecto"
 msgid "numbers for defined ignores"
 msgstr "números para los ignores definidos"
 
+#, fuzzy
+msgid "nicks in notify list"
+msgstr "%s: lista de ignorados vacía"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -4575,6 +4643,11 @@ msgstr ""
 "mensaje de salida por defecto (cuando se desconecta del servidor) (\"%v\" "
 "será reemplazado por la versión de WeeChat)"
 
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+
 #, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s%s: error al crear el servidor \"%s\""
@@ -4713,6 +4786,18 @@ msgstr ""
 "mostrar avisos como mensajes privados (si es auto, usa un buffer privado si "
 "lo encuentra)"
 
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
 msgid "close buffer when /part is issued on a channel"
 msgstr "cerrar el buffer cuando /part es usado en un canal"
 
@@ -4807,6 +4892,19 @@ msgstr ""
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr "retraso máximo para la autoreconexión (en segundos, 0 = sin máximo)"
 
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr ""
+"cuando se desactiva, los códigos de color se ignoran en los mensajes "
+"entrantes"
+
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+"permitir al usuario enviar colores con códigos especiales (ctrl-c + un "
+"código y color opcional: b=negrita, cxx,yy=color+fondo, u=subrayado, "
+"r=invertido)"
+
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 "intervalo entre dos comprobaciones de retraso (en segundos, 0 = nunca "
@@ -4826,21 +4924,21 @@ msgstr ""
 "intervalo de refresco para el elemento de lag, cuando este aumenta (en "
 "segundos)"
 
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr ""
-"cuando se desactiva, los códigos de color se ignoran en los mensajes "
-"entrantes"
-
-msgid ""
-"allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
-msgstr ""
-"permitir al usuario enviar colores con códigos especiales (ctrl-c + un "
-"código y color opcional: b=negrita, cxx,yy=color+fondo, u=subrayado, "
-"r=invertido)"
-
 msgid "send unknown commands to server"
 msgstr "envía comandos desconocidos al servidor"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr ""
+"intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr ""
+"intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -5004,6 +5102,14 @@ msgstr "lista de IRC ignores"
 msgid "ignore pointer (optional)"
 msgstr "puntero del ignore (opcional)"
 
+#, fuzzy
+msgid "list of notify"
+msgstr "lista de opciones"
+
+#, fuzzy
+msgid "notify pointer (optional)"
+msgstr "puntero del apodo (opcional)"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: no estas conectado a ningún servidor"
@@ -5011,6 +5117,46 @@ msgstr "%s%s: no estas conectado a ningún servidor"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ¡este buffer no es un canal!"
+
+msgid "offline"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Notify list for %s%s%s:"
+msgstr "Lista de transferencias:"
+
+msgid "Notify list is empty on this server"
+msgstr ""
+
+#, fuzzy
+msgid "Notify list for all servers:"
+msgstr "Lista de transferencias:"
+
+msgid "Notify list is empty on all servers"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has joined %s%s"
+msgstr "%s%s%s%s ha expulsado %s%s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has quit %s%s"
+msgstr "%s%s%s%s ha expulsado %s%s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr "%s%s[%s%s%s]%s está ausente: %s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr "%sEl tema para %s%s%s es \"%s%s\""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr "%s%s[%s%s%s]%s está ausente: %s"
 
 #, c-format
 msgid ""
@@ -7023,52 +7169,3 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Puntero"
-
-#~ msgid "open new channels near server"
-#~ msgstr "abrir nuevos canales cerca del servidor"
-
-#~ msgid "open new privates near server"
-#~ msgstr "abrir nuevas conversaciones privadas cerca del servidor"
-
-#~ msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-#~ msgstr ""
-#~ "%s%s: dirección sin definir para el servidor  \"%s\", no es posible "
-#~ "conectarse"
-
-#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-#~ msgstr ""
-#~ "%s%s: buffer no encontrado para el servidor IRC \"%s\", canal \"%s\""
-
-#, fuzzy
-#~ msgid "list of regex modifiers"
-#~ msgstr "lista de transferencias"
-
-#, fuzzy
-#~ msgid "List of regex modifiers:"
-#~ msgstr "Lista de proxies:"
-
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "color para el prefijo #1 en la lista de apodos"
-
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "color para el prefijo #2 en la lista de apodos"
-
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "color para el prefijo #3 en la lista de apodos"
-
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "color para el prefijo #4 en la lista de apodos"
-
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "color para el prefijo #5 en la lista de apodos"
-
-#~ msgid ""
-#~ "channel: channel name to join\n"
-#~ "    key: key to join the channel"
-#~ msgstr ""
-#~ "canal: canal a unirse\n"
-#~ "clave: clave para unirse al canal"
-
-#, fuzzy
-#~ msgid "color for buffer name when connected using SSL to server"
-#~ msgstr "%s%s: no estas conectado a ningún servidor"

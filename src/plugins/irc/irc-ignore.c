@@ -36,7 +36,7 @@ struct t_irc_ignore *last_irc_ignore = NULL; /* last ignore in list         */
 
 
 /*
- * irc_ignore_valid: check if a ignore pointer exists
+ * irc_ignore_valid: check if an ignore pointer exists
  *                   return 1 if ignore exists
  *                          0 if ignore is not found
  */
@@ -61,7 +61,7 @@ irc_ignore_valid (struct t_irc_ignore *ignore)
 }
 
 /*
- * irc_ignore_search: search a ignore
+ * irc_ignore_search: search an ignore
  */
 
 struct t_irc_ignore *
@@ -91,7 +91,7 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
 }
 
 /*
- * irc_ignore_search_by_number: search a ignore by number (first is #1)
+ * irc_ignore_search_by_number: search an ignore by number (first is #1)
  */
 
 struct t_irc_ignore *
@@ -241,7 +241,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
 }
 
 /*
- * irc_ignore_free: remove a ignore
+ * irc_ignore_free: remove an ignore
  */
 
 void
@@ -302,7 +302,7 @@ irc_ignore_free_all ()
 }
 
 /*
- * irc_ignore_add_to_infolist: add a ignore in an infolist
+ * irc_ignore_add_to_infolist: add an ignore in an infolist
  *                             return 1 if ok, 0 if error
  */
 

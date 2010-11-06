@@ -218,6 +218,16 @@
 ** type: entier
 ** valeurs: auto, never, always (valeur par défaut: `auto`)
 
+* *irc.look.notify_tags_ison*
+** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison), par exemple: "notify_highlight", "notify_message" ou "notify_private"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
+
+* *irc.look.notify_tags_whois*
+** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsque le status d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_highlight", "notify_message" ou "notify_private"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
+
 * *irc.look.part_closes_buffer*
 ** description: `fermer le tampon lorsque /part est exécuté sur un canal`
 ** type: booléen
@@ -297,6 +307,16 @@
 ** description: `intervalle entre deux rafraichissements du lag, lorsque le lag augmente (en secondes)`
 ** type: entier
 ** valeurs: 1 .. 3600 (valeur par défaut: `1`)
+
+* *irc.network.notify_check_ison*
+** description: `intervalle entre deux vérifications de notification avec la commande IRC "ison" (en minutes)`
+** type: entier
+** valeurs: 1 .. 10080 (valeur par défaut: `1`)
+
+* *irc.network.notify_check_whois*
+** description: `intervalle entre deux vérifications de notification avec la commande IRC "whois" (en minutes)`
+** type: entier
+** valeurs: 1 .. 10080 (valeur par défaut: `5`)
 
 * *irc.network.send_unknown_commands*
 ** description: `envoie les commandes inconnues au serveur`
@@ -395,6 +415,11 @@
 
 * *irc.server_default.nicks*
 ** description: `pseudos à utiliser sur le serveur (séparés par des virgules)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* *irc.server_default.notify*
+** description: `liste de notifications pour le serveur (vous ne devriez pas changer cette option mais utiliser la commande /notify)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

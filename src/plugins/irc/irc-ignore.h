@@ -30,8 +30,8 @@ struct t_irc_ignore
     int number;                        /* ignore number                     */
     char *mask;                        /* nick / host mask                  */
     regex_t *regex_mask;               /* regex for mask                    */
-    char *server;                      /* server name                       */
-    char *channel;                     /* channel name                      */
+    char *server;                      /* server name ("*" == any server)   */
+    char *channel;                     /* channel name ("*" == any channel) */
     struct t_irc_ignore *prev_ignore;  /* link to previous ignore           */
     struct t_irc_ignore *next_ignore;  /* link to next ignore               */
 };

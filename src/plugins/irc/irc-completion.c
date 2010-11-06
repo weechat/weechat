@@ -28,13 +28,14 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-buffer.h"
+#include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-ignore.h"
-#include "irc-server.h"
-#include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
+#include "irc-server.h"
 
 
 /*
@@ -566,6 +567,50 @@ irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
 }
 
 /*
+ * irc_completion_notify_nicks_cb: callback for completion with nicks in notify
+ *                                 list
+ */
+
+int
+irc_completion_notify_nicks_cb (void *data, const char *completion_item,
+                                struct t_gui_buffer *buffer,
+                                struct t_gui_completion *completion)
+{
+    struct t_irc_notify *ptr_notify;
+    
+    IRC_BUFFER_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    
+    if (ptr_server)
+    {
+        for (ptr_notify = ptr_server->notify_list; ptr_notify;
+             ptr_notify = ptr_notify->next_notify)
+        {
+            weechat_hook_completion_list_add (completion, ptr_notify->nick,
+                                              0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+    else
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            for (ptr_notify = ptr_server->notify_list; ptr_notify;
+                 ptr_notify = ptr_notify->next_notify)
+            {
+                weechat_hook_completion_list_add (completion, ptr_notify->nick,
+                                                  0, WEECHAT_LIST_POS_SORT);
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_completion_init: init completion for IRC plugin
  */
 
@@ -614,4 +659,7 @@ irc_completion_init ()
     weechat_hook_completion ("irc_ignores_numbers",
                              N_("numbers for defined ignores"),
                              &irc_completion_ignores_numbers_cb, NULL);
+    weechat_hook_completion ("irc_notify_nicks",
+                             N_("nicks in notify list"),
+                             &irc_completion_notify_nicks_cb, NULL);
 }

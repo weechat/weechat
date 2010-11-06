@@ -18,6 +18,8 @@
 
 | irc | irc_msg_part | message de fin par défaut pour le canal IRC
 
+| irc | irc_notify_nicks | pseudos dans la liste de notifications
+
 | irc | irc_privates | privés sur tous les serveurs IRC
 
 | irc | irc_server | serveur IRC courant

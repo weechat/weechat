@@ -105,6 +105,8 @@ extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
 extern struct t_config_option *irc_config_look_notice_as_pv;
+extern struct t_config_option *irc_config_look_notify_tags_ison;
+extern struct t_config_option *irc_config_look_notify_tags_whois;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_smart_filter;
@@ -131,12 +133,14 @@ extern struct t_config_option *irc_config_color_reason_quit;
 
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;
+extern struct t_config_option *irc_config_network_colors_receive;
+extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_lag_check;
 extern struct t_config_option *irc_config_network_lag_min_show;
 extern struct t_config_option *irc_config_network_lag_disconnect;
 extern struct t_config_option *irc_config_network_lag_refresh_interval;
-extern struct t_config_option *irc_config_network_colors_receive;
-extern struct t_config_option *irc_config_network_colors_send;
+extern struct t_config_option *irc_config_network_notify_check_ison;
+extern struct t_config_option *irc_config_network_notify_check_whois;
 extern struct t_config_option *irc_config_network_send_unknown_commands;
 
 extern struct t_config_option *irc_config_server_default[];

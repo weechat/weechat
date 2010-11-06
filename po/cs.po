@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-01 18:38+0100\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-11-06 11:25+0100\n"
+"PO-Revision-Date: 2010-11-05 17:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -3209,6 +3209,41 @@ msgstr ""
 msgid "Notice"
 msgstr ""
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr ""
+"%s%s: příkaz \"%s\" nemůže být spuštěn v irc bufferu (server nebo kanál)"
+
+#, fuzzy, c-format
+msgid "%s%s: notify already exists"
+msgstr "%s%s: ignorování již existuje"
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s"
+msgstr "%s: přepínám adresu na %s/%d"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding notification"
+msgstr "%s%s: chyba při přidávání ignorování"
+
+#, fuzzy, c-format
+msgid "%s: all notifications deleted"
+msgstr "%s: všechny ignorování byly smazány"
+
+#, fuzzy, c-format
+msgid "%s: no notification in list"
+msgstr "%s: žádné ignorování v seznamu"
+
+#, fuzzy, c-format
+msgid "%s: notification deleted"
+msgstr "%s: ignorování smazáno"
+
+#, fuzzy, c-format
+msgid "%s%s: notification not found"
+msgstr "%s%s: ignorování nenalezeno"
+
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nemohu vytvořít nový soukromý buffer\"%s\""
@@ -3519,10 +3554,11 @@ msgstr "ignorovat přezdívky/hosty na serveru nebo kanálu"
 msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 
+#, fuzzy
 msgid ""
 "     list: list all ignores\n"
-"      add: add a ignore\n"
-"      del: del a ignore\n"
+"      add: add an ignore\n"
+"      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
@@ -3842,6 +3878,33 @@ msgstr ""
 "   server: poslat tomuto serveru (vnitřní jméno)\n"
 "přezdívka: uživatel, kterému poslat notifikaci\n"
 "     text: text, který poslat"
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+
+#, fuzzy
+msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgstr "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nickname\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
 
 msgid "give channel operator status to nickname(s)"
 msgstr "dát status operátora kanálu přezdívce (přezdívkám)"
@@ -4347,6 +4410,10 @@ msgstr "výchozí odchozí zpráva pro IRC kanál"
 msgid "numbers for defined ignores"
 msgstr "čísla pro definované ignorování"
 
+#, fuzzy
+msgid "nicks in notify list"
+msgstr "%s: žádné ignorování v seznamu"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -4521,6 +4588,11 @@ msgstr ""
 "výchozí zpráva při uknočnení (odpojení od serveru) (\"%v\" bude nahrazeno "
 "verzí WeeChat v řetězci)"
 
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+
 #, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s%s: chyba při vytváření serveru \"%s\""
@@ -4655,6 +4727,18 @@ msgstr ""
 "zobrazovat upozornění jako soukromé zprávy (pokud je automaticky, použije se "
 "soukromý buffer, kdy existuje)"
 
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
 msgid "close buffer when /part is issued on a channel"
 msgstr "zavřít buffer, když je na kanálu spuštěn /part"
 
@@ -4750,6 +4834,17 @@ msgstr ""
 "maximální délka prodlevy automatíckého znovupřipojení k serveru (v "
 "sekundách, 0 = žádné maximum)"
 
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr "pokud je off, jsou barvy v příchozích zprávách ignorovány"
+
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+"povolit uživateli posílat barvy se speciálními kódy (ctrl-c + kód a "
+"volitelná barva: b=tlustě, cxx=barva, cxx,yy=barva+pozadí, u=podtržené, "
+"r=obrácené)"
+
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 "interval mezi dvěmi knotrolami pro lag (v sekundách, 0 = nikdy nekontrolovat)"
@@ -4766,19 +4861,23 @@ msgid ""
 msgstr ""
 "interval mezi dvěmi knotrolami pro lag, kdyz se lag zvětšuje (v sekundách)"
 
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr "pokud je off, jsou barvy v příchozích zprávách ignorovány"
-
-msgid ""
-"allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
-msgstr ""
-"povolit uživateli posílat barvy se speciálními kódy (ctrl-c + kód a "
-"volitelná barva: b=tlustě, cxx=barva, cxx,yy=barva+pozadí, u=podtržené, "
-"r=obrácené)"
-
 msgid "send unknown commands to server"
 msgstr "posílat neznámé příkazy na server"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr ""
+"interval mezi dvěmi knotrolami pro nepřítomnost (v minutách, 0 = nikdy "
+"nekontrolovat)"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr ""
+"interval mezi dvěmi knotrolami pro nepřítomnost (v minutách, 0 = nikdy "
+"nekontrolovat)"
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -4941,6 +5040,14 @@ msgstr "seznam pro IRC ignorování"
 msgid "ignore pointer (optional)"
 msgstr "ignorovat ukazatel (volitelné)"
 
+#, fuzzy
+msgid "list of notify"
+msgstr "seznam konfiguračních možností"
+
+#, fuzzy
+msgid "notify pointer (optional)"
+msgstr "ukazatel přezdívky (volitelné)"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: nejste připojen k serveru"
@@ -4948,6 +5055,46 @@ msgstr "%s%s: nejste připojen k serveru"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
+
+msgid "offline"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Notify list for %s%s%s:"
+msgstr "Xfer seznam:"
+
+msgid "Notify list is empty on this server"
+msgstr ""
+
+#, fuzzy
+msgid "Notify list for all servers:"
+msgstr "Xfer seznam:"
+
+msgid "Notify list is empty on all servers"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has joined %s%s"
+msgstr "%s%s%s%s byl vykopnut %s%s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has quit %s%s"
+msgstr "%s%s%s%s byl vykopnut %s%s%s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr "%s%s[%s%s%s]%s je pryč: %s"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr "%sTéma pro %s%s%s v \"%s%s\""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr "%s%s[%s%s%s]%s je pryč: %s"
 
 #, c-format
 msgid ""
@@ -6934,23 +7081,3 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
-
-#~ msgid "open new channels near server"
-#~ msgstr "otevřít nový kanál poblíž serveru"
-
-#~ msgid "open new privates near server"
-#~ msgstr "otevřít nový soukromý rozhovor poblíž serveru"
-
-#~ msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-#~ msgstr "%s%s: adresa pro server \"%s\" není definována, nemohu se připojit"
-
-#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-#~ msgstr "%s%s: buffer IRC serveru \"%s\", kanálu \"%s\" nenalezen"
-
-#, fuzzy
-#~ msgid "list of regex modifiers"
-#~ msgstr "seznam xfer"
-
-#, fuzzy
-#~ msgid "List of regex modifiers:"
-#~ msgstr "Seznam proxy:"

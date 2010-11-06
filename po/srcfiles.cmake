@@ -138,6 +138,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-msgbuffer.h
 ./src/plugins/irc/irc-nick.c
 ./src/plugins/irc/irc-nick.h
+./src/plugins/irc/irc-notify.c
+./src/plugins/irc/irc-notify.h
 ./src/plugins/irc/irc-protocol.c
 ./src/plugins/irc/irc-protocol.h
 ./src/plugins/irc/irc-raw.c

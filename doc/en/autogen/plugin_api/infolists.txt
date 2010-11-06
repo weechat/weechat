@@ -10,6 +10,8 @@
 
 | irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (channel and nick are optional)
 
+| irc | irc_notify | list of notify | notify pointer (optional) | server name (can start or end with "*" as wildcard) (optional)
+
 | irc | irc_server | list of IRC servers | server pointer (optional) | server name (can start or end with "*" as wildcard) (optional)
 
 | logger | logger_buffer | list of logger buffers | logger pointer (optional) | -

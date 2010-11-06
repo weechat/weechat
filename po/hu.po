@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-01 18:38+0100\n"
-"PO-Revision-Date: 2010-08-07 10:46+0200\n"
+"POT-Creation-Date: 2010-11-06 11:25+0100\n"
+"PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -3021,6 +3021,40 @@ msgid "Notice"
 msgstr ""
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
+
+#, fuzzy, c-format
+msgid "%s%s: notify already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s"
+msgstr "%s IP-cím nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding notification"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%s: all notifications deleted"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%s: no notification in list"
+msgstr "%s nem található ilyen mellőzés\n"
+
+#, fuzzy, c-format
+msgid "%s: notification deleted"
+msgstr "Nincs mellőzés megadva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: notification not found"
+msgstr "aláírás nem található"
+
+#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
@@ -3308,8 +3342,8 @@ msgstr ""
 
 msgid ""
 "     list: list all ignores\n"
-"      add: add a ignore\n"
-"      del: del a ignore\n"
+"      add: add an ignore\n"
+"      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
@@ -3588,6 +3622,32 @@ msgid ""
 msgstr ""
 "   név: felhasználó akinek az üzenetet küldjük\n"
 "szöveg: az üzenet szövege"
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+
+msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgstr ""
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nickname\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
 
 #, fuzzy
 msgid "give channel operator status to nickname(s)"
@@ -4128,6 +4188,10 @@ msgstr "felhasználók listája a szobában"
 msgid "numbers for defined ignores"
 msgstr ""
 
+#, fuzzy
+msgid "nicks in notify list"
+msgstr "%s nem található ilyen mellőzés\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -4299,6 +4363,11 @@ msgstr ""
 "alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
 "cserélődik)"
 
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -4426,6 +4495,18 @@ msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
 msgstr "figyelmeztetések privát üzenetként való mutatása"
 
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
 msgid "close buffer when /part is issued on a channel"
 msgstr ""
 
@@ -4514,6 +4595,17 @@ msgstr ""
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
 
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr "ha ki van kapcsolva, "
+
+#, fuzzy
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+"színküldés engedélyezése speciális karakterekkel (^Cb=félkövér, ^Ccxx=szín, "
+"^Cxx,yy=szín+háttérszín ^Cu=aláhúzás, ^Cr=fordított)"
+
 #, fuzzy
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
@@ -4531,20 +4623,20 @@ msgid ""
 "seconds)"
 msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
 
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr "ha ki van kapcsolva, "
-
-#, fuzzy
-msgid ""
-"allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
-msgstr ""
-"színküldés engedélyezése speciális karakterekkel (^Cb=félkövér, ^Ccxx=szín, "
-"^Cxx,yy=szín+háttérszín ^Cu=aláhúzás, ^Cr=fordított)"
-
 #, fuzzy
 msgid "send unknown commands to server"
 msgstr "ismeretlen parancsok küldése az IRC szervernek"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
+
+#, fuzzy
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
 
 #, fuzzy, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -4721,6 +4813,14 @@ msgstr "IRC szerver portja"
 msgid "ignore pointer (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "list of notify"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "notify pointer (optional)"
+msgstr "Beállítások mentése a lemezre\n"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s nincs csatlakozva szerverhez!\n"
@@ -4728,6 +4828,46 @@ msgstr "%s nincs csatlakozva szerverhez!\n"
 #, fuzzy, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
+
+msgid "offline"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Notify list for %s%s%s:"
+msgstr "hotlist törlése"
+
+msgid "Notify list is empty on this server"
+msgstr ""
+
+#, fuzzy
+msgid "Notify list for all servers:"
+msgstr "hotlist törlése"
+
+msgid "Notify list is empty on all servers"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has joined %s%s"
+msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has quit %s%s"
+msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr "%s%s%s távol: %s\n"
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr "A %s%s%s szoba témája: "
+
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr "%s%s%s távol: %s\n"
 
 #, c-format
 msgid ""
@@ -6676,54 +6816,3 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
-
-#, fuzzy
-#~ msgid "open new channels near server"
-#~ msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
-
-#, fuzzy
-#~ msgid "open new privates near server"
-#~ msgstr "az új szobák/privát beszélgetések a szerverhez közel nyíljanak"
-
-#, fuzzy
-#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-#~ msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
-
-#, fuzzy
-#~ msgid "list of regex modifiers"
-#~ msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-#~ msgid "List of regex modifiers:"
-#~ msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-#~ msgid "text color for prefix #1 in nicklist"
-#~ msgstr "név színe"
-
-#, fuzzy
-#~ msgid "text color for prefix #2 in nicklist"
-#~ msgstr "név színe"
-
-#, fuzzy
-#~ msgid "text color for prefix #3 in nicklist"
-#~ msgstr "név színe"
-
-#, fuzzy
-#~ msgid "text color for prefix #4 in nicklist"
-#~ msgstr "név színe"
-
-#, fuzzy
-#~ msgid "text color for prefix #5 in nicklist"
-#~ msgstr "név színe"
-
-#~ msgid ""
-#~ "channel: channel name to join\n"
-#~ "    key: key to join the channel"
-#~ msgstr ""
-#~ "szoba: a szoba neve, ahová csatlakozni szeretnénk\n"
-#~ "kulcs: a csatlakozáshoz szükséges kulcs"
-
-#, fuzzy
-#~ msgid "color for buffer name when connected using SSL to server"
-#~ msgstr "%s nincs csatlakozva szerverhez!\n"

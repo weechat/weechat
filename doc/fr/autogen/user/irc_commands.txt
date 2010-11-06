@@ -364,6 +364,29 @@
     texte: texte à envoyer
 ........................................
 
+&bull; *`/notify`* `[add pseudo [serveur [-away]]] | [del pseudo|-all [serveur]]`::
+
+........................................
+  ajoute une notification de présence ou de statut d'absence pour des pseudos sur les serveurs
+
+      add: ajoute une notification
+   pasudo: pseudo
+  serveur: nom interne du serveur (par défaut le serveur courant)
+    -away: notifie quand le message d'absence est changé (en faisant un whois sur le pseudo)
+      del: supprime une notification
+     -all: supprime toutes les notifications
+  
+  Sans paramètre, cette commande affiche les notifications pour le serveur courant (ou tous les serveurs si la commande est exécutée sur le tampon "core").
+  
+  Exemples:
+    notifie quand "toto" rejoint/quitte le serveur courant:
+      /notify add toto
+    notifie quand "toto" rejoint/quitte le serveur freenode:
+      /notify add toto freenode
+    notifie quand "toto" est absent ou de retour sur le serveur freenode:
+      /notify add toto freenode -away
+........................................
+
 &bull; *`/op`* `pseudo [pseudo]`::
 
 ........................................

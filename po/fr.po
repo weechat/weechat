@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-01 18:38+0100\n"
-"PO-Revision-Date: 2010-10-29 22:59+0200\n"
+"POT-Creation-Date: 2010-11-06 11:25+0100\n"
+"PO-Revision-Date: 2010-11-05 22:53+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3300,6 +3300,42 @@ msgid "Notice"
 msgstr "Notice"
 
 #, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr ""
+"%s%s: le serveur doit être spécifié car vous n'êtes pas sur un serveur ou un "
+"canal irc"
+
+#, c-format
+msgid "%s%s: notify already exists"
+msgstr "%s%s: la notification existe déjà"
+
+#, c-format
+msgid "%s: notification added for %s%s"
+msgstr "%s: notification ajoutée pour %s%s"
+
+#, c-format
+msgid "%s%s: error adding notification"
+msgstr "%s%s: erreur d'ajout de la notification"
+
+#, c-format
+msgid "%s: all notifications deleted"
+msgstr "%s: notifications supprimées"
+
+#, c-format
+msgid "%s: no notification in list"
+msgstr "%s: pas de notification dans la liste"
+
+#, c-format
+msgid "%s: notification deleted"
+msgstr "%s: notification supprimée"
+
+#, c-format
+msgid "%s%s: notification not found"
+msgstr "%s%s: notification non trouvée"
+
+#, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: impossible de créer le tampon privé \"%s\""
 
@@ -3614,8 +3650,8 @@ msgstr "[list] | [add [re:]pseudo/hote [server [channel]]] | [del numéro|-all]"
 
 msgid ""
 "     list: list all ignores\n"
-"      add: add a ignore\n"
-"      del: del a ignore\n"
+"      add: add an ignore\n"
+"      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
 "nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
@@ -3937,6 +3973,53 @@ msgstr ""
 "serveur: envoyer à ce serveur (nom interne)\n"
 " pseudo: pseudo cible pour la notice\n"
 "  texte: texte à envoyer"
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+"ajoute une notification de présence ou de statut d'absence pour des pseudos "
+"sur les serveurs"
+
+msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgstr "[add pseudo [serveur [-away]]] | [del pseudo|-all [serveur]]"
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nickname\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
+"    add: ajoute une notification\n"
+" pasudo: pseudo\n"
+"serveur: nom interne du serveur (par défaut le serveur courant)\n"
+"  -away: notifie quand le message d'absence est changé (en faisant un whois "
+"sur le pseudo)\n"
+"    del: supprime une notification\n"
+"   -all: supprime toutes les notifications\n"
+"\n"
+"Sans paramètre, cette commande affiche les notifications pour le serveur "
+"courant (ou tous les serveurs si la commande est exécutée sur le tampon "
+"\"core\").\n"
+"\n"
+"Exemples:\n"
+"  notifie quand \"toto\" rejoint/quitte le serveur courant:\n"
+"    /notify add toto\n"
+"  notifie quand \"toto\" rejoint/quitte le serveur freenode:\n"
+"    /notify add toto freenode\n"
+"  notifie quand \"toto\" est absent ou de retour sur le serveur freenode:\n"
+"    /notify add toto freenode -away"
 
 msgid "give channel operator status to nickname(s)"
 msgstr "donner le statut opérateur à un/des pseudo(s)"
@@ -4446,6 +4529,9 @@ msgstr "message de fin par défaut pour le canal IRC"
 msgid "numbers for defined ignores"
 msgstr "numéros pour les ignores définis"
 
+msgid "nicks in notify list"
+msgstr "pseudos dans la liste de notifications"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
@@ -4627,6 +4713,13 @@ msgstr ""
 "message de fin par défaut (lors de la déconnexion du serveur) (\"%v\" sera "
 "remplacé par la version de WeeChat dans la chaîne)"
 
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+"liste de notifications pour le serveur (vous ne devriez pas changer cette "
+"option mais utiliser la commande /notify)"
+
 #, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s%s: erreur de création du serveur \"%s\""
@@ -4774,6 +4867,26 @@ msgstr ""
 "afficher les notices comme des messages privés (si auto, utilise le tampon "
 "privé s'il est trouvé)"
 
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+"liste des tags (séparés par des virgules) utilisés dans les messages "
+"affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur "
+"(résultat de la commande ison), par exemple: \"notify_highlight\", "
+"\"notify_message\" ou \"notify_private\""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highglight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+"liste des tags (séparés par des virgules) utilisés dans les messages "
+"affichés par notify lorsque le status d'absence d'un pseudo change (résultat "
+"de la commande whois), par exemple: \"notify_highlight\", \"notify_message\" "
+"ou \"notify_private\""
+
 msgid "close buffer when /part is issued on a channel"
 msgstr "fermer le tampon lorsque /part est exécuté sur un canal"
 
@@ -4873,6 +4986,17 @@ msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
 msgstr ""
 "délai maximum d'autoreconnection au serveur (en secondes, 0 = pas de maximum)"
 
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr "si désactivé, les codes couleurs des messages entrants sont ignorés"
+
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+"autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (ctrl-"
+"c + un code et une couleur optionnelle: b=gras, cxx=couleur, cxx,yy=couleur"
+"+fond, u=souligné, r=inversé)"
+
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 "intervalle entre deux vérifications du lag (en secondes, 0 = ne jamais "
@@ -4892,19 +5016,21 @@ msgstr ""
 "intervalle entre deux rafraichissements du lag, lorsque le lag augmente (en "
 "secondes)"
 
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr "si désactivé, les codes couleurs des messages entrants sont ignorés"
-
-msgid ""
-"allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
-msgstr ""
-"autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (ctrl-"
-"c + un code et une couleur optionnelle: b=gras, cxx=couleur, cxx,yy=couleur"
-"+fond, u=souligné, r=inversé)"
-
 msgid "send unknown commands to server"
 msgstr "envoie les commandes inconnues au serveur"
+
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr ""
+"intervalle entre deux vérifications de notification avec la commande IRC "
+"\"ison\" (en minutes)"
+
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr ""
+"intervalle entre deux vérifications de notification avec la commande IRC "
+"\"whois\" (en minutes)"
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -5065,6 +5191,12 @@ msgstr "liste des ignores IRC"
 msgid "ignore pointer (optional)"
 msgstr "pointeur vers l'ignore (optionnel)"
 
+msgid "list of notify"
+msgstr "liste des notifications"
+
+msgid "notify pointer (optional)"
+msgstr "pointeur vers la notification (optionnel)"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: vous n'êtes pas connecté au serveur"
@@ -5072,6 +5204,45 @@ msgstr "%s%s: vous n'êtes pas connecté au serveur"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ce tampon n'est pas un canal !"
+
+msgid "offline"
+msgstr "déconnecté"
+
+msgid "online"
+msgstr "connecté"
+
+#, c-format
+msgid "Notify list for %s%s%s:"
+msgstr "Liste de notifications pour %s%s%s:"
+
+msgid "Notify list is empty on this server"
+msgstr "La liste de notifications est vide sur ce serveur"
+
+msgid "Notify list for all servers:"
+msgstr "Liste de notifications pour tous les serveurs:"
+
+msgid "Notify list is empty on all servers"
+msgstr "La liste de notifications est vide sur tous les serveurs"
+
+#, c-format
+msgid "%snotify: %s%s%s has joined %s%s"
+msgstr "%snotify: %s%s%s a rejoint %s%s"
+
+#, c-format
+msgid "%snotify: %s%s%s has quit %s%s"
+msgstr "%snotify: %s%s%s a quitté %s%s"
+
+#, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr "%snotify: %s%s%s est maintenant absent: \"%s\""
+
+#, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr "%snotify: %s%s%s est de retour"
+
+#, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr "%snotify: %s%s%s est toujours absent: \"%s\""
 
 #, c-format
 msgid ""
@@ -7100,23 +7271,3 @@ msgstr "Hashtable (sortie)"
 
 msgid "Pointer"
 msgstr "Pointeur"
-
-#~ msgid ""
-#~ "display full away message in away bar item (if not set, display "
-#~ "translated string \"away\")"
-#~ msgstr ""
-#~ "afficher le message complet d'absence dans l'objet de barre d'absence (si "
-#~ "non défini, affiche la chaîne tra"
-
-#~ msgid "open new channels near server"
-#~ msgstr "ouvrir les nouveaux canaux près du serveur"
-
-#~ msgid "open new privates near server"
-#~ msgstr "ouvrir les nouveaux privés près du serveur"
-
-#~ msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
-#~ msgstr ""
-#~ "%s%s: adresses non définies pour le serveur \"%s\", connexion impossible"
-
-#~ msgid "%s%s: buffer not found for IRC server \"%s\", channel \"%s\""
-#~ msgstr "%s%s: tampon non trouvé pour le serveur IRC \"%s\", canal \"%s\""

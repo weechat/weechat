@@ -32,13 +32,14 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
-#include "irc-ctcp.h"
 #include "irc-buffer.h"
+#include "irc-channel.h"
+#include "irc-ctcp.h"
 #include "irc-ignore.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-server.h"
-#include "irc-channel.h"
 
 
 struct t_config_file *irc_config_file = NULL;
@@ -79,6 +80,8 @@ struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_notice_as_pv;
+struct t_config_option *irc_config_look_notify_tags_ison;
+struct t_config_option *irc_config_look_notify_tags_whois;
 struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_smart_filter;
@@ -109,12 +112,14 @@ struct t_config_option *irc_config_color_reason_quit;
 
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
+struct t_config_option *irc_config_network_colors_receive;
+struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
 struct t_config_option *irc_config_network_lag_min_show;
 struct t_config_option *irc_config_network_lag_disconnect;
 struct t_config_option *irc_config_network_lag_refresh_interval;
-struct t_config_option *irc_config_network_colors_receive;
-struct t_config_option *irc_config_network_colors_send;
+struct t_config_option *irc_config_network_notify_check_ison;
+struct t_config_option *irc_config_network_notify_check_whois;
 struct t_config_option *irc_config_network_send_unknown_commands;
 
 /* IRC config, server section */
@@ -587,6 +592,38 @@ irc_config_change_network_lag_min_show (void *data,
 }
 
 /*
+ * irc_config_change_network_notify_check_ison: called when notify check ison
+ *                                              is changed
+ */
+
+void
+irc_config_change_network_notify_check_ison (void *data,
+                                             struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    irc_notify_hook_timer_ison ();
+}
+
+/*
+ * irc_config_change_network_notify_check_whois: called when notify check whois
+ *                                               is changed
+ */
+
+void
+irc_config_change_network_notify_check_whois (void *data,
+                                             struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    irc_notify_hook_timer_whois ();
+}
+
+/*
  * irc_config_change_network_send_unknown_commands: called when "send_unknown_commands"
  *                                                  is changed
  */
@@ -715,9 +752,36 @@ irc_config_server_change_cb (void *data, struct t_config_option *option)
                         irc_server_check_away (ptr_server);
                     else
                         irc_server_remove_away (ptr_server);
+                    break;
+                case IRC_SERVER_OPTION_NOTIFY:
+                    irc_notify_new_for_server (ptr_server);
+                    break;
             }
         }
     }
+}
+
+/*
+ * irc_config_server_default_check_notify: calback called when "notify" option
+ *                                         from "server_default" section is
+ *                                         changed: return 0 if a value is set
+ *                                         This option is not used, only values
+ *                                         in servers are used for notify.
+ */
+
+int
+irc_config_server_default_check_notify (void *data,
+                                        struct t_config_option *option,
+                                        const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (value && value[0])
+        return 0;
+    
+    return 1;
 }
 
 /*
@@ -1436,6 +1500,21 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_NOTIFY:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("notify list for server (you should not change this option "
+                    "but use /notify command instead)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                (section == irc_config_section_server_default) ?
+                &irc_config_server_default_check_notify : NULL,
+                NULL,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_NUM_OPTIONS:
             break;
     }
@@ -1855,6 +1934,24 @@ irc_config_init ()
         N_("display notices as private messages (if auto, use private buffer "
            "if found)"),
         "auto|never|always", 0, 0, "auto", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_notify_tags_ison = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notify_tags_ison", "string",
+        N_("comma separated list of tags used in messages printed by notify "
+           "when a nick joins or quits server (result of command ison), "
+           "for example: \"notify_highglight\", \"notify_message\" or "
+           "\"notify_private\""),
+        NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_look_notify_tags_whois = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notify_tags_whois", "string",
+        N_("comma separated list of tags used in messages printed by notify "
+           "when a nick away status changes (result of command whois), "
+           "for example: \"notify_highglight\", \"notify_message\" or "
+           "\"notify_private\""),
+        NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_part_closes_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
         "part_closes_buffer", "boolean",
@@ -2026,6 +2123,18 @@ irc_config_init ()
         N_("maximum autoreconnect delay to server (in seconds, 0 = no maximum)"),
         NULL, 0, 3600 * 24, "1800", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_network_colors_receive = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "colors_receive", "boolean",
+        N_("when off, colors codes are ignored in incoming messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_network_colors_send = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "colors_send", "boolean",
+        N_("allow user to send colors with special codes (ctrl-c + a code and "
+           "optional color: b=bold, cxx=color, cxx,yy=color+background, "
+           "u=underline, r=reverse)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_check", "integer",
@@ -2051,24 +2160,26 @@ irc_config_init ()
         N_("interval between two refreshs of lag item, when lag is increasing "
            "(in seconds)"),
         NULL, 1, 3600, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_colors_receive = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "colors_receive", "boolean",
-        N_("when off, colors codes are ignored in incoming messages"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_colors_send = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "colors_send", "boolean",
-        N_("allow user to send colors with special codes (ctrl-c + a code and "
-           "optional color: b=bold, cxx=color, cxx,yy=color+background, "
-           "u=underline, r=reverse)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_send_unknown_commands = weechat_config_new_option (
         irc_config_file, ptr_section,
         "send_unknown_commands", "boolean",
         N_("send unknown commands to server"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
+    irc_config_network_notify_check_ison = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notify_check_ison", "integer",
+        N_("interval between two checks for notify with IRC command \"ison\" "
+           "(in minutes)"),
+        NULL, 1, 60 * 24 * 7, "1", NULL, 0, NULL, NULL,
+        &irc_config_change_network_notify_check_ison, NULL, NULL, NULL);
+    irc_config_network_notify_check_whois = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notify_check_whois", "integer",
+        N_("interval between two checks for notify with IRC command \"whois\" "
+           "(in minutes)"),
+        NULL, 1, 60 * 24 * 7, "5", NULL, 0, NULL, NULL,
+        &irc_config_change_network_notify_check_whois, NULL, NULL, NULL);
     
     /* msgbuffer */
     ptr_section = weechat_config_new_section (irc_config_file, "msgbuffer",
@@ -2154,7 +2265,16 @@ irc_config_init ()
 int
 irc_config_read ()
 {
-    return weechat_config_read (irc_config_file);
+    int rc;
+    
+    rc = weechat_config_read (irc_config_file);
+    if (rc == WEECHAT_CONFIG_READ_OK)
+    {
+        irc_notify_new_for_all_servers ();
+        irc_config_change_network_notify_check_ison (NULL, NULL);
+        irc_config_change_network_notify_check_whois (NULL, NULL);
+    }
+    return rc;
 }
 
 /*

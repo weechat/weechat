@@ -91,6 +91,13 @@ extern struct t_irc_redirect *irc_redirect_new_with_commands (struct t_irc_serve
                                                               const char *cmd_stop,
                                                               const char *cmd_extra,
                                                               const char *cmd_filter);
+extern struct t_irc_redirect *irc_redirect_new (struct t_irc_server *server,
+                                                const char *pattern,
+                                                const char *signal,
+                                                int count,
+                                                const char *string,
+                                                int timeout,
+                                                const char *cmd_filter);
 extern struct t_irc_redirect *irc_redirect_search_available (struct t_irc_server *server);
 extern void irc_redirect_init_command (struct t_irc_redirect *redirect,
                                        const char *command);

@@ -36,16 +36,17 @@
 #include "irc.h"
 #include "irc-command.h"
 #include "irc-buffer.h"
+#include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
-#include "irc-input.h"
-#include "irc-server.h"
-#include "irc-channel.h"
-#include "irc-nick.h"
 #include "irc-display.h"
 #include "irc-ignore.h"
+#include "irc-input.h"
+#include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
+#include "irc-server.h"
 
 
 /*
@@ -1436,7 +1437,7 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_ignore_display: display a ignore
+ * irc_command_ignore_display: display an ignore
  */
 
 void
@@ -1454,10 +1455,8 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_CHAT,
                     (mask) ? mask : ignore->mask,
-                    (ignore->server) ?
-                    ignore->server : "*",
-                    (ignore->channel) ?
-                    ignore->channel : "*");
+                    (ignore->server) ? ignore->server : "*",
+                    (ignore->channel) ? ignore->channel : "*");
     
     if (mask)
         free (mask);
@@ -1483,7 +1482,7 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
     if ((argc == 1)
         || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
     {
-        /* display all key bindings */
+        /* display all ignores */
         if (irc_ignore_list)
         {
             weechat_printf (NULL, "");
@@ -2619,6 +2618,184 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                                       "notice");
     }
     
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_notify: add or remove notify
+ */
+
+int
+irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    struct t_irc_notify *ptr_notify;
+    int i, check_away;
+    
+    IRC_BUFFER_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+    
+    /* display notify status for users on server */
+    if (argc == 1)
+    {
+        irc_notify_display_list (ptr_server);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add notify */
+    if (weechat_strcasecmp (argv[1], "add") == 0)
+    {
+        if (argc < 3)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: missing arguments for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            "notify add");
+            return WEECHAT_RC_OK;
+        }
+        
+        check_away = 0;
+        
+        if (argc > 3)
+        {
+            ptr_server = irc_server_search (argv[3]);
+            if (!ptr_server)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: server \"%s\" not found"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                argv[3]);
+                return WEECHAT_RC_OK;
+            }
+        }
+        
+        if (!ptr_server)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: server must be specified because you are "
+                              "not on an irc server or channel"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (argc > 4)
+        {
+            for (i = 4; i < argc; i++)
+            {
+                if (weechat_strcasecmp (argv[i], "-away") == 0)
+                    check_away = 1;
+            }
+        }
+
+        ptr_notify = irc_notify_search (ptr_server, argv[2]);
+        if (ptr_notify)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: notify already exists"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        
+        ptr_notify = irc_notify_new (ptr_server, argv[2], check_away);
+        if (ptr_notify)
+        {
+            irc_notify_set_server_option (ptr_server);
+            weechat_printf (ptr_server->buffer,
+                            _("%s: notification added for %s%s"),
+                            IRC_PLUGIN_NAME,
+                            IRC_COLOR_CHAT_NICK,
+                            ptr_notify->nick);
+        }
+        else
+        {
+            weechat_printf (NULL, _("%s%s: error adding notification"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* delete notify */
+    if (weechat_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: missing arguments for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            "notify del");
+            return WEECHAT_RC_OK;
+        }
+
+        if (argc > 3)
+        {
+            ptr_server = irc_server_search (argv[3]);
+            if (!ptr_server)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: server \"%s\" not found"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                argv[3]);
+                return WEECHAT_RC_OK;
+            }
+        }
+        
+        if (!ptr_server)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: server must be specified because you are "
+                              "not on an irc server or channel"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        {
+            if (ptr_server->notify_list)
+            {
+                irc_notify_free_all (ptr_server);
+                irc_notify_set_server_option (ptr_server);
+                weechat_printf (NULL, _("%s: all notifications deleted"),
+                                IRC_PLUGIN_NAME);
+            }
+            else
+            {
+                weechat_printf (NULL, _("%s: no notification in list"),
+                                IRC_PLUGIN_NAME);
+            }
+        }
+        else
+        {
+            ptr_notify = irc_notify_search (ptr_server, argv[2]);
+            if (ptr_notify)
+            {
+                irc_notify_free (ptr_server, ptr_notify);
+                irc_notify_set_server_option (ptr_server);
+                weechat_printf (NULL, _("%s: notification deleted"),
+                                IRC_PLUGIN_NAME);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: notification not found"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                return WEECHAT_RC_OK;
+            }
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    weechat_printf (NULL,
+                    _("%s%s: unknown option for \"%s\" "
+                      "command"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "notify");
     return WEECHAT_RC_OK;
 }
 
@@ -4502,8 +4679,8 @@ irc_command_init ()
                           N_("[list] | [add [re:]nick/host [server [channel]]] | "
                              "[del number|-all]"),
                           N_("     list: list all ignores\n"
-                             "      add: add a ignore\n"
-                             "      del: del a ignore\n"
+                             "      add: add an ignore\n"
+                             "      del: delete an ignore\n"
                              "   number: number of ignore to delete (look at "
                              "list to find it)\n"
                              "     -all: delete all ignores\n"
@@ -4686,6 +4863,37 @@ irc_command_init ()
                              "nickname: user to send notice to\n"
                              "    text: text to send"),
                           "%(nicks) %-", &irc_command_notice, NULL);
+    weechat_hook_command ("notify",
+                          N_("add a notification for presence or away status "
+                             "of nicks on servers"),
+                          N_("[add nick [server [-away]]] | "
+                             "[del nick|-all [server]]"),
+                          N_("   add: add a notification\n"
+                             "  nick: nickname\n"
+                             "server: internal server name (by default "
+                             "current server)\n"
+                             " -away: notify when away message is changed "
+                             "(by doing whois on nick)\n"
+                             "   del: delete a notification\n"
+                             "  -all: delete all notifications\n\n"
+                             "Without argument, this command displays "
+                             "notifications for current server (or all servers "
+                             "if command is issued on core buffer).\n\n"
+                             "Examples:\n"
+                             "  notify when \"toto\" joins/quits current "
+                             "server:\n"
+                             "    /notify add toto\n"
+                             "  notify when \"toto\" joins/quits freenode "
+                             "server:\n"
+                             "    /notify add toto freenode\n"
+                             "  notify when \"toto\" is away or back on "
+                             "freenode server:\n"
+                             "    /notify add toto freenode -away"),
+                          "list"
+                          " || add %(irc_channel_nicks) %(irc_servers) "
+                          "-away %-"
+                          " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
+                          &irc_command_notify, NULL);
     weechat_hook_command ("op",
                           N_("give channel operator status to nickname(s)"),
                           N_("nickname [nickname]"),

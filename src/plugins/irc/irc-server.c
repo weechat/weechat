@@ -50,6 +50,7 @@
 #include "irc-config.h"
 #include "irc-input.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
 #include "irc-redirect.h"
@@ -73,6 +74,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
   "anti_flood_prio_high", "anti_flood_prio_low",
   "away_check", "away_check_max_nicks",
   "default_msg_part", "default_msg_quit",
+  "notify",
 };
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
@@ -86,6 +88,7 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "2", "2",
   "0", "25",
   "WeeChat %v", "WeeChat %v",
+  "",
 };
 
 char *irc_server_prefix_modes_default = "qaohvu";
@@ -650,6 +653,8 @@ irc_server_alloc (const char *name)
     }
     new_server->redirects = NULL;
     new_server->last_redirect = NULL;
+    new_server->notify_list = NULL;
+    new_server->last_notify = NULL;
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -1088,6 +1093,7 @@ irc_server_free_data (struct t_irc_server *server)
     {
         irc_server_outqueue_free_all (server, i);
     }
+    irc_notify_free_all (server);
     irc_redirect_free_all (server);
     if (server->channels)
         irc_channel_free_all (server);
@@ -4480,6 +4486,8 @@ irc_server_print_log ()
         }
         weechat_log_printf ("  redirects. . . . . . : 0x%lx", ptr_server->redirects);
         weechat_log_printf ("  last_redirect. . . . : 0x%lx", ptr_server->last_redirect);
+        weechat_log_printf ("  notify_list. . . . . : 0x%lx", ptr_server->notify_list);
+        weechat_log_printf ("  last_notify. . . . . : 0x%lx", ptr_server->last_notify);
         weechat_log_printf ("  buffer . . . . . . . : 0x%lx", ptr_server->buffer);
         weechat_log_printf ("  buffer_as_string . . : 0x%lx", ptr_server->buffer_as_string);
         weechat_log_printf ("  channels . . . . . . : 0x%lx", ptr_server->channels);
@@ -4488,6 +4496,8 @@ irc_server_print_log ()
         weechat_log_printf ("  next_server. . . . . : 0x%lx", ptr_server->next_server);
         
         irc_redirect_print_log (ptr_server);
+        
+        irc_notify_print_log (ptr_server);
         
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

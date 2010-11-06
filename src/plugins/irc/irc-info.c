@@ -31,6 +31,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-nick.h"
+#include "irc-notify.h"
 #include "irc-protocol.h"
 #include "irc-server.h"
 
@@ -273,6 +274,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_ignore *ptr_ignore;
+    struct t_irc_notify *ptr_notify;
     char **argv;
     int argc;
     
@@ -495,6 +497,49 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
+    else if (weechat_strcasecmp (infolist_name, "irc_notify") == 0)
+    {
+        if (pointer && !irc_notify_valid (NULL, pointer))
+            return NULL;
+        
+        ptr_infolist = weechat_infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one notify */
+                if (!irc_notify_add_to_infolist (ptr_infolist, pointer))
+                {
+                    weechat_infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with notify list of all servers matchin arguments */
+                for (ptr_server = irc_servers; ptr_server;
+                     ptr_server = ptr_server->next_server)
+                {
+                    if (!arguments || !arguments[0]
+                        || weechat_string_match (ptr_server->name, arguments, 0))
+                    {
+                        for (ptr_notify = ptr_server->notify_list; ptr_notify;
+                             ptr_notify = ptr_notify->next_notify)
+                        {
+                            if (!irc_notify_add_to_infolist (ptr_infolist,
+                                                             ptr_notify))
+                            {
+                                weechat_infolist_free (ptr_infolist);
+                                return NULL;
+                            }
+                        }
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
     
     return NULL;
 }
@@ -574,5 +619,10 @@ irc_info_init ()
                            N_("list of IRC ignores"),
                            N_("ignore pointer (optional)"),
                            NULL,
+                           &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_notify",
+                           N_("list of notify"),
+                           N_("notify pointer (optional)"),
+                           N_("server name (can start or end with \"*\" as wildcard) (optional)"),
                            &irc_info_get_infolist_cb, NULL);
 }
