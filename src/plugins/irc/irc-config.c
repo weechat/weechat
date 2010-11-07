@@ -1939,7 +1939,7 @@ irc_config_init ()
         "notify_tags_ison", "string",
         N_("comma separated list of tags used in messages printed by notify "
            "when a nick joins or quits server (result of command ison), "
-           "for example: \"notify_highglight\", \"notify_message\" or "
+           "for example: \"notify_highlight\", \"notify_message\" or "
            "\"notify_private\""),
         NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
@@ -1948,7 +1948,7 @@ irc_config_init ()
         "notify_tags_whois", "string",
         N_("comma separated list of tags used in messages printed by notify "
            "when a nick away status changes (result of command whois), "
-           "for example: \"notify_highglight\", \"notify_message\" or "
+           "for example: \"notify_highlight\", \"notify_message\" or "
            "\"notify_private\""),
         NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);

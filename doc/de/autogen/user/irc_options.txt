@@ -219,12 +219,12 @@
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * *irc.look.notify_tags_ison*
-** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highglight", "notify_message" or "notify_private"`
+** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highlight", "notify_message" or "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * *irc.look.notify_tags_whois*
-** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highglight", "notify_message" or "notify_private"`
+** Beschreibung: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highlight", "notify_message" or "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
