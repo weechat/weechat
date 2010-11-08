@@ -1211,6 +1211,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
 {
     int length;
     char *mask, *pos_option, *new_option_name, *buffer_name;
+    char charset_modifier[256];
     const char *option_name;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
@@ -1263,7 +1264,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
         free (server->name);
     server->name = strdup (new_server_name);
     
-    /* change name for buffers with this server */
+    /* change name and local variables on buffers */
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -1271,12 +1272,22 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
         {
             buffer_name = irc_buffer_build_name (server->name, ptr_channel->name);
             weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
+            weechat_buffer_set (ptr_channel->buffer, "localvar_set_server",
+                                server->name);
         }
     }
     if (server->buffer)
     {
         buffer_name = irc_buffer_build_name (server->name, NULL);
         weechat_buffer_set (server->buffer, "name", buffer_name);
+        weechat_buffer_set (server->buffer, "localvar_set_server",
+                            server->name);
+        weechat_buffer_set (server->buffer, "localvar_set_channel",
+                            server->name);
+        snprintf (charset_modifier, sizeof (charset_modifier),
+                  "irc.%s", server->name);
+        weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
+                            charset_modifier);
     }
     
     return 1;
