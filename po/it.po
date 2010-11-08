@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-07 09:27+0100\n"
+"POT-Creation-Date: 2010-11-08 15:03+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6695,6 +6695,9 @@ msgstr "%s%s: impossibile reindirizzare stdout"
 #, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: impossibile reindirizzare stderr"
+
+msgid "path to python 2.x interpreter"
+msgstr ""
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"

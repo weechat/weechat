@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-07 09:27+0100\n"
+"POT-Creation-Date: 2010-11-08 15:03+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6301,6 +6301,9 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s nem sikerült a szervert létrehozni\n"
+
+msgid "path to python 2.x interpreter"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to launch global interpreter"

@@ -25,6 +25,9 @@
 #undef _
 
 #include <Python.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "../../weechat-plugin.h"
 #include "../script.h"
@@ -47,6 +50,7 @@ struct t_plugin_script *python_current_script = NULL;
 struct t_plugin_script *python_registered_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
+char *python2_bin = NULL;
 
 /*
  * string used to execute action "install":
@@ -66,6 +70,54 @@ char *python_action_remove_list = NULL;
 
 char python_buffer_output[128];
 
+
+/*
+ * weechat_python_set_python2_bin: set path to python 2.x interpreter
+ */
+
+void
+weechat_python_set_python2_bin ()
+{
+    const char *dir_separator;
+    char *path, **paths, bin[4096];
+    char *versions[] = { "2", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", NULL };
+    int num_paths, i, j, rc;
+    struct stat stat_buf;
+    
+    python2_bin = NULL;
+    
+    dir_separator = weechat_info_get ("dir_separator", "");
+    path = getenv ("PATH");
+    
+    if (dir_separator && path)
+    {
+        paths = weechat_string_split (path, ":", 0, 0, &num_paths);
+        if (paths)
+        {
+            for (i = 0; i < num_paths; i++)
+            {
+                for (j = 0; versions[j]; j++)
+                {
+                    snprintf (bin, sizeof (bin), "%s%s%s%s",
+                              paths[i], dir_separator, "python",
+                              versions[j]);
+                    rc = stat (bin, &stat_buf);
+                    if ((rc == 0) && (S_ISREG(stat_buf.st_mode)))
+                    {
+                        python2_bin = strdup (bin);
+                        break;
+                    }
+                }
+                if (python2_bin)
+                    break;
+            }
+            weechat_string_free_split (paths);
+        }
+    }
+    
+    if (!python2_bin)
+        python2_bin = strdup ("python");
+}
 
 /*
  * weechat_python_hashtable_map_cb: callback called for each key/value in a
@@ -795,6 +847,26 @@ weechat_python_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_python_info_cb: callback for info
+ */
+
+const char *
+weechat_python_info_cb (void *data, const char *info_name,
+                        const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (weechat_strcasecmp (info_name, "python2_bin") == 0)
+    {
+        return python2_bin;
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_python_infolist_cb: callback for infolist
  */
 
@@ -939,6 +1011,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     weechat_python_plugin = plugin;
     
+    /*
+     * hook info to get path to python 2.x interpreter
+     * (some scripts using hook_process need that)
+     */
+    weechat_python_set_python2_bin ();
+    weechat_hook_info ("python2_bin",
+                       N_("path to python 2.x interpreter"),
+                       NULL,
+                       &weechat_python_info_cb, NULL);
+    
     /* init stdout/stderr buffer */
     python_buffer_output[0] = '\0';
     
@@ -1019,6 +1101,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     }
     
     /* free some data */
+    if (python2_bin)
+        free (python2_bin);
     if (python_action_install_list)
         free (python_action_install_list);
     if (python_action_remove_list)

@@ -22,6 +22,8 @@
 
 | irc | irc_server_isupport_value | Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message 005) | Server,Funktion
 
+| python | python2_bin | path to python 2.x interpreter | -
+
 | weechat | charset_internal | Interner WeeChat Zeichensatz | -
 
 | weechat | charset_terminal | Terminal Zeichensatz | -

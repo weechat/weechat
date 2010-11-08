@@ -59,6 +59,7 @@ Version 0.3.4 (under dev!)
   expressions (bug #26964)
 * relay: beta version of IRC proxy
 * scripts: add missing function "infolist_reset_item_cursor" in API (bug #31057)
+* python: add info "python2_bin" (path to python 2.x interpreter)
 * lua: fix crash when unloading script
 * ruby: fix compilation with Ruby 1.9.2 (patch #7316)
 

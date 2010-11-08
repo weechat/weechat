@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-07 09:27+0100\n"
+"POT-Creation-Date: 2010-11-08 15:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5526,6 +5526,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to redirect stderr"
+msgstr ""
+
+msgid "path to python 2.x interpreter"
 msgstr ""
 
 #, c-format
