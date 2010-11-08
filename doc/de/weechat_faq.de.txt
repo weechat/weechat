@@ -224,8 +224,10 @@ Ich möchte die Sprache der Meldungen die WeeChat ausgibt ändern, ohne WeeChat 
 Ja, dazu kannst Du das Python-Skript shell.py verwenden (erhältlich auf der
 Internetseite). Nach dem laden des Skripts führe folgende Befehle aus:
 
-  /shell setenv LANG=en_US.UTF-8
-  /upgrade
+----------------------------------------
+/shell setenv LANG=de_DE.UTF-8
+/upgrade
+----------------------------------------
 
 Hierdurch erhält man für das Terminal englische, UTF-8 kodierte Meldungen.
 Benutzer von ISO-Kodierungen können folgendes eingeben:
@@ -316,6 +318,18 @@ Entsprechend der WeeChat-Version:
 ** globaler Filter (unterdrückt *alle* join/part/quit): +
    `/filter add jpk * irc_join,irc_part,irc_quit *` +
    (Hilfe mit: `/help filter`)
+
+
+// TRANSLATION MISSING
+[[filter_irc_channel_names]]
+How can I filter names displayed when I join an IRC channel?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You must add a filter on tag "irc_366":
+
+----------------------------------------
+/filter add irc_names * irc_366 *
+----------------------------------------
 
 
 [[filter_voice_messages]]

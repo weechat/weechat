@@ -142,16 +142,15 @@ który działa dobrze (jak wiele innych wartości).
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 
-// TRANSLATION MISSING
 [[osx_display_broken]]
-I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
+Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you compiled ncursesw yourself, try to use standard ncurses (that comes with
-system).
+Jeśli samodzielnie skopilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarcznej
+z systemem).
 
-Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
-manager.
+Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą menagera pakietów 
+Homebrew.
 
 
 [[buffer_vs_window]]
@@ -214,8 +213,10 @@ Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego za
 Tak, musisz użyć pythonowego skryptu shell.py (dostępny na stronie programu),
 oraz użyć tych komend po załadowaniu skryptu:
 
-  /shell setenv LANG=pl_PL.UTF-8
-  /upgrade
+----------------------------------------
+/shell setenv LANG=pl_PL.UTF-8
+/upgrade
+----------------------------------------
 
 Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osóby
 używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
@@ -300,6 +301,18 @@ W zależności od wersji WeeChat:
 ** globalny filtr (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia): +
    `/filter add jpk * irc_join,irc_part,irc_quit *` +
    (`/help filter` dla pomocy)
+
+
+// TRANSLATION MISSING
+[[filter_irc_channel_names]]
+How can I filter names displayed when I join an IRC channel?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You must add a filter on tag "irc_366":
+
+----------------------------------------
+/filter add irc_names * irc_366 *
+----------------------------------------
 
 
 [[filter_voice_messages]]

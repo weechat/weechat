@@ -212,8 +212,10 @@ I want to change the language used by WeeChat for messages, but without exiting 
 Yes, you have to use a python script, shell.py (available on WeeChat website)
 and issue these commands when script is loaded:
 
-  /shell setenv LANG=en_US.UTF-8
-  /upgrade
+----------------------------------------
+/shell setenv LANG=en_US.UTF-8
+/upgrade
+----------------------------------------
 
 To have english messages with UTF-8 encoding for terminal, for ISO users, you
 can issue: `/shell setenv LANG=en_US`.
@@ -298,6 +300,17 @@ According to WeeChat version:
 ** global filter (hide *all* join/part/quit): +
    `/filter add jpk * irc_join,irc_part,irc_quit *` +
    (`/help filter` for help)
+
+
+[[filter_irc_channel_names]]
+How can I filter names displayed when I join an IRC channel?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You must add a filter on tag "irc_366":
+
+----------------------------------------
+/filter add irc_names * irc_366 *
+----------------------------------------
 
 
 [[filter_voice_messages]]
