@@ -43,7 +43,7 @@ weechat_user.fr.html: weechat_user.fr.txt $(wildcard autogen/user/*.txt)
 
 # plugin API reference
 weechat_plugin_api.fr.html: weechat_plugin_api.fr.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.fr.html weechat_plugin_api.fr.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.fr.html weechat_plugin_api.fr.txt
 
 # scripting guide
 weechat_scripting.fr.html: weechat_scripting.fr.txt

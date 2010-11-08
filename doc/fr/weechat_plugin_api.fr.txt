@@ -4693,7 +4693,7 @@ Script (Python) :
 value = weechat.config_option_string(option)
 
 # exemple
-value = weechat.config_option_string(option):
+value = weechat.config_option_string(option)
 ----------------------------------------
 
 weechat_config_string_default
@@ -4731,7 +4731,7 @@ Script (Python) :
 value = weechat.config_option_string_default(option)
 
 # exemple
-value = weechat.config_option_string_default(option):
+value = weechat.config_option_string_default(option)
 ----------------------------------------
 
 weechat_config_color
@@ -4769,7 +4769,7 @@ Script (Python) :
 value = weechat.config_option_color(option)
 
 # exemple
-value = weechat.config_option_color(option):
+value = weechat.config_option_color(option)
 ----------------------------------------
 
 weechat_config_color_default
@@ -4808,7 +4808,7 @@ Script (Python) :
 value = weechat.config_option_color_default(option)
 
 # exemple
-value = weechat.config_option_color_default(option):
+value = weechat.config_option_color_default(option)
 ----------------------------------------
 
 weechat_config_write_option
@@ -6850,6 +6850,162 @@ weechat.hook_signal_send(signal, type_data, signal_data)
 weechat.hook_signal_send("mon_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, ma_chaine)
 ----------------------------------------
 
+[[signal_logger_backlog]]
+Signal logger_backlog
++++++++++++++++++++++
+
+Le signal "logger_backlog" peut être envoyé pour afficher l'historique de
+discussion dans le tampon (par exemple si vous ouvrez votre propre tampon dans
+votre extension/script).
+
+Le paramètre est un pointeur vers le tampon.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hook_signal_send ("logger_backlog", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, buffer)
+----------------------------------------
+
+[[signals_xxx_script_install]]
+Signaux xxx_script_install
+++++++++++++++++++++++++++
+
+Cinq signaux peuvent être envoyés pour installer un script, selon le langage :
+
+* 'perl_script_install'
+* 'python_script_install'
+* 'ruby_script_install'
+* 'lua_script_install'
+* 'tcl_script_install'
+
+Le "callback" effectuera les actions suivantes lorsqu'il recevra le signal :
+
+. déchargement et suppression du script installé
+. déplacement du nouveau script vers le répertoire '~/.weechat/xxx/' (où 'xxx'
+  est le langage) 
+. création d'un lien vers le nouveau script dans le répertoire
+  '~/.weechat/xxx/autoload/'
+. chargement du nouveau script
+
+Ces signaux sont utilisés par le script 'weeget.py' pour installer des scripts.
+
+Le paramètre est une chaîne avec le chemin vers le script à installer.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
+                          "/home/xxx/.weechat/test.py");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
+                         "/home/xxx/.weechat/test.py")
+----------------------------------------
+
+[[signals_xxx_script_remove]]
+Signaux xxx_script_remove
++++++++++++++++++++++++++
+
+Cinq signaux peuvent être envoyés pour supprimer une liste de scripts, selon le
+langage :
+
+* 'perl_script_remove'
+* 'python_script_remove'
+* 'ruby_script_remove'
+* 'lua_script_remove'
+* 'tcl_script_remove'
+
+Pour chaque script dans la liste, le "callback" déchargera et supprimera le
+script.
+
+Ces signaux sont utilisés par le script 'weeget.py' pour supprimer des scripts.
+
+Le paramètre est une chaîne avec une liste de scripts à supprimer (séparés par
+des virgules, nom du script sans le chemin, par exemple 'script.py').
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+/* décharge et supprime les scripts test.py et script.py */
+weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
+                          "test.py,script.py");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# décharge et supprime les scripts test.py et script.py
+weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
+                         "test.py,script.py")
+----------------------------------------
+
+[[signal_irc_input_send]]
+Signal irc_input_send
++++++++++++++++++++++
+
+_Nouveau dans la version 0.3.4._
+
+Le signal "irc_input_send" peut être envoyé pour simuler une entrée de texte
+dans un tampon irc (serveur, canal ou privé).
+
+Le paramètre est une chaîne avec le format suivant :
+
+* nom interne du serveur (requis)
+* point-virgule
+* nom de canal (optionnel)
+* point-virgule
+* drapeaux utilisés lors de l'envoi du message (optionnel, 1 par
+  défaut) :
+** '1' : file d'attente avec haute priorité (comme les messages utilisateur)
+** '2' : file d'attente avec basse priorité (comme les messages envoyés
+   automatiquement par WeeChat)
+* point-virgule
+* liste d'étiquettes (séparées par des virgules) utilisées lors de l'envoi du
+  du message (optionnel)
+* point-virgule
+* texte ou commande (requis)
+
+Exemples en C :
+
+[source,C]
+----------------------------------------
+/* dis "Bonjour !" sur le serveur freenode, canal #weechat */
+weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat;1;;Bonjour !");
+
+/* envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité */
+weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;;2;;/whois FlashCode");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# dis "Bonjour !" sur le serveur freenode, canal #weechat
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;#weechat;1;;Bonjour !")
+
+# envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;;2;;/whois FlashCode")
+----------------------------------------
+
 weechat_hook_hsignal
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -6878,7 +7034,7 @@ Paramètres :
 | Extension | Signal | Paramètres
 
 | irc | irc_redirection_xxx_yyy ^(1)^ |
-  sortie de la redirection
+  sortie de la redirection (voir <<hsignal_irc_redirect_command>>)
 |========================================
 
 [NOTE]
@@ -6971,6 +7127,178 @@ weechat.hook_hsignal_send(signal, hashtable)
 
 # exemple
 weechat.hook_hsignal_send("my_hsignal", { "clé": "valeur" })
+----------------------------------------
+
+[[hsignal_irc_redirect_command]]
+Hsignal irc_redirect_command
+++++++++++++++++++++++++++++
+
+_Nouveau dans la version 0.3.4._
+
+Le hsignal "irc_redirect_command" peut être envoyé pour rediriger la sortie
+d'une commande irc vers un "callback".
+
+Le paramètre est une hashtable avec les entrées suivantes (les clés et valeurs
+sont des chaînes) :
+
+* 'server' : nom interne du serveur (requis)
+* 'pattern' : modèle de redirection à utiliser (requis), soit un par défaut
+  (défini par l'extension irc), ou un modèle utilisateur (voir
+  <<hsignal_irc_redirect_pattern>>), les modèles par défaut sont :
+** 'ison'
+** 'list'
+** 'mode_channel'
+** 'mode_channel_ban' ("mode #channel b")
+** 'mode_channel_ban_exception' ("mode #channel e")
+** 'mode_channel_invite' ("mode #channel I")
+** 'mode_user'
+** 'names'
+** 'ping'
+** 'time'
+** 'topic'
+** 'userhost'
+** 'who'
+** 'whois'
+** 'whowas'
+* 'signal' : nom du signal (requis)
+* 'count' : nombre de fois que la redirection sera exécutée (optionnel, 1 par
+  défaut)
+* 'string' : chaîne qui doit être dans les messages irc reçus (optionnel, mais
+  recommandé, si une chaîne peut être utilisée pour identifier les messages)
+* 'timeout' : temps d'attente maxi pour la redirection, en secondes (optionnel,
+  60 par défaut)
+* 'cmd_filter' : liste de commandes irc (séparées par des virgules) à filtrer
+  (seules ces commandes seront transmises au "callback", les autres seront
+  ignorées) (optionnel)
+
+Immédiatement après l'envoi de ce hsignal, vous devez envoyer la commande au
+serveur irc, et la redirection sera utilisée pour cette commande.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int
+test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+{
+    weechat_printf (NULL, "erreur = %s", weechat_hashtable_get (hashtable, "error"));
+    weechat_printf (NULL, "sortie = %s", weechat_hashtable_get (hashtable, "output"));
+    return WEECHAT_RC_OK;
+}
+
+weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL);
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "server", "freenode");
+    weechat_hashtable_set (hashtable, "pattern", "whois");
+    weechat_hashtable_set (hashtable, "signal", "test");
+    weechat_hashtable_set (hashtable, "string", "FlashCode");
+    weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
+    weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                              "freenode;;2;;/whois FlashCode");
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+def test_whois_cb(data, signal, hashtable):
+    weechat.prnt("", "erreur = %s" % hashtable["error"])
+    weechat.prnt("", "sortie = %s" % hashtable["output"])
+    return weechat.WEECHAT_RC_OK
+}
+
+weechat.hook_hsignal ("irc_redirection_test_whois", "test_whois_cb", "")
+weechat.hook_hsignal_send("irc_redirect_command",
+                          { "server": "freenode", "pattern": "whois", "signal": "test",
+                            "string": "FlashCode" })
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;;2;;/whois FlashCode")
+----------------------------------------
+
+[[hsignal_irc_redirect_pattern]]
+Hsignal irc_redirect_pattern
+++++++++++++++++++++++++++++
+
+_Nouveau dans la version 0.3.4._
+
+Le hsignal "irc_redirect_pattern" peut être envoyé pour créer un modèle de
+redirection irc (voir <<hsignal_irc_redirect_command>>).
+
+Le paramètre est une hashtable avec les entrées suivantes (les clés et valeurs
+sont des chaînes) :
+
+* 'pattern' : nom du modèle (requis)
+* 'timeout' : temps d'attente maxi pour le modèle, en secondes (optionnel, 60
+  par défaut)
+* 'cmd_start' : liste de commandes (séparées par des virgules) démarrant la
+  redirection (optionnel)
+* 'cmd_stop' : liste de commandes (séparées par des virgules) stoppant la
+  redirection (requis)
+* 'cmd_extra' : liste de commandes (séparées par des virgules) pouvant être
+  reçues après les commandes de stop (optionnel)
+
+Pour chaque commande dans 'cmd_start', 'cmd_stop' et 'cmd_extra', il est
+possible de donner un entier avec la position de la chaîne "string" qui doit
+être trouvée dans le message reçu, par exemple :
+
+----------------------------------------
+352:1,354,401:1
+----------------------------------------
+
+Pour les commandes 352 et 401, la chaîne "string" doit être trouvée dans le
+message reçu, comme premier paramètre.
+
+[IMPORTANT]
+Le modèle est détruit dès qu'il est utilisé dans une redirection. Si vous avez
+besoin du modèle pour plusieurs redirections, vous devez créer un modèle pour
+chaque redirection.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "pattern", "my_whois");
+    weechat_hashtable_set (hashtable, "timeout", "30");
+    weechat_hashtable_set (hashtable, "cmd_start", "311:1");
+    weechat_hashtable_set (hashtable, "cmd_stop", "318:1,401:1,402:1,431:1,461");
+    weechat_hashtable_set (hashtable, "cmd_extra", "318:1");
+    weechat_hook_hsignal_send ("irc_redirect_pattern", hashtable);
+    /*
+     * rediriger maintenant la commande irc whois avec le hsignal irc_redirect_command,
+     * en utilisant le modèle "my_whois"
+     */
+    /* ... */
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+weechat.hook_hsignal_send("irc_redirect_pattern",
+                          { "pattern": "my_whois", "timeout": "30",
+                            "cmd_start": "311:1",
+                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
+                            "cmd_extra": "318:1" })
+# rediriger maintenant la commande irc whois avec le hsignal irc_redirect_command,
+# en utilisant le modèle "my_whois"
+# ...
 ----------------------------------------
 
 weechat_hook_config

@@ -42,7 +42,7 @@ weechat_user.it.html: weechat_user.it.txt $(wildcard autogen/user/*.txt)
 
 # plugin API reference
 weechat_plugin_api.it.html: weechat_plugin_api.it.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.it.html weechat_plugin_api.it.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.it.html weechat_plugin_api.it.txt
 
 # scripting guide
 weechat_scripting.it.html: weechat_scripting.it.txt

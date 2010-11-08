@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-06
+v0.3.4-dev, 2010-11-08
 
 
 Version 0.3.4 (under dev!)
@@ -36,7 +36,8 @@ Version 0.3.4 (under dev!)
 * irc: add new option irc.look.nick_color_force (task #7374)
 * irc: improve nick prefixes, all modes (even unknown) are used with PREFIX
   value from message 005
-* irc: add command redirection (task #6703)
+* irc: add command redirection with hsignals irc_redirect_pattern and
+  irc_redirect_command (task #6703)
 * irc: add new options irc.color.nick_prefix and irc.color.nick_suffix
 * irc: add new option irc.look.item_away_message
 * irc: add tag "nick_xxx" in user messages
@@ -53,6 +54,7 @@ Version 0.3.4 (under dev!)
 * irc: switch to next server address when IRC error is received after TCP
   connection but before message 001 (bug #30884)
 * irc: fix bug with hostmasks in command /ignore (bug #30716)
+* irc: add signal "irc_input_send"
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
 * relay: beta version of IRC proxy

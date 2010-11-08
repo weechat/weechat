@@ -6765,6 +6765,154 @@ weechat.hook_signal_send(signal, type_data, signal_data)
 weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----------------------------------------
 
+[[signal_logger_backlog]]
+Signal logger_backlog
++++++++++++++++++++++
+
+The signal "logger_backlog" can be sent to display backlog (chat history) in
+buffer (for example if you open your own buffer in your plugin/script).
+
+Argument is a pointer to buffer.
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hook_signal_send ("logger_backlog", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, buffer)
+----------------------------------------
+
+[[signals_xxx_script_install]]
+Signals xxx_script_install
+++++++++++++++++++++++++++
+
+Five signals can be sent to install a script, according to language:
+
+* 'perl_script_install'
+* 'python_script_install'
+* 'ruby_script_install'
+* 'lua_script_install'
+* 'tcl_script_install'
+
+The callback will do following actions when receiving signal:
+
+. unload and remove installed script
+. move new script to directory '~/.weechat/xxx/' (where 'xxx' is language) 
+. create link to new script in directory '~/.weechat/xxx/autoload/'
+. load new script
+
+These signals are used by script 'weeget.py' to install scripts.
+
+Argument is a string with path to script to install.
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hook_signal_send ("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
+                          "/home/xxx/.weechat/test.py");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
+                         "/home/xxx/.weechat/test.py")
+----------------------------------------
+
+[[signals_xxx_script_remove]]
+Signals xxx_script_remove
++++++++++++++++++++++++++
+
+Five signals can be sent to remove list of scripts, according to language:
+
+* 'perl_script_remove'
+* 'python_script_remove'
+* 'ruby_script_remove'
+* 'lua_script_remove'
+* 'tcl_script_remove'
+
+For each script in list, the callback will unload then remove script.
+
+These signals are used by script 'weeget.py' to remove scripts.
+
+Argument is a string with comma-separated list of script to remove (script
+is name without path, for example 'script.py').
+
+C example:
+
+[source,C]
+----------------------------------------
+/* unload and remove scripts test.py and script.py */
+weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
+                          "test.py,script.py");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# unload and remove scripts test.py and script.py
+weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
+                         "test.py,script.py")
+----------------------------------------
+
+[[signal_irc_input_send]]
+Signal irc_input_send
++++++++++++++++++++++
+
+_New in version 0.3.4._
+
+The signal "irc_input_send" can be sent to simulate input in an irc buffer
+(server, channel or private).
+
+Argument is a string with following format:
+
+* internal server name (required)
+* semicolon
+* channel name (optional)
+* semicolon
+* flags used when sending message (optional, default is 1):
+** '1': queue with high priority (like user messages)
+** '2': queue with low priority (like messages automatically sent by WeeChat)
+* semicolon
+* comma-separated list of tags used when sending message (optional)
+* semicolon
+* text or command (required)
+
+C examples:
+
+[source,C]
+----------------------------------------
+/* say "Hello!" on freenode server, #weechat channel */
+weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;#weechat;1;;Hello!");
+
+/* send command "/whois FlashCode" on freenode server, with low priority */
+weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                          "freenode;;2;;/whois FlashCode");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# say "Hello!" on freenode server, #weechat channel
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;#weechat;1;;Hello!")
+
+# send command "/whois FlashCode" on freenode server, with low priority
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;;2;;/whois FlashCode")
+----------------------------------------
+
 weechat_hook_hsignal
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -6793,7 +6941,7 @@ Arguments:
 | Plugin | Signal | Arguments
 
 | irc | irc_redirection_xxx_yyy ^(1)^ |
-  redirection output
+  redirection output (see <<hsignal_irc_redirect_command>>)
 |========================================
 
 [NOTE]
@@ -6885,6 +7033,169 @@ weechat.hook_hsignal_send(signal, hashtable)
 
 # example
 weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
+----------------------------------------
+
+[[hsignal_irc_redirect_command]]
+Hsignal irc_redirect_command
+++++++++++++++++++++++++++++
+
+_New in version 0.3.4._
+
+The hsignal "irc_redirect_command" can be sent to redirect output of irc
+command to a callback.
+
+Argument is a hashtable with following entries (keys and values are string):
+
+* 'server': internal server name (required)
+* 'pattern': redirect pattern to use (required), either a default one (defined
+  by irc plugin), or a user pattern (see <<hsignal_irc_redirect_pattern>>),
+  default patterns are:
+** 'ison'
+** 'list'
+** 'mode_channel'
+** 'mode_channel_ban' ("mode #channel b")
+** 'mode_channel_ban_exception' ("mode #channel e")
+** 'mode_channel_invite' ("mode #channel I")
+** 'mode_user'
+** 'names'
+** 'ping'
+** 'time'
+** 'topic'
+** 'userhost'
+** 'who'
+** 'whois'
+** 'whowas'
+* 'signal': signal name (required)
+* 'count': number of times redirection will work (optional, 1 by default)
+* 'string': string that must be in irc messages received (optional, but
+  recommended, if a string can be used to identify messages)
+* 'timeout': timeout for redirect, in seconds (optional, 60 by default)
+* 'cmd_filter': comma-separated list of irc commands to filter (only these
+  commands will be sent to callbacks, other will be ignored) (optional)
+
+Immediately after sending this hsignal, you must send command to irc server,
+and redirection will be used for this command.
+
+C example:
+
+[source,C]
+----------------------------------------
+int
+test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
+{
+    weechat_printf (NULL, "error = %s", weechat_hashtable_get (hashtable, "error"));
+    weechat_printf (NULL, "output = %s", weechat_hashtable_get (hashtable, "output"));
+    return WEECHAT_RC_OK;
+}
+
+weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL);
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "server", "freenode");
+    weechat_hashtable_set (hashtable, "pattern", "whois");
+    weechat_hashtable_set (hashtable, "signal", "test");
+    weechat_hashtable_set (hashtable, "string", "FlashCode");
+    weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
+    weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
+                              "freenode;;2;;/whois FlashCode");
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+def test_whois_cb(data, signal, hashtable):
+    weechat.prnt("", "error = %s" % hashtable["error"])
+    weechat.prnt("", "output = %s" % hashtable["output"])
+    return weechat.WEECHAT_RC_OK
+}
+
+weechat.hook_hsignal ("irc_redirection_test_whois", "test_whois_cb", "")
+weechat.hook_hsignal_send("irc_redirect_command",
+                          { "server": "freenode", "pattern": "whois", "signal": "test",
+                            "string": "FlashCode" })
+weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
+                         "freenode;;2;;/whois FlashCode")
+----------------------------------------
+
+[[hsignal_irc_redirect_pattern]]
+Hsignal irc_redirect_pattern
+++++++++++++++++++++++++++++
+
+_New in version 0.3.4._
+
+The hsignal "irc_redirect_pattern" can be sent to create a pattern for irc
+redirect (see <<hsignal_irc_redirect_command>>).
+
+Argument is a hashtable with following entries (keys and values are string):
+
+* 'pattern': name of pattern (required)
+* 'timeout': default timeout for pattern, in seconds (optional, 60 by default)
+* 'cmd_start': comma-separated list of commands starting redirect (optional)
+* 'cmd_stop': comma-separated list of commands stopping redirect (required)
+* 'cmd_extra': comma-separated list of commands that may be received
+  after stop commands (optional)
+
+For each command in 'cmd_start', 'cmd_stop' and 'cmd_extra', it is possible to
+give integer with position of "string" that must be found in received message,
+for example:
+
+----------------------------------------
+352:1,354,401:1
+----------------------------------------
+
+For commands 352 and 401, "string" must be found in received message,
+as first argument.
+
+[IMPORTANT]
+The pattern is destroyed when it is used by a redirection. If you need pattern
+for many redirections, you must create pattern before each redirect.
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       NULL,
+                                                       NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (hashtable, "pattern", "my_whois");
+    weechat_hashtable_set (hashtable, "timeout", "30");
+    weechat_hashtable_set (hashtable, "cmd_start", "311:1");
+    weechat_hashtable_set (hashtable, "cmd_stop", "318:1,401:1,402:1,431:1,461");
+    weechat_hashtable_set (hashtable, "cmd_extra", "318:1");
+    weechat_hook_hsignal_send ("irc_redirect_pattern", hashtable);
+    /*
+     * now redirect irc whois command with hsignal irc_redirect_command,
+     * using pattern "my_whois"
+     */
+    /* ... */
+    weechat_hashtable_free (hashtable);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+weechat.hook_hsignal_send("irc_redirect_pattern",
+                          { "pattern": "my_whois", "timeout": "30",
+                            "cmd_start": "311:1",
+                            "cmd_stop": "318:1,401:1,402:1,431:1,461",
+                            "cmd_extra": "318:1" })
+# now redirect irc whois command with hsignal irc_redirect_command
+# using pattern "my_whois"
+# ...
 ----------------------------------------
 
 weechat_hook_config

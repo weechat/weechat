@@ -32,7 +32,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.en.html DESTINATION ${SHA
 # plugin API reference
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.en.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="${VERSION}" -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.en.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.en.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.txt
