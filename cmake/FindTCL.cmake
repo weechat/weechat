@@ -87,10 +87,6 @@ IF(WIN32)
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\ActiveState\\ActiveTcl\\${ActiveTcl_CurrentVersion}]/lib"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.6;Root]/lib"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.5;Root]/lib"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.4;Root]/lib"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.3;Root]/lib"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.2;Root]/lib"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.0;Root]/lib"
     "$ENV{ProgramFiles}/Tcl/Lib"
     "C:/Program Files/Tcl/lib"
     "C:/Tcl/lib"
@@ -99,14 +95,10 @@ ENDIF(WIN32)
 
 FIND_LIBRARY(TCL_LIBRARY
   NAMES
-  tcl
-  tcl${TCL_VERSION} tcl${TCL_TCLSH_VERSION}
   tcl86 tcl8.6
   tcl85 tcl8.5
-  tcl84 tcl8.4
-  tcl83 tcl8.3
-  tcl82 tcl8.2
-  tcl80 tcl8.0
+  tcl
+  tcl${TCL_VERSION} tcl${TCL_TCLSH_VERSION}
   PATHS ${TCL_POSSIBLE_LIB_PATHS}
   )
 
@@ -126,22 +118,14 @@ SET(TCL_POSSIBLE_INCLUDE_PATHS
   "${TCL_INCLUDE_PATH}"
   ${TCL_FRAMEWORK_INCLUDES}
   "${TCL_TCLSH_PATH_PARENT}/include"
+  /usr/include/tcl8.6
+  /usr/include/tcl8.5
   /usr/include
   /usr/local/include
   /usr/include/tcl${TCL_VERSION}
-  /usr/include/tcl8.6
-  /usr/include/tcl8.5
-  /usr/include/tcl8.4
-  /usr/include/tcl8.3
-  /usr/include/tcl8.2
-  /usr/include/tcl8.0
   /usr/local/include/tcl${TCL_VERSION}
   /usr/local/include/tcl8.6
   /usr/local/include/tcl8.5
-  /usr/local/include/tcl8.4
-  /usr/local/include/tcl8.3
-  /usr/local/include/tcl8.2
-  /usr/local/include/tcl8.0
   )
 
 
@@ -150,10 +134,6 @@ IF(WIN32)
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\ActiveState\\ActiveTcl\\${ActiveTcl_CurrentVersion}]/include"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.6;Root]/include"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.5;Root]/include"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.4;Root]/include"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.3;Root]/include"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.2;Root]/include"
-    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Scriptics\\Tcl\\8.0;Root]/include"
     "$ENV{ProgramFiles}/Tcl/include"
     "C:/Program Files/Tcl/include"
     "C:/Tcl/include"
