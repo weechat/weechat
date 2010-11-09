@@ -418,7 +418,8 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
-    char *topic_color;
+    char *topic, *topic_color;
+    int length;
     
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
@@ -428,12 +429,35 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
     
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
-        topic_color = irc_color_decode_for_user_entry (ptr_channel->topic);
+        if (weechat_strncasecmp (ptr_channel->topic, ptr_channel->name,
+                                 strlen (ptr_channel->name)) == 0)
+        {
+            /*
+             * if topic starts with channel name, add another channel name
+             * before topic, so that completion will be:
+             *   /topic #test #test is a test channel
+             * instead of
+             *   /topic #test is a test channel
+             */
+            length = strlen (ptr_channel->name) + strlen (ptr_channel->topic) + 16;
+            topic = malloc (length + 1);
+            if (topic)
+            {
+                snprintf (topic, length, "%s %s",
+                          ptr_channel->name, ptr_channel->topic);
+            }
+        }
+        else
+            topic = strdup (ptr_channel->topic);
+        
+        topic_color = irc_color_decode_for_user_entry ((topic) ? topic : ptr_channel->topic);
         weechat_hook_completion_list_add (completion,
-                                          (topic_color) ? topic_color : ptr_channel->topic,
+                                          (topic_color) ? topic_color : ((topic) ? topic : ptr_channel->topic),
                                           0, WEECHAT_LIST_POS_SORT);
         if (topic_color)
             free (topic_color);
+        if (topic)
+            free (topic);
     }
     
     return WEECHAT_RC_OK;
