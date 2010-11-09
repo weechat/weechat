@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-08
+v0.3.4-dev, 2010-11-09
 
 
 Version 0.3.4 (under dev!)
@@ -26,9 +26,10 @@ Version 0.3.4 (under dev!)
 * api: add priority for hooks (task #10550)
 * api: add new functions: hashtable_get_string, hook_info_hashtable,
   info_get_hashtable, hook_hsignal, hook_hsignal_send,
-  nicklist_group_get_integer, nicklist_group_get_string,
-  nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
-  nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
+  hook_completion_get_string, nicklist_group_get_integer,
+  nicklist_group_get_string, nicklist_group_get_pointer, nicklist_group_set,
+  nicklist_nick_get_integer, nicklist_nick_get_string, nicklist_nick_get_pointer,
+  nicklist_nick_set
 * irc: add command /notify, new options irc.look.notify_tags_ison,
   irc.look.notify_tags_whois, irc.network.notify_check_ison,
   irc.network.notify_check_whois, new option "notify" in servers, new infolist

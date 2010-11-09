@@ -439,6 +439,8 @@ extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
                                        const char *description,
                                        t_hook_callback_completion *callback,
                                        void *callback_data);
+extern const char *hook_completion_get_string (struct t_gui_completion *completion,
+                                               const char *property);
 extern void hook_completion_list_add (struct t_gui_completion *completion,
                                       const char *word, int nick_completion,
                                       const char *where);

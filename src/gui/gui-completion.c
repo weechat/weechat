@@ -1162,6 +1162,27 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 }
 
 /*
+ * gui_completion_get_string: get a completion property as string
+ */
+
+const char *
+gui_completion_get_string (struct t_gui_completion *completion,
+                           const char *property)
+{
+    if (completion)
+    {
+        if (string_strcasecmp (property, "base_command") == 0)
+            return completion->base_command;
+        else if (string_strcasecmp (property, "base_word") == 0)
+            return completion->base_word;
+        else if (string_strcasecmp (property, "args") == 0)
+            return completion->args;
+    }
+    
+    return NULL;
+}
+
+/*
  * gui_completion_print_log: print completion list in log (usually for crash dump)
  */
 

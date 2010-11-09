@@ -7412,6 +7412,65 @@ hook = weechat.hook_completion("plugin_item", "my custom completion!",
                                "my_completion_cb", "")
 ----------------------------------------
 
+// TRANSLATION MISSING
+weechat_hook_completion_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Get a completion property as string.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
+                                                const char *property);
+----------------------------------------
+
+Arguments:
+
+* 'completion': completion pointer
+* 'property': property name:
+** 'base_command': command used for completion
+** 'base_word': word being completed
+** 'args': command arguments (including base word)
+
+C example:
+
+[source,C]
+----------------------------------------
+int
+my_completion_cb (void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* get arguments of command */
+    const char *args = weechat_hook_completion_get_string (completion, "args");
+    
+    /* completion depending on args */
+    /* ... */
+    
+    return WEECHAT_RC_OK;
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hook_completion_get_string(completion, property)
+
+# example
+def my_completion_cb(data, completion_item, buffer, completion):
+    # get arguments of command
+    args = weechat.hook_completion_get_string(completion, "args")
+    # completion depending on args
+    # ...
+    return weechat.WEECHAT_RC_OK
+----------------------------------------
+
 weechat_hook_completion_list_add
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

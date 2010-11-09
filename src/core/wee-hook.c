@@ -2064,6 +2064,17 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
 }
 
 /*
+ * hook_completion_get_string: get a completion property as string
+ */
+
+const char *
+hook_completion_get_string (struct t_gui_completion *completion,
+                            const char *property)
+{
+    return gui_completion_get_string (completion, property);
+}
+
+/*
  * hook_completion_list_add: add a word for a completion (called by plugins)
  */
 

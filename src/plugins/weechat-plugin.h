@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101029-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101109-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -509,6 +509,8 @@ struct t_weechat_plugin
                                                        struct t_gui_buffer *buffer,
                                                        struct t_gui_completion *completion),
                                        void *callback_data);
+    const char *(*hook_completion_get_string) (struct t_gui_completion *completion,
+                                               const char *property);
     void (*hook_completion_list_add) (struct t_gui_completion *completion,
                                       const char *word,
                                       int nick_completion,
@@ -1156,6 +1158,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                 __callback, __data)                     \
     weechat_plugin->hook_completion(weechat_plugin, __completion,       \
                                     __description, __callback, __data)
+#define weechat_hook_completion_get_string(__completion, __property)    \
+    weechat_plugin->hook_completion_get_string(__completion,            \
+                                               __property)
 #define weechat_hook_completion_list_add(__completion, __word,          \
                                          __nick_completion, __where)    \
     weechat_plugin->hook_completion_list_add(__completion, __word,      \

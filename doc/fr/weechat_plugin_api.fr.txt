@@ -7449,6 +7449,64 @@ hook = weechat.hook_completion("extension_item", "ma complétion !",
                                "my_completion_cb", "")
 ----------------------------------------
 
+weechat_hook_completion_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Retourne la valeur d'une propriété de la complétion sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
+                                                const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'completion' : pointeur vers la complétion
+* 'property' : nom de la propriété :
+** 'base_command' : commande utilisée pour la complétion
+** 'base_word' : le mot qui va être complété
+** 'args' : paramètres de la commande (incluant le mot de base "base_word")
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int
+my_completion_cb (void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* récupère les paramètres de la commande */
+    const char *args = weechat_hook_completion_get_string (completion, "args");
+    
+    /* complétion selon les paramètres */
+    /* ... */
+    
+    return WEECHAT_RC_OK;
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hook_completion_get_string(completion, property)
+
+# exemple
+def my_completion_cb(data, completion_item, buffer, completion):
+    # récupère les paramètres de la commande
+    args = weechat.hook_completion_get_string(completion, "args")
+    # complétion selon les paramètres
+    # ...
+    return weechat.WEECHAT_RC_OK
+----------------------------------------
+
 weechat_hook_completion_list_add
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -8419,7 +8477,7 @@ weechat.prnt("", "mon numéro de tampon est : %d" % weechat.buffer_get_integer(m
 weechat_buffer_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Retourne la valeur d'une propriété sous forme de chaîne.
+Retourne la valeur d'une propriété du tampon sous forme de chaîne.
 
 Prototype :
 

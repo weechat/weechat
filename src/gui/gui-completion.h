@@ -76,6 +76,8 @@ extern void gui_completion_list_add (struct t_gui_completion *completion,
 extern void gui_completion_search (struct t_gui_completion *completion,
                                    int direction, const char *data, int size,
                                    int pos);
+extern const char *gui_completion_get_string (struct t_gui_completion *completion,
+                                              const char *property);
 extern void gui_completion_print_log (struct t_gui_completion *completion);
 
 #endif /* __WEECHAT_GUI_COMPLETION_H */
