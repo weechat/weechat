@@ -584,7 +584,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
 * *weechat.network.gnutls_ca_file*
-** descrizione: `file contenente le autorità dei certificati`
+** descrizione: `file containing the certificate authorities ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/ssl/CAs.pem"`)
 

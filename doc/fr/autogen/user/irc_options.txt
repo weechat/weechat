@@ -464,7 +464,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * *irc.server_default.ssl_cert*
-** description: `fichier de certificat ssl utilisé pour identifier automatiquement votre pseudo`
+** description: `fichier de certificat ssl utilisé pour identifier automatiquement votre pseudo ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

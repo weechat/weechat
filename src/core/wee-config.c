@@ -2031,7 +2031,8 @@ config_weechat_init_options ()
     config_network_gnutls_ca_file = config_file_new_option (
         weechat_config_file, ptr_section,
         "gnutls_ca_file", "string",
-        N_("file containing the certificate authorities"),
+        N_("file containing the certificate authorities (\"%h\" will be "
+           "replaced by WeeChat home, \"~/.weechat\" by default)"),
         NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* plugin */

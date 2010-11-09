@@ -69,12 +69,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *xfer.file.download_path*
-** descrizione: `percorso per il salvataggio dei file locali`
+** descrizione: `path for writing incoming files ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/xfer"`)
 
 * *xfer.file.upload_path*
-** descrizione: `percorso per la lettura dei file all'invio (se non specificato dall'utente)`
+** descrizione: `path for reading files when sending (when no path is specified by user) ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"~"`)
 

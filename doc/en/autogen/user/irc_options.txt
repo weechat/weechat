@@ -464,7 +464,7 @@
 ** values: on, off (default value: `off`)
 
 * *irc.server_default.ssl_cert*
-** description: `ssl certificate file used to automatically identify your nick`
+** description: `ssl certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** type: string
 ** values: any string (default value: `""`)
 

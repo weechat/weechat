@@ -584,7 +584,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T"`)
 
 * *weechat.network.gnutls_ca_file*
-** description: `fichier contenant les autorités de certification`
+** description: `fichier contenant les autorités de certification ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%h/ssl/CAs.pem"`)
 

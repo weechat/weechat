@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 15:47+0100\n"
+"POT-Creation-Date: 2010-11-09 22:38+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2095,8 +2095,13 @@ msgstr ""
 "megjeleníthető parancsok maximális száma előzmények listázásakor ( 0 = "
 "korlátlan)"
 
-msgid "file containing the certificate authorities"
+#, fuzzy
+msgid ""
+"file containing the certificate authorities (\"%h\" will be replaced by "
+"WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid ""
@@ -4234,8 +4239,13 @@ msgstr "IPv6 protokoll használata a kapcsolathoz"
 msgid "use SSL for server communication"
 msgstr "SSL használata a a kapcsolathoz"
 
-msgid "ssl certificate file used to automatically identify your nick"
+#, fuzzy
+msgid ""
+"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
@@ -6714,13 +6724,20 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "path for writing incoming files"
-msgstr "dcc-n beérkező fájlok helye"
+msgid ""
+"path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
+"\"~/.weechat\" by default)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
-msgid "path for reading files when sending (when no path is specified by user)"
+msgid ""
+"path for reading files when sending (when no path is specified by user) (\"%h"
+"\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"dcc-n keresztül küldendő fájlok elérési útvonala (ha nincs külön megadva)"
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -6823,3 +6840,13 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "path for writing incoming files"
+#~ msgstr "dcc-n beérkező fájlok helye"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for reading files when sending (when no path is specified by user)"
+#~ msgstr ""
+#~ "dcc-n keresztül küldendő fájlok elérési útvonala (ha nincs külön megadva)"

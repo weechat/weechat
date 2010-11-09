@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 15:47+0100\n"
+"POT-Creation-Date: 2010-11-09 22:38+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2110,8 +2110,13 @@ msgstr ""
 "максимальное количество отображаемых команд в листинге истории (0 = не "
 "ограничено)"
 
-msgid "file containing the certificate authorities"
+#, fuzzy
+msgid ""
+"file containing the certificate authorities (\"%h\" will be replaced by "
+"WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 #, fuzzy
 msgid ""
@@ -4243,8 +4248,13 @@ msgstr "использовать IPv6 при связи с сервером"
 msgid "use SSL for server communication"
 msgstr "использовать SSL при связи с сервером"
 
-msgid "ssl certificate file used to automatically identify your nick"
+#, fuzzy
+msgid ""
+"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
@@ -6722,12 +6732,20 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "path for writing incoming files"
-msgstr "путь для получаемых файлов"
+msgid ""
+"path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
+"\"~/.weechat\" by default)"
+msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 #, fuzzy
-msgid "path for reading files when sending (when no path is specified by user)"
-msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"
+msgid ""
+"path for reading files when sending (when no path is specified by user) (\"%h"
+"\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -6831,3 +6849,12 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "path for writing incoming files"
+#~ msgstr "путь для получаемых файлов"
+
+#, fuzzy
+#~ msgid ""
+#~ "path for reading files when sending (when no path is specified by user)"
+#~ msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"

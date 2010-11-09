@@ -1162,7 +1162,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("ssl certificate file used to automatically identify your nick"),
+                N_("ssl certificate file used to automatically identify your "
+                   "nick (\"%h\" will be replaced by WeeChat home, "
+                   "\"~/.weechat\" by default)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

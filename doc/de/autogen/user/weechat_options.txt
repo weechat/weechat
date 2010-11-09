@@ -584,7 +584,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
 * *weechat.network.gnutls_ca_file*
-** Beschreibung: `Datei enthält die Zertifizierungsstellen.`
+** Beschreibung: `file containing the certificate authorities ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/CAs.pem"`)
 

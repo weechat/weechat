@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 15:47+0100\n"
+"POT-Creation-Date: 2010-11-09 22:38+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2280,8 +2280,13 @@ msgstr ""
 "número máximo de comandos para mostrar por defecto en el listado del "
 "historial (0 = ilimitado)"
 
-msgid "file containing the certificate authorities"
-msgstr "archivo que contiene las autoridades de certificación"
+#, fuzzy
+msgid ""
+"file containing the certificate authorities (\"%h\" will be replaced by "
+"WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
+"de WeeChat, \"~/.weechat\" por defecto)"
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -4516,8 +4521,13 @@ msgstr "usar el protocolo IPv6 para la comunicación con el servidor"
 msgid "use SSL for server communication"
 msgstr "usar SSL para la comunicación con el servidor"
 
-msgid "ssl certificate file used to automatically identify your nick"
-msgstr "archivo con certificado SSL para identificar automáticamente su apodo"
+#, fuzzy
+msgid ""
+"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
+"de WeeChat, \"~/.weechat\" por defecto)"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "tamaño de la llave usada durante Diffie-Hellman Key Exchange"
@@ -7072,13 +7082,21 @@ msgid ""
 msgstr ""
 "límite de velocidad al enviar archivos, en kb/s (0 significa sin límite)"
 
-msgid "path for writing incoming files"
-msgstr "ruta para guardar los archivos entrantes"
-
-msgid "path for reading files when sending (when no path is specified by user)"
+#, fuzzy
+msgid ""
+"path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
+"\"~/.weechat\" by default)"
 msgstr ""
-"ruta para la leer archivos cuando se envían (cuando no ruta es especificada "
-"por el usuario)"
+"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
+"de WeeChat, \"~/.weechat\" por defecto)"
+
+#, fuzzy
+msgid ""
+"path for reading files when sending (when no path is specified by user) (\"%h"
+"\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
+"de WeeChat, \"~/.weechat\" por defecto)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -7176,3 +7194,19 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#~ msgid "file containing the certificate authorities"
+#~ msgstr "archivo que contiene las autoridades de certificación"
+
+#~ msgid "ssl certificate file used to automatically identify your nick"
+#~ msgstr ""
+#~ "archivo con certificado SSL para identificar automáticamente su apodo"
+
+#~ msgid "path for writing incoming files"
+#~ msgstr "ruta para guardar los archivos entrantes"
+
+#~ msgid ""
+#~ "path for reading files when sending (when no path is specified by user)"
+#~ msgstr ""
+#~ "ruta para la leer archivos cuando se envían (cuando no ruta es "
+#~ "especificada por el usuario)"
