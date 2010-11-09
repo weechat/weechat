@@ -4,6 +4,8 @@
 
 | alias | alias | liste des alias
 
+| alias | alias_value | valeur de l'alias
+
 | aspell | aspell_langs | liste des langues supportées pour aspell
 
 | irc | irc_channel | canal IRC courant

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 15:01+0100\n"
+"POT-Creation-Date: 2010-11-09 15:47+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2604,6 +2604,10 @@ msgstr "сокращение: удаляемое сокращение"
 
 #, fuzzy
 msgid "list of aliases"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "value of alias"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format

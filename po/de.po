@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 15:01+0100\n"
+"POT-Creation-Date: 2010-11-09 15:47+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2871,6 +2871,10 @@ msgid "alias_name: name of alias to remove"
 msgstr "alias_name: Name des zu löschenden Alias"
 
 msgid "list of aliases"
+msgstr "Liste der Alias"
+
+#, fuzzy
+msgid "value of alias"
 msgstr "Liste der Alias"
 
 #, c-format

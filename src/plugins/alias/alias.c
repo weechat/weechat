@@ -861,6 +861,50 @@ alias_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * alias_value_completion_cb: callback for completion with value of an alias
+ */
+
+int
+alias_value_completion_cb (void *data, const char *completion_item,
+                           struct t_gui_buffer *buffer,
+                           struct t_gui_completion *completion)
+{
+    const char *args;
+    char *pos, *alias_name;
+    struct t_alias *ptr_alias;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    args = weechat_hook_completion_get_string (completion, "args");
+    if (args)
+    {
+        pos = strchr (args, ' ');
+        if (pos)
+            alias_name = weechat_strndup (args, pos - args);
+        else
+            alias_name = strdup (args);
+        
+        if (alias_name)
+        {
+            ptr_alias = alias_search (alias_name);
+            if (ptr_alias)
+            {
+                weechat_hook_completion_list_add (completion,
+                                                  ptr_alias->command,
+                                                  0,
+                                                  WEECHAT_LIST_POS_BEGINNING);
+            }
+            free (alias_name);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * alias_add_to_infolist: add an alias in an infolist
  *                        return 1 if ok, 0 if error
  */
@@ -949,7 +993,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "  alias /forcejoin to send IRC command "
                              "\"forcejoin\" with completion of /sajoin:\n"
                              "    /alias -completion %%sajoin forcejoin /quote forcejoin"),
-                          "%(alias)|-completion %(commands)",
+                          "%(alias)|-completion %(commands)|%(alias_value)",
                           &alias_command_cb, NULL);
     
     weechat_hook_command ("unalias", N_("remove aliases"),
@@ -960,6 +1004,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_completion ("alias", N_("list of aliases"),
                              &alias_completion_cb, NULL);
+    weechat_hook_completion ("alias_value", N_("value of alias"),
+                             &alias_value_completion_cb, NULL);
     
     alias_info_init ();
     
