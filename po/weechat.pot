@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1273,6 +1273,75 @@ msgid ""
 "    /window scroll -d"
 msgstr ""
 
+msgid "names of buffers"
+msgstr ""
+
+msgid "numbers of buffers"
+msgstr ""
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+msgid "properties that can be set on a buffer"
+msgstr ""
+
+msgid "properties that can be read on a buffer"
+msgstr ""
+
+msgid "configuration files"
+msgstr ""
+
+msgid "filename"
+msgstr ""
+
+msgid "names of filters"
+msgstr ""
+
+msgid "commands (weechat and plugins)"
+msgstr ""
+
+msgid "names of infos hooked"
+msgstr ""
+
+msgid "names of infolists hooked"
+msgstr ""
+
+msgid "nicks in nicklist of current buffer"
+msgstr ""
+
+msgid "configuration options"
+msgstr ""
+
+msgid "names of plugins"
+msgstr ""
+
+msgid "commands defined by plugins"
+msgstr ""
+
+msgid "names of bars"
+msgstr ""
+
+msgid "values for a configuration option"
+msgstr ""
+
+msgid "weechat commands"
+msgstr ""
+
+msgid "names of proxies"
+msgstr ""
+
+msgid "options for proxies"
+msgstr ""
+
+msgid "options for bars"
+msgstr ""
+
+msgid "key codes"
+msgstr ""
+
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2047,75 +2116,6 @@ msgstr ""
 
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"
-msgstr ""
-
-msgid "names of buffers"
-msgstr ""
-
-msgid "numbers of buffers"
-msgstr ""
-
-msgid "names of buffers (including plugins names)"
-msgstr ""
-
-msgid "properties that can be set on a buffer"
-msgstr ""
-
-msgid "properties that can be read on a buffer"
-msgstr ""
-
-msgid "configuration files"
-msgstr ""
-
-msgid "filename"
-msgstr ""
-
-msgid "names of filters"
-msgstr ""
-
-msgid "commands (weechat and plugins)"
-msgstr ""
-
-msgid "names of infos hooked"
-msgstr ""
-
-msgid "names of infolists hooked"
-msgstr ""
-
-msgid "nicks in nicklist of current buffer"
-msgstr ""
-
-msgid "configuration options"
-msgstr ""
-
-msgid "names of plugins"
-msgstr ""
-
-msgid "commands defined by plugins"
-msgstr ""
-
-msgid "names of bars"
-msgstr ""
-
-msgid "values for a configuration option"
-msgstr ""
-
-msgid "weechat commands"
-msgstr ""
-
-msgid "names of proxies"
-msgstr ""
-
-msgid "options for proxies"
-msgstr ""
-
-msgid "options for bars"
-msgstr ""
-
-msgid "key codes"
-msgstr ""
-
-msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
 
 msgid "Error: not enough memory to add a buffer to hotlist"

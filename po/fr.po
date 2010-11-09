@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-08 15:03+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1704,6 +1704,77 @@ msgstr ""
 "  défilement jusqu'au début du jour courant:\n"
 "    /window scroll -d"
 
+msgid "names of buffers"
+msgstr "noms des tampons"
+
+msgid "numbers of buffers"
+msgstr "numéros des tampons"
+
+msgid "names of buffers (including plugins names)"
+msgstr "noms des tampons (incluant les noms d'extensions)"
+
+msgid "properties that can be set on a buffer"
+msgstr "propriétés qui peuvent être changées sur un tampon"
+
+msgid "properties that can be read on a buffer"
+msgstr "propriétés qui peuvent être lues sur un tampon"
+
+msgid "configuration files"
+msgstr "fichiers de configuration"
+
+msgid "filename"
+msgstr "nom de fichier"
+
+msgid "names of filters"
+msgstr "noms des filtres"
+
+msgid "commands (weechat and plugins)"
+msgstr "commandes (weechat et extensions)"
+
+msgid "names of infos hooked"
+msgstr "noms des infos accrochées"
+
+msgid "names of infolists hooked"
+msgstr "noms des infolistes accrochées"
+
+msgid "nicks in nicklist of current buffer"
+msgstr "pseudos dans la liste des pseudos du tampon courant"
+
+msgid "configuration options"
+msgstr "options de configuration"
+
+msgid "names of plugins"
+msgstr "noms des extensions"
+
+msgid "commands defined by plugins"
+msgstr "commandes définies par les extensions"
+
+msgid "names of bars"
+msgstr "noms des barres"
+
+msgid "values for a configuration option"
+msgstr "valeurs pour une option de configuration"
+
+msgid "weechat commands"
+msgstr "commandes weechat"
+
+msgid "names of proxies"
+msgstr "noms des proxies"
+
+msgid "options for proxies"
+msgstr "options pour les proxies"
+
+msgid "options for bars"
+msgstr "options pour les barres"
+
+msgid "key codes"
+msgstr "codes des touches"
+
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+"codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies "
+"ou supprimées)"
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2621,77 +2692,6 @@ msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sErreur: il est possible de mélanger seulement des tampons avec du contenu "
 "formaté"
-
-msgid "names of buffers"
-msgstr "noms des tampons"
-
-msgid "numbers of buffers"
-msgstr "numéros des tampons"
-
-msgid "names of buffers (including plugins names)"
-msgstr "noms des tampons (incluant les noms d'extensions)"
-
-msgid "properties that can be set on a buffer"
-msgstr "propriétés qui peuvent être changées sur un tampon"
-
-msgid "properties that can be read on a buffer"
-msgstr "propriétés qui peuvent être lues sur un tampon"
-
-msgid "configuration files"
-msgstr "fichiers de configuration"
-
-msgid "filename"
-msgstr "nom de fichier"
-
-msgid "names of filters"
-msgstr "noms des filtres"
-
-msgid "commands (weechat and plugins)"
-msgstr "commandes (weechat et extensions)"
-
-msgid "names of infos hooked"
-msgstr "noms des infos accrochées"
-
-msgid "names of infolists hooked"
-msgstr "noms des infolistes accrochées"
-
-msgid "nicks in nicklist of current buffer"
-msgstr "pseudos dans la liste des pseudos du tampon courant"
-
-msgid "configuration options"
-msgstr "options de configuration"
-
-msgid "names of plugins"
-msgstr "noms des extensions"
-
-msgid "commands defined by plugins"
-msgstr "commandes définies par les extensions"
-
-msgid "names of bars"
-msgstr "noms des barres"
-
-msgid "values for a configuration option"
-msgstr "valeurs pour une option de configuration"
-
-msgid "weechat commands"
-msgstr "commandes weechat"
-
-msgid "names of proxies"
-msgstr "noms des proxies"
-
-msgid "options for proxies"
-msgstr "options pour les proxies"
-
-msgid "options for bars"
-msgstr "options pour les barres"
-
-msgid "key codes"
-msgstr "codes des touches"
-
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr ""
-"codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies "
-"ou supprimées)"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"

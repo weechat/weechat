@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1689,6 +1689,76 @@ msgstr ""
 "  desplazar al principio del día actual:\n"
 "    /window scroll -d"
 
+msgid "names of buffers"
+msgstr "nombres de los buffers"
+
+msgid "numbers of buffers"
+msgstr "números de los buffers"
+
+msgid "names of buffers (including plugins names)"
+msgstr "nombre de los buffers (incluyendo nombre de los plugins)"
+
+msgid "properties that can be set on a buffer"
+msgstr "propiedades del buffer que pueden configurarse"
+
+msgid "properties that can be read on a buffer"
+msgstr "propiedades del buffer que pueden leerse"
+
+msgid "configuration files"
+msgstr "archivos de configuración"
+
+msgid "filename"
+msgstr "nombre de archivo"
+
+msgid "names of filters"
+msgstr "nombre de los filtros"
+
+msgid "commands (weechat and plugins)"
+msgstr "comandos (weechat y plugins)"
+
+msgid "names of infos hooked"
+msgstr "nombres de infos enganchados"
+
+msgid "names of infolists hooked"
+msgstr "nombres de infolists enganchados"
+
+msgid "nicks in nicklist of current buffer"
+msgstr "apodos en la lista de apodos del buffer actual"
+
+msgid "configuration options"
+msgstr "opciones de configuración"
+
+msgid "names of plugins"
+msgstr "nombres de plugins"
+
+msgid "commands defined by plugins"
+msgstr "comandos definidos por plugins"
+
+msgid "names of bars"
+msgstr "nombres de barras"
+
+msgid "values for a configuration option"
+msgstr "valores de una opción de configuración"
+
+msgid "weechat commands"
+msgstr "comandos de weechat"
+
+msgid "names of proxies"
+msgstr "nombres de proxies"
+
+msgid "options for proxies"
+msgstr "opciones para proxies"
+
+msgid "options for bars"
+msgstr "opciones para barras"
+
+msgid "key codes"
+msgstr "códigos de tecla"
+
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+"Atajos que se pueden restaurar (atajos agregados, redefinidos o borrados)"
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2584,76 +2654,6 @@ msgstr "%sError: un buffer con el mismo nombre (%s) ya existe"
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sError: solamente es posible fusionar buffers con contenido formateado"
-
-msgid "names of buffers"
-msgstr "nombres de los buffers"
-
-msgid "numbers of buffers"
-msgstr "números de los buffers"
-
-msgid "names of buffers (including plugins names)"
-msgstr "nombre de los buffers (incluyendo nombre de los plugins)"
-
-msgid "properties that can be set on a buffer"
-msgstr "propiedades del buffer que pueden configurarse"
-
-msgid "properties that can be read on a buffer"
-msgstr "propiedades del buffer que pueden leerse"
-
-msgid "configuration files"
-msgstr "archivos de configuración"
-
-msgid "filename"
-msgstr "nombre de archivo"
-
-msgid "names of filters"
-msgstr "nombre de los filtros"
-
-msgid "commands (weechat and plugins)"
-msgstr "comandos (weechat y plugins)"
-
-msgid "names of infos hooked"
-msgstr "nombres de infos enganchados"
-
-msgid "names of infolists hooked"
-msgstr "nombres de infolists enganchados"
-
-msgid "nicks in nicklist of current buffer"
-msgstr "apodos en la lista de apodos del buffer actual"
-
-msgid "configuration options"
-msgstr "opciones de configuración"
-
-msgid "names of plugins"
-msgstr "nombres de plugins"
-
-msgid "commands defined by plugins"
-msgstr "comandos definidos por plugins"
-
-msgid "names of bars"
-msgstr "nombres de barras"
-
-msgid "values for a configuration option"
-msgstr "valores de una opción de configuración"
-
-msgid "weechat commands"
-msgstr "comandos de weechat"
-
-msgid "names of proxies"
-msgstr "nombres de proxies"
-
-msgid "options for proxies"
-msgstr "opciones para proxies"
-
-msgid "options for bars"
-msgstr "opciones para barras"
-
-msgid "key codes"
-msgstr "códigos de tecla"
-
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr ""
-"Atajos que se pueden restaurar (atajos agregados, redefinidos o borrados)"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""

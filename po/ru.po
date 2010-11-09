@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1489,6 +1489,96 @@ msgstr ""
 "текущего. Например, 25 означает создать окно в 4 раза меньше текущего"
 
 #, fuzzy
+msgid "names of buffers"
+msgstr "загрузка буфера не удалась"
+
+#, fuzzy
+msgid "numbers of buffers"
+msgstr "загрузка буфера не удалась"
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+#, fuzzy
+msgid "properties that can be set on a buffer"
+msgstr "загрузка буфера не удалась"
+
+#, fuzzy
+msgid "properties that can be read on a buffer"
+msgstr "загрузка буфера не удалась"
+
+#, fuzzy
+msgid "configuration files"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy
+msgid "filename"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "names of filters"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "commands (weechat and plugins)"
+msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+msgid "names of infos hooked"
+msgstr "     обработчики таймера:\n"
+
+#, fuzzy
+msgid "names of infolists hooked"
+msgstr "     обработчики таймера:\n"
+
+#, fuzzy
+msgid "nicks in nicklist of current buffer"
+msgstr "некорректная длина буфера"
+
+#, fuzzy
+msgid "configuration options"
+msgstr "Не найден параметр\n"
+
+#, fuzzy
+msgid "names of plugins"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "commands defined by plugins"
+msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+msgid "names of bars"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "values for a configuration option"
+msgstr "Не найден параметр\n"
+
+#, fuzzy
+msgid "weechat commands"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "names of proxies"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "options for proxies"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "options for bars"
+msgstr "Список сокращений:\n"
+
+msgid "key codes"
+msgstr ""
+
+#, fuzzy
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr "Комбинации клавиш:\n"
+
+#, fuzzy
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2395,96 +2485,6 @@ msgstr ""
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
-
-#, fuzzy
-msgid "names of buffers"
-msgstr "загрузка буфера не удалась"
-
-#, fuzzy
-msgid "numbers of buffers"
-msgstr "загрузка буфера не удалась"
-
-msgid "names of buffers (including plugins names)"
-msgstr ""
-
-#, fuzzy
-msgid "properties that can be set on a buffer"
-msgstr "загрузка буфера не удалась"
-
-#, fuzzy
-msgid "properties that can be read on a buffer"
-msgstr "загрузка буфера не удалась"
-
-#, fuzzy
-msgid "configuration files"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, fuzzy
-msgid "filename"
-msgstr "команда users отключена"
-
-#, fuzzy
-msgid "names of filters"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "commands (weechat and plugins)"
-msgstr "  (нет pluginа)\n"
-
-#, fuzzy
-msgid "names of infos hooked"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy
-msgid "names of infolists hooked"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy
-msgid "nicks in nicklist of current buffer"
-msgstr "некорректная длина буфера"
-
-#, fuzzy
-msgid "configuration options"
-msgstr "Не найден параметр\n"
-
-#, fuzzy
-msgid "names of plugins"
-msgstr "настроить параметры конфигурации"
-
-#, fuzzy
-msgid "commands defined by plugins"
-msgstr "  (нет pluginа)\n"
-
-#, fuzzy
-msgid "names of bars"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "values for a configuration option"
-msgstr "Не найден параметр\n"
-
-#, fuzzy
-msgid "weechat commands"
-msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "names of proxies"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "options for proxies"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "options for bars"
-msgstr "Список сокращений:\n"
-
-msgid "key codes"
-msgstr ""
-
-#, fuzzy
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr "Комбинации клавиш:\n"
 
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"

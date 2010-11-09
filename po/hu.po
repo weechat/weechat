@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1480,6 +1480,96 @@ msgstr ""
 "szülőablak negyedét kapjuk."
 
 #, fuzzy
+msgid "names of buffers"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "numbers of buffers"
+msgstr "puffer betöltése sikertelen"
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+#, fuzzy
+msgid "properties that can be set on a buffer"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "properties that can be read on a buffer"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "configuration files"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "filename"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "names of filters"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "commands (weechat and plugins)"
+msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+msgid "names of infos hooked"
+msgstr "     időkezelők:\n"
+
+#, fuzzy
+msgid "names of infolists hooked"
+msgstr "     időkezelők:\n"
+
+#, fuzzy
+msgid "nicks in nicklist of current buffer"
+msgstr "érvénytelen pufferhossz"
+
+#, fuzzy
+msgid "configuration options"
+msgstr "Nem található az opció\n"
+
+#, fuzzy
+msgid "names of plugins"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "commands defined by plugins"
+msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+msgid "names of bars"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "values for a configuration option"
+msgstr "Nem található az opció\n"
+
+#, fuzzy
+msgid "weechat commands"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+msgid "names of proxies"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "options for proxies"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "options for bars"
+msgstr "Aliaszok listája:\n"
+
+msgid "key codes"
+msgstr ""
+
+#, fuzzy
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr "Billentyűparancsok:\n"
+
+#, fuzzy
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2375,96 +2465,6 @@ msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
-
-#, fuzzy
-msgid "names of buffers"
-msgstr "puffer betöltése sikertelen"
-
-#, fuzzy
-msgid "numbers of buffers"
-msgstr "puffer betöltése sikertelen"
-
-msgid "names of buffers (including plugins names)"
-msgstr ""
-
-#, fuzzy
-msgid "properties that can be set on a buffer"
-msgstr "puffer betöltése sikertelen"
-
-#, fuzzy
-msgid "properties that can be read on a buffer"
-msgstr "puffer betöltése sikertelen"
-
-#, fuzzy
-msgid "configuration files"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy
-msgid "filename"
-msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy
-msgid "names of filters"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "commands (weechat and plugins)"
-msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-msgid "names of infos hooked"
-msgstr "     időkezelők:\n"
-
-#, fuzzy
-msgid "names of infolists hooked"
-msgstr "     időkezelők:\n"
-
-#, fuzzy
-msgid "nicks in nicklist of current buffer"
-msgstr "érvénytelen pufferhossz"
-
-#, fuzzy
-msgid "configuration options"
-msgstr "Nem található az opció\n"
-
-#, fuzzy
-msgid "names of plugins"
-msgstr "konfigurációs paraméterek beállítása"
-
-#, fuzzy
-msgid "commands defined by plugins"
-msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-msgid "names of bars"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "values for a configuration option"
-msgstr "Nem található az opció\n"
-
-#, fuzzy
-msgid "weechat commands"
-msgstr "%s belső parancsok:\n"
-
-#, fuzzy
-msgid "names of proxies"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "options for proxies"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "options for bars"
-msgstr "Aliaszok listája:\n"
-
-msgid "key codes"
-msgstr ""
-
-#, fuzzy
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr "Billentyűparancsok:\n"
 
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"

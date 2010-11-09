@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1696,6 +1696,77 @@ msgstr ""
 "  przewiń do początku obecnego dnia:\n"
 "    /window scroll -d"
 
+msgid "names of buffers"
+msgstr "nazwy buforów"
+
+msgid "numbers of buffers"
+msgstr "numery buforów"
+
+msgid "names of buffers (including plugins names)"
+msgstr "nazwy buforów (włącznie z nazwami wtyczek)"
+
+msgid "properties that can be set on a buffer"
+msgstr "właściwości, jakie mogą być ustawione w buforze"
+
+msgid "properties that can be read on a buffer"
+msgstr "właściwości, jakie moga być przeczytane w buforze"
+
+msgid "configuration files"
+msgstr "pliki konfiguracyjne"
+
+msgid "filename"
+msgstr "nazwa pliku"
+
+msgid "names of filters"
+msgstr "nazwy wiltrów"
+
+msgid "commands (weechat and plugins)"
+msgstr "komendy (weechata i pluginów)"
+
+msgid "names of infos hooked"
+msgstr "nazwy powiązanych informacji"
+
+msgid "names of infolists hooked"
+msgstr "nazwy powiązanych infolist"
+
+msgid "nicks in nicklist of current buffer"
+msgstr "nicki na liście nicków obecnego bufora"
+
+msgid "configuration options"
+msgstr "opcje konfiguracyjne"
+
+msgid "names of plugins"
+msgstr "nazwy wtyczek"
+
+msgid "commands defined by plugins"
+msgstr "komendy zdefiniowane przez wtyczki"
+
+msgid "names of bars"
+msgstr "nazwy pasków"
+
+msgid "values for a configuration option"
+msgstr "wartości opcji konfiguracyunych"
+
+msgid "weechat commands"
+msgstr "komendy weechata"
+
+msgid "names of proxies"
+msgstr "nazwy proxy"
+
+msgid "options for proxies"
+msgstr "opcje proxy"
+
+msgid "options for bars"
+msgstr "opcje pasków"
+
+msgid "key codes"
+msgstr "kody klawiszowe"
+
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+"kody klawiszy, które mogą być zresetowane (klawisze dodane, zredefiniowane "
+"lub udunięte)"
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2578,77 +2649,6 @@ msgstr "%sBłąd: istnieje już bufor o nazwie (%s)"
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sBłąd: możliwe jest tylko połączenie buforów z sformatowaną zawartością"
-
-msgid "names of buffers"
-msgstr "nazwy buforów"
-
-msgid "numbers of buffers"
-msgstr "numery buforów"
-
-msgid "names of buffers (including plugins names)"
-msgstr "nazwy buforów (włącznie z nazwami wtyczek)"
-
-msgid "properties that can be set on a buffer"
-msgstr "właściwości, jakie mogą być ustawione w buforze"
-
-msgid "properties that can be read on a buffer"
-msgstr "właściwości, jakie moga być przeczytane w buforze"
-
-msgid "configuration files"
-msgstr "pliki konfiguracyjne"
-
-msgid "filename"
-msgstr "nazwa pliku"
-
-msgid "names of filters"
-msgstr "nazwy wiltrów"
-
-msgid "commands (weechat and plugins)"
-msgstr "komendy (weechata i pluginów)"
-
-msgid "names of infos hooked"
-msgstr "nazwy powiązanych informacji"
-
-msgid "names of infolists hooked"
-msgstr "nazwy powiązanych infolist"
-
-msgid "nicks in nicklist of current buffer"
-msgstr "nicki na liście nicków obecnego bufora"
-
-msgid "configuration options"
-msgstr "opcje konfiguracyjne"
-
-msgid "names of plugins"
-msgstr "nazwy wtyczek"
-
-msgid "commands defined by plugins"
-msgstr "komendy zdefiniowane przez wtyczki"
-
-msgid "names of bars"
-msgstr "nazwy pasków"
-
-msgid "values for a configuration option"
-msgstr "wartości opcji konfiguracyunych"
-
-msgid "weechat commands"
-msgstr "komendy weechata"
-
-msgid "names of proxies"
-msgstr "nazwy proxy"
-
-msgid "options for proxies"
-msgstr "opcje proxy"
-
-msgid "options for bars"
-msgstr "opcje pasków"
-
-msgid "key codes"
-msgstr "kody klawiszowe"
-
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr ""
-"kody klawiszy, które mogą być zresetowane (klawisze dodane, zredefiniowane "
-"lub udunięte)"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"

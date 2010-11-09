@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-08 15:03+0100\n"
+"POT-Creation-Date: 2010-11-09 15:01+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1675,6 +1675,77 @@ msgstr ""
 "  posunout na začátek aktuálního dne:\n"
 "    /window scroll -d"
 
+msgid "names of buffers"
+msgstr "jména bufferů"
+
+msgid "numbers of buffers"
+msgstr "čísla bufferů"
+
+msgid "names of buffers (including plugins names)"
+msgstr "jména bufferů (včetně jmen pluginů)"
+
+msgid "properties that can be set on a buffer"
+msgstr "vlastnosti, které mohou být nastaveny bufferu"
+
+msgid "properties that can be read on a buffer"
+msgstr "vlastnosti, které mohou být čteny o bufferu"
+
+msgid "configuration files"
+msgstr "konfigurační soubory"
+
+msgid "filename"
+msgstr "jméno souboru"
+
+msgid "names of filters"
+msgstr "jména filtrů"
+
+msgid "commands (weechat and plugins)"
+msgstr "příkazy (weechat a pluginů)"
+
+msgid "names of infos hooked"
+msgstr "jména napojených info"
+
+msgid "names of infolists hooked"
+msgstr "jména napojených infolistů"
+
+msgid "nicks in nicklist of current buffer"
+msgstr "přezdívky v seznamu přezdívek aktuálního bufferu"
+
+msgid "configuration options"
+msgstr "konfigurační nastavení"
+
+msgid "names of plugins"
+msgstr "jména pluginů"
+
+msgid "commands defined by plugins"
+msgstr "příkazy definované pluginy"
+
+msgid "names of bars"
+msgstr "jména polí"
+
+msgid "values for a configuration option"
+msgstr "hodnoty pro konfigurační nastavení"
+
+msgid "weechat commands"
+msgstr "příkazy weechat"
+
+msgid "names of proxies"
+msgstr "jména prefixů"
+
+msgid "options for proxies"
+msgstr "volby pro proxy"
+
+msgid "options for bars"
+msgstr "volby pro pole"
+
+msgid "key codes"
+msgstr "klávesové kódy"
+
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+"klávesové kódy mohou být resetovány (klávesy přidány, redefinovány nebo "
+"smazány)"
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2547,77 +2618,6 @@ msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr "%sChyba: je možné spojovat pouze bufferz s formátovaným obsahem"
-
-msgid "names of buffers"
-msgstr "jména bufferů"
-
-msgid "numbers of buffers"
-msgstr "čísla bufferů"
-
-msgid "names of buffers (including plugins names)"
-msgstr "jména bufferů (včetně jmen pluginů)"
-
-msgid "properties that can be set on a buffer"
-msgstr "vlastnosti, které mohou být nastaveny bufferu"
-
-msgid "properties that can be read on a buffer"
-msgstr "vlastnosti, které mohou být čteny o bufferu"
-
-msgid "configuration files"
-msgstr "konfigurační soubory"
-
-msgid "filename"
-msgstr "jméno souboru"
-
-msgid "names of filters"
-msgstr "jména filtrů"
-
-msgid "commands (weechat and plugins)"
-msgstr "příkazy (weechat a pluginů)"
-
-msgid "names of infos hooked"
-msgstr "jména napojených info"
-
-msgid "names of infolists hooked"
-msgstr "jména napojených infolistů"
-
-msgid "nicks in nicklist of current buffer"
-msgstr "přezdívky v seznamu přezdívek aktuálního bufferu"
-
-msgid "configuration options"
-msgstr "konfigurační nastavení"
-
-msgid "names of plugins"
-msgstr "jména pluginů"
-
-msgid "commands defined by plugins"
-msgstr "příkazy definované pluginy"
-
-msgid "names of bars"
-msgstr "jména polí"
-
-msgid "values for a configuration option"
-msgstr "hodnoty pro konfigurační nastavení"
-
-msgid "weechat commands"
-msgstr "příkazy weechat"
-
-msgid "names of proxies"
-msgstr "jména prefixů"
-
-msgid "options for proxies"
-msgstr "volby pro proxy"
-
-msgid "options for bars"
-msgstr "volby pro pole"
-
-msgid "key codes"
-msgstr "klávesové kódy"
-
-msgid "key codes that can be reset (keys added, redefined or removed)"
-msgstr ""
-"klávesové kódy mohou být resetovány (klávesy přidány, redefinovány nebo "
-"smazány)"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Chyba: nedostatek paměti pro přidáni bufferu do hotlistu"

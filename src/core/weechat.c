@@ -54,6 +54,7 @@
 
 #include "weechat.h"
 #include "wee-command.h"
+#include "wee-completion.h"
 #include "wee-config.h"
 #include "wee-debug.h"
 #include "wee-hook.h"
@@ -389,7 +390,7 @@ main (int argc, char *argv[])
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */
-    gui_completion_init ();             /* add core completion hooks        */
+    completion_init ();                 /* add core completion hooks        */
     gui_keyboard_init ();               /* init keyboard                    */
     if (!config_weechat_init ())        /* init options with default values */
         exit (EXIT_FAILURE);

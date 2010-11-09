@@ -5,6 +5,8 @@ SET(WEECHAT_SOURCES
 ./src/core/weechat.h
 ./src/core/wee-command.c
 ./src/core/wee-command.h
+./src/core/wee-completion.c
+./src/core/wee-completion.h
 ./src/core/wee-config.c
 ./src/core/wee-config-file.c
 ./src/core/wee-config-file.h
