@@ -537,8 +537,6 @@ irc_redirect_new (struct t_irc_server *server,
      */
     if (new_redirect && ptr_redirect_pattern->temp_pattern)
         irc_redirect_pattern_free (ptr_redirect_pattern);
-
-    irc_redirect_print_log (server);
     
     return new_redirect;
 }
