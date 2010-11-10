@@ -1220,10 +1220,12 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
         {
             if (ptr_nick)
                 length += ptr_nick->group->level + 16 /* color */
-                    + 1 /* prefix */ + 16 /* color */
+                    + ((ptr_nick->prefix) ? strlen (ptr_nick->prefix) : 0)
+                    + 16 /* color */
                     + strlen (ptr_nick->name) + 1;
             else
                 length += ptr_group->level - 1
+                    + 16 /* color */
                     + strlen (gui_nicklist_get_group_start (ptr_group->name))
                     + 1;
         }
