@@ -238,12 +238,14 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         prefix_modes = irc_server_get_prefix_modes (server);
         for (i = 0; prefix_modes[i]; i++)
         {
-            snprintf (str_group, sizeof (str_group),
-                      "%03d|%c", i, prefix_modes[i]);
+            snprintf (str_group, sizeof (str_group), "%03d|%c",
+                      i, prefix_modes[i]);
             weechat_nicklist_add_group (new_buffer, NULL, str_group,
                                         "weechat.color.nicklist_group", 1);
         }
-        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OTHER,
+        snprintf (str_group, sizeof (str_group), "%03d|%s",
+                  IRC_NICK_GROUP_OTHER_NUMBER, IRC_NICK_GROUP_OTHER_NAME);
+        weechat_nicklist_add_group (new_buffer, NULL, str_group,
                                     "weechat.color.nicklist_group", 1);
     }
     

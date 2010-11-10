@@ -23,7 +23,9 @@
 #define IRC_NICK_VALID_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHI"      \
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
 
-#define IRC_NICK_GROUP_OTHER      "999|..."
+/* nicklist group for nicks without prefix is "999|..." */
+#define IRC_NICK_GROUP_OTHER_NUMBER 999
+#define IRC_NICK_GROUP_OTHER_NAME   "..."
 
 struct t_irc_server;
 struct t_irc_channel;
