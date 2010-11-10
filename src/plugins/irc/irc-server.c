@@ -3255,6 +3255,23 @@ irc_server_connect (struct t_irc_server *server)
         return 0;
     }
     
+    /* free some old values (from a previous connection to server) */
+    if (server->isupport)
+    {
+        free (server->isupport);
+        server->isupport = NULL;
+    }
+    if (server->prefix_modes)
+    {
+        free (server->prefix_modes);
+        server->prefix_modes = NULL;
+    }
+    if (server->prefix_chars)
+    {
+        free (server->prefix_chars);
+        server->prefix_chars = NULL;
+    }
+    
     proxy_type = NULL;
     proxy_ipv6 = NULL;
     proxy_address = NULL;
@@ -3542,21 +3559,6 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         free (server->nick_modes);
         server->nick_modes = NULL;
         weechat_bar_item_update ("input_prompt");
-    }
-    if (server->isupport)
-    {
-        free (server->isupport);
-        server->isupport = NULL;
-    }
-    if (server->prefix_modes)
-    {
-        free (server->prefix_modes);
-        server->prefix_modes = NULL;
-    }
-    if (server->prefix_chars)
-    {
-        free (server->prefix_chars);
-        server->prefix_chars = NULL;
     }
     server->is_away = 0;
     server->away_time = 0;
