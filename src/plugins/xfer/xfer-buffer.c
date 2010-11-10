@@ -48,7 +48,7 @@ xfer_buffer_refresh (const char *hotlist)
     char str_color[256], suffix[32], status[64], date[128], eta[128];
     char *progress_bar, *str_pos, *str_total, *str_bytes_per_sec;
     int i, length, line, progress_bar_size, num_bars;
-    unsigned long pct_complete;
+    unsigned long long pct_complete;
     struct tm *date_tmp;
     
     if (xfer_buffer)
@@ -177,7 +177,7 @@ xfer_buffer_refresh (const char *hotlist)
                         pct_complete = 0;
                 }
                 else
-                    pct_complete = (unsigned long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
+                    pct_complete = (unsigned long long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
                 
                 /* position, total and bytes per second */
                 str_pos = weechat_string_format_size (ptr_xfer->pos);
@@ -189,7 +189,7 @@ xfer_buffer_refresh (const char *hotlist)
                 if (ptr_xfer->status == XFER_STATUS_ACTIVE)
                 {
                     snprintf (eta, sizeof (eta),
-                              "%s: %.2lu:%.2lu:%.2lu - ",
+                              "%s: %.2llu:%.2llu:%.2llu - ",
                               _("ETA"),
                               ptr_xfer->eta / 3600,
                               (ptr_xfer->eta / 60) % 60,
@@ -198,7 +198,7 @@ xfer_buffer_refresh (const char *hotlist)
                 
                 /* display second line for file with status, progress bar and estimated time */
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
-                                  "%s%s%s %s%s%s%s%3lu%%   %s / %s  (%s%s/s)",
+                                  "%s%s%s %s%s%s%s%3llu%%   %s / %s  (%s%s/s)",
                                   weechat_color(str_color),
                                   (line == xfer_buffer_selected_line) ? "*** " : "    ",
                                   (XFER_IS_SEND(ptr_xfer->type)) ? "<<--" : "-->>",

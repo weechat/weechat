@@ -321,7 +321,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         /* erase file only if really empty on disk */
         if (stat (xfer->local_filename, &st) != -1)
         {
-            if ((unsigned long) st.st_size == 0)
+            if ((unsigned long long) st.st_size == 0)
                 unlink (xfer->local_filename);
         }
     }
@@ -395,10 +395,10 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
                                              xfer->charset_modifier);
             weechat_infolist_new_var_string (item, "filename",
                                              xfer->filename);
-            snprintf (str_long, sizeof (str_long), "%lu", xfer->size);
+            snprintf (str_long, sizeof (str_long), "%llu", xfer->size);
             weechat_infolist_new_var_string (item, "size",
                                              str_long);
-            snprintf (str_long, sizeof (str_long), "%lu", xfer->start_resume);
+            snprintf (str_long, sizeof (str_long), "%llu", xfer->start_resume);
             weechat_infolist_new_var_string (item, "start_resume",
                                              str_long);
             snprintf (str_long, sizeof (str_long), "%lu", xfer->address);
@@ -489,7 +489,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
           enum t_xfer_type type, enum t_xfer_protocol protocol,
           const char *remote_nick, const char *local_nick,
           const char *charset_modifier, const char *filename,
-          unsigned long size, const char *proxy, unsigned long address,
+          unsigned long long size, const char *proxy, unsigned long address,
           int port, int sock, const char *local_filename)
 {
     struct t_xfer *new_xfer;
@@ -542,7 +542,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_TYPE_FILE_RECV:
             weechat_printf (NULL,
                             _("%s: incoming file from %s "
-                              "(%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"),
+                              "(%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
                             address >> 24,
@@ -557,7 +557,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_TYPE_FILE_SEND:
             weechat_printf (NULL,
                             _("%s: sending file to %s: %s "
-                              "(local filename: %s), %lu bytes (protocol: %s)"),
+                              "(local filename: %s), %llu bytes (protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
                             filename,
@@ -600,7 +600,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     {
         weechat_printf (NULL,
                         _("%s: file %s (local filename: %s) "
-                          "will be resumed at position %lu"),
+                          "will be resumed at position %llu"),
                         XFER_PLUGIN_NAME,
                         new_xfer->filename,
                         new_xfer->local_filename,
@@ -713,7 +713,8 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     struct sockaddr_in addr;
     socklen_t length;
     struct in_addr tmpaddr;
-    unsigned long local_addr, file_size;
+    unsigned long local_addr;
+    unsigned long long file_size;
     struct t_xfer *ptr_xfer;
     
     /* make C compiler happy */
@@ -801,7 +802,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     if (type == XFER_TYPE_FILE_RECV)
     {
         filename2 = strdup (filename);
-        sscanf (weechat_infolist_string (infolist, "size"), "%lu", &file_size);
+        sscanf (weechat_infolist_string (infolist, "size"), "%llu", &file_size);
     }
     
     if (type == XFER_TYPE_FILE_SEND)
@@ -1068,7 +1069,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     struct t_xfer *ptr_xfer;
     const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
-    unsigned long start_resume;
+    unsigned long long start_resume;
     
     /* make C compiler happy */
     (void) data;
@@ -1110,7 +1111,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
         goto error;
     }
     
-    sscanf (str_start_resume, "%lu", &start_resume);
+    sscanf (str_start_resume, "%llu", &start_resume);
     
     ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_RECV,
                             XFER_STATUS_CONNECTING, port);
@@ -1126,7 +1127,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: unable to resume file \"%s\" (port: %d, "
-                           "start position: %lu): xfer not found or not ready "
+                          "start position: %llu): xfer not found or not ready "
                           "for transfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
@@ -1153,7 +1154,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     struct t_xfer *ptr_xfer;
     const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
-    unsigned long start_resume;
+    unsigned long long start_resume;
     
     /* make C compiler happy */
     (void) data;
@@ -1195,7 +1196,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         goto error;
     }
     
-    sscanf (str_start_resume, "%lu", &start_resume);
+    sscanf (str_start_resume, "%llu", &start_resume);
     
     ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND,
                             XFER_STATUS_CONNECTING, port);
@@ -1208,7 +1209,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         xfer_send_signal (ptr_xfer, "xfer_send_accept_resume");
         
         weechat_printf (NULL,
-                        _("%s: file %s resumed at position %lu"),
+                        _("%s: file %s resumed at position %llu"),
                         XFER_PLUGIN_NAME,
                         ptr_xfer->filename,
                         ptr_xfer->start_resume);
@@ -1218,7 +1219,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: unable to accept resume file \"%s\" (port: %d, "
-                           "start position: %lu): xfer not found or not ready "
+                          "start position: %llu): xfer not found or not ready "
                           "for transfer"),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
@@ -1270,7 +1271,7 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "filename", xfer->filename))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->size);
+    snprintf (value, sizeof (value), "%llu", xfer->size);
     if (!weechat_infolist_new_var_string (ptr_item, "size", value))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "proxy", xfer->proxy))
@@ -1317,26 +1318,26 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "filename_suffix", xfer->filename_suffix))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->pos);
+    snprintf (value, sizeof (value), "%llu", xfer->pos);
     if (!weechat_infolist_new_var_string (ptr_item, "pos", value))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->ack);
+    snprintf (value, sizeof (value), "%llu", xfer->ack);
     if (!weechat_infolist_new_var_string (ptr_item, "ack", value))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->start_resume);
+    snprintf (value, sizeof (value), "%llu", xfer->start_resume);
     if (!weechat_infolist_new_var_string (ptr_item, "start_resume", value))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_check_time", xfer->last_check_time))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->last_check_pos);
+    snprintf (value, sizeof (value), "%llu", xfer->last_check_pos);
     if (!weechat_infolist_new_var_string (ptr_item, "last_check_pos", value))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_activity", xfer->last_activity))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->bytes_per_sec);
+    snprintf (value, sizeof (value), "%llu", xfer->bytes_per_sec);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_per_sec", value))
         return 0;
-    snprintf (value, sizeof (value), "%lu", xfer->eta);
+    snprintf (value, sizeof (value), "%llu", xfer->eta);
     if (!weechat_infolist_new_var_string (ptr_item, "eta", value))
         return 0;
     
@@ -1368,7 +1369,7 @@ xfer_print_log ()
         weechat_log_printf ("  local_nick. . . . . : '%s'",  ptr_xfer->local_nick);
         weechat_log_printf ("  charset_modifier. . : '%s'",  ptr_xfer->charset_modifier);
         weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_xfer->filename);
-        weechat_log_printf ("  size. . . . . . . . : %lu",   ptr_xfer->size);
+        weechat_log_printf ("  size. . . . . . . . : %llu",  ptr_xfer->size);
         weechat_log_printf ("  proxy . . . . . . . : '%s'",  ptr_xfer->proxy);
         weechat_log_printf ("  address . . . . . . : %lu",   ptr_xfer->address);
         weechat_log_printf ("  port. . . . . . . . : %d",    ptr_xfer->port);
@@ -1392,14 +1393,14 @@ xfer_print_log ()
         weechat_log_printf ("  file. . . . . . . . : %d",    ptr_xfer->file);
         weechat_log_printf ("  local_filename. . . : '%s'",  ptr_xfer->local_filename);
         weechat_log_printf ("  filename_suffix . . : %d",    ptr_xfer->filename_suffix);
-        weechat_log_printf ("  pos . . . . . . . . : %lu",   ptr_xfer->pos);
-        weechat_log_printf ("  ack . . . . . . . . : %lu",   ptr_xfer->ack);
-        weechat_log_printf ("  start_resume. . . . : %lu",   ptr_xfer->start_resume);
+        weechat_log_printf ("  pos . . . . . . . . : %llu",  ptr_xfer->pos);
+        weechat_log_printf ("  ack . . . . . . . . : %llu",  ptr_xfer->ack);
+        weechat_log_printf ("  start_resume. . . . : %llu",  ptr_xfer->start_resume);
         weechat_log_printf ("  last_check_time . . : %ld",   ptr_xfer->last_check_time);
-        weechat_log_printf ("  last_check_pos. . . : %lu",   ptr_xfer->last_check_pos);
+        weechat_log_printf ("  last_check_pos. . . : %llu",  ptr_xfer->last_check_pos);
         weechat_log_printf ("  last_activity . . . : %ld",   ptr_xfer->last_activity);
-        weechat_log_printf ("  bytes_per_sec . . . : %lu",   ptr_xfer->bytes_per_sec);
-        weechat_log_printf ("  eta . . . . . . . . : %lu",   ptr_xfer->eta);
+        weechat_log_printf ("  bytes_per_sec . . . : %llu",  ptr_xfer->bytes_per_sec);
+        weechat_log_printf ("  eta . . . . . . . . : %llu",  ptr_xfer->eta);
         weechat_log_printf ("  prev_xfer . . . . . : 0x%lx", ptr_xfer->prev_xfer);
         weechat_log_printf ("  next_xfer . . . . . : 0x%lx", ptr_xfer->next_xfer);
     }

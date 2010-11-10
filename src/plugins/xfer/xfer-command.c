@@ -85,7 +85,7 @@ xfer_command_xfer_list (int full)
     struct t_xfer *ptr_xfer;
     int i;
     char date[128];
-    unsigned long pct_complete;
+    unsigned long long pct_complete;
     struct tm *date_tmp;
     
     if (xfer_list)
@@ -106,12 +106,12 @@ xfer_command_xfer_list (int full)
                         pct_complete = 0;
                 }
                 else
-                    pct_complete = (unsigned long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
+                    pct_complete = (unsigned long long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
                 
                 weechat_printf (NULL,
                                 _("%3d. %s (%s), file: \"%s\" (local: "
                                   "\"%s\"), %s %s, status: %s%s%s "
-                                  "(%lu %%)"),
+                                  "(%llu %%)"),
                                 i,
                                 xfer_type_string[ptr_xfer->type],
                                 xfer_protocol_string[ptr_xfer->protocol],
@@ -153,8 +153,8 @@ xfer_command_xfer_list (int full)
                 if (XFER_IS_FILE(ptr_xfer->type))
                 {
                     weechat_printf (NULL,
-                                    _("     plugin: %s (id: %s), file: %lu "
-                                      "bytes (position: %lu), address: "
+                                    _("     plugin: %s (id: %s), file: %llu "
+                                      "bytes (position: %llu), address: "
                                       "%d.%d.%d.%d (port %d)"),
                                     ptr_xfer->plugin_name,
                                     ptr_xfer->plugin_id,

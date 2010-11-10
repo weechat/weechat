@@ -115,7 +115,7 @@ struct t_xfer
     char *local_nick;                  /* local nick                        */
     char *charset_modifier;            /* string for charset modifier_data  */
     char *filename;                    /* filename                          */
-    unsigned long size;                /* file size                         */
+    unsigned long long size;           /* file size                         */
     char *proxy;                       /* proxy to use (optional)           */
     unsigned long address;             /* local or remote IP address        */
     int port;                          /* remote port                       */
@@ -139,14 +139,14 @@ struct t_xfer
     int file;                          /* local file (read or write)        */
     char *local_filename;              /* local filename (with path)        */
     int filename_suffix;               /* suffix (like .1) if renaming file */
-    unsigned long pos;                 /* number of bytes received/sent     */
-    unsigned long ack;                 /* number of bytes received OK       */
-    unsigned long start_resume;        /* start of resume (in bytes)        */
+    unsigned long long pos;            /* number of bytes received/sent     */
+    unsigned long long ack;            /* number of bytes received OK       */
+    unsigned long long start_resume;   /* start of resume (in bytes)        */
     time_t last_check_time;            /* last time we checked bytes snt/rcv*/
-    unsigned long last_check_pos;      /* bytes sent/recv at last check     */
+    unsigned long long last_check_pos; /* bytes sent/recv at last check     */
     time_t last_activity;              /* time of last byte received/sent   */
-    unsigned long bytes_per_sec;       /* bytes per second                  */
-    unsigned long eta;                 /* estimated time of arrival         */
+    unsigned long long bytes_per_sec;  /* bytes per second                  */
+    unsigned long long eta;            /* estimated time of arrival         */
     struct t_xfer *prev_xfer;          /* link to previous xfer             */
     struct t_xfer *next_xfer;          /* link to next xfer                 */
 };

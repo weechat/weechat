@@ -75,9 +75,9 @@ xfer_network_create_pipe (struct t_xfer *xfer)
 void
 xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
 {
-    char buffer[1 + 1 + 12 + 1];   /* status + error + pos + \0 */
+    char buffer[1 + 1 + 32 + 1];   /* status + error + pos + \0 */
     
-    snprintf (buffer, sizeof (buffer), "%c%c%012lu",
+    snprintf (buffer, sizeof (buffer), "%c%c%032llu",
               status + '0', error + '0', xfer->pos);
     write (xfer->child_write, buffer, sizeof (buffer));
 }
@@ -90,7 +90,7 @@ int
 xfer_network_child_read_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
-    char bufpipe[1 + 1 + 12 + 1];
+    char bufpipe[1 + 1 + 32 + 1];
     int num_read;
     char *error;
     
@@ -103,7 +103,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
     if (num_read > 0)
     {
         error = NULL;
-        xfer->pos = (unsigned long)(strtoll (bufpipe + 2, &error, 10));
+        sscanf (bufpipe + 2, "%llu", &xfer->pos);
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
         

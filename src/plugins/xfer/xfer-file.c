@@ -55,9 +55,9 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
     {
         if (stat (filename, &st) != -1)
         {
-            if ((unsigned long) st.st_size < xfer->size)
+            if ((unsigned long long) st.st_size < xfer->size)
             {
-                xfer->start_resume = (unsigned long) st.st_size;
+                xfer->start_resume = (unsigned long long) st.st_size;
                 xfer->pos = xfer->start_resume;
                 xfer->last_check_pos = xfer->start_resume;
                 return 1;
@@ -176,7 +176,7 @@ void
 xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
 {
     time_t local_time, elapsed;
-    unsigned long bytes_per_sec_total;
+    unsigned long long bytes_per_sec_total;
     
     local_time = time (NULL);
     if (ended || local_time > xfer->last_check_time)
