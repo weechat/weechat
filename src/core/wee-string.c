@@ -1283,7 +1283,7 @@ string_iconv_fprintf (FILE *file, const char *data, ...)
  */
 
 char *
-string_format_size (unsigned long size)
+string_format_size (unsigned long long size)
 {
     char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
     char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };

@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101109-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101110-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -188,7 +188,7 @@ struct t_weechat_plugin
                                              const char *separator);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_split_command) (char **split_command);
-    char *(*string_format_size) (unsigned long size);
+    char *(*string_format_size) (unsigned long long size);
     char *(*string_remove_color) (const char *string, const char *replacement);
     void (*string_encode_base64) (const char *from, int length, char *to);
     int (*string_decode_base64) (const char *from, char *to);

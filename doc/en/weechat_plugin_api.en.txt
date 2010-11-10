@@ -1177,7 +1177,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-char *weechat_string_format_size (unsigned long size);
+char *weechat_string_format_size (unsigned long long size);
 ----------------------------------------
 
 Arguments:
