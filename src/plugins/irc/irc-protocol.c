@@ -3630,45 +3630,48 @@ IRC_PROTOCOL_CALLBACK(366)
                         strlen (weechat_infolist_string (infolist, "name")) + 1;
                 }
             }
-            string = malloc (length);
-            if (string)
+            if (length > 0)
             {
-                string[0] = '\0';
-                i = 0;
-                while (weechat_infolist_next (infolist))
+                string = malloc (length);
+                if (string)
                 {
-                    if (strcmp (weechat_infolist_string (infolist, "type"),
-                            "nick") == 0)
+                    string[0] = '\0';
+                    i = 0;
+                    while (weechat_infolist_next (infolist))
                     {
-                        if (i > 0)
-                            strcat (string, " ");
-                        prefix = weechat_infolist_string (infolist, "prefix");
-                        if (prefix[0] && (prefix[0] != ' '))
+                        if (strcmp (weechat_infolist_string (infolist, "type"),
+                                    "nick") == 0)
                         {
-                            weechat_config_search_with_string (weechat_infolist_string (infolist,
-                                                                                        "prefix_color"),
-                                                               NULL, NULL, &ptr_option,
-                                                               NULL);
-                            if (ptr_option)
-                                strcat (string, weechat_color (weechat_config_string (ptr_option)));
-                            strcat (string, prefix);
+                            if (i > 0)
+                                strcat (string, " ");
+                            prefix = weechat_infolist_string (infolist, "prefix");
+                            if (prefix[0] && (prefix[0] != ' '))
+                            {
+                                weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                                            "prefix_color"),
+                                                                   NULL, NULL, &ptr_option,
+                                                                   NULL);
+                                if (ptr_option)
+                                    strcat (string, weechat_color (weechat_config_string (ptr_option)));
+                                strcat (string, prefix);
+                            }
+                            strcat (string, IRC_COLOR_CHAT);
+                            strcat (string, weechat_infolist_string (infolist, "name"));
+                            i++;
                         }
-                        strcat (string, IRC_COLOR_CHAT);
-                        strcat (string, weechat_infolist_string (infolist, "name"));
-                        i++;
                     }
+                    weechat_printf_tags (ptr_channel->buffer,
+                                         irc_protocol_tags (command, "irc_numeric", NULL),
+                                         _("%sNicks %s%s%s: %s[%s%s]"),
+                                         weechat_prefix ("network"),
+                                         IRC_COLOR_CHAT_CHANNEL,
+                                         ptr_channel->name,
+                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_CHAT_DELIMITERS,
+                                         string,
+                                         IRC_COLOR_CHAT_DELIMITERS);
+                    free (string);
                 }
-                weechat_printf_tags (ptr_channel->buffer,
-                                     irc_protocol_tags (command, "irc_numeric", NULL),
-                                     _("%sNicks %s%s%s: %s[%s%s]"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     ptr_channel->name,
-                                     IRC_COLOR_CHAT,
-                                     IRC_COLOR_CHAT_DELIMITERS,
-                                     string,
-                                     IRC_COLOR_CHAT_DELIMITERS);
-                free (string);
             }
             weechat_infolist_free (infolist);
         }
