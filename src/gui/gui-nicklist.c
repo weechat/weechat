@@ -144,15 +144,17 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
 }
 
 /*
- * gui_nicklist_search_group: search a group in buffer nicklist
+ * gui_nicklist_search_group_internal: search a group in buffer nicklist
  */
 
 struct t_gui_nick_group *
-gui_nicklist_search_group (struct t_gui_buffer *buffer,
-                           struct t_gui_nick_group *from_group,
-                           const char *name)
+gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
+                                    struct t_gui_nick_group *from_group,
+                                    const char *name,
+                                    int skip_digits)
 {
     struct t_gui_nick_group *ptr_group;
+    const char *ptr_name;
     
     if (!buffer)
         return NULL;
@@ -165,7 +167,10 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
     
     if (from_group->childs)
     {
-        ptr_group = gui_nicklist_search_group (buffer, from_group->childs, name);
+        ptr_group = gui_nicklist_search_group_internal (buffer,
+                                                        from_group->childs,
+                                                        name,
+                                                        skip_digits);
         if (ptr_group)
             return ptr_group;
     }
@@ -173,13 +178,32 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
     ptr_group = from_group;
     while (ptr_group)
     {
-        if (strcmp (ptr_group->name, name) == 0)
+        ptr_name = (skip_digits) ?
+            gui_nicklist_get_group_start(ptr_group->name) : ptr_group->name;
+        if (strcmp (ptr_name, name) == 0)
             return ptr_group;
         ptr_group = ptr_group->next_group;
     }
     
     /* group not found */
     return NULL;
+}
+
+/*
+ * gui_nicklist_search_group: search a group in buffer nicklist
+ */
+
+struct t_gui_nick_group *
+gui_nicklist_search_group (struct t_gui_buffer *buffer,
+                           struct t_gui_nick_group *from_group,
+                           const char *name)
+{
+    const char *ptr_name;
+    
+    ptr_name = gui_nicklist_get_group_start (name);
+    
+    return gui_nicklist_search_group_internal (buffer, from_group, name,
+                                               (ptr_name == name) ? 1 : 0);
 }
 
 /*
@@ -583,7 +607,7 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
  *                               after '|', otherwise it's beginning of name
  */
 
-char *
+const char *
 gui_nicklist_get_group_start (const char *name)
 {
     const char *ptr_name;
@@ -596,9 +620,9 @@ gui_nicklist_get_group_start (const char *name)
         ptr_name++;
     }
     if ((ptr_name[0] == '|') && (ptr_name != name))
-        return (char *)ptr_name + 1;
+        return ptr_name + 1;
     else
-        return (char *)name;
+        return name;
 }
 
 /*

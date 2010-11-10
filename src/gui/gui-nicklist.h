@@ -78,7 +78,7 @@ extern void gui_nicklist_remove_all (struct t_gui_buffer *buffer);
 extern void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group **group,
                                         struct t_gui_nick **nick);
-extern char *gui_nicklist_get_group_start (const char *name);
+extern const char *gui_nicklist_get_group_start (const char *name);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *group);
 
