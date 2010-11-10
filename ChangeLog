@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-09
+v0.3.4-dev, 2010-11-10
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: fix crash when displaying groups in buffer nicklist
 * core: fix bug with message "day changed to", sometimes displayed several
   times wrongly
 * core: fix default value of bar items options (bug #31422)
