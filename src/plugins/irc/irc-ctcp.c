@@ -407,7 +407,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
     char *pos_start_resume, *filename;
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    char plugin_id[128], charset_modifier[256];
+    char charset_modifier[256];
     
     if (!arguments || !arguments[0])
         return;
@@ -509,9 +509,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             if (item)
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                snprintf (plugin_id, sizeof (plugin_id),
-                          "%lx", (long unsigned int)server);
-                weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                weechat_infolist_new_var_string (item, "plugin_id", server->name);
                 weechat_infolist_new_var_string (item, "type", "file_recv");
                 weechat_infolist_new_var_string (item, "protocol", "dcc");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
@@ -614,9 +612,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             if (item)
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                snprintf (plugin_id, sizeof (plugin_id),
-                          "%lx", (long unsigned int)server);
-                weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                weechat_infolist_new_var_string (item, "plugin_id", server->name);
                 weechat_infolist_new_var_string (item, "type", "file_recv");
                 weechat_infolist_new_var_string (item, "filename",
                                                  (filename) ? filename : pos_file);
@@ -713,9 +709,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             if (item)
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                snprintf (plugin_id, sizeof (plugin_id),
-                          "%lx", (long unsigned int)server);
-                weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                weechat_infolist_new_var_string (item, "plugin_id", server->name);
                 weechat_infolist_new_var_string (item, "type", "file_recv");
                 weechat_infolist_new_var_string (item, "filename",
                                                  (filename) ? filename : pos_file);
@@ -822,9 +816,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             if (item)
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
-                snprintf (plugin_id, sizeof (plugin_id),
-                          "%lx", (long unsigned int)server);
-                weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                weechat_infolist_new_var_string (item, "plugin_id", server->name);
                 weechat_infolist_new_var_string (item, "type", "chat_recv");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);

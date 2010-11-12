@@ -3846,8 +3846,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                                const char *type_data, void *signal_data)
 {
     struct t_infolist *infolist;
-    struct t_irc_server *server, *ptr_server;
-    long unsigned int value;
+    struct t_irc_server *ptr_server;
     const char *plugin_name, *plugin_id, *type, *filename;
     int spaces_in_name;
     
@@ -3864,14 +3863,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", &value);
-            server = (struct t_irc_server *)value;
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                if (ptr_server == server)
-                    break;
-            }
+            ptr_server = irc_server_search (plugin_id);
             if (ptr_server)
             {
                 type = weechat_infolist_string (infolist, "type");
@@ -3881,7 +3873,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     {
                         filename = weechat_infolist_string (infolist, "filename");
                         spaces_in_name = (strchr (filename, ' ') != NULL);
-                        irc_server_sendf (server,
+                        irc_server_sendf (ptr_server,
                                           IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                           "PRIVMSG %s :\01DCC SEND %s%s%s "
                                           "%s %d %s\01",
@@ -3895,7 +3887,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                     }
                     else if (strcmp (type, "chat_send") == 0)
                     {
-                        irc_server_sendf (server,
+                        irc_server_sendf (ptr_server,
                                           IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                           "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
@@ -3925,8 +3917,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
                                  const char *type_data, void *signal_data)
 {
     struct t_infolist *infolist;
-    struct t_irc_server *server, *ptr_server;
-    long unsigned int value;
+    struct t_irc_server *ptr_server;
     const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
@@ -3943,19 +3934,13 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", &value);
-            server = (struct t_irc_server *)value;
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                if (ptr_server == server)
-                    break;
-            }
+            ptr_server = irc_server_search (plugin_id);
             if (ptr_server)
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",
@@ -3986,8 +3971,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
                                        void *signal_data)
 {
     struct t_infolist *infolist;
-    struct t_irc_server *server, *ptr_server;
-    long unsigned int value;
+    struct t_irc_server *ptr_server;
     const char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
     
@@ -4004,19 +3988,13 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%lx", &value);
-            server = (struct t_irc_server *)value;
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                if (ptr_server == server)
-                    break;
-            }
+            ptr_server = irc_server_search (plugin_id);
             if (ptr_server)
             {
                 filename = weechat_infolist_string (infolist, "filename");
                 spaces_in_name = (strchr (filename, ' ') != NULL);
-                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                irc_server_sendf (ptr_server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                   "PRIVMSG %s :\01DCC ACCEPT %s%s%s %d %s\01",
                                   weechat_infolist_string (infolist, "remote_nick"),
                                   (spaces_in_name) ? "\"" : "",

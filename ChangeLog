@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-10
+v0.3.4-dev, 2010-11-12
 
 
 Version 0.3.4 (under dev!)
@@ -67,6 +67,7 @@ Version 0.3.4 (under dev!)
 * python: add info "python2_bin" (path to python 2.x interpreter)
 * lua: fix crash when unloading script
 * ruby: fix compilation with Ruby 1.9.2 (patch #7316)
+* xfer: fix dcc chat buffer name (use irc server in name) (bug #29925)
 * xfer: fix dcc file transfer for large files (more than 4 GB) on 32-bit systems
   (bug #31531)
 * xfer: fix bug at end of file sent, sometimes transfer is still active although

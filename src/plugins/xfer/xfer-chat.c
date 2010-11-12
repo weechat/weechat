@@ -316,12 +316,13 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
     
     buffer_created = 0;
     
-    length = strlen (xfer->plugin_name) + 8 + strlen (xfer->remote_nick) + 1;
+    length = strlen (xfer->plugin_name) + 8 + strlen (xfer->plugin_id) + 1
+        + strlen (xfer->remote_nick) + 1;
     name = malloc (length);
     if (name)
     {
-        snprintf (name, length, "%s_dcc_%s",
-                  xfer->plugin_name, xfer->remote_nick);
+        snprintf (name, length, "%s_dcc.%s.%s",
+                  xfer->plugin_name, xfer->plugin_id, xfer->remote_nick);
         xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
         if (!xfer->buffer)
         {
