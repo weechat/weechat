@@ -3237,10 +3237,10 @@ irc_server_connect (struct t_irc_server *server)
     {
         if (!irc_server_create_buffer (server))
             return 0;
-        
         weechat_buffer_set (server->buffer, "display", "auto");
-        weechat_bar_item_update ("buffer_name");
     }
+    
+    weechat_bar_item_update ("buffer_name");
     
     irc_server_set_index_current_address (server,
                                           server->index_current_address);
