@@ -1778,9 +1778,9 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             
             /* get queue from flags */
             queue_msg = 0;
-            if (flags && IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
+            if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
                 queue_msg = 1;
-            else if (flags && IRC_SERVER_SEND_OUTQ_PRIO_LOW)
+            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
                 queue_msg = 2;
             
             switch (queue_msg - 1)
