@@ -367,13 +367,6 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             xfer_network_send_file_fork (xfer);
         }
-        /*
-        if (xfer->type == XFER_TYPE_FILE_RECV)
-        {
-            if (xfer->child_read != -1)
-                irc_dcc_file_child_read (dcc);
-        }
-        */
     }
     
     if (xfer->status == XFER_STATUS_WAITING)
@@ -417,17 +410,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer_chat_open_buffer (xfer);
         }
     }
-    /*
-    if (xfer->status == XFER_STATUS_ACTIVE)
-    {
-        if (XFER_IS_CHAT(dcc->type))
-        {
-            irc_dcc_chat_recv (dcc);
-        }
-        else
-            irc_dcc_file_child_read (dcc);
-    }
-    */
+    
     return WEECHAT_RC_OK;
 }
 
