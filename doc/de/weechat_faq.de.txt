@@ -9,8 +9,8 @@ Allgemein
 
 
 [[why_choose_weechat]]
-Weshalb WeeChat? - X-Chat und Irssi sind sehr gut...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Weshalb WeeChat? - X-Chat und Irssi sind auch sehr gut...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Weil WeeChat schlank ist und neue Funktionen besitzt.
 Einige Funktionen (Version > = 0.3.x):
@@ -18,7 +18,7 @@ Einige Funktionen (Version > = 0.3.x):
 * Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
 * mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
 * in mehreren Sprachen verfügbar
-* den eigenen Bedürfnissen anpassbar, durch Erweiterungen (C, Perl, Python, Ruby, Lua, Tcl)
+* den eigenen Bedürfnissen durch Erweiterungen anpassbar (C, Perl, Python, Ruby, Lua, Tcl)
 * Buffer mit unabhängigem Inhalt
 * Filterung der Anzeige mittels Tags und regulären Ausdrücken
 * horizontale und vertikale Einteilung der Fenster
@@ -42,8 +42,8 @@ Kompilierung / Installation
 
 
 [[gui]]
-Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw nutzen?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Zur Zeit ist nur eine GUI für Curses verfügbar.
 
@@ -55,11 +55,11 @@ sein.
 Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Der empfohlene Weg um WeeChat zu kompilieren ist die Nutzung von cmake.
+Es wird empfohlen zum kompilieren von WeeChat, cmake zu nutzen.
 
-Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (also nicht cmake),
-stelle sicher, dass Du die neueste Version von autoconf und automake besitzt
-(WeeChat wird mit autoconf 2.61 und automake 1.10.1 entwickelt).
+Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (dich also nicht 
+für cmake entscheidest), stelle sicher, dass Du die neueste Version von autoconf
+und automake besitzt (WeeChat wird mit autoconf 2.61 und automake 1.10.1 entwickelt).
 
 Die zweite Möglichkeit besteht darin das "Entwickler-Paket" zu installieren. Dies
 besitzt weniger Abhängigkeiten. Das Paket wird quasi täglich aus dem git Repository erstellt.
@@ -76,7 +76,7 @@ Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhä
 Du durch die Eingabe von: `/help Befehlsname`.
 Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 aufgeführt.
-(Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige scrollen)
+(Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kannst Du die Anzeige blättern)
 
 Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen (siehe
 Dokumentation auf der Internetseite).
@@ -155,10 +155,10 @@ Falls nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 Ich habe WeeChat unter OS X kompiliert und erhalte nur "(null)" als Textausgabe. Was läuft da schief?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Wenn Du ncursesw selber kompiliert haben solltest dann probiere einmal die standard ncurses aus, die
+Wenn Du ncursesw selber kompiliert haben solltest dann probiere einmal die Standard ncurses aus welche
 mit dem System ausgeliefert wird.
 
-Darüberhinaus ist es unter OS X ratsam WeeChat mittels dem Homebrew package manager zu installieren.
+Darüber hinaus ist es unter OS X ratsam WeeChat mittels dem Homebrew package manager zu installieren.
 
 
 [[buffer_vs_window]]
@@ -184,7 +184,7 @@ Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxv
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
 ctrl + alt in Verbindung mit der Auswahl durch die Maus.
 
-Eine andere Lösung ist, die Nickliste nach oben oder unten zu verschieben:
+Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu verschieben:
 
 * WeeChat < = 0.2.6: +
   `set look_nicklist_position = top`
@@ -197,9 +197,9 @@ Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Da WeeChat sowohl die Uhrzeit als auch einen Präfix für jede Zeile darstellt und
-man optional auch noch Bars nutzen kann, die das Chatfenster zusätzlich
-verkleinern, kann es passieren dass sehr lange URLs abgeschnitten und dadurch nicht
-mehr aufgerufen werden können.
+man optional auch noch Bars nutzen kan die das Chatfenster zusätzlich verkleinern
+kann es passieren, dass sehr lange URLs abgeschnitten und dadurch nicht mehr
+aufgerufen werden können.
 
 Deshalb sollte man eines der folgenden Skripten nutzen:
 
@@ -214,15 +214,15 @@ tinyurl.py::
 shortenurl.py::
     URLs werden durch einen Internet-Dienst gekürzt.
 
-Eine Liste der Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
+Hier findet man eine Aufstellung von Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[change_locale_without_quit]]
-Ich möchte die Sprache der Meldungen die WeeChat ausgibt ändern, ohne WeeChat zu verlassen. Ist dies möglich?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ja, dazu kannst Du das Python-Skript shell.py verwenden (erhältlich auf der
-Internetseite). Nach dem laden des Skripts führe folgende Befehle aus:
+Internetseite). Nach dem Laden des Skripts führe folgende Befehle aus:
 
 ----------------------------------------
 /shell setenv LANG=de_DE.UTF-8
@@ -240,12 +240,12 @@ Tastaturbelegung
 
 
 [[meta_keys]]
-Aus welchem Grund funktionieren manche meta keys (alt + key) nicht?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Aus welchem Grund funktionieren manche Meta-Tasten (alt + Taste) nicht?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Wenn Du einen Terminal wie xterm oder uxterm nutzten solltest werden einige
-meta keys standardmäßig nicht unterstützt.
-In diesem Fall sollte folgende Zeile der Konfigurationsdatei '~/.Xresources'
+Meta-Tasten Standardmäßig nicht unterstützt.
+In einem solchen Fall sollte folgende Zeile der Konfigurationsdatei '~/.Xresources'
 hinzugefügt werden:
 
 * für xterm:
@@ -320,12 +320,11 @@ Entsprechend der WeeChat-Version:
    (Hilfe mit: `/help filter`)
 
 
-// TRANSLATION MISSING
 [[filter_irc_channel_names]]
-How can I filter names displayed when I join an IRC channel?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich die Namen filtern wenn ich einen IRC Channel betrete?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must add a filter on tag "irc_366":
+Dazu muss ein Filter für den tag "irc_366" erstellt werden:
 
 ----------------------------------------
 /filter add irc_names * irc_366 *

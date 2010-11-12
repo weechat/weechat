@@ -701,35 +701,33 @@ def join_cb(data, signal, signal_data):
 weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_modify_messages]]
 Modify messages
 ^^^^^^^^^^^^^^^
 
-IRC plugin sends a "modifier" called "irc_in_xxx" ("xxx" is IRC command) for a
-message received, so that you can modify it.
+Die IRC Erweiterung verschickt einen "modifier" mit Namen "irc_in_xxx" ("xxx" steht für den
+Namen des IRC Befehls) um eine Nachricht zu empfangen die dann modifiziert werden kann.
 
 [source,python]
 ----------------------------------------
 def modifier_cb(data, modifier, modifier_data, string):
-    # add server name to all messages received
-    # (ok that's not very useful, but that's just an example!)
+    # füge den Namen des Server zu allen empfangenen Nachrichten hinzu
+    # (Okay dies ist nicht wirklich sinnvoll, aber es ist auch nur ein Beispiel!)
     return "%s %s" % (string, modifier_data)
 
 weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 ----------------------------------------
 
 [WARNING]
-A malformed message could crash WeeChat or cause severe problems!
+Eine fehlerhafte Nachricht kann WeeChat zum Absturz bringen oder andere ernsthafte Probleme erzeugen!
 
-// TRANSLATION MISSING
 [[irc_parse_message]]
-Parse message
-^^^^^^^^^^^^^
+Nachrichten parsen
+^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Neu in Version 0.3.4._
 
-You can parse an IRC message with info_hashtable called "irc_parse_message".
+Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_parse_message" parsen. 
 
 [source,python]
 ----------------------------------------
