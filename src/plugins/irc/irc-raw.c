@@ -269,7 +269,7 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
             strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND_MODIFIED);
             break;
         default:
-            if (flags && IRC_RAW_FLAG_RECV)
+            if (flags & IRC_RAW_FLAG_RECV)
                 strcpy (prefix_arrow, IRC_RAW_PREFIX_RECV);
             else
                 strcpy (prefix_arrow, IRC_RAW_PREFIX_SEND);
