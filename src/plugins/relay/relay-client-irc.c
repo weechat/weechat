@@ -1017,7 +1017,16 @@ relay_client_irc_alloc_with_infolist (struct t_relay_client *client,
         RELAY_IRC_DATA(client, nick) = strdup (weechat_infolist_string (infolist, "nick"));
         RELAY_IRC_DATA(client, user_received) = weechat_infolist_integer (infolist, "user_received");
         RELAY_IRC_DATA(client, connected) = weechat_infolist_integer (infolist, "connected");
-        relay_client_irc_hook_signals (client);
+        if (RELAY_IRC_DATA(client, connected))
+        {
+            relay_client_irc_hook_signals (client);
+        }
+        else
+        {
+            RELAY_IRC_DATA(client, hook_signal_irc_in2) = NULL;
+            RELAY_IRC_DATA(client, hook_signal_irc_outtags) = NULL;
+            RELAY_IRC_DATA(client, hook_signal_irc_disc) = NULL;
+        }
     }
 }
 

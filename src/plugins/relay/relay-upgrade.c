@@ -182,10 +182,15 @@ relay_upgrade_read_cb (void *data,
                     new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
                     new_client->start_time = weechat_infolist_time (infolist, "start_time");
                     new_client->end_time = weechat_infolist_time (infolist, "end_time");
-                    new_client->hook_fd = weechat_hook_fd (new_client->sock,
-                                                           1, 0, 0,
-                                                           &relay_client_recv_cb,
-                                                           new_client);
+                    if (new_client->sock >= 0)
+                    {
+                        new_client->hook_fd = weechat_hook_fd (new_client->sock,
+                                                               1, 0, 0,
+                                                               &relay_client_recv_cb,
+                                                               new_client);
+                    }
+                    else
+                        new_client->hook_fd = NULL;
                     new_client->last_activity = weechat_infolist_time (infolist, "last_activity");
                     sscanf (weechat_infolist_string (infolist, "bytes_recv"),
                             "%lu", &(new_client->bytes_recv));
