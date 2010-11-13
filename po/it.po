@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 22:38+0100\n"
+"POT-Creation-Date: 2010-11-12 21:37+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6906,13 +6906,13 @@ msgstr "%s: chat chiusa con %s (%d.%d.%d.%d)"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: memoria non sufficiente per nuovo xfer"
 
-#, c-format
-msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+#, fuzzy, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
 msgstr "%s: file in arrivo da %s (%d.%d.%d.%d): %s, %lu byte (protocollo: %s)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+"%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
 msgstr ""
 "%s: invio file a %s: %s (nome file locale: %s), %lu byte (protocollo: %s)"
 
@@ -6924,8 +6924,8 @@ msgstr "%s: richiesta di chat in arrivo da %s (%d.%d.%d.%d)"
 msgid "%s: sending chat request to %s"
 msgstr "%s: invio richiesta di chat a %s"
 
-#, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr "%s: file %s (nome file locale: %s) verrà ripreso dalla posizione %lu"
 
 #, c-format
@@ -6960,21 +6960,21 @@ msgstr "%s%s: impossibile trovare una porta disponibile per xfer"
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: errore nella creazione di xfer"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
-"found or not ready for transfer"
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
 msgstr ""
 "%s%s: impossibile riprendere il file \"%s\" (porta: %d, posizione di avvio: "
 "%lu): xfer non trovato o non pronto per il trasferimento"
 
-#, c-format
-msgid "%s: file %s resumed at position %lu"
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %llu"
 msgstr "%s: file %s ripreso alla posizione %lu"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
 "%s%s: impossibile accettare di riprendere il file  \"%s\" (porta: %d, "
@@ -6999,9 +6999,9 @@ msgstr "Connesso a %s (%d.%d.%d.%d) via chat xfer"
 msgid "Xfer list:"
 msgstr "Lista xfer:"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
 "%3d, %s (%s), file: \"%s\" (locale: \"%s\"), %s %s, stato: %s%s%s (%lu %%)"
 
@@ -7010,10 +7010,10 @@ msgstr ""
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr "%3d. %s, chat con %s (nick locale: %s), avviata il %s, stato: %s%s"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
-"%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
+"%d.%d (port %d)"
 msgstr ""
 "     plugin: %s (id: %s), file: %lu byte (posizione: %lu), indirizzo: %d.%d."
 "%d.%d (porta %d)"

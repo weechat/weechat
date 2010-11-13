@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 22:38+0100\n"
+"POT-Creation-Date: 2010-11-12 21:37+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6524,12 +6524,12 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy, c-format
-msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
 msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+"%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
 msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
@@ -6541,7 +6541,7 @@ msgid "%s: sending chat request to %s"
 msgstr "Отправляю запрос на DCC-чат %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
 
@@ -6579,19 +6579,19 @@ msgstr "%s недостаточно памяти для сообщения в с
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
-"found or not ready for transfer"
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
 msgstr ""
 "%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
 "найден или завершён\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s resumed at position %lu"
+msgid "%s: file %s resumed at position %llu"
 msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
 "%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
@@ -6619,7 +6619,7 @@ msgstr "очистить хотлист"
 
 #, c-format
 msgid ""
-"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is date
@@ -6629,8 +6629,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
-"%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
+"%d.%d (port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is date

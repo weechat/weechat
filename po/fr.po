@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-09 22:38+0100\n"
-"PO-Revision-Date: 2010-11-09 22:41+0100\n"
+"POT-Creation-Date: 2010-11-12 21:37+0100\n"
+"PO-Revision-Date: 2010-11-13 10:12+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6967,14 +6967,15 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
 
 #, c-format
-msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: réception fichier de %s (%d.%d.%d.%d): %s, %lu octets (protocole: %s)"
+"%s: réception fichier de %s (%d.%d.%d.%d): %s, %llu octets (protocole: %s)"
 
 #, c-format
 msgid ""
-"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
-msgstr "%s: envoi fichier à %s: %s (nom local: %s), %lu octets (protocole: %s)"
+"%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: envoi fichier à %s: %s (nom local: %s), %llu octets (protocole: %s)"
 
 #, c-format
 msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
@@ -6985,8 +6986,8 @@ msgid "%s: sending chat request to %s"
 msgstr "%s: envoi d'une demande de discussion à %s"
 
 #, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
-msgstr "%s: fichier %s (nom local: %s) sera recommencé en position %lu"
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr "%s: fichier %s (nom local: %s) sera recommencé en position %llu"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -7024,23 +7025,23 @@ msgstr "%s%s: erreur de création du xfer"
 
 #, c-format
 msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
-"found or not ready for transfer"
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
 msgstr ""
 "%s%s: impossible de continuer le fichier \"%s\" (port: %d, position de "
-"départ: %lu): xfer non trouvé ou non prêt pour le transfert"
+"départ: %llu): xfer non trouvé ou non prêt pour le transfert"
 
 #, c-format
-msgid "%s: file %s resumed at position %lu"
-msgstr "%s: fichier %s sera recommencé en position %lu"
+msgid "%s: file %s resumed at position %llu"
+msgstr "%s: fichier %s sera recommencé en position %llu"
 
 #, c-format
 msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
 "%s%s: impossible d'accepter de continuer le fichier \"%s\" (port: %d, "
-"position de départ: %lu): xfer non trouvé ou non prêt pour le transfert"
+"position de départ: %llu): xfer non trouvé ou non prêt pour le transfert"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -7063,9 +7064,10 @@ msgstr "Liste Xfer:"
 
 #, c-format
 msgid ""
-"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
-"%3d. %s (%s), fichier: \"%s\" (local: \"%s\"), %s %s, statut: %s%s%s (%lu %%)"
+"%3d. %s (%s), fichier: \"%s\" (local: \"%s\"), %s %s, statut: %s%s%s (%llu "
+"%%)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
@@ -7075,11 +7077,11 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
-"%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
+"%d.%d (port %d)"
 msgstr ""
-"     extension: %s (id: %s), fichier: %lu octets (position: %lu), addresse: "
-"%d.%d.%d.%d (port %d)"
+"     extension: %s (id: %s), fichier: %llu octets (position: %llu), "
+"addresse: %d.%d.%d.%d (port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
