@@ -6242,6 +6242,18 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
+[NOTE]
+La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a
+2 tampons: un pour stdout et un pour stderr).
+Si la sortie du processus fils (stdout ou stderr) est plus longue que 64 Ko, le
+"callback" sera appelé plusieurs fois.
+
+[IMPORTANT]
+Même si la plupart du temps le "callback" n'est appelé qu'une seule fois, vous
+devez vous assurer que plusieurs appels au "callback" sont ok dans votre code :
+vous devez concaténer les données issues de plusieurs appels et n'utiliser les
+données que lorsque le code retour est positif ou nul.
+
 Exemple en C :
 
 [source,C]

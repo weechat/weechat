@@ -68,6 +68,11 @@ enum t_hook_type
 #define HOOK_FD_FLAG_WRITE      2
 #define HOOK_FD_FLAG_EXCEPTION  4
 
+/* constants for hook process */
+#define HOOK_PROCESS_STDOUT      0
+#define HOOK_PROCESS_STDERR      1
+#define HOOK_PROCESS_BUFFER_SIZE 65536
+
 /* macros to access hook specific data */
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
 #define HOOK_COMMAND_RUN(hook, var) (((struct t_hook_command_run *)hook->hook_data)->var)
@@ -180,14 +185,13 @@ struct t_hook_process
     t_hook_callback_process *callback; /* process callback (after child end)*/
     char *command;                     /* command executed by child         */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
-    int child_stdout_read;             /* to read data in pipe from child   */
-    int child_stdout_write;            /* to write data in pipe for child   */
-    int child_stderr_read;             /* to read data in pipe from child   */
-    int child_stderr_write;            /* to write data in pipe for child   */
+    int child_read[2];                 /* to read data in pipe from child   */
+    int child_write[2];                /* to write data in pipe for child   */
     pid_t child_pid;                   /* pid of child process              */
-    struct t_hook *hook_fd_stdout;     /* hook fd for stdout                */
-    struct t_hook *hook_fd_stderr;     /* hook fd for stderr                */
+    struct t_hook *hook_fd[2];         /* hook fd for stdout/stderr         */
     struct t_hook *hook_timer;         /* timer to check if child has died  */
+    char *buffer[2];                   /* buffers for child stdout/stderr   */
+    int buffer_size[2];                /* size of child stdout/stderr       */
 };
 
 /* hook connect */

@@ -1,12 +1,15 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-12
+v0.3.4-dev, 2010-11-14
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: fix data sent to callback of hook_process (some data was sometimes
+  missing), use a 64KB buffer for child output and send data to callback only
+  when buffer is full
 * core: fix crash when displaying groups in buffer nicklist
 * core: fix bug with message "day changed to", sometimes displayed several
   times wrongly

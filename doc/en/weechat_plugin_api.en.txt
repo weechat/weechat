@@ -6165,6 +6165,17 @@ Return value:
 
 * pointer to new hook, NULL if error occured
 
+[NOTE]
+Buffer size for sending data to callback is 64KB (there are 2 buffers: one for
+stdout and one for stderr).
+If output from child process (stdout or stderr) is longer than 64KB, callback
+will be called more than one time.
+
+[IMPORTANT]
+Even if most of times your callback is called only once, you must ensure that
+many calls to callback are ok in your code: you must concatenate data issued by
+many calls and use data only when return code is nonnegative.
+
 C example:
 
 [source,C]
