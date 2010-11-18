@@ -27,6 +27,7 @@
 #endif
 
 #include <unistd.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -726,6 +727,94 @@ network_connect_child (struct t_hook *hook_connect)
 }
 
 /*
+ * network_connect_gnutls_handshake_fd_cb: callback for gnutls handshake
+ *                                         (used to not block WeeChat if
+ *                                         handshake takes some time to finish)
+ */
+
+#ifdef HAVE_GNUTLS
+int
+network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
+{
+    struct t_hook *hook_connect;
+    int rc, direction, flags;
+    
+    /* make C compiler happy */
+    (void) fd;
+    
+    hook_connect = (struct t_hook *)arg_hook_connect;
+    
+    rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
+    
+    if ((rc == GNUTLS_E_AGAIN) || (rc == GNUTLS_E_INTERRUPTED))
+    {
+        direction = gnutls_record_get_direction (*HOOK_CONNECT(hook_connect, gnutls_sess));
+        flags = HOOK_FD(HOOK_CONNECT(hook_connect, handshake_hook_fd), flags);
+        if ((((flags & HOOK_FD_FLAG_READ) == HOOK_FD_FLAG_READ)
+             && (direction != 0))
+            || (((flags & HOOK_FD_FLAG_WRITE) == HOOK_FD_FLAG_WRITE)
+                && (direction != 1)))
+        {
+            HOOK_FD(HOOK_CONNECT(hook_connect, handshake_hook_fd), flags) =
+                (direction) ? HOOK_FD_FLAG_WRITE: HOOK_FD_FLAG_READ;
+        }
+    }
+    else if (rc != GNUTLS_E_SUCCESS)
+    {
+        (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data,
+             WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+             rc,
+             gnutls_strerror (rc),
+             HOOK_CONNECT(hook_connect, handshake_ip_address));
+        unhook (hook_connect);
+    }
+    else
+    {
+        fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
+               HOOK_CONNECT(hook_connect, handshake_fd_flags));
+        unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
+        (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_OK, 0, NULL,
+                 HOOK_CONNECT(hook_connect, handshake_ip_address));
+        unhook (hook_connect);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+#endif
+
+/*
+ * network_connect_gnutls_handshake_timer_cb: timer for timeout on handshake
+ */
+
+#ifdef HAVE_GNUTLS
+int
+network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
+                                           int remaining_calls)
+{
+    struct t_hook *hook_connect;
+    
+    /* make C compiler happy */
+    (void) remaining_calls;
+    
+    hook_connect = (struct t_hook *)arg_hook_connect;
+    
+    HOOK_CONNECT(hook_connect, handshake_hook_timer) = NULL;
+    
+    (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data,
+             WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+             GNUTLS_E_EXPIRED,
+             gnutls_strerror (GNUTLS_E_EXPIRED),
+             HOOK_CONNECT(hook_connect, handshake_ip_address));
+    unhook (hook_connect);
+    
+    return WEECHAT_RC_OK;
+}
+#endif
+
+/*
  * network_connect_child_read_cb: read connection progress from child process
  */
 
@@ -737,7 +826,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     int num_read;
     long size_ip;
 #ifdef HAVE_GNUTLS
-    int rc;
+    int rc, direction;
 #endif
 
     /* make C compiler happy */
@@ -780,21 +869,47 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 #ifdef HAVE_GNUTLS
             if (HOOK_CONNECT(hook_connect, gnutls_sess))
             {
+                /*
+                 * the socket needs to be non-blocking since the call to
+                 * gnutls_handshake can block
+                 */
+                HOOK_CONNECT(hook_connect, handshake_fd_flags) =
+                    fcntl (HOOK_CONNECT(hook_connect, sock), F_GETFL);
+                fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
+                       HOOK_CONNECT(hook_connect, handshake_fd_flags) | O_NONBLOCK);
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                           (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
-                if (HOOK_CONNECT(hook_connect, gnutls_dhkey_size) > 0) {
+                if (HOOK_CONNECT (hook_connect, gnutls_dhkey_size) > 0)
+                {
                     gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                               (unsigned int) HOOK_CONNECT(hook_connect, gnutls_dhkey_size));
                 }
-                while (1)
+                rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
+                if ((rc == GNUTLS_E_AGAIN) || (rc == GNUTLS_E_INTERRUPTED))
                 {
-                    rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
-                    if ((rc == GNUTLS_E_SUCCESS)
-                        || ((rc != GNUTLS_E_AGAIN) && (rc != GNUTLS_E_INTERRUPTED)))
-                        break;
-                    usleep (1000);
+                    /*
+                     * gnutls was unable to proceed with the handshake without
+                     * blocking: non fatal error, we just have to wait for an
+                     * event about handshake
+                     */
+                    direction = gnutls_record_get_direction (*HOOK_CONNECT(hook_connect, gnutls_sess));
+                    HOOK_CONNECT(hook_connect, handshake_ip_address) = ip_address;
+                    HOOK_CONNECT(hook_connect, handshake_hook_fd) =
+                        hook_fd (hook_connect->plugin,
+                                 HOOK_CONNECT(hook_connect, sock),
+                                 (!direction ? 1 : 0), (direction  ? 1 : 0), 0,
+                                 //1, 1, 0,
+                                 &network_connect_gnutls_handshake_fd_cb,
+                                 hook_connect);
+                    HOOK_CONNECT(hook_connect, handshake_hook_timer) =
+                        hook_timer (hook_connect->plugin,
+                                    CONFIG_INTEGER(config_network_gnutls_handshake_timeout) * 1000,
+                                    0, 1,
+                                    &network_connect_gnutls_handshake_timer_cb,
+                                    hook_connect);
+                    return WEECHAT_RC_OK;
                 }
-                if (rc != GNUTLS_E_SUCCESS)
+                else if (rc != GNUTLS_E_SUCCESS)
                 {
                     (void) (HOOK_CONNECT(hook_connect, callback))
                         (hook_connect->callback_data,
@@ -807,6 +922,8 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                         free (ip_address);
                     return WEECHAT_RC_OK;
                 }
+                fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
+                       HOOK_CONNECT(hook_connect, handshake_fd_flags));
             }
 #endif
         }

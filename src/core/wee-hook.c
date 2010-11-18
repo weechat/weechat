@@ -1687,6 +1687,10 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *ad
     new_hook_connect->child_write = -1;
     new_hook_connect->child_pid = 0;
     new_hook_connect->hook_fd = NULL;
+    new_hook_connect->handshake_hook_fd = NULL;
+    new_hook_connect->handshake_hook_timer = NULL;
+    new_hook_connect->handshake_fd_flags = 0;
+    new_hook_connect->handshake_ip_address = NULL;
     
     hook_add_to_list (new_hook);
     
@@ -2695,6 +2699,12 @@ unhook (struct t_hook *hook)
                     free (HOOK_CONNECT(hook, local_hostname));
                 if (HOOK_CONNECT(hook, hook_fd))
                     unhook (HOOK_CONNECT(hook, hook_fd));
+                if (HOOK_CONNECT(hook, handshake_hook_fd))
+                    unhook (HOOK_CONNECT(hook, handshake_hook_fd));
+                if (HOOK_CONNECT(hook, handshake_hook_timer))
+                    unhook (HOOK_CONNECT(hook, handshake_hook_timer));
+                if (HOOK_CONNECT(hook, handshake_ip_address))
+                    free (HOOK_CONNECT(hook, handshake_ip_address));
                 if (HOOK_CONNECT(hook, child_pid) > 0)
                 {
                     kill (HOOK_CONNECT(hook, child_pid), SIGKILL);
@@ -3000,6 +3010,14 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     if (!infolist_new_var_integer (ptr_item, "child_pid", HOOK_CONNECT(ptr_hook, child_pid)))
                         return 0;
                     if (!infolist_new_var_pointer (ptr_item, "hook_fd", HOOK_CONNECT(ptr_hook, hook_fd)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "handshake_hook_fd", HOOK_CONNECT(ptr_hook, handshake_hook_fd)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "handshake_hook_timer", HOOK_CONNECT(ptr_hook, handshake_hook_timer)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "handshake_fd_flags", HOOK_CONNECT(ptr_hook, handshake_fd_flags)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "handshake_ip_address", HOOK_CONNECT(ptr_hook, handshake_ip_address)))
                         return 0;
                 }
                 break;
@@ -3332,6 +3350,10 @@ hook_print_log ()
                         log_printf ("    child_write . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
                         log_printf ("    child_pid . . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_pid));
                         log_printf ("    hook_fd . . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_fd));
+                        log_printf ("    handshake_hook_fd . . : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_fd));
+                        log_printf ("    handshake_hook_timer. : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_timer));
+                        log_printf ("    handshake_fd_flags. . : %d",    HOOK_CONNECT(ptr_hook, handshake_fd_flags));
+                        log_printf ("    handshake_ip_address. : '%s'",  HOOK_CONNECT(ptr_hook, handshake_ip_address));
                     }
                     break;
                 case HOOK_TYPE_PRINT:

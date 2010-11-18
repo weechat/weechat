@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-12 21:37+0100\n"
+"POT-Creation-Date: 2010-11-18 17:28+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2117,6 +2117,10 @@ msgid ""
 msgstr ""
 "путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
 "умолчанию - ~/.weechat)"
+
+#, fuzzy
+msgid "timeout (in seconds) for gnutls handshake"
+msgstr "использовать SSL при связи с сервером"
 
 #, fuzzy
 msgid ""

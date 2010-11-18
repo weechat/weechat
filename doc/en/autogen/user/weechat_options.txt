@@ -588,6 +588,11 @@
 ** type: string
 ** values: any string (default value: `"%h/ssl/CAs.pem"`)
 
+* *weechat.network.gnutls_handshake_timeout*
+** description: `timeout (in seconds) for gnutls handshake`
+** type: integer
+** values: 1 .. 2147483647 (default value: `30`)
+
 * *weechat.plugin.autoload*
 ** description: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, names can start or end with "*" to match several plugins (examples: "*" or "*,!lua,!tcl")`
 ** type: string

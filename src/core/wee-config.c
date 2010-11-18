@@ -186,6 +186,7 @@ struct t_config_option *config_history_display_default;
 /* config, network section */
 
 struct t_config_option *config_network_gnutls_ca_file;
+struct t_config_option *config_network_gnutls_handshake_timeout;
 
 /* config, plugin section */
 
@@ -2034,6 +2035,11 @@ config_weechat_init_options ()
         N_("file containing the certificate authorities (\"%h\" will be "
            "replaced by WeeChat home, \"~/.weechat\" by default)"),
         NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_network_gnutls_handshake_timeout = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "gnutls_handshake_timeout", "integer",
+        N_("timeout (in seconds) for gnutls handshake"),
+        NULL, 1, INT_MAX, "30", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",

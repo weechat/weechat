@@ -207,6 +207,7 @@ extern struct t_config_option *config_history_max_visited_buffers;
 extern struct t_config_option *config_history_display_default;
 
 extern struct t_config_option *config_network_gnutls_ca_file;
+extern struct t_config_option *config_network_gnutls_handshake_timeout;
 
 extern struct t_config_option *config_plugin_autoload;
 extern struct t_config_option *config_plugin_debug;

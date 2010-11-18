@@ -588,6 +588,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/CAs.pem"`)
 
+* *weechat.network.gnutls_handshake_timeout*
+** Beschreibung: `timeout (in seconds) for gnutls handshake`
+** Typ: integer
+** Werte: 1 .. 2147483647 (Standardwert: `30`)
+
 * *weechat.plugin.autoload*
 ** Beschreibung: `Eine durch Kommata getrennte Liste der Erweiterungen die beim Programmstart automatisch geladen werden sollen, "*" lädt alle gefundenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
 ** Typ: Zeichenkette

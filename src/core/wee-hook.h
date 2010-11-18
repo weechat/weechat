@@ -226,6 +226,10 @@ struct t_hook_connect
     int child_write;                   /* to write data in pipe for child   */
     pid_t child_pid;                   /* pid of child process (connecting) */
     struct t_hook *hook_fd;            /* pointer to fd hook                */
+    struct t_hook *handshake_hook_fd;  /* fd hook for handshake             */
+    struct t_hook *handshake_hook_timer; /* timer for handshake timeout     */
+    int handshake_fd_flags;            /* socket flags saved for handshake  */
+    char *handshake_ip_address;        /* ip address (used for handshake)   */
 };
 
 /* hook print */

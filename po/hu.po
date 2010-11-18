@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-12 21:37+0100\n"
+"POT-Creation-Date: 2010-11-18 17:28+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2102,6 +2102,10 @@ msgid ""
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+#, fuzzy
+msgid "timeout (in seconds) for gnutls handshake"
+msgstr "SSL használata a a kapcsolathoz"
 
 #, fuzzy
 msgid ""
