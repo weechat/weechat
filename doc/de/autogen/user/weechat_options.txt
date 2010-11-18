@@ -349,7 +349,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * *weechat.look.buffer_time_format*
-** Beschreibung: `Format für die Uhrzeit die am Anfang jeder Zeile in einem Buffer dargestellt wird`
+** Beschreibung: `time format for each line displayed in buffers (see man strftime for date/time specifiers)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
@@ -444,7 +444,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `32`)
 
 * *weechat.look.item_time_format*
-** Beschreibung: `Zeitformatierung für die "time" Option in der Infobar`
+** Beschreibung: `time format for "time" bar item (see man strftime for date/time specifiers)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
 

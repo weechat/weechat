@@ -349,7 +349,7 @@
 ** values: none, highlight, message, all (default value: `all`)
 
 * *weechat.look.buffer_time_format*
-** description: `time format for each line displayed in buffers`
+** description: `time format for each line displayed in buffers (see man strftime for date/time specifiers)`
 ** type: string
 ** values: any string (default value: `"%H:%M:%S"`)
 
@@ -444,7 +444,7 @@
 ** values: 0 .. 65535 (default value: `32`)
 
 * *weechat.look.item_time_format*
-** description: `time format for "time" bar item`
+** description: `time format for "time" bar item (see man strftime for date/time specifiers)`
 ** type: string
 ** values: any string (default value: `"%H:%M"`)
 
