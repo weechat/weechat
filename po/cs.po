@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 18:18+0100\n"
+"POT-Creation-Date: 2010-11-18 18:24+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2601,8 +2601,10 @@ msgstr "výchozí barva pozadí pro pole"
 msgid "separator line between bar and other bars/windows"
 msgstr "oddělovací řádek mezi polem a ostatními poli/okny"
 
-msgid "items of bar"
-msgstr "položky pole"
+msgid ""
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items)"
+msgstr ""
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -7118,6 +7120,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "items of bar"
+#~ msgstr "položky pole"
 
 #~ msgid "time format for each line displayed in buffers"
 #~ msgstr "formát času pro každý řádek v bufferu"

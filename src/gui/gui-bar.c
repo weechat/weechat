@@ -1369,7 +1369,8 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "string",
-                    N_("items of bar"),
+                    N_("items of bar, they can be separated by comma (space "
+                       "between items) or \"+\" (glued items)"),
                     NULL, 0, 0, gui_bar_default_items (bar_name), value, 0,
                     NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
                 break;

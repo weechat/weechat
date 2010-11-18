@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 18:18+0100\n"
+"POT-Creation-Date: 2010-11-18 18:24+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2632,8 +2632,10 @@ msgstr "domyślny kolor tła paska"
 msgid "separator line between bar and other bars/windows"
 msgstr "separator pomiędzy paskiem a innymi paskami/oknami"
 
-msgid "items of bar"
-msgstr "elementy paska"
+msgid ""
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items)"
+msgstr ""
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -7137,6 +7139,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "items of bar"
+#~ msgstr "elementy paska"
 
 #~ msgid "time format for each line displayed in buffers"
 #~ msgstr "format czasu dla każej linii wyświetlanej w buforze"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 18:18+0100\n"
+"POT-Creation-Date: 2010-11-18 18:24+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2716,8 +2716,10 @@ msgstr "Standardhintergrundfarbe der Infobar"
 msgid "separator line between bar and other bars/windows"
 msgstr "Trennzeichen zwischen verschieden Infobars und Fenstern"
 
-msgid "items of bar"
-msgstr "Items der Infobar"
+msgid ""
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items)"
+msgstr ""
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -7402,6 +7404,9 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "items of bar"
+#~ msgstr "Items der Infobar"
 
 #~ msgid "time format for each line displayed in buffers"
 #~ msgstr ""

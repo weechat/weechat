@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 18:18+0100\n"
+"POT-Creation-Date: 2010-11-18 18:24+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2457,9 +2457,10 @@ msgstr "цвет текста информационной панели"
 msgid "separator line between bar and other bars/windows"
 msgstr "разделитель чата и никлиста"
 
-#, fuzzy
-msgid "items of bar"
-msgstr "Список сокращений:\n"
+msgid ""
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" updated"
@@ -6855,6 +6856,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "items of bar"
+#~ msgstr "Список сокращений:\n"
 
 #, fuzzy
 #~ msgid "time format for \"time\" bar item"
