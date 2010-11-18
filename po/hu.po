@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1613,7 +1613,9 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "time format for each line displayed in buffers"
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
 msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid "number of colors to use for nicks colors"
@@ -1702,9 +1704,9 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "időbélyeg a információs pult idejéhez"
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -6844,6 +6846,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "időbélyeg a információs pult idejéhez"
 
 #, fuzzy
 #~ msgid "path for writing incoming files"

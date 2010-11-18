@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1622,7 +1622,9 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "time format for each line displayed in buffers"
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
 msgstr "отображение маркера даты при смене дня"
 
 msgid "number of colors to use for nicks colors"
@@ -1719,9 +1721,9 @@ msgstr ""
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr "максимальное количество команд в истории (0 = не ограничено)"
 
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "время в информационной строке"
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -6853,6 +6855,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "время в информационной строке"
 
 #, fuzzy
 #~ msgid "path for writing incoming files"

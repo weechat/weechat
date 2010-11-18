@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1816,8 +1816,13 @@ msgstr ""
 "message=messaggi+eventi, highlight=solo eventi, none=non viene mai "
 "visualizzato nella hotlist"
 
-msgid "time format for each line displayed in buffers"
-msgstr "formato dell'ora per ogni riga visualizzata nei buffer"
+#, fuzzy
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"data e ora utilizzati nei file di log (consultare man strftime per gli "
+"specificatori di data/ora)"
 
 msgid "number of colors to use for nicks colors"
 msgstr "numero di colori da utilizzare per i colori dei nick"
@@ -1930,8 +1935,12 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "numero massimo di righe nella cronologia per buffer (0 = nessun limite)"
 
-msgid "time format for \"time\" bar item"
-msgstr "formato dell'ora per l'elemento della barra \"tempo\""
+#, fuzzy
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"data e ora utilizzati nei file di log (consultare man strftime per gli "
+"specificatori di data/ora)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -7226,6 +7235,12 @@ msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
+
+#~ msgid "time format for each line displayed in buffers"
+#~ msgstr "formato dell'ora per ogni riga visualizzata nei buffer"
+
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "formato dell'ora per l'elemento della barra \"tempo\""
 
 #~ msgid "file containing the certificate authorities"
 #~ msgstr "file contenente le autorità dei certificati"

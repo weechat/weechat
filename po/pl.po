@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1816,8 +1816,13 @@ msgstr ""
 "bufor musi być wyświetlany na hotliście czy nie, w zależności od wagi "
 "wiadomości)"
 
-msgid "time format for each line displayed in buffers"
-msgstr "format czasu dla każej linii wyświetlanej w buforze"
+#, fuzzy
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"format czasu użyty w plikach z logami (zobacz man strftime dla "
+"specyfikatorów daty/czasu)"
 
 msgid "number of colors to use for nicks colors"
 msgstr "liczba kolorów do użycia dla kolorowania nicków"
@@ -1926,8 +1931,12 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "maksymalna ilość \"cofnięć\" dla linii poleceń dla bufora (0 = wyłączone)"
 
-msgid "time format for \"time\" bar item"
-msgstr "format czasu dla elementu paska \"time\""
+#, fuzzy
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"format czasu użyty w plikach z logami (zobacz man strftime dla "
+"specyfikatorów daty/czasu)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -7128,6 +7137,12 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "time format for each line displayed in buffers"
+#~ msgstr "format czasu dla każej linii wyświetlanej w buforze"
+
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "format czasu dla elementu paska \"time\""
 
 #~ msgid "file containing the certificate authorities"
 #~ msgstr "plik zawierający dane centrum uwierzytelniającego (CA)"

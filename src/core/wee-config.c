@@ -1288,7 +1288,8 @@ config_weechat_init_options ()
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
-        N_("time format for each line displayed in buffers"),
+        N_("time format for each line displayed in buffers (see man strftime "
+           "for date/time specifiers)"),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_nicks_number = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1406,7 +1407,8 @@ config_weechat_init_options ()
     config_look_item_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_time_format", "string",
-        N_("time format for \"time\" bar item"),
+        N_("time format for \"time\" bar item (see man strftime for date/time "
+           "specifiers)"),
         NULL, 0, 0, "%H:%M", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1807,8 +1807,13 @@ msgstr ""
 "buffer debe ser mostrado en la lista de actividad o no, según la importancia "
 "del mensaje)"
 
-msgid "time format for each line displayed in buffers"
-msgstr "formato de hora mostrada en cada línea en los buffers"
+#, fuzzy
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"formato de hora en el registro (ver el manual de strftime para los "
+"especificadores de fecha/hora)"
 
 msgid "number of colors to use for nicks colors"
 msgstr "número de colores para usar en los colores de nombres de usuario"
@@ -1919,9 +1924,12 @@ msgstr ""
 "número máximo de niveles de deshaces en la línea de comando, por buffer (0 = "
 "deshacer desactivado)"
 
-# "time" is an item name, so keep it in english
-msgid "time format for \"time\" bar item"
-msgstr "formato para el elemento \"time\" de la barra"
+#, fuzzy
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"formato de hora en el registro (ver el manual de strftime para los "
+"especificadores de fecha/hora)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -7199,6 +7207,13 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#~ msgid "time format for each line displayed in buffers"
+#~ msgstr "formato de hora mostrada en cada línea en los buffers"
+
+# "time" is an item name, so keep it in english
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "formato para el elemento \"time\" de la barra"
 
 #~ msgid "file containing the certificate authorities"
 #~ msgstr "archivo que contiene las autoridades de certificación"

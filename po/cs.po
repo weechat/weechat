@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-18 17:28+0100\n"
+"POT-Creation-Date: 2010-11-18 18:18+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1792,8 +1792,13 @@ msgstr ""
 "výchozí upozorňovací úrovně pro buffery (používano WeeChatem pro určení "
 "jestli má být buffer zobrazen v hotlistu nebo ne, podle důležitosti zprávy)"
 
-msgid "time format for each line displayed in buffers"
-msgstr "formát času pro každý řádek v bufferu"
+#, fuzzy
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"časová známka použita v logovacích souborech (použijte manuálovou stránku "
+"strftime pro spcifikátory data/času)"
 
 msgid "number of colors to use for nicks colors"
 msgstr "počet barev použitých pro barvy přezdívek"
@@ -1901,8 +1906,12 @@ msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "maximální počet \"undo\" pro příkazovou řádku pro bufferu (0 = vypnuto)"
 
-msgid "time format for \"time\" bar item"
-msgstr "formát času pro \"time\" položu pole"
+#, fuzzy
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+"časová známka použita v logovacích souborech (použijte manuálovou stránku "
+"strftime pro spcifikátory data/času)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -7109,6 +7118,12 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "time format for each line displayed in buffers"
+#~ msgstr "formát času pro každý řádek v bufferu"
+
+#~ msgid "time format for \"time\" bar item"
+#~ msgstr "formát času pro \"time\" položu pole"
 
 #~ msgid "file containing the certificate authorities"
 #~ msgstr "soubor obsahuje certifikační autority"
