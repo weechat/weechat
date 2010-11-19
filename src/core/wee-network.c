@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -892,6 +893,8 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                      * blocking: non fatal error, we just have to wait for an
                      * event about handshake
                      */
+                    unhook (HOOK_CONNECT(hook_connect, hook_fd));
+                    HOOK_CONNECT(hook_connect, hook_fd) = NULL;
                     direction = gnutls_record_get_direction (*HOOK_CONNECT(hook_connect, gnutls_sess));
                     HOOK_CONNECT(hook_connect, handshake_ip_address) = ip_address;
                     HOOK_CONNECT(hook_connect, handshake_hook_fd) =
