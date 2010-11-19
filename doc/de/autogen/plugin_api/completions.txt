@@ -4,7 +4,7 @@
 
 | alias | alias | Liste der Alias
 
-| alias | alias_value | value of alias
+| alias | alias_value | Wert von Alias
 
 | aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für aspell
 
@@ -20,7 +20,7 @@
 
 | irc | irc_msg_part | Standardnachricht beim Verlassen (/part) eines IRC-Channels
 
-| irc | irc_notify_nicks | nicks in notify list
+| irc | irc_notify_nicks | Nicks für die eine Benachrichtigung existiert
 
 | irc | irc_privates | Private auf allen IRC Servern
 

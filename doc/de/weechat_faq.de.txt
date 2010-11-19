@@ -320,27 +320,26 @@ Entsprechend der WeeChat-Version:
    (Hilfe mit: `/help filter`)
 
 
-// TRANSLATION MISSING
 [[filter_irc_join_channel_messages]]
-How can I filter some messages displayed when I join an IRC channel?
+Wie kann ich Nachrichten filtern wenn ich einen IRC Channel betrete?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some tags you can use to filter messages:
+Einige Tags die man zum filtern von Nachrichten nutzen kann:
 
-* 'irc_366': names on channel
-* 'irc_332,irc_333': channel topic/date
-* 'irc_329': channel creation date
+* 'irc_366': Namen derer die sich im Channel befinden
+* 'irc_332,irc_333': Channel Topic/Datum
+* 'irc_329': Wann der Channel erstellt wurde
 
-You can find tags for other messages by looking at IRC raw server
+Tags von anderen Nachrichten kann man im IRC Raw-Server finden
 (`/server raw`).
 
-Examples:
+Beispiele:
 
-* filter names:
+* filtert die Auflistung der Namen die sich im Channel befinden:
 ----------------------------------------
 /filter add irc_join_names * irc_366 *
 ----------------------------------------
-* filter topic (and date):
+* filtert das Topic (und das Datum) des Channels:
 ----------------------------------------
 /filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
@@ -350,13 +349,13 @@ Examples:
 Wie kann ich voice Nachrichten filtern (z.B. auf Bitlbee Servern)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Voice Nachrichten zu filtern ist nicht einfach, da der Voice-Modus mit anderen
-Modi in der IRC Nachricht kombiniert werden kann.
+Voice Nachrichten zu filtern ist nicht einfach da der Voice-Modus mit anderen
+Modi in einer IRC Nachricht kombiniert werden kann.
 
-Falls Du Voice Nachrichten z.B. bei Bitlbee unterdrücken möchtest da diese
-dazu genutzt werden um den Abwesenheitsstatus anderer User anzuzeigen und Du nicht
-von diesen Mitteilungen überflutet werden möchtest, kannst Du WeeChat anweisen
-den Nick der abwesend ist in einer speziellen Farbe darzustellen.
+Möchte man Voice-Nachrichten z.B. bei Bitlbee unterdrücken, da diese dazu genutzt
+werden um den Abwesenheitsstatus anderer User anzuzeigen (und man nicht von diesen
+Mitteilungen überflutet werden möchte), kann man WeeChat anweisen abwesende Nicks
+in einer anderen Farbe darzustellen.
 
 Im Channel '&bitlbee':
 ----------------------------------------
@@ -368,20 +367,21 @@ Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 
 
 [[color_away_nicks]]
-Wie kann ich mir Nicks in der Nickliste anzeigen lassen, die abwesend sind?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich Nicks in der Nickliste anzeigen lassen die abwesend sind?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dazu musst Du in der Option 'irc.server_default.away_check' ein Zeitintervall,
-in Minuten, angeben die zwischen zwei Überprüfungen liegen soll.
+Dazu weist man der Option 'irc.server_default.away_check' ein Zeitintervall
+zu, in welchen Abständen eine Überprüfung stattfinden soll. Die Angabe des
+Wertes erfolgt in Minuten.
 
-Mit der Option 'irc.server_default.away_check_max_nicks' kann festgelegt werden
-in welchen Channels eine Überprüfung stattfinden soll. Hierbei stellt der
-angegebene Wert die maximale Anzahl an Nicks in einem Channel dar, die den
-Channel gleichzeitig besuchen.
+Mittels der Option 'irc.server_default.away_check_max_nicks' kann festgelegt
+werden in welchen Channels eine Überprüfung stattfinden soll. Hierbei stellt
+der angegebene Wert die maximale Anzahl an Nicks in einem Channel dar die den
+Channel gleichzeitig besuchen dürfen.
 
 In folgendem Beispiel wird der Abwesenheitsstatus alle fünf Minuten überprüft.
-Dabei werden aber nur Channels berücksichtigt die nicht mehr als 25 Teilnehmer
-haben:
+Dabei werden aber nur solche Channels berücksichtigt die nicht mehr als 25
+Teilnehmer haben:
 
 ----------------------------------------
 /set irc.server_default.away_check 5
@@ -397,8 +397,8 @@ Für Weechat < = 0.3.3, lauten die Optionen 'irc.network.away_check' und
 Wie kann ich mich darüber informieren lassen falls mich jemand in einem Channel highlighted
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-((A.d.Ü) Highlight bedeutet, dass der eigene Nick-Name im Channel genannt wird. Ich also
-direkt, persönlich, angesprochen werde. Der Nick der Person die mich anschreibt wird dabei
+((A.d.Ü) Highlight bedeutet, dass der eigene (Nick)Name im Channel genannt wird. Man wird
+also direkt, persönlich, angesprochen. Der Nick, der Person die mich anschreibt wird dabei
 farblich hervorgehoben)
 
 Die Einstellung geschieht abhängig von der WeeChat Version:
@@ -422,8 +422,8 @@ Erweiterungen / Skripten
 
 
 [[openbsd_plugins]]
-Ich benutze OpenBSD und WeeChat lädt keine Erweiterungen - weshalb?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ich benutze OpenBSD aber WeeChat lädt keine Erweiterungen - weshalb?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unter OpenBSD enden die Dateinamen von Erweiterungen mit ".so.0.0" (".so" bei Linux).
 
@@ -467,7 +467,7 @@ Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?
 Du kannst folgende Tipps umsetzen damit WeeChat weniger Speicher benötigt:
 
 * nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
-  weniger Speicherlecks besitzt, als eine ältere Version)
+  weniger Speicherlecks besitzt, als eine vorherige Version)
 * lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Fifo,
   Logger, Perl, Python, Ruby, Lua, Tcl, Xfer (wird für DCC benötigst)
 * lade nur Skripten die Du auch benutzt

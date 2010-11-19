@@ -10,7 +10,7 @@
 
 | irc | irc_nick | Liste der Nicks im IRC-Channel | Nick Pointer (optional) | Server,Channel,Nick (Channel und Nick sind optional)
 
-| irc | irc_notify | list of notify | notify pointer (optional) | Servername (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| irc | irc_notify | Liste mit Benachrichtigungen | Benachrichtigungspointer (optional) | Servername (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | irc | irc_server | Liste der IRC-Server | Server Pointer (optional) | Servername (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
@@ -58,6 +58,6 @@
 
 | weechat | window | Auflistung der Windows | Fenster Pointer (optional) | Fenstername (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| xfer | xfer | Transfer-Liste | xfer Pointer (optional) | -
+| xfer | xfer | Transfer-Liste | Transfer-Pointer (optional) | -
 
 |========================================

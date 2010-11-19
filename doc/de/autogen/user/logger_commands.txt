@@ -1,7 +1,7 @@
 &bull; *`/logger`* `[list | set level | disable]`::
 
 ........................................
-  Konfiguration für "logger" Erweiterung (dient zum Protokollieren der Buffer)
+  Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)
 
      list: zeigt, für geöffnete Buffer, den Status der Protokollierung an
       set: legt den Level fest, nach dem der aktuelle Buffer protokolliert werden soll

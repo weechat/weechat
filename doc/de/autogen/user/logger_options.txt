@@ -1,5 +1,5 @@
 * *logger.file.auto_log*
-** Beschreibung: `Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren, für den Buffer nicht deaktiviert sein sollte)`
+** Beschreibung: `Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

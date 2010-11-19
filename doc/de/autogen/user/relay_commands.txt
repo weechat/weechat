@@ -11,7 +11,7 @@
   protocol.name: Protokoll und Name des Relays
                  Beispiel: irc.freenode
            port: Port den der Relay nutzen soll
-            raw: öffnet Buffer mit  RAW-Relay Daten
+            raw: öffnet Buffer mit RAW-Relay Daten
   
   Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
 ........................................

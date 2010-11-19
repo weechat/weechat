@@ -349,7 +349,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * *weechat.look.buffer_time_format*
-** Beschreibung: `time format for each line displayed in buffers (see man strftime for date/time specifiers)`
+** Beschreibung: `Format für die Zeit die in jeder Zeile in einem Buffer dargestellt werden soll (siehe man strftime für Datum/Zeit Platzhalter)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
@@ -444,7 +444,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `32`)
 
 * *weechat.look.item_time_format*
-** Beschreibung: `time format for "time" bar item (see man strftime for date/time specifiers)`
+** Beschreibung: `Format der Zeit für das Bar-Item "time" (siehe man strftime für Datum/Zeit Platzhalter)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
 
@@ -584,12 +584,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
 * *weechat.network.gnutls_ca_file*
-** Beschreibung: `file containing the certificate authorities ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Beschreibung: `Datei beinhaltet die digitalen Zertifikate ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/CAs.pem"`)
 
 * *weechat.network.gnutls_handshake_timeout*
-** Beschreibung: `timeout (in seconds) for gnutls handshake`
+** Beschreibung: `Zeitüberschreitung (in Sekunden) für gnutls handshake`
 ** Typ: integer
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 

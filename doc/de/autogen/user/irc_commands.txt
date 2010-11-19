@@ -151,21 +151,21 @@
 ........................................
   Ignoriert Nicks/Hosts von Channels oder Servern
 
-       list: list all ignores
-        add: add an ignore
-        del: delete an ignore
-     number: number of ignore to delete (look at list to find it)
-       -all: delete all ignores
-  nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
-     server: internal server name where ignore is working
-    channel: channel name where ignore is working
+       list: zeigt an, wer/was ignoriert wird
+        add: fügt eine Ignorierung hinzu
+        del: entfernt eine Ignorierung 
+     number: Nummer der Ignorierung die entfernt werden soll (nutze "list" um die entsprechende Nummer zu finden)
+       -all: entfernt alle Einträge
+  nick/host: Nick oder Host der ignoriert werden soll: Syntax ist "re:regex" oder "mask" (Eine Maske ist eine Zeichenkette in der mittels "*" ein- oder mehrere Zeichen ersetzt werden können)
+     server: interner Name des Server, in dem die Ignorierung statt finden soll
+    channel: Name des Channel, in dem die Ignorierung statt finden soll
   
-  Examples:
-    ignore nick "toto" everywhere:
+  Beispiele:
+    ignoriert den Nick "toto" global:
       /ignore add toto
-    ignore host "toto@domain.com" on freenode server:
+    ignoriert den Host "toto@domain.com" auf dem freenode Server:
       /ignore add toto@domain.com freenode
-    ignore host "toto*@*.domain.com" on freenode/#weechat:
+    ignoriert den Host "toto*@*.domain.com" im Chat  freenode/#weechat:
       /ignore add toto*@*.domain.com freenode #weechat
 ........................................
 
@@ -367,23 +367,23 @@
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::
 
 ........................................
-  add a notification for presence or away status of nicks on servers
+  Fügt eine Benachrichtigung für An- oder Abwesenheit von Nicks auf Servern hinzu
 
-     add: add a notification
-    nick: nickname
-  server: internal server name (by default current server)
-   -away: notify when away message is changed (by doing whois on nick)
-     del: delete a notification
-    -all: delete all notifications
+     add: fügt eine Benachrichtigung hinzu
+    nick: Nickname
+  server: interner Name des Servers (Standard: aktueller Server)
+   -away: gibt eine Benachrichtigung aus falls sich die Abwesenheitsnachricht ändert (der Nick wird mittels whois abgefragt)
+     del: entfernt eine Benachrichtigung
+    -all: entfernt alle Benachrichtigungen
   
-  Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
+  Ohne Angabe von Argumenten werden alle Benachrichtigungen für den aktuellen Server angezeigt (um alle Server abzufragen muss der Befehl im Core Buffer ausgeführt werden).
   
-  Examples:
-    notify when "toto" joins/quits current server:
+  Beispiele:
+    Benachrichtigung falls sich "toto" am aktuellen Server an- oder abmeldet:
       /notify add toto
-    notify when "toto" joins/quits freenode server:
+    Benachrichtigung falls sich "toto" am freenode Server an- oder abmeldet:
       /notify add toto freenode
-    notify when "toto" is away or back on freenode server:
+    Benachrichtigung falls "toto" den Befehl away am freenode Server nutzt:
       /notify add toto freenode -away
 ........................................
 

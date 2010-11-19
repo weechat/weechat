@@ -44,17 +44,17 @@
 ** Werte: ein Farbname (Standardwert: `white`)
 
 * *xfer.file.auto_accept_chats*
-** Beschreibung: `Die Annahme einer Chat-Anfrage wird, automatisch, akzeptiert (Vorsicht!)`
+** Beschreibung: `Die Annahme einer Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *xfer.file.auto_accept_files*
-** Beschreibung: `Die Annahme von Daten wird, automatisch, akzeptiert (Vorsicht!)`
+** Beschreibung: `Die Annahme von Daten wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *xfer.file.auto_rename*
-** Beschreibung: `Eingehende Dateien automatisch umbenennen, um Überschreiben zu vermeiden (fügt dabei '.1', '.2', ... dem Dateinamen hinzu)`
+** Beschreibung: `Eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen  '.1', '.2', ... hinzugefügt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -64,22 +64,22 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *xfer.file.convert_spaces*
-** Beschreibung: `Beim Verschicken von Dateien, Leerzeichen in Unterstrich umwandeln`
+** Beschreibung: `Ein Leerzeichen wird in einen Unterstrich gewandelt wenn Daten versendet werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *xfer.file.download_path*
-** Beschreibung: `path for writing incoming files ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Beschreibung: `Pfad in welchem die ankommenden Dateien gespeichert werden ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/xfer"`)
 
 * *xfer.file.upload_path*
-** Beschreibung: `path for reading files when sending (when no path is specified by user) ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Beschreibung: `Pfad in welchem sich die Quelldatei befindet (falls vom Anwender kein Pfad angegeben wurde) ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"~"`)
 
 * *xfer.file.use_nick_in_filename*
-** Beschreibung: `Nutze den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden`
+** Beschreibung: `Nutzt den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -99,17 +99,17 @@
 ** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
 * *xfer.network.fast_send*
-** Beschreibung: `Warte beim Verschicken von Dateien nicht auf das Bestätigungssignal (ACK)`
+** Beschreibung: `Wartet beim Versenden von Dateien nicht auf das Bestätigungssignal (ACK)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *xfer.network.own_ip*
-** Beschreibung: `IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert angegeben wird, wird die IP des lokalen Interfaces benutzt)`
+** Beschreibung: `IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert angegeben ist, wird die IP des lokalen Interfaces benutzt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *xfer.network.port_range*
-** Beschreibung: `Schränkt ausgehende Daten/Chats auf die ausschließliche Benutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen die Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
+** Beschreibung: `Schränkt den ausgehenden Datenversand bzw. Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen welche Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

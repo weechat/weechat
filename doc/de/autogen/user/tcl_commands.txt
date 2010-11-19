@@ -3,8 +3,8 @@
 ........................................
   auflisten/installieren/deinstallieren von Skripten
 
-  Dateiname: Skript (Datei) die geladen werden soll
-  Name: Name des Skripts
+  filename: Skript/Datei welches geladen werden soll
+  name: Name des Skripts
   
   Wird der Befehl ohne Argumente aufgerufen werden alle geladenen Skripten aufgelistet.
 ........................................
