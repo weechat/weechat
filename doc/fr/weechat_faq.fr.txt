@@ -315,14 +315,28 @@ Selon la version de WeeChat :
    (`/help filter` pour l'aide)
 
 
-[[filter_irc_channel_names]]
-Comment puis-je filtrer les noms affichés quand je rejoins un canal IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[filter_irc_join_channel_messages]]
+Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Vous devez ajouter un filtre sur l'étiquette "irc_366" :
+Quelques étiquettes que vous pouvez utiliser pour filtrer des messages :
 
+* 'irc_366' : noms sur le canal
+* 'irc_332,irc_333' : titre/date du canal
+* 'irc_329' : date de création du canal
+
+Vous pouvez trouver les étiquettes pour les autres messages en regardant le
+tampon des données brutes IRC (`/server raw`).
+
+Exemples :
+
+* filtrer les noms :
 ----------------------------------------
-/filter add irc_names * irc_366 *
+/filter add irc_join_names * irc_366 *
+----------------------------------------
+* filtrer le titre (et la date):
+----------------------------------------
+/filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
 
 

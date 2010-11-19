@@ -302,14 +302,28 @@ According to WeeChat version:
    (`/help filter` for help)
 
 
-[[filter_irc_channel_names]]
-How can I filter names displayed when I join an IRC channel?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[filter_irc_join_channel_messages]]
+How can I filter some messages displayed when I join an IRC channel?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must add a filter on tag "irc_366":
+Some tags you can use to filter messages:
 
+* 'irc_366': names on channel
+* 'irc_332,irc_333': channel topic/date
+* 'irc_329': channel creation date
+
+You can find tags for other messages by looking at IRC raw server
+(`/server raw`).
+
+Examples:
+
+* filter names:
 ----------------------------------------
-/filter add irc_names * irc_366 *
+/filter add irc_join_names * irc_366 *
+----------------------------------------
+* filter topic (and date):
+----------------------------------------
+/filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
 
 
