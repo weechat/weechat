@@ -1724,54 +1724,24 @@ Autori
 Sviluppatori
 ~~~~~~~~~~~~
 
-Sébastien Helleu (FlashCode)::
-    sviluppatore principale
+Sviluppatore principale::
+    Sébastien Helleu (FlashCode)
 
 [[contributors]]
 Contributori
 ~~~~~~~~~~~~
 
-Emmanuel Bouthenot (kolter)::
-    packager debian
+Packagers::
+    Emmanuel Bouthenot (kolter), Julien Louis (ptitlouis), Odin
 
-Ptitlouis::
-    packager debian precedente
+Traduzioni::
+    Jiri Golembiovsky, soltys, Nils Görs, rettub, Frank Zacharias,
+    Pavel Shevchuk, Elián Hanisch (m4v), Voroskoi, Marco Paolone,
+    Ivan Sichmann Freitas
 
-Jiri Golembiovsky::
-    traduzione in ceco, patch
-
-soltys::
-    traduzione in polacco
-
-Nils Görs::
-rettub::
-Frank Zacharias::
-    traduzione in tedesco
-
-Pavel Shevchuk::
-    traduzione in russo
-
-m4v::
-    traduzione in spagnolo
-
-Voroskoi::
-    traduzione in ungherese
-
-Marco Paolone::
-    traduzione in italiano
-
-Dmitry Kobylin::
-    plugin tcl
-
-Rudolf Polzer::
-Jim Ramsay::
-Pistos::
-Gwenn::
-Dominik Honnef::
-    patch
-
-Odin::
-    SuSE RPM
+Patches::
+    Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
+    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n
 
 
 [[support]]
