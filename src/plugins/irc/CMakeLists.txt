@@ -32,6 +32,7 @@ irc-display.c irc-display.h
 irc-ignore.c irc-ignore.h
 irc-info.c irc-info.h
 irc-input.c irc-input.h
+irc-message.c irc-message.h
 irc-mode.c irc-mode.h
 irc-msgbuffer.c irc-msgbuffer.h
 irc-nick.c irc-nick.h

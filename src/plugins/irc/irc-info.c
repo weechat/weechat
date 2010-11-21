@@ -30,6 +30,7 @@
 #include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-ignore.h"
+#include "irc-message.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -97,7 +98,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
     }
     else if (weechat_strcasecmp (info_name, "irc_nick_from_host") == 0)
     {
-        return irc_protocol_get_nick_from_host (arguments);
+        return irc_message_get_nick_from_host (arguments);
     }
     else if (weechat_strcasecmp (info_name, "irc_nick_color") == 0)
     {
@@ -149,7 +150,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
                 {
                     free (channel);
                     channel = NULL;
-                    nick = irc_protocol_get_nick_from_host (host);
+                    nick = irc_message_get_nick_from_host (host);
                     if (nick)
                         channel = strdup (nick);
                     
@@ -252,7 +253,7 @@ irc_info_get_info_hashtable_cb (void *data, const char *info_name,
                                                            "message");
             if (message)
             {
-                value = irc_server_parse_message_to_hashtable (message);
+                value = irc_message_parse_to_hashtable (message);
                 return value;
             }
         }

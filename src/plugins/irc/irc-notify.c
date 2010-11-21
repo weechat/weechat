@@ -30,6 +30,7 @@
 #include "irc-notify.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-message.h"
 #include "irc-redirect.h"
 #include "irc-server.h"
 
@@ -596,8 +597,8 @@ irc_notify_hsignal_cb (void *data, const char *signal,
             }
             for (i = 0; i < num_messages; i++)
             {
-                irc_server_parse_message (messages[i], NULL, NULL, NULL, NULL,
-                                          &arguments);
+                irc_message_parse (messages[i], NULL, NULL, NULL, NULL,
+                                   &arguments);
                 if (arguments)
                 {
                     pos = strchr (arguments, ' ');
@@ -672,8 +673,8 @@ irc_notify_hsignal_cb (void *data, const char *signal,
             {
                 for (i = 0; i < num_messages; i++)
                 {
-                    irc_server_parse_message (messages[0], NULL, NULL,
-                                              &irc_cmd, NULL, &arguments);
+                    irc_message_parse (messages[0], NULL, NULL, &irc_cmd, NULL,
+                                       &arguments);
                     if (irc_cmd && arguments)
                     {
                         if (strcmp (irc_cmd, "401") == 0)

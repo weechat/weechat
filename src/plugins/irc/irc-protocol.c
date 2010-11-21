@@ -44,6 +44,7 @@
 #include "irc-config.h"
 #include "irc-ctcp.h"
 #include "irc-ignore.h"
+#include "irc-message.h"
 #include "irc-mode.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
@@ -65,95 +66,6 @@ irc_protocol_is_numeric_command (const char *str)
         str++;
     }
     return 1;
-}
-
-/*
- * irc_protocol_get_nick_from_host: get nick from host in an IRC message
- */
-
-const char *
-irc_protocol_get_nick_from_host (const char *host)
-{
-    static char nick[128];
-    char host2[128], *pos_space, *pos;
-    const char *ptr_host;
-    
-    if (!host)
-        return NULL;
-    
-    nick[0] = '\0';
-    if (host)
-    {
-        ptr_host = host;
-        pos_space = strchr (host, ' ');
-        if (pos_space)
-        {
-            if (pos_space - host < (int)sizeof (host2))
-            {
-                strncpy (host2, host, pos_space - host);
-                host2[pos_space - host] = '\0';
-            }
-            else
-                snprintf (host2, sizeof (host2), "%s", host);
-            ptr_host = host2;
-        }
-        
-        if (ptr_host[0] == ':')
-            ptr_host++;
-        
-        pos = strchr (ptr_host, '!');
-        if (pos && (pos - ptr_host < (int)sizeof (nick)))
-        {
-            strncpy (nick, ptr_host, pos - ptr_host);
-            nick[pos - ptr_host] = '\0';
-        }
-        else
-        {
-            snprintf (nick, sizeof (nick), "%s", ptr_host);
-        }
-    }
-    
-    return nick;
-}
-
-/*
- * irc_protocol_get_address_from_host: get address from host in an IRC message
- */
-
-const char *
-irc_protocol_get_address_from_host (const char *host)
-{
-    static char address[256];
-    char host2[256], *pos_space, *pos;
-    const char *ptr_host;
-    
-    address[0] = '\0';
-    if (host)
-    {
-        ptr_host = host;
-        pos_space = strchr (host, ' ');
-        if (pos_space)
-        {
-            if (pos_space - host < (int)sizeof (host2))
-            {
-                strncpy (host2, host, pos_space - host);
-                host2[pos_space - host] = '\0';
-            }
-            else
-                snprintf (host2, sizeof (host2), "%s", host);
-            ptr_host = host2;
-        }
-        
-        if (ptr_host[0] == ':')
-            ptr_host++;
-        pos = strchr (ptr_host, '!');
-        if (pos)
-            snprintf (address, sizeof (address), "%s", pos + 1);
-        else
-            snprintf (address, sizeof (address), "%s", ptr_host);
-    }
-    
-    return address;
 }
 
 /*
@@ -219,48 +131,6 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick)
               str_log_level);
     
     return string;
-}
-
-/*
- * irc_protocol_replace_vars: replace special IRC vars ($nick, $channel,
- *                            $server) in a string
- *                            Note: result has to be free() after use
- */
-
-char *
-irc_protocol_replace_vars (struct t_irc_server *server,
-                           struct t_irc_channel *channel, const char *string)
-{
-    char *var_nick, *var_channel, *var_server;
-    char empty_string[1] = { '\0' };
-    char *res, *temp;
-    
-    var_nick = (server && server->nick) ? server->nick : empty_string;
-    var_channel = (channel) ? channel->name : empty_string;
-    var_server = (server) ? server->name : empty_string;
-    
-    /* replace nick */
-    temp = weechat_string_replace (string, "$nick", var_nick);
-    if (!temp)
-        return NULL;
-    res = temp;
-    
-    /* replace channel */
-    temp = weechat_string_replace (res, "$channel", var_channel);
-    free (res);
-    if (!temp)
-        return NULL;
-    res = temp;
-    
-    /* replace server */
-    temp = weechat_string_replace (res, "$server", var_server);
-    free (res);
-    if (!temp)
-        return NULL;
-    res = temp;
-    
-    /* return result */
-    return res;
 }
 
 /*
@@ -1955,8 +1825,8 @@ IRC_PROTOCOL_CALLBACK(001)
         {
             for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
             {
-                vars_replaced = irc_protocol_replace_vars (server, NULL,
-                                                           *ptr_cmd);
+                vars_replaced = irc_message_replace_vars (server, NULL,
+                                                          *ptr_cmd);
                 weechat_command (server->buffer,
                                  (vars_replaced) ? vars_replaced : *ptr_cmd);
                 if (vars_replaced)
@@ -2956,8 +2826,8 @@ IRC_PROTOCOL_CALLBACK(333)
     
     IRC_PROTOCOL_MIN_ARGS(5);
     
-    topic_nick = (argc > 5) ? irc_protocol_get_nick_from_host (argv[4]) : NULL;
-    topic_address = (argc > 5) ? irc_protocol_get_address_from_host (argv[4]) : NULL;
+    topic_nick = (argc > 5) ? irc_message_get_nick_from_host (argv[4]) : NULL;
+    topic_address = (argc > 5) ? irc_message_get_address_from_host (argv[4]) : NULL;
     if (topic_nick && topic_address && strcmp (topic_nick, topic_address) == 0)
         topic_address = NULL;
     
@@ -3194,10 +3064,10 @@ IRC_PROTOCOL_CALLBACK(346)
                              argv[4],
                              IRC_COLOR_CHAT,
                              IRC_COLOR_CHAT_NICK,
-                             irc_protocol_get_nick_from_host (argv[5]),
+                             irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
-                             irc_protocol_get_address_from_host (argv[5]),
+                             irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
                              weechat_util_get_time_string (&datetime));
@@ -3217,10 +3087,10 @@ IRC_PROTOCOL_CALLBACK(346)
                              argv[4],
                              IRC_COLOR_CHAT,
                              IRC_COLOR_CHAT_NICK,
-                             irc_protocol_get_nick_from_host (argv[5]),
+                             irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
-                             irc_protocol_get_address_from_host (argv[5]),
+                             irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS);
     }
     
@@ -3304,10 +3174,10 @@ IRC_PROTOCOL_CALLBACK(348)
                              argv[4],
                              IRC_COLOR_CHAT,
                              IRC_COLOR_CHAT_NICK,
-                             irc_protocol_get_nick_from_host (argv[5]),
+                             irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
-                             irc_protocol_get_address_from_host (argv[5]),
+                             irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
                              weechat_util_get_time_string (&datetime));
@@ -3765,10 +3635,10 @@ IRC_PROTOCOL_CALLBACK(367)
                              argv[4],
                              IRC_COLOR_CHAT,
                              IRC_COLOR_CHAT_NICK,
-                             irc_protocol_get_nick_from_host (argv[5]),
+                             irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
-                             irc_protocol_get_address_from_host (argv[5]),
+                             irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
                              weechat_util_get_time_string (&datetime));
@@ -3788,10 +3658,10 @@ IRC_PROTOCOL_CALLBACK(367)
                              argv[4],
                              IRC_COLOR_CHAT,
                              IRC_COLOR_CHAT_NICK,
-                             irc_protocol_get_nick_from_host (argv[5]),
+                             irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
-                             irc_protocol_get_address_from_host (argv[5]),
+                             irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS);
     }
     
@@ -4308,8 +4178,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     host1 = NULL;
     if (irc_message && (irc_message[0] == ':'))
     {
-        nick1 = irc_protocol_get_nick_from_host (irc_message);
-        address1 = irc_protocol_get_address_from_host (irc_message);
+        nick1 = irc_message_get_nick_from_host (irc_message);
+        address1 = irc_message_get_address_from_host (irc_message);
         host1 = irc_message + 1;
     }
     nick = (nick1) ? strdup (nick1) : NULL;

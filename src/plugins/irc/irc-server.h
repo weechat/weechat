@@ -237,10 +237,6 @@ extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *signal, const char *command,
                                     const char *full_message,
                                     const char *tags);
-extern void irc_server_parse_message (const char *message, char **nick,
-                                      char **host, char **command,
-                                      char **channel, char **arguments);
-extern struct t_hashtable *irc_server_parse_message_to_hashtable (const char *message);
 extern void irc_server_set_send_default_tags (const char *tags);
 extern void irc_server_sendf (struct t_irc_server *server, int flags,
                               const char *tags, const char *format, ...);

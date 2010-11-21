@@ -49,6 +49,7 @@
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-input.h"
+#include "irc-message.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -1521,175 +1522,6 @@ irc_server_outqueue_send (struct t_irc_server *server)
 }
 
 /*
- * irc_server_parse_message: parse IRC message and return pointer to
- *                           host, command, channel, target nick and arguments
- *                           (if any)
- */
-
-void
-irc_server_parse_message (const char *message, char **nick, char **host,
-                          char **command, char **channel, char **arguments)
-{
-    const char *pos, *pos2, *pos3, *pos4, *pos5;
-
-    if (nick)
-        *nick = NULL;
-    if (host)
-        *host = NULL;
-    if (command)
-        *command = NULL;
-    if (channel)
-        *channel = NULL;
-    if (arguments)
-        *arguments = NULL;
-    
-    if (!message)
-        return;
-    
-    /*
-     * we will use this message as example:
-     *   :FlashCode!n=FlashCod@host.com PRIVMSG #channel :hello!
-     */
-    if (message[0] == ':')
-    {
-        pos2 = strchr (message, '!');
-        pos = strchr (message, ' ');
-        if (pos2 && (!pos || pos > pos2))
-        {
-            if (nick)
-                *nick = weechat_strndup (message + 1, pos2 - (message + 1));
-        }
-        else if (pos)
-        {
-            if (nick)
-                *nick = weechat_strndup (message + 1, pos - (message + 1));
-        }
-        if (pos)
-        {
-            if (host)
-                *host = weechat_strndup (message + 1, pos - (message + 1));
-            pos++;
-        }
-        else
-            pos = message;
-    }
-    else
-        pos = message;
-
-    /* pos is pointer on PRIVMSG #channel :hello! */
-    if (pos && pos[0])
-    {
-        while (pos[0] == ' ')
-        {
-            pos++;
-        }
-        pos2 = strchr (pos, ' ');
-        if (pos2)
-        {
-            /* pos2 is pointer on #channel :hello! */
-            if (command)
-                *command = weechat_strndup (pos, pos2 - pos);
-            pos2++;
-            while (pos2[0] == ' ')
-            {
-                pos2++;
-            }
-            if (arguments)
-                *arguments = strdup (pos2);
-            if (pos2[0] != ':')
-            {
-                if (irc_channel_is_channel (pos2))
-                {
-                    pos3 = strchr (pos2, ' ');
-                    if (channel)
-                    {
-                        if (pos3)
-                            *channel = weechat_strndup (pos2, pos3 - pos2);
-                        else
-                            *channel = strdup (pos2);
-                    }
-                }
-                else
-                {
-                    pos3 = strchr (pos2, ' ');
-                    if (nick && !*nick)
-                    {
-                        if (pos3)
-                            *nick = weechat_strndup (pos2, pos3 - pos2);
-                        else
-                            *nick = strdup (pos2);
-                    }
-                    if (pos3)
-                    {
-                        pos4 = pos3;
-                        pos3++;
-                        while (pos3[0] == ' ')
-                        {
-                            pos3++;
-                        }
-                        if (irc_channel_is_channel (pos3))
-                        {
-                            pos5 = strchr (pos3, ' ');
-                            if (channel)
-                            {
-                                if (pos5)
-                                    *channel = weechat_strndup (pos3, pos5 - pos3);
-                                else
-                                    *channel = strdup (pos3);
-                            }
-                        }
-                        else if (channel && !*channel)
-                        {
-                            *channel = weechat_strndup (pos2, pos4 - pos2);
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (command)
-                *command = strdup (pos);
-        }
-    }
-}
-
-/*
- * irc_server_parse_message_to_hashtable: parse IRC message and return hashtable
- *                                        with keys: nick, host, command,
- *                                        channel, arguments
- *                                        Note: hashtable has to be free()
- *                                        after use
- */
-
-struct t_hashtable *
-irc_server_parse_message_to_hashtable (const char *message)
-{
-    char *nick, *host, *command, *channel, *arguments;
-    char empty_str[1] = { '\0' };
-    struct t_hashtable *hashtable;
-    
-    irc_server_parse_message (message, &nick, &host, &command, &channel,
-                              &arguments);
-    
-    hashtable = weechat_hashtable_new (8,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL,
-                                       NULL);
-    if (!hashtable)
-        return NULL;
-    
-    weechat_hashtable_set (hashtable, "nick", (nick) ? nick : empty_str);
-    weechat_hashtable_set (hashtable, "host", (host) ? host : empty_str);
-    weechat_hashtable_set (hashtable, "command", (command) ? command : empty_str);
-    weechat_hashtable_set (hashtable, "channel", (channel) ? channel : empty_str);
-    weechat_hashtable_set (hashtable, "arguments", (arguments) ? arguments : empty_str);
-    
-    return hashtable;
-}
-
-/*
  * irc_server_send_one_msg: send one message to IRC server
  *                          if flag contains outqueue priority value, then
  *                          messages are in a queue and sent slowly (to be sure
@@ -1716,7 +1548,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
     
     rc = 1;
     
-    irc_server_parse_message (message, &nick, NULL, &command, &channel, NULL);
+    irc_message_parse (message, &nick, NULL, &command, &channel, NULL);
     snprintf (str_modifier, sizeof (str_modifier),
               "irc_out_%s",
               (command) ? command : "unknown");
@@ -2074,8 +1906,7 @@ irc_server_msgq_flush ()
                 irc_raw_print (irc_recv_msgq->server, IRC_RAW_FLAG_RECV,
                                ptr_data);
                 
-                irc_server_parse_message (ptr_data, NULL, NULL, &command,
-                                          NULL, NULL);
+                irc_message_parse (ptr_data, NULL, NULL, &command, NULL, NULL);
                 snprintf (str_modifier, sizeof (str_modifier),
                           "irc_in_%s",
                           (command) ? command : "unknown");
@@ -2111,9 +1942,8 @@ irc_server_msgq_flush ()
                                            ptr_msg);
                         }
                         
-                        irc_server_parse_message (ptr_msg, &nick, &host,
-                                                  &command, &channel,
-                                                  &arguments);
+                        irc_message_parse (ptr_msg, &nick, &host, &command,
+                                           &channel, &arguments);
                         
                         /* convert charset for message */
                         if (channel)

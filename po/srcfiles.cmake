@@ -134,6 +134,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-info.h
 ./src/plugins/irc/irc-input.c
 ./src/plugins/irc/irc-input.h
+./src/plugins/irc/irc-message.c
+./src/plugins/irc/irc-message.h
 ./src/plugins/irc/irc-mode.c
 ./src/plugins/irc/irc-mode.h
 ./src/plugins/irc/irc-msgbuffer.c
