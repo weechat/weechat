@@ -20,6 +20,9 @@
 #ifndef __WEECHAT_IRC_MESSAGE_H
 #define __WEECHAT_IRC_MESSAGE_H 1
 
+struct t_irc_server;
+struct t_irc_channel;
+
 extern void irc_message_parse (const char *message, char **nick, char **host,
                                char **command, char **channel,
                                char **arguments);
