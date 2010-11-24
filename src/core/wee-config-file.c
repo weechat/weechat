@@ -1064,33 +1064,44 @@ config_file_option_set (struct t_config_option *option, const char *value,
         switch (option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                if (config_file_string_boolean_is_valid (value))
+                if (!option->value)
                 {
-                    if (!option->value)
-                    {
-                        option->value = malloc (sizeof (int));
-                        if (option->value)
-                        {
-                            if (string_strcasecmp (value, "toggle") == 0)
-                                CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
-                            else
-                            {
-                                value_int = config_file_string_to_boolean (value);
-                                CONFIG_BOOLEAN(option) = value_int;
-                            }
-                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-                        }
-                    }
-                    else
+                    option->value = malloc (sizeof (int));
+                    if (option->value)
                     {
                         if (string_strcasecmp (value, "toggle") == 0)
                         {
-                            CONFIG_BOOLEAN(option) =
-                                (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                                CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                            CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_TRUE;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                         else
+                        {
+                            if (config_file_string_boolean_is_valid (value))
+                            {
+                                value_int = config_file_string_to_boolean (value);
+                                CONFIG_BOOLEAN(option) = value_int;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                            }
+                            else
+                            {
+                                free (option->value);
+                                option->value = NULL;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (string_strcasecmp (value, "toggle") == 0)
+                    {
+                        CONFIG_BOOLEAN(option) =
+                            (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                            CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                        rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
+                    }
+                    else
+                    {
+                        if (config_file_string_boolean_is_valid (value))
                         {
                             value_int = config_file_string_to_boolean (value);
                             if (value_int == CONFIG_BOOLEAN(option))
