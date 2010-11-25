@@ -423,6 +423,45 @@ weechat_lua_api_string_has_highlight (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_string_has_highlight_regex: return 1 if string contains a
+ *                                             highlight (using regular
+ *                                             expression)
+ *                                             return 0 if no highlight is
+ *                                             found in string
+ */
+
+static int
+weechat_lua_api_string_has_highlight_regex (lua_State *L)
+{
+    const char *string, *regex;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        LUA_RETURN_INT(0);
+    }
+    
+    string = lua_tostring (lua_current_interpreter, -2);
+    regex = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_string_has_highlight_regex (string, regex);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_string_mask_to_regex: convert a mask (string with only
  *                                       "*" as wildcard) to a regex, paying
  *                                       attention to special chars in a
@@ -7562,6 +7601,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "ngettext", &weechat_lua_api_ngettext },
     { "string_match", &weechat_lua_api_string_match },
     { "string_has_highlight", &weechat_lua_api_string_has_highlight },
+    { "string_has_highlight_regex", &weechat_lua_api_string_has_highlight_regex },
     { "string_mask_to_regex", &weechat_lua_api_string_mask_to_regex },
     { "string_remove_color", &weechat_lua_api_string_remove_color },
     { "string_is_command_char", &weechat_lua_api_string_is_command_char },

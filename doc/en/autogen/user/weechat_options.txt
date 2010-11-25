@@ -388,6 +388,11 @@
 ** type: string
 ** values: any string (default value: `""`)
 
+* *weechat.look.highlight_regex*
+** description: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case sensitive, example: "FlashCode|flashy"`
+** type: string
+** values: any string (default value: `""`)
+
 * *weechat.look.hline_char*
 ** description: `char used to draw horizontal lines, note that empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals`
 ** type: string

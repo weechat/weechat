@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-18
+v0.3.4-dev, 2010-11-25
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add new option weechat.look.highlight_regex and function
+  string_has_highlight_regex in plugin API (task #10321)
 * core: fix infinite loop on gnutls handshake when connecting with SSL to server
   on wrong port or server with SSL problems (bug #27487)
 * core: fix data sent to callback of hook_process (some data was sometimes

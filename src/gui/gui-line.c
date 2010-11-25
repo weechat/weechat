@@ -474,6 +474,12 @@ gui_line_has_highlight (struct t_gui_line *line)
             free (highlight_words);
     }
     
+    if (!rc && config_highlight_regex)
+    {
+        rc = string_has_highlight_regex_compiled (msg_no_color,
+                                                  config_highlight_regex);
+    }
+    
     free (msg_no_color);
     
     return rc;

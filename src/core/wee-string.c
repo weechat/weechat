@@ -31,6 +31,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
+#include <regex.h>
 
 #if defined(__OpenBSD__)
 #include <utf8/wchar.h>
@@ -706,6 +707,76 @@ string_has_highlight (const char *string, const char *highlight_words)
     
     /* no highlight found */
     return 0;
+}
+
+/*
+ * string_has_highlight_regex_compiled: return 1 if string contains a highlight
+ *                                      using a regular expression (any match
+ *                                      in string must be surrounded by word
+ *                                      chars)
+ */
+
+int
+string_has_highlight_regex_compiled (const char *string, regex_t *regex)
+{
+    int rc, startswith, endswith;
+    regmatch_t regex_match;
+    const char *match_pre;
+    
+    if (!string || !regex)
+        return 0;
+    
+    while (string && string[0])
+    {
+        rc = regexec (regex, string,  1, &regex_match, 0);
+        if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo < 0))
+            break;
+        
+        startswith = (regex_match.rm_so == 0);
+        if (!startswith)
+        {
+            match_pre = utf8_prev_char (string, string + regex_match.rm_so);
+            startswith = !string_is_word_char (match_pre);
+        }
+        endswith = 0;
+        if (startswith)
+        {
+            endswith = ((regex_match.rm_eo == (int)strlen (string))
+                        || !string_is_word_char (string + regex_match.rm_eo));
+        }
+        if (startswith && endswith)
+            return 1;
+        
+        string += regex_match.rm_eo;
+    }
+    
+    /* no highlight found */
+    return 0;
+}
+
+/*
+ * string_has_highlight_regex: return 1 if string contains a highlight
+ *                             using a regular expression (any match in string
+ *                             must be surrounded by word chars)
+ */
+
+int
+string_has_highlight_regex (const char *string, const char *regex)
+{
+    regex_t reg;
+    int rc;
+    
+    if (!string || !regex)
+        return 0;
+    
+    if (regcomp (&reg, regex, REG_EXTENDED) != 0)
+        return 0;
+    
+    rc = string_has_highlight_regex_compiled (string, &reg);
+    
+    regfree (&reg);
+    
+    return rc;
 }
 
 /*

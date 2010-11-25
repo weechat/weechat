@@ -62,6 +62,9 @@ CHECK_FUNCTION_EXISTS(strpbrk HAVE_STRPBRK)
 CHECK_FUNCTION_EXISTS(strrchr HAVE_STRRCHR)
 CHECK_FUNCTION_EXISTS(strstr HAVE_STRSTR)
 
+CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
+CHECK_FUNCTION_EXISTS(regexec HAVE_REGEXEC)
+
 
 #needs to be splitted in subdirectories
 # FIXME: weechat_gui_common MUST be the first lib in the list

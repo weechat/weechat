@@ -388,6 +388,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* *weechat.look.highlight_regex*
+** Beschreibung: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case sensitive, example: "FlashCode|flashy"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * *weechat.look.hline_char*
 ** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu zeichnen. Hinweis: Ein leerer Wert bewirkt das ncurses eine durchgezogene Linie zeichnet. Dies kann aber bei einigen Terminals, in URL Sektionen, zu Fehlern führen.`
 ** Typ: Zeichenkette

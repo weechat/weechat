@@ -954,6 +954,50 @@ highlight = weechat.string_has_highlight(string, highlight_words)
 highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----------------------------------------
 
+// TRANSLATION MISSING
+weechat_string_has_highlight_regex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Check if a string has one or more highlights, using a regular expression.
+For at least one match of regular expression on string, it must be surrounded
+by word chars (alphanumeric character, "-", "_" or "|").
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_string_has_highlight_regex (const char *string, const char *regex);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+* 'regex': regular expression
+
+Return value:
+
+* 1 if string has one or more highlights, otherwise 0
+
+C example:
+
+[source,C]
+----------------------------------------
+int hl = weechat_string_has_highlight_regex ("my test string", "test|word2"); /* == 1 */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+highlight = weechat.string_has_highlight_regex(string, regex)
+
+# example
+highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
+----------------------------------------
+
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

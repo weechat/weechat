@@ -943,6 +943,50 @@ highlight = weechat.string_has_highlight(string, highlight_words)
 highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----------------------------------------
 
+weechat_string_has_highlight_regex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Vérifie si une chaîne a un ou plusieurs "highlights", en utilisant une
+expression régulière.
+Pour au moins une correspondance dans la chaîne, elle doit être entourée de
+caractères de mot (caractère alpha-numérique, "-", "_" ou "|").
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_string_has_highlight_regex (const char *string, const char *regex);
+----------------------------------------
+
+Paramètres :
+
+* 'string' : chaîne
+* 'regex' : expression régulière
+
+Valeur de retour :
+
+* 1 si la chaîne a un ou plusieurs "highlights", sinon 0
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int hl = weechat_string_has_highlight_regex ("my test string", "test|word2"); /* == 1 */
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+highlight = weechat.string_has_highlight_regex(string, regex)
+
+# exemple
+highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
+----------------------------------------
+
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

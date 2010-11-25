@@ -21,9 +21,10 @@
 #ifndef __WEECHAT_CONFIG_H
 #define __WEECHAT_CONFIG_H 1
 
-struct t_gui_buffer;
-
+#include <regex.h>
 #include "wee-config-file.h"
+
+struct t_gui_buffer;
 
 #define WEECHAT_CONFIG_NAME "weechat"
 
@@ -112,6 +113,7 @@ extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_day_change;
 extern struct t_config_option *config_look_day_change_time_format;
 extern struct t_config_option *config_look_highlight;
+extern struct t_config_option *config_look_highlight_regex;
 extern struct t_config_option *config_look_hline_char;
 extern struct t_config_option *config_look_hotlist_names_count;
 extern struct t_config_option *config_look_hotlist_names_length;
@@ -214,6 +216,8 @@ extern struct t_config_option *config_plugin_debug;
 extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
+
+extern regex_t *config_highlight_regex;
 
 
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);

@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101110-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101125-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -180,6 +180,7 @@ struct t_weechat_plugin
                            const char *chars);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
+    int (*string_has_highlight_regex) (const char *string, const char *regex);
     char *(*string_mask_to_regex) (const char *mask);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
@@ -800,6 +801,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_strip(__string, __left, __right, __chars)
 #define weechat_string_has_highlight(__string, __highlight_words)       \
     weechat_plugin->string_has_highlight(__string, __highlight_words)
+#define weechat_string_has_highlight_regex(__string, __regex)           \
+    weechat_plugin->string_has_highlight_regex(__string, __regex)
 #define weechat_string_mask_to_regex(__mask)                            \
     weechat_plugin->string_mask_to_regex(__mask)
 #define weechat_string_split(__string, __separator, __eol, __max,       \

@@ -35,6 +35,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <regex.h>
 
 #include "weechat.h"
 #include "wee-config.h"
@@ -83,6 +84,7 @@ struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_highlight;
+struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_hline_char;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
@@ -200,6 +202,7 @@ struct t_config_option *config_plugin_save_config_on_unload;
 
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
+regex_t *config_highlight_regex = NULL;
 
 
 /*
@@ -281,6 +284,41 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
     gui_chat_change_time_format ();
     if (gui_ok)
         gui_window_ask_refresh (1);
+}
+
+/*
+ * config_change_highlight_regex: called when highlight_regex changes
+ */
+
+void
+config_change_highlight_regex (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (config_highlight_regex)
+    {
+        regfree (config_highlight_regex);
+        free (config_highlight_regex);
+        config_highlight_regex = NULL;
+    }
+    
+    if (CONFIG_STRING(config_look_highlight_regex)
+        && CONFIG_STRING(config_look_highlight_regex)[0])
+    {
+        config_highlight_regex = malloc (sizeof (*config_highlight_regex));
+        if (config_highlight_regex)
+        {
+            if (regcomp (config_highlight_regex,
+                         CONFIG_STRING(config_look_highlight_regex),
+                         REG_EXTENDED) != 0)
+            {
+                free (config_highlight_regex);
+                config_highlight_regex = NULL;
+            }
+        }
+    }
 }
 
 /*
@@ -1334,6 +1372,14 @@ config_weechat_init_options ()
         N_("comma separated list of words to highlight (case insensitive "
            "comparison, words may begin or end with \"*\" for partial match)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_highlight_regex = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "highlight_regex", "string",
+        N_("regular expression used to check if a message has highlight or not, "
+           "at least one match in string must be surrounded by word chars "
+            "(alphanumeric, \"-\", \"_\" or \"|\"), regular expression is case "
+           "sensitive, example: \"FlashCode|flashy\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_regex, NULL, NULL, NULL);
     config_look_hline_char = config_file_new_option (
         weechat_config_file, ptr_section,
         "hline_char", "string",
@@ -2196,6 +2242,7 @@ config_weechat_init ()
                                               0,
                                               &config_day_change_timer_cb,
                                               NULL);
+        config_change_highlight_regex (NULL, NULL);
     }
     
     return rc;

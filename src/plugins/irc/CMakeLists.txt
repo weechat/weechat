@@ -45,9 +45,6 @@ irc-server.c irc-server.h
 irc-upgrade.c irc-upgrade.h)
 SET_TARGET_PROPERTIES(irc PROPERTIES PREFIX "")
 
-CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
-CHECK_FUNCTION_EXISTS(regexec HAVE_REGEXEC)
-
 SET (LINK_LIBS)
 
 IF(GNUTLS_FOUND)

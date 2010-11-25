@@ -465,6 +465,7 @@ plugin_load (const char *filename)
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
         new_plugin->string_has_highlight = &string_has_highlight;
+        new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
         new_plugin->string_mask_to_regex = &string_mask_to_regex;
         new_plugin->string_split = &string_split;
         new_plugin->string_free_split = &string_free_split;

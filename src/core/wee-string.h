@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_STRING_H
 #define __WEECHAT_STRING_H 1
 
+#include <regex.h>
+
 extern char *string_strndup (const char *string, int length);
 extern void string_tolower (char *string);
 extern void string_toupper (char *string);
@@ -42,6 +44,9 @@ extern char *string_strip (const char *string, int left, int right,
 extern char *string_convert_hex_chars (const char *string);
 extern int string_has_highlight (const char *string,
                                  const char *highlight_words);
+extern int string_has_highlight_regex_compiled (const char *string,
+                                                regex_t *regex);
+extern int string_has_highlight_regex (const char *string, const char *regex);
 extern char *string_mask_to_regex (const char *mask);
 extern char **string_split (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);

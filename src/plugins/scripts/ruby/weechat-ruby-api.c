@@ -431,6 +431,47 @@ weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
 }
 
 /*
+ * weechat_ruby_api_string_has_highlight_regex: return 1 if string contains a
+ *                                              highlight (using regular
+ *                                              expression)
+ *                                              return 0 if no highlight is
+ *                                              found in string
+ */
+
+static VALUE
+weechat_ruby_api_string_has_highlight_regex (VALUE class, VALUE string,
+                                             VALUE regex)
+{
+    char *c_string, *c_regex;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (string) || NIL_P (regex))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (string, T_STRING);
+    Check_Type (regex, T_STRING);
+    
+    c_string = StringValuePtr (string);
+    c_regex = StringValuePtr (regex);
+    
+    value = weechat_string_has_highlight_regex (c_string, c_regex);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
  * weechat_ruby_api_string_mask_to_regex: convert a mask (string with only
  *                                        "*" as wildcard) to a regex, paying
  *                                        attention to special chars in a
@@ -7494,6 +7535,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
     rb_define_module_function (ruby_mWeechat, "string_match", &weechat_ruby_api_string_match, 3);
     rb_define_module_function (ruby_mWeechat, "string_has_highlight", &weechat_ruby_api_string_has_highlight, 2);
+    rb_define_module_function (ruby_mWeechat, "string_has_highlight_regex", &weechat_ruby_api_string_has_highlight_regex, 2);
     rb_define_module_function (ruby_mWeechat, "string_mask_to_regex", &weechat_ruby_api_string_mask_to_regex, 1);
     rb_define_module_function (ruby_mWeechat, "string_remove_color", &weechat_ruby_api_string_remove_color, 2);
     rb_define_module_function (ruby_mWeechat, "string_is_command_char", &weechat_ruby_api_string_is_command_char, 1);

@@ -531,6 +531,46 @@ weechat_tcl_api_string_has_highlight (ClientData clientData,
 }
 
 /*
+ * weechat_tcl_api_string_has_highlight_regex: return 1 if string contains a
+ *                                             highlight (using a regular
+ *                                             expression)
+ *                                             return 0 if no highlight is
+ *                                             found in string
+ */
+
+static int
+weechat_tcl_api_string_has_highlight_regex (ClientData clientData,
+                                            Tcl_Interp *interp,
+                                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *string, *regex;
+    int result, i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "string_has_highlight_regex");
+        TCL_RETURN_INT(0);
+    }
+    
+    string = Tcl_GetStringFromObj (objv[1], &i);
+    regex = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_string_has_highlight_regex (string, regex);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
  * weechat_tcl_api_string_mask_to_regex: convert a mask (string with only
  *                                       "*" as wildcard) to a regex, paying
  *                                       attention to special chars in a
@@ -7343,6 +7383,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_string_match, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::string_has_highlight",
                           weechat_tcl_api_string_has_highlight, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::string_has_highlight_regex",
+                          weechat_tcl_api_string_has_highlight_regex, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::string_mask_to_regex",
                           weechat_tcl_api_string_mask_to_regex, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::string_remove_color",
