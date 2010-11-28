@@ -401,6 +401,26 @@ dei plugin/script:
 http://www.weechat.org/scripts
 
 
+// TRANSLATION MISSING
+[[irc_ssl_connection]]
+I have some problems when connecting to a server using SSL, what can I do?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you see errors about gnutls handshake, you can try to use a smaller
+Diffie-Hellman key (default is 2048):
+
+----------------------------------------
+/set irc.server.freenode.ssl_dhkey_size 1024
+----------------------------------------
+
+If you see errors about certificate, you can disable "ssl_verify" (be careful,
+connection will be less secure by doing that):
+
+----------------------------------------
+/set irc.server.freenode.ssl_verify off
+----------------------------------------
+
+
 [[plugins_scripts]]
 Plugin / script
 ---------------

@@ -403,6 +403,26 @@ De nombreux autres scripts de notification existent, merci de consulter la
 liste des extensions/scripts : http://www.weechat.org/scripts
 
 
+[[irc_ssl_connection]]
+J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si vous voyez des erreurs à propos de la poignée de main gnutls ("handshake"),
+vous pouvez utiliser une valeur plus petite pour la clé Diffie-Hellman (par
+défaut 2048) :
+
+----------------------------------------
+/set irc.server.freenode.ssl_dhkey_size 1024
+----------------------------------------
+
+Si vous voyez des erreurs à propos du certificat, vous pouvez désactiver
+"ssl_verify" (attention, la connexion sera moins sûre en faisant cela) :
+
+----------------------------------------
+/set irc.server.freenode.ssl_verify off
+----------------------------------------
+
+
 [[plugins_scripts]]
 Extensions / scripts
 --------------------
