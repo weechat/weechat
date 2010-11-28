@@ -3409,61 +3409,66 @@ command_set_display_option (struct t_config_option *option,
         switch (option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
-                                 (message) ? message : "  ",
-                                 option->config_file->name,
-                                 option->section->name,
-                                 option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                 (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                                  "on" : "off");
+                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                           "%s%s.%s.%s%s = %s%s",
+                                           (message) ? message : "  ",
+                                           option->config_file->name,
+                                           option->section->name,
+                                           option->name,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                           (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                                           "on" : "off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (option->string_values)
                 {
-                    gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
-                                     (message) ? message : "  ",
-                                     option->config_file->name,
-                                     option->section->name,
-                                     option->name,
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                     option->string_values[CONFIG_INTEGER(option)]);
+                    gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                               "%s%s.%s.%s%s = %s%s",
+                                               (message) ? message : "  ",
+                                               option->config_file->name,
+                                               option->section->name,
+                                               option->name,
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                               GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                               option->string_values[CONFIG_INTEGER(option)]);
                 }
                 else
                 {
-                    gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%d",
-                                     (message) ? message : "  ",
-                                     option->config_file->name,
-                                     option->section->name,
-                                     option->name,
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                     CONFIG_INTEGER(option));
+                    gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                               "%s%s.%s.%s%s = %s%d",
+                                               (message) ? message : "  ",
+                                               option->config_file->name,
+                                               option->section->name,
+                                               option->name,
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                               GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                               CONFIG_INTEGER(option));
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
-                gui_chat_printf (NULL, "%s%s.%s.%s%s = \"%s%s%s\"",
-                                 (message) ? message : "  ",
-                                 option->config_file->name,
-                                 option->section->name,
-                                 option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                 CONFIG_STRING(option),
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                           "%s%s.%s.%s%s = \"%s%s%s\"",
+                                           (message) ? message : "  ",
+                                           option->config_file->name,
+                                           option->section->name,
+                                           option->name,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                           CONFIG_STRING(option),
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 color_name = gui_color_get_name (CONFIG_COLOR(option));
-                gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
-                                 (message) ? message : "  ",
-                                 option->config_file->name,
-                                 option->section->name,
-                                 option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                 (color_name) ? color_name : _("(unknown)"));
+                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                           "%s%s.%s.%s%s = %s%s",
+                                           (message) ? message : "  ",
+                                           option->config_file->name,
+                                           option->section->name,
+                                           option->name,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                           (color_name) ? color_name : _("(unknown)"));
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 /* make C compiler happy */
@@ -3472,11 +3477,12 @@ command_set_display_option (struct t_config_option *option,
     }
     else
     {
-        gui_chat_printf (NULL, "%s%s.%s.%s",
-                         (message) ? message : "  ",
-                         option->config_file->name,
-                         option->section->name,
-                         option->name);
+        gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                                   "%s%s.%s.%s",
+                                   (message) ? message : "  ",
+                                   option->config_file->name,
+                                   option->section->name,
+                                   option->name);
     }
 }
 
