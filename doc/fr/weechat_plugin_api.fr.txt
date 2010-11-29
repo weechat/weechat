@@ -8556,7 +8556,8 @@ Paramètres :
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
 ** 'highlight_words' : liste des mots pour le highlight
 ** 'highlight_tags' : liste des étiquettes pour le highlight
-** 'no_highlight_nicks' : liste des pseudos à NE PAS mettre en valeur (highlight)
+** 'hotlist_max_level_nicks' : niveau maximum pour la hotlist pour certains
+   pseudos
 ** 'localvar_xxx' : contenu de la variable locale "xxx" (remplacer "xxx" par le
    nom de la variable locale à lire)
 
@@ -8720,17 +8721,19 @@ Paramètres :
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   liste d'étiquettes ("tags") à mettre en valeur pour ce tampon
 
-| no_highlight_nicks | liste de pseudos séparés par des virgules |
-  liste de pseudos à NE PAS mettre en valeur dans ce tampon, par exemple :
-  "joe,mike,robert"
+| hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
+  liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut
+  être : -1: jamais dans la hotlist, 0: faible, 1: message, 2: privé,
+  3: highlight), par exemple : "joe:2,mike:-1,robert:-1" (joe ne produira
+  jamais de highlight sur le tampon, mike et robert ne changeront jamais la
+  hotlist)
 
-| no_highlight_nicks_add | liste de pseudos séparés par des virgules |
-  liste de pseudos à NE PAS mettre en valeur dans ce tampon, ces mots sont
-  ajoutés aux pseudos existants pour le tampon
+| hotlist_max_level_nicks_add | liste de "pseudo:niveau" séparés par des virgules" |
+  liste de pseudos avec niveau pour la hotlist, ces pseudos sont ajoutés aux
+  pseudos existant dans le tampon
 
-| no_highlight_nicks_del | liste de pseudos séparés par des virgules |
-  liste de pseudos à supprimer de la liste des pseudos à ne pas mettre en
-  valeur dans ce tampon
+| hotlist_max_level_nicks_del | liste de pseudos séparés par des virgules |
+  liste de pseudos à supprimer des niveaux max de hotlist
 
 | key_bind_xxx | toute chaîne |
   associe la nouvelle touche 'xxx', spécifique à ce tampon, la valeur est la

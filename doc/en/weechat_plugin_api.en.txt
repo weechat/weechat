@@ -8427,7 +8427,7 @@ Arguments:
 ** 'text_search_input': input saved before text search
 ** 'highlight_words': list of words to highlight
 ** 'highlight_tags': list of tags to highlight
-** 'no_highlight_nicks': list of nicks to NOT highlight
+** 'hotlist_max_level_nicks': max hotlist level for some nicks
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
    name of variable to read)
 
@@ -8584,16 +8584,18 @@ Arguments:
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer
 
-| no_highlight_nicks | comma separated list of nicks |
-  comma separated list of nicks to NOT highlight in this buffer, for example:
-  "joe,mike,robert"
+| hotlist_max_level_nicks | comma separated list of "nick:level" |
+  comma separated list of nicks with max level for hotlist on this buffer
+  (level can be: -1: never in hotlist, 0: low, 1: message, 2: private,
+  3: highlight), for example: "joe:2,mike:-1,robert:-1" (joe will never produce
+  highlight on buffer, mike and robert will never change hotlist)
 
-| no_highlight_nicks_add | comma separated list of nicks |
-  comma separated list of nicks to NOT highlight in this buffer, these words are
+| hotlist_max_level_nicks_add | comma separated list of "nick:level" |
+  comma separated list of nicks with level for hotlist, these nicks are
   added to existing nicks in buffer
 
-| no_highlight_nicks_del | comma separated list of nicks |
-  comma separated list of nicks to remove from non highlighted nicks on buffer
+| hotlist_max_level_nicks_del | comma separated list of nicks |
+  comma separated list of nicks to remove from hotlist max levels
 
 | key_bind_xxx | any string |
   bind a new key 'xxx', specific to this buffer, value is command to execute

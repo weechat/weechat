@@ -406,7 +406,6 @@ gui_line_has_highlight (struct t_gui_line *line)
 {
     int rc, i;
     char *msg_no_color, *highlight_words;
-    const char *nick;
     
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -432,17 +431,6 @@ gui_line_has_highlight (struct t_gui_line *line)
         if (!gui_line_match_tags (line,
                                   line->data->buffer->highlight_tags_count,
                                   line->data->buffer->highlight_tags_array))
-            return 0;
-    }
-
-    /*
-     * if a nick is defined in tags ("nick_xxx"), then check if highlight is
-     * disabled for this nick (using hashtable buffer->no_highlight_nicks)
-     */
-    nick = gui_line_get_nick_tag (line);
-    if (nick)
-    {
-        if (hashtable_has_key (line->data->buffer->no_highlight_nicks, nick))
             return 0;
     }
     
@@ -762,7 +750,8 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line_data *new_line_data;
     struct t_gui_window *ptr_win;
     char *message_for_signal;
-    int notify_level;
+    const char *nick;
+    int notify_level, *max_notify_level;
     
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -803,11 +792,23 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->data->prefix_length = (prefix) ?
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
-    new_line->data->highlight = gui_line_has_highlight (new_line);
     
+    /* get notify level and max notify level for nick in buffer */
     notify_level = gui_line_get_notify_level (new_line);
+    nick = gui_line_get_nick_tag (new_line);
+    max_notify_level = NULL;
+    if (nick)
+        max_notify_level = hashtable_get (buffer->hotlist_max_level_nicks, nick);
+    if (max_notify_level
+        && (*max_notify_level < notify_level))
+        notify_level = *max_notify_level;
+    
     if (notify_level == GUI_HOTLIST_HIGHLIGHT)
         new_line->data->highlight = 1;
+    else if (max_notify_level && (*max_notify_level < GUI_HOTLIST_HIGHLIGHT))
+        new_line->data->highlight = 0;
+    else
+        new_line->data->highlight = gui_line_has_highlight (new_line);
     
     /* add line to lines list */
     gui_line_add_to_list (buffer->own_lines, new_line);
@@ -844,7 +845,8 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                     free (message_for_signal);
                 }
             }
-            gui_hotlist_add (buffer, notify_level, NULL, 1);
+            if (notify_level >= GUI_HOTLIST_MIN)
+                gui_hotlist_add (buffer, notify_level, NULL, 1);
         }
     }
     else

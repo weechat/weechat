@@ -84,7 +84,7 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "plugin", "name", "short_name", "title", "input", "text_search_input",
-  "highlight_words", "highlight_tags", "no_highlight_nicks",
+  "highlight_words", "highlight_tags", "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
@@ -96,8 +96,9 @@ char *gui_buffer_properties_set[] =
   "type", "notify", "title", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_display_groups", "highlight_words",
   "highlight_words_add", "highlight_words_del", "highlight_tags",
-  "no_highlight_nicks", "no_highlight_nicks_add", "no_highlight_nicks_del",
-  "input", "input_pos", "input_get_unknown_commands",
+  "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
+  "hotlist_max_level_nicks_del", "input", "input_pos",
+  "input_get_unknown_commands",
   NULL
 };
 
@@ -459,11 +460,13 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->highlight_tags = NULL;
         new_buffer->highlight_tags_count = 0;
         new_buffer->highlight_tags_array = NULL;
-        new_buffer->no_highlight_nicks = hashtable_new (8,
-                                                        WEECHAT_HASHTABLE_STRING,
-                                                        WEECHAT_HASHTABLE_STRING,
-                                                        NULL,
-                                                        NULL);
+        
+        /* hotlist */
+        new_buffer->hotlist_max_level_nicks = hashtable_new (8,
+                                                             WEECHAT_HASHTABLE_STRING,
+                                                             WEECHAT_HASHTABLE_INTEGER,
+                                                             NULL,
+                                                             NULL);
         
         /* keys */
         new_buffer->keys = NULL;
@@ -752,8 +755,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->highlight_words;
         else if (string_strcasecmp (property, "highlight_tags") == 0)
             return buffer->highlight_tags;
-        else if (string_strcasecmp (property, "no_highlight_nicks") == 0)
-            return hashtable_get_string (buffer->no_highlight_nicks, "keys");
+        else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
+            return hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values");
         else if (string_strncasecmp (property, "localvar_", 9) == 0)
         {
             ptr_value = (const char *)hashtable_get (buffer->local_variables,
@@ -1103,26 +1106,41 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_buffer_set_no_highlight_nicks: set no_highlight_nicks for a buffer
+ * gui_buffer_set_hotlist_max_level_nicks: set hotlist_max_level_nicks for a
+ *                                         buffer
  */
 
 void
-gui_buffer_set_no_highlight_nicks (struct t_gui_buffer *buffer,
-                                   const char *new_no_highlight_nicks)
+gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
+                                        const char *new_hotlist_max_level_nicks)
 {
-    char **nicks;
-    int nicks_count, i;
+    char **nicks, *pos, *error;
+    int nicks_count, value, i;
+    long number;
     
-    hashtable_remove_all (buffer->no_highlight_nicks);
+    hashtable_remove_all (buffer->hotlist_max_level_nicks);
     
-    if (new_no_highlight_nicks && new_no_highlight_nicks[0])
+    if (new_hotlist_max_level_nicks && new_hotlist_max_level_nicks[0])
     {
-        nicks = string_split (new_no_highlight_nicks, ",", 0, 0, &nicks_count);
+        nicks = string_split (new_hotlist_max_level_nicks, ",", 0, 0,
+                              &nicks_count);
         if (nicks)
         {
             for (i = 0; i < nicks_count; i++)
             {
-                hashtable_set (buffer->no_highlight_nicks, nicks[i], NULL);
+                value = -1;
+                pos = strchr (nicks[i], ':');
+                if (pos)
+                {
+                    pos[0] = '\0';
+                    pos++;
+                    error = NULL;
+                    number = strtol (pos, &error, 10);
+                    if (error && !error[0])
+                        value = (int)number;
+                }
+                hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
+                               &value);
             }
             string_free_split (nicks);
         }
@@ -1130,54 +1148,69 @@ gui_buffer_set_no_highlight_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_buffer_add_no_highlight_nicks: add nicks to no_highlight_nicks for a
- *                                    buffer
+ * gui_buffer_add_hotlist_max_level_nicks: add nicks to hotlist_max_level_nicks
+ *                                         for a buffer
  */
 
 void
-gui_buffer_add_no_highlight_nicks (struct t_gui_buffer *buffer,
-                                   const char *nicks_to_add)
+gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
+                                        const char *nicks_to_add)
 {
-    char **nicks;
-    int nicks_count, i;
+    char **nicks, *pos, *error;
+    int nicks_count, value, i;
+    long number;
     
     if (!nicks_to_add)
         return;
     
-    nicks = string_split (nicks_to_add, ",", 0, 0,
-                          &nicks_count);
+    nicks = string_split (nicks_to_add, ",", 0, 0, &nicks_count);
     if (nicks)
     {
         for (i = 0; i < nicks_count; i++)
         {
-            hashtable_set (buffer->no_highlight_nicks, nicks[i], NULL);
+            value = -1;
+            pos = strchr (nicks[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                pos++;
+                error = NULL;
+                number = strtol (pos, &error, 10);
+                if (error && !error[0])
+                    value = (int)number;
+            }
+            hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
+                           &value);
         }
         string_free_split (nicks);
     }
 }
 
 /*
- * gui_buffer_remove_no_highlight_nicks: remove nicks from no_highlight_nicks
- *                                       in a buffer
+ * gui_buffer_remove_hotlist_max_level_nicks: remove nicks from
+ *                                            hotlist_max_level_nicks in a
+ *                                            buffer
  */
 
 void
-gui_buffer_remove_no_highlight_nicks (struct t_gui_buffer *buffer,
-                                      const char *nicks_to_remove)
+gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
+                                           const char *nicks_to_remove)
 {
-    char **nicks;
+    char **nicks, *pos;
     int nicks_count, i;
     
     if (!nicks_to_remove)
         return;
     
-    nicks = string_split (nicks_to_remove, ",", 0, 0,
-                          &nicks_count);
+    nicks = string_split (nicks_to_remove, ",", 0, 0, &nicks_count);
     if (nicks)
     {
         for (i = 0; i < nicks_count; i++)
         {
-            hashtable_remove (buffer->no_highlight_nicks, nicks[i]);
+            pos = strchr (nicks[i], ':');
+            if (pos)
+                pos[0] = '\0';
+            hashtable_remove (buffer->hotlist_max_level_nicks, nicks[i]);
         }
         string_free_split (nicks);
     }
@@ -1356,17 +1389,17 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     {
         gui_buffer_set_highlight_tags (buffer, value);
     }
-    else if (string_strcasecmp (property, "no_highlight_nicks") == 0)
+    else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
     {
-        gui_buffer_set_no_highlight_nicks (buffer, value);
+        gui_buffer_set_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "no_highlight_nicks_add") == 0)
+    else if (string_strcasecmp (property, "hotlist_max_level_nicks_add") == 0)
     {
-        gui_buffer_add_no_highlight_nicks (buffer, value);
+        gui_buffer_add_hotlist_max_level_nicks (buffer, value);
     }
-    else if (string_strcasecmp (property, "no_highlight_nicks_del") == 0)
+    else if (string_strcasecmp (property, "hotlist_max_level_nicks_del") == 0)
     {
-        gui_buffer_remove_no_highlight_nicks (buffer, value);
+        gui_buffer_remove_hotlist_max_level_nicks (buffer, value);
     }
     else if (string_strncasecmp (property, "key_bind_", 9) == 0)
     {
@@ -1944,8 +1977,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_split (buffer->highlight_tags_array);
-    if (buffer->no_highlight_nicks)
-        hashtable_free (buffer->no_highlight_nicks);
+    if (buffer->hotlist_max_level_nicks)
+        hashtable_free (buffer->hotlist_max_level_nicks);
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
                            &buffer->keys_count);
     gui_buffer_local_var_remove_all (buffer);
@@ -2848,7 +2881,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_tags", buffer->highlight_tags))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "no_highlight_nicks", hashtable_get_string (buffer->no_highlight_nicks, "keys")))
+    if (!infolist_new_var_string (ptr_item, "hotlist_max_level_nicks", hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values")))
         return 0;
     i = 0;
     for (ptr_key = buffer->keys; ptr_key; ptr_key = ptr_key->next_key)
@@ -3030,10 +3063,10 @@ gui_buffer_print_log ()
         log_printf ("  prev_buffer. . . . . . : 0x%lx", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%lx", ptr_buffer->next_buffer);
         
-        if (ptr_buffer->no_highlight_nicks)
+        if (ptr_buffer->hotlist_max_level_nicks)
         {
-            hashtable_print_log (ptr_buffer->no_highlight_nicks,
-                                 "no_highlight_nicks");
+            hashtable_print_log (ptr_buffer->hotlist_max_level_nicks,
+                                 "hotlist_max_level_nicks");
         }
         
         if (ptr_buffer->keys)

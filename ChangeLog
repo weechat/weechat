@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-11-25
+v0.3.4-dev, 2010-11-29
 
 
 Version 0.3.4 (under dev!)
@@ -20,8 +20,8 @@ Version 0.3.4 (under dev!)
 * core: fix default value of bar items options (bug #31422)
 * core: fix bug with buffer name in "/bar scroll" command
 * core: add new option weechat.look.hotlist_unique_numbers (task #10691)
-* core: add property "no_highlight_nicks" in buffers to disable highlight
-  for some nicks in buffer
+* core: add property "hotlist_max_level_nicks" in buffers to set max hotlist
+  level for some nicks in buffer
 * core: add new options weechat.look.input_share and
   weechat.look.input_share_overwrite (task #9228)
 * core: add new option weechat.look.prefix_align_min (task #10650)

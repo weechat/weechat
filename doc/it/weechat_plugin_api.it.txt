@@ -8518,7 +8518,8 @@ Argomenti:
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
 ** 'highlight_tags': elenco di tag da evidenziare
-** 'no_highlight_nicks': lista di nick da NON evidenziare
+// TRANSLATION MISSING
+** 'hotlist_max_level_nicks': max hotlist level for some nicks
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
 
@@ -8684,16 +8685,21 @@ Argomenti:
 | highlight_tags | elenco separato da virgole di tag |
   elenco separato da virgole di tag da evidenziare in questo buffer
 
-| no_highlight_nicks | elenco separato da virgole di nick |
-  elenco separato da virgole di nick da NON evidenziare in questo buffer, ad esempio:
-  "joe,mike,robert"
+// TRANSLATION MISSING
+| hotlist_max_level_nicks | comma separated list of "nick:level" |
+  comma separated list of nicks with max level for hotlist on this buffer
+  (level can be: -1: never in hotlist, 0: low, 1: message, 2: private,
+  3: highlight), for example: "joe:2,mike:-1,robert:-1" (joe will never produce
+  highlight on buffer, mike and robert will never change hotlist)
 
-| no_highlight_nicks_add | elenco separato da virgole di nick |
-  elenco separato da virgole di nick da NON evidenziare in questo buffer, queste
-  parole vengono aggiunte ai nick esistenti nel buffer
+// TRANSLATION MISSING
+| hotlist_max_level_nicks_add | comma separated list of "nick:level" |
+  comma separated list of nicks with level for hotlist, these nicks are
+  added to existing nicks in buffer
 
-| no_highlight_nicks_del | elenco separato da virgole di nick |
-  elenco separato da virgole di nick da rimuovere dai nick non evidenziati nel buffer
+// TRANSLATION MISSING
+| hotlist_max_level_nicks_del | comma separated list of nicks |
+  comma separated list of nicks to remove from hotlist max levels
 
 | key_bind_xxx | qualsiasi stringa |
   assegna un nuovo tasto 'xxx', specifico per questo buffer, il valore è il
