@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-25 14:41+0100\n"
+"POT-Creation-Date: 2010-11-29 10:19+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3651,17 +3651,17 @@ msgid "send notice message to user"
 msgstr "отправить уведомление пользователю"
 
 #, fuzzy
-msgid "[-server server] nickname text"
-msgstr "[сервер | ник]"
+msgid "[-server server] receiver text"
+msgstr "адресат[,адресат] текст"
 
 #, fuzzy
 msgid ""
 "  server: send to this server (internal name)\n"
-"nickname: user to send notice to\n"
+"receiver: nick or channel\n"
 "    text: text to send"
 msgstr ""
-"  ник: адресат уведомления\n"
-"текст: отправляемый текст"
+"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
+"текст: отправляаемый текст"
 
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
@@ -6863,6 +6863,19 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "[-server server] nickname text"
+#~ msgstr "[сервер | ник]"
+
+#, fuzzy
+#~ msgid ""
+#~ "  server: send to this server (internal name)\n"
+#~ "nickname: user to send notice to\n"
+#~ "    text: text to send"
+#~ msgstr ""
+#~ "  ник: адресат уведомления\n"
+#~ "текст: отправляемый текст"
 
 #, fuzzy
 #~ msgid "items of bar"

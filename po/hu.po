@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-25 14:41+0100\n"
+"POT-Creation-Date: 2010-11-29 10:19+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3634,17 +3634,17 @@ msgid "send notice message to user"
 msgstr "emlékeztető küldése egy felhasználónak"
 
 #, fuzzy
-msgid "[-server server] nickname text"
-msgstr "[szerver | név]"
+msgid "[-server server] receiver text"
+msgstr "fogadó [,fogadó] szöveg"
 
 #, fuzzy
 msgid ""
 "  server: send to this server (internal name)\n"
-"nickname: user to send notice to\n"
+"receiver: nick or channel\n"
 "    text: text to send"
 msgstr ""
-"   név: felhasználó akinek az üzenetet küldjük\n"
-"szöveg: az üzenet szövege"
+"fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
+"szöveg: küldendő üzenet"
 
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
@@ -6854,6 +6854,19 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "[-server server] nickname text"
+#~ msgstr "[szerver | név]"
+
+#, fuzzy
+#~ msgid ""
+#~ "  server: send to this server (internal name)\n"
+#~ "nickname: user to send notice to\n"
+#~ "    text: text to send"
+#~ msgstr ""
+#~ "   név: felhasználó akinek az üzenetet küldjük\n"
+#~ "szöveg: az üzenet szövege"
 
 #, fuzzy
 #~ msgid "items of bar"

@@ -354,14 +354,14 @@
    nick: nuovo nick
 ........................................
 
-&bull; *`/notice`* `[-server server] nick testo`::
+&bull; *`/notice`* `[-server server] receiver text`::
 
 ........................................
   invia messaggio di notifica all'utente
 
-  server: invia a questo server (nome interno)
-    nick: utente a cui inviare la notifica
-   testo: testo da inviare
+    server: send to this server (internal name)
+  receiver: nick or channel
+      text: text to send
 ........................................
 
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::

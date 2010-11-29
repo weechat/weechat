@@ -4854,9 +4854,9 @@ irc_command_init ()
                           &irc_command_nick, NULL);
     weechat_hook_command ("notice",
                           N_("send notice message to user"),
-                          N_("[-server server] nickname text"),
+                          N_("[-server server] receiver text"),
                           N_("  server: send to this server (internal name)\n"
-                             "nickname: user to send notice to\n"
+                             "receiver: nick or channel\n"
                              "    text: text to send"),
                           "%(nicks) %-", &irc_command_notice, NULL);
     weechat_hook_command ("notify",

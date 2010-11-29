@@ -354,13 +354,13 @@
   pseudo: nouveau pseudo
 ........................................
 
-&bull; *`/notice`* `[-server serveur] pseudo texte`::
+&bull; *`/notice`* `[-server serveur] cible texte`::
 
 ........................................
   envoyer un message notice à un utilisateur
 
   serveur: envoyer à ce serveur (nom interne)
-   pseudo: pseudo cible pour la notice
+    cible: pseudo ou canal
     texte: texte à envoyer
 ........................................
 

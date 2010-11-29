@@ -354,13 +354,13 @@
   nickname: new nickname
 ........................................
 
-&bull; *`/notice`* `[-server server] nickname text`::
+&bull; *`/notice`* `[-server server] receiver text`::
 
 ........................................
   send notice message to user
 
     server: send to this server (internal name)
-  nickname: user to send notice to
+  receiver: nick or channel
       text: text to send
 ........................................
 
