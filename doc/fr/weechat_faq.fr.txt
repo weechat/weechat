@@ -265,6 +265,22 @@ La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code d'une
 touche et de l'inclure dans la ligne de commande.
 
 
+[[jump_to_buffer_11_or_higher]]
+Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La touche est alt-j puis 2 chiffres, par exemple alt-j puis 1, 1 pour sauter
+au tampon 11.
+
+Vous pouvez définir une touche, par exemple :
+
+----------------------------------------
+/key bind meta-q /buffer *11
+----------------------------------------
+
+La liste des touches par défaut est dans le Guide utlisateur.
+
+
 [[irc]]
 IRC
 ---

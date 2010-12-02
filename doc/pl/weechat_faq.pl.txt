@@ -256,6 +256,23 @@ Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
 go w wierszu poleceń.
 
 
+// TRANSLATION MISSING
+[[jump_to_buffer_11_or_higher]]
+What is the key to jump to buffer 11 (or higher number)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The key is alt-j and then 2 digits, for example alt-j then 1, 1 to jump to
+buffer 11.
+
+You can bind a key, for example:
+
+----------------------------------------
+/key bind meta-q /buffer *11
+----------------------------------------
+
+List of default keys is in User's guide.
+
+
 [[irc]]
 IRC
 ---
