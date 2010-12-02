@@ -79,7 +79,7 @@
 
       cible: pseudo à qui envoyer le CTCP
        type: type de CTCP (exemples: "version", "ping", etc...)
-  arguments: arguments pour le CTCP
+  arguments: paramètres pour le CTCP
 ........................................
 
 &bull; *`/cycle`* `[canal[,canal]] [message_de_fin]`::

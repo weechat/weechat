@@ -4604,9 +4604,9 @@ irc_command_init ()
                           &irc_command_connect, NULL);
     weechat_hook_command ("ctcp",
                           N_("send a CTCP message (Client-To-Client Protocol)"),
-                          N_("receiver type [arguments]"),
-                          N_(" receiver: nick or channel to send CTCP to\n"
-                             "     type: CTCP type (examples: \"version\", "
+                          N_("target type [arguments]"),
+                          N_(" target: nick or channel to send CTCP to\n"
+                             "   type: CTCP type (examples: \"version\", "
                              "\"ping\", ..)\n"
                              "arguments: arguments for CTCP"),
                           "%(irc_channel)|%(nicks) "
@@ -4830,11 +4830,11 @@ irc_command_init ()
                           NULL, &irc_command_motd, NULL);
     weechat_hook_command ("msg",
                           N_("send message to a nick or channel"),
-                          N_("[-server server] receiver[,receiver] text"),
-                          N_("  server: send to this server (internal name)\n"
-                             "receiver: nick or channel (may be mask, '*' = "
+                          N_("[-server server] target[,target] text"),
+                          N_("server: send to this server (internal name)\n"
+                             "target: nick or channel (may be mask, '*' = "
                              "current channel)\n"
-                             "    text: text to send"),
+                             "  text: text to send"),
                           "-server %(irc_servers)"
                           " || %(nicks) %-",
                           &irc_command_msg, NULL);
@@ -4854,10 +4854,10 @@ irc_command_init ()
                           &irc_command_nick, NULL);
     weechat_hook_command ("notice",
                           N_("send notice message to user"),
-                          N_("[-server server] receiver text"),
-                          N_("  server: send to this server (internal name)\n"
-                             "receiver: nick or channel\n"
-                             "    text: text to send"),
+                          N_("[-server server] target text"),
+                          N_("server: send to this server (internal name)\n"
+                             "target: nick or channel\n"
+                             "  text: text to send"),
                           "%(nicks) %-", &irc_command_notice, NULL);
     weechat_hook_command ("notify",
                           N_("add a notification for presence or away status "

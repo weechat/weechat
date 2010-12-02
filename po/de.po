@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-29 10:19+0100\n"
+"POT-Creation-Date: 2010-12-02 09:59+0100\n"
 "PO-Revision-Date: 2010-11-20 00:05+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3646,12 +3646,14 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP-Nachricht verschicken"
 
-msgid "receiver type [arguments]"
+#, fuzzy
+msgid "target type [arguments]"
 msgstr "Empfänger Typ [Argumente]"
 
+#, fuzzy
 msgid ""
-" receiver: nick or channel to send CTCP to\n"
-"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+" target: nick or channel to send CTCP to\n"
+"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
 " Empfänger: User, an den die CTCP-Nachricht geschickt werden soll\n"
@@ -4011,13 +4013,15 @@ msgstr "Die \"Mitteilung des Tages\" abfragen"
 msgid "send message to a nick or channel"
 msgstr "Nachricht an Nick/Channel verschicken"
 
-msgid "[-server server] receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] target[,target] text"
 msgstr "[-server Server] receiver[,Empfänger] Text"
 
+#, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"receiver: nick or channel (may be mask, '*' = current channel)\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
 msgstr ""
 " Server: schicke an diesen Server (interner Servername)\n"
 "Empfänger: Nick oder Channel (darf eine Maske sein, '*' = aktueller "
@@ -4050,14 +4054,14 @@ msgid "send notice message to user"
 msgstr "Mitteilung (notice) an einen User verschicken"
 
 #, fuzzy
-msgid "[-server server] receiver text"
+msgid "[-server server] target text"
 msgstr "[-server Server] receiver[,Empfänger] Text"
 
 #, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"receiver: nick or channel\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"target: nick or channel\n"
+"  text: text to send"
 msgstr ""
 " Server: schicke an diesen Server (interner Servername)\n"
 "Empfänger: Nick oder Channel (darf eine Maske sein, '*' = aktueller "
@@ -7436,6 +7440,9 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "[-server server] receiver[,receiver] text"
+#~ msgstr "[-server Server] receiver[,Empfänger] Text"
 
 #~ msgid "[-server server] nickname text"
 #~ msgstr "[-server Server] Nickname Text"

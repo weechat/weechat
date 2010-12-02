@@ -72,14 +72,14 @@
     /connect mio.server.org/6697 -ssl -password=test
 ........................................
 
-&bull; *`/ctcp`* `destinatario tipo [argomenti]`::
+&bull; *`/ctcp`* `target type [arguments]`::
 
 ........................................
   invia un messaggio CTCP (Protocollo Client-A-Client)
 
-  destinatario: nick o canale a cui inviare il CTCP
-          tipo: tipo CTCP (esempi: "version", "ping", ..)
-     argomenti: argomenti per il CTCP
+   target: nick or channel to send CTCP to
+     type: CTCP type (examples: "version", "ping", ..)
+  arguments: arguments for CTCP
 ........................................
 
 &bull; *`/cycle`* `[canale[,canale]] [messaggio]`::
@@ -327,14 +327,14 @@
   destinazione: nome server
 ........................................
 
-&bull; *`/msg`* `[-server server] [destinatario[,destinatario] testo`::
+&bull; *`/msg`* `[-server server] target[,target] text`::
 
 ........................................
   invia un messaggio ad un nick o a un canale
 
-        server: invia a questo server (nome interno)
-  destinatario: nick o canale (può essere una mask, '*' = canale corrente)
-         testo: testo da inviare
+  server: send to this server (internal name)
+  target: nick or channel (may be mask, '*' = current channel)
+    text: text to send
 ........................................
 
 &bull; *`/names`* `[canale[,canale]]`::
@@ -354,14 +354,14 @@
    nick: nuovo nick
 ........................................
 
-&bull; *`/notice`* `[-server server] receiver text`::
+&bull; *`/notice`* `[-server server] target text`::
 
 ........................................
   invia messaggio di notifica all'utente
 
-    server: send to this server (internal name)
-  receiver: nick or channel
-      text: text to send
+  server: send to this server (internal name)
+  target: nick or channel
+    text: text to send
 ........................................
 
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::

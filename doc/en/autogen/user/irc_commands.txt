@@ -72,13 +72,13 @@
     /connect my.server.org/6697 -ssl -password=test
 ........................................
 
-&bull; *`/ctcp`* `receiver type [arguments]`::
+&bull; *`/ctcp`* `target type [arguments]`::
 
 ........................................
   send a CTCP message (Client-To-Client Protocol)
 
-   receiver: nick or channel to send CTCP to
-       type: CTCP type (examples: "version", "ping", ..)
+   target: nick or channel to send CTCP to
+     type: CTCP type (examples: "version", "ping", ..)
   arguments: arguments for CTCP
 ........................................
 
@@ -327,14 +327,14 @@
   target: server name
 ........................................
 
-&bull; *`/msg`* `[-server server] receiver[,receiver] text`::
+&bull; *`/msg`* `[-server server] target[,target] text`::
 
 ........................................
   send message to a nick or channel
 
-    server: send to this server (internal name)
-  receiver: nick or channel (may be mask, '*' = current channel)
-      text: text to send
+  server: send to this server (internal name)
+  target: nick or channel (may be mask, '*' = current channel)
+    text: text to send
 ........................................
 
 &bull; *`/names`* `[channel[,channel]]`::
@@ -354,14 +354,14 @@
   nickname: new nickname
 ........................................
 
-&bull; *`/notice`* `[-server server] receiver text`::
+&bull; *`/notice`* `[-server server] target text`::
 
 ........................................
   send notice message to user
 
-    server: send to this server (internal name)
-  receiver: nick or channel
-      text: text to send
+  server: send to this server (internal name)
+  target: nick or channel
+    text: text to send
 ........................................
 
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::

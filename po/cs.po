@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-11-29 10:19+0100\n"
+"POT-Creation-Date: 2010-12-02 09:59+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3496,12 +3496,14 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "poslat CTCP zprávu (Client-To-Client Protocol)"
 
-msgid "receiver type [arguments]"
+#, fuzzy
+msgid "target type [arguments]"
 msgstr "příjemce typ [argumenty]"
 
+#, fuzzy
 msgid ""
-" receiver: nick or channel to send CTCP to\n"
-"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+" target: nick or channel to send CTCP to\n"
+"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
 " příjemce: uživatel kterému se pošle CTCP\n"
@@ -3861,13 +3863,15 @@ msgstr "získat \"Zprávu dne\""
 msgid "send message to a nick or channel"
 msgstr "poslat zprávu přezdívce nebo kanálu"
 
-msgid "[-server server] receiver[,receiver] text"
+#, fuzzy
+msgid "[-server server] target[,target] text"
 msgstr "[-server server] příjemce[,příjemce] text"
 
+#, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"receiver: nick or channel (may be mask, '*' = current channel)\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
 msgstr ""
 "  server: poslat tomuto serveru (vnitřní jméno)\n"
 "příjemce: přezdívka nebo kanál (může být maska, '*' = aktuální kanál)\n"
@@ -3899,14 +3903,14 @@ msgid "send notice message to user"
 msgstr "poslat notifikační zprávu uživateli"
 
 #, fuzzy
-msgid "[-server server] receiver text"
+msgid "[-server server] target text"
 msgstr "[-server server] příjemce[,příjemce] text"
 
 #, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"receiver: nick or channel\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"target: nick or channel\n"
+"  text: text to send"
 msgstr ""
 "  server: poslat tomuto serveru (vnitřní jméno)\n"
 "příjemce: přezdívka nebo kanál (může být maska, '*' = aktuální kanál)\n"
@@ -7129,6 +7133,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "[-server server] receiver[,receiver] text"
+#~ msgstr "[-server server] příjemce[,příjemce] text"
 
 #~ msgid "[-server server] nickname text"
 #~ msgstr "[-server server] přezdívka text"
