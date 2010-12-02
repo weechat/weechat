@@ -634,14 +634,23 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
                 return WEECHAT_RC_OK;
             }
         }
-        
-        /* loop on users */
-        while (argv[pos_args])
+
+        if (argv[pos_args])
+        {
+            /* loop on users */
+            while (argv[pos_args])
+            {
+                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  "MODE %s +b %s",
+                                  pos_channel, argv[pos_args]);
+                pos_args++;
+            }
+        }
+        else
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "MODE %s +b %s",
-                              pos_channel, argv[pos_args]);
-            pos_args++;
+                              "MODE %s +b",
+                              pos_channel);
         }
     }
     else
