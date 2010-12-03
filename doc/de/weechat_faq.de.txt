@@ -196,10 +196,10 @@ Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu ve
 Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Da WeeChat sowohl die Uhrzeit als auch einen Präfix für jede Zeile darstellt und
-man optional auch noch Bars nutzen kan die das Chatfenster zusätzlich verkleinern
-kann es passieren, dass sehr lange URLs abgeschnitten und dadurch nicht mehr
-aufgerufen werden können.
+Da WeeChat sowohl die Uhrzeit als auch einen Präfix in jeder Zeile darstellt
+und ein Chatfenster durch die zusätzliche Nutzung von Bars verkleinert werden,
+ist es möglich, dass überlange URLs abgeschnitten werden und diese dadurch
+nicht mehr aufgerufen werden können.
 
 Deshalb sollte man eines der folgenden Skripten nutzen:
 
@@ -214,7 +214,7 @@ tinyurl.py::
 shortenurl.py::
     URLs werden durch einen Internet-Dienst gekürzt.
 
-Hier findet man eine Aufstellung von Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
+Hier findet man eine Auflistung von Skripten die sich mit URLs befassen: http://www.weechat.org/scripts/stable/tag/url
 
 
 [[change_locale_without_quit]]
@@ -244,7 +244,7 @@ Aus welchem Grund funktionieren manche Meta-Tasten (alt + Taste) nicht?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Wenn Du einen Terminal wie xterm oder uxterm nutzten solltest werden einige
-Meta-Tasten Standardmäßig nicht unterstützt.
+Meta-Tasten standardmäßig nicht unterstützt.
 In einem solchen Fall sollte folgende Zeile der Konfigurationsdatei '~/.Xresources'
 hinzugefügt werden:
 
@@ -271,21 +271,20 @@ Mit der voreingestellten Tastenkombination Meta-k (normal Alt-k) kann man sich d
 Code der jeweiligen Taste anzeigen lassen und in die Eingabezeile einfügen.
 
 
-// TRANSLATION MISSING
 [[jump_to_buffer_11_or_higher]]
-What is the key to jump to buffer 11 (or higher number)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Mit welcher Tastenkombination kann ich zum Buffer 11 (oder höher) wechseln?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The key is alt-j and then 2 digits, for example alt-j then 1, 1 to jump to
-buffer 11.
+Die Tastenkombination lautet alt-j gefolgt von den zwei Ziffern des Buffers.
+Zum Beispiel, "alt-j 1 1" um zum Buffer 11 zu wechseln.
 
-You can bind a key, for example:
+Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 
 ----------------------------------------
 /key bind meta-q /buffer *11
 ----------------------------------------
 
-List of default keys is in User's guide.
+Eine Auflistung der Standardtastenbelegung findet man in der Benutzeranleitung.
 
 
 [[irc]]
@@ -305,12 +304,12 @@ Zutreffende Meldungen werden, bevor sie angezeigt werden, von der IRC-Erweiterun
 (Du wirst sie niemals zu Gesicht bekommen).
 
 Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
-nicht an den Server gesendet) und beeinflußt somit jeden Buffer.
+nicht an den Server gesendet) und beeinflusst somit jeden Buffer.
 Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Tags und
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
-Die Darstellung von gefilterte Zeilen wird nur unterdrückt, die Zeilen werden nicht gelöscht.
-Du kannst diese Zeilen sichtbar machen indem Du den Filter deaktivierst (Voreinstellung zum
-aktivieren/deaktivieren der Filter: Alt-Taste + "=").
+Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt. 
+Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Filter deaktiviert
+(Voreinstellung zum aktivieren/deaktivieren der Filter: Alt-Taste + "=").
 
 
 [[filter_irc_join_part_quit]]
@@ -343,7 +342,7 @@ Wie kann ich Nachrichten filtern wenn ich einen IRC Channel betrete?
 
 Einige Tags die man zum filtern von Nachrichten nutzen kann:
 
-* 'irc_366': Namen derer die sich im Channel befinden
+* 'irc_366': Auflistung der Namen die sich im Channel befinden
 * 'irc_332,irc_333': Channel Topic/Datum
 * 'irc_329': Wann der Channel erstellt wurde
 
@@ -433,20 +432,21 @@ Es gibt noch andere Skripten, die über verschiedene Ereignisse informieren , bi
 besuche dazu die Skripten-Webseite: http://www.weechat.org/scripts/
 
 
-// TRANSLATION MISSING
 [[irc_ssl_connection]]
-I have some problems when connecting to a server using SSL, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Es treten Probleme bei einer Serververbindung mittels SSL auf. Was kann ich tun?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you see errors about gnutls handshake, you can try to use a smaller
-Diffie-Hellman key (default is 2048):
+Falls Fehlermeldungen auftreten sollten die besagen dass der gnutls Handshake
+nicht geklappt hat dann sollte ein kleinerer Diffie-Hellman-Schlüssel verwendet
+werden (Standardgröße: 2048):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----------------------------------------
 
-If you see errors about certificate, you can disable "ssl_verify" (be careful,
-connection will be less secure by doing that):
+Erscheint eine Fehlermeldung dass etwas mit dem Zertifikat nicht stimmen sollte dann
+kann eine Überprüfung deaktiviert werden mittels "ssl_verify" (die Verbindung ist in
+diesem Fall weniger sicher):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_verify off

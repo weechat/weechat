@@ -389,7 +389,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *weechat.look.highlight_regex*
-** Beschreibung: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case sensitive, example: "FlashCode|flashy"`
+** Beschreibung: `Suchmuster (regulärer Ausdrück) dass genutzt werden soll um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"), das Suchmuster unterscheidet zwischen Groß-und Kleinschreibung. Beispiel: "FlashCode|flashy"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

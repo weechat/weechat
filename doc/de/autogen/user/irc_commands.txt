@@ -77,9 +77,9 @@
 ........................................
   CTCP-Nachricht verschicken
 
-   target: nick or channel to send CTCP to
-     type: CTCP type (examples: "version", "ping", ..)
-  arguments: arguments for CTCP
+   target: User oder Channel an welchen eine CTCP-Nachricht geschickt werden soll
+     type: CTCP-Nachricht (z.B. "version", "ping", ..)
+  arguments: Argumente für CTCP
 ........................................
 
 &bull; *`/cycle`* `[Channel[,Channel]] [Abschiedsnachricht]`::
@@ -332,9 +332,9 @@
 ........................................
   Nachricht an Nick/Channel verschicken
 
-  server: send to this server (internal name)
-  target: nick or channel (may be mask, '*' = current channel)
-    text: text to send
+  server: schicke an diesen Server (interner Servername)
+  target: Nick oder Channel (darf eine Maske sein, '*' = aktueller Channel)
+    text: zu sendender Text
 ........................................
 
 &bull; *`/names`* `[Channel[,Channel]]`::
@@ -359,9 +359,9 @@
 ........................................
   Mitteilung (notice) an einen User verschicken
 
-  server: send to this server (internal name)
-  target: nick or channel
-    text: text to send
+  server: an diesen Server senden (interner Name)
+  target: Nickname oder Channel
+    text: zu sendender Text
 ........................................
 
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::
