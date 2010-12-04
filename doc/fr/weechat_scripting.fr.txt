@@ -156,7 +156,7 @@ chaque fonction de l'API : prototype, paramètres, valeurs de retour, exemples.
 Il est important de bien faire la différence entre une 'extension' et un
 'script' : une 'extension' est un fichier binaire compilé et chargé avec la
 commande `/plugin`, tandis qu'un 'script' est un fichier texte chargé par une
-extension comme 'pyhton' par la commande `/python`.
+extension comme 'python' par la commande `/python`.
 
 Quand votre script 'test.py' appelle une fonction de l'API WeeChat, le chemin
 est le suivant :
@@ -584,7 +584,7 @@ def kernel_process_cb(data, command, rc, stdout, stderr):
         weechat.prnt("", kernel_txt)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("python -c \"import urllib; " \
+weechat.hook_process("python -c \"import urllib; "
                      "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
                      10 * 1000, "kernel_process_cb", "")
 ----------------------------------------
@@ -726,8 +726,8 @@ Un message mal formé peut provoquer un plantage de WeeChat ou de sérieux
 problèmes !
 
 [[irc_parse_message]]
-Parse message
-^^^^^^^^^^^^^
+Analyser un message
+^^^^^^^^^^^^^^^^^^^
 
 _Nouveau dans la version 0.3.4._
 

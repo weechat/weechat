@@ -583,7 +583,7 @@ def kernel_process_cb(data, command, rc, stdout, stderr):
         weechat.prnt("", kernel_txt)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("python -c \"import urllib; " \
+weechat.hook_process("python -c \"import urllib; "
                      "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
                      10 * 1000, "kernel_process_cb", "")
 ----------------------------------------
