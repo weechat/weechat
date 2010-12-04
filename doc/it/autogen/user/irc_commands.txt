@@ -72,14 +72,14 @@
     /connect mio.server.org/6697 -ssl -password=test
 ........................................
 
-&bull; *`/ctcp`* `target type [arguments]`::
+&bull; *`/ctcp`* `destinazione tipo [argomenti]`::
 
 ........................................
   invia un messaggio CTCP (Protocollo Client-A-Client)
 
-   target: nick or channel to send CTCP to
-     type: CTCP type (examples: "version", "ping", ..)
-  arguments: arguments for CTCP
+  destinazione: nick o canale a cui inviare il CTCP
+          tipo: tipo CTCP (esempi: "version", "ping", ..)
+     argomenti: argomenti per il CTCP
 ........................................
 
 &bull; *`/cycle`* `[canale[,canale]] [messaggio]`::
@@ -151,22 +151,22 @@
 ........................................
   ignora nick/host dai server o dai canali
 
-       list: list all ignores
-        add: add an ignore
-        del: delete an ignore
-     number: number of ignore to delete (look at list to find it)
-       -all: delete all ignores
-  nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
-     server: internal server name where ignore is working
-    channel: channel name where ignore is working
+       list: elenca tutti gli ignore
+        add: aggiungi un ignore
+        del: elimina un ignore
+     numero: numero di ignore da eliminare (nella lista)
+       -all: elimina tutti gli ignore
+  nick/host: nick o host da ignorare: la sintassi è "re:regex" o "mask" (una mask è una stringa con alcuni "*" per sostituire uno o più caratteri)
+     server: nome interno del server dove l'ignore è attivo
+     canale: nome del canale dove l'ignore è attivo
   
-  Examples:
-    ignore nick "toto" everywhere:
-      /ignore add toto
-    ignore host "toto@domain.com" on freenode server:
-      /ignore add toto@domain.com freenode
-    ignore host "toto*@*.domain.com" on freenode/#weechat:
-      /ignore add toto*@*.domain.com freenode #weechat
+  Esempi:
+    ignora nick "tizio" su tutti gli host/canali:
+      /ignore add tizio
+    ignora l'host "tizio@dominio.com" sul server freenode:
+      /ignore add tizio@dominio.com freenode
+    ignora l'host "tizio*@*.dominio.com" su freenode/#weechat:
+      /ignore add tizio*@*.dominio.com freenode #weechat
 ........................................
 
 &bull; *`/info`* `[obiettivo]`::
@@ -327,14 +327,14 @@
   destinazione: nome server
 ........................................
 
-&bull; *`/msg`* `[-server server] target[,target] text`::
+&bull; *`/msg`* `[-server server] destinazione[,destinazione] testo`::
 
 ........................................
   invia un messaggio ad un nick o a un canale
 
-  server: send to this server (internal name)
-  target: nick or channel (may be mask, '*' = current channel)
-    text: text to send
+        server: invia a questo server (nome interno)
+  destinazione: nick o canale (può essere una mask, '*' = canale corrente)
+         testo: testo da inviare
 ........................................
 
 &bull; *`/names`* `[canale[,canale]]`::
@@ -354,36 +354,36 @@
    nick: nuovo nick
 ........................................
 
-&bull; *`/notice`* `[-server server] target text`::
+&bull; *`/notice`* `[-server server] destinazione testo`::
 
 ........................................
   invia messaggio di notifica all'utente
 
-  server: send to this server (internal name)
-  target: nick or channel
-    text: text to send
+        server: invia a questo server (nome interno)
+  destinazione: nick o canale
+         testo: testo da inviare
 ........................................
 
 &bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::
 
 ........................................
-  add a notification for presence or away status of nicks on servers
+  aggiunge una notifica per lo stato di presenza o assenza dei nick sui server
 
-     add: add a notification
-    nick: nickname
-  server: internal server name (by default current server)
-   -away: notify when away message is changed (by doing whois on nick)
-     del: delete a notification
-    -all: delete all notifications
+     add: aggiunge una notifica
+    nick: nick
+  server: nome interno del server (server corrente è il predefinito)
+   -away: notifica quando il messaggio di assenza viene cambiato (effettuando il whois sul nick)
+     del: elimina una notifica
+    -all: elimina tutte le notifiche
   
-  Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
+  Senza argomenti, questo comando visualizza le notifiche per il server corrente (oppure tutti i server se il comando viene digitato sul buffer core).
   
-  Examples:
-    notify when "toto" joins/quits current server:
-      /notify add toto
-    notify when "toto" joins/quits freenode server:
+  Esempi:
+    notifica quando "tizio" entra/esce dal server corrente:
+      /notify add tizio
+    notifica quando "tizio" entra/esce dal server freenode:
       /notify add toto freenode
-    notify when "toto" is away or back on freenode server:
+    notifica quando "tizio" è assente o presente sul server freenode:
       /notify add toto freenode -away
 ........................................
 
@@ -599,9 +599,9 @@
 ........................................
   invia agli utenti connessi ad un host con un server IRC in esecuzione un messaggio per invitarli ad entrare su IRC
 
-  utente: nome utente
+        utente: nome utente
   destinazione: nome server
-  canale: nome canale
+        canale: nome canale
 ........................................
 
 &bull; *`/time`* `[obiettivo]`::

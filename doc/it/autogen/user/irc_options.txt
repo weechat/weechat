@@ -219,12 +219,12 @@
 ** valori: auto, never, always (valore predefinito: `auto`)
 
 * *irc.look.notify_tags_ison*
-** descrizione: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highlight", "notify_message" or "notify_private"`
+** descrizione: `elenco separato da virgole di tag usati nei messaggi stampati dalle notifiche quando un nick entra o esce da un server (risultato del comando ison), ad esempio: "notify_highlight", "notify_message" o "notify_private"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"notify_message"`)
 
 * *irc.look.notify_tags_whois*
-** descrizione: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highlight", "notify_message" or "notify_private"`
+** descrizione: `elenco separato da virgole di tag usati nei messaggi stampati dalle notifiche quando un nick cambia lo stato di assenza (risultato del comando whois), ad esempio: "notify_highligh", "notify_message" o "notify_private"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"notify_message"`)
 
@@ -309,12 +309,12 @@
 ** valori: 1 .. 3600 (valore predefinito: `1`)
 
 * *irc.network.notify_check_ison*
-** descrizione: `interval between two checks for notify with IRC command "ison" (in minutes)`
+** descrizione: `intervallo tra due verifiche per la notifica con il comando IRC "ison" (in minuti)`
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: `1`)
 
 * *irc.network.notify_check_whois*
-** descrizione: `interval between two checks for notify with IRC command "whois" (in minutes)`
+** descrizione: `intervallo tra due verifiche per la notifica con il comando IRC "whois" (in minuti)`
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: `5`)
 
@@ -419,7 +419,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.notify*
-** descrizione: `notify list for server (you should not change this option but use /notify command instead)`
+** descrizione: `elenco notifiche per il server (si consiglia di non cambiare questa opzione ma di usare il comando /notify)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -464,7 +464,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * *irc.server_default.ssl_cert*
-** descrizione: `ssl certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** descrizione: `file del certificato ssl usato per identificare automaticamente il proprio nick ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

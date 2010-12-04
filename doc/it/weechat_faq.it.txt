@@ -260,21 +260,21 @@ Il tasto predefinito Meta-k (di solito Alt-k) consente di registrare il codice
 tasto ed inserirlo nella riga di comando.
 
 
-// TRANSLATION MISSING
 [[jump_to_buffer_11_or_higher]]
-What is the key to jump to buffer 11 (or higher number)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Qual è il tasto per passare al buffer 11 (o superiore)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The key is alt-j and then 2 digits, for example alt-j then 1, 1 to jump to
-buffer 11.
+Il tasto è alt-j seguito da due numeri, ad esempio alt-j e 1, 1 per passare
+al buffer 11.
 
-You can bind a key, for example:
+È possibile associare un tasto, ad esempio:
 
 ----------------------------------------
 /key bind meta-q /buffer *11
 ----------------------------------------
 
 List of default keys is in User's guide.
+L'elenco dei tasti predefiniti è nella Guida dell'utente.
 
 
 [[irc]]
@@ -327,27 +327,26 @@ A seconda della versione di WeeChat:
    (`/help filter` per aiuto)
 
 
-// TRANSLATION MISSING
 [[filter_irc_join_channel_messages]]
-How can I filter some messages displayed when I join an IRC channel?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some tags you can use to filter messages:
+Ecco alcuni tag da poter utilizzare per filtrare i messaggi:
 
-* 'irc_366': names on channel
-* 'irc_332,irc_333': channel topic/date
-* 'irc_329': channel creation date
+* 'irc_366': nomi sui canali
+* 'irc_332,irc_333': topic/data del canale
+* 'irc_329': data di creazione del canale
 
-You can find tags for other messages by looking at IRC raw server
+È possibile trovare i tag per gli altri messaggi consultando il server raw IRC
 (`/server raw`).
 
-Examples:
+Esempi:
 
-* filter names:
+* filtrare i nomi:
 ----------------------------------------
 /filter add irc_join_names * irc_366 *
 ----------------------------------------
-* filter topic (and date):
+* filtrare l'argomento (e la data):
 ----------------------------------------
 /filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
@@ -418,20 +417,19 @@ dei plugin/script:
 http://www.weechat.org/scripts
 
 
-// TRANSLATION MISSING
 [[irc_ssl_connection]]
-I have some problems when connecting to a server using SSL, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ho dei problemi nella connessione al server con SSL, cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you see errors about gnutls handshake, you can try to use a smaller
-Diffie-Hellman key (default is 2048):
+Se si verificano problemi con l'handshake gnutls, si può cercare di
+usare una chiave Diffie-Hellman più piccola (la predefinita è 2048):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----------------------------------------
 
-If you see errors about certificate, you can disable "ssl_verify" (be careful,
-connection will be less secure by doing that):
+Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify"
+(attenzione, la connessione in questo modo sarà meno sicura):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_verify off
