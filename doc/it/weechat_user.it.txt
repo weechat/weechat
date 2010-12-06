@@ -949,6 +949,8 @@ I plugin predefiniti sono:
 | fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
 | irc       | protocollo chat per IRC
 | logger    | Registra i buffer su file
+// TRANSLATION MISSING
+| relay     | Relay data via network (IRC proxy)
 | rmodifier | Cambia le stringhe del modificatore con espressioni regolari
 | perl      | API per lo scripting in Perl
 | python    | API per lo scripting in Python
@@ -1586,6 +1588,51 @@ Si avranno i seguenti file:
             |       #canale1.weechatlog
             |       #canale2.weechatlog
 ........................................
+
+// TRANSLATION MISSING
+[[relay_plugin]]
+Relay plugin
+~~~~~~~~~~~~
+
+The Relay plugin is used to relay data via network, using different protocols.
+
+Currently, only "irc" protocol is supported (IRC proxy).
+
+[[relay_options]]
+Opzioni (relay.conf)
+^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/relay_options.txt[]
+
+[[relay_commands]]
+Comandi
+^^^^^^^
+
+include::autogen/user/relay_commands.txt[]
+
+// TRANSLATION MISSING
+[[relay_irc_proxy]]
+IRC proxy
+^^^^^^^^^
+
+The Relay plugin can act as an IRC proxy: you can define one port by IRC server
+and use a password for clients.
+
+For example:
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add irc.freenode 8000
+----------------------------------------
+
+Now you can connect on port 8000 with any IRC client (WeeChat, xchat,
+irssi, ..), using server password "mypass".
+
+You can limit number of allowed clients:
+
+----------------------------------------
+/set relay.network.max_clients 1
+----------------------------------------
 
 [[rmodifier_plugin]]
 Plugin Rmodifier

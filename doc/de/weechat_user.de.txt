@@ -932,6 +932,8 @@ Standarderweiterungen:
 | fifo      | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc       | IRC Chat-Protokoll
 | logger    | erstellt Protokolldateien von Buffern
+// TRANSLATION MISSING
+| relay     | Relay data via network (IRC proxy)
 | rmodifier | wandelt Schlüsselwörter mit regulären Ausdrücken
 | perl      | Perl-Skript API
 | python    | Python-Skript API
@@ -1566,9 +1568,54 @@ In einer Baumstruktur sieht es dann wie folgt aus:
             |       #chan2.weechatlog
 ........................................
 
+// TRANSLATION MISSING
+[[relay_plugin]]
+Relay Erweiterung
+~~~~~~~~~~~~~~~~~
+
+The Relay plugin is used to relay data via network, using different protocols.
+
+Currently, only "irc" protocol is supported (IRC proxy).
+
+[[relay_options]]
+Optionen (relay.conf)
+^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/relay_options.txt[]
+
+[[relay_commands]]
+Befehle
+^^^^^^^
+
+include::autogen/user/relay_commands.txt[]
+
+// TRANSLATION MISSING
+[[relay_irc_proxy]]
+IRC proxy
+^^^^^^^^^
+
+The Relay plugin can act as an IRC proxy: you can define one port by IRC server
+and use a password for clients.
+
+For example:
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add irc.freenode 8000
+----------------------------------------
+
+Now you can connect on port 8000 with any IRC client (WeeChat, xchat,
+irssi, ..), using server password "mypass".
+
+You can limit number of allowed clients:
+
+----------------------------------------
+/set relay.network.max_clients 1
+----------------------------------------
+
 [[rmodifier_plugin]]
-Rmodifier plugin
-~~~~~~~~~~~~~~~~
+Rmodifier Erweiterung
+~~~~~~~~~~~~~~~~~~~~~
 
 Mittels der Rmodifer Erweiterung kann man Schlüsselwörter mittels regulären Ausdrücken
 wandeln. Ein typischer Anwendungsfall ist das Passwörter bei der Eingabe verborgen werden,
@@ -1577,14 +1624,14 @@ Ein einfaches Anwendungsbeispiel. Es ist möglich jedes einzelne Zeichen eines P
 durch das Zeichen "*" zu ersetzen.
 
 [[rmodifier_options]]
-Options (rmodifier.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^
+Optionen (rmodifier.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/rmodifier_options.txt[]
 
 [[rmodifier_commands]]
-Commands
-^^^^^^^^
+Befehle
+^^^^^^^
 
 include::autogen/user/rmodifier_commands.txt[]
 

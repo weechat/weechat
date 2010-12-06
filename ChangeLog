@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-12-01
+v0.3.4-dev, 2010-12-06
 
 
 Version 0.3.4 (under dev!)
@@ -70,7 +70,7 @@ Version 0.3.4 (under dev!)
 * irc: add signal "irc_input_send"
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
-* relay: beta version of IRC proxy
+* relay: beta version of IRC proxy, now relay plugin is compiled by default
 * scripts: add missing function "infolist_reset_item_cursor" in API (bug #31057)
 * python: add info "python2_bin" (path to python 2.x interpreter)
 * lua: fix crash when unloading script

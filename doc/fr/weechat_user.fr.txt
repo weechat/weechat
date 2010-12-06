@@ -955,6 +955,7 @@ Les extensions par défaut sont :
 | fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
+| relay     | Relai de données via le réseau (proxy IRC)
 | rmodifier | Modification des chaînes de "modifier" avec des expressions régulières
 | perl      | Interface (API) pour scripts Perl
 | python    | Interface (API) pour scripts Python
@@ -1595,6 +1596,51 @@ Vous obtiendrez les fichiers suivants :
             |       #chan1.weechatlog
             |       #chan2.weechatlog
 ........................................
+
+[[relay_plugin]]
+Relay plugin
+~~~~~~~~~~~~
+
+L'extension Relay est utilisée pour relayer des données via le réseau, en
+utilisant divers protocoles.
+
+Actuellement, seul le protocole "irc" est supporté (proxy IRC).
+
+[[relay_options]]
+Options (relay.conf)
+^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/relay_options.txt[]
+
+[[relay_commands]]
+Commandes
+^^^^^^^^^
+
+include::autogen/user/relay_commands.txt[]
+
+[[relay_irc_proxy]]
+IRC proxy
+^^^^^^^^^
+
+L'extension Relay peut agir comme un proxy IRC : vous pouvez définir un port
+par serveur IRC et utiliser un mot de passe pour les clients.
+
+Par exemple :
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add irc.freenode 8000
+----------------------------------------
+
+Maintenant vous pouvez vous connecter sur le port 8000 avec n'importe quel
+client IRC (WeeChat, xchat, irssi, etc...), en utilisant le mot de passe
+"mypass".
+
+Vous pouvez limiter le nombre de clients autorisés :
+
+----------------------------------------
+/set relay.network.max_clients 1
+----------------------------------------
 
 [[rmodifier_plugin]]
 Extension Rmodifier
