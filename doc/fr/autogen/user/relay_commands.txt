@@ -9,10 +9,15 @@
             add: ajoute un relai pour un protocole + nom
             del: supprime un relai pour un protocole + nom
   protocole.nom: protocole et nom à relayer
+                 actuellement, seul le protocole "irc" est supporté
                  par exemple: irc.freenode
            port: port utilisé pour le relai
             raw: ouvre le tampon avec les données brutes Relay
   
   Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
+  
+  Exemple :
+    proxy irc, pour le serveur "freenode" :
+      /relay add irc.freenode 8000
 ........................................
 

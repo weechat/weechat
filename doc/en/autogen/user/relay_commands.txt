@@ -9,10 +9,15 @@
             add: add relay for a protocol + name
             del: remove relay for a protocol + name
   protocol.name: protocol and name to relay
+                 currently, only protocol "irc" is supported
                  for example: irc.freenode
            port: port used for relay
             raw: open buffer with raw Relay data
   
   Without argument, this command opens buffer with list of relay clients.
+  
+  Example:
+    irc proxy, for server "freenode":
+      /relay add irc.freenode 8000
 ........................................
 

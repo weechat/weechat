@@ -294,11 +294,16 @@ relay_command_init ()
                              "          add: add relay for a protocol + name\n"
                              "          del: remove relay for a protocol + name\n"
                              "protocol.name: protocol and name to relay\n"
+                             "               currently, only protocol \"irc\" "
+                             "is supported\n"
                              "               for example: irc.freenode\n"
                              "         port: port used for relay\n"
                              "          raw: open buffer with raw Relay data\n\n"
                              "Without argument, this command opens buffer "
-                             "with list of relay clients."),
+                             "with list of relay clients.\n\n"
+                             "Example:\n"
+                             "  irc proxy, for server \"freenode\":\n"
+                             "    /relay add irc.freenode 8000"),
                           "list %(relay_relays)"
                           " || listfull %(relay_relays)"
                           " || listrelay"
