@@ -38,27 +38,27 @@ all-local: weechat_user.it.html \
 
 # user's guide
 weechat_user.it.html: weechat_user.it.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_user.it.html weechat_user.it.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_user.it.html weechat_user.it.txt
 
 # plugin API reference
 weechat_plugin_api.it.html: weechat_plugin_api.it.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.it.html weechat_plugin_api.it.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_plugin_api.it.html weechat_plugin_api.it.txt
 
 # scripting guide
 weechat_scripting.it.html: weechat_scripting.it.txt
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_scripting.it.html weechat_scripting.it.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_scripting.it.html weechat_scripting.it.txt
 
 # FAQ
 weechat_faq.it.html: weechat_faq.it.txt
-	$(ASCIIDOC) -a toc -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.it.html weechat_faq.it.txt
+	$(ASCIIDOC) -a toc -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_faq.it.html weechat_faq.it.txt
 
 # quickstart
 weechat_quickstart.it.html: weechat_quickstart.it.txt
-	$(ASCIIDOC) -a toc -a toc_title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.it.html weechat_quickstart.it.txt
+	$(ASCIIDOC) -a toc -a toc_title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_quickstart.it.html weechat_quickstart.it.txt
 
 # tester's guide
 weechat_tester.it.html: weechat_tester.it.txt
-	$(ASCIIDOC) -a toc -a toc_title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_tester.it.html weechat_tester.it.txt
+	$(ASCIIDOC) -a toc -a toc_title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_tester.it.html weechat_tester.it.txt
 
 # install docs
 

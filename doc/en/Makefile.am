@@ -39,27 +39,27 @@ all-local: weechat_user.en.html \
 
 # user's guide
 weechat_user.en.html: weechat_user.en.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_user.en.html weechat_user.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_user.en.html weechat_user.en.txt
 
 # plugin API reference
 weechat_plugin_api.en.html: weechat_plugin_api.en.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_plugin_api.en.html weechat_plugin_api.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_plugin_api.en.html weechat_plugin_api.en.txt
 
 # scripting guide
 weechat_scripting.en.html: weechat_scripting.en.txt
-	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_scripting.en.html weechat_scripting.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_scripting.en.html weechat_scripting.en.txt
 
 # FAQ
 weechat_faq.en.html: weechat_faq.en.txt
-	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_faq.en.html weechat_faq.en.txt
+	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_faq.en.html weechat_faq.en.txt
 
 # quickstart
 weechat_quickstart.en.html: weechat_quickstart.en.txt
-	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_quickstart.en.html weechat_quickstart.en.txt
+	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_quickstart.en.html weechat_quickstart.en.txt
 
 # tester's guide
 weechat_tester.en.html: weechat_tester.en.txt
-	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -n -o weechat_tester.en.html weechat_tester.en.txt
+	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_tester.en.html weechat_tester.en.txt
 
 # install docs
 
