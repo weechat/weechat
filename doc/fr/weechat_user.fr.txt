@@ -1598,8 +1598,8 @@ Vous obtiendrez les fichiers suivants :
 ........................................
 
 [[relay_plugin]]
-Relay plugin
-~~~~~~~~~~~~
+Extension Relay
+~~~~~~~~~~~~~~~
 
 L'extension Relay est utilisée pour relayer des données via le réseau, en
 utilisant divers protocoles.
