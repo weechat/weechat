@@ -6217,6 +6217,10 @@ Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore
 
+// TRANSLATION MISSING
+When command has ended, or if timeout is reached, WeeChat will automatically
+unhook (and kill process if it is still running).
+
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
 2 buffer: uno per stdout ed uno per stderr).

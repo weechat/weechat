@@ -6286,6 +6286,10 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
+Lorsque la commande est terminée, ou si le timeout est atteint, WeeChat
+supprimera automatiquement le "hook" (et tuera le processus s'il tourne
+toujours).
+
 [NOTE]
 La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a
 2 tampons: un pour stdout et un pour stderr).
