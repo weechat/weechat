@@ -21,7 +21,7 @@
 #define __WEECHAT_GUI_BAR_WINDOW_H 1
 
 struct t_gui_window;
-enum t_gui_bar_position position;
+enum t_gui_bar_position;
 
 struct t_gui_bar_window
 {
