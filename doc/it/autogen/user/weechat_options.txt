@@ -349,7 +349,7 @@
 ** valori: none, highlight, message, all (valore predefinito: `all`)
 
 * *weechat.look.buffer_time_format*
-** descrizione: `formato dell'ora per ogni riga visualizzata nei buffer (consultare man strftime per gli specificatori data/ora)`
+** descrizione: `time format for each line displayed in buffers (see man strftime for date/time specifiers), colors are allowed with format "${color}", for example french time: "${lightblue}%H${white}%M${lightred}%S"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
 

@@ -280,7 +280,7 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
+    gui_chat_time_length = gui_chat_get_time_length ();
     gui_chat_change_time_format ();
     if (gui_ok)
         gui_window_ask_refresh (1);
@@ -1327,7 +1327,9 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
         N_("time format for each line displayed in buffers (see man strftime "
-           "for date/time specifiers)"),
+           "for date/time specifiers), colors are allowed with format "
+           "\"${color}\", for example french time: "
+           "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_nicks_number = config_file_new_option (
         weechat_config_file, ptr_section,

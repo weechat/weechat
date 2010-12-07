@@ -349,7 +349,7 @@
 ** valeurs: none, highlight, message, all (valeur par défaut: `all`)
 
 * *weechat.look.buffer_time_format*
-** description: `format de date/heure pour chaque ligne affichée dans les tampons (voir man strftime pour le format de date/heure)`
+** description: `format de date/heure pour chaque ligne affichée dans les tampons (voir man strftime pour le format de date/heure), les couleurs sont autorisées avec le format "${couleur}", par exemple l'heure française: "${lightblue}%H${white}%M${lightred}%S"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 

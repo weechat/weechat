@@ -289,6 +289,7 @@ char *
 gui_chat_get_time_string (time_t date)
 {
     char text_time[128], text_time2[(128*3)+16], text_time_char[2];
+    char *text_with_color;
     int i, time_first_digit, time_last_digit, last_color;
     struct tm *local_time;
     
@@ -301,6 +302,17 @@ gui_chat_get_time_string (time_t date)
                   CONFIG_STRING(config_look_buffer_time_format),
                   local_time) == 0)
         return NULL;
+    
+    if (strstr (text_time, "${"))
+    {
+        text_with_color = gui_color_string_replace_colors (text_time);
+        if (text_with_color)
+        {
+            if (strcmp (text_time, text_with_color) != 0)
+                return text_with_color;
+            free (text_with_color);
+        }
+    }
     
     time_first_digit = -1;
     time_last_digit = -1;
@@ -370,6 +382,35 @@ gui_chat_get_time_string (time_t date)
     }
     
     return strdup (text_time2);
+}
+
+/*
+ * gui_chat_get_time_length: calculates time length with a time format
+ *                           (format can include color codes with format ${name})
+ */
+
+int
+gui_chat_get_time_length ()
+{
+    time_t date;
+    char *text_time;
+    int length;
+    
+    if (!CONFIG_STRING(config_look_buffer_time_format)
+        || !CONFIG_STRING(config_look_buffer_time_format)[0])
+        return 0;
+    
+    length = 0;
+    date = time (NULL);
+    text_time = gui_chat_get_time_string (date);
+    
+    if (text_time)
+    {
+        length = gui_chat_strlen_screen (text_time);
+        free (text_time);
+    }
+    
+    return length;
 }
 
 /*

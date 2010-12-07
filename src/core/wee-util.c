@@ -106,27 +106,6 @@ util_timeval_add (struct timeval *tv, long interval)
 }
 
 /*
- * util_get_time_length: calculates time length with a time format
- */
-
-int
-util_get_time_length (const char *time_format)
-{
-    time_t date;
-    struct tm *local_time;
-    char text_time[1024];
-    
-    if (!time_format || !time_format[0])
-        return 0;
-    
-    date = time (NULL);
-    local_time = localtime (&date);
-    strftime (text_time, sizeof (text_time),
-              time_format, local_time);
-    return strlen (text_time);
-}
-
-/*
  * util_get_time_string: converts date to a string, using format of option
  *                       weechat.look.time_format (can be localized)
  */

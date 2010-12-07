@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-dev, 2010-12-06
+v0.3.4-dev, 2010-12-07
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add color support in option weechat.look.buffer_time_format
 * core: call to hook_config when config option is created
 * core: add new option weechat.look.highlight_regex and function
   string_has_highlight_regex in plugin API (task #10321)

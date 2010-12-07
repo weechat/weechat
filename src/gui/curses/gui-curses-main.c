@@ -112,7 +112,7 @@ gui_main_init ()
     gui_input_clipboard = NULL;
     
     /* get time length */
-    gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
+    gui_chat_time_length = gui_chat_get_time_length ();
     
     /* init bar items */
     gui_bar_item_init ();
