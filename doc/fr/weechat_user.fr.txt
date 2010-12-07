@@ -101,7 +101,7 @@ compiler WeeChat.
 | ruby1.8-dev            | non    | extension ruby
 | liblua5.1-0-dev        | non    | extension lua
 | tcl-dev (>= 8.5)       | non    | extension tcl
-| asciidoc (>= 8.2)      | non    | construction de la documentation (fichiers HTML)
+| asciidoc (>= 8.5.0)    | non    | construction de la documentation (fichiers HTML)
 | source-highlight       | non    | coloration des sources dans la documentation HTML
 |========================================
 

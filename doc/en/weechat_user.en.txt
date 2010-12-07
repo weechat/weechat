@@ -99,7 +99,7 @@ compile WeeChat.
 | ruby1.8-dev            | no       | ruby plugin
 | liblua5.1-0-dev        | no       | lua plugin
 | tcl-dev (>= 8.5)       | no       | tcl plugin
-| asciidoc (>= 8.2)      | no       | build documentation (HTML files)
+| asciidoc (>= 8.5.0)    | no       | build documentation (HTML files)
 | source-highlight       | no       | syntax highlight for sources in HTML documentation
 |========================================
 

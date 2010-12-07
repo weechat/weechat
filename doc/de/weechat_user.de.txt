@@ -99,7 +99,7 @@ welche Pakete optional genutzt werden können.
 | ruby1.8-dev            | nein     | ruby Erweiterung
 | liblua5.1-0-dev        | nein     | lua Erweiterung
 | tcl-dev (>= 8.5)       | nein     | tcl Erweiterung
-| asciidoc (>= 8.2)      | nein     | erstellt Dokumentation (HTML Dateien)
+| asciidoc (>= 8.5.0)    | nein     | erstellt Dokumentation (HTML Dateien)
 | source-highlight       | nein     | Syntax highlight für Quelltext in HTML Dokumentation
 |========================================
 
