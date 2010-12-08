@@ -932,8 +932,7 @@ Standarderweiterungen:
 | fifo      | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc       | IRC Chat-Protokoll
 | logger    | erstellt Protokolldateien von Buffern
-// TRANSLATION MISSING
-| relay     | Relay data via network (IRC proxy)
+| relay     | Daten via Netzwerk übermitteln (IRC Proxy)
 | rmodifier | wandelt Schlüsselwörter mit regulären Ausdrücken
 | perl      | Perl-Skript API
 | python    | Python-Skript API
@@ -1568,14 +1567,14 @@ In einer Baumstruktur sieht es dann wie folgt aus:
             |       #chan2.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[relay_plugin]]
 Relay Erweiterung
 ~~~~~~~~~~~~~~~~~
 
-The Relay plugin is used to relay data via network, using different protocols.
+Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlichen Protokollen,
+über ein Netzwerk zu übermitteln.
 
-Currently, only "irc" protocol is supported (IRC proxy).
+Zur Zeit wird ausschließlich das "IRC" Protokoll unterstützt (IRC Proxy).
 
 [[relay_options]]
 Optionen (relay.conf)
@@ -1589,25 +1588,24 @@ Befehle
 
 include::autogen/user/relay_commands.txt[]
 
-// TRANSLATION MISSING
 [[relay_irc_proxy]]
 IRC proxy
 ^^^^^^^^^
 
-The Relay plugin can act as an IRC proxy: you can define one port by IRC server
-and use a password for clients.
+Die Relay-Erweiterung verhält sich wie ein IRC Proxy: Es kann ein Port als IRC Server
+definiert und ein Passwort für Clients genutzt werden.
 
-For example:
+Beispiel:
 
 ----------------------------------------
-/set relay.network.password "mypass"
+/set relay.network.password "mein Passwort"
 /relay add irc.freenode 8000
 ----------------------------------------
 
-Now you can connect on port 8000 with any IRC client (WeeChat, xchat,
-irssi, ..), using server password "mypass".
+Nun kann mittels eines IRC Clients (WeeChat, XChat, irssi, ...) am Port 8000 und dem
+Server-Passwort "mein Passwort" eine Verbindung hergestellt werden.
 
-You can limit number of allowed clients:
+Die Anzahl an erlaubten Clients kann limitiert werden:
 
 ----------------------------------------
 /set relay.network.max_clients 1
