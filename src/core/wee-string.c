@@ -766,7 +766,7 @@ string_has_highlight_regex (const char *string, const char *regex)
     regex_t reg;
     int rc;
     
-    if (!string || !regex)
+    if (!string || !regex || !regex[0])
         return 0;
     
     if (regcomp (&reg, regex, REG_EXTENDED) != 0)
