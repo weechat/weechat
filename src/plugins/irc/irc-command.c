@@ -3149,18 +3149,15 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     if (!server)
         return 0;
     
-    if ((!server->is_connected) && (!server->hook_connect)
-        && (!server->hook_fd))
+    if ((server->is_connected) || (server->hook_connect) || (server->hook_fd))
     {
-        weechat_printf (server->buffer,
-                        _("%s%s: not connected to server \"%s\"!"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        server->name);
-        return 0;
+        /* disconnect from server */
+        irc_command_quit_server (server, NULL);
+        irc_server_disconnect (server, 0, 0);
     }
-    irc_command_quit_server (server, NULL);
-    irc_server_disconnect (server, 0, 0);
+    
     server->disable_autojoin = no_join;
+    
     if (irc_server_connect (server))
     {
         server->reconnect_delay = 0;
@@ -3181,14 +3178,13 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
                        char **argv, char **argv_eol)
 {
     int i, nb_reconnect, reconnect_ok, all_servers, no_join;
-
+    
     IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
     (void) argv_eol;
     
-    nb_reconnect = 0;
     reconnect_ok = 1;
     
     all_servers = 0;
@@ -3206,9 +3202,7 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            nb_reconnect++;
-            if ((ptr_server->is_connected) || (ptr_server->hook_connect)
-                || (ptr_server->hook_fd))
+            if (ptr_server->buffer)
             {
                 if (!irc_command_reconnect_one_server (ptr_server, no_join))
                     reconnect_ok = 0;
@@ -3217,6 +3211,7 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
+        nb_reconnect = 0;
         for (i = 1; i < argc; i++)
         {
             if (argv[i][0] != '-')
@@ -3238,10 +3233,9 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
         }
+        if (nb_reconnect == 0)
+            reconnect_ok = irc_command_reconnect_one_server (ptr_server, no_join);
     }
-    
-    if (nb_reconnect == 0)
-        reconnect_ok = irc_command_reconnect_one_server (ptr_server, no_join);
     
     if (!reconnect_ok)
         return WEECHAT_RC_ERROR;

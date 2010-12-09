@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-07 19:35+0100\n"
-"PO-Revision-Date: 2010-12-07 08:39+0100\n"
+"POT-Creation-Date: 2010-12-09 19:36+0100\n"
+"PO-Revision-Date: 2010-12-09 19:32+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -7333,51 +7333,3 @@ msgstr "Hashtable (sortie)"
 
 msgid "Pointer"
 msgstr "Pointeur"
-
-#~ msgid ""
-#~ "time format for each line displayed in buffers (see man strftime for date/"
-#~ "time specifiers)"
-#~ msgstr ""
-#~ "format de date/heure pour chaque ligne affichée dans les tampons (voir "
-#~ "man strftime pour le format de date/heure)"
-
-#~ msgid "[-server server] receiver[,receiver] text"
-#~ msgstr "[-server serveur] cible[,cible] texte"
-
-#~ msgid "[-server server] nickname text"
-#~ msgstr "[-server serveur] pseudo texte"
-
-#~ msgid ""
-#~ "  server: send to this server (internal name)\n"
-#~ "nickname: user to send notice to\n"
-#~ "    text: text to send"
-#~ msgstr ""
-#~ "serveur: envoyer à ce serveur (nom interne)\n"
-#~ " pseudo: pseudo cible pour la notice\n"
-#~ "  texte: texte à envoyer"
-
-#~ msgid "items of bar"
-#~ msgstr "objets de la barre"
-
-#~ msgid "time format for each line displayed in buffers"
-#~ msgstr "format de date/heure pour chaque ligne affichée dans les tampons"
-
-#~ msgid "time format for \"time\" bar item"
-#~ msgstr "format de date/heure pour l'objet de barre \"time\""
-
-#~ msgid "file containing the certificate authorities"
-#~ msgstr "fichier contenant les autorités de certification"
-
-#~ msgid "ssl certificate file used to automatically identify your nick"
-#~ msgstr ""
-#~ "fichier de certificat ssl utilisé pour identifier automatiquement votre "
-#~ "pseudo"
-
-#~ msgid "path for writing incoming files"
-#~ msgstr "chemin où écrire les fichiers reçus"
-
-#~ msgid ""
-#~ "path for reading files when sending (when no path is specified by user)"
-#~ msgstr ""
-#~ "chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié "
-#~ "par l'utilisateur)"
