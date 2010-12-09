@@ -50,26 +50,28 @@
       nick: utente o host da bannare
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | nome_server [nome_server ...] [-nojoin] | nome_host[/porta] [-opzione[=valore]] [-nooption]`::
+&bull; *`/connect`* `[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] | -all | -open] [-nojoin] [-switch]`::
 
 ........................................
   connette ad uno o più server IRC
 
-         -all: connette a tutti i server definiti nella configurazione
-       -open: connette a tutti i server aperti ai quali non si è attualmente connessi
-  nome_server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)
-      -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è attivo sul server)
-    nome_host: nome host (oppure IP) del server
-        porta: porta per il server (6667 è la predefinita)
-      opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)
-     nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)
+  servername: internal server name to connect (server must have been created by /server add)
+    hostname: hostname (or IP) of a server (this will create a TEMPORARY server)
+        port: port for server (6667 by default)
+      option: set option for server (for boolean option, value can be omitted)
+    nooption: set boolean option to 'off' (for example: -nossl)
+        -all: connect to all servers defined in configuration
+       -open: connect to all opened servers that are not currently connected
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
   
-  Esempi:
+  Examples:
     /connect freenode
     /connect irc.oftc.net/6667
     /connect irc6.oftc.net/6667 -ipv6
     /connect irc6.oftc.net/6697 -ipv6 -ssl
-    /connect mio.server.org/6697 -ssl -password=test
+    /connect my.server.org/6697 -ssl -password=test
+    /connect -switch
 ........................................
 
 &bull; *`/ctcp`* `destinazione tipo [argomenti]`::
@@ -447,14 +449,15 @@
     dati: dati raw da inviare
 ........................................
 
-&bull; *`/reconnect`* `[-all [-nojoin] | nome_server [nome_server ...] [-nojoin]]`::
+&bull; *`/reconnect`* `[servername [servername ...] | -all] [-nojoin] [-switch]`::
 
 ........................................
   riconnette a uno (o più) server
 
-         -all: riconnetti a tutti i server
-  nome_server: nome del server a cui riconnettersi
-       nojoin: non entrare in nessun canale (anche se l'ingresso automatico è abilitato sul server)
+  servername: server name to reconnect
+        -all: reconnect to all servers
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
 ........................................
 
 &bull; *`/rehash`* `[opzione]`::

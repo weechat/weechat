@@ -50,26 +50,28 @@
   Nickname: zu sperrender User oder Host
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
+&bull; *`/connect`* `[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] | -all | -open] [-nojoin] [-switch]`::
 
 ........................................
   Mit IRC-Server(n) verbinden
 
-        -all: Verbindet mit allen Servern
-       -open: stellt eine Verbindung zu allen geöffneten Servern her, zu denen es aktuell keine Verbindung gibt
-  servername: intern genutzter Servername, mit dem verbunden werden soll (Der Server muss zuerst mittels "/server add" angelegt werden)
-     -nojoin: betrete (/join) keinen Channel (auch wenn die Funktion "autojoin" aktiviert sein sollte)
-    hostname: Hostname, oder IP, eines Servers
-        port: Port den der Server nutzen soll (Standardport: 6667)
-      option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
-    nooption: stellt die Boolean Option auf "off" (Beispiel: -nossl)
+  servername: internal server name to connect (server must have been created by /server add)
+    hostname: hostname (or IP) of a server (this will create a TEMPORARY server)
+        port: port for server (6667 by default)
+      option: set option for server (for boolean option, value can be omitted)
+    nooption: set boolean option to 'off' (for example: -nossl)
+        -all: connect to all servers defined in configuration
+       -open: connect to all opened servers that are not currently connected
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
   
-  Beispiele:
+  Examples:
     /connect freenode
     /connect irc.oftc.net/6667
     /connect irc6.oftc.net/6667 -ipv6
     /connect irc6.oftc.net/6697 -ipv6 -ssl
     /connect my.server.org/6697 -ssl -password=test
+    /connect -switch
 ........................................
 
 &bull; *`/ctcp`* `target type [arguments]`::
@@ -447,14 +449,15 @@
   data: unbearbeitete (RAW) Daten die gesendet werden sollen
 ........................................
 
-&bull; *`/reconnect`* `[-all [-nojoin] | Servername [Servername ...] [-nojoin]]`::
+&bull; *`/reconnect`* `[servername [servername ...] | -all] [-nojoin] [-switch]`::
 
 ........................................
   Mit einem oder mehreren Server(n) erneut verbinden
 
-        -all: mit allen Servern neu verbinden
-  Servername: Servername mit welchem verbunden werden soll
-     -nojoin: Channels werden nicht betreten (selbst wenn autojoin für diesen Server aktiv ist)
+  servername: server name to reconnect
+        -all: reconnect to all servers
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
 ........................................
 
 &bull; *`/rehash`* `[Option]`::

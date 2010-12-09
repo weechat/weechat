@@ -50,19 +50,20 @@
   nickname: user or host to ban
 ........................................
 
-&bull; *`/connect`* `[-all [-nojoin] | -open [-nojoin] | servername [servername ...] [-nojoin] | hostname[/port] [-option[=value]] [-nooption]]`::
+&bull; *`/connect`* `[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] | -all | -open] [-nojoin] [-switch]`::
 
 ........................................
   connect to IRC server(s)
 
-        -all: connect to all servers defined in configuration
-       -open: connect to all opened servers that are not currently connected
   servername: internal server name to connect (server must have been created by /server add)
-     -nojoin: do not join any channel (even if autojoin is enabled on server)
-    hostname: hostname (or IP) of a server
+    hostname: hostname (or IP) of a server (this will create a TEMPORARY server)
         port: port for server (6667 by default)
       option: set option for server (for boolean option, value can be omitted)
     nooption: set boolean option to 'off' (for example: -nossl)
+        -all: connect to all servers defined in configuration
+       -open: connect to all opened servers that are not currently connected
+     -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
   
   Examples:
     /connect freenode
@@ -70,6 +71,7 @@
     /connect irc6.oftc.net/6667 -ipv6
     /connect irc6.oftc.net/6697 -ipv6 -ssl
     /connect my.server.org/6697 -ssl -password=test
+    /connect -switch
 ........................................
 
 &bull; *`/ctcp`* `target type [arguments]`::
@@ -447,14 +449,15 @@
     data: raw data to send
 ........................................
 
-&bull; *`/reconnect`* `[-all [-nojoin] | servername [servername ...] [-nojoin]]`::
+&bull; *`/reconnect`* `[servername [servername ...] | -all] [-nojoin] [-switch]`::
 
 ........................................
   reconnect to server(s)
 
-        -all: reconnect to all servers
   servername: server name to reconnect
+        -all: reconnect to all servers
      -nojoin: do not join any channel (even if autojoin is enabled on server)
+     -switch: switch to next server address
 ........................................
 
 &bull; *`/rehash`* `[option]`::
