@@ -454,102 +454,102 @@ Tasti per la riga di comando
 | Tasti | Descrizione e comando
 
 | Freccia sinistra +
-  Ctrl + `b` |
+  Ctrl + "b" |
   Passa al carattere precedente nella riga di comando +
   `/input move_previous_char`
 
 | Freccia destra +
-  Ctrl + `f` |
+  Ctrl + "f" |
   Passa al carattere successivo nella riga di comando +
   `/input move_next_char`
 
 | Ctrl + freccia sinistra +
-  Alt + `b` |
+  Alt + "b" |
   Passa alla parola precedente nella riga di comando +
   `/input move_previous_word`
 
 | Ctrl + freccia destra +
-  Alt + `f` |
+  Alt + "f" |
   Passa alla parola successiva nella riga di comando +
   `/input move_next_word`
 
 | Home +
-  Ctrl + `a` |
+  Ctrl + "a" |
   Si sposta all'inizio della riga di comando +
   `/input move_beginning_of_line`
 
 | Fine +
-  Ctrl + `e` |
+  Ctrl + "e" |
   Si sposta alla fine della riga di comando +
   `/input move_end_of_line`
 
-| Ctrl + `c` poi `b` |
+| Ctrl + "c" poi "b" |
   Inserisce il codice per il testo in grassetto +
   `/input insert \x02`
 
-| Ctrl + `c` poi `c` |
+| Ctrl + "c" poi "c" |
   Inserisce il codice per il testo colorato +
   `/input insert \x03`
 
-| Ctrl + `c` poi `i` |
+| Ctrl + "c" poi "i" |
   Inserisce il codice per il testo in corsivo +
   `/input insert \x1D`
 
-| Ctrl + `c` poi `o` |
+| Ctrl + "c" poi "o" |
   Inserisce il codice per il reset dei colori +
   `/input insert \x0F`
 
-| Ctrl + `c` then `r` |
+| Ctrl + "c" then "r" |
   Inserisce il codice per l'inversione dei colori +
   `/input insert \x12`
 
-| Ctrl + `c` poi `u` |
+| Ctrl + "c" poi "u" |
   Inserisce il codice per il testo sottolineato +
   `/input insert \x15`
 
 | Canc +
-  Ctrl + `d` |
+  Ctrl + "d" |
   Elimina il carattere successivo nella riga di comando +
   `/input delete_next_char`
 
 | Backspace +
-  Ctrl + `h` |
+  Ctrl + "h" |
   Elimina il carattere precedente nella riga di comando +
   `/input delete_previous_char`
 
-| Ctrl + `k` |
+| Ctrl + "k" |
   Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata
   viene copiata negli appunti) +
   `/input delete_end_of_line`
 
-| Ctrl + `r` |
+| Ctrl + "r" |
   Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto),
   ricorrenze successive/precedenti possono essere trovate con le frecce su/giù +
   `/input search_text`
 
-| Ctrl + `t` |
+| Ctrl + "t" |
   Inverti caratteri +
   `/input transpose_chars`
 
-| Ctrl + `u` |
+| Ctrl + "u" |
   Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata
   viene copiata negli appunti) +
   `/input delete_beginning_of_line`
 
-| Ctrl + `w` |
+| Ctrl + "w" |
   Elimina la parola precedente nella riga di comando (la stringa eliminata viene
   copiata negli appunti) +
   `/input delete_previous_word`
 
-| Ctrl + `y` |
+| Ctrl + "y" |
   Incolla il contenuto degli appunti +
   `/input clipboard_paste`
 
-| Ctrl + `_` |
+| Ctrl + "_" |
   Annulla l'ultima azione sulla riga di comando +
   `/input undo`
 
-| Alt + `_` |
+| Alt + "_" |
   Ripete l'ultima azione sulla riga di comando +
   `/input redo`
 
@@ -566,8 +566,8 @@ Tasti per la riga di comando
   Inserisce carattere alla posizione del cursore nella riga di comando
 
 | Invio +
-  Ctrl + `j` +
-  Ctrl + `m` |
+  Ctrl + "j" +
+  Ctrl + "m" |
   Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) +
   `/input return`
 
@@ -589,17 +589,17 @@ Tasti per la riga di comando
   per tutti i buffer) +
   `/input history_global_next`
 
-| Alt + `d` |
+| Alt + "d" |
   Elimina la parola successiva nella riga di comando (la stringa eliminata viene
   copiata negli appunti) +
   `/input delete_next_word`
 
-| Alt + `k` |
+| Alt + "k" |
   Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto
   esiste) nella riga di comando +
   `/input grab_key_command`
 
-| Alt + `r` |
+| Alt + "r" |
   Elimina l'intera riga di comando +
   `/input delete_line`
 |========================================
@@ -612,15 +612,15 @@ Tasti per buffer / finestre
 |========================================
 | Tasti | Descrizione e comando
 
-| Ctrl + `l` |
+| Ctrl + "l" (L) |
   Ridisegna l'intera finestra +
   `/window refresh`
 
-| Ctrl + `s` poi Ctrl + `u` |
+| Ctrl + "s" poi Ctrl + "u" |
   Imposta l'evidenziatore dei messaggi non letti su tutti i buffer +
   `/input set_unread`
 
-| Ctrl + `x` |
+| Ctrl + "x" |
   Passa al buffer attivo se i buffer sono collegati con lo stesso numero +
   `/input switch_active_buffer`
 
@@ -650,14 +650,14 @@ Tasti per buffer / finestre
 
 | Alt + freccia sinistra +
   Alt + freccia su +
-  Ctrl + `p` +
+  Ctrl + "p" +
   F5 |
   Passa al buffer precedente +
   `/buffer -1`
 
 | Alt + freccia destra +
   Alt + freccia giù +
-  Ctrl + `n` +
+  Ctrl + "n" +
   F6 |
   Passa al buffer successivo +
   `/buffer +1`
@@ -694,20 +694,20 @@ Tasti per buffer / finestre
   Sposta alla fine della lista nick +
   `/bar scroll nicklist * ye`
 
-| Alt + `a` |
+| Alt + "a" |
   Passa al buffer successivo con attività (con priorità: evento, messaggio,
   altro) +
   `/input jump_smart`
 
-| Alt + `j` poi Alt + `l` |
+| Alt + "j" poi Alt + "l" (L) |
   Passa all'ultimo buffer +
   `/input jump_last_buffer`
 
-| Alt + `j` poi Alt + `r` |
+| Alt + "j" poi Alt + "r" |
   Passa al buffer raw IRC +
   `/server raw`
 
-| Alt + `j` poi Alt + `s` |
+| Alt + "j" poi Alt + "s" |
   Passa al buffer server IRC +
   `/server jump`
 
@@ -715,39 +715,39 @@ Tasti per buffer / finestre
   Passa al buffer numero (0 = 10) +
   `/buffer *N`
 
-| Alt + `j` poi numero (01-99) |
+| Alt + "j" poi numero (01-99) |
   Passa al buffer numero +
   `/buffer NN`
 
-| Alt + `n` |
+| Alt + "n" |
   Scorre fino all'evento successivo +
   `/window scroll_next_highlight`
 
-| Alt + `p` |
+| Alt + "p" |
   Scorre fino all'evento precedente +
   `/window scroll_previous_highlight`
 
-| Alt + `u` |
+| Alt + "u" |
   Scorre fino alla prima riga non letta nel buffer +
   `/input scroll_unread`
 
-| Alt + `w` poi Alt + freccia |
+| Alt + "w" poi Alt + freccia |
   Passa alla finestra con direzione +
   `/window up` (in alto) +
   `/window down` (in basso) +
   `/window left` (a sinistra) +
   `/window right` (a destra)
 
-| Alt + `z` |
+| Alt + "z" |
   Ingrandimento sulla finestra attiva (Alt + Z di nuovo: ripristina lo stato iniziale
   della finestra, prima dell'ingrandimento) +
   `/window zoom`
 
-| Alt + `<` |
+| Alt + "<" |
   Passa al buffer precedente nella lista dei buffer visitati +
   `/input jump_previously_visited_buffer`
 
-| Alt + `>` |
+| Alt + ">" |
   Passa al buffer successivo nella lista dei buffer visitati +
   `/input jump_next_visited_buffer`
 |========================================
@@ -760,11 +760,11 @@ Altri tasti
 |========================================
 | Tasti | Descrizione e comando
 
-| Alt + `h` |
+| Alt + "h" |
   Pulisce hotlist (notifica di attività su altri buffer) +
   `/input hotlist_clear` +
 
-| Alt + `=` |
+| Alt + "=" |
   Attiva/disattiva filtri +
   `/filter toggle` +
 |========================================
