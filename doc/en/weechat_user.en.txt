@@ -1529,8 +1529,50 @@ variables to build filename. To see local variables for current buffer:
 /buffer localvar
 ----------------------------------------
 
-For example if you want one directory by IRC server and one file by channel
-inside:
+For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
+option name, in this order:
+
+----------------------------------------
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----------------------------------------
+
+That means you can have masks specific for some IRC servers
+("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+
+[[logger_files_by_date]]
+Log files by date
++++++++++++++++++
+
+To have log files by date, you can use date/time specifiers in mask (see
+`man strftime` for formats), for example:
+
+----------------------------------------
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----------------------------------------
+
+You'll have following files:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+........................................
+
+[[logger_irc_files_by_server_channel]]
+IRC log files by server and channel
++++++++++++++++++++++++++++++++++++
+
+If you want one directory by IRC server and one file by channel inside:
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"

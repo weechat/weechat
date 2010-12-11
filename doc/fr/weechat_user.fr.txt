@@ -1574,8 +1574,51 @@ Pour voir les variables du tampon courant :
 /buffer localvar
 ----------------------------------------
 
-Par exemple, si vous voulez un répertoire par serveur IRC et un fichier
-par canal dedans :
+Par exemple, sur le tampon "irc.freenode.#weechat", WeeChat cherchera un masque
+avec le nom de l'option, dans cet ordre :
+
+----------------------------------------
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----------------------------------------
+
+Cela signifie que vous pouvez avoir un masque spécifique pour certaines
+serveurs IRC ("logger.mask.irc.freenode") ou pour une extension
+("logger.mask.irc").
+
+[[logger_files_by_date]]
+Fichiers de log par date
+++++++++++++++++++++++++
+
+Pour avoir des fichiers de log par date, vous pouvez utiliser des marqueurs
+dans le masque (voir `man strftime` pour le format), par exemple :
+
+----------------------------------------
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----------------------------------------
+
+Vous obtiendrez les fichiers suivants :
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+........................................
+
+[[logger_irc_files_by_server_channel]]
+Fichiers de log IRC par serveur et canal
+++++++++++++++++++++++++++++++++++++++++
+
+Si vous voulez un répertoire par serveur IRC et un fichier par canal dedans :
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"

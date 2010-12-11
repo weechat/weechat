@@ -1566,14 +1566,59 @@ variabili locali per il buffer corrente:
 /buffer localvar
 ----------------------------------------
 
-Per esempio, se si vuole una cartella per server IRC e un file per canale al
-suo interno:
+// TRANSLATION MISSING
+For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
+option name, in this order:
+
+----------------------------------------
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----------------------------------------
+
+That means you can have masks specific for some IRC servers
+("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+
+// TRANSLATION MISSING
+[[logger_files_by_date]]
+Log files by date
++++++++++++++++++
+
+To have log files by date, you can use date/time specifiers in mask (see
+`man strftime` for formats), for example:
+
+----------------------------------------
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----------------------------------------
+
+You'll have following files:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+........................................
+
+// TRANSLATION MISSING
+[[logger_irc_files_by_server_channel]]
+IRC log files by server and channel
++++++++++++++++++++++++++++++++++++
+
+If you want one directory by IRC server and one file by channel inside:
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
 ----------------------------------------
 
-Si avranno i seguenti file:
+You'll have following files:
 
 ........................................
 ~/.weechat/
@@ -1582,11 +1627,11 @@ Si avranno i seguenti file:
             |--- freenode/
             |       freenode.weechatlog
             |       #weechat.weechatlog
-            |       #miocanale.weechatlog
+            |       #mychan.weechatlog
             |--- oftc/
             |       oftc.weechatlog
-            |       #canale1.weechatlog
-            |       #canale2.weechatlog
+            |       #chan1.weechatlog
+            |       #chan2.weechatlog
 ........................................
 
 // TRANSLATION MISSING

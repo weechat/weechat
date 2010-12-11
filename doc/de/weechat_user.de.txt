@@ -1544,14 +1544,59 @@ mit lokalen Buffervariablen zu füllen. Um zu sehen welche lokalen Variabel es g
 /buffer localvar
 ----------------------------------------
 
-Möchten Sie zum Beispiel ein Verzeichnis für jeden IRC Server in dem eine Datei
-für jeden Channel erstellt wird nutzen Sie:
+// TRANSLATION MISSING
+For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
+option name, in this order:
+
+----------------------------------------
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----------------------------------------
+
+That means you can have masks specific for some IRC servers
+("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+
+// TRANSLATION MISSING
+[[logger_files_by_date]]
+Log files by date
++++++++++++++++++
+
+To have log files by date, you can use date/time specifiers in mask (see
+`man strftime` for formats), for example:
+
+----------------------------------------
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----------------------------------------
+
+You'll have following files:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+........................................
+
+// TRANSLATION MISSING
+[[logger_irc_files_by_server_channel]]
+IRC log files by server and channel
++++++++++++++++++++++++++++++++++++
+
+If you want one directory by IRC server and one file by channel inside:
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
 ----------------------------------------
 
-In einer Baumstruktur sieht es dann wie folgt aus:
+You'll have following files:
 
 ........................................
 ~/.weechat/
