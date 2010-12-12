@@ -949,8 +949,7 @@ I plugin predefiniti sono:
 | fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
 | irc       | protocollo chat per IRC
 | logger    | Registra i buffer su file
-// TRANSLATION MISSING
-| relay     | Relay data via network (IRC proxy)
+| relay     | Relay dei dati via rete (proxy IRC)
 | rmodifier | Cambia le stringhe del modificatore con espressioni regolari
 | perl      | API per lo scripting in Perl
 | python    | API per lo scripting in Python
@@ -1566,9 +1565,8 @@ variabili locali per il buffer corrente:
 /buffer localvar
 ----------------------------------------
 
-// TRANSLATION MISSING
-For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
-option name, in this order:
+Ad esempio, sul buffer "irc.freenode.#weechat", WeeChat cercherà un mask con il
+nome dell'opzione, in quest'ordine:
 
 ----------------------------------------
 logger.mask.irc.freenode.#weechat
@@ -1577,22 +1575,21 @@ logger.mask.irc
 logger.file.mask
 ----------------------------------------
 
-That means you can have masks specific for some IRC servers
-("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+Ciò vuol dire che si hanno dei mask specifici per alcuni server
+IRC ("logger.mask.irc.freenode") o per un plugin ("logger.mask.irc").
 
-// TRANSLATION MISSING
 [[logger_files_by_date]]
-Log files by date
-+++++++++++++++++
+File di log per data
+++++++++++++++++++++
 
-To have log files by date, you can use date/time specifiers in mask (see
-`man strftime` for formats), for example:
+Per avere file di log per data, è possibile usare specificatori data/ora
+nei mask (consultare `man stfrtime` per i formati), ad esempio:
 
 ----------------------------------------
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
 ----------------------------------------
 
-You'll have following files:
+Si avranno i seguenti file:
 
 ........................................
 ~/.weechat/
@@ -1607,18 +1604,18 @@ You'll have following files:
             |       irc.freenode.#weechat.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[logger_irc_files_by_server_channel]]
-IRC log files by server and channel
+File di log IRC per server e canale
 +++++++++++++++++++++++++++++++++++
 
-If you want one directory by IRC server and one file by channel inside:
+Se si desidera avere una cartella per il server IRC ed una per il canale
+al suo interno:
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
 ----------------------------------------
 
-You'll have following files:
+Si avranno i seguenti file:
 
 ........................................
 ~/.weechat/
@@ -1634,14 +1631,14 @@ You'll have following files:
             |       #chan2.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[relay_plugin]]
-Relay plugin
+Plugin Relay
 ~~~~~~~~~~~~
 
-The Relay plugin is used to relay data via network, using different protocols.
+Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
+protocolli differenti.
 
-Currently, only "irc" protocol is supported (IRC proxy).
+Al momento, è supportato solo il protocollo "irc" (proxy IRC).
 
 [[relay_options]]
 Opzioni (relay.conf)
@@ -1655,25 +1652,24 @@ Comandi
 
 include::autogen/user/relay_commands.txt[]
 
-// TRANSLATION MISSING
 [[relay_irc_proxy]]
-IRC proxy
+Proxy IRC
 ^^^^^^^^^
 
-The Relay plugin can act as an IRC proxy: you can define one port by IRC server
-and use a password for clients.
+Il plugin Relay può funzionare come un proxy IRC: è possibile definire una porta
+per il server IRC ed utilizzare una password per i client.
 
-For example:
+Ad esempio:
 
 ----------------------------------------
-/set relay.network.password "mypass"
+/set relay.network.password "miapass"
 /relay add irc.freenode 8000
 ----------------------------------------
 
-Now you can connect on port 8000 with any IRC client (WeeChat, xchat,
-irssi, ..), using server password "mypass".
+Ora è possibile connettersi sulla porta 8000 con qualsiasi client IRC
+(WeeChat, xchat, irssi, ..) utilizzando la password del server "miapass".
 
-You can limit number of allowed clients:
+È possibile inoltre limitare il numero di client consentiti:
 
 ----------------------------------------
 /set relay.network.max_clients 1

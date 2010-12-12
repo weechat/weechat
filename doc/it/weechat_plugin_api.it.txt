@@ -6217,9 +6217,8 @@ Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore
 
-// TRANSLATION MISSING
-When command has ended, or if timeout is reached, WeeChat will automatically
-unhook (and kill process if it is still running).
+Quando il comando ha terminato, o se viene raggiunto il timeout, WeeChat
+effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione).
 
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
