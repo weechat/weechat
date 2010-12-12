@@ -1544,9 +1544,8 @@ mit lokalen Buffervariablen zu füllen. Um zu sehen welche lokalen Variabel es g
 /buffer localvar
 ----------------------------------------
 
-// TRANSLATION MISSING
-For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
-option name, in this order:
+Zum Beispiel für den Buffer "irc.freenode.#weechat". WeeChat sucht in dieser
+Reihenfolge nach einer Maske:
 
 ----------------------------------------
 logger.mask.irc.freenode.#weechat
@@ -1555,22 +1554,23 @@ logger.mask.irc
 logger.file.mask
 ----------------------------------------
 
-That means you can have masks specific for some IRC servers
-("logger.mask.irc.freenode") or for a plugin ("logger.mask.irc").
+Dies bedeutet dass man eine Maske speziell für einen IRC Server 
+("logger.mask.irc.freenode") anlegen kann oder aber global für
+die Erweiterung ("logger.mask.irc").
 
-// TRANSLATION MISSING
 [[logger_files_by_date]]
-Log files by date
-+++++++++++++++++
+Protokolldatei nach Datum
++++++++++++++++++++++++++
 
-To have log files by date, you can use date/time specifiers in mask (see
-`man strftime` for formats), for example:
+Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
+Datumsspezifikationen in der Maske genutzt werden (siehe
+`man strftime` for formats). Zum Beispiel:
 
 ----------------------------------------
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
 ----------------------------------------
 
-You'll have following files:
+Erstellt eine Struktur in folgender Form:
 
 ........................................
 ~/.weechat/
@@ -1585,18 +1585,18 @@ You'll have following files:
             |       irc.freenode.#weechat.weechatlog
 ........................................
 
-// TRANSLATION MISSING
 [[logger_irc_files_by_server_channel]]
-IRC log files by server and channel
-+++++++++++++++++++++++++++++++++++
+Protokolldateien nach Server und Channel
+++++++++++++++++++++++++++++++++++++++++
 
-If you want one directory by IRC server and one file by channel inside:
+Soll für jeden IRC Server ein Verzeichnis erstellt werden mit jeweils
+einer Protokolldatei für jeden Channel:
 
 ----------------------------------------
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
 ----------------------------------------
 
-You'll have following files:
+Erstellt eine Struktur in folgender Form:
 
 ........................................
 ~/.weechat/
@@ -1616,7 +1616,7 @@ You'll have following files:
 Relay Erweiterung
 ~~~~~~~~~~~~~~~~~
 
-Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlichen Protokollen,
+Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokolle,
 über ein Netzwerk zu übermitteln.
 
 Zur Zeit wird ausschließlich das "IRC" Protokoll unterstützt (IRC Proxy).
