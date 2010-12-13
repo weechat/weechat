@@ -631,7 +631,7 @@ irc_redirect_message_match_hash (struct t_irc_redirect *redirect,
         if (!arguments_argv || (*value >= arguments_argc))
             return 0;
         
-        if (strcmp (arguments_argv[*value], redirect->string) != 0)
+        if (weechat_strcasecmp (arguments_argv[*value], redirect->string) != 0)
             return 0;
     }
     
