@@ -1946,7 +1946,7 @@ irc_server_msgq_flush ()
                                            &channel, &arguments);
                         
                         /* convert charset for message */
-                        if (channel)
+                        if (channel && irc_channel_is_channel (channel))
                         {
                             snprintf (modifier_data, sizeof (modifier_data),
                                       "%s.%s.%s",
