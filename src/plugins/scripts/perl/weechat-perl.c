@@ -275,11 +275,14 @@ weechat_perl_exec (struct t_plugin_script *script,
     if (script->interpreter)
         PERL_SET_CONTEXT (script->interpreter);
 #else
-    length = strlen (script->interpreter) + strlen (function) + 3;
+    length = strlen ((script->interpreter) ? script->interpreter : perl_main) +
+        strlen (function) + 3;
     func = (char *) malloc (length);
     if (!func)
         return NULL;
-    snprintf (func, length, "%s::%s", (char *) script->interpreter, function);
+    snprintf (func, length, "%s::%s",
+              (char *) ((script->interpreter) ? script->interpreter : perl_main),
+              function);
 #endif
     
     ENTER;
