@@ -289,6 +289,9 @@ Paramètres de ligne de commande :
 -a, --no-connect::
     Supprimer la connexion automatique aux serveurs lors du démarrage
 
+-c, --colors::
+    Afficher les couleurs par défaut du terminal
+
 -d, --dir 'path'::
     Définir le répertoire comme étant la base de WeeChat
     (utilisé pour les fichiers de configuration, logs, extensions

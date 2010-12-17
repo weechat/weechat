@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-09 22:59+0100\n"
-"PO-Revision-Date: 2010-12-09 20:22+0100\n"
+"POT-Creation-Date: 2010-12-17 12:25+0100\n"
+"PO-Revision-Date: 2010-12-17 11:58+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -46,6 +46,7 @@ msgstr "Utilisation: %s [option...] [extension:option...]\n"
 
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -c, --colors      display default colors in terminal\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
 "  -h, --help        this help\n"
 "  -k, --keys        display WeeChat default keys\n"
@@ -62,6 +63,7 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect  désactiver l'auto-connexion aux serveurs au démarrage\n"
+"  -c, --colors      afficher les couleurs par défaut du terminal\n"
 "  -d, --dir <rep>   définir le répertoire de base pour WeeChat (défaut: ~/."
 "weechat)\n"
 "  -h, --help        cette aide\n"
@@ -2598,6 +2600,15 @@ msgstr ""
 "lecture - mauvaise signature (le format de fichier upgrade a peut-être "
 "changé depuis la dernière version)"
 
+msgid "Terminal infos:"
+msgstr "Infos sur le terminal:"
+
+msgid "No color support in terminal."
+msgstr "Pas de support pour la couleur dans le terminal."
+
+msgid "Default colors:"
+msgstr "Couleurs par défaut:"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal perdu, sortie de WeeChat..."
 
@@ -2607,9 +2618,6 @@ msgstr "Signal %s reçu, sortie de WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP reçu, rechargement des fichiers de configuration"
-
-msgid "Terminal infos:"
-msgstr "Infos sur le terminal:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"

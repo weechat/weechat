@@ -290,6 +290,10 @@ Argomenti a riga di comando:
 -a, --no-connect::
     Disabilita la connessione automatica ai server all'avvio di WeeChat
 
+// TRANSLATION MISSING
+-c, --colors::
+    Display default colors in terminal
+
 -d, --dir 'path'::
     Imposta una cartella come home per WeeChat (utilizzata per i file di
     configurazione, log, plugin e script dell'utente), il valore predefinito

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-09 22:59+0100\n"
+"POT-Creation-Date: 2010-12-17 12:25+0100\n"
 "PO-Revision-Date: 2010-12-07 23:21+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -47,8 +47,10 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -c, --colors      display default colors in terminal\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
 "  -h, --help        this help\n"
 "  -k, --keys        display WeeChat default keys\n"
@@ -2637,6 +2639,16 @@ msgstr ""
 "lese - falsche Signatur (das Dateiformat wurde vermutlich seit der letzten "
 "Version verändern)"
 
+msgid "Terminal infos:"
+msgstr "Terminal Informationen:"
+
+msgid "No color support in terminal."
+msgstr ""
+
+#, fuzzy
+msgid "Default colors:"
+msgstr "Standard rmodifier:"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
 
@@ -2646,9 +2658,6 @@ msgstr "Signal %s empfangen, beende WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP empfangen, lese Konfigurationsdateien neu"
-
-msgid "Terminal infos:"
-msgstr "Terminal Informationen:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-09 22:59+0100\n"
+"POT-Creation-Date: 2010-12-17 12:25+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -46,6 +46,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -c, --colors      display default colors in terminal\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
 "  -h, --help        this help\n"
 "  -k, --keys        display WeeChat default keys\n"
@@ -2364,6 +2365,16 @@ msgid ""
 "version)"
 msgstr ""
 
+msgid "Terminal infos:"
+msgstr ""
+
+msgid "No color support in terminal."
+msgstr ""
+
+#, fuzzy
+msgid "Default colors:"
+msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -2374,9 +2385,6 @@ msgstr ""
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-msgid "Terminal infos:"
-msgstr ""
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"

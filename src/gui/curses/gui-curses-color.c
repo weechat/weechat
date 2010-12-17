@@ -327,6 +327,75 @@ gui_color_init ()
 }
 
 /*
+ * gui_color_display_terminal_colors: display terminal colors
+ *                                    This is called by command line option
+ *                                    "-c" / "--colors"
+ */
+
+void
+gui_color_display_terminal_colors ()
+{
+    int lines, line, col, color;
+    int color_support, colors, color_pairs, change_color;
+    char str_line[1024], str_color[64];
+
+    color_support = 0;
+    colors = 0;
+    color_pairs = 0;
+    change_color = 0;
+    
+    initscr ();
+    if (has_colors ())
+    {
+        color_support = 1;
+        start_color ();
+        use_default_colors ();
+        colors = COLORS;
+        color_pairs = COLOR_PAIRS;
+        change_color = can_change_color () ? 1 : 0;
+        refresh ();
+        endwin ();
+    }
+    printf ("\n");
+    printf ("%s $TERM=%s   COLORS: %d, COLOR_PAIRS: %d, "
+            "can_change_color: %s\n",
+            _("Terminal infos:"),
+            getenv ("TERM"), colors, color_pairs,
+            (change_color) ? "yes" : "no");
+    if (colors == 0)
+    {
+        printf ("%s\n", _("No color support in terminal."));
+    }
+    else
+    {
+        printf ("\n");
+        printf ("%s\n", _("Default colors:"));
+        printf ("------------------------------------------------------------"
+                "--------------------\n");
+        lines = (colors < 16) ? colors : 16;
+        for (line = 0; line < lines; line++)
+        {
+            str_line[0] = '\0';
+            for (col = 0; col < 16; col++)
+            {
+                color = (col * 16) + line;
+                if (color < colors)
+                {
+                    snprintf (str_color, sizeof (str_color),
+                              "\33[0;38;5;%dm %03d ", color, color);
+                    strcat (str_line, str_color);
+                }
+            }
+            printf ("%s\n", str_line);
+        }
+        printf ("\33[0m");
+        printf ("------------------------------------------------------------"
+                "--------------------\n");
+    }
+    printf ("\n");
+}
+
+/*
  * gui_color_end: end GUI colors
  */
 

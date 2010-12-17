@@ -144,5 +144,6 @@ extern int gui_color_get_number ();
 extern const char *gui_color_get_name (int num_color);
 extern void gui_color_init_pairs ();
 extern void gui_color_init_weechat ();
+extern void gui_color_display_terminal_colors ();
 
 #endif /* __WEECHAT_GUI_COLOR_H */

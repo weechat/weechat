@@ -110,6 +110,7 @@ weechat_display_usage (char *exec_name)
     string_iconv_fprintf (stdout, "\n\n");
     string_iconv_fprintf (stdout,
                           _("  -a, --no-connect  disable auto-connect to servers at startup\n"
+                            "  -c, --colors      display default colors in terminal\n"
                             "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
                             "  -h, --help        this help\n"
                             "  -k, --keys        display WeeChat default keys\n"
@@ -173,7 +174,13 @@ weechat_parse_args (int argc, char *argv[])
     
     for (i = 1; i < argc; i++)
     {
-        if ((strcmp (argv[i], "-d") == 0)
+        if ((strcmp (argv[i], "-c") == 0)
+            || (strcmp (argv[i], "--colors") == 0))
+        {
+            gui_color_display_terminal_colors ();
+            weechat_shutdown (EXIT_SUCCESS, 0);
+        }
+        else if ((strcmp (argv[i], "-d") == 0)
             || (strcmp (argv[i], "--dir") == 0))
         {
             if (i + 1 < argc)

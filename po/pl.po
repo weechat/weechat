@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-09 22:59+0100\n"
+"POT-Creation-Date: 2010-12-17 12:25+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -45,8 +45,10 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Użycie: %s [argumenty...] [wtyczka:opcje...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -c, --colors      display default colors in terminal\n"
 "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
 "  -h, --help        this help\n"
 "  -k, --keys        display WeeChat default keys\n"
@@ -2556,6 +2558,16 @@ msgid ""
 msgstr ""
 "odczyt - zła sygnatura (format pliku mógł ulec zmianie od poprzedniej wersji)"
 
+msgid "Terminal infos:"
+msgstr "Informacje terminala:"
+
+msgid "No color support in terminal."
+msgstr ""
+
+#, fuzzy
+msgid "Default colors:"
+msgstr "Przywrócono domyślne przypisania klawiszy"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Utracono terminal, wychodzę z WeeChat..."
 
@@ -2565,9 +2577,6 @@ msgstr "Otrzymano sygnał %s, wychodzę z WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Otrzymano sygnał SIGHUP, przeładowuję pliki konfiguracyjne"
-
-msgid "Terminal infos:"
-msgstr "Informacje terminala:"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"

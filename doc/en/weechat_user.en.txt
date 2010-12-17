@@ -283,6 +283,9 @@ Command line arguments:
 -a, --no-connect::
     Disable auto-connect to servers when WeeChat is starting
 
+-c, --colors::
+    Display default colors in terminal
+
 -d, --dir 'path'::
     Set path as home for WeeChat (used for configuration files, logs, user
     plugins and scripts), default value is '~/.weechat' (note: directory is

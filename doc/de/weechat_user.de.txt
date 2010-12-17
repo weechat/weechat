@@ -281,6 +281,10 @@ Befehlszeile:
 -a, --no-connect::
     deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat
 
+// TRANSLATION MISSING
+-c, --colors::
+    Display default colors in terminal
+
 -d, --dir 'path'::
     legt den Konfigurationsordner für WeeChat fest (Voreinstellung: ~/.weechat) in
     dem die Erweiterungen, Skripten, Protokolldateien etc.pp. gesichert werden.

@@ -216,6 +216,18 @@ gui_color_init ()
 }
 
 /*
+ * gui_color_display_terminal_colors: display terminal colors
+ *                                    This is called by command line option
+ *                                    "-c" / "--colors"
+ */
+
+void
+gui_color_display_terminal_colors ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
  * gui_color_end: end GUI colors
  */
 
