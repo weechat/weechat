@@ -97,6 +97,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_BG_STR                      "B"
 #define GUI_COLOR_FG_BG_CHAR                  '*'
 #define GUI_COLOR_FG_BG_STR                   "*"
+#define GUI_COLOR_PAIR_CHAR                   '@'
+#define GUI_COLOR_PAIR_STR                    "@"
 #define GUI_COLOR_BAR_CHAR                    'b'
 #define GUI_COLOR_BAR_STR                     "b"
 #define GUI_COLOR_BAR_FG_CHAR                 'F'

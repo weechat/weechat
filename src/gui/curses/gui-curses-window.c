@@ -296,9 +296,17 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
     {
         gui_window_reset_style (window, num_color);
         wattron (window, gui_color[num_color]->attributes);
-        gui_window_set_color (window,
-                              gui_color[num_color]->foreground,
-                              gui_color[num_color]->background);
+        if ((gui_color[num_color]->foreground > 0)
+            && (gui_color[num_color]->foreground & 0x10000))
+        {
+            wattron (window, COLOR_PAIR(gui_color[num_color]->foreground & 0xFFFF));
+        }
+        else
+        {
+            gui_window_set_color (window,
+                                  gui_color[num_color]->foreground,
+                                  gui_color[num_color]->background);
+        }
     }
 }
 
@@ -319,6 +327,21 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
                               gui_weechat_colors[fg].foreground,
                               (gui_color_num_bg > 8) ?
                               gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
+    }
+}
+
+/*
+ * gui_window_set_custom_color_pair: set a custom color for a window
+ *                                   (pair number)
+ */
+
+void
+gui_window_set_custom_color_pair (WINDOW *window, int pair)
+{
+    if ((pair >= 0) && (pair <= gui_color_last_pair))
+    {
+        gui_window_remove_color_style (window, A_BOLD);
+        wattron (window, COLOR_PAIR(pair));
     }
 }
 

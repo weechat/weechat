@@ -1286,8 +1286,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     else
                     {
-                        gui_color_assign (&value_int, value);
-                        if ((value_int >= 0) && (value_int <= num_colors - 1))
+                        if (gui_color_assign (&value_int, value))
                             new_value_ok = 1;
                     }
                     if (new_value_ok)

@@ -86,6 +86,7 @@ extern void gui_window_remove_color_style (WINDOW *window, int style);
 extern void gui_window_set_color (WINDOW *window, int fg, int bg);
 extern void gui_window_set_weechat_color (WINDOW *window, int num_color);
 extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg);
+extern void gui_window_set_custom_color_pair (WINDOW *window, int pair);
 extern void gui_window_set_custom_color_fg (WINDOW *window, int fg);
 extern void gui_window_set_custom_color_bg (WINDOW *window, int bg);
 extern void gui_window_clrtoeol_with_current_bg (WINDOW *window);

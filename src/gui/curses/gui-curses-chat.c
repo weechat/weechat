@@ -179,8 +179,8 @@ char *
 gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
-    char str_fg[3], str_bg[3];
-    int weechat_color, fg, bg;
+    char str_fg[3], str_bg[3], str_pair[6], *error;
+    int weechat_color, fg, bg, pair;
     
     while (string[0])
     {
@@ -241,6 +241,26 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 sscanf (str_bg, "%d", &bg);
                                 gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                                    fg, bg);
+                            }
+                            string += 6;
+                        }
+                        break;
+                    case GUI_COLOR_PAIR_CHAR: /* pair number */
+                        if ((isdigit (string[1])) && (isdigit (string[2]))
+                            && (isdigit (string[3])) && (isdigit (string[4]))
+                            && (isdigit (string[5])))
+                        {
+                            if (apply_style)
+                            {
+                                memcpy (str_pair, string + 1, 5);
+                                str_pair[5] = '\0';
+                                error = NULL;
+                                pair = (int)strtol (str_pair, &error, 10);
+                                if (error && !error[0])
+                                {
+                                    gui_window_set_custom_color_pair (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                      pair);
+                                }
                             }
                             string += 6;
                         }

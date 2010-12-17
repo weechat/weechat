@@ -89,18 +89,24 @@ gui_color_search (const char *color_name)
 int
 gui_color_assign (int *color, const char *color_name)
 {
-    int i;
+    int color_index, pair;
+    char *error;
     
-    /* look for curses colors in table */
-    i = 0;
-    while (gui_weechat_colors[i].string)
+    error = NULL;
+    pair = (int)strtol (color_name, &error, 10);
+    if (error && !error[0] && (pair >= 0))
     {
-        if (string_strcasecmp (gui_weechat_colors[i].string, color_name) == 0)
+        *color = 0x10000 | pair;
+        return 1;
+    }
+    else
+    {
+        color_index = gui_color_search (color_name);
+        if (color_index >= 0)
         {
-            *color = i;
+            *color = color_index;
             return 1;
         }
-        i++;
     }
     
     /* color not found */
@@ -124,13 +130,26 @@ gui_color_get_number ()
 const char *
 gui_color_get_name (int num_color)
 {
+    static char color[32][16];
+    static int index_color = 0;
+    
+    if (num_color & 0x10000)
+    {
+        index_color = (index_color + 1) % 32;
+        color[index_color][0] = '\0';
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%d", num_color & 0xFFFF);
+        return color[index_color];
+    }
+    
     return gui_weechat_colors[num_color].string;
 }
 
 /*
- * gui_color_build: build a WeeChat color with foreground,
- *                  background and attributes (attributes are
- *                  given with foreground color, with a OR)
+ * gui_color_build: build a WeeChat color with foreground and background
+ *                  (foreground and background must be >= 0,
+ *                  if they are >= 0x10000, then it is a pair number
+ *                  (pair = value & 0xFFFF))
  */
 
 void
@@ -144,9 +163,20 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->string = malloc (4);
     }
     
-    gui_color[number]->foreground = gui_weechat_colors[foreground].foreground;
-    gui_color[number]->background = gui_weechat_colors[background].foreground;
-    gui_color[number]->attributes = gui_weechat_colors[foreground].attributes;
+    if (foreground & 0x10000)
+    {
+        gui_color[number]->foreground = foreground;
+        gui_color[number]->background = 0;
+        gui_color[number]->attributes = 0;
+    }
+    else
+    {
+        if (background & 0x10000)
+            background = 0;
+        gui_color[number]->foreground = gui_weechat_colors[foreground].foreground;
+        gui_color[number]->background = gui_weechat_colors[background].foreground;
+        gui_color[number]->attributes = gui_weechat_colors[foreground].attributes;
+    }
     if (gui_color[number]->string)
     {
         snprintf (gui_color[number]->string, 4,
@@ -199,7 +229,7 @@ gui_color_init_pairs ()
      *   urxvt    | xterm-256color  |    256 | 32767
      *   screen   | screen          |      8 |    64
      *   screen   | screen-256color |    256 | 32767
-    */
+     */
     
     if (has_colors ())
     {

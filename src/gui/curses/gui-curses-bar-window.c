@@ -156,7 +156,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int hide_chars_if_scrolling)
 {
     int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char, hidden;
-    char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
+    int pair;
+    char str_fg[3], str_bg[3], str_pair[6], utf_char[16], *next_char, *output;
+    char *error;
     
     if (!string || !string[0])
         return 1;
@@ -220,6 +222,23 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             sscanf (str_bg, "%d", &bg);
                             gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                fg, bg);
+                            string += 6;
+                        }
+                        break;
+                    case GUI_COLOR_PAIR_CHAR: /* pair number */
+                        if ((isdigit (string[1])) && (isdigit (string[2]))
+                            && (isdigit (string[3])) && (isdigit (string[4]))
+                            && (isdigit (string[5])))
+                        {
+                            memcpy (str_pair, string + 1, 5);
+                            str_pair[5] = '\0';
+                            error = NULL;
+                            pair = (int)strtol (str_pair, &error, 10);
+                            if (error && !error[0])
+                            {
+                                gui_window_set_custom_color_pair (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                  pair);
+                            }
                             string += 6;
                         }
                         break;
