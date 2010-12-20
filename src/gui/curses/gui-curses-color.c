@@ -448,6 +448,7 @@ gui_color_init ()
     }
     gui_color_init_pairs ();
     gui_color_init_weechat ();
+    gui_color_palette_build_aliases ();
 }
 
 /*
@@ -561,6 +562,12 @@ void
 gui_color_palette_build_aliases ()
 {
     int i;
+    
+    if (!gui_color_hash_palette_alias || !gui_color_list_with_alias
+        || !gui_color_hash_palette_color)
+    {
+        gui_color_palette_alloc ();
+    }
     
     hashtable_remove_all (gui_color_hash_palette_alias);
     weelist_remove_all (gui_color_list_with_alias);
