@@ -323,9 +323,9 @@ gui_color_decode (const char *string, const char *replacement)
                             ptr_string += 6;
                         break;
                     case GUI_COLOR_PAIR_CHAR:
-                        if ((isdigit (string[1])) && (isdigit (string[2]))
-                            && (isdigit (string[3])) && (isdigit (string[4]))
-                            && (isdigit (string[5])))
+                        if ((isdigit (ptr_string[1])) && (isdigit (ptr_string[2]))
+                            && (isdigit (ptr_string[3])) && (isdigit (ptr_string[4]))
+                            && (isdigit (ptr_string[5])))
                             ptr_string += 6;
                         break;
                     case GUI_COLOR_BAR_CHAR:
