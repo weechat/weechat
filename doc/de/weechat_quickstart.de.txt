@@ -1,5 +1,5 @@
-WeeChat Quick Start Guide
-=========================
+WeeChat Quickstart Anleitung
+============================
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -8,8 +8,8 @@ Start von WeeChat
 -----------------
 
 Die bevorzugte Terminal-Emulation für X (aber nicht obligatorisch) ist
-rxvt-unicode (es hat eine gute Unterstützung für UTF-8 und keine Probleme
-mit der Standard Tastaturbelegung).
+rxvt-unicode (es besitzt eine gute Unterstützung für UTF-8 und hat keine
+Probleme mit der Standard Tastaturbelegung).
 
 Starte "weechat-curses" aus Deiner shell.
 
@@ -24,26 +24,26 @@ ausführen.
 
 Um Optionen zu setzen benutzt man `/set config.section.option value`.
 (dabei ist 'config' der Konfigurationsname ('weechat' für den Kern von weechat,
-oder ein Plugin-Name), 'section' ein Abschnitt dieser Konfiguration und 'option'
-der Name der Option).
+oder der Name einer Erweiterung), 'section' ein Abschnitt dieser Konfiguration und 'option'
+der Name der betreffenden Option).
 
-WeeChat benutzt den neu eingestellten Wert sofort (WeeChat muss also *niemals* neu gestartet
+WeeChat benutzt den neu eingestellten Wert umgehend (WeeChat muss also *niemals* neu gestartet
 werden, nach dem die Konfiguration verändert wurde).
 
 Du kannst die Option `/set` mit teilweise ausgeschriebenen Namen und dem
-Platzhalter "*" am Beginn oder Ende verwenden um alle Optionen anzuzeigen, die
-die Zeichenkette enthalten.
+Platzhalter "*" am Beginn oder Ende verwenden um alle Optionen anzuzeigen die
+diese Zeichenkette enthalten.
 
 Zum Beispiel:
 
 `/set`::
-    Anzeige aller Optionen (WeeChat und Plugins)
+    Anzeige aller Optionen (WeeChat und Erweiterungen)
 
 `/set weechat.*`::
     Anzeige der WeeChat Optionen
 
 `/set irc.*`::
-    Anzeige der Optionen des IRC-Plugins
+    Anzeige der Optionen des IRC-Erweiterung
 
 Du kannst mit `/help` Hilfe für Optionen auflisten lassen, z.B.:
 `/help weechat.look.highlight`.
@@ -79,8 +79,8 @@ Du kannst einen IRC-Server mit dem Befehl `/server` hinzufügen, z.B.:
 
   /server add oftc irc.oftc.net/6667
 
-Wie immer, wenn Du nicht mehr weiter weißt, kannst Du mit `/help server` Hilfe
-erlangen.
+Wie bei jedem Befehl kannst Du Dir, falls Du nicht mehr weiter kommst, mit
+`/help server` einen Hilfstext anzeigen lassen.
 
 
 [[irc_server_options]]
@@ -88,25 +88,26 @@ Setzen eigener IRC-Server Optionen
 ----------------------------------
 
 WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs") falls
-Du keine eigenen Werte für entsprechende Server-Optionen bestimmst.
+Du keine eigenen Werte für entsprechende Server-Optionen bestimmt haben solltest.
 Diese Vorgabeoptionen sind "irc.server_default.*".
 
 Für jede Server-Option benutzt WeeChat den entsprechend gesetzten Wert - falls
 definiert (nicht "null"). Andernfalls verwendet WeeChat Vorgabewerte
 ("irc.server_default.xxx").
 
-Als Beispiel erwähnt seien die Vorgabe (default) nicks, die auf dem Un*x Login
-basieren. Diese können nun für oftc-Server mittels folgendem Befehl
+Als Beispiel erwähnt ist die Vorgabe (default) nicks, die auf dem Un*x Login
+basiert. Diese Vorgabe kann nun für den oftc-Server mittels folgendem Befehl
 überschrieben werden:
 
   /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
 
-Um den User-Namen und wirklichen Namen zu setzen:
+Um einen User- und realen Namen zu setzen:
 
   /set irc.server.oftc.username "Mein User-Name"
   /set irc.server.oftc.realname "Mein wirklicher Name"
 
-Aktivieren des automatischen Verbindens mit dem Server beim Start von WeeChat:
+Um beim Start von WeeChat automatisch eine Verbindung zu einem Server
+herzustellen:
 
   /set irc.server.oftc.autoconnect on
 
