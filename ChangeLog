@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-rc1, 2010-12-16
+v0.3.4-rc1, 2010-12-20
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add 256 colors support, new section "palette" in weechat.conf
+  (task #6834)
 * core: add support of python 2.7 in cmake and configure (debian #606989)
 * core: add color support in option weechat.look.buffer_time_format
 * core: call to hook_config when config option is created
@@ -35,9 +37,9 @@ Version 0.3.4 (under dev!)
 * core: use similar behaviour for keys bound to local or global history
   (bug #30759)
 * api: add priority for hooks (task #10550)
-* api: add new functions: hashtable_get_string, hook_info_hashtable,
-  info_get_hashtable, hook_hsignal, hook_hsignal_send,
-  hook_completion_get_string, nicklist_group_get_integer,
+* api: add new functions: list_search_pos, list_casesearch_pos,
+  hashtable_get_string, hook_info_hashtable, info_get_hashtable, hook_hsignal,
+  hook_hsignal_send, hook_completion_get_string, nicklist_group_get_integer,
   nicklist_group_get_string, nicklist_group_get_pointer, nicklist_group_set,
   nicklist_nick_get_integer, nicklist_nick_get_string, nicklist_nick_get_pointer,
   nicklist_nick_set

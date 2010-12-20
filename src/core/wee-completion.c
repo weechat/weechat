@@ -37,6 +37,7 @@
 
 #include "weechat.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-list.h"
 #include "wee-proxy.h"
@@ -706,6 +707,24 @@ completion_list_add_plugins_commands_cb (void *data,
 }
 
 /*
+ * completion_list_add_color_alias_cb: add color alias in completion
+ */
+
+void
+completion_list_add_color_alias_cb (void *data,
+                                    struct t_hashtable *hashtable,
+                                    const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+    
+    gui_completion_list_add ((struct t_gui_completion *)data,
+                             (char *)key,
+                             0, WEECHAT_LIST_POS_SORT);
+}
+
+/*
  * completion_list_add_config_option_values_cb: add option value to completion
  *                                              list
  */
@@ -887,6 +906,12 @@ completion_list_add_config_option_values_cb (void *data,
                                             gui_completion_list_add (completion,
                                                                      color_name,
                                                                      0, WEECHAT_LIST_POS_SORT);
+                                    }
+                                    if (gui_color_hash_palette_alias)
+                                    {
+                                        hashtable_map (gui_color_hash_palette_alias,
+                                                       &completion_list_add_color_alias_cb,
+                                                       completion);
                                     }
                                     gui_completion_list_add (completion, "++1",
                                                              0, WEECHAT_LIST_POS_END);

@@ -248,19 +248,19 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             case GUI_COLOR_BAR_FG_CHAR:
                                 /* bar foreground */
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                                 string += 2;
                                 break;
                             case GUI_COLOR_BAR_DELIM_CHAR:
                                 /* bar delimiter */
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
+                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
                                 string += 2;
                                 break;
                             case GUI_COLOR_BAR_BG_CHAR:
                                 /* bar background */
                                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                                 string += 2;
                                 break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
@@ -301,9 +301,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 break;
             case GUI_COLOR_RESET_CHAR:
                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                                CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                A_BOLD | A_UNDERLINE | A_REVERSE);
                 string++;
@@ -672,7 +672,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 y = 0;
                 gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                    CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                                   CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                            y, x, "--");
             }
@@ -685,7 +685,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
                 gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                    CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                                                   CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                            y, x, "++");
             }

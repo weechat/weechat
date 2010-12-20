@@ -31,8 +31,11 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hashtable.h"
+#include "../../core/wee-list.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
 #include "../gui-color.h"
 #include "../gui-chat.h"
 #include "gui-curses.h"
@@ -84,6 +87,7 @@ gui_color_search (const char *color_name)
 
 /*
  * gui_color_assign: assign a WeeChat color (read from config)
+ *                   return 1 if ok, 0 if error
  */
 
 int
@@ -92,15 +96,26 @@ gui_color_assign (int *color, const char *color_name)
     int color_index, pair;
     char *error;
     
+    /* search for color alias */
+    pair = gui_color_palette_get_alias (color_name);
+    if (pair >= 0)
+    {
+        *color = GUI_COLOR_PAIR_FLAG | pair;
+        return 1;
+    }
+    
+    /* is it pair number? */
     error = NULL;
     pair = (int)strtol (color_name, &error, 10);
     if (error && !error[0] && (pair >= 0))
     {
-        *color = 0x10000 | pair;
+        /* color_name is a number, use this pair number */
+        *color = GUI_COLOR_PAIR_FLAG | pair;
         return 1;
     }
     else
     {
+        /* search for basic WeeChat color */
         color_index = gui_color_search (color_name);
         if (color_index >= 0)
         {
@@ -110,6 +125,57 @@ gui_color_assign (int *color, const char *color_name)
     }
     
     /* color not found */
+    return 0;
+}
+
+/*
+ * gui_color_assign_by_diff: assign color by difference
+ *                           It is called when a color option is
+ *                           set with value ++X or --X, to search
+ *                           another color (for example ++1 is
+ *                           next color/alias in list)
+ *                           return 1 if ok, 0 if error
+ */
+
+int
+gui_color_assign_by_diff (int *color, const char *color_name, int diff)
+{
+    int index, list_size;
+    struct t_weelist_item *ptr_item;
+    const char *name;
+    
+    index = weelist_search_pos (gui_color_list_with_alias, color_name);
+    if (index < 0)
+        index = 0;
+    
+    list_size = weelist_size (gui_color_list_with_alias);
+    
+    diff = diff % (list_size + 1);
+    
+    if (diff > 0)
+    {
+        index = (index + diff) % (list_size + 1);
+        while (index > list_size - 1)
+        {
+            index -= list_size;
+        }
+    }
+    else
+    {
+        index = (index + list_size + diff) % list_size;
+        while (index < 0)
+        {
+            index += list_size;
+        }
+    }
+    
+    ptr_item = weelist_get (gui_color_list_with_alias, index);
+    if (!ptr_item)
+        return 0;
+    name = weelist_string (ptr_item);
+    if (name)
+        return gui_color_assign (color, name);
+    
     return 0;
 }
 
@@ -132,13 +198,17 @@ gui_color_get_name (int num_color)
 {
     static char color[32][16];
     static int index_color = 0;
+    struct t_gui_color_palette *ptr_color_palette;
     
-    if (num_color & 0x10000)
+    if (num_color & GUI_COLOR_PAIR_FLAG)
     {
+        ptr_color_palette = gui_color_palette_get (num_color & GUI_COLOR_PAIR_MASK);
+        if (ptr_color_palette && ptr_color_palette->alias)
+            return ptr_color_palette->alias;
         index_color = (index_color + 1) % 32;
         color[index_color][0] = '\0';
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%d", num_color & 0xFFFF);
+                  "%d", num_color & GUI_COLOR_PAIR_MASK);
         return color[index_color];
     }
     
@@ -163,7 +233,7 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->string = malloc (4);
     }
     
-    if (foreground & 0x10000)
+    if (foreground & GUI_COLOR_PAIR_FLAG)
     {
         gui_color[number]->foreground = foreground;
         gui_color[number]->background = 0;
@@ -171,7 +241,7 @@ gui_color_build (int number, int foreground, int background)
     }
     else
     {
-        if (background & 0x10000)
+        if (background & GUI_COLOR_PAIR_FLAG)
             background = 0;
         gui_color[number]->foreground = gui_weechat_colors[foreground].foreground;
         gui_color[number]->background = gui_weechat_colors[background].foreground;
@@ -200,6 +270,9 @@ gui_color_get_pair (int num_color)
     fg = gui_color[num_color]->foreground;
     bg = gui_color[num_color]->background;
     
+    if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
+        return fg & GUI_COLOR_PAIR_MASK;
+    
     if (((fg == -1) || (fg == 99))
         && ((bg == -1) || (bg == 99)))
         return gui_color_last_pair;
@@ -212,13 +285,42 @@ gui_color_get_pair (int num_color)
 }
 
 /*
+ * gui_color_init_pair: init a color pair
+ */
+
+void
+gui_color_init_pair (int number)
+{
+    struct t_gui_color_palette *ptr_color_palette;
+    int fg, bg;
+    
+    if ((number >= 1) && (number <= COLOR_PAIRS - 1))
+    {
+        ptr_color_palette = gui_color_palette_get (number);
+        if (ptr_color_palette)
+        {
+            init_pair (number,
+                       ptr_color_palette->foreground,
+                       ptr_color_palette->background);
+        }
+        else
+        {
+            fg = (number - 1) % gui_color_num_bg;
+            bg = ((number - 1) < gui_color_num_bg) ? -1 : (number - 1) / gui_color_num_bg;
+            init_pair (number, fg, bg);
+        }
+    }
+}
+
+/*
  * gui_color_init_pairs: init color pairs
  */
 
 void
 gui_color_init_pairs ()
 {
-    int i, fg, bg, num_colors;
+    int i, num_colors;
+    struct t_gui_color_palette *ptr_color_palette;
     
     /*
      * depending on terminal and $TERM value, we can have for example:
@@ -235,23 +337,29 @@ gui_color_init_pairs ()
     {
         gui_color_num_bg = (COLOR_PAIRS >= 256) ? 16 : 8;
         num_colors = (COLOR_PAIRS >= 256) ? 256 : COLOR_PAIRS;
-        for (i = 1; i < num_colors; i++)
-        {
-            fg = (i - 1) % gui_color_num_bg;
-            bg = ((i - 1) < gui_color_num_bg) ? -1 : (i - 1) / gui_color_num_bg;
-            init_pair (i, fg, bg);
-        }
         gui_color_last_pair = num_colors - 1;
         
+        /* WeeChat pairs */
+        for (i = 1; i < num_colors; i++)
+        {
+            gui_color_init_pair (i);
+        }
+        
         /* disable white on white, replaced by black on white */
-        init_pair (gui_color_last_pair, -1, -1);
+        ptr_color_palette = gui_color_palette_get (gui_color_last_pair);
+        if (!ptr_color_palette)
+            init_pair (gui_color_last_pair, -1, -1);
         
         /*
          * white on default bg is default (-1) (for terminals with white/light
          * background)
          */
         if (!CONFIG_BOOLEAN(config_look_color_real_white))
-            init_pair (COLOR_WHITE + 1, -1, -1);
+        {
+            ptr_color_palette = gui_color_palette_get (COLOR_WHITE);
+            if (!ptr_color_palette)
+                init_pair (COLOR_WHITE + 1, -1, -1);
+        }
     }
 }
 
@@ -393,6 +501,167 @@ gui_color_display_terminal_colors ()
                 "--------------------\n");
     }
     printf ("\n");
+}
+
+/*
+ * gui_color_palette_add_alias_cb: add an alias in hashtable with aliases
+ */
+
+void
+gui_color_palette_add_alias_cb (void *data,
+                                struct t_hashtable *hashtable,
+                                const void *key, const void *value)
+{
+    struct t_gui_color_palette *color_palette;
+    char *error;
+    int number;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    
+    color_palette = (struct t_gui_color_palette *)value;
+    
+    if (color_palette && color_palette->alias)
+    {
+        error = NULL;
+        number = (int)strtol ((char *)key, &error, 10);
+        if (error && !error[0])
+        {
+            hashtable_set (gui_color_hash_palette_alias,
+                           color_palette->alias,
+                           &number);
+        }
+        weelist_add (gui_color_list_with_alias, color_palette->alias,
+                     WEECHAT_LIST_POS_END, NULL);
+    }
+}
+
+/*
+ * gui_color_palette_build_aliases: build aliases for palette
+ */
+
+void
+gui_color_palette_build_aliases ()
+{
+    int i;
+    
+    hashtable_remove_all (gui_color_hash_palette_alias);
+    weelist_remove_all (gui_color_list_with_alias);
+    for (i = 0; i < GUI_CURSES_NUM_WEECHAT_COLORS; i++)
+    {
+        weelist_add (gui_color_list_with_alias,
+                     gui_weechat_colors[i].string,
+                     WEECHAT_LIST_POS_END,
+                     NULL);
+    }
+    hashtable_map (gui_color_hash_palette_color,
+                   &gui_color_palette_add_alias_cb, NULL);
+}
+
+/*
+ * gui_color_palette_new: create a new color in palette
+ */
+
+struct t_gui_color_palette *
+gui_color_palette_new (int number, const char *value)
+{
+    struct t_gui_color_palette *new_color_palette;
+    char **items, *pos, *pos2, *error1, *error2, *error3, str_number[64];
+    int num_items, fg, bg, r, g, b;
+    
+    if (!value)
+        return NULL;
+    
+    new_color_palette = malloc (sizeof (*new_color_palette));
+    if (new_color_palette)
+    {
+        new_color_palette->alias = NULL;
+        new_color_palette->foreground = number;
+        new_color_palette->background = -1;
+        new_color_palette->r = -1;
+        new_color_palette->g = -1;
+        new_color_palette->b = -1;
+        items = string_split (value, ";", 0, 0, &num_items);
+        if (items)
+        {
+            if ((num_items >= 1) && items[0][0])
+            {
+                new_color_palette->alias = strdup (items[0]);
+            }
+            if ((num_items >= 2) && items[1][0])
+            {
+                pos = strchr (items[1], ',');
+                if (pos)
+                {
+                    pos[0] = '\0';
+                    error1 = NULL;
+                    fg = (int)strtol (items[1], &error1, 10);
+                    error2 = NULL;
+                    bg = (int)strtol (pos + 1, &error2, 10);
+                    if (error1 && !error1[0] && error2 && !error2[0]
+                        && (fg >= -1) && (bg >= -1))
+                    {
+                        new_color_palette->foreground = fg;
+                        new_color_palette->background = bg;
+                    }
+                }
+            }
+            if ((num_items >= 3) && items[2][0])
+            {
+                pos = strchr (items[2], '/');
+                if (pos)
+                {
+                    pos[0] = '\0';
+                    pos2 = strchr (pos + 1, '/');
+                    if (pos2)
+                    {
+                        pos2[0] = '\0';
+                        error1 = NULL;
+                        r = (int)strtol (items[2], &error1, 10);
+                        error2 = NULL;
+                        g = (int)strtol (pos + 1, &error2, 10);
+                        error3 = NULL;
+                        b = (int)strtol (pos2 + 1, &error3, 10);
+                        if (error1 && !error1[0] && error2 && !error2[0]
+                            && error3 && !error3[0]
+                            && (r >= 0) && (r <= 1000)
+                            && (g >= 0) && (g <= 1000)
+                            && (b >= 0) && (b <= 1000))
+                        {
+                            new_color_palette->r = r;
+                            new_color_palette->g = g;
+                            new_color_palette->b = b;
+                        }
+                    }
+                }
+            }
+            string_free_split (items);
+        }
+        if (!new_color_palette->alias)
+        {
+            snprintf (str_number, sizeof (str_number), "%d", number);
+            new_color_palette->alias = strdup (str_number);
+        }
+    }
+    
+    return new_color_palette;
+}
+
+/*
+ * gui_color_palette_free: free a color in palette
+ */
+
+void
+gui_color_palette_free (struct t_gui_color_palette *color_palette)
+{
+    if (!color_palette)
+        return;
+    
+    if (color_palette->alias)
+        free (color_palette->alias);
+    
+    free (color_palette);
 }
 
 /*

@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101125-01"
+#define WEECHAT_PLUGIN_API_VERSION "20101220-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -237,8 +237,12 @@ struct t_weechat_plugin
                                         void *user_data);
     struct t_weelist_item *(*list_search) (struct t_weelist *weelist,
                                            const char *data);
+    int (*list_search_pos) (struct t_weelist *weelist,
+                            const char *data);
     struct t_weelist_item *(*list_casesearch) (struct t_weelist *weelist,
                                                const char *data);
+    int (*list_casesearch_pos) (struct t_weelist *weelist,
+                                const char *data);
     struct t_weelist_item *(*list_get) (struct t_weelist *weelist,
                                         int position);
     void (*list_set) (struct t_weelist_item *item, const char *value);
@@ -899,8 +903,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->list_add(__list, __string, __where, __user_data)
 #define weechat_list_search(__list, __string)                           \
     weechat_plugin->list_search(__list, __string)
+#define weechat_list_search_pos(__list, __string)                       \
+    weechat_plugin->list_search_pos(__list, __string)
 #define weechat_list_casesearch(__list, __string)                       \
     weechat_plugin->list_casesearch(__list, __string)
+#define weechat_list_casesearch_pos(__list, __string)                   \
+    weechat_plugin->list_casesearch_pos(__list, __string)
 #define weechat_list_get(__list, __index)                               \
     weechat_plugin->list_get(__list, __index)
 #define weechat_list_set(__item, __value)                               \

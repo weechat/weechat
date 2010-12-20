@@ -2461,6 +2461,49 @@ item = weechat.list_search(list, data)
 item = weechat.list_search(list, "my data")
 ----------------------------------------
 
+// TRANSLATION MISSING
+weechat_list_search_pos
+^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Search an item position in a list.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_list_search_pos (struct t_weelist *weelist,
+                             const char *data);
+----------------------------------------
+
+Arguments:
+
+* 'weelist': list pointer
+* 'data': data to search in list
+
+Return value:
+
+* position of item found, -1 if item was not found
+
+C example:
+
+[source,C]
+----------------------------------------
+int pos_item = weechat_list_search_pos (list, "my data");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+pos_item = weechat.list_search_pos(list, data)
+
+# example
+pos_item = weechat.list_search_pos(list, "my data")
+----------------------------------------
+
 weechat_list_casesearch
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2500,6 +2543,49 @@ item = weechat.list_casesearch(list, data)
 
 # esempio
 item = weechat.list_casesearch(list, "my data")
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_list_casesearch_pos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Search an item position in a list, ignoring case.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_list_casesearch_pos (struct t_weelist *weelist,
+                                 const char *data);
+----------------------------------------
+
+Arguments:
+
+* 'weelist': list pointer
+* 'data': data to search in list
+
+Return value:
+
+* position of item found, -1 if item was not found
+
+C example:
+
+[source,C]
+----------------------------------------
+int pos_item = weechat_list_casesearch_pos (list, "my data");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+pos_item = weechat.list_casesearch_pos(list, data)
+
+# example
+pos_item = weechat.list_casesearch_pos(list, "my data")
 ----------------------------------------
 
 weechat_list_get

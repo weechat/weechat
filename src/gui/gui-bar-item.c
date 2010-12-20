@@ -377,16 +377,38 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
             bar_color[0] = '\0';
             if (prefix || suffix)
             {
-                snprintf (delimiter_color, sizeof (delimiter_color),
-                          "%c%c%02d",
-                          GUI_COLOR_COLOR_CHAR,
-                          GUI_COLOR_FG_CHAR,
-                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
-                snprintf (bar_color, sizeof (bar_color),
-                          "%c%c%02d",
-                          GUI_COLOR_COLOR_CHAR,
-                          GUI_COLOR_FG_CHAR,
-                          CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_FLAG)
+                {
+                    snprintf (delimiter_color, sizeof (delimiter_color),
+                              "%c%c%05d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_PAIR_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_MASK);
+                }
+                else
+                {
+                    snprintf (delimiter_color, sizeof (delimiter_color),
+                              "%c%c%02d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
+                }
+                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_FLAG)
+                {
+                    snprintf (bar_color, sizeof (bar_color),
+                              "%c%c%05d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_PAIR_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_MASK);
+                }
+                else
+                {
+                    snprintf (bar_color, sizeof (bar_color),
+                              "%c%c%02d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                }
             }
             snprintf (result, length,
                       "%s%s%s%s%s%s",

@@ -183,6 +183,32 @@ weelist_search (struct t_weelist *weelist, const char *data)
 }
 
 /*
+ * weelist_search_pos: search data in a list (case sensitive), return position
+ *                     of item found, -1 if not found
+ */
+
+int
+weelist_search_pos (struct t_weelist *weelist, const char *data)
+{
+    struct t_weelist_item *ptr_item;
+    int i;
+    
+    if (!weelist || !data)
+        return -1;
+
+    i = 0;
+    for (ptr_item = weelist->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (strcmp (data, ptr_item->data) == 0)
+            return i;
+        i++;
+    }
+    /* data not found in list */
+    return -1;
+}
+
+/*
  * weelist_casesearch: search data in a list (case unsensitive)
  */
 
@@ -202,6 +228,31 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
     }
     /* data not found in list */
     return NULL;
+}
+
+/*
+ * weelist_casesearch_pos: search data in a list (case unsensitive), return
+ *                         position of item found, -1 if not found
+ */
+
+int
+weelist_casesearch_pos (struct t_weelist *weelist, const char *data)
+{
+    struct t_weelist_item *ptr_item;
+    int i;
+    
+    if (!weelist || !data)
+        return -1;
+    
+    for (ptr_item = weelist->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (string_strcasecmp (data, ptr_item->data) == 0)
+            return i;
+        i++;
+    }
+    /* data not found in list */
+    return -1;
 }
 
 /*

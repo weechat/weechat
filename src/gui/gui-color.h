@@ -114,6 +114,9 @@ enum t_gui_color_enum
 #define GUI_COLOR_BAR_MOVE_CURSOR_CHAR        '#'
 #define GUI_COLOR_BAR_MOVE_CURSOR_STR         "#"
 
+#define GUI_COLOR_PAIR_FLAG 0x10000
+#define GUI_COLOR_PAIR_MASK 0xFFFF
+
 /* color structure */
 
 struct t_gui_color
@@ -124,9 +127,22 @@ struct t_gui_color
     char *string;                   /* WeeChat color: "\x19??", ?? is #color*/
 };
 
+/* custom color in palette */
+
+struct t_gui_color_palette
+{
+    char *alias;                    /* alias name for this color pair       */
+    int foreground;                 /* foreground color                     */
+    int background;                 /* background color                     */
+    int r, g, b;                    /* red/green/blue values for color      */
+};
+
 /* color variables */
 
 extern struct t_gui_color *gui_color[];
+extern struct t_hashtable *gui_color_hash_palette_color;
+extern struct t_hashtable *gui_color_hash_palette_alias;
+extern struct t_weelist *gui_color_list_with_alias;
 
 /* color functions */
 
@@ -135,15 +151,27 @@ extern const char *gui_color_get_custom (const char *color_name);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_string_replace_colors (const char *string);
 extern void gui_color_free (struct t_gui_color *color);
+extern int gui_color_palette_get_alias (const char *alias);
+extern struct t_gui_color_palette *gui_color_palette_get (int number);
+extern void gui_color_palette_add (int number, const char *value);
+extern void gui_color_palette_remove (int number);
+extern void gui_color_palette_change (int number, const char *value);
 
 /* color functions (GUI dependent) */
 
 extern int gui_color_search (const char *color_name);
 extern int gui_color_assign (int *color, char const *color_name);
+extern int gui_color_assign_by_diff (int *color, const char *color_name,
+                                     int diff);
 extern int gui_color_get_number ();
 extern const char *gui_color_get_name (int num_color);
+extern void gui_color_init_pair (int number);
 extern void gui_color_init_pairs ();
 extern void gui_color_init_weechat ();
 extern void gui_color_display_terminal_colors ();
+extern void gui_color_palette_build_aliases ();
+extern struct t_gui_color_palette *gui_color_palette_new (int number,
+                                                          const char *value);
+extern void gui_color_palette_free (struct t_gui_color_palette *color_palette);
 
 #endif /* __WEECHAT_GUI_COLOR_H */

@@ -2501,6 +2501,48 @@ item = weechat.list_search(list, data)
 item = weechat.list_search(list, "ma donnée")
 ----------------------------------------
 
+weechat_list_search_pos
+^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Recherche la position d'un élément dans une liste.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_list_search_pos (struct t_weelist *weelist,
+                             const char *data);
+----------------------------------------
+
+Paramètres :
+
+* 'weelist' : pointeur vers la liste
+* 'data' : donnée à chercher dans la liste
+
+Valeur de retour :
+
+* position de l'élément trouvé, -1 si aucun élément n'a été trouvé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int pos_item = weechat_list_search_pos (list, "ma donnée");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+pos_item = weechat.list_search_pos(list, data)
+
+# exemple
+pos_item = weechat.list_search_pos(list, "ma donnée")
+----------------------------------------
+
 weechat_list_casesearch
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2539,6 +2581,48 @@ item = weechat.list_casesearch(list, data)
 
 # exemple
 item = weechat.list_casesearch(list, "ma donnée")
+----------------------------------------
+
+weechat_list_casesearch_pos
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Recherche la position d'un élément dans la liste, sans tenir compte de la casse.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_list_casesearch_pos (struct t_weelist *weelist,
+                                 const char *data);
+----------------------------------------
+
+Paramètres :
+
+* 'weelist' : pointeur vers la liste
+* 'data' : données à chercher dans la liste
+
+Valeur de retour :
+
+* position l'élément trouvé, -1 si aucun élément n'a été trouvé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int pos_item = weechat_list_casesearch_pos (list, "ma donnée");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+pos_item = weechat.list_casesearch_pos(list, data)
+
+# exemple
+pos_item = weechat.list_casesearch_pos(list, "ma donnée")
 ----------------------------------------
 
 weechat_list_get

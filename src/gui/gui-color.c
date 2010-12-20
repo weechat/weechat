@@ -36,12 +36,21 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
+#include "../core/wee-list.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 #include "gui-color.h"
+#include "gui-window.h"
 
 
 struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
+
+/* palette colors and aliases */
+struct t_hashtable *gui_color_hash_palette_color = NULL;
+struct t_hashtable *gui_color_hash_palette_alias = NULL;
+struct t_weelist *gui_color_list_with_alias = NULL;
 
 
 /*
@@ -52,27 +61,21 @@ struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
 const char *
 gui_color_search_config (const char *color_name)
 {
-    struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     
     if (color_name)
     {
-        ptr_section = config_file_search_section (weechat_config_file,
-                                                  "color");
-        if (ptr_section)
+        for (ptr_option = weechat_config_section_color->options;
+             ptr_option; ptr_option = ptr_option->next_option)
         {
-            for (ptr_option = ptr_section->options; ptr_option;
-                 ptr_option = ptr_option->next_option)
+            if (string_strcasecmp (ptr_option->name, color_name) == 0)
             {
-                if (string_strcasecmp (ptr_option->name, color_name) == 0)
+                if (ptr_option->min < 0)
                 {
-                    if (ptr_option->min < 0)
-                    {
-                        return gui_color_get_custom (
-                            gui_color_get_name (CONFIG_COLOR(ptr_option)));
-                    }
-                    return GUI_COLOR(ptr_option->min);
+                    return gui_color_get_custom (
+                        gui_color_get_name (CONFIG_COLOR(ptr_option)));
                 }
+                return GUI_COLOR(ptr_option->min);
             }
         }
     }
@@ -189,9 +192,8 @@ gui_color_get_custom (const char *color_name)
     else
     {
         /* custom color name (GUI dependent) */
-        error = NULL;
-        pair = (int)strtol (color_name, &error, 10);
-        if (error && !error[0])
+        pair = gui_color_palette_get_alias (color_name);
+        if (pair >= 0)
         {
             snprintf (color[index_color], sizeof (color[index_color]),
                       "%s%s%05d",
@@ -201,61 +203,74 @@ gui_color_get_custom (const char *color_name)
         }
         else
         {
-            pos_comma = strchr (color_name, ',');
-            if (pos_comma)
+            error = NULL;
+            pair = (int)strtol (color_name, &error, 10);
+            if (error && !error[0])
             {
-                if (pos_comma == color_name)
-                    str_fg = NULL;
-                else
-                    str_fg = string_strndup (color_name, pos_comma - color_name);
-                pos_bg = pos_comma + 1;
+                snprintf (color[index_color], sizeof (color[index_color]),
+                          "%s%s%05d",
+                          GUI_COLOR_COLOR_STR,
+                          GUI_COLOR_PAIR_STR,
+                          pair);
             }
             else
             {
-                str_fg = strdup (color_name);
-                pos_bg = NULL;
-            }
-            
-            if (str_fg && pos_bg)
-            {
-                fg = gui_color_search (str_fg);
-                bg = gui_color_search (pos_bg);
-                if ((fg >= 0) && (bg >= 0))
+                pos_comma = strchr (color_name, ',');
+                if (pos_comma)
                 {
-                    snprintf (color[index_color], sizeof (color[index_color]),
-                              "%s%s%02d,%02d",
-                              GUI_COLOR_COLOR_STR,
-                              GUI_COLOR_FG_BG_STR,
-                              fg, bg);
+                    if (pos_comma == color_name)
+                        str_fg = NULL;
+                    else
+                        str_fg = string_strndup (color_name, pos_comma - color_name);
+                    pos_bg = pos_comma + 1;
                 }
-            }
-            else if (str_fg && !pos_bg)
-            {
-                fg = gui_color_search (str_fg);
-                if (fg >= 0)
+                else
                 {
-                    snprintf (color[index_color], sizeof (color[index_color]),
-                              "%s%s%02d",
-                              GUI_COLOR_COLOR_STR,
-                              GUI_COLOR_FG_STR,
-                              fg);
+                    str_fg = strdup (color_name);
+                    pos_bg = NULL;
                 }
-            }
-            else if (!str_fg && pos_bg)
-            {
-                bg = gui_color_search (pos_bg);
-                if (bg >= 0)
+                
+                if (str_fg && pos_bg)
                 {
-                    snprintf (color[index_color], sizeof (color[index_color]),
-                              "%s%s%02d",
-                              GUI_COLOR_COLOR_STR,
-                              GUI_COLOR_BG_STR,
-                              bg);
+                    fg = gui_color_search (str_fg);
+                    bg = gui_color_search (pos_bg);
+                    if ((fg >= 0) && (bg >= 0))
+                    {
+                        snprintf (color[index_color], sizeof (color[index_color]),
+                                  "%s%s%02d,%02d",
+                                  GUI_COLOR_COLOR_STR,
+                                  GUI_COLOR_FG_BG_STR,
+                                  fg, bg);
+                    }
                 }
+                else if (str_fg && !pos_bg)
+                {
+                    fg = gui_color_search (str_fg);
+                    if (fg >= 0)
+                    {
+                        snprintf (color[index_color], sizeof (color[index_color]),
+                                  "%s%s%02d",
+                                  GUI_COLOR_COLOR_STR,
+                                  GUI_COLOR_FG_STR,
+                                  fg);
+                    }
+                }
+                else if (!str_fg && pos_bg)
+                {
+                    bg = gui_color_search (pos_bg);
+                    if (bg >= 0)
+                    {
+                        snprintf (color[index_color], sizeof (color[index_color]),
+                                  "%s%s%02d",
+                                  GUI_COLOR_COLOR_STR,
+                                  GUI_COLOR_BG_STR,
+                                  bg);
+                    }
+                }
+                
+                if (str_fg)
+                    free (str_fg);
             }
-            
-            if (str_fg)
-                free (str_fg);
         }
     }
     
@@ -461,5 +476,146 @@ gui_color_free (struct t_gui_color *color)
             free (color->string);
         
         free (color);
+    }
+}
+
+/*
+ * gui_color_palette_alloc: allocate hashtables and lists for palette
+ */
+
+void
+gui_color_palette_alloc ()
+{
+    if (!gui_color_hash_palette_color)
+    {
+        gui_color_hash_palette_color = hashtable_new (16,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_POINTER,
+                                                      NULL,
+                                                      NULL);
+    }
+    if (!gui_color_hash_palette_alias)
+    {
+        gui_color_hash_palette_alias = hashtable_new (16,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_INTEGER,
+                                                      NULL,
+                                                      NULL);
+    }
+    if (!gui_color_list_with_alias)
+    {
+        gui_color_list_with_alias = weelist_new ();
+    }
+}
+
+/*
+ * gui_color_palette_get_alias: get color pair number with alias
+ *                              return -1 if alias is not found
+ */
+
+int
+gui_color_palette_get_alias (const char *alias)
+{
+    int *ptr_number;
+    
+    if (gui_color_hash_palette_alias)
+    {
+        ptr_number = hashtable_get (gui_color_hash_palette_alias, alias);
+        if (ptr_number)
+            return *ptr_number;
+    }
+    
+    /* alias not found */
+    return -1;
+}
+
+/*
+ * gui_color_palette_get: get a color palette with number
+ */
+
+struct t_gui_color_palette *
+gui_color_palette_get (int number)
+{
+    char str_number[64];
+    
+    snprintf (str_number, sizeof (str_number), "%d", number);
+    return hashtable_get (gui_color_hash_palette_color,
+                          str_number);
+}
+
+/*
+ * gui_color_palette_add: add a color in palette
+ */
+
+void
+gui_color_palette_add (int number, const char *value)
+{
+    struct t_gui_color_palette *new_color_palette, *ptr_color_palette;
+    char str_number[64];
+    
+    gui_color_palette_alloc ();
+    
+    new_color_palette = gui_color_palette_new (number, value);
+    if (!new_color_palette)
+        return;
+
+    snprintf (str_number, sizeof (str_number), "%d", number);
+    ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
+                                       str_number);
+    if (ptr_color_palette)
+        gui_color_palette_free (ptr_color_palette);
+    hashtable_set (gui_color_hash_palette_color,
+                   str_number, new_color_palette);
+    gui_color_palette_build_aliases ();
+    
+    if (gui_init_ok)
+        gui_color_init_pair (number);
+}
+
+/*
+ * gui_color_palette_remove: remove a color in palette
+ */
+
+void
+gui_color_palette_remove (int number)
+{
+    struct t_gui_color_palette *ptr_color_palette;
+    char str_number[64];
+    
+    gui_color_palette_alloc ();
+    
+    snprintf (str_number, sizeof (str_number), "%d", number);
+    ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
+                                       str_number);
+    if (ptr_color_palette)
+    {
+        gui_color_palette_free (ptr_color_palette);
+        hashtable_remove (gui_color_hash_palette_color, str_number);
+        gui_color_palette_build_aliases ();
+        if (gui_init_ok)
+            gui_color_init_pair (number);
+    }
+}
+
+/*
+ * gui_color_palette_change: change a color in palette
+ */
+
+void
+gui_color_palette_change (int number, const char *value)
+{
+    struct t_gui_color_palette *ptr_color_palette;
+    char str_number[64];
+    
+    gui_color_palette_alloc ();
+    
+    snprintf (str_number, sizeof (str_number), "%d", number);
+    ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
+                                       str_number);
+    if (ptr_color_palette)
+    {
+        gui_color_palette_free (ptr_color_palette);
+        hashtable_remove (gui_color_hash_palette_color, str_number);
+        gui_color_palette_add (number, value);
     }
 }

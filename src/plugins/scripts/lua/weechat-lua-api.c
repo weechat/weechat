@@ -817,6 +817,41 @@ weechat_lua_api_list_search (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_list_search_pos: search position of a string in list
+ */
+
+static int
+weechat_lua_api_list_search_pos (lua_State *L)
+{
+    const char *weelist, *data;
+    int n, pos;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_search_pos");
+        LUA_RETURN_INT(-1);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_search_pos");
+        LUA_RETURN_INT(-1);
+    }
+    
+    weelist = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
+    
+    pos = weechat_list_search_pos (script_str2ptr (weelist), data);
+    
+    LUA_RETURN_INT(pos);
+}
+
+/*
  * weechat_lua_api_list_casesearch: search a string in list (ignore case)
  */
 
@@ -851,6 +886,42 @@ weechat_lua_api_list_casesearch (lua_State *L)
                                                       data));
     
     LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_list_casesearch_pos: search position of a string in list
+ *                                      (ignore case)
+ */
+
+static int
+weechat_lua_api_list_casesearch_pos (lua_State *L)
+{
+    const char *weelist, *data;
+    int n, pos;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        LUA_RETURN_INT(-1);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        LUA_RETURN_INT(-1);
+    }
+    
+    weelist = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
+    
+    pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
+    
+    LUA_RETURN_INT(pos);
 }
 
 /*
@@ -7612,7 +7683,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "list_new", &weechat_lua_api_list_new },
     { "list_add", &weechat_lua_api_list_add },
     { "list_search", &weechat_lua_api_list_search },
+    { "list_search_pos", &weechat_lua_api_list_search_pos },
     { "list_casesearch", &weechat_lua_api_list_casesearch },
+    { "list_casesearch_pos", &weechat_lua_api_list_casesearch_pos },
     { "list_get", &weechat_lua_api_list_get },
     { "list_set", &weechat_lua_api_list_set },
     { "list_next", &weechat_lua_api_list_next },

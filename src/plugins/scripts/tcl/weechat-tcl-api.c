@@ -932,6 +932,41 @@ weechat_tcl_api_list_search (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_list_search_pos: search position of a string in list
+ */
+
+static int
+weechat_tcl_api_list_search_pos (ClientData clientData, Tcl_Interp *interp,
+                             int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *weelist, *data;
+    int i, pos;
+
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_search_pos");
+        TCL_RETURN_INT(-1);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "list_search_pos");
+        TCL_RETURN_INT(-1);
+    }
+    
+    weelist = Tcl_GetStringFromObj (objv[1], &i);
+    data = Tcl_GetStringFromObj (objv[2], &i);
+    
+    pos = weechat_list_search_pos (script_str2ptr (weelist), data);
+    
+    TCL_RETURN_INT(pos);
+}
+
+/*
  * weechat_tcl_api_list_casesearch: search a string in list (ignore case)
  */
 
@@ -965,6 +1000,42 @@ weechat_tcl_api_list_casesearch (ClientData clientData, Tcl_Interp *interp,
                                                       data));
     
     TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_list_casesearch_pos: search position of a string in list
+ *                                      (ignore case)
+ */
+
+static int
+weechat_tcl_api_list_casesearch_pos (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *weelist, *data;
+    int i, pos;
+
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        TCL_RETURN_INT(-1);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        TCL_RETURN_INT(-1);
+    }
+    
+    weelist = Tcl_GetStringFromObj (objv[1], &i);
+    data = Tcl_GetStringFromObj (objv[2], &i);
+    
+    pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
+    
+    TCL_RETURN_INT(pos);
 }
 
 /*
@@ -7405,8 +7476,12 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_list_add, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::list_search",
                           weechat_tcl_api_list_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::list_search_pos",
+                          weechat_tcl_api_list_search_pos, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::list_casesearch",
                           weechat_tcl_api_list_casesearch, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::list_casesearch_pos",
+                          weechat_tcl_api_list_casesearch_pos, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::list_get",
                           weechat_tcl_api_list_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::list_set",

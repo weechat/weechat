@@ -94,6 +94,7 @@ enum t_config_look_save_layout_on_exit
 };
 
 extern struct t_config_file *weechat_config_file;
+extern struct t_config_section *weechat_config_section_color;
 extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_notify;

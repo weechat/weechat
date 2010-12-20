@@ -831,6 +831,42 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
 }
 
 /*
+ * weechat_ruby_api_list_search_pos: search position of a string in list
+ */
+
+static VALUE
+weechat_ruby_api_list_search_pos (VALUE class, VALUE weelist, VALUE data)
+{
+    char *c_weelist, *c_data;
+    int pos;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_search_pos");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    if (NIL_P (weelist) || NIL_P (data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_search_pos");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    Check_Type (weelist, T_STRING);
+    Check_Type (data, T_STRING);
+    
+    c_weelist = StringValuePtr (weelist);
+    c_data = StringValuePtr (data);
+    
+    pos = weechat_list_search_pos (script_str2ptr(c_weelist), c_data);
+    
+    RUBY_RETURN_INT(pos);
+}
+
+/*
  * weechat_ruby_api_list_casesearch: search a string in list (ignore case)
  */
 
@@ -864,6 +900,43 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
                                                       c_data));
     
     RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_list_casesearch_pos: search position of a string in list
+ *                                       (ignore case)
+ */
+
+static VALUE
+weechat_ruby_api_list_casesearch_pos (VALUE class, VALUE weelist, VALUE data)
+{
+    char *c_weelist, *c_data;
+    int pos;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    if (NIL_P (weelist) || NIL_P (data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    Check_Type (weelist, T_STRING);
+    Check_Type (data, T_STRING);
+    
+    c_weelist = StringValuePtr (weelist);
+    c_data = StringValuePtr (data);
+    
+    pos = weechat_list_casesearch_pos (script_str2ptr(c_weelist), c_data);
+    
+    RUBY_RETURN_INT(pos);
 }
 
 /*
@@ -7546,7 +7619,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "list_new", &weechat_ruby_api_list_new, 0);
     rb_define_module_function (ruby_mWeechat, "list_add", &weechat_ruby_api_list_add, 4);
     rb_define_module_function (ruby_mWeechat, "list_search", &weechat_ruby_api_list_search, 2);
+    rb_define_module_function (ruby_mWeechat, "list_search_pos", &weechat_ruby_api_list_search_pos, 2);
     rb_define_module_function (ruby_mWeechat, "list_casesearch", &weechat_ruby_api_list_casesearch, 2);
+    rb_define_module_function (ruby_mWeechat, "list_casesearch_pos", &weechat_ruby_api_list_casesearch_pos, 2);
     rb_define_module_function (ruby_mWeechat, "list_get", &weechat_ruby_api_list_get, 2);
     rb_define_module_function (ruby_mWeechat, "list_set", &weechat_ruby_api_list_set, 2);
     rb_define_module_function (ruby_mWeechat, "list_next", &weechat_ruby_api_list_next, 1);

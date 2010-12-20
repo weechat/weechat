@@ -61,6 +61,7 @@
 
 struct t_config_file *weechat_config_file = NULL;
 struct t_config_section *weechat_config_section_debug = NULL;
+struct t_config_section *weechat_config_section_color = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
@@ -658,6 +659,130 @@ config_weechat_debug_set (const char *plugin_name, const char *value)
                                                   weechat_config_section_debug,
                                                   plugin_name,
                                                   value);
+}
+
+/*
+ * config_weechat_palette_change_cb: called when a palette option is changed
+ */
+
+void
+config_weechat_palette_change_cb (void *data,
+                                  struct t_config_option *option)
+{
+    char *error;
+    int number;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    error = NULL;
+    number = (int)strtol (option->name, &error, 10);
+    if (error && !error[0])
+    {
+        gui_color_palette_change (number, CONFIG_STRING(option));
+    }
+}
+
+/*
+ * config_weechat_palette_create_option_cb: create option in "palette" section
+ */
+
+int
+config_weechat_palette_create_option_cb (void *data,
+                                         struct t_config_file *config_file,
+                                         struct t_config_section *section,
+                                         const char *option_name,
+                                         const char *value)
+{
+    struct t_config_option *ptr_option;
+    char *error;
+    int rc, number;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+    error = NULL;
+    number = (int)strtol (option_name, &error, 10);
+    if (error && !error[0])
+    {
+        if (option_name)
+        {
+            ptr_option = config_file_search_option (config_file, section,
+                                                    option_name);
+            if (ptr_option)
+            {
+                if (value)
+                    rc = config_file_option_set (ptr_option, value, 1);
+                else
+                {
+                    config_file_option_free (ptr_option);
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+                }
+            }
+            else
+            {
+                if (value)
+                {
+                    ptr_option = config_file_new_option (
+                        config_file, section,
+                        option_name, "string",
+                        _("custom color in palette, format is: \"alias;fg,bg;r/g/b\" "
+                          "where alias is color name, fg,bg is \"foreground,background\" "
+                          "(example: \"200,-1\"), r/g/b is redefinition of color "
+                          "(terminal must support it) (everything is optional "
+                          "in this format)"),
+                        NULL, 0, 0, "", value, 0, NULL, NULL,
+                        &config_weechat_palette_change_cb, NULL,
+                        NULL, NULL);
+                    rc = (ptr_option) ?
+                        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                    if (ptr_option)
+                        gui_color_palette_add (number, value);
+                }
+                else
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: palette option must be numeric"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    }
+    
+    return rc;
+}
+
+/*
+ * config_weechat_palette_delete_option_cb: delete option in "palette" section
+ */
+
+int
+config_weechat_palette_delete_option_cb (void *data,
+                                       struct t_config_file *config_file,
+                                       struct t_config_section *section,
+                                       struct t_config_option *option)
+{
+    char *error;
+    int number;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    error = NULL;
+    number = (int)strtol (option->name, &error, 10);
+    if (error && !error[0])
+        gui_color_palette_remove (number);
+    
+    config_file_option_free (option);
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
 /*
@@ -1606,6 +1731,19 @@ config_weechat_init_options ()
            "messages"),
         NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
+    /* palette */
+    ptr_section = config_file_new_section (weechat_config_file, "palette",
+                                           1, 1,
+                                           NULL, NULL, NULL, NULL,
+                                           NULL, NULL,
+                                           &config_weechat_palette_create_option_cb, NULL,
+                                           &config_weechat_palette_delete_option_cb, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
     /* colors */
     ptr_section = config_file_new_section (weechat_config_file, "color",
                                            0, 0,
@@ -1616,6 +1754,8 @@ config_weechat_init_options ()
         config_file_free (weechat_config_file);
         return 0;
     }
+    
+    weechat_config_section_color = ptr_section;
     
     /* general color settings */
     config_color_separator = config_file_new_option (
@@ -2232,9 +2372,9 @@ config_weechat_init ()
                          _("FATAL: error initializing configuration options"));
     }
     
-    /* create timer to check if day has changed */
     if (!config_day_change_timer)
     {
+        /* create timer to check if day has changed */
         gettimeofday (&tv_time, NULL);
         local_time = localtime (&tv_time.tv_sec);
         config_day_change_old_day = local_time->tm_mday;
@@ -2244,8 +2384,9 @@ config_weechat_init ()
                                               0,
                                               &config_day_change_timer_cb,
                                               NULL);
-        config_change_highlight_regex (NULL, NULL);
     }
+    if (!config_highlight_regex)
+        config_change_highlight_regex (NULL, NULL);
     
     return rc;
 }

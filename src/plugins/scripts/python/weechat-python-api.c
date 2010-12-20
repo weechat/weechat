@@ -769,6 +769,39 @@ weechat_python_api_list_search (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_list_search_pos: search position of a string in list
+ */
+
+static PyObject *
+weechat_python_api_list_search_pos (PyObject *self, PyObject *args)
+{
+    char *weelist, *data;
+    int pos;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_search_pos");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    weelist = NULL;
+    data = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &weelist, &data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "list_search_pos");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    pos = weechat_list_search_pos (script_str2ptr (weelist), data);
+    
+    PYTHON_RETURN_INT(pos);
+}
+
+/*
  * weechat_python_api_list_casesearch: search a string in list (ignore case)
  */
 
@@ -800,6 +833,40 @@ weechat_python_api_list_casesearch (PyObject *self, PyObject *args)
                                                       data));
     
     PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_list_casesearch_pos: search position of a string in list
+ *                                         (ignore case)
+ */
+
+static PyObject *
+weechat_python_api_list_casesearch_pos (PyObject *self, PyObject *args)
+{
+    char *weelist, *data;
+    int pos;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    weelist = NULL;
+    data = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &weelist, &data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
+    
+    PYTHON_RETURN_INT(pos);
 }
 
 /*
@@ -6886,7 +6953,9 @@ PyMethodDef weechat_python_funcs[] =
     { "list_new", &weechat_python_api_list_new, METH_VARARGS, "" },
     { "list_add", &weechat_python_api_list_add, METH_VARARGS, "" },
     { "list_search", &weechat_python_api_list_search, METH_VARARGS, "" },
+    { "list_search_pos", &weechat_python_api_list_search_pos, METH_VARARGS, "" },
     { "list_casesearch", &weechat_python_api_list_casesearch, METH_VARARGS, "" },
+    { "list_casesearch_pos", &weechat_python_api_list_casesearch_pos, METH_VARARGS, "" },
     { "list_get", &weechat_python_api_list_get, METH_VARARGS, "" },
     { "list_set", &weechat_python_api_list_set, METH_VARARGS, "" },
     { "list_next", &weechat_python_api_list_next, METH_VARARGS, "" },

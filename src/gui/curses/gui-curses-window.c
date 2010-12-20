@@ -235,9 +235,9 @@ gui_window_reset_style (WINDOW *window, int num_color)
     window_current_style_attr = 0;
     window_current_color_attr = 0;
     
+    wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
     wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
              gui_color[num_color]->attributes);
-    wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
 }
 
 /*
@@ -297,9 +297,9 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
         gui_window_reset_style (window, num_color);
         wattron (window, gui_color[num_color]->attributes);
         if ((gui_color[num_color]->foreground > 0)
-            && (gui_color[num_color]->foreground & 0x10000))
+            && (gui_color[num_color]->foreground & GUI_COLOR_PAIR_FLAG))
         {
-            wattron (window, COLOR_PAIR(gui_color[num_color]->foreground & 0xFFFF));
+            wattron (window, COLOR_PAIR(gui_color[num_color]->foreground & GUI_COLOR_PAIR_MASK));
         }
         else
         {
@@ -354,15 +354,22 @@ void
 gui_window_set_custom_color_fg (WINDOW *window, int fg)
 {
     int current_bg;
-    
-    if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS))
+
+    if (fg >= 0)
     {
-        current_bg = window_current_style_bg;
-        gui_window_remove_color_style (window, A_BOLD);
-        gui_window_set_color_style (window, gui_weechat_colors[fg].attributes);
-        gui_window_set_color (window,
-                              gui_weechat_colors[fg].foreground,
-                              current_bg);
+        if (fg & GUI_COLOR_PAIR_FLAG)
+        {
+            gui_window_set_custom_color_pair (window, fg & GUI_COLOR_PAIR_MASK);
+        }
+        else if (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
+        {
+            current_bg = window_current_style_bg;
+            gui_window_remove_color_style (window, A_BOLD);
+            gui_window_set_color_style (window, gui_weechat_colors[fg].attributes);
+            gui_window_set_color (window,
+                                  gui_weechat_colors[fg].foreground,
+                                  current_bg);
+        }
     }
 }
 
@@ -376,14 +383,21 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
 {
     int current_attr, current_fg;
     
-    if ((bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
+    if (bg >= 0)
     {
-        current_attr = window_current_style_attr;
-        current_fg = window_current_style_fg;
-        gui_window_set_color_style (window, current_attr);
-        gui_window_set_color (window, current_fg,
-                              (gui_color_num_bg > 8) ?
-                              gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
+        if (bg & GUI_COLOR_PAIR_FLAG)
+        {
+            gui_window_set_custom_color_pair (window, bg & GUI_COLOR_PAIR_MASK);
+        }
+        else if (bg < GUI_CURSES_NUM_WEECHAT_COLORS)
+        {
+            current_attr = window_current_style_attr;
+            current_fg = window_current_style_fg;
+            gui_window_set_color_style (window, current_attr);
+            gui_window_set_color (window, current_fg,
+                                  (gui_color_num_bg > 8) ?
+                                  gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
+        }
     }
 }
 

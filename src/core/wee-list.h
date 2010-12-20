@@ -41,8 +41,10 @@ extern struct t_weelist_item *weelist_add (struct t_weelist *weelist,
                                            void *user_data);
 extern struct t_weelist_item *weelist_search (struct t_weelist *weelist,
                                               const char *data);
+extern int weelist_search_pos (struct t_weelist *weelist, const char *data);
 extern struct t_weelist_item *weelist_casesearch (struct t_weelist *weelist,
                                                   const char *data);
+extern int weelist_casesearch_pos (struct t_weelist *weelist, const char *data);
 extern struct t_weelist_item *weelist_get (struct t_weelist *weelist,
                                            int position);
 extern void weelist_set (struct t_weelist_item *item, const char *value);

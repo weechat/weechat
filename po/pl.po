@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-17 12:25+0100\n"
+"POT-Creation-Date: 2010-12-20 09:52+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1782,6 +1782,17 @@ msgstr "\t\tDzień zmienił się na %s"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "poziom debugowania dla wtyczki (\"core\" dla rdzenia WeeChat)"
+
+msgid ""
+"custom color in palette, format is: \"alias;fg,bg;r/g/b\" where alias is "
+"color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
+"is redefinition of color (terminal must support it) (everything is optional "
+"in this format)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: palette option must be numeric"
+msgstr "%sBłąd: nie udało się zapisać ustawień do %s"
 
 msgid "Notify level for buffer"
 msgstr "Poziom powiadomień dla buforu"

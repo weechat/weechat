@@ -511,7 +511,9 @@ plugin_load (const char *filename)
         new_plugin->list_new = &weelist_new;
         new_plugin->list_add = &weelist_add;
         new_plugin->list_search = &weelist_search;
+        new_plugin->list_search_pos = &weelist_search_pos;
         new_plugin->list_casesearch = &weelist_casesearch;
+        new_plugin->list_casesearch_pos = &weelist_casesearch_pos;
         new_plugin->list_get = &weelist_get;
         new_plugin->list_set = &weelist_set;
         new_plugin->list_next = &weelist_next;

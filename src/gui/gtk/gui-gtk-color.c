@@ -102,6 +102,26 @@ gui_color_assign (int *color, const char *color_name)
 }
 
 /*
+ * gui_color_assign_by_diff: assign color by difference
+ *                           It is called when a color option is
+ *                           set with value ++X or --X, to search
+ *                           another color (for example ++1 is
+ *                           next color/alias in list)
+ *                           return 1 if ok, 0 if error
+ */
+
+int
+gui_color_assign_by_diff (int *color, const char *color_name, int diff)
+{
+    /* TODO: write this function for Gtk */
+    (void) color;
+    (void) color_name;
+    (void) diff;
+    
+    return 1;
+}
+
+/*
  * gui_color_get_number: get number of available colors
  */
 
@@ -145,6 +165,17 @@ gui_color_get_pair (int num_color)
         bg = 0;
     
     return (bg * 8) + fg;
+}
+
+/*
+ * gui_color_init_pair: init a color pair
+ */
+
+void
+gui_color_init_pair (int number)
+{
+    /* This function does nothing in Gtk GUI */
+    (void) number;
 }
 
 /*
@@ -225,6 +256,41 @@ void
 gui_color_display_terminal_colors ()
 {
     /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_palette_build_aliases: build aliases for palette
+ */
+
+void
+gui_color_palette_build_aliases ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_palette_new: create a new color in palette
+ */
+
+struct t_gui_color_palette *
+gui_color_palette_new (int number, const char *value)
+{
+    /* This function does nothing in Gtk GUI */
+    (void) number;
+    (void) value;
+    
+    return NULL;
+}
+
+/*
+ * gui_color_palette_free: free a color in palette
+ */
+
+void
+gui_color_palette_free (struct t_gui_color_palette *color_palette)
+{
+    /* This function does nothing in Gtk GUI */
+    (void) color_palette;
 }
 
 /*

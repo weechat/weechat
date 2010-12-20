@@ -1260,12 +1260,9 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            number = number % (num_colors + 1);
-                            value_int = (old_value + number) %
-                                (num_colors + 1);
-                            if (value_int > num_colors - 1)
-                                value_int -= num_colors;
-                            if (value_int <= num_colors - 1)
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          number))
                                 new_value_ok = 1;
                         }
                     }
@@ -1275,12 +1272,9 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         number = strtol (value + 2, &error, 10);
                         if (error && !error[0])
                         {
-                            number = number % (num_colors + 1);
-                            value_int = (old_value + num_colors - number) %
-                                num_colors;
-                            if (value_int < 0)
-                                value_int += num_colors;
-                            if (value_int >= 0)
+                            if (gui_color_assign_by_diff (&value_int,
+                                                          gui_color_get_name (old_value),
+                                                          -1 * number))
                                 new_value_ok = 1;
                         }
                     }

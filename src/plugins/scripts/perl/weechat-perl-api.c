@@ -729,6 +729,39 @@ XS (XS_weechat_api_list_search)
 }
 
 /*
+ * weechat::list_search_pos: search position of a string in list
+ */
+
+XS (XS_weechat_api_list_search_pos)
+{
+    char *weelist, *data;
+    int pos;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_search_pos");
+        PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "list_search_pos");
+        PERL_RETURN_INT(-1);
+    }
+    
+    weelist = SvPV (ST (0), PL_na);
+    data = SvPV (ST (1), PL_na);
+    
+    pos = weechat_list_search_pos (script_str2ptr (weelist), data);
+    
+    PERL_RETURN_INT(pos);
+}
+
+/*
  * weechat::list_casesearch: search a string in list (ignore case)
  */
 
@@ -759,6 +792,40 @@ XS (XS_weechat_api_list_casesearch)
                                                       data));
     
     PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::list_casesearch_pos: search position of a string in list
+ *                               (ignore case)
+ */
+
+XS (XS_weechat_api_list_casesearch_pos)
+{
+    char *weelist, *data;
+    int pos;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "list_casesearch_pos");
+        PERL_RETURN_INT(-1);
+    }
+    
+    weelist = SvPV (ST (0), PL_na);
+    data = SvPV (ST (1), PL_na);
+    
+    pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
+    
+    PERL_RETURN_INT(pos);
 }
 
 /*
@@ -6553,7 +6620,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::list_new", XS_weechat_api_list_new, "weechat");
     newXS ("weechat::list_add", XS_weechat_api_list_add, "weechat");
     newXS ("weechat::list_search", XS_weechat_api_list_search, "weechat");
+    newXS ("weechat::list_search_pos", XS_weechat_api_list_search_pos, "weechat");
     newXS ("weechat::list_casesearch", XS_weechat_api_list_casesearch, "weechat");
+    newXS ("weechat::list_casesearch_pos", XS_weechat_api_list_casesearch_pos, "weechat");
     newXS ("weechat::list_get", XS_weechat_api_list_get, "weechat");
     newXS ("weechat::list_set", XS_weechat_api_list_set, "weechat");
     newXS ("weechat::list_next", XS_weechat_api_list_next, "weechat");
