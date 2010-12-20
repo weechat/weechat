@@ -107,7 +107,7 @@ gui_color_assign (int *color, const char *color_name)
     /* is it pair number? */
     error = NULL;
     pair = (int)strtol (color_name, &error, 10);
-    if (error && !error[0] && (pair >= 0))
+    if (color_name[0] && error && !error[0] && (pair >= 0))
     {
         /* color_name is a number, use this pair number */
         *color = GUI_COLOR_PAIR_FLAG | pair;
