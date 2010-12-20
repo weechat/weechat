@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1631,9 +1631,6 @@ msgid ""
 "french time: \"${lightblue}%H${white}%M${lightred}%S\""
 msgstr "új nap kezdetével megjelenő időbélyeg"
 
-msgid "number of colors to use for nicks colors"
-msgstr "nevek színezéséhez használt színek száma"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -1911,52 +1908,16 @@ msgid "text color for nicks in chat window"
 msgstr "idő színe a beszédablakban"
 
 #, fuzzy
+msgid "text color for nicks (comma separated list of colors)"
+msgstr "idő színe a beszédablakban"
+
+#, fuzzy
 msgid "text color for local nick in chat window"
 msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
 
 #, fuzzy
 msgid "text color for other nick in private buffer"
 msgstr "másik fél nevének színe privát beszélgetésben"
-
-#, fuzzy
-msgid "text color #1 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #2 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #3 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #4 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #5 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #6 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #7 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #8 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #9 for nick"
-msgstr "név színe"
-
-#, fuzzy
-msgid "text color #10 for nick"
-msgstr "név színe"
 
 #, fuzzy
 msgid "text color for hostnames"
@@ -2779,9 +2740,9 @@ msgstr ""
 msgid "%sdemo message with error prefix"
 msgstr ""
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr ""
+#, fuzzy
+msgid "colors"
+msgstr "üzenetek színe"
 
 msgid "Available infos:"
 msgstr ""
@@ -6887,6 +6848,49 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#~ msgid "number of colors to use for nicks colors"
+#~ msgstr "nevek színezéséhez használt színek száma"
+
+#, fuzzy
+#~ msgid "text color #1 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #2 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #3 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #4 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #5 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #6 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #7 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #8 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #9 for nick"
+#~ msgstr "név színe"
+
+#, fuzzy
+#~ msgid "text color #10 for nick"
+#~ msgstr "név színe"
 
 #, fuzzy
 #~ msgid "[-server server] receiver[,receiver] text"

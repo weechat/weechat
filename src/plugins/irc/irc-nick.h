@@ -46,6 +46,8 @@ struct t_irc_nick
 extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
 extern int irc_nick_is_nick (const char *string);
+extern int irc_nick_config_colors_cb (void *data, const char *option,
+                                      const char *value);
 extern const char *irc_nick_find_color (const char *nickname);
 extern const char *irc_nick_find_color_name (const char *nickname);
 extern int irc_nick_is_op (struct t_irc_server *server,

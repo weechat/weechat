@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1838,9 +1838,6 @@ msgstr ""
 "format czasu użyty w plikach z logami (zobacz man strftime dla "
 "specyfikatorów daty/czasu)"
 
-msgid "number of colors to use for nicks colors"
-msgstr "liczba kolorów do użycia dla kolorowania nicków"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -2134,41 +2131,15 @@ msgstr "kolor nazw kanałów"
 msgid "text color for nicks in chat window"
 msgstr "kolor nicków w oknie rozmowy"
 
+#, fuzzy
+msgid "text color for nicks (comma separated list of colors)"
+msgstr "kolor nicków w oknie rozmowy"
+
 msgid "text color for local nick in chat window"
 msgstr "kolor lokalnego nicka w oknie rozmowy"
 
 msgid "text color for other nick in private buffer"
 msgstr "kolor innego nicka w prywatnym buforze"
-
-msgid "text color #1 for nick"
-msgstr "kolor #1 nicka"
-
-msgid "text color #2 for nick"
-msgstr "kolor #2 nicka"
-
-msgid "text color #3 for nick"
-msgstr "kolor #3 nicka"
-
-msgid "text color #4 for nick"
-msgstr "kolor #4 nicka"
-
-msgid "text color #5 for nick"
-msgstr "kolor #5 nicka"
-
-msgid "text color #6 for nick"
-msgstr "kolor #6 nicka"
-
-msgid "text color #7 for nick"
-msgstr "kolor #7 nicka"
-
-msgid "text color #8 for nick"
-msgstr "kolor #8 nicka"
-
-msgid "text color #9 for nick"
-msgstr "kolor #9 nicka"
-
-msgid "text color #10 for nick"
-msgstr "kolor #10 nicka"
 
 msgid "text color for hostnames"
 msgstr "kolor nazw hostów"
@@ -3004,9 +2975,9 @@ msgstr "testowa wiadomość bez przedrostka"
 msgid "%sdemo message with error prefix"
 msgstr "%stestowa wiadomość z przedrostkiem"
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr "kolory: %s bufor %s nick1 %s nick2 %s nick3 %s nick4"
+#, fuzzy
+msgid "colors"
+msgstr "kolor"
 
 msgid "Available infos:"
 msgstr "Dostępne informacje:"
@@ -7186,6 +7157,42 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#~ msgid "number of colors to use for nicks colors"
+#~ msgstr "liczba kolorów do użycia dla kolorowania nicków"
+
+#~ msgid "text color #1 for nick"
+#~ msgstr "kolor #1 nicka"
+
+#~ msgid "text color #2 for nick"
+#~ msgstr "kolor #2 nicka"
+
+#~ msgid "text color #3 for nick"
+#~ msgstr "kolor #3 nicka"
+
+#~ msgid "text color #4 for nick"
+#~ msgstr "kolor #4 nicka"
+
+#~ msgid "text color #5 for nick"
+#~ msgstr "kolor #5 nicka"
+
+#~ msgid "text color #6 for nick"
+#~ msgstr "kolor #6 nicka"
+
+#~ msgid "text color #7 for nick"
+#~ msgstr "kolor #7 nicka"
+
+#~ msgid "text color #8 for nick"
+#~ msgstr "kolor #8 nicka"
+
+#~ msgid "text color #9 for nick"
+#~ msgstr "kolor #9 nicka"
+
+#~ msgid "text color #10 for nick"
+#~ msgstr "kolor #10 nicka"
+
+#~ msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
+#~ msgstr "kolory: %s bufor %s nick1 %s nick2 %s nick3 %s nick4"
 
 #~ msgid "[-server server] receiver[,receiver] text"
 #~ msgstr "[-server serwer] odbiorca[,odbiorca] tekst"

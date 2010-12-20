@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_GUI_COLOR_H
 #define __WEECHAT_GUI_COLOR_H 1
 
-#define GUI_COLOR_NICK_NUMBER 10
-
 enum t_gui_color_enum
 {
     GUI_COLOR_SEPARATOR = 0,
@@ -42,16 +40,20 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_NICK,
     GUI_COLOR_CHAT_NICK_SELF,
     GUI_COLOR_CHAT_NICK_OTHER,
-    GUI_COLOR_CHAT_NICK1,
-    GUI_COLOR_CHAT_NICK2,
-    GUI_COLOR_CHAT_NICK3,
-    GUI_COLOR_CHAT_NICK4,
-    GUI_COLOR_CHAT_NICK5,
-    GUI_COLOR_CHAT_NICK6,
-    GUI_COLOR_CHAT_NICK7,
-    GUI_COLOR_CHAT_NICK8,
-    GUI_COLOR_CHAT_NICK9,
-    GUI_COLOR_CHAT_NICK10,
+    /*
+     * following obsolete colors are kept here for compatibility
+     * with WeeChat <= 0.3.3
+     */
+    GUI_COLOR_CHAT_NICK1_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK2_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK3_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK4_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK5_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK6_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK7_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK8_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK9_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK10_OBSOLETE, /* not used any more since WeeChat 0.3.4 */
     GUI_COLOR_CHAT_HOST,
     GUI_COLOR_CHAT_DELIMITERS,
     GUI_COLOR_CHAT_HIGHLIGHT,

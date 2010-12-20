@@ -48,55 +48,10 @@
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: `lightcyan`)
 
-* *weechat.color.chat_nick_color01*
-** description: `couleur du texte n°1 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `cyan`)
-
-* *weechat.color.chat_nick_color02*
-** description: `couleur du texte n°2 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `magenta`)
-
-* *weechat.color.chat_nick_color03*
-** description: `couleur du texte n°3 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `green`)
-
-* *weechat.color.chat_nick_color04*
-** description: `couleur du texte n°4 le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `brown`)
-
-* *weechat.color.chat_nick_color05*
-** description: `couleur du texte n°5 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightblue`)
-
-* *weechat.color.chat_nick_color06*
-** description: `couleur du texte n°6 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
-
-* *weechat.color.chat_nick_color07*
-** description: `couleur du texte n°7 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightcyan`)
-
-* *weechat.color.chat_nick_color08*
-** description: `couleur du texte n°8 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightmagenta`)
-
-* *weechat.color.chat_nick_color09*
-** description: `couleur du texte n°9 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightgreen`)
-
-* *weechat.color.chat_nick_color10*
-** description: `couleur du texte n°10 pour le pseudo`
-** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `blue`)
+* *weechat.color.chat_nick_colors*
+** description: `couleur du texte pour les pseudos (liste de couleurs séparées par une virgule)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * *weechat.color.chat_nick_other*
 ** description: `couleur du texte pour l'autre pseudo dans le tampon privée`
@@ -352,11 +307,6 @@
 ** description: `format de date/heure pour chaque ligne affichée dans les tampons (voir man strftime pour le format de date/heure), les couleurs sont autorisées avec le format "${couleur}", par exemple l'heure française: "${lightblue}%H${white}%M${lightred}%S"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
-
-* *weechat.look.color_nicks_number*
-** description: `nombre de couleurs à utiliser pour les couleurs des pseudos`
-** type: entier
-** valeurs: 1 .. 10 (valeur par défaut: `10`)
 
 * *weechat.look.color_real_white*
 ** description: `si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)`

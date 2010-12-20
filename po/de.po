@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
 "PO-Revision-Date: 2010-12-07 23:21+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1884,9 +1884,6 @@ msgstr ""
 "\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen, zum Beispiel eine "
 "französische Uhr: \"${lightblue}%H${white}%M${lightred}%S\""
 
-msgid "number of colors to use for nicks colors"
-msgstr "Anzahl der Farben die für die Nicknamen genutzt werden sollen"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -2205,41 +2202,15 @@ msgstr "Farbe der Channel-Namens"
 msgid "text color for nicks in chat window"
 msgstr "Farbe für Nicks im Chat-Fenster"
 
+#, fuzzy
+msgid "text color for nicks (comma separated list of colors)"
+msgstr "Farbe für Nicks im Chat-Fenster"
+
 msgid "text color for local nick in chat window"
 msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster."
 
 msgid "text color for other nick in private buffer"
 msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
-
-msgid "text color #1 for nick"
-msgstr "Textfarbe #1 für Nick"
-
-msgid "text color #2 for nick"
-msgstr "Textfarbe #2 für Nick"
-
-msgid "text color #3 for nick"
-msgstr "Textfarbe #3 für Nick"
-
-msgid "text color #4 for nick"
-msgstr "Textfarbe #4 für Nick"
-
-msgid "text color #5 for nick"
-msgstr "Textfarbe #5 für Nick"
-
-msgid "text color #6 for nick"
-msgstr "Textfarbe #6 für Nick"
-
-msgid "text color #7 for nick"
-msgstr "Textfarbe #7 für Nick"
-
-msgid "text color #8 for nick"
-msgstr "Textfarbe #8 für Nick"
-
-msgid "text color #9 for nick"
-msgstr "Textfarbe #9 für Nick"
-
-msgid "text color #10 for nick"
-msgstr "Textfarbe #10 für Nick"
 
 msgid "text color for hostnames"
 msgstr "Textfarbe für Host-Namen"
@@ -3108,9 +3079,9 @@ msgstr "Demo-Nachricht, ohne Präfix"
 msgid "%sdemo message with error prefix"
 msgstr "%sDemo-Nachricht mit fehlerhaftem Präfix"
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr "Farben: %s Buffer %s Nick1 %s Nick2 %s Nick3 %s Nick4"
+#, fuzzy
+msgid "colors"
+msgstr "Farbe"
 
 msgid "Available infos:"
 msgstr "verfügbare Informationen:"
@@ -7480,6 +7451,42 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "number of colors to use for nicks colors"
+#~ msgstr "Anzahl der Farben die für die Nicknamen genutzt werden sollen"
+
+#~ msgid "text color #1 for nick"
+#~ msgstr "Textfarbe #1 für Nick"
+
+#~ msgid "text color #2 for nick"
+#~ msgstr "Textfarbe #2 für Nick"
+
+#~ msgid "text color #3 for nick"
+#~ msgstr "Textfarbe #3 für Nick"
+
+#~ msgid "text color #4 for nick"
+#~ msgstr "Textfarbe #4 für Nick"
+
+#~ msgid "text color #5 for nick"
+#~ msgstr "Textfarbe #5 für Nick"
+
+#~ msgid "text color #6 for nick"
+#~ msgstr "Textfarbe #6 für Nick"
+
+#~ msgid "text color #7 for nick"
+#~ msgstr "Textfarbe #7 für Nick"
+
+#~ msgid "text color #8 for nick"
+#~ msgstr "Textfarbe #8 für Nick"
+
+#~ msgid "text color #9 for nick"
+#~ msgstr "Textfarbe #9 für Nick"
+
+#~ msgid "text color #10 for nick"
+#~ msgstr "Textfarbe #10 für Nick"
+
+#~ msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
+#~ msgstr "Farben: %s Buffer %s Nick1 %s Nick2 %s Nick3 %s Nick4"
 
 #~ msgid ""
 #~ "  server: send to this server (internal name)\n"

@@ -68,13 +68,12 @@ demo_printf_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                         _("%sdemo message with error prefix"),
                         weechat_prefix ("error"));
         weechat_printf (buffer,
-                        _("colors: %s buffer %s nick1 %s nick2 %s nick3 "
-                          "%s nick4"),
+                        "%s: %s chat_buffer %s chat_server "
+                        "%s chat_host",
+                        _("colors"),
                         weechat_color ("chat_buffer"),
-                        weechat_color ("chat_nick_color1"),
-                        weechat_color ("chat_nick_color2"),
-                        weechat_color ("chat_nick_color3"),
-                        weechat_color ("chat_nick_color4"));
+                        weechat_color ("chat_server"),
+                        weechat_color ("chat_host"));
     }
     
     return WEECHAT_RC_OK;

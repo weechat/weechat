@@ -145,8 +145,12 @@ extern struct t_config_option *irc_config_network_send_unknown_commands;
 
 extern struct t_config_option *irc_config_server_default[];
 
+extern char **irc_config_nick_colors;
+extern int irc_config_num_nick_colors;
+
 extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 
+extern void irc_config_set_nick_colors ();
 extern void irc_config_server_change_cb (void *data,
                                          struct t_config_option *option);
 struct t_config_option *irc_config_server_new_option (struct t_config_file *config_file,

@@ -126,7 +126,9 @@ struct t_config_option *irc_config_network_send_unknown_commands;
 
 struct t_config_option *irc_config_server_default[IRC_SERVER_NUM_OPTIONS];
 
-struct t_hook *hook_config_color_nicks_number = NULL;
+struct t_hook *irc_config_hook_config_nick_colors = NULL;
+char **irc_config_nick_colors = NULL;
+int irc_config_num_nick_colors = 0;
 struct t_hashtable *irc_config_hashtable_nick_color_force = NULL;
 
 int irc_config_write_temp_servers = 0;
@@ -187,20 +189,41 @@ irc_config_compute_nick_colors ()
 }
 
 /*
- * irc_config_change_look_color_nicks_number: called when the
- *                                            "weechat.look.color_nicks_number"
- *                                            option is changed
+ * irc_config_set_nick_colors: set nick colors using option
+ *                             "weechat.color.chat_nick_colors"
+ */
+
+void
+irc_config_set_nick_colors ()
+{
+    if (irc_config_nick_colors)
+    {
+        weechat_string_free_split (irc_config_nick_colors);
+        irc_config_nick_colors = NULL;
+        irc_config_num_nick_colors = 0;
+    }
+    
+    irc_config_nick_colors =
+        weechat_string_split (weechat_config_string (weechat_config_get ("weechat.color.chat_nick_colors")),
+                              ",", 0, 0,
+                              &irc_config_num_nick_colors);
+}
+
+/*
+ * irc_config_change_nick_colors_cb: callback called when option
+ *                                   "weechat.color.chat_nick_colors" is changed
  */
 
 int
-irc_config_change_look_color_nicks_number (void *data, const char *option,
-                                           const char *value)
+irc_config_change_nick_colors_cb (void *data, const char *option,
+                                  const char *value)
 {
     /* make C compiler happy */
     (void) data;
     (void) option;
     (void) value;
     
+    irc_config_set_nick_colors ();
     irc_config_compute_nick_colors ();
     
     return WEECHAT_RC_OK;
@@ -2254,8 +2277,8 @@ irc_config_init ()
     }
     irc_config_section_server = ptr_section;
     
-    hook_config_color_nicks_number = weechat_hook_config ("weechat.look.color_nicks_number",
-                                                          &irc_config_change_look_color_nicks_number, NULL);
+    irc_config_hook_config_nick_colors = weechat_hook_config ("weechat.color.chat_nick_colors",
+                                                              &irc_config_change_nick_colors_cb, NULL);
     
     return 1;
 }
@@ -2299,13 +2322,19 @@ void
 irc_config_free ()
 {
     weechat_config_free (irc_config_file);
-
-    if (hook_config_color_nicks_number)
+    
+    if (irc_config_hook_config_nick_colors)
     {
-        weechat_unhook (hook_config_color_nicks_number);
-        hook_config_color_nicks_number = NULL;
+        weechat_unhook (irc_config_hook_config_nick_colors);
+        irc_config_hook_config_nick_colors = NULL;
     }
-
+    if (irc_config_nick_colors)
+    {
+        weechat_string_free_split (irc_config_nick_colors);
+        irc_config_nick_colors = NULL;
+        irc_config_num_nick_colors = 0;
+    }
+    
     if (irc_config_hashtable_nick_color_force)
     {
         weechat_hashtable_free (irc_config_hashtable_nick_color_force);

@@ -225,6 +225,11 @@ gui_color_get_name (int num_color)
 void
 gui_color_build (int number, int foreground, int background)
 {
+    if (foreground < 0)
+        foreground = 0;
+    if (background < 0)
+        background = 0;
+    
     if (!gui_color[number])
     {
         gui_color[number] = malloc (sizeof (*gui_color[number]));
@@ -370,8 +375,6 @@ gui_color_init_pairs ()
 void
 gui_color_init_weechat ()
 {
-    int i;
-    
     gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
     
     gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));
@@ -390,10 +393,6 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_CHAT_NICK, CONFIG_COLOR(config_color_chat_nick), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_NICK_SELF, CONFIG_COLOR(config_color_chat_nick_self), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_NICK_OTHER, CONFIG_COLOR(config_color_chat_nick_other), CONFIG_COLOR(config_color_chat_bg));
-    for (i = 0; i < GUI_COLOR_NICK_NUMBER; i++)
-    {
-        gui_color_build (GUI_COLOR_CHAT_NICK1 + i, CONFIG_COLOR(config_color_chat_nick_colors[i]), CONFIG_COLOR(config_color_chat_bg));
-    }
     gui_color_build (GUI_COLOR_CHAT_HOST, CONFIG_COLOR(config_color_chat_host), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_DELIMITERS, CONFIG_COLOR(config_color_chat_delimiters), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_HIGHLIGHT, CONFIG_COLOR(config_color_chat_highlight), CONFIG_COLOR(config_color_chat_highlight_bg));
@@ -401,6 +400,23 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_CHAT_TEXT_FOUND, CONFIG_COLOR(config_color_chat_text_found), CONFIG_COLOR(config_color_chat_text_found_bg));
     gui_color_build (GUI_COLOR_CHAT_VALUE, CONFIG_COLOR(config_color_chat_value), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_PREFIX_BUFFER, CONFIG_COLOR(config_color_chat_prefix_buffer), CONFIG_COLOR(config_color_chat_bg));
+    
+    /*
+     * define old nick colors for compatibility on /upgrade with previous
+     * versions: these colors have been removed in version 0.3.4 and replaced
+     * by new option "weechat.color.chat_nick_colors", which is a list of
+     * colors (without limit on number of colors)
+     */
+    gui_color_build (GUI_COLOR_CHAT_NICK1_OBSOLETE,  gui_color_search ("cyan"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK2_OBSOLETE,  gui_color_search ("magenta"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK3_OBSOLETE,  gui_color_search ("green"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK4_OBSOLETE,  gui_color_search ("brown"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK5_OBSOLETE,  gui_color_search ("lightblue"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK6_OBSOLETE,  gui_color_search ("default"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK7_OBSOLETE,  gui_color_search ("lightcyan"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK8_OBSOLETE,  gui_color_search ("lightmagenta"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK9_OBSOLETE,  gui_color_search ("lightgreen"), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK10_OBSOLETE, gui_color_search ("blue"), CONFIG_COLOR(config_color_chat_bg));
 }
 
 /*

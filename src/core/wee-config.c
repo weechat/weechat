@@ -78,7 +78,6 @@ struct t_config_option *config_startup_display_version;
 struct t_config_option *config_look_align_end_of_lines;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
-struct t_config_option *config_look_color_nicks_number;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_confirm_quit;
@@ -138,9 +137,9 @@ struct t_config_option *config_color_chat_buffer;
 struct t_config_option *config_color_chat_server;
 struct t_config_option *config_color_chat_channel;
 struct t_config_option *config_color_chat_nick;
+struct t_config_option *config_color_chat_nick_colors;
 struct t_config_option *config_color_chat_nick_self;
 struct t_config_option *config_color_chat_nick_other;
-struct t_config_option *config_color_chat_nick_colors[GUI_COLOR_NICK_NUMBER];
 struct t_config_option *config_color_chat_host;
 struct t_config_option *config_color_chat_delimiters;
 struct t_config_option *config_color_chat_highlight;
@@ -1456,11 +1455,6 @@ config_weechat_init_options ()
            "\"${color}\", for example french time: "
            "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
-    config_look_color_nicks_number = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "color_nicks_number", "integer",
-        N_("number of colors to use for nicks colors"),
-        NULL, 1, 10, "10", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_real_white = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_real_white", "boolean",
@@ -1869,6 +1863,13 @@ config_weechat_init_options ()
         N_("text color for nicks in chat window"),
         NULL, GUI_COLOR_CHAT_NICK, 0, "lightcyan", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_nick_colors = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_nick_colors", "string",
+        N_("text color for nicks (comma separated list of colors)"),
+        NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
+        "lightmagenta,lightgreen,blue", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     config_color_chat_nick_self = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_self", "color",
@@ -1880,66 +1881,6 @@ config_weechat_init_options ()
         "chat_nick_other", "color",
         N_("text color for other nick in private buffer"),
         NULL, GUI_COLOR_CHAT_NICK_OTHER, 0, "cyan", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[0] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color01", "color",
-        N_("text color #1 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK1, 0, "cyan", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[1] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color02", "color",
-        N_("text color #2 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK2, 0, "magenta", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[2] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color03", "color",
-        N_("text color #3 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK3, 0, "green", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[3] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color04", "color",
-        N_("text color #4 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK4, 0, "brown", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[4] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color05", "color",
-        N_("text color #5 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK5, 0, "lightblue", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[5] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color06", "color",
-        N_("text color #6 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK6, 0, "default", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[6] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color07", "color",
-        N_("text color #7 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK7, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[7] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color08", "color",
-        N_("text color #8 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK8, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[8] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color09", "color",
-        N_("text color #9 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK9, 0, "lightgreen", NULL, 0,
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_nick_colors[9] = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "chat_nick_color10", "color",
-        N_("text color #10 for nick"),
-        NULL, GUI_COLOR_CHAT_NICK10, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_host = config_file_new_option (
         weechat_config_file, ptr_section,

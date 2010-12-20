@@ -141,6 +141,12 @@ irc_nick_hash_color (const char *nickname)
     int color;
     const char *ptr_nick;
     
+    if (!irc_config_nick_colors)
+        irc_config_set_nick_colors ();
+    
+    if (irc_config_num_nick_colors == 0)
+        return 0;
+    
     color = 0;
     ptr_nick = nickname;
     while (ptr_nick && ptr_nick[0])
@@ -148,8 +154,8 @@ irc_nick_hash_color (const char *nickname)
         color += weechat_utf8_char_int (ptr_nick);
         ptr_nick = weechat_utf8_next_char (ptr_nick);
     }
-    return (color %
-            weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
+    
+    return (color % irc_config_num_nick_colors);
 }
 
 /*
@@ -161,8 +167,14 @@ const char *
 irc_nick_find_color (const char *nickname)
 {
     int color;
-    char *nickname2, color_name[64];
+    char *nickname2;
     const char *forced_color;
+    
+    if (!irc_config_nick_colors)
+        irc_config_set_nick_colors ();
+    
+    if (irc_config_num_nick_colors == 0)
+        return weechat_color ("default");
     
     nickname2 = irc_nick_strdup_for_color (nickname);
     
@@ -186,9 +198,7 @@ irc_nick_find_color (const char *nickname)
         free (nickname2);
     
     /* return color */
-    snprintf (color_name, sizeof (color_name),
-              "chat_nick_color%02d", color + 1);
-    return weechat_color (color_name);
+    return weechat_color (irc_config_nick_colors[color]);
 }
 
 /*
@@ -200,8 +210,15 @@ const char *
 irc_nick_find_color_name (const char *nickname)
 {
     int color;
-    char *nickname2, color_name[128];
+    char *nickname2;
     const char *forced_color;
+    static char *default_color = "default";
+    
+    if (!irc_config_nick_colors)
+        irc_config_set_nick_colors ();
+    
+    if (irc_config_num_nick_colors == 0)
+        return default_color;
     
     nickname2 = irc_nick_strdup_for_color (nickname);
     
@@ -221,9 +238,7 @@ irc_nick_find_color_name (const char *nickname)
         free (nickname2);
     
     /* return color name */
-    snprintf (color_name, sizeof (color_name),
-              "weechat.color.chat_nick_color%02d", color + 1);
-    return weechat_config_color (weechat_config_get (color_name));
+    return irc_config_nick_colors[color];
 }
 
 /*

@@ -48,55 +48,10 @@
 ** type: color
 ** values: a color name (default value: `lightcyan`)
 
-* *weechat.color.chat_nick_color01*
-** description: `text color #1 for nick`
-** type: color
-** values: a color name (default value: `cyan`)
-
-* *weechat.color.chat_nick_color02*
-** description: `text color #2 for nick`
-** type: color
-** values: a color name (default value: `magenta`)
-
-* *weechat.color.chat_nick_color03*
-** description: `text color #3 for nick`
-** type: color
-** values: a color name (default value: `green`)
-
-* *weechat.color.chat_nick_color04*
-** description: `text color #4 for nick`
-** type: color
-** values: a color name (default value: `brown`)
-
-* *weechat.color.chat_nick_color05*
-** description: `text color #5 for nick`
-** type: color
-** values: a color name (default value: `lightblue`)
-
-* *weechat.color.chat_nick_color06*
-** description: `text color #6 for nick`
-** type: color
-** values: a color name (default value: `default`)
-
-* *weechat.color.chat_nick_color07*
-** description: `text color #7 for nick`
-** type: color
-** values: a color name (default value: `lightcyan`)
-
-* *weechat.color.chat_nick_color08*
-** description: `text color #8 for nick`
-** type: color
-** values: a color name (default value: `lightmagenta`)
-
-* *weechat.color.chat_nick_color09*
-** description: `text color #9 for nick`
-** type: color
-** values: a color name (default value: `lightgreen`)
-
-* *weechat.color.chat_nick_color10*
-** description: `text color #10 for nick`
-** type: color
-** values: a color name (default value: `blue`)
+* *weechat.color.chat_nick_colors*
+** description: `text color for nicks (comma separated list of colors)`
+** type: string
+** values: any string (default value: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * *weechat.color.chat_nick_other*
 ** description: `text color for other nick in private buffer`
@@ -352,11 +307,6 @@
 ** description: `time format for each line displayed in buffers (see man strftime for date/time specifiers), colors are allowed with format "${color}", for example french time: "${lightblue}%H${white}%M${lightred}%S"`
 ** type: string
 ** values: any string (default value: `"%H:%M:%S"`)
-
-* *weechat.look.color_nicks_number*
-** description: `number of colors to use for nicks colors`
-** type: integer
-** values: 1 .. 10 (default value: `10`)
 
 * *weechat.look.color_real_white*
 ** description: `if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)`

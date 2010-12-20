@@ -9,6 +9,8 @@ Version 0.3.4 (under dev!)
 
 * core: add 256 colors support, new section "palette" in weechat.conf
   (task #6834)
+* core: replace the 10 nick color options and number of nick colors by a single
+  option "weechat.color.chat_nick_colors" (comma separated list of colors)
 * core: add support of python 2.7 in cmake and configure (debian #606989)
 * core: add color support in option weechat.look.buffer_time_format
 * core: call to hook_config when config option is created

@@ -48,55 +48,10 @@
 ** tipo: colore
 ** valori: un nome colore (valore predefinito: `lightcyan`)
 
-* *weechat.color.chat_nick_color01*
-** descrizione: `colore del testo #1 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `cyan`)
-
-* *weechat.color.chat_nick_color02*
-** descrizione: `colore del testo #2 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `magenta`)
-
-* *weechat.color.chat_nick_color03*
-** descrizione: `colore del testo #3 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `green`)
-
-* *weechat.color.chat_nick_color04*
-** descrizione: `colore del testo #4 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `brown`)
-
-* *weechat.color.chat_nick_color05*
-** descrizione: `colore del testo #5 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `lightblue`)
-
-* *weechat.color.chat_nick_color06*
-** descrizione: `colore del testo #6 per il nick`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `default`)
-
-* *weechat.color.chat_nick_color07*
-** descrizione: `colore del testo #7 per il nick<`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `lightcyan`)
-
-* *weechat.color.chat_nick_color08*
-** descrizione: `colore del testo #8 per il nick<`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `lightmagenta`)
-
-* *weechat.color.chat_nick_color09*
-** descrizione: `colore del testo #9 per il nick<`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `lightgreen`)
-
-* *weechat.color.chat_nick_color10*
-** descrizione: `colore del testo #10 per il nick<`
-** tipo: colore
-** valori: un nome colore (valore predefinito: `blue`)
+* *weechat.color.chat_nick_colors*
+** descrizione: `text color for nicks (comma separated list of colors)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * *weechat.color.chat_nick_other*
 ** descrizione: `colore del testo per gli altri nick nel buffer privato`
@@ -352,11 +307,6 @@
 ** descrizione: `formato dell'ora per ogni riga visualizzata nei buffer (consultare man strftime per gli specificatori data/ora), i colori sono consentiti nel formato "${colore}", nell'orario italiano ad esempio: "${lightblue}%H${white}%M{lightred}%S"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
-
-* *weechat.look.color_nicks_number*
-** descrizione: `numero di colori da utilizzare per i colori dei nick`
-** tipo: intero
-** valori: 1 .. 10 (valore predefinito: `10`)
 
 * *weechat.look.color_real_white*
 ** descrizione: `se impostato, utilizza il colore bianco reale, disabilitato sui terminali con lo sfondo bianco (se non utilizzato, l'opzione dovrebbe essere attivata per visualizzare il bianco reale invece del colore di primo piano predefinito del terminale)`

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1640,9 +1640,6 @@ msgid ""
 "french time: \"${lightblue}%H${white}%M${lightred}%S\""
 msgstr "отображение маркера даты при смене дня"
 
-msgid "number of colors to use for nicks colors"
-msgstr "количество цветов для раскрашивания ников"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -1929,52 +1926,16 @@ msgid "text color for nicks in chat window"
 msgstr "цвет времени в окне чата"
 
 #, fuzzy
+msgid "text color for nicks (comma separated list of colors)"
+msgstr "цвет времени в окне чата"
+
+#, fuzzy
 msgid "text color for local nick in chat window"
 msgstr "текст, который отображать до ника в окне чата"
 
 #, fuzzy
 msgid "text color for other nick in private buffer"
 msgstr "цвет ника собеседника в окне привата"
-
-#, fuzzy
-msgid "text color #1 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #2 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #3 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #4 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #5 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #6 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #7 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #8 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #9 for nick"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "text color #10 for nick"
-msgstr "цвет ника"
 
 #, fuzzy
 msgid "text color for hostnames"
@@ -2798,9 +2759,9 @@ msgstr ""
 msgid "%sdemo message with error prefix"
 msgstr ""
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr ""
+#, fuzzy
+msgid "colors"
+msgstr "цвет чата"
 
 msgid "Available infos:"
 msgstr ""
@@ -6896,6 +6857,49 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#~ msgid "number of colors to use for nicks colors"
+#~ msgstr "количество цветов для раскрашивания ников"
+
+#, fuzzy
+#~ msgid "text color #1 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #2 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #3 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #4 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #5 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #6 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #7 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #8 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #9 for nick"
+#~ msgstr "цвет ника"
+
+#, fuzzy
+#~ msgid "text color #10 for nick"
+#~ msgstr "цвет ника"
 
 #, fuzzy
 #~ msgid "[-server server] receiver[,receiver] text"

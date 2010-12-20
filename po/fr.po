@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
-"PO-Revision-Date: 2010-12-19 19:54+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
+"PO-Revision-Date: 2010-12-20 12:15+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -1853,9 +1853,6 @@ msgstr ""
 "format \"${couleur}\", par exemple l'heure française: \"${lightblue}%H"
 "${white}%M${lightred}%S\""
 
-msgid "number of colors to use for nicks colors"
-msgstr "nombre de couleurs à utiliser pour les couleurs des pseudos"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -2161,41 +2158,16 @@ msgstr "couleur du texte pour le nom des canaux"
 msgid "text color for nicks in chat window"
 msgstr "couleur du texte pour l'heure dans la fenêtre de discussion"
 
+msgid "text color for nicks (comma separated list of colors)"
+msgstr ""
+"couleur du texte pour les pseudos (liste de couleurs séparées par une "
+"virgule)"
+
 msgid "text color for local nick in chat window"
 msgstr "couleur du texte pour le pseudo local dans la fenêtre de discussion"
 
 msgid "text color for other nick in private buffer"
 msgstr "couleur du texte pour l'autre pseudo dans le tampon privée"
-
-msgid "text color #1 for nick"
-msgstr "couleur du texte n°1 pour le pseudo"
-
-msgid "text color #2 for nick"
-msgstr "couleur du texte n°2 pour le pseudo"
-
-msgid "text color #3 for nick"
-msgstr "couleur du texte n°3 pour le pseudo"
-
-msgid "text color #4 for nick"
-msgstr "couleur du texte n°4 le pseudo"
-
-msgid "text color #5 for nick"
-msgstr "couleur du texte n°5 pour le pseudo"
-
-msgid "text color #6 for nick"
-msgstr "couleur du texte n°6 pour le pseudo"
-
-msgid "text color #7 for nick"
-msgstr "couleur du texte n°7 pour le pseudo"
-
-msgid "text color #8 for nick"
-msgstr "couleur du texte n°8 pour le pseudo"
-
-msgid "text color #9 for nick"
-msgstr "couleur du texte n°9 pour le pseudo"
-
-msgid "text color #10 for nick"
-msgstr "couleur du texte n°10 pour le pseudo"
 
 msgid "text color for hostnames"
 msgstr "couleur du texte pour les noms d'hôtes"
@@ -3064,9 +3036,8 @@ msgstr "message de démonstration sans préfixe"
 msgid "%sdemo message with error prefix"
 msgstr "%smessage de démonstration avec préfixe d'erreur"
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr "couleurs: %s tampon %s pseudo1 %s pseudo2 %s pseudo3 %s pseudo4"
+msgid "colors"
+msgstr "couleurs"
 
 msgid "Available infos:"
 msgstr "Infos disponibles:"

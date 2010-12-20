@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-20 09:52+0100\n"
+"POT-Creation-Date: 2010-12-20 12:52+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1829,9 +1829,6 @@ msgstr ""
 "formato de hora en el registro (ver el manual de strftime para los "
 "especificadores de fecha/hora)"
 
-msgid "number of colors to use for nicks colors"
-msgstr "número de colores para usar en los colores de nombres de usuario"
-
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -2129,41 +2126,15 @@ msgstr "color para los nombres de los canales"
 msgid "text color for nicks in chat window"
 msgstr "color para los apodos en la ventana de conversación"
 
+#, fuzzy
+msgid "text color for nicks (comma separated list of colors)"
+msgstr "color para los apodos en la ventana de conversación"
+
 msgid "text color for local nick in chat window"
 msgstr "color para el apodo propio en la ventana de conversación"
 
 msgid "text color for other nick in private buffer"
 msgstr "color para el otro apodo en una conversación privada"
-
-msgid "text color #1 for nick"
-msgstr "color para el apodo #1"
-
-msgid "text color #2 for nick"
-msgstr "color para el apodo #2"
-
-msgid "text color #3 for nick"
-msgstr "color para el apodo #3"
-
-msgid "text color #4 for nick"
-msgstr "color para el apodo #4"
-
-msgid "text color #5 for nick"
-msgstr "color para el apodo #5"
-
-msgid "text color #6 for nick"
-msgstr "color para el apodo #6"
-
-msgid "text color #7 for nick"
-msgstr "color para el apodo #7"
-
-msgid "text color #8 for nick"
-msgstr "color para el apodo #8"
-
-msgid "text color #9 for nick"
-msgstr "color para el apodo #9"
-
-msgid "text color #10 for nick"
-msgstr "color para el apodo #10"
 
 msgid "text color for hostnames"
 msgstr "color para los hostnames"
@@ -3013,9 +2984,9 @@ msgstr "mensaje de demostración sin un prefijo"
 msgid "%sdemo message with error prefix"
 msgstr "%smensaje de demostración con prefijo de error"
 
-#, c-format
-msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr "colores: %s buffer %s apodo1 %s apodo2 %s apodo3 %s apodo4"
+#, fuzzy
+msgid "colors"
+msgstr "color"
 
 msgid "Available infos:"
 msgstr "Infos disponibles:"
@@ -7256,6 +7227,42 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#~ msgid "number of colors to use for nicks colors"
+#~ msgstr "número de colores para usar en los colores de nombres de usuario"
+
+#~ msgid "text color #1 for nick"
+#~ msgstr "color para el apodo #1"
+
+#~ msgid "text color #2 for nick"
+#~ msgstr "color para el apodo #2"
+
+#~ msgid "text color #3 for nick"
+#~ msgstr "color para el apodo #3"
+
+#~ msgid "text color #4 for nick"
+#~ msgstr "color para el apodo #4"
+
+#~ msgid "text color #5 for nick"
+#~ msgstr "color para el apodo #5"
+
+#~ msgid "text color #6 for nick"
+#~ msgstr "color para el apodo #6"
+
+#~ msgid "text color #7 for nick"
+#~ msgstr "color para el apodo #7"
+
+#~ msgid "text color #8 for nick"
+#~ msgstr "color para el apodo #8"
+
+#~ msgid "text color #9 for nick"
+#~ msgstr "color para el apodo #9"
+
+#~ msgid "text color #10 for nick"
+#~ msgstr "color para el apodo #10"
+
+#~ msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
+#~ msgstr "colores: %s buffer %s apodo1 %s apodo2 %s apodo3 %s apodo4"
 
 #~ msgid "[-server server] receiver[,receiver] text"
 #~ msgstr "[-server servidor] destino[,destino] texto"
