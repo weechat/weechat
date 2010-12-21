@@ -732,7 +732,7 @@ config_weechat_palette_create_option_cb (void *data,
                           "where alias is color name, fg,bg is \"foreground,background\" "
                           "(example: \"200,-1\"), r/g/b is redefinition of color "
                           "(terminal must support it) (everything is optional "
-                          "in this format)"),
+                          "in this format and order is not important)"),
                         NULL, 0, 0, "", value, 0, NULL, NULL,
                         &config_weechat_palette_change_cb, NULL,
                         NULL, NULL);

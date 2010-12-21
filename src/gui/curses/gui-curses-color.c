@@ -590,9 +590,9 @@ struct t_gui_color_palette *
 gui_color_palette_new (int number, const char *value)
 {
     struct t_gui_color_palette *new_color_palette;
-    char *pos_semicolon, *ptr_value, *pos, *pos2, *error1, *error2, *error3;
+    char **items, *pos, *pos2, *error1, *error2, *error3;
     char *str_alias, *str_pair, *str_rgb, str_number[64];
-    int fg, bg, r, g, b;
+    int num_items, i, fg, bg, r, g, b;
     
     if (!value)
         return NULL;
@@ -611,104 +611,85 @@ gui_color_palette_new (int number, const char *value)
         str_pair = NULL;
         str_rgb = NULL;
         
-        pos_semicolon = strchr (value, ';');
-        if (pos_semicolon)
+        items = string_split (value, ";", 0, 0, &num_items);
+        if (items)
         {
-            if (pos_semicolon > value)
+            for (i = 0; i < num_items; i++)
             {
-                str_alias = string_strndup (value, pos_semicolon - value);
-            }
-            ptr_value = pos_semicolon + 1;
-            if (ptr_value[0])
-            {
-                pos_semicolon = strchr (ptr_value, ';');
-                if (pos_semicolon)
-                {
-                    if (pos_semicolon > ptr_value)
-                    {
-                        str_pair = string_strndup (ptr_value,
-                                                   pos_semicolon - ptr_value);
-                    }
-                    ptr_value = pos_semicolon + 1;
-                    if (ptr_value[0])
-                    {
-                        str_rgb = strdup (ptr_value);
-                    }
-                }
+                pos = strchr (items[i], ',');
+                if (pos)
+                    str_pair = items[i];
                 else
-                    str_pair = strdup (ptr_value);
-            }
-        }
-        else if (value[0])
-        {
-            str_alias = strdup (value);
-        }
-        
-        if (str_alias)
-        {
-            new_color_palette->alias = strdup (str_alias);
-        }
-        else
-        {
-            snprintf (str_number, sizeof (str_number), "%d", number);
-            new_color_palette->alias = strdup (str_number);
-        }
-        
-        if (str_pair)
-        {
-            pos = strchr (str_pair, ',');
-            if (pos)
-            {
-                pos[0] = '\0';
-                error1 = NULL;
-                fg = (int)strtol (str_pair, &error1, 10);
-                error2 = NULL;
-                bg = (int)strtol (pos + 1, &error2, 10);
-                if (error1 && !error1[0] && error2 && !error2[0]
-                    && (fg >= -1) && (bg >= -1))
                 {
-                    new_color_palette->foreground = fg;
-                    new_color_palette->background = bg;
+                    pos = strchr (items[i], '/');
+                    if (pos)
+                        str_rgb = items[i];
+                    else
+                        str_alias = items[i];
                 }
             }
-        }
-        
-        if (str_rgb)
-        {
-            pos = strchr (str_rgb, '/');
-            if (pos)
+            
+            if (str_alias)
             {
-                pos[0] = '\0';
-                pos2 = strchr (pos + 1, '/');
-                if (pos2)
+                new_color_palette->alias = strdup (str_alias);
+            }
+            else
+            {
+                snprintf (str_number, sizeof (str_number), "%d", number);
+                new_color_palette->alias = strdup (str_number);
+            }
+            
+            if (str_pair)
+            {
+                pos = strchr (str_pair, ',');
+                if (pos)
                 {
-                    pos2[0] = '\0';
+                    pos[0] = '\0';
                     error1 = NULL;
-                    r = (int)strtol (str_rgb, &error1, 10);
+                    fg = (int)strtol (str_pair, &error1, 10);
                     error2 = NULL;
-                    g = (int)strtol (pos + 1, &error2, 10);
-                    error3 = NULL;
-                    b = (int)strtol (pos2 + 1, &error3, 10);
+                    bg = (int)strtol (pos + 1, &error2, 10);
                     if (error1 && !error1[0] && error2 && !error2[0]
-                        && error3 && !error3[0]
-                        && (r >= 0) && (r <= 1000)
-                        && (g >= 0) && (g <= 1000)
-                        && (b >= 0) && (b <= 1000))
+                        && (fg >= -1) && (bg >= -1))
                     {
-                        new_color_palette->r = r;
-                        new_color_palette->g = g;
-                        new_color_palette->b = b;
+                        new_color_palette->foreground = fg;
+                        new_color_palette->background = bg;
                     }
                 }
             }
+            
+            if (str_rgb)
+            {
+                pos = strchr (str_rgb, '/');
+                if (pos)
+                {
+                    pos[0] = '\0';
+                    pos2 = strchr (pos + 1, '/');
+                    if (pos2)
+                    {
+                        pos2[0] = '\0';
+                        error1 = NULL;
+                        r = (int)strtol (str_rgb, &error1, 10);
+                        error2 = NULL;
+                        g = (int)strtol (pos + 1, &error2, 10);
+                        error3 = NULL;
+                        b = (int)strtol (pos2 + 1, &error3, 10);
+                        if (error1 && !error1[0] && error2 && !error2[0]
+                            && error3 && !error3[0]
+                            && (r >= 0) && (r <= 1000)
+                            && (g >= 0) && (g <= 1000)
+                            && (b >= 0) && (b <= 1000))
+                        {
+                            new_color_palette->r = r;
+                            new_color_palette->g = g;
+                            new_color_palette->b = b;
+                        }
+                    }
+                }
+            }
+            
+            string_free_split (items);
         }
-        
-        if (str_alias)
-            free (str_alias);
-        if (str_pair)
-            free (str_pair);
-        if (str_rgb)
-            free (str_rgb);
     }
     
     return new_color_palette;
