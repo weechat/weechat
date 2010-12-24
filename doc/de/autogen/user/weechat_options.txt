@@ -49,7 +49,7 @@
 ** Werte: ein Farbname (Standardwert: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** Beschreibung: `text color for nicks (comma separated list of colors)`
+** Beschreibung: `Textfarbe für Nicks (durch Kommata getrennte Liste von Farben)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
@@ -264,7 +264,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.completion.partial_completion_count*
-** Beschreibung: `Zeige einen Zähler für jede teilweise, automatische Vervollständigung in der Bar-Item an`
+** Beschreibung: `Zeigt bei einer teilweisen Vervollständigung die Anzahl der jeweiligen Möglichkeiten in der Bar-Item an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -289,7 +289,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `4096`)
 
 * *weechat.history.max_visited_buffers*
-** Beschreibung: `maximale Anzahl an besuchten Buffern, die im Speicher gehalten werden sollen`
+** Beschreibung: `maximale Anzahl an besuchten Buffern welche im Speicher gehalten werden sollen`
 ** Typ: integer
 ** Werte: 0 .. 1000 (Standardwert: `50`)
 

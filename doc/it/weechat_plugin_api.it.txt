@@ -2461,15 +2461,14 @@ item = weechat.list_search(list, data)
 item = weechat.list_search(list, "my data")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_list_search_pos
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Search an item position in a list.
+Cerca la posizione di un elemento nella lista.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2477,16 +2476,16 @@ int weechat_list_search_pos (struct t_weelist *weelist,
                              const char *data);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'weelist': list pointer
-* 'data': data to search in list
+* 'weelist': puntatore alla lista
+* 'data': dati da cercare nella lista
 
-Return value:
+Valore restituito:
 
-* position of item found, -1 if item was not found
+* posizione dell'elemento trovato, -1 se non trovato
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2497,10 +2496,10 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 pos_item = weechat.list_search_pos(list, data)
 
-# example
+# esempio
 pos_item = weechat.list_search_pos(list, "my data")
 ----------------------------------------
 
@@ -2545,15 +2544,14 @@ item = weechat.list_casesearch(list, data)
 item = weechat.list_casesearch(list, "my data")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_list_casesearch_pos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.4._
+_Novità nella versione 0.3.4._
 
-Search an item position in a list, ignoring case.
+Cerca la posizione di un elemento in una lista, ricerca normale.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -2561,16 +2559,16 @@ int weechat_list_casesearch_pos (struct t_weelist *weelist,
                                  const char *data);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'weelist': list pointer
-* 'data': data to search in list
+* 'weelist': puntatore alla lista
+* 'data': dati da cercare nella lista
 
-Return value:
+Valore restituito:
 
-* position of item found, -1 if item was not found
+* posizione dell'elemento trovato, -1 se non trovato
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -2581,10 +2579,10 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 pos_item = weechat.list_casesearch_pos(list, data)
 
-# example
+# esempio
 pos_item = weechat.list_casesearch_pos(list, "my data")
 ----------------------------------------
 

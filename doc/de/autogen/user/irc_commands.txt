@@ -55,17 +55,17 @@
 ........................................
   Mit IRC-Server(n) verbinden
 
-  servername: internal server name to connect (server must have been created by /server add)
-    hostname: hostname (or IP) of a server (this will create a TEMPORARY server)
-        port: port for server (6667 by default)
-      option: set option for server (for boolean option, value can be omitted)
-    nooption: set boolean option to 'off' (for example: -nossl)
-        -all: connect to all servers defined in configuration
-       -open: connect to all opened servers that are not currently connected
-     -nojoin: do not join any channel (even if autojoin is enabled on server)
-     -switch: switch to next server address
+  servername: intern genutzter Servername mit dem verbunden werden soll (Der Server muss zuerst mittels "/server add" angelegt werden)
+    hostname: Hostname oder IP eines Servers (damit erstelt man ausschließlich einen TEMPORÄREN Server)
+        port: Port den der Server nutzen soll (Standardport: 6667)
+      option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
+    nooption: stellt die Boolean Option auf "off" (Beispiel: -nossl)
+        -all: Verbindet mit allen Servern
+       -open: stellt eine Verbindung zu allen geöffneten Servern her zu denen es aktuell keine Verbindung gibt
+     -nojoin: Channel(s) werden nicht betreten (auch falls die Funktion "autojoin" aktiviert sein sollte)
+     -switch: wechselt zur nächsten Server-Adresse
   
-  Examples:
+  Beispiele:
     /connect freenode
     /connect irc.oftc.net/6667
     /connect irc6.oftc.net/6667 -ipv6
@@ -454,10 +454,10 @@
 ........................................
   Mit einem oder mehreren Server(n) erneut verbinden
 
-  servername: server name to reconnect
-        -all: reconnect to all servers
-     -nojoin: do not join any channel (even if autojoin is enabled on server)
-     -switch: switch to next server address
+  Servername: Servername zu welchem neu verbunden werden soll
+        -all: mit allen Servern neu verbinden
+     -nojoin: Channels werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
+     -switch: wechselt zur nächsten Server-Adresse
 ........................................
 
 &bull; *`/rehash`* `[Option]`::

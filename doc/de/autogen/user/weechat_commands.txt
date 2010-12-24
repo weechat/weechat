@@ -404,14 +404,14 @@
               h: Stunden
    Befehl: Befehl der ausgeführt werden soll (ohne das führende '/') oder ein Text der in dem Buffer ausgegeben werden soll
   
-  Hinweis: Der Befehl der zeit verzögert gestartet werden soll wird in dem Buffer ausgeführt in dem der Befehl /wait gestartet wurde. Falls dieser Buffer nicht gefunden werden sollte, z.B.  weil er in der Zwischenzeit geschlossen wurde, wird der Befehl im WeeChat Haupt-Buffer gestartet.
+  Hinweis: Der Befehl der zeit verzögert gestartet werden soll wird in dem Buffer ausgeführt in dem der /wait  Befehl aufgerufen wurde. Falls dieser Buffer nicht gefunden werden sollte, z.B.  weil er in der Zwischenzeit geschlossen wurde, wird der Befehl im WeeChat Core-Buffer ausgeführt.
   
   Beispiele:
-    Betritt einen Channel in 10 Sekunden:
+    Betritt nach 10 Sekunden den Channel #test:
     /wait 10 /join #test
-    Setzt eine Abwesenheit in 15 Minuten:
+    Setzt nach 15 Minuten eine globale Abwesenheit:
     /wait 15m /away -all Bin dann mal eben weg
-    Schickt den Text 'Hallo' nach zwei Minuten ab:
+    Versendet nach zwei Minuten den Text 'Hallo':
     /wait 2m Hallo
 ........................................
 

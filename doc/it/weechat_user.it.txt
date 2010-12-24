@@ -290,9 +290,8 @@ Argomenti a riga di comando:
 -a, --no-connect::
     Disabilita la connessione automatica ai server all'avvio di WeeChat
 
-// TRANSLATION MISSING
 -c, --colors::
-    Display default colors in terminal
+    Mostra i colori prefefiniti nel terminale
 
 -d, --dir 'path'::
     Imposta una cartella come home per WeeChat (utilizzata per i file di
@@ -300,13 +299,13 @@ Argomenti a riga di comando:
     è ~/.weechat
 
 -h, --help::
-    Visualizza l'aiuto
+    Mostra l'aiuto
 
 -k, --keys::
-    Visualizza i tasti predefiniti di WeeChat
+    Mostra i tasti predefiniti di WeeChat
 
 -l, --license::
-    Visualizza la licenza di WeeChat
+    Mostra la licenza di WeeChat
 
 -p, --no-plugin::
     Disabilita il caricamento automatico dei plugin
@@ -315,7 +314,7 @@ Argomenti a riga di comando:
     Disabilita il caricamento automatico dei script
 
 -v, --version::
-    Visualizza la versione di WeeChat
+    Mostra la versione di WeeChat
 
 plugin:option::
     Opzione per il plugin (consultare la documentazione per ogni plugin)
