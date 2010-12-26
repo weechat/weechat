@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-21 09:22+0100\n"
-"PO-Revision-Date: 2010-12-21 09:22+0100\n"
+"POT-Creation-Date: 2010-12-26 12:13+0100\n"
+"PO-Revision-Date: 2010-12-26 11:51+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -1796,7 +1796,11 @@ msgid ""
 "color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
 "is redefinition of color (terminal must support it) (everything is optional "
 "in this format and order is not important)"
-msgstr "couleur personnalisée dans la palette, le format est: \"alias;fg,bg;r/g/b\" où alias est le nom de la couleur, fg,bg est \"texte,fond\" (par exemple: \"200,-1\"), r/g/b est la redéfinition de la couleur (le terminal doit le supporter) (tout est optionnel dans ce format et l'ordre n'est pas important)"
+msgstr ""
+"couleur personnalisée dans la palette, le format est: \"alias;fg,bg;r/g/b\" "
+"où alias est le nom de la couleur, fg,bg est \"texte,fond\" (par exemple: "
+"\"200,-1\"), r/g/b est la redéfinition de la couleur (le terminal doit le "
+"supporter) (tout est optionnel dans ce format et l'ordre n'est pas important)"
 
 #, c-format
 msgid "%sError: palette option must be numeric"
@@ -2513,6 +2517,11 @@ msgstr "octet"
 #, c-format
 msgid "debug: removing file: %s"
 msgstr "debug: suppression du fichier: %s"
+
+#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#, c-format
+msgid "Upgrade done (%.02f %s)"
+msgstr "Mise à jour terminée (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -6137,6 +6146,9 @@ msgstr "site WeeChat"
 
 msgid "WeeChat site, download page"
 msgstr "site WeeChat, page de téléchargement"
+
+msgid "1 if WeeChat is upgrading (command `/upgrade`)"
+msgstr "1 si WeeChat est en cours de mise à jour (commande `/upgrade`)"
 
 msgid "terminal charset"
 msgstr "charset du terminal"

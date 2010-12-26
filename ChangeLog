@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-rc2, 2010-12-20
+v0.3.4-rc2, 2010-12-26
 
 
 Version 0.3.4 (under dev!)
 --------------------------
 
+* core: add info "weechat_upgrading", signal "upgrade_ended", display duration
+  of upgrade
 * core: add 256 colors support, new section "palette" in weechat.conf
   (task #6834)
 * core: replace the 10 nick color options and number of nick colors by a single

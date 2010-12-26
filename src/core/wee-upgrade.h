@@ -38,6 +38,6 @@ enum t_upgrade_weechat_type
 
 int upgrade_weechat_save ();
 int upgrade_weechat_load ();
-void upgrade_weechat_remove_files ();
+void upgrade_weechat_end ();
 
 #endif /* __WEECHAT_UPGRADE_H */

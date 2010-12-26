@@ -6793,6 +6793,10 @@ Argomenti:
 | weechat | upgrade | - |
   comando `/upgrade` digitato dall'utente
 
+// TRANSLATION MISSING
+| weechat | upgrade_ended | - |
+  end of upgrade process (command `/upgrade`)
+
 | weechat | weechat_highlight | string: messaggio con prefisso |
   evento accaduto
 

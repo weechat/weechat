@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-21 09:22+0100\n"
+"POT-Creation-Date: 2010-12-26 12:13+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2471,6 +2471,11 @@ msgstr "bajt"
 #, c-format
 msgid "debug: removing file: %s"
 msgstr "debug: usuwam plik: %s"
+
+#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#, c-format
+msgid "Upgrade done (%.02f %s)"
+msgstr ""
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -6019,6 +6024,9 @@ msgstr "Strona WeeChat"
 
 msgid "WeeChat site, download page"
 msgstr "Strona pobrań WeeChat"
+
+msgid "1 if WeeChat is upgrading (command `/upgrade`)"
+msgstr ""
 
 msgid "terminal charset"
 msgstr "kodowanie terminala"

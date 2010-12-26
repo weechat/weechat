@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-21 09:22+0100\n"
+"POT-Creation-Date: 2010-12-26 12:13+0100\n"
 "PO-Revision-Date: 2010-12-22 11:02+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1791,8 +1791,8 @@ msgstr ""
 "colore personalizzato nella tavolozza, il formato è \"alias;fg,bg;r/g/b\" "
 "dove l'alias è il nome del colore, fg,bg sono \"colore di primo piano,colore "
 "di sfondo (esempio: \"200,-1\"), r/g/b la nuova definizone del colore (il "
-"terminale deve supportarla) (tutto è opzionale in questo formato e non importa "
-"l'ordine)"
+"terminale deve supportarla) (tutto è opzionale in questo formato e non "
+"importa l'ordine)"
 
 #, c-format
 msgid "%sError: palette option must be numeric"
@@ -2491,6 +2491,11 @@ msgstr "byte"
 #, c-format
 msgid "debug: removing file: %s"
 msgstr "debug: rimozione del file: %s"
+
+#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#, c-format
+msgid "Upgrade done (%.02f %s)"
+msgstr ""
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -6104,6 +6109,9 @@ msgstr "sito di WeeChat"
 
 msgid "WeeChat site, download page"
 msgstr "sito di WeeChat, pagina di download"
+
+msgid "1 if WeeChat is upgrading (command `/upgrade`)"
+msgstr ""
 
 msgid "terminal charset"
 msgstr "set caratteri terminale"

@@ -45,6 +45,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <time.h>
 #include <signal.h>
 
@@ -77,8 +78,10 @@
 int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
-time_t weechat_start_time = 0;         /* start time (used by /uptime cmd)  */
+time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
+struct timeval weechat_current_start_timeval; /* start time used to display */
+                                              /* duration of /upgrade       */
 int weechat_quit = 0;                  /* = 1 if quit request from user     */
 int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
@@ -88,6 +91,17 @@ int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
 int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
                                        /* (useful when using valgrind)      */
 
+
+/*
+ * weechat_init_vars: initialize some variables
+ */
+
+void
+weechat_init_vars ()
+{
+    weechat_first_start_time = time (NULL);
+    gettimeofday (&weechat_current_start_timeval, NULL);
+}
 
 /*
  * weechat_display_usage: display WeeChat usage
@@ -300,17 +314,6 @@ weechat_create_home_dirs ()
 }
 
 /*
- * weechat_init_vars: initialize some variables
- */
-
-void
-weechat_init_vars ()
-{
-    /* start time, used by /uptime command */
-    weechat_start_time = time (NULL);
-}
-
-/*
  * weechat_welcome_message: display WeeChat welcome message - yeah!
  */
 
@@ -373,6 +376,8 @@ weechat_shutdown (int return_code, int crash)
 int
 main (int argc, char *argv[])
 {
+    weechat_init_vars ();               /* initialize some variables        */
+    
     setlocale (LC_ALL, "");             /* initialize gettext               */
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, LOCALEDIR);
@@ -395,7 +400,6 @@ main (int argc, char *argv[])
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
-    weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */
     completion_init ();                 /* add core completion hooks        */
     gui_keyboard_init ();               /* init keyboard                    */
@@ -420,8 +424,7 @@ main (int argc, char *argv[])
     command_startup (1);                /* command executed after plugins   */
     gui_layout_window_apply (gui_layout_windows, -1); /* apply saved layout */
     if (weechat_upgrading)
-        upgrade_weechat_remove_files ();/* remove .upgrade files            */
-    weechat_upgrading = 0;
+        upgrade_weechat_end ();         /* remove .upgrade files + signal   */
     
     gui_main_loop ();                   /* WeeChat main loop                */
     

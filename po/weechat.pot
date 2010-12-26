@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-21 09:22+0100\n"
+"POT-Creation-Date: 2010-12-26 12:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1936,6 +1936,11 @@ msgstr ""
 
 #, c-format
 msgid "debug: removing file: %s"
+msgstr ""
+
+#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#, c-format
+msgid "Upgrade done (%.02f %s)"
 msgstr ""
 
 #, c-format
@@ -4960,6 +4965,9 @@ msgid "WeeChat site"
 msgstr ""
 
 msgid "WeeChat site, download page"
+msgstr ""
+
+msgid "1 if WeeChat is upgrading (command `/upgrade`)"
 msgstr ""
 
 msgid "terminal charset"

@@ -6862,6 +6862,9 @@ Paramètres :
 | weechat | upgrade | - |
   la commande `/upgrade` a été exécutée par l'utilisateur
 
+| weechat | upgrade_ended | - |
+  fin du processus de mise à jour (commande `/upgrade`)
+
 | weechat | weechat_highlight | chaîne : message avec le préfixe |
   un highlight est survenu
 

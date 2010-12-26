@@ -322,6 +322,11 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     {
         return WEECHAT_WEBSITE_DOWNLOAD;
     }
+    else if (string_strcasecmp (info_name, "weechat_upgrading") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", weechat_upgrading);
+        return value;
+    }
     else if (string_strcasecmp (info_name, "charset_terminal") == 0)
     {
         return weechat_local_charset;
@@ -956,6 +961,8 @@ plugin_api_init ()
     hook_info (NULL, "weechat_site", N_("WeeChat site"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "weechat_site_download", N_("WeeChat site, download page"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_upgrading", N_("1 if WeeChat is upgrading (command `/upgrade`)"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "charset_terminal", N_("terminal charset"), NULL,
                &plugin_api_info_get_internal, NULL);

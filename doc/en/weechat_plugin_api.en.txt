@@ -6775,6 +6775,9 @@ Arguments:
 | weechat | upgrade | - |
   command `/upgrade` issued by user
 
+| weechat | upgrade_ended | - |
+  end of upgrade process (command `/upgrade`)
+
 | weechat | weechat_highlight | string: message with prefix |
   highlight happened
 

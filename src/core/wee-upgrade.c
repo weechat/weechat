@@ -29,9 +29,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include "weechat.h"
 #include "wee-upgrade.h"
+#include "wee-hook.h"
 #include "wee-infolist.h"
 #include "wee-string.h"
 #include "wee-util.h"
@@ -207,7 +209,7 @@ upgrade_weechat_save_uptime (struct t_upgrade_file *upgrade_file)
         infolist_free (ptr_infolist);
         return 0;
     }
-    if (!infolist_new_var_time (ptr_item, "start_time", weechat_start_time))
+    if (!infolist_new_var_time (ptr_item, "start_time", weechat_first_start_time))
     {
         infolist_free (ptr_infolist);
         return 0;
@@ -539,7 +541,7 @@ upgrade_weechat_read_cb (void *data,
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_UPTIME:
-                weechat_start_time = infolist_time (infolist, "start_time");
+                weechat_first_start_time = infolist_time (infolist, "start_time");
                 weechat_upgrade_count = infolist_integer (infolist, "upgrade_count");
                 break;
             case UPGRADE_WEECHAT_TYPE_HOTLIST:
@@ -628,14 +630,34 @@ upgrade_weechat_remove_file_cb (void *data, const char *filename)
 }
 
 /*
- * upgrade_weechat_remove_files: remove *.upgrade files after upgrade
+ * upgrade_weechat_end: remove *.upgrade files after upgrade and send signal
+ *                      "weechat_upgrade_done"
  */
 
 void
-upgrade_weechat_remove_files ()
+upgrade_weechat_end ()
 {
+    struct timeval tv_now;
+    long time_diff;
+    
+    /* remove .upgrade files */
     util_exec_on_files (weechat_home,
                         0,
                         NULL,
                         &upgrade_weechat_remove_file_cb);
+    
+    /* display message for end of /upgrade with duration */
+    gettimeofday (&tv_now, NULL);
+    time_diff = util_timeval_diff (&weechat_current_start_timeval, &tv_now);
+    gui_chat_printf (NULL,
+                     /* TRANSLATORS: "%s" is translation of "second" or "seconds" */
+                     _("Upgrade done (%.02f %s)"),
+                     ((float)time_diff) / 1000,
+                     NG_("second", "seconds", time_diff / 1000));
+    
+    /* upgrading ended */
+    weechat_upgrading = 0;
+    
+    /* send signal for end of /upgrade */
+    hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }

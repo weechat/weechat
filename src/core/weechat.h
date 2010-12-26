@@ -103,7 +103,8 @@
 extern int weechat_debug_core;
 extern char *weechat_argv0;
 extern int weechat_upgrading;
-extern time_t weechat_start_time;
+extern time_t weechat_first_start_time;
+extern struct timeval weechat_current_start_timeval;
 extern int weechat_upgrade_count;
 extern int weechat_quit;
 extern char *weechat_home;

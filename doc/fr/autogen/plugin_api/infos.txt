@@ -52,4 +52,6 @@
 
 | weechat | weechat_site_download | site WeeChat, page de téléchargement | -
 
+| weechat | weechat_upgrading | 1 si WeeChat est en cours de mise à jour (commande `/upgrade`) | -
+
 |========================================

@@ -3865,7 +3865,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
     (void) data;
     (void) argv_eol;
     
-    running_time = time (NULL) - weechat_start_time;
+    running_time = time (NULL) - weechat_first_start_time;
     day = running_time / (60 * 60 * 24);
     hour = (running_time % (60 * 60 * 24)) / (60 * 60);
     min = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
@@ -3880,7 +3880,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                   hour,
                   min,
                   sec,
-                  ctime (&weechat_start_time));
+                  ctime (&weechat_first_start_time));
         string[strlen (string) - 1] = '\0';
         input_data (buffer, string);
     }
@@ -3894,7 +3894,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                   hour,
                   min,
                   sec,
-                  util_get_time_string (&weechat_start_time));
+                  util_get_time_string (&weechat_first_start_time));
         input_data (buffer, string);
     }
     else
@@ -3918,7 +3918,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                          sec,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         util_get_time_string (&weechat_start_time));
+                         util_get_time_string (&weechat_first_start_time));
     }
     
     return WEECHAT_RC_OK;
@@ -3953,7 +3953,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           weechat_upgrade_count,
                           /* TRANSLATORS: text is: "upgraded xx times" */
                           NG_("time", "times", weechat_upgrade_count),
-                          util_get_time_string (&weechat_start_time));
+                          util_get_time_string (&weechat_first_start_time));
                 input_data (buffer, string);
             }
         }
@@ -3972,7 +3972,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           "Upgraded %d %s, first start: %s",
                           weechat_upgrade_count,
                           (weechat_upgrade_count > 1) ? "times" : "time",
-                          ctime (&weechat_start_time));
+                          ctime (&weechat_first_start_time));
                 string[strlen (string) - 1] = '\0';
                 input_data (buffer, string);
             }
@@ -3996,7 +3996,7 @@ command_version_display (struct t_gui_buffer *buffer,
                              weechat_upgrade_count,
                              /* TRANSLATORS: text is: "upgraded xx times" */
                              NG_("time", "times", weechat_upgrade_count),
-                             util_get_time_string (&weechat_start_time));
+                             util_get_time_string (&weechat_first_start_time));
         }
     }
 }
