@@ -504,6 +504,28 @@ There are 3 ways:
   (you can subscribe and send to "support" mailing list)
 
 
+[[gdb_error_threads]]
+When I run WeeChat under gdb, there is error about threads, what can I do?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you run WeeChat under gdb, you may have this error:
+
+----------------------------------------
+gdb /path/to/weechat-curses
+(gdb) run
+[Thread debugging using libthread_db enabled]
+Cannot find new threads: generic error
+----------------------------------------
+
+To fix that, you can run gdb with this command (replace path to libpthread and
+WeeChat with paths on your system):
+
+----------------------------------------
+LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+(gdb) run
+----------------------------------------
+
+
 [[supported_os]]
 What is the list of supported platforms for WeeChat? Will it be ported to other operating systems?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
