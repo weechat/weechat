@@ -99,7 +99,7 @@
       /buffer +1
 ........................................
 
-&bull; *`/color`* `[add pair [alias] [fg,bg] [r/g/b]] | [del pair] | switch`::
+&bull; *`/color`* `[add pair [alias] [fg,bg]] | [del pair] | switch`::
 
 ........................................
   define custom colors and display palette of colors
@@ -110,7 +110,6 @@
     pair: pair number (>= 1)
    alias: alias name for color (for example: "orange")
    fg,bg: foreground and background pair number (-1 for default terminal foreground or background)
-    r/g/b: red/green/blue values (0-1000), terminal must support it
   
   Without argument, this command displays colors in a new buffer.
   

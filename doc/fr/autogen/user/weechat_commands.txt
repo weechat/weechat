@@ -99,7 +99,7 @@
       /buffer +1
 ........................................
 
-&bull; *`/color`* `[add paire [alias] [fg,bg] [r/g/b]] | [del paire] | switch`::
+&bull; *`/color`* `[add paire [alias] [fg,bg]] | [del paire] | switch`::
 
 ........................................
   définir des couleurs personnalisées et afficher la palette des couleurs
@@ -110,7 +110,6 @@
    paire: numéro de paire (>= 1)
    alias: nom d'alias pour la couleur (par exemple: "orange")
    fg,bg: numéro de paire pour le texte et le fond (-1 pour la couleur par défaut du terminal pour le texte ou le fond)
-   r/g/b: valeurs rouge/vert/bleu pour redéfinir la couleur (0-1000), seulement si le terminal le supporte
   
   Sans paramètre, cette commande affiche les couleurs dans un nouveau tampon.
   
