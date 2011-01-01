@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2011 Sebastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2005-2006 Julien Louis <ptitlouis@sysif.net>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 11:27+0100\n"
-"PO-Revision-Date: 2011-01-01 11:27+0100\n"
+"POT-Creation-Date: 2011-01-01 18:04+0100\n"
+"PO-Revision-Date: 2011-01-01 15:54+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -34,10 +34,10 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"%s Copyright (C) 2003-2010, compiled on %s %s\n"
+"WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s Copyright (C) 2003-2010, compilé le %s %s\n"
+"WeeChat %s Copyright %s, compilé le %s %s\n"
 "Développé par Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
@@ -269,10 +269,6 @@ msgstr "%sErreur: filtre \"%s\" non trouvé"
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtre \"%s\" désactivé"
-
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sErreur: paramètres manquants pour la commande \"%s\""
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -1760,6 +1756,10 @@ msgstr ""
 "    /window scroll -2d\n"
 "  défilement jusqu'au début du jour courant:\n"
 "    /window scroll -d"
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%sErreur: paramètres manquants pour la commande \"%s\""
 
 msgid "names of buffers"
 msgstr "noms des tampons"

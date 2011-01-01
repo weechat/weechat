@@ -4,8 +4,8 @@ Sat, 21 May 2005 08:00:00 +0200.
 It was downloaded from http://weechat.org/files/src/
 
 Copyright:
-    Copyright (C) (2003-2010) Sebastien Helleu <flashcode@flashtux.org>
-    Copyright (C) (2005-2010) Emmanuel Bouthenot <kolter@openics.org>
+    Copyright (C) (2003-2011) Sebastien Helleu <flashcode@flashtux.org>
+    Copyright (C) (2005-2011) Emmanuel Bouthenot <kolter@openics.org>
     Copyright (C) (2008-2010) Dmitry Kobylin <fnfal@academ.tsc.ru> (tcl plugin)
 
 This program is free software; you can redistribute it and/or modify
@@ -19,4 +19,4 @@ License, Version 3 can be found in the file
 
 Debian packaging (licensed under the GPLv3):
   Copyright(C) 2005-2008, Julien Louis <ptitlouis@sysif.net>
-  Copyright(C) 2008-2010, Emmanuel Bouthenot <kolter@openics.org>
+  Copyright(C) 2008-2011, Emmanuel Bouthenot <kolter@openics.org>

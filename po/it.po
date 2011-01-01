@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 11:27+0100\n"
+"POT-Creation-Date: 2011-01-01 18:04+0100\n"
 "PO-Revision-Date: 2010-12-22 11:02+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -31,9 +31,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s Copyright (C) 2003-2010, compiled on %s %s\n"
+"WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 "%s Copyright (C) 2003-2010, compilato il %s %s\n"
@@ -267,10 +267,6 @@ msgstr "%sErrore: filtro \"%s\" non trovato"
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtro \"%s\" disabilitato"
-
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sErrore: argomento mancante per il comando \"%s\""
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -1734,6 +1730,10 @@ msgstr ""
 "    /window scroll -2d\n"
 "  scorre all'inizio del giorno attuale:\n"
 "     /window scroll -d"
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%sErrore: argomento mancante per il comando \"%s\""
 
 msgid "names of buffers"
 msgstr "nomi dei buffer"

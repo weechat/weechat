@@ -14,7 +14,7 @@
  * ##                                                                      ##
  * ##########################################################################
  *
- * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2011 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -104,24 +104,36 @@ weechat_init_vars ()
 }
 
 /*
+ * weechat_display_copyright: display WeeChat copyright
+ */
+
+void
+weechat_display_copyright ()
+{
+    string_iconv_fprintf (stdout, "\n");
+    string_iconv_fprintf (stdout,
+                          /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
+                          _("WeeChat %s Copyright %s, compiled on %s %s\n"
+                            "Developed by Sebastien Helleu <flashcode@flashtux.org> "
+                            "- %s"),
+                          PACKAGE_VERSION, WEECHAT_COPYRIGHT_DATE,
+                          __DATE__, __TIME__, WEECHAT_WEBSITE);
+    string_iconv_fprintf (stdout, "\n");
+}
+
+/*
  * weechat_display_usage: display WeeChat usage
  */
 
 void
 weechat_display_usage (char *exec_name)
 {
+    weechat_display_copyright ();
     string_iconv_fprintf (stdout, "\n");
-    string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("%s Copyright (C) 2003-2010, compiled on %s %s\n"
-                            "Developed by Sebastien Helleu <flashcode@flashtux.org> "
-                            "- %s"),
-                          PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
-    string_iconv_fprintf (stdout, "\n\n");
     string_iconv_fprintf (stdout,
                           _("Usage: %s [option...] [plugin:option...]\n"),
                           exec_name, exec_name);
-    string_iconv_fprintf (stdout, "\n\n");
+    string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
                           _("  -a, --no-connect  disable auto-connect to servers at startup\n"
                             "  -c, --colors      display default colors in terminal\n"
@@ -223,7 +235,9 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
-            string_iconv_fprintf (stdout, "\n%s%s", WEECHAT_LICENSE_TEXT);
+            weechat_display_copyright ();
+            string_iconv_fprintf (stdout, "\n");
+            string_iconv_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if (strcmp (argv[i], "--no-dlclose") == 0)

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2005 Benoit Papillault <benoit.papillault@free.fr>
- * Copyright (C) 2005-2010 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2005-2011 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

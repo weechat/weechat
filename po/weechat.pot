@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 11:27+0100\n"
+"POT-Creation-Date: 2011-01-01 18:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"%s Copyright (C) 2003-2010, compiled on %s %s\n"
+"WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 
@@ -232,10 +232,6 @@ msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" disabled"
-msgstr ""
-
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -1309,6 +1305,10 @@ msgid ""
 "    /window scroll -2d\n"
 "  scroll to beginning of current day:\n"
 "    /window scroll -d"
+msgstr ""
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr ""
 
 msgid "names of buffers"

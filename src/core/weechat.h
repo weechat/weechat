@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2010 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2011 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -51,7 +51,7 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2010"
+#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2011"
 #define WEECHAT_WEBSITE          "http://www.weechat.org/"
 #define WEECHAT_WEBSITE_DOWNLOAD "http://www.weechat.org/download"
 
@@ -62,8 +62,6 @@
 /* license */
 
 #define WEECHAT_LICENSE_TEXT \
-    "WeeChat " PACKAGE_VERSION " Copyright (C) 2003-2010, compiled on " __DATE__ " " __TIME__ \
-    "\nDeveloped by Sebastien Helleu <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "WeeChat is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
     "the Free Software Foundation; either version 3 of the License, or\n" \
