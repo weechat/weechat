@@ -1522,8 +1522,26 @@ gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer, int value)
 }
 
 /*
+ * gui_buffer_is_main: return 1 if plugin/name of buffer is WeeChat main buffer
+ */
+
+int
+gui_buffer_is_main (const char *plugin_name, const char *name)
+{
+    /* if plugin is set and is not "core", then it's NOT main buffer */
+    if (plugin_name && (strcmp (plugin_name, plugin_get_name (NULL)) != 0))
+        return 0;
+    
+    /* if name is set and is not "weechat", then it's NOT main buffer */
+    if (name && (strcmp (name, GUI_BUFFER_MAIN) != 0))
+        return 0;
+    
+    /* it's main buffer */
+    return 1;
+}
+
+/*
  * gui_buffer_search_main: get main buffer (weechat one, created at startup)
- *                         return first buffer if not found
  */
 
 struct t_gui_buffer *
@@ -1534,7 +1552,9 @@ gui_buffer_search_main ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (!ptr_buffer->plugin)
+        if ((!ptr_buffer->plugin)
+            && (ptr_buffer->name)
+            && (strcmp (ptr_buffer->name, GUI_BUFFER_MAIN) == 0))
             return ptr_buffer;
     }
     

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-27 11:05+0100\n"
+"POT-Creation-Date: 2011-01-01 11:27+0100\n"
 "PO-Revision-Date: 2010-11-06 11:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -147,10 +147,6 @@ msgid "No bar item defined"
 msgstr "Ningún elemento definido"
 
 #, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sError: faltan argumentos para el comando \"%s\""
-
-#, c-format
 msgid "%sNot enough memory"
 msgstr "%sNo hay suficiente memoria"
 
@@ -224,6 +220,14 @@ msgid "No local variable defined for buffer \"%s\""
 msgstr "Ninguna variable local definida para el buffer \"%s\""
 
 #, c-format
+msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sColor \"%s\" is not defined in palette"
+msgstr ""
+
+#, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" no encontrado"
 
@@ -265,6 +269,10 @@ msgstr "%sError: filtro \"%s\" no encontrado"
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtro \"%s\" desactivado"
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%sError: faltan argumentos para el comando \"%s\""
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -677,6 +685,10 @@ msgstr "%sError: opción de configuración \"%s\" no encontrada"
 msgid "Option changed: "
 msgstr "Opción cambiada: "
 
+#, fuzzy
+msgid "Option created: "
+msgstr "Opción cambiada: "
+
 msgid "Option changed"
 msgstr "Opción cambiada"
 
@@ -997,6 +1009,32 @@ msgstr ""
 "    /buffer #weechat\n"
 "  ir al buffer siguiente:\n"
 "    /buffer +1"
+
+msgid "define custom colors and display palette of colors"
+msgstr ""
+
+msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
+msgstr ""
+
+msgid ""
+"   add: add a color pair\n"
+"   del: delete a color pair\n"
+"switch: switch WeeChat/terminal colors\n"
+"  pair: pair number (>= 1)\n"
+" alias: alias name for color (for example: \"orange\")\n"
+" fg,bg: foreground and background pair number (-1 for default terminal "
+"foreground or background)\n"
+"\n"
+"Without argument, this command displays colors in a new buffer.\n"
+"\n"
+"Examples:\n"
+"  add color 214 with alias \"orange\":\n"
+"    /color add 214 orange\n"
+"  add color 250 with orange on blue:\n"
+"    /color add 250 214,4 orange_blue\n"
+"  delete color 214:\n"
+"    /color del 214"
+msgstr ""
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "lanza explícitamente un comando de WeeChat o plugin"
@@ -1706,6 +1744,10 @@ msgstr "propiedades del buffer que pueden configurarse"
 msgid "properties that can be read on a buffer"
 msgstr "propiedades del buffer que pueden leerse"
 
+#, fuzzy
+msgid "color pairs"
+msgstr "color"
+
 msgid "configuration files"
 msgstr "archivos de configuración"
 
@@ -1776,10 +1818,9 @@ msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "nivel de depurado para el plugin (\"core\" para el núcleo de WeeChat)"
 
 msgid ""
-"custom color in palette, format is: \"alias;fg,bg;r/g/b\" where alias is "
-"color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
-"is redefinition of color (terminal must support it) (everything is optional "
-"in this format and order is not important)"
+"custom color in palette, format is: \"alias;fg,bg\" where alias is color "
+"name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
+"is optional in this format and order is not important)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2559,6 +2600,35 @@ msgstr ""
 msgid "Default colors:"
 msgstr "Atajos predefinidos restaurados"
 
+msgid ""
+"WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
+"Toggle colors"
+msgstr ""
+
+#, fuzzy
+msgid "Terminal colors:"
+msgstr "Información de la terminal:"
+
+#, fuzzy
+msgid "WeeChat colors:"
+msgstr "fecha de compilación de WeeChat"
+
+#, fuzzy
+msgid "fixed color"
+msgstr "color del texto"
+
+#, fuzzy
+msgid "WeeChat basic colors:"
+msgstr "directorio de WeeChat"
+
+#, fuzzy
+msgid "Nick colors:"
+msgstr "color"
+
+#, fuzzy
+msgid "Palette colors:"
+msgstr "Atajos predefinidos restaurados"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Se perdió la terminal, cerrando WeeChat..."
 
@@ -3252,6 +3322,10 @@ msgstr "%s%s: número de ignorado incorrecto"
 #, c-format
 msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s%s: opción desconocida para el comando \"%s\""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s%s: el comando \"%s\"debe ser ejecutado en un servidor irc conectado"
 
 #, c-format
 msgid "%s%s: mask must begin with nick"
@@ -4462,10 +4536,6 @@ msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr ""
 "%s%s: el comando \"%s\" debe ser ejecutado en un buffer irc (canal o "
 "servidor)"
-
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on connected irc server"
-msgstr "%s%s: el comando \"%s\"debe ser ejecutado en un servidor irc conectado"
 
 msgid "current IRC server"
 msgstr "servidor IRC actual"

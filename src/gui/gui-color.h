@@ -166,12 +166,17 @@ extern int gui_color_search (const char *color_name);
 extern int gui_color_assign (int *color, char const *color_name);
 extern int gui_color_assign_by_diff (int *color, const char *color_name,
                                      int diff);
-extern int gui_color_get_number ();
+extern int gui_color_get_weechat_colors_number ();
+extern int gui_color_get_last_pair ();
 extern const char *gui_color_get_name (int num_color);
 extern void gui_color_init_pair (int number);
 extern void gui_color_init_pairs ();
 extern void gui_color_init_weechat ();
 extern void gui_color_display_terminal_colors ();
+extern void gui_color_buffer_display ();
+extern void gui_color_switch_colors ();
+extern void gui_color_buffer_assign ();
+extern void gui_color_buffer_open ();
 extern void gui_color_palette_build_aliases ();
 extern struct t_gui_color_palette *gui_color_palette_new (int number,
                                                           const char *value);

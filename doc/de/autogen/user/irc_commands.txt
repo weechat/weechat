@@ -201,13 +201,13 @@
 ........................................
   einen Channel betreten
 
-   server: send to this server (internal name)
-  channel: channel name to join
-      key: key to join the channel (channels with a key must be the first in list)
+   server: sendet an diesen Server (interner Name)
+  channel: Name des Channels der betreten werden soll
+      key: Zugriffsschlüssel für einen Channel (Channels die einen Zugriffsschlüssel benötigen müssen zuerst aufgeführt werden)
   
-  Examples:
+  Beispiele:
     /join #weechat
-    /join #protectedchan,#weechat key
+    /join #geschützterChannel,#weechat Zugriffsschlüssel
     /join -server freenode #weechat
 ........................................
 

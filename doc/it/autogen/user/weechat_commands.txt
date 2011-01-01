@@ -99,6 +99,30 @@
       /buffer +1
 ........................................
 
+&bull; *`/color`* `[add pair [alias] [fg,bg] [r/g/b]] | [del pair] | switch`::
+
+........................................
+  define custom colors and display palette of colors
+
+     add: add a color pair
+     del: delete a color pair
+  switch: switch WeeChat/terminal colors
+    pair: pair number (>= 1)
+   alias: alias name for color (for example: "orange")
+   fg,bg: foreground and background pair number (-1 for default terminal foreground or background)
+    r/g/b: red/green/blue values (0-1000), terminal must support it
+  
+  Without argument, this command displays colors in a new buffer.
+  
+  Examples:
+    add color 214 with alias "orange":
+      /color add 214 orange
+    add color 250 with orange on blue:
+      /color add 250 214,4 orange_blue
+    delete color 214:
+      /color del 214
+........................................
+
 &bull; *`/command`* `plugin comando`::
 
 ........................................

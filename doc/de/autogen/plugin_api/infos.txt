@@ -52,6 +52,6 @@
 
 | weechat | weechat_site_download | Download-Seite von WeeChat | -
 
-| weechat | weechat_upgrading | 1 if WeeChat is upgrading (command `/upgrade`) | -
+| weechat | weechat_upgrading | 1 falls WeeChat ein Upgrade durchführt (Befehl  `/upgrade`) | -
 
 |========================================

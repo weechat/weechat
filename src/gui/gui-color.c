@@ -569,7 +569,10 @@ gui_color_palette_add (int number, const char *value)
     gui_color_palette_build_aliases ();
     
     if (gui_init_ok)
+    {
         gui_color_init_pair (number);
+        gui_color_buffer_display ();
+    }
 }
 
 /*
@@ -593,7 +596,10 @@ gui_color_palette_remove (int number)
         hashtable_remove (gui_color_hash_palette_color, str_number);
         gui_color_palette_build_aliases ();
         if (gui_init_ok)
+        {
             gui_color_init_pair (number);
+            gui_color_buffer_display ();
+        }
     }
 }
 

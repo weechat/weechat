@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-27 11:05+0100\n"
+"POT-Creation-Date: 2011-01-01 11:27+0100\n"
 "PO-Revision-Date: 2010-11-05 17:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -148,10 +148,6 @@ msgid "No bar item defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
-
-#, fuzzy, c-format
 msgid "%sNot enough memory"
 msgstr "Nincs elég memória az új sorhoz\n"
 
@@ -226,6 +222,14 @@ msgstr "a pufferek időbélyege"
 msgid "No local variable defined for buffer \"%s\""
 msgstr ""
 
+#, c-format
+msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sColor \"%s\" is not defined in palette"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
@@ -271,6 +275,10 @@ msgstr "%s a \"%s\" modul nem található\n"
 #, fuzzy, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -729,6 +737,10 @@ msgid "Option changed: "
 msgstr "nincs a szobában"
 
 #, fuzzy
+msgid "Option created: "
+msgstr "nincs a szobában"
+
+#, fuzzy
 msgid "Option changed"
 msgstr "nincs a szobában"
 
@@ -973,6 +985,32 @@ msgstr ""
 "     ugrás 15 perccel előre: /buffer scroll +15m\n"
 "    ugrás 20 sorral feljebb: /buffer scroll -20\n"
 "   ugrás a #weechat szobára: /buffer #weechat"
+
+msgid "define custom colors and display palette of colors"
+msgstr ""
+
+msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
+msgstr ""
+
+msgid ""
+"   add: add a color pair\n"
+"   del: delete a color pair\n"
+"switch: switch WeeChat/terminal colors\n"
+"  pair: pair number (>= 1)\n"
+" alias: alias name for color (for example: \"orange\")\n"
+" fg,bg: foreground and background pair number (-1 for default terminal "
+"foreground or background)\n"
+"\n"
+"Without argument, this command displays colors in a new buffer.\n"
+"\n"
+"Examples:\n"
+"  add color 214 with alias \"orange\":\n"
+"    /color add 214 orange\n"
+"  add color 250 with orange on blue:\n"
+"    /color add 250 214,4 orange_blue\n"
+"  delete color 214:\n"
+"    /color del 214"
+msgstr ""
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr ""
@@ -1500,6 +1538,10 @@ msgid "properties that can be read on a buffer"
 msgstr "puffer betöltése sikertelen"
 
 #, fuzzy
+msgid "color pairs"
+msgstr "üzenetek színe"
+
+#, fuzzy
 msgid "configuration files"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
@@ -1586,10 +1628,9 @@ msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
 msgid ""
-"custom color in palette, format is: \"alias;fg,bg;r/g/b\" where alias is "
-"color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
-"is redefinition of color (terminal must support it) (everything is optional "
-"in this format and order is not important)"
+"custom color in palette, format is: \"alias;fg,bg\" where alias is color "
+"name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
+"is optional in this format and order is not important)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2352,6 +2393,35 @@ msgstr ""
 msgid "Default colors:"
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
+msgid ""
+"WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
+"Toggle colors"
+msgstr ""
+
+#, fuzzy
+msgid "Terminal colors:"
+msgstr "pufferek kezelése"
+
+#, fuzzy
+msgid "WeeChat colors:"
+msgstr "Konfigurációs fájl elmentve\n"
+
+#, fuzzy
+msgid "fixed color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "WeeChat basic colors:"
+msgstr "WeeChat Hiba:"
+
+#, fuzzy
+msgid "Nick colors:"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "Palette colors:"
+msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -3002,6 +3072,10 @@ msgstr "%s helytelen pufferszám\n"
 #, fuzzy, c-format
 msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
 #, c-format
 msgid "%s%s: mask must begin with nick"
@@ -4147,10 +4221,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
-msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
-
-#, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on connected irc server"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
 #, fuzzy

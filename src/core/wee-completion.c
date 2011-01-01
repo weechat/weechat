@@ -261,6 +261,46 @@ completion_list_add_buffer_properties_get_cb (void *data,
 }
 
 /*
+ * completion_list_map_add_color_cb: add color pairs in completion
+ */
+
+void
+completion_list_map_add_color_cb (void *data,
+                                  struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+    
+    gui_completion_list_add ((struct t_gui_completion *)data,
+                             (char *)key,
+                             0, WEECHAT_LIST_POS_SORT);
+}
+
+/*
+ * completion_list_add_color_pairs_cb: add color pairs (in section "palette")
+ */
+
+int
+completion_list_add_color_pairs_cb (void *data,
+                                    const char *completion_item,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_gui_completion *completion)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    hashtable_map (gui_color_hash_palette_color,
+                   &completion_list_map_add_color_cb,
+                   completion);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * completion_list_add_config_files_cb: add config files to completion list
  */
 
@@ -707,13 +747,13 @@ completion_list_add_plugins_commands_cb (void *data,
 }
 
 /*
- * completion_list_add_color_alias_cb: add color alias in completion
+ * completion_list_map_add_color_alias_cb: add color alias in completion
  */
 
 void
-completion_list_add_color_alias_cb (void *data,
-                                    struct t_hashtable *hashtable,
-                                    const void *key, const void *value)
+completion_list_map_add_color_alias_cb (void *data,
+                                        struct t_hashtable *hashtable,
+                                        const void *key, const void *value)
 {
     /* make C compiler happy */
     (void) hashtable;
@@ -898,7 +938,7 @@ completion_list_add_config_option_values_cb (void *data,
                                     }
                                     break;
                                 case CONFIG_OPTION_TYPE_COLOR:
-                                    num_colors = gui_color_get_number ();
+                                    num_colors = gui_color_get_weechat_colors_number ();
                                     for (i = 0; i < num_colors; i++)
                                     {
                                         color_name = gui_color_get_name (i);
@@ -910,7 +950,7 @@ completion_list_add_config_option_values_cb (void *data,
                                     if (gui_color_hash_palette_alias)
                                     {
                                         hashtable_map (gui_color_hash_palette_alias,
-                                                       &completion_list_add_color_alias_cb,
+                                                       &completion_list_map_add_color_alias_cb,
                                                        completion);
                                     }
                                     gui_completion_list_add (completion, "++1",
@@ -1155,6 +1195,9 @@ completion_init ()
     hook_completion (NULL, "buffer_properties_get",
                      N_("properties that can be read on a buffer"),
                      &completion_list_add_buffer_properties_get_cb, NULL);
+    hook_completion (NULL, "color_pairs",
+                     N_("color pairs"),
+                     &completion_list_add_color_pairs_cb, NULL);
     hook_completion (NULL, "config_files", /* formerly "%c" */
                      N_("configuration files"),
                      &completion_list_add_config_files_cb, NULL);

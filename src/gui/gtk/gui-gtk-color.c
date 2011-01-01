@@ -122,11 +122,21 @@ gui_color_assign_by_diff (int *color, const char *color_name, int diff)
 }
 
 /*
- * gui_color_get_number: get number of available colors
+ * gui_color_get_weechat_colors_number: get number of available colors
  */
 
 int
-gui_color_get_number ()
+gui_color_get_weechat_colors_number ()
+{
+    return 0;
+}
+
+/*
+ * gui_color_get_last_pair: get last pair number
+ */
+
+int
+gui_color_get_last_pair ()
 {
     return 0;
 }
@@ -254,6 +264,46 @@ gui_color_init ()
 
 void
 gui_color_display_terminal_colors ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_buffer_display: display content of color buffer
+ */
+
+void
+gui_color_buffer_display ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_switch_colrs: switch between WeeChat and terminal colors
+ */
+
+void
+gui_color_switch_colors ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_buffer_assign: assign color buffer to pointer if it is not yet set
+ */
+
+void
+gui_color_buffer_assign ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_buffer_open: open a buffer to display colors
+ */
+
+void
+gui_color_buffer_open ()
 {
     /* This function does nothing in Gtk GUI */
 }

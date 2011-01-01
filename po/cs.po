@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-27 11:05+0100\n"
+"POT-Creation-Date: 2011-01-01 11:27+0100\n"
 "PO-Revision-Date: 2010-11-06 11:55+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -146,10 +146,6 @@ msgid "No bar item defined"
 msgstr "Žádné položky pole nejsou definovány"
 
 #, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sChyba: chybí argumenty pro příkaz \"%s\""
-
-#, c-format
 msgid "%sNot enough memory"
 msgstr "%sNedostatek paměti"
 
@@ -223,6 +219,14 @@ msgid "No local variable defined for buffer \"%s\""
 msgstr "Není definovaná žádná lokální proměnná pro buffer \"%s\""
 
 #, c-format
+msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sColor \"%s\" is not defined in palette"
+msgstr ""
+
+#, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" nenalezen"
 
@@ -264,6 +268,10 @@ msgstr "%sChyba: filtr \"%s\" nenalezen"
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtr \"%s\" zakázán"
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%sChyba: chybí argumenty pro příkaz \"%s\""
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -681,6 +689,10 @@ msgstr "%sChyba: volba nastavení \"%s\" nenalezena"
 msgid "Option changed: "
 msgstr "Volba změněna: "
 
+#, fuzzy
+msgid "Option created: "
+msgstr "Volba změněna: "
+
 msgid "Option changed"
 msgstr "Volba změněna"
 
@@ -994,6 +1006,32 @@ msgstr ""
 "    /buffer #weechat\n"
 "  skočit na další buffer:\n"
 "    /buffer +1"
+
+msgid "define custom colors and display palette of colors"
+msgstr ""
+
+msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
+msgstr ""
+
+msgid ""
+"   add: add a color pair\n"
+"   del: delete a color pair\n"
+"switch: switch WeeChat/terminal colors\n"
+"  pair: pair number (>= 1)\n"
+" alias: alias name for color (for example: \"orange\")\n"
+" fg,bg: foreground and background pair number (-1 for default terminal "
+"foreground or background)\n"
+"\n"
+"Without argument, this command displays colors in a new buffer.\n"
+"\n"
+"Examples:\n"
+"  add color 214 with alias \"orange\":\n"
+"    /color add 214 orange\n"
+"  add color 250 with orange on blue:\n"
+"    /color add 250 214,4 orange_blue\n"
+"  delete color 214:\n"
+"    /color del 214"
+msgstr ""
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "pustit uvedený WeeChat nebo plugin příkaz"
@@ -1692,6 +1730,10 @@ msgstr "vlastnosti, které mohou být nastaveny bufferu"
 msgid "properties that can be read on a buffer"
 msgstr "vlastnosti, které mohou být čteny o bufferu"
 
+#, fuzzy
+msgid "color pairs"
+msgstr "barva"
+
 msgid "configuration files"
 msgstr "konfigurační soubory"
 
@@ -1763,10 +1805,9 @@ msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "úroveň ladění pro plugin (\"core\" pro jádro WeeChat)"
 
 msgid ""
-"custom color in palette, format is: \"alias;fg,bg;r/g/b\" where alias is "
-"color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
-"is redefinition of color (terminal must support it) (everything is optional "
-"in this format and order is not important)"
+"custom color in palette, format is: \"alias;fg,bg\" where alias is color "
+"name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
+"is optional in this format and order is not important)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -2526,6 +2567,35 @@ msgstr ""
 msgid "Default colors:"
 msgstr "Výchozí klávesové zkratky obnoveny"
 
+msgid ""
+"WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
+"Toggle colors"
+msgstr ""
+
+#, fuzzy
+msgid "Terminal colors:"
+msgstr "Informace o terminálu:"
+
+#, fuzzy
+msgid "WeeChat colors:"
+msgstr "datum kompilace WeeChat"
+
+#, fuzzy
+msgid "fixed color"
+msgstr "barva textu"
+
+#, fuzzy
+msgid "WeeChat basic colors:"
+msgstr "adresář WeeChat"
+
+#, fuzzy
+msgid "Nick colors:"
+msgstr "barva"
+
+#, fuzzy
+msgid "Palette colors:"
+msgstr "Výchozí klávesové zkratky obnoveny"
+
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
 
@@ -3207,6 +3277,10 @@ msgstr "%s%s: nekorektní číslo ignorování"
 #, c-format
 msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s%s: neznámá volba pro příkaz \"%s\""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr "%s%s: příkaz \"%s\" nemůže být spuštěn v připojeném irc serveru"
 
 #, c-format
 msgid "%s%s: mask must begin with nick"
@@ -4408,10 +4482,6 @@ msgstr "%s%s: příliš málo parametrů pro příkaz \"%s\""
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr ""
 "%s%s: příkaz \"%s\" nemůže být spuštěn v irc bufferu (server nebo kanál)"
-
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on connected irc server"
-msgstr "%s%s: příkaz \"%s\" nemůže být spuštěn v připojeném irc serveru"
 
 msgid "current IRC server"
 msgstr "aktuální IRC server"

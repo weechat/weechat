@@ -21,6 +21,11 @@
 #ifndef __WEECHAT_COMMAND_H
 #define __WEECHAT_COMMAND_H 1
 
+#define COMMAND_CALLBACK(__command)                                     \
+    int                                                                 \
+    command_##__command (void *data, struct t_gui_buffer *buffer,       \
+                         int argc, char **argv, char **argv_eol)
+
 /*
  * This macro is used to create an "empty" command in WeeChat core:
  * command does nothing, but plugins or scripts can catch it when it
@@ -38,6 +43,18 @@
         (void) argv;                                                    \
         (void) argv_eol;                                                \
         return WEECHAT_RC_OK;                                           \
+    }
+
+#define COMMAND_MIN_ARGS(__min, __command)                              \
+    if (argc < __min)                                                   \
+    {                                                                   \
+        gui_chat_printf_date_tags (                                     \
+            NULL, 0,                                                    \
+            GUI_FILTER_TAG_NO_FILTER,                                   \
+            _("%sError: missing arguments for \"%s\" command"),         \
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],                     \
+            __command);                                                 \
+        return WEECHAT_RC_ERROR;                                        \
     }
 
 struct t_gui_buffer;

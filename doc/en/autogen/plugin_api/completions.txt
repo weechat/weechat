@@ -70,6 +70,8 @@
 
 | weechat | buffers_plugins_names | names of buffers (including plugins names)
 
+| weechat | color_pairs | color pairs
+
 | weechat | commands | commands (weechat and plugins)
 
 | weechat | config_files | configuration files

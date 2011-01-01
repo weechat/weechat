@@ -120,7 +120,8 @@ gui_main_init ()
     gui_init_ok = 0;
     
     /* create core buffer */
-    ptr_buffer = gui_buffer_new (NULL, "weechat", NULL, NULL, NULL, NULL);
+    ptr_buffer = gui_buffer_new (NULL, GUI_BUFFER_MAIN,
+                                 NULL, NULL, NULL, NULL);
     if (ptr_buffer)
     {
         gui_init_ok = 1;

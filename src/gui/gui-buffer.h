@@ -42,6 +42,8 @@ enum t_gui_buffer_notify
     GUI_BUFFER_NUM_NOTIFY,
 };
 
+#define GUI_BUFFER_MAIN "weechat"
+
 #define GUI_TEXT_SEARCH_DISABLED 0
 #define GUI_TEXT_SEARCH_BACKWARD 1
 #define GUI_TEXT_SEARCH_FORWARD  2
@@ -244,6 +246,7 @@ extern void gui_buffer_set_pointer (struct t_gui_buffer *buffer,
                                     const char *property, void *pointer);
 extern void gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer,
                                                 int value);
+extern int gui_buffer_is_main (const char *plugin_name, const char *name);
 extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
                                                        const char *name);

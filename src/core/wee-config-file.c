@@ -636,7 +636,7 @@ config_file_new_option (struct t_config_file *config_file,
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 new_option->min = min;
-                new_option->max = gui_color_get_number () - 1;
+                new_option->max = gui_color_get_weechat_colors_number () - 1;
                 if (default_value)
                 {
                     new_option->default_value = malloc (sizeof (int));
@@ -1251,7 +1251,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     old_value = CONFIG_COLOR(option);
                 if (option->value)
                 {
-                    num_colors = gui_color_get_number ();
+                    num_colors = gui_color_get_weechat_colors_number ();
                     value_int = -1;
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)

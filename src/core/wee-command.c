@@ -150,9 +150,7 @@ command_bar_list (int full)
  * command_bar: manage bars
  */
 
-int
-command_bar (void *data, struct t_gui_buffer *buffer,
-             int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(bar)
 {
     int type, position;
     char *error, *str_type, *pos_condition;
@@ -204,15 +202,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* add a new bar */
     if (string_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 8)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(8, "bar add");
         pos_condition = strchr (argv[3], ',');
         if (pos_condition)
         {
@@ -300,15 +290,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* delete a bar */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "bar del");
         if (string_strcasecmp (argv[2], "-all") == 0)
         {
             gui_bar_free_all ();
@@ -337,15 +319,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* set a bar property */
     if (string_strcasecmp (argv[1], "set") == 0)
     {
-        if (argc < 5)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(5, "bar set");
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -371,15 +345,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* hide a bar */
     if (string_strcasecmp (argv[1], "hide") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "bar hide");
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -398,15 +364,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* show a bar */
     if (string_strcasecmp (argv[1], "show") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "bar show");
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -425,15 +383,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* toggle a bar visible/hidden */
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "bar toggle");
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -452,15 +402,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* scroll in a bar */
     if (string_strcasecmp (argv[1], "scroll") == 0)
     {
-        if (argc < 5)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "bar");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(5, "bar scroll");
         ptr_bar = gui_bar_search (argv[2]);
         if (ptr_bar)
         {
@@ -530,9 +472,7 @@ command_buffer_display_localvar (void *data,
  * command_buffer: manage buffers
  */
 
-int
-command_buffer (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(buffer)
 {
     struct t_gui_buffer *ptr_buffer;
     long number, number1, number2;
@@ -621,16 +561,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* move buffer to another number in the list */
     if (string_strcasecmp (argv[1], "move") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "buffer");
-            return WEECHAT_RC_ERROR;
-        }
-        
+        COMMAND_MIN_ARGS(3, "buffer move");
         error = NULL;
         number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
                          argv[2] + 1 : argv[2],
@@ -661,16 +592,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* merge buffer with another number in the list */
     if (string_strcasecmp (argv[1], "merge") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "buffer");
-            return WEECHAT_RC_ERROR;
-        }
-        
+        COMMAND_MIN_ARGS(3, "buffer merge");
         error = NULL;
         number = strtol (argv[2], &error, 10);
         if (error && !error[0])
@@ -718,7 +640,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     {
         if (argc < 3)
         {
-            if (!buffer->plugin)
+            if (buffer == gui_buffer_search_main ())
             {
                 gui_chat_printf (NULL,
                                  _("%sError: WeeChat main buffer can't be "
@@ -797,20 +719,11 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         
         return WEECHAT_RC_OK;
     }
-
-    /* display buffer notify */
+    
+    /* set notify level */
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "buffer");
-            return WEECHAT_RC_ERROR;
-        }
-        /* set notify level for current buffer */
+        COMMAND_MIN_ARGS(3, "buffer notify");
         config_weechat_notify_set (gui_current_window->buffer,
                                    argv_eol[2]);
         return WEECHAT_RC_OK;
@@ -839,15 +752,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* set a property on buffer */
     if (string_strcasecmp (argv[1], "set") == 0)
     {
-        if (argc < 4)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "buffer");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(4, "buffer set");
         value = string_remove_quotes (argv_eol[3], "'\"");
         gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
         if (value)
@@ -859,15 +764,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* get a buffer property */
     if (string_strcasecmp (argv[1], "get") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "buffer");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "buffer get");
         if (gui_buffer_property_in_list (gui_buffer_properties_get_integer,
                                          argv[2]))
         {
@@ -986,12 +883,159 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_color: define custom colors and display palette of colors
+ */
+
+COMMAND_CALLBACK(color)
+{
+    char *str_alias, *str_pair, *str_rgb, *pos, *error;
+    char str_color[1024], str_command[1024];
+    long number;
+    int i;
+    struct t_gui_color_palette *color_palette;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+    
+    if (argc == 1)
+    {
+        gui_color_buffer_open ();
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add a color pair */
+    if (string_strcasecmp (argv[1], "add") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "color add");
+        
+        /* check pair number */
+        error = NULL;
+        number = strtol (argv[2], &error, 10);
+        if (error && !error[0])
+        {
+            if ((number < 1) || (number > gui_color_get_last_pair ()))
+                number = -1;
+        }
+        else
+        {
+            number = -1;
+        }
+        if (number < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sInvalid pair number \"%s\" (must be between "
+                               "%d and %d)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2], 1, gui_color_get_last_pair ());
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* check other arguments */
+        str_alias = NULL;
+        str_pair = NULL;
+        str_rgb = NULL;
+        for (i = 3; i < argc; i++)
+        {
+            pos = strchr (argv[i], ',');
+            if (pos)
+                str_pair = argv[i];
+            else
+            {
+                pos = strchr (argv[i], '/');
+                if (pos)
+                    str_rgb = argv[i];
+                else
+                    str_alias = argv[i];
+            }
+        }
+        str_color[0] = '\0';
+        if (str_alias)
+        {
+            strcat (str_color, ";");
+            strcat (str_color, str_alias);
+        }
+        if (str_pair)
+        {
+            strcat (str_color, ";");
+            strcat (str_color, str_pair);
+        }
+        if (str_rgb)
+        {
+            strcat (str_color, ";");
+            strcat (str_color, str_rgb);
+        }
+        
+        /* add color pair */
+        snprintf (str_command, sizeof (str_command),
+                  "/set weechat.palette.%d \"%s\"",
+                  (int)number,
+                  (str_color[0]) ? str_color + 1 : "");
+        input_exec_command (buffer, 1, NULL, str_command);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* delete a color pair */
+    if (string_strcasecmp (argv[1], "del") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "color del");
+        
+        /* check pair number */
+        error = NULL;
+        number = strtol (argv[2], &error, 10);
+        if (error && !error[0])
+        {
+            if ((number < 1) || (number > gui_color_get_last_pair ()))
+                number = -1;
+        }
+        else
+        {
+            number = -1;
+        }
+        if (number < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sInvalid pair number \"%s\" (must be between "
+                               "%d and %d)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2], 1, gui_color_get_last_pair ());
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* search color pair */
+        color_palette = gui_color_palette_get ((int)number);
+        if (!color_palette)
+        {
+            gui_chat_printf (NULL,
+                             _("%sColor \"%s\" is not defined in palette"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* delete color pair */
+        snprintf (str_command, sizeof (str_command),
+                  "/unset weechat.palette.%d",
+                  (int)number);
+        input_exec_command (buffer, 1, NULL, str_command);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch WeeChat/terminal colors */
+    if (string_strcasecmp (argv[1], "switch") == 0)
+    {
+        gui_color_switch_colors ();
+        return WEECHAT_RC_OK;
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_command: launch explicit WeeChat or plugin command
  */
 
-int
-command_command (void *data, struct t_gui_buffer *buffer,
-                 int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(command)
 {
     int length;
     char *command;
@@ -1038,9 +1082,7 @@ command_command (void *data, struct t_gui_buffer *buffer,
  * command_debug: control debug for core/plugins
  */
 
-int
-command_debug (void *data, struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(debug)
 {
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
@@ -1097,15 +1139,7 @@ command_debug (void *data, struct t_gui_buffer *buffer,
     }
     else if (string_strcasecmp (argv[1], "set") == 0)
     {
-        if (argc < 4)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "debug set");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(4, "debug set");
         if (strcmp (argv[3], "0") == 0)
         {
             /* disable debug for a plugin */
@@ -1167,9 +1201,7 @@ command_filter_display (struct t_gui_filter *filter)
  * command_filter: manage message filters
  */
 
-int
-command_filter (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(filter)
 {
     struct t_gui_filter *ptr_filter;
     
@@ -1321,15 +1353,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     /* add filter */
     if (string_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 6)
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: missing arguments for \"%s\" "
-                                         "command"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       "filter add");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(6, "filter add");
         if (gui_filter_search_by_name (argv[2]))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
@@ -1370,17 +1394,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     /* rename a filter */
     if (string_strcasecmp (argv[1], "rename") == 0)
     {
-        if (argc < 4)
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: missing arguments for \"%s\" "
-                                         "command"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       "filter rename");
-            return WEECHAT_RC_ERROR;
-        }
-        
-        /* rename filter */
+        COMMAND_MIN_ARGS(4, "filter rename");
         ptr_filter = gui_filter_search_by_name (argv[2]);
         if (ptr_filter)
         {
@@ -1415,15 +1429,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     /* delete filter */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: missing arguments for \"%s\" "
-                                         "command"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                       "filter del");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "filter del");
         if (string_strcasecmp (argv[2], "-all") == 0)
         {
             if (gui_filters)
@@ -1473,9 +1479,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
  * command_help: display help about commands
  */
 
-int
-command_help (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(help)
 {
     struct t_hook *ptr_hook;
     struct t_config_option *ptr_option;
@@ -1840,9 +1844,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
  * command_history: display current buffer history
  */
 
-int
-command_history (void *data, struct t_gui_buffer *buffer,
-                 int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(history)
 {
     struct t_gui_history *ptr_history;
     int n, n_total, n_user, displayed;
@@ -1897,9 +1899,7 @@ command_history (void *data, struct t_gui_buffer *buffer,
  * command_input: input actions (used by key bindings)
  */
 
-int
-command_input (void *data, struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(input)
 {
     /* make C compiler happy */
     (void) data;
@@ -2143,9 +2143,7 @@ command_key_display_listdiff ()
  * command_key: bind/unbind keys
  */
 
-int
-command_key (void *data, struct t_gui_buffer *buffer,
-             int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(key)
 {
     char *internal_code;
     struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
@@ -2207,15 +2205,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_OK;
         }
         
-        if (argc < 4)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "key");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(4, "key bind");
         
         /* bind new key */
         gui_keyboard_verbose = 1;
@@ -2447,9 +2437,7 @@ command_layout_display_tree (struct t_gui_layout_window *layout_window,
  * command_layout: save/apply buffers/windows layout
  */
 
-int
-command_layout (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(layout)
 {
     struct t_gui_layout_buffer *ptr_layout_buffer;
     int flag_buffers, flag_windows;
@@ -2559,9 +2547,7 @@ command_layout (void *data, struct t_gui_buffer *buffer,
  * command_mute: execute a command mute
  */
 
-int
-command_mute (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(mute)
 {
     int length, mute_mode;
     char *command, *ptr_command;
@@ -2926,9 +2912,7 @@ command_plugin_list (const char *name, int full)
  * command_plugin: list/load/unload WeeChat plugins
  */
 
-int
-command_plugin (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(plugin)
 {
     /* make C compiler happy */
     (void) data;
@@ -3029,9 +3013,7 @@ command_proxy_list ()
  * command_proxy: manage proxies
  */
 
-int
-command_proxy (void *data, struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(proxy)
 {
     int type;
     char *error;
@@ -3052,15 +3034,7 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
     /* add a new proxy */
     if (string_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 6)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "proxy");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(6, "proxy add");
         type = proxy_search_type (argv[3]);
         if (type < 0)
         {
@@ -3107,15 +3081,7 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
     /* delete a proxy */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
-        if (argc < 3)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "proxy");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(3, "proxy del");
         if (string_strcasecmp (argv[2], "-all") == 0)
         {
             proxy_free_all ();
@@ -3142,15 +3108,7 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
     /* set a proxy property */
     if (string_strcasecmp (argv[1], "set") == 0)
     {
-        if (argc < 5)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "proxy");
-            return WEECHAT_RC_ERROR;
-        }
+        COMMAND_MIN_ARGS(5, "proxy set");
         ptr_proxy = proxy_search (argv[2]);
         if (!ptr_proxy)
         {
@@ -3185,9 +3143,7 @@ command_proxy (void *data, struct t_gui_buffer *buffer,
  * command_quit: quit WeeChat
  */
 
-int
-command_quit (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(quit)
 {
     int confirm_ok;
     char *pos_args;
@@ -3266,9 +3222,7 @@ command_reload_file (struct t_config_file *config_file)
  * command_reload: reload WeeChat and plugins options from disk
  */
 
-int
-command_reload (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(reload)
 {
     struct t_config_file *ptr_config_file;
     int i;
@@ -3333,9 +3287,7 @@ command_save_file (struct t_config_file *config_file)
  * command_save: save configuration files to disk
  */
 
-int
-command_save (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(save)
 {
     struct t_config_file *ptr_config_file;
     int i;
@@ -3548,13 +3500,11 @@ command_set_display_option_list (const char *message, const char *search)
  * command_set: set config options
  */
 
-int
-command_set (void *data, struct t_gui_buffer *buffer,
-             int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(set)
 {
     char *value;
     int number_found, rc;
-    struct t_config_option *ptr_option;
+    struct t_config_option *ptr_option, *ptr_option_before;
     
     /* make C compiler happy */
     (void) data;
@@ -3572,20 +3522,25 @@ command_set (void *data, struct t_gui_buffer *buffer,
         if (number_found == 0)
         {
             if (argc == 2)
+            {
                 gui_chat_printf (NULL,
                                  _("%sOption \"%s\" not found (tip: you can use "
                                    "\"*\" at beginning and/or end of option to "
                                    "see a sublist)"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[1]);
+            }
             else
+            {
                 gui_chat_printf (NULL,
                                  _("No configuration option found"));
+            }
         }
         else
         {
             gui_chat_printf (NULL, "");
             if (argc == 2)
+            {
                 gui_chat_printf (NULL,
                                  NG_("%s%d%s configuration option found "
                                      "matching with \"%s\"",
@@ -3596,7 +3551,9 @@ command_set (void *data, struct t_gui_buffer *buffer,
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  argv[1]);
+            }
             else
+            {
                 gui_chat_printf (NULL,
                                  NG_("%s%d%s configuration option found",
                                      "%s%d%s configuration options found",
@@ -3604,12 +3561,15 @@ command_set (void *data, struct t_gui_buffer *buffer,
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT));
+            }
         }
         return WEECHAT_RC_OK;
     }
     
     /* set option value */
-    value =(string_strcasecmp (argv_eol[2], WEECHAT_CONFIG_OPTION_NULL) == 0) ?
+    config_file_search_with_string (argv[1], NULL, NULL, &ptr_option_before,
+                                    NULL);
+    value = (string_strcasecmp (argv_eol[2], WEECHAT_CONFIG_OPTION_NULL) == 0) ?
         NULL : string_remove_quotes (argv_eol[2], "'\"");
     rc = config_file_option_set_with_string (argv[1], value);
     if (value)
@@ -3633,8 +3593,12 @@ command_set (void *data, struct t_gui_buffer *buffer,
             config_file_search_with_string (argv[1], NULL, NULL,
                                             &ptr_option, NULL);
             if (ptr_option)
+            {
                 command_set_display_option (ptr_option,
-                                            _("Option changed: "));
+                                            (ptr_option_before) ?
+                                            _("Option changed: ") :
+                                            _("Option created: "));
+            }
             else
                 gui_chat_printf (NULL, _("Option changed"));
             break;
@@ -3647,9 +3611,7 @@ command_set (void *data, struct t_gui_buffer *buffer,
  * command_unset: unset/reset config options
  */
 
-int
-command_unset (void *data, struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(unset)
 {
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
@@ -3733,9 +3695,7 @@ command_unset (void *data, struct t_gui_buffer *buffer,
  * command_upgrade: upgrade WeeChat
  */
 
-int
-command_upgrade (void *data, struct t_gui_buffer *buffer,
-                 int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(upgrade)
 {
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
@@ -3853,9 +3813,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
  * command_uptime: display WeeChat uptime
  */
 
-int
-command_uptime (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(uptime)
 {
     time_t running_time;
     int day, hour, min, sec;
@@ -4005,9 +3963,7 @@ command_version_display (struct t_gui_buffer *buffer,
  * command_version: display WeeChat version
  */
 
-int
-command_version (void *data, struct t_gui_buffer *buffer,
-                 int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(version)
 {
     int send_to_buffer_as_input, translated_string;
     
@@ -4080,9 +4036,7 @@ command_wait_timer_cb (void *data, int remaining_calls)
  * command_wait: schedule a command execution in future
  */
 
-int
-command_wait (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(wait)
 {
     char *pos, *str_number, *error;
     long number, factor, delay;
@@ -4159,9 +4113,7 @@ command_wait (void *data, struct t_gui_buffer *buffer,
  * command_window: manage windows
  */
 
-int
-command_window (void *data, struct t_gui_buffer *buffer,
-                int argc, char **argv, char **argv_eol)
+COMMAND_CALLBACK(window)
 {
     struct t_gui_window *ptr_win;
     int i;
@@ -4570,6 +4522,29 @@ command_init ()
                   " || %(irc_privates)"
                   " || %(buffers_numbers)",
                   &command_buffer, NULL);
+    hook_command (NULL, "color",
+                  N_("define custom colors and display palette of colors"),
+                  N_("[add pair [alias] [fg,bg]] | [del pair] | switch"),
+                  N_("   add: add a color pair\n"
+                     "   del: delete a color pair\n"
+                     "switch: switch WeeChat/terminal colors\n"
+                     "  pair: pair number (>= 1)\n"
+                     " alias: alias name for color (for example: \"orange\")\n"
+                     " fg,bg: foreground and background pair number (-1 for "
+                      "default terminal foreground or background)\n\n"
+                     "Without argument, this command displays colors in a new "
+                     "buffer.\n\n"
+                     "Examples:\n"
+                     "  add color 214 with alias \"orange\":\n"
+                     "    /color add 214 orange\n"
+                     "  add color 250 with orange on blue:\n"
+                     "    /color add 250 214,4 orange_blue\n"
+                     "  delete color 214:\n"
+                     "    /color del 214"),
+                  "add %(color_pairs)"
+                  " || del %(color_pairs)"
+                  " || switch",
+                  &command_color, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
                   N_("plugin command"),

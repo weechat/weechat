@@ -39,6 +39,7 @@
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-line.h"
@@ -328,11 +329,11 @@ upgrade_weechat_read_cb (void *data,
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_BUFFER:
-                if (!infolist_string (infolist, "plugin_name")
-                    || (strcmp (infolist_string (infolist, "plugin_name"),
-                                plugin_get_name (NULL)) == 0))
+                plugin_name = infolist_string (infolist, "plugin_name");
+                name = infolist_string (infolist, "name");
+                if (gui_buffer_is_main (plugin_name, name))
                 {
-                    /* use WeeChat main buffer (plugin is "core") */
+                    /* use WeeChat main buffer */
                     upgrade_current_buffer = gui_buffers;
                 }
                 else
@@ -607,6 +608,9 @@ upgrade_weechat_load ()
         gui_window_switch_to_buffer (gui_current_window,
                                      upgrade_set_current_buffer, 0);
     }
+    
+    gui_color_buffer_assign ();
+    gui_color_buffer_display ();
     
     return rc;
 }

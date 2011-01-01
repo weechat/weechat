@@ -407,6 +407,20 @@ config_change_color (void *data, struct t_config_option *option)
 }
 
 /*
+ * config_change_nick_colors: called when nick colors are changed
+ */
+
+void
+config_change_nick_colors (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    gui_color_buffer_display ();
+}
+
+/*
  * config_day_change_timer_cb: timer callback for displaying
  *                             "Day changed to xxx" message
  */
@@ -728,10 +742,9 @@ config_weechat_palette_create_option_cb (void *data,
                     ptr_option = config_file_new_option (
                         config_file, section,
                         option_name, "string",
-                        _("custom color in palette, format is: \"alias;fg,bg;r/g/b\" "
+                        _("custom color in palette, format is: \"alias;fg,bg\" "
                           "where alias is color name, fg,bg is \"foreground,background\" "
-                          "(example: \"200,-1\"), r/g/b is redefinition of color "
-                          "(terminal must support it) (everything is optional "
+                          "(example: \"200,-1\") (everything is optional "
                           "in this format and order is not important)"),
                         NULL, 0, 0, "", value, 0, NULL, NULL,
                         &config_weechat_palette_change_cb, NULL,
@@ -762,9 +775,9 @@ config_weechat_palette_create_option_cb (void *data,
 
 int
 config_weechat_palette_delete_option_cb (void *data,
-                                       struct t_config_file *config_file,
-                                       struct t_config_section *section,
-                                       struct t_config_option *option)
+                                         struct t_config_file *config_file,
+                                         struct t_config_section *section,
+                                         struct t_config_option *option)
 {
     char *error;
     int number;
@@ -1869,7 +1882,7 @@ config_weechat_init_options ()
         N_("text color for nicks (comma separated list of colors)"),
         NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
         "lightmagenta,lightgreen,blue", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &config_change_nick_colors, NULL, NULL, NULL);
     config_color_chat_nick_self = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_self", "color",

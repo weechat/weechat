@@ -70,6 +70,8 @@
 
 | weechat | buffers_plugins_names | noms des tampons (incluant les noms d'extensions)
 
+| weechat | color_pairs | paires de couleur
+
 | weechat | commands | commandes (weechat et extensions)
 
 | weechat | config_files | fichiers de configuration

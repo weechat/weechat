@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2010-12-27 11:05+0100\n"
-"PO-Revision-Date: 2010-12-21 17:42+0100\n"
+"POT-Creation-Date: 2011-01-01 11:27+0100\n"
+"PO-Revision-Date: 2010-12-27 17:08+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -154,10 +154,6 @@ msgid "No bar item defined"
 msgstr "Es wurde kein Bar-Item festgelegt"
 
 #, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sFehler: fehlende Argumente für den Befehl \"%s\""
-
-#, c-format
 msgid "%sNot enough memory"
 msgstr "%sNicht genügend Speicher"
 
@@ -232,6 +228,14 @@ msgid "No local variable defined for buffer \"%s\""
 msgstr "Keine lokale Variable definiert für Buffer \"%s\""
 
 #, c-format
+msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sColor \"%s\" is not defined in palette"
+msgstr ""
+
+#, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sErweiterung \"%s\" wurde nicht gefunden"
 
@@ -273,6 +277,10 @@ msgstr "%sFehler: Filter \"%s\" nicht gefunden"
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filter \"%s\" deaktiviert"
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr "%sFehler: fehlende Argumente für den Befehl \"%s\""
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -689,6 +697,10 @@ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
 msgid "Option changed: "
 msgstr "Option geändert: "
 
+#, fuzzy
+msgid "Option created: "
+msgstr "Option geändert: "
+
 msgid "Option changed"
 msgstr "Option geändert"
 
@@ -1013,6 +1025,32 @@ msgstr ""
 " /buffer #weechat\n"
 "  wechselt zum nächsten Buffer:\n"
 " /buffer +1"
+
+msgid "define custom colors and display palette of colors"
+msgstr ""
+
+msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
+msgstr ""
+
+msgid ""
+"   add: add a color pair\n"
+"   del: delete a color pair\n"
+"switch: switch WeeChat/terminal colors\n"
+"  pair: pair number (>= 1)\n"
+" alias: alias name for color (for example: \"orange\")\n"
+" fg,bg: foreground and background pair number (-1 for default terminal "
+"foreground or background)\n"
+"\n"
+"Without argument, this command displays colors in a new buffer.\n"
+"\n"
+"Examples:\n"
+"  add color 214 with alias \"orange\":\n"
+"    /color add 214 orange\n"
+"  add color 250 with orange on blue:\n"
+"    /color add 250 214,4 orange_blue\n"
+"  delete color 214:\n"
+"    /color del 214"
+msgstr ""
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "führe explizit einen WeeChat Befehl oder eine Erweiterung aus"
@@ -1752,6 +1790,10 @@ msgstr "Eigenschaften die für den Buffer gesetzt werden können"
 msgid "properties that can be read on a buffer"
 msgstr "Eigenschaften die für den Buffer gelesen werden können"
 
+#, fuzzy
+msgid "color pairs"
+msgstr "Farben"
+
 msgid "configuration files"
 msgstr "Konfigurationsdateien"
 
@@ -1822,11 +1864,11 @@ msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
 
+#, fuzzy
 msgid ""
-"custom color in palette, format is: \"alias;fg,bg;r/g/b\" where alias is "
-"color name, fg,bg is \"foreground,background\" (example: \"200,-1\"), r/g/b "
-"is redefinition of color (terminal must support it) (everything is optional "
-"in this format and order is not important)"
+"custom color in palette, format is: \"alias;fg,bg\" where alias is color "
+"name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
+"is optional in this format and order is not important)"
 msgstr ""
 "Benutzerdefinierte Farbe in der Palette, Format:  \"alias;fg,bg;r/g/b\" "
 "wobei Alias der Name der Farbe ist, fg,bg stellt \"Vordergrund,Hintergrund\" "
@@ -2562,7 +2604,7 @@ msgstr "debug: lösche Datei: %s"
 #. TRANSLATORS: "%s" is translation of "second" or "seconds"
 #, c-format
 msgid "Upgrade done (%.02f %s)"
-msgstr ""
+msgstr "Upgrade durchgeführt (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -2640,6 +2682,35 @@ msgid "No color support in terminal."
 msgstr "Keine Unterstützung von Farben im Terminal."
 
 msgid "Default colors:"
+msgstr "Standardfarben:"
+
+msgid ""
+"WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
+"Toggle colors"
+msgstr ""
+
+#, fuzzy
+msgid "Terminal colors:"
+msgstr "Terminal Informationen:"
+
+#, fuzzy
+msgid "WeeChat colors:"
+msgstr "Standardfarben:"
+
+#, fuzzy
+msgid "fixed color"
+msgstr "Textfarbe"
+
+#, fuzzy
+msgid "WeeChat basic colors:"
+msgstr "WeeChat Verzeichnis"
+
+#, fuzzy
+msgid "Nick colors:"
+msgstr "Farben"
+
+#, fuzzy
+msgid "Palette colors:"
 msgstr "Standardfarben:"
 
 msgid "Terminal lost, exiting WeeChat..."
@@ -3360,6 +3431,12 @@ msgid "%s%s: unknown option for \"%s\" command"
 msgstr "%s%s: Unbekannte Option für den Befehl \"%s\""
 
 #, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr ""
+"%s%s: Der Befehl \"%s\" kann nur bei einem verbundenen IRC-Server ausgeführt "
+"werden"
+
+#, c-format
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: Die Maske muss mit einem Nick beginnen"
 
@@ -3822,11 +3899,9 @@ msgstr "Nickname: Nickname"
 msgid "join a channel"
 msgstr "einen Channel betreten"
 
-#, fuzzy
 msgid "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
-msgstr "[channel1[,channel2[,channel3]] [key1[,key2]]]"
+msgstr "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
 
-#, fuzzy
 msgid ""
 " server: send to this server (internal name)\n"
 "channel: channel name to join\n"
@@ -3838,13 +3913,15 @@ msgid ""
 "  /join #protectedchan,#weechat key\n"
 "  /join -server freenode #weechat"
 msgstr ""
+" server: sendet an diesen Server (interner Name)\n"
 "channel: Name des Channels der betreten werden soll\n"
 "    key: Zugriffsschlüssel für einen Channel (Channels die einen "
 "Zugriffsschlüssel benötigen müssen zuerst aufgeführt werden)\n"
 "\n"
-"Examples:\n"
+"Beispiele:\n"
 "  /join #weechat\n"
-"  /join #geschützterChannel,#weechat Zugriffsschlüssel"
+"  /join #geschützterChannel,#weechat Zugriffsschlüssel\n"
+"  /join -server freenode #weechat"
 
 msgid "forcibly remove a user from a channel"
 msgstr "Einen User aus einem Channel herauskicken"
@@ -4593,12 +4670,6 @@ msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr ""
 "%s%s: Der Befehl \"%s\" kann nur im IRC-Buffer ausgeführt werden (Server "
 "oder Channel)"
-
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on connected irc server"
-msgstr ""
-"%s%s: Der Befehl \"%s\" kann nur bei einem verbundenen IRC-Server ausgeführt "
-"werden"
 
 msgid "current IRC server"
 msgstr "aktueller IRC-Server"
@@ -6265,7 +6336,7 @@ msgid "WeeChat site, download page"
 msgstr "Download-Seite von WeeChat"
 
 msgid "1 if WeeChat is upgrading (command `/upgrade`)"
-msgstr ""
+msgstr "1 falls WeeChat ein Upgrade durchführt (Befehl  `/upgrade`)"
 
 msgid "terminal charset"
 msgstr "Terminal Zeichensatz"

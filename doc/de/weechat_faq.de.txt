@@ -535,25 +535,24 @@ Es gibt drei Möglichkeiten:
   (Um emails an die "support" Mailing-Liste zu schicken, kannst Du diese abonnieren)
 
 
-// TRANSLATION MISSING
 [[gdb_error_threads]]
-When I run WeeChat under gdb, there is an error about threads, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wenn man WeeChat in gdb startet kann ein Thread-Fehler auftreten. Was beudeutet das?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you run WeeChat under gdb, you may have this error:
+Falls man WeeChat in gdb ausführt kann folgende Fehlermeldung erscheinen:
 
 ----------------------------------------
-gdb /path/to/weechat-curses
+gdb /Pfad/zu/weechat-curses
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
 ----------------------------------------
 
-To fix that, you can run gdb with this command (replace path to libpthread and
-WeeChat with paths on your system):
+Um diesen Fehler zu beheben sollte man gdb wie folgt aufrufen (der Pfad zu
+libpthread und WeeChat muss natürlich an das eigene System angepasst werden):
 
 ----------------------------------------
-LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat-curses
 (gdb) run
 ----------------------------------------
 

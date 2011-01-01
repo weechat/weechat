@@ -36,8 +36,10 @@
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
+#include "../gui-buffer.h"
 #include "../gui-color.h"
 #include "../gui-chat.h"
+#include "../gui-window.h"
 #include "gui-curses.h"
 
 
@@ -63,6 +65,8 @@ struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
 
 int gui_color_last_pair = 63;
 int gui_color_num_bg = 8;
+struct t_gui_buffer *gui_color_buffer = NULL;
+int gui_color_terminal_colors = 0;
 
 
 /*
@@ -180,13 +184,23 @@ gui_color_assign_by_diff (int *color, const char *color_name, int diff)
 }
 
 /*
- * gui_color_get_number: get number of available colors
+ * gui_color_get_weechat_colors_number: get number of WeeChat colors
  */
 
 int
-gui_color_get_number ()
+gui_color_get_weechat_colors_number ()
 {
     return GUI_CURSES_NUM_WEECHAT_COLORS;
+}
+
+/*
+ * gui_color_get_last_pair: get last pair number
+ */
+
+int
+gui_color_get_last_pair ()
+{
+    return gui_color_last_pair;
 }
 
 /*
@@ -299,20 +313,27 @@ gui_color_init_pair (int number)
     struct t_gui_color_palette *ptr_color_palette;
     int fg, bg;
     
-    if ((number >= 1) && (number <= COLOR_PAIRS - 1))
+    if ((number >= 1) && (number <= gui_color_last_pair))
     {
-        ptr_color_palette = gui_color_palette_get (number);
-        if (ptr_color_palette)
+        if (gui_color_terminal_colors)
         {
-            init_pair (number,
-                       ptr_color_palette->foreground,
-                       ptr_color_palette->background);
+            init_pair (number, number, -1);
         }
         else
         {
-            fg = (number - 1) % gui_color_num_bg;
-            bg = ((number - 1) < gui_color_num_bg) ? -1 : (number - 1) / gui_color_num_bg;
-            init_pair (number, fg, bg);
+            ptr_color_palette = gui_color_palette_get (number);
+            if (ptr_color_palette)
+            {
+                init_pair (number,
+                           ptr_color_palette->foreground,
+                           ptr_color_palette->background);
+            }
+            else
+            {
+                fg = (number - 1) % gui_color_num_bg;
+                bg = ((number - 1) < gui_color_num_bg) ? -1 : (number - 1) / gui_color_num_bg;
+                init_pair (number, fg, bg);
+            }
         }
     }
 }
@@ -350,20 +371,23 @@ gui_color_init_pairs ()
             gui_color_init_pair (i);
         }
         
-        /* disable white on white, replaced by black on white */
-        ptr_color_palette = gui_color_palette_get (gui_color_last_pair);
-        if (!ptr_color_palette)
-            init_pair (gui_color_last_pair, -1, -1);
-        
-        /*
-         * white on default bg is default (-1) (for terminals with white/light
-         * background)
-         */
-        if (!CONFIG_BOOLEAN(config_look_color_real_white))
+        if (!gui_color_terminal_colors)
         {
-            ptr_color_palette = gui_color_palette_get (COLOR_WHITE);
+            /* disable white on white, replaced by black on white */
+            ptr_color_palette = gui_color_palette_get (gui_color_last_pair);
             if (!ptr_color_palette)
-                init_pair (COLOR_WHITE + 1, -1, -1);
+                init_pair (gui_color_last_pair, -1, -1);
+            
+            /*
+             * white on default bg is default (-1) (for terminals with white/light
+             * background)
+             */
+            if (!CONFIG_BOOLEAN(config_look_color_real_white))
+            {
+                ptr_color_palette = gui_color_palette_get (COLOR_WHITE);
+                if (!ptr_color_palette)
+                    init_pair (COLOR_WHITE + 1, -1, -1);
+            }
         }
     }
 }
@@ -461,10 +485,9 @@ void
 gui_color_display_terminal_colors ()
 {
     int lines, line, col, color;
-    int color_support, colors, color_pairs, change_color;
+    int colors, color_pairs, change_color;
     char str_line[1024], str_color[64];
-
-    color_support = 0;
+    
     colors = 0;
     color_pairs = 0;
     change_color = 0;
@@ -472,7 +495,6 @@ gui_color_display_terminal_colors ()
     initscr ();
     if (has_colors ())
     {
-        color_support = 1;
         start_color ();
         use_default_colors ();
         colors = COLORS;
@@ -482,7 +504,7 @@ gui_color_display_terminal_colors ()
         endwin ();
     }
     printf ("\n");
-    printf ("%s $TERM=%s   COLORS: %d, COLOR_PAIRS: %d, "
+    printf ("%s $TERM=%s  COLORS: %d, COLOR_PAIRS: %d, "
             "can_change_color: %s\n",
             _("Terminal infos:"),
             getenv ("TERM"), colors, color_pairs,
@@ -518,6 +540,311 @@ gui_color_display_terminal_colors ()
                 "--------------------\n");
     }
     printf ("\n");
+}
+
+/*
+ * gui_color_buffer_display: display content of color buffer
+ */
+
+void
+gui_color_buffer_display ()
+{
+    int y, i, lines, line, col, color;
+    int colors, color_pairs, change_color, num_items;
+    char str_line[1024], str_color[64], str_rgb[64], **items;
+    struct t_gui_color_palette *color_palette;
+    
+    if (!gui_color_buffer)
+        return;
+    
+    gui_buffer_clear (gui_color_buffer);
+    
+    colors = 0;
+    color_pairs = 0;
+    change_color = 0;
+    
+    if (has_colors ())
+    {
+        colors = COLORS;
+        color_pairs = COLOR_PAIRS;
+        change_color = can_change_color () ? 1 : 0;
+    }
+    
+    /* set title buffer */
+    gui_buffer_set_title (gui_color_buffer,
+                          _("WeeChat colors | Actions: [R] Refresh "
+                            "[Q] Close buffer | Keys: [alt-c] Toggle colors"));
+    
+    /* display terminal/colors infos */
+    y = 0;
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       "$TERM=%s  COLORS: %d, COLOR_PAIRS: %d, "
+                       "can_change_color: %s",
+                       getenv ("TERM"),
+                       colors,
+                       color_pairs,
+                       (change_color) ? "yes" : "no");
+    
+    /* display palette of colors */
+    y++;
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       (gui_color_terminal_colors) ?
+                       _("Terminal colors:") :
+                       _("WeeChat colors:"));
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       " %s%s00000 000 %s%s",
+                       GUI_COLOR_COLOR_STR,
+                       GUI_COLOR_PAIR_STR,
+                       GUI_COLOR(GUI_COLOR_CHAT),
+                       _("fixed color"));
+    lines = (colors < 16) ? colors : 16;
+    for (line = 0; line < lines; line++)
+    {
+        str_line[0] = '\0';
+        for (col = 0; col < 16; col++)
+        {
+            color = (col * 16) + line + 1;
+            if (color < colors)
+            {
+                snprintf (str_color, sizeof (str_color),
+                          "%s%s%05d %03d ",
+                          GUI_COLOR_COLOR_STR,
+                          GUI_COLOR_PAIR_STR,
+                          color,
+                          color);
+                strcat (str_line, str_color);
+            }
+            else
+            {
+                snprintf (str_color, sizeof (str_color),
+                          "%s     ",
+                          GUI_COLOR(GUI_COLOR_CHAT));
+                strcat (str_line, str_color);
+            }
+        }
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           " %s",
+                           str_line);
+    }
+    
+    /* display WeeChat basic colors */
+    y++;
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("WeeChat basic colors:"));
+    str_line[0] = '\0';
+    for (i = 0; i < GUI_CURSES_NUM_WEECHAT_COLORS; i++)
+    {
+        if (gui_color_terminal_colors)
+        {
+            snprintf (str_color, sizeof (str_color),
+                      " %s",
+                      gui_weechat_colors[i].string);
+        }
+        else
+        {
+            snprintf (str_color, sizeof (str_color),
+                      "%s%s%02d %s",
+                      GUI_COLOR_COLOR_STR,
+                      GUI_COLOR_FG_STR,
+                      i,
+                      gui_weechat_colors[i].string);
+        }
+        strcat (str_line, str_color);
+        if (((i + 1) % 8) == 0)
+        {
+            gui_chat_printf_y (gui_color_buffer, y++,
+                               " %s", str_line);
+            str_line[0] = '\0';
+        }
+    }
+    if (str_line[0])
+    {
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           " %s", str_line);
+    }
+    
+    /* display nick colors */
+    y++;
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       _("Nick colors:"));
+    items = string_split (CONFIG_STRING(config_color_chat_nick_colors),
+                          ",", 0, 0, &num_items);
+    if (items)
+    {
+        str_line[0] = '\0';
+        for (i = 0; i < num_items; i++)
+        {
+            if (gui_color_terminal_colors)
+            {
+                snprintf (str_color, sizeof (str_color),
+                          " %s",
+                          items[i]);
+            }
+            else
+            {
+                snprintf (str_color, sizeof (str_color),
+                          "%s %s",
+                          gui_color_get_custom (items[i]),
+                          items[i]);
+            }
+            strcat (str_line, str_color);
+            if (((i + 1) % 8) == 0)
+            {
+                gui_chat_printf_y (gui_color_buffer, y++,
+                                   " %s", str_line);
+                str_line[0] = '\0';
+            }
+        }
+        if (str_line[0])
+        {
+            gui_chat_printf_y (gui_color_buffer, y++,
+                               " %s", str_line);
+        }
+        string_free_split (items);
+    }
+    
+    /* display palette colors */
+    if (hashtable_get_integer (gui_color_hash_palette_color,
+                               "items_count") > 0)
+    {
+        y++;
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           _("Palette colors:"));
+        for (i = 1; i <= gui_color_last_pair; i++)
+        {
+            color_palette = gui_color_palette_get (i);
+            if (color_palette)
+            {
+                str_color[0] = '\0';
+                if (!gui_color_terminal_colors)
+                {
+                    snprintf (str_color, sizeof (str_color),
+                              "%s%s%05d",
+                              GUI_COLOR_COLOR_STR,
+                              GUI_COLOR_PAIR_STR,
+                              i);
+                }
+                snprintf (str_rgb, sizeof (str_rgb), "              ");
+                if ((color_palette->r >= 0) && (color_palette->g >= 0)
+                    && (color_palette->b >= 0))
+                {
+                    snprintf (str_rgb, sizeof (str_rgb),
+                              "%04d/%04d/%04d",
+                              color_palette->r,
+                              color_palette->g,
+                              color_palette->b);
+                }
+                gui_chat_printf_y (gui_color_buffer, y++,
+                                   " %5d: %s%5d,%-5d %s %s",
+                                   i,
+                                   str_color,
+                                   color_palette->foreground,
+                                   color_palette->background,
+                                   str_rgb,
+                                   (color_palette->alias) ?
+                                   color_palette->alias : "");
+            }
+        }
+    }
+}
+
+/*
+ * gui_color_switch_colrs: switch between WeeChat and terminal colors
+ */
+
+void
+gui_color_switch_colors ()
+{
+    gui_color_terminal_colors ^= 1;
+    gui_color_init_pairs ();
+    gui_color_buffer_display ();
+}
+
+/*
+ * gui_color_buffer_input_cb: input callback for color buffer
+ */
+
+int
+gui_color_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+                           const char *input_data)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (string_strcasecmp (input_data, "r") == 0)
+    {
+        gui_color_buffer_display ();
+    }
+    else if (string_strcasecmp (input_data, "q") == 0)
+    {
+        gui_buffer_close (buffer);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * gui_color_buffer_close_cb: close callback for color buffer
+ */
+
+int
+gui_color_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    gui_color_buffer = NULL;
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * gui_color_buffer_assign: assign color buffer to pointer if it is not yet set
+ */
+
+void
+gui_color_buffer_assign ()
+{
+    if (!gui_color_buffer)
+    {
+        gui_color_buffer = gui_buffer_search_by_name (NULL, "color");
+        if (gui_color_buffer)
+        {
+            gui_color_buffer->input_callback = &gui_color_buffer_input_cb;
+            gui_color_buffer->close_callback = &gui_color_buffer_close_cb;
+        }
+    }
+}
+
+/*
+ * gui_color_buffer_open: open a buffer to display colors
+ */
+
+void
+gui_color_buffer_open ()
+{
+    if (!gui_color_buffer)
+    {
+        gui_color_buffer = gui_buffer_new (NULL, "color",
+                                           &gui_color_buffer_input_cb, NULL,
+                                           &gui_color_buffer_close_cb, NULL);
+        if (gui_color_buffer)
+        {
+            gui_buffer_set (gui_color_buffer, "type", "free");
+            gui_buffer_set (gui_color_buffer, "localvar_set_no_log", "1");
+            gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");
+        }
+    }
+
+    gui_color_buffer_display ();
+    
+    if (!gui_color_buffer)
+        return;
+    
+    gui_window_switch_to_buffer (gui_current_window, gui_color_buffer, 1);
+    
+    gui_color_buffer_display ();
 }
 
 /*
@@ -633,11 +960,6 @@ gui_color_palette_new (int number, const char *value)
             {
                 new_color_palette->alias = strdup (str_alias);
             }
-            else
-            {
-                snprintf (str_number, sizeof (str_number), "%d", number);
-                new_color_palette->alias = strdup (str_number);
-            }
             
             if (str_pair)
             {
@@ -687,8 +1009,12 @@ gui_color_palette_new (int number, const char *value)
                     }
                 }
             }
-            
             string_free_split (items);
+        }
+        if (!new_color_palette->alias)
+        {
+            snprintf (str_number, sizeof (str_number), "%d", number);
+            new_color_palette->alias = strdup (str_number);
         }
     }
     
