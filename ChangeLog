@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-rc2, 2011-01-01
+v0.3.4-rc2, 2011-01-02
 
 
 Version 0.3.4 (under dev!)
@@ -42,8 +42,9 @@ Version 0.3.4 (under dev!)
   (bug #30759)
 * api: add priority for hooks (task #10550)
 * api: add new functions: list_search_pos, list_casesearch_pos,
-  hashtable_get_string, hook_info_hashtable, info_get_hashtable, hook_hsignal,
-  hook_hsignal_send, hook_completion_get_string, nicklist_group_get_integer,
+  hashtable_get_string, hashtable_set_pointer, hook_info_hashtable,
+  info_get_hashtable, hook_hsignal, hook_hsignal_send,
+  hook_completion_get_string, nicklist_group_get_integer,
   nicklist_group_get_string, nicklist_group_get_pointer, nicklist_group_set,
   nicklist_nick_get_integer, nicklist_nick_get_string, nicklist_nick_get_pointer,
   nicklist_nick_set

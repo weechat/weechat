@@ -27,6 +27,8 @@ typedef unsigned int (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                             const void *key);
 typedef int (t_hashtable_keycmp)(struct t_hashtable *hashtable,
                                  const void *key1, const void *key2);
+typedef void (t_hashtable_free_value)(struct t_hashtable *hashtable,
+                                      const void *key, void *value);
 typedef void (t_hashtable_map)(void *data,
                                struct t_hashtable *hashtable,
                                const void *key, const void *value);
@@ -95,9 +97,10 @@ struct t_hashtable
     enum t_hashtable_type type_values; /* type for values: int/str/pointer  */
     
     /* callbacks */
-    t_hashtable_hash_key *callback_hash_key; /* hash key to integer value   */
-    t_hashtable_keycmp *callback_keycmp;     /* compare two keys            */
-
+    t_hashtable_hash_key *callback_hash_key;     /* hash key to int value   */
+    t_hashtable_keycmp *callback_keycmp;         /* compare two keys        */
+    t_hashtable_free_value *callback_free_value; /* callback to free value  */
+    
     /* keys/values as string */
     char *keys_values;                 /* keys/values as string (NULL if    */
                                        /* never asked)                      */
@@ -122,6 +125,9 @@ extern int hashtable_get_integer (struct t_hashtable *hashtable,
                                   const char *property);
 extern const char *hashtable_get_string (struct t_hashtable *hashtable,
                                          const char *property);
+extern void hashtable_set_pointer (struct t_hashtable *hashtable,
+                                   const char *property,
+                                   void *pointer);
 extern int hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                       struct t_infolist_item *infolist_item,
                                       const char *prefix);

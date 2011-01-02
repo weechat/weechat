@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20101220-01"
+#define WEECHAT_PLUGIN_API_VERSION "20110102-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -281,6 +281,9 @@ struct t_weechat_plugin
                                   const char *property);
     const char *(*hashtable_get_string) (struct t_hashtable *hashtable,
                                          const char *property);
+    void (*hashtable_set_pointer) (struct t_hashtable *hashtable,
+                                   const char *property,
+                                   void *pointer);
     int (*hashtable_add_to_infolist) (struct t_hashtable *hashtable,
                                       struct t_infolist_item *infolist_item,
                                       const char *prefix);
@@ -950,6 +953,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hashtable_get_integer(__hashtable, __property)
 #define weechat_hashtable_get_string(__hashtable, __property)           \
     weechat_plugin->hashtable_get_string(__hashtable, __property)
+#define weechat_hashtable_set_pointer(__hashtable, __property,          \
+                                      __pointer)                        \
+    weechat_plugin->hashtable_set_pointer(__hashtable, __property,      \
+                                          __pointer)
 #define weechat_hashtable_add_to_infolist(__hashtable, __infolist_item, \
                                           __prefix)                     \
     weechat_plugin->hashtable_add_to_infolist(__hashtable,              \

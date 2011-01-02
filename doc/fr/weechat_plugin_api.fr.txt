@@ -3310,6 +3310,44 @@ weechat_printf (NULL, "liste des clés: %s",
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_hashtable_set_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.4._
+
+Affecte un pointeur à une propriété d'une hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
+                                    const char *property, void *pointer);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'property' et 'value' : nom de la propriété, avec sa valeur :
+** 'callback_free_value' : définit la fonction "callback" pour libérer les
+   valeurs de la hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+void
+my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
+{
+    /* ... */
+}
+
+weechat_hashtable_set_pointer (hashtable, "callback_free_value", &my_free_value_cb);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

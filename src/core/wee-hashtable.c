@@ -149,6 +149,8 @@ hashtable_new (int size,
             new_hashtable->callback_keycmp = &hashtable_keycmp_string_cb;
         else
             new_hashtable->callback_keycmp = callback_keycmp;
+        
+        new_hashtable->callback_free_value = NULL;
     }
     return new_hashtable;
 }
@@ -211,24 +213,57 @@ hashtable_alloc_type (enum t_hashtable_type type,
 }
 
 /*
- * hashtable_free_type: free space used by a key or value
+ * hashtable_free_key: free space used by a key
  */
 
 void
-hashtable_free_type (enum t_hashtable_type type, void *value)
+hashtable_free_key (struct t_hashtable *hashtable,
+                    struct t_hashtable_item *item)
 {
-    switch (type)
+    switch (hashtable->type_keys)
     {
         case HASHTABLE_INTEGER:
         case HASHTABLE_STRING:
         case HASHTABLE_BUFFER:
         case HASHTABLE_TIME:
-            free (value);
+            free (item->key);
             break;
         case HASHTABLE_POINTER:
             break;
         case HASHTABLE_NUM_TYPES:
             break;
+    }
+}
+
+/*
+ * hashtable_free_value: free space used by a value
+ */
+
+void
+hashtable_free_value (struct t_hashtable *hashtable,
+                      struct t_hashtable_item *item)
+{
+    if (hashtable->callback_free_value)
+    {
+        (void) (hashtable->callback_free_value) (hashtable,
+                                                 item->key,
+                                                 item->value);
+    }
+    else
+    {
+        switch (hashtable->type_values)
+        {
+            case HASHTABLE_INTEGER:
+            case HASHTABLE_STRING:
+            case HASHTABLE_BUFFER:
+            case HASHTABLE_TIME:
+                free (item->value);
+                break;
+            case HASHTABLE_POINTER:
+                break;
+            case HASHTABLE_NUM_TYPES:
+                break;
+        }
     }
 }
 
@@ -267,7 +302,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     /* replace value if item is already in hash table */
     if (ptr_item && (hashtable->callback_keycmp (hashtable, key, ptr_item->key) == 0))
     {
-        hashtable_free_type (hashtable->type_values, ptr_item->value);
+        hashtable_free_value (hashtable, ptr_item);
         hashtable_alloc_type (hashtable->type_values,
                               value, value_size,
                               &ptr_item->value, &ptr_item->value_size);
@@ -733,6 +768,21 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
+ * hashtable_set_pointer: set a hashtable property (pointer)
+ */
+
+void
+hashtable_set_pointer (struct t_hashtable *hashtable, const char *property,
+                       void *pointer)
+{
+    if (hashtable && property)
+    {
+        if (string_strcasecmp (property, "callback_free_value") == 0)
+            hashtable->callback_free_value = pointer;
+    }
+}
+
+/*
  * hashtable_add_to_infolist: add hashtable keys and values to infolist
  *                            return 1 if ok, 0 if error
  */
@@ -813,8 +863,8 @@ hashtable_remove_item (struct t_hashtable *hashtable,
         return;
     
     /* free key and value */
-    hashtable_free_type (hashtable->type_keys, item->key);
-    hashtable_free_type (hashtable->type_values, item->value);
+    hashtable_free_value (hashtable, item);
+    hashtable_free_key (hashtable, item);
     
     /* remove item from list */
     if (item->prev_item)

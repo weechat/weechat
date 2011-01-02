@@ -3278,6 +3278,43 @@ weechat_printf (NULL, "list of keys: %s",
 [NOTE]
 This function is not available in scripting API.
 
+weechat_hashtable_set_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.4._
+
+Set pointer value of a hashtable property.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
+                                    const char *property, void *pointer);
+----------------------------------------
+
+Arguments:
+
+* 'hashtable': hashtable pointer
+* 'property' and 'value': property name, with its value:
+** 'callback_free_value': set callback function used to free values in hashtable
+
+C example:
+
+[source,C]
+----------------------------------------
+void
+my_free_value_cb (struct t_hashtable *hashtable, const void *key, void *value)
+{
+    /* ... */
+}
+
+weechat_hashtable_set_pointer (hashtable, "callback_free_value", &my_free_value_cb);
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
