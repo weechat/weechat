@@ -893,7 +893,7 @@ gui_color_palette_build_aliases ()
     if (!gui_color_hash_palette_alias || !gui_color_list_with_alias
         || !gui_color_hash_palette_color)
     {
-        gui_color_palette_alloc ();
+        gui_color_palette_alloc_structs ();
     }
     
     hashtable_remove_all (gui_color_hash_palette_alias);
@@ -1050,4 +1050,5 @@ gui_color_end ()
     {
         gui_color_free (gui_color[i]);
     }
+    gui_color_palette_free_structs ();
 }
