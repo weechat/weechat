@@ -4939,7 +4939,7 @@ irc_command_init ()
                           N_("server: send to this server (internal name)\n"
                              "target: nick or channel\n"
                              "  text: text to send"),
-                          "%(nicks) %-", &irc_command_notice, NULL);
+                          "%(nicks)|-server %(irc_servers) %-", &irc_command_notice, NULL);
     weechat_hook_command ("notify",
                           N_("add a notification for presence or away status "
                              "of nicks on servers"),
@@ -5008,13 +5008,13 @@ irc_command_init ()
                           N_("  server: send to this server (internal name)\n"
                              "nickname: nickname for private conversation\n"
                              "    text: text to send"),
-                          "%(nicks) %-", &irc_command_query, NULL);
+                          "%(nicks)|-server %(irc_servers) %-", &irc_command_query, NULL);
     weechat_hook_command ("quote",
                           N_("send raw data to server without parsing"),
                           N_("[-server server] data"),
                           N_("server: send to this server (internal name)\n"
                              "  data: raw data to send"),
-                          NULL, &irc_command_quote, NULL);
+                          "-server %(irc_servers)", &irc_command_quote, NULL);
     weechat_hook_command ("reconnect",
                           N_("reconnect to server(s)"),
                           N_("[servername [servername ...] | -all] [-nojoin] "
