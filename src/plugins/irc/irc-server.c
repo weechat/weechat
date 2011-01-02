@@ -2007,6 +2007,8 @@ irc_server_msgq_flush ()
                             free (command);
                         if (channel)
                             free (channel);
+                        if (arguments)
+                            free (arguments);
                         if (msg_decoded)
                             free (msg_decoded);
                         if (msg_decoded_without_color)
