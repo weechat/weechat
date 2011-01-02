@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 18:04+0100\n"
-"PO-Revision-Date: 2010-12-27 17:08+0100\n"
+"POT-Creation-Date: 2011-01-02 19:28+0100\n"
+"PO-Revision-Date: 2011-01-01 22:28+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -35,12 +35,12 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s Copyright (C) 2003-2010, kompiliert am %s %s\n"
+"WeeChat %s Copyright %s, kompiliert am %s %s\n"
 "Entwickelt von Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
@@ -229,11 +229,11 @@ msgstr "Keine lokale Variable definiert für Buffer \"%s\""
 
 #, c-format
 msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
-msgstr ""
+msgstr "%sungültiger Wert für Farbpaar \"%s\" (muss zwischen %d und %d liegen)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr ""
+msgstr "%sFarbe \"%s\" ist in der Farbpalette nicht definiert"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -693,9 +693,8 @@ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
 msgid "Option changed: "
 msgstr "Option geändert: "
 
-#, fuzzy
 msgid "Option created: "
-msgstr "Option geändert: "
+msgstr "Option erstellt: "
 
 msgid "Option changed"
 msgstr "Option geändert"
@@ -1023,10 +1022,10 @@ msgstr ""
 " /buffer +1"
 
 msgid "define custom colors and display palette of colors"
-msgstr ""
+msgstr "erstellt benutzerdefinierte Farben und stellt die Farbpalette dar"
 
 msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
-msgstr ""
+msgstr "[add pair [alias] [fg,bg]] | [del pair] | switch"
 
 msgid ""
 "   add: add a color pair\n"
@@ -1047,6 +1046,24 @@ msgid ""
 "  delete color 214:\n"
 "    /color del 214"
 msgstr ""
+"   add: fügt ein Farbpaar hinzu\n"
+"   del: entfernt ein Farbpaar\n"
+"switch: wechselt die Farben von WeeChat/Terminal\n"
+"  pair: Wert für Farbpaar (>= 1)\n"
+" alias: Alias für Farbe (zum Beispiel: \"orange\")\n"
+" fg,bg: Vordergrund- und Hintergrundfarbe (-1 setzt für den Vorder- oder "
+"Hintergrund die standard Terminalfarbe)\n"
+"\n"
+"Ohne Angabe von Argumenten öffnet der Befehl einen neuen Buffer, in welchem "
+"die Farbpalette dargestellt wird.\n"
+"\n"
+"Beispiele:\n"
+"  fügt die Farbe 214 mit dem Alias \"orange\" hinzu:\n"
+"    /color add 214 orange\n"
+"  fügt die Farbe 250 mit dem Alias Orange auf Blau hinzu:\n"
+"    /color add 250 214,4 orange_blau\n"
+"  löscht die Farbe 214:\n"
+"    /color del 214"
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "führe explizit einen WeeChat Befehl oder eine Erweiterung aus"
@@ -1790,9 +1807,8 @@ msgstr "Eigenschaften die für den Buffer gesetzt werden können"
 msgid "properties that can be read on a buffer"
 msgstr "Eigenschaften die für den Buffer gelesen werden können"
 
-#, fuzzy
 msgid "color pairs"
-msgstr "Farben"
+msgstr "Farbpaar"
 
 msgid "configuration files"
 msgstr "Konfigurationsdateien"
@@ -1864,16 +1880,14 @@ msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
 
-#, fuzzy
 msgid ""
 "custom color in palette, format is: \"alias;fg,bg\" where alias is color "
 "name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
 "is optional in this format and order is not important)"
 msgstr ""
-"Benutzerdefinierte Farbe in der Palette, Format:  \"alias;fg,bg;r/g/b\" "
-"wobei Alias der Name der Farbe ist, fg,bg stellt \"Vordergrund,Hintergrund\" "
-"dar (Beispiel: \"200,-1\"), r/g/b ist eine Neudefinition einer Farbe (dies "
-"muss durch den verwendeten Terminal unterstützt werden) (alle Einträge in "
+"Benutzerdefinierte Farbe in der Palette, Format:  \"alias;fg,bg\" wobei "
+"alias durch einen Farbnamen ersetzt werden kann, fg,bg steht für "
+"\"Vordergrund,Hintergrund\"-Farbe  (Beispiel: \"200,-1\")  (alle Einträge in "
 "diesem Format sind optional und die Reihenfolge der Einträge ist frei "
 "wählbar)"
 
@@ -2688,30 +2702,26 @@ msgid ""
 "WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
 "Toggle colors"
 msgstr ""
+"WeeChat Farben | Aktionen: [R] aktualisieren [Q] Buffer schließen | Befehle: "
+"[alt-c] wechselt Farben"
 
-#, fuzzy
 msgid "Terminal colors:"
-msgstr "Terminal Informationen:"
+msgstr "Terminal-Farben:"
 
-#, fuzzy
 msgid "WeeChat colors:"
-msgstr "Standardfarben:"
+msgstr "WeeChat Farben:"
 
-#, fuzzy
 msgid "fixed color"
-msgstr "Textfarbe"
+msgstr "vorgegebene Farbe"
 
-#, fuzzy
 msgid "WeeChat basic colors:"
-msgstr "WeeChat Verzeichnis"
+msgstr "WeeChat Basisfarben:"
 
-#, fuzzy
 msgid "Nick colors:"
-msgstr "Farben"
+msgstr "Farben für Nicks:"
 
-#, fuzzy
 msgid "Palette colors:"
-msgstr "Standardfarben:"
+msgstr "Farbpalette:"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
