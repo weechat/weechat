@@ -2520,7 +2520,8 @@ IRC_PROTOCOL_CALLBACK(324)
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT,
-                             (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4],
+                             (argc > 4) ?
+                             ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
                              IRC_COLOR_CHAT_DELIMITERS);
     }
     
