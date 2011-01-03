@@ -770,7 +770,7 @@ IRC_PROTOCOL_CALLBACK(mode)
                                  IRC_COLOR_CHAT_NICK,
                                  nick);
         }
-        irc_mode_user_set (server, pos_modes);
+        irc_mode_user_set (server, pos_modes, 0);
     }
     
     return WEECHAT_RC_OK;
@@ -1937,6 +1937,10 @@ IRC_PROTOCOL_CALLBACK(221)
                          IRC_COLOR_CHAT,
                          (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
                          IRC_COLOR_CHAT_DELIMITERS);
+    
+    irc_mode_user_set (server,
+                       (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
+                       1);
     
     return WEECHAT_RC_OK;
 }

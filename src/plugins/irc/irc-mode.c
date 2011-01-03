@@ -227,10 +227,19 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
  */
 
 void
-irc_mode_user_set (struct t_irc_server *server, const char *modes)
+irc_mode_user_set (struct t_irc_server *server, const char *modes,
+                   int reset_modes)
 {
     char set_flag;
-    
+
+    if (reset_modes)
+    {
+        if (server->nick_modes)
+        {
+            free (server->nick_modes);
+            server->nick_modes = NULL;
+        }
+    }
     set_flag = '+';
     while (modes && modes[0])
     {
@@ -254,4 +263,5 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes)
         }
         modes++;
     }
+    weechat_bar_item_update ("input_prompt");
 }
