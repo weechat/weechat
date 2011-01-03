@@ -574,7 +574,7 @@ gui_color_palette_get (int number)
 void
 gui_color_palette_add (int number, const char *value)
 {
-    struct t_gui_color_palette *new_color_palette, *ptr_color_palette;
+    struct t_gui_color_palette *new_color_palette;
     char str_number[64];
     
     gui_color_palette_alloc_structs ();
@@ -584,10 +584,6 @@ gui_color_palette_add (int number, const char *value)
         return;
 
     snprintf (str_number, sizeof (str_number), "%d", number);
-    ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
-                                       str_number);
-    if (ptr_color_palette)
-        gui_color_palette_free (ptr_color_palette);
     hashtable_set (gui_color_hash_palette_color,
                    str_number, new_color_palette);
     gui_color_palette_build_aliases ();
@@ -616,7 +612,6 @@ gui_color_palette_remove (int number)
                                        str_number);
     if (ptr_color_palette)
     {
-        gui_color_palette_free (ptr_color_palette);
         hashtable_remove (gui_color_hash_palette_color, str_number);
         gui_color_palette_build_aliases ();
         if (gui_init_ok)
@@ -624,29 +619,6 @@ gui_color_palette_remove (int number)
             gui_color_init_pair (number);
             gui_color_buffer_display ();
         }
-    }
-}
-
-/*
- * gui_color_palette_change: change a color in palette
- */
-
-void
-gui_color_palette_change (int number, const char *value)
-{
-    struct t_gui_color_palette *ptr_color_palette;
-    char str_number[64];
-    
-    gui_color_palette_alloc_structs ();
-    
-    snprintf (str_number, sizeof (str_number), "%d", number);
-    ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
-                                       str_number);
-    if (ptr_color_palette)
-    {
-        gui_color_palette_free (ptr_color_palette);
-        hashtable_remove (gui_color_hash_palette_color, str_number);
-        gui_color_palette_add (number, value);
     }
 }
 

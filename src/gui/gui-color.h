@@ -158,7 +158,6 @@ extern int gui_color_palette_get_alias (const char *alias);
 extern struct t_gui_color_palette *gui_color_palette_get (int number);
 extern void gui_color_palette_add (int number, const char *value);
 extern void gui_color_palette_remove (int number);
-extern void gui_color_palette_change (int number, const char *value);
 extern void gui_color_palette_free_structs ();
 
 /* color functions (GUI dependent) */

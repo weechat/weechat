@@ -693,7 +693,7 @@ config_weechat_palette_change_cb (void *data,
     number = (int)strtol (option->name, &error, 10);
     if (error && !error[0])
     {
-        gui_color_palette_change (number, CONFIG_STRING(option));
+        gui_color_palette_add (number, CONFIG_STRING(option));
     }
 }
 
