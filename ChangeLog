@@ -9,6 +9,8 @@ Version 0.3.4 (under dev!)
 
 * core: add 256 colors support, new command /color, new section "palette" in
   weechat.conf (task #6834)
+* core: fix bug with /upgrade: check existence of binary even when command is
+  executed without argument
 * core: add info "weechat_upgrading", signal "upgrade_ended", display duration
   of upgrade
 * core: replace the 10 nick color options and number of nick colors by a single
