@@ -44,7 +44,7 @@
 ** valeurs: un nom de couleur (valeur par défaut: `cyan`)
 
 * *weechat.color.chat_nick*
-** description: `couleur du texte pour l'heure dans la fenêtre de discussion`
+** description: `couleur du texte pour les pseudos dans la fenêtre de discussion`
 ** type: couleur
 ** valeurs: un nom de couleur (valeur par défaut: `lightcyan`)
 
