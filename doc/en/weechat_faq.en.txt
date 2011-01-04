@@ -233,6 +233,12 @@ are:
 * under screen: 'screen-256color'
 * outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
+If you are using screen, you can add this line to your '~/.screenrc':
+
+----------------------------------------
+term screen-256color
+----------------------------------------
+
 If your 'TERM' variable has wrong value and that WeeChat is already running,
 don't panic! You can change it without restarting, thanks to script 'shell.py':
 
