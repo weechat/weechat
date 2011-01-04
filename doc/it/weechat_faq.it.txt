@@ -214,7 +214,7 @@ Elenco di script a proposito di URL: http://www.weechat.org/scripts/stable/tag/u
 Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sì. è necessario uno script python, shell.py (disponibile sul sito di WeeChat)
+Sì. è necessario uno script python, 'shell.py' (disponibile sul sito di WeeChat)
 e digitare questi comandi quando viene caricato lo script:
 
 ----------------------------------------
@@ -224,6 +224,32 @@ e digitare questi comandi quando viene caricato lo script:
 
 Per avere i messaggi in inglese con la codifica UTF-8 per il terminale, per gli
 utenti ISO, digitare: `/shell setenv LANG=en_US`.
+
+
+// TRANSLATION MISSING
+[[256_colors]]
+How can I use 256 colors in WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+256 colors are supported with WeeChat 0.3.4 or newer.
+
+First check that your 'TERM' environment variable is correct, recommended values
+are:
+
+* under screen: 'screen-256color'
+* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+
+If your 'TERM' variable has wrong value and that WeeChat is already running,
+don't panic! You can change it without restarting, thanks to script 'shell.py':
+
+----------------------------------------
+/shell setenv TERM=screen-256color
+/upgrade
+----------------------------------------
+
+You can use command `/color` for easy setup of colors in WeeChat.
+
+Please read user's guide for more information about colors management.
 
 
 [[key_bindings]]
