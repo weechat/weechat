@@ -349,14 +349,14 @@ gui_color_init_pairs ()
     struct t_gui_color_palette *ptr_color_palette;
     
     /*
-     * depending on terminal and $TERM value, we can have for example:
+     * depending on $TERM value, we can have for example:
      *
-     *   terminal | $TERM           | colors | pairs
-     *   ---------+-----------------+--------+------
-     *   urxvt    | rxvt-unicode    |     88 |   256
-     *   urxvt    | xterm-256color  |    256 | 32767
-     *   screen   | screen          |      8 |    64
-     *   screen   | screen-256color |    256 | 32767
+     *   $TERM                             | colors | pairs
+     *   ----------------------------------+--------+------
+     *   rxvt-unicode, xterm,...           |     88 |   256
+     *   rxvt-256color, xterm-256color,... |    256 | 32767
+     *   screen                            |      8 |    64
+     *   screen-256color                   |    256 | 32767
      */
     
     if (has_colors ())
@@ -549,7 +549,7 @@ gui_color_display_terminal_colors ()
 void
 gui_color_buffer_display ()
 {
-    int y, i, lines, line, col, color;
+    int y, i, lines, line, col, color, max_color;
     int colors, color_pairs, change_color, num_items;
     char str_line[1024], str_color[64], str_rgb[64], **items;
     struct t_gui_color_palette *color_palette;
@@ -597,14 +597,17 @@ gui_color_buffer_display ()
                        GUI_COLOR_PAIR_STR,
                        GUI_COLOR(GUI_COLOR_CHAT),
                        _("fixed color"));
-    lines = (colors < 16) ? colors : 16;
+    max_color = (gui_color_terminal_colors) ? colors - 1 : gui_color_last_pair;
+    if (max_color > 255)
+        max_color = 255;
+    lines = (max_color <= 64) ? 8 : 16;
     for (line = 0; line < lines; line++)
     {
         str_line[0] = '\0';
         for (col = 0; col < 16; col++)
         {
-            color = (col * 16) + line + 1;
-            if (color < colors)
+            color = (col * lines) + line + 1;
+            if (color <= max_color)
             {
                 snprintf (str_color, sizeof (str_color),
                           "%s%s%05d %03d ",
