@@ -281,9 +281,8 @@ Befehlszeile:
 -a, --no-connect::
     deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat
 
-// TRANSLATION MISSING
 -c, --colors::
-    Display default colors in terminal
+    Zeigt die Standardfarben im Terminal an.
 
 -d, --dir 'path'::
     legt den Konfigurationsordner für WeeChat fest (Voreinstellung: ~/.weechat) in
@@ -318,11 +317,11 @@ $ weechat-curses
 ----------------------------------------
 
 Wird WeeChat zum ersten mal gestartet wird eine Konfigurationsdatei
-mit Standardparametern erstellt. Die Konfigurationsdatei heisst:
+mit Standardparametern erstellt. Die Konfigurationsdatei heißt:
 '~/.weechat/weechat.conf'.
 
-Die Einstellungen für WeeChat können an die eigenen Bedürfnissen angepasst werden. Dazu sollten
-Sie veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführen. (siehe
+Die Einstellungen für WeeChat können an die eigenen Bedürfnisse angepasst werden. Dazu sollten
+Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführt werden. (siehe
 <<weechat_commands,WeeChat Befehle>>).
 
 [[screen_layout]]
@@ -790,17 +789,16 @@ Dazu muss ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu 
 //set
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[command_line_colors]]
-Color codes
-^^^^^^^^^^^
+Farbkodierung
+^^^^^^^^^^^^^
 
-Für einige Erweiterungen wie z.B. die IRC Erweiterung können Farbcodes und Attribute für den Text
-gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C" gefolgt von einem der folgenden Zeichen
+Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbcodes und Attribute für den Text
+gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C", gefolgt von einem der folgenden Zeichen,
 genutzt werden:
 
 ^Cb::
-    fett dargestellter Text
+    Text wird fett dargestellt
 
 ^Ccxx::
     Textfarbe `xx` (siehe Farbtabelle)
@@ -815,7 +813,7 @@ genutzt werden:
     Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
 
 ^Cu::
-    Text wird mit unterstrich dargestellt
+    Text wird mit Unterstrich dargestellt
 
 [NOTE]
 Der selbe Befehl (ohne den Wert für ^Cc) sollte genutzt werden um die Farbcodes bzw. Attribute
@@ -863,20 +861,19 @@ WeeChat Befehle
 
 include::autogen/user/weechat_commands.txt[]
 
-// TRANSLATION MISSING
 [[colors]]
-Colors
+Farben
 ~~~~~~
 
-WeeChat can use up to 256 color pairs to display text in bars and chat area
-(your terminal must support 256 colors to use them in WeeChat).
+WeeChat kann bis zu 256 Farbpaarungen nutzen um einen Text in Bars oder im
+Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten).
 
-According to value of 'TERM' environment variable, you may have following limits
-for colors in WeeChat:
+Gemäß der Einstellung in der 'TERM'-Umgebungsvariable bestehen folgende Einschränkungen
+was die Farbdarstellung in WeeChat betrifft:
 
 [width="40%",cols="5,>2,>2",options="header"]
 |========================================
-| $TERM                                 | Colors | Pairs ^(1)^
+| $TERM                                 | Farben | Paare ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256
 | "rxvt-256color", "xterm-256color",... |    256 |       32767
 | "screen"                              |      8 |          64
@@ -884,41 +881,44 @@ for colors in WeeChat:
 |========================================
 
 [NOTE]
-^(1)^ Even if your terminal supports more than 256 pairs, only 256 pairs can be
-used in WeeChat, because of a ncurses limitation.
+^(1)^ Auch falls die Terminal-Emulation mehr als 256 Farbpaare unterstützten sollte
+können lediglich 256 Farbpaare durch WeeChat genutzt werden, da dies eine Einschränkung
+von ncurses darstellt.
 
-You can run `weechat-curses --colors` or use command `/color` in WeeChat to
-display limits for your environment.
+Mittels `weechat-curses --colors` oder dem internen WeeChat-Befehl `/color` kann man sich
+die Einschränkungen für die jeweilige Umgebungsvariable anzeigen lassen.
 
-Some recommended values for 'TERM' if you want 256 colors:
+Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, falls man 256 Farben
+nutzen möchte:
 
-* under screen: 'screen-256color'
-* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* falls screen genutzt wird: 'screen-256color'
+* screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-If you are using screen, you can add this line to your '~/.screenrc':
+Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
+'~/.screenrc':
 
 ----------------------------------------
 term screen-256color
 ----------------------------------------
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-don't panic! You can change it without restarting, thanks to script 'shell.py':
+Enthält die 'TERM'-Umgebungsvariable einen falschen Wert und WeeChat wird bereits
+ausgeführt, keine Panik! Mittels dem Skript 'shell.py' kann eine Änderung der
+Umgebungsvariable durchgeführt werden, ohne das WeeChat neu gestartet werden muss:
 
 ----------------------------------------
 /shell setenv TERM=screen-256color
 /upgrade
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_basic]]
-Basic colors
-^^^^^^^^^^^^
+Basisfarben
+^^^^^^^^^^^
 
-Basic colors in WeeChat are:
+Basisfarben in WeeChat sind:
 
 [width="50%",cols="^3m,8",options="header"]
 |========================================
-| Name         | Color
+| Name         | Farbe
 | default      | Standard Terminalfarbe (transparent für Hintergrund)
 | black        | schwarz
 | darkgray     | dunkelgrau
@@ -937,33 +937,35 @@ Basic colors in WeeChat are:
 | white        | weiß
 |========================================
 
-// TRANSLATION MISSING
 [[colors_palette]]
 Palette
 ^^^^^^^
 
-According to your terminal, 64 or 256 pairs are defined by WeeChat, a
-combination of foreground with background colors:
+Gemäß der jeweiligen Terminal-Einstellung werden 64 oder 256 Farbpaare
+durch WeeChat definiert. Diese bestehen aus einer Kombination von
+Vordergrund- und Hintergrundfarben.
 
-* for 64 pairs: 8 foreground colors * 8 background colors (dark colors)
-* for 256 pairs: 16 foreground colors * 16 background colors (8 dark colors and
-  8 light colors)
+* für 64 Paare: 8 Vordergrundfarben * 8 Hintergrundfarben (dunkle Farben)
+* für 256 Paare: 16 Vordergrundfarben * 16 Hintergrundfarben (jeweils 8 dunkle und
+  8 helle Farben)
 
-Use command `/color` to see default colors (on buffer you can press 'alt+c' to
-switch between WeeChat and terminal colors).
+Mit dem Befehl `/color` können die Standardfarben angezeigt werden (im Buffer kann
+mittels 'alt+c' zwischen den WeeChat und der Terminal Farbpalette gewechselt werden). 
 
-You can override some color pairs (a pair is foreground + background) with
-command `/color`, which creates option in section 'palette' of file
-'weechat.conf'.
+Farbpaarungen (ein Paar besteht aus einer Vordergrund- und einer Hintergrundfarbe)
+können mit dem Befehl `/color` angepasst werden. Es wird dazu in der Konfigurationsdatei
+'weechat.conf', in der Sektion 'palette' eine entsprechende Option erstellt.
 
-For each color defined, you can specify:
+Für jede definierte Farbe können folgende Parameter festgelegt werden:
 
-* foreground and background, using format "fg,bg": color for text and
-  background, by default it is color pair number on default background (-1)
-* alias: you can give a name to your color, for easy use in color options
+* Vordergrund- und Hintergrund, zu nutzendes Format "fg,bg": Farbe für den Text und
+  Hintergrund. Standardmäßig wird für den Hintergrund die voreingestellte Hintergrundfarbe (-1)
+  verwendet.
+* alias: der Farbpaarung kann ein Name zugeordnet werden, damit man diesen Namen zur einfacheren
+  Nutzung in den Farboptionen verwenden kann.
 
-For example, to define pairs 225 to 240 with colors like blue, cyan, green,
-yellow, orange, red, pink, purple:
+Ein Beispiel, um die Farbpaarungen 225 bis 240 mit den Farben blau, türkis,
+grün, gelb, orange, rot, rosa, violett zu definieren:
 
 ----------------------------------------
 /color add 225 18,-1
@@ -984,11 +986,12 @@ yellow, orange, red, pink, purple:
 /color add 240 176,-1
 ----------------------------------------
 
-See `/help color` for other examples.
+siehe `/help color` für weitere Beispiele:
 
 [IMPORTANT]
-Colors defined are overriding default WeeChat color pairs, so you should
-redefine pair only if you're not using this color in WeeChat.
+Farben die manuell definiert werden überschreiben die von WeeChat genutzten
+Standardfarben. Deshalb sollten Farbpaarungen nur redefiniert werden falls
+man diese Farbe nicht in WeeChat nutzt.
 
 
 [[plugins]]

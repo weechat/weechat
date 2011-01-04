@@ -234,36 +234,37 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 `/shell setenv LANG=en_US`.
 
 
-// TRANSLATION MISSING
 [[256_colors]]
-How can I use 256 colors in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich 256 Farben in WeeChat nutzen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-256 colors are supported with WeeChat 0.3.4 or newer.
+WeeChat unterstützt ab der Version 0.3.4, 256 Farben.
 
-First check that your 'TERM' environment variable is correct, recommended values
-are:
+Zuerst sollte überprüft werden ob die 'TERM'-Umgebungsvariable korrekt hinterlegt
+ist. Folgende Werte sind zu empfehlen:
 
-* under screen: 'screen-256color'
-* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* falls screen genutzt wird: 'screen-256color'
+* screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-If you are using screen, you can add this line to your '~/.screenrc':
+Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
+'~/.screenrc':
 
 ----------------------------------------
 term screen-256color
 ----------------------------------------
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-don't panic! You can change it without restarting, thanks to script 'shell.py':
+Enthält die 'TERM'-Umgebungsvariable einen falschen Wert und WeeChat wird bereits
+ausgeführt, keine Panik! Mittels dem Skript 'shell.py' kann eine Änderung der
+Umgebungsvariable durchgeführt werden, ohne das WeeChat neu gestartet werden muss:
 
 ----------------------------------------
 /shell setenv TERM=screen-256color
 /upgrade
 ----------------------------------------
 
-You can use command `/color` for easy setup of colors in WeeChat.
+Mit dem Befehl `/color` können die Farben ganz einfach in WeeChat angepasst werden.
 
-Please read user's guide for more information about colors management.
+Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranleitung.
 
 
 [[key_bindings]]
