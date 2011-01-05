@@ -839,8 +839,6 @@ gui_color_buffer_open ()
             gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");
         }
     }
-
-    gui_color_buffer_display ();
     
     if (!gui_color_buffer)
         return;
