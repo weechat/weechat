@@ -547,7 +547,7 @@ IRC_PROTOCOL_CALLBACK(kick)
                           "\"%s\" command"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[2],
                         "kick");
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     
     ptr_nick = irc_nick_search (ptr_channel, nick);
@@ -1361,15 +1361,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             irc_channel_nick_speaking_time_add (ptr_channel, nick,
                                                 time (NULL));
         }
-        else
-        {
-            weechat_printf (server->buffer,
-                            _("%s%s: channel \"%s\" not found for \"%s\" "
-                              "command"),
-                            weechat_prefix ("error"),
-                            IRC_PLUGIN_NAME, argv[2], "privmsg");
-            return WEECHAT_RC_ERROR;
-        }
     }
     else
     {
@@ -1627,7 +1618,7 @@ IRC_PROTOCOL_CALLBACK(topic)
         weechat_printf (server->buffer,
                         _("%s%s: \"%s\" command received without channel"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, "topic");
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     
     pos_topic = (argc > 3) ?
