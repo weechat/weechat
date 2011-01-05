@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.4-rc3, 2011-01-04
+v0.3.4-rc3, 2011-01-05
 
 
 Version 0.3.4 (under dev!)
@@ -9,6 +9,8 @@ Version 0.3.4 (under dev!)
 
 * core: add 256 colors support, new command /color, new section "palette" in
   weechat.conf (task #6834)
+* core: fix scroll problem on buffers with free content and non-allocated lines
+  (bug #32039)
 * core: add info "weechat_upgrading", signal "upgrade_ended", display duration
   of upgrade
 * core: replace the 10 nick color options and number of nick colors by a single

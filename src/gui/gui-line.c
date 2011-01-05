@@ -896,9 +896,6 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     struct t_gui_line *ptr_line, *new_line;
     struct t_gui_line_data *new_line_data;
     
-    if (!message || !message[0])
-        return;
-    
     /* search if line exists for "y" */
     for (ptr_line = buffer->own_lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
@@ -970,7 +967,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     /* set message for line */
     if (ptr_line->data->message)
         free (ptr_line->data->message);
-    ptr_line->data->message = strdup (message);
+    ptr_line->data->message = (message) ? strdup (message) : strdup ("");
     
     /* check if line is filtered or not */
     ptr_line->data->displayed = gui_filter_check_line (buffer, ptr_line);
@@ -985,6 +982,23 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     }
     
     ptr_line->data->refresh_needed = 1;
+}
+
+/*
+ * gui_line_clear: clear prefix and message on a line
+ *                 (used on buffers with free content only)
+ */
+
+void
+gui_line_clear (struct t_gui_line *line)
+{
+    if (line->data->prefix)
+        free (line->data->prefix);
+    line->data->prefix = strdup ("");
+    
+    if (line->data->message)
+        free (line->data->message);
+    line->data->message = strdup ("");
 }
 
 /*

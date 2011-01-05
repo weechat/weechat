@@ -35,7 +35,6 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
-#include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
@@ -657,6 +656,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     va_list argptr;
     struct t_gui_line *ptr_line;
     char strbuf[8192];
+    int i, num_lines_to_add;
     
     if (gui_init_ok)
     {
@@ -689,7 +689,10 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             }
             if (ptr_line && (ptr_line->data->y == y))
             {
-                gui_line_free (buffer, ptr_line);
+                if (ptr_line->next_line)
+                    gui_line_clear (ptr_line);
+                else
+                    gui_line_free (buffer, ptr_line);
                 gui_buffer_ask_chat_refresh (buffer, 2);
             }
         }
@@ -698,6 +701,23 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
+            num_lines_to_add = 0;
+            if (buffer->own_lines && buffer->own_lines->last_line)
+                num_lines_to_add = y - buffer->own_lines->last_line->data->y - 1;
+            else
+                num_lines_to_add = y;
+            if (num_lines_to_add > 0)
+            {
+                /*
+                 * add empty line(s) before asked line, to ensure there is at
+                 * least "y" lines in buffer, and then be able to scroll
+                 * properly buffer page by page
+                 */
+                for (i = y - num_lines_to_add; i < y; i++)
+                {
+                    gui_line_add_y (buffer, i, "");
+                }
+            }
             gui_line_add_y (buffer, y, strbuf);
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
