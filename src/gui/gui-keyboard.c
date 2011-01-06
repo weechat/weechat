@@ -314,6 +314,9 @@ gui_keyboard_new (struct t_gui_buffer *buffer, const char *key,
     struct t_gui_key *new_key;
     char *expanded_name;
     
+    if (!key || !command)
+        return NULL;
+    
     if ((new_key = malloc (sizeof (*new_key))))
     {
         new_key->key = gui_keyboard_get_internal_code (key);
@@ -324,9 +327,10 @@ gui_keyboard_new (struct t_gui_buffer *buffer, const char *key,
             free (new_key);
             return NULL;
         }
-        new_key->command = (command) ? strdup (command) : NULL;
+        new_key->command = strdup (command);
         if (!new_key->command)
         {
+            free (new_key->key);
             free (new_key);
             return NULL;
         }
