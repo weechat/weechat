@@ -652,13 +652,13 @@ gui_color_buffer_display ()
                       i,
                       gui_weechat_colors[i].string);
         }
-        strcat (str_line, str_color);
-        if (((i + 1) % 8) == 0)
+        if (gui_chat_strlen_screen (str_line) + gui_chat_strlen_screen (str_color) > 80)
         {
             gui_chat_printf_y (gui_color_buffer, y++,
                                " %s", str_line);
             str_line[0] = '\0';
         }
+        strcat (str_line, str_color);
     }
     if (str_line[0])
     {
@@ -690,13 +690,13 @@ gui_color_buffer_display ()
                           gui_color_get_custom (items[i]),
                           items[i]);
             }
-            strcat (str_line, str_color);
-            if (((i + 1) % 8) == 0)
+            if (gui_chat_strlen_screen (str_line) + gui_chat_strlen_screen (str_color) > 80)
             {
                 gui_chat_printf_y (gui_color_buffer, y++,
                                    " %s", str_line);
                 str_line[0] = '\0';
             }
+            strcat (str_line, str_color);
         }
         if (str_line[0])
         {
