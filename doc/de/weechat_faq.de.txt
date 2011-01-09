@@ -17,8 +17,7 @@ Einige Funktionen (Version > = 0.3.x):
 
 * Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
 * mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
-// TRANSLATION NEEDED
-* 256 colors support
+* Unterstützung von 256 Farben
 * in mehreren Sprachen verfügbar
 * den eigenen Bedürfnissen durch Erweiterungen anpassbar (C, Perl, Python, Ruby, Lua, Tcl)
 * Buffer mit unabhängigem Inhalt
@@ -26,10 +25,8 @@ Einige Funktionen (Version > = 0.3.x):
 * horizontale und vertikale Einteilung der Fenster
 * anpassbare und erweiterbare Leisten
 * Nickliste in allen GUI's verfügbar
-// TRANSLATION NEEDED
-* IRC proxy
-// TRANSLATION NEEDED
-* redirection of IRC commands
+* IRC Proxy
+* Umleitung von IRC Befehlen
 * inkrementelle Textsuche in Buffern, zu Highlights springen
 * FIFO Pipe für Fernsteuerung
 * Unterstützung von Aspell
