@@ -1001,14 +1001,16 @@ IRC_PROTOCOL_CALLBACK(notice)
             {
                 if (!ptr_channel->topic)
                     irc_channel_set_topic (ptr_channel, address);
-                
+
                 weechat_printf_tags (ptr_channel->buffer,
                                      irc_protocol_tags (command,
                                                         "notify_private",
                                                         nick),
-                                     "%s%s",
-                                     irc_nick_as_prefix (server, NULL, nick,
-                                                         irc_nick_color_for_pv (ptr_channel, nick)),
+                                     "%s%s%s%s: %s",
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_CHAT_NICK,
+                                     nick,
+                                     IRC_COLOR_CHAT,
                                      pos_args);
                 if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
                     && ptr_channel->has_quit_server)
