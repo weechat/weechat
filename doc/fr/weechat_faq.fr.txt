@@ -16,6 +16,7 @@ Quelques fonctionnalités (version > = 0.3.x) :
 
 * support multi-protocoles via extensions (IRC, Jabber)
 * plusieurs interfaces déportées en plus de Curses (à venir bientôt)
+* support 256 couleurs
 * disponible en plusieurs langues
 * extensible par des extensions (C, Perl, Python, Ruby, Lua, Tcl)
 * tampons avec contenu libre
@@ -23,6 +24,8 @@ Quelques fonctionnalités (version > = 0.3.x) :
 * découpage de la fenêtre horizontalement et verticalement
 * barres personnalisables et extensibles
 * liste des pseudos disponible dans toutes les interfaces
+* proxy IRC
+* redirection des commandes IRC
 * recherche incrémentale de texte dans les tampons, saut aux highlights
 * tube FIFO pour contrôle à distance
 * support aspell

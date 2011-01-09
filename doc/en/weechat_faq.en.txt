@@ -17,6 +17,7 @@ Some features (version > = 0.3.x):
 
 * multi-protocol support via plugins (IRC, Jabber)
 * many remote GUI's in addition to Curses (coming soon)
+* 256 colors support
 * available in many languages
 * extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl)
 * buffers with free content
@@ -24,6 +25,8 @@ Some features (version > = 0.3.x):
 * horizontal and vertical window split
 * customizable and extensible bars
 * nicklist available in all GUI's
+* IRC proxy
+* redirection of IRC commands
 * incremental text search in buffers, jump to highlights
 * FIFO pipe for remote control
 * aspell support

@@ -17,6 +17,8 @@ Alcune caratteristiche (versione > = 0.3.x):
 
 * supporto multi-protocollo via plugin (IRC, Jabber)
 * molte interfacce remote in aggiunta a Curses (presto in arrivo)
+// TRANSLATION NEEDED
+* 256 colors support
 * disponibile in molte lingue
 * estensibile con plugin (C, Perl, Python, Ruby, Lua, Tcl)
 * buffer con contenuto libero
@@ -24,6 +26,10 @@ Alcune caratteristiche (versione > = 0.3.x):
 * divisione finestre in orizzontale e verticale
 * barre personalizzabili ed estensibili
 * liste nick disponibili in tutte le interfacce
+// TRANSLATION NEEDED
+* IRC proxy
+// TRANSLATION NEEDED
+* redirection of IRC commands
 * ricerca incrementale nei buffer, passaggio rapido agli eventi importanti
 * pipe FIFO per il controllo remoto
 * doppio set caratteri (codifica/decodifica)

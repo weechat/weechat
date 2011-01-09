@@ -17,6 +17,8 @@ Niektóre cechy (wersja > = 0.3.x):
 
 * wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
 * wiele zdalnych GUI w dodatku do Courses (już niedługo)
+// TRANSLATION NEEDED
+* 256 colors support
 * dostępny w wielu językach
 * rozszerzalny dzięki wtyczką (C, Perl, Python, Ruby, Lua, Tcl)
 * bufory z wolną zawartością
@@ -24,6 +26,10 @@ Niektóre cechy (wersja > = 0.3.x):
 * poziome i pionowe dzielenie okien
 * paski które możemy tworzyć i dostosowywać do własnych potrzeb
 * lista nicków dostępna w każdym GUI
+// TRANSLATION NEEDED
+* IRC proxy
+// TRANSLATION NEEDED
+* redirection of IRC commands
 * przyrostowe wyszukiwanie tekstu w buforach, przeskakiwanie do podświetleń
 * strumień FIFO do zdalnej kontroli
 * wsparcie dla aspell
