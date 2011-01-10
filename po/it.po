@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 18:04+0100\n"
-"PO-Revision-Date: 2010-12-22 11:02+0100\n"
+"POT-Creation-Date: 2011-01-09 12:43+0100\n"
+"PO-Revision-Date: 2011-01-09 10:38+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -31,12 +31,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s Copyright (C) 2003-2010, compilato il %s %s\n"
+"WeeChat %s Copyright %s, compilato il %s %s\n"
 "Sviluppato da Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
@@ -221,10 +221,11 @@ msgstr "Nessuna variabile locale definita per il buffer \"%s\""
 #, c-format
 msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
 msgstr ""
+"%sNumero di coppia \"%s\" non valido (deve essere compresto tra %d e %d)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr ""
+msgstr "%sColore \"%s\" non definito nella tavolozza"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -680,9 +681,8 @@ msgstr "%sErrore: opzione di configurazione \"%s\" non trovata"
 msgid "Option changed: "
 msgstr "Opzione modificata: "
 
-#, fuzzy
 msgid "Option created: "
-msgstr "Opzione modificata: "
+msgstr "Opzione creata: "
 
 msgid "Option changed"
 msgstr "Opzione modificata"
@@ -1001,10 +1001,10 @@ msgstr ""
 "    /buffer +1"
 
 msgid "define custom colors and display palette of colors"
-msgstr ""
+msgstr "definisce i colori predefiniti e visualizza la tavolozza dei colori"
 
 msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
-msgstr ""
+msgstr "[add pair [alias] [fg,bg]] | [del pair] | switch"
 
 msgid ""
 "   add: add a color pair\n"
@@ -1025,6 +1025,23 @@ msgid ""
 "  delete color 214:\n"
 "    /color del 214"
 msgstr ""
+"   add: aggiunge una coppia di colore\n"
+"   del: elimina una coppia di colore\n"
+"switch: passa tra i colori di WeeChat/terminale\n"
+"  pair: numero della coppia (>= 1)\n"
+" alias: nome per il colore (ad esempio: \"arancio\")\n"
+" fg,bg: numero di coppia per il primo piano e lo sfondo (-1 per il primo "
+"piano o sfondo del terminale predefinito)\n"
+"\n"
+"Senza argomenti, il comando visualizza i colori in un nuovo buffer.\n"
+"\n"
+"Esempi:\n"
+"  aggiunge il colore 214 con l'alias \"arancio\":\n"
+"    /color add 214 orange\n"
+"  aggiunge il colore 250 con arancio su blu:\n"
+"    /color add 250 214,4 arancio_blu\n"
+"  elimina il colore 214:\n"
+"    /color del 214"
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "esegui comando o plugin di WeeChat esplicito"
@@ -1750,9 +1767,8 @@ msgstr "proprietà che possono essere impostate su un buffer"
 msgid "properties that can be read on a buffer"
 msgstr "proprietà che possono essere lette su un buffer"
 
-#, fuzzy
 msgid "color pairs"
-msgstr "colori"
+msgstr "coppie di colori"
 
 msgid "configuration files"
 msgstr "file di configurazione"
@@ -1824,16 +1840,14 @@ msgstr "\t\tOggi è %s"
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "livello di debug per il plugin (\"core\" per il core di WeeChat)"
 
-#, fuzzy
 msgid ""
 "custom color in palette, format is: \"alias;fg,bg\" where alias is color "
 "name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
 "is optional in this format and order is not important)"
 msgstr ""
-"colore personalizzato nella tavolozza, il formato è \"alias;fg,bg;r/g/b\" "
-"dove l'alias è il nome del colore, fg,bg sono \"colore di primo piano,colore "
-"di sfondo (esempio: \"200,-1\"), r/g/b la nuova definizone del colore (il "
-"terminale deve supportarla) (tutto è opzionale in questo formato e non "
+"colore personalizzato nella tavolozza, il formato è \"alias;fg,bg\" dove "
+"l'alias è il nome del colore, fg,bg sono \"colore di primo piano,colore di "
+"sfondo (esempio: \"200,-1\"), (tutto è opzionale in questo formato e non "
 "importa l'ordine)"
 
 #, c-format
@@ -2537,7 +2551,7 @@ msgstr "debug: rimozione del file: %s"
 #. TRANSLATORS: "%s" is translation of "second" or "seconds"
 #, c-format
 msgid "Upgrade done (%.02f %s)"
-msgstr ""
+msgstr "Aggiornamento completato (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -2622,30 +2636,26 @@ msgid ""
 "WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
 "Toggle colors"
 msgstr ""
+"Colori WeeChat | Azioni: [R] Aggiorna [Q] Chiudi buffer | Tasti: [alt-c] "
+"Alterna colori"
 
-#, fuzzy
 msgid "Terminal colors:"
-msgstr "Informazioni sul terminale:"
+msgstr "Colori del terminale:"
 
-#, fuzzy
 msgid "WeeChat colors:"
-msgstr "data di compilazione di WeeChat"
+msgstr "Colori di WeeChat:"
 
-#, fuzzy
 msgid "fixed color"
-msgstr "colore del testo"
+msgstr "colore fisso"
 
-#, fuzzy
 msgid "WeeChat basic colors:"
-msgstr "cartella WeeChat"
+msgstr "Colori base di WeeChat"
 
-#, fuzzy
 msgid "Nick colors:"
-msgstr "colori"
+msgstr "Colori per nick:"
 
-#, fuzzy
 msgid "Palette colors:"
-msgstr "Colori predefiniti:"
+msgstr "Tavolozza dei colori:"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminale perduto, chiusura di WeeChat..."
@@ -3802,11 +3812,9 @@ msgstr "nick: nick"
 msgid "join a channel"
 msgstr "entra in un canale"
 
-#, fuzzy
 msgid "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
-msgstr "[canale1[,canale2[,canale3]] [chiave1[,chiave2]]]"
+msgstr "[-server server] [canale1[,canale2[,canale3]] [chiave1[,chiave2]]]"
 
-#, fuzzy
 msgid ""
 " server: send to this server (internal name)\n"
 "channel: channel name to join\n"
@@ -3818,13 +3826,15 @@ msgid ""
 "  /join #protectedchan,#weechat key\n"
 "  /join -server freenode #weechat"
 msgstr ""
+"server: invia a questo server (nome interno)\n"
 "canale: nome del canale in cui entrare\n"
 "chiave: chiave per entrare nel canale (i canali con una chiave devono essere "
 "primi nella lista)\n"
 "\n"
 "Esempi:\n"
 "  /join #weechat\n"
-"  /join #canaleprotetto,#weechat chiave"
+"  /join #canaleprotetto,#weechat chiave\n"
+"  /join -server freenode #weechat"
 
 msgid "forcibly remove a user from a channel"
 msgstr "caccia forzatamente un utente da un canale"
@@ -6186,7 +6196,7 @@ msgid "WeeChat site, download page"
 msgstr "sito di WeeChat, pagina di download"
 
 msgid "1 if WeeChat is upgrading (command `/upgrade`)"
-msgstr ""
+msgstr "1 se si sta aggiornando WeeChat (comando `/upgrade`)"
 
 msgid "terminal charset"
 msgstr "set caratteri terminale"

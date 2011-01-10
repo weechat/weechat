@@ -805,10 +805,9 @@ poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
 //set
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[command_line_colors]]
-Color codes
-^^^^^^^^^^^
+Codici colore
+^^^^^^^^^^^^^
 
 Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
 come segue (digitare Ctrl-C poi la lettera che segue, con il valore
@@ -879,20 +878,19 @@ Comandi di WeeChat
 
 include::autogen/user/weechat_commands.txt[]
 
-// TRANSLATION MISSING
 [[colors]]
-Colors
+Colori
 ~~~~~~
 
-WeeChat can use up to 256 color pairs to display text in bars and chat area
-(your terminal must support 256 colors to use them in WeeChat).
+WeeChat può usare fino a 256 coppie di colore per visualizzare il testo nelle barre e
+nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati in WeeChat).
 
-According to value of 'TERM' environment variable, you may have following limits
-for colors in WeeChat:
+In base al valore della variabile di ambiente 'TERM', potrebbero verificarsi i
+seguenti limiti per i colori in WeeChat:
 
 [width="40%",cols="5,>2,>2",options="header"]
 |========================================
-| $TERM                                 | Colors | Pairs ^(1)^
+| $TERM                                 | Colori | Coppie ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256
 | "rxvt-256color", "xterm-256color",... |    256 |       32767
 | "screen"                              |      8 |          64
@@ -900,41 +898,41 @@ for colors in WeeChat:
 |========================================
 
 [NOTE]
-^(1)^ Even if your terminal supports more than 256 pairs, only 256 pairs can be
-used in WeeChat, because of a ncurses limitation.
+^(1)^ Anche se il terminale supporta più di 256 coppie, possono essere utilizzate
+solo 256 coppie in WeeChat, a causa di una limitazione di ncurses.
 
-You can run `weechat-curses --colors` or use command `/color` in WeeChat to
-display limits for your environment.
+È possibile eseguire `weechat-curses --colors` o utilizzare il comando `/color` in
+WeeChat per visualizzare i limiti del proprio ambiente.
 
-Some recommended values for 'TERM' if you want 256 colors:
+Alcuni valori raccomandati per 'TERM' se si desiderano 256 colori:
 
-* under screen: 'screen-256color'
-* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* con screen: 'screen-256color'
+* al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-If you are using screen, you can add this line to your '~/.screenrc':
+Se si sta utilizzando screen, è possibile aggiungere questa riga al
+proprio '~/.screenrc':
 
 ----------------------------------------
 term screen-256color
 ----------------------------------------
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-don't panic! You can change it without restarting, thanks to script 'shell.py':
+Se la variabile 'TERM' contiene un valore errato e WeeChat è già in esecuzione,
+niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell.py':
 
 ----------------------------------------
 /shell setenv TERM=screen-256color
 /upgrade
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_basic]]
-Basic colors
+Colori base
 ^^^^^^^^^^^^
 
-Basic colors in WeeChat are:
+I colori base in WeeChat sono:
 
 [width="50%",cols="^3m,8",options="header"]
 |========================================
-| Name         | Color
+| Nome         | Colore
 | default      | colore predefinito del terminale (trasparente per lo sfondo)
 | black        | nero
 | darkgray     | grigio scuro
@@ -953,33 +951,34 @@ Basic colors in WeeChat are:
 | white        | bianco
 |========================================
 
-// TRANSLATION MISSING
 [[colors_palette]]
-Palette
-^^^^^^^
+Tavolozza
+^^^^^^^^^
 
-According to your terminal, 64 or 256 pairs are defined by WeeChat, a
-combination of foreground with background colors:
+In base al proprio terminale, vengono definite 64 o 256 coppie da WeeChat,
+una combinazione di colori di primo piano con quelli di sfondo:
 
-* for 64 pairs: 8 foreground colors * 8 background colors (dark colors)
-* for 256 pairs: 16 foreground colors * 16 background colors (8 dark colors and
-  8 light colors)
+* per 64 coppie: 8 colori di primo piano * 8 colori di sfondo (colori scuri)
+* per 256 coppie: 16 colori di primo piano * 16 colori di sfondo (8 colori scuri
+  ed 8 colori chiari)
 
-Use command `/color` to see default colors (on buffer you can press 'alt+c' to
-switch between WeeChat and terminal colors).
+Usare il comando `/color` per visualizzare i colori predefiniti (nel buffer
+è possibile digitare 'alt+c' per passare tra i colori di WeeChat e quelli del
+terminale).
 
-You can override some color pairs (a pair is foreground + background) with
-command `/color`, which creates option in section 'palette' of file
-'weechat.conf'.
+È possibile sovrascrivere alcune coppie di colori (una coppia è costituita
+da colore di primo piano + sfondo) con il comando `/color`, che crea un'opzione
+nella sezione 'palette' del file 'weechat.conf'.
 
-For each color defined, you can specify:
+Per ogni colore definito, si può specificare:
 
-* foreground and background, using format "fg,bg": color for text and
-  background, by default it is color pair number on default background (-1)
-* alias: you can give a name to your color, for easy use in color options
+* colore di primo piano e sfondo, con il formato "fg,bg": colore per il testo e
+  di sfondo, quello predefinito è il numero della coppia del colore su
+  sfondo predefinito (-1)
+* alias: si può dare un nome al proprio colore, per un facile utilizzo nelle opzioni
 
-For example, to define pairs 225 to 240 with colors like blue, cyan, green,
-yellow, orange, red, pink, purple:
+Ad esempio, per definire le coppie da 225 a 240 con colori come blu, ciano, verde,
+giallo, arancione, rosso, rosa, porpora:
 
 ----------------------------------------
 /color add 225 18,-1
@@ -1000,12 +999,12 @@ yellow, orange, red, pink, purple:
 /color add 240 176,-1
 ----------------------------------------
 
-See `/help color` for other examples.
+Consultare `/help color` per ulteriori esempi.
 
 [IMPORTANT]
-Colors defined are overriding default WeeChat color pairs, so you should
-redefine pair only if you're not using this color in WeeChat.
-
+I colori definiti sovrascrivono le coppie di colore predefinite di WeeChat,
+per cui si consiglia di ridefinire la coppia solo questo colore non verrà
+usato in WeeChat.
 
 [[plugins]]
 Plugin

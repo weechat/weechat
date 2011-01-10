@@ -16,9 +16,8 @@ Perché WeeChat è molto leggero ed ha nuove funzionalità.
 Alcune caratteristiche (versione > = 0.3.x):
 
 * supporto multi-protocollo via plugin (IRC, Jabber)
-* molte interfacce remote in aggiunta a Curses (presto in arrivo)
-// TRANSLATION NEEDED
-* 256 colors support
+* diverse interfacce remote in aggiunta a Curses (presto in arrivo)
+* supporto ai 256 colori
 * disponibile in molte lingue
 * estensibile con plugin (C, Perl, Python, Ruby, Lua, Tcl)
 * buffer con contenuto libero
@@ -26,10 +25,8 @@ Alcune caratteristiche (versione > = 0.3.x):
 * divisione finestre in orizzontale e verticale
 * barre personalizzabili ed estensibili
 * liste nick disponibili in tutte le interfacce
-// TRANSLATION NEEDED
-* IRC proxy
-// TRANSLATION NEEDED
-* redirection of IRC commands
+* proxy IRC
+* redirezione dei comandi IRC
 * ricerca incrementale nei buffer, passaggio rapido agli eventi importanti
 * pipe FIFO per il controllo remoto
 * doppio set caratteri (codifica/decodifica)
@@ -232,36 +229,38 @@ Per avere i messaggi in inglese con la codifica UTF-8 per il terminale, per gli
 utenti ISO, digitare: `/shell setenv LANG=en_US`.
 
 
-// TRANSLATION MISSING
 [[256_colors]]
-How can I use 256 colors in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso usare 256 colori in WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-256 colors are supported with WeeChat 0.3.4 or newer.
+256 colori sono supportati da WeeChat 0.3.4 o successivi.
 
-First check that your 'TERM' environment variable is correct, recommended values
-are:
+Per prima cosa verificare che la variabile di ambiente 'TERM' sia corretta, i
+valori raccomandati sono:
 
-* under screen: 'screen-256color'
-* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* con screen: 'screen-256color'
+* al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-If you are using screen, you can add this line to your '~/.screenrc':
+Se si sta utilizzando screen, è possibile aggiungere questa riga al
+proprio '~/.screenrc':
 
 ----------------------------------------
 term screen-256color
 ----------------------------------------
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-don't panic! You can change it without restarting, thanks to script 'shell.py':
+Se la variabile 'TERM' contiene un valore errato e WeeChat è già in esecuzione,
+niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell.py':
 
 ----------------------------------------
 /shell setenv TERM=screen-256color
 /upgrade
 ----------------------------------------
 
-You can use command `/color` for easy setup of colors in WeeChat.
+È possibile utilizzare il comando `/color` per una semplice impostazione
+dei colori in WeeChat.
 
-Please read user's guide for more information about colors management.
+Per favore consultare la guida per l'utente per maggiori informazioni sulla gestione
+dei colori.
 
 
 [[key_bindings]]
@@ -555,12 +554,12 @@ Esistono 3 modi:
   (è possibile iscriversi ed inviare alla mailing list "support")
 
 
-// TRANSLATION MISSING
 [[gdb_error_threads]]
-When I run WeeChat under gdb, there is an error about threads, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you run WeeChat under gdb, you may have this error:
+Quando viene eseguito WeeChat all'interno di gdb, potrebbe verificarsi
+questo errore:
 
 ----------------------------------------
 gdb /path/to/weechat-curses
@@ -569,8 +568,8 @@ gdb /path/to/weechat-curses
 Cannot find new threads: generic error
 ----------------------------------------
 
-To fix that, you can run gdb with this command (replace path to libpthread and
-WeeChat with paths on your system):
+Per correggerlo, è possibile eseguire gdb con questo comando (sostituire il
+percorso di libpthread e WeeChat con i percorsi del proprio sistema):
 
 ----------------------------------------
 LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses

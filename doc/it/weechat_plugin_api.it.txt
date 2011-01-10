@@ -3273,8 +3273,7 @@ weechat_hashtable_set_pointer
 
 _Novità nella versione 0.3.4._
 
-// TRANSLATION MISSING
-Set pointer value of a hashtable property.
+Imposta il valore puntatore della proprietà di una tabella hash.
 
 Prototipo:
 
@@ -3288,8 +3287,8 @@ Argomenti:
 
 * 'hashtable': puntatore alla tabella hash
 * 'property' e 'value': nome della proprietà, con il proprio valore:
-// TRANSLATION MISSING
-** 'callback_free_value': set callback function used to free values in hashtable
+** 'callback_free_value': imposta la funzione callback usata per
+   liberare i valori nella tabella hash
 
 Esempio in C:
 
@@ -6832,9 +6831,8 @@ Argomenti:
 | weechat | upgrade | - |
   comando `/upgrade` digitato dall'utente
 
-// TRANSLATION MISSING
 | weechat | upgrade_ended | - |
-  end of upgrade process (command `/upgrade`)
+  fine del processo di aggiornamento (comando `/upgrade`)
 
 | weechat | weechat_highlight | string: messaggio con prefisso |
   evento accaduto

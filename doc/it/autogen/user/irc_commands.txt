@@ -196,18 +196,18 @@
   nick: nick
 ........................................
 
-&bull; *`/join`* `[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]`::
+&bull; *`/join`* `[-server server] [canale1[,canale2[,canale3]] [chiave1[,chiave2]]]`::
 
 ........................................
   entra in un canale
 
-   server: send to this server (internal name)
-  channel: channel name to join
-      key: key to join the channel (channels with a key must be the first in list)
+  server: invia a questo server (nome interno)
+  canale: nome del canale in cui entrare
+  chiave: chiave per entrare nel canale (i canali con una chiave devono essere primi nella lista)
   
-  Examples:
+  Esempi:
     /join #weechat
-    /join #protectedchan,#weechat key
+    /join #canaleprotetto,#weechat chiave
     /join -server freenode #weechat
 ........................................
 

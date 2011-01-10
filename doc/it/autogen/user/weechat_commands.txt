@@ -102,23 +102,23 @@
 &bull; *`/color`* `[add pair [alias] [fg,bg]] | [del pair] | switch`::
 
 ........................................
-  define custom colors and display palette of colors
+  definisce i colori predefiniti e visualizza la tavolozza dei colori
 
-     add: add a color pair
-     del: delete a color pair
-  switch: switch WeeChat/terminal colors
-    pair: pair number (>= 1)
-   alias: alias name for color (for example: "orange")
-   fg,bg: foreground and background pair number (-1 for default terminal foreground or background)
+     add: aggiunge una coppia di colore
+     del: elimina una coppia di colore
+  switch: passa tra i colori di WeeChat/terminale
+    pair: numero della coppia (>= 1)
+   alias: nome per il colore (ad esempio: "arancio")
+   fg,bg: numero di coppia per il primo piano e lo sfondo (-1 per il primo piano o sfondo del terminale predefinito)
   
-  Without argument, this command displays colors in a new buffer.
+  Senza argomenti, il comando visualizza i colori in un nuovo buffer.
   
-  Examples:
-    add color 214 with alias "orange":
+  Esempi:
+    aggiunge il colore 214 con l'alias "arancio":
       /color add 214 orange
-    add color 250 with orange on blue:
-      /color add 250 214,4 orange_blue
-    delete color 214:
+    aggiunge il colore 250 con arancio su blu:
+      /color add 250 214,4 arancio_blu
+    elimina il colore 214:
       /color del 214
 ........................................
 
