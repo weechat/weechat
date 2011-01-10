@@ -797,6 +797,8 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                 ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
+                    irc_server_apply_command_line_options (ptr_server,
+                                                           argc, argv);
                     if (!irc_command_connect_one_server (ptr_server,
                                                          switch_address,
                                                          no_join))
