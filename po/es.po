@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.4-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-01 18:04+0100\n"
-"PO-Revision-Date: 2010-11-06 11:56+0100\n"
+"POT-Creation-Date: 2011-01-11 16:06+0100\n"
+"PO-Revision-Date: 2011-01-11 16:07+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -32,19 +32,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s Copyright (C) 2003-2010, compilado en %s %s\n"
+"WeeChat %s Copyright %s, compilado en %s %s\n"
 "Desarrollado por Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opción...] [plugin:opción...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect  disable auto-connect to servers at startup\n"
 "  -c, --colors      display default colors in terminal\n"
@@ -64,6 +63,7 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect  desactivar la autoconexión de los servidores al inicio\n"
+"  -c, --colors      muestra los colores predeterminados en la terminal\n"
 "  -d, --dir <ruta>  establecer el directorio raíz de WeeChat (por defecto ~/."
 "weechat)\n"
 "  -h, --help        esta ayuda\n"
@@ -221,11 +221,11 @@ msgstr "Ninguna variable local definida para el buffer \"%s\""
 
 #, c-format
 msgid "%sInvalid pair number \"%s\" (must be between %d and %d)"
-msgstr ""
+msgstr "%sPar de números \"%s\" inválido (debe ser entre %d y %d)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr ""
+msgstr "%sColor \"%s\" no está definido en la paleta"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -359,7 +359,7 @@ msgstr "nombre de un color"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
-msgstr ""
+msgstr "valor sin definir permitido (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -681,9 +681,8 @@ msgstr "%sError: opción de configuración \"%s\" no encontrada"
 msgid "Option changed: "
 msgstr "Opción cambiada: "
 
-#, fuzzy
 msgid "Option created: "
-msgstr "Opción cambiada: "
+msgstr "Opción creada: "
 
 msgid "Option changed"
 msgstr "Opción cambiada"
@@ -1007,10 +1006,10 @@ msgstr ""
 "    /buffer +1"
 
 msgid "define custom colors and display palette of colors"
-msgstr ""
+msgstr "define colores personalizados y muestra la paleta de colores"
 
 msgid "[add pair [alias] [fg,bg]] | [del pair] | switch"
-msgstr ""
+msgstr "[add par [sinónimo] [fg,bg]] | [del par] | switch"
 
 msgid ""
 "   add: add a color pair\n"
@@ -1031,6 +1030,23 @@ msgid ""
 "  delete color 214:\n"
 "    /color del 214"
 msgstr ""
+"   add: agrega un color\n"
+"   del: borra un color\n"
+"switch: cambia entre los colores de WeeChat o la terminal\n"
+"   par: par de números (>= 1)\n"
+" alias: alias para el color (por ejemplo: \"naranja\")\n"
+" fg,bg: color de texto (fg) y color de fondo (bg) (-1 para user el color "
+"predeterminado de la terminal de texto o de fondo)\n"
+"\n"
+"Sin argumentos, este comando muestra los colores en un nuevo buffer.\n"
+"\n"
+"Ejemplos:\n"
+"  agregar color 214 con el alias \"naranja\":\n"
+"    /color add 214 naranja\n"
+"  agregar color 250 con naranja sobre azul:\n"
+"    /color add 250 214,4 naranja_azul\n"
+"  borrar color 214:\n"
+"    /color del 214"
 
 msgid "launch explicit WeeChat or plugin command"
 msgstr "lanza explícitamente un comando de WeeChat o plugin"
@@ -1052,9 +1068,8 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "controla los mensajes de depuración para el núcleo/plugins"
 
-#, fuzzy
 msgid "[list | set plugin level | dump [plugin] | buffer | windows | term]"
-msgstr "[list | set plugin nivel | dump | buffer | windows | term]"
+msgstr "[list | set plugin nivel | dump [plugin] | buffer | windows | term]"
 
 msgid ""
 "    set: set log level for plugin\n"
@@ -1089,7 +1104,6 @@ msgstr ""
 "[list] | [enable|disable|toggle [nombre]] | [add nombre plugin.buffer "
 "etiquetas regex] | [del nombre|-all]"
 
-#, fuzzy
 msgid ""
 "         list: list all filters\n"
 "       enable: enable filters (filters are enabled by default)\n"
@@ -1154,14 +1168,17 @@ msgstr ""
 "especiales como '|' deben ser escritos como '\\|')\n"
 "               - si la expresión regular empieza con '!', entonces el "
 "resultado se invierte (usa '\\!' para empezar con '!')\n"
+"               nota: dos expresiones regulares son creadas: una para el "
+"prefijo y otra para el mensaje\n"
 "\n"
 "Por predeterminado, el atajo alt+'=' activa o desactiva el filtrado.\n"
 "\n"
 "Etiquetas más comúnmente usadas:\n"
-"  no_filter, no_highlight, log0..log9 (nivel de registro),\n"
+"  no_filter, no_highlight, no_log, log0..log9 (nivel de registro),\n"
 "  notify_message, notify_private, notify_highlight,\n"
-"  irc_xxx (xxx es el nombre del comando o un número, ver /server raw), "
-"irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
+"  nick_xxx (xxx es el apodo en el mensaje),\n"
+"  irc_xxx (xxx es el nombre del comando o un número, ver /server raw),\n"
+"  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "\n"
 "Ejemplos:\n"
@@ -1426,7 +1443,7 @@ msgstr ""
 "        list: lista todos los proxies\n"
 "\n"
 "Ejemplos:\n"
-"  crear un proxy http, corriento en el host local, puerto 8888:\n"
+"  crear un proxy http, corriendo en el host local, puerto 8888:\n"
 "    /proxy add local http 127.0.0.1 8888\n"
 "  crear un proxy http con protocolo IPv6:\n"
 "    /proxy add local http 127.0.0.1 8888\n"
@@ -1537,7 +1554,6 @@ msgstr "actualizar WeeChat sin desconectarse de los servidores"
 msgid "[path_to_binary]"
 msgstr "[ruta_al_ejecutable]"
 
-#, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "\n"
@@ -1553,9 +1569,16 @@ msgstr ""
 "ruta_al_ejecutable: ruta al ejecutable de WeeChat (ejecutable actual por "
 "defecto)\n"
 "\n"
-"Este comando ejecuta de nuevo el ejecutable de WeeChat, así que este debería "
-"haber sido compilado o instalado con un gestor de paquetes antes de "
-"ejecutarse."
+"Este comando inicia nuevamente el ejecutable de WeeChat, así que este "
+"debería haber sido compilado o instalado con un gestor de paquetes antes de "
+"ejecutarse.\n"
+"\n"
+"El proceso de actualización tiene 4 pasos:\n"
+"  1. Guarda en archivos la sesión del núcleo y los plugins (buffers, "
+"historial, ..)\n"
+"  2. Descarga todos los plugins (la configuración es guardada)\n"
+"  3. Guarda la configuración de WeeChat (weechat.conf)\n"
+"  4. Ejecuta el nuevo binario de WeeChat."
 
 msgid "show WeeChat uptime"
 msgstr "muestra el tiempo de uso de WeeChat"
@@ -1744,9 +1767,8 @@ msgstr "propiedades del buffer que pueden configurarse"
 msgid "properties that can be read on a buffer"
 msgstr "propiedades del buffer que pueden leerse"
 
-#, fuzzy
 msgid "color pairs"
-msgstr "color"
+msgstr "pares de colores"
 
 msgid "configuration files"
 msgstr "archivos de configuración"
@@ -1822,10 +1844,13 @@ msgid ""
 "name, fg,bg is \"foreground,background\" (example: \"200,-1\") (everything "
 "is optional in this format and order is not important)"
 msgstr ""
+"color personalizado en la paleta, el formato es: \"alias;fg,bg\" donde alias "
+"es el nombre del color, fg,bg es \"color de texto,color de fondo\" (ejemplo: "
+"\"200,-1\") (en este formato todo es opcional y el orden no es importante)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: palette option must be numeric"
-msgstr "%sError: no se pudo guardar las opciones en %s"
+msgstr "%sError: el valor de la paleta debe ser un número"
 
 msgid "Notify level for buffer"
 msgstr "Nivel de notificación para el buffer"
@@ -1850,7 +1875,6 @@ msgstr ""
 "empiezan debajo de este elemento (time, buffer, prefix, suffix, message (por "
 "defecto))"
 
-#, fuzzy
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
@@ -1859,16 +1883,19 @@ msgid ""
 msgstr ""
 "nivel de notificación por defecto para buffers (indica a WeeChat si el "
 "buffer debe ser mostrado en la lista de actividad o no, según la importancia "
-"del mensaje)"
+"del mensaje): all=todos los mensajes (predeterminado), message=mensajes"
+"+resaltes, highlight=solamente resaltes,none=nunca mostrar en la lista de "
+"actividad"
 
-#, fuzzy
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers), colors are allowed with format \"${color}\", for example "
 "french time: \"${lightblue}%H${white}%M${lightred}%S\""
 msgstr ""
 "formato de hora en el registro (ver el manual de strftime para los "
-"especificadores de fecha/hora)"
+"especificadores de fecha/hora), se pueden usar colores con el formato "
+"\"${color}\", ejemplo hora francesa: \"${lightblue}%H${white}%M${lightred}%S"
+"\""
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -1916,6 +1943,10 @@ msgid ""
 "\"_\" or \"|\"), regular expression is case sensitive, example: \"FlashCode|"
 "flashy\""
 msgstr ""
+"expresión regular usada para ver si un mensaje tiene un resalte o no, al "
+"menos una coincidencia en el texto debe estar rodeado por letras "
+"(alfanumérico, \"-\", \"_\" o \"|\"), la expresión regular distingue "
+"mayúsculas/minúsculas, ejemplo: \"FlashCode|flashy\""
 
 msgid ""
 "char used to draw horizontal lines, note that empty value will draw a real "
@@ -1962,33 +1993,36 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-#, fuzzy
 msgid ""
 "keep only unique numbers in hotlist (this applies only on hotlist items "
 "where name is NOT displayed after number)"
 msgstr ""
-"número máximo de nombres en la lista de actividad (0 = no se muestra "
-"ninguno, sólo los números de buffer)"
+"mantiene solamente números únicos en la lista de actividad (esto solo vale "
+"en los elementos de la lista donde el nombre NO es mostrado después del "
+"número)"
 
 msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
 "history for each buffer)"
 msgstr ""
+"comparte comandos, texto, o ambos en la línea de entrada en todos los "
+"buffers (cada buffer tiene aún su propio historial)"
 
 msgid "if set and input is shared, always overwrite input in target buffer"
 msgstr ""
+"si es establecido y la entrada es compartida, siempre sobreescribe la línea "
+"de entrada en el buffer"
 
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
 "número máximo de niveles de deshaces en la línea de comando, por buffer (0 = "
 "deshacer desactivado)"
 
-#, fuzzy
 msgid ""
 "time format for \"time\" bar item (see man strftime for date/time specifiers)"
 msgstr ""
-"formato de hora en el registro (ver el manual de strftime para los "
-"especificadores de fecha/hora)"
+"formato de hora para el elemento de barra \"time\" (ver el manual de "
+"strftime para los especificadores de fecha/hora)"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -2035,14 +2069,13 @@ msgstr "prefijo para mensajes de salida"
 
 # none, left, right are option names, keep in english
 msgid "prefix alignment (none, left, right (default))"
-msgstr "alineación del prefijo (none, left, right) (right por defecto)"
+msgstr "alineación del prefijo (none, left, right (predeterminado))"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr "tamaño máximo para el prefijo (0 = no hay límite)"
 
-#, fuzzy
 msgid "min size for prefix"
-msgstr "cadena mostrada después del prefijo"
+msgstr "tamaño mínimo para el prefijo"
 
 msgid "display '+' if prefix is truncated"
 msgstr "mostrar '+' si el prefijo ha sido truncado"
@@ -2052,7 +2085,7 @@ msgid ""
 "number (none, left, right (default))"
 msgstr ""
 "alineación para los nombres de buffer, cuando varios buffers están "
-"fusionados con el mismo número (none, left, right (por defecto))"
+"fusionados con el mismo número (none, left, right (predeterminado))"
 
 msgid ""
 "max size for buffer name, when many buffers are merged with same number (0 = "
@@ -2167,9 +2200,8 @@ msgstr "color para los nombres de los canales"
 msgid "text color for nicks in chat window"
 msgstr "color para los apodos en la ventana de conversación"
 
-#, fuzzy
 msgid "text color for nicks (comma separated list of colors)"
-msgstr "color para los apodos en la ventana de conversación"
+msgstr "color para los apodos (lista de colores separadas por comas)"
 
 msgid "text color for local nick in chat window"
 msgstr "color para el apodo propio en la ventana de conversación"
@@ -2321,18 +2353,15 @@ msgstr ""
 "número máximo de comandos para mostrar por defecto en el listado del "
 "historial (0 = ilimitado)"
 
-#, fuzzy
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
 "WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
-"de WeeChat, \"~/.weechat\" por defecto)"
+"archivo con las autoridades de certificación (\"%h\" será reemplazado por el "
+"directorio raíz de WeeChat, \"~/.weechat\" por defecto)"
 
-#, fuzzy
 msgid "timeout (in seconds) for gnutls handshake"
-msgstr ""
-"tiempo de espera (en segundos) antes de abandonar la autenticación por SASL"
+msgstr "tiempo de espera (en segundos) para el saludo gnutls"
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -2518,7 +2547,7 @@ msgstr "depurado: removiendo el archivo: %s"
 #. TRANSLATORS: "%s" is translation of "second" or "seconds"
 #, c-format
 msgid "Upgrade done (%.02f %s)"
-msgstr ""
+msgstr "Actualización hecha (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -2594,40 +2623,35 @@ msgid "Terminal infos:"
 msgstr "Información de la terminal:"
 
 msgid "No color support in terminal."
-msgstr ""
+msgstr "No hay soporte para color en la terminal."
 
-#, fuzzy
 msgid "Default colors:"
-msgstr "Atajos predefinidos restaurados"
+msgstr "Colores predeterminados:"
 
 msgid ""
 "WeeChat colors | Actions: [R] Refresh [Q] Close buffer | Keys: [alt-c] "
 "Toggle colors"
 msgstr ""
+"Colores de WeeChat | Acciones: [R] Refrescar [Q] Cerrar buffer | Atajos: "
+"[alt-c] Alternar colores"
 
-#, fuzzy
 msgid "Terminal colors:"
-msgstr "Información de la terminal:"
+msgstr "Colores de la terminal:"
 
-#, fuzzy
 msgid "WeeChat colors:"
-msgstr "fecha de compilación de WeeChat"
+msgstr "Colores de WeeChat"
 
-#, fuzzy
 msgid "fixed color"
-msgstr "color del texto"
+msgstr "color fijo"
 
-#, fuzzy
 msgid "WeeChat basic colors:"
-msgstr "directorio de WeeChat"
+msgstr "Colores básicos de WeeChat"
 
-#, fuzzy
 msgid "Nick colors:"
-msgstr "color"
+msgstr "Colores de apodos"
 
-#, fuzzy
 msgid "Palette colors:"
-msgstr "Atajos predefinidos restaurados"
+msgstr "Paleta de colores:"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Se perdió la terminal, cerrando WeeChat..."
@@ -2682,7 +2706,7 @@ msgid ""
 msgstr ""
 "dirección de llenado de la barra (\"horizontal\" (de izquierda a derecha) o "
 "\"vertical\" (de arriba a abajo)) cuando la posición de la barra es \"top\" "
-"o \"botton\""
+"o \"bottom\""
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
@@ -2714,6 +2738,8 @@ msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+"
 "\" (glued items)"
 msgstr ""
+"elementos de la barra, pueden estar separados por coma (espacio entre "
+"elementos) o \"+\" (elementos pegados entre sí)"
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -2884,9 +2910,8 @@ msgstr "nombre_alias: nombre del alias a suprimir"
 msgid "list of aliases"
 msgstr "lista de alias"
 
-#, fuzzy
 msgid "value of alias"
-msgstr "lista de alias"
+msgstr "valor del alias"
 
 #, c-format
 msgid "%s%s: error creating completion for alias \"%s\": alias not found"
@@ -3059,9 +3084,8 @@ msgstr "mensaje de demostración sin un prefijo"
 msgid "%sdemo message with error prefix"
 msgstr "%smensaje de demostración con prefijo de error"
 
-#, fuzzy
 msgid "colors"
-msgstr "color"
+msgstr "colores"
 
 msgid "Available infos:"
 msgstr "Infos disponibles:"
@@ -3354,43 +3378,43 @@ msgstr ""
 
 #. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
 msgid "Notice"
-msgstr ""
+msgstr "Aviso"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: server must be specified because you are not on an irc server or "
 "channel"
 msgstr ""
-"%s%s: el comando \"%s\" debe ser ejecutado en un buffer irc (canal o "
-"servidor)"
+"%s%s: el servidor debe ser especificado porque no se encuentra en un "
+"servidor irc o canal"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: notify already exists"
-msgstr "%s%s: ya se encuentra ignorado"
+msgstr "%s%s: la notificación ya existe"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification added for %s%s"
-msgstr "%s: cambiando dirección a %s/%d"
+msgstr "%s: notificación para %s%s agregada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error adding notification"
-msgstr "%s%s: error al actualizar la lista de ignorados"
+msgstr "%s%s: error al agregar la notificación"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: all notifications deleted"
-msgstr "%s: lista de ignorados borrada"
+msgstr "%s: todas las notificaciones borradas"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: no notification in list"
-msgstr "%s: lista de ignorados vacía"
+msgstr "%s: no hay notificaciones en la lista"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification deleted"
-msgstr "%s: borrado de la lista de ignorados"
+msgstr "%s: notificación borrada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: notification not found"
-msgstr "%s%s: no se encontró el ignorado"
+msgstr "%s%s: notificación no encontrada"
 
 #, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
@@ -3566,15 +3590,13 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "conectar a un servidor IRC"
 
-#, fuzzy
 msgid ""
 "[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] "
 "| -all | -open] [-nojoin] [-switch]"
 msgstr ""
-"[-all [-nojoin] | -open [-nojoin] | servidor [servidor ...] [-nojoin] | "
-"hostname[/puerto] [-opción=[=valor]] [-noopción]]"
+"[servidor [servidor ...] | hostname[/puerto] [-opción=[=valor]] [-noopción] "
+"| -all | -open] [-nojoin] [-switch]"
 
-#, fuzzy
 msgid ""
 "servername: internal server name to connect (server must have been created "
 "by /server add)\n"
@@ -3597,41 +3619,41 @@ msgid ""
 "  /connect my.server.org/6697 -ssl -password=test\n"
 "  /connect -switch"
 msgstr ""
-"    -all: conectar a todos los servidores configurados\n"
-"   -open: conectar a todos los servidores abiertos que no están conectados "
-"actualmente\n"
 "servidor: nombre interno del servidor a conectar (debe haber sido creado "
 "por /server add)\n"
-" -nojoin: no unirse a ningún canal (incluso si autojoin está activado en el "
-"servidor)\n"
 "hostname: dirección (o IP) del servidor\n"
 "  puerto: puerto del servidor (6667 por defecto)\n"
 "  opción: configura opción para el servidor (para opciones booleanas, el "
 "valor puede omitirse)\n"
 "noopción: pone la opción booleana en 'off' (desactivado) (por ejemplo: -"
 "nossl)\n"
+"    -all: conectar a todos los servidores configurados\n"
+"   -open: conectar a todos los servidores abiertos que no están conectados "
+"actualmente\n"
+" -nojoin: no unirse a ningún canal (incluso si autojoin está activado en el "
+"servidor)\n"
+" -switch: cambia la siguiente dirección de servidor\n"
 "\n"
 "Ejemplos:\n"
 "  /connect freenode\n"
 "  /connect irc.oftc.net/6667\n"
 "  /connect irc6.oftc.net/6667 -ipv6\n"
 "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
-"  /connect mi.server.org/6697 -ssl -password=prueba"
+"  /connect mi.server.org/6697 -ssl -password=prueba\n"
+"  /connect -switch"
 
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "envía un mensaje CTCP (Client-To-Client Protocol)"
 
-#, fuzzy
 msgid "target type [arguments]"
-msgstr "receptor tipo [argumentos]"
+msgstr "destino tipo [argumentos]"
 
-#, fuzzy
 msgid ""
 " target: nick or channel to send CTCP to\n"
 "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
-"  receptor: apodo o canal a enviar el CTCP\n"
+"   destino: apodo o canal a enviar el CTCP\n"
 "      tipo: tipo de CTCP (ejemplos:\"version\", \"ping\", ...)\n"
 "argumentos: argumentos para el CTCP"
 
@@ -3712,7 +3734,6 @@ msgstr "ignorar apodos/hosts en servidores o canales"
 msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr "[list] | [add [re:]apodo/host [servidor [canal]]] | [del número|-all]"
 
-#, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
@@ -3781,11 +3802,9 @@ msgstr "apodo: apodo"
 msgid "join a channel"
 msgstr "unirse a un canal"
 
-#, fuzzy
 msgid "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
-msgstr "[canal1[,canal2[,canal3]] [clave1[,clave2]]]"
+msgstr "[-server servidor] [canal1[,canal2[,canal3]] [clave1[,clave2]]]"
 
-#, fuzzy
 msgid ""
 " server: send to this server (internal name)\n"
 "channel: channel name to join\n"
@@ -3797,13 +3816,15 @@ msgid ""
 "  /join #protectedchan,#weechat key\n"
 "  /join -server freenode #weechat"
 msgstr ""
-"canal: nombre del canal a unirse\n"
-"clave: clave para unirse al canal (canales con clave deben ser los primeros "
-"en la lista)\n"
+" servidor: enviar a este servidor (nombre interno)\n"
+"    canal: nombre del canal a unirse\n"
+"    clave: clave para unirse al canal (canales con clave deben ser los "
+"primeros en la lista)\n"
 "\n"
 "Ejemplos:\n"
 "  /join #weechat\n"
-"  /join #canalprotegido,#weechat clave"
+"  /join #canalprotegido,#weechat clave\n"
+"  /join -server freenode #weechat"
 
 msgid "forcibly remove a user from a channel"
 msgstr "expulsar forzosamente a un usuario de un canal"
@@ -3992,11 +4013,9 @@ msgstr "obtener el \"Mensaje del Día\" (MOTD)"
 msgid "send message to a nick or channel"
 msgstr "envía mensaje a un usuario o canal"
 
-#, fuzzy
 msgid "[-server server] target[,target] text"
 msgstr "[-server servidor] destino[,destino] texto"
 
-#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
 "target: nick or channel (may be mask, '*' = current channel)\n"
@@ -4031,26 +4050,25 @@ msgstr ""
 msgid "send notice message to user"
 msgstr "enviar mensaje de aviso a un usuario"
 
-#, fuzzy
 msgid "[-server server] target text"
-msgstr "[-server servidor] destino[,destino] texto"
+msgstr "[-server servidor] destino texto"
 
-#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
 "target: nick or channel\n"
 "  text: text to send"
 msgstr ""
 "servidor: enviar a este servidor (nombre interno)\n"
-" destino: apodo o canal (puede ser una máscara, '*' = canal actual)\n"
+" destino: apodo o canal\n"
 "   texto: texto a enviar"
 
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
+"agregar una notificación sobre la presencia o ausencia de apodos en los "
+"servidores"
 
-#, fuzzy
 msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
-msgstr "[list] | [add [re:]apodo/host [servidor [canal]]] | [del número|-all]"
+msgstr "[add apodo [servidor [-away]]] | [del apodo|-all [servidor]]"
 
 msgid ""
 "   add: add a notification\n"
@@ -4071,6 +4089,26 @@ msgid ""
 "  notify when \"toto\" is away or back on freenode server:\n"
 "    /notify add toto freenode -away"
 msgstr ""
+"     add: agrega una notificación\n"
+"   apodo: apodo\n"
+"servidor: nombre interno del servidor (por defecto se usa el servidor "
+"actual)\n"
+"   -away: notificar cuando el mensaje de ausencia cambie (mediante /whois en "
+"el apodo)\n"
+"     del: borra una notificación\n"
+"    -all: borra todas las notificaciones\n"
+"\n"
+"Sin argumentos, muestra las notificaciones para el servidor actual (o "
+"todoslos servidores si el comando se usa en el buffer núcleo).\n"
+"\n"
+"Ejemplos:\n"
+"  notificar cuando \"toto\" se conecte/desconecte del servidor actual:\n"
+"    /notify add toto\n"
+"  notificar cuando \"toto\" se conecte/desconecte del servidor freenode:\n"
+"    /notify add toto freenode\n"
+"  notificar cuando \"toto\" está ausente o de regreso en el servidor "
+"freenode:\n"
+"    /notify add toto freenode -away"
 
 msgid "give channel operator status to nickname(s)"
 msgstr "dar el estado de operador del canal a el/los usuario(s)"
@@ -4145,7 +4183,6 @@ msgstr "enviar datos brutos al servidor sin analizar"
 msgid "[-server server] data"
 msgstr "[-server servidor] datos"
 
-#, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
 "  data: raw data to send"
@@ -4156,21 +4193,20 @@ msgstr ""
 msgid "reconnect to server(s)"
 msgstr "reconectar al servidor(es)"
 
-#, fuzzy
 msgid "[servername [servername ...] | -all] [-nojoin] [-switch]"
-msgstr "[-all [-nojoin] | servidor [servidor ...] [-nojoin]]"
+msgstr "[servidor [servidor ...] | -all] [-nojoin] [-switch]"
 
-#, fuzzy
 msgid ""
 "servername: server name to reconnect\n"
 "      -all: reconnect to all servers\n"
 "   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
 "   -switch: switch to next server address"
 msgstr ""
-"    -all: reconectar en todos los servidores\n"
 "servidor: nombre del servidor a reconectar\n"
+"    -all: reconectar en todos los servidores\n"
 " -nojoin: no unirse a ningún canal (incluso si autojoin está activado en el "
-"servidor)"
+"servidor)\n"
+" -switch: cambia la siguiente dirección de servidor"
 
 msgid "tell the server to reload its config file"
 msgstr "pedir al servidor que recargue su archivo de configuración"
@@ -4459,7 +4495,7 @@ msgid "give voice to nickname(s)"
 msgstr "da voz a el/los apodo(s)"
 
 msgid "send a notice to channel ops"
-msgstr "envía un notice a los ops del canal"
+msgstr "envía un aviso a los ops del canal"
 
 msgid "[channel] text"
 msgstr "[canal] texto"
@@ -4579,9 +4615,8 @@ msgstr "mensaje de abandono por defecto"
 msgid "numbers for defined ignores"
 msgstr "números para los ignores definidos"
 
-#, fuzzy
 msgid "nicks in notify list"
-msgstr "%s: lista de ignorados vacía"
+msgstr "apodos en la lista de notificación"
 
 #, c-format
 msgid ""
@@ -4628,13 +4663,13 @@ msgstr "usar el protocolo IPv6 para la comunicación con el servidor"
 msgid "use SSL for server communication"
 msgstr "usar SSL para la comunicación con el servidor"
 
-#, fuzzy
 msgid ""
 "ssl certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
-"de WeeChat, \"~/.weechat\" por defecto)"
+"archivo con el certificado ssl para identificar tu apodo automáticamente "
+"(\"%h\" será reemplazado por el directorio raíz de WeeChat, \"~/.weechat\" "
+"por defecto)"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "tamaño de la llave usada durante Diffie-Hellman Key Exchange"
@@ -4768,6 +4803,8 @@ msgid ""
 "notify list for server (you should not change this option but use /notify "
 "command instead)"
 msgstr ""
+"Lista de notificaciones para el servidor (no se debería cambiar esta opción, "
+"usar el comando /notify para ello)"
 
 #, c-format
 msgid "%s%s: error creating server \"%s\""
@@ -4791,12 +4828,18 @@ msgid ""
 "(should be last buffer)r, next = current buffer + 1, near_server = after "
 "last channel/pv of server)"
 msgstr ""
+"fuerza la posición de nuevos canales en la lista de buffers (none = posición "
+"predeterminada (último buffer), next = buffer actual + 1, near_server = "
+"después del último canal/privado del server)"
 
 msgid ""
 "force position of new private in list of buffers (none = default position "
 "(should be last buffer)r, next = current buffer + 1, near_server = after "
 "last channel/pv of server)"
 msgstr ""
+"fuerza la posición de nuevos privados en la lista de buffers (none = "
+"posición  predeterminada (último buffer), next = buffer actual + 1, "
+"near_server = después del último canal/privado del server)"
 
 msgid "text to display before nick in chat window"
 msgstr "texto a mostrar antes del apodo en la ventana de charla"
@@ -4808,6 +4851,8 @@ msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
 msgstr ""
+"fuerza color para algunos apodos: no se computará el hash usado para elegir "
+"el color en estos apodos (el formato es: \"apodo1:color1;apodo2:color2\")"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -4857,9 +4902,8 @@ msgstr ""
 "mostrar un mensaje en privado cuando el usuario esta de vuelta (después de "
 "salir del servidor)"
 
-#, fuzzy
 msgid "display server away message in away bar item"
-msgstr "mostrar mensaje de ausencia remota únicamente una vez en privado"
+msgstr "mostrar mensaje de ausencia en el elemento de barra \"away\""
 
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "mostrar los modos del canal en el elemento de barra \"buffer_name\""
@@ -4912,23 +4956,28 @@ msgid ""
 "joins or quits server (result of command ison), for example: "
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
+"lista separada por comas de etiquetas usadas en los mensajes de notificación "
+"cuando un apodo se une o abandona el servidor (resultado del comando ison), "
+"por ejemplo: \"notify_highlight\", \"notify_message\" o \"notify_private\""
 
 msgid ""
 "comma separated list of tags used in messages printed by notify when a nick "
 "away status changes (result of command whois), for example: "
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
+"lista separada por comas de etiquetas usadas en los mensajes de notificación "
+"cuando un apodo cambia su estado de ausencia (resultado del comando whois), "
+"por ejemplo: \"notify_highlight\", \"notify_message\" o \"notify_private\""
 
 msgid "close buffer when /part is issued on a channel"
 msgstr "cerrar el buffer cuando /part es usado en un canal"
 
-#, fuzzy
 msgid ""
 "number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
-"número de mensajes IRC brutos a guardar en memoria (los mensajes serán "
-"mostrados cuando sea abra el buffer de datos brutos)"
+"número de mensajes brutos a mantener en memoria cuando el buffer de datos en "
+"bruto está cerrado (los mensajes serán mostrados cuando sea abra este buffer)"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "
@@ -4974,12 +5023,14 @@ msgstr "color del prefijo del apodo cuando es un usuario del canal"
 
 msgid "color for nick prefix (prefix is custom string displayed before nick)"
 msgstr ""
+"color del prefijo del apodo (el prefijo es el texto mostrado antes del apodo)"
 
 msgid "color for nick suffix (suffix is custom string displayed after nick)"
 msgstr ""
+"color del sufijo del apodo (el sufijo es el texto mostrado después del apodo)"
 
 msgid "color for text \"Notice\" in notices"
-msgstr "color para el texto \"Notice\" en los mensajes de aviso"
+msgstr "color para el texto \"Aviso\" en los mensajes de aviso"
 
 msgid "color for nick in input bar"
 msgstr "color para el apodo en la barra de entrada"
@@ -5048,18 +5099,18 @@ msgstr ""
 msgid "send unknown commands to server"
 msgstr "envía comandos desconocidos al servidor"
 
-#, fuzzy
 msgid ""
 "interval between two checks for notify with IRC command \"ison\" (in minutes)"
 msgstr ""
-"intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
+"intervalo entre dos comprobaciones para notificaciones con el comando IRC "
+"\"ison\" (en minutos)"
 
-#, fuzzy
 msgid ""
 "interval between two checks for notify with IRC command \"whois\" (in "
 "minutes)"
 msgstr ""
-"intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
+"intervalo entre dos comprobaciones para notificaciones con el comando IRC "
+"\"whois\" (en minutos)"
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -5173,19 +5224,19 @@ msgstr ""
 "valor de la característica, si es soportada por el servidor (desde el "
 "mensaje IRC 005)"
 
-#, fuzzy
 msgid "parse an IRC message"
-msgstr "mensaje: mensaje a enviar"
+msgstr "analiza un mensaje IRC"
 
-#, fuzzy
 msgid "\"message\": IRC message"
-msgstr "mensaje: mensaje a enviar"
+msgstr "\"mensaje\": mensaje IRC"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
 "\"nick\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel)"
 msgstr ""
+"\"nick\": apodo, \"host\": host, \"command\": comando, \"channel\": canal, "
+"\"arguments\": argumentos (incluye el canal)"
 
 msgid "list of IRC servers"
 msgstr "lista de servidores IRC"
@@ -5204,9 +5255,8 @@ msgstr "lista de canales de un servidor IRC"
 msgid "channel pointer (optional)"
 msgstr "puntero del canal (opcional)"
 
-#, fuzzy
 msgid "server,channel (channel is optional)"
-msgstr "servidor,canal,apodo (canal y apodo es opcional)"
+msgstr "servidor,canal (canal es opcional)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "lista de apodos de un canal IRC"
@@ -5223,13 +5273,11 @@ msgstr "lista de IRC ignores"
 msgid "ignore pointer (optional)"
 msgstr "puntero del ignore (opcional)"
 
-#, fuzzy
 msgid "list of notify"
-msgstr "lista de opciones"
+msgstr "lista de notificaciones"
 
-#, fuzzy
 msgid "notify pointer (optional)"
-msgstr "puntero del apodo (opcional)"
+msgstr "puntero de la notificación (opcional)"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -5240,44 +5288,43 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ¡este buffer no es un canal!"
 
 msgid "offline"
-msgstr ""
+msgstr "fuera de línea"
 
 msgid "online"
-msgstr ""
+msgstr "en línea"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Notify list for %s%s%s:"
-msgstr "Lista de transferencias:"
+msgstr "Lista de notificaciones para %s%s%s:"
 
 msgid "Notify list is empty on this server"
-msgstr ""
+msgstr "Lista de notificación vacía en este servidor"
 
-#, fuzzy
 msgid "Notify list for all servers:"
-msgstr "Lista de transferencias:"
+msgstr "Lista de notificaciones para todos los servidores:"
 
 msgid "Notify list is empty on all servers"
-msgstr ""
+msgstr "Lista de notificaciones vacía en todos los servidores"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has joined %s%s"
-msgstr "%s%s%s%s ha expulsado %s%s%s"
+msgstr "%saviso: %s%s%s se ha unido a %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has quit %s%s"
-msgstr "%s%s%s%s ha expulsado %s%s%s"
+msgstr "%saviso: %s%s%s ha salido de %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
-msgstr "%s%s[%s%s%s]%s está ausente: %s"
+msgstr "%saviso: %s%s%s está ahora ausente: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is back"
-msgstr "%sEl tema para %s%s%s es \"%s%s\""
+msgstr "%saviso: %s%s%s ha regresado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
-msgstr "%s%s[%s%s%s]%s está ausente: %s"
+msgstr "%saviso: %s%s%s está aún ausente: \"%s\""
 
 #, c-format
 msgid ""
@@ -5390,9 +5437,9 @@ msgstr "%s%s%s%s ha cambiado el tema para %s%s%s de \"%s%s\" a \"%s%s\""
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
 msgstr "%s%s%s%s ha cambiado el tema para %s%s%s a \"%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
-msgstr "%s%s%s%s ha cambiado el tema para %s%s%s a \"%s%s\""
+msgstr "%s%s%s%s ha borrado el tema para %s%s%s (tema anterior: \"%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
@@ -5617,35 +5664,37 @@ msgstr "%s%s: comando \"%s\" recibido sin host"
 msgid "IRC raw messages"
 msgstr "mensajes IRC en bruto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
-msgstr "%s%s: faltan argumentos para el comando \"%s\""
+msgstr "%s%s: falta el argumento \"%s\" para el patrón de redirección"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%sError: el filtro \"%s\" ya existe"
+msgstr "%s%s: patrón de redirección \"%s\" ya existe"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
-msgstr "%s%s: ¡no conectado al servidor \"%s\"!"
+msgstr "%s%s: no conectado al servidor \"%s\" para la redirección"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: faltan argumentos para el comando \"%s\""
+msgstr "%s%s: falta el argumento \"%s\"  para la redirección"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
-msgstr "%s%s: servidor \"%s\" no encontrado"
+msgstr "%s%s: patrón de redirección \"%s\" no encontrado"
 
 #, c-format
 msgid ""
 "%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
 "pattern: \"%s\")"
 msgstr ""
+"%s: comenzando redirección del comando \"%s\" en el servidor \"%s\" (patrón "
+"de redirección: \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: server \"%s\" not found for redirect"
-msgstr "%s%s: servidor \"%s\" no encontrado"
+msgstr "%s%s: servidor \"%s\" no encontrado para la redirección"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -5717,9 +5766,9 @@ msgstr "%s: reconectando al servidor en %d %s"
 msgid "%s: switching address to %s/%d"
 msgstr "%s: cambiando dirección a %s/%d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: connected to %s/%d (%s)"
-msgstr "%s: conectado a %s (%s)"
+msgstr "%s: conectado a %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -5842,10 +5891,10 @@ msgstr " - información del certificado del cliente (%s):"
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: no es posible leer el certificado \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown address server \"%s\", cannot connect"
 msgstr ""
-"%s%s: apodos sin definir para el servidor \"%s\", no es posible conectarse"
+"%s%s: dirección del servidor \"%s\" desconocida, no es posible conectarse"
 
 #, c-format
 msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
@@ -6139,7 +6188,7 @@ msgid "WeeChat site, download page"
 msgstr "sitio web de WeeChat, página de descarga"
 
 msgid "1 if WeeChat is upgrading (command `/upgrade`)"
-msgstr ""
+msgstr "1 si WeeChat se está actualizando (comando `/upgrade`)"
 
 msgid "terminal charset"
 msgstr "set de caracteres de la terminal"
@@ -6348,9 +6397,9 @@ msgstr "%s%s[%s%s%s%s] %s (empezó en: %s%s%s%s)"
 msgid "ended on: "
 msgstr "terminado en: "
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s protocolo: %s, recibido: %s, enviado: %s"
+msgstr "%s%-26s id: %d, protocolo: %s, recibido: %s, enviado: %s"
 
 msgid "List of clients for relay"
 msgstr "Lista de clientes a retransmitir"
@@ -6367,10 +6416,11 @@ msgstr "falló la autenticación"
 msgid "disconnected"
 msgstr "desconectado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
 msgstr ""
-"%s: nuevo cliente desde %s%s%s en el puerto %d (retransmitiendo: %s.%s)"
+"%s: nuevo cliente desde %s%s%s en el puerto %d (id: %d, retransmitiendo: %s."
+"%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -6384,13 +6434,13 @@ msgstr "%s%s: la autenticación falló con el cliente %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: desconectado del cliente %s%s%s (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: memoria insuficiente para un mensaje recibido"
+msgstr "%s%s: memoria insuficiente para analizar el mensaje"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: error al enviar datos al cliente %s"
+msgstr "%s%s: error al enviar datos al cliente: %s"
 
 #, c-format
 msgid "%s%s: error sending data to client %s"
@@ -6399,17 +6449,17 @@ msgstr "%s%s: error al enviar datos al cliente %s"
 msgid "Clients for relay:"
 msgstr "Clientes para retransmitir:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
 "recv, %lu sent"
 msgstr ""
-"%3d. %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
+" id: %d, %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
 "recibidos, %lu enviados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  id: %d, %s%s%s, started on: %s"
-msgstr "%3d. %s%s%s, iniciado en: %s"
+msgstr "id: %d, %s%s%s, iniciado en: %s"
 
 msgid "No client for relay"
 msgstr "Ningún cliente para retransmitir"
@@ -6417,20 +6467,20 @@ msgstr "Ningún cliente para retransmitir"
 msgid "Listening on ports:"
 msgstr "Escuchando en los puertos:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "%3d. puerto %s%d%s, repetidor: %s%s.%s%s, iniciado en: %s"
+msgstr " puerto %s%d%s, repetidor: %s%s.%s%s, iniciado en: %s"
 
 msgid "No server for relay"
 msgstr "Ningún servidor para retransmitir"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (port %s) added"
-msgstr "%s%s: repetidor \"%s\" no encontrado"
+msgstr "%s: repetidor \"%s\" (puerto %s) agregado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (port %d) removed"
-msgstr "%s%s: repetidor \"%s\" no encontrado"
+msgstr "%s: repetidor \"%s\" (puerto %d) removido"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
@@ -6439,11 +6489,10 @@ msgstr "%s%s: repetidor \"%s\" no encontrado"
 msgid "relay control"
 msgstr "control de retransmisión"
 
-#, fuzzy
 msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
-msgstr "[list | listfull | add protocolo.nombre puerto | del protocolo.nombre]"
+msgstr ""
+"[list | listfull | add protocolo.nombre puerto | del protocolo.nombre | raw]"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -6469,11 +6518,17 @@ msgstr ""
 "      add: agregar un repetidor para un protocolo + nombre\n"
 "      del: remover un repetidor para un protocolo + nombre\n"
 "protocolo.nombre: protocolo y nombre a retransmitir\n"
+"\t\t\t\t   actualmente, solo el protocolo \"irc\" es soportado\n"
 "                  por ejemplo: irc.freenode\n"
 "   puerto: puerto a usar por el repetidor\n"
+"      raw: abrir buffer con datos en bruto del repetidor\n"
 "\n"
-"Sin ningún argumento, este comando abre un buffer con una lista de clientes "
-"en el repetidor."
+"Sin ningún argumento, este comando abre un buffer con una lista de "
+"clientes.\n"
+"\n"
+"Ejemplo:\n"
+"  irc proxy, para el servidor \"freenode\":\n"
+"    /relay add irc.freenode 8000"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "todos los posibles protocolo.nombre para el plugin relay"
@@ -6492,9 +6547,9 @@ msgstr "%s%s: error: puerto \"%d\" ya está en uso"
 msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: error: protocolo desconocido \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%sError: el filtro \"%s\" ya existe"
+msgstr "%s%s: error: repetidor para \"%s\" ya existe"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
@@ -6529,6 +6584,9 @@ msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
+"dirección a escuchar (si está vacío, conexión es posible en todas las "
+"interfaces, usa \"127.0.0.1\" para permitir conexiones de la máquina local "
+"solamente)"
 
 msgid "maximum number of clients connecting to a port"
 msgstr "número máximo de clientes conectados a un puerto"
@@ -6537,6 +6595,8 @@ msgid ""
 "password required by clients to access this relay (empty value means no "
 "password required)"
 msgstr ""
+"los clientes requieren una clave para acceder este repetidor (sin valor "
+"significa que no se requiere clave)"
 
 msgid "list of relay clients"
 msgstr "Lista de clientes en el repetidor"
@@ -6544,9 +6604,8 @@ msgstr "Lista de clientes en el repetidor"
 msgid "relay pointer (optional)"
 msgstr "puntero del retransmisor (opcional)"
 
-#, fuzzy
 msgid "Relay raw messages"
-msgstr "mensajes IRC en bruto"
+msgstr "Retransmitir mensajes en bruto"
 
 #, c-format
 msgid "%s: socket closed for %s.%s (port %d)"
@@ -6568,63 +6627,59 @@ msgstr "%s: escuchando en el puerto %d (repetidor: %s.%s, max %d clientes)"
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: no hay memoria suficiente para escuchar en un nuevo puerto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: error al crear la opción \"%s\" del servidor"
+msgstr "%s%s: error al compilar la expresión regular \"%s\""
 
-#, fuzzy
 msgid "No rmodifier defined"
-msgstr "Ningún filtro definido"
+msgstr "Ningún modificador regular definido"
 
-#, fuzzy
 msgid "List of rmodifiers:"
-msgstr "lista de filtros"
+msgstr "Lista de modificadores regulares:"
 
-#, fuzzy
 msgid "Default rmodifiers:"
-msgstr "Atajos predefinidos restaurados"
+msgstr "Modificadores regulares predeterminados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: error al crear el servidor \"%s\""
+msgstr "%s%s: error al crear el modificador regular \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" created"
-msgstr "Barra \"%s\" creada"
+msgstr "Modificador regular \"%s\" creado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d rmodifiers removed"
-msgstr "    modificadores enganchados:"
+msgstr "%d modificadores regulares removidos"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Rmodifier \"%s\" removed"
-msgstr "Alias \"%s\" eliminado"
+msgstr "Modificador regular \"%s\" removido"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sRmodifier \"%s\" not found"
-msgstr "%sError: filtro \"%s\" no encontrado"
+msgstr "%sModificador regular \"%s\" no encontrado"
 
-#, fuzzy
 msgid "Default rmodifiers restored:"
-msgstr "Atajos predefinidos restaurados"
+msgstr "Modificadores regulares predeterminados restaurados"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sError: \"-yes\" argument is required for restoring default rmodifiers "
 "(security reason)"
-msgstr "%sError: se requiere el argumento \"-yes\" para restaurar los atajos"
+msgstr ""
+"%sError: por seguridad, se requiere el argumento \"-yes\" para restaurar los "
+"modificadores regulares"
 
-#, fuzzy
 msgid "alter modifier strings with regular expressions"
-msgstr "%s%s: error al crear la opción \"%s\" del servidor"
+msgstr "alterar cadenas en modificadores con expresiones regulares"
 
-#, fuzzy
 msgid ""
 "[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
 "[name...]] | [default -yes]"
 msgstr ""
-"[list] | [enable|disable|toggle [nombre]] | [add nombre plugin.buffer "
-"etiquetas regex] | [del nombre|-all]"
+"[list] | [listdefault] | [add nombre modificadores grupos regex] [del "
+"nombre|-all [nombre...]] | [default -yes]"
 
 msgid ""
 "       list: list all rmodifiers\n"
@@ -6647,27 +6702,44 @@ msgid ""
 "  delete all rmodifiers:\n"
 "    /rmodifier del -all"
 msgstr ""
+"         list: lista todos los modificadores regulares\n"
+"  listdefault: lista los modificadores regulares predeterminados\n"
+"          add: agrega un modificador regular\n"
+"       nombre: nombre del modificador regular\n"
+"modificadores: lista separada por comas de modificadores\n"
+"       grupos: acciones para los grupos encontrados: lista separada por "
+"comas de grupos (desde 1 a 9)con opcional \"*\" después del número para "
+"ocultar el grupo\n"
+"        regex: expresión regular\n"
+"          del: borra modificador regular\n"
+"         -all: borra todos los modificadores regulares\n"
+"      default: restaurar los modificadores regulares predeterminados\n"
+"\n"
+"Ejemplos:\n"
+"  oculta todo lo tipeado después del comando /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  borra el modificador regular \"password\":\n"
+"    /rmodifier del password\n"
+"  borra todos los modificadores regulares:\n"
+"    /rmodifier del -all"
 
-#, fuzzy
 msgid "list of rmodifiers"
-msgstr "lista de filtros"
+msgstr "lista de modificadores regulares"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: error al crear \"%s\" => \"%s\""
+msgstr "%s%s: error al crear el modificador regular \"%s\" => \"%s\""
 
 msgid "char used to hide part of a string"
-msgstr ""
+msgstr "carácter usado para ocultar parte de un texto"
 
-#, fuzzy
 msgid "rmodifier pointer (optional)"
-msgstr "puntero del xfer (optional)"
+msgstr "puntero del modificador regular (opcional)"
 
-#, fuzzy
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
-"nombre del filtro (puede empezar o terminar con \"*\" como comodín) "
-"(opcional)"
+"nombre del modificador regular (puede empezar o terminar con \"*\" como "
+"comodín) (opcional)"
 
 #, c-format
 msgid ""
@@ -6787,7 +6859,7 @@ msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: no es posible redirigir la salida stderr"
 
 msgid "path to python 2.x interpreter"
-msgstr ""
+msgstr "ruta al interprete de python 2.x"
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -6982,16 +7054,16 @@ msgstr "%s: charla con %s cerrada (%d.%d.%d.%d)"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: no hay memoria suficiente para una nueva transferencia"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: archivo entrante desde %s (%d.%d.%d.%d): %s, %lu bytes (protocolo: %s)"
+"%s: archivo entrante desde %s (%d.%d.%d.%d): %s, %llu bytes (protocolo: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
 msgstr ""
-"%s: enviando archivo a %s: %s (nombre del archivo local: %s), %lu bytes "
+"%s: enviando archivo a %s: %s (nombre del archivo local: %s), %llu bytes "
 "(protocolo: %s)"
 
 #, c-format
@@ -7002,11 +7074,11 @@ msgstr "%s: petición de charla desde %s (%d.%d.%d.%d)"
 msgid "%s: sending chat request to %s"
 msgstr "%s: petición de charla enviada a %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
 msgstr ""
 "%s: archivo %s (nombre del archivo local: %s) será resumido desde la "
-"posición %lu"
+"posición %llu"
 
 #, c-format
 msgid "%s%s: missing arguments (%s)"
@@ -7042,25 +7114,25 @@ msgstr ""
 msgid "%s%s: error creating xfer"
 msgstr "%s%s: error al crear la transferencia"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
 "not found or not ready for transfer"
 msgstr ""
 "%s%s: no es posible resumir el archivo \"%s\" (puerto: %d, posición inicial: "
-"%lu): xfer no encontrado o no está listo para transferir"
+"%llu): xfer no encontrado o no está listo para transferir"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file %s resumed at position %llu"
-msgstr "%s: archivo %s reanudado desde la posición %lu"
+msgstr "%s: archivo %s reanudado desde la posición %llu"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
 "%s%s: no es posible aceptar la continuación del archivo \"%s\" (puerto: %d, "
-"posición inicial: %lu): xfer encontrado o no está listo para transferir"
+"posición inicial: %llu): xfer encontrado o no está listo para transferir"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -7081,11 +7153,12 @@ msgstr "Conectado a %s (%d.%d.%d.%d) vía charla xfer"
 msgid "Xfer list:"
 msgstr "Lista de transferencias:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
-"%3d. %s (%s), archivo: \"%s\" (local: \"%s\"), %s %s, estado: %s%s%s (%lu %%)"
+"%3d. %s (%s), archivo: \"%s\" (local: \"%s\"), %s %s, estado: %s%s%s (%llu "
+"%%)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
@@ -7093,13 +7166,13 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s, conversación con %s (apodo local: %s), iniciado en %s, estado: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
 "%d.%d (port %d)"
 msgstr ""
-"     plugin: %s (id: %s), archivo: %lu bytes (posición: %lu), dirección: %d."
-"%d.%d.%d (puerto %d)"
+"     plugin: %s (id: %s), archivo: %llu bytes (posición: %llu), dirección: "
+"%d.%d.%d.%d (puerto %d)"
 
 #. TRANSLATORS: "%s" after "started on" is date
 #, c-format
@@ -7197,21 +7270,20 @@ msgid ""
 msgstr ""
 "límite de velocidad al enviar archivos, en kb/s (0 significa sin límite)"
 
-#, fuzzy
 msgid ""
 "path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
 "\"~/.weechat\" by default)"
 msgstr ""
-"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
-"de WeeChat, \"~/.weechat\" por defecto)"
+"ruta para guardar archivos entrantes (\"%h\" será reemplazado por el "
+"directorio raíz de WeeChat, \"~/.weechat\" por defecto)"
 
-#, fuzzy
 msgid ""
 "path for reading files when sending (when no path is specified by user) (\"%h"
 "\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"ruta para encontrar plugins (\"%h\" será reemplazado por el directorio raíz "
-"de WeeChat, \"~/.weechat\" por defecto)"
+"ruta para buscar archivos a enviar (cuando no es especificado por el "
+"usuario) (\"%h\" será reemplazado por el directorio raíz de WeeChat, \"~/."
+"weechat\" por defecto)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
@@ -7243,7 +7315,7 @@ msgid "list of xfer"
 msgstr "lista de transferencias"
 
 msgid "xfer pointer (optional)"
-msgstr "puntero del xfer (optional)"
+msgstr "puntero del xfer (opcional)"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
@@ -7302,87 +7374,10 @@ msgid "Arguments"
 msgstr "Argumentos"
 
 msgid "Hashtable (input)"
-msgstr ""
+msgstr "Tabla hash (entrada)"
 
 msgid "Hashtable (output)"
-msgstr ""
+msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
-
-#~ msgid "number of colors to use for nicks colors"
-#~ msgstr "número de colores para usar en los colores de nombres de usuario"
-
-#~ msgid "text color #1 for nick"
-#~ msgstr "color para el apodo #1"
-
-#~ msgid "text color #2 for nick"
-#~ msgstr "color para el apodo #2"
-
-#~ msgid "text color #3 for nick"
-#~ msgstr "color para el apodo #3"
-
-#~ msgid "text color #4 for nick"
-#~ msgstr "color para el apodo #4"
-
-#~ msgid "text color #5 for nick"
-#~ msgstr "color para el apodo #5"
-
-#~ msgid "text color #6 for nick"
-#~ msgstr "color para el apodo #6"
-
-#~ msgid "text color #7 for nick"
-#~ msgstr "color para el apodo #7"
-
-#~ msgid "text color #8 for nick"
-#~ msgstr "color para el apodo #8"
-
-#~ msgid "text color #9 for nick"
-#~ msgstr "color para el apodo #9"
-
-#~ msgid "text color #10 for nick"
-#~ msgstr "color para el apodo #10"
-
-#~ msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-#~ msgstr "colores: %s buffer %s apodo1 %s apodo2 %s apodo3 %s apodo4"
-
-#~ msgid "[-server server] receiver[,receiver] text"
-#~ msgstr "[-server servidor] destino[,destino] texto"
-
-#~ msgid "[-server server] nickname text"
-#~ msgstr "[-server servidor] apodo texto"
-
-#~ msgid ""
-#~ "  server: send to this server (internal name)\n"
-#~ "nickname: user to send notice to\n"
-#~ "    text: text to send"
-#~ msgstr ""
-#~ "servidor: enviar a este servidor (nombre interno)\n"
-#~ "   apodo: apodo del destinatario\n"
-#~ "   texto: texto a enviar"
-
-#~ msgid "items of bar"
-#~ msgstr "elementos de la barra"
-
-#~ msgid "time format for each line displayed in buffers"
-#~ msgstr "formato de hora mostrada en cada línea en los buffers"
-
-# "time" is an item name, so keep it in english
-#~ msgid "time format for \"time\" bar item"
-#~ msgstr "formato para el elemento \"time\" de la barra"
-
-#~ msgid "file containing the certificate authorities"
-#~ msgstr "archivo que contiene las autoridades de certificación"
-
-#~ msgid "ssl certificate file used to automatically identify your nick"
-#~ msgstr ""
-#~ "archivo con certificado SSL para identificar automáticamente su apodo"
-
-#~ msgid "path for writing incoming files"
-#~ msgstr "ruta para guardar los archivos entrantes"
-
-#~ msgid ""
-#~ "path for reading files when sending (when no path is specified by user)"
-#~ msgstr ""
-#~ "ruta para la leer archivos cuando se envían (cuando no ruta es "
-#~ "especificada por el usuario)"
