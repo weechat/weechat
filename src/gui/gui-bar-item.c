@@ -1441,6 +1441,8 @@ gui_bar_item_init ()
                       &gui_bar_item_default_input_prompt, NULL);
     gui_bar_item_hook_signal ("buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     
     /* input search */
     gui_bar_item_new (NULL,
