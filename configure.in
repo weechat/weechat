@@ -538,7 +538,7 @@ fi
 RUBY_VERSION=
 
 if test "x$enable_ruby" = "xyes" ; then
-    AC_PATH_PROGS(RUBY, ruby ruby1.8 ruby1.9)
+    AC_PATH_PROGS(RUBY, ruby1.9.2 ruby1.9.1 ruby1.9 ruby1.8 ruby)
     if test -z $RUBY ; then
         AC_MSG_WARN([
 *** Ruby must be installed on your system but ruby interpreter couldn't be found in path.
@@ -552,7 +552,7 @@ if test "x$enable_ruby" = "xyes" ; then
             AC_MSG_WARN([
 *** Ruby header files have been found, but they're of the version 1.9.0.
 *** Ruby 1.9.0 is an unstable release and should not be used in production.
-*** Please install Ruby >=1.8.6 or 1.9.1.
+*** Please install Ruby 1.8.x (>= 1.8.6) or >= 1.9.1.
 *** WeeChat will be built without Ruby support.])
             enable_ruby="no"
             not_found="$not_found ruby"
@@ -561,7 +561,7 @@ if test "x$enable_ruby" = "xyes" ; then
             RUBY_ARCH=`$RUBY -rrbconfig -e 'print Config::CONFIG[["arch"]]'`
             AC_MSG_CHECKING(for Ruby header files)
             if test -d "$RUBY_INCLUDE/"; then
-                M_RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']].gsub(/\./, '')[[0,2]]"`
+                M_RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']].gsub(/\./, '')[[0,3]]"`
                 RUBY_CFLAGS="-I$RUBY_INCLUDE/ -I$RUBY_INCLUDE/$RUBY_ARCH -DRUBY_VERSION=$M_RUBY_VERSION"
             else
                 AC_MSG_WARN([

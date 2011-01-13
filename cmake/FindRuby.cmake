@@ -32,7 +32,7 @@ IF(RUBY_FOUND)
 ENDIF(RUBY_FOUND)
 
 FIND_PROGRAM(RUBY_EXECUTABLE
-  NAMES ruby ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16
+  NAMES ruby1.9.2 ruby192 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16 ruby
   PATHS /usr/bin /usr/local/bin /usr/pkg/bin
   )
 
@@ -78,7 +78,7 @@ IF(RUBY_EXECUTABLE)
     "${RUBY_INCLUDE_PATH}/${RUBY_ARCH}")
 
   FIND_LIBRARY(RUBY_LIBRARY
-    NAMES ruby ruby1.6 ruby16 ruby1.8 ruby18 ruby1.9 ruby19
+    NAMES ruby-1.9.2 ruby1.9.2 ruby192 ruby-1.9.1 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16 ruby
     PATHS ${RUBY_POSSIBLE_LIB_PATH} ${RUBY_RUBY_LIB_PATH}
     )
 
