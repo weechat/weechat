@@ -43,7 +43,7 @@ Vorbereitung
 
 Um WeeChat zu installieren wird folgendes benötigt:
 
-* ein laufendes GNU/Linux System (mit Kompiler-Tools für Quellpakete),
+* ein laufendes GNU/Linux System (mit Kompilierungswerkzeugen für Quellpakete),
   oder ein kompatibles OS
 * 'root' Privilegien (um WeeChat im Systemverzeichnis zu installieren)
 * ncurses library
@@ -70,8 +70,8 @@ Binärpakete sind für folgende Distributionen erhältlich:
 
 zusätzliche Pakete können/sollten installiert werden. Zum Beispiel: weechat-plugins.
 
-Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung der Distribution,
-wie man Pakete installiert.
+Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung,
+wie Pakete zu installieren sind.
 
 [[source_package]]
 Quellpakete
@@ -104,7 +104,7 @@ welche Pakete optional genutzt werden können.
 |========================================
 
 [NOTE]
-^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen. Versions- und Paketnamen
+^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen. Versionen und Paketnamen
 können für andere Distributionen abweichend sein. +
 ^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
 treten dabei Darstellungsfehler mit breiten Zeichen auf).
@@ -157,10 +157,10 @@ $ make install
 Git Quellen
 ~~~~~~~~~~~
 
-Warnung: GIT Quellen sollten nur von erfahrenen Nutzern verwendet werden: evtl. lassen sich
-die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewarnt!
+Warnung: GIT Quellen sollten nur von erfahrenen Nutzern verwendet werden. Eventuell lassen
+sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewarnt!
 
-Um die GIT Quellen zu beziehen, nutzen Sie folgende Befehle:
+Um die GIT Quellen zu beziehen nutzen Sie folgende Befehle:
 
 ----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
@@ -172,13 +172,13 @@ Sollten die autotools genutzt werden (und nicht cmake), muss dieses Skript ausge
 $ ./autogen.sh
 ----------------------------------------
 
-Dann folgen Sie der Anleitung für Quellpakete (siehe <<source_package,Quellpakete>>).
+Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_package,Quellpakete>>).
 
 [[report_crashes]]
 Abstürze melden
 ~~~~~~~~~~~~~~~
 
-Falls ein Absturz mit WeeChat aufgetreten ist und Sie diesen Fehler melden wollen:
+Falls es zu einem Absturz von WeeChat gekommen ist und Sie diesen Fehler melden wollen:
 
 * kompilieren Sie WeeChat mit Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
 * aktivieren Sie 'core' Dateien auf Ihrem System
@@ -360,10 +360,10 @@ Beispiel des WeeChat-Terminals:
 Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 
 * Chat-Bereich (in der Mitte des Bildschirms) enthält den geschrieben Text und für jede Zeile:
-** die Zeit
-** Prefix (vor dem "|")
-** Nachricht (nach dem "|")
-* Bars können um den Chat-Bereich angeordnet werden. standard Bars sind:
+** die Uhrzeit
+** Prefix (links von dem "|")
+** Nachricht (rechts von dem "|")
+* Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
 ** 'title' Bar, über dem Chat-Bereich
 ** 'status' Bar, unter dem Chat-Bereich
 ** 'input' Bar, unter der Status-Bar
@@ -762,7 +762,7 @@ Befehlszeile
 ~~~~~~~~~~~~
 
 In der WeeChat Befehlszeile (am unteren Rand des Fensters) können Befehle ausgeführt oder
-ein Text in den Buffer geschickt werden.
+ein Text in den Buffer geschrieben werden.
 
 [[command_line_syntax]]
 Syntax
@@ -775,14 +775,14 @@ Beispiel werden alle Konfigurationsoptionen angezeigt:
 /set
 ----------------------------------------
 
-Jeder Text der nicht mit dem Zeichen "/" beginnt wird in den Buffer geschickt.
-In folgendem Beispiel wird der Text 'Hallo' in den aktuellen Buffer geschickt:
+Jeder Text der nicht mit dem Zeichen "/" beginnt wird in den Buffer geschrieben.
+In folgendem Beispiel wird der Text 'Hallo' in den aktuellen Buffer geschrieben:
 
 ----------------------------------------
 Hallo
 ----------------------------------------
 
-Dennoch ist es möglich einen Text in den Buffer zu schicken der mit dem Zeichen "/" beginnt.
+Dennoch ist es möglich einen Text in den Buffer zu schreiben der mit dem Zeichen "/" beginnt.
 Dazu muss ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu senden:
 
 ----------------------------------------
@@ -793,9 +793,9 @@ Dazu muss ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu 
 Farbkodierung
 ^^^^^^^^^^^^^
 
-Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbcodes und Attribute für den Text
-gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C", gefolgt von einem der folgenden Zeichen,
-genutzt werden:
+Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbkodierungen und Attribute für den
+Text gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C", gefolgt von einem der folgenden
+Zeichen, genutzt werden:
 
 ^Cb::
     Text wird fett dargestellt
@@ -816,8 +816,8 @@ genutzt werden:
     Text wird mit Unterstrich dargestellt
 
 [NOTE]
-Der selbe Befehl (ohne den Wert für ^Cc) sollte genutzt werden um die Farbcodes bzw. Attribute
-wieder zu deaktivieren.
+Der selbe Befehl (ohne den Wert für ^Cc) sollte genutzt werden um die Farbkodierungen bzw. Attribute
+zu deaktivieren.
 
 Farbtabelle für ^Cc:
 
@@ -842,8 +842,8 @@ Farbtabelle für ^Cc:
 | 15   | hellgrau      | white
 |========================================
 
-Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett,hellblau
-und "an alle" wird rot,unterstrichen dargestellt.
+Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
+und "an alle" rot und unterstrichen dargestellt.
 
 ----------------------------------------
 ^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
@@ -882,13 +882,13 @@ was die Farbdarstellung in WeeChat betrifft:
 
 [NOTE]
 ^(1)^ Auch falls die Terminal-Emulation mehr als 256 Farbpaare unterstützten sollte
-können lediglich 256 Farbpaare durch WeeChat genutzt werden, da dies eine Einschränkung
-von ncurses darstellt.
+können lediglich 256 Farbpaare durch WeeChat genutzt werden, dies ist eine Einschränkung
+von ncurses.
 
 Mittels `weechat-curses --colors` oder dem internen WeeChat-Befehl `/color` kann man sich
 die Einschränkungen für die jeweilige Umgebungsvariable anzeigen lassen.
 
-Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, falls man 256 Farben
+Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, sofern man 256 Farben
 nutzen möchte:
 
 * falls screen genutzt wird: 'screen-256color'
@@ -958,7 +958,7 @@ können mit dem Befehl `/color` angepasst werden. Es wird dazu in der Konfigurat
 
 Für jede definierte Farbe können folgende Parameter festgelegt werden:
 
-* Vordergrund- und Hintergrund, zu nutzendes Format "fg,bg": Farbe für den Text und
+* Vordergrund- und Hintergrund, zu nutzendes Format "fg,bg": Farbe für den Text und den
   Hintergrund. Standardmäßig wird für den Hintergrund die voreingestellte Hintergrundfarbe (-1)
   verwendet.
 * alias: der Farbpaarung kann ein Name zugeordnet werden, damit man diesen Namen zur einfacheren
@@ -989,7 +989,7 @@ grün, gelb, orange, rot, rosa, violett zu definieren:
 siehe `/help color` für weitere Beispiele:
 
 [IMPORTANT]
-Farben die manuell definiert werden überschreiben die von WeeChat genutzten
+Farben die manuell definiert werden, überschreiben die von WeeChat genutzten
 Standardfarben. Deshalb sollten Farbpaarungen nur redefiniert werden falls
 man diese Farbe nicht in WeeChat nutzt.
 
@@ -1006,7 +1006,7 @@ Erweiterungen in WeeChat
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Eine WeeChat Erweiterung ist eine dynamische Bibliothek (library), die in C geschrieben
-und kompiliert wurde. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".so", unter
+und kompiliert ist. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".so", unter
 Windows ".dll".
 
 Erweiterungen die gefunden werden, werden beim Start von WeeChat automatisch geladen.
@@ -1057,7 +1057,7 @@ Standarderweiterungen:
 Alias Erweiterung
 ~~~~~~~~~~~~~~~~~
 
-Die Alias-Erweiterung erlaubt es für Befehle sogenannte Kurzbefehle (Alias) zu erstellen.
+Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Alias) zu erstellen.
 
 [[alias_commands]]
 Befehle
@@ -1069,8 +1069,8 @@ include::autogen/user/alias_commands.txt[]
 Aspell Erweiterung
 ~~~~~~~~~~~~~~~~~~
 
-Mit der ASpell Erweiterung findet eine Rechtschreibprüfung einzug in WeeChat.
-Dabei ist es möglich mehrere Wörterbücher in einem Buffer zu nutzen.
+Mit der ASpell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
+Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 
 [[aspell_options]]
 Optionen (aspell.conf)
@@ -1139,8 +1139,7 @@ include::autogen/user/charset_commands.txt[]
 Zeichensatz auswählen
 ^^^^^^^^^^^^^^^^^^^^^
 
-Um den Zeichensatz zum kodieren und dekodieren zu bestimmen wird der
-Befehl `/set` genutzt.
+Um einen Zeichensatz zum de-/kodieren zu bestimmen wird der Befehl `/set` genutzt.
 
 Beispiel:
 
@@ -1174,7 +1173,7 @@ ist identisch mit den Befehlen:
 /charset encode ISO-8859-15
 ----------------------------------------
 
-Um den Zeichensatz im einem IRC-Channel (oder in einem privaten Buffer) zu ändern
+Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
 wird der selbe Befehl im entsprechenden Buffer genutzt.
 
 Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl genutzt:
@@ -1195,7 +1194,7 @@ Fifo Erweiterung
 ~~~~~~~~~~~~~~~~
 
 Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
-schicken (dazu muss die Option "plugins.var.fifo.fifo" aktiviert sein (Standardmäßig
+schicken (dazu muss die Option "plugins.var.fifo.fifo" aktiviert sein (standardmäßig
 ist diese Option aktiviert).
 
 Die FIFO pipe findet man in '~/.weechat/' und heisst 'weechat_fifo_xxxx'
@@ -1210,7 +1209,7 @@ Die Syntax der FIFO Pipe Befehle/Text sieht wie folgt aus:
 
 einige Beispiele:
 
-* Auf dem IRC Server freenode den eigenen Nick in "newnick" ändern:
+* Den eigenen Nick auf dem IRC Server freenode in "newnick" ändern:
 
 ----------------------------------------
 $ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
@@ -1344,7 +1343,7 @@ Hinweis: es ist möglich mehrere Zertifikate in der Datei CAs.pem zu halten.
 zweites Beispiel: Verbindung zu oftc mittels CertFP
 +++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* Erstellen Sie ein Zertifikate in der Shell:
+* Erstellen Sie ein Zertifikat in der Shell:
 
 ----------------------------------------
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
@@ -1366,10 +1365,10 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 einfacher Filter für join/part/quit Nachrichten
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Es gibt einen einfachen Filter für join/part/quit Nachrichten falls ein Nick für
+Es existiert ein einfacher Filter für join/part/quit Nachrichten falls ein Nick für
 eine vorgegebene Zeit in einem Channel inaktiv gewesen ist.
 
-Diese Funktion ist passe aktiviert aber Sie müssen einen Filter erstellen damit
+Diese Funktion ist standardmäßig aktiviert, aber Sie müssen einen Filter erstellen damit
 solche Nachrichten im Buffer unterdrückt werden. Ein Beispiel:
 
 ----------------------------------------
@@ -1492,7 +1491,7 @@ private::
 weechat::
     WeeChat "core" Buffer
 
-Vorgegeben ist der Server-Buffer falls keine Option ausgewählt wurde.
+Vorgegeben ist der Server-Buffer, falls keine Option ausgewählt wurde.
 
 Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
 
@@ -1544,7 +1543,7 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 
 andere nummerische Befehle können angepasst werden.
 
-Den IRC Nachrichten kann der Servername vorangestellt sein um zu spezifizieren
+Den IRC Nachrichten kann der Servername vorangestellt werden um zu spezifizieren
 von welchem IRC Server die Nachricht gekommen ist. Zum Beispiel: `freenode.whois`.
 
 einige Beispiele:
@@ -1578,8 +1577,8 @@ Logger Erweiterung
 ~~~~~~~~~~~~~~~~~~
 
 Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
-Dabei kann man über Optionen einfluß darauf nehmen was und wie es gesichert
-werden soll.
+Dabei kann man über Optionen Einfluss darauf nehmen was gesichert und wie etwas
+gesichert werden soll.
 
 [[logger_options]]
 Optionen (logger.conf)
@@ -1597,14 +1596,13 @@ include::autogen/user/logger_commands.txt[]
 Log Levels
 ^^^^^^^^^^
 
-Die Protokollierung wird durch Level für jeden Buffer sichergestellt. Der
-Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer
-angezeigt werden protokolliert).
-Der Grad einer Protokollierung kann separat für jeden einzelnen Buffer
-oder aber für eine Anzahl von Buffern festgelegt werden.
+Die Protokollierung wird durch einen sogenannten Level für jeden Buffer sichergestellt.
+Der Standardlevel ist dabei 9 (damit werden alle Nachrichten die im Buffer angezeigt
+werden protokolliert). Der Grad einer Protokollierung kann separat für jeden einzelnen
+Buffer oder aber für eine Anzahl von Buffern festgelegt werden.
 
 Mögliche Level sind hierbei 0 bis 9. Null bedeutet, es findet keine Protokollierung
-statt und neun dass alle Nachrichten protokolliert werden.
+statt und neun, dass alle Nachrichten protokolliert werden.
 
 Erweiterungen nutzen unterschiedliche Level um Nachrichten anzuzeigen.
 Die IRC Erweiterung nutzt folgende Level:
@@ -1675,7 +1673,7 @@ Protokolldatei nach Datum
 
 Um Protokolldateien mit einer Datumsrelevanz zu erstellen müssen
 Datumsspezifikationen in der Maske genutzt werden (siehe
-`man strftime` for formats). Zum Beispiel:
+`man strftime` für das Format). Zum Beispiel:
 
 ----------------------------------------
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
@@ -1790,7 +1788,7 @@ Befehle
 include::autogen/user/rmodifier_commands.txt[]
 
 [[rmodifier_creation]]
-Erstellen eines Rmodifier
+Erstellen eines rmodifier
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ein rmodifier besteht aus drei Elementen:
@@ -1832,12 +1830,12 @@ Lautet die Befehlszeile `/oper nick password` wird diese in der Befehlszeile als
 Skripten Erweiterungen
 ~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat unterstützt fünf Erweiterungen für Skripten: Perl, Python, Ruby, Lua und Tcl.
+WeeChat unterstützt fünf Skript-Erweiterungen: Perl, Python, Ruby, Lua und Tcl.
 Diese Erweiterungen können für die jeweilige Sprache die Skripten laden, ausführen und
 entfernen.
 
-Sollten Sie Interesse daran haben wie man Skripten schreibt dann lesen Sie bitte
-die 'WeeChat Scripting Guide'.
+Sollten Sie Interesse daran haben wie man Skripten für WeeChat erstellt dann lesen Sie
+bitte die 'WeeChat Scripting Guide'.
 
 Skripten für WeeChat finden Sie auf: http://www.weechat.org/scripts
 
@@ -1875,7 +1873,7 @@ include::autogen/user/tcl_commands.txt[]
 Xfer Erweiterung
 ~~~~~~~~~~~~~~~~
 
-Mit der Xfer Erweiterung kann man:
+Mit der xfer Erweiterung kann man:
 
 * einen direkten Chat nutzen (zwischen zwei Hosts, ohne Server): zum Beispiel "DCC Chat"
   mittels IRC Erweiterung
@@ -1926,7 +1924,7 @@ Patches::
 Unterstützung
 -------------
 
-Bevor Sie um Unterstützung bitten lesen Sie bitte die Dokumentation und die FAQ
+Bevor Sie um Unterstützung nachsuchen lesen Sie bitte die Dokumentation und die FAQ
 von WeeChat durch (mit Dokumentation ist dieses Dokument gemeint. Falls Sie nicht
 alles gelesen haben sollten und trotzdem diese Zeilen lesen, dann beginnen Sie
 bitte noch mal von vorne!).
