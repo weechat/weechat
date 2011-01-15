@@ -17,8 +17,7 @@ Niektóre cechy (wersja > = 0.3.x):
 
 * wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
 * wiele zdalnych GUI w dodatku do Courses (już niedługo)
-// TRANSLATION NEEDED
-* 256 colors support
+* wsparcie dla 256 kolorów
 * dostępny w wielu językach
 * rozszerzalny dzięki wtyczką (C, Perl, Python, Ruby, Lua, Tcl)
 * bufory z wolną zawartością
@@ -26,10 +25,8 @@ Niektóre cechy (wersja > = 0.3.x):
 * poziome i pionowe dzielenie okien
 * paski które możemy tworzyć i dostosowywać do własnych potrzeb
 * lista nicków dostępna w każdym GUI
-// TRANSLATION NEEDED
-* IRC proxy
-// TRANSLATION NEEDED
-* redirection of IRC commands
+* proxy IRC
+* przekierowanie części komęd IRC
 * przyrostowe wyszukiwanie tekstu w buforach, przeskakiwanie do podświetleń
 * strumień FIFO do zdalnej kontroli
 * wsparcie dla aspell
@@ -52,7 +49,7 @@ Słyszałem o wielu GUI dla WeeChat. Jak moge je skompilować/użyć?
 
 Obecnie dostępne jest tylko GUI Courses.
 
-Pozostałe będą dostępne jeko zdalne klienty (obecnie rozwijane).
+Pozostałe będą dostępne jako zdalne klienty (obecnie rozwijane).
 
 
 [[compile_git]]
@@ -228,36 +225,35 @@ Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osóby
 używające ISO, moga wykonać: `/shell setenv LANG=pl_PL`.
 
 
-// TRANSLATION MISSING
 [[256_colors]]
-How can I use 256 colors in WeeChat?
+Jak mogę użyć 256 kolorów w WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-256 colors are supported with WeeChat 0.3.4 or newer.
+Wsparcie dla 256 kolorów jest dostępne dla wersji WeeChat 0.3.4 i nowszych.
 
-First check that your 'TERM' environment variable is correct, recommended values
-are:
+Najpierw należy sprawdzić czy wartość zmiennej środowiskowej 'TERM' jest poprawna,\
+zalecane wartości to:
 
-* under screen: 'screen-256color'
-* outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* w screenie: 'screen-256color'
+* poza screenem: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-If you are using screen, you can add this line to your '~/.screenrc':
+Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
 
 ----------------------------------------
 term screen-256color
 ----------------------------------------
 
-If your 'TERM' variable has wrong value and that WeeChat is already running,
-don't panic! You can change it without restarting, thanks to script 'shell.py':
+Jeśli wartość zmiennej 'TERM' jest niepoprawna, oraz WeeChat został już uruchomiony
+nie należy panikować! Można to zmienić bez konieczności restartu, za pomocą skryptu 'shell.py':
 
 ----------------------------------------
 /shell setenv TERM=screen-256color
 /upgrade
 ----------------------------------------
 
-You can use command `/color` for easy setup of colors in WeeChat.
+Możesz użyć komendy `/color` do łatwego dostosowania kolowów w WeeChat.
 
-Please read user's guide for more information about colors management.
+Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku użytkownika.
 
 
 [[key_bindings]]
@@ -294,21 +290,20 @@ Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
 go w wierszu poleceń.
 
 
-// TRANSLATION MISSING
 [[jump_to_buffer_11_or_higher]]
-What is the key to jump to buffer 11 (or higher number)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jakim skrótem można przejść do buforu 11 (lub o więszym numerze)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The key is alt-j and then 2 digits, for example alt-j then 1, 1 to jump to
-buffer 11.
+Skrót to alt-j i dwie cyfry, na przykład alt-j później 1, 1 przejdzie do
+buforu 11.
 
-You can bind a key, for example:
+Można również samemu stworzyć skrót, na przykład:
 
 ----------------------------------------
 /key bind meta-q /buffer *11
 ----------------------------------------
 
-List of default keys is in User's guide.
+Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 
 
 [[irc]]
@@ -358,27 +353,26 @@ W zależności od wersji WeeChat:
    (`/help filter` dla pomocy)
 
 
-// TRANSLATION MISSING
 [[filter_irc_join_channel_messages]]
-How can I filter some messages displayed when I join an IRC channel?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some tags you can use to filter messages:
+Tagi, które można użyć do filtrowania wiadomości:
 
-* 'irc_366': names on channel
-* 'irc_332,irc_333': channel topic/date
-* 'irc_329': channel creation date
+* 'irc_366': osoby na kanale
+* 'irc_332,irc_333': temat/data kanału
+* 'irc_329': data utworzenia kanału
 
-You can find tags for other messages by looking at IRC raw server
+Tagi innych wiadomości można znaleźć analizując nieprzetworzone dane IRC
 (`/server raw`).
 
-Examples:
+Przykłady:
 
-* filter names:
+* filtrowanie użytkowników:
 ----------------------------------------
 /filter add irc_join_names * irc_366 *
 ----------------------------------------
-* filter topic (and date):
+* filtrowanie tematu (i daty):
 ----------------------------------------
 /filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
@@ -423,8 +417,7 @@ osobami:
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
+Dla WeeChat < = 0.3.3, opcje te to 'irc.network.away_check' oraz
 'irc.network.away_check_max_nicks'.
 
 
@@ -447,20 +440,19 @@ Istnieje wiele innych skryptów do powiadomień, zajrzyj na stronę wtyczek/skry
 http://www.weechat.org/scripts
 
 
-// TRANSLATION MISSING
 [[irc_ssl_connection]]
-I have some problems when connecting to a server using SSL, what can I do?
+Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you see errors about gnutls handshake, you can try to use a smaller
-Diffie-Hellman key (default is 2048):
+Jeśli widzisz błędy gnutls, możesz użyć innej wielkości klucza
+Diffie-Hellman (domyślnie 2048):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----------------------------------------
 
-If you see errors about certificate, you can disable "ssl_verify" (be careful,
-connection will be less secure by doing that):
+Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opjcę "ssl_verify"
+(należy jednak uważać, ponieważ połączenie będzie mniej bezpieczne):
 
 ----------------------------------------
 /set irc.server.freenode.ssl_verify off
@@ -547,25 +539,24 @@ Są 3 możliwości:
   (możesz się zapisać na listę mailingową "support" i na niej pisać)
 
 
-// TRANSLATION MISSING
 [[gdb_error_threads]]
-When I run WeeChat under gdb, there is an error about threads, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Kiedy uruchaiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you run WeeChat under gdb, you may have this error:
+Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:
 
 ----------------------------------------
-gdb /path/to/weechat-curses
+gdb /scieżka/do/weechat-curses
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
 ----------------------------------------
 
-To fix that, you can run gdb with this command (replace path to libpthread and
-WeeChat with paths on your system):
+Żeby to naprawić, można użyć takiej komendy(należy zmienić scieżki do libpthread oraz
+WeeChat na właściwe dla naszego systemu):
 
 ----------------------------------------
-LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat-curses
 (gdb) run
 ----------------------------------------
 
