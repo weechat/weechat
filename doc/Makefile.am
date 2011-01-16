@@ -22,4 +22,4 @@ SUBDIRS = . en fr pl de ru ja it
 
 man_MANS = weechat-curses.1
 
-EXTRA_DIST = $(man_MANS) docgen.pl CMakeLists.txt
+EXTRA_DIST = $(man_MANS) docgen.pl CMakeLists.txt asciidoc.css
