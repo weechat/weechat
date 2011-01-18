@@ -1880,7 +1880,7 @@ Main developer::
 Contributors
 ~~~~~~~~~~~~
 
-Pcakagers::
+Packagers::
     Emmanuel Bouthenot (kolter), Julien Louis (ptitlouis), Odin
 
 Translations::
