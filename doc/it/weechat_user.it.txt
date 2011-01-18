@@ -888,7 +888,7 @@ nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati 
 In base al valore della variabile di ambiente 'TERM', potrebbero verificarsi i
 seguenti limiti per i colori in WeeChat:
 
-[width="40%",cols="5,>2,>2",options="header"]
+[width="50%",cols="8,>2,>2",options="header"]
 |========================================
 | $TERM                                 | Colori | Coppie ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256

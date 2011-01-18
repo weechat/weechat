@@ -872,7 +872,7 @@ WeeChat can use up to 256 color pairs to display text in bars and chat area
 According to value of 'TERM' environment variable, you may have following limits
 for colors in WeeChat:
 
-[width="40%",cols="5,>2,>2",options="header"]
+[width="50%",cols="8,>2,>2",options="header"]
 |========================================
 | $TERM                                 | Colors | Pairs ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256

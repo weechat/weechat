@@ -871,7 +871,7 @@ Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten
 Gemäß der Einstellung in der 'TERM'-Umgebungsvariable bestehen folgende Einschränkungen
 was die Farbdarstellung in WeeChat betrifft:
 
-[width="40%",cols="5,>2,>2",options="header"]
+[width="50%",cols="8,>2,>2",options="header"]
 |========================================
 | $TERM                                 | Farben | Paare ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256

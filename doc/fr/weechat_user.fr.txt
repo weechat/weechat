@@ -894,7 +894,7 @@ pour pouvoir les utiliser dans WeeChat).
 Selon la valeur de la variable d'environnement 'TERM', vous pouvez avoir les
 limites suivantes pour les couleurs dans WeeChat :
 
-[width="40%",cols="5,>2,>2",options="header"]
+[width="50%",cols="8,>2,>2",options="header"]
 |========================================
 | $TERM                                  | Couleurs | Paires ^(1)^
 | "rxvt-unicode", "xterm", ...           |       88 |          256
