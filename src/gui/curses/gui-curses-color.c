@@ -275,19 +275,19 @@ gui_color_build (int number, int foreground, int background)
 }
 
 /*
- * gui_color_get_pair: get color pair with a WeeChat color number
+ * gui_color_weechat_get_pair: get color pair with a WeeChat color number
  */
 
 int
-gui_color_get_pair (int num_color)
+gui_color_weechat_get_pair (int weechat_color)
 {
     int fg, bg;
     
-    if ((num_color < 0) || (num_color > GUI_COLOR_NUM_COLORS - 1))
+    if ((weechat_color < 0) || (weechat_color > GUI_COLOR_NUM_COLORS - 1))
         return COLOR_WHITE;
     
-    fg = gui_color[num_color]->foreground;
-    bg = gui_color[num_color]->background;
+    fg = gui_color[weechat_color]->foreground;
+    bg = gui_color[weechat_color]->background;
     
     if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
         return fg & GUI_COLOR_PAIR_MASK;

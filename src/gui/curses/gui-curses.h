@@ -61,7 +61,7 @@ extern int gui_color_last_pair;
 extern int gui_color_num_bg;
 
 /* color functions */
-extern int gui_color_get_pair (int num_color);
+extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_pre_init ();
 extern void gui_color_init ();
 extern void gui_color_end ();

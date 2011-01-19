@@ -186,16 +186,16 @@ gui_window_wprintw (WINDOW *window, const char *data, ...)
 }
 
 /*
- * gui_window_curses_clear_weechat: clear a Curses window with a weechat color
+ * gui_window_clear_weechat: clear a Curses window with a weechat color
  */
 
 void
-gui_window_clear_weechat (WINDOW *window, int num_color)
+gui_window_clear_weechat (WINDOW *window, int weechat_color)
 {
     if (!gui_ok)
         return;
     
-    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (num_color)));
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_weechat_get_pair (weechat_color)));
     werase (window);
     wmove (window, 0, 0);
 }
@@ -224,11 +224,12 @@ gui_window_clear (WINDOW *window, int bg)
 }
 
 /*
- * gui_window_reset_style: reset style (color and attr) for a window
+ * gui_window_reset_style: reset style (color and attr) with a weechat color
+ *                         for a window
  */
 
 void
-gui_window_reset_style (WINDOW *window, int num_color)
+gui_window_reset_style (WINDOW *window, int weechat_color)
 {
     window_current_style_fg = -1;
     window_current_style_bg = -1;
@@ -236,8 +237,8 @@ gui_window_reset_style (WINDOW *window, int num_color)
     window_current_color_attr = 0;
     
     wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
-    wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
-             gui_color[num_color]->attributes);
+    wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
+             gui_color[weechat_color]->attributes);
 }
 
 /*
