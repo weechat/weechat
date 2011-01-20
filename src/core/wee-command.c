@@ -474,7 +474,7 @@ command_buffer_display_localvar (void *data,
 
 COMMAND_CALLBACK(buffer)
 {
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *weechat_buffer;
     long number, number1, number2;
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, target_buffer;
@@ -638,9 +638,10 @@ COMMAND_CALLBACK(buffer)
     /* close buffer */
     if (string_strcasecmp (argv[1], "close") == 0)
     {
+        weechat_buffer = gui_buffer_search_main();
         if (argc < 3)
         {
-            if (buffer == gui_buffer_search_main ())
+            if (buffer == weechat_buffer)
             {
                 gui_chat_printf (NULL,
                                  _("%sError: WeeChat main buffer can't be "
@@ -701,7 +702,7 @@ COMMAND_CALLBACK(buffer)
                 {
                     if (ptr_buffer->number == i)
                     {
-                        if (!ptr_buffer->plugin)
+                        if (ptr_buffer == weechat_buffer)
                         {
                             gui_chat_printf (NULL,
                                              _("%sError: WeeChat main buffer "
