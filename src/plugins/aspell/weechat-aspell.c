@@ -676,7 +676,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     const char *color_normal, *color_error;
     int utf8_char_int, char_size;
     int length, index_result, length_word, word_ok;
-    int length_color_normal, length_color_error;
+    int length_color_normal, length_color_error, rc;
     
     /* make C compiler happy */
     (void) data;
@@ -685,7 +685,10 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     if (!string || !string[0])
         return NULL;
     
-    sscanf (modifier_data, "%lx", &value);
+    rc = sscanf (modifier_data, "%lx", &value);
+    if ((rc == EOF) || (rc == 0))
+        return NULL;
+    
     buffer = (struct t_gui_buffer *)value;
     
     if (!weechat_aspell_spellers)

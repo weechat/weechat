@@ -180,7 +180,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
     char str_fg[3], str_bg[3], str_pair[6], *error;
-    int weechat_color, fg, bg, pair;
+    int weechat_color, fg, bg, pair, rc;
     
     while (string[0])
     {
@@ -203,9 +203,12 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_fg[0] = string[1];
                                 str_fg[1] = string[2];
                                 str_fg[2] = '\0';
-                                sscanf (str_fg, "%d", &fg);
-                                gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                fg);
+                                rc = sscanf (str_fg, "%d", &fg);
+                                if ((rc != EOF) && (rc >= 1))
+                                {
+                                    gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                    fg);
+                                }
                             }
                             string += 3;
                         }
@@ -218,9 +221,12 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_bg[0] = string[1];
                                 str_bg[1] = string[2];
                                 str_bg[2] = '\0';
-                                sscanf (str_bg, "%d", &bg);
-                                gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                bg);
+                                rc = sscanf (str_bg, "%d", &bg);
+                                if ((rc != EOF) && (rc >= 1))
+                                {
+                                    gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                    bg);
+                                }
                             }
                             string += 3;
                         }
@@ -237,10 +243,16 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_bg[0] = string[4];
                                 str_bg[1] = string[5];
                                 str_bg[2] = '\0';
-                                sscanf (str_fg, "%d", &fg);
-                                sscanf (str_bg, "%d", &bg);
-                                gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                   fg, bg);
+                                rc = sscanf (str_fg, "%d", &fg);
+                                if ((rc != EOF) && (rc >= 1))
+                                {
+                                    rc = sscanf (str_bg, "%d", &bg);
+                                    if ((rc != EOF) && (rc >= 1))
+                                    {
+                                        gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                           fg, bg);
+                                    }
+                                }
                             }
                             string += 6;
                         }
@@ -289,9 +301,12 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_fg[0] = string[0];
                                 str_fg[1] = string[1];
                                 str_fg[2] = '\0';
-                                sscanf (str_fg, "%d", &weechat_color);
-                                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                              weechat_color);
+                                rc = sscanf (str_fg, "%d", &weechat_color);
+                                if ((rc != EOF) && (rc >= 1))
+                                {
+                                    gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                  weechat_color);
+                                }
                             }
                             string += 2;
                         }

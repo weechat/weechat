@@ -386,13 +386,16 @@ void *
 script_str2ptr (const char *pointer_str)
 {
     long unsigned int value;
+    int rc;
     
     if (!pointer_str || (pointer_str[0] != '0') || (pointer_str[1] != 'x'))
         return NULL;
     
-    sscanf (pointer_str + 2, "%lx", &value);
+    rc = sscanf (pointer_str + 2, "%lx", &value);
+    if ((rc != EOF) && (rc >= 1))
+        return (void *)value;
     
-    return (void *)value;
+    return NULL;
 }
 
 /*

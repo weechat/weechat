@@ -65,7 +65,7 @@ irc_color_decode (const char *string, int keep_colors)
     unsigned char *out, *ptr_string;
     int out_length, length, out_pos;
     char str_fg[3], str_bg[3], str_color[128];
-    int fg, bg, bold, reverse, italic, underline;
+    int fg, bg, bold, reverse, italic, underline, rc;
     
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
@@ -164,13 +164,19 @@ irc_color_decode (const char *string, int keep_colors)
                         bg = -1;
                         if (str_fg[0])
                         {
-                            sscanf (str_fg, "%d", &fg);
-                            fg %= IRC_NUM_COLORS;
+                            rc = sscanf (str_fg, "%d", &fg);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                fg %= IRC_NUM_COLORS;
+                            }
                         }
                         if (str_bg[0])
                         {
-                            sscanf (str_bg, "%d", &bg);
-                            bg %= IRC_NUM_COLORS;
+                            rc = sscanf (str_bg, "%d", &bg);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                bg %= IRC_NUM_COLORS;
+                            }
                         }
                         snprintf (str_color, sizeof (str_color),
                                   "%s%s%s",

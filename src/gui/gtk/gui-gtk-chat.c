@@ -189,7 +189,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
     char str_fg[3];
-    int weechat_color;
+    int weechat_color, rc;
     
     while (string[0])
     {
@@ -210,8 +210,11 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     string += 2;
                     if (apply_style)
                     {
-                        sscanf (str_fg, "%d", &weechat_color);
-                        gui_chat_set_weechat_color (window, weechat_color);
+                        rc = sscanf (str_fg, "%d", &weechat_color);
+                        if ((rc != EOF) && (rc >= 1))
+                        {
+                            gui_chat_set_weechat_color (window, weechat_color);
+                        }
                     }
                 }
                 break;

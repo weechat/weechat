@@ -156,7 +156,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int hide_chars_if_scrolling)
 {
     int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char, hidden;
-    int pair;
+    int pair, rc;
     char str_fg[3], str_bg[3], str_pair[6], utf_char[16], *next_char, *output;
     char *error;
     
@@ -190,9 +190,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             str_fg[0] = string[1];
                             str_fg[1] = string[2];
                             str_fg[2] = '\0';
-                            sscanf (str_fg, "%d", &fg);
-                            gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            fg);
+                            rc = sscanf (str_fg, "%d", &fg);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                fg);
+                            }
                             string += 3;
                         }
                         break;
@@ -202,9 +205,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             str_bg[0] = string[1];
                             str_bg[1] = string[2];
                             str_bg[2] = '\0';
-                            sscanf (str_bg, "%d", &bg);
-                            gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                            bg);
+                            rc = sscanf (str_bg, "%d", &bg);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                bg);
+                            }
                             string += 3;
                         }
                         break;
@@ -218,10 +224,16 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             str_bg[0] = string[4];
                             str_bg[1] = string[5];
                             str_bg[2] = '\0';
-                            sscanf (str_fg, "%d", &fg);
-                            sscanf (str_bg, "%d", &bg);
-                            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                               fg, bg);
+                            rc = sscanf (str_fg, "%d", &fg);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                rc = sscanf (str_bg, "%d", &bg);
+                                if ((rc != EOF) && (rc >= 1))
+                                {
+                                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                       fg, bg);
+                                }
+                            }
                             string += 6;
                         }
                         break;
@@ -291,9 +303,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             str_fg[0] = string[0];
                             str_fg[1] = string[1];
                             str_fg[2] = '\0';
-                            sscanf (str_fg, "%d", &weechat_color);
-                            gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                          weechat_color);
+                            rc = sscanf (str_fg, "%d", &weechat_color);
+                            if ((rc != EOF) && (rc >= 1))
+                            {
+                                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                              weechat_color);
+                            }
                             string += 2;
                         }
                         break;
