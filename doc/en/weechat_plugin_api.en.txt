@@ -6319,7 +6319,7 @@ Arguments:
 ** 'const char *command': command executed by child
 ** 'int return_code': return code:
 *** '>= 0': child command return code
-*** '< 0': 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (data available, but child still
+*** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (data available, but child still
     running) or 'WEECHAT_HOOK_PROCESS_ERROR' (error when launching command)
 ** 'out': standard output of command (stdout)
 ** 'err': error output of command (stderr)

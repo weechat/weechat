@@ -6396,7 +6396,7 @@ Paramètres :
 ** 'const char *command' : commande exécutée par le fils
 ** 'int return_code' : code retour :
 *** '>= 0' : code retour du fils
-*** '< 0' : 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (données disponibles, mais le
+*** '< 0' : 'WEECHAT_HOOK_PROCESS_RUNNING' (données disponibles, mais le
     fils tourne toujours) ou 'WEECHAT_HOOK_PROCESS_ERROR' (erreur en lançant
     la commande)
 ** 'out' : sortie standard de la commande (stdout)

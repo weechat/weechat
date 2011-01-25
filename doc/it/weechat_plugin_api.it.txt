@@ -6328,7 +6328,7 @@ Argomenti:
 ** 'const char *command': comando eseguito dal processo figlio
 ** 'int return_code': codice restituito:
 *** '>= 0': codice restituito dal comando figlio
-*** '< 0': 'WEECHAT_HOOK_PROCESS_OK_RUNNING' (dati disponibili, ma figlio
+*** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (dati disponibili, ma figlio
     ancora in esecuzione) o 'WEECHAT_HOOK_PROCESS_ERROR' (errore nella
     esecuzione del comando)
 ** 'out': output standard del comando (stdout)
