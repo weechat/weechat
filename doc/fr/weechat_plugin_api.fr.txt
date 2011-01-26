@@ -4693,10 +4693,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_boolean(option)
+value = weechat.config_boolean(option)
 
 # exemple
-if weechat.config_option_boolean(option):
+if weechat.config_boolean(option):
     # ...
 ----------------------------------------
 
@@ -4739,10 +4739,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_boolean_default(option)
+value = weechat.config_boolean_default(option)
 
 # exemple
-if weechat.config_option_boolean_default(option):
+if weechat.config_boolean_default(option):
     # ...
 ----------------------------------------
 
@@ -4778,10 +4778,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_integer(option)
+value = weechat.config_integer(option)
 
 # exemple
-if weechat.config_option_integer(option):
+if weechat.config_integer(option):
     # ...
 ----------------------------------------
 
@@ -4817,10 +4817,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_integer_default(option)
+value = weechat.config_integer_default(option)
 
 # exemple
-if weechat.config_option_integer_default(option):
+if weechat.config_integer_default(option):
     # ...
 ----------------------------------------
 
@@ -4856,10 +4856,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_string(option)
+value = weechat.config_string(option)
 
 # exemple
-value = weechat.config_option_string(option)
+value = weechat.config_string(option)
 ----------------------------------------
 
 weechat_config_string_default
@@ -4871,7 +4871,7 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-const char *weechat_config_integer_default (struct t_config_option *option);
+const char *weechat_config_string_default (struct t_config_option *option);
 ----------------------------------------
 
 Paramètres :
@@ -4894,10 +4894,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_string_default(option)
+value = weechat.config_string_default(option)
 
 # exemple
-value = weechat.config_option_string_default(option)
+value = weechat.config_string_default(option)
 ----------------------------------------
 
 weechat_config_color
@@ -4932,14 +4932,14 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_color(option)
+value = weechat.config_color(option)
 
 # exemple
-value = weechat.config_option_color(option)
+value = weechat.config_color(option)
 ----------------------------------------
 
 weechat_config_color_default
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Retourne la valeur par défaut de l'option, sous forme de couleur.
 
@@ -4971,10 +4971,10 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-value = weechat.config_option_color_default(option)
+value = weechat.config_color_default(option)
 
 # exemple
-value = weechat.config_option_color_default(option)
+value = weechat.config_color_default(option)
 ----------------------------------------
 
 weechat_config_write_option

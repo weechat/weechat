@@ -4638,10 +4638,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_boolean(option)
+value = weechat.config_boolean(option)
 
 # esempio
-if weechat.config_option_boolean(option):
+if weechat.config_boolean(option):
     # ...
 ----------------------------------------
 
@@ -4684,10 +4684,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_boolean_default(option)
+value = weechat.config_boolean_default(option)
 
 # esempio
-if weechat.config_option_boolean_default(option):
+if weechat.config_boolean_default(option):
     # ...
 ----------------------------------------
 
@@ -4723,10 +4723,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_integer(option)
+value = weechat.config_integer(option)
 
 # esempio
-if weechat.config_option_integer(option):
+if weechat.config_integer(option):
     # ...
 ----------------------------------------
 
@@ -4762,10 +4762,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_integer_default(option)
+value = weechat.config_integer_default(option)
 
 # esempio
-if weechat.config_option_integer_default(option):
+if weechat.config_integer_default(option):
     # ...
 ----------------------------------------
 
@@ -4801,10 +4801,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_string(option)
+value = weechat.config_string(option)
 
 # esempio
-value = weechat.config_option_string(option):
+value = weechat.config_string(option):
 ----------------------------------------
 
 weechat_config_string_default
@@ -4816,7 +4816,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-const char *weechat_config_integer_default (struct t_config_option *option);
+const char *weechat_config_string_default (struct t_config_option *option);
 ----------------------------------------
 
 Argomenti:
@@ -4839,10 +4839,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_string_default(option)
+value = weechat.config_string_default(option)
 
 # esempio
-value = weechat.config_option_string_default(option):
+value = weechat.config_string_default(option):
 ----------------------------------------
 
 weechat_config_color
@@ -4877,10 +4877,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_color(option)
+value = weechat.config_color(option)
 
 # esempio
-value = weechat.config_option_color(option):
+value = weechat.config_color(option):
 ----------------------------------------
 
 weechat_config_color_default
@@ -4915,10 +4915,10 @@ Script (Python):
 [source,python]
 ----------------------------------------
 # prototipo
-value = weechat.config_option_color_default(option)
+value = weechat.config_color_default(option)
 
 # esempio
-value = weechat.config_option_color_default(option):
+value = weechat.config_color_default(option):
 ----------------------------------------
 
 weechat_config_write_option
