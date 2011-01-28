@@ -243,31 +243,25 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     
     ptr_xfer = xfer_search_by_buffer (buffer);
     
-    if (!ptr_xfer)
+    if (ptr_xfer)
     {
-        weechat_printf (NULL,
-                        _("%s%s: can't find xfer for buffer \"%s\""),
-                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                        weechat_buffer_get_string (buffer, "name"));
-        return WEECHAT_RC_OK;
-    }
-    
-    if (!XFER_HAS_ENDED(ptr_xfer->status))
-    {
-        xfer_chat_sendf (ptr_xfer, "%s\n", input_data);
         if (!XFER_HAS_ENDED(ptr_xfer->status))
         {
-            input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
-                                                           "1",
-                                                           input_data);
-            weechat_printf_tags (buffer,
-                                 "irc_privmsg,no_highlight",
-                                 "%s%s\t%s",
-                                 weechat_color ("chat_nick_self"),
-                                 ptr_xfer->local_nick,
-                                 (input_data_color) ? input_data_color : input_data);
-            if (input_data_color)
-                free (input_data_color);
+            xfer_chat_sendf (ptr_xfer, "%s\n", input_data);
+            if (!XFER_HAS_ENDED(ptr_xfer->status))
+            {
+                input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
+                                                               "1",
+                                                               input_data);
+                weechat_printf_tags (buffer,
+                                     "irc_privmsg,no_highlight",
+                                     "%s%s\t%s",
+                                     weechat_color ("chat_nick_self"),
+                                     ptr_xfer->local_nick,
+                                     (input_data_color) ? input_data_color : input_data);
+                if (input_data_color)
+                    free (input_data_color);
+            }
         }
     }
     
@@ -344,15 +338,16 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
             weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
             weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
             weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
-            weechat_printf (xfer->buffer,
-                            _("Connected to %s (%d.%d.%d.%d) via "
-                              "xfer chat"),
-                            xfer->remote_nick,
-                            xfer->address >> 24,
-                            (xfer->address >> 16) & 0xff,
-                            (xfer->address >> 8) & 0xff,
-                            xfer->address & 0xff);
         }
+        
+        weechat_printf (xfer->buffer,
+                        _("Connected to %s (%d.%d.%d.%d) via "
+                          "xfer chat"),
+                        xfer->remote_nick,
+                        xfer->address >> 24,
+                        (xfer->address >> 16) & 0xff,
+                        (xfer->address >> 8) & 0xff,
+                        xfer->address & 0xff);
         
         free (name);
     }
