@@ -383,6 +383,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* *weechat.look.input_cursor_scroll*
+** description: `number of chars displayed after end of input line when scrolling to display end of line`
+** type: integer
+** values: 0 .. 100 (default value: `20`)
+
 * *weechat.look.input_share*
 ** description: `share commands, text, or both in input for all buffers (there is still local history for each buffer)`
 ** type: integer

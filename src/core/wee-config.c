@@ -93,6 +93,7 @@ struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_hotlist_unique_numbers;
+struct t_config_option *config_look_input_cursor_scroll;
 struct t_config_option *config_look_input_share;
 struct t_config_option *config_look_input_share_overwrite;
 struct t_config_option *config_look_input_undo_max;
@@ -1561,6 +1562,12 @@ config_weechat_init_options ()
         N_("keep only unique numbers in hotlist (this applies only on hotlist "
            "items where name is NOT displayed after number)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_input_cursor_scroll = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "input_cursor_scroll", "integer",
+        N_("number of chars displayed after end of input line when scrolling "
+           "to display end of line"),
+        NULL, 0, 100, "20", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_share = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_share", "integer",

@@ -383,6 +383,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* *weechat.look.input_cursor_scroll*
+** description: `nombre de caractères affichés après la fin de la ligne de saisie lors d'un défilement pour afficher la fin de la ligne`
+** type: entier
+** valeurs: 0 .. 100 (valeur par défaut: `20`)
+
 * *weechat.look.input_share*
 ** description: `partage les commandes, le texte, ou les deux dans la zone de saisie pour tous les tampons (il y a toujours un historique local sur chaque tampon)`
 ** type: entier

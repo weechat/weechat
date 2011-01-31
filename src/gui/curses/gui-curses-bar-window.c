@@ -697,13 +697,12 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)
                         {
-                            /*
-                             * FIXME: keep some spaces after end of input
-                             * for example by adding something to diff, like:
-                             * diff += (9 - (diff % 10));
-                             * but then scroll position has to be saved
-                             *  (in bar window ?)
-                             */
+                            if (CONFIG_INTEGER(config_look_input_cursor_scroll) > 0)
+                            {
+                                diff += (CONFIG_INTEGER(config_look_input_cursor_scroll)
+                                         - 1
+                                         - (diff % CONFIG_INTEGER(config_look_input_cursor_scroll)));
+                            }
                             
                             /* compute new start for displaying input */
                             new_start_input = pos_after_start_input + gui_chat_string_real_pos (pos_after_start_input, diff);

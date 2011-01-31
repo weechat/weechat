@@ -122,6 +122,7 @@ extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_hotlist_unique_numbers;
+extern struct t_config_option *config_look_input_cursor_scroll;
 extern struct t_config_option *config_look_input_share;
 extern struct t_config_option *config_look_input_share_overwrite;
 extern struct t_config_option *config_look_input_undo_max;
