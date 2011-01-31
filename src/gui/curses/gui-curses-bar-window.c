@@ -156,8 +156,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int hide_chars_if_scrolling)
 {
     int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char, hidden;
-    int pair, rc;
-    char str_fg[3], str_bg[3], str_pair[6], utf_char[16], *next_char, *output;
+    int pair;
+    char str_fg[6], str_bg[6], str_pair[6], utf_char[16], *next_char, *output;
     char *error;
     
     if (!string || !string[0])
@@ -185,56 +185,150 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 switch (string[0])
                 {
                     case GUI_COLOR_FG_CHAR: /* fg color */
-                        if (string[1] && string[2])
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            str_fg[0] = string[1];
-                            str_fg[1] = string[2];
-                            str_fg[2] = '\0';
-                            rc = sscanf (str_fg, "%d", &fg);
-                            if ((rc != EOF) && (rc >= 1))
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                fg);
+                                memcpy (str_fg, string + 2, 5);
+                                str_fg[5] = '\0';
+                                error = NULL;
+                                fg = (int)strtol (str_fg, &error, 10);
+                                if (error && !error[0])
+                                {
+                                    gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                    fg | GUI_COLOR_PAIR_FLAG);
+                                }
+                                string += 7;
                             }
-                            string += 3;
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                str_fg[0] = string[1];
+                                str_fg[1] = string[2];
+                                str_fg[2] = '\0';
+                                error = NULL;
+                                fg = (int)strtol (str_fg, &error, 10);
+                                if (error && !error[0])
+                                {
+                                    gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                    fg);
+                                }
+                                string += 3;
+                            }
                         }
                         break;
                     case GUI_COLOR_BG_CHAR: /* bg color */
-                        if (string[1] && string[2])
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            str_bg[0] = string[1];
-                            str_bg[1] = string[2];
-                            str_bg[2] = '\0';
-                            rc = sscanf (str_bg, "%d", &bg);
-                            if ((rc != EOF) && (rc >= 1))
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                bg);
+                                memcpy (str_bg, string + 2, 5);
+                                str_bg[5] = '\0';
+                                error = NULL;
+                                bg = (int)strtol (str_bg, &error, 10);
+                                if (error && !error[0])
+                                {
+                                    gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                    bg | GUI_COLOR_PAIR_FLAG);
+                                }
+                                string += 7;
                             }
-                            string += 3;
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                str_bg[0] = string[1];
+                                str_bg[1] = string[2];
+                                str_bg[2] = '\0';
+                                error = NULL;
+                                bg = (int)strtol (str_bg, &error, 10);
+                                if (error && !error[0])
+                                {
+                                    gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                                    bg);
+                                }
+                                string += 3;
+                            }
                         }
                         break;
                     case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
-                        if (string[1] && string[2] && (string[3] == ',')
-                            && string[4] && string[5])
+                        str_fg[0] = '\0';
+                        str_bg[0] = '\0';
+                        fg = -1;
+                        bg = -1;
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            str_fg[0] = string[1];
-                            str_fg[1] = string[2];
-                            str_fg[2] = '\0';
-                            str_bg[0] = string[4];
-                            str_bg[1] = string[5];
-                            str_bg[2] = '\0';
-                            rc = sscanf (str_fg, "%d", &fg);
-                            if ((rc != EOF) && (rc >= 1))
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                rc = sscanf (str_bg, "%d", &bg);
-                                if ((rc != EOF) && (rc >= 1))
+                                memcpy (str_fg, string + 2, 5);
+                                str_fg[5] = '\0';
+                                error = NULL;
+                                fg = (int)strtol (str_fg, &error, 10);
+                                if (!error || error[0])
+                                    fg = -1;
+                                else
+                                    fg |= GUI_COLOR_PAIR_FLAG;
+                                string += 7;
+                            }
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                str_fg[0] = string[1];
+                                str_fg[1] = string[2];
+                                str_fg[2] = '\0';
+                                error = NULL;
+                                fg = (int)strtol (str_fg, &error, 10);
+                                if (!error || error[0])
+                                    fg = -1;
+                                string += 3;
+                            }
+                        }
+                        if (str_fg[0] && (string[0] == ','))
+                        {
+                            string++;
+                            if (string[0] == GUI_COLOR_PAIR_CHAR)
+                            {
+                                if (string[1] && string[2] && string[3]
+                                    && string[4] && string[5])
                                 {
-                                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                       fg, bg);
+                                    memcpy (str_bg, string + 1, 5);
+                                    str_bg[5] = '\0';
+                                    error = NULL;
+                                    bg = (int)strtol (str_bg, &error, 10);
+                                    if (!error || error[0])
+                                        bg = -1;
+                                    else
+                                        bg |= GUI_COLOR_PAIR_FLAG;
+                                    string += 6;
                                 }
                             }
-                            string += 6;
+                            else
+                            {
+                                if (string[0] && string[1])
+                                {
+                                    str_bg[0] = string[0];
+                                    str_bg[1] = string[1];
+                                    str_bg[2] = '\0';
+                                    error = NULL;
+                                    bg = (int)strtol (str_bg, &error, 10);
+                                    if (!error || error[0])
+                                        bg = -1;
+                                    string += 2;
+                                }
+                            }
+                        }
+                        if ((fg >= 0) && (bg >= 0))
+                        {
+                            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                               fg, bg);
                         }
                         break;
                     case GUI_COLOR_PAIR_CHAR: /* pair number */
@@ -303,8 +397,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                             str_fg[0] = string[0];
                             str_fg[1] = string[1];
                             str_fg[2] = '\0';
-                            rc = sscanf (str_fg, "%d", &weechat_color);
-                            if ((rc != EOF) && (rc >= 1))
+                            error = NULL;
+                            weechat_color = (int)strtol (str_fg, &error, 10);
+                            if (error && !error[0])
                             {
                                 gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                               weechat_color);
@@ -500,6 +595,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
                 gui_bar_window_set_current_size (bar_window, window, 1);
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
         }
         else
@@ -554,6 +650,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             }
             
             gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                              CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
             x = 0;
             y = 0;
@@ -714,6 +811,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)
             gui_bar_window_set_current_size (bar_window, window, 1);
         gui_window_clear (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                          CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
 

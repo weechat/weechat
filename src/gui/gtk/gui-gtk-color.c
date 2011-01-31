@@ -132,12 +132,37 @@ gui_color_get_weechat_colors_number ()
 }
 
 /*
- * gui_color_get_last_pair: get last pair number
+ * gui_color_get_term_colors: get number of colors supported by terminal
  */
 
 int
-gui_color_get_last_pair ()
+gui_color_get_term_colors ()
 {
+    return 0;
+}
+
+/*
+ * gui_color_get_pair: get a pair with given foreground/background colors
+ */
+
+int
+gui_color_get_pair (int fg, int bg)
+{
+    (void) fg;
+    (void) bg;
+    
+    return 0;
+}
+
+/*
+ * gui_color_weechat_get_pair: get color pair with a WeeChat color number
+ */
+
+int
+gui_color_weechat_get_pair (int weechat_color)
+{
+    (void) weechat_color;
+    
     return 0;
 }
 
@@ -149,53 +174,6 @@ const char *
 gui_color_get_name (int num_color)
 {
     return gui_weechat_colors[num_color].string;
-}
-
-/*
- * gui_color_get_pair: get color pair with a WeeChat color number
- */
-
-int
-gui_color_get_pair (int num_color)
-{
-    int fg, bg;
-    
-    if ((num_color < 0) || (num_color > GUI_COLOR_NUM_COLORS - 1))
-        return WEECHAT_COLOR_WHITE;
-    
-    fg = gui_color[num_color]->foreground;
-    bg = gui_color[num_color]->background;
-    
-    if (((fg == -1) || (fg == 99))
-        && ((bg == -1) || (bg == 99)))
-        return 63;
-    if ((fg == -1) || (fg == 99))
-        fg = WEECHAT_COLOR_WHITE;
-    if ((bg == -1) || (bg == 99))
-        bg = 0;
-    
-    return (bg * 8) + fg;
-}
-
-/*
- * gui_color_init_pair: init a color pair
- */
-
-void
-gui_color_init_pair (int number)
-{
-    /* This function does nothing in Gtk GUI */
-    (void) number;
-}
-
-/*
- * gui_color_init_pairs: init color pairs
- */
-
-void
-gui_color_init_pairs ()
-{
-    /* This function does nothing in Gtk GUI */
 }
 
 /*
@@ -231,32 +209,6 @@ gui_color_rebuild_weechat ()
 }
 
 /*
- * gui_color_pre_init: pre-init colors
- */
-
-void
-gui_color_pre_init ()
-{
-    int i;
-    
-    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
-    {
-        gui_color[i] = NULL;
-    }
-}
-
-/*
- * gui_color_init: init GUI colors
- */
-
-void
-gui_color_init ()
-{
-    gui_color_init_pairs ();
-    gui_color_init_weechat ();
-}
-
-/*
  * gui_color_display_terminal_colors: display terminal colors
  *                                    This is called by command line option
  *                                    "-c" / "--colors"
@@ -284,6 +236,16 @@ gui_color_buffer_display ()
 
 void
 gui_color_switch_colors ()
+{
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_color_reset_pairs: reset all color pairs
+ */
+
+void
+gui_color_reset_pairs ()
 {
     /* This function does nothing in Gtk GUI */
 }
@@ -341,6 +303,41 @@ gui_color_palette_free (struct t_gui_color_palette *color_palette)
 {
     /* This function does nothing in Gtk GUI */
     (void) color_palette;
+}
+
+/*
+ * gui_color_pre_init: pre-init colors
+ */
+
+void
+gui_color_pre_init ()
+{
+    int i;
+    
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
+    {
+        gui_color[i] = NULL;
+    }
+}
+
+/*
+ * gui_color_init: init GUI colors
+ */
+
+void
+gui_color_init ()
+{
+    gui_color_init_weechat ();
+}
+
+/*
+ * gui_color_dump: dump colors
+ */
+
+void
+gui_color_dump ()
+{
+    /* This function does nothing in Gtk GUI */
 }
 
 /*

@@ -70,8 +70,6 @@
 
 | weechat | buffers_plugins_names | names of buffers (including plugins names)
 
-| weechat | color_pairs | color pairs
-
 | weechat | commands | commands (weechat and plugins)
 
 | weechat | config_files | configuration files
@@ -93,6 +91,8 @@
 | weechat | keys_codes_for_reset | key codes that can be reset (keys added, redefined or removed)
 
 | weechat | nicks | nicks in nicklist of current buffer
+
+| weechat | palette_colors | palette colors
 
 | weechat | plugins_commands | commands defined by plugins
 

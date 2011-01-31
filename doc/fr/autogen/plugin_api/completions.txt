@@ -70,8 +70,6 @@
 
 | weechat | buffers_plugins_names | noms des tampons (incluant les noms d'extensions)
 
-| weechat | color_pairs | paires de couleur
-
 | weechat | commands | commandes (weechat et extensions)
 
 | weechat | config_files | fichiers de configuration
@@ -93,6 +91,8 @@
 | weechat | keys_codes_for_reset | codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies ou supprimées)
 
 | weechat | nicks | pseudos dans la liste des pseudos du tampon courant
+
+| weechat | palette_colors | couleurs de la palette
 
 | weechat | plugins_commands | commandes définies par les extensions
 

@@ -180,7 +180,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
     char str_fg[3], str_bg[3], str_pair[6], *error;
-    int weechat_color, fg, bg, pair, rc;
+    int weechat_color, fg, bg, pair;
     
     while (string[0])
     {
@@ -196,65 +196,174 @@ gui_chat_string_next_char (struct t_gui_window *window,
                 switch (string[0])
                 {
                     case GUI_COLOR_FG_CHAR: /* fg color */
-                        if (string[1] && string[2])
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            if (apply_style)
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                str_fg[0] = string[1];
-                                str_fg[1] = string[2];
-                                str_fg[2] = '\0';
-                                rc = sscanf (str_fg, "%d", &fg);
-                                if ((rc != EOF) && (rc >= 1))
+                                if (apply_style)
                                 {
-                                    gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                    fg);
+                                    memcpy (str_fg, string + 2, 5);
+                                    str_fg[5] = '\0';
+                                    error = NULL;
+                                    fg = (int)strtol (str_fg, &error, 10);
+                                    if (error && !error[0])
+                                    {
+                                        gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                        fg | GUI_COLOR_PAIR_FLAG);
+                                    }
                                 }
+                                string += 7;
                             }
-                            string += 3;
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                if (apply_style)
+                                {
+                                    str_fg[0] = string[1];
+                                    str_fg[1] = string[2];
+                                    str_fg[2] = '\0';
+                                    error = NULL;
+                                    fg = (int)strtol (str_fg, &error, 10);
+                                    if (error && !error[0])
+                                    {
+                                        gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                        fg);
+                                    }
+                                }
+                                string += 3;
+                            }
                         }
                         break;
                     case GUI_COLOR_BG_CHAR: /* bg color */
-                        if (string[1] && string[2])
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            if (apply_style)
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                str_bg[0] = string[1];
-                                str_bg[1] = string[2];
-                                str_bg[2] = '\0';
-                                rc = sscanf (str_bg, "%d", &bg);
-                                if ((rc != EOF) && (rc >= 1))
+                                if (apply_style)
                                 {
-                                    gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                    bg);
+                                    memcpy (str_bg, string + 2, 5);
+                                    str_bg[5] = '\0';
+                                    error = NULL;
+                                    bg = (int)strtol (str_bg, &error, 10);
+                                    if (error && !error[0])
+                                    {
+                                        gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                        bg | GUI_COLOR_PAIR_FLAG);
+                                    }
                                 }
+                                string += 7;
                             }
-                            string += 3;
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                if (apply_style)
+                                {
+                                    str_bg[0] = string[1];
+                                    str_bg[1] = string[2];
+                                    str_bg[2] = '\0';
+                                    error = NULL;
+                                    bg = (int)strtol (str_bg, &error, 10);
+                                    if (error && !error[0])
+                                    {
+                                        gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                                        bg);
+                                    }
+                                }
+                                string += 3;
+                            }
                         }
                         break;
                     case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
-                        if (string[1] && string[2] && (string[3] == ',')
-                            && string[4] && string[5])
+                        str_fg[0] = '\0';
+                        str_bg[0] = '\0';
+                        fg = -1;
+                        bg = -1;
+                        if (string[1] == GUI_COLOR_PAIR_CHAR)
                         {
-                            if (apply_style)
+                            if (string[2] && string[3] && string[4]
+                                && string[5] && string[6])
                             {
-                                str_fg[0] = string[1];
-                                str_fg[1] = string[2];
-                                str_fg[2] = '\0';
-                                str_bg[0] = string[4];
-                                str_bg[1] = string[5];
-                                str_bg[2] = '\0';
-                                rc = sscanf (str_fg, "%d", &fg);
-                                if ((rc != EOF) && (rc >= 1))
+                                if (apply_style)
                                 {
-                                    rc = sscanf (str_bg, "%d", &bg);
-                                    if ((rc != EOF) && (rc >= 1))
+                                    memcpy (str_fg, string + 2, 5);
+                                    str_fg[5] = '\0';
+                                    error = NULL;
+                                    fg = (int)strtol (str_fg, &error, 10);
+                                    if (!error || error[0])
+                                        fg = -1;
+                                    else
+                                        fg |= GUI_COLOR_PAIR_FLAG;
+                                }
+                                string += 7;
+                            }
+                        }
+                        else
+                        {
+                            if (string[1] && string[2])
+                            {
+                                if (apply_style)
+                                {
+                                    str_fg[0] = string[1];
+                                    str_fg[1] = string[2];
+                                    str_fg[2] = '\0';
+                                    error = NULL;
+                                    fg = (int)strtol (str_fg, &error, 10);
+                                    if (!error || error[0])
+                                        fg = -1;
+                                }
+                                string += 3;
+                            }
+                        }
+                        if (string[0] == ',')
+                        {
+                            string++;
+                            if (string[0] == GUI_COLOR_PAIR_CHAR)
+                            {
+                                if (string[1] && string[2] && string[3]
+                                    && string[4] && string[5])
+                                {
+                                    if (apply_style)
                                     {
-                                        gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                           fg, bg);
+                                        memcpy (str_bg, string + 1, 5);
+                                        str_bg[5] = '\0';
+                                        error = NULL;
+                                        bg = (int)strtol (str_bg, &error, 10);
+                                        if (!error || error[0])
+                                            bg = -1;
+                                        else
+                                            bg |= GUI_COLOR_PAIR_FLAG;
                                     }
+                                    string += 6;
                                 }
                             }
-                            string += 6;
+                            else
+                            {
+                                if (string[0] && string[1])
+                                {
+                                    if (apply_style)
+                                    {
+                                        str_bg[0] = string[0];
+                                        str_bg[1] = string[1];
+                                        str_bg[2] = '\0';
+                                        error = NULL;
+                                        bg = (int)strtol (str_bg, &error, 10);
+                                        if (!error || error[0])
+                                            bg = -1;
+                                    }
+                                    string += 2;
+                                }
+                            }
+                        }
+                        if (apply_style && (fg >= 0) && (bg >= 0))
+                        {
+                            gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                               fg, bg);
                         }
                         break;
                     case GUI_COLOR_PAIR_CHAR: /* pair number */
@@ -301,8 +410,9 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                 str_fg[0] = string[0];
                                 str_fg[1] = string[1];
                                 str_fg[2] = '\0';
-                                rc = sscanf (str_fg, "%d", &weechat_color);
-                                if ((rc != EOF) && (rc >= 1))
+                                error = NULL;
+                                weechat_color = (int)strtol (str_fg, &error, 10);
+                                if (error && !error[0])
                                 {
                                     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                                   weechat_color);
@@ -1028,7 +1138,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     if (gui_chat_display_word_raw (window, line->data->message,
                                    window->win_chat_width, 1) < window->win_chat_width)
     {
-        gui_window_clrtoeol_with_current_bg (GUI_WINDOW_OBJECTS(window)->win_chat);
+        gui_window_clrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
     }
 }
 

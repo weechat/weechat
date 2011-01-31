@@ -99,25 +99,22 @@
       /buffer +1
 ........................................
 
-&bull; *`/color`* `[add paire [alias] [fg,bg]] | [del paire] | switch`::
+&bull; *`/color`* `[add couleur alias] | [del paire] | switch`::
 
 ........................................
-  définir des couleurs personnalisées et afficher la palette des couleurs
+  définir des alias de couleurs et afficher la palette des couleurs
 
-     add: ajouter une paire de couleur
-     del: supprimer une paire de couleur
-  switch: basculer entre les couleurs WeeChat et du terminal
-   paire: numéro de paire (>= 1)
-   alias: nom d'alias pour la couleur (par exemple: "orange")
-   fg,bg: numéro de paire pour le texte et le fond (-1 pour la couleur par défaut du terminal pour le texte ou le fond)
+      add: ajouter une paire de couleur
+      del: supprimer une paire de couleur
+  couleur: numéro de couleur (>= 1, le max dépend du terminal, généralement 63 ou 255)
+    alias: nom d'alias pour la couleur (par exemple: "orange")
+    reset: réinitialiser toutes les paires de couleurs (pratique quand il n'y a plus de paires disponibles)
   
   Sans paramètre, cette commande affiche les couleurs dans un nouveau tampon.
   
   Exemples:
-    ajouter la couleur 214 avec l'alias "orange":
+    ajouter l'alias "orange" pour la couleur 214:
       /color add 214 orange
-    ajouter la couleur 250 avec orange sur bleu:
-      /color add 250 214,4 orange_bleu
     supprimer la couleur 214:
       /color del 214
 ........................................
@@ -131,7 +128,7 @@
    commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ........................................
 
-&bull; *`/debug`* `[list | set extension niveau | dump [extension] | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set extension niveau | dump [extension] | buffer | windows | term | color]`::
 
 ........................................
   contrôle du debug pour le coeur/les extensions
@@ -143,6 +140,7 @@
      buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
     windows: affiche l'arbre des fenêtres
        term: afficher des infos sur le terminal et les couleurs disponibles
+      color: afficher des infos sur les paires de couleur courantes
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [nom]] | [add nom extension.tampon tags regex] | [del nom|-all]`::

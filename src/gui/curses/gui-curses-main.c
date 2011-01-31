@@ -224,6 +224,13 @@ gui_main_refreshs ()
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
+
+    /* refresh color buffer if needed */
+    if (gui_color_buffer_refresh_needed)
+    {
+        gui_color_buffer_display ();
+        gui_color_buffer_refresh_needed = 0;
+    }
     
     /* refresh window if needed */
     if (gui_window_refresh_needed)

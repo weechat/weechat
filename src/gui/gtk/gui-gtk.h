@@ -88,7 +88,7 @@ extern GtkWidget *gui_gtk_entry_input;
 extern GtkWidget *gui_gtk_label1;
 
 /* color functions */
-extern int gui_color_get_pair (int num_color);
+extern int gui_color_get_pair (int fg, int bg);
 extern void gui_color_pre_init ();
 extern void gui_color_init ();
 extern void gui_color_end ();

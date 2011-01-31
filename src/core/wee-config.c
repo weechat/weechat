@@ -251,7 +251,7 @@ config_change_buffers (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    gui_window_refresh_windows ();
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -384,7 +384,7 @@ config_change_prefix_align_min (void *data, struct t_config_option *option)
         if (ptr_buffer->mixed_lines)
             gui_line_compute_prefix_max_length (ptr_buffer->mixed_lines);
     }
-    gui_window_refresh_windows ();
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -400,9 +400,8 @@ config_change_color (void *data, struct t_config_option *option)
     
     if (gui_ok)
     {
-        gui_color_init_pairs ();
         gui_color_init_weechat ();
-        gui_window_refresh_windows ();
+        gui_window_ask_refresh (1);
     }
 }
 
@@ -742,10 +741,7 @@ config_weechat_palette_create_option_cb (void *data,
                     ptr_option = config_file_new_option (
                         config_file, section,
                         option_name, "string",
-                        _("custom color in palette, format is: \"alias;fg,bg\" "
-                          "where alias is color name, fg,bg is \"foreground,background\" "
-                          "(example: \"200,-1\") (everything is optional "
-                          "in this format and order is not important)"),
+                        _("alias for color"),
                         NULL, 0, 0, "", value, 0, NULL, NULL,
                         &config_weechat_palette_change_cb, NULL,
                         NULL, NULL);
@@ -1879,7 +1875,8 @@ config_weechat_init_options ()
     config_color_chat_nick_colors = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_colors", "string",
-        N_("text color for nicks (comma separated list of colors)"),
+        N_("text color for nicks (comma separated list of colors, background "
+            "is allowed with format: \"fg/bg\", for example: \"blue/red\")"),
         NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
         "lightmagenta,lightgreen,blue", NULL, 0,
         NULL, NULL, &config_change_nick_colors, NULL, NULL, NULL);

@@ -889,7 +889,7 @@ COMMAND_CALLBACK(buffer)
 
 COMMAND_CALLBACK(color)
 {
-    char *str_alias, *str_pair, *str_rgb, *pos, *error;
+    char *str_alias, *str_rgb, *pos, *error;
     char str_color[1024], str_command[1024];
     long number;
     int i;
@@ -905,17 +905,17 @@ COMMAND_CALLBACK(color)
         return WEECHAT_RC_OK;
     }
     
-    /* add a color pair */
+    /* add a color */
     if (string_strcasecmp (argv[1], "add") == 0)
     {
-        COMMAND_MIN_ARGS(3, "color add");
+        COMMAND_MIN_ARGS(4, "color add");
         
-        /* check pair number */
+        /* check color number */
         error = NULL;
         number = strtol (argv[2], &error, 10);
         if (error && !error[0])
         {
-            if ((number < 1) || (number > gui_color_get_last_pair ()))
+            if ((number < 0) || (number > gui_color_get_term_colors ()))
                 number = -1;
         }
         else
@@ -925,30 +925,23 @@ COMMAND_CALLBACK(color)
         if (number < 0)
         {
             gui_chat_printf (NULL,
-                             _("%sInvalid pair number \"%s\" (must be between "
-                               "%d and %d)"),
+                             _("%sInvalid color number \"%s\" (must be "
+                               "between %d and %d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2], 1, gui_color_get_last_pair ());
+                             argv[2], 0, gui_color_get_term_colors ());
             return WEECHAT_RC_ERROR;
         }
         
         /* check other arguments */
         str_alias = NULL;
-        str_pair = NULL;
         str_rgb = NULL;
         for (i = 3; i < argc; i++)
         {
-            pos = strchr (argv[i], ',');
+            pos = strchr (argv[i], '/');
             if (pos)
-                str_pair = argv[i];
+                str_rgb = argv[i];
             else
-            {
-                pos = strchr (argv[i], '/');
-                if (pos)
-                    str_rgb = argv[i];
-                else
-                    str_alias = argv[i];
-            }
+                str_alias = argv[i];
         }
         str_color[0] = '\0';
         if (str_alias)
@@ -956,18 +949,13 @@ COMMAND_CALLBACK(color)
             strcat (str_color, ";");
             strcat (str_color, str_alias);
         }
-        if (str_pair)
-        {
-            strcat (str_color, ";");
-            strcat (str_color, str_pair);
-        }
         if (str_rgb)
         {
             strcat (str_color, ";");
             strcat (str_color, str_rgb);
         }
         
-        /* add color pair */
+        /* add color */
         snprintf (str_command, sizeof (str_command),
                   "/set weechat.palette.%d \"%s\"",
                   (int)number,
@@ -976,17 +964,17 @@ COMMAND_CALLBACK(color)
         return WEECHAT_RC_OK;
     }
     
-    /* delete a color pair */
+    /* delete a color */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
         COMMAND_MIN_ARGS(3, "color del");
         
-        /* check pair number */
+        /* check color number */
         error = NULL;
         number = strtol (argv[2], &error, 10);
         if (error && !error[0])
         {
-            if ((number < 1) || (number > gui_color_get_last_pair ()))
+            if ((number < 0) || (number > gui_color_get_term_colors ()))
                 number = -1;
         }
         else
@@ -996,14 +984,14 @@ COMMAND_CALLBACK(color)
         if (number < 0)
         {
             gui_chat_printf (NULL,
-                             _("%sInvalid pair number \"%s\" (must be between "
-                               "%d and %d)"),
+                             _("%sInvalid color number \"%s\" (must be "
+                               "between %d and %d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2], 1, gui_color_get_last_pair ());
+                             argv[2], 0, gui_color_get_term_colors ());
             return WEECHAT_RC_ERROR;
         }
         
-        /* search color pair */
+        /* search color */
         color_palette = gui_color_palette_get ((int)number);
         if (!color_palette)
         {
@@ -1014,11 +1002,18 @@ COMMAND_CALLBACK(color)
             return WEECHAT_RC_ERROR;
         }
         
-        /* delete color pair */
+        /* delete color */
         snprintf (str_command, sizeof (str_command),
                   "/unset weechat.palette.%d",
                   (int)number);
         input_exec_command (buffer, 1, NULL, str_command);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* reset color pairs */
+    if (string_strcasecmp (argv[1], "reset") == 0)
+    {
+        gui_color_reset_pairs ();
         return WEECHAT_RC_OK;
     }
     
@@ -1137,6 +1132,10 @@ COMMAND_CALLBACK(debug)
     else if (string_strcasecmp (argv[1], "term") == 0)
     {
         gui_window_term_display_infos ();
+    }
+    else if (string_strcasecmp (argv[1], "color") == 0)
+    {
+        gui_color_dump (buffer);
     }
     else if (string_strcasecmp (argv[1], "set") == 0)
     {
@@ -4524,27 +4523,25 @@ command_init ()
                   " || %(buffers_numbers)",
                   &command_buffer, NULL);
     hook_command (NULL, "color",
-                  N_("define custom colors and display palette of colors"),
-                  N_("[add pair [alias] [fg,bg]] | [del pair] | switch"),
-                  N_("   add: add a color pair\n"
-                     "   del: delete a color pair\n"
-                     "switch: switch WeeChat/terminal colors\n"
-                     "  pair: pair number (>= 1)\n"
+                  N_("define color aliases and display palette of colors"),
+                  N_("[add color alias] | [del color] | reset"),
+                  N_("   add: add an alias for a color\n"
+                     "   del: delete an alias\n"
+                     " color: color number (>= 1, max depends on terminal, "
+                     "commonly 63 or 255)\n"
                      " alias: alias name for color (for example: \"orange\")\n"
-                     " fg,bg: foreground and background pair number (-1 for "
-                      "default terminal foreground or background)\n\n"
+                     " reset: reset all color pairs (useful when no more "
+                     "pairs are available)\n\n"
                      "Without argument, this command displays colors in a new "
                      "buffer.\n\n"
                      "Examples:\n"
-                     "  add color 214 with alias \"orange\":\n"
+                     "  add alias \"orange\" for color 214:\n"
                      "    /color add 214 orange\n"
-                     "  add color 250 with orange on blue:\n"
-                     "    /color add 250 214,4 orange_blue\n"
                      "  delete color 214:\n"
                      "    /color del 214"),
-                  "add %(color_pairs)"
-                  " || del %(color_pairs)"
-                  " || switch",
+                  "add %(palette_colors)"
+                  " || del %(palette_colors)"
+                  " || reset",
                   &command_color, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
@@ -4558,7 +4555,7 @@ command_init ()
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
                   N_("[list | set plugin level | dump [plugin] | buffer | "
-                     "windows | term]"),
+                     "windows | term | color]"),
                   N_("    set: set log level for plugin\n"
                      " plugin: name of plugin (\"core\" for WeeChat core)\n"
                      "  level: debug level for plugin (0 = disable debug)\n"
@@ -4568,13 +4565,15 @@ command_init ()
                      "in log file\n"
                      "windows: display windows tree\n"
                      "   term: display infos about terminal and available "
-                     "colors"),
+                     "colors\n"
+                     "  color: display infos about current color pairs"),
                   "list"
                   " || set %(plugins_names)|core"
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || windows"
-                  " || term",
+                  " || term"
+                  " || color",
                   &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "

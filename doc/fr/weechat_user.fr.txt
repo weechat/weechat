@@ -957,62 +957,46 @@ Les couleurs de base dans WeeChat sont :
 | white        | white
 |========================================
 
-[[colors_palette]]
-Palette
-^^^^^^^
+[[colors_extended]]
+Couleurs étendues
+^^^^^^^^^^^^^^^^^
 
-Selon votre terminal, 64 ou 256 paires sont définies par WeeChat, une
-combinaison des couleurs d'avant-plan avec le fond :
+WeeChat alloue dynamiquement les paires de couleurs quand elles sont utilisées
+sur l'écran (pour afficher les tampons et les barres).
 
-* pour 64 paires : 8 couleurs d'avant-plan * 8 couleurs de fond (couleurs
-  sombres)
-* pour 256 paires : 16 couleurs d'avant-plan * 16 couleurs de fond (8 couleurs
-  sombres et 8 couleurs claires)
+En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
+et la limite de votre terminal.
 
-Utilisez la commande `/color` pour voir les couleurs par défaut (sur le tampon
-vous pouvez appuyer sur 'alt+c' pour basculer entre les couleurs WeeChat et
-celles du terminal).
+Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
+touche 'alt+c', vous pouvez basculer temporairement vers les couleurs du
+terminal pour choisir une couleur.
 
-Vous pouvez écraser des paires de couleur (une paire est un avant-plan + un
-fond) avec la commande `/color`, qui créé une option dans la section 'palette'
-du fichier 'weechat.conf'.
-
-Pour chaque couleur définie, vous pouvez spécifier :
-
-* avant-plan et fond, en utilisant le format "fg,bg" : couleur pour le texte et
-  le fond, par défaut c'est la couleur du numéro de paire sur le fond par
-  défaut (-1)
-* alias : vous pouvez donner un nom à la couleur, pour l'utiliser facilement
-  dans les options de couleurs
-
-Par exemple, pour définir les paires de 225 à 240 avec des couleurs comme le
-bleu, cyan, vert, jaune, orange, rouge, rose, pourpre :
+Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
+faites :
 
 ----------------------------------------
-/color add 225 18,-1
-/color add 226 20,-1
-/color add 227 27,-1
-/color add 228 39,-1
-/color add 229 51,-1
-/color add 230 49,-1
-/color add 231 47,-1
-/color add 232 82,-1
-/color add 233 154,-1
-/color add 234 226,-1
-/color add 235 214,-1
-/color add 236 202,-1
-/color add 237 196,-1
-/color add 238 199,-1
-/color add 239 201,-1
-/color add 240 176,-1
+/set weechat.color.chat_time 214
 ----------------------------------------
 
-Voir `/help color` pour d'autres exemples.
+Ou si vous voulez un fond vert très foncé pour la barre de statut :
 
-[IMPORTANT]
-Les couleurs définies écrasent les paires de couleur WeeChat par défaut, donc
-vous ne devriez redéfinir une paire seulement si vous n'utilisez pas cette
-couleur dans WeeChat.
+----------------------------------------
+/set weechat.bar.status.color_bg 22
+----------------------------------------
+
+[[colors_aliases]]
+Alias pour les couleurs
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Vous pouvez ajouter des alias de couleur avec la commande `/color add` puis
+utiliser cet alias dans n'importe quelle option de couleur.
+
+Par exemple :
+
+----------------------------------------
+/color add 214 orange
+/set weechat.color.chat_delimiters orange
+----------------------------------------
 
 
 [[plugins]]

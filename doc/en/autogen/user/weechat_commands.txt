@@ -99,25 +99,22 @@
       /buffer +1
 ........................................
 
-&bull; *`/color`* `[add pair [alias] [fg,bg]] | [del pair] | switch`::
+&bull; *`/color`* `[add color alias] | [del color] | reset`::
 
 ........................................
-  define custom colors and display palette of colors
+  define color aliases and display palette of colors
 
-     add: add a color pair
-     del: delete a color pair
-  switch: switch WeeChat/terminal colors
-    pair: pair number (>= 1)
+     add: add an alias for a color
+     del: delete an alias
+   color: color number (>= 1, max depends on terminal, commonly 63 or 255)
    alias: alias name for color (for example: "orange")
-   fg,bg: foreground and background pair number (-1 for default terminal foreground or background)
+   reset: reset all color pairs (useful when no more pairs are available)
   
   Without argument, this command displays colors in a new buffer.
   
   Examples:
-    add color 214 with alias "orange":
+    add alias "orange" for color 214:
       /color add 214 orange
-    add color 250 with orange on blue:
-      /color add 250 214,4 orange_blue
     delete color 214:
       /color del 214
 ........................................
@@ -131,7 +128,7 @@
   command: command to execute (a '/' is automatically added if not found at beginning of command)
 ........................................
 
-&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term | color]`::
 
 ........................................
   control debug for core/plugins
@@ -143,6 +140,7 @@
    buffer: dump buffer content with hexadecimal values in log file
   windows: display windows tree
      term: display infos about terminal and available colors
+    color: display infos about current color pairs
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]`::

@@ -951,60 +951,47 @@ I colori base in WeeChat sono:
 | white        | bianco
 |========================================
 
-[[colors_palette]]
-Tavolozza
-^^^^^^^^^
+// TRANSLATION MISSING
+[[colors_extended]]
+Extended colors
+^^^^^^^^^^^^^^^
 
-In base al proprio terminale, vengono definite 64 o 256 coppie da WeeChat,
-una combinazione di colori di primo piano con quelli di sfondo:
+WeeChat dynamically allocates color pairs when colors are used on screen (to
+display buffers and bars).
 
-* per 64 coppie: 8 colori di primo piano * 8 colori di sfondo (colori scuri)
-* per 256 coppie: 16 colori di primo piano * 16 colori di sfondo (8 colori scuri
-  ed 8 colori chiari)
+In addition to basic colors, you can use a color number between 1 and the limit
+of your terminal.
 
-Usare il comando `/color` per visualizzare i colori predefiniti (nel buffer
-è possibile digitare 'alt+c' per passare tra i colori di WeeChat e quelli del
-terminale).
+Use command `/color` to see current colors and limits. With 'alt+c' you can
+temporarily switch to terminal colors to choose a color.
 
-È possibile sovrascrivere alcune coppie di colori (una coppia è costituita
-da colore di primo piano + sfondo) con il comando `/color`, che crea un'opzione
-nella sezione 'palette' del file 'weechat.conf'.
-
-Per ogni colore definito, si può specificare:
-
-* colore di primo piano e sfondo, con il formato "fg,bg": colore per il testo e
-  di sfondo, quello predefinito è il numero della coppia del colore su
-  sfondo predefinito (-1)
-* alias: si può dare un nome al proprio colore, per un facile utilizzo nelle opzioni
-
-Ad esempio, per definire le coppie da 225 a 240 con colori come blu, ciano, verde,
-giallo, arancione, rosso, rosa, porpora:
+For example if you want to display time in orange in buffer, do:
 
 ----------------------------------------
-/color add 225 18,-1
-/color add 226 20,-1
-/color add 227 27,-1
-/color add 228 39,-1
-/color add 229 51,-1
-/color add 230 49,-1
-/color add 231 47,-1
-/color add 232 82,-1
-/color add 233 154,-1
-/color add 234 226,-1
-/color add 235 214,-1
-/color add 236 202,-1
-/color add 237 196,-1
-/color add 238 199,-1
-/color add 239 201,-1
-/color add 240 176,-1
+/set weechat.color.chat_time 214
 ----------------------------------------
 
-Consultare `/help color` per ulteriori esempi.
+Or if you want a very dark green background for status bar:
 
-[IMPORTANT]
-I colori definiti sovrascrivono le coppie di colore predefinite di WeeChat,
-per cui si consiglia di ridefinire la coppia solo questo colore non verrà
-usato in WeeChat.
+----------------------------------------
+/set weechat.bar.status.color_bg 22
+----------------------------------------
+
+// TRANSLATION MISSING
+[[colors_aliases]]
+Alises for colors
+^^^^^^^^^^^^^^^^^
+
+You can add color aliases with command `/color add` and then use this alias
+in any color option.
+
+For example:
+
+----------------------------------------
+/color add 214 orange
+/set weechat.color.chat_delimiters orange
+----------------------------------------
+
 
 [[plugins]]
 Plugin

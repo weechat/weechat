@@ -99,26 +99,23 @@
    /buffer +1
 ........................................
 
-&bull; *`/color`* `[add pair [alias] [fg,bg]] | [del pair] | switch`::
+&bull; *`/color`* `[add color alias] | [del color] | reset`::
 
 ........................................
-  erstellt benutzerdefinierte Farben und stellt die Farbpalette dar
+  define color aliases and display palette of colors
 
-     add: fügt ein Farbpaar hinzu
-     del: entfernt ein Farbpaar
-  switch: wechselt die Farben von WeeChat/Terminal
-    pair: Wert für Farbpaar (>= 1)
-   alias: Alias für Farbe (zum Beispiel: "orange")
-   fg,bg: Vordergrund- und Hintergrundfarbe (-1 setzt für den Vorder- oder Hintergrund die standard Terminalfarbe)
+     add: add an alias for a color
+     del: delete an alias
+   color: color number (>= 1, max depends on terminal, commonly 63 or 255)
+   alias: alias name for color (for example: "orange")
+   reset: reset all color pairs (useful when no more pairs are available)
   
-  Ohne Angabe von Argumenten öffnet der Befehl einen neuen Buffer, in welchem die Farbpalette dargestellt wird.
+  Without argument, this command displays colors in a new buffer.
   
-  Beispiele:
-    fügt die Farbe 214 mit dem Alias "orange" hinzu:
+  Examples:
+    add alias "orange" for color 214:
       /color add 214 orange
-    fügt die Farbe 250 mit dem Alias Orange auf Blau hinzu:
-      /color add 250 214,4 orange_blau
-    löscht die Farbe 214:
+    delete color 214:
       /color del 214
 ........................................
 
@@ -131,18 +128,19 @@
       Befehl: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
 ........................................
 
-&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term]`::
+&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term | color]`::
 
 ........................................
   Debug-Kontrolle für Hauptprogramm und/oder Erweiterung
 
-      set: setzt den Level der Protokollierung für eine Erweiterung
-   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
-    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)
-     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
-   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
-  windows: zeigt die Fensterstruktur an
-     term: gibt Informationen über das Terminal und verfügbare Farben aus.
+      set: set log level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+  windows: display windows tree
+     term: display infos about terminal and available colors
+    color: display infos about current color pairs
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]`::

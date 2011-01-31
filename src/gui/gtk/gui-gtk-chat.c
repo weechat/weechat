@@ -147,17 +147,6 @@ void
 gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 {
     /* TODO: write this function for Gtk */
-    /*if (((fg == -1) || (fg == 99))
-        && ((bg == -1) || (bg == 99)))
-        wattron (window->win_chat, COLOR_PAIR(63));
-    else
-    {
-        if ((fg == -1) || (fg == 99))
-            fg = WEECHAT_COLOR_WHITE;
-        if ((bg == -1) || (bg == 99))
-            bg = 0;
-        wattron (window->win_chat, COLOR_PAIR((bg * 8) + fg));
-    }*/
     (void) window;
     (void) fg;
     (void) bg;

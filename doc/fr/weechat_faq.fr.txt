@@ -260,8 +260,12 @@ ne paniquez pas ! Vous pouvez la changer sans redémarrer, grâce au script
 /upgrade
 ----------------------------------------
 
-Vous pouvez utiliser la commande `/color` pour une configuration facile des
-couleurs dans WeeChat.
+Pour la version 0.3.4, vous devez utiliser la commande `/color` pour ajouter
+des nouvelles couleurs.
+
+Pour les versions > = 0.3.5, vous pouvez utiliser un numéro de couleur dans les
+options (facultatif : vous pouvez ajouter des alias de couleurs avec la commande
+`/color`).
 
 Merci de lire le guide utilisateur pour plus d'information sur la gestion des
 couleurs.

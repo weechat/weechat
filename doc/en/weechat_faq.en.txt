@@ -250,7 +250,10 @@ don't panic! You can change it without restarting, thanks to script 'shell.py':
 /upgrade
 ----------------------------------------
 
-You can use command `/color` for easy setup of colors in WeeChat.
+For version 0.3.4, you must use command `/color` to add new colors.
+
+For versions > = 0.3.5, you can use any color number in options (optional: you
+can add color aliases with command `/color`).
 
 Please read user's guide for more information about colors management.
 

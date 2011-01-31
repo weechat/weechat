@@ -49,7 +49,7 @@
 ** valori: un nome colore (valore predefinito: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** descrizione: `colore del testo per i nick (elenco separato da virgole di colori)`
+** descrizione: `text color for nicks (comma separated list of colors, background is allowed with format: "fg/bg", for example: "blue/red")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 

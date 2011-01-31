@@ -205,22 +205,24 @@ gui_window_clear_weechat (WINDOW *window, int weechat_color)
  */
 
 void
-gui_window_clear (WINDOW *window, int bg)
+gui_window_clear (WINDOW *window, int fg, int bg)
 {
-    int color;
-    
     if (!gui_ok)
         return;
-
-    if ((bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
-    {
-        color = gui_weechat_colors[bg].background;
-        wbkgdset (window,
-                  ' ' | COLOR_PAIR (((color == -1) || (color == 99)) ?
-                                    gui_color_last_pair : (color * gui_color_num_bg) + 1));
-        werase (window);
-        wmove (window, 0, 0);
-    }
+    
+    if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
+        fg &= GUI_COLOR_PAIR_MASK;
+    else
+        fg = gui_weechat_colors[fg].foreground;
+    
+    if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
+        bg &= GUI_COLOR_PAIR_MASK;
+    else
+        bg = gui_weechat_colors[bg].background;
+    
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)));
+    werase (window);
+    wmove (window, 0, 0);
 }
 
 /*
@@ -273,17 +275,7 @@ gui_window_set_color (WINDOW *window, int fg, int bg)
     window_current_style_fg = fg;
     window_current_style_bg = bg;
     
-    if (((fg == -1) || (fg == 99))
-        && ((bg == -1) || (bg == 99)))
-        wattron (window, COLOR_PAIR(gui_color_last_pair));
-    else
-    {
-        if ((fg == -1) || (fg == 99))
-            fg = COLOR_WHITE;
-        if ((bg == -1) || (bg == 99))
-            bg = 0;
-        wattron (window, COLOR_PAIR((bg * gui_color_num_bg) + fg + 1));
-    }
+    wattron (window, COLOR_PAIR(gui_color_get_pair (fg, bg)));
 }
 
 /*
@@ -293,21 +285,19 @@ gui_window_set_color (WINDOW *window, int fg, int bg)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
+    int fg, bg;
+    
     if ((num_color >= 0) && (num_color < GUI_COLOR_NUM_COLORS))
     {
         gui_window_reset_style (window, num_color);
         wattron (window, gui_color[num_color]->attributes);
-        if ((gui_color[num_color]->foreground > 0)
-            && (gui_color[num_color]->foreground & GUI_COLOR_PAIR_FLAG))
-        {
-            wattron (window, COLOR_PAIR(gui_color[num_color]->foreground & GUI_COLOR_PAIR_MASK));
-        }
-        else
-        {
-            gui_window_set_color (window,
-                                  gui_color[num_color]->foreground,
-                                  gui_color[num_color]->background);
-        }
+        fg = gui_color[num_color]->foreground;
+        bg = gui_color[num_color]->background;
+        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
+            fg &= GUI_COLOR_PAIR_MASK;
+        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
+            bg &= GUI_COLOR_PAIR_MASK;
+        gui_window_set_color (window, fg, bg);
     }
 }
 
@@ -319,30 +309,27 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 void
 gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
 {
-    if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
-        && (bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
+    if ((fg >= 0) && (bg >= 0))
     {
         gui_window_remove_color_style (window, A_BOLD);
-        wattron (window, gui_weechat_colors[fg].attributes);
-        gui_window_set_color (window,
-                              gui_weechat_colors[fg].foreground,
-                              (gui_color_num_bg > 8) ?
-                              gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
-    }
-}
-
-/*
- * gui_window_set_custom_color_pair: set a custom color for a window
- *                                   (pair number)
- */
-
-void
-gui_window_set_custom_color_pair (WINDOW *window, int pair)
-{
-    if ((pair >= 0) && (pair <= gui_color_last_pair))
-    {
-        gui_window_remove_color_style (window, A_BOLD);
-        wattron (window, COLOR_PAIR(pair));
+        
+        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
+            fg &= GUI_COLOR_PAIR_MASK;
+        else
+        {
+            wattron (window, gui_weechat_colors[fg].attributes);
+            fg = gui_weechat_colors[fg].foreground;
+        }
+        
+        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
+            bg &= GUI_COLOR_PAIR_MASK;
+        else
+        {
+            bg = (gui_color_num_bg > 8) ?
+                gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground;
+        }
+        
+        gui_window_set_color (window, fg, bg);
     }
 }
 
@@ -355,16 +342,17 @@ void
 gui_window_set_custom_color_fg (WINDOW *window, int fg)
 {
     int current_bg;
-
+    
     if (fg >= 0)
     {
-        if (fg & GUI_COLOR_PAIR_FLAG)
+        current_bg = window_current_style_bg;
+        
+        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
         {
-            gui_window_set_custom_color_pair (window, fg & GUI_COLOR_PAIR_MASK);
+            gui_window_set_color (window, fg & GUI_COLOR_PAIR_MASK, current_bg);
         }
         else if (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            current_bg = window_current_style_bg;
             gui_window_remove_color_style (window, A_BOLD);
             gui_window_set_color_style (window, gui_weechat_colors[fg].attributes);
             gui_window_set_color (window,
@@ -386,14 +374,15 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
     
     if (bg >= 0)
     {
-        if (bg & GUI_COLOR_PAIR_FLAG)
+        current_attr = window_current_style_attr;
+        current_fg = window_current_style_fg;
+        
+        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
         {
-            gui_window_set_custom_color_pair (window, bg & GUI_COLOR_PAIR_MASK);
+            gui_window_set_color (window, current_fg, bg & GUI_COLOR_PAIR_MASK);
         }
         else if (bg < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            current_attr = window_current_style_attr;
-            current_fg = window_current_style_fg;
             gui_window_set_color_style (window, current_attr);
             gui_window_set_color (window, current_fg,
                                   (gui_color_num_bg > 8) ?
@@ -403,15 +392,30 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
 }
 
 /*
- * gui_window_clrtoeol_with_current_bg: clear until end of line with current bg
+ * gui_window_set_custom_color_pair: set a custom color for a window
+ *                                   (pair number)
  */
 
 void
-gui_window_clrtoeol_with_current_bg (WINDOW *window)
+gui_window_set_custom_color_pair (WINDOW *window, int pair)
+{
+    if ((pair >= 0) && (pair <= gui_color_num_pairs))
+    {
+        gui_window_remove_color_style (window, A_BOLD);
+        wattron (window, COLOR_PAIR(pair));
+    }
+}
+
+/*
+ * gui_window_clrtoeol: clear until end of line with current background
+ */
+
+void
+gui_window_clrtoeol (WINDOW *window)
 {
     wbkgdset (window,
-              ' ' | COLOR_PAIR ((window_current_style_bg < 0) ?
-                                gui_color_last_pair : (window_current_style_bg * gui_color_num_bg) + 1));
+              ' ' | COLOR_PAIR (gui_color_get_pair (window_current_style_fg,
+                                                    window_current_style_bg)));
     wclrtoeol (window);
 }
 
@@ -1526,8 +1530,6 @@ gui_window_term_display_infos ()
     gui_chat_printf (NULL, _("Terminal infos:"));
     gui_chat_printf (NULL, _("  TERM='%s', size: %dx%d"),
                      getenv("TERM"), gui_term_cols, gui_term_lines);
-    gui_chat_printf (NULL, _("  %d colors available, %d pairs"),
-                     COLORS, COLOR_PAIRS);
 }
 
 /*

@@ -57,10 +57,12 @@ struct t_gui_bar_window_curses_objects
 
 extern int gui_term_cols, gui_term_lines;
 extern struct t_gui_color gui_weechat_colors[];
-extern int gui_color_last_pair;
+extern int gui_color_num_pairs;
 extern int gui_color_num_bg;
+extern int gui_color_buffer_refresh_needed;
 
 /* color functions */
+extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_pre_init ();
 extern void gui_color_init ();
@@ -79,7 +81,7 @@ extern int gui_keyboard_read_cb (void *data, int fd);
 extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern int gui_window_get_hline_char ();
-extern void gui_window_clear (WINDOW *window, int bg);
+extern void gui_window_clear (WINDOW *window, int fg, int bg);
 extern void gui_window_reset_style (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);
 extern void gui_window_remove_color_style (WINDOW *window, int style);
@@ -89,7 +91,7 @@ extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg);
 extern void gui_window_set_custom_color_pair (WINDOW *window, int pair);
 extern void gui_window_set_custom_color_fg (WINDOW *window, int fg);
 extern void gui_window_set_custom_color_bg (WINDOW *window, int bg);
-extern void gui_window_clrtoeol_with_current_bg (WINDOW *window);
+extern void gui_window_clrtoeol (WINDOW *window);
 extern void gui_window_set_title (const char *title);
 
 #endif /* __WEECHAT_GUI_CURSES_H */

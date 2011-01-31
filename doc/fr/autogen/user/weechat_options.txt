@@ -49,7 +49,7 @@
 ** valeurs: un nom de couleur (valeur par défaut: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** description: `couleur du texte pour les pseudos (liste de couleurs séparées par une virgule)`
+** description: `couleur du texte pour les pseudos (liste de couleurs séparées par une virgule, un fond est autorisé avec le format: "couleur/fond", par exemple: "blue/red")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 

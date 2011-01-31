@@ -91,10 +91,11 @@ gui_color_search_config (const char *color_name)
 const char *
 gui_color_get_custom (const char *color_name)
 {
-    int fg, bg, pair;
+    int fg, bg, fg_pair, bg_pair, pair;
     static char color[32][16];
     static int index_color = 0;
-    char *pos_comma, *str_fg, *pos_bg, *error;
+    char color_fg[32], color_bg[32];
+    char *pos_delim, *str_fg, *pos_bg, *error;
     
     /* attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 32;
@@ -106,64 +107,64 @@ gui_color_get_custom (const char *color_name)
     if (string_strcasecmp (color_name, "reset") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s",
-                  GUI_COLOR_RESET_STR);
+                  "%c",
+                  GUI_COLOR_RESET_CHAR);
     }
     else if (string_strcasecmp (color_name, "bold") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_SET_WEECHAT_STR,
-                  GUI_COLOR_ATTR_BOLD_STR);
+                  "%c%c",
+                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_BOLD_CHAR);
     }
     else if (string_strcasecmp (color_name, "-bold") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_REMOVE_WEECHAT_STR,
-                  GUI_COLOR_ATTR_BOLD_STR);
+                  "%c%c",
+                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_BOLD_CHAR);
     }
     else if (string_strcasecmp (color_name, "reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_SET_WEECHAT_STR,
-                  GUI_COLOR_ATTR_REVERSE_STR);
+                  "%c%c",
+                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_REVERSE_CHAR);
     }
     else if (string_strcasecmp (color_name, "-reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_REMOVE_WEECHAT_STR,
-                  GUI_COLOR_ATTR_REVERSE_STR);
+                  "%c%c",
+                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_REVERSE_CHAR);
     }
     else if (string_strcasecmp (color_name, "italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_SET_WEECHAT_STR,
-                  GUI_COLOR_ATTR_ITALIC_STR);
+                  "%c%c",
+                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_ITALIC_CHAR);
     }
     else if (string_strcasecmp (color_name, "-italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_REMOVE_WEECHAT_STR,
-                  GUI_COLOR_ATTR_ITALIC_STR);
+                  "%c%c",
+                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_ITALIC_CHAR);
     }
     else if (string_strcasecmp (color_name, "underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_SET_WEECHAT_STR,
-                  GUI_COLOR_ATTR_UNDERLINE_STR);
+                  "%c%c",
+                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
     else if (string_strcasecmp (color_name, "-underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s%s",
-                  GUI_COLOR_REMOVE_WEECHAT_STR,
-                  GUI_COLOR_ATTR_UNDERLINE_STR);
+                  "%c%c",
+                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
     else if (string_strcasecmp (color_name, "bar_fg") == 0)
     {
@@ -192,86 +193,121 @@ gui_color_get_custom (const char *color_name)
     else
     {
         /* custom color name (GUI dependent) */
-        pair = gui_color_palette_get_alias (color_name);
-        if (pair >= 0)
+        pos_delim = strchr (color_name, ',');
+        if (!pos_delim)
+            pos_delim = strchr (color_name, '/');
+        if (pos_delim)
         {
-            snprintf (color[index_color], sizeof (color[index_color]),
-                      "%s%s%05d",
-                      GUI_COLOR_COLOR_STR,
-                      GUI_COLOR_PAIR_STR,
-                      pair);
+            if (pos_delim == color_name)
+                str_fg = NULL;
+            else
+                str_fg = string_strndup (color_name, pos_delim - color_name);
+            pos_bg = pos_delim + 1;
         }
         else
         {
-            error = NULL;
-            pair = (int)strtol (color_name, &error, 10);
-            if (error && !error[0])
+            str_fg = strdup (color_name);
+            pos_bg = NULL;
+        }
+        
+        fg_pair = -1;
+        bg_pair = -1;
+        fg = -1;
+        bg = -1;
+        color_fg[0] = '\0';
+        color_bg[0] = '\0';
+        
+        if (str_fg)
+        {
+            fg_pair = gui_color_palette_get_alias (str_fg);
+            if (fg_pair < 0)
             {
-                snprintf (color[index_color], sizeof (color[index_color]),
-                          "%s%s%05d",
-                          GUI_COLOR_COLOR_STR,
-                          GUI_COLOR_PAIR_STR,
-                          pair);
-            }
-            else
-            {
-                pos_comma = strchr (color_name, ',');
-                if (pos_comma)
+                error = NULL;
+                pair = (int)strtol (str_fg, &error, 10);
+                if (error && !error[0])
                 {
-                    if (pos_comma == color_name)
-                        str_fg = NULL;
-                    else
-                        str_fg = string_strndup (color_name, pos_comma - color_name);
-                    pos_bg = pos_comma + 1;
+                    fg_pair = pair;
+                    if (fg_pair < 0)
+                        fg_pair = 0;
+                    else if (fg_pair > 99999)
+                        fg_pair = 99999;
                 }
                 else
-                {
-                    str_fg = strdup (color_name);
-                    pos_bg = NULL;
-                }
-                
-                if (str_fg && pos_bg)
-                {
                     fg = gui_color_search (str_fg);
-                    bg = gui_color_search (pos_bg);
-                    if ((fg >= 0) && (bg >= 0))
-                    {
-                        snprintf (color[index_color], sizeof (color[index_color]),
-                                  "%s%s%02d,%02d",
-                                  GUI_COLOR_COLOR_STR,
-                                  GUI_COLOR_FG_BG_STR,
-                                  fg, bg);
-                    }
-                }
-                else if (str_fg && !pos_bg)
-                {
-                    fg = gui_color_search (str_fg);
-                    if (fg >= 0)
-                    {
-                        snprintf (color[index_color], sizeof (color[index_color]),
-                                  "%s%s%02d",
-                                  GUI_COLOR_COLOR_STR,
-                                  GUI_COLOR_FG_STR,
-                                  fg);
-                    }
-                }
-                else if (!str_fg && pos_bg)
-                {
-                    bg = gui_color_search (pos_bg);
-                    if (bg >= 0)
-                    {
-                        snprintf (color[index_color], sizeof (color[index_color]),
-                                  "%s%s%02d",
-                                  GUI_COLOR_COLOR_STR,
-                                  GUI_COLOR_BG_STR,
-                                  bg);
-                    }
-                }
-                
-                if (str_fg)
-                    free (str_fg);
             }
         }
+        if (pos_bg)
+        {
+            bg_pair = gui_color_palette_get_alias (pos_bg);
+            if (bg_pair < 0)
+            {
+                error = NULL;
+                pair = (int)strtol (pos_bg, &error, 10);
+                if (error && !error[0])
+                {
+                    bg_pair = pair;
+                    if (bg_pair < 0)
+                        bg_pair = 0;
+                    else if (bg_pair > 99999)
+                        bg_pair = 99999;
+                }
+                else
+                    bg = gui_color_search (pos_bg);
+            }
+        }
+        
+        if (fg_pair >= 0)
+        {
+            snprintf (color_fg, sizeof (color_fg), "%c%05d",
+                      GUI_COLOR_PAIR_CHAR,
+                      fg_pair);
+        }
+        else if (fg >= 0)
+        {
+            snprintf (color_fg, sizeof (color_fg), "%02d",
+                      fg);
+        }
+        
+        if (bg_pair >= 0)
+        {
+            snprintf (color_bg, sizeof (color_bg), "%c%05d",
+                      GUI_COLOR_PAIR_CHAR,
+                      bg_pair);
+        }
+        else if (bg >= 0)
+        {
+            snprintf (color_bg, sizeof (color_bg), "%02d",
+                      bg);
+        }
+
+        if (color_fg[0] && color_bg[0])
+        {
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%c%c%s,%s",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_BG_CHAR,
+                      color_fg,
+                      color_bg);
+        }
+        else if (color_fg[0])
+        {
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%c%c%s",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_FG_CHAR,
+                      color_fg);
+        }
+        else if (color_bg[0])
+        {
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%c%c%s",
+                      GUI_COLOR_COLOR_CHAR,
+                      GUI_COLOR_BG_CHAR,
+                      color_bg);
+        }
+        
+        if (str_fg)
+            free (str_fg);
     }
     
     return color[index_color];
@@ -314,13 +350,51 @@ gui_color_decode (const char *string, const char *replacement)
                 {
                     case GUI_COLOR_FG_CHAR:
                     case GUI_COLOR_BG_CHAR:
-                        if (ptr_string[1] && ptr_string[2])
-                            ptr_string += 3;
+                        if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                        {
+                            if (ptr_string[2] && ptr_string[3] && ptr_string[4]
+                                && ptr_string[5] && ptr_string[6])
+                            {
+                                ptr_string += 7;
+                            }
+                        }
+                        else
+                        {
+                            if (ptr_string[1] && ptr_string[2])
+                                ptr_string += 3;
+                        }
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
-                        if (ptr_string[1] && ptr_string[2] && (ptr_string[3] == ',')
-                            && ptr_string[4] && ptr_string[5])
-                            ptr_string += 6;
+                        if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                        {
+                            if (ptr_string[2] && ptr_string[3] && ptr_string[4]
+                                && ptr_string[5] && ptr_string[6])
+                            {
+                                ptr_string += 7;
+                            }
+                        }
+                        else
+                        {
+                            if (ptr_string[1] && ptr_string[2])
+                                ptr_string += 3;
+                        }
+                        if (ptr_string[0] == ',')
+                        {
+                            if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                            {
+                                if (ptr_string[2] && ptr_string[3]
+                                    && ptr_string[4] && ptr_string[5]
+                                    && ptr_string[6])
+                                {
+                                    ptr_string += 7;
+                                }
+                            }
+                            else
+                            {
+                                if (ptr_string[1] && ptr_string[2])
+                                    ptr_string += 3;
+                            }
+                        }
                         break;
                     case GUI_COLOR_PAIR_CHAR:
                         if ((isdigit (ptr_string[1])) && (isdigit (ptr_string[2]))
@@ -582,17 +656,14 @@ gui_color_palette_add (int number, const char *value)
     new_color_palette = gui_color_palette_new (number, value);
     if (!new_color_palette)
         return;
-
+    
     snprintf (str_number, sizeof (str_number), "%d", number);
     hashtable_set (gui_color_hash_palette_color,
                    str_number, new_color_palette);
     gui_color_palette_build_aliases ();
     
     if (gui_init_ok)
-    {
-        gui_color_init_pair (number);
         gui_color_buffer_display ();
-    }
 }
 
 /*
@@ -614,11 +685,9 @@ gui_color_palette_remove (int number)
     {
         hashtable_remove (gui_color_hash_palette_color, str_number);
         gui_color_palette_build_aliases ();
+        
         if (gui_init_ok)
-        {
-            gui_color_init_pair (number);
             gui_color_buffer_display ();
-        }
     }
 }
 

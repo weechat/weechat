@@ -158,7 +158,6 @@ extern void gui_window_scroll_up (struct t_gui_window *window);
 extern void gui_window_scroll_down (struct t_gui_window *window);
 extern void gui_window_scroll_top (struct t_gui_window *window);
 extern void gui_window_scroll_bottom (struct t_gui_window *window);
-extern void gui_window_refresh_windows ();
 extern struct t_gui_window *gui_window_split_horizontal (struct t_gui_window *window,
                                                          int percentage);
 extern struct t_gui_window *gui_window_split_vertical (struct t_gui_window *window,
