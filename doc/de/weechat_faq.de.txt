@@ -265,12 +265,11 @@ Umgebungsvariable durchgeführt werden, ohne das WeeChat neu gestartet werden mu
 /upgrade
 ----------------------------------------
 
-// TRANSLATION MISSING
-For version 0.3.4, you must use command `/color` to add new colors.
+Mit Version 0.3.4 muss der Befehl `/color` genutzt werden um neue Farben zu erstellen.
 
-// TRANSLATION MISSING
-For versions > = 0.3.5, you can use any color number in options (optional: you
-can add color aliases with command `/color`).
+Ab Version > = 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entsprechende
+Zahl eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
+eine Farbe definieren).
 
 Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranleitung.
 

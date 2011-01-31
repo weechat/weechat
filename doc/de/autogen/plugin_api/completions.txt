@@ -92,7 +92,7 @@
 
 | weechat | nicks | Nicks in Nickliste des aktuellen Buffers
 
-| weechat | palette_colors | palette colors
+| weechat | palette_colors | Farbpalette
 
 | weechat | plugins_commands | Befehle, definiert durch Erweiterungen
 

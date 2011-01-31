@@ -1,5 +1,5 @@
-WeeChat User Anleitung
-======================
+WeeChat Benutzerhandbuch
+========================
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -937,41 +937,40 @@ Basisfarben in WeeChat sind:
 | white        | weiß
 |========================================
 
-// TRANSLATION MISSING
 [[colors_extended]]
-Extended colors
-^^^^^^^^^^^^^^^
+erweiterte Farbpalette
+^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat dynamically allocates color pairs when colors are used on screen (to
-display buffers and bars).
+WeeChat belegt, dynamisch, Farbpaare sobald die Farbe genutzt werden sollte. Zum Beispiel
+um mit einer Farbe Buffer oder Bars zu nutzen.
 
-In addition to basic colors, you can use a color number between 1 and the limit
-of your terminal.
+Zu den Basisfarben können zusätzlich Farben zwischen eins und der maximalen Anzahl an Farben
+genutzt werden die vom jeweiligen Terminal zur Verfügung gestellt werden.
 
-Use command `/color` to see current colors and limits. With 'alt+c' you can
-temporarily switch to terminal colors to choose a color.
+Mit dem `/color` Befehl kann man sich sowohl die aktuelle Farbpalette anzeigen lassen als
+auch die Anzahl der zu nutzenden Farben. Mit 'alt+c' kann man vorübergehend zu den Terminalfarben
+wechseln um eine Farbe auszuwählen.
 
-For example if you want to display time in orange in buffer, do:
+Um zum Beispiel die Uhrzeit in einem Buffer in einem schönen Orange darzustellen:
 
 ----------------------------------------
 /set weechat.color.chat_time 214
 ----------------------------------------
 
-Or if you want a very dark green background for status bar:
+oder falls man den Hintergrund der Statusbar in einm sehr dunklen Grün haben möchte:
 
 ----------------------------------------
 /set weechat.bar.status.color_bg 22
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_aliases]]
-Alises for colors
-^^^^^^^^^^^^^^^^^
+Alias für Farben definieren
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can add color aliases with command `/color add` and then use this alias
-in any color option.
+Man kann einer Farbe einen Alias zuordnen um diesen Alias anstelle einer Zahl in
+die Optionen einzutragen. Um einen Alias zu definieren nutzt man den Befehl `/color add`.
 
-For example:
+Beispiel:
 
 ----------------------------------------
 /color add 214 orange

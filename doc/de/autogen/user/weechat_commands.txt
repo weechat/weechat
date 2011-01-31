@@ -102,20 +102,20 @@
 &bull; *`/color`* `[add color alias] | [del color] | reset`::
 
 ........................................
-  define color aliases and display palette of colors
+  definiert Farbalias und stellt die Palette der möglichen Farben dar.
 
-     add: add an alias for a color
-     del: delete an alias
-   color: color number (>= 1, max depends on terminal, commonly 63 or 255)
-   alias: alias name for color (for example: "orange")
-   reset: reset all color pairs (useful when no more pairs are available)
+     add: fügt ein Farbpaar hinzu
+     del: entfernt ein Farbpaar
+   color: Farbnummer (>= 1, maximale Anzahl ist abhängig vom Terminal, üblicherweise 63 oder 255)
+   alias: Aliasname für eine Farbe (zum Beispiel: "orange")
+   reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung mehr verfügbar sein sollte)
   
-  Without argument, this command displays colors in a new buffer.
+  Ohne Angabe von Argumenten öffnet der Befehl, in einem neuen Buffer, die nutzbare Farbpalette.
   
-  Examples:
-    add alias "orange" for color 214:
+  Beispiele:
+    der Farbe 214 wird das Alias "orange" zugeordnet:
       /color add 214 orange
-    delete color 214:
+    löscht die Farbe 214:
       /color del 214
 ........................................
 
@@ -133,14 +133,14 @@
 ........................................
   Debug-Kontrolle für Hauptprogramm und/oder Erweiterung
 
-      set: set log level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-  windows: display windows tree
-     term: display infos about terminal and available colors
-    color: display infos about current color pairs
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+  windows: zeigt die Fensterstruktur an
+     term: gibt Informationen über das Terminal und verfügbare Farben aus.
+    color: zeigt Informationen über die aktuellen Farbpaarungen an.
 ........................................
 
 &bull; *`/filter`* `[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]`::

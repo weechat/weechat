@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-31 18:41+0100\n"
-"PO-Revision-Date: 2011-01-31 18:57+0100\n"
+"POT-Creation-Date: 2011-01-31 20:53+0100\n"
+"PO-Revision-Date: 2011-01-31 20:13+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -227,9 +227,10 @@ msgstr "Lokale Variablen für Buffer \"%s\":"
 msgid "No local variable defined for buffer \"%s\""
 msgstr "Keine lokale Variable definiert für Buffer \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
-msgstr "%sungültiger Wert für Farbpaar \"%s\" (muss zwischen %d und %d liegen)"
+msgstr ""
+"%sungültige Farbnummer \"%s\" (der Wert muss zwischen %d und %d liegen)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
@@ -1021,15 +1022,12 @@ msgstr ""
 "  wechselt zum nächsten Buffer:\n"
 " /buffer +1"
 
-#, fuzzy
 msgid "define color aliases and display palette of colors"
-msgstr "erstellt benutzerdefinierte Farben und stellt die Farbpalette dar"
+msgstr "definiert Farbalias und stellt die Palette der möglichen Farben dar."
 
-#, fuzzy
 msgid "[add color alias] | [del color] | reset"
-msgstr "[add pair [alias] [fg,bg]] | [del pair] | switch"
+msgstr "[add color alias] | [del color] | reset"
 
-#, fuzzy
 msgid ""
 "   add: add an alias for a color\n"
 "   del: delete an alias\n"
@@ -1047,20 +1045,18 @@ msgid ""
 msgstr ""
 "   add: fügt ein Farbpaar hinzu\n"
 "   del: entfernt ein Farbpaar\n"
-"switch: wechselt die Farben von WeeChat/Terminal\n"
-"  pair: Wert für Farbpaar (>= 1)\n"
-" alias: Alias für Farbe (zum Beispiel: \"orange\")\n"
-" fg,bg: Vordergrund- und Hintergrundfarbe (-1 setzt für den Vorder- oder "
-"Hintergrund die standard Terminalfarbe)\n"
+" color: Farbnummer (>= 1, maximale Anzahl ist abhängig vom Terminal, "
+"üblicherweise 63 oder 255)\n"
+" alias: Aliasname für eine Farbe (zum Beispiel: \"orange\")\n"
+" reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung "
+"mehr verfügbar sein sollte)\n"
 "\n"
-"Ohne Angabe von Argumenten öffnet der Befehl einen neuen Buffer, in welchem "
-"die Farbpalette dargestellt wird.\n"
+"Ohne Angabe von Argumenten öffnet der Befehl, in einem neuen Buffer, die "
+"nutzbare Farbpalette.\n"
 "\n"
 "Beispiele:\n"
-"  fügt die Farbe 214 mit dem Alias \"orange\" hinzu:\n"
+"  der Farbe 214 wird das Alias \"orange\" zugeordnet:\n"
 "    /color add 214 orange\n"
-"  fügt die Farbe 250 mit dem Alias Orange auf Blau hinzu:\n"
-"    /color add 250 214,4 orange_blau\n"
 "  löscht die Farbe 214:\n"
 "    /color del 214"
 
@@ -1082,12 +1078,11 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
-#, fuzzy
 msgid ""
 "[list | set plugin level | dump [plugin] | buffer | windows | term | color]"
-msgstr "[list | set plugin level | dump [plugin] | buffer | windows | term]"
+msgstr ""
+"[list | set plugin level | dump [plugin] | buffer | windows | term | color]"
 
-#, fuzzy
 msgid ""
 "    set: set log level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -1107,7 +1102,8 @@ msgstr ""
 " buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die "
 "Protokolldatei\n"
 "windows: zeigt die Fensterstruktur an\n"
-"   term: gibt Informationen über das Terminal und verfügbare Farben aus."
+"   term: gibt Informationen über das Terminal und verfügbare Farben aus.\n"
+"  color: zeigt Informationen über die aktuellen Farbpaarungen an."
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1810,9 +1806,8 @@ msgstr "Eigenschaften die für den Buffer gesetzt werden können"
 msgid "properties that can be read on a buffer"
 msgstr "Eigenschaften die für den Buffer gelesen werden können"
 
-#, fuzzy
 msgid "palette colors"
-msgstr "Farbpalette:"
+msgstr "Farbpalette"
 
 msgid "configuration files"
 msgstr "Konfigurationsdateien"
@@ -1885,7 +1880,7 @@ msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
 
 msgid "alias for color"
-msgstr ""
+msgstr "Alias für Farbe"
 
 #, c-format
 msgid "%sError: palette option must be numeric"
@@ -2261,11 +2256,13 @@ msgstr "Farbe der Channel-Namens"
 msgid "text color for nicks in chat window"
 msgstr "Farbe für Nicks im Chat-Fenster"
 
-#, fuzzy
 msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg/bg\", for example: \"blue/red\")"
-msgstr "Textfarbe für Nicks (durch Kommata getrennte Liste von Farben)"
+msgstr ""
+"Textfarbe für Nicks (durch Kommata getrennte Liste von Farben. Eine "
+"Hintergrundfarbe kann durch das folgende Format genutzt werden: \"fg/bg\". "
+"Zum Beispiel: \"blau/rot\")"
 
 msgid "text color for local nick in chat window"
 msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster."
@@ -2693,6 +2690,8 @@ msgid ""
 "Warning: the %d color pairs are used, do \"/color reset\" to remove unused "
 "pairs"
 msgstr ""
+"Warnung: das Farbpaar %d wird bereits genutzt. Nutze \"/color reset\" um "
+"ungenutzte Farbpaarungen zu entfernen"
 
 msgid "Terminal infos:"
 msgstr "Terminal Informationen:"
@@ -2706,17 +2705,17 @@ msgstr "Standardfarben:"
 msgid "Terminal colors:"
 msgstr "Terminal-Farben:"
 
-#, fuzzy
 msgid ""
 "WeeChat colors | Actions: [e] Display extra infos [r] Refresh [z] Reset "
 "colors [q] Close buffer | Keys: [alt-c] Temporarily switch to terminal colors"
 msgstr ""
-"WeeChat Farben | Aktionen: [R] aktualisieren [Q] Buffer schließen | Befehle: "
-"[alt-c] wechselt Farben"
+"WeeChat Farben | Aktionen: [e] Zeigt zusätzliche Informationen an [r] "
+"aktualisieren [z] Farben zurücksetzen [q] Buffer schließen | Befehle: [alt-"
+"c] wechselt Farben"
 
 #, c-format
 msgid "WeeChat colors (in use: %d, left: %d):"
-msgstr ""
+msgstr "WeeChat Farben (in Benutzung: %d, noch frei verfügbar: %d):"
 
 msgid "WeeChat basic colors:"
 msgstr "WeeChat Basisfarben:"
@@ -2724,12 +2723,11 @@ msgstr "WeeChat Basisfarben:"
 msgid "Nick colors:"
 msgstr "Farben für Nicks:"
 
-#, fuzzy
 msgid "Color aliases:"
-msgstr "Liste der Alias"
+msgstr "Farbalias:"
 
 msgid "Content of colors (r/g/b):"
-msgstr ""
+msgstr "Inhalt der Farben (r/g/b):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
