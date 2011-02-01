@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-01-31
+v0.3.5-dev, 2011-02-01
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: fix terminal title when $TERM starts with "screen"
 * core: add some chars after cursor when scrolling input line: new option
   weechat.look.input_cursor_scroll (bug #21391)
 * core: dynamically allocate color pairs (extended colors can be used without

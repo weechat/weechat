@@ -1465,10 +1465,10 @@ gui_window_set_title (const char *title)
             {
                 printf ("\33]0;%s\7", title);
             }
-            else if (strcmp (envterm, "screen") == 0)
+            else if (strncmp (envterm, "screen", 6) == 0)
             {
                 printf ("\033k%s\033\\", title);
-                /* tryning to set the title of a backgrounded xterm like terminal */
+                /* trying to set the title of a backgrounded xterm like terminal */
                 printf ("\33]0;%s\7", title);
             }
         }
@@ -1492,7 +1492,7 @@ gui_window_set_title (const char *title)
             {
                 printf ("\33]0;%s\7", "Terminal");
             }
-            else if (strcmp (envterm, "screen") == 0)
+            else if (strncmp (envterm, "screen", 6) == 0)
             {
                 if (envshell)
                 {
