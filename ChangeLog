@@ -13,6 +13,8 @@ Version 0.3.5 (under dev!)
 * core: dynamically allocate color pairs (extended colors can be used without
   being added with command "/color add")
 * core: allow background for nick colors (using "/")
+* irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
+  (bug #32216)
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
 Version 0.3.4 (2011-01-16)

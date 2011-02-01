@@ -1504,57 +1504,82 @@ private::
     tampon privé pour le pseudo, ou le tampon courant s'il n'est pas trouvé
     (selon l'option 'irc.look.msgbuffer_fallback')
 
+server::
+    tampon du serveur
+
 weechat::
     tampon "core" WeeChat
 
-Par défaut, le tampon du serveur est utilisé (quand l'option n'est pas définie).
+Lorsque l'option n'est pas définie (par défaut), WeeChat choisira
+le tampon approprié, généralement le tampon du serveur ou du canal.
 
 Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 
-[width="50%",cols="^1m,^1m,3",options="header"]
+[width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
-| message | alias  | description
-| invite  |        | invité sur un canal
-| notice  |        | notice
-| wallops |        | wallops
-| 221     |        | chaîne de mode utilisateur
-| 275     | whois  | whois (connexion sécurisée)
-| 301     | whois  | whois (absent)
-| 303     |        | ison
-| 305     | unaway | non absent
-| 306     | away   | absent
-| 307     | whois  | whois (pseudo enregistré)
-| 310     | whois  | whois (mode aide)
-| 311     | whois  | whois (utilisateur)
-| 312     | whois  | whois (serveur)
-| 313     | whois  | whois (opérateur)
-| 314     | whowas | whowas
-| 315     | who    | who (fin)
-| 317     | whois  | whois (inactivité)
-| 318     | whois  | whois (fin)
-| 319     | whois  | whois (canaux)
-| 320     | whois  | whois (utilisateur identifié)
-| 321     | list   | list (début)
-| 322     | list   | list (canal)
-| 323     | list   | list (fin)
-| 326     | whois  | whois (a les privilèges oper)
-| 327     | whois  | whois (machine)
-| 330     | whois  | whois (identifié comme)
-| 335     | whois  | whois (est un robot sur)
-| 338     | whois  | whois (machine)
-| 341     |        | invitation
-| 344     | reop   | reop canal
-| 345     | reop   | reop canal (fin)
-| 351     |        | version du serveur
-| 352     | who    | who
-| 369     | whowas | whowas (fin)
-| 378     | whois  | whois (connection depuis)
-| 379     | whois  | whois (utilise les modes)
-| 432     |        | pseudo erroné
-| 433     |        | pseudo déjà en cours d'utilisation
-| 438     |        | pas autorisé à changer de pseudo
-| 671     | whois  | whois (connexion sécurisée)
-| 901     |        | vous êtes maintenant identifié
+| message | alias         | description
+| error   |               | erreur
+| invite  |               | invité sur un canal
+| join    |               | join
+| kick    |               | kick
+| kill    |               | kill
+| mode    |               | mode
+| notice  |               | notice
+| part    |               | part
+| quit    |               | quit
+| topic   |               | topic
+| wallops |               | wallops
+| 221     |               | chaîne de mode utilisateur
+| 275     | whois         | whois (connexion sécurisée)
+| 301     | whois         | whois (absent)
+| 303     |               | ison
+| 305     | unaway        | non absent
+| 306     | away          | absent
+| 307     | whois         | whois (pseudo enregistré)
+| 310     | whois         | whois (mode aide)
+| 311     | whois         | whois (utilisateur)
+| 312     | whois         | whois (serveur)
+| 313     | whois         | whois (opérateur)
+| 314     | whowas        | whowas
+| 315     | who           | who (fin)
+| 317     | whois         | whois (inactivité)
+| 318     | whois         | whois (fin)
+| 319     | whois         | whois (canaux)
+| 320     | whois         | whois (utilisateur identifié)
+| 321     | list          | list (début)
+| 322     | list          | list (canal)
+| 323     | list          | list (fin)
+| 326     | whois         | whois (a les privilèges oper)
+| 327     | whois         | whois (machine)
+| 328     |               | URL du canal
+| 329     |               | date de création du canal
+| 330     | whois         | whois (identifié comme)
+| 331     |               | pas de titre ("topic") pour le canal
+| 332     |               | titre du canal ("topic")
+| 333     |               | infos sur le titre ("topic")
+| 335     | whois         | whois (est un robot sur)
+| 338     | whois         | whois (machine)
+| 341     |               | invitation
+| 344     | reop          | reop canal
+| 345     | reop          | reop canal (fin)
+| 346     | invitelist    | liste des invitations
+| 347     | invitelist    | liste des invitations (fin)
+| 348     | exceptionlist | liste des exceptions
+| 349     | exceptionlist | liste des exceptions (fin)
+| 351     |               | version du serveur
+| 352     | who           | who
+| 353     | names         | liste des utilisateurs sur le canal
+| 366     | names         | fin de la liste /names
+| 367     | banlist       | liste de bannissement
+| 368     | banlist       | fin de la liste de bannissement
+| 369     | whowas        | whowas (fin)
+| 378     | whois         | whois (connection depuis)
+| 379     | whois         | whois (utilise les modes)
+| 432     |               | pseudo erroné
+| 433     |               | pseudo déjà en cours d'utilisation
+| 438     |               | pas autorisé à changer de pseudo
+| 671     | whois         | whois (connexion sécurisée)
+| 901     |               | vous êtes maintenant identifié
 |========================================
 
 Les autres messages numériques peuvent être paramétrés de la même manière.

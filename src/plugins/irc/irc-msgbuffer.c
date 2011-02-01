@@ -36,23 +36,6 @@
 #include "irc-server.h"
 
 
-char *irc_msgbuffer_target_string[] =
-{ "weechat", "server", "current", "private" };
-
-
-/*
- * irc_msgbuffer_get_string: get string value for target
- */
-
-const char *
-irc_msgbuffer_get_string (int target)
-{
-    if ((target < 0) || (target >= IRC_MSGBUFFER_NUM_TARGETS))
-        return NULL;
-    
-    return irc_msgbuffer_target_string[target];
-}
-
 /*
  * irc_msgbuffer_get_option: get pointer to option with IRC message
  */
@@ -114,16 +97,21 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
     if (!ptr_option && alias && alias[0])
         ptr_option = irc_msgbuffer_get_option (server, alias);
     
-    if (!ptr_option && default_buffer)
-        return default_buffer;
+    if (!ptr_option)
+    {
+        if (default_buffer)
+            return default_buffer;
+        return (server) ? server->buffer : NULL;
+    }
     
-    target = (ptr_option) ?
-        weechat_config_integer (ptr_option) : -1;
-    
+    target = weechat_config_integer (ptr_option);
     switch (target)
     {
         case IRC_MSGBUFFER_TARGET_WEECHAT:
             return NULL;
+            break;
+        case IRC_MSGBUFFER_TARGET_SERVER:
+            return (server) ? server->buffer : NULL;
             break;
         case IRC_MSGBUFFER_TARGET_CURRENT:
             break;
@@ -146,5 +134,6 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
     buffer_plugin = weechat_buffer_get_pointer (ptr_buffer, "plugin");
     if (buffer_plugin == weechat_irc_plugin)
         return ptr_buffer;
+    
     return (server) ? server->buffer : NULL;
 }

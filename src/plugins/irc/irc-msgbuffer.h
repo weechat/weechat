@@ -23,6 +23,7 @@
 enum t_irc_msgbuffer_target
 {
     IRC_MSGBUFFER_TARGET_WEECHAT = 0,
+    IRC_MSGBUFFER_TARGET_SERVER,
     IRC_MSGBUFFER_TARGET_CURRENT,
     IRC_MSGBUFFER_TARGET_PRIVATE,
     /* number of msgbuffer targets */
@@ -37,7 +38,6 @@ struct t_irc_msgbuffer
     enum t_irc_msgbuffer_target target; /* target buffer                     */
 };
 
-extern const char *irc_msgbuffer_get_string (int target);
 extern struct t_gui_buffer *irc_msgbuffer_get_target_buffer (struct t_irc_server *server,
                                                              const char *nick,
                                                              const char *message,

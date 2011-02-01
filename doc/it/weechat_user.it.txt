@@ -1493,59 +1493,99 @@ private::
     buffer privato per il nick, o il buffer corrente se non trovato
     (in base all'opzione 'irc.look.msgbuffer_fallback')
 
+// TRANSLATION MISSING
+server::
+    server buffer
+
 weechat::
     Il buffer "core" di WeeChat
 
-Il buffer del server è la destinazione predefinita
-(quando l'opzione non è impostata).
+// TRANSLATION MISSING
+When option is not set (default), WeeChat chooses appropriate buffer, commonly
+server or channel buffer.
 
 Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
 personalizzare:
 
-[width="50%",cols="^1m,^1m,3",options="header"]
+[width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
-| messaggio | alias  | descrizione
-| invite    |        | invitato su un canale
-| notice    |        | notifica
-| wallops   |        | wallops
-| 221       |        | stringa modalità utente
-| 275       | whois  | whois (connessione sicura)
-| 301       | whois  | whois (assente)
-| 303       |        | ison
-| 305       | unaway | presente
-| 306       | away   | assente
-| 307       | whois  | whois (nick registrato)
-| 310       | whois  | whois (modalità aiuto)
-| 311       | whois  | whois (utente)
-| 312       | whois  | whois (server)
-| 313       | whois  | whois (operatore)
-| 314       | whowas | whowas
-| 315       | who    | who (fine)
-| 317       | whois  | whois (inattività)
-| 318       | whois  | whois (fine)
-| 319       | whois  | whois (canali)
-| 320       | whois  | whois (utente identificato)
-| 321       | list   | list (inizio)
-| 322       | list   | list (canale)
-| 323       | list   | list (fine)
-| 326       | whois  | whois (con privilegi di operatore)
-| 327       | whois  | whois (host)
-| 330       | whois  | whois (loggato come)
-| 335       | whois  | whois (è un bot su)
-| 338       | whois  | whois (host)
-| 341       |        | invito
-| 344       | reop   | reop sul canale
-| 345       | reop   | reop sul canale (fine)
-| 351       |        | versione del server
-| 352       | who    | who
-| 369       | whowas | whowas (fine)
-| 378       | whois  | whois (connesso da)
-| 379       | whois  | whois (usa le modalità)
-| 432       |        | nick errato
-| 433       |        | nick già utilizzato
-| 438       |        | non autorizzato a cambiare nick
-| 671       | whois  | whois (connessione sicura)
-| 901       |        | ora si è loggati
+| messaggio | alias         | descrizione
+// TRANSLATION MISSING
+| error     |               | error
+| invite    |               | invitato su un canale
+| join      |               | channel join
+| kick      |               | kick
+| kill      |               | kill
+| mode      |               | mode
+| notice    |               | notifica
+| part      |               | part
+| quit      |               | quit
+| topic     |               | topic
+| wallops   |               | wallops
+| 221       |               | stringa modalità utente
+| 275       | whois         | whois (connessione sicura)
+| 301       | whois         | whois (assente)
+| 303       |               | ison
+| 305       | unaway        | presente
+| 306       | away          | assente
+| 307       | whois         | whois (nick registrato)
+| 310       | whois         | whois (modalità aiuto)
+| 311       | whois         | whois (utente)
+| 312       | whois         | whois (server)
+| 313       | whois         | whois (operatore)
+| 314       | whowas        | whowas
+| 315       | who           | who (fine)
+| 317       | whois         | whois (inattività)
+| 318       | whois         | whois (fine)
+| 319       | whois         | whois (canali)
+| 320       | whois         | whois (utente identificato)
+| 321       | list          | list (inizio)
+| 322       | list          | list (canale)
+| 323       | list          | list (fine)
+| 326       | whois         | whois (con privilegi di operatore)
+| 327       | whois         | whois (host)
+// TRANSLATION MISSING
+| 328       |               | channel URL
+// TRANSLATION MISSING
+| 329       |               | channel creation date
+| 330       | whois         | whois (loggato come)
+// TRANSLATION MISSING
+| 331       |               | no topic for channel
+// TRANSLATION MISSING
+| 332       |               | topic of channel
+// TRANSLATION MISSING
+| 333       |               | infos about topic
+| 335       | whois         | whois (è un bot su)
+| 338       | whois         | whois (host)
+| 341       |               | invito
+| 344       | reop          | reop sul canale
+| 345       | reop          | reop sul canale (fine)
+// TRANSLATION MISSING
+| 346       | invitelist    | invite list
+// TRANSLATION MISSING
+| 347       | invitelist    | invite list (end)
+// TRANSLATION MISSING
+| 348       | exceptionlist | exception list
+// TRANSLATION MISSING
+| 349       | exceptionlist | exception list (end)
+| 351       |               | versione del server
+| 352       | who           | who
+// TRANSLATION MISSING
+| 353       | names         | list of users on channel
+// TRANSLATION MISSING
+| 366       | names         | end of /names list
+// TRANSLATION MISSING
+| 367       | banlist       | ban list
+// TRANSLATION MISSING
+| 368       | banlist       | end of ban list
+| 369       | whowas        | whowas (fine)
+| 378       | whois         | whois (connesso da)
+| 379       | whois         | whois (usa le modalità)
+| 432       |               | nick errato
+| 433       |               | nick già utilizzato
+| 438       |               | non autorizzato a cambiare nick
+| 671       | whois         | whois (connessione sicura)
+| 901       |               | ora si è loggati
 |========================================
 
 Anche altri comandi numerici possono essere personalizzati.

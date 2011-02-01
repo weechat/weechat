@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-31 21:01+0100\n"
+"POT-Creation-Date: 2011-02-01 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -687,7 +687,7 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr ""
@@ -697,7 +697,7 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: "%s%s" after "started on" is date
+#. TRANSLATORS: "%s%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -4433,12 +4433,12 @@ msgstr ""
 msgid "%sURL for %s%s%s: %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel created on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr ""
@@ -4451,22 +4451,22 @@ msgstr ""
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr ""
@@ -4479,7 +4479,7 @@ msgstr ""
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -4488,7 +4488,7 @@ msgstr ""
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -4539,7 +4539,7 @@ msgid_plural "normals"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
@@ -5900,7 +5900,7 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -5911,7 +5911,7 @@ msgid ""
 "%d.%d (port %d)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-31 21:01+0100\n"
+"POT-Creation-Date: 2011-02-01 18:55+0100\n"
 "PO-Revision-Date: 2011-01-31 18:57+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -734,7 +734,7 @@ msgstr "%sError: no se pudo guardar la sesión"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** Error: el ejecutable falló (programa: \"%s\"), cerrando WeeChat"
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado en %s"
@@ -744,7 +744,7 @@ msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "días"
 
-#. TRANSLATORS: "%s%s" after "started on" is date
+#. TRANSLATORS: "%s%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -5504,12 +5504,12 @@ msgstr "%sModo %s%s %s[%s%s%s]"
 msgid "%sURL for %s%s%s: %s"
 msgstr "%sURL para %s%s%s: %s"
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel created on %s"
 msgstr "%sCanal creado el %s"
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "%sCanal %s%s%s creado en %s"
@@ -5522,22 +5522,22 @@ msgstr "%sNo hay tema establecido para el canal %s%s"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "%sEl tema para %s%s%s es \"%s%s\""
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTema establecido por %s%s%s%s%s%s%s%s%s el %s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set on %s"
 msgstr "%sTema establecido el%s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sTema para %s%s%s establecido por %s%s%s%s%s%s%s%s%s el %s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "%sTema para %s%s%s establecido el %s"
@@ -5551,7 +5551,7 @@ msgstr "%s%s%s%s ha invitado a %s%s%s a %s%s%s"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sCanal reop %s%s%s: %s%s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)%s el %s"
@@ -5560,7 +5560,7 @@ msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)%s el %s"
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s]%s excepción %s%s%s por %s%s %s(%s%s%s)%s el %s"
@@ -5612,7 +5612,7 @@ msgid_plural "normals"
 msgstr[0] "normal"
 msgstr[1] "normales"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s vetado por %s%s %s(%s%s%s)%s el %s"
@@ -7171,7 +7171,7 @@ msgstr ""
 "%3d. %s (%s), archivo: \"%s\" (local: \"%s\"), %s %s, estado: %s%s%s (%llu "
 "%%)"
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -7185,7 +7185,7 @@ msgstr ""
 "     plugin: %s (id: %s), archivo: %llu bytes (posición: %llu), dirección: "
 "%d.%d.%d.%d (puerto %d)"
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr "     envío rápido: %s, tamaño del bloque: %d, iniciado en %s"

@@ -898,7 +898,7 @@ irc_config_msgbuffer_create_option (void *data,
                     option_name, "integer",
                     _("buffer used to display message received from IRC "
                       "server"),
-                    "weechat|current|private", 0, 0, value, value, 0,
+                    "weechat|server|current|private", 0, 0, value, value, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;

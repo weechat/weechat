@@ -3845,7 +3845,7 @@ COMMAND_CALLBACK(uptime)
     else if ((argc >= 2) && (string_strcasecmp (argv[1], "-ol") == 0))
     {
         snprintf (string, sizeof (string),
-                  /* TRANSLATORS: "%s" after "started on" is date */
+                  /* TRANSLATORS: "%s" after "started on" is a date */
                   _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
                   day,
                   NG_("day", "days", day),
@@ -3858,7 +3858,7 @@ COMMAND_CALLBACK(uptime)
     else
     {
         gui_chat_printf (NULL,
-                         /* TRANSLATORS: "%s%s" after "started on" is date */
+                         /* TRANSLATORS: "%s%s" after "started on" is a date */
                          _("WeeChat uptime: %s%d %s%s "
                            "%s%02d%s:%s%02d%s:%s%02d%s, "
                            "started on %s%s"),

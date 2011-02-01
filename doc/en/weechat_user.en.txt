@@ -1457,57 +1457,82 @@ private::
     private buffer for nick, or current/server buffer if not found (according
     to option 'irc.look.msgbuffer_fallback')
 
+server::
+    server buffer
+
 weechat::
     WeeChat "core" buffer
 
-Default is server buffer (when option is not set).
+When option is not set (default), WeeChat chooses appropriate buffer, commonly
+server or channel buffer.
 
 Non-exhaustive list of IRC messages or alias that you can customize:
 
-[width="50%",cols="^1m,^1m,3",options="header"]
+[width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
-| message | alias  | description
-| invite  |        | invited on a channel
-| notice  |        | notice
-| wallops |        | wallops
-| 221     |        | user mode string
-| 275     | whois  | whois (secure connection)
-| 301     | whois  | whois (away)
-| 303     |        | ison
-| 305     | unaway | unaway
-| 306     | away   | away
-| 307     | whois  | whois (registered nick)
-| 310     | whois  | whois (help mode)
-| 311     | whois  | whois (user)
-| 312     | whois  | whois (server)
-| 313     | whois  | whois (operator)
-| 314     | whowas | whowas
-| 315     | who    | who (end)
-| 317     | whois  | whois (idle)
-| 318     | whois  | whois (end)
-| 319     | whois  | whois (channels)
-| 320     | whois  | whois (identified user)
-| 321     | list   | list (start)
-| 322     | list   | list (channel)
-| 323     | list   | list (end)
-| 326     | whois  | whois (has oper privs)
-| 327     | whois  | whois (host)
-| 330     | whois  | whois (logged in as)
-| 335     | whois  | whois (is a bot on)
-| 338     | whois  | whois (host)
-| 341     |        | inviting
-| 344     | reop   | channel reop
-| 345     | reop   | channel reop (end)
-| 351     |        | server version
-| 352     | who    | who
-| 369     | whowas | whowas (end)
-| 378     | whois  | whois (connecting from)
-| 379     | whois  | whois (using modes)
-| 432     |        | erroneous nickname
-| 433     |        | nickname already in use
-| 438     |        | not authorized to change nickname
-| 671     | whois  | whois (secure connection)
-| 901     |        | you are now logged in
+| message | alias         | description
+| error   |               | error
+| invite  |               | invited on a channel
+| join    |               | join
+| kick    |               | kick
+| kill    |               | kill
+| mode    |               | mode
+| notice  |               | notice
+| part    |               | part
+| quit    |               | quit
+| topic   |               | topic
+| wallops |               | wallops
+| 221     |               | user mode string
+| 275     | whois         | whois (secure connection)
+| 301     | whois         | whois (away)
+| 303     |               | ison
+| 305     | unaway        | unaway
+| 306     | away          | away
+| 307     | whois         | whois (registered nick)
+| 310     | whois         | whois (help mode)
+| 311     | whois         | whois (user)
+| 312     | whois         | whois (server)
+| 313     | whois         | whois (operator)
+| 314     | whowas        | whowas
+| 315     | who           | who (end)
+| 317     | whois         | whois (idle)
+| 318     | whois         | whois (end)
+| 319     | whois         | whois (channels)
+| 320     | whois         | whois (identified user)
+| 321     | list          | list (start)
+| 322     | list          | list (channel)
+| 323     | list          | list (end)
+| 326     | whois         | whois (has oper privs)
+| 327     | whois         | whois (host)
+| 328     |               | channel URL
+| 329     |               | channel creation date
+| 330     | whois         | whois (logged in as)
+| 331     |               | no topic for channel
+| 332     |               | topic of channel
+| 333     |               | infos about topic
+| 335     | whois         | whois (is a bot on)
+| 338     | whois         | whois (host)
+| 341     |               | inviting
+| 344     | reop          | channel reop
+| 345     | reop          | channel reop (end)
+| 346     | invitelist    | invite list
+| 347     | invitelist    | invite list (end)
+| 348     | exceptionlist | exception list
+| 349     | exceptionlist | exception list (end)
+| 351     |               | server version
+| 352     | who           | who
+| 353     | names         | list of users on channel
+| 366     | names         | end of /names list
+| 367     | banlist       | ban list
+| 368     | banlist       | end of ban list
+| 369     | whowas        | whowas (end)
+| 378     | whois         | whois (connecting from)
+| 379     | whois         | whois (using modes)
+| 432     |               | erroneous nickname
+| 433     |               | nickname already in use
+| 438     |               | not authorized to change nickname
+| 671     | whois         | whois (secure connection)
+| 901     |               | you are now logged in
 |========================================
 
 Other numeric commands can be customized as well.

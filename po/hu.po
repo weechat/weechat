@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-01-31 21:01+0100\n"
+"POT-Creation-Date: 2011-02-01 18:55+0100\n"
 "PO-Revision-Date: 2011-01-31 14:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -783,7 +783,7 @@ msgstr "%s nem sikerült a folyamatot menteni\n"
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
@@ -793,7 +793,7 @@ msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
 
-#. TRANSLATORS: "%s%s" after "started on" is date
+#. TRANSLATORS: "%s%s" after "started on" is a date
 #, fuzzy, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -5128,12 +5128,12 @@ msgstr "A %s%s %s[%s%s%s]%s üzemmódot bekapcsolta: %s%s\n"
 msgid "%sURL for %s%s%s: %s"
 msgstr "A %s%s%s szoba témája: "
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, fuzzy, c-format
 msgid "%sChannel created on %s"
 msgstr "Szoba létrehozva: %s"
 
-#. TRANSLATORS: "%s" after "created on" is date
+#. TRANSLATORS: "%s" after "created on" is a date
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "Szoba létrehozva: %s"
@@ -5146,22 +5146,22 @@ msgstr "Nincs téma beállítva a %s%s szobában\n"
 msgid "%sTopic for %s%s%s is \"%s%s\""
 msgstr "A %s%s%s szoba témája: "
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%sTopic set on %s"
 msgstr "Nincs téma beállítva a %s%s szobában\n"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "A %s%s%s szoba témája: "
@@ -5174,7 +5174,7 @@ msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%s szoba: %s> %s"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
@@ -5183,7 +5183,7 @@ msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
@@ -5240,7 +5240,7 @@ msgid_plural "normals"
 msgstr[0] "normál"
 msgstr[1] "normál"
 
-#. TRANSLATORS: "%s" after "on" is date
+#. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
@@ -6707,7 +6707,7 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -6718,7 +6718,7 @@ msgid ""
 "%d.%d (port %d)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is date
+#. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""
