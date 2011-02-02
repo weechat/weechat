@@ -151,8 +151,10 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
 {
     void *ret_value;
     int argc, i, *ret_i;
+    lua_State *old_lua_current_interpreter;
     struct t_plugin_script *old_lua_current_script;
     
+    old_lua_current_interpreter = lua_current_interpreter;
     lua_current_interpreter = script->interpreter;
     
     lua_getglobal (lua_current_interpreter, function);
@@ -191,6 +193,7 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                         weechat_prefix ("error"), LUA_PLUGIN_NAME,
                         lua_tostring (lua_current_interpreter, -1));
         lua_current_script = old_lua_current_script;
+        lua_current_interpreter = old_lua_current_interpreter;
         return NULL;
     }
     
@@ -212,10 +215,12 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, function);
         lua_current_script = old_lua_current_script;
+        lua_current_interpreter = old_lua_current_interpreter;
         return NULL;
     }
     
     lua_current_script = old_lua_current_script;
+    lua_current_interpreter = old_lua_current_interpreter;
     
     return ret_value;
 }

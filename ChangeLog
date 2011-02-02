@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-02-01
+v0.3.5-dev, 2011-02-02
 
 
 Version 0.3.5 (under dev!)
@@ -15,6 +15,7 @@ Version 0.3.5 (under dev!)
 * core: allow background for nick colors (using "/")
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)
+* lua: fix crash when many scripts are executing callbacks at same time
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
 Version 0.3.4 (2011-01-16)
