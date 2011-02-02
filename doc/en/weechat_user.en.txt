@@ -893,6 +893,10 @@ Some recommended values for 'TERM' if you want 256 colors:
 * under screen: 'screen-256color'
 * outside screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
+[NOTE]
+You may have to install package "ncurses-term" to use these values in 'TERM'
+variable.
+
 If you are using screen, you can add this line to your '~/.screenrc':
 
 ----------------------------------------

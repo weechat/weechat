@@ -245,6 +245,10 @@ les valeurs recommandées sont :
 * sous screen : 'screen-256color'
 * en dehors de screen : 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
+[NOTE]
+Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
+valeurs dans la variable 'TERM'.
+
 Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre '~/.screenrc':
 
 ----------------------------------------

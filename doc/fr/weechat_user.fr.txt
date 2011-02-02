@@ -917,6 +917,10 @@ Quelques valeurs recommandées pour 'TERM' si vous voulez 256 couleurs :
 
 Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre '~/.screenrc':
 
+[NOTE]
+Vous devrez peut-être installer le paquet "ncurses-term" pour utiliser ces
+valeurs dans la variable 'TERM'.
+
 ----------------------------------------
 term screen-256color
 ----------------------------------------

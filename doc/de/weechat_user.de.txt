@@ -894,6 +894,11 @@ nutzen möchte:
 * falls screen genutzt wird: 'screen-256color'
 * screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
+// TRANSLATION MISSING
+[NOTE]
+You may have to install package "ncurses-term" to use these values in 'TERM'
+variable.
+
 Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
 '~/.screenrc':
 
