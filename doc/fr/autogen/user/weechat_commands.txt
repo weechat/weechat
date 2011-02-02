@@ -99,24 +99,24 @@
       /buffer +1
 ........................................
 
-&bull; *`/color`* `[add couleur alias] | [del paire] | switch`::
+&bull; *`/color`* `[alias couleur nom] | [unalias couleur] | switch`::
 
 ........................................
   définir des alias de couleurs et afficher la palette des couleurs
 
-      add: ajouter une paire de couleur
-      del: supprimer une paire de couleur
+    alias: ajouter un alias pour une couleur
+  unalias: supprimer un alias pour une couleur
   couleur: numéro de couleur (>= 1, le max dépend du terminal, généralement 63 ou 255)
-    alias: nom d'alias pour la couleur (par exemple: "orange")
+      nom: nom d'alias pour la couleur (par exemple: "orange")
     reset: réinitialiser toutes les paires de couleurs (pratique quand il n'y a plus de paires disponibles)
   
   Sans paramètre, cette commande affiche les couleurs dans un nouveau tampon.
   
   Exemples:
     ajouter l'alias "orange" pour la couleur 214:
-      /color add 214 orange
+      /color alias 214 orange
     supprimer la couleur 214:
-      /color del 214
+      /color unalias 214
 ........................................
 
 &bull; *`/command`* `extension commande`::

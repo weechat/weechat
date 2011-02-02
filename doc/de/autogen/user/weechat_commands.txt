@@ -99,24 +99,24 @@
    /buffer +1
 ........................................
 
-&bull; *`/color`* `[add color alias] | [del color] | reset`::
+&bull; *`/color`* `[alias color name] | [unalias color] | reset`::
 
 ........................................
   definiert Farbalias und stellt die Palette der möglichen Farben dar.
 
-     add: fügt ein Farbpaar hinzu
-     del: entfernt ein Farbpaar
-   color: Farbnummer (>= 1, maximale Anzahl ist abhängig vom Terminal, üblicherweise 63 oder 255)
-   alias: Aliasname für eine Farbe (zum Beispiel: "orange")
-   reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung mehr verfügbar sein sollte)
+    alias: add an alias for a color
+  unalias: delete an alias
+    color: color number (>= 1, max depends on terminal, commonly 63 or 255)
+     name: alias name for color (for example: "orange")
+    reset: reset all color pairs (useful when no more pairs are available)
   
-  Ohne Angabe von Argumenten öffnet der Befehl, in einem neuen Buffer, die nutzbare Farbpalette.
+  Without argument, this command displays colors in a new buffer.
   
-  Beispiele:
-    der Farbe 214 wird das Alias "orange" zugeordnet:
-      /color add 214 orange
-    löscht die Farbe 214:
-      /color del 214
+  Examples:
+    add alias "orange" for color 214:
+      /color alias 214 orange
+    delete color 214:
+      /color unalias 214
 ........................................
 
 &bull; *`/command`* `Erweiterungs-Befehl`::

@@ -968,12 +968,13 @@ Alias für Farben definieren
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Man kann einer Farbe einen Alias zuordnen um diesen Alias anstelle einer Zahl in
-die Optionen einzutragen. Um einen Alias zu definieren nutzt man den Befehl `/color add`.
+die Optionen einzutragen. Um einen Alias zu definieren nutzt man den Befehl
+`/color alias`.
 
 Beispiel:
 
 ----------------------------------------
-/color add 214 orange
+/color alias 214 orange
 /set weechat.color.chat_delimiters orange
 ----------------------------------------
 

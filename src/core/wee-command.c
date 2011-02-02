@@ -905,10 +905,10 @@ COMMAND_CALLBACK(color)
         return WEECHAT_RC_OK;
     }
     
-    /* add a color */
-    if (string_strcasecmp (argv[1], "add") == 0)
+    /* add a color alias */
+    if (string_strcasecmp (argv[1], "alias") == 0)
     {
-        COMMAND_MIN_ARGS(4, "color add");
+        COMMAND_MIN_ARGS(4, "color alias");
         
         /* check color number */
         error = NULL;
@@ -955,7 +955,7 @@ COMMAND_CALLBACK(color)
             strcat (str_color, str_rgb);
         }
         
-        /* add color */
+        /* add color alias */
         snprintf (str_command, sizeof (str_command),
                   "/set weechat.palette.%d \"%s\"",
                   (int)number,
@@ -964,10 +964,10 @@ COMMAND_CALLBACK(color)
         return WEECHAT_RC_OK;
     }
     
-    /* delete a color */
-    if (string_strcasecmp (argv[1], "del") == 0)
+    /* delete a color alias */
+    if (string_strcasecmp (argv[1], "unalias") == 0)
     {
-        COMMAND_MIN_ARGS(3, "color del");
+        COMMAND_MIN_ARGS(3, "color unalias");
         
         /* check color number */
         error = NULL;
@@ -1002,7 +1002,7 @@ COMMAND_CALLBACK(color)
             return WEECHAT_RC_ERROR;
         }
         
-        /* delete color */
+        /* delete color alias */
         snprintf (str_command, sizeof (str_command),
                   "/unset weechat.palette.%d",
                   (int)number);
@@ -4524,23 +4524,23 @@ command_init ()
                   &command_buffer, NULL);
     hook_command (NULL, "color",
                   N_("define color aliases and display palette of colors"),
-                  N_("[add color alias] | [del color] | reset"),
-                  N_("   add: add an alias for a color\n"
-                     "   del: delete an alias\n"
-                     " color: color number (>= 1, max depends on terminal, "
+                  N_("[alias color name] | [unalias color] | reset"),
+                  N_("  alias: add an alias for a color\n"
+                     "unalias: delete an alias\n"
+                     "  color: color number (>= 1, max depends on terminal, "
                      "commonly 63 or 255)\n"
-                     " alias: alias name for color (for example: \"orange\")\n"
-                     " reset: reset all color pairs (useful when no more "
+                     "   name: alias name for color (for example: \"orange\")\n"
+                     "  reset: reset all color pairs (useful when no more "
                      "pairs are available)\n\n"
                      "Without argument, this command displays colors in a new "
                      "buffer.\n\n"
                      "Examples:\n"
                      "  add alias \"orange\" for color 214:\n"
-                     "    /color add 214 orange\n"
+                     "    /color alias 214 orange\n"
                      "  delete color 214:\n"
-                     "    /color del 214"),
-                  "add %(palette_colors)"
-                  " || del %(palette_colors)"
+                     "    /color unalias 214"),
+                  "alias %(palette_colors)"
+                  " || unalias %(palette_colors)"
                   " || reset",
                   &command_color, NULL);
     hook_command (NULL, "command",

@@ -988,13 +988,13 @@ Ou si vous voulez un fond vert très foncé pour la barre de statut :
 Alias pour les couleurs
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Vous pouvez ajouter des alias de couleur avec la commande `/color add` puis
+Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
 utiliser cet alias dans n'importe quelle option de couleur.
 
 Par exemple :
 
 ----------------------------------------
-/color add 214 orange
+/color alias 214 orange
 /set weechat.color.chat_delimiters orange
 ----------------------------------------
 

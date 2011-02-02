@@ -963,13 +963,13 @@ Or if you want a very dark green background for status bar:
 Alises for colors
 ^^^^^^^^^^^^^^^^^
 
-You can add color aliases with command `/color add` and then use this alias
+You can add color aliases with command `/color alias` and then use this alias
 in any color option.
 
 For example:
 
 ----------------------------------------
-/color add 214 orange
+/color alias 214 orange
 /set weechat.color.chat_delimiters orange
 ----------------------------------------
 
