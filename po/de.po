@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-02 22:55+0100\n"
+"POT-Creation-Date: 2011-02-03 09:50+0100\n"
 "PO-Revision-Date: 2011-01-31 20:13+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2720,8 +2720,8 @@ msgstr ""
 "aktualisieren [z] Farben zurücksetzen [q] Buffer schließen | Befehle: [alt-"
 "c] wechselt Farben"
 
-#, c-format
-msgid "WeeChat colors (in use: %d, left: %d):"
+#, fuzzy, c-format
+msgid "WeeChat color pairs (in use: %d, left: %d):"
 msgstr "WeeChat Farben (in Benutzung: %d, noch frei verfügbar: %d):"
 
 msgid "WeeChat basic colors:"
@@ -2735,6 +2735,10 @@ msgstr "Farbalias:"
 
 msgid "Content of colors (r/g/b):"
 msgstr "Inhalt der Farben (r/g/b):"
+
+#, c-format
+msgid "WeeChat colors (in use: %d, left: %d):"
+msgstr "WeeChat Farben (in Benutzung: %d, noch frei verfügbar: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."

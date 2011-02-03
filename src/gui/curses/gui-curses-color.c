@@ -709,7 +709,7 @@ gui_color_buffer_display ()
     else
     {
         gui_chat_printf_y (gui_color_buffer, y++,
-                           _("WeeChat colors (in use: %d, left: %d):"),
+                           _("WeeChat color pairs (in use: %d, left: %d):"),
                            gui_color_pairs_used,
                            gui_color_num_pairs - gui_color_pairs_used);
     }
