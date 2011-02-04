@@ -179,7 +179,7 @@ char *
 gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
-    char str_fg[3], str_bg[3], str_pair[6], *error;
+    char str_fg[6], str_bg[6], str_pair[6], *error;
     int weechat_color, fg, bg, pair;
     
     while (string[0])
