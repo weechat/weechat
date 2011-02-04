@@ -153,25 +153,6 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * demo_buffer_set_command_cb: demo command for setting buffer property
- */
-
-int
-demo_buffer_set_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
-                            char **argv, char **argv_eol)
-{
-    /* make C compiler happy */
-    (void) data;
-    
-    if (argc > 2)
-    {
-        weechat_buffer_set (buffer, argv[1], argv_eol[2]);
-    }
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
  * demo_infolist_print: display an infolist
  */
 
@@ -390,28 +371,21 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("demo_printf",
                           N_("print some messages on current buffer"),
-                          N_("[text]"),
+                          N_("<text>"),
                           N_("text: write this text"),
                           "",
                           &demo_printf_command_cb, NULL);
     
     weechat_hook_command ("demo_buffer",
                           N_("open a new buffer"),
-                          N_("name"),
+                          N_("<name>"),
                           "",
                           "",
                           &demo_buffer_command_cb, NULL);
     
-    weechat_hook_command ("demo_buffer_set",
-                          N_("set a buffer property"),
-                          N_("property value"),
-                          "",
-                          "",
-                          &demo_buffer_set_command_cb, NULL);
-    
     weechat_hook_command ("demo_info",
                           N_("get and display an info"),
-                          N_("[info [arguments]]"),
+                          N_("<info> [<arguments>]"),
                           N_("     info: info to display\n"
                              "arguments: optional arguments for info\n\n"
                              "Without argument, this command displays list "
@@ -421,7 +395,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("demo_infolist",
                           N_("get and display an infolist"),
-                          N_("[infolist [arguments]]"),
+                          N_("<infolist> [<arguments>]"),
                           N_(" infolist: infolist to display\n"
                              "arguments: optional arguments for infolist\n\n"
                              "Without argument, this command displays list "

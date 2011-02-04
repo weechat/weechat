@@ -959,12 +959,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("alias",
                           N_("create an alias for a command"),
-                          N_("[[-completion completion] alias_name [command "
-                             "[arguments]]]"),
+                          N_("[-completion <completion>] <alias> [<command> "
+                             "[<arguments>]]"),
                           N_("completion: completion for alias (optional, by "
                              "default completion is done with target "
                              "command)\n"
-                             "alias_name: name of alias (can start or end "
+                             "     alias: name of alias (can start or end "
                              "with \"*\" for alias listing)\n"
                              "   command: command name (many commands can be "
                              "separated by semicolons)\n"
@@ -997,8 +997,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           &alias_command_cb, NULL);
     
     weechat_hook_command ("unalias", N_("remove aliases"),
-                          N_("alias_name [alias_name...]"),
-                          N_("alias_name: name of alias to remove"),
+                          N_("<alias> [<alias>...]"),
+                          N_("alias: name of alias to remove"),
                           "%(alias)|%*",
                           &unalias_command_cb, NULL);
     

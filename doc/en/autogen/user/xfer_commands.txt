@@ -1,19 +1,17 @@
-&bull; *`/me`* `message`::
-
+[command]*`me`* send a CTCP action to remote host::
 ........................................
-  send a CTCP action to remote host
+/me  <message>
 
-  message: message to send
+message: message to send
 ........................................
 
-&bull; *`/xfer`* `[list | listfull]`::
-
+[command]*`xfer`* xfer control::
 ........................................
-  xfer control
+/xfer  [list|listfull]
 
-      list: list xfer
-  listfull: list xfer (verbose)
-  
-  Without argument, this command opens buffer with xfer list.
+    list: list xfer
+listfull: list xfer (verbose)
+
+Without argument, this command opens buffer with xfer list.
 ........................................
 

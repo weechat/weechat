@@ -257,11 +257,23 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     }
     weechat_hook_command (weechat_plugin->name,
                           N_("list/load/unload scripts"),
-                          N_("[list [name]] | [listfull [name]] | "
-                             "[load filename] | [autoload] | "
-                             "[reload [name]] | [unload [name]]"),
-                          N_("filename: script (file) to load\n"
-                             "name: a script name\n\n"
+                          N_("list|listfull [<name>]"
+                             " || load <filename>"
+                             " || autoload"
+                             " || reload|unload [<name>]"),
+                          N_("    list: list loaded scripts\n"
+                             "listfull: list loaded scripts (verbose)\n"
+                             "    load: load a script\n"
+                             "autoload: load all scripts in \"autoload\" "
+                             "directory\n"
+                             "  reload: reload a script (if no name given, "
+                             "unload all scripts, then load all scripts in "
+                             "\"autoload\" directory)\n"
+                             "  unload: unload a script (if no name given, "
+                             "unload all scripts)\n"
+                             "filename: script (file) to load\n"
+                             "    name: a script name (name used in call to "
+                             "\"register\" function)\n\n"
                              "Without argument, this command "
                              "lists all loaded scripts."),
                           completion,

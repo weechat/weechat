@@ -1,13 +1,15 @@
-&bull; *`/aspell`* `dictlist | enable lang | disable | addword [lang] word`::
-
+[command]*`aspell`* configuration de l'extension aspell::
 ........................................
-  configuration de l'extension aspell
+/aspell  dictlist
+         enable <langue>
+         disable
+         addword [<langue>] <mot>
 
-  dictlist: afficher les dictionnaires installés
-    enable: active aspell sur le tampon courant
-   disable: désactive aspell sur le tampon courant
-   addword: ajoute un mot dans le dictionnaire personnel aspell
-  
-  Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes.
+dictlist: afficher les dictionnaires installés
+  enable: activer aspell sur le tampon courant
+ disable: désactiver aspell sur le tampon courant
+ addword: ajouter un mot dans le dictionnaire personnel aspell
+
+Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes.
 ........................................
 

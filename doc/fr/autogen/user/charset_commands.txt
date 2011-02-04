@@ -1,11 +1,11 @@
-&bull; *`/charset`* `[[decode | encode] charset] | [reset]`::
-
+[command]*`charset`* changer le charset pour le tampon courant::
 ........................................
-  changer le charset pour le tampon courant
+/charset  decode|encode <charset>
+          reset
 
-   decode: changer le charset de décodage
-   encode: changer le charset d'encodage
-  charset: nouveau charset pour le tampon courant
-    reset: réinitialiser les charsets pour le tampon courant
+ decode: changer le charset de décodage
+ encode: changer le charset d'encodage
+charset: nouveau charset pour le tampon courant
+  reset: réinitialiser les charsets pour le tampon courant
 ........................................
 

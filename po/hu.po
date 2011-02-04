@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-03 09:50+0100\n"
+"POT-Creation-Date: 2011-02-04 21:55+0100\n"
 "PO-Revision-Date: 2011-01-31 14:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -828,7 +828,8 @@ msgstr ""
 msgid "toggle away status"
 msgstr "távolléti státusz váltása"
 
-msgid "[-all] [message]"
+#, fuzzy
+msgid "[-all] [<message>]"
 msgstr "[-all] [üzenet]"
 
 msgid ""
@@ -844,15 +845,18 @@ msgid "manage bars"
 msgstr "pufferek kezelése"
 
 msgid ""
-"[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [default] | [del barname|-all] | [set barname option value] | [hide|show|"
-"toggle barname] | [scroll barname buffer scroll_value] | [list] | [listfull] "
-"| [listitems]"
+"list|listfull|listitems || add <name> <type>[,<cond1>[,<cond2>...]] "
+"<position> <size> <separator> <item1>[,<item2>...] || default || del <name>|-"
+"all || set <name> <option> <value> || hide|show|toggle <name> || scroll "
+"<name> <buffer> <scroll_value>"
 msgstr ""
 
 msgid ""
+"         list: list all bars\n"
+"     listfull: list all bars (verbose)\n"
+"    listitems: list all bar items\n"
 "          add: add a new bar\n"
-"      barname: name of bar (must be unique)\n"
+"         name: name of bar (must be unique)\n"
 "         type:   root: outside windows,\n"
 "               window: inside windows, with optional conditions (see below)\n"
 "    cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
@@ -875,15 +879,12 @@ msgid ""
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
 "       toggle: hide/show a bar\n"
-"       scroll: scroll bar up/down\n"
+"       scroll: scroll bar\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
 " scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', "
 "'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
 "%% of width/height, otherwise value is number of chars)\n"
-"         list: list all bars\n"
-"     listfull: list all bars (verbose)\n"
-"    listitems: list all bar items\n"
 "\n"
 "Examples:\n"
 "  create a bar with time, buffer number + name, and completion:\n"
@@ -903,13 +904,14 @@ msgid "manage buffers"
 msgstr "pufferek kezelése"
 
 msgid ""
-"[clear [number | -merged | -all] | move number | merge number | unmerge "
-"[number] | close [n1[-n2]] | list | notify level | localvar | set property "
-"value | get property | number | name]"
+"list || clear [<number>|-merged|-all] || move|merge <number> || unmerge "
+"[<number>] || close [<n1>[-<n2>]] || notify <level> || localvar || set "
+"<property> <value> || get <property> || <number>|<name>"
 msgstr ""
 
 #, fuzzy
 msgid ""
+"    list: list buffers (without argument, this list is displayed)\n"
 "   clear: clear buffer content (number for a buffer, -merged for merged "
 "buffers, -all for all buffers, or nothing for current buffer)\n"
 "    move: move buffer in the list (may be relative, for example -1)\n"
@@ -918,7 +920,6 @@ msgid ""
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
-"    list: list buffers (without argument, this list is displayed)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
 "               none: never\n"
@@ -985,7 +986,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr ""
 
-msgid "[alias color name] | [unalias color] | reset"
+msgid "alias <color> <alias> || unalias <color> || reset"
 msgstr ""
 
 msgid ""
@@ -1008,7 +1009,7 @@ msgid "launch explicit WeeChat or plugin command"
 msgstr ""
 
 #, fuzzy
-msgid "plugin command"
+msgid "<plugin> <command>"
 msgstr "Modul parancsok:\n"
 
 #, fuzzy
@@ -1025,19 +1026,20 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"[list | set plugin level | dump [plugin] | buffer | windows | term | color]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|windows|term|color"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
 msgid ""
-"    set: set log level for plugin\n"
+"   list: list plugins with debug levels\n"
+"    set: set debug level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   term: display infos about terminal and available colors\n"
+"   term: display infos about terminal\n"
 "  color: display infos about current color pairs"
 msgstr ""
 "   dump: memóriatartalom mentése a WeeChat logba (ugyanez a tartalom íródik "
@@ -1050,8 +1052,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags "
-"regex] | [del name|-all]"
+"list || enable|disable|toggle [<name>] || add <name> <plugin.buffer> <tags> "
+"<regex> || del <name>|-all"
 msgstr ""
 
 msgid ""
@@ -1107,7 +1109,7 @@ msgid "display help about commands and options"
 msgstr "segítség megjelenítése a parancsokhoz"
 
 #, fuzzy
-msgid "[command | option]"
+msgid "<command> || <option>"
 msgstr "[parancs]"
 
 #, fuzzy
@@ -1119,7 +1121,8 @@ msgstr "parancs: WeeChat vagy IRC parancs neve"
 msgid "show buffer command history"
 msgstr "a pufferben kiadott parancsok előzményének mutatása"
 
-msgid "[clear | value]"
+#, fuzzy
+msgid "clear || <value>"
 msgstr "[clear | érték]"
 
 msgid ""
@@ -1133,7 +1136,52 @@ msgstr ""
 msgid "functions for command line"
 msgstr "szöveg beillesztése a parancssorba"
 
-msgid "This command is used by key bindings or plugins."
+#, fuzzy
+msgid "<action> [<arguments>]"
+msgstr "fogadó típusa [paraméterek]"
+
+msgid ""
+"list of actions:\n"
+"  return: simulate key \"enter\"\n"
+"  complete_next: complete word with next completion\n"
+"  complete_previous: complete word with previous completion\n"
+"  search_text: search text in buffer\n"
+"  delete_previous_char: delete previous char\n"
+"  delete_next_char: delete next char\n"
+"  delete_previous_word: delete previous word\n"
+"  delete_next_word: delete next word\n"
+"  delete_beginning_of_line: delete from beginning of line until cursor\n"
+"  delete_end_of_line: delete from cursor until end of line\n"
+"  delete_line: delete entire line\n"
+"  clipboard_paste: paste from clipboard\n"
+"  transpose_chars: transpose two chars\n"
+"  undo: undo last command line action\n"
+"  redo: redo last command line action\n"
+"  move_beginning_of_line: move cursor to beginning of line\n"
+"  move_end_of_line: move cursor to end of line\n"
+"  move_previous_char: move cursor to previous char\n"
+"  move_next_char: move cursor to next char\n"
+"  move_previous_word: move cursor to previous word\n"
+"  move_next_word: move cursor to next word\n"
+"  history_previous: recall previous command in current buffer history\n"
+"  history_next: recall next command in current buffer history\n"
+"  history_global_previous: recall previous command in global history\n"
+"  history_global_next: recall next command in global history\n"
+"  jump_smart: jump to next buffer with activity\n"
+"  jump_last_buffer: jump to last buffer\n"
+"  jump_previously_visited_buffer: jump to previously visited buffer\n"
+"  jump_next_visited_buffer: jump to next visited buffer\n"
+"  hotlist_clear: clear hotlist\n"
+"  grab_key: grab a key\n"
+"  grab_key_command: grab a key with its associated command\n"
+"  scroll_unread: scroll to unread marker\n"
+"  set_unread: set unread marker for all buffers\n"
+"  set_unread_current_buffer: set unread marker for current buffer\n"
+"  switch_active_buffer: switch to next merged buffer\n"
+"  switch_active_buffer_previous: switch to previous merged buffer\n"
+"  insert: insert text in command line\n"
+"\n"
+"This command is used by key bindings or plugins."
 msgstr ""
 
 msgid "bind/unbind keys"
@@ -1141,8 +1189,8 @@ msgstr "billentyűk hozzárendelése/hozzárendelés eltávolítása"
 
 #, fuzzy
 msgid ""
-"[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
-"| [reset key] | [resetall -yes] | [missing]"
+"list|listdefault|listdiff || bind <key> [<command> [<args>]] || unbind <key> "
+"|| reset <key> || resetall -yes || missing"
 msgstr ""
 "[billentyű [funkció/parancs]] [unbind billentyű] [funkciók] [call funkció "
 "[\"paraméterek\"]] [reset -yes]"
@@ -1184,7 +1232,8 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr ""
 
-msgid "[[save | apply | reset] [buffers | windows]]"
+msgid ""
+"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
 msgstr ""
 
 msgid ""
@@ -1201,7 +1250,7 @@ msgstr ""
 msgid "execute a command silently"
 msgstr "%s belső parancsok:\n"
 
-msgid "[-current | -buffer name | -all] command"
+msgid "[-current | -buffer <name> | -all] command"
 msgstr ""
 
 msgid ""
@@ -1228,9 +1277,10 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr "modulok listázása/betöltése/eltávolítása"
 
+#, fuzzy
 msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
-"[name]] | [unload [name]]"
+"list|listfull [<name>] || load <filename> || autoload || reload|unload "
+"[<name>]"
 msgstr ""
 "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
 "[név]] | [unload [név]]"
@@ -1241,9 +1291,9 @@ msgid ""
 "listfull: list loaded plugins (verbose)\n"
 "    load: load a plugin\n"
 "autoload: autoload plugins in system or user directory\n"
-"  reload: reload one plugin (if no name given, unload all plugins, then "
+"  reload: reload a plugin (if no name given, unload all plugins, then "
 "autoload plugins)\n"
-"  unload: unload one or all plugins\n"
+"  unload: unload a plugin (if no name given, unload all plugins)\n"
 "\n"
 "Without argument, this command lists loaded plugins."
 msgstr ""
@@ -1263,24 +1313,24 @@ msgid "manage proxies"
 msgstr "pufferek kezelése"
 
 msgid ""
-"[add proxyname type address port [username [password]]] | [del proxyname|-"
-"all] | [set proxyname option value] | [list]"
+"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
+"<name>|-all || set <name> <option> <value>"
 msgstr ""
 
 msgid ""
-"          add: add a new proxy\n"
-"    proxyname: name of proxy (must be unique)\n"
-"         type: http, socks4 or socks5\n"
-"      address: IP or hostname\n"
-"         port: port\n"
-"     username: username (optional)\n"
-"     password: password (optional)\n"
-"          del: delete a proxy (or all proxies with -all)\n"
-"          set: set a value for a proxy property\n"
-"       option: option to change (for options list, look at /set weechat."
-"proxy.<proxyname>.*)\n"
-"        value: new value for option\n"
-"         list: list all proxies\n"
+"    list: list all proxies\n"
+"     add: add a new proxy\n"
+"    name: name of proxy (must be unique)\n"
+"    type: http, socks4 or socks5\n"
+" address: IP or hostname\n"
+"    port: port\n"
+"username: username (optional)\n"
+"password: password (optional)\n"
+"     del: delete a proxy (or all proxies with -all)\n"
+"     set: set a value for a proxy property\n"
+"  option: option to change (for options list, look at /set weechat.proxy."
+"<proxyname>.*)\n"
+"   value: new value for option\n"
 "\n"
 "Examples:\n"
 "  create a http proxy, running on local host, port 8888:\n"
@@ -1298,7 +1348,7 @@ msgid "quit WeeChat"
 msgstr ""
 
 #, fuzzy
-msgid "[-yes] [arguments]"
+msgid "[-yes] [<arguments>]"
 msgstr "fogadó típusa [paraméterek]"
 
 msgid ""
@@ -1312,11 +1362,11 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr "Beállítások mentése a lemezre\n"
 
-msgid "[file [file...]]"
+msgid "[<file> [<file>...]]"
 msgstr ""
 
 msgid ""
-"file: configuration file to reload\n"
+"file: configuration file to reload (without extension \".conf\")\n"
 "\n"
 "Without argument, all files (WeeChat and plugins) are reloaded."
 msgstr ""
@@ -1326,7 +1376,7 @@ msgid "save configuration files to disk"
 msgstr "beállítások mentése kilépéskor"
 
 msgid ""
-"file: configuration file to save\n"
+"file: configuration file to save (without extension \".conf\")\n"
 "\n"
 "Without argument, all files (WeeChat and plugins) are saved."
 msgstr ""
@@ -1335,11 +1385,12 @@ msgid "set config options"
 msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy
-msgid "[option [value]]"
+msgid "[<option> [<value>]]"
 msgstr "[opció [ = érték]]"
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (can start or end with \"*\" to list many "
+"options)\n"
 " value: new value for option\n"
 "\n"
 "New value can be, according to variable type:\n"
@@ -1349,7 +1400,13 @@ msgid ""
 "  color  : color name, ++number or --number\n"
 "\n"
 "For all types, you can use null to remove option value (undefined value). "
-"This works only for some special plugin variables."
+"This works only for some special plugin variables.\n"
+"\n"
+"Examples:\n"
+"  display options about highlight:\n"
+"    /set *highlight*\n"
+"  add a word to highlight:\n"
+"    /set weechat.look.highlight \"word\""
 msgstr ""
 
 #, fuzzy
@@ -1357,7 +1414,7 @@ msgid "unset/reset config options"
 msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy
-msgid "[option]"
+msgid "<option>"
 msgstr "[parancs]"
 
 msgid ""
@@ -1365,13 +1422,20 @@ msgid ""
 "options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
-"optional settings, like server values)."
+"optional settings, like server values).\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /unset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /unset weechat.color.*"
 msgstr ""
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "WeeChat frissítése a szerverekről való lecsatlakozás nélkül"
 
-msgid "[path_to_binary]"
+#, fuzzy
+msgid "[<path_to_binary>]"
 msgstr "[path_to_binary]"
 
 #, fuzzy
@@ -1383,9 +1447,9 @@ msgid ""
 "\n"
 "Upgrade process has 4 steps:\n"
 "  1. save session into files for core and plugins (buffers, history, ..)\n"
-"  2. unload all plugins (configs *.conf are saved)\n"
-"  3. save WeeChat config (weechat.conf)\n"
-"  4. exec new WeeChat binary."
+"  2. unload all plugins (configuration files (*.conf) are written on disk)\n"
+"  3. save WeeChat configuration (weechat.conf)\n"
+"  4. execute new WeeChat binary and reload session."
 msgstr ""
 "path_to_binary: a WeeChat bináris útvonala (alapértelmezetten az aktuális "
 "bináris útvonala)\n"
@@ -1413,7 +1477,7 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr ""
 
-msgid "number[unit] command"
+msgid "<number>[<unit>] <command>"
 msgstr ""
 
 msgid ""
@@ -1431,11 +1495,11 @@ msgid ""
 "then command is executed on WeeChat core buffer).\n"
 "\n"
 "Examples:\n"
-"  join channel in 10 sec:\n"
+"  join channel in 10 seconds:\n"
 "    /wait 10 /join #test\n"
-"  set away in 15 min:\n"
+"  set away in 15 minutes:\n"
 "    /wait 15m /away -all I'm away\n"
-"  say 'hello' in 2 min:\n"
+"  say 'hello' in 2 minutes:\n"
 "    /wait 2m hello"
 msgstr ""
 
@@ -1444,10 +1508,10 @@ msgstr "ablakok kezelése"
 
 #, fuzzy
 msgid ""
-"[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
-"[pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | "
-"scroll_up | scroll_down | scroll_top | scroll_bottom | "
-"scroll_previous_highlight | scroll_next_highlight | zoom]"
+"list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize <pct> "
+"|| merge [all] || page_up|page_down || refresh || scroll|scroll_up|"
+"scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
+"scroll_next_highlight || zoom"
 msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
@@ -2608,14 +2672,14 @@ msgid "create an alias for a command"
 msgstr "alias készítése egy parancshoz"
 
 #, fuzzy
-msgid "[[-completion completion] alias_name [command [arguments]]]"
+msgid "[-completion <completion>] <alias> [<command> [<arguments>]]"
 msgstr "[alias_név [parancs [paraméterek]]]"
 
 #, fuzzy, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
-"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
+"     alias: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"
@@ -2659,10 +2723,11 @@ msgid "remove aliases"
 msgstr "alias eltávolítása"
 
 #, fuzzy
-msgid "alias_name [alias_name...]"
+msgid "<alias> [<alias>...]"
 msgstr "név [név...]"
 
-msgid "alias_name: name of alias to remove"
+#, fuzzy
+msgid "alias: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
 
 #, fuzzy
@@ -2719,7 +2784,7 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "Beállítások mentése a lemezre\n"
 
-msgid "dictlist | enable lang | disable | addword [lang] word"
+msgid "dictlist || enable <lang> || disable || addword [<lang>] <word>"
 msgstr ""
 
 msgid ""
@@ -2805,7 +2870,7 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgid "change charset for current buffer"
 msgstr "szobanév nem található a pufferhez"
 
-msgid "[[decode | encode] charset] | [reset]"
+msgid "decode|encode <charset> || reset"
 msgstr ""
 
 msgid ""
@@ -2854,7 +2919,7 @@ msgid "print some messages on current buffer"
 msgstr "szobanév nem található a pufferhez"
 
 #, fuzzy
-msgid "[text]"
+msgid "<text>"
 msgstr "szöveg"
 
 #, fuzzy
@@ -2865,14 +2930,7 @@ msgstr "időbélyeg a információs pult idejéhez"
 msgid "open a new buffer"
 msgstr "nem sikerült új puffert nyitni"
 
-msgid "name"
-msgstr ""
-
-#, fuzzy
-msgid "set a buffer property"
-msgstr "szöveg keresése a puffertörténetben"
-
-msgid "property value"
+msgid "<name>"
 msgstr ""
 
 #, fuzzy
@@ -2880,7 +2938,7 @@ msgid "get and display an info"
 msgstr "megjeleníthető parancsok maximális száma"
 
 #, fuzzy
-msgid "[info [arguments]]"
+msgid "<info> [<arguments>]"
 msgstr "fogadó típusa [paraméterek]"
 
 msgid ""
@@ -2895,7 +2953,7 @@ msgid "get and display an infolist"
 msgstr "megjeleníthető parancsok maximális száma"
 
 #, fuzzy
-msgid "[infolist [arguments]]"
+msgid "<infolist> [<arguments>]"
 msgstr "fogadó típusa [paraméterek]"
 
 msgid ""
@@ -3231,7 +3289,8 @@ msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
 msgid "find information about the administrator of the server"
 msgstr "információ lekérdezése a szerver adminisztrátorról"
 
-msgid "[target]"
+#, fuzzy
+msgid "[<target>]"
 msgstr "[cél]"
 
 msgid "target: server"
@@ -3241,8 +3300,9 @@ msgstr "cél: szerver"
 msgid "execute a command on all channels of all connected servers"
 msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobájába"
 
-msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
-msgstr ""
+#, fuzzy
+msgid "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
+msgstr "[alias_név [parancs [paraméterek]]]"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -3265,7 +3325,7 @@ msgstr ""
 msgid "execute a command on all connected servers"
 msgstr "üzenet küldése az összes csatlakoztatott szerver összes szobájába"
 
-msgid "[-exclude=server[,server...]] command [arguments]"
+msgid "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
 msgstr ""
 
 msgid ""
@@ -3285,12 +3345,14 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr "név vagy gép letiltása"
 
-msgid "[channel] [nickname [nickname ...]]"
+#, fuzzy
+msgid "[<channel>] [<nick> [<nick>...]]"
 msgstr "[szoba] [név [név ...]]"
 
+#, fuzzy
 msgid ""
-" channel: channel for ban\n"
-"nickname: user or host to ban"
+"channel: channel for ban\n"
+"   nick: user or host to ban"
 msgstr ""
 "szoba: letiltandó szoba\n"
 "  név: letiltandó felhasználó vagy gép"
@@ -3301,15 +3363,15 @@ msgstr "csatlakozás a szerver(ek)hez"
 
 #, fuzzy
 msgid ""
-"[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] "
-"| -all | -open] [-nojoin] [-switch]"
+"[<server> [<server>...] | <hostname>[/<port>]] [-<option>[=<value>]] [-"
+"no<option>] [-nojoin] [-switch] || -all|-open [-nojoin] [-switch]"
 msgstr ""
 "[-all [-nojoin] | szervernév [szervernév ...] [-nojoin] | gépnév [-port "
 "port] [-ipv6] [-ssl]]"
 
 #, fuzzy
 msgid ""
-"servername: internal server name to connect (server must have been created "
+"    server: internal server name to connect (server must have been created "
 "by /server add)\n"
 "  hostname: hostname (or IP) of a server (this will create a TEMPORARY "
 "server)\n"
@@ -3343,7 +3405,7 @@ msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP üzenet küldése (Client-To-Client Protokoll)"
 
 #, fuzzy
-msgid "target type [arguments]"
+msgid "<target> <type> [<arguments>]"
 msgstr "fogadó típusa [paraméterek]"
 
 #, fuzzy
@@ -3359,28 +3421,29 @@ msgstr ""
 msgid "leave and rejoin a channel"
 msgstr "kilépés majd visszalépés a szobába"
 
-msgid "[channel[,channel]] [part_message]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[szoba,[szoba] [kilépő_üzenet]]"
 
+#, fuzzy
 msgid ""
-"     channel: channel name for cycle\n"
-"part_message: part message (displayed to other users)"
+"channel: channel name for cycle\n"
+"message: part message (displayed to other users)"
 msgstr ""
-"        szoba: a szoba ahonnan ki-be szeretnénk lépni\n"
+"        szoba: a szoba ahonnan ki szeretnénk lépni\n"
 "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
 
 #, fuzzy
-msgid "start DCC (file or chat)"
+msgid "start a DCC (file transfert or direct chat)"
 msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
 
-msgid "action [nickname [file]]"
-msgstr "parancs [név [fájl]]"
+msgid "chat <nick> || send <nick> <file>"
+msgstr ""
 
 #, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat'\n"
-"nickname: nickname to send file or chat\n"
-"    file: filename (on local host)\n"
+"nick: nick for chat or file\n"
+"file: filename (on local host)\n"
 "\n"
 "Examples:\n"
 "  chat with nick \"toto\":\n"
@@ -3394,18 +3457,19 @@ msgstr ""
 "   fájl: fájlnév (a helyi gépen)"
 
 #, fuzzy
-msgid "remove half channel operator status from nickname(s)"
+msgid "remove half channel operator status from nick(s)"
 msgstr "elveszi a féloperátori jogot a felhasználó(k)tól"
 
-msgid "[nickname [nickname]]"
-msgstr "[név [név]]"
+#, fuzzy
+msgid "<nick> [<nick>...]"
+msgstr "név [név...]"
 
 #, fuzzy
-msgid "remove channel operator status from nickname(s)"
+msgid "remove channel operator status from nick(s)"
 msgstr "elveszi az operátori jogot a felhasználó(k)tól"
 
 #, fuzzy
-msgid "remove voice from nickname(s)"
+msgid "remove voice from nick(s)"
 msgstr "elveszi a voice jogot a felhasználó(k)tól"
 
 msgid "shutdown the server"
@@ -3415,29 +3479,29 @@ msgstr "szerver leállítása"
 msgid "disconnect from IRC server(s)"
 msgstr "kilépés a szerver(ek)ről"
 
-msgid "[-all | servername [servername ...]]"
-msgstr "[-all | szervernév [szervernév ...]]"
+#, fuzzy
+msgid "<server> [<server>...] || -all"
+msgstr "szerver1 [szerver2]"
 
 msgid ""
-"      -all: disconnect from all servers\n"
-"servername: server name to disconnect"
+"server: server name to disconnect\n"
+"  -all: disconnect from all servers"
 msgstr ""
-"      -all: kapcsolat bontása minden szerverrel\n"
-"szervernév: belső szervernév amivel a kapcsolatot bontja"
 
 #, fuzzy
-msgid "give half channel operator status to nickname(s)"
+msgid "give half channel operator status to nick(s)"
 msgstr "féloperátori jog biztosítása a felhasználó(k)nak"
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
-msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
+msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr ""
 
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
+"     nick: nick or hostname (can be regular expression if \"re:\" is given)\n"
 "      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
@@ -3464,30 +3528,31 @@ msgstr "cél: szerver neve"
 msgid "invite a nick on a channel"
 msgstr "felhasználó meghívása szobából"
 
-msgid "nickname channel"
+#, fuzzy
+msgid "<nick> <channel>"
 msgstr "név szoba"
 
+#, fuzzy
 msgid ""
-"nickname: nick to invite\n"
-" channel: channel to invite"
+"   nick: nick to invite\n"
+"channel: channel to invite"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
 
-msgid "check if a nickname is currently on IRC"
+#, fuzzy
+msgid "check if a nick is currently on IRC"
 msgstr "ellenőrzi, hogy egy név fent van-e az IRC-n"
 
-msgid "nickname [nickname ...]"
-msgstr "név [név...]"
-
-msgid "nickname: nickname"
+#, fuzzy
+msgid "nick: nick"
 msgstr "név: név"
 
 msgid "join a channel"
 msgstr "belépés egy szobába"
 
 #, fuzzy
-msgid "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
+msgid "[-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]"
 msgstr "szoba[,szoba] [kulcs[,kulcs]]"
 
 msgid ""
@@ -3505,13 +3570,15 @@ msgstr ""
 msgid "forcibly remove a user from a channel"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
-msgid "[channel] nickname [comment]"
+#, fuzzy
+msgid "[<channel>] <nick> [<reason>]"
 msgstr "[szoba] név [megjegyzés]"
 
+#, fuzzy
 msgid ""
-" channel: channel where user is\n"
-"nickname: nickname to kick\n"
-" comment: comment for kick"
+"channel: channel where user is\n"
+"   nick: nick to kick\n"
+" reason: reason for kick"
 msgstr ""
 "     szoba: a szoba, ahol a felhasználó tartózkodik\n"
 "       név: a kirúgandó neve\n"
@@ -3521,9 +3588,9 @@ msgid "kicks and bans a nick from a channel"
 msgstr "kirúgja és kitiltja a felhasználót a szobából"
 
 msgid ""
-" channel: channel where user is\n"
-"nickname: nickname to kick and ban\n"
-" comment: comment for kick\n"
+"channel: channel where user is\n"
+"   nick: nick to kick and ban\n"
+" reason: reason for kick\n"
 "\n"
 "It is possible to kick/ban with a mask, nick will be extracted from mask and "
 "replaced by \"*\".\n"
@@ -3536,22 +3603,25 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "kliens-szerver kapcsolat bezárása"
 
-msgid "nickname comment"
-msgstr "név megjegyzés"
+#, fuzzy
+msgid "<nick> <reason>"
+msgstr "név szöveg"
 
+#, fuzzy
 msgid ""
-"nickname: nickname\n"
-" comment: comment for kill"
+"  nick: nick to kill\n"
+"reason: reason for kill"
 msgstr ""
-"       név: név\n"
-"megjegyzés: megjegyzés a kill parancshoz"
+"  név: meghívandó név\n"
+"szoba: meghívandó szoba"
 
 msgid "list all servernames which are known by the server answering the query"
 msgstr ""
 "kilistázza az összes szerver nevét, melyeket a kérésre válaszoló szerver "
 "ismer"
 
-msgid "[[server] server_mask]"
+#, fuzzy
+msgid "[[<server>>] <server_mask>]"
 msgstr "[[szerver] szerver_maszk]"
 
 msgid ""
@@ -3565,13 +3635,13 @@ msgid "list channels and their topic"
 msgstr "szobák listája témájukkal együtt"
 
 #, fuzzy
-msgid "[channel[,channel] [server] [-re regexp]]"
+msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 msgstr "[szoba[,szoba] [szerver]]"
 
 msgid ""
 "channel: channel to list\n"
 " server: server name\n"
-" regexp: regular expression used to filter results\n"
+"  regex: regular expression used to filter results\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"
@@ -3586,7 +3656,8 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr "statisztika gyűjtése az IRC hálózat méretéről"
 
-msgid "[mask [target]]"
+#, fuzzy
+msgid "[<mask> [<target>]]"
 msgstr "[maszk [cél]]"
 
 msgid ""
@@ -3602,7 +3673,8 @@ msgstr ""
 msgid "send a CTCP action to the current channel"
 msgstr "CTCP parancs küldése az aktuális szobába"
 
-msgid "message"
+#, fuzzy
+msgid "<message>"
 msgstr "üzenet"
 
 msgid "message: message to send"
@@ -3612,9 +3684,7 @@ msgid "change channel or user mode"
 msgstr "szoba vagy felhasználó állapotának változtatása"
 
 #, fuzzy
-msgid ""
-"{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
-"{[+|-]|i|w|s|o} }"
+msgid "[<channel>] [+|-]o|p|s|i|t|n|b|v [<arguments>] || <nick> [+|-]i|w|s|o"
 msgstr ""
 "{ szoba {[+|-]|o|p|s|i|t|n|b|v} [limit] [felhasználó] [tiltási maszk] } | "
 "{ név {[+|-]|i|w|s|o} }"
@@ -3636,11 +3706,20 @@ msgid ""
 "  v: give/take the ability to speak on a moderated channel\n"
 "  k: set a channel key (password)\n"
 "user modes:\n"
-"  nickname: nickname to modify\n"
+"  nick: nick to modify\n"
 "  i: mark a user as invisible\n"
 "  s: mark a user for receive server notices\n"
 "  w: user receives wallops\n"
-"  o: operator flag"
+"  o: operator flag\n"
+"\n"
+"List of modes is not comprehensive, you should read documentation about your "
+"server to see all possible modes.\n"
+"\n"
+"Examples:\n"
+"  protect topic on channel #weechat:\n"
+"    /mode #weecht +t\n"
+"  become invisible on server:\n"
+"    /mode nick +i"
 msgstr ""
 "szoba állapotai:\n"
 "  szoba: módosítandó szoba neve\n"
@@ -3670,7 +3749,7 @@ msgid "send message to a nick or channel"
 msgstr "üzenet küldése egy felhasználónak vagy szobának"
 
 #, fuzzy
-msgid "[-server server] target[,target] text"
+msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr "fogadó [,fogadó] szöveg"
 
 #, fuzzy
@@ -3682,24 +3761,29 @@ msgstr ""
 "fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
 "szöveg: küldendő üzenet"
 
-msgid "list nicknames on channels"
+#, fuzzy
+msgid "list nicks on channels"
 msgstr "felhasználók listája egy szobában"
 
-msgid "[channel[,channel]]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]]"
 msgstr "[szoba[,szoba]]"
 
 msgid "channel: channel name"
 msgstr "szoba: szoba neve"
 
-msgid "change current nickname"
+#, fuzzy
+msgid "change current nick"
 msgstr "aktuális név megváltoztatása"
 
-msgid "[-all] nickname"
+#, fuzzy
+msgid "[-all] <nick>"
 msgstr "[-all] név"
 
+#, fuzzy
 msgid ""
-"    -all: set new nickname for all connected servers\n"
-"nickname: new nickname"
+"-all: set new nick for all connected servers\n"
+"nick: new nick"
 msgstr ""
 "-all: új név beállítása minden csatlakozott szerveren\n"
 " név: új név"
@@ -3708,7 +3792,7 @@ msgid "send notice message to user"
 msgstr "emlékeztető küldése egy felhasználónak"
 
 #, fuzzy
-msgid "[-server server] target text"
+msgid "[-server <server>] <target> <text>"
 msgstr "fogadó [,fogadó] szöveg"
 
 #, fuzzy
@@ -3723,12 +3807,12 @@ msgstr ""
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
-msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr ""
 
 msgid ""
 "   add: add a notification\n"
-"  nick: nickname\n"
+"  nick: nick\n"
 "server: internal server name (by default current server)\n"
 " -away: notify when away message is changed (by doing whois on nick)\n"
 "   del: delete a notification\n"
@@ -3747,29 +3831,28 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "give channel operator status to nickname(s)"
+msgid "give channel operator status to nick(s)"
 msgstr "operátori jogok biztosítása felhasználó(k)nak"
-
-msgid "nickname [nickname]"
-msgstr "név [név]"
 
 msgid "get operator privileges"
 msgstr "operátori jogok megszerzése"
 
-msgid "user password"
+#, fuzzy
+msgid "<user> <password>"
 msgstr "felhasználó jelszó"
 
-msgid "user/password: used to get privileges on current IRC server"
+msgid ""
+"    user: user\n"
+"password: password"
 msgstr ""
-"felhasználó/jelszó: privilégiumok szerzésére szolgál az aktuális IRC "
-"szerveren"
 
 msgid "leave a channel"
 msgstr "kilépés a szobából"
 
+#, fuzzy
 msgid ""
-"     channel: channel name to leave\n"
-"part_message: part message (displayed to other users)"
+"channel: channel name to leave\n"
+"message: part message (displayed to other users)"
 msgstr ""
 "        szoba: a szoba ahonnan ki szeretnénk lépni\n"
 "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
@@ -3777,7 +3860,8 @@ msgstr ""
 msgid "ping server"
 msgstr "szerver pingelése"
 
-msgid "server1 [server2]"
+#, fuzzy
+msgid "<server1> [<server2>]"
 msgstr "szerver1 [szerver2]"
 
 msgid ""
@@ -3790,7 +3874,8 @@ msgstr ""
 msgid "answer to a ping message"
 msgstr "válasz ping üzenetre"
 
-msgid "daemon [daemon2]"
+#, fuzzy
+msgid "<daemon> [<daemon2>]"
 msgstr "démon [démon2]"
 
 msgid ""
@@ -3804,14 +3889,14 @@ msgid "send a private message to a nick"
 msgstr "személyes üzenet küldése egy felhasználónak"
 
 #, fuzzy
-msgid "[-server server] nickname [text]"
+msgid "[-server <server>] <nick> [<text>]"
 msgstr "[szerver | név]"
 
 #, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"nickname: nickname for private conversation\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"  nick: nick for private conversation\n"
+"  text: text to send"
 msgstr ""
 "becenév: privát beszélgetésre hívott felhasználó beceneve\n"
 " szöveg: küldendő üzenet"
@@ -3820,7 +3905,7 @@ msgid "send raw data to server without parsing"
 msgstr "formázás nélküli nyers üzenet küldése a szervernek"
 
 #, fuzzy
-msgid "[-server server] data"
+msgid "[-server <server>] <data>"
 msgstr "szerver1 [szerver2]"
 
 #, fuzzy
@@ -3835,15 +3920,15 @@ msgid "reconnect to server(s)"
 msgstr "újracsatlakozás a szerver(ek)hez"
 
 #, fuzzy
-msgid "[servername [servername ...] | -all] [-nojoin] [-switch]"
+msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr "[-all [-nojoin] | szervernév [szervernév ...] [-nojoin]]"
 
 #, fuzzy
 msgid ""
-"servername: server name to reconnect\n"
-"      -all: reconnect to all servers\n"
-"   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"   -switch: switch to next server address"
+" server: server name to reconnect\n"
+"   -all: reconnect to all servers\n"
+"-nojoin: do not join any channel (even if autojoin is enabled on server)\n"
+"-switch: switch to next server address"
 msgstr ""
 "-all: újracsatlakozás minden szerverhez\n"
 "szervernév: újracsatlakozás a megadott szerverhez\n"
@@ -3852,6 +3937,10 @@ msgstr ""
 
 msgid "tell the server to reload its config file"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "[<option>]"
+msgstr "[parancs]"
 
 msgid "option: extra option, for some servers"
 msgstr ""
@@ -3864,13 +3953,13 @@ msgid "forces a user to join channel(s)"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
-msgid "nickname channel[,channel]"
+msgid "<nick> <channel>[,<channel>...]"
 msgstr "név szoba"
 
 #, fuzzy
 msgid ""
-"nickname: nickname\n"
-" channel: channel name"
+"   nick: nick\n"
+"channel: channel name"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
@@ -3878,10 +3967,8 @@ msgstr ""
 msgid "change mode on channel, without having operator status"
 msgstr ""
 
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
 #, fuzzy
-msgid "channel mode"
+msgid "<channel> <mode>"
 msgstr "%d szoba"
 
 #, fuzzy
@@ -3897,13 +3984,13 @@ msgid "forces a user to use another nick"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
-msgid "nickname new_nickname"
+msgid "<nick> <new_nick>"
 msgstr "név: név"
 
 #, fuzzy
 msgid ""
-"    nickname: nickname\n"
-"new_nickname: new nickname"
+"    nick: nick\n"
+"new_nick: new nick"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
@@ -3917,13 +4004,9 @@ msgid "forces a user to quit server with a reason"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
-msgid "nickname reason"
-msgstr "név szöveg"
-
-#, fuzzy
 msgid ""
-"nickname: nickname\n"
-"  reason: reason"
+"  nick: nick\n"
+"reason: reason"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
@@ -3931,7 +4014,8 @@ msgstr ""
 msgid "register a new service"
 msgstr "új szolgáltatás regisztrálása"
 
-msgid "nickname reserved distribution type reserved info"
+#, fuzzy
+msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr "név foglaltság megosztás típus foglaltság információ"
 
 msgid ""
@@ -3947,10 +4031,9 @@ msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 
 #, fuzzy
 msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-option[=value]] [-nooption]] | [copy servername "
-"newservername] | [rename servername newservername] | [keep servername] | "
-"[del servername] | [deloutq] | [jump] | [raw]"
+"list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
+"<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
+"keep <server> || deloutq|jump|raw"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -3960,24 +4043,23 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"      list: list servers (without argument, this list is displayed)\n"
-"  listfull: list servers with detailed info for each server\n"
-"       add: create a new server\n"
-"servername: server name, for internal and display use\n"
-"  hostname: name or IP address of server, with optional port (default: "
-"6667), many addresses can be separated by a comma\n"
-"      temp: create temporary server (not saved)\n"
-"    option: set option for server (for boolean option, value can be "
-"omitted)\n"
-"  nooption: set boolean option to 'off' (for example: -nossl)\n"
-"      copy: duplicate a server\n"
-"    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
-"       del: delete a server\n"
-"   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)\n"
-"      jump: jump to server buffer\n"
-"       raw: open buffer with raw IRC data\n"
+"    list: list servers (without argument, this list is displayed)\n"
+"listfull: list servers with detailed info for each server\n"
+"     add: create a new server\n"
+"  server: server name, for internal and display use\n"
+"hostname: name or IP address of server, with optional port (default: 6667), "
+"many addresses can be separated by a comma\n"
+"    temp: create temporary server (not saved)\n"
+"  option: set option for server (for boolean option, value can be omitted)\n"
+"nooption: set boolean option to 'off' (for example: -nossl)\n"
+"    copy: duplicate a server\n"
+"  rename: rename a server\n"
+"    keep: keep server in config file (for temporary servers only)\n"
+"     del: delete a server\n"
+" deloutq: delete messages out queue for all servers (all messages WeeChat is "
+"currently sending)\n"
+"    jump: jump to server buffer\n"
+"     raw: open buffer with raw IRC data\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -4021,7 +4103,8 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr "a hálózathoz kapcsolódó szolgáltatások listája"
 
-msgid "[mask [type]]"
+#, fuzzy
+msgid "[<mask> [<type>]]"
 msgstr "[maszk [típus]]"
 
 msgid ""
@@ -4034,12 +4117,14 @@ msgstr ""
 msgid "deliver a message to a service"
 msgstr "üzenet küldése egy szolgáltatásnak"
 
-msgid "service text"
+#, fuzzy
+msgid "<service> <text>"
 msgstr "szolgáltatás szöveg"
 
+#, fuzzy
 msgid ""
 "service: name of service\n"
-"text: text to send"
+"   text: text to send"
 msgstr ""
 "szolgáltatás: szolgáltatás neve\n"
 "      szöveg: küldendő üzenet"
@@ -4047,11 +4132,13 @@ msgstr ""
 msgid "disconnect server links"
 msgstr "szerver linkek lecsatlakoztatása"
 
-msgid "server comment"
+#, fuzzy
+msgid "<server> <comment>"
 msgstr "szerver megjegyzés"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+" server: server name\n"
 "comment: comment for quit"
 msgstr ""
 "   szerver: szerver neve\n"
@@ -4060,7 +4147,8 @@ msgstr ""
 msgid "query statistics about server"
 msgstr "szerver statisztika lekérdezése"
 
-msgid "[query [server]]"
+#, fuzzy
+msgid "[<query> [<server>]]"
 msgstr "[kérdés [szerver]]"
 
 msgid ""
@@ -4077,12 +4165,14 @@ msgstr ""
 "üzenetet küld a gépen IRC szervert futtatóknak, hogy csatlakozzanak fel az "
 "IRC-re"
 
-msgid "user [target [channel]]"
+#, fuzzy
+msgid "<user> [<target> [<channel>]]"
 msgstr "felhasználó [cél [szoba]]"
 
+#, fuzzy
 msgid ""
 "   user: username\n"
-"target: server name\n"
+" target: server name\n"
 "channel: channel name"
 msgstr ""
 "felhasználó: felhasználónév\n"
@@ -4098,12 +4188,15 @@ msgstr "cél: idő lekérdezése a megadott szerverről"
 msgid "get/set channel topic"
 msgstr "szoba témájának olvasása/módosítása"
 
-msgid "[channel] [topic]"
+#, fuzzy
+msgid "[<channel>] [<topic>|-delete]"
 msgstr "[szoba] [téma]"
 
+#, fuzzy
 msgid ""
 "channel: channel name\n"
-"topic: new topic for channel (if topic is \"-delete\" then topic is deleted)"
+"  topic: new topic for channel\n"
+"-delete: delete channel topic"
 msgstr ""
 "szoba: szoba neve \n"
 " téma: a szoba új témája (ha \"-delete\" akkor a téma törlésre kerül)"
@@ -4115,17 +4208,20 @@ msgstr "útvonal keresése a megadott szerverhez"
 msgid "unban nicks or hosts"
 msgstr "gép vagy felhasználó tiltásának visszavonása"
 
-msgid "[channel] nickname [nickname ...]"
+#, fuzzy
+msgid "[<channel>] <nick> [<nick>...]"
 msgstr "[szoba] név [név ...]"
 
+#, fuzzy
 msgid ""
-" channel: channel for unban\n"
-"nickname: user or host to unban"
+"channel: channel for unban\n"
+"   nick: user or host to unban"
 msgstr ""
 "szoba: szoba ahol a parancsot végrehajtjuk\n"
 "  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
 
-msgid "return a list of information about nicknames"
+#, fuzzy
+msgid "return a list of information about nicks"
 msgstr "információt ad a kívánt felhasználókról"
 
 msgid "list of users logged into the server"
@@ -4137,18 +4233,20 @@ msgstr ""
 "verzióinformáció kijelzése felhasználóról vagy szerverről (aktuális vagy "
 "megadott)"
 
-msgid "[server | nickname]"
+#, fuzzy
+msgid "[<server>|<nick>]"
 msgstr "[szerver | név]"
 
+#, fuzzy
 msgid ""
-"  server: server name\n"
-"nickname: nickname"
+"server: server name\n"
+"  nick: nick"
 msgstr ""
 "szerver: szerver neve\n"
 "    név: felhasználónév"
 
 #, fuzzy
-msgid "give voice to nickname(s)"
+msgid "give voice to nick(s)"
 msgstr "voice jog biztosítása a felhasználó(k)nak"
 
 #, fuzzy
@@ -4156,7 +4254,7 @@ msgid "send a notice to channel ops"
 msgstr "üzenet küldése egy felhasználónak vagy szobának"
 
 #, fuzzy
-msgid "[channel] text"
+msgid "[<channel>] <text>"
 msgstr "[szoba] [téma]"
 
 #, fuzzy
@@ -4174,16 +4272,15 @@ msgstr ""
 "üzenet küldése minden olyan felhasználónak, aki a 'w' felhasználói módot "
 "beállította"
 
-msgid "text"
-msgstr "szöveg"
-
-msgid "text to send"
+#, fuzzy
+msgid "text: text to send"
 msgstr "küldendő üzenet"
 
 msgid "generate a query which returns a list of information"
 msgstr "lekérdezés generálása mely a kívánt információk listájával tér vissza"
 
-msgid "[mask [\"o\"]]"
+#, fuzzy
+msgid "[<mask> [o]]"
 msgstr "[maszk [\"o\"]]"
 
 msgid ""
@@ -4197,26 +4294,31 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "felhasználó(k) információjának lekérdezése"
 
-msgid "[server] nickname[,nickname]"
+#, fuzzy
+msgid "[<server>] <nick>[,<nick>...]"
 msgstr "[szerver] felhasználó[,felhasználó]"
 
+#, fuzzy
 msgid ""
-"  server: server name\n"
-"nickname: nickname (may be a mask)"
+"server: server name\n"
+"  nick: nick (may be a mask)"
 msgstr ""
 "    szerver: szerver neve\n"
 "felhasználó: felhasználónév (maszk is lehet)"
 
-msgid "ask for information about a nickname which no longer exists"
+#, fuzzy
+msgid "ask for information about a nick which no longer exists"
 msgstr "információ lekérdezése már nem létező felhasználóról"
 
-msgid "nickname [,nickname [,nickname ...]] [count [target]]"
+#, fuzzy
+msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "felhasználó [,felhasználó [,felhasználó ...]] [számláló [cél]]"
 
+#, fuzzy
 msgid ""
-"nickname: nickname to search\n"
-"   count: number of replies to return (full search if negative number)\n"
-"  target: reply should match this mask"
+"  nick: nick to search\n"
+" count: number of replies to return (full search if negative number)\n"
+"target: reply should match this mask"
 msgstr ""
 "felhasználó: felhasználó akit keresünk\n"
 "   számláló: válaszok száma (negatív esetén az összes)\n"
@@ -5642,7 +5744,7 @@ msgstr ""
 msgid "logger plugin configuration"
 msgstr "Beállítások mentése a lemezre\n"
 
-msgid "[list | set level | disable]"
+msgid "list || set <level> || disable"
 msgstr ""
 
 msgid ""
@@ -6075,7 +6177,9 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "relay control"
 msgstr ""
 
-msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
+msgid ""
+"list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
+"|| raw"
 msgstr ""
 
 msgid ""
@@ -6251,8 +6355,8 @@ msgid "alter modifier strings with regular expressions"
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid ""
-"[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
-"[name...]] | [default -yes]"
+"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
+"all [<name>...] || default -yes"
 msgstr ""
 
 msgid ""
@@ -6454,12 +6558,30 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 msgid "list/load/unload scripts"
 msgstr "modulok listázása/betöltése/eltávolítása"
 
+#, fuzzy
 msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"name: a script name\n"
+"    name: a script name (name used in call to \"register\" function)\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
 msgstr ""
+"list: betöltött modulok listája\n"
+"listfull: betöltött modulok listája részletes információkkal együtt\n"
+"load: modul betöltése\n"
+"autoload: modulok automatikus betöltése a felhasználó vagy "
+"rendszerkönyvtárból\n"
+"reload: modul újratöltése (ha nincs név megadva, minden modul eltávolítása, "
+"majd automatikus modulbetöltés)\n"
+"unload: megadott vagy összes modul eltávolítása\n"
+"\n"
+"Paraméter nélkül a /plugin parancs listázza a betöltött modulokat."
 
 #, fuzzy
 msgid "list of scripts"
@@ -6935,3 +7057,85 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#~ msgid "user/password: used to get privileges on current IRC server"
+#~ msgstr ""
+#~ "felhasználó/jelszó: privilégiumok szerzésére szolgál az aktuális IRC "
+#~ "szerveren"
+
+#, fuzzy
+#~ msgid ""
+#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
+#~ "autoload"
+#~ msgstr ""
+#~ "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
+#~ "[név]] | [unload [név]]"
+
+#~ msgid "message"
+#~ msgstr "üzenet"
+
+#~ msgid ""
+#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
+#~ "[reload [name]] | [unload [name]]"
+#~ msgstr ""
+#~ "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
+#~ "[név]] | [unload [név]]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<message>]"
+#~ msgstr "[szoba,[szoba] [kilépő_üzenet]]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<part_message>]"
+#~ msgstr "[szoba,[szoba] [kilépő_üzenet]]"
+
+#~ msgid ""
+#~ "     channel: channel name for cycle\n"
+#~ "part_message: part message (displayed to other users)"
+#~ msgstr ""
+#~ "        szoba: a szoba ahonnan ki-be szeretnénk lépni\n"
+#~ "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
+
+#~ msgid "action [nickname [file]]"
+#~ msgstr "parancs [név [fájl]]"
+
+#~ msgid "[nickname [nickname]]"
+#~ msgstr "[név [név]]"
+
+#~ msgid "[-all | servername [servername ...]]"
+#~ msgstr "[-all | szervernév [szervernév ...]]"
+
+#~ msgid ""
+#~ "      -all: disconnect from all servers\n"
+#~ "servername: server name to disconnect"
+#~ msgstr ""
+#~ "      -all: kapcsolat bontása minden szerverrel\n"
+#~ "szervernév: belső szervernév amivel a kapcsolatot bontja"
+
+#~ msgid "nickname comment"
+#~ msgstr "név megjegyzés"
+
+#~ msgid ""
+#~ "nickname: nickname\n"
+#~ " comment: comment for kill"
+#~ msgstr ""
+#~ "       név: név\n"
+#~ "megjegyzés: megjegyzés a kill parancshoz"
+
+#~ msgid "nickname [nickname]"
+#~ msgstr "név [név]"
+
+#, fuzzy
+#~ msgid "[option]"
+#~ msgstr "[parancs]"
+
+#~ msgid "text"
+#~ msgstr "szöveg"
+
+#, fuzzy
+#~ msgid "[text]"
+#~ msgstr "szöveg"
+
+#, fuzzy
+#~ msgid "set a buffer property"
+#~ msgstr "szöveg keresése a puffertörténetben"

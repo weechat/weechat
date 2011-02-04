@@ -1483,8 +1483,9 @@ COMMAND_CALLBACK(help)
 {
     struct t_hook *ptr_hook;
     struct t_config_option *ptr_option;
-    int i, length, command_found;
-    char *string;
+    int i, length, command_found, first_line_displayed;
+    char *string, *ptr_string, *pos_double_pipe, *pos_end;
+    char empty_string[1] = { '\0' }, str_format[64];
     
     /* make C compiler happy */
     (void) data;
@@ -1556,6 +1557,7 @@ COMMAND_CALLBACK(help)
     }
     
     /* look for command */
+    command_found = 0;
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -1565,19 +1567,63 @@ COMMAND_CALLBACK(help)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    argv[1]) == 0))
         {
+            command_found = 1;
             gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL,
-                             "%s[%s%s%s]  %s/%s  %s%s",
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             plugin_get_name (ptr_hook->plugin),
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             HOOK_COMMAND(ptr_hook, command),
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             (HOOK_COMMAND(ptr_hook, args)
-                              && HOOK_COMMAND(ptr_hook, args)[0]) ?
-                             _(HOOK_COMMAND(ptr_hook, args)) : "");
+            length = utf8_strlen_screen (plugin_get_name (ptr_hook->plugin)) +
+                utf8_strlen_screen (HOOK_COMMAND(ptr_hook, command)) + 7;
+            snprintf (str_format, sizeof (str_format),
+                      "%%-%ds%%s", length);
+            first_line_displayed = 0;
+            ptr_string = (HOOK_COMMAND(ptr_hook, args) && HOOK_COMMAND(ptr_hook, args)[0]) ?
+                _(HOOK_COMMAND(ptr_hook, args)) : empty_string;
+            while (ptr_string)
+            {
+                string = NULL;
+                pos_double_pipe = strstr (ptr_string, "||");
+                if (pos_double_pipe)
+                {
+                    pos_end = pos_double_pipe - 1;
+                    while ((pos_end > ptr_string) && (pos_end[0] == ' '))
+                    {
+                        pos_end--;
+                    }
+                    string = string_strndup (ptr_string,
+                                             pos_end - ptr_string + 1);
+                }
+                if (first_line_displayed)
+                {
+                    gui_chat_printf (NULL, str_format,
+                                     " ",
+                                     (string) ? string : ptr_string);
+                }
+                else
+                {
+                    gui_chat_printf (NULL,
+                                     "%s[%s%s%s]  %s/%s  %s%s",
+                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                     GUI_COLOR(GUI_COLOR_CHAT),
+                                     plugin_get_name (ptr_hook->plugin),
+                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                     HOOK_COMMAND(ptr_hook, command),
+                                     GUI_COLOR(GUI_COLOR_CHAT),
+                                     (string) ? string : ptr_string);
+                    first_line_displayed = 1;
+                }
+                if (string)
+                    free (string);
+                
+                if (pos_double_pipe)
+                {
+                    ptr_string = pos_double_pipe + 2;
+                    while (ptr_string[0] == ' ')
+                    {
+                        ptr_string++;
+                    }
+                }
+                else
+                    ptr_string = NULL;
+            }
             if (HOOK_COMMAND(ptr_hook, description)
                 && HOOK_COMMAND(ptr_hook, description)[0])
             {
@@ -1592,9 +1638,10 @@ COMMAND_CALLBACK(help)
                 gui_chat_printf (NULL, "%s",
                                  _(HOOK_COMMAND(ptr_hook, args_description)));
             }
-            return WEECHAT_RC_OK;
         }
     }
+    if (command_found)
+        return WEECHAT_RC_OK;
     
     /* look for option */
     config_file_search_with_string (argv[1], NULL, NULL, &ptr_option, NULL);
@@ -4381,7 +4428,7 @@ command_init ()
 {
     hook_command (NULL, "away",
                   N_("toggle away status"),
-                  N_("[-all] [message]"),
+                  N_("[-all] [<message>]"),
                   N_("   -all: toggle away status on all connected "
                      "servers\n"
                      "message: message for away (if no message is "
@@ -4389,13 +4436,19 @@ command_init ()
                   "-all", &command_away, NULL);
     hook_command (NULL, "bar",
                   N_("manage bars"),
-                  N_("[add barname type[,cond1,cond2,...] position size "
-                     "separator item1,item2,...] | [default] | "
-                     "[del barname|-all] | [set barname option value] | "
-                     "[hide|show|toggle barname] | [scroll barname buffer "
-                     "scroll_value] | [list] | [listfull] | [listitems]"),
-                  N_("          add: add a new bar\n"
-                     "      barname: name of bar (must be unique)\n"
+                  N_("list|listfull|listitems"
+                     " || add <name> <type>[,<cond1>[,<cond2>...]] <position> "
+                     "<size> <separator> <item1>[,<item2>...]"
+                     " || default"
+                     " || del <name>|-all"
+                     " || set <name> <option> <value>"
+                     " || hide|show|toggle <name>"
+                     " || scroll <name> <buffer> <scroll_value>"),
+                  N_("         list: list all bars\n"
+                     "     listfull: list all bars (verbose)\n"
+                     "    listitems: list all bar items\n"
+                     "          add: add a new bar\n"
+                     "         name: name of bar (must be unique)\n"
                      "         type:   root: outside windows,\n"
                      "               window: inside windows, with optional "
                      "conditions (see below)\n"
@@ -4420,16 +4473,13 @@ command_init ()
                      "         hide: hide a bar\n"
                      "         show: show an hidden bar\n"
                      "       toggle: hide/show a bar\n"
-                     "       scroll: scroll bar up/down\n"
+                     "       scroll: scroll bar\n"
                      "       buffer: name of buffer to scroll ('*' "
                      "means current buffer, you should use '*' for root bars)\n"
                      " scroll_value: value for scroll: 'x' or 'y', followed by "
                      "'+', '-', 'b' (beginning) or 'e' (end), value (for +/-), "
                      "and optional %% (to scroll by %% of width/height, "
-                     "otherwise value is number of chars)\n"
-                     "         list: list all bars\n"
-                     "     listfull: list all bars (verbose)\n"
-                     "    listitems: list all bar items\n\n"
+                     "otherwise value is number of chars)\n\n"
                      "Examples:\n"
                      "  create a bar with time, buffer number + name, and completion:\n"
                      "    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion\n"
@@ -4441,25 +4491,33 @@ command_init ()
                      "    /bar scroll nicklist #weechat y-100%\n"
                      "  scroll to end of nicklist on current buffer:\n"
                      "    /bar scroll nicklist * ye"),
-                  "add %(bars_names) root|window bottom|top|left|right"
+                  "list"
+                  " || listfull"
+                  " || listitems"
+                  " || add %(bars_names) root|window bottom|top|left|right"
                   " || default"
                   " || del %(bars_names)|-all"
                   " || set %(bars_names) %(bars_options)"
                   " || hide %(bars_names)"
                   " || show %(bars_names)"
                   " || toggle %(bars_names)"
-                  " || scroll %(bars_names) %(buffers_plugins_names)|*"
-                  " || list"
-                  " || listfull"
-                  " || listitems",
+                  " || scroll %(bars_names) %(buffers_plugins_names)|*",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
-                  N_("[clear [number | -merged | -all] | move number | "
-                     "merge number | unmerge [number] | close [n1[-n2]] | "
-                     "list | notify level | localvar | set property value | "
-                     "get property | number | name]"),
-                  N_("   clear: clear buffer content (number for a buffer, "
+                  N_("list"
+                     " || clear [<number>|-merged|-all]"
+                     " || move|merge <number>"
+                     " || unmerge [<number>]"
+                     " || close [<n1>[-<n2>]]"
+                     " || notify <level>"
+                     " || localvar"
+                     " || set <property> <value>"
+                     " || get <property>"
+                     " || <number>|<name>"),
+                  N_("    list: list buffers (without argument, this list is "
+                     "displayed)\n"
+                     "   clear: clear buffer content (number for a buffer, "
                      "-merged for merged buffers, -all for all buffers, or "
                      "nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
@@ -4471,8 +4529,6 @@ command_init ()
                      " unmerge: unmerge buffer from other buffers which have "
                      "same number\n"
                      "   close: close buffer (number/range is optional)\n"
-                     "    list: list buffers (without argument, this list is "
-                     "displayed)\n"
                      "  notify: set notify level for current buffer: this "
                      "level determines whether buffer will be added to "
                      "hotlist or not:\n"
@@ -4524,7 +4580,9 @@ command_init ()
                   &command_buffer, NULL);
     hook_command (NULL, "color",
                   N_("define color aliases and display palette of colors"),
-                  N_("[alias color name] | [unalias color] | reset"),
+                  N_("alias <color> <alias>"
+                     " || unalias <color>"
+                     " || reset"),
                   N_("  alias: add an alias for a color\n"
                      "unalias: delete an alias\n"
                      "  color: color number (>= 1, max depends on terminal, "
@@ -4545,7 +4603,7 @@ command_init ()
                   &command_color, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
-                  N_("plugin command"),
+                  N_("<plugin> <command>"),
                   N_(" plugin: plugin name ('weechat' for WeeChat internal "
                      "command)\n"
                      "command: command to execute (a '/' is automatically "
@@ -4554,9 +4612,12 @@ command_init ()
                   &command_command, NULL);
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
-                  N_("[list | set plugin level | dump [plugin] | buffer | "
-                     "windows | term | color]"),
-                  N_("    set: set log level for plugin\n"
+                  N_("list"
+                     " || set <plugin> <level>"
+                     " || dump [<plugin>]"
+                     " || buffer|windows|term|color"),
+                  N_("   list: list plugins with debug levels\n"
+                     "    set: set debug level for plugin\n"
                      " plugin: name of plugin (\"core\" for WeeChat core)\n"
                      "  level: debug level for plugin (0 = disable debug)\n"
                      "   dump: save memory dump in WeeChat log file (same "
@@ -4564,8 +4625,7 @@ command_init ()
                      " buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
                      "windows: display windows tree\n"
-                     "   term: display infos about terminal and available "
-                     "colors\n"
+                     "   term: display infos about terminal\n"
                      "  color: display infos about current color pairs"),
                   "list"
                   " || set %(plugins_names)|core"
@@ -4578,9 +4638,10 @@ command_init ()
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),
-                  N_("[list] | [enable|disable|toggle [name]] | "
-                     "[add name plugin.buffer tags regex] | "
-                     "[del name|-all]"),
+                  N_("list"
+                     " || enable|disable|toggle [<name>]"
+                     " || add <name> <plugin.buffer> <tags> <regex>"
+                     " || del <name>|-all"),
                   N_("         list: list all filters\n"
                      "       enable: enable filters (filters are enabled by "
                       "default)\n"
@@ -4634,37 +4695,76 @@ command_init ()
                   &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands and options"),
-                  N_("[command | option]"),
+                  N_("<command>"
+                     " || <option>"),
                   N_("command: a command name\n"
                      " option: an option name (use /set to see list)"),
                   "%(commands)|%(config_options)",
                   &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),
-                  N_("[clear | value]"),
+                  N_("clear"
+                     " || <value>"),
                   N_("clear: clear history\n"
                      "value: number of history entries to show"),
                   "clear",
                   &command_history, NULL);
     hook_command (NULL, "input",
                   N_("functions for command line"),
-                  "return | complete_next | complete_previous | search_next | "
-                  "delete_previous_char | delete_next_char | "
-                  "delete_previous_word | delete_next_word | "
-                  "delete_beginning_of_line | delete_end_of_line | "
-                  "delete_line | clipboard_paste | transpose_chars | "
-                  "undo | redo | move_beginning_of_line | move_end_of_line | "
-                  "move_previous_char | move_next_char | move_previous_word | "
-                  "move_next_word | history_previous | history_next | "
-                  "history_global_previous | history_global_next | "
-                  "jump_smart | jump_last_buffer | "
-                  "jump_previously_visited_buffer | "
-                  "jump_next_visited_buffer | hotlist_clear | grab_key | "
-                  "grab_key_command | scroll_unread | set_unread | "
-                  "set_unread_current_buffer | switch_active_buffer | "
-                  "switch_active_buffer_previous | insert [args]",
-                  N_("This command is used by key bindings or plugins."),
-                  "return|complete_next|complete_previous|search_next|"
+                  N_("<action> [<arguments>]"),
+                  N_("list of actions:\n"
+                     "  return: simulate key \"enter\"\n"
+                     "  complete_next: complete word with next completion\n"
+                     "  complete_previous: complete word with previous "
+                     "completion\n"
+                     "  search_text: search text in buffer\n"
+                     "  delete_previous_char: delete previous char\n"
+                     "  delete_next_char: delete next char\n"
+                     "  delete_previous_word: delete previous word\n"
+                     "  delete_next_word: delete next word\n"
+                     "  delete_beginning_of_line: delete from beginning of "
+                     "line until cursor\n"
+                     "  delete_end_of_line: delete from cursor until end of "
+                     "line\n"
+                     "  delete_line: delete entire line\n"
+                     "  clipboard_paste: paste from clipboard\n"
+                     "  transpose_chars: transpose two chars\n"
+                     "  undo: undo last command line action\n"
+                     "  redo: redo last command line action\n"
+                     "  move_beginning_of_line: move cursor to beginning of "
+                     "line\n"
+                     "  move_end_of_line: move cursor to end of line\n"
+                     "  move_previous_char: move cursor to previous char\n"
+                     "  move_next_char: move cursor to next char\n"
+                     "  move_previous_word: move cursor to previous word\n"
+                     "  move_next_word: move cursor to next word\n"
+                     "  history_previous: recall previous command in current "
+                     "buffer history\n"
+                     "  history_next: recall next command in current buffer "
+                     "history\n"
+                     "  history_global_previous: recall previous command in "
+                     "global history\n"
+                     "  history_global_next: recall next command in global "
+                     "history\n"
+                     "  jump_smart: jump to next buffer with activity\n"
+                     "  jump_last_buffer: jump to last buffer\n"
+                     "  jump_previously_visited_buffer: jump to previously "
+                     "visited buffer\n"
+                     "  jump_next_visited_buffer: jump to next visited buffer\n"
+                     "  hotlist_clear: clear hotlist\n"
+                     "  grab_key: grab a key\n"
+                     "  grab_key_command: grab a key with its associated "
+                     "command\n"
+                     "  scroll_unread: scroll to unread marker\n"
+                     "  set_unread: set unread marker for all buffers\n"
+                     "  set_unread_current_buffer: set unread marker for "
+                     "current buffer\n"
+                     "  switch_active_buffer: switch to next merged buffer\n"
+                     "  switch_active_buffer_previous: switch to previous "
+                     "merged buffer\n"
+                     "  insert: insert text in command line\n\n"
+                     "This command is used by key bindings or plugins."),
+                  "return|complete_next|complete_previous|search_text|"
                   "delete_previous_char|delete_next_char|"
                   "delete_previous_word|delete_next_word|"
                   "delete_beginning_of_line|delete_end_of_line|"
@@ -4681,9 +4781,12 @@ command_init ()
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("[list | listdefault | listdiff] | [bind key [command "
-                     "[args]]] | [unbind key] | [reset key] | "
-                     "[resetall -yes] | [missing]"),
+                  N_("list|listdefault|listdiff"
+                     " || bind <key> [<command> [<args>]]"
+                     " || unbind <key>"
+                     " || reset <key>"
+                     " || resetall -yes"
+                     " || missing"),
                   N_("       list: list all current keys (without argument, "
                      "this list is displayed)\n"
                      "listdefault: list default keys\n"
@@ -4718,7 +4821,9 @@ command_init ()
                   &command_key, NULL);
     hook_command (NULL, "layout",
                   N_("save/apply/reset layout for buffers and windows"),
-                  N_("[[save | apply | reset] [buffers | windows]]"),
+                  N_("save [buffers|windows]"
+                     " || apply [buffers|windows]"
+                     " || reset [buffers|windows]"),
                   N_("   save: save current layout\n"
                      "  apply: apply saved layout\n"
                      "  reset: remove saved layout\n"
@@ -4730,7 +4835,7 @@ command_init ()
                   &command_layout, NULL);
     hook_command (NULL, "mute",
                   N_("execute a command silently"),
-                  N_("[-current | -buffer name | -all] command"),
+                  N_("[-current | -buffer <name> | -all] command"),
                   N_("-current: no output on curent buffer\n"
                      " -buffer: no output on specified buffer\n"
                      "    name: full buffer name (examples: "
@@ -4752,15 +4857,18 @@ command_init ()
                   &command_mute, NULL);
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),
-                  N_("[list [name]] | [listfull [name]] | [load filename] | "
-                     "[autoload] | [reload [name]] | [unload [name]]"),
+                  N_("list|listfull [<name>]"
+                     " || load <filename>"
+                     " || autoload"
+                     " || reload|unload [<name>]"),
                   N_("    list: list loaded plugins\n"
                      "listfull: list loaded plugins (verbose)\n"
                      "    load: load a plugin\n"
                      "autoload: autoload plugins in system or user directory\n"
-                     "  reload: reload one plugin (if no name given, unload "
+                     "  reload: reload a plugin (if no name given, unload "
                      "all plugins, then autoload plugins)\n"
-                     "  unload: unload one or all plugins\n\n"
+                     "  unload: unload a plugin (if no name given, unload "
+                     "all plugins)\n\n"
                      "Without argument, this command lists loaded plugins."),
                   "list %(plugins_names)"
                   " || listfull %(plugins_names)"
@@ -4771,22 +4879,24 @@ command_init ()
                   &command_plugin, NULL);
     hook_command (NULL, "proxy",
                   N_("manage proxies"),
-                  N_("[add proxyname type address port [username "
-                     "[password]]] | [del proxyname|-all] | [set "
-                     "proxyname option value] | [list]"),
-                  N_("          add: add a new proxy\n"
-                     "    proxyname: name of proxy (must be unique)\n"
-                     "         type: http, socks4 or socks5\n"
-                     "      address: IP or hostname\n"
-                     "         port: port\n"
-                     "     username: username (optional)\n"
-                     "     password: password (optional)\n"
-                     "          del: delete a proxy (or all proxies with -all)\n"
-                     "          set: set a value for a proxy property\n"
-                     "       option: option to change (for options list, look "
+                  N_("list"
+                     " || add <name> <type> <address> <port> [<username> "
+                     "[<password>]]"
+                     " || del <name>|-all"
+                     " || set <name> <option> <value>"),
+                  N_("    list: list all proxies\n"
+                     "     add: add a new proxy\n"
+                     "    name: name of proxy (must be unique)\n"
+                     "    type: http, socks4 or socks5\n"
+                     " address: IP or hostname\n"
+                     "    port: port\n"
+                     "username: username (optional)\n"
+                     "password: password (optional)\n"
+                     "     del: delete a proxy (or all proxies with -all)\n"
+                     "     set: set a value for a proxy property\n"
+                     "  option: option to change (for options list, look "
                      "at /set weechat.proxy.<proxyname>.*)\n"
-                     "        value: new value for option\n"
-                     "         list: list all proxies\n\n"
+                     "   value: new value for option\n\n"
                      "Examples:\n"
                      "  create a http proxy, running on local host, port 8888:\n"
                      "    /proxy add local http 127.0.0.1 8888\n"
@@ -4797,14 +4907,14 @@ command_init ()
                      "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
                      "  delete a proxy:\n"
                      "    /proxy del myproxy"),
-                  "add %(proxies_names) http|socks4|socks5"
+                  "list"
+                  " || add %(proxies_names) http|socks4|socks5"
                   " || del %(proxies_names)"
-                  " || set %(proxies_names) %(proxies_options)"
-                  " || list ",
+                  " || set %(proxies_names) %(proxies_options)",
                   &command_proxy, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
-                  N_("[-yes] [arguments]"),
+                  N_("[-yes] [<arguments>]"),
                   N_("     -yes: required if option weechat.look.confirm_quit "
                      "is enabled\n"
                      "arguments: text sent with signal \"quit\"\n"
@@ -4814,24 +4924,27 @@ command_init ()
                   &command_quit, NULL);
     hook_command (NULL, "reload",
                   N_("reload configuration files from disk"),
-                  N_("[file [file...]]"),
-                  N_("file: configuration file to reload\n\n"
+                  N_("[<file> [<file>...]]"),
+                  N_("file: configuration file to reload (without extension "
+                     "\".conf\")\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "reloaded."),
                   "%(config_files)|%*",
                   &command_reload, NULL);
     hook_command (NULL, "save",
                   N_("save configuration files to disk"),
-                  N_("[file [file...]]"),
-                  N_("file: configuration file to save\n\n"
+                  N_("[<file> [<file>...]]"),
+                  N_("file: configuration file to save (without extension "
+                     "\".conf\")\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "saved."),
                   "%(config_files)|%*",
                   &command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),
-                  N_("[option [value]]"),
-                  N_("option: name of an option\n"
+                  N_("[<option> [<value>]]"),
+                  N_("option: name of an option (can start or end with \"*\" "
+                     "to list many options)\n"
                      " value: new value for option\n\n"
                      "New value can be, according to variable type:\n"
                      "  boolean: on, off or toggle\n"
@@ -4840,21 +4953,31 @@ command_init ()
                      "  color  : color name, ++number or --number\n\n"
                      "For all types, you can use null to remove "
                      "option value (undefined value). This works only "
-                     "for some special plugin variables."),
+                     "for some special plugin variables.\n\n"
+                     "Examples:\n"
+                     "  display options about highlight:\n"
+                     "    /set *highlight*\n"
+                     "  add a word to highlight:\n"
+                     "    /set weechat.look.highlight \"word\""),
                   "%(config_options) %(config_option_values)",
                   &command_set, NULL);
     hook_command (NULL, "unset",
                   N_("unset/reset config options"),
-                  N_("[option]"),
+                  N_("<option>"),
                   N_("option: name of an option (may begin or end with \"*\" "
                      "to mass-reset options, use carefully!)\n\n"
                      "According to option, it's reset (for standard options) "
-                     "or removed (for optional settings, like server values)."),
+                     "or removed (for optional settings, like server values).\n\n"
+                     "Examples:\n"
+                     "  reset one option:\n"
+                     "    /unset weechat.look.item_time_format\n"
+                     "  reset all color options:\n"
+                     "    /unset weechat.color.*"),
                   "%(config_options)",
                   &command_unset, NULL);
     hook_command (NULL, "upgrade",
                   N_("upgrade WeeChat without disconnecting from servers"),
-                  N_("[path_to_binary]"),
+                  N_("[<path_to_binary>]"),
                   N_("path_to_binary: path to WeeChat binary (default is "
                      "current binary)\n\n"
                      "This command run again a WeeChat binary, so it should "
@@ -4863,9 +4986,10 @@ command_init ()
                      "Upgrade process has 4 steps:\n"
                      "  1. save session into files for core and plugins "
                      "(buffers, history, ..)\n"
-                     "  2. unload all plugins (configs *.conf are saved)\n"
-                     "  3. save WeeChat config (weechat.conf)\n"
-                     "  4. exec new WeeChat binary."),
+                     "  2. unload all plugins (configuration files (*.conf) "
+                     "are written on disk)\n"
+                     "  3. save WeeChat configuration (weechat.conf)\n"
+                     "  4. execute new WeeChat binary and reload session."),
                   "%(filename)",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
@@ -4888,7 +5012,7 @@ command_init ()
                   &command_version, NULL);
     hook_command (NULL, "wait",
                   N_("schedule a command execution in future"),
-                  N_("number[unit] command"),
+                  N_("<number>[<unit>] <command>"),
                   N_(" number: amount of time to wait (integer number)\n"
                      "   unit: optional, values are:\n"
                      "           ms: milliseconds\n"
@@ -4902,22 +5026,27 @@ command_init ()
                      "been closed before execution of command), then command "
                      "is executed on WeeChat core buffer).\n\n"
                      "Examples:\n"
-                     "  join channel in 10 sec:\n"
+                     "  join channel in 10 seconds:\n"
                      "    /wait 10 /join #test\n"
-                     "  set away in 15 min:\n"
+                     "  set away in 15 minutes:\n"
                      "    /wait 15m /away -all I'm away\n"
-                     "  say 'hello' in 2 min:\n"
+                     "  say 'hello' in 2 minutes:\n"
                      "    /wait 2m hello"),
                   "%- %(commands)",
                   &command_wait, NULL);
     hook_command (NULL, "window",
                   N_("manage windows"),
-                  N_("[list | -1 | +1 | b# | up | down | left | right | "
-                     "splith [pct] | splitv [pct] | resize pct | "
-                     "merge [all] | page_up | page_down | refresh | scroll | "
-                     "scroll_up | scroll_down | scroll_top | scroll_bottom | "
-                     "scroll_previous_highlight | scroll_next_highlight | "
-                     "zoom]"),
+                  N_("list"
+                     " || -1|+1|b#|up|down|left|right"
+                     " || splith|splitv [<pct>]"
+                     " || resize <pct>"
+                     " || merge [all]"
+                     " || page_up|page_down"
+                     " || refresh"
+                     " || scroll|scroll_up|scroll_down|scroll_top|"
+                     "scroll_bottom|scroll_previous_highlight|"
+                     "scroll_next_highlight"
+                     " || zoom"),
                   N_("         list: list opened windows (without argument, "
                      "this list is displayed)\n"
                      "           -1: jump to previous window\n"

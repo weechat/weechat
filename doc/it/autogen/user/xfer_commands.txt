@@ -1,19 +1,17 @@
-&bull; *`/me`* `messaggio`::
-
+[command]*`me`* invia un'azione CTCP all'host remoto::
 ........................................
-  invia un'azione CTCP all'host remoto
+/me  <message>
 
-  messaggio: messaggio da inviare
+messaggio: messaggio da inviare
 ........................................
 
-&bull; *`/xfer`* `[list | listfull]`::
-
+[command]*`xfer`* controllo xfer::
 ........................................
-  controllo xfer
+/xfer  [list|listfull]
 
-      list: lista xfer
-  listfull: lista xfer (dettagliata)
-  
-  Senza argomenti, il comando apre il buffer con la lista xfer.
+    list: lista xfer
+listfull: lista xfer (dettagliata)
+
+Senza argomenti, il comando apre il buffer con la lista xfer.
 ........................................
 

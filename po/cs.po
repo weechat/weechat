@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-03 09:50+0100\n"
+"POT-Creation-Date: 2011-02-04 21:55+0100\n"
 "PO-Revision-Date: 2011-01-31 14:50+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -781,7 +781,8 @@ msgstr ""
 msgid "toggle away status"
 msgstr "přepnout status nepřítomnosti"
 
-msgid "[-all] [message]"
+#, fuzzy
+msgid "[-all] [<message>]"
 msgstr "[-all] [zpráva]"
 
 msgid ""
@@ -795,20 +796,25 @@ msgstr ""
 msgid "manage bars"
 msgstr "řídit pole"
 
+#, fuzzy
 msgid ""
-"[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [default] | [del barname|-all] | [set barname option value] | [hide|show|"
-"toggle barname] | [scroll barname buffer scroll_value] | [list] | [listfull] "
-"| [listitems]"
+"list|listfull|listitems || add <name> <type>[,<cond1>[,<cond2>...]] "
+"<position> <size> <separator> <item1>[,<item2>...] || default || del <name>|-"
+"all || set <name> <option> <value> || hide|show|toggle <name> || scroll "
+"<name> <buffer> <scroll_value>"
 msgstr ""
 "[add jméno_pole typ[,cond1,cond2,...] pozice velikost dělič položka1,"
 "položka2,...] | [default] | [del jméno_pole|-all] | [set jméno_pole "
 "nastavení hodnota] | [hide|show|toggle jméno_pole] | [scroll jméno_pole "
 "buffer hodnota_posuvu] | [list] | [listfull] | [listitems]"
 
+#, fuzzy
 msgid ""
+"         list: list all bars\n"
+"     listfull: list all bars (verbose)\n"
+"    listitems: list all bar items\n"
 "          add: add a new bar\n"
-"      barname: name of bar (must be unique)\n"
+"         name: name of bar (must be unique)\n"
 "         type:   root: outside windows,\n"
 "               window: inside windows, with optional conditions (see below)\n"
 "    cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
@@ -831,15 +837,12 @@ msgid ""
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
 "       toggle: hide/show a bar\n"
-"       scroll: scroll bar up/down\n"
+"       scroll: scroll bar\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
 " scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', "
 "'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
 "%% of width/height, otherwise value is number of chars)\n"
-"         list: list all bars\n"
-"     listfull: list all bars (verbose)\n"
-"    listitems: list all bar items\n"
 "\n"
 "Examples:\n"
 "  create a bar with time, buffer number + name, and completion:\n"
@@ -905,16 +908,19 @@ msgstr ""
 msgid "manage buffers"
 msgstr "řídit buffery"
 
+#, fuzzy
 msgid ""
-"[clear [number | -merged | -all] | move number | merge number | unmerge "
-"[number] | close [n1[-n2]] | list | notify level | localvar | set property "
-"value | get property | number | name]"
+"list || clear [<number>|-merged|-all] || move|merge <number> || unmerge "
+"[<number>] || close [<n1>[-<n2>]] || notify <level> || localvar || set "
+"<property> <value> || get <property> || <number>|<name>"
 msgstr ""
 "[clear [číslo | -merged | -all] | move číslo | merge číslo | unmerge [číslo] "
 "| close [n1[-n2]] | list | notify úroveň | localvar | set vlastnost hodnota "
 "| get vlastnost | číslo | jméno]"
 
+#, fuzzy
 msgid ""
+"    list: list buffers (without argument, this list is displayed)\n"
 "   clear: clear buffer content (number for a buffer, -merged for merged "
 "buffers, -all for all buffers, or nothing for current buffer)\n"
 "    move: move buffer in the list (may be relative, for example -1)\n"
@@ -923,7 +929,6 @@ msgid ""
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
 "   close: close buffer (number/range is optional)\n"
-"    list: list buffers (without argument, this list is displayed)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
 "               none: never\n"
@@ -1006,7 +1011,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr ""
 
-msgid "[alias color name] | [unalias color] | reset"
+msgid "alias <color> <alias> || unalias <color> || reset"
 msgstr ""
 
 msgid ""
@@ -1028,7 +1033,8 @@ msgstr ""
 msgid "launch explicit WeeChat or plugin command"
 msgstr "pustit uvedený WeeChat nebo plugin příkaz"
 
-msgid "plugin command"
+#, fuzzy
+msgid "<plugin> <command>"
 msgstr "příkaz pluginu"
 
 msgid ""
@@ -1045,19 +1051,20 @@ msgstr "spřáva ladění pro jádro/pluginy"
 
 #, fuzzy
 msgid ""
-"[list | set plugin level | dump [plugin] | buffer | windows | term | color]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|windows|term|color"
 msgstr "[list | set plugin level | dump | buffer | windows | term]"
 
 #, fuzzy
 msgid ""
-"    set: set log level for plugin\n"
+"   list: list plugins with debug levels\n"
+"    set: set debug level for plugin\n"
 " plugin: name of plugin (\"core\" for WeeChat core)\n"
 "  level: debug level for plugin (0 = disable debug)\n"
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
-"   term: display infos about terminal and available colors\n"
+"   term: display infos about terminal\n"
 "  color: display infos about current color pairs"
 msgstr ""
 "    set: nastavit úroveň logování pro plugin\n"
@@ -1075,9 +1082,10 @@ msgstr ""
 "filtrovat zprávy v bufferu, pro jejich schováni/zobrazení podle tagů nebo "
 "regulárního výrazu"
 
+#, fuzzy
 msgid ""
-"[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags "
-"regex] | [del name|-all]"
+"list || enable|disable|toggle [<name>] || add <name> <plugin.buffer> <tags> "
+"<regex> || del <name>|-all"
 msgstr ""
 "[list] | [enable|disable|toggle [name]] | [add jméno plugin.buffer tags "
 "regex] | [del name|-all]"
@@ -1177,7 +1185,8 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "zobrazí nápovědu k příkazům a volbám"
 
-msgid "[command | option]"
+#, fuzzy
+msgid "<command> || <option>"
 msgstr "[příkaz | volba]"
 
 msgid ""
@@ -1190,7 +1199,8 @@ msgstr ""
 msgid "show buffer command history"
 msgstr "zobrazit historii příkazů bufferu"
 
-msgid "[clear | value]"
+#, fuzzy
+msgid "clear || <value>"
 msgstr "[clear | value]"
 
 msgid ""
@@ -1203,15 +1213,61 @@ msgstr ""
 msgid "functions for command line"
 msgstr "funkce pro příkazovou řádku"
 
-msgid "This command is used by key bindings or plugins."
-msgstr "Tento příkaz je používán napojenou klávesou nebo pluginy."
+#, fuzzy
+msgid "<action> [<arguments>]"
+msgstr "[info [argumenty]]"
+
+msgid ""
+"list of actions:\n"
+"  return: simulate key \"enter\"\n"
+"  complete_next: complete word with next completion\n"
+"  complete_previous: complete word with previous completion\n"
+"  search_text: search text in buffer\n"
+"  delete_previous_char: delete previous char\n"
+"  delete_next_char: delete next char\n"
+"  delete_previous_word: delete previous word\n"
+"  delete_next_word: delete next word\n"
+"  delete_beginning_of_line: delete from beginning of line until cursor\n"
+"  delete_end_of_line: delete from cursor until end of line\n"
+"  delete_line: delete entire line\n"
+"  clipboard_paste: paste from clipboard\n"
+"  transpose_chars: transpose two chars\n"
+"  undo: undo last command line action\n"
+"  redo: redo last command line action\n"
+"  move_beginning_of_line: move cursor to beginning of line\n"
+"  move_end_of_line: move cursor to end of line\n"
+"  move_previous_char: move cursor to previous char\n"
+"  move_next_char: move cursor to next char\n"
+"  move_previous_word: move cursor to previous word\n"
+"  move_next_word: move cursor to next word\n"
+"  history_previous: recall previous command in current buffer history\n"
+"  history_next: recall next command in current buffer history\n"
+"  history_global_previous: recall previous command in global history\n"
+"  history_global_next: recall next command in global history\n"
+"  jump_smart: jump to next buffer with activity\n"
+"  jump_last_buffer: jump to last buffer\n"
+"  jump_previously_visited_buffer: jump to previously visited buffer\n"
+"  jump_next_visited_buffer: jump to next visited buffer\n"
+"  hotlist_clear: clear hotlist\n"
+"  grab_key: grab a key\n"
+"  grab_key_command: grab a key with its associated command\n"
+"  scroll_unread: scroll to unread marker\n"
+"  set_unread: set unread marker for all buffers\n"
+"  set_unread_current_buffer: set unread marker for current buffer\n"
+"  switch_active_buffer: switch to next merged buffer\n"
+"  switch_active_buffer_previous: switch to previous merged buffer\n"
+"  insert: insert text in command line\n"
+"\n"
+"This command is used by key bindings or plugins."
+msgstr ""
 
 msgid "bind/unbind keys"
 msgstr "napojit/odpojit klávesy"
 
+#, fuzzy
 msgid ""
-"[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] "
-"| [reset key] | [resetall -yes] | [missing]"
+"list|listdefault|listdiff || bind <key> [<command> [<args>]] || unbind <key> "
+"|| reset <key> || resetall -yes || missing"
 msgstr ""
 "[list | listdefault | listdiff] | [bind klávesa [příkaz [argumenty]]] | "
 "[unbind key] | [reset klávesa] | [reset -yes] | [missing]"
@@ -1270,7 +1326,9 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "uložit/použít/resetovat rozložení bufferů a oken"
 
-msgid "[[save | apply | reset] [buffers | windows]]"
+#, fuzzy
+msgid ""
+"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
 msgstr "[[save | apply | reset] [buffers | windows]]"
 
 msgid ""
@@ -1293,7 +1351,8 @@ msgstr ""
 msgid "execute a command silently"
 msgstr "vykonat příkaz v tichosti"
 
-msgid "[-current | -buffer name | -all] command"
+#, fuzzy
+msgid "[-current | -buffer <name> | -all] command"
 msgstr "[-current | -buffer jméno | -all] příkaz"
 
 msgid ""
@@ -1338,21 +1397,23 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr "seznam/načíst/odebrat pluginy"
 
+#, fuzzy
 msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
-"[name]] | [unload [name]]"
+"list|listfull [<name>] || load <filename> || autoload || reload|unload "
+"[<name>]"
 msgstr ""
 "[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
 "[reload [name]] | [unload [name]]"
 
+#, fuzzy
 msgid ""
 "    list: list loaded plugins\n"
 "listfull: list loaded plugins (verbose)\n"
 "    load: load a plugin\n"
 "autoload: autoload plugins in system or user directory\n"
-"  reload: reload one plugin (if no name given, unload all plugins, then "
+"  reload: reload a plugin (if no name given, unload all plugins, then "
 "autoload plugins)\n"
-"  unload: unload one or all plugins\n"
+"  unload: unload a plugin (if no name given, unload all plugins)\n"
 "\n"
 "Without argument, this command lists loaded plugins."
 msgstr ""
@@ -1369,27 +1430,29 @@ msgstr ""
 msgid "manage proxies"
 msgstr "spravovat proxy"
 
+#, fuzzy
 msgid ""
-"[add proxyname type address port [username [password]]] | [del proxyname|-"
-"all] | [set proxyname option value] | [list]"
+"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
+"<name>|-all || set <name> <option> <value>"
 msgstr ""
 "[add jméno_proxy typ adresa port [uživatl [heslo]]] | [del jméno_proxy|-all] "
 "| [set jméno_proxy volba hodnota] | [list]"
 
+#, fuzzy
 msgid ""
-"          add: add a new proxy\n"
-"    proxyname: name of proxy (must be unique)\n"
-"         type: http, socks4 or socks5\n"
-"      address: IP or hostname\n"
-"         port: port\n"
-"     username: username (optional)\n"
-"     password: password (optional)\n"
-"          del: delete a proxy (or all proxies with -all)\n"
-"          set: set a value for a proxy property\n"
-"       option: option to change (for options list, look at /set weechat."
-"proxy.<proxyname>.*)\n"
-"        value: new value for option\n"
-"         list: list all proxies\n"
+"    list: list all proxies\n"
+"     add: add a new proxy\n"
+"    name: name of proxy (must be unique)\n"
+"    type: http, socks4 or socks5\n"
+" address: IP or hostname\n"
+"    port: port\n"
+"username: username (optional)\n"
+"password: password (optional)\n"
+"     del: delete a proxy (or all proxies with -all)\n"
+"     set: set a value for a proxy property\n"
+"  option: option to change (for options list, look at /set weechat.proxy."
+"<proxyname>.*)\n"
+"   value: new value for option\n"
 "\n"
 "Examples:\n"
 "  create a http proxy, running on local host, port 8888:\n"
@@ -1430,7 +1493,8 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "ukončit WeeChat"
 
-msgid "[-yes] [arguments]"
+#, fuzzy
+msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [argumenty]"
 
 msgid ""
@@ -1447,11 +1511,13 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr "znovu načíst konfikurační soubory z disku"
 
-msgid "[file [file...]]"
+#, fuzzy
+msgid "[<file> [<file>...]]"
 msgstr "[soubor [soubor...]]"
 
+#, fuzzy
 msgid ""
-"file: configuration file to reload\n"
+"file: configuration file to reload (without extension \".conf\")\n"
 "\n"
 "Without argument, all files (WeeChat and plugins) are reloaded."
 msgstr ""
@@ -1462,23 +1528,27 @@ msgstr ""
 msgid "save configuration files to disk"
 msgstr "uložit soubory s nastavením na disk"
 
+#, fuzzy
 msgid ""
-"file: configuration file to save\n"
+"file: configuration file to save (without extension \".conf\")\n"
 "\n"
 "Without argument, all files (WeeChat and plugins) are saved."
 msgstr ""
-"soubor: konfigurační soubor pro uložení\n"
+"soubor: konfigurační soubor pro znovunačtení\n"
 "\n"
-"Bez argumentu jsou uloženy všechny soubory (WeeChat a pluginy)."
+"Bez argumentu jsou načteny všechny soubory (WeeChat a pluginů)."
 
 msgid "set config options"
 msgstr "nastaví konfigurační možnosti"
 
-msgid "[option [value]]"
+#, fuzzy
+msgid "[<option> [<value>]]"
 msgstr "[možnost [hodnota]]"
 
+#, fuzzy
 msgid ""
-"option: name of an option\n"
+"option: name of an option (can start or end with \"*\" to list many "
+"options)\n"
 " value: new value for option\n"
 "\n"
 "New value can be, according to variable type:\n"
@@ -1488,7 +1558,13 @@ msgid ""
 "  color  : color name, ++number or --number\n"
 "\n"
 "For all types, you can use null to remove option value (undefined value). "
-"This works only for some special plugin variables."
+"This works only for some special plugin variables.\n"
+"\n"
+"Examples:\n"
+"  display options about highlight:\n"
+"    /set *highlight*\n"
+"  add a word to highlight:\n"
+"    /set weechat.look.highlight \"word\""
 msgstr ""
 "možnost: jméno nastavení\n"
 "hodnota: nová hodnota pro nastavení\n"
@@ -1506,15 +1582,23 @@ msgstr ""
 msgid "unset/reset config options"
 msgstr "odnastavit/resetovat konfigurační možnosti"
 
-msgid "[option]"
+#, fuzzy
+msgid "<option>"
 msgstr "[volba]"
 
+#, fuzzy
 msgid ""
 "option: name of an option (may begin or end with \"*\" to mass-reset "
 "options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
-"optional settings, like server values)."
+"optional settings, like server values).\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /unset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /unset weechat.color.*"
 msgstr ""
 "volba: jméno volby (může být začátek nebo konec s \"*\" pro hromadný reset "
 "voleb, používejte obezřetně!).\n"
@@ -1525,7 +1609,8 @@ msgstr ""
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "aktualizovat WeeChat bez odpojení od serveru"
 
-msgid "[path_to_binary]"
+#, fuzzy
+msgid "[<path_to_binary>]"
 msgstr "[cesta_k_binárce]"
 
 #, fuzzy
@@ -1537,9 +1622,9 @@ msgid ""
 "\n"
 "Upgrade process has 4 steps:\n"
 "  1. save session into files for core and plugins (buffers, history, ..)\n"
-"  2. unload all plugins (configs *.conf are saved)\n"
-"  3. save WeeChat config (weechat.conf)\n"
-"  4. exec new WeeChat binary."
+"  2. unload all plugins (configuration files (*.conf) are written on disk)\n"
+"  3. save WeeChat configuration (weechat.conf)\n"
+"  4. execute new WeeChat binary and reload session."
 msgstr ""
 "cesta_k_binárce: cesta k WeeChat binárce (výchozí je aktuální binárka)\n"
 "\n"
@@ -1569,9 +1654,11 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr "naplánovat spuštění příkazu v budoucnosti"
 
-msgid "number[unit] command"
+#, fuzzy
+msgid "<number>[<unit>] <command>"
 msgstr "číslo[jednotka] příkaz"
 
+#, fuzzy
 msgid ""
 " number: amount of time to wait (integer number)\n"
 "   unit: optional, values are:\n"
@@ -1587,11 +1674,11 @@ msgid ""
 "then command is executed on WeeChat core buffer).\n"
 "\n"
 "Examples:\n"
-"  join channel in 10 sec:\n"
+"  join channel in 10 seconds:\n"
 "    /wait 10 /join #test\n"
-"  set away in 15 min:\n"
+"  set away in 15 minutes:\n"
 "    /wait 15m /away -all I'm away\n"
-"  say 'hello' in 2 min:\n"
+"  say 'hello' in 2 minutes:\n"
 "    /wait 2m hello"
 msgstr ""
 "   číslo: množství času pro čekání (celočíselná hodnota)\n"
@@ -1618,11 +1705,12 @@ msgstr ""
 msgid "manage windows"
 msgstr "spravuje okna"
 
+#, fuzzy
 msgid ""
-"[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
-"[pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | "
-"scroll_up | scroll_down | scroll_top | scroll_bottom | "
-"scroll_previous_highlight | scroll_next_highlight | zoom]"
+"list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize <pct> "
+"|| merge [all] || page_up|page_down || refresh || scroll|scroll_up|"
+"scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
+"scroll_next_highlight || zoom"
 msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | "
@@ -2775,14 +2863,15 @@ msgstr "%s%s: chyba při vytváření konfiguračního souboru"
 msgid "create an alias for a command"
 msgstr "vytvoří alias pro příkaz"
 
-msgid "[[-completion completion] alias_name [command [arguments]]]"
+#, fuzzy
+msgid "[-completion <completion>] <alias> [<command> [<arguments>]]"
 msgstr "[[-completion doplňování] jméno_aliasu [příkaz [argumenty]]]"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
-"alias_name: name of alias (can start or end with \"*\" for alias listing)\n"
+"     alias: name of alias (can start or end with \"*\" for alias listing)\n"
 "   command: command name (many commands can be separated by semicolons)\n"
 " arguments: arguments for command\n"
 "\n"
@@ -2843,10 +2932,12 @@ msgstr ""
 msgid "remove aliases"
 msgstr "odebere aliasy"
 
-msgid "alias_name [alias_name...]"
+#, fuzzy
+msgid "<alias> [<alias>...]"
 msgstr "jméno_aliasu [jméno_aliasu ...]"
 
-msgid "alias_name: name of alias to remove"
+#, fuzzy
+msgid "alias: name of alias to remove"
 msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
 msgid "list of aliases"
@@ -2902,7 +2993,8 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "konfigurace pluginu aspell"
 
-msgid "dictlist | enable lang | disable | addword [lang] word"
+#, fuzzy
+msgid "dictlist || enable <lang> || disable || addword [<lang>] <word>"
 msgstr "dictlist | enable jazyk | disable | addword [jazyk] slovo"
 
 msgid ""
@@ -3002,7 +3094,8 @@ msgstr "%s%s: nekorektní znaková sada: \"%s\""
 msgid "change charset for current buffer"
 msgstr "změní znakovou sadu aktuálního bufferu"
 
-msgid "[[decode | encode] charset] | [reset]"
+#, fuzzy
+msgid "decode|encode <charset> || reset"
 msgstr "[[decode | encode] charset] | [reset]"
 
 msgid ""
@@ -3054,8 +3147,9 @@ msgstr ""
 msgid "print some messages on current buffer"
 msgstr "vypsat některé zprávy do aktuálního bufferu"
 
-msgid "[text]"
-msgstr "[text]"
+#, fuzzy
+msgid "<text>"
+msgstr "text"
 
 msgid "text: write this text"
 msgstr "text: zapsat tento text"
@@ -3063,19 +3157,15 @@ msgstr "text: zapsat tento text"
 msgid "open a new buffer"
 msgstr "otevřít nový buffer"
 
-msgid "name"
+#, fuzzy
+msgid "<name>"
 msgstr "jméno"
-
-msgid "set a buffer property"
-msgstr "nastavit vlastnost bufferu"
-
-msgid "property value"
-msgstr "hodnota vlastnosti"
 
 msgid "get and display an info"
 msgstr "získat a zobrazit informace"
 
-msgid "[info [arguments]]"
+#, fuzzy
+msgid "<info> [<arguments>]"
 msgstr "[info [argumenty]]"
 
 msgid ""
@@ -3092,7 +3182,8 @@ msgstr ""
 msgid "get and display an infolist"
 msgstr "získat a zobrazit infolist"
 
-msgid "[infolist [arguments]]"
+#, fuzzy
+msgid "<infolist> [<arguments>]"
 msgstr "[infolist [argumenty]]"
 
 msgid ""
@@ -3438,7 +3529,8 @@ msgstr "%s%s: nejste na kanálu \"%s\""
 msgid "find information about the administrator of the server"
 msgstr "najít informace o administrátorovi serveru"
 
-msgid "[target]"
+#, fuzzy
+msgid "[<target>]"
 msgstr "[cíl]"
 
 msgid "target: server"
@@ -3447,7 +3539,8 @@ msgstr "cíl: server"
 msgid "execute a command on all channels of all connected servers"
 msgstr "vykonat příkaz na všech kanálech všech připojených serverů"
 
-msgid "[-current] [-exclude=channel[,channel...]] command [arguments]"
+#, fuzzy
+msgid "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
 msgstr "[-current] [-exclude=kanál[,kanál...]] příkaz [argumenty]"
 
 msgid ""
@@ -3483,7 +3576,8 @@ msgstr ""
 msgid "execute a command on all connected servers"
 msgstr "vykonat příkaz na všech připojených serverech"
 
-msgid "[-exclude=server[,server...]] command [arguments]"
+#, fuzzy
+msgid "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
 msgstr "[-exclude=server[,server...]] příkaz [argumenty]"
 
 msgid ""
@@ -3512,12 +3606,14 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr "zakázat přezdívky nebo hosty"
 
-msgid "[channel] [nickname [nickname ...]]"
+#, fuzzy
+msgid "[<channel>] [<nick> [<nick>...]]"
 msgstr "[kanál] [přezdívka [přezdívka ...]]"
 
+#, fuzzy
 msgid ""
-" channel: channel for ban\n"
-"nickname: user or host to ban"
+"channel: channel for ban\n"
+"   nick: user or host to ban"
 msgstr ""
 "    kanál: kanál pro zakázání\n"
 "přezdívka: uživatel nebo host, který bude zakáhán"
@@ -3527,15 +3623,15 @@ msgstr "připojit se k IRC serveru/serverům"
 
 #, fuzzy
 msgid ""
-"[servername [servername ...] | hostname[/port] [-option[=value]] [-nooption] "
-"| -all | -open] [-nojoin] [-switch]"
+"[<server> [<server>...] | <hostname>[/<port>]] [-<option>[=<value>]] [-"
+"no<option>] [-nojoin] [-switch] || -all|-open [-nojoin] [-switch]"
 msgstr ""
 "[-all [-nojoin] | -open [-nojoin] | jméno_serveru [jméno_serveru ...] [-"
 "nojoin] | jméno_hosta[/port] [-volba[=hodnota]] [-novolba]]"
 
 #, fuzzy
 msgid ""
-"servername: internal server name to connect (server must have been created "
+"    server: internal server name to connect (server must have been created "
 "by /server add)\n"
 "  hostname: hostname (or IP) of a server (this will create a TEMPORARY "
 "server)\n"
@@ -3580,7 +3676,7 @@ msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "poslat CTCP zprávu (Client-To-Client Protocol)"
 
 #, fuzzy
-msgid "target type [arguments]"
+msgid "<target> <type> [<arguments>]"
 msgstr "příjemce typ [argumenty]"
 
 #, fuzzy
@@ -3596,26 +3692,29 @@ msgstr ""
 msgid "leave and rejoin a channel"
 msgstr "opustit a znovu se připojit ke kanálu"
 
-msgid "[channel[,channel]] [part_message]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[kanál[,kanál]] [zpráva_části]"
 
+#, fuzzy
 msgid ""
-"     channel: channel name for cycle\n"
-"part_message: part message (displayed to other users)"
+"channel: channel name for cycle\n"
+"message: part message (displayed to other users)"
 msgstr ""
-"       kanál: jméno kanálu pro cyklus\n"
+"       kanál: kanál, který opustit\n"
 "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
 
-msgid "start DCC (file or chat)"
+#, fuzzy
+msgid "start a DCC (file transfert or direct chat)"
 msgstr "spustit DCC (soubor nebo rozhovor)"
 
-msgid "action [nickname [file]]"
-msgstr "akce [přezdívka [soubor]]"
+msgid "chat <nick> || send <nick> <file>"
+msgstr ""
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat'\n"
-"nickname: nickname to send file or chat\n"
-"    file: filename (on local host)\n"
+"nick: nick for chat or file\n"
+"file: filename (on local host)\n"
 "\n"
 "Examples:\n"
 "  chat with nick \"toto\":\n"
@@ -3633,16 +3732,20 @@ msgstr ""
 "  poslat soubor \"/home/foo/bar.txt\" přezdívce \"toto\":\n"
 "    /dcc send toto /home/foo/bar.txt"
 
-msgid "remove half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nick(s)"
 msgstr "odebrat status polovičního operátora kanálu z přezdívky (přezdívek)"
 
-msgid "[nickname [nickname]]"
-msgstr "[přezdívka [přezdívka]]"
+#, fuzzy
+msgid "<nick> [<nick>...]"
+msgstr "přezdívka [přezdívka ...]"
 
-msgid "remove channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nick(s)"
 msgstr "odebrat status operátora kanálu z přezdívky (přezdívek)"
 
-msgid "remove voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nick(s)"
 msgstr "odebrat hlas z přezdívky (přezdívek)"
 
 msgid "shutdown the server"
@@ -3651,29 +3754,31 @@ msgstr "vypnout server"
 msgid "disconnect from IRC server(s)"
 msgstr "odpojit z IRC serveru/serverů"
 
-msgid "[-all | servername [servername ...]]"
-msgstr "[-all | jméno_serveru [jméno_serveru ...]]"
+#, fuzzy
+msgid "<server> [<server>...] || -all"
+msgstr "server1 [server2]"
 
 msgid ""
-"      -all: disconnect from all servers\n"
-"servername: server name to disconnect"
+"server: server name to disconnect\n"
+"  -all: disconnect from all servers"
 msgstr ""
-"         -all: odpojit od všech serverů\n"
-"jméno_serveru: jméno serveru pro odpojení"
 
-msgid "give half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nick(s)"
 msgstr "dát přezdívce (přezdívkám) status polovičního operátora kanálu"
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignorovat přezdívky/hosty na serveru nebo kanálu"
 
-msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
+#, fuzzy
+msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 
 #, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
+"     nick: nick or hostname (can be regular expression if \"re:\" is given)\n"
 "      del: delete an ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignores\n"
@@ -3718,30 +3823,31 @@ msgstr "cíl: server jméno"
 msgid "invite a nick on a channel"
 msgstr "pozvat přezdívku na kanál"
 
-msgid "nickname channel"
+#, fuzzy
+msgid "<nick> <channel>"
 msgstr "přezdívka kanál"
 
+#, fuzzy
 msgid ""
-"nickname: nick to invite\n"
-" channel: channel to invite"
+"   nick: nick to invite\n"
+"channel: channel to invite"
 msgstr ""
 "přezdívka: přezdívka, kterou pozvat\n"
 "    kanál: kanál na kterou ji pozvat"
 
-msgid "check if a nickname is currently on IRC"
+#, fuzzy
+msgid "check if a nick is currently on IRC"
 msgstr "zkontrolovat jestli je přezdívka momentálne na IRC"
 
-msgid "nickname [nickname ...]"
-msgstr "přezdívka [přezdívka ...]"
-
-msgid "nickname: nickname"
+#, fuzzy
+msgid "nick: nick"
 msgstr "přezdívka: přezdívka"
 
 msgid "join a channel"
 msgstr "připojit se ke kanálu"
 
 #, fuzzy
-msgid "[-server server] [channel1[,channel2[,channel3]] [key1[,key2]]]"
+msgid "[-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]"
 msgstr "[kanál1[,kanál2[,kanál3]] [klíč1[,klíč2]]]"
 
 #, fuzzy
@@ -3767,13 +3873,15 @@ msgstr ""
 msgid "forcibly remove a user from a channel"
 msgstr "násilně odebrat uživatele z kanálu"
 
-msgid "[channel] nickname [comment]"
+#, fuzzy
+msgid "[<channel>] <nick> [<reason>]"
 msgstr "[kanál] přezdívka [komentář]"
 
+#, fuzzy
 msgid ""
-" channel: channel where user is\n"
-"nickname: nickname to kick\n"
-" comment: comment for kick"
+"channel: channel where user is\n"
+"   nick: nick to kick\n"
+" reason: reason for kick"
 msgstr ""
 "    kanál: kanál na kterém je uživatel\n"
 "přezdívka: přezdívka, kterou vykopnout\n"
@@ -3782,10 +3890,11 @@ msgstr ""
 msgid "kicks and bans a nick from a channel"
 msgstr "vyhodit a zakázat přezdívku na kanálu"
 
+#, fuzzy
 msgid ""
-" channel: channel where user is\n"
-"nickname: nickname to kick and ban\n"
-" comment: comment for kick\n"
+"channel: channel where user is\n"
+"   nick: nick to kick and ban\n"
+" reason: reason for kick\n"
 "\n"
 "It is possible to kick/ban with a mask, nick will be extracted from mask and "
 "replaced by \"*\".\n"
@@ -3808,21 +3917,24 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "zavřít spojení klient-server"
 
-msgid "nickname comment"
-msgstr "přezdívka komentář"
+#, fuzzy
+msgid "<nick> <reason>"
+msgstr "přezdívka důvod"
 
+#, fuzzy
 msgid ""
-"nickname: nickname\n"
-" comment: comment for kill"
+"  nick: nick to kill\n"
+"reason: reason for kill"
 msgstr ""
 "přezdívka: přezdívka\n"
-" komentář: komentář pro zabít"
+"    důvod: důvod"
 
 msgid "list all servernames which are known by the server answering the query"
 msgstr ""
 "vypsat všechny jména serverů, které jsou známy serveru odpovídajícím na query"
 
-msgid "[[server] server_mask]"
+#, fuzzy
+msgid "[[<server>>] <server_mask>]"
 msgstr "[[server] maska_serveru]"
 
 msgid ""
@@ -3835,13 +3947,15 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr "vypsat kanály a jejich témata"
 
-msgid "[channel[,channel] [server] [-re regexp]]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 msgstr "[kanál,[,kanál] [server] [-re regexp]]"
 
+#, fuzzy
 msgid ""
 "channel: channel to list\n"
 " server: server name\n"
-" regexp: regular expression used to filter results\n"
+"  regex: regular expression used to filter results\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"
@@ -3869,7 +3983,8 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr "získat statistiku o velikosti IRC sítě"
 
-msgid "[mask [target]]"
+#, fuzzy
+msgid "[<mask> [<target>]]"
 msgstr "[maska [cíl]]"
 
 msgid ""
@@ -3885,7 +4000,8 @@ msgstr "ukázat grafickou mapu IRC sítě"
 msgid "send a CTCP action to the current channel"
 msgstr "poslat CTCP akci na aktuální kanál"
 
-msgid "message"
+#, fuzzy
+msgid "<message>"
 msgstr "zpráva"
 
 msgid "message: message to send"
@@ -3894,13 +4010,13 @@ msgstr "zpráva: zpráva, která se má poslat"
 msgid "change channel or user mode"
 msgstr "změní mód kanálu nebo uživatele"
 
-msgid ""
-"{ [channel] {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
-"{[+|-]|i|w|s|o} }"
+#, fuzzy
+msgid "[<channel>] [+|-]o|p|s|i|t|n|b|v [<arguments>] || <nick> [+|-]i|w|s|o"
 msgstr ""
 "{ [kanál] {[+|-]|o|p|s|i|t|n|b|v} [limit] [uživatel] [maska k zakázání] } | "
 "{ přezdívka {[+|-]|i|w|s|o} }"
 
+#, fuzzy
 msgid ""
 "channel modes:\n"
 "  channel: channel name to modify (default is current one)\n"
@@ -3917,11 +4033,20 @@ msgid ""
 "  v: give/take the ability to speak on a moderated channel\n"
 "  k: set a channel key (password)\n"
 "user modes:\n"
-"  nickname: nickname to modify\n"
+"  nick: nick to modify\n"
 "  i: mark a user as invisible\n"
 "  s: mark a user for receive server notices\n"
 "  w: user receives wallops\n"
-"  o: operator flag"
+"  o: operator flag\n"
+"\n"
+"List of modes is not comprehensive, you should read documentation about your "
+"server to see all possible modes.\n"
+"\n"
+"Examples:\n"
+"  protect topic on channel #weechat:\n"
+"    /mode #weecht +t\n"
+"  become invisible on server:\n"
+"    /mode nick +i"
 msgstr ""
 "módy kanálu:\n"
 "  kanál: jméno kanálu, která změnit (aktuální je výchozí)\n"
@@ -3951,7 +4076,7 @@ msgid "send message to a nick or channel"
 msgstr "poslat zprávu přezdívce nebo kanálu"
 
 #, fuzzy
-msgid "[-server server] target[,target] text"
+msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr "[-server server] příjemce[,příjemce] text"
 
 #, fuzzy
@@ -3964,24 +4089,29 @@ msgstr ""
 "příjemce: přezdívka nebo kanál (může být maska, '*' = aktuální kanál)\n"
 "    text: text, který se má poslat"
 
-msgid "list nicknames on channels"
+#, fuzzy
+msgid "list nicks on channels"
 msgstr "vypsat přezdívky na kanále"
 
-msgid "[channel[,channel]]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]]"
 msgstr "[kanál[,]kanál]"
 
 msgid "channel: channel name"
 msgstr "kanál: jméno kanálu"
 
-msgid "change current nickname"
+#, fuzzy
+msgid "change current nick"
 msgstr "změnit aktuální přezdívku"
 
-msgid "[-all] nickname"
+#, fuzzy
+msgid "[-all] <nick>"
 msgstr "[-all] přezdívka"
 
+#, fuzzy
 msgid ""
-"    -all: set new nickname for all connected servers\n"
-"nickname: new nickname"
+"-all: set new nick for all connected servers\n"
+"nick: new nick"
 msgstr ""
 "     -all: nastavit novou přezdívku přo všechny připojené servery\n"
 "přezdívka: nová přezdívka"
@@ -3990,7 +4120,7 @@ msgid "send notice message to user"
 msgstr "poslat notifikační zprávu uživateli"
 
 #, fuzzy
-msgid "[-server server] target text"
+msgid "[-server <server>] <target> <text>"
 msgstr "[-server server] příjemce[,příjemce] text"
 
 #, fuzzy
@@ -4007,12 +4137,12 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
 #, fuzzy
-msgid "[add nick [server [-away]]] | [del nick|-all [server]]"
+msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 
 msgid ""
 "   add: add a notification\n"
-"  nick: nickname\n"
+"  nick: nick\n"
 "server: internal server name (by default current server)\n"
 " -away: notify when away message is changed (by doing whois on nick)\n"
 "   del: delete a notification\n"
@@ -4030,27 +4160,29 @@ msgid ""
 "    /notify add toto freenode -away"
 msgstr ""
 
-msgid "give channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nick(s)"
 msgstr "dát status operátora kanálu přezdívce (přezdívkám)"
-
-msgid "nickname [nickname]"
-msgstr "přezdívka [přezdívka]"
 
 msgid "get operator privileges"
 msgstr "dát práva operátora"
 
-msgid "user password"
+#, fuzzy
+msgid "<user> <password>"
 msgstr "uživatel heslo"
 
-msgid "user/password: used to get privileges on current IRC server"
-msgstr "uživatel/heslo: použité pro získání práv na aktuálním IRC serveru"
+msgid ""
+"    user: user\n"
+"password: password"
+msgstr ""
 
 msgid "leave a channel"
 msgstr "opustit kanál"
 
+#, fuzzy
 msgid ""
-"     channel: channel name to leave\n"
-"part_message: part message (displayed to other users)"
+"channel: channel name to leave\n"
+"message: part message (displayed to other users)"
 msgstr ""
 "       kanál: kanál, který opustit\n"
 "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
@@ -4058,7 +4190,8 @@ msgstr ""
 msgid "ping server"
 msgstr "pingnout server"
 
-msgid "server1 [server2]"
+#, fuzzy
+msgid "<server1> [<server2>]"
 msgstr "server1 [server2]"
 
 msgid ""
@@ -4071,7 +4204,8 @@ msgstr ""
 msgid "answer to a ping message"
 msgstr "odpovědět na ping zprávu"
 
-msgid "daemon [daemon2]"
+#, fuzzy
+msgid "<daemon> [<daemon2>]"
 msgstr "démon [démon2]"
 
 msgid ""
@@ -4084,13 +4218,15 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "poslat soukromou zprávu přezdívce"
 
-msgid "[-server server] nickname [text]"
+#, fuzzy
+msgid "[-server <server>] <nick> [<text>]"
 msgstr "[-server server] přezdívka [text]"
 
+#, fuzzy
 msgid ""
-"  server: send to this server (internal name)\n"
-"nickname: nickname for private conversation\n"
-"    text: text to send"
+"server: send to this server (internal name)\n"
+"  nick: nick for private conversation\n"
+"  text: text to send"
 msgstr ""
 "   server: poslat na tento server (vnitřní jméno)\n"
 "přezdívka: přezdívka pro soukromé spojení\n"
@@ -4099,7 +4235,8 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "poslat čistá data na server bez pársování"
 
-msgid "[-server server] data"
+#, fuzzy
+msgid "[-server <server>] <data>"
 msgstr "[-server server] data"
 
 #, fuzzy
@@ -4114,15 +4251,15 @@ msgid "reconnect to server(s)"
 msgstr "znovu připojit k serveru/serverům"
 
 #, fuzzy
-msgid "[servername [servername ...] | -all] [-nojoin] [-switch]"
+msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr "[-all [-nojoin] | jméno_serveru [jméno_serveru ...] [-nojoin]]"
 
 #, fuzzy
 msgid ""
-"servername: server name to reconnect\n"
-"      -all: reconnect to all servers\n"
-"   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"   -switch: switch to next server address"
+" server: server name to reconnect\n"
+"   -all: reconnect to all servers\n"
+"-nojoin: do not join any channel (even if autojoin is enabled on server)\n"
+"-switch: switch to next server address"
 msgstr ""
 "         -all: znovu připojit ke všem serverům\n"
 "jméno_serveru: jméno serveru pro znovu přípojení\n"
@@ -4131,6 +4268,10 @@ msgstr ""
 
 msgid "tell the server to reload its config file"
 msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
+
+#, fuzzy
+msgid "[<option>]"
+msgstr "[volba]"
 
 msgid "option: extra option, for some servers"
 msgstr "volba: extra volba pro některé servery"
@@ -4141,12 +4282,14 @@ msgstr "říct serveru, aby se restartoval"
 msgid "forces a user to join channel(s)"
 msgstr "násilně připojit uživatele ke kanálu/kanálům"
 
-msgid "nickname channel[,channel]"
+#, fuzzy
+msgid "<nick> <channel>[,<channel>...]"
 msgstr "přezdívka kanál[,kanál]"
 
+#, fuzzy
 msgid ""
-"nickname: nickname\n"
-" channel: channel name"
+"   nick: nick\n"
+"channel: channel name"
 msgstr ""
 "přezdívka: přezdívka\n"
 "    kanál: jméno kanálu"
@@ -4154,9 +4297,8 @@ msgstr ""
 msgid "change mode on channel, without having operator status"
 msgstr "změnit mód kanálu, bez nutnosti mít operátorské oprávnění"
 
-#. TRANSLATORS: "channel" and "mode" are arguments
-#. for command, translate them separately
-msgid "channel mode"
+#, fuzzy
+msgid "<channel> <mode>"
 msgstr "kanál mód"
 
 msgid ""
@@ -4169,12 +4311,14 @@ msgstr ""
 msgid "forces a user to use another nick"
 msgstr "násilně přinutit uživatele používat jinou přezdívku"
 
-msgid "nickname new_nickname"
+#, fuzzy
+msgid "<nick> <new_nick>"
 msgstr "přezdívka nová_přezdívka"
 
+#, fuzzy
 msgid ""
-"    nickname: nickname\n"
-"new_nickname: new nickname"
+"    nick: nick\n"
+"new_nick: new nick"
 msgstr ""
 "     přezdívka: přezdívka\n"
 "nová_přezdívka: nová přezdívka"
@@ -4185,12 +4329,10 @@ msgstr "násilně odebrat uživatele z kanálu/kanálů"
 msgid "forces a user to quit server with a reason"
 msgstr "násilně přinutit uživatele opustit server s odůvodněním"
 
-msgid "nickname reason"
-msgstr "přezdívka důvod"
-
+#, fuzzy
 msgid ""
-"nickname: nickname\n"
-"  reason: reason"
+"  nick: nick\n"
+"reason: reason"
 msgstr ""
 "přezdívka: přezdívka\n"
 "    důvod: důvod"
@@ -4198,7 +4340,8 @@ msgstr ""
 msgid "register a new service"
 msgstr "zaregistrovat novou službu"
 
-msgid "nickname reserved distribution type reserved info"
+#, fuzzy
+msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr "přezdívka reserved distribuce typ reserved info"
 
 msgid ""
@@ -4211,11 +4354,11 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "vypíše, přídá nebo odebere IRC servery"
 
+#, fuzzy
 msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-option[=value]] [-nooption]] | [copy servername "
-"newservername] | [rename servername newservername] | [keep servername] | "
-"[del servername] | [deloutq] | [jump] | [raw]"
+"list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
+"<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
+"keep <server> || deloutq|jump|raw"
 msgstr ""
 "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
 "jméno_hosta[/port] [-temp] [-volba[=hodnota]] [-novolba] | [copy "
@@ -4223,25 +4366,25 @@ msgstr ""
 "nové_jméno_serveru] | [keep jméno_serveru] | [del jméno_serveru] | [deloutq] "
 "| [jump] | [raw]"
 
+#, fuzzy
 msgid ""
-"      list: list servers (without argument, this list is displayed)\n"
-"  listfull: list servers with detailed info for each server\n"
-"       add: create a new server\n"
-"servername: server name, for internal and display use\n"
-"  hostname: name or IP address of server, with optional port (default: "
-"6667), many addresses can be separated by a comma\n"
-"      temp: create temporary server (not saved)\n"
-"    option: set option for server (for boolean option, value can be "
-"omitted)\n"
-"  nooption: set boolean option to 'off' (for example: -nossl)\n"
-"      copy: duplicate a server\n"
-"    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
-"       del: delete a server\n"
-"   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)\n"
-"      jump: jump to server buffer\n"
-"       raw: open buffer with raw IRC data\n"
+"    list: list servers (without argument, this list is displayed)\n"
+"listfull: list servers with detailed info for each server\n"
+"     add: create a new server\n"
+"  server: server name, for internal and display use\n"
+"hostname: name or IP address of server, with optional port (default: 6667), "
+"many addresses can be separated by a comma\n"
+"    temp: create temporary server (not saved)\n"
+"  option: set option for server (for boolean option, value can be omitted)\n"
+"nooption: set boolean option to 'off' (for example: -nossl)\n"
+"    copy: duplicate a server\n"
+"  rename: rename a server\n"
+"    keep: keep server in config file (for temporary servers only)\n"
+"     del: delete a server\n"
+" deloutq: delete messages out queue for all servers (all messages WeeChat is "
+"currently sending)\n"
+"    jump: jump to server buffer\n"
+"     raw: open buffer with raw IRC data\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -4289,7 +4432,8 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr "vypsat služby, které jsou zrovna připojeny k síti"
 
-msgid "[mask [type]]"
+#, fuzzy
+msgid "[<mask> [<type>]]"
 msgstr "[maska [typ]]"
 
 msgid ""
@@ -4302,12 +4446,14 @@ msgstr ""
 msgid "deliver a message to a service"
 msgstr "doručit zprávu službě"
 
-msgid "service text"
+#, fuzzy
+msgid "<service> <text>"
 msgstr "služba text"
 
+#, fuzzy
 msgid ""
 "service: name of service\n"
-"text: text to send"
+"   text: text to send"
 msgstr ""
 "služba: jméno služby\n"
 "text: text, který se má poslat"
@@ -4315,11 +4461,13 @@ msgstr ""
 msgid "disconnect server links"
 msgstr "odpojit spojení serveru"
 
-msgid "server comment"
+#, fuzzy
+msgid "<server> <comment>"
 msgstr "server komentář"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+" server: server name\n"
 "comment: comment for quit"
 msgstr ""
 "server: jméno serveru\n"
@@ -4328,7 +4476,8 @@ msgstr ""
 msgid "query statistics about server"
 msgstr "dotázat se na statistiku o serveru"
 
-msgid "[query [server]]"
+#, fuzzy
+msgid "[<query> [<server>]]"
 msgstr "[dotaz [server]]"
 
 msgid ""
@@ -4345,12 +4494,14 @@ msgstr ""
 "dát uživatelům, kteří jsou na stroji, kde běží IRC server, zprávu a zeptat "
 "se na prosím připojte se na IRC"
 
-msgid "user [target [channel]]"
+#, fuzzy
+msgid "<user> [<target> [<channel>]]"
 msgstr "uživatel [cíl [kanál]]"
 
+#, fuzzy
 msgid ""
 "   user: username\n"
-"target: server name\n"
+" target: server name\n"
 "channel: channel name"
 msgstr ""
 "uživatel: uživatelské jméno\n"
@@ -4366,12 +4517,15 @@ msgstr "cíl: získat čas z uvedeného serveru"
 msgid "get/set channel topic"
 msgstr "získat/nastavit téma kanálu"
 
-msgid "[channel] [topic]"
+#, fuzzy
+msgid "[<channel>] [<topic>|-delete]"
 msgstr "[kanál] [téma]"
 
+#, fuzzy
 msgid ""
 "channel: channel name\n"
-"topic: new topic for channel (if topic is \"-delete\" then topic is deleted)"
+"  topic: new topic for channel\n"
+"-delete: delete channel topic"
 msgstr ""
 "kanál: jméno kanálu\n"
 "téma: nové téma pro kanál (pokud je téma \"-delete\" je téma vymazáno)"
@@ -4382,17 +4536,20 @@ msgstr "najít cestu k určenému serveru"
 msgid "unban nicks or hosts"
 msgstr "zruší zakázání pro přezdívku nebo hosta"
 
-msgid "[channel] nickname [nickname ...]"
+#, fuzzy
+msgid "[<channel>] <nick> [<nick>...]"
 msgstr "[kanál] přezdívka [přezdívka ...]"
 
+#, fuzzy
 msgid ""
-" channel: channel for unban\n"
-"nickname: user or host to unban"
+"channel: channel for unban\n"
+"   nick: user or host to unban"
 msgstr ""
 "    kanál: kanál pro unban\n"
 "přezdívka: uživatel nebo host pro unban"
 
-msgid "return a list of information about nicknames"
+#, fuzzy
+msgid "return a list of information about nicks"
 msgstr "vrátí seznam informací o přezdívce"
 
 msgid "list of users logged into the server"
@@ -4401,23 +4558,27 @@ msgstr "seznam uživatelů přihlášených k serveru"
 msgid "give the version info of nick or server (current or specified)"
 msgstr "získat informace o verzi přezdívky nebo serveru (aktuální nebo určené)"
 
-msgid "[server | nickname]"
+#, fuzzy
+msgid "[<server>|<nick>]"
 msgstr "[server | přezdívka]"
 
+#, fuzzy
 msgid ""
-"  server: server name\n"
-"nickname: nickname"
+"server: server name\n"
+"  nick: nick"
 msgstr ""
 "   server: jméno serveru\n"
 "přezdívka: přezdívka"
 
-msgid "give voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nick(s)"
 msgstr "dá hlas přezdívce (přezdívkám)"
 
 msgid "send a notice to channel ops"
 msgstr "poslat notifikaci operátorům kanálu"
 
-msgid "[channel] text"
+#, fuzzy
+msgid "[<channel>] <text>"
 msgstr "[kanál] text"
 
 msgid ""
@@ -4434,16 +4595,15 @@ msgstr ""
 "poslat zprávu všem aktuálně připojeným uživatelům, kteří mají u sebe "
 "nastaven uživatelský mód 'w'"
 
-msgid "text"
-msgstr "text"
-
-msgid "text to send"
+#, fuzzy
+msgid "text: text to send"
 msgstr "text pro poslání"
 
 msgid "generate a query which returns a list of information"
 msgstr "vygenerovat dotaz, který vrátí seznam informací"
 
-msgid "[mask [\"o\"]]"
+#, fuzzy
+msgid "[<mask> [o]]"
 msgstr "[maska [\"o\"]]"
 
 msgid ""
@@ -4456,26 +4616,31 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "dotázat se na informace o uživateli (uživatelích)"
 
-msgid "[server] nickname[,nickname]"
+#, fuzzy
+msgid "[<server>] <nick>[,<nick>...]"
 msgstr "[server] přezdívka[,přezdívka]"
 
+#, fuzzy
 msgid ""
-"  server: server name\n"
-"nickname: nickname (may be a mask)"
+"server: server name\n"
+"  nick: nick (may be a mask)"
 msgstr ""
 "   server: jméno serveru\n"
 "přezdívka: přezdívka (může být maska)"
 
-msgid "ask for information about a nickname which no longer exists"
+#, fuzzy
+msgid "ask for information about a nick which no longer exists"
 msgstr "dotázat se na informace o přezdívce, která již neexistuje"
 
-msgid "nickname [,nickname [,nickname ...]] [count [target]]"
+#, fuzzy
+msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "přezdívka [,přezdívka [,přezdívka ...]] [počet [cíl]]"
 
+#, fuzzy
 msgid ""
-"nickname: nickname to search\n"
-"   count: number of replies to return (full search if negative number)\n"
-"  target: reply should match this mask"
+"  nick: nick to search\n"
+" count: number of replies to return (full search if negative number)\n"
+"target: reply should match this mask"
 msgstr ""
 "přezdívka: přezdívka, kterou hledat\n"
 "    počet: počet odpovědí, které vrátit (úplné vyhledávání je negativní "
@@ -5913,7 +6078,8 @@ msgstr "===\t========== Konec zpětného logu (%d řádků) =========="
 msgid "logger plugin configuration"
 msgstr "konfigurace logovacího pluginu"
 
-msgid "[list | set level | disable]"
+#, fuzzy
+msgid "list || set <level> || disable"
 msgstr "[list | set úroveň | disable]"
 
 msgid ""
@@ -6371,7 +6537,9 @@ msgid "relay control"
 msgstr "ovládání přesměrování"
 
 #, fuzzy
-msgid "[list | listfull | add protocol.name port | del protocol.name | raw]"
+msgid ""
+"list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
+"|| raw"
 msgstr "[list | listfull | add protocol.name port | del protocol.name]"
 
 #, fuzzy
@@ -6550,8 +6718,8 @@ msgstr "%s%s: chyba při vytváření volby serveru \"%s\""
 
 #, fuzzy
 msgid ""
-"[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all "
-"[name...]] | [default -yes]"
+"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
+"all [<name>...] || default -yes"
 msgstr ""
 "[list] | [enable|disable|toggle [name]] | [add jméno plugin.buffer tags "
 "regex] | [del name|-all]"
@@ -6758,16 +6926,29 @@ msgstr "%s%s: nemohu vyhodnotit interní kód WeeChat ruby"
 msgid "list/load/unload scripts"
 msgstr "seznam/načíst/odebrat skirpty"
 
+#, fuzzy
 msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"name: a script name\n"
+"    name: a script name (name used in call to \"register\" function)\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
 msgstr ""
-"jméno_souboru: skript (soubor) pro načtení\n"
-"jméno: jméno skriptu\n"
+"    list: vypíše načtené pluginy\n"
+"listfull: vypíše načtené s detailními informacemi\n"
+"    load: načte plugin\n"
+"autolaod: automaticky načte pluginy v systémovém nebo uživatelském adresáři\n"
+"  reload: znovu načte jeden plugin (pokud není zadané žádné jméno odebere "
+"všechny pluginy pak automaticky načte pluginy)\n"
+"  unload: odebere jeden nebo všechny pluginy\n"
 "\n"
-"Pokud nejsou uvedeny argumenty, jsou vypsány všechny načtené skripty."
+"Zavolání příkazu bez parametrů vypíše načtené pluginy."
 
 msgid "list of scripts"
 msgstr "seznam skriptů"
@@ -7227,3 +7408,107 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "user/password: used to get privileges on current IRC server"
+#~ msgstr "uživatel/heslo: použité pro získání práv na aktuálním IRC serveru"
+
+#~ msgid ""
+#~ "file: configuration file to save\n"
+#~ "\n"
+#~ "Without argument, all files (WeeChat and plugins) are saved."
+#~ msgstr ""
+#~ "soubor: konfigurační soubor pro uložení\n"
+#~ "\n"
+#~ "Bez argumentu jsou uloženy všechny soubory (WeeChat a pluginy)."
+
+#, fuzzy
+#~ msgid ""
+#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
+#~ "autoload"
+#~ msgstr ""
+#~ "[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
+#~ "[reload [name]] | [unload [name]]"
+
+#~ msgid "This command is used by key bindings or plugins."
+#~ msgstr "Tento příkaz je používán napojenou klávesou nebo pluginy."
+
+#~ msgid "message"
+#~ msgstr "zpráva"
+
+#, fuzzy
+#~ msgid ""
+#~ "filename: script (file) to load\n"
+#~ "    name: a script name (name used in call to \"register\" function)\n"
+#~ "\n"
+#~ "Without argument, this command lists all loaded scripts."
+#~ msgstr ""
+#~ "jméno_souboru: skript (soubor) pro načtení\n"
+#~ "jméno: jméno skriptu\n"
+#~ "\n"
+#~ "Pokud nejsou uvedeny argumenty, jsou vypsány všechny načtené skripty."
+
+#~ msgid ""
+#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
+#~ "[reload [name]] | [unload [name]]"
+#~ msgstr ""
+#~ "[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
+#~ "[reload [name]] | [unload [name]]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<message>]"
+#~ msgstr "[kanál[,kanál]] [zpráva_části]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<part_message>]"
+#~ msgstr "[kanál[,kanál]] [zpráva_části]"
+
+#~ msgid ""
+#~ "     channel: channel name for cycle\n"
+#~ "part_message: part message (displayed to other users)"
+#~ msgstr ""
+#~ "       kanál: jméno kanálu pro cyklus\n"
+#~ "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
+
+#~ msgid "action [nickname [file]]"
+#~ msgstr "akce [přezdívka [soubor]]"
+
+#~ msgid "[nickname [nickname]]"
+#~ msgstr "[přezdívka [přezdívka]]"
+
+#~ msgid "[-all | servername [servername ...]]"
+#~ msgstr "[-all | jméno_serveru [jméno_serveru ...]]"
+
+#~ msgid ""
+#~ "      -all: disconnect from all servers\n"
+#~ "servername: server name to disconnect"
+#~ msgstr ""
+#~ "         -all: odpojit od všech serverů\n"
+#~ "jméno_serveru: jméno serveru pro odpojení"
+
+#~ msgid "nickname comment"
+#~ msgstr "přezdívka komentář"
+
+#~ msgid ""
+#~ "nickname: nickname\n"
+#~ " comment: comment for kill"
+#~ msgstr ""
+#~ "přezdívka: přezdívka\n"
+#~ " komentář: komentář pro zabít"
+
+#~ msgid "nickname [nickname]"
+#~ msgstr "přezdívka [přezdívka]"
+
+#~ msgid "[option]"
+#~ msgstr "[volba]"
+
+#~ msgid "text"
+#~ msgstr "text"
+
+#~ msgid "[text]"
+#~ msgstr "[text]"
+
+#~ msgid "set a buffer property"
+#~ msgstr "nastavit vlastnost bufferu"
+
+#~ msgid "property value"
+#~ msgstr "hodnota vlastnosti"

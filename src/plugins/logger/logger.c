@@ -1214,7 +1214,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* command /logger */
     weechat_hook_command ("logger",
                           N_("logger plugin configuration"),
-                          N_("[list | set level | disable]"),
+                          N_("list"
+                             " || set <level>"
+                             " || disable"),
                           N_("   list: show logging status for opened buffers\n"
                              "    set: set logging level on current buffer\n"
                              "  level: level for messages to be logged (0 = "

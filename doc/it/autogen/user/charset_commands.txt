@@ -1,11 +1,11 @@
-&bull; *`/charset`* `[[decode | encode |  set_caratteri:] | [reset]`::
-
+[command]*`charset`* modifica il set di caratteri per il buffer corrente::
 ........................................
-  modifica il set di caratteri per il buffer corrente
+/charset  decode|encode <charset>
+          reset
 
-         decode: modifica il set di caratteri per la decodifica
-         encode: modifica il set di caratteri per la codifica
-  set_caratteri: nuovo set di caratteri per il buffer corrente
-          reset: resetta il set di caratteri per il buffer corrente
+       decode: modifica il set di caratteri per la decodifica
+       encode: modifica il set di caratteri per la codifica
+set_caratteri: nuovo set di caratteri per il buffer corrente
+        reset: resetta il set di caratteri per il buffer corrente
 ........................................
 

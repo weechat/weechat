@@ -234,9 +234,10 @@ rmodifier_command_init ()
 {
     weechat_hook_command ("rmodifier",
                           N_("alter modifier strings with regular expressions"),
-                          N_("[list] | [listdefault] | "
-                             "[add name modifiers groups regex] | "
-                             "[del name|-all [name...]] | [default -yes]"),
+                          N_("list|listdefault"
+                             " || add <name> <modifiers> <groups> <regex>"
+                             " || del <name>|-all [<name>...]"
+                             " || default -yes"),
                           N_("       list: list all rmodifiers\n"
                              "listdefault: list default rmodifiers\n"
                              "        add: add a rmodifier\n"

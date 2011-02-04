@@ -1,42 +1,32 @@
-&bull; *`/demo_buffer`* `Name`::
-
+[command]*`demo_buffer`* Öffne einen neuen Buffer::
 ........................................
-  Öffne einen neuen Buffer
-........................................
-
-&bull; *`/demo_buffer_set`* `Eigenschaft eines Wertes`::
-
-........................................
-  Bestimme eine Eigenschaft des Buffers
+/demo_buffer  <name>
 ........................................
 
-&bull; *`/demo_info`* `[Info [Argumente]]`::
-
+[command]*`demo_info`* Hole eine Info und zeige sie an::
 ........................................
-  Hole eine Info und zeige sie an
+/demo_info  <info> [<arguments>]
 
-       Info: Information die dargestellt werden soll
-  Argumente: optionale Argumente für Info
-  
-  Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen angezeigt
-........................................
+     Info: Information die dargestellt werden soll
+Argumente: optionale Argumente für Info
 
-&bull; *`/demo_infolist`* `[Infolist [Argumente]]`::
-
-........................................
-  Hole eine Infolist und zeige sie an
-
-   Infolist: Infoliste die dargestellt werden soll
-  Argumente: optionale Argumente für Infoliste
-  
-  Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen der Infoliste angezeigt
+Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen angezeigt
 ........................................
 
-&bull; *`/demo_printf`* `[Text]`::
-
+[command]*`demo_infolist`* Hole eine Infolist und zeige sie an::
 ........................................
-  Gibt ein paar Nachrichten im aktuellen Buffer aus
+/demo_infolist  <infolist> [<arguments>]
 
-  Text: schreibe diesen Text
+ Infolist: Infoliste die dargestellt werden soll
+Argumente: optionale Argumente für Infoliste
+
+Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen der Infoliste angezeigt
+........................................
+
+[command]*`demo_printf`* Gibt ein paar Nachrichten im aktuellen Buffer aus::
+........................................
+/demo_printf  <text>
+
+Text: schreibe diesen Text
 ........................................
 

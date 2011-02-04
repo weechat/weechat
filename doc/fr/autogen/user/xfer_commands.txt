@@ -1,19 +1,17 @@
-&bull; *`/me`* `message`::
-
+[command]*`me`* envoyer une action CTCP à l'hôte distant::
 ........................................
-  envoyer une action CTCP à l'hôte distant
+/me  <message>
 
-  message: message à envoyer
+message: message à envoyer
 ........................................
 
-&bull; *`/xfer`* `[list | listfull]`::
-
+[command]*`xfer`* contrôle xfer::
 ........................................
-  contrôle xfer
+/xfer  [list|listfull]
 
-      list: liste les xfer
-  listfull: liste les xfer (verbeux)
-  
-  Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
+    list: lister les xfer
+listfull: lister les xfer (verbeux)
+
+Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
 ........................................
 

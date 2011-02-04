@@ -965,8 +965,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* command /aspell */
     weechat_hook_command ("aspell",
                           N_("aspell plugin configuration"),
-                          N_("dictlist | enable lang | disable | "
-                             "addword [lang] word"),
+                          N_("dictlist"
+                             " || enable <lang>"
+                             " || disable"
+                             " || addword [<lang>] <word>"),
                           N_("dictlist: show installed dictionaries\n"
                              "  enable: enable aspell on current buffer\n"
                              " disable: disable aspell on current buffer\n"

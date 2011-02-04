@@ -1,13 +1,15 @@
-&bull; *`/aspell`* `dictlist | enable lingua | disable | addword [lingua] parola`::
-
+[command]*`aspell`* configurazione del plugin aspell::
 ........................................
-  configurazione del plugin aspell
+/aspell  dictlist
+         enable <lang>
+         disable
+         addword [<lang>] <word>
 
-  dictlist: mostra i dizionari installati
-    enable: abilita aspell sul buffer corrente
-   disable: disabilita aspell sul buffer corrente
-   addword: aggiunge una parola nel dizionario personale aspell
-  
-  La riga di input che comincia con '/' non viene controllata, tranne che per alcuni comandi.
+dictlist: mostra i dizionari installati
+  enable: abilita aspell sul buffer corrente
+ disable: disabilita aspell sul buffer corrente
+ addword: aggiunge una parola nel dizionario personale aspell
+
+La riga di input che comincia con '/' non viene controllata, tranne che per alcuni comandi.
 ........................................
 

@@ -1,11 +1,19 @@
-&bull; *`/lua`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]`::
-
+[command]*`lua`* lister/charger/décharger des scripts::
 ........................................
-  liste/charge/décharge des scripts
+/lua  list|listfull [<nom>]
+      load <fichier>
+      autoload
+      reload|unload [<nom>]
 
-  fichier: script (fichier) à charger
-  nom: un nom de script
-  
-  Sans argument, cette commande liste tous les scripts chargés.
+    list: lister les scripts chargés
+listfull: lister les scripts chargés (verbeux)
+    load: charger un script
+autoload: charger tous les scripts dans le répertoire "autoload"
+  reload: recharger un script (si pas de nom donné, décharger tous les scripts puis charger tous les scripts dans le répertoire "autoload")
+  unload: décharger un script (si pas de nom donné, décharger tous les scripts)
+ fichier: script (fichier) à charger
+     nom: nom de script (nom utilisé dans l'appel à la fonction "register")
+
+Sans paramètre, cette commande liste les scripts chargés.
 ........................................
 

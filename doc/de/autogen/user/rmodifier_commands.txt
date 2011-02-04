@@ -1,25 +1,27 @@
-&bull; *`/rmodifier`* `[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all [name...]] | [default -yes]`::
-
+[command]*`rmodifier`* wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Sichtbarkeit von Texten in WeeChat)::
 ........................................
-  wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Sichtbarkeit von Texten in WeeChat)
+/rmodifier  list|listdefault
+            add <name> <modifiers> <groups> <regex>
+            del <name>|-all [<name>...]
+            default -yes
 
-         list: zeigt alle rmodifier an
-  listdefault: zeigt die Standardeinstellung für rmodifier an
-          add: einen rmodifier hinzufügen
-         name: Name des rmodifier
-    modifiers: durch Kommata getrennte Liste der modifier
-       groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe zu verbergen
-        regex: regulärer Ausdruck
-          del: löscht einen rmodifier Eintrag
-         -all: löscht alle rmodifiers Einträge
-      default: setzt die rmodifier auf Standardwerte zurück
-  
-  Beispiele:
-    verbirgt die Eingabe nach dem Befehl /passwort:
-      /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)
-    lösche rmodifier "passwort":
-      /rmodifier del passwort
-    lösche alle rmodifiers:
-      /rmodifier del -all
+       list: zeigt alle rmodifier an
+listdefault: zeigt die Standardeinstellung für rmodifier an
+        add: einen rmodifier hinzufügen
+       name: Name des rmodifier
+  modifiers: durch Kommata getrennte Liste der modifier
+     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe zu verbergen
+      regex: regulärer Ausdruck
+        del: löscht einen rmodifier Eintrag
+       -all: löscht alle rmodifiers Einträge
+    default: setzt die rmodifier auf Standardwerte zurück
+
+Beispiele:
+  verbirgt die Eingabe nach dem Befehl /passwort:
+    /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)
+  lösche rmodifier "passwort":
+    /rmodifier del passwort
+  lösche alle rmodifiers:
+    /rmodifier del -all
 ........................................
 

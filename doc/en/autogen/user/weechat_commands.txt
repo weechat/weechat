@@ -1,480 +1,554 @@
-&bull; *`/away`* `[-all] [message]`::
-
+[command]*`away`* toggle away status::
 ........................................
-  toggle away status
+/away  [-all] [<message>]
 
-     -all: toggle away status on all connected servers
-  message: message for away (if no message is given, away status is removed)
-........................................
-
-&bull; *`/bar`* `[add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show|toggle barname] | [scroll barname buffer scroll_value] | [list] | [listfull] | [listitems]`::
-
-........................................
-  manage bars
-
-            add: add a new bar
-        barname: name of bar (must be unique)
-           type:   root: outside windows,
-                 window: inside windows, with optional conditions (see below)
-      cond1,...: condition(s) for displaying bar (only for type "window"):
-                   active: on active window
-                 inactive: on inactive windows
-                 nicklist: on windows with nicklist
-                 without condition, bar is always displayed
-       position: bottom, top, left or right
-           size: size of bar (in chars)
-      separator: 1 for using separator (line), 0 or nothing means no separator
-      item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-        default: create default bars
-            del: delete a bar (or all bars with -all)
-            set: set a value for a bar property
-         option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-          value: new value for option
-           hide: hide a bar
-           show: show an hidden bar
-         toggle: hide/show a bar
-         scroll: scroll bar up/down
-         buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
-   scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
-           list: list all bars
-       listfull: list all bars (verbose)
-      listitems: list all bar items
-  
-  Examples:
-    create a bar with time, buffer number + name, and completion:
-      /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-    hide a bar:
-      /bar hide mybar
-    scroll nicklist 10 lines down on current buffer:
-      /bar scroll nicklist * y+10
-    scroll nicklist one page up on #weechat buffer:
-      /bar scroll nicklist #weechat y-100%
-    scroll to end of nicklist on current buffer:
-      /bar scroll nicklist * ye
+   -all: toggle away status on all connected servers
+message: message for away (if no message is given, away status is removed)
 ........................................
 
-&bull; *`/buffer`* `[clear [number | -merged | -all] | move number | merge number | unmerge [number] | close [n1[-n2]] | list | notify level | localvar | set property value | get property | number | name]`::
-
+[command]*`bar`* manage bars::
 ........................................
-  manage buffers
+/bar  list|listfull|listitems
+      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      default
+      del <name>|-all
+      set <name> <option> <value>
+      hide|show|toggle <name>
+      scroll <name> <buffer> <scroll_value>
 
-     clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-      move: move buffer in the list (may be relative, for example -1)
-     merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-            (by default ctrl-x switches between merged buffers)
-   unmerge: unmerge buffer from other buffers which have same number
-     close: close buffer (number/range is optional)
-      list: list buffers (without argument, this list is displayed)
-    notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-                 none: never
-            highlight: for highlights only
-              message: for messages from users + highlights
-                  all: all messages
-                reset: reset to default value (all)
-  localvar: display local variables for current buffer
-       set: set a property for current buffer
-       get: display a property of current buffer
-    number: jump to buffer by number, possible prefix:
-            '+': relative jump, add number to current
-            '-': relative jump, sub number to current
-            '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-      name: jump to buffer by (partial) name
-  
-  Examples:
-    clear current buffer:
-      /buffer clear
-    move buffer to number 5:
-      /buffer move 5
-    merge with core buffer:
-      /buffer merge 1
-    unmerge buffer:
-      /buffer unmerge
-    close current buffer:
-      /buffer close
-    close buffers 5 to 7:
-      /buffer close 5-7
-    jump to #weechat:
-      /buffer #weechat
-    jump to next buffer:
-      /buffer +1
-........................................
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+    cond1,...: condition(s) for displaying bar (only for type "window"):
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               without condition, bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create default bars
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
+ scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
 
-&bull; *`/color`* `[alias color name] | [unalias color] | reset`::
-
-........................................
-  define color aliases and display palette of colors
-
-    alias: add an alias for a color
-  unalias: delete an alias
-    color: color number (>= 1, max depends on terminal, commonly 63 or 255)
-     name: alias name for color (for example: "orange")
-    reset: reset all color pairs (useful when no more pairs are available)
-  
-  Without argument, this command displays colors in a new buffer.
-  
-  Examples:
-    add alias "orange" for color 214:
-      /color alias 214 orange
-    delete color 214:
-      /color unalias 214
+Examples:
+  create a bar with time, buffer number + name, and completion:
+    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  hide a bar:
+    /bar hide mybar
+  scroll nicklist 10 lines down on current buffer:
+    /bar scroll nicklist * y+10
+  scroll nicklist one page up on #weechat buffer:
+    /bar scroll nicklist #weechat y-100%
+  scroll to end of nicklist on current buffer:
+    /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/command`* `plugin command`::
-
+[command]*`buffer`* manage buffers::
 ........................................
-  launch explicit WeeChat or plugin command
+/buffer  list
+         clear [<number>|-merged|-all]
+         move|merge <number>
+         unmerge [<number>]
+         close [<n1>[-<n2>]]
+         notify <level>
+         localvar
+         set <property> <value>
+         get <property>
+         <number>|<name>
 
-   plugin: plugin name ('weechat' for WeeChat internal command)
-  command: command to execute (a '/' is automatically added if not found at beginning of command)
-........................................
+    list: list buffers (without argument, this list is displayed)
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1)
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+   close: close buffer (number/range is optional)
+  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+localvar: display local variables for current buffer
+     set: set a property for current buffer
+     get: display a property of current buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+    name: jump to buffer by (partial) name
 
-&bull; *`/debug`* `[list | set plugin level | dump [plugin] | buffer | windows | term | color]`::
-
-........................................
-  control debug for core/plugins
-
-      set: set log level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-  windows: display windows tree
-     term: display infos about terminal and available colors
-    color: display infos about current color pairs
-........................................
-
-&bull; *`/filter`* `[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]`::
-
-........................................
-  filter messages in buffers, to hide/show them according to tags or regex
-
-           list: list all filters
-         enable: enable filters (filters are enabled by default)
-        disable: disable filters
-         toggle: toggle filters
-           name: filter name
-            add: add a filter
-            del: delete a filter
-           -all: delete all filters
-  plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
-           tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-          regex: regular expression to search in line
-                 - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-                 - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-                 note: two regex are created: one for prefix and one for message
-  
-  The default key alt+'=' toggles filtering on/off.
-  
-  Tags most commonly used:
-    no_filter, no_highlight, no_log, log0..log9 (log level),
-    notify_message, notify_private, notify_highlight,
-    nick_xxx (xxx is nick in message),
-    irc_xxx (xxx is command name or number, see /server raw),
-    irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-  
-  Examples:
-    use IRC smart filter for join/part/quit messages:
-      /filter add irc_smart * irc_smart_filter *
-    filter all IRC join/part/quit messages:
-      /filter add joinquit * irc_join,irc_part,irc_quit *
-    filter nicks displayed when joining channels or with /names:
-      /filter add nicks * irc_366 *
-    filter nick "toto" on IRC channel #weechat:
-      /filter add toto irc.freenode.#weechat * toto\t
-    keep only nick "titi" on IRC channel #test:
-      /filter add titi irc.freenode.#test * !titi\t
-    filter lines containing word "spam":
-      /filter add filterspam * * spam
-    filter lines containing "weechat sucks" on IRC channel #weechat:
-      /filter add sucks irc.freenode.#weechat * weechat sucks
+Examples:
+  clear current buffer:
+    /buffer clear
+  move buffer to number 5:
+    /buffer move 5
+  merge with core buffer:
+    /buffer merge 1
+  unmerge buffer:
+    /buffer unmerge
+  close current buffer:
+    /buffer close
+  close buffers 5 to 7:
+    /buffer close 5-7
+  jump to #weechat:
+    /buffer #weechat
+  jump to next buffer:
+    /buffer +1
 ........................................
 
-&bull; *`/help`* `[command | option]`::
-
+[command]*`color`* define color aliases and display palette of colors::
 ........................................
-  display help about commands and options
+/color  alias <color> <alias>
+        unalias <color>
+        reset
 
-  command: a command name
-   option: an option name (use /set to see list)
-........................................
+  alias: add an alias for a color
+unalias: delete an alias
+  color: color number (>= 1, max depends on terminal, commonly 63 or 255)
+   name: alias name for color (for example: "orange")
+  reset: reset all color pairs (useful when no more pairs are available)
 
-&bull; *`/history`* `[clear | value]`::
+Without argument, this command displays colors in a new buffer.
 
-........................................
-  show buffer command history
-
-  clear: clear history
-  value: number of history entries to show
-........................................
-
-&bull; *`/input`* `return | complete_next | complete_previous | search_next | delete_previous_char | delete_next_char | delete_previous_word | delete_next_word | delete_beginning_of_line | delete_end_of_line | delete_line | clipboard_paste | transpose_chars | undo | redo | move_beginning_of_line | move_end_of_line | move_previous_char | move_next_char | move_previous_word | move_next_word | history_previous | history_next | history_global_previous | history_global_next | jump_smart | jump_last_buffer | jump_previously_visited_buffer | jump_next_visited_buffer | hotlist_clear | grab_key | grab_key_command | scroll_unread | set_unread | set_unread_current_buffer | switch_active_buffer | switch_active_buffer_previous | insert [args]`::
-
-........................................
-  functions for command line
-
-  This command is used by key bindings or plugins.
+Examples:
+  add alias "orange" for color 214:
+    /color alias 214 orange
+  delete color 214:
+    /color unalias 214
 ........................................
 
-&bull; *`/key`* `[list | listdefault | listdiff] | [bind key [command [args]]] | [unbind key] | [reset key] | [resetall -yes] | [missing]`::
-
+[command]*`command`* launch explicit WeeChat or plugin command::
 ........................................
-  bind/unbind keys
+/command  <plugin> <command>
 
-         list: list all current keys (without argument, this list is displayed)
-  listdefault: list default keys
-     listdiff: list differences between current and default keys (keys added, redefined or deleted)
-         bind: bind a command to a key or display command bound to key
-       unbind: remove a key binding
-        reset: reset a key to default binding
-     resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-      missing: add missing keys (using default bindings), useful after installing new WeeChat version
-  
-  When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
-  
-  Examples:
-    key alt-x to toggle nicklist bar:
-      /key bind meta-x /bar toggle nicklist
-    key alt-r to jump to #weechat IRC channel:
-      /key bind meta-r /buffer #weechat
-    restore default binding for key alt-r:
-      /key reset meta-r
+ plugin: plugin name ('weechat' for WeeChat internal command)
+command: command to execute (a '/' is automatically added if not found at beginning of command)
 ........................................
 
-&bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
-
+[command]*`debug`* control debug for core/plugins::
 ........................................
-  save/apply/reset layout for buffers and windows
+/debug  list
+        set <plugin> <level>
+        dump [<plugin>]
+        buffer|windows|term|color
 
-     save: save current layout
-    apply: apply saved layout
-    reset: remove saved layout
-  buffers: save/apply only buffers (order of buffers)
-  windows: save/apply only windows (buffer displayed by each window)
-  
-  Without argument, this command displays saved layout.
-........................................
-
-&bull; *`/mute`* `[-current | -buffer name | -all] command`::
-
-........................................
-  execute a command silently
-
-  -current: no output on curent buffer
-   -buffer: no output on specified buffer
-      name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
-      -all: no output on ALL buffers
-   command: command to execute silently (a '/' is automatically added if not found at beginning of command)
-  
-  If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
-  
-  Examples:
-    config save:
-      /mute save
-    message to current IRC channel:
-      /mute -current msg * hi!
-    message to #weechat channel:
-      /mute -buffer irc.freenode.#weechat msg #weechat hi!
+   list: list plugins with debug levels
+    set: set debug level for plugin
+ plugin: name of plugin ("core" for WeeChat core)
+  level: debug level for plugin (0 = disable debug)
+   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+ buffer: dump buffer content with hexadecimal values in log file
+windows: display windows tree
+   term: display infos about terminal
+  color: display infos about current color pairs
 ........................................
 
-&bull; *`/plugin`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]`::
-
+[command]*`filter`* filter messages in buffers, to hide/show them according to tags or regex::
 ........................................
-  list/load/unload plugins
+/filter  list
+         enable|disable|toggle [<name>]
+         add <name> <plugin.buffer> <tags> <regex>
+         del <name>|-all
 
-      list: list loaded plugins
-  listfull: list loaded plugins (verbose)
-      load: load a plugin
-  autoload: autoload plugins in system or user directory
-    reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)
-    unload: unload one or all plugins
-  
-  Without argument, this command lists loaded plugins.
-........................................
+         list: list all filters
+       enable: enable filters (filters are enabled by default)
+      disable: disable filters
+       toggle: toggle filters
+         name: filter name
+          add: add a filter
+          del: delete a filter
+         -all: delete all filters
+plugin.buffer: plugin and buffer where filter is active ("*" for all buffers)
+         tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+        regex: regular expression to search in line
+               - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+               - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+               note: two regex are created: one for prefix and one for message
 
-&bull; *`/proxy`* `[add proxyname type address port [username [password]]] | [del proxyname|-all] | [set proxyname option value] | [list]`::
+The default key alt+'=' toggles filtering on/off.
 
-........................................
-  manage proxies
+Tags most commonly used:
+  no_filter, no_highlight, no_log, log0..log9 (log level),
+  notify_message, notify_private, notify_highlight,
+  nick_xxx (xxx is nick in message),
+  irc_xxx (xxx is command name or number, see /server raw),
+  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 
-            add: add a new proxy
-      proxyname: name of proxy (must be unique)
-           type: http, socks4 or socks5
-        address: IP or hostname
-           port: port
-       username: username (optional)
-       password: password (optional)
-            del: delete a proxy (or all proxies with -all)
-            set: set a value for a proxy property
-         option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
-          value: new value for option
-           list: list all proxies
-  
-  Examples:
-    create a http proxy, running on local host, port 8888:
-      /proxy add local http 127.0.0.1 8888
-    create a http proxy using IPv6 protocol:
-      /proxy add local http 127.0.0.1 8888
-      /proxy set local ipv6 on
-    create a socks5 proxy with username/password:
-      /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-    delete a proxy:
-      /proxy del myproxy
-........................................
-
-&bull; *`/quit`* `[-yes] [arguments]`::
-
-........................................
-  quit WeeChat
-
-       -yes: required if option weechat.look.confirm_quit is enabled
-  arguments: text sent with signal "quit"
-             (for example irc plugin uses this text to send quit message to server)
+Examples:
+  use IRC smart filter for join/part/quit messages:
+    /filter add irc_smart * irc_smart_filter *
+  filter all IRC join/part/quit messages:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
+  filter nicks displayed when joining channels or with /names:
+    /filter add nicks * irc_366 *
+  filter nick "toto" on IRC channel #weechat:
+    /filter add toto irc.freenode.#weechat * toto\t
+  keep only nick "titi" on IRC channel #test:
+    /filter add titi irc.freenode.#test * !titi\t
+  filter lines containing word "spam":
+    /filter add filterspam * * spam
+  filter lines containing "weechat sucks" on IRC channel #weechat:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
-&bull; *`/reload`* `[file [file...]]`::
-
+[command]*`help`* display help about commands and options::
 ........................................
-  reload configuration files from disk
+/help  <command>
+       <option>
 
-  file: configuration file to reload
-  
-  Without argument, all files (WeeChat and plugins) are reloaded.
-........................................
-
-&bull; *`/save`* `[file [file...]]`::
-
-........................................
-  save configuration files to disk
-
-  file: configuration file to save
-  
-  Without argument, all files (WeeChat and plugins) are saved.
+command: a command name
+ option: an option name (use /set to see list)
 ........................................
 
-&bull; *`/set`* `[option [value]]`::
-
+[command]*`history`* show buffer command history::
 ........................................
-  set config options
+/history  clear
+          <value>
 
-  option: name of an option
+clear: clear history
+value: number of history entries to show
+........................................
+
+[command]*`input`* functions for command line::
+........................................
+/input  <action> [<arguments>]
+
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text: search text in buffer
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer: jump to last buffer
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist
+  grab_key: grab a key
+  grab_key_command: grab a key with its associated command
+  scroll_unread: scroll to unread marker
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  insert: insert text in command line
+
+This command is used by key bindings or plugins.
+........................................
+
+[command]*`key`* bind/unbind keys::
+........................................
+/key  list|listdefault|listdiff
+      bind <key> [<command> [<args>]]
+      unbind <key>
+      reset <key>
+      resetall -yes
+      missing
+
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+       bind: bind a command to a key or display command bound to key
+     unbind: remove a key binding
+      reset: reset a key to default binding
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+
+Examples:
+  key alt-x to toggle nicklist bar:
+    /key bind meta-x /bar toggle nicklist
+  key alt-r to jump to #weechat IRC channel:
+    /key bind meta-r /buffer #weechat
+  restore default binding for key alt-r:
+    /key reset meta-r
+........................................
+
+[command]*`layout`* save/apply/reset layout for buffers and windows::
+........................................
+/layout  save [buffers|windows]
+         apply [buffers|windows]
+         reset [buffers|windows]
+
+   save: save current layout
+  apply: apply saved layout
+  reset: remove saved layout
+buffers: save/apply only buffers (order of buffers)
+windows: save/apply only windows (buffer displayed by each window)
+
+Without argument, this command displays saved layout.
+........................................
+
+[command]*`mute`* execute a command silently::
+........................................
+/mute  [-current | -buffer <name> | -all] command
+
+-current: no output on curent buffer
+ -buffer: no output on specified buffer
+    name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+    -all: no output on ALL buffers
+ command: command to execute silently (a '/' is automatically added if not found at beginning of command)
+
+If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
+
+Examples:
+  config save:
+    /mute save
+  message to current IRC channel:
+    /mute -current msg * hi!
+  message to #weechat channel:
+    /mute -buffer irc.freenode.#weechat msg #weechat hi!
+........................................
+
+[command]*`plugin`* list/load/unload plugins::
+........................................
+/plugin  list|listfull [<name>]
+         load <filename>
+         autoload
+         reload|unload [<name>]
+
+    list: list loaded plugins
+listfull: list loaded plugins (verbose)
+    load: load a plugin
+autoload: autoload plugins in system or user directory
+  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+  unload: unload a plugin (if no name given, unload all plugins)
+
+Without argument, this command lists loaded plugins.
+........................................
+
+[command]*`proxy`* manage proxies::
+........................................
+/proxy  list
+        add <name> <type> <address> <port> [<username> [<password>]]
+        del <name>|-all
+        set <name> <option> <value>
+
+    list: list all proxies
+     add: add a new proxy
+    name: name of proxy (must be unique)
+    type: http, socks4 or socks5
+ address: IP or hostname
+    port: port
+username: username (optional)
+password: password (optional)
+     del: delete a proxy (or all proxies with -all)
+     set: set a value for a proxy property
+  option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
    value: new value for option
-  
-  New value can be, according to variable type:
-    boolean: on, off or toggle
-    integer: number, ++number or --number
-    string : any string ("" for empty string)
-    color  : color name, ++number or --number
-  
-  For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+
+Examples:
+  create a http proxy, running on local host, port 8888:
+    /proxy add local http 127.0.0.1 8888
+  create a http proxy using IPv6 protocol:
+    /proxy add local http 127.0.0.1 8888
+    /proxy set local ipv6 on
+  create a socks5 proxy with username/password:
+    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
+  delete a proxy:
+    /proxy del myproxy
 ........................................
 
-&bull; *`/unset`* `[option]`::
-
+[command]*`quit`* quit WeeChat::
 ........................................
-  unset/reset config options
+/quit  [-yes] [<arguments>]
 
-  option: name of an option (may begin or end with "*" to mass-reset options, use carefully!)
-  
-  According to option, it's reset (for standard options) or removed (for optional settings, like server values).
-........................................
-
-&bull; *`/upgrade`* `[path_to_binary]`::
-
-........................................
-  upgrade WeeChat without disconnecting from servers
-
-  path_to_binary: path to WeeChat binary (default is current binary)
-  
-  This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
-  
-  Upgrade process has 4 steps:
-    1. save session into files for core and plugins (buffers, history, ..)
-    2. unload all plugins (configs *.conf are saved)
-    3. save WeeChat config (weechat.conf)
-    4. exec new WeeChat binary.
+     -yes: required if option weechat.look.confirm_quit is enabled
+arguments: text sent with signal "quit"
+           (for example irc plugin uses this text to send quit message to server)
 ........................................
 
-&bull; *`/uptime`* `[-o | -ol]`::
-
+[command]*`reload`* reload configuration files from disk::
 ........................................
-  show WeeChat uptime
+/reload  [<file> [<file>...]]
 
-   -o: send uptime to current buffer as input (english string)
-  -ol: send uptime to current buffer as input (translated string)
-........................................
+file: configuration file to reload (without extension ".conf")
 
-&bull; *`/version`* `[-o | -ol]`::
-
-........................................
-  show WeeChat version and compilation date
-
-   -o: send version to current buffer as input (english string)
-  -ol: send version to current buffer as input (translated string)
+Without argument, all files (WeeChat and plugins) are reloaded.
 ........................................
 
-&bull; *`/wait`* `number[unit] command`::
-
+[command]*`save`* save configuration files to disk::
 ........................................
-  schedule a command execution in future
+/save  [<file> [<file>...]]
 
-   number: amount of time to wait (integer number)
-     unit: optional, values are:
-             ms: milliseconds
-              s: seconds (default)
-              m: minutes
-              h: hours
-  command: command to execute (or text to send to buffer if command does not start with '/')
-  
-  Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
-  
-  Examples:
-    join channel in 10 sec:
-      /wait 10 /join #test
-    set away in 15 min:
-      /wait 15m /away -all I'm away
-    say 'hello' in 2 min:
-      /wait 2m hello
+file: configuration file to save (without extension ".conf")
+
+Without argument, all files (WeeChat and plugins) are saved.
 ........................................
 
-&bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
-
+[command]*`set`* set config options::
 ........................................
-  manage windows
+/set  [<option> [<value>]]
 
-           list: list opened windows (without argument, this list is displayed)
-             -1: jump to previous window
-             +1: jump to next window
-             b#: jump to next window displaying buffer number #
-             up: switch to window above current one
-           down: switch to window below current one
-           left: switch to window on the left
-          right: switch to window on the right
-         splith: split current window horizontally
-         splitv: split current window vertically
-         resize: resize window size, new size is <pct> percentage of parent window
-          merge: merge window with another (all = keep only one window)
-        page_up: scroll one page up
-      page_down: scroll one page down
-        refresh: refresh screen
-         scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
-      scroll_up: scroll a few lines up
-    scroll_down: scroll a few lines down
-     scroll_top: scroll to top of buffer
-  scroll_bottom: scroll to bottom of buffer
-  scroll_previous_highlight: scroll to previous highlight
-  scroll_next_highlight: scroll to next highlight
-           zoom: zoom on window
-  
-  For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
-  
-  Examples:
-    jump to window displaying buffer #1:
-      /window b1
-    scroll 2 lines up:
-      /window scroll -2
-    scroll 2 days up:
-      /window scroll -2d
-    scroll to beginning of current day:
-      /window scroll -d
+option: name of an option (can start or end with "*" to list many options)
+ value: new value for option
+
+New value can be, according to variable type:
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+  string : any string ("" for empty string)
+  color  : color name, ++number or --number
+
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+
+Examples:
+  display options about highlight:
+    /set *highlight*
+  add a word to highlight:
+    /set weechat.look.highlight "word"
+........................................
+
+[command]*`unset`* unset/reset config options::
+........................................
+/unset  <option>
+
+option: name of an option (may begin or end with "*" to mass-reset options, use carefully!)
+
+According to option, it's reset (for standard options) or removed (for optional settings, like server values).
+
+Examples:
+  reset one option:
+    /unset weechat.look.item_time_format
+  reset all color options:
+    /unset weechat.color.*
+........................................
+
+[command]*`upgrade`* upgrade WeeChat without disconnecting from servers::
+........................................
+/upgrade  [<path_to_binary>]
+
+path_to_binary: path to WeeChat binary (default is current binary)
+
+This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
+........................................
+
+[command]*`uptime`* show WeeChat uptime::
+........................................
+/uptime  [-o | -ol]
+
+ -o: send uptime to current buffer as input (english string)
+-ol: send uptime to current buffer as input (translated string)
+........................................
+
+[command]*`version`* show WeeChat version and compilation date::
+........................................
+/version  [-o | -ol]
+
+ -o: send version to current buffer as input (english string)
+-ol: send version to current buffer as input (translated string)
+........................................
+
+[command]*`wait`* schedule a command execution in future::
+........................................
+/wait  <number>[<unit>] <command>
+
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
+
+Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
+
+Examples:
+  join channel in 10 seconds:
+    /wait 10 /join #test
+  set away in 15 minutes:
+    /wait 15m /away -all I'm away
+  say 'hello' in 2 minutes:
+    /wait 2m hello
+........................................
+
+[command]*`window`* manage windows::
+........................................
+/window  list
+         -1|+1|b#|up|down|left|right
+         splith|splitv [<pct>]
+         resize <pct>
+         merge [all]
+         page_up|page_down
+         refresh
+         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         zoom
+
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is <pct> percentage of parent window
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+         zoom: zoom on window
+
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+
+Examples:
+  jump to window displaying buffer #1:
+    /window b1
+  scroll 2 lines up:
+    /window scroll -2
+  scroll 2 days up:
+    /window scroll -2d
+  scroll to beginning of current day:
+    /window scroll -d
 ........................................
 

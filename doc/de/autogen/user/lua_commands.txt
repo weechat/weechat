@@ -1,11 +1,19 @@
-&bull; *`/lua`* `[list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload [Name]] | [unload [Name]]`::
-
+[command]*`lua`* auflisten/installieren/deinstallieren von Skripten::
 ........................................
-  auflisten/installieren/deinstallieren von Skripten
+/lua  list|listfull [<name>]
+      load <filename>
+      autoload
+      reload|unload [<name>]
 
-  filename: Skript/Datei welches geladen werden soll
-  name: Name des Skripts
-  
-  Wird der Befehl ohne Argumente aufgerufen werden alle geladenen Skripten aufgelistet.
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+
+Without argument, this command lists all loaded scripts.
 ........................................
 

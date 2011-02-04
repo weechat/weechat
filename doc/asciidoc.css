@@ -1,6 +1,12 @@
 div.sectionbody {
-  font-family: serif,Helvetica,arial;
+    font-family: serif,Helvetica,arial;
 }
 h5 {
     font-size: 0.95em;
+}
+span.command {
+    background: #EEEEFF;
+    border: solid 1px #BBBBDD;
+    padding: 0 8px 0 8px;
+    margin-right: 12px;
 }

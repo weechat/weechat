@@ -1,13 +1,15 @@
-&bull; *`/aspell`* `dictlist | enable lang | disable | addword [lang] word`::
-
+[command]*`aspell`* Konfiguration für aspell-Erweiterung::
 ........................................
-  Konfiguration für aspell-Erweiterung
+/aspell  dictlist
+         enable <lang>
+         disable
+         addword [<lang>] <word>
 
-  dictlist: listet installierte Wörterbücher auf
-    enable: aktiviert aspell in aktuellem Buffer [lang = Wörterbuch)
-   disable: deaktiviert aspell in aktuellem Buffer
-   addword: fügt ein Wort in das persönliche Wörterbuch von aspell hinzu
-  
-  Eingaben die mit '/' beginnen werden nicht überprüft, außer bei einigen Befehle.
+dictlist: listet installierte Wörterbücher auf
+  enable: aktiviert aspell in aktuellem Buffer [lang = Wörterbuch)
+ disable: deaktiviert aspell in aktuellem Buffer
+ addword: fügt ein Wort in das persönliche Wörterbuch von aspell hinzu
+
+Eingaben die mit '/' beginnen werden nicht überprüft, außer bei einigen Befehle.
 ........................................
 

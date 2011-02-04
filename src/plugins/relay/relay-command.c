@@ -284,8 +284,10 @@ relay_command_init ()
 {
     weechat_hook_command ("relay",
                           N_("relay control"),
-                          N_("[list | listfull | add protocol.name port | "
-                             "del protocol.name | raw]"),
+                          N_("list|listfull|listrelay"
+                             " || add <protocol.name> <port>"
+                             " || del <protocol.name>"
+                             " || raw"),
                           N_("         list: list relay clients (only active "
                              "relays)\n"
                              "     listfull: list relay clients (verbose, all "

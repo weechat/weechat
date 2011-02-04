@@ -1470,7 +1470,7 @@ weechat::
 When option is not set (default), WeeChat chooses appropriate buffer, commonly
 server or channel buffer.
 
-Non-exhaustive list of IRC messages or alias that you can customize:
+Non-comprehensive list of IRC messages or alias that you can customize:
 
 [width="60%",cols="^1m,^3m,8",options="header"]
 |========================================

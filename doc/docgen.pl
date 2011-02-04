@@ -397,23 +397,27 @@ sub docgen
                     {
                         my $args = $plugin_commands{$plugin}{$command}{"args"};
                         $args = $d->get($args) if ($args ne "");
+                        my @args_formats = split(/ \|\| /, $args);
                         my $description = $plugin_commands{$plugin}{$command}{"description"};
                         $description = $d->get($description) if ($description ne "");
                         my $args_description = $plugin_commands{$plugin}{$command}{"args_description"};
                         $args_description = $d->get($args_description) if ($args_description ne "");
                         
-                        print FILE "&bull; *`/".$command."`*";
-                        print FILE " `".$args."`" if ($args ne "");
-                        print FILE "::\n\n";
+                        print FILE "[command]*`".$command."`* ".$description."::\n";
                         print FILE "........................................\n";
-                        print FILE "  ".$description."\n" if ($description ne "");
+                        my $prefix = "/".$command."  ";
+                        foreach my $format (@args_formats)
+                        {
+                            print FILE $prefix.$format."\n";
+                            $prefix = " " x length($prefix);
+                        }
                         if ($args_description ne "")
                         {
                             print FILE "\n";
                             my @lines = split(/\n/, $args_description);
                             foreach my $line (@lines)
                             {
-                                print FILE "  ".$line."\n";
+                                print FILE $line."\n";
                             }
                         }
                         print FILE "........................................\n\n";

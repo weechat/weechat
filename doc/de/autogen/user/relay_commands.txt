@@ -1,23 +1,25 @@
-&bull; *`/relay`* `[list | listfull | add protocol.name port | del protocol.name | raw]`::
-
+[command]*`relay`* Relay-Kontrolle::
 ........................................
-  Relay-Kontrolle
+/relay  list|listfull|listrelay
+        add <protocol.name> <port>
+        del <protocol.name>
+        raw
 
-           list: Auflistung der Relay-Clients (nur aktive Relays)
-       listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
-      listrelay: Auflistung der Relays (Name und Port)
-            add: füge ein Relay, für ein Protokoll + Name, hinzu
-            del: entferne Relay für ein Protokoll + Name
-  protocol.name: Protokoll und Name des Relays
-                 zur Zeit wird ausschließlich das "irc" Protokoll unterstützt
-                 Beispiel: irc.freenode
-           port: Port den der Relay nutzen soll
-            raw: öffnet Buffer mit RAW-Relay Daten
-  
-  Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
-  
-  Beispiel:
-    IRC Proxy für Server "freenode":
-      /relay add irc.freenode 8000
+         list: Auflistung der Relay-Clients (nur aktive Relays)
+     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
+    listrelay: Auflistung der Relays (Name und Port)
+          add: füge ein Relay, für ein Protokoll + Name, hinzu
+          del: entferne Relay für ein Protokoll + Name
+protocol.name: Protokoll und Name des Relays
+               zur Zeit wird ausschließlich das "irc" Protokoll unterstützt
+               Beispiel: irc.freenode
+         port: Port den der Relay nutzen soll
+          raw: öffnet Buffer mit RAW-Relay Daten
+
+Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
+
+Beispiel:
+  IRC Proxy für Server "freenode":
+    /relay add irc.freenode 8000
 ........................................
 

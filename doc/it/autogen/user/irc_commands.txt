@@ -1,721 +1,671 @@
-&bull; *`/admin`* `[obiettivo]`::
-
+[command]*`admin`* informazioni sull'amministratore del server::
 ........................................
-  informazioni sull'amministratore del server
+/admin  [<target>]
 
-  destinazione: server
-........................................
-
-&bull; *`/allchan`* `[-current] [-exclude=canale,[,canale...]] comando [argomenti]`::
-
-........................................
-  esegue un comando su tutti i canali di tutti i server connessi
-
-   -current: esegue il comando solo per i canali del server corrente
-   -exclude: esclude alcunu canali ('*' è consentito all'inizio o alla fine del nome del canale, per escludere più canali)
-    comando: comando da eseguire
-  argomenti: argomenti per il comando
-  
-  Esempi:
-    esegue '/me sta testando' su tutti i canali:
-      /allchan me is testing
-    dice 'ciao' dovunque tranne che su #weechat:
-      /allchan -exclude=#weechat msg * ciao
-    dice 'ciao' dovunque tranne che su #weechat e i canali che iniziano con #linux:
-      /allchan -exclude=#weechat,#linux* msg * ciao
+destinazione: server
 ........................................
 
-&bull; *`/allserv`* `[-exclude=server[,server...]] comando [argomenti]`::
-
+[command]*`allchan`* esegue un comando su tutti i canali di tutti i server connessi::
 ........................................
-  esegue un comando su tutti i server connessi
+/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
-   -exclude: esclude alcuni server ('*' è consentito all'inizio o alla fine del nome server, per escludere più server)
-    comando: comando da eseguire
-  argomenti: argomenti per il comando
-  
-  Esempli:
-    cambia nick su tutti i server:
-      /allserv nick nuovonick
-    imposta l'assenza su tutti i server:
-      /allserv away sono assente
-........................................
+ -current: esegue il comando solo per i canali del server corrente
+ -exclude: esclude alcunu canali ('*' è consentito all'inizio o alla fine del nome del canale, per escludere più canali)
+  comando: comando da eseguire
+argomenti: argomenti per il comando
 
-&bull; *`/ban`* `[canale] [nick [nick ...]]`::
-
-........................................
-  banna nick oppure host
-
-  canale: canale per il ban
-      nick: utente o host da bannare
+Esempi:
+  esegue '/me sta testando' su tutti i canali:
+    /allchan me is testing
+  dice 'ciao' dovunque tranne che su #weechat:
+    /allchan -exclude=#weechat msg * ciao
+  dice 'ciao' dovunque tranne che su #weechat e i canali che iniziano con #linux:
+    /allchan -exclude=#weechat,#linux* msg * ciao
 ........................................
 
-&bull; *`/connect`* `[nome_server [nome_server ...] | nome_host[/porta] [-opzione[=valore]] [-nooption] | -all | -open] [-nojoin] [-switch]`::
-
+[command]*`allserv`* esegue un comando su tutti i server connessi::
 ........................................
-  connette ad uno o più server IRC
+/allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
-  nome_server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)
-    nome_host: nome host (oppure IP) del server
-        porta: porta per il server (6667 è la predefinita)
-      opzione: imposta opzione per il server (per le opzioni bool, il valore può essere omesso)
-     nooption: imposta il valore bool dell'opzione su off (per esempio: -nossl)
-         -all: connette a tutti i server definiti nella configurazione
-       -open: connette a tutti i server aperti ai quali non si è attualmente connessi
-      -nojoin: non entrare in nessun canale (anche se l'ingresso automatico è attivo sul server)
-      -switch: passa al server successivo
-  
-  Esempi:
-    /connect freenode
-    /connect irc.oftc.net/6667
-    /connect irc6.oftc.net/6667 -ipv6
-    /connect irc6.oftc.net/6697 -ipv6 -ssl
-    /connect mio.server.org/6697 -ssl -password=test
-    /connect -switch
+ -exclude: esclude alcuni server ('*' è consentito all'inizio o alla fine del nome server, per escludere più server)
+  comando: comando da eseguire
+argomenti: argomenti per il comando
+
+Esempli:
+  cambia nick su tutti i server:
+    /allserv nick nuovonick
+  imposta l'assenza su tutti i server:
+    /allserv away sono assente
 ........................................
 
-&bull; *`/ctcp`* `destinazione tipo [argomenti]`::
-
+[command]*`ban`* banna nick oppure host::
 ........................................
-  invia un messaggio CTCP (Protocollo Client-A-Client)
+/ban  [<channel>] [<nick> [<nick>...]]
 
-  destinazione: nick o canale a cui inviare il CTCP
-          tipo: tipo CTCP (esempi: "version", "ping", ..)
-     argomenti: argomenti per il CTCP
+channel: channel for ban
+   nick: user or host to ban
 ........................................
 
-&bull; *`/cycle`* `[canale[,canale]] [messaggio]`::
-
+[command]*`connect`* connette ad uno o più server IRC::
 ........................................
-  esce e rienta in un canale
+/connect  [<server> [<server>...] | <hostname>[/<port>]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
+          -all|-open [-nojoin] [-switch]
 
-     canale: nome canale per il ciclo
-  messaggio: messaggio di uscita (mostrato agli altri utenti)
-........................................
+    server: internal server name to connect (server must have been created by /server add)
+  hostname: hostname (or IP) of a server (this will create a TEMPORARY server)
+      port: port for server (6667 by default)
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-&bull; *`/dcc`* `azione [nick] [file]]`::
-
-........................................
-  avvia DCC (file o  chat)
-
-  azione: 'send' (invia file) o 'chat' (avvia una conversazione)
-    nick: nick a cui inviare il file o con cui aprire la chat
-    file: nome file (sull'host locale)
-  
-  Esempi:
-    chat con "tizio":
-      /dcc chat tizio
-    invia file "/home/foo/bar.txt al nick "tizio":
-      /dcc send tizio /home/foo/bar.txt
-........................................
-
-&bull; *`/dehalfop`* `[nick [nick]]`::
-
-........................................
-  rimuove lo stato di half-op da uno (o più) nick
+Examples:
+  /connect freenode
+  /connect irc.oftc.net/6667
+  /connect irc6.oftc.net/6667 -ipv6
+  /connect irc6.oftc.net/6697 -ipv6 -ssl
+  /connect my.server.org/6697 -ssl -password=test
+  /connect -switch
 ........................................
 
-&bull; *`/deop`* `[nick [nick]]`::
-
+[command]*`ctcp`* invia un messaggio CTCP (Protocollo Client-A-Client)::
 ........................................
-  rimuove lo stato di operatore da uno (o più) nick
-........................................
+/ctcp  <target> <type> [<arguments>]
 
-&bull; *`/devoice`* `[nick [nick]]`::
-
-........................................
-  rimuove voce da uno (o più) nick
+destinazione: nick o canale a cui inviare il CTCP
+        tipo: tipo CTCP (esempi: "version", "ping", ..)
+   argomenti: argomenti per il CTCP
 ........................................
 
-&bull; *`/die`*::
-
+[command]*`cycle`* esce e rienta in un canale::
 ........................................
-  arresta il server
-........................................
+/cycle  [<channel>[,<channel>...]] [<message>]
 
-&bull; *`/disconnect`* `[-all | nome_server [nome_server ...]]`::
-
-........................................
-  disconnette da uno o più server IRC
-
-       -all: disconnetti da tutti i server
-  nome_server: nome del server da cui disconnettersi
+channel: channel name for cycle
+message: part message (displayed to other users)
 ........................................
 
-&bull; *`/halfop`* `[nick [nick]]`::
-
+[command]*`dcc`* start a DCC (file transfert or direct chat)::
 ........................................
-  concede lo stato di halfop ad uno (o più) nick
-........................................
+/dcc  chat <nick>
+      send <nick> <file>
 
-&bull; *`/ignore`* `[list] | [add [re:]nick/host [server [canale]]] | [del numero|-all]`::
+nick: nick for chat or file
+file: filename (on local host)
 
-........................................
-  ignora nick/host dai server o dai canali
-
-       list: elenca tutti gli ignore
-        add: aggiungi un ignore
-        del: elimina un ignore
-     numero: numero di ignore da eliminare (nella lista)
-       -all: elimina tutti gli ignore
-  nick/host: nick o host da ignorare: la sintassi è "re:regex" o "mask" (una mask è una stringa con alcuni "*" per sostituire uno o più caratteri)
-     server: nome interno del server dove l'ignore è attivo
-     canale: nome del canale dove l'ignore è attivo
-  
-  Esempi:
-    ignora nick "tizio" su tutti gli host/canali:
-      /ignore add tizio
-    ignora l'host "tizio@dominio.com" sul server freenode:
-      /ignore add tizio@dominio.com freenode
-    ignora l'host "tizio*@*.dominio.com" su freenode/#weechat:
-      /ignore add tizio*@*.dominio.com freenode #weechat
+Examples:
+  chat with nick "toto":
+    /dcc chat toto
+  send file "/home/foo/bar.txt" to nick "toto":
+    /dcc send toto /home/foo/bar.txt
 ........................................
 
-&bull; *`/info`* `[obiettivo]`::
-
+[command]*`dehalfop`* remove half channel operator status from nick(s)::
 ........................................
-  ottieni informazioni sul server
-
-  destinazione: nome server
+/dehalfop  <nick> [<nick>...]
 ........................................
 
-&bull; *`/invite`* `nick canale`::
-
+[command]*`deop`* remove channel operator status from nick(s)::
 ........................................
-  invita un nick su un canale
-
-      nick: nick da invitare
-  canale: canale su cui invitare
+/deop  <nick> [<nick>...]
 ........................................
 
-&bull; *`/ison`* `[nick [nick ...]]`::
-
+[command]*`devoice`* remove voice from nick(s)::
 ........................................
-  verifica se un nick è collegato su IRC
+/devoice  <nick> [<nick>...]
+........................................
 
+[command]*`die`* arresta il server::
+........................................
+........................................
+
+[command]*`disconnect`* disconnette da uno o più server IRC::
+........................................
+/disconnect  <server> [<server>...]
+             -all
+
+server: server name to disconnect
+  -all: disconnect from all servers
+........................................
+
+[command]*`halfop`* give half channel operator status to nick(s)::
+........................................
+/halfop  <nick> [<nick>...]
+........................................
+
+[command]*`ignore`* ignora nick/host dai server o dai canali::
+........................................
+/ignore  list
+         add [re:]<nick> [<server> [<channel>]]
+         del <number>|-all
+
+     list: list all ignores
+      add: add an ignore
+     nick: nick or hostname (can be regular expression if "re:" is given)
+      del: delete an ignore
+   number: number of ignore to delete (look at list to find it)
+     -all: delete all ignores
+nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
+   server: internal server name where ignore is working
+  channel: channel name where ignore is working
+
+Examples:
+  ignore nick "toto" everywhere:
+    /ignore add toto
+  ignore host "toto@domain.com" on freenode server:
+    /ignore add toto@domain.com freenode
+  ignore host "toto*@*.domain.com" on freenode/#weechat:
+    /ignore add toto*@*.domain.com freenode #weechat
+........................................
+
+[command]*`info`* ottieni informazioni sul server::
+........................................
+/info  [<target>]
+
+destinazione: nome server
+........................................
+
+[command]*`invite`* invita un nick su un canale::
+........................................
+/invite  <nick> <channel>
+
+   nick: nick to invite
+channel: channel to invite
+........................................
+
+[command]*`ison`* check if a nick is currently on IRC::
+........................................
+/ison  <nick> [<nick>...]
+
+nick: nick
+........................................
+
+[command]*`join`* entra in un canale::
+........................................
+/join  [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
+
+server: invia a questo server (nome interno)
+canale: nome del canale in cui entrare
+chiave: chiave per entrare nel canale (i canali con una chiave devono essere primi nella lista)
+
+Esempi:
+  /join #weechat
+  /join #canaleprotetto,#weechat chiave
+  /join -server freenode #weechat
+........................................
+
+[command]*`kick`* caccia forzatamente un utente da un canale::
+........................................
+/kick  [<channel>] <nick> [<reason>]
+
+channel: channel where user is
+   nick: nick to kick
+ reason: reason for kick
+........................................
+
+[command]*`kickban`* caccia e banna un nick da un canale::
+........................................
+/kickban  [<channel>] <nick> [<reason>]
+
+channel: channel where user is
+   nick: nick to kick and ban
+ reason: reason for kick
+
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+
+Example:
+  ban "*!*@host.com" and then kick "toto":
+    /kickban toto!*@host.com
+........................................
+
+[command]*`kill`* chiude connessione client-server::
+........................................
+/kill  <nick> <reason>
+
+  nick: nick to kill
+reason: reason for kill
+........................................
+
+[command]*`links`* elenca tutti i nomi server conosciuti dal server che risponde alla richiesta::
+........................................
+/links  [[<server>>] <server_mask>]
+
+          server: questo server dovrebbe rispondere alla richiesta
+mask_server: elenco dei server devono corrispondere a questa mask
+........................................
+
+[command]*`list`* elenca i canali ed i loro argomenti::
+........................................
+/list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
+
+channel: channel to list
+ server: server name
+  regex: regular expression used to filter results
+
+Examples:
+  list all channels on server (can be very slow on large networks):
+    /list
+  list channel #weechat:
+    /list #weechat
+  list all channels beginning with "#weechat" (can be very slow on large networks):
+    /list -re #weechat.*
+........................................
+
+[command]*`lusers`* ottiene statistiche sulla dimensione del network IRC::
+........................................
+/lusers  [<mask> [<target>]]
+
+        mask: server corrispondenti alla mask
+destinazione: server per redirigere la richiesta
+........................................
+
+[command]*`map`* mostra una mappa grafica della rete IRC::
+........................................
+........................................
+
+[command]*`me`* invia un'azione CTCP al canale corrente::
+........................................
+/me  <message>
+
+messaggio: messaggio da inviare
+........................................
+
+[command]*`mode`* cambia modalità canale o utente::
+........................................
+/mode  [<channel>] [+|-]o|p|s|i|t|n|b|v [<arguments>]
+       <nick> [+|-]i|w|s|o
+
+channel modes:
+  channel: channel name to modify (default is current one)
+  o: give/take channel operator privileges
+  p: private channel flag
+  s: secret channel flag
+  i: invite-only channel flag
+  t: topic settable by channel operator only flag
+  n: no messages to channel from clients on the outside
+  m: moderated channel
+  l: set the user limit to channel
+  b: set a ban mask to keep users out
+  e: set exception mask
+  v: give/take the ability to speak on a moderated channel
+  k: set a channel key (password)
+user modes:
+  nick: nick to modify
+  i: mark a user as invisible
+  s: mark a user for receive server notices
+  w: user receives wallops
+  o: operator flag
+
+List of modes is not comprehensive, you should read documentation about your server to see all possible modes.
+
+Examples:
+  protect topic on channel #weechat:
+    /mode #weecht +t
+  become invisible on server:
+    /mode nick +i
+........................................
+
+[command]*`motd`* riceve il "Messaggio Del Giorno"::
+........................................
+/motd  [<target>]
+
+destinazione: nome server
+........................................
+
+[command]*`msg`* invia un messaggio ad un nick o a un canale::
+........................................
+/msg  [-server <server>] <target>[,<target>...] <text>
+
+      server: invia a questo server (nome interno)
+destinazione: nick o canale (può essere una mask, '*' = canale corrente)
+       testo: testo da inviare
+........................................
+
+[command]*`names`* list nicks on channels::
+........................................
+/names  [<channel>[,<channel>...]]
+
+canale: nome canale
+........................................
+
+[command]*`nick`* change current nick::
+........................................
+/nick  [-all] <nick>
+
+-all: set new nick for all connected servers
+nick: new nick
+........................................
+
+[command]*`notice`* invia messaggio di notifica all'utente::
+........................................
+/notice  [-server <server>] <target> <text>
+
+      server: invia a questo server (nome interno)
+destinazione: nick o canale
+       testo: testo da inviare
+........................................
+
+[command]*`notify`* aggiunge una notifica per lo stato di presenza o assenza dei nick sui server::
+........................................
+/notify  add <nick> [<server> [-away]]
+         del <nick>|-all [<server>]
+
+   add: add a notification
+  nick: nick
+server: internal server name (by default current server)
+ -away: notify when away message is changed (by doing whois on nick)
+   del: delete a notification
+  -all: delete all notifications
+
+Without argument, this command displays notifications for current server (or all servers if command is issued on core buffer).
+
+Examples:
+  notify when "toto" joins/quits current server:
+    /notify add toto
+  notify when "toto" joins/quits freenode server:
+    /notify add toto freenode
+  notify when "toto" is away or back on freenode server:
+    /notify add toto freenode -away
+........................................
+
+[command]*`op`* give channel operator status to nick(s)::
+........................................
+/op  <nick> [<nick>...]
+........................................
+
+[command]*`oper`* ottieni i privilegi di operatore::
+........................................
+/oper  <user> <password>
+
+    user: user
+password: password
+........................................
+
+[command]*`part`* esce da un canale::
+........................................
+/part  [<channel>[,<channel>...]] [<message>]
+
+channel: channel name to leave
+message: part message (displayed to other users)
+........................................
+
+[command]*`ping`* invia ping al server::
+........................................
+/ping  <server1> [<server2>]
+
+server1: server su cui effettuare il ping
+server2: invia ping a questo server
+........................................
+
+[command]*`pong`* risponde ad un messaggio ping::
+........................................
+/pong  <daemon> [<daemon2>]
+
+  demone: demone che ha risposto al messaggio di Ping
+demone2: invia messaggio a questo demone
+........................................
+
+[command]*`query`* invia un messaggio privato ad un nick::
+........................................
+/query  [-server <server>] <nick> [<text>]
+
+server: send to this server (internal name)
+  nick: nick for private conversation
+  text: text to send
+........................................
+
+[command]*`quote`* invia dati grezzi al server senza analisi::
+........................................
+/quote  [-server <server>] <data>
+
+server: invia a questo server (nome interno)
+  dati: dati raw da inviare
+........................................
+
+[command]*`reconnect`* riconnette a uno (o più) server::
+........................................
+/reconnect  <server> [<server>...] [-nojoin] [-switch]
+            -all [-nojoin] [-switch]
+
+ server: server name to reconnect
+   -all: reconnect to all servers
+-nojoin: do not join any channel (even if autojoin is enabled on server)
+-switch: switch to next server address
+........................................
+
+[command]*`rehash`* chiede al server di ricaricare il proprio file di configurazione::
+........................................
+/rehash  [<option>]
+
+opzione: opzione extra, per alcuni server
+........................................
+
+[command]*`restart`* chiede al server di riavviarsi::
+........................................
+........................................
+
+[command]*`sajoin`* forza un utente ad entrare su uno o più canali::
+........................................
+/sajoin  <nick> <channel>[,<channel>...]
+
+   nick: nick
+channel: channel name
+........................................
+
+[command]*`samode`* cambia modalità sul canale, senza avere lo status di operatore::
+........................................
+/samode  <channel> <mode>
+
+canale: nome del canale
+modalità: modalità per il canale
+........................................
+
+[command]*`sanick`* forza un utente ad utilizzare un altro nick::
+........................................
+/sanick  <nick> <new_nick>
+
+    nick: nick
+new_nick: new nick
+........................................
+
+[command]*`sapart`* forza un utente a lasciare uno o più canali::
+........................................
+/sapart  <nick> <channel>[,<channel>...]
+
+   nick: nick
+channel: channel name
+........................................
+
+[command]*`saquit`* forza un utente ad uscire dal server senza un motivo::
+........................................
+/saquit  <nick> <reason>
+
+  nick: nick
+reason: reason
+........................................
+
+[command]*`server`* elenca, aggiunge o rimuove server IRC::
+........................................
+/server  list|listfull [<server>]
+         add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
+         copy|rename <server> <new_name>
+         del|keep <server>
+         deloutq|jump|raw
+
+    list: list servers (without argument, this list is displayed)
+listfull: list servers with detailed info for each server
+     add: create a new server
+  server: server name, for internal and display use
+hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+    temp: create temporary server (not saved)
+  option: set option for server (for boolean option, value can be omitted)
+nooption: set boolean option to 'off' (for example: -nossl)
+    copy: duplicate a server
+  rename: rename a server
+    keep: keep server in config file (for temporary servers only)
+     del: delete a server
+ deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    jump: jump to server buffer
+     raw: open buffer with raw IRC data
+
+Examples:
+  /server listfull
+  /server add oftc irc.oftc.net/6697 -ssl -autoconnect
+  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
+  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+  /server add freenode3 irc.freenode.net -password=mypass
+  /server copy oftc oftcbis
+  /server rename oftc newoftc
+  /server del freenode
+  /server deloutq
+........................................
+
+[command]*`service`* registra un nuovo servizio::
+........................................
+/service  <nick> <reserved> <distribution> <type> <reserved> <info>
+
+distrubuzione: visibilità del servizio
+        tipo: riservato per un utilizzo futuro
+........................................
+
+[command]*`servlist`* elenca servizi attualmente connessi al network::
+........................................
+/servlist  [<mask> [<type>]]
+
+mask: elenca solo i servizi che corrispondono a questa mask
+  tipo: elenca solo i servizi di questo tipo
+........................................
+
+[command]*`squery`* invia un messaggio ad un servizio::
+........................................
+/squery  <service> <text>
+
+service: name of service
+   text: text to send
+........................................
+
+[command]*`squit`* disconnette collegamenti al server::
+........................................
+/squit  <server> <comment>
+
+ server: server name
+comment: comment for quit
+........................................
+
+[command]*`stats`* richiede statistiche sul server::
+........................................
+/stats  [<query> [<server>]]
+
+ query: c/h/i/k/l/m/o/y/u (per info RFC1459)
+server: nome server
+........................................
+
+[command]*`summon`* invia agli utenti connessi ad un host con un server IRC in esecuzione un messaggio per invitarli ad entrare su IRC::
+........................................
+/summon  <user> [<target> [<channel>]]
+
+   user: username
+ target: server name
+channel: channel name
+........................................
+
+[command]*`time`* richiede l'ora locale dal server::
+........................................
+/time  [<target>]
+
+destinazione: richiede l'ora dal server specificato
+........................................
+
+[command]*`topic`* legge/modifica argomento del canale::
+........................................
+/topic  [<channel>] [<topic>|-delete]
+
+channel: channel name
+  topic: new topic for channel
+-delete: delete channel topic
+........................................
+
+[command]*`trace`* trova il percorso del server specifico::
+........................................
+/trace  [<target>]
+
+destinazione: server
+........................................
+
+[command]*`unban`* rimuove il ban da nick o host::
+........................................
+/unban  [<channel>] <nick> [<nick>...]
+
+channel: channel for unban
+   nick: user or host to unban
+........................................
+
+[command]*`userhost`* return a list of information about nicks::
+........................................
+/userhost  <nick> [<nick>...]
+
+nick: nick
+........................................
+
+[command]*`users`* lista di utenti autenticati sul server::
+........................................
+/users  [<target>]
+
+destinazione: server
+........................................
+
+[command]*`version`* riceve informazioni di versione del nick o del server (corrente o specificato)::
+........................................
+/version  [<server>|<nick>]
+
+server: server name
   nick: nick
 ........................................
 
-&bull; *`/join`* `[-server server] [canale1[,canale2[,canale3]] [chiave1[,chiave2]]]`::
-
-........................................
-  entra in un canale
-
-  server: invia a questo server (nome interno)
-  canale: nome del canale in cui entrare
-  chiave: chiave per entrare nel canale (i canali con una chiave devono essere primi nella lista)
-  
-  Esempi:
-    /join #weechat
-    /join #canaleprotetto,#weechat chiave
-    /join -server freenode #weechat
-........................................
-
-&bull; *`/kick`* `[canale] nick [commento]`::
-
-........................................
-  caccia forzatamente un utente da un canale
-
-    canale: canale dove si trova l'utente
-      nick: nick da cacciare
-  commento: commento per il kick
-........................................
-
-&bull; *`/kickban`* `[canale] nick [commento]`::
-
-........................................
-  caccia e banna un nick da un canale
-
-         canale: canale in cui si trova l'utente
-            nick: nick da cacciare e bannare
-  commento: commento per la cacciata
-  
-  È possibile cacciare/bannare con una mask, il nick verrà estratto dalla mask e sostituito da "*".
-  
-  Esempio:
-    banna "*!*@host.com" e poi caccia "tizio":
-      /kickban tizio!*@host.com
-........................................
-
-&bull; *`/kill`* `nick commento`::
-
-........................................
-  chiude connessione client-server
-
-      nick: nick
-  commento: commento per il kill
-........................................
-
-&bull; *`/links`* `[[server] mask_server]`::
-
-........................................
-  elenca tutti i nomi server conosciuti dal server che risponde alla richiesta
-
-            server: questo server dovrebbe rispondere alla richiesta
-  mask_server: elenco dei server devono corrispondere a questa mask
-........................................
-
-&bull; *`/list`* `[canale[,canale] [server] [-re regexp]]`::
-
-........................................
-  elenca i canali ed i loro argomenti
-
-  canale: canale da elencare
-  server: nome del server
-  regexp: espressione regolare utilizzata per filtrare i risultati
-  
-  Esempi:
-    elenca tutti i canali sul server (può essere molto lento su grandi network):
-      /list
-    elenca il canale #weechat:
-      /list #weechat.*
-    elenca tutti i canali che iniziano con "#weechat" (può essere molto lento su grandi network):
-      /list -re #weechat.*
-........................................
-
-&bull; *`/lusers`* `[mask [destinazione]]`::
-
-........................................
-  ottiene statistiche sulla dimensione del network IRC
-
-          mask: server corrispondenti alla mask
-  destinazione: server per redirigere la richiesta
-........................................
-
-&bull; *`/map`*::
-
-........................................
-  mostra una mappa grafica della rete IRC
-........................................
-
-&bull; *`/me`* `messaggio`::
-
-........................................
-  invia un'azione CTCP al canale corrente
-
-  messaggio: messaggio da inviare
-........................................
-
-&bull; *`/mode`* `{ [canale] {[+|-]|o|p|s|i|t|n|b|v} [limit] [utente] [ban mask] } | { nick {[+|-]|i|w|s|o} }`::
-
-........................................
-  cambia modalità canale o utente
-
-  modalità canale:
-    canale: nome canale da modificare (quello attivo è il predefinito)
-    o: concede/nega i privilegi di operatore del canale
-    p: canale privato
-    s: canale segreto
-    i: canale a solo-invito
-    t: argomento modificabile solo dall'operatore del canale
-    n: nessun messaggio al canale da client esterni
-    m: canale moderato
-    l: imposta il limite massimo di utenti sul canale
-    b: imposta un mask ban per tenere alla larga agli utenti
-    e: imposta mask di eccezione
-    v: concede/nega la possibilità di parlare su un canale moderato
-    k: imposta una chiave per il canale (password)
-  modalità utente:
-    nick: nick da modificare
-    i: marca un utente come invisibile
-    s: marca un utente per la ricezione dei messaggi dal server
-    w: l'utente riceve wallops
-    o: flag operatore
-........................................
-
-&bull; *`/motd`* `[obiettivo]`::
-
-........................................
-  riceve il "Messaggio Del Giorno"
-
-  destinazione: nome server
-........................................
-
-&bull; *`/msg`* `[-server server] destinazione[,destinazione] testo`::
-
-........................................
-  invia un messaggio ad un nick o a un canale
-
-        server: invia a questo server (nome interno)
-  destinazione: nick o canale (può essere una mask, '*' = canale corrente)
-         testo: testo da inviare
-........................................
-
-&bull; *`/names`* `[canale[,canale]]`::
-
-........................................
-  elenca i nick sul canale
-
-  canale: nome canale
-........................................
-
-&bull; *`/nick`* `[-all] nick`::
-
-........................................
-  modifica il nick corrente
-
-   -all: imposta nuovo nick per tutti i server connessi
-   nick: nuovo nick
-........................................
-
-&bull; *`/notice`* `[-server server] destinazione testo`::
-
-........................................
-  invia messaggio di notifica all'utente
-
-        server: invia a questo server (nome interno)
-  destinazione: nick o canale
-         testo: testo da inviare
-........................................
-
-&bull; *`/notify`* `[add nick [server [-away]]] | [del nick|-all [server]]`::
-
-........................................
-  aggiunge una notifica per lo stato di presenza o assenza dei nick sui server
-
-     add: aggiunge una notifica
-    nick: nick
-  server: nome interno del server (server corrente è il predefinito)
-   -away: notifica quando il messaggio di assenza viene cambiato (effettuando il whois sul nick)
-     del: elimina una notifica
-    -all: elimina tutte le notifiche
-  
-  Senza argomenti, questo comando visualizza le notifiche per il server corrente (oppure tutti i server se il comando viene digitato sul buffer core).
-  
-  Esempi:
-    notifica quando "tizio" entra/esce dal server corrente:
-      /notify add tizio
-    notifica quando "tizio" entra/esce dal server freenode:
-      /notify add toto freenode
-    notifica quando "tizio" è assente o presente sul server freenode:
-      /notify add toto freenode -away
-........................................
-
-&bull; *`/op`* `nick [nick]`::
-
-........................................
-  concede lo stato di operatore del canale al(ai) nick
-........................................
-
-&bull; *`/oper`* `utente password`::
-
-........................................
-  ottieni i privilegi di operatore
-
-  utente/password: utilizzata per ottenere i privilegi sul server IRC corrente
-........................................
-
-&bull; *`/part`* `[canale[,canale]] [messaggio]`::
-
-........................................
-  esce da un canale
-
-            canale: nome del canale da lasciare
-  messaggio_uscita: messaggio di uscita (mostrato agli altri utenti)
-........................................
-
-&bull; *`/ping`* `server1 [server2]`::
-
-........................................
-  invia ping al server
-
-  server1: server su cui effettuare il ping
-  server2: invia ping a questo server
-........................................
-
-&bull; *`/pong`* `demone [demone2]`::
-
-........................................
-  risponde ad un messaggio ping
-
-    demone: demone che ha risposto al messaggio di Ping
-  demone2: invia messaggio a questo demone
-........................................
-
-&bull; *`/query`* `[-server server] nick [testo]`::
-
-........................................
-  invia un messaggio privato ad un nick
-
-  server: invia a questo server (nome interno)
-    nick: nick per la conversazione privata
-   testo: testo da inviare
-........................................
-
-&bull; *`/quote`* `[-server server] dati`::
-
-........................................
-  invia dati grezzi al server senza analisi
-
-  server: invia a questo server (nome interno)
-    dati: dati raw da inviare
-........................................
-
-&bull; *`/reconnect`* `[nome_server [nome_server ...] | -all [-nojoin] [switch]`::
-
+[command]*`voice`* give voice to nick(s)::
 ........................................
-  riconnette a uno (o più) server
-
-  nome_server: nome del server a cui riconnettersi
-         -all: riconnetti a tutti i server
-       nojoin: non entrare in nessun canale (anche se l'ingresso automatico è abilitato sul server)
-      -switch: passa al server successivo
-........................................
-
-&bull; *`/rehash`* `[opzione]`::
-
-........................................
-  chiede al server di ricaricare il proprio file di configurazione
-
-  opzione: opzione extra, per alcuni server
-........................................
-
-&bull; *`/restart`*::
-
-........................................
-  chiede al server di riavviarsi
-........................................
-
-&bull; *`/sajoin`* `nick canale[,canale]`::
-
-........................................
-  forza un utente ad entrare su uno o più canali
-
-    nick: nick
-  canale: nome del canale
-........................................
-
-&bull; *`/samode`* `canale modalità`::
-
-........................................
-  cambia modalità sul canale, senza avere lo status di operatore
-
-  canale: nome del canale
-  modalità: modalità per il canale
-........................................
-
-&bull; *`/sanick`* `nick nuovo_nick`::
-
-........................................
-  forza un utente ad utilizzare un altro nick
-
-             nick: nick
-  nuovo_nick: nuovo nick
-........................................
-
-&bull; *`/sapart`* `nick canale[,canale]`::
-
-........................................
-  forza un utente a lasciare uno o più canali
-
-    nick: nick
-  canale: nome del canale
-........................................
-
-&bull; *`/saquit`* `nick motivo`::
-
-........................................
-  forza un utente ad uscire dal server senza un motivo
-
-      nick: nick
-  motivo: motivo
-........................................
-
-&bull; *`/server`* `[list [nome_server]] | [listfull [nome_server]] | [add nome_server host[/porta] [-temp | -opzione[=valore]] [-nooption] | [copy nome_server nuovo_nome_server] | [rename nome_server nuovo_nome_server] | [keep nome_server] | [del nome_server ] | [deloutq] | [jump] | [raw]`::
-
-........................................
-  elenca, aggiunge o rimuove server IRC
-
-         list: elenca tutti i server (senza argomento, questa lista viene visualizzata)
-     listfull: elenca tutti i server con tutte le informazioni per ogni server
-          add: crea un nuovo server
-  nome_server: nome server, per il solo uso interno e di visualizzazione
-    nome_host: nome o indirizzo IP del server, con porta opzionale (predefinita: 6667), più indirizzi possono essere separati da virgole
-         temp: crea server temporaneo (non salvato)
-       option: imposta opzione per il server (per opzioni bool, il valore può essere omesso)
-     nooption: imposta l'opzione bool su 'off' (per esempio: -nossl)
-         copy: duplica un server
-       rename: rinomina un server
-         keep: salva server nel file di configurazione (solo per server temporanei)
-          del: elimina un server
-      deloutq: elimina i messaggi fuori coda per tutti i server (tutti i messaggi che WeeChat sta inviando)
-         jump: passa al buffer del server
-          raw: apri buffer con dati grezzi IRC
-  
-  Esempi:
-    /server listfull
-    /server add oftc irc.oftc.net/6697 -ssl
-    /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
-    /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
-    /server add freenode3 irc.freenode.net -password=miapassword
-    /server copy oftc oftcbis
-    /server rename oftc newoftc
-    /server del freenode
-    /server deloutq
-........................................
-
-&bull; *`/service`* `nick distribuzione riservata tipo info riservata`::
-
-........................................
-  registra un nuovo servizio
-
-  distrubuzione: visibilità del servizio
-          tipo: riservato per un utilizzo futuro
-........................................
-
-&bull; *`/servlist`* `[mask [tipo]]`::
-
-........................................
-  elenca servizi attualmente connessi al network
-
-  mask: elenca solo i servizi che corrispondono a questa mask
-    tipo: elenca solo i servizi di questo tipo
-........................................
-
-&bull; *`/squery`* `servizio testo`::
-
-........................................
-  invia un messaggio ad un servizio
-
-  servizio: nome del servizio
-     testo: testo da inviare
-........................................
-
-&bull; *`/squit`* `server commento`::
-
-........................................
-  disconnette collegamenti al server
-
-    server: nome server
-  commento: commento per l'uscita
-........................................
-
-&bull; *`/stats`* `[query [server]]`::
-
-........................................
-  richiede statistiche sul server
-
-   query: c/h/i/k/l/m/o/y/u (per info RFC1459)
-  server: nome server
-........................................
-
-&bull; *`/summon`* `utente [destinazione [canale]]`::
-
-........................................
-  invia agli utenti connessi ad un host con un server IRC in esecuzione un messaggio per invitarli ad entrare su IRC
-
-        utente: nome utente
-  destinazione: nome server
-        canale: nome canale
-........................................
-
-&bull; *`/time`* `[obiettivo]`::
-
-........................................
-  richiede l'ora locale dal server
-
-  destinazione: richiede l'ora dal server specificato
-........................................
-
-&bull; *`/topic`* `[canale] [argomento]`::
-
-........................................
-  legge/modifica argomento del canale
-
-  canale: nome canale
-  argomento: nuovo argomento per il canale (se l'argomento è "-delete" allora viene eliminato)
-........................................
-
-&bull; *`/trace`* `[obiettivo]`::
-
-........................................
-  trova il percorso del server specifico
-
-  destinazione: server
+/voice  <nick> [<nick>...]
 ........................................
 
-&bull; *`/unban`* `[canale] nick [nick ...]`::
-
-........................................
-  rimuove il ban da nick o host
-
-  canale: canale da cui rimuovere il ban
-      nick: utente o host a cui rimuovere il ban
-........................................
-
-&bull; *`/userhost`* `[nick [nick ...]]`::
-
-........................................
-  stampa una lista informativa sui nick
-
-  nick: nick
-........................................
-
-&bull; *`/users`* `[obiettivo]`::
-
-........................................
-  lista di utenti autenticati sul server
-
-  destinazione: server
-........................................
-
-&bull; *`/version`* `[server | nick]`::
-
-........................................
-  riceve informazioni di versione del nick o del server (corrente o specificato)
-
-  server: nome server
-     nick: nick
-........................................
-
-&bull; *`/voice`* `[nick [nick]]`::
-
+[command]*`wallchops`* invia una notifica agli operatori del canale::
 ........................................
-  concede il voice ad uno (o più) utenti
-........................................
-
-&bull; *`/wallchops`* `[canale] testo`::
-
-........................................
-  invia una notifica agli operatori del canale
+/wallchops  [<channel>] <text>
 
-  canale: nome del canale
-    testo: testo da inviare
+canale: nome del canale
+  testo: testo da inviare
 ........................................
 
-&bull; *`/wallops`* `testo`::
-
+[command]*`wallops`* invia un messaggio a tutti gli utenti attualmente connessi che hanno impostato la modalità 'w'::
 ........................................
-  invia un messaggio a tutti gli utenti attualmente connessi che hanno impostato la modalità 'w'
+/wallops  <text>
 
-  testo da inviare
+text: text to send
 ........................................
-
-&bull; *`/who`* `[mask ["o"]]`::
 
+[command]*`who`* genera una richiesta per ottenere una lista di informazioni::
 ........................................
-  genera una richiesta per ottenere una lista di informazioni
+/who  [<mask> [o]]
 
-   mask: solo le informazioni corrispondenti al mask
-         o: sono visualizzati solo gli operatori in base alla mask fornita
+ mask: solo le informazioni corrispondenti al mask
+       o: sono visualizzati solo gli operatori in base alla mask fornita
 ........................................
 
-&bull; *`/whois`* `[server] nick[,nick]`::
-
+[command]*`whois`* richiedi informazioni su uno (o più) utenti::
 ........................................
-  richiedi informazioni su uno (o più) utenti
+/whois  [<server>] <nick>[,<nick>...]
 
-  server: nome server
-      nick: nick (può essere una mask)
+server: server name
+  nick: nick (may be a mask)
 ........................................
-
-&bull; *`/whowas`* `nick [,nick [,nick ...]] [count [destinazione]]`::
 
+[command]*`whowas`* ask for information about a nick which no longer exists::
 ........................................
-  richiede informazioni su un nick non più esistente
+/whowas  <nick>[,<nick>...] [<count> [<target>]]
 
-      nick: nick da cercare
-   count: numero di risultati da visualizzare (ricerca completa se il numero è negativo)
-  destinazione: la risposta dovrebbe coincidere con la mask
+  nick: nick to search
+ count: number of replies to return (full search if negative number)
+target: reply should match this mask
 ........................................
 

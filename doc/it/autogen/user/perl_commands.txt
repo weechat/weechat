@@ -1,11 +1,19 @@
-&bull; *`/perl`* `[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload [nome]] | [unload [nome]]`::
-
+[command]*`perl`* elenca/attiva/disattiva script::
 ........................................
-  elenca/attiva/disattiva script
+/perl  list|listfull [<name>]
+       load <filename>
+       autoload
+       reload|unload [<name>]
 
-  nome_file: file script da attivare
-        nome: il nome dello script
-  
-  Senza argomenti, il comando elenca tutti gli script attivati
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+
+Without argument, this command lists all loaded scripts.
 ........................................
 

@@ -1,19 +1,17 @@
-&bull; *`/me`* `Nachricht`::
-
+[command]*`me`* Sendet CTCP Aktion an entfernten Host::
 ........................................
-  Sendet CTCP Aktion an entfernten Host
+/me  <message>
 
-  Message: zu sendende Nachricht
+Message: zu sendende Nachricht
 ........................................
 
-&bull; *`/xfer`* `[list | listfull]`::
-
+[command]*`xfer`* Transfer-Steuerung::
 ........................................
-  Transfer-Steuerung
+/xfer  [list|listfull]
 
-      list: zeigt Liste der Übertragungen
-  listfull: zeigt eine ausführliche Liste der Übertragungen
-  
-  Ohne Angabe von Argumenten wird ein Buffer, mit Übertragungsliste, geöffnet.
+    list: zeigt Liste der Übertragungen
+listfull: zeigt eine ausführliche Liste der Übertragungen
+
+Ohne Angabe von Argumenten wird ein Buffer, mit Übertragungsliste, geöffnet.
 ........................................
 

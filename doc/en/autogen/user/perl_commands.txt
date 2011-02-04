@@ -1,11 +1,19 @@
-&bull; *`/perl`* `[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]`::
-
+[command]*`perl`* list/load/unload scripts::
 ........................................
-  list/load/unload scripts
+/perl  list|listfull [<name>]
+       load <filename>
+       autoload
+       reload|unload [<name>]
 
-  filename: script (file) to load
-  name: a script name
-  
-  Without argument, this command lists all loaded scripts.
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+
+Without argument, this command lists all loaded scripts.
 ........................................
 

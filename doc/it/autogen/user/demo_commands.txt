@@ -1,42 +1,32 @@
-&bull; *`/demo_buffer`* `nome`::
-
+[command]*`demo_buffer`* apri un nuovo buffer::
 ........................................
-  apri un nuovo buffer
-........................................
-
-&bull; *`/demo_buffer_set`* `valore della proprietà`::
-
-........................................
-  imposta una proprietà del buffer
+/demo_buffer  <name>
 ........................................
 
-&bull; *`/demo_info`* `[info [argomenti]]`::
-
+[command]*`demo_info`* ricevi e visualizza un'informazione::
 ........................................
-  ricevi e visualizza un'informazione
+/demo_info  <info> [<arguments>]
 
-            info: informazioni da visualizzare
-  argomenti: argomenti opzionali per le informazioni
-  
-  Senza argomenti, questo comando visualizza un elenco di informazioni disponibili
-........................................
+          info: informazioni da visualizzare
+argomenti: argomenti opzionali per le informazioni
 
-&bull; *`/demo_infolist`* `[infolist [argomenti]]`::
-
-........................................
-  ricevi e visualizza una lista info
-
-    infolist: lista info da visualizzare
-   argomenti: argomenti opzionali per la lista info
-  
-  Senza argomento, il comando visualizza l'elenco delle liste info disponibili
+Senza argomenti, questo comando visualizza un elenco di informazioni disponibili
 ........................................
 
-&bull; *`/demo_printf`* `[testo]`::
-
+[command]*`demo_infolist`* ricevi e visualizza una lista info::
 ........................................
-  stampa alcuni messaggi sul buffer corrente
+/demo_infolist  <infolist> [<arguments>]
 
-  testo: scrivi questo testo
+  infolist: lista info da visualizzare
+ argomenti: argomenti opzionali per la lista info
+
+Senza argomento, il comando visualizza l'elenco delle liste info disponibili
+........................................
+
+[command]*`demo_printf`* stampa alcuni messaggi sul buffer corrente::
+........................................
+/demo_printf  <text>
+
+testo: scrivi questo testo
 ........................................
 

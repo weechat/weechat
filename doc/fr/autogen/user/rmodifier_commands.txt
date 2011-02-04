@@ -1,25 +1,27 @@
-&bull; *`/rmodifier`* `[list] | [listdefault] | [add nom modifiers groupes regex] | [del nom|-all [nom...]] | [default -yes]`::
-
+[command]*`rmodifier`* modifier des chaînes de "modifier" avec des expressions régulières::
 ........................................
-  modifie des chaînes de "modifier" avec des expressions régulières
+/rmodifier  list|listdefault
+            add <nom> <modifiers> <groupes> <regex>
+            del <nom>|-all [<nom>...]
+            default -yes
 
-         list: liste les rmodifiers
-  listdefault: liste les rmodifiers par défaut
-          add: ajoute un rmodifier
-         name: nom du rmodifier
-    modifiers: liste de modifiers (séparés par une virgule)
-      groupes: action sur les groupes trouvés: liste de groupes (séparés par une virgule) (de 1 à 9) avec en option "*" après le nombre pour cacher le groupe
-        regex: expression régulière
-          del: supprime un rmodifier
-         -all: supprime tous les rmodifiers
-      default: restaure les rmodifiers par défaut
-  
-  Exemples:
-    cacher tout ce qui est tapé après la commande /password:
-      /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-    supprimer le rmodifier "password":
-      /rmodifier del password
-    supprimer tous les rmodifiers:
-      /rmodifier del -all
+       list: lister les rmodifiers
+listdefault: lister les rmodifiers par défaut
+        add: ajouter un rmodifier
+       name: nom du rmodifier
+  modifiers: liste de modifiers (séparés par une virgule)
+    groupes: action sur les groupes trouvés: liste de groupes (séparés par une virgule) (de 1 à 9) avec en option "*" après le nombre pour cacher le groupe
+      regex: expression régulière
+        del: supprimer un rmodifier
+       -all: supprimer tous les rmodifiers
+    default: restaurer les rmodifiers par défaut
+
+Exemples:
+  cacher tout ce qui est tapé après la commande /password:
+    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
+  supprimer le rmodifier "password":
+    /rmodifier del password
+  supprimer tous les rmodifiers:
+    /rmodifier del -all
 ........................................
 

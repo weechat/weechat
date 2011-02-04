@@ -1,25 +1,27 @@
-&bull; *`/rmodifier`* `[list] | [listdefault] | [add nome modifiers groups regex] | [del nome|-all [nome...]] | [default -yes]`::
-
+[command]*`rmodifier`* sostituisce le stringhe del modificatore con le espressioni regolari::
 ........................................
-  sostituisce le stringhe del modificatore con le espressioni regolari
+/rmodifier  list|listdefault
+            add <name> <modifiers> <groups> <regex>
+            del <name>|-all [<name>...]
+            default -yes
 
-         list: elenca tutti gli rmodifier
-  listdefault: elenca gli rmodifier predefiniti
-          add: aggiunge un rmodifier
-         nome: nome rmodifier
-    modifiers: elenco separato da virgole di modificatori
-       groups: azione sul gruppo trovato: elenco separato da virgole di gruppi (da 1 a 9) con "*" opzionale dopo il numero per nascondere il gruppo
-        regex: espressione regolare
-          del: elimina rmodifier
-         -all: elimina tutti gli rmodifier
-      default: ripristina gli rmodifier predefiniti
-  
-  Esempi:
-    nasconde ciò che viene digitato dopo il comando /password:
-      /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-    elimina rmodifier "password":
-      /rmodifier del password
-    elimina tutti gli rmodifier:
-      /rmodifier del -all
+       list: elenca tutti gli rmodifier
+listdefault: elenca gli rmodifier predefiniti
+        add: aggiunge un rmodifier
+       nome: nome rmodifier
+  modifiers: elenco separato da virgole di modificatori
+     groups: azione sul gruppo trovato: elenco separato da virgole di gruppi (da 1 a 9) con "*" opzionale dopo il numero per nascondere il gruppo
+      regex: espressione regolare
+        del: elimina rmodifier
+       -all: elimina tutti gli rmodifier
+    default: ripristina gli rmodifier predefiniti
+
+Esempi:
+  nasconde ciò che viene digitato dopo il comando /password:
+    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
+  elimina rmodifier "password":
+    /rmodifier del password
+  elimina tutti gli rmodifier:
+    /rmodifier del -all
 ........................................
 

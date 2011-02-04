@@ -1,480 +1,554 @@
-&bull; *`/away`* `[-all] [message]`::
-
+[command]*`away`* basculer le statut absent::
 ........................................
-  basculer le statut absent
+/away  [-all] [<message>]
 
-     -all: basculer le statut absent sur tous les serveurs connectés
-  message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
-........................................
-
-&bull; *`/bar`* `[add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre option valeur] | [hide|show|toggle nombarre] | [scroll nombarre tampon valeur_scroll] | [list] | [listfull] | [listitems]`::
-
-........................................
-  gestion des barres
-
-            add: ajoute une nouvelle barre
-       nombarre: nom de la barre (doit être unique)
-           type:   root: en dehors des fenêtres
-                 window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
-      cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window"):
-                   active: sur la fenêtre active
-                 inactive: sur les fenêtres inactives
-                 nicklist: sur les fenêtres avec liste de pseudos
-                 sans condition, la barre est toujours affichée
-       position: bottom (bas), top (haut), left (gauche) ou right (droite)
-         taille: taille de la barre (en caractères)
-     séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
-     objet1,...: objets pour cette barre (les objets peuvent être séparés par une virgule (espace entre les objets) ou "+" (objets collés))
-        default: créer les barres par défaut
-            del: supprime une barre (ou toutes les barres avec -all)
-            set: change la valeur d'une propriété de la barre
-         option: option à modifier (pour la liste des options, voir /set weechat.bar.<nombarre>.*
-         valeur: nouvelle valeur pour l'option
-           hide: cache la barre
-           show: montre une barre cachée
-         toggle: cache/montre une barre
-         scroll: défilement de la barre vers le haut/bas
-         tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
-  valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
-           list: liste toutes les barres
-       listfull: liste toutes les barres (verbeux)
-      listitems: liste tous les objets de barre
-  
-  Exemples:
-    créer une barre avec l'heure, numéro + nom de tampon, et la complétion:
-      /bar add mabarre root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-    cacher une barre:
-      /bar hide mabarre
-    faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon courant:
-      /bar scroll nicklist * y+10
-    faire défiler la liste des pseudos d'une page vers le haut sur le tampon #weechat:
-      /bar scroll nicklist #weechat y-100%
-    faire défiler la liste des pseudos à la fin sur le tampon courant:
-      /bar scroll nicklist * ye
+   -all: basculer le statut absent sur tous les serveurs connectés
+message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
 ........................................
 
-&bull; *`/buffer`* `[clear [nombre | -merged | -all] | move nombre | merge nombre | unmerge [nombre] | close [n1[-n2]] | list | notify niveau | localvar | set propriété valeur | get propriété | nombre | nom]`::
-
+[command]*`bar`* gestion des barres::
 ........................................
-  gestion des tampons
+/bar  list|listfull|listitems
+      add <nom> <type>[,<cond1>[,<cond2>...]] <position> <taille> <séparateur> <objet1>[,<objet2>...]
+      default
+      del <nom>|-all
+      set <nom> <option> <valeur>
+      hide|show|toggle <nom>
+      scroll <nom> <tampon> <valeur_scroll>
 
-     clear: efface le contenu du tampon (un numéro pour un tampon, -merged pour les tampons mélangés, -all pour tous les tampons, ou rien pour le tampon courant)
-      move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
-     merge: mélange le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
-            (par défaut ctrl-x bascule entre les tampons mélangés)
-   unmerge: détache le tampon courant des autres tampons portant le même numéro
-     close: ferme le tampon (nombre/intervalle optionnel)
-      list: liste les tampons ouverts (sans paramètre, cette liste est affichée)
-    notify: définit le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
-                 none: jamais
-            highlight: pour les highlights seulement
-              message: pour les messages d'utilisateurs + highlights
-                  all: pout tous les messages
-                reset: réinitialise à valeur par défaut (all)
-  localvar: affiche la liste des variables locales pour le tampon courant
-       set: modifier une propriété du tampon courant
-       get: afficher une propriété du tampon courant
-    nombre: saute au tampon qui a ce numéro, préfixe possible:
-            '+': saut relatif, ajoute le numéro au courant,
-            '-': saut relatif, soustrait le numéro au courant,
-            '*': saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
-       nom: saute au tampon par nom (partiel)
-  
-  Exemples:
-    effacer le tampon courant:
-      /buffer clear
-    déplacer le tampon vers le numéro 5:
-      /buffer move 5
-    mélanger avec le tampon core:
-      /buffer merge 1
-    détacher le tampon:
-      /buffer unmerge
-    fermer le tampon courant:
-      /buffer close
-    fermer les tampons 5 à 7:
-      /buffer close 5-7
-    aller sur #weechat:
-      /buffer #weechat
-    aller au tampon suivant:
-      /buffer +1
-........................................
+         list: lister toutes les barres
+     listfull: lister toutes les barres (verbeux)
+    listitems: lister tous les objets de barre
+          add: ajouter une nouvelle barre
+          nom: nom de la barre (doit être unique)
+         type:   root: en dehors des fenêtres
+               window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
+    cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window"):
+                 active: sur la fenêtre active
+               inactive: sur les fenêtres inactives
+               nicklist: sur les fenêtres avec liste de pseudos
+               sans condition, la barre est toujours affichée
+     position: bottom (bas), top (haut), left (gauche) ou right (droite)
+       taille: taille de la barre (en caractères)
+   séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
+   objet1,...: objets pour cette barre (les objets peuvent être séparés par une virgule (espace entre les objets) ou "+" (objets collés))
+      default: créer les barres par défaut
+          del: supprimer une barre (ou toutes les barres avec -all)
+          set: changer la valeur d'une propriété de la barre
+       option: option à modifier (pour la liste des options, voir /set weechat.bar.<nombarre>.*
+       valeur: nouvelle valeur pour l'option
+         hide: cacher la barre
+         show: montrer une barre cachée
+       toggle: cacher/montrer une barre
+       scroll: faire défiler la barre
+       tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
+valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
 
-&bull; *`/color`* `[alias couleur nom] | [unalias couleur] | switch`::
-
-........................................
-  définir des alias de couleurs et afficher la palette des couleurs
-
-    alias: ajouter un alias pour une couleur
-  unalias: supprimer un alias pour une couleur
-  couleur: numéro de couleur (>= 1, le max dépend du terminal, généralement 63 ou 255)
-      nom: nom d'alias pour la couleur (par exemple: "orange")
-    reset: réinitialiser toutes les paires de couleurs (pratique quand il n'y a plus de paires disponibles)
-  
-  Sans paramètre, cette commande affiche les couleurs dans un nouveau tampon.
-  
-  Exemples:
-    ajouter l'alias "orange" pour la couleur 214:
-      /color alias 214 orange
-    supprimer la couleur 214:
-      /color unalias 214
+Exemples:
+  créer une barre avec l'heure, numéro + nom de tampon, et la complétion:
+    /bar add mabarre root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  cacher une barre:
+    /bar hide mabarre
+  faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon courant:
+    /bar scroll nicklist * y+10
+  faire défiler la liste des pseudos d'une page vers le haut sur le tampon #weechat:
+    /bar scroll nicklist #weechat y-100%
+  faire défiler la liste des pseudos à la fin sur le tampon courant:
+    /bar scroll nicklist * ye
 ........................................
 
-&bull; *`/command`* `extension commande`::
-
+[command]*`buffer`* gestion des tampons::
 ........................................
-  lancer explicitement une commande WeeChat ou d'une extension
+/buffer  list
+         clear [<nombre>|-merged|-all]
+         move|merge <nombre>
+         unmerge [<nombre>]
+         close [<n1>[-<n2>]]
+         notify <niveau>
+         localvar
+         set <propriété> <valeur>
+         get <propriété>
+         <nombre>|<nom>
 
-  extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
-   commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
-........................................
+    list: lister les tampons ouverts (sans paramètre, cette liste est affichée)
+   clear: effacer le contenu du tampon (un numéro pour un tampon, -merged pour les tampons mélangés, -all pour tous les tampons, ou rien pour le tampon courant)
+    move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
+   merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
+          (par défaut ctrl-x bascule entre les tampons mélangés)
+ unmerge: détacher le tampon courant des autres tampons portant le même numéro
+   close: fermer le tampon (nombre/intervalle optionnel)
+  notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
+               none: jamais
+          highlight: pour les highlights seulement
+            message: pour les messages d'utilisateurs + highlights
+                all: pout tous les messages
+              reset: réinitialise à valeur par défaut (all)
+localvar: afficher la liste des variables locales pour le tampon courant
+     set: modifier une propriété du tampon courant
+     get: afficher une propriété du tampon courant
+  nombre: sauter au tampon qui a ce numéro, préfixe possible:
+          '+': saut relatif, ajoute le numéro au courant,
+          '-': saut relatif, soustrait le numéro au courant,
+          '*': saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
+     nom: sauter au tampon par nom (partiel)
 
-&bull; *`/debug`* `[list | set extension niveau | dump [extension] | buffer | windows | term | color]`::
-
-........................................
-  contrôle du debug pour le coeur/les extensions
-
-        set: définir le niveau de log pour l'extension
-  extension: nom de l'extension ("core" pour le coeur de WeeChat)
-     niveau: niveau de debug pour l'extension
-       dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
-     buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
-    windows: affiche l'arbre des fenêtres
-       term: afficher des infos sur le terminal et les couleurs disponibles
-      color: afficher des infos sur les paires de couleur courantes
-........................................
-
-&bull; *`/filter`* `[list] | [enable|disable|toggle [nom]] | [add nom extension.tampon tags regex] | [del nom|-all]`::
-
-........................................
-  filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières
-
-              list: liste tous les filtres
-            enable: active les filtres (par défaut les filtres sont activés)
-           disable: désactive les filtres
-            toggle: active/désactive les filtres
-               nom: nom de filtre
-               add: ajoute un filtre
-               del: supprime un filtre
-              -all: supprime tous les filtres
-  extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
-              tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
-             regex: expression régulière à rechercher dans la ligne
-                    - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
-                    - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
-                    note: deux regex sont créées: une pour le préfixe et une pour le message
-  
-  La touche par défaut alt+'=' active/désactive le filtrage.
-  
-  Les tags les plus couramment utilisés:
-    no_filter, no_highlight, no_log, log0..log9 (niveau de log),
-    notify_message, notify_private, notify_highlight,
-    nick_xxx (xxx est le pseudo dans le message),
-    irc_xxx (xxx est un nom de commande ou nombre, voir /server raw),
-    irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-  
-  Exemples:
-    utiliser le filtre intelligent IRC pour les messages join/part/quit:
-      /filter add irc_smart * irc_smart_filter *
-    filtrer tous les messages IRC join/part/quit:
-      /filter add joinquit * irc_join,irc_part,irc_quit *
-    filtrer les pseudos afficher en rejoignant les canaux ou avec /names:
-      /filter add nicks * irc_366 *
-    filtrer le pseudo "toto" sur le canal IRC #weechat:
-      /filter add toto irc.freenode.#weechat * toto\t
-    garder uniquement le pseudo "titi" sur le canal IRC #test:
-      /filter add titi irc.freenode.#test * !titi\t
-    filtrer les lignes contenant le mot "spam":
-      /filter add filtrespam * * spam
-    filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
-      /filter add sucks irc.freenode.#weechat * weechat sucks
+Exemples:
+  effacer le tampon courant:
+    /buffer clear
+  déplacer le tampon vers le numéro 5:
+    /buffer move 5
+  mélanger avec le tampon core:
+    /buffer merge 1
+  détacher le tampon:
+    /buffer unmerge
+  fermer le tampon courant:
+    /buffer close
+  fermer les tampons 5 à 7:
+    /buffer close 5-7
+  aller sur #weechat:
+    /buffer #weechat
+  aller au tampon suivant:
+    /buffer +1
 ........................................
 
-&bull; *`/help`* `[commande | option]`::
-
+[command]*`color`* définir des alias de couleurs et afficher la palette des couleurs::
 ........................................
-  afficher l'aide sur les commandes et les options
+/color  alias <couleur> <alias>
+        unalias <couleur>
+        reset
 
-  commande: nom d'une commande
-    option: nom d'une option (utilisez /set pour voir la liste)
-........................................
+  alias: ajouter un alias pour une couleur
+unalias: supprimer un alias pour une couleur
+couleur: numéro de couleur (>= 1, le max dépend du terminal, généralement 63 ou 255)
+    nom: nom d'alias pour la couleur (par exemple: "orange")
+  reset: réinitialiser toutes les paires de couleurs (pratique quand il n'y a plus de paires disponibles)
 
-&bull; *`/history`* `[clear | valeur]`::
+Sans paramètre, cette commande affiche les couleurs dans un nouveau tampon.
 
-........................................
-  affiche l'historique des commandes du tampon
-
-  clear: effacer l'historique
-  valeur: nombre d'entrées dans l'historique à afficher
-........................................
-
-&bull; *`/input`* `return | complete_next | complete_previous | search_next | delete_previous_char | delete_next_char | delete_previous_word | delete_next_word | delete_beginning_of_line | delete_end_of_line | delete_line | clipboard_paste | transpose_chars | undo | redo | move_beginning_of_line | move_end_of_line | move_previous_char | move_next_char | move_previous_word | move_next_word | history_previous | history_next | history_global_previous | history_global_next | jump_smart | jump_last_buffer | jump_previously_visited_buffer | jump_next_visited_buffer | hotlist_clear | grab_key | grab_key_command | scroll_unread | set_unread | set_unread_current_buffer | switch_active_buffer | switch_active_buffer_previous | insert [args]`::
-
-........................................
-  fonctions pour la ligne de commande
-
-  Cette commande est utilisée par les associations de touches ou les extensions.
+Exemples:
+  ajouter l'alias "orange" pour la couleur 214:
+    /color alias 214 orange
+  supprimer la couleur 214:
+    /color unalias 214
 ........................................
 
-&bull; *`/key`* `[list | listdefault | listdiff] | [bind touche [commande [args]]] | [unbind touche] | [reset touche] | [resetall -yes] | [missing]`::
-
+[command]*`command`* lancer explicitement une commande WeeChat ou d'une extension::
 ........................................
-  associer/libérer des touches
+/command  <extension> <commande>
 
-         list: affiche toutes les touches courantes (sans paramètre, cette liste est affichée)
-  listdefault: affiche les touches par défaut
-     listdiff: affiche les différences entre les touches courantes et celles par défaut (touches ajoutées, redéfinies ou supprimées)
-         bind: associe une commande à une touche ou affiche la commande associée à la touche
-       unbind: supprime l'association à une touche
-        reset: réinitialise une touche à son association par défaut
-     resetall: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
-      missing: ajoute les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
-  
-  Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
-  
-  Exemples:
-    touche alt-x pour activer/désactiver la liste des pseudos:
-      /key bind meta-x /bar toggle nicklist
-    touche alt-r pour aller sur le canal IRC #weechat:
-      /key bind meta-r /buffer #weechat
-    restaure l'association par défaut pour la touche alt-r:
-      /key reset meta-r
+extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
+ commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ........................................
 
-&bull; *`/layout`* `[[save | apply | reset] [buffers | windows]]`::
-
+[command]*`debug`* contrôle du debug pour le coeur/les extensions::
 ........................................
-  sauve/applique/réinitialise la disposition des tampons et fenêtres
+/debug  list
+        set <extension> <niveau>
+        dump [<extension>]
+        buffer|windows|term|color
 
-     save: sauve la disposition courante
-    apply: applique la disposition sauvegardée
-    reset: supprime la disposition sauvegardée
-  buffers: sauve/applique seulement pour les tampons (ordre des tampons)
-  windows: sauve/applique seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
-  
-  Sans paramètre, cette commande affiche la disposition sauvegardée.
-........................................
-
-&bull; *`/mute`* `[-current | -buffer nom | -all] commande`::
-
-........................................
-  exécuter une commande silencieusement
-
-  -current: pas d'affichage sur le tampon courant
-   -buffer: pas d'affichage sur le tampon spécifié
-       nom: nom complet du tampon (exemples: "irc.server.freenode", "irc.freenode.#weechat")
-      -all: pas d'affichage sur TOUS les tampons
-  commande: commande à exécuter silencieusement (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
-  
-  Si aucune cible n'est spécifiée (-current, -buffer ou -all), alors par défaut seul le tampon core WeeChat sera silencieux.
-  
-  Exemples:
-    sauvegarde configuration:
-      /mute save
-    message au canal IRC courant:
-      /mute -current msg * bonjour !
-    message au canal #weechat:
-      /mute -buffer irc.freenode.#weechat msg #weechat bonjour !
+     list: lister les extensions avec leur niveau de debug
+      set: définir le niveau de debug pour l'extension
+extension: nom de l'extension ("core" pour le coeur de WeeChat)
+   niveau: niveau de debug pour l'extension
+     dump: afficher les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
+   buffer: afficher le contenu du tampon en valeurs hexadécimales dans le fichier log
+  windows: afficher l'arbre des fenêtres
+     term: afficher des infos sur le terminal
+    color: afficher des infos sur les paires de couleur courantes
 ........................................
 
-&bull; *`/plugin`* `[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]`::
-
+[command]*`filter`* filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières::
 ........................................
-  liste/charge/décharge des extensions
+/filter  list
+         enable|disable|toggle [<nom>]
+         add <nom> <extension.tampon> <tags> <regex>
+         del <nom>|-all
 
-      list: lister les extensions chargées
-  listfull: lister les extensions chargées (verbeux)
-      load: charger une extension
-  autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
-    reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis puis recharger automatiquement les extensions)
-    unload: décharger une ou plusieurs exteneions
-  
-  Sans paramètre, cette commande liste les extensions chargées.
-........................................
+            list: lister tous les filtres
+          enable: activer les filtres (par défaut les filtres sont activés)
+         disable: désactiver les filtres
+          toggle: activer/désactiver les filtres
+             nom: nom de filtre
+             add: ajouter un filtre
+             del: supprimer un filtre
+            -all: supprimer tous les filtres
+extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
+            tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
+           regex: expression régulière à rechercher dans la ligne
+                  - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
+                  - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
+                  note: deux regex sont créées: une pour le préfixe et une pour le message
 
-&bull; *`/proxy`* `[add nomproxy type addresse port [utilisateur [motdepasse]]] | [del nomproxy|-all] | [set nomproxy option valeur] | [list]`::
+La touche par défaut alt+'=' active/désactive le filtrage.
 
-........................................
-  gestion des proxies
+Les tags les plus couramment utilisés:
+  no_filter, no_highlight, no_log, log0..log9 (niveau de log),
+  notify_message, notify_private, notify_highlight,
+  nick_xxx (xxx est le pseudo dans le message),
+  irc_xxx (xxx est un nom de commande ou nombre, voir /server raw),
+  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 
-            add: ajoute un nouveau proxy
-       nomproxy: nom du proxy (doit être unique)
-           type: http, socks4 ou socks5
-       addresse: IP ou nom de machine
-           port: port
-    utilisateur: nom d'utilisateur (optionnel)
-     motdepasse: mot de passe (optionnel)
-            del: supprime un proxy (ou tous les proxies avec -all)
-            set: change la valeur d'une propriété d'un proxy
-         option: option à modifier (pour la liste des options, voir /set weechat.proxy.<proxyname>.*)
-         valeur: nouvelle valeur pour l'option
-           list: liste de tous les proxies
-  
-  Exemples:
-    créer un proxy http, tournant en local, port 8888:
-      /proxy add local http 127.0.0.1 8888
-    créer un proxy http en utilisant le protocole IPv6:
-      /proxy add local http 127.0.0.1 8888
-      /proxy set local ipv6 on
-    créer un proxy socks5 avec un utilisateur/mot de passe:
-      /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-    supprimer un proxy:
-      /proxy del myproxy
-........................................
-
-&bull; *`/quit`* `[-yes] [paramètres]`::
-
-........................................
-  quitter WeeChat
-
-        -yes: requis si l'option weechat.look.confirm_quit est activée
-  paramètres: texte envoyé avec le signal "quit"
-              (par exemple l'extension irc utilise ce texte pour envoyer le message de quit au serveur)
+Exemples:
+  utiliser le filtre intelligent IRC pour les messages join/part/quit:
+    /filter add irc_smart * irc_smart_filter *
+  filtrer tous les messages IRC join/part/quit:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
+  filtrer les pseudos afficher en rejoignant les canaux ou avec /names:
+    /filter add nicks * irc_366 *
+  filtrer le pseudo "toto" sur le canal IRC #weechat:
+    /filter add toto irc.freenode.#weechat * toto\t
+  garder uniquement le pseudo "titi" sur le canal IRC #test:
+    /filter add titi irc.freenode.#test * !titi\t
+  filtrer les lignes contenant le mot "spam":
+    /filter add filtrespam * * spam
+  filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
-&bull; *`/reload`* `[fichier [fichier...]]`::
-
+[command]*`help`* afficher l'aide sur les commandes et les options::
 ........................................
-  recharger les fichiers de configuration depuis le disque
+/help  <commande>
+       <option>
 
-  fichier: fichier de configuration à recharger
-  
-  Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
-........................................
-
-&bull; *`/save`* `[fichier [fichier...]]`::
-
-........................................
-  sauvegarder les fichiers de configuration sur disque
-
-  fichier: fichier de configuration à sauvegarder
-  
-  Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
+commande: nom d'une commande
+  option: nom d'une option (utilisez /set pour voir la liste)
 ........................................
 
-&bull; *`/set`* `[option [valeur]]`::
-
+[command]*`history`* affiche l'historique des commandes du tampon::
 ........................................
-  modifier des options de configuration
+/history  clear
+          <valeur>
 
-  option: nom d'une option
-  valeur: nouvelle valeur pour l'option
-  
-  La nouvelle valeur peut être, selon le type de l'option:
-    booléen: on, off ou toggle
-    entier : nombre, ++nombre ou --nombre
-    chaîne : toute chaîne ("" pour une chaîne vide)
-    couleur: nom de couleur, ++nombre ou --nombre
-  
-  Pour tous les types, vous pouvez utiliser null pour supprimer la valeur de l'option (valeur non définie). Cela ne fonctionne qu'avec certaines options spéciales des extensions.
+ clear: effacer l'historique
+valeur: nombre d'entrées dans l'historique à afficher
 ........................................
 
-&bull; *`/unset`* `[option]`::
-
+[command]*`input`* fonctions pour la ligne de commande::
 ........................................
-  supprimer/réinitialiser des options de configuration
+/input  <action> [<paramètres>]
 
-  option: nom d'une option (peut commencer ou se terminer par "*" pour réinitialiser plusieurs options, à utiliser avec prudence !)
-  
-  Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs).
-........................................
+list des actions:
+  return: simuler la touche "entrée"
+  complete_next: compléter le mot avec la complétion suivante
+  complete_previous: compléter le mot avec la complétion précédente
+  search_text: chercher du texte dans le tampon
+  delete_previous_char: effacer le caractère précédent
+  delete_next_char: effacer le caractère suivant
+  delete_previous_word: effacer le mot précédent
+  delete_next_word: effacer le mot suivant
+  delete_beginning_of_line: effacer du début de la ligne jusqu'au curseur
+  delete_end_of_line: effacer du curseur jusqu'à la fin de la ligne
+  delete_line: effacer la ligne entière
+  clipboard_paste: coller depuis le presse-papier
+  transpose_chars: inverser deux caractères
+  undo: défaire la dernière action de la ligne de commande
+  redo: refaire la dernière action de la ligne de commande
+  move_beginning_of_line: déplacer le curseur au début de la ligne
+  move_end_of_line: déplacer le curseur à la fin de la ligne
+  move_previous_char: déplacer le curseur sur le caractère précédent
+  move_next_char: déplacer le curseur sur le caractère suivant
+  move_previous_word: déplacer le curseur sur le mot précédent
+  move_next_word: déplacer le curseur sur le mot suivant
+  history_previous: rappeler la commande précédente dans l'historique du tampon courant
+  history_next: rappeler la commande suivante dans l'historique du tampon courant
+  history_global_previous: rappeler la commande précédente dans l'historique global
+  history_global_next: rappeler la commande suivante dans l'historique global
+  jump_smart: sauter au prochain tampon avec de l'activité
+  jump_last_buffer: sauter au dernier tampon
+  jump_previously_visited_buffer: sauter au tampon visité précédemment
+  jump_next_visited_buffer: sauter au tampon visité après
+  hotlist_clear: effacer la hotlist
+  grab_key: capturer une touche
+  grab_key_command: capturer une touche avec sa commande associée
+  scroll_unread: faire défiler jusqu'au marqueur de données non lues
+  set_unread: définir le marqueur de données non lues pour tous les tampons
+  set_unread_current_buffer: définir le marqueur de données non lues pour le tampon courant
+  switch_active_buffer: basculer vers le tampon mélangé suivant
+  switch_active_buffer_previous: basculer vers le tampon mélangé précédent
+  insert: insérer du texte dans la ligne de commande
 
-&bull; *`/upgrade`* `[chemin_vers_binaire]`::
-
-........................................
-  mettre à jour WeeChat sans se déconnecter des serveurs
-
-  chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
-  
-  Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
-  
-  Le processus de mise à jour comporte 4 étapes :
-    1. sauvegarde de la session pour le coeur et les extensions (tampons, historique, ...)
-    2. déchargement de toutes les extensions (les configs *.conf sont sauvegardées)
-    3. sauvegarde de la config WeeChat (weechat.conf)
-    4. exécution du nouveau binaire WeeChat.
-........................................
-
-&bull; *`/uptime`* `[-o | -ol]`::
-
-........................................
-  montrer l'uptime de WeeChat
-
-   -o: envoyer l'uptime sur le tampon courant comme entrée (chaîne en anglais)
-  -ol: envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)
-........................................
-
-&bull; *`/version`* `[-o | -ol]`::
-
-........................................
-  afficher la version de WeeChat et la date de compilation
-
-   -o: envoyer la version sur le tampon courant comme entrée (chaîne en anglais)
-  -ol: envoyer la version sur le tampon courant comme entrée (chaîne traduite)
-........................................
-
-&bull; *`/wait`* `nombre[unité] commande`::
-
-........................................
-  planifie l'exécution d'une commande dans le futur
-
-    nombre: temps à attendre (nombre entier)
-     unité: optionnelle, valeurs possibles:
-              ms: millisecondes
-               s: secondes (par défaut)
-               m: minutes
-               h: heures
-  commande: commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
-  
-  Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
-  
-  Exemples:
-    rejoindre le canal dans 10 sec:
-      /wait 10 /join #test
-    passer absent dans 15 min:
-      /wait 15m /away -all I'm away
-    dire 'bonjour' dans 2 min:
-      /wait 2m bonjour
+Cette commande est utilisé par les associations de touches ou les extensions.
 ........................................
 
-&bull; *`/window`* `[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all] | page_up | page_down | refresh | scroll | scroll_up | scroll_down | scroll_top | scroll_bottom | scroll_previous_highlight | scroll_next_highlight | zoom]`::
-
+[command]*`key`* associer/libérer des touches::
 ........................................
-  gestion des fenêtres
+/key  list|listdefault|listdiff
+      bind <touche> [<commande> [<args>]]
+      unbind <touche>
+      reset <touche>
+      resetall -yes
+      missing
 
-           list: liste les fenêtres ouvertes (sans paramètre, cette liste est affichée)
-             -1: saute à la fenêtre précédente
-             +1: saute à la fenêtre suivante
-             b#: saute à la fenêtre affichant le tampon #
-             up: saute à la fenêtre au dessus
-           down: saute à la fenêtre au dessous
-           left: saute à la fenêtre à gauche
-          right: saute à la fenêtre à droite
-         splith: éclate la fenêtre en deux horizontalement
-         splitv: éclate la fenêtre en deux verticalement
-         resize: redimensionne une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
-          merge: fusionne la fenêtre avec une autre
-        page_up: défilement d'une page vers le haut
-      page_down: défilement d'une page vers le bas
-        refresh: redessine l'écran
-         scroll: défilement d'un nombre de lignes (+/-N) ou avec du temps: s=secondes, m=minutes, h=heures, d=jours, M=mois, y=année
-      scroll_up: défilement de quelques lignes vers le haut
-    scroll_down: défilement de quelques lignes vers le bas
-     scroll_top: défilement jusqu'au début du tampon
-  scroll_bottom: défilement jusqu'au bas du tampon
-  scroll_previous_highlight: défilement jusqu'au highlight précédent
-  scroll_next_highlight: défilement jusqu'au highlight suivant
-           zoom: zoom sur la fenêtre
-  
-  Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
-  
-  Exemples:
-    sauter à la fenêtre affichant le tampon 1:
-      /window b1
-    défilement de 2 lignes vers le haut:
-      /window scroll -2
-    défilement de 2 jours vers le haut:
-      /window scroll -2d
-    défilement jusqu'au début du jour courant:
-      /window scroll -d
+       list: afficher toutes les touches courantes (sans paramètre, cette liste est affichée)
+listdefault: afficher les touches par défaut
+   listdiff: afficher les différences entre les touches courantes et celles par défaut (touches ajoutées, redéfinies ou supprimées)
+       bind: associer une commande à une touche ou affiche la commande associée à la touche
+     unbind: supprimer l'association à une touche
+      reset: réinitialiser une touche à son association par défaut
+   resetall: restaurer les touches aux valeurs par défaut et supprimer TOUTES les touches personnelles (utiliser avec précaution !)
+    missing: ajouter les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
+
+Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
+
+Exemples:
+  touche alt-x pour activer/désactiver la liste des pseudos:
+    /key bind meta-x /bar toggle nicklist
+  touche alt-r pour aller sur le canal IRC #weechat:
+    /key bind meta-r /buffer #weechat
+  restaure l'association par défaut pour la touche alt-r:
+    /key reset meta-r
+........................................
+
+[command]*`layout`* sauve/applique/réinitialise la disposition des tampons et fenêtres::
+........................................
+/layout  save [buffers|windows]
+         apply [buffers|windows]
+         reset [buffers|windows]
+
+   save: sauver la disposition courante
+  apply: appliquer la disposition sauvegardée
+  reset: supprimer la disposition sauvegardée
+buffers: sauver/appliquer seulement pour les tampons (ordre des tampons)
+windows: sauver/appliquer seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
+
+Sans paramètre, cette commande affiche la disposition sauvegardée.
+........................................
+
+[command]*`mute`* exécuter une commande silencieusement::
+........................................
+/mute  [-current | -buffer <nom> | -all] commande
+
+-current: pas d'affichage sur le tampon courant
+ -buffer: pas d'affichage sur le tampon spécifié
+     nom: nom complet du tampon (exemples: "irc.server.freenode", "irc.freenode.#weechat")
+    -all: pas d'affichage sur TOUS les tampons
+commande: commande à exécuter silencieusement (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+
+Si aucune cible n'est spécifiée (-current, -buffer ou -all), alors par défaut seul le tampon core WeeChat sera silencieux.
+
+Exemples:
+  sauvegarde configuration:
+    /mute save
+  message au canal IRC courant:
+    /mute -current msg * bonjour !
+  message au canal #weechat:
+    /mute -buffer irc.freenode.#weechat msg #weechat bonjour !
+........................................
+
+[command]*`plugin`* lister/charger/décharger des extensions::
+........................................
+/plugin  list|listfull [<nom>]
+         load <fichier>
+         autoload
+         reload|unload [<nom>]
+
+    list: lister les extensions chargées
+listfull: lister les extensions chargées (verbeux)
+    load: charger une extension
+autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
+  reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis recharger automatiquement les extensions)
+  unload: décharger une extension (si pas de nom donné, décharger toutes les extensions)
+
+Sans paramètre, cette commande liste les extensions chargées.
+........................................
+
+[command]*`proxy`* gestion des proxies::
+........................................
+/proxy  list
+        add <nom> <type> <addresse> <port> [<utilisateur> [<mot_de_passe>]]
+        del <nom>|-all
+        set <nom> <option> <valeur>
+
+        list: lister tous les proxies
+         add: ajouter un nouveau proxy
+         nom: nom du proxy (doit être unique)
+        type: http, socks4 ou socks5
+    addresse: IP ou nom de machine
+        port: port
+ utilisateur: nom d'utilisateur (optionnel)
+mot_de_passe: mot de passe (optionnel)
+         del: supprimer un proxy (ou tous les proxies avec -all)
+         set: changer la valeur d'une propriété d'un proxy
+      option: option à modifier (pour la liste des options, voir /set weechat.proxy.<proxyname>.*)
+      valeur: nouvelle valeur pour l'option
+
+Exemples:
+  créer un proxy http, tournant en local, port 8888:
+    /proxy add local http 127.0.0.1 8888
+  créer un proxy http en utilisant le protocole IPv6:
+    /proxy add local http 127.0.0.1 8888
+    /proxy set local ipv6 on
+  créer un proxy socks5 avec un utilisateur/mot de passe:
+    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
+  supprimer un proxy:
+    /proxy del myproxy
+........................................
+
+[command]*`quit`* quitter WeeChat::
+........................................
+/quit  [-yes] [<paramètres>]
+
+      -yes: requis si l'option weechat.look.confirm_quit est activée
+paramètres: texte envoyé avec le signal "quit"
+            (par exemple l'extension irc utilise ce texte pour envoyer le message de quit au serveur)
+........................................
+
+[command]*`reload`* recharger les fichiers de configuration depuis le disque::
+........................................
+/reload  [<fichier> [<fichier>...]]
+
+fichier: fichier de configuration à recharger (sans l'extension ".conf")
+
+Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
+........................................
+
+[command]*`save`* sauvegarder les fichiers de configuration sur disque::
+........................................
+/save  [<fichier> [<fichier>...]]
+
+fichier: fichier de configuration à sauvegarder (sans l'extension ".conf")
+
+Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
+........................................
+
+[command]*`set`* modifier des options de configuration::
+........................................
+/set  [<option> [<valeur>]]
+
+option: nom d'une option (peut démarrer ou se terminer par "*" pour lister plusieurs options)
+valeur: nouvelle valeur pour l'option
+
+La nouvelle valeur peut être, selon le type de l'option:
+  booléen: on, off ou toggle
+  entier : nombre, ++nombre ou --nombre
+  chaîne : toute chaîne ("" pour une chaîne vide)
+  couleur: nom de couleur, ++nombre ou --nombre
+
+Pour tous les types, vous pouvez utiliser null pour supprimer la valeur de l'option (valeur non définie). Cela ne fonctionne qu'avec certaines options spéciales des extensions.
+
+Exemples:
+  afficher les options à propos du highlight:
+    /set *highlight*
+  ajouter un mot pour le highlight:
+    /set weechat.look.highlight "mot"
+........................................
+
+[command]*`unset`* supprimer/réinitialiser des options de configuration::
+........................................
+/unset  <option>
+
+option: nom d'une option (peut commencer ou se terminer par "*" pour réinitialiser plusieurs options, à utiliser avec prudence !)
+
+Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs).
+
+Exemples:
+  réinitialiser une option:
+    /unset weechat.look.item_time_format
+  réinitialiser toutes les options de couleur:
+    /unset weechat.color.*
+........................................
+
+[command]*`upgrade`* mettre à jour WeeChat sans se déconnecter des serveurs::
+........................................
+/upgrade  [<chemin_vers_binaire>]
+
+chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
+
+Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+
+Le processus de mise à jour comporte 4 étapes :
+  1. sauvegarder la session pour le coeur et les extensions (tampons, historique, ...)
+  2. décharger toutes les extensions (les fichiers de configuration (*.conf) sont écrits sur disque)
+  3. sauvegarder la configuration WeeChat (weechat.conf)
+  4. exécuter le nouveau binaire WeeChat et recharger la session.
+........................................
+
+[command]*`uptime`* montrer l'uptime de WeeChat::
+........................................
+/uptime  [-o | -ol]
+
+ -o: envoyer l'uptime sur le tampon courant comme entrée (chaîne en anglais)
+-ol: envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)
+........................................
+
+[command]*`version`* afficher la version de WeeChat et la date de compilation::
+........................................
+/version  [-o | -ol]
+
+ -o: envoyer la version sur le tampon courant comme entrée (chaîne en anglais)
+-ol: envoyer la version sur le tampon courant comme entrée (chaîne traduite)
+........................................
+
+[command]*`wait`* planifier l'exécution d'une commande dans le futur::
+........................................
+/wait  <nombre>[<unité>] <commande>
+
+  nombre: temps à attendre (nombre entier)
+   unité: optionnelle, valeurs possibles:
+            ms: millisecondes
+             s: secondes (par défaut)
+             m: minutes
+             h: heures
+commande: commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
+
+Note: la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
+
+Exemples:
+  rejoindre le canal dans 10 secondes:
+    /wait 10 /join #test
+  passer absent dans 15 minutes:
+    /wait 15m /away -all I'm away
+  dire 'bonjour' dans 2 minutes:
+    /wait 2m bonjour
+........................................
+
+[command]*`window`* gestion des fenêtres::
+........................................
+/window  list
+         -1|+1|b#|up|down|left|right
+         splith|splitv [<pct>]
+         resize <pct>
+         merge [all]
+         page_up|page_down
+         refresh
+         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         zoom
+
+         list: lister les fenêtres ouvertes (sans paramètre, cette liste est affichée)
+           -1: sauter à la fenêtre précédente
+           +1: sauter à la fenêtre suivante
+           b#: sauter à la fenêtre affichant le tampon #
+           up: sauter à la fenêtre au dessus
+         down: sauter à la fenêtre au dessous
+         left: sauter à la fenêtre à gauche
+        right: sauter à la fenêtre à droite
+       splith: éclater la fenêtre en deux horizontalement
+       splitv: éclater la fenêtre en deux verticalement
+       resize: redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
+        merge: fusionner la fenêtre avec une autre
+      page_up: faire défiler d'une page vers le haut
+    page_down: faire défiler d'une page vers le bas
+      refresh: redessiner l'écran
+       scroll: faire défiler d'un nombre de lignes (+/-N) ou avec du temps: s=secondes, m=minutes, h=heures, d=jours, M=mois, y=année
+    scroll_up: faire défiler de quelques lignes vers le haut
+  scroll_down: faire défiler de quelques lignes vers le bas
+   scroll_top: faire défiler jusqu'au début du tampon
+scroll_bottom: faire défiler jusqu'en bas du tampon
+scroll_previous_highlight: faire défiler jusqu'au highlight précédent
+scroll_next_highlight: faire défiler jusqu'au highlight suivant
+         zoom: zoomer sur la fenêtre
+
+Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
+
+Exemples:
+  sauter à la fenêtre affichant le tampon 1:
+    /window b1
+  défilement de 2 lignes vers le haut:
+    /window scroll -2
+  défilement de 2 jours vers le haut:
+    /window scroll -2d
+  défilement jusqu'au début du jour courant:
+    /window scroll -d
 ........................................
 

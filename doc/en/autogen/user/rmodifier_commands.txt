@@ -1,25 +1,27 @@
-&bull; *`/rmodifier`* `[list] | [listdefault] | [add name modifiers groups regex] | [del name|-all [name...]] | [default -yes]`::
-
+[command]*`rmodifier`* alter modifier strings with regular expressions::
 ........................................
-  alter modifier strings with regular expressions
+/rmodifier  list|listdefault
+            add <name> <modifiers> <groups> <regex>
+            del <name>|-all [<name>...]
+            default -yes
 
-         list: list all rmodifiers
-  listdefault: list default rmodifiers
-          add: add a rmodifier
-         name: name of rmodifier
-    modifiers: comma separated list of modifiers
-       groups: action on groups found: comma separated list of groups (from 1 to 9) with optional "*" after number to hide group
-        regex: regular expression
-          del: delete a rmodifier
-         -all: delete all rmodifiers
-      default: restore default rmodifiers
-  
-  Examples:
-    hide everything typed after a command /password:
-      /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-    delete rmodifier "password":
-      /rmodifier del password
-    delete all rmodifiers:
-      /rmodifier del -all
+       list: list all rmodifiers
+listdefault: list default rmodifiers
+        add: add a rmodifier
+       name: name of rmodifier
+  modifiers: comma separated list of modifiers
+     groups: action on groups found: comma separated list of groups (from 1 to 9) with optional "*" after number to hide group
+      regex: regular expression
+        del: delete a rmodifier
+       -all: delete all rmodifiers
+    default: restore default rmodifiers
+
+Examples:
+  hide everything typed after a command /password:
+    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
+  delete rmodifier "password":
+    /rmodifier del password
+  delete all rmodifiers:
+    /rmodifier del -all
 ........................................
 
