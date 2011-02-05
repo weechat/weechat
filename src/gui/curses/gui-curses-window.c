@@ -145,26 +145,6 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator)
 }
 
 /*
- * gui_window_get_hline_char: get char used to draw horizontal lines
- *                            Note: ACS_HLINE from ncurses is better for
- *                                  render, but it introduces bug with URLs
- *                                  selected by terminal: below this line,
- *                                  some URLs are not visible or shifted
- */
-
-int
-gui_window_get_hline_char ()
-{
-    const char *hline_char;
-
-    hline_char = CONFIG_STRING(config_look_hline_char);
-    if (!hline_char || !hline_char[0])
-        return ACS_HLINE;
-    
-    return utf8_char_int (hline_char);
-}
-
-/*
  * gui_window_wprintw: decode then display string with wprintw
  */
 

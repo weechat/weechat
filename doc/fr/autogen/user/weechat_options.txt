@@ -344,7 +344,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * *weechat.look.hline_char*
-** description: `caractère utilisé pour tracer les lignes horizontales, notez qu'une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux`
+** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-"`)
 
@@ -501,12 +501,17 @@
 * *weechat.look.read_marker*
 ** description: `utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue`
 ** type: entier
-** valeurs: none, line, dotted-line, char (valeur par défaut: `dotted-line`)
+** valeurs: none, line, char (valeur par défaut: `line`)
 
 * *weechat.look.read_marker_always_show*
 ** description: `toujours afficher le marqueur de lecture, même s'il est après la dernière ligne du tampon`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
+
+* *weechat.look.read_marker_string*
+** description: `chaîne utilisée pour tracer la ligne de marqueur des données non lues (la chaîne est répétée jusqu'à la fin de la ligne)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"- "`)
 
 * *weechat.look.save_config_on_exit*
 ** description: `sauvegarder la configuration en quittant`

@@ -344,7 +344,7 @@
 ** values: any string (default value: `""`)
 
 * *weechat.look.hline_char*
-** description: `char used to draw horizontal lines, note that empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals`
+** description: `char used to draw horizontal separators around bars (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
 ** type: string
 ** values: any string (default value: `"-"`)
 
@@ -501,12 +501,17 @@
 * *weechat.look.read_marker*
 ** description: `use a marker (line or char) on buffers to show first unread line`
 ** type: integer
-** values: none, line, dotted-line, char (default value: `dotted-line`)
+** values: none, line, char (default value: `line`)
 
 * *weechat.look.read_marker_always_show*
 ** description: `always show read marker, even if it is after last buffer line`
 ** type: boolean
 ** values: on, off (default value: `off`)
+
+* *weechat.look.read_marker_string*
+** description: `string used to draw read marker line (string is repeated until end of line)`
+** type: string
+** values: any string (default value: `"- "`)
 
 * *weechat.look.save_config_on_exit*
 ** description: `save configuration file on exit`

@@ -80,7 +80,6 @@ extern int gui_keyboard_read_cb (void *data, int fd);
 /* window functions */
 extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
-extern int gui_window_get_hline_char ();
 extern void gui_window_clear (WINDOW *window, int fg, int bg);
 extern void gui_window_reset_style (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);

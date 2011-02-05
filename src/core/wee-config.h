@@ -81,7 +81,6 @@ enum t_config_look_read_marker
 {
     CONFIG_LOOK_READ_MARKER_NONE = 0,
     CONFIG_LOOK_READ_MARKER_LINE,
-    CONFIG_LOOK_READ_MARKER_DOTTED_LINE,
     CONFIG_LOOK_READ_MARKER_CHAR,
 };
 
@@ -143,6 +142,7 @@ extern struct t_config_option *config_look_prefix_buffer_align_more;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_read_marker_always_show;
+extern struct t_config_option *config_look_read_marker_string;
 extern struct t_config_option *config_look_save_config_on_exit;
 extern struct t_config_option *config_look_save_layout_on_exit;
 extern struct t_config_option *config_look_scroll_amount;

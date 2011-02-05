@@ -70,8 +70,7 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     struct t_gui_line *last_read_line;
     
     /* marker is disabled in config? */
-    if ((CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
-        && (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
+    if (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
         return 0;
     
     /* marker is not set for buffer? */
@@ -134,36 +133,26 @@ gui_chat_display_new_line (struct t_gui_window *window, int num_lines, int count
 void
 gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
 {
-    int i, n, hline_char;
-    
-    hline_char = gui_window_get_hline_char ();
+    int x, size_on_screen;
     
     if (!simulate)
     {
-        gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                      GUI_COLOR_CHAT_READ_MARKER);
-        switch (CONFIG_INTEGER(config_look_read_marker))
+        if (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
         {
-            case CONFIG_LOOK_READ_MARKER_LINE:
-                mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
-                          window->win_chat_cursor_y, window->win_chat_cursor_x,
-                          hline_char, window->win_chat_width - 1);
-                break;
-            case CONFIG_LOOK_READ_MARKER_DOTTED_LINE:
-                wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-                       window->win_chat_cursor_y, window->win_chat_cursor_x);
-                wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
-                n = (window->win_chat_width % 2);
-                for (i = 0; i < window->win_chat_width - 1; i++)
-                {
-                    if (i % 2 == n)
-                        mvwhline (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                  window->win_chat_cursor_y, i,
-                                  hline_char, 1);
-                }
-                break;
-            default:
-                break;
+            size_on_screen = utf8_strlen_screen (CONFIG_STRING(config_look_read_marker_string));
+            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                          GUI_COLOR_CHAT_READ_MARKER);
+            wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
+                   window->win_chat_cursor_y, window->win_chat_cursor_x);
+            wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+            x = 0;
+            while (x < window->win_chat_width - 1)
+            {
+                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+                           window->win_chat_cursor_y, x,
+                           "%s", CONFIG_STRING(config_look_read_marker_string));
+                x += size_on_screen;
+            }
         }
         window->win_chat_cursor_x = window->win_chat_width;
     }

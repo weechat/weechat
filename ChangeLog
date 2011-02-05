@@ -7,6 +7,7 @@ v0.3.5-dev, 2011-02-05
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: add option weechat.look.read_marker_string
 * core: improve arguments displayed in /help of commands
 * core: fix terminal title when $TERM starts with "screen"
 * core: add some chars after cursor when scrolling input line: new option
