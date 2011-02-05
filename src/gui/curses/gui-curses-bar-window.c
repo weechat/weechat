@@ -291,7 +291,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 string += 3;
                             }
                         }
-                        if (str_fg[0] && (string[0] == ','))
+                        if (string[0] == ',')
                         {
                             string++;
                             if (string[0] == GUI_COLOR_PAIR_CHAR)

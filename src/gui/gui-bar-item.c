@@ -380,8 +380,9 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
                 if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_FLAG)
                 {
                     snprintf (delimiter_color, sizeof (delimiter_color),
-                              "%c%c%05d",
+                              "%c%c%c%05d",
                               GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
                               GUI_COLOR_PAIR_CHAR,
                               CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_MASK);
                 }
@@ -396,8 +397,9 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
                 if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_FLAG)
                 {
                     snprintf (bar_color, sizeof (bar_color),
-                              "%c%c%05d",
+                              "%c%c%c%05d",
                               GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
                               GUI_COLOR_PAIR_CHAR,
                               CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_MASK);
                 }
