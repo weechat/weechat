@@ -319,10 +319,6 @@ gui_color_get_pair (int fg, int bg)
     if (bg > gui_color_term_colors)
         bg = -1;
     
-    /* if not real white, we use default terminal foreground instead of white */
-    if ((fg == COLOR_WHITE) && !CONFIG_BOOLEAN(config_look_color_real_white))
-        fg = -1;
-    
     /* compute index for gui_color_pairs with foreground and background */
     index = ((bg + 1) * (gui_color_term_colors + 2)) + (fg + 1);
     
