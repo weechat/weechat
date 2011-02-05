@@ -134,12 +134,16 @@ void
 gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
 {
     int x, size_on_screen;
+    char *read_marker_string, *default_string = "- ";
     
     if (!simulate)
     {
         if (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
         {
-            size_on_screen = utf8_strlen_screen (CONFIG_STRING(config_look_read_marker_string));
+            read_marker_string = CONFIG_STRING(config_look_read_marker_string);
+            if (!read_marker_string || !read_marker_string[0])
+                read_marker_string = default_string;
+            size_on_screen = utf8_strlen_screen (read_marker_string);
             gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                           GUI_COLOR_CHAT_READ_MARKER);
             wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
@@ -150,7 +154,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
             {
                 mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
                            window->win_chat_cursor_y, x,
-                           "%s", CONFIG_STRING(config_look_read_marker_string));
+                           "%s", read_marker_string);
                 x += size_on_screen;
             }
         }
