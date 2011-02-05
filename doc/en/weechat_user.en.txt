@@ -822,7 +822,7 @@ attribute.
 
 Color codes for ^Cc are:
 
-[width="35%",cols="^1m,3,3",options="header"]
+[width="50%",cols="^1m,3,3",options="header"]
 |========================================
 | Code | IRC           | WeeChat (curses)
 | 00   | white         | white
@@ -839,7 +839,7 @@ Color codes for ^Cc are:
 | 11   | light cyan    | lightcyan
 | 12   | light blue    | lightblue
 | 13   | light magenta | lightmagenta
-| 14   | gray          | default
+| 14   | gray          | gray
 | 15   | light gray    | white
 |========================================
 
@@ -935,6 +935,7 @@ Basic colors in WeeChat are:
 | lightmagenta | light magenta
 | cyan         | dark cyan
 | lightcyan    | light cyan
+| gray         | gray
 | white        | white
 |========================================
 

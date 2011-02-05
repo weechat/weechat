@@ -855,7 +855,7 @@ I codici colore per ^Cc sono:
 | 11     | azzurro chiaro | lightcyan
 | 12     | blu chiaro     | lightblue
 | 13     | rosa chiaro    | lightmagenta
-| 14     | grigio         | default
+| 14     | grigio         | gray
 | 15     | grigio chiaro  | white
 |=======================================
 
@@ -931,7 +931,7 @@ niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell
 
 [[colors_basic]]
 Colori base
-^^^^^^^^^^^^
+^^^^^^^^^^^
 
 I colori base in WeeChat sono:
 
@@ -953,6 +953,7 @@ I colori base in WeeChat sono:
 | lightmagenta | rosa chiaro
 | cyan         | azzurro scuro
 | lightcyan    | azzurro chiaro
+| gray         | grigio
 | white        | bianco
 |========================================
 

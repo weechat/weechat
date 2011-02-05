@@ -36,7 +36,7 @@ struct t_gui_buffer;
 struct t_gui_window;
 struct t_gui_bar_window;
 
-#define GUI_CURSES_NUM_WEECHAT_COLORS 16
+#define GUI_CURSES_NUM_WEECHAT_COLORS 17
 
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))

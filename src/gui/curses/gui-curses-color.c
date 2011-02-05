@@ -62,7 +62,8 @@ struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
   { COLOR_MAGENTA, COLOR_MAGENTA + 8, A_BOLD, "lightmagenta" },
   { COLOR_CYAN,    COLOR_CYAN,        0,      "cyan"         },
   { COLOR_CYAN,    COLOR_CYAN + 8,    A_BOLD, "lightcyan"    },
-  { COLOR_WHITE,   COLOR_WHITE,       A_BOLD, "white"        },
+  { COLOR_WHITE,   COLOR_WHITE,       0,      "gray"         },
+  { COLOR_WHITE,   COLOR_WHITE + 8,   A_BOLD, "white"        },
   { 0,             0,                 0,      NULL           }
 };
 

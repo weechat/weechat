@@ -47,7 +47,7 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
   /* 11 */ "lightcyan",
   /* 12 */ "lightblue",
   /* 13 */ "lightmagenta",
-  /* 14 */ "default",
+  /* 14 */ "gray",
   /* 15 */ "white"
 };
 

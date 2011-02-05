@@ -821,7 +821,7 @@ zu deaktivieren.
 
 Farbtabelle für ^Cc:
 
-[width="35%",cols="^1m,3,3",options="header"]
+[width="50%",cols="^1m,3,3",options="header"]
 |========================================
 | Code | IRC           | WeeChat (curses)
 | 00   | weiß          | white
@@ -838,7 +838,7 @@ Farbtabelle für ^Cc:
 | 11   | hell türkis   | lightcyan
 | 12   | hellblau      | lightblue
 | 13   | hell magenta  | lightmagenta
-| 14   | grau          | default
+| 14   | grau          | gray
 | 15   | hellgrau      | white
 |========================================
 
@@ -939,6 +939,7 @@ Basisfarben in WeeChat sind:
 | lightmagenta | hell magenta
 | cyan         | dunkel türkis
 | lightcyan    | hell türkis
+| gray         | grau
 | white        | weiß
 |========================================
 
