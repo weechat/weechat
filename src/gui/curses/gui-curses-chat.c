@@ -189,7 +189,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                 switch (string[0])
                 {
                     case GUI_COLOR_FG_CHAR: /* fg color */
-                        if (string[1] == GUI_COLOR_PAIR_CHAR)
+                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             if (string[2] && string[3] && string[4]
                                 && string[5] && string[6])
@@ -203,7 +203,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                     if (error && !error[0])
                                     {
                                         gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        fg | GUI_COLOR_PAIR_FLAG);
+                                                                        fg | GUI_COLOR_EXTENDED_FLAG);
                                     }
                                 }
                                 string += 7;
@@ -231,7 +231,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         }
                         break;
                     case GUI_COLOR_BG_CHAR: /* bg color */
-                        if (string[1] == GUI_COLOR_PAIR_CHAR)
+                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             if (string[2] && string[3] && string[4]
                                 && string[5] && string[6])
@@ -245,7 +245,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                     if (error && !error[0])
                                     {
                                         gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        bg | GUI_COLOR_PAIR_FLAG);
+                                                                        bg | GUI_COLOR_EXTENDED_FLAG);
                                     }
                                 }
                                 string += 7;
@@ -277,7 +277,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         str_bg[0] = '\0';
                         fg = -1;
                         bg = -1;
-                        if (string[1] == GUI_COLOR_PAIR_CHAR)
+                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             if (string[2] && string[3] && string[4]
                                 && string[5] && string[6])
@@ -291,7 +291,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                     if (!error || error[0])
                                         fg = -1;
                                     else
-                                        fg |= GUI_COLOR_PAIR_FLAG;
+                                        fg |= GUI_COLOR_EXTENDED_FLAG;
                                 }
                                 string += 7;
                             }
@@ -316,7 +316,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         if (string[0] == ',')
                         {
                             string++;
-                            if (string[0] == GUI_COLOR_PAIR_CHAR)
+                            if (string[0] == GUI_COLOR_EXTENDED_CHAR)
                             {
                                 if (string[1] && string[2] && string[3]
                                     && string[4] && string[5])
@@ -330,7 +330,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                         if (!error || error[0])
                                             bg = -1;
                                         else
-                                            bg |= GUI_COLOR_PAIR_FLAG;
+                                            bg |= GUI_COLOR_EXTENDED_FLAG;
                                     }
                                     string += 6;
                                 }
@@ -359,7 +359,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                                                                fg, bg);
                         }
                         break;
-                    case GUI_COLOR_PAIR_CHAR: /* pair number */
+                    case GUI_COLOR_EXTENDED_CHAR: /* pair number */
                         if ((isdigit (string[1])) && (isdigit (string[2]))
                             && (isdigit (string[3])) && (isdigit (string[4]))
                             && (isdigit (string[5])))

@@ -125,7 +125,7 @@ gui_color_assign (int *color, const char *color_name)
     pair = gui_color_palette_get_alias (color_name);
     if (pair >= 0)
     {
-        *color = GUI_COLOR_PAIR_FLAG | pair;
+        *color = GUI_COLOR_EXTENDED_FLAG | pair;
         return 1;
     }
     
@@ -135,7 +135,7 @@ gui_color_assign (int *color, const char *color_name)
     if (color_name[0] && error && !error[0] && (pair >= 0))
     {
         /* color_name is a number, use this pair number */
-        *color = GUI_COLOR_PAIR_FLAG | pair;
+        *color = GUI_COLOR_EXTENDED_FLAG | pair;
         return 1;
     }
     else
@@ -367,10 +367,10 @@ gui_color_weechat_get_pair (int weechat_color)
         fg = gui_color[weechat_color]->foreground;
         bg = gui_color[weechat_color]->background;
         
-        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
-            fg &= GUI_COLOR_PAIR_MASK;
-        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
-            bg &= GUI_COLOR_PAIR_MASK;
+        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+            fg &= GUI_COLOR_EXTENDED_MASK;
+        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+            bg &= GUI_COLOR_EXTENDED_MASK;
     }
     
     return gui_color_get_pair (fg, bg);
@@ -387,15 +387,15 @@ gui_color_get_name (int num_color)
     static int index_color = 0;
     struct t_gui_color_palette *ptr_color_palette;
     
-    if (num_color & GUI_COLOR_PAIR_FLAG)
+    if (num_color & GUI_COLOR_EXTENDED_FLAG)
     {
-        ptr_color_palette = gui_color_palette_get (num_color & GUI_COLOR_PAIR_MASK);
+        ptr_color_palette = gui_color_palette_get (num_color & GUI_COLOR_EXTENDED_MASK);
         if (ptr_color_palette && ptr_color_palette->alias)
             return ptr_color_palette->alias;
         index_color = (index_color + 1) % 32;
         color[index_color][0] = '\0';
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%d", num_color & GUI_COLOR_PAIR_MASK);
+                  "%d", num_color & GUI_COLOR_EXTENDED_MASK);
         return color[index_color];
     }
     
@@ -734,7 +734,7 @@ gui_color_buffer_display ()
                     snprintf (str_color, sizeof (str_color),
                               "%c%c%05d%c%03d%c",
                               GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_PAIR_CHAR,
+                              GUI_COLOR_EXTENDED_CHAR,
                               color,
                               (color == 0) ? '<' : ' ',
                               color,
@@ -857,7 +857,7 @@ gui_color_buffer_display ()
                         snprintf (str_color, sizeof (str_color),
                                   "%c%c%05d",
                                   GUI_COLOR_COLOR_CHAR,
-                                  GUI_COLOR_PAIR_CHAR,
+                                  GUI_COLOR_EXTENDED_CHAR,
                                   i);
                     }
                     str_rgb[0] = '\0';

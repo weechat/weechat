@@ -190,13 +190,13 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     if (!gui_ok)
         return;
     
-    if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
-        fg &= GUI_COLOR_PAIR_MASK;
+    if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+        fg &= GUI_COLOR_EXTENDED_MASK;
     else
         fg = gui_weechat_colors[fg].foreground;
     
-    if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
-        bg &= GUI_COLOR_PAIR_MASK;
+    if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+        bg &= GUI_COLOR_EXTENDED_MASK;
     else
         bg = gui_weechat_colors[bg].background;
     
@@ -284,10 +284,10 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
             fg = -1;
         }
         
-        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
-            fg &= GUI_COLOR_PAIR_MASK;
-        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
-            bg &= GUI_COLOR_PAIR_MASK;
+        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+            fg &= GUI_COLOR_EXTENDED_MASK;
+        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+            bg &= GUI_COLOR_EXTENDED_MASK;
         gui_window_set_color (window, fg, bg);
     }
 }
@@ -306,8 +306,8 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
     {
         gui_window_remove_color_style (window, A_BOLD);
         
-        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
-            fg &= GUI_COLOR_PAIR_MASK;
+        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+            fg &= GUI_COLOR_EXTENDED_MASK;
         else
         {
             attributes = gui_weechat_colors[fg].attributes;
@@ -325,8 +325,8 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
             }
         }
         
-        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
-            bg &= GUI_COLOR_PAIR_MASK;
+        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+            bg &= GUI_COLOR_EXTENDED_MASK;
         else
         {
             bg = (gui_color_num_bg > 8) ?
@@ -351,9 +351,11 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
     {
         current_bg = window_current_style_bg;
         
-        if ((fg > 0) && (fg & GUI_COLOR_PAIR_FLAG))
+        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
-            gui_window_set_color (window, fg & GUI_COLOR_PAIR_MASK, current_bg);
+            gui_window_set_color (window,
+                                  fg & GUI_COLOR_EXTENDED_MASK,
+                                  current_bg);
         }
         else if (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
@@ -392,9 +394,11 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
         current_attr = window_current_style_attr;
         current_fg = window_current_style_fg;
         
-        if ((bg > 0) && (bg & GUI_COLOR_PAIR_FLAG))
+        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
         {
-            gui_window_set_color (window, current_fg, bg & GUI_COLOR_PAIR_MASK);
+            gui_window_set_color (window,
+                                  current_fg,
+                                  bg & GUI_COLOR_EXTENDED_MASK);
         }
         else if (bg < GUI_CURSES_NUM_WEECHAT_COLORS)
         {

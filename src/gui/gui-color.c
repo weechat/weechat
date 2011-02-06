@@ -259,7 +259,7 @@ gui_color_get_custom (const char *color_name)
         if (fg_pair >= 0)
         {
             snprintf (color_fg, sizeof (color_fg), "%c%05d",
-                      GUI_COLOR_PAIR_CHAR,
+                      GUI_COLOR_EXTENDED_CHAR,
                       fg_pair);
         }
         else if (fg >= 0)
@@ -271,7 +271,7 @@ gui_color_get_custom (const char *color_name)
         if (bg_pair >= 0)
         {
             snprintf (color_bg, sizeof (color_bg), "%c%05d",
-                      GUI_COLOR_PAIR_CHAR,
+                      GUI_COLOR_EXTENDED_CHAR,
                       bg_pair);
         }
         else if (bg >= 0)
@@ -350,7 +350,7 @@ gui_color_decode (const char *string, const char *replacement)
                 {
                     case GUI_COLOR_FG_CHAR:
                     case GUI_COLOR_BG_CHAR:
-                        if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                        if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             if (ptr_string[2] && ptr_string[3] && ptr_string[4]
                                 && ptr_string[5] && ptr_string[6])
@@ -365,7 +365,7 @@ gui_color_decode (const char *string, const char *replacement)
                         }
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
-                        if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                        if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                         {
                             if (ptr_string[2] && ptr_string[3] && ptr_string[4]
                                 && ptr_string[5] && ptr_string[6])
@@ -380,7 +380,7 @@ gui_color_decode (const char *string, const char *replacement)
                         }
                         if (ptr_string[0] == ',')
                         {
-                            if (ptr_string[1] == GUI_COLOR_PAIR_CHAR)
+                            if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                             {
                                 if (ptr_string[2] && ptr_string[3]
                                     && ptr_string[4] && ptr_string[5]
@@ -396,7 +396,7 @@ gui_color_decode (const char *string, const char *replacement)
                             }
                         }
                         break;
-                    case GUI_COLOR_PAIR_CHAR:
+                    case GUI_COLOR_EXTENDED_CHAR:
                         if ((isdigit (ptr_string[1])) && (isdigit (ptr_string[2]))
                             && (isdigit (ptr_string[3])) && (isdigit (ptr_string[4]))
                             && (isdigit (ptr_string[5])))

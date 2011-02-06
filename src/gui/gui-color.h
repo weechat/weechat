@@ -89,7 +89,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_FG_CHAR                     'F'
 #define GUI_COLOR_BG_CHAR                     'B'
 #define GUI_COLOR_FG_BG_CHAR                  '*'
-#define GUI_COLOR_PAIR_CHAR                   '@'
+#define GUI_COLOR_EXTENDED_CHAR               '@'
 
 /* color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
@@ -100,8 +100,8 @@ enum t_gui_color_enum
 #define GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR '-'
 #define GUI_COLOR_BAR_MOVE_CURSOR_CHAR        '#'
 
-#define GUI_COLOR_PAIR_FLAG 0x10000
-#define GUI_COLOR_PAIR_MASK 0xFFFF
+#define GUI_COLOR_EXTENDED_FLAG 0x10000
+#define GUI_COLOR_EXTENDED_MASK 0xFFFF
 
 /* color structure */
 

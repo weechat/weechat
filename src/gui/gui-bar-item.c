@@ -377,14 +377,14 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
             bar_color[0] = '\0';
             if (prefix || suffix)
             {
-                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_FLAG)
+                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
                 {
                     snprintf (delimiter_color, sizeof (delimiter_color),
                               "%c%c%c%05d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_FG_CHAR,
-                              GUI_COLOR_PAIR_CHAR,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_PAIR_MASK);
+                              GUI_COLOR_EXTENDED_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
                 }
                 else
                 {
@@ -394,14 +394,14 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
                               GUI_COLOR_FG_CHAR,
                               CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
                 }
-                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_FLAG)
+                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
                 {
                     snprintf (bar_color, sizeof (bar_color),
                               "%c%c%c%05d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_FG_CHAR,
-                              GUI_COLOR_PAIR_CHAR,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_PAIR_MASK);
+                              GUI_COLOR_EXTENDED_CHAR,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
                 }
                 else
                 {
