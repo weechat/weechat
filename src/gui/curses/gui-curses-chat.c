@@ -579,8 +579,7 @@ gui_chat_display_word (struct t_gui_window *window,
     {
         /* insert spaces for aligning text under time/nick */
         length_align = gui_line_get_align (window->buffer, line, 0, 0);
-        if ((length_align > 0)
-            && (window->win_chat_cursor_x == 0)
+        if ((window->win_chat_cursor_x == 0)
             && (*lines_displayed > 0)
             /* FIXME: modify arbitraty value for non aligning messages on time/nick? */
             && (length_align < (window->win_chat_width - 5)))
@@ -595,8 +594,8 @@ gui_chat_display_word (struct t_gui_window *window,
             window->win_chat_cursor_x += length_align;
             if ((CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
-                && (CONFIG_STRING(config_look_prefix_suffix)
-                    && CONFIG_STRING(config_look_prefix_suffix)[0]))
+                && CONFIG_STRING(config_look_prefix_suffix)
+                && CONFIG_STRING(config_look_prefix_suffix)[0])
             {
                 if (!simulate)
                 {
