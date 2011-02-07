@@ -855,8 +855,9 @@ gui_color_buffer_display ()
                     if (!gui_color_use_term_colors)
                     {
                         snprintf (str_color, sizeof (str_color),
-                                  "%c%c%05d",
+                                  "%c%c%c%05d",
                                   GUI_COLOR_COLOR_CHAR,
+                                  GUI_COLOR_FG_CHAR,
                                   GUI_COLOR_EXTENDED_CHAR,
                                   i);
                     }
