@@ -21,7 +21,7 @@
 
 #
 # weercd - the WeeChat flood IRC server
-# 
+#
 # weercd is an IRC server that is designed to test client resistance and memory
 # usage (quickly detect memory leaks, for example with client scripts).
 # Various IRC commands are sent in a short time (privmsg, notice, join/quit, ..)
@@ -123,7 +123,7 @@ def strrand(minlength=1, maxlength=50, spaces=False):
     strspace = ''
     if spaces:
         strspace = ' '
-    return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits + strspace) for x in range(length)) 
+    return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits + strspace) for x in range(length))
 
 class Client:
     def __init__(self, sock, addr, **kwargs):

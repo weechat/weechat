@@ -435,7 +435,7 @@ irc_notify_get_tags (struct t_config_option *option)
               (tags && tags[0]) ? "," : "",
               (tags && tags[0]) ? tags : "");
     
-    return string;          
+    return string;
 }
 
 /*

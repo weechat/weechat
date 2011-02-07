@@ -60,7 +60,7 @@ Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
 
 Es wird empfohlen zum kompilieren von WeeChat, cmake zu nutzen.
 
-Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (dich also nicht 
+Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (dich also nicht
 für cmake entscheidest), stelle sicher, dass Du die neueste Version von autoconf
 und automake besitzt (WeeChat wird mit autoconf 2.61 und automake 1.10.1 entwickelt).
 
@@ -352,7 +352,7 @@ Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt u
 nicht an den Server gesendet) und beeinflusst somit jeden Buffer.
 Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Tags und
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
-Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt. 
+Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt.
 Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Filter deaktiviert
 (Voreinstellung zum aktivieren/deaktivieren der Filter: Alt-Taste + "=").
 

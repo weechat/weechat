@@ -152,7 +152,7 @@ Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest 
 Jeśli samodzielnie skopilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarcznej
 z systemem).
 
-Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą menagera pakietów 
+Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą menagera pakietów
 Homebrew.
 
 

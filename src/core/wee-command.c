@@ -1549,7 +1549,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
             }
         }
         
-        /* use list to display commands, sorted by columns */ 
+        /* use list to display commands, sorted by columns */
         list_size = weelist_size (list);
         if ((max_length > 0) && (list_size > 0))
         {

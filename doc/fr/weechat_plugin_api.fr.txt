@@ -7075,7 +7075,7 @@ Le "callback" effectuera les actions suivantes lorsqu'il recevra le signal :
 
 . déchargement et suppression du script installé
 . déplacement du nouveau script vers le répertoire '~/.weechat/xxx/' (où 'xxx'
-  est le langage) 
+  est le langage)
 . création d'un lien vers le nouveau script dans le répertoire
   '~/.weechat/xxx/autoload/'
 . chargement du nouveau script

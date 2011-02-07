@@ -6984,7 +6984,7 @@ Five signals can be sent to install a script, according to language:
 The callback will do following actions when receiving signal:
 
 . unload and remove installed script
-. move new script to directory '~/.weechat/xxx/' (where 'xxx' is language) 
+. move new script to directory '~/.weechat/xxx/' (where 'xxx' is language)
 . create link to new script in directory '~/.weechat/xxx/autoload/'
 . load new script
 

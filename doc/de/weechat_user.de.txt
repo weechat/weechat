@@ -1695,7 +1695,7 @@ logger.mask.irc
 logger.file.mask
 ----------------------------------------
 
-Dies bedeutet dass man eine Maske speziell für einen IRC Server 
+Dies bedeutet dass man eine Maske speziell für einen IRC Server
 ("logger.mask.irc.freenode") anlegen kann oder aber global für
 die Erweiterung ("logger.mask.irc").
 

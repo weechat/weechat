@@ -727,7 +727,7 @@ Nachrichten parsen
 
 _Neu in Version 0.3.4._
 
-Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_parse_message" parsen. 
+Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_parse_message" parsen.
 
 [source,python]
 ----------------------------------------
