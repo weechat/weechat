@@ -351,6 +351,8 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
     {
         current_bg = window_current_style_bg;
         
+        gui_window_remove_color_style (window, A_BOLD);
+        
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
             gui_window_set_color (window,
@@ -359,7 +361,6 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         }
         else if (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            gui_window_remove_color_style (window, A_BOLD);
             attributes = gui_weechat_colors[fg].attributes;
             gui_window_set_color_style (window, attributes);
             fg = gui_weechat_colors[fg].foreground;
