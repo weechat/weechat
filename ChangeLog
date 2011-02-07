@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-02-05
+v0.3.5-dev, 2011-02-07
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: improve display of commands lists in /help (add arguments -list
+  and -listfull)
 * core: add option weechat.look.read_marker_string
 * core: improve arguments displayed in /help of commands
 * core: fix terminal title when $TERM starts with "screen"

@@ -208,11 +208,15 @@ Exemples:
 
 [command]*`help`* afficher l'aide sur les commandes et les options::
 ........................................
-/help  <commande>
+/help  -list|-listfull [<extension> [<extension>...]]
+       <commande>
        <option>
 
-commande: nom d'une commande
-  option: nom d'une option (utilisez /set pour voir la liste)
+    -list: lister les commandes, par extension (sans paramètre, cette liste est affichée)
+-listfull: lister les commandes avec description, par extension
+extension: lister les commandes de cette extension
+ commande: un nom de commande
+   option: un nom d'option (utilisez /set pour voir la liste)
 ........................................
 
 [command]*`history`* affiche l'historique des commandes du tampon::

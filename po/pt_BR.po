@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-05 15:20+0100\n"
-"PO-Revision-Date: 2011-01-31 14:51+0100\n"
+"POT-Creation-Date: 2011-02-07 17:30+0100\n"
+"PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Portuguese\n"
@@ -302,14 +302,6 @@ msgstr "Todos os filtros foram deletados"
 #, c-format
 msgid "Filter \"%s\" deleted"
 msgstr "Filtro \"%s\" deletado"
-
-#. TRANSLATORS: "%s" is "weechat"
-#, c-format
-msgid "%s internal commands:"
-msgstr "%s comandos internos:"
-
-msgid "Other commands:"
-msgstr "Outros comandos:"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -1199,16 +1191,17 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "mostra a ajuda sobre comandos e opções"
 
-#, fuzzy
-msgid "<command> || <option>"
-msgstr "[comando | opção]"
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
 
 msgid ""
-"command: a command name\n"
-" option: an option name (use /set to see list)"
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
 msgstr ""
-"comando: um nome de comando\n"
-"  opção: um nome de opção (use /set para ver a lista)"
 
 msgid "show buffer command history"
 msgstr "mostra o histórico de linhas de comando do buffer"
@@ -6708,38 +6701,3 @@ msgstr ""
 
 msgid "Pointer"
 msgstr ""
-
-#~ msgid ""
-#~ "file: configuration file to save\n"
-#~ "\n"
-#~ "Without argument, all files (WeeChat and plugins) are saved."
-#~ msgstr ""
-#~ "arquivo: arquivo de configuração a ser salvo\n"
-#~ "\n"
-#~ "Sem argumentos, todos os arquivos (WeeChat e plugins) são salvos"
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-
-# find a better translation to "bindings"
-#~ msgid "This command is used by key bindings or plugins."
-#~ msgstr "Este comando é usado por vinculações de tecla ou plugins"
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[-all] [mensagem]"
-
-#~ msgid "[option]"
-#~ msgstr "[opção]"

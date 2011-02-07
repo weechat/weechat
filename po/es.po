@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-05 15:20+0100\n"
-"PO-Revision-Date: 2011-02-03 19:00+0100\n"
+"POT-Creation-Date: 2011-02-07 17:30+0100\n"
+"PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -302,14 +302,6 @@ msgstr "Todos los filtros fueron eliminados"
 #, c-format
 msgid "Filter \"%s\" deleted"
 msgstr "Filtro \"%s\" eliminado"
-
-#. TRANSLATORS: "%s" is "weechat"
-#, c-format
-msgid "%s internal commands:"
-msgstr "Comandos internos de %s:"
-
-msgid "Other commands:"
-msgstr "Otros comandos:"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -1209,16 +1201,17 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "mostrar ayuda sobre los comandos y opciones"
 
-#, fuzzy
-msgid "<command> || <option>"
-msgstr "[comando | opción]"
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
 
 msgid ""
-"command: a command name\n"
-" option: an option name (use /set to see list)"
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
 msgstr ""
-"comando: nombre del comando\n"
-" opción: nombre de la opción (usa /set para ver una lista)"
 
 msgid "show buffer command history"
 msgstr "mostrar historial de comandos de buffer"
@@ -7596,113 +7589,3 @@ msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
-
-#, fuzzy
-#~ msgid "char used to draw read marker line"
-#~ msgstr "carácter usado para ocultar parte de un texto"
-
-#~ msgid "user/password: used to get privileges on current IRC server"
-#~ msgstr ""
-#~ "usuario/contraseña: usado para obtener privilegios en el servidor IRC "
-#~ "actual"
-
-#~ msgid ""
-#~ "file: configuration file to save\n"
-#~ "\n"
-#~ "Without argument, all files (WeeChat and plugins) are saved."
-#~ msgstr ""
-#~ "archivo: archivo de configuración a guardar\n"
-#~ "\n"
-#~ "Sin argumentos, todos los archivos (WeeChat y plugins) son guardados."
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [nombre]] | [listfull [nombre]] | [load archivo] | [autoload] | "
-#~ "[reload [nombre]] | [unload [nombre]]"
-
-#~ msgid "This command is used by key bindings or plugins."
-#~ msgstr "Este comando es usado para atajos del teclado o extensiones"
-
-#~ msgid "message"
-#~ msgstr "mensaje"
-
-#, fuzzy
-#~ msgid ""
-#~ "filename: script (file) to load\n"
-#~ "    name: a script name (name used in call to \"register\" function)\n"
-#~ "\n"
-#~ "Without argument, this command lists all loaded scripts."
-#~ msgstr ""
-#~ "archivo: script (archivo) a cargar\n"
-#~ " nombre: nombre del script\n"
-#~ "\n"
-#~ "Sin ningún argumento, este comando lista los scripts cargados actualmente."
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [nombre]] | [listfull [nombre]] | [load archivo] | [autoload] | "
-#~ "[reload [nombre]] | [unload [nombre]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[canal[,canal]] [mensaje]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<part_message>]"
-#~ msgstr "[canal[,canal]] [mensaje]"
-
-#~ msgid ""
-#~ "     channel: channel name for cycle\n"
-#~ "part_message: part message (displayed to other users)"
-#~ msgstr ""
-#~ "  canal: nombre de canal a ciclar\n"
-#~ "mensaje: mensaje de partida (mostrado al resto de usuarios)"
-
-#~ msgid "action [nickname [file]]"
-#~ msgstr "acción [apodo [archivo]]"
-
-#~ msgid "[nickname [nickname]]"
-#~ msgstr "[apodo [apodo]]"
-
-#~ msgid "[-all | servername [servername ...]]"
-#~ msgstr "[-all | servidor [servidor ...]]"
-
-#~ msgid ""
-#~ "      -all: disconnect from all servers\n"
-#~ "servername: server name to disconnect"
-#~ msgstr ""
-#~ "    -all: desconectarse de todos los servidores\n"
-#~ "servidor: nombre del servidor a desconectar"
-
-#~ msgid "nickname comment"
-#~ msgstr "apodo comentario"
-
-#~ msgid ""
-#~ "nickname: nickname\n"
-#~ " comment: comment for kill"
-#~ msgstr ""
-#~ "     apodo: apodo\n"
-#~ "comentario: comentario de la expulsión"
-
-#~ msgid "nickname [nickname]"
-#~ msgstr "apodo [apodo]"
-
-#~ msgid "[option]"
-#~ msgstr "[opción]"
-
-#~ msgid "text"
-#~ msgstr "texto"
-
-#~ msgid "[text]"
-#~ msgstr "[texto]"
-
-#~ msgid "set a buffer property"
-#~ msgstr "configura una propiedad del buffer"
-
-#~ msgid "property value"
-#~ msgstr "propiedad valor"

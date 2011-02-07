@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-05 15:20+0100\n"
-"PO-Revision-Date: 2011-01-31 14:51+0100\n"
+"POT-Creation-Date: 2011-02-07 17:30+0100\n"
+"PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -310,15 +310,6 @@ msgstr "команда users отключена"
 #, fuzzy, c-format
 msgid "Filter \"%s\" deleted"
 msgstr "команда users отключена"
-
-#. TRANSLATORS: "%s" is "weechat"
-#, fuzzy, c-format
-msgid "%s internal commands:"
-msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "Other commands:"
-msgstr "Внутренние команды %s:\n"
 
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
@@ -1116,15 +1107,17 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "отобразить помощь по командам"
 
-#, fuzzy
-msgid "<command> || <option>"
-msgstr "[команда]"
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
 
-#, fuzzy
 msgid ""
-"command: a command name\n"
-" option: an option name (use /set to see list)"
-msgstr "команда: название команды WeeChat или IRC"
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
+msgstr ""
 
 msgid "show buffer command history"
 msgstr "показать историю буфера команд"
@@ -7071,85 +7064,3 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
-
-#~ msgid "user/password: used to get privileges on current IRC server"
-#~ msgstr ""
-#~ "пользователь/пароль: используется для получения привилегий на текущем IRC-"
-#~ "сервере"
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
-#~ "[имя]] | [unload [имя]]"
-
-#~ msgid "message"
-#~ msgstr "сообщение"
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
-#~ "[имя]] | [unload [имя]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[канал[,канал]] [сообщение]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<part_message>]"
-#~ msgstr "[канал[,канал]] [сообщение]"
-
-#~ msgid ""
-#~ "     channel: channel name for cycle\n"
-#~ "part_message: part message (displayed to other users)"
-#~ msgstr ""
-#~ "    канал: целевой канал\n"
-#~ "сообщение: причина покидания (отображается другим пользователям)"
-
-#~ msgid "action [nickname [file]]"
-#~ msgstr "действие [ник [файл]]"
-
-#~ msgid "[nickname [nickname]]"
-#~ msgstr "[ник [ник]]"
-
-#~ msgid "[-all | servername [servername ...]]"
-#~ msgstr "[-all | сервер [сервер ...]]"
-
-#~ msgid ""
-#~ "      -all: disconnect from all servers\n"
-#~ "servername: server name to disconnect"
-#~ msgstr ""
-#~ "  -all: отключиться от всех серверов\n"
-#~ "сервер: название сервера для отключения"
-
-#~ msgid "nickname comment"
-#~ msgstr "комментарий к нику"
-
-#~ msgid ""
-#~ "nickname: nickname\n"
-#~ " comment: comment for kill"
-#~ msgstr ""
-#~ "        ник: целевой ник\n"
-#~ "комментарий: причина убийства"
-
-#~ msgid "nickname [nickname]"
-#~ msgstr "ник [ник]"
-
-#, fuzzy
-#~ msgid "[option]"
-#~ msgstr "[команда]"
-
-#~ msgid "text"
-#~ msgstr "текст"
-
-#, fuzzy
-#~ msgid "[text]"
-#~ msgstr "текст"
-
-#, fuzzy
-#~ msgid "set a buffer property"
-#~ msgstr "поиск текста в истории буфера"

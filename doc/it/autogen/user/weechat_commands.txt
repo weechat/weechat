@@ -208,11 +208,15 @@ Esempi:
 
 [command]*`help`* visualizza l'aiuto su comandi e opzioni::
 ........................................
-/help  <command>
+/help  -list|-listfull [<plugin> [<plugin>...]]
+       <command>
        <option>
 
-comando: nome comando
-opzione: nome opzione (utilizza /set per vedere l'elenco)
+    -list: list commands, by plugin (without argument, this list is displayed)
+-listfull: list commands with description, by plugin
+   plugin: list commands for this plugin
+  command: a command name
+   option: an option name (use /set to see list)
 ........................................
 
 [command]*`history`* mostra la cronologia dei comandi del buffer::

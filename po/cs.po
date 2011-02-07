@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-05 15:20+0100\n"
-"PO-Revision-Date: 2011-01-31 14:50+0100\n"
+"POT-Creation-Date: 2011-02-07 17:30+0100\n"
+"PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -299,14 +299,6 @@ msgstr "Všechny filtry byly smazány"
 #, c-format
 msgid "Filter \"%s\" deleted"
 msgstr "Filter \"%s\" smazán"
-
-#. TRANSLATORS: "%s" is "weechat"
-#, c-format
-msgid "%s internal commands:"
-msgstr "%s vnitřní příkazy:"
-
-msgid "Other commands:"
-msgstr "Další příkazy:"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
@@ -1185,16 +1177,17 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "zobrazí nápovědu k příkazům a volbám"
 
-#, fuzzy
-msgid "<command> || <option>"
-msgstr "[příkaz | volba]"
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
 
 msgid ""
-"command: a command name\n"
-" option: an option name (use /set to see list)"
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
 msgstr ""
-"příkaz: jméno příkazu\n"
-" volba: jméno volby (použijte /set pro zobrazení seznamu)"
 
 msgid "show buffer command history"
 msgstr "zobrazit historii příkazů bufferu"
@@ -7414,107 +7407,3 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
-
-#~ msgid "user/password: used to get privileges on current IRC server"
-#~ msgstr "uživatel/heslo: použité pro získání práv na aktuálním IRC serveru"
-
-#~ msgid ""
-#~ "file: configuration file to save\n"
-#~ "\n"
-#~ "Without argument, all files (WeeChat and plugins) are saved."
-#~ msgstr ""
-#~ "soubor: konfigurační soubor pro uložení\n"
-#~ "\n"
-#~ "Bez argumentu jsou uloženy všechny soubory (WeeChat a pluginy)."
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-
-#~ msgid "This command is used by key bindings or plugins."
-#~ msgstr "Tento příkaz je používán napojenou klávesou nebo pluginy."
-
-#~ msgid "message"
-#~ msgstr "zpráva"
-
-#, fuzzy
-#~ msgid ""
-#~ "filename: script (file) to load\n"
-#~ "    name: a script name (name used in call to \"register\" function)\n"
-#~ "\n"
-#~ "Without argument, this command lists all loaded scripts."
-#~ msgstr ""
-#~ "jméno_souboru: skript (soubor) pro načtení\n"
-#~ "jméno: jméno skriptu\n"
-#~ "\n"
-#~ "Pokud nejsou uvedeny argumenty, jsou vypsány všechny načtené skripty."
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[kanál[,kanál]] [zpráva_části]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<part_message>]"
-#~ msgstr "[kanál[,kanál]] [zpráva_části]"
-
-#~ msgid ""
-#~ "     channel: channel name for cycle\n"
-#~ "part_message: part message (displayed to other users)"
-#~ msgstr ""
-#~ "       kanál: jméno kanálu pro cyklus\n"
-#~ "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
-
-#~ msgid "action [nickname [file]]"
-#~ msgstr "akce [přezdívka [soubor]]"
-
-#~ msgid "[nickname [nickname]]"
-#~ msgstr "[přezdívka [přezdívka]]"
-
-#~ msgid "[-all | servername [servername ...]]"
-#~ msgstr "[-all | jméno_serveru [jméno_serveru ...]]"
-
-#~ msgid ""
-#~ "      -all: disconnect from all servers\n"
-#~ "servername: server name to disconnect"
-#~ msgstr ""
-#~ "         -all: odpojit od všech serverů\n"
-#~ "jméno_serveru: jméno serveru pro odpojení"
-
-#~ msgid "nickname comment"
-#~ msgstr "přezdívka komentář"
-
-#~ msgid ""
-#~ "nickname: nickname\n"
-#~ " comment: comment for kill"
-#~ msgstr ""
-#~ "přezdívka: přezdívka\n"
-#~ " komentář: komentář pro zabít"
-
-#~ msgid "nickname [nickname]"
-#~ msgstr "přezdívka [přezdívka]"
-
-#~ msgid "[option]"
-#~ msgstr "[volba]"
-
-#~ msgid "text"
-#~ msgstr "text"
-
-#~ msgid "[text]"
-#~ msgstr "[text]"
-
-#~ msgid "set a buffer property"
-#~ msgstr "nastavit vlastnost bufferu"
-
-#~ msgid "property value"
-#~ msgstr "hodnota vlastnosti"

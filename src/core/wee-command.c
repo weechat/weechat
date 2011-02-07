@@ -1476,14 +1476,157 @@ COMMAND_CALLBACK(filter)
 }
 
 /*
+ * command_help_list_plugin_commands: display help for commands of a plugin
+ *                                    (or core commands if plugin is NULL)
+ */
+
+void
+command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
+                                   int verbose)
+{
+    struct t_hook *ptr_hook;
+    struct t_weelist *list;
+    struct t_weelist_item *item;
+    int command_found, length, max_length, list_size;
+    int cols, lines, col, line, index;
+    char str_format[64], str_command[256], str_line[2048];
+    
+    if (verbose)
+    {
+        command_found = 0;
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook->plugin == plugin)
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0])
+            {
+                if (!command_found)
+                {
+                    gui_chat_printf (NULL, "");
+                    gui_chat_printf (NULL,
+                                     "%s[%s%s%s]",
+                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                     plugin_get_name (plugin),
+                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    command_found = 1;
+                }
+                gui_chat_printf (NULL, "  %s%s%s%s%s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 HOOK_COMMAND(ptr_hook, command),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 " - " : "",
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 _(HOOK_COMMAND(ptr_hook, description)) : "");
+            }
+        }
+    }
+    else
+    {
+        max_length = -1;
+        list = weelist_new ();
+        
+        /*
+         * build list of commands for plugin and save max length of command
+         * names
+         */
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook->plugin == plugin)
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0])
+            {
+                length = utf8_strlen_screen (HOOK_COMMAND(ptr_hook, command));
+                if (length > max_length)
+                    max_length = length;
+                weelist_add (list, HOOK_COMMAND(ptr_hook, command),
+                             WEECHAT_LIST_POS_SORT, NULL);
+            }
+        }
+        
+        /* use list to display commands, sorted by columns */ 
+        list_size = weelist_size (list);
+        if ((max_length > 0) && (list_size > 0))
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL,
+                             "%s[%s%s%s]",
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             plugin_get_name (plugin),
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            
+            snprintf (str_format, sizeof (str_format),
+                      " %%-%ds", max_length);
+            
+            /* auto compute number of colums, max size is 90% of chat width */
+            cols = ((gui_current_window->win_chat_width * 90) / 100) / (max_length + 1);
+            if (cols == 0)
+                cols = 1;
+            lines = ((list_size - 1) / cols) + 1;
+            for (line = 0; line < lines; line++)
+            {
+                str_line[0] = '\0';
+                for (col = 0; col < cols; col++)
+                {
+                    index = (col * lines) + line;
+                    if (index < list_size)
+                    {
+                        item = weelist_get (list, index);
+                        if (item)
+                        {
+                            if (strlen (str_line) + strlen (weelist_string (item)) + 1 < (int)sizeof (str_line))
+                            {
+                                snprintf (str_command, sizeof (str_command),
+                                          str_format, weelist_string (item));
+                                strcat (str_line, str_command);
+                            }
+                        }
+                    }
+                }
+                gui_chat_printf (NULL, " %s", str_line);
+            }
+        }
+        
+        weelist_free (list);
+    }
+}
+
+/*
+ * command_help_list_commands: display help for commands
+ */
+
+void
+command_help_list_commands (int verbose)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    
+    /* WeeChat commands */
+    command_help_list_plugin_commands (NULL, verbose);
+    
+    /* plugins commands */
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        command_help_list_plugin_commands (ptr_plugin, verbose);
+    }
+}
+
+/*
  * command_help: display help about commands
  */
 
 COMMAND_CALLBACK(help)
 {
     struct t_hook *ptr_hook;
+    struct t_weechat_plugin *ptr_plugin;
     struct t_config_option *ptr_option;
-    int i, length, command_found, first_line_displayed;
+    int i, length, command_found, first_line_displayed, verbose;
     char *string, *ptr_string, *pos_double_pipe, *pos_end;
     char empty_string[1] = { '\0' }, str_format[64];
     
@@ -1493,66 +1636,26 @@ COMMAND_CALLBACK(help)
     (void) argv_eol;
     
     /* display help for all commands */
-    if (argc == 1)
+    if ((argc == 1)
+        || ((argc > 1) && (string_strncasecmp (argv[1], "-list", 5) == 0)))
     {
-        command_found = 0;
-        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-             ptr_hook = ptr_hook->next_hook)
+        verbose = ((argc > 1) && (string_strcasecmp (argv[1], "-listfull") == 0));
+        if (argc > 2)
         {
-            if (!ptr_hook->deleted
-                && !ptr_hook->plugin
-                && HOOK_COMMAND(ptr_hook, command)
-                && HOOK_COMMAND(ptr_hook, command)[0])
+            for (i = 2; i < argc; i++)
             {
-                if (!command_found)
+                if (string_strcasecmp (argv[i], PLUGIN_CORE) == 0)
+                    command_help_list_plugin_commands (NULL, verbose);
+                else
                 {
-                    gui_chat_printf (NULL, "");
-                    gui_chat_printf (NULL,
-                                     /* TRANSLATORS: "%s" is "weechat" */
-                                     _("%s internal commands:"),
-                                     PACKAGE_NAME);
-                    command_found = 1;
+                    ptr_plugin = plugin_search (argv[i]);
+                    if (ptr_plugin)
+                        command_help_list_plugin_commands (ptr_plugin, verbose);
                 }
-                gui_chat_printf (NULL, "   %s%s%s%s%s",
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 HOOK_COMMAND(ptr_hook, command),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 (HOOK_COMMAND(ptr_hook, description)
-                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 " - " : "",
-                                 (HOOK_COMMAND(ptr_hook, description)
-                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 _(HOOK_COMMAND(ptr_hook, description)) : "");
             }
         }
-        command_found = 0;
-        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-             ptr_hook = ptr_hook->next_hook)
-        {
-            if (!ptr_hook->deleted
-                && ptr_hook->plugin
-                && HOOK_COMMAND(ptr_hook, command)
-                && HOOK_COMMAND(ptr_hook, command)[0])
-            {
-                if (!command_found)
-                {
-                    gui_chat_printf (NULL, "");
-                    gui_chat_printf (NULL, _("Other commands:"));
-                    command_found = 1;
-                }
-                gui_chat_printf (NULL, "   %s%s%s%s%s",
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 HOOK_COMMAND(ptr_hook, command),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 (HOOK_COMMAND(ptr_hook, description)
-                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 " - " : "",
-                                 (HOOK_COMMAND(ptr_hook, description)
-                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                 _(HOOK_COMMAND(ptr_hook, description)) : "");
-            }
-        }
-        
+        else
+            command_help_list_commands (verbose);
         return WEECHAT_RC_OK;
     }
     
@@ -2954,7 +3057,7 @@ command_plugin_list (const char *name, int full)
             gui_chat_printf (NULL, _("  (no plugin)"));
     }
 }
-    
+
 /*
  * command_plugin: list/load/unload WeeChat plugins
  */
@@ -4695,11 +4798,17 @@ command_init ()
                   &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands and options"),
-                  N_("<command>"
+                  N_("-list|-listfull [<plugin> [<plugin>...]]"
+                     " || <command>"
                      " || <option>"),
-                  N_("command: a command name\n"
-                     " option: an option name (use /set to see list)"),
-                  "%(commands)|%(config_options)",
+                  N_("    -list: list commands, by plugin (without argument, "
+                     "this list is displayed)\n"
+                     "-listfull: list commands with description, by plugin\n"
+                     "   plugin: list commands for this plugin\n"
+                     "  command: a command name\n"
+                     "   option: an option name (use /set to see list)"),
+                  "-list|-listfull|%(commands)|%(config_options) "
+                  "%(plugins_names)|" PLUGIN_CORE "|%*",
                   &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),

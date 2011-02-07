@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-05 15:20+0100\n"
-"PO-Revision-Date: 2011-01-31 14:50+0100\n"
+"POT-Creation-Date: 2011-02-07 17:30+0100\n"
+"PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -307,15 +307,6 @@ msgstr "a felhasználók le lettek tiltva"
 #, fuzzy, c-format
 msgid "Filter \"%s\" deleted"
 msgstr "a felhasználók le lettek tiltva"
-
-#. TRANSLATORS: "%s" is "weechat"
-#, fuzzy, c-format
-msgid "%s internal commands:"
-msgstr "%s belső parancsok:\n"
-
-#, fuzzy
-msgid "Other commands:"
-msgstr "%s belső parancsok:\n"
 
 #, fuzzy, c-format
 msgid "Option \"%s%s%s\":"
@@ -1108,15 +1099,17 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "segítség megjelenítése a parancsokhoz"
 
-#, fuzzy
-msgid "<command> || <option>"
-msgstr "[parancs]"
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
 
-#, fuzzy
 msgid ""
-"command: a command name\n"
-" option: an option name (use /set to see list)"
-msgstr "parancs: WeeChat vagy IRC parancs neve"
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
+msgstr ""
 
 msgid "show buffer command history"
 msgstr "a pufferben kiadott parancsok előzményének mutatása"
@@ -7062,85 +7055,3 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
-
-#~ msgid "user/password: used to get privileges on current IRC server"
-#~ msgstr ""
-#~ "felhasználó/jelszó: privilégiumok szerzésére szolgál az aktuális IRC "
-#~ "szerveren"
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
-#~ "[név]] | [unload [név]]"
-
-#~ msgid "message"
-#~ msgstr "üzenet"
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
-#~ "[név]] | [unload [név]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[szoba,[szoba] [kilépő_üzenet]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<part_message>]"
-#~ msgstr "[szoba,[szoba] [kilépő_üzenet]]"
-
-#~ msgid ""
-#~ "     channel: channel name for cycle\n"
-#~ "part_message: part message (displayed to other users)"
-#~ msgstr ""
-#~ "        szoba: a szoba ahonnan ki-be szeretnénk lépni\n"
-#~ "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
-
-#~ msgid "action [nickname [file]]"
-#~ msgstr "parancs [név [fájl]]"
-
-#~ msgid "[nickname [nickname]]"
-#~ msgstr "[név [név]]"
-
-#~ msgid "[-all | servername [servername ...]]"
-#~ msgstr "[-all | szervernév [szervernév ...]]"
-
-#~ msgid ""
-#~ "      -all: disconnect from all servers\n"
-#~ "servername: server name to disconnect"
-#~ msgstr ""
-#~ "      -all: kapcsolat bontása minden szerverrel\n"
-#~ "szervernév: belső szervernév amivel a kapcsolatot bontja"
-
-#~ msgid "nickname comment"
-#~ msgstr "név megjegyzés"
-
-#~ msgid ""
-#~ "nickname: nickname\n"
-#~ " comment: comment for kill"
-#~ msgstr ""
-#~ "       név: név\n"
-#~ "megjegyzés: megjegyzés a kill parancshoz"
-
-#~ msgid "nickname [nickname]"
-#~ msgstr "név [név]"
-
-#, fuzzy
-#~ msgid "[option]"
-#~ msgstr "[parancs]"
-
-#~ msgid "text"
-#~ msgstr "szöveg"
-
-#, fuzzy
-#~ msgid "[text]"
-#~ msgstr "szöveg"
-
-#, fuzzy
-#~ msgid "set a buffer property"
-#~ msgstr "szöveg keresése a puffertörténetben"
