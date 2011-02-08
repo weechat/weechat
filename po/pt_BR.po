@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:10+0100\n"
+"POT-Creation-Date: 2011-02-08 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3555,7 +3555,7 @@ msgid ""
 "    /dcc send toto /home/foo/bar.txt"
 msgstr ""
 
-msgid "remove half channel operator status from nick(s)"
+msgid "remove channel half-operator status from nick(s)"
 msgstr ""
 
 #, fuzzy
@@ -3582,7 +3582,7 @@ msgid ""
 "  -all: disconnect from all servers"
 msgstr ""
 
-msgid "give half channel operator status to nick(s)"
+msgid "give channel half-operator status to nick(s)"
 msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"

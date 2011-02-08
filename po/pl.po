@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:10+0100\n"
+"POT-Creation-Date: 2011-02-08 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3800,8 +3800,8 @@ msgstr ""
 "    /dcc send toto /home/foo/bar.txt"
 
 #, fuzzy
-msgid "remove half channel operator status from nick(s)"
-msgstr "usuwa status półoperatora kanału (halfopa)"
+msgid "remove channel half-operator status from nick(s)"
+msgstr "usuwa status operatora kanału"
 
 #, fuzzy
 msgid "<nick> [<nick>...]"
@@ -3831,8 +3831,8 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "give half channel operator status to nick(s)"
-msgstr "nadaje status półoperatora (halfopa)"
+msgid "give channel half-operator status to nick(s)"
+msgstr "nadaje uprawienia użytkownika kanału"
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignoruje nicki/hosty z serwera lub kanałów"
@@ -7511,3 +7511,11 @@ msgstr "Hashtable (wyjście)"
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#, fuzzy
+#~ msgid "remove half channel operator status from nick(s)"
+#~ msgstr "usuwa status półoperatora kanału (halfopa)"
+
+#, fuzzy
+#~ msgid "give half channel operator status to nick(s)"
+#~ msgstr "nadaje status półoperatora (halfopa)"

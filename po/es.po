@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:10+0100\n"
+"POT-Creation-Date: 2011-02-08 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3814,8 +3814,8 @@ msgstr ""
 "    /dcc send toto /home/foo/bar.txt"
 
 #, fuzzy
-msgid "remove half channel operator status from nick(s)"
-msgstr "remueve el estado semi-operador del canal de el/los apodo(s)"
+msgid "remove channel half-operator status from nick(s)"
+msgstr "remueve el estado de operador del canal de el/los apodo(s)"
 
 #, fuzzy
 msgid "<nick> [<nick>...]"
@@ -3845,8 +3845,8 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "give half channel operator status to nick(s)"
-msgstr "dar el estado de semi-operador del canal a el/los apodo(s)"
+msgid "give channel half-operator status to nick(s)"
+msgstr "dar el estado de operador del canal a el/los usuario(s)"
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignorar apodos/hosts en servidores o canales"
@@ -7589,3 +7589,11 @@ msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#, fuzzy
+#~ msgid "remove half channel operator status from nick(s)"
+#~ msgstr "remueve el estado semi-operador del canal de el/los apodo(s)"
+
+#, fuzzy
+#~ msgid "give half channel operator status to nick(s)"
+#~ msgstr "dar el estado de semi-operador del canal a el/los apodo(s)"

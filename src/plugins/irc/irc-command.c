@@ -4716,7 +4716,7 @@ irc_command_init ()
                           " || send %(nicks) %(filename)",
                           &irc_command_dcc, NULL);
     weechat_hook_command ("dehalfop",
-                          N_("remove half channel operator status from "
+                          N_("remove channel half-operator status from "
                              "nick(s)"),
                           N_("<nick> [<nick>...]"),
                           "",
@@ -4747,7 +4747,7 @@ irc_command_init ()
                           " || %(irc_servers)|%*",
                           &irc_command_disconnect, NULL);
     weechat_hook_command ("halfop",
-                          N_("give half channel operator status to "
+                          N_("give channel half-operator status to "
                              "nick(s)"),
                           N_("<nick> [<nick>...]"),
                           "",
