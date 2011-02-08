@@ -267,7 +267,7 @@ utf8_char_int (const char *string)
     else if ((ptr_string[0] & 0xF8) == 0xF0)
     {
         if (!ptr_string[1])
-            return (int)ptr_string[0] & 0x07;
+            return (int)(ptr_string[0] & 0x07);
         if (!ptr_string[2])
             return (((int)(ptr_string[0] & 0x07)) << 6) +
                 ((int)(ptr_string[1] & 0x3F));
