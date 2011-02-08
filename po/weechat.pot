@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:15+0100\n"
+"POT-Creation-Date: 2011-02-08 12:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3352,14 +3352,14 @@ msgid ""
 "message: part message (displayed to other users)"
 msgstr ""
 
-msgid "ping server"
+msgid "send a ping to server"
 msgstr ""
 
 msgid "<server1> [<server2>]"
 msgstr ""
 
 msgid ""
-"server1: server to ping\n"
+"server1: server\n"
 "server2: forward ping to this server"
 msgstr ""
 
@@ -3422,7 +3422,7 @@ msgstr ""
 msgid "tell the server to restart itself"
 msgstr ""
 
-msgid "forces a user to join channel(s)"
+msgid "force a user to join channel(s)"
 msgstr ""
 
 msgid "<nick> <channel>[,<channel>...]"
@@ -3444,7 +3444,7 @@ msgid ""
 "   mode: mode for channel"
 msgstr ""
 
-msgid "forces a user to use another nick"
+msgid "force a user to use another nick"
 msgstr ""
 
 msgid "<nick> <new_nick>"
@@ -3455,10 +3455,10 @@ msgid ""
 "new_nick: new nick"
 msgstr ""
 
-msgid "forces a user to leave channel(s)"
+msgid "force a user to leave channel(s)"
 msgstr ""
 
-msgid "forces a user to quit server with a reason"
+msgid "force a user to quit server with a reason"
 msgstr ""
 
 msgid ""

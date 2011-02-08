@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:15+0100\n"
+"POT-Creation-Date: 2011-02-08 12:28+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3855,15 +3855,17 @@ msgstr ""
 "        szoba: a szoba ahonnan ki szeretnénk lépni\n"
 "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
 
-msgid "ping server"
+#, fuzzy
+msgid "send a ping to server"
 msgstr "szerver pingelése"
 
 #, fuzzy
 msgid "<server1> [<server2>]"
 msgstr "szerver1 [szerver2]"
 
+#, fuzzy
 msgid ""
-"server1: server to ping\n"
+"server1: server\n"
 "server2: forward ping to this server"
 msgstr ""
 "szerver1: pingelni kívánt szerver\n"
@@ -3947,7 +3949,7 @@ msgid "tell the server to restart itself"
 msgstr "szerver újraindítása"
 
 #, fuzzy
-msgid "forces a user to join channel(s)"
+msgid "force a user to join channel(s)"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
@@ -3978,7 +3980,7 @@ msgstr ""
 "kulcs: a csatlakozáshoz szükséges kulcs"
 
 #, fuzzy
-msgid "forces a user to use another nick"
+msgid "force a user to use another nick"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
@@ -3994,11 +3996,11 @@ msgstr ""
 "szoba: meghívandó szoba"
 
 #, fuzzy
-msgid "forces a user to leave channel(s)"
+msgid "force a user to leave channel(s)"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy
-msgid "forces a user to quit server with a reason"
+msgid "force a user to quit server with a reason"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
 
 #, fuzzy

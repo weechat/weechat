@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:15+0100\n"
+"POT-Creation-Date: 2011-02-08 12:28+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4295,15 +4295,17 @@ msgstr ""
 "          canale: nome del canale da lasciare\n"
 "messaggio_uscita: messaggio di uscita (mostrato agli altri utenti)"
 
-msgid "ping server"
+#, fuzzy
+msgid "send a ping to server"
 msgstr "invia ping al server"
 
 #, fuzzy
 msgid "<server1> [<server2>]"
 msgstr "server1 [server2]"
 
+#, fuzzy
 msgid ""
-"server1: server to ping\n"
+"server1: server\n"
 "server2: forward ping to this server"
 msgstr ""
 "server1: server su cui effettuare il ping\n"
@@ -4387,7 +4389,8 @@ msgstr "opzione: opzione extra, per alcuni server"
 msgid "tell the server to restart itself"
 msgstr "chiede al server di riavviarsi"
 
-msgid "forces a user to join channel(s)"
+#, fuzzy
+msgid "force a user to join channel(s)"
 msgstr "forza un utente ad entrare su uno o più canali"
 
 #, fuzzy
@@ -4416,7 +4419,8 @@ msgstr ""
 "canale: nome del canale\n"
 "modalità: modalità per il canale"
 
-msgid "forces a user to use another nick"
+#, fuzzy
+msgid "force a user to use another nick"
 msgstr "forza un utente ad utilizzare un altro nick"
 
 #, fuzzy
@@ -4431,10 +4435,12 @@ msgstr ""
 "           nick: nick\n"
 "nuovo_nick: nuovo nick"
 
-msgid "forces a user to leave channel(s)"
+#, fuzzy
+msgid "force a user to leave channel(s)"
 msgstr "forza un utente a lasciare uno o più canali"
 
-msgid "forces a user to quit server with a reason"
+#, fuzzy
+msgid "force a user to quit server with a reason"
 msgstr "forza un utente ad uscire dal server senza un motivo"
 
 #, fuzzy

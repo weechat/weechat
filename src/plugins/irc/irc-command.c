@@ -5006,9 +5006,9 @@ irc_command_init ()
                              "users)"),
                           "%(irc_msg_part)", &irc_command_part, NULL);
     weechat_hook_command ("ping",
-                          N_("ping server"),
+                          N_("send a ping to server"),
                           N_("<server1> [<server2>]"),
-                          N_("server1: server to ping\n"
+                          N_("server1: server\n"
                              "server2: forward ping to this server"),
                           NULL, &irc_command_ping, NULL);
     weechat_hook_command ("pong",
@@ -5053,7 +5053,7 @@ irc_command_init ()
                           "",
                           NULL, &irc_command_restart, NULL);
     weechat_hook_command ("sajoin",
-                          N_("forces a user to join channel(s)"),
+                          N_("force a user to join channel(s)"),
                           N_("<nick> <channel>[,<channel>...]"),
                           N_("   nick: nick\n"
                              "channel: channel name"),
@@ -5066,19 +5066,19 @@ irc_command_init ()
                              "   mode: mode for channel"),
                           "%(irc_server_channels)", &irc_command_samode, NULL);
     weechat_hook_command ("sanick",
-                          N_("forces a user to use another nick"),
+                          N_("force a user to use another nick"),
                           N_("<nick> <new_nick>"),
                           N_("    nick: nick\n"
                              "new_nick: new nick"),
                           "%(nicks) %(nicks)", &irc_command_sanick, NULL);
     weechat_hook_command ("sapart",
-                          N_("forces a user to leave channel(s)"),
+                          N_("force a user to leave channel(s)"),
                           N_("<nick> <channel>[,<channel>...]"),
                           N_("   nick: nick\n"
                              "channel: channel name"),
                           "%(nicks) %(irc_server_channels)", &irc_command_sapart, NULL);
     weechat_hook_command ("saquit",
-                          N_("forces a user to quit server with a reason"),
+                          N_("force a user to quit server with a reason"),
                           N_("<nick> <reason>"),
                           N_("  nick: nick\n"
                              "reason: reason"),
