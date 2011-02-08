@@ -87,7 +87,7 @@ channel: channel name for cycle
 message: part message (displayed to other users)
 ........................................
 
-[command]*`dcc`* start a DCC (file transfert or direct chat)::
+[command]*`dcc`* start a DCC (file transfer or direct chat)::
 ........................................
 /dcc  chat <nick>
       send <nick> <file>

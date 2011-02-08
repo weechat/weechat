@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 11:03+0100\n"
+"POT-Creation-Date: 2011-02-08 12:10+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3786,7 +3786,7 @@ msgstr ""
 "mensaje: mensaje de partida (mostrado al resto de usuarios)"
 
 #, fuzzy
-msgid "start a DCC (file transfert or direct chat)"
+msgid "start a DCC (file transfer or direct chat)"
 msgstr "inicia DCC (archivo o charla)"
 
 msgid "chat <nick> || send <nick> <file>"
