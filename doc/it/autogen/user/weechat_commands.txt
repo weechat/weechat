@@ -119,7 +119,7 @@ Examples:
 
   alias: add an alias for a color
 unalias: delete an alias
-  color: color number (>= 1, max depends on terminal, commonly 63 or 255)
+  color: color number (>= 0, max depends on terminal, commonly 63 or 255)
    name: alias name for color (for example: "orange")
   reset: reset all color pairs (useful when no more pairs are available)
 
