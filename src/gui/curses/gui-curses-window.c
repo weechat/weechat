@@ -741,15 +741,16 @@ gui_window_string_apply_color_weechat (unsigned char **str, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_set: apply "set attribute" color code in
- *                                    string and move string pointer after
- *                                    color in string
- *                                    If window is NULL, no color is applied
- *                                    but string pointer is moved anyway
+ * gui_window_string_apply_color_set_attr: apply "set attribute" color code in
+ *                                         string and move string pointer after
+ *                                         color in string
+ *                                         If window is NULL, no color is
+ *                                         applied but string pointer is moved
+ *                                         anyway
  */
 
 void
-gui_window_string_apply_color_set (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_set_attr (unsigned char **str, WINDOW *window)
 {
     unsigned char *ptr_string;
     
@@ -782,15 +783,16 @@ gui_window_string_apply_color_set (unsigned char **str, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_remove: apply "remove attribute" color code in
- *                                       string and move string pointer after
- *                                       color in string
- *                                       If window is NULL, no color is applied
- *                                       but string pointer is moved anyway
+ * gui_window_string_apply_color_remove_attr: apply "remove attribute" color
+ *                                            code in string and move string
+ *                                            pointer after color in string
+ *                                            If window is NULL, no color is
+ *                                            applied but string pointer is
+ *                                            moved anyway
  */
 
 void
-gui_window_string_apply_color_remove (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_remove_attr (unsigned char **str, WINDOW *window)
 {
     unsigned char *ptr_string;
     

@@ -219,15 +219,15 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         break;
                 }
                 break;
-            case GUI_COLOR_SET_WEECHAT_CHAR:
+            case GUI_COLOR_SET_ATTR_CHAR:
                 string++;
-                gui_window_string_apply_color_set ((unsigned char **)&string,
-                                                   (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
+                gui_window_string_apply_color_set_attr ((unsigned char **)&string,
+                                                        (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                 break;
-            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
+            case GUI_COLOR_REMOVE_ATTR_CHAR:
                 string++;
-                gui_window_string_apply_color_remove ((unsigned char **)&string,
-                                                      (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
+                gui_window_string_apply_color_remove_attr ((unsigned char **)&string,
+                                                           (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                 break;
             case GUI_COLOR_RESET_CHAR:
                 string++;

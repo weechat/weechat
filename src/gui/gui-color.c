@@ -114,56 +114,56 @@ gui_color_get_custom (const char *color_name)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_BOLD_CHAR);
     }
     else if (string_strcasecmp (color_name, "-bold") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_BOLD_CHAR);
     }
     else if (string_strcasecmp (color_name, "reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_REVERSE_CHAR);
     }
     else if (string_strcasecmp (color_name, "-reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_REVERSE_CHAR);
     }
     else if (string_strcasecmp (color_name, "italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_ITALIC_CHAR);
     }
     else if (string_strcasecmp (color_name, "-italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_ITALIC_CHAR);
     }
     else if (string_strcasecmp (color_name, "underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_SET_WEECHAT_CHAR,
+                  GUI_COLOR_SET_ATTR_CHAR,
                   GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
     else if (string_strcasecmp (color_name, "-underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c%c",
-                  GUI_COLOR_REMOVE_WEECHAT_CHAR,
+                  GUI_COLOR_REMOVE_ATTR_CHAR,
                   GUI_COLOR_ATTR_UNDERLINE_CHAR);
     }
     else if (string_strcasecmp (color_name, "bar_fg") == 0)
@@ -427,8 +427,8 @@ gui_color_decode (const char *string, const char *replacement)
                     out_pos++;
                 }
                 break;
-            case GUI_COLOR_SET_WEECHAT_CHAR:
-            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
+            case GUI_COLOR_SET_ATTR_CHAR:
+            case GUI_COLOR_REMOVE_ATTR_CHAR:
                 ptr_string++;
                 if (ptr_string[0])
                     ptr_string++;

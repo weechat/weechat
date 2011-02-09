@@ -177,98 +177,11 @@ char *
 gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
-    char str_fg[3];
-    int weechat_color, rc;
+    /* TODO: write this function for Gtk */
+    (void) window;
+    (void) apply_style;
     
-    while (string[0])
-    {
-        switch (string[0])
-        {
-            case GUI_COLOR_RESET_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_reset_style (window);
-                break;
-            case GUI_COLOR_COLOR_CHAR:
-                string++;
-                if (isdigit (string[0]) && isdigit (string[1]))
-                {
-                    str_fg[0] = string[0];
-                    str_fg[1] = string[1];
-                    str_fg[2] = '\0';
-                    string += 2;
-                    if (apply_style)
-                    {
-                        rc = sscanf (str_fg, "%d", &weechat_color);
-                        if ((rc != EOF) && (rc >= 1))
-                        {
-                            gui_chat_set_weechat_color (window, weechat_color);
-                        }
-                    }
-                }
-                break;
-            case GUI_COLOR_SET_WEECHAT_CHAR:
-                string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_set_color_style (window, A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_set_color_style (window, A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_set_color_style (window, A_UNDERLINE);
-                        break;
-                }
-                break;
-            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
-                string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_remove_color_style (window, A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_remove_color_style (window, A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_chat_remove_color_style (window, A_UNDERLINE);
-                        break;
-                }
-                break;
-            default:
-                if (string[0] < 32)
-                    string++;
-                else
-                    return (char *)string;
-                break;
-        }
-            
-    }
-    
-    /* nothing found except color/attrib codes, so return NULL */
-    return NULL;
+    return (char *)string;
 }
 
 /*

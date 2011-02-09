@@ -250,15 +250,15 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         break;
                 }
                 break;
-            case GUI_COLOR_SET_WEECHAT_CHAR:
+            case GUI_COLOR_SET_ATTR_CHAR:
                 string++;
-                gui_window_string_apply_color_set ((unsigned char **)&string,
-                                                   GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                gui_window_string_apply_color_set_attr ((unsigned char **)&string,
+                                                        GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                 break;
-            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
+            case GUI_COLOR_REMOVE_ATTR_CHAR:
                 string++;
-                gui_window_string_apply_color_remove ((unsigned char **)&string,
-                                                      GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                gui_window_string_apply_color_remove_attr ((unsigned char **)&string,
+                                                           GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                 break;
             case GUI_COLOR_RESET_CHAR:
                 string++;

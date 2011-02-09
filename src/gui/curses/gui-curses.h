@@ -101,10 +101,10 @@ extern void gui_window_string_apply_color_pair (unsigned char **str,
                                                 WINDOW *window);
 extern void gui_window_string_apply_color_weechat (unsigned char **str,
                                                    WINDOW *window);
-extern void gui_window_string_apply_color_set (unsigned char **str,
-                                               WINDOW *window);
-extern void gui_window_string_apply_color_remove (unsigned char **str,
-                                                  WINDOW *window);
+extern void gui_window_string_apply_color_set_attr (unsigned char **str,
+                                                    WINDOW *window);
+extern void gui_window_string_apply_color_remove_attr (unsigned char **str,
+                                                       WINDOW *window);
 extern void gui_window_apply_color (unsigned char **str, WINDOW *window,
                                     int apply_bar_colors);
 extern void gui_window_set_title (const char *title);

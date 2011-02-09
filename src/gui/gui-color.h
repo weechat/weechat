@@ -69,8 +69,8 @@ enum t_gui_color_enum
 /* WeeChat internal color attributes (should never be in protocol messages) */
 
 #define GUI_COLOR_COLOR_CHAR           '\x19'
-#define GUI_COLOR_SET_WEECHAT_CHAR     '\x1A'
-#define GUI_COLOR_REMOVE_WEECHAT_CHAR  '\x1B'
+#define GUI_COLOR_SET_ATTR_CHAR        '\x1A'
+#define GUI_COLOR_REMOVE_ATTR_CHAR     '\x1B'
 #define GUI_COLOR_RESET_CHAR           '\x1C'
 
 #define GUI_COLOR_ATTR_BOLD_CHAR       '\x01'
