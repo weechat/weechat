@@ -27,7 +27,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -172,215 +171,37 @@ char *
 gui_chat_string_next_char (struct t_gui_window *window,
                            const unsigned char *string, int apply_style)
 {
-    char str_fg[6], str_bg[6], str_pair[6], *error;
-    int weechat_color, fg, bg, pair;
-    
     while (string[0])
     {
         switch (string[0])
         {
-            case GUI_COLOR_RESET_CHAR:
-                string++;
-                if (apply_style)
-                    gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
-                break;
             case GUI_COLOR_COLOR_CHAR:
                 string++;
                 switch (string[0])
                 {
                     case GUI_COLOR_FG_CHAR: /* fg color */
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                if (apply_style)
-                                {
-                                    memcpy (str_fg, string + 2, 5);
-                                    str_fg[5] = '\0';
-                                    error = NULL;
-                                    fg = (int)strtol (str_fg, &error, 10);
-                                    if (error && !error[0])
-                                    {
-                                        gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        fg | GUI_COLOR_EXTENDED_FLAG);
-                                    }
-                                }
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                if (apply_style)
-                                {
-                                    str_fg[0] = string[1];
-                                    str_fg[1] = string[2];
-                                    str_fg[2] = '\0';
-                                    error = NULL;
-                                    fg = (int)strtol (str_fg, &error, 10);
-                                    if (error && !error[0])
-                                    {
-                                        gui_window_set_custom_color_fg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        fg);
-                                    }
-                                }
-                                string += 3;
-                            }
-                        }
+                        string++;
+                        gui_window_string_apply_color_fg ((unsigned char **)&string,
+                                                          (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
                     case GUI_COLOR_BG_CHAR: /* bg color */
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                if (apply_style)
-                                {
-                                    memcpy (str_bg, string + 2, 5);
-                                    str_bg[5] = '\0';
-                                    error = NULL;
-                                    bg = (int)strtol (str_bg, &error, 10);
-                                    if (error && !error[0])
-                                    {
-                                        gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        bg | GUI_COLOR_EXTENDED_FLAG);
-                                    }
-                                }
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                if (apply_style)
-                                {
-                                    str_bg[0] = string[1];
-                                    str_bg[1] = string[2];
-                                    str_bg[2] = '\0';
-                                    error = NULL;
-                                    bg = (int)strtol (str_bg, &error, 10);
-                                    if (error && !error[0])
-                                    {
-                                        gui_window_set_custom_color_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                        bg);
-                                    }
-                                }
-                                string += 3;
-                            }
-                        }
+                        string++;
+                        gui_window_string_apply_color_bg ((unsigned char **)&string,
+                                                          (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
                     case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
-                        str_fg[0] = '\0';
-                        str_bg[0] = '\0';
-                        fg = -1;
-                        bg = -1;
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                if (apply_style)
-                                {
-                                    memcpy (str_fg, string + 2, 5);
-                                    str_fg[5] = '\0';
-                                    error = NULL;
-                                    fg = (int)strtol (str_fg, &error, 10);
-                                    if (!error || error[0])
-                                        fg = -1;
-                                    else
-                                        fg |= GUI_COLOR_EXTENDED_FLAG;
-                                }
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                if (apply_style)
-                                {
-                                    str_fg[0] = string[1];
-                                    str_fg[1] = string[2];
-                                    str_fg[2] = '\0';
-                                    error = NULL;
-                                    fg = (int)strtol (str_fg, &error, 10);
-                                    if (!error || error[0])
-                                        fg = -1;
-                                }
-                                string += 3;
-                            }
-                        }
-                        if (string[0] == ',')
-                        {
-                            string++;
-                            if (string[0] == GUI_COLOR_EXTENDED_CHAR)
-                            {
-                                if (string[1] && string[2] && string[3]
-                                    && string[4] && string[5])
-                                {
-                                    if (apply_style)
-                                    {
-                                        memcpy (str_bg, string + 1, 5);
-                                        str_bg[5] = '\0';
-                                        error = NULL;
-                                        bg = (int)strtol (str_bg, &error, 10);
-                                        if (!error || error[0])
-                                            bg = -1;
-                                        else
-                                            bg |= GUI_COLOR_EXTENDED_FLAG;
-                                    }
-                                    string += 6;
-                                }
-                            }
-                            else
-                            {
-                                if (string[0] && string[1])
-                                {
-                                    if (apply_style)
-                                    {
-                                        str_bg[0] = string[0];
-                                        str_bg[1] = string[1];
-                                        str_bg[2] = '\0';
-                                        error = NULL;
-                                        bg = (int)strtol (str_bg, &error, 10);
-                                        if (!error || error[0])
-                                            bg = -1;
-                                    }
-                                    string += 2;
-                                }
-                            }
-                        }
-                        if (apply_style && (fg >= 0) && (bg >= 0))
-                        {
-                            gui_window_set_custom_color_fg_bg (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                               fg, bg);
-                        }
+                        string++;
+                        gui_window_string_apply_color_fg_bg ((unsigned char **)&string,
+                                                             (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
                     case GUI_COLOR_EXTENDED_CHAR: /* pair number */
-                        if ((isdigit (string[1])) && (isdigit (string[2]))
-                            && (isdigit (string[3])) && (isdigit (string[4]))
-                            && (isdigit (string[5])))
-                        {
-                            if (apply_style)
-                            {
-                                memcpy (str_pair, string + 1, 5);
-                                str_pair[5] = '\0';
-                                error = NULL;
-                                pair = (int)strtol (str_pair, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_custom_color_pair (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                      pair);
-                                }
-                            }
-                            string += 6;
-                        }
+                        string++;
+                        gui_window_string_apply_color_pair ((unsigned char **)&string,
+                                                            (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
                     case GUI_COLOR_BAR_CHAR: /* bar color */
-                        switch (string[1])
+                        string++;
+                        switch (string[0])
                         {
                             case GUI_COLOR_BAR_FG_CHAR:
                             case GUI_COLOR_BAR_DELIM_CHAR:
@@ -388,95 +209,35 @@ gui_chat_string_next_char (struct t_gui_window *window,
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
                             case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
-                                string += 2;
-                                break;
-                            default:
                                 string++;
                                 break;
                         }
                         break;
                     default:
-                        if (isdigit (string[0]) && isdigit (string[1]))
-                        {
-                            if (apply_style)
-                            {
-                                str_fg[0] = string[0];
-                                str_fg[1] = string[1];
-                                str_fg[2] = '\0';
-                                error = NULL;
-                                weechat_color = (int)strtol (str_fg, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                                  weechat_color);
-                                }
-                            }
-                            string += 2;
-                        }
+                        gui_window_string_apply_color_weechat ((unsigned char **)&string,
+                                                               (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
                 }
                 break;
             case GUI_COLOR_SET_WEECHAT_CHAR:
                 string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                        A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                        A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_set_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                        A_UNDERLINE);
-                        break;
-                }
+                gui_window_string_apply_color_set ((unsigned char **)&string,
+                                                   (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                 break;
             case GUI_COLOR_REMOVE_WEECHAT_CHAR:
                 string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                           A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                           A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        if (apply_style)
-                            gui_window_remove_color_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                                           A_UNDERLINE);
-                        break;
-                }
+                gui_window_string_apply_color_remove ((unsigned char **)&string,
+                                                      (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
+                break;
+            case GUI_COLOR_RESET_CHAR:
+                string++;
+                if (apply_style)
+                    gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
                 break;
             default:
                 return (char *)string;
                 break;
         }
-            
     }
     
     /* nothing found except color/attrib codes, so return NULL */

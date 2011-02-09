@@ -27,7 +27,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include <limits.h>
 
 #include "../../core/weechat.h"
@@ -155,10 +154,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int reset_color_before_display,
                              int hide_chars_if_scrolling)
 {
-    int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char, hidden;
-    int pair;
-    char str_fg[6], str_bg[6], str_pair[6], utf_char[16], *next_char, *output;
-    char *error;
+    int x_with_hidden, size_on_screen, low_char, hidden;
+    char utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
         return 1;
@@ -185,189 +182,45 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 switch (string[0])
                 {
                     case GUI_COLOR_FG_CHAR: /* fg color */
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                memcpy (str_fg, string + 2, 5);
-                                str_fg[5] = '\0';
-                                error = NULL;
-                                fg = (int)strtol (str_fg, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                    fg | GUI_COLOR_EXTENDED_FLAG);
-                                }
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                str_fg[0] = string[1];
-                                str_fg[1] = string[2];
-                                str_fg[2] = '\0';
-                                error = NULL;
-                                fg = (int)strtol (str_fg, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                    fg);
-                                }
-                                string += 3;
-                            }
-                        }
+                        string++;
+                        gui_window_string_apply_color_fg ((unsigned char **)&string,
+                                                          GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
                     case GUI_COLOR_BG_CHAR: /* bg color */
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                memcpy (str_bg, string + 2, 5);
-                                str_bg[5] = '\0';
-                                error = NULL;
-                                bg = (int)strtol (str_bg, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                    bg | GUI_COLOR_EXTENDED_FLAG);
-                                }
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                str_bg[0] = string[1];
-                                str_bg[1] = string[2];
-                                str_bg[2] = '\0';
-                                error = NULL;
-                                bg = (int)strtol (str_bg, &error, 10);
-                                if (error && !error[0])
-                                {
-                                    gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                    bg);
-                                }
-                                string += 3;
-                            }
-                        }
+                        string++;
+                        gui_window_string_apply_color_bg ((unsigned char **)&string,
+                                                          GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
                     case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
-                        str_fg[0] = '\0';
-                        str_bg[0] = '\0';
-                        fg = -1;
-                        bg = -1;
-                        if (string[1] == GUI_COLOR_EXTENDED_CHAR)
-                        {
-                            if (string[2] && string[3] && string[4]
-                                && string[5] && string[6])
-                            {
-                                memcpy (str_fg, string + 2, 5);
-                                str_fg[5] = '\0';
-                                error = NULL;
-                                fg = (int)strtol (str_fg, &error, 10);
-                                if (!error || error[0])
-                                    fg = -1;
-                                else
-                                    fg |= GUI_COLOR_EXTENDED_FLAG;
-                                string += 7;
-                            }
-                        }
-                        else
-                        {
-                            if (string[1] && string[2])
-                            {
-                                str_fg[0] = string[1];
-                                str_fg[1] = string[2];
-                                str_fg[2] = '\0';
-                                error = NULL;
-                                fg = (int)strtol (str_fg, &error, 10);
-                                if (!error || error[0])
-                                    fg = -1;
-                                string += 3;
-                            }
-                        }
-                        if (string[0] == ',')
-                        {
-                            string++;
-                            if (string[0] == GUI_COLOR_EXTENDED_CHAR)
-                            {
-                                if (string[1] && string[2] && string[3]
-                                    && string[4] && string[5])
-                                {
-                                    memcpy (str_bg, string + 1, 5);
-                                    str_bg[5] = '\0';
-                                    error = NULL;
-                                    bg = (int)strtol (str_bg, &error, 10);
-                                    if (!error || error[0])
-                                        bg = -1;
-                                    else
-                                        bg |= GUI_COLOR_EXTENDED_FLAG;
-                                    string += 6;
-                                }
-                            }
-                            else
-                            {
-                                if (string[0] && string[1])
-                                {
-                                    str_bg[0] = string[0];
-                                    str_bg[1] = string[1];
-                                    str_bg[2] = '\0';
-                                    error = NULL;
-                                    bg = (int)strtol (str_bg, &error, 10);
-                                    if (!error || error[0])
-                                        bg = -1;
-                                    string += 2;
-                                }
-                            }
-                        }
-                        if ((fg >= 0) && (bg >= 0))
-                        {
-                            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                               fg, bg);
-                        }
+                        string++;
+                        gui_window_string_apply_color_fg_bg ((unsigned char **)&string,
+                                                             GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
                     case GUI_COLOR_EXTENDED_CHAR: /* pair number */
-                        if ((isdigit (string[1])) && (isdigit (string[2]))
-                            && (isdigit (string[3])) && (isdigit (string[4]))
-                            && (isdigit (string[5])))
-                        {
-                            memcpy (str_pair, string + 1, 5);
-                            str_pair[5] = '\0';
-                            error = NULL;
-                            pair = (int)strtol (str_pair, &error, 10);
-                            if (error && !error[0])
-                            {
-                                gui_window_set_custom_color_pair (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                                  pair);
-                            }
-                            string += 6;
-                        }
+                        string++;
+                        gui_window_string_apply_color_pair ((unsigned char **)&string,
+                                                            GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
                     case GUI_COLOR_BAR_CHAR: /* bar color */
                         switch (string[1])
                         {
                             case GUI_COLOR_BAR_FG_CHAR:
                                 /* bar foreground */
+                                string += 2;
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
-                                string += 2;
                                 break;
                             case GUI_COLOR_BAR_DELIM_CHAR:
                                 /* bar delimiter */
+                                string += 2;
                                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
-                                string += 2;
                                 break;
                             case GUI_COLOR_BAR_BG_CHAR:
                                 /* bar background */
+                                string += 2;
                                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                                string += 2;
                                 break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
                                 string += 2;
@@ -379,12 +232,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
                                 /* move cursor to current position on screen */
+                                string += 2;
                                 getyx (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                        bar_window->cursor_y,
                                        bar_window->cursor_x);
                                 bar_window->cursor_x += bar_window->x;
                                 bar_window->cursor_y += bar_window->y;
-                                string += 2;
                                 break;
                             default:
                                 string++;
@@ -392,81 +245,29 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         }
                         break;
                     default:
-                        if (isdigit (string[0]) && isdigit (string[1]))
-                        {
-                            str_fg[0] = string[0];
-                            str_fg[1] = string[1];
-                            str_fg[2] = '\0';
-                            error = NULL;
-                            weechat_color = (int)strtol (str_fg, &error, 10);
-                            if (error && !error[0])
-                            {
-                                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                              weechat_color);
-                            }
-                            string += 2;
-                        }
+                        gui_window_string_apply_color_weechat ((unsigned char **)&string,
+                                                               GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
                 }
                 break;
+            case GUI_COLOR_SET_WEECHAT_CHAR:
+                string++;
+                gui_window_string_apply_color_set ((unsigned char **)&string,
+                                                   GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                break;
+            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
+                string++;
+                gui_window_string_apply_color_remove ((unsigned char **)&string,
+                                                      GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
+                break;
             case GUI_COLOR_RESET_CHAR:
+                string++;
                 gui_window_set_custom_color_fg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]));
                 gui_window_set_custom_color_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                 CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
                 gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                A_BOLD | A_UNDERLINE | A_REVERSE);
-                string++;
-                break;
-            case GUI_COLOR_SET_WEECHAT_CHAR:
-                string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                    A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                    A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        gui_window_set_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                    A_UNDERLINE);
-                        break;
-                }
-                break;
-            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
-                string++;
-                switch (string[0])
-                {
-                    case GUI_COLOR_ATTR_BOLD_CHAR:
-                        string++;
-                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       A_BOLD);
-                        break;
-                    case GUI_COLOR_ATTR_REVERSE_CHAR:
-                        string++;
-                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       A_REVERSE);
-                        break;
-                    case GUI_COLOR_ATTR_ITALIC_CHAR:
-                        /* not available in Curses GUI */
-                        string++;
-                        break;
-                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                        string++;
-                        gui_window_remove_color_style (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                       A_UNDERLINE);
-                        break;
-                }
                 break;
             default:
                 next_char = utf8_next_char (string);

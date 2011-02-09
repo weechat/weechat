@@ -81,6 +81,7 @@ extern int gui_keyboard_read_cb (void *data, int fd);
 extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_clear (WINDOW *window, int fg, int bg);
+extern void gui_window_clrtoeol (WINDOW *window);
 extern void gui_window_reset_style (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);
 extern void gui_window_remove_color_style (WINDOW *window, int style);
@@ -90,7 +91,22 @@ extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg);
 extern void gui_window_set_custom_color_pair (WINDOW *window, int pair);
 extern void gui_window_set_custom_color_fg (WINDOW *window, int fg);
 extern void gui_window_set_custom_color_bg (WINDOW *window, int bg);
-extern void gui_window_clrtoeol (WINDOW *window);
+extern void gui_window_string_apply_color_fg (unsigned char **str,
+                                              WINDOW *window);
+extern void gui_window_string_apply_color_bg (unsigned char **str,
+                                              WINDOW *window);
+extern void gui_window_string_apply_color_fg_bg (unsigned char **str,
+                                                 WINDOW *window);
+extern void gui_window_string_apply_color_pair (unsigned char **str,
+                                                WINDOW *window);
+extern void gui_window_string_apply_color_weechat (unsigned char **str,
+                                                   WINDOW *window);
+extern void gui_window_string_apply_color_set (unsigned char **str,
+                                               WINDOW *window);
+extern void gui_window_string_apply_color_remove (unsigned char **str,
+                                                  WINDOW *window);
+extern void gui_window_apply_color (unsigned char **str, WINDOW *window,
+                                    int apply_bar_colors);
 extern void gui_window_set_title (const char *title);
 
 #endif /* __WEECHAT_GUI_CURSES_H */

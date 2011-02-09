@@ -27,6 +27,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdarg.h>
 #include <libgen.h>
 #include <sys/ioctl.h>
@@ -203,6 +204,19 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)));
     werase (window);
     wmove (window, 0, 0);
+}
+
+/*
+ * gui_window_clrtoeol: clear until end of line with current background
+ */
+
+void
+gui_window_clrtoeol (WINDOW *window)
+{
+    wbkgdset (window,
+              ' ' | COLOR_PAIR (gui_color_get_pair (window_current_style_fg,
+                                                    window_current_style_bg)));
+    wclrtoeol (window);
 }
 
 /*
@@ -427,16 +441,385 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
 }
 
 /*
- * gui_window_clrtoeol: clear until end of line with current background
+ * gui_window_string_apply_color_fg: apply foreground color code in string and
+ *                                   move string pointer after color in string
+ *                                   If window is NULL, no color is applied but
+ *                                   string pointer is moved anyway
  */
 
 void
-gui_window_clrtoeol (WINDOW *window)
+gui_window_string_apply_color_fg (unsigned char **str, WINDOW *window)
 {
-    wbkgdset (window,
-              ' ' | COLOR_PAIR (gui_color_get_pair (window_current_style_fg,
-                                                    window_current_style_bg)));
-    wclrtoeol (window);
+    unsigned char *ptr_string;
+    char str_fg[6], *error;
+    int fg;
+    
+    ptr_string = *str;
+    
+    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+    {
+        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
+            && ptr_string[4] && ptr_string[5])
+        {
+            if (window)
+            {
+                memcpy (str_fg, ptr_string + 1, 5);
+                str_fg[5] = '\0';
+                error = NULL;
+                fg = (int)strtol (str_fg, &error, 10);
+                if (error && !error[0])
+                {
+                    gui_window_set_custom_color_fg (window,
+                                                    fg | GUI_COLOR_EXTENDED_FLAG);
+                }
+            }
+            ptr_string += 6;
+        }
+    }
+    else
+    {
+        if (ptr_string[0] && ptr_string[1])
+        {
+            if (window)
+            {
+                str_fg[0] = ptr_string[0];
+                str_fg[1] = ptr_string[1];
+                str_fg[2] = '\0';
+                error = NULL;
+                fg = (int)strtol (str_fg, &error, 10);
+                if (error && !error[0])
+                {
+                    gui_window_set_custom_color_fg (window, fg);
+                }
+            }
+            ptr_string += 2;
+        }
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_bg: apply background color code in string and
+ *                                   move string pointer after color in string
+ *                                   If window is NULL, no color is applied but
+ *                                   string pointer is moved anyway
+ */
+
+void
+gui_window_string_apply_color_bg (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    char str_bg[6], *error;
+    int bg;
+    
+    ptr_string = *str;
+    
+    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+    {
+        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
+            && ptr_string[4] && ptr_string[5])
+        {
+            if (window)
+            {
+                memcpy (str_bg, ptr_string + 1, 5);
+                str_bg[5] = '\0';
+                error = NULL;
+                bg = (int)strtol (str_bg, &error, 10);
+                if (error && !error[0])
+                {
+                    gui_window_set_custom_color_bg (window,
+                                                    bg | GUI_COLOR_EXTENDED_FLAG);
+                }
+            }
+            ptr_string += 6;
+        }
+    }
+    else
+    {
+        if (ptr_string[0] && ptr_string[1])
+        {
+            if (window)
+            {
+                str_bg[0] = ptr_string[0];
+                str_bg[1] = ptr_string[1];
+                str_bg[2] = '\0';
+                error = NULL;
+                bg = (int)strtol (str_bg, &error, 10);
+                if (error && !error[0])
+                {
+                    gui_window_set_custom_color_bg (window, bg);
+                }
+            }
+            ptr_string += 2;
+        }
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_fg_bg: apply foreground + background color
+ *                                      code in string and move string pointer
+ *                                      after color in string
+ *                                      If window is NULL, no color is applied
+ *                                      but string pointer is moved anyway
+ */
+
+void
+gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    char str_fg[6], str_bg[6], *error;
+    int fg, bg;
+    
+    ptr_string = *str;
+    
+    str_fg[0] = '\0';
+    str_bg[0] = '\0';
+    fg = -1;
+    bg = -1;
+    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+    {
+        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
+            && ptr_string[4] && ptr_string[5])
+        {
+            if (window)
+            {
+                memcpy (str_fg, ptr_string + 1, 5);
+                str_fg[5] = '\0';
+                error = NULL;
+                fg = (int)strtol (str_fg, &error, 10);
+                if (!error || error[0])
+                    fg = -1;
+                else
+                    fg |= GUI_COLOR_EXTENDED_FLAG;
+            }
+            ptr_string += 6;
+        }
+    }
+    else
+    {
+        if (ptr_string[0] && ptr_string[1])
+        {
+            if (window)
+            {
+                str_fg[0] = ptr_string[0];
+                str_fg[1] = ptr_string[1];
+                str_fg[2] = '\0';
+                error = NULL;
+                fg = (int)strtol (str_fg, &error, 10);
+                if (!error || error[0])
+                    fg = -1;
+            }
+            ptr_string += 2;
+        }
+    }
+    if (ptr_string[0] == ',')
+    {
+        ptr_string++;
+        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+        {
+            if (ptr_string[1] && ptr_string[2] && ptr_string[3]
+                && ptr_string[4] && ptr_string[5])
+            {
+                if (window)
+                {
+                    memcpy (str_bg, ptr_string + 1, 5);
+                    str_bg[5] = '\0';
+                    error = NULL;
+                    bg = (int)strtol (str_bg, &error, 10);
+                    if (!error || error[0])
+                        bg = -1;
+                    else
+                        bg |= GUI_COLOR_EXTENDED_FLAG;
+                }
+                ptr_string += 6;
+            }
+        }
+        else
+        {
+            if (ptr_string[0] && ptr_string[1])
+            {
+                if (window)
+                {
+                    str_bg[0] = ptr_string[0];
+                    str_bg[1] = ptr_string[1];
+                    str_bg[2] = '\0';
+                    error = NULL;
+                    bg = (int)strtol (str_bg, &error, 10);
+                    if (!error || error[0])
+                        bg = -1;
+                }
+                ptr_string += 2;
+            }
+        }
+    }
+    if (window && (fg >= 0) && (bg >= 0))
+    {
+        gui_window_set_custom_color_fg_bg (window, fg, bg);
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_pair: apply pair color code in string and
+ *                                     move string pointer after color in
+ *                                     string
+ *                                     If window is NULL, no color is applied
+ *                                     but string pointer is moved anyway
+ */
+
+void
+gui_window_string_apply_color_pair (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    char str_pair[6], *error;
+    int pair;
+    
+    ptr_string = *str;
+    
+    if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
+        && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
+        && (isdigit (ptr_string[4])))
+    {
+        if (window)
+        {
+            memcpy (str_pair, ptr_string, 5);
+            str_pair[5] = '\0';
+            error = NULL;
+            pair = (int)strtol (str_pair, &error, 10);
+            if (error && !error[0])
+            {
+                gui_window_set_custom_color_pair (window, pair);
+            }
+        }
+        ptr_string += 5;
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_weechat: apply weechat color code in string
+ *                                        and move string pointer after color
+ *                                        in string
+ *                                        If window is NULL, no color is
+ *                                        applied but string pointer is moved
+ *                                        anyway
+ */
+
+void
+gui_window_string_apply_color_weechat (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    char str_number[3], *error;
+    int weechat_color;
+    
+    ptr_string = *str;
+    
+    if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+    {
+        if (window)
+        {
+            str_number[0] = ptr_string[0];
+            str_number[1] = ptr_string[1];
+            str_number[2] = '\0';
+            error = NULL;
+            weechat_color = (int)strtol (str_number, &error, 10);
+            if (error && !error[0])
+            {
+                gui_window_set_weechat_color (window,
+                                              weechat_color);
+            }
+        }
+        ptr_string += 2;
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_set: apply "set attribute" color code in
+ *                                    string and move string pointer after
+ *                                    color in string
+ *                                    If window is NULL, no color is applied
+ *                                    but string pointer is moved anyway
+ */
+
+void
+gui_window_string_apply_color_set (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    
+    ptr_string = *str;
+    
+    switch (ptr_string[0])
+    {
+        case GUI_COLOR_ATTR_BOLD_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_BOLD);
+            break;
+        case GUI_COLOR_ATTR_REVERSE_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_REVERSE);
+            break;
+        case GUI_COLOR_ATTR_ITALIC_CHAR:
+            /* not available in Curses GUI */
+            ptr_string++;
+            break;
+        case GUI_COLOR_ATTR_UNDERLINE_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_UNDERLINE);
+            break;
+    }
+    
+    *str = ptr_string;
+}
+
+/*
+ * gui_window_string_apply_color_remove: apply "remove attribute" color code in
+ *                                       string and move string pointer after
+ *                                       color in string
+ *                                       If window is NULL, no color is applied
+ *                                       but string pointer is moved anyway
+ */
+
+void
+gui_window_string_apply_color_remove (unsigned char **str, WINDOW *window)
+{
+    unsigned char *ptr_string;
+    
+    ptr_string = *str;
+    
+    switch (ptr_string[0])
+    {
+        case GUI_COLOR_ATTR_BOLD_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_BOLD);
+            break;
+        case GUI_COLOR_ATTR_REVERSE_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_REVERSE);
+            break;
+        case GUI_COLOR_ATTR_ITALIC_CHAR:
+            /* not available in Curses GUI */
+            ptr_string++;
+            break;
+        case GUI_COLOR_ATTR_UNDERLINE_CHAR:
+            ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_UNDERLINE);
+            break;
+    }
+    
+    *str = ptr_string;
 }
 
 /*
