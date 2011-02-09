@@ -112,7 +112,7 @@ Exemples:
 /deop  <pseudo> [<pseudo>...]
 ........................................
 
-[command]*`devoice`* retire la voix du/des pseudo(s)::
+[command]*`devoice`* retirer la voix du/des pseudo(s)::
 ........................................
 /devoice  <pseudo> [<pseudo>...]
 ........................................
@@ -391,11 +391,11 @@ mot_de_passe: mot de passe
 message: message de fin (affiché aux autres utilisateurs)
 ........................................
 
-[command]*`ping`* pinguer un serveur::
+[command]*`ping`* envoyer un ping au serveur::
 ........................................
 /ping  <serveur1> [<serveur2>]
 
-serveur1: serveur à pinguer
+serveur1: serveur
 serveur2: faire suivre le ping à ce serveur
 ........................................
 
@@ -446,7 +446,7 @@ option: option supplémentaire, pour certains serveurs
 ........................................
 ........................................
 
-[command]*`sajoin`* force un utilisateur à rejoindre un ou plusieurs canaux::
+[command]*`sajoin`* forcer un utilisateur à rejoindre un ou plusieurs canaux::
 ........................................
 /sajoin  <pseudo> <canal>[,<canal>...]
 
@@ -462,7 +462,7 @@ canal: nom du canal
  mode: mode pour le canal
 ........................................
 
-[command]*`sanick`* force un utilisateur à utiliser un autre pseudo::
+[command]*`sanick`* forcer un utilisateur à utiliser un autre pseudo::
 ........................................
 /sanick  <pseudo> <nouveau_pseudo>
 
@@ -470,7 +470,7 @@ canal: nom du canal
 nouveau_pseudo: nouveau pseudo
 ........................................
 
-[command]*`sapart`* force un utilisateur à quitter un ou plusieurs canaux::
+[command]*`sapart`* forcer un utilisateur à quitter un ou plusieurs canaux::
 ........................................
 /sapart  <pseudo> <canal>[,<canal>...]
 
@@ -478,7 +478,7 @@ pseudo: pseudo
  canal: canal
 ........................................
 
-[command]*`saquit`* force un utilisateur à quitter le serveur avec une raison::
+[command]*`saquit`* forcer un utilisateur à quitter le serveur avec une raison::
 ........................................
 /saquit  <pseudo> <raison>
 
@@ -486,7 +486,7 @@ pseudo: pseudo
 raison: raison
 ........................................
 
-[command]*`server`* liste, ajoute ou retire des serveurs IRC::
+[command]*`server`* lister, ajouter ou retirer des serveurs IRC::
 ........................................
 /server  list|listfull [<serveur>]
          add <serveur> <nom>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
@@ -594,7 +594,7 @@ cible: demander l'heure de ce serveur
 cible: serveur
 ........................................
 
-[command]*`unban`* supprime le bannissement sur des pseudos ou hôtes::
+[command]*`unban`* supprimer le bannissement sur des pseudos ou hôtes::
 ........................................
 /unban  [<canal>] <pseudo> [<pseudo>...]
 
@@ -602,7 +602,7 @@ cible: serveur
 pseudo: pseudo ou hôte pour supprimer le bannissement
 ........................................
 
-[command]*`userhost`* retourne une liste d'informations sur des pseudos::
+[command]*`userhost`* retourner une liste d'informations sur des pseudos::
 ........................................
 /userhost  <pseudo> [<pseudo>...]
 
@@ -616,7 +616,7 @@ pseudo: pseudo
 cible: serveur
 ........................................
 
-[command]*`version`* retourne la version du pseudo ou du serveur (courant ou spécifié)::
+[command]*`version`* retourner la version du pseudo ou du serveur (courant ou spécifié)::
 ........................................
 /version  [<serveur>|<pseudo>]
 
@@ -624,7 +624,7 @@ serveur: nom du serveur
  pseudo: pseudo
 ........................................
 
-[command]*`voice`* donne la voix à/aux pseudo(s)::
+[command]*`voice`* donner la voix à/aux pseudo(s)::
 ........................................
 /voice  <pseudo> [<pseudo>...]
 ........................................
@@ -644,7 +644,7 @@ texte: texte à envoyer
 texte: texte à envoyer
 ........................................
 
-[command]*`who`* génère une requête qui retourne une liste d'information::
+[command]*`who`* générer une requête qui retourne une liste d'information::
 ........................................
 /who  [<masque> [o]]
 
@@ -652,7 +652,7 @@ masque: information qui correspond à ce masque uniquement
      o: seul les opérateurs sont retournés correspondant au masque fourni
 ........................................
 
-[command]*`whois`* demande les informations sur le(s) utilisateur(s)::
+[command]*`whois`* demander les informations sur le(s) utilisateur(s)::
 ........................................
 /whois  [<serveur>] <pseudo>[,<pseudo>...]
 

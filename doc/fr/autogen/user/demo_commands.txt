@@ -3,7 +3,7 @@
 /demo_buffer  <nom>
 ........................................
 
-[command]*`demo_info`* lit et affiche une info::
+[command]*`demo_info`* lire et afficher une info::
 ........................................
 /demo_info  <info> [<paramètres>]
 
@@ -13,7 +13,7 @@ paramètres: paramètres optionnels pour l'info
 Sans paramètre, cette commande affiche la liste des infos disponibles
 ........................................
 
-[command]*`demo_infolist`* lit et affiche une infolist::
+[command]*`demo_infolist`* lire et afficher une infolist::
 ........................................
 /demo_infolist  <infolist> [<paramètres>]
 
@@ -23,7 +23,7 @@ paramètres: paramètres optionnels pour l'infolist
 Sans paramètre, cette commande affiche la liste des infolists disponibles
 ........................................
 
-[command]*`demo_printf`* affiche des messages sur le tampon courant::
+[command]*`demo_printf`* afficher des messages sur le tampon courant::
 ........................................
 /demo_printf  <texte>
 

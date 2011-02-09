@@ -344,7 +344,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *weechat.look.hline_char*
-** Beschreibung: `char used to draw horizontal separators around bars (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
+** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene Linie. Dies kann allerdings bei einigen Terminals, in URL Sektionen, zu Fehlern führen. Wide Chars sind für diese Option NICHT erlaubt.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
@@ -384,7 +384,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.input_cursor_scroll*
-** Beschreibung: `number of chars displayed after end of input line when scrolling to display end of line`
+** Beschreibung: `Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende der Eingabezeile erreicht wird.`
 ** Typ: integer
 ** Werte: 0 .. 100 (Standardwert: `20`)
 
@@ -509,7 +509,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.read_marker_string*
-** Beschreibung: `string used to draw read marker line (string is repeated until end of line)`
+** Beschreibung: `Zeichen dass als Lesezeichen genutzt werden soll (das Zeichen wird bis zum Ende der Zeile wiederholt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"- "`)
 

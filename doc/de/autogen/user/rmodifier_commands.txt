@@ -10,7 +10,7 @@ listdefault: zeigt die Standardeinstellung für rmodifier an
         add: einen rmodifier hinzufügen
        name: Name des rmodifier
   modifiers: durch Kommata getrennte Liste der modifier
-     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe zu verbergen
+     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe auszublenden
       regex: regulärer Ausdruck
         del: löscht einen rmodifier Eintrag
        -all: löscht alle rmodifiers Einträge

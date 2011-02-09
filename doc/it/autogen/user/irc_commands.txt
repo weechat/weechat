@@ -391,12 +391,12 @@ channel: channel name to leave
 message: part message (displayed to other users)
 ........................................
 
-[command]*`ping`* invia ping al server::
+[command]*`ping`* send a ping to server::
 ........................................
 /ping  <server1> [<server2>]
 
-server1: server su cui effettuare il ping
-server2: invia ping a questo server
+server1: server
+server2: forward ping to this server
 ........................................
 
 [command]*`pong`* risponde ad un messaggio ping::
@@ -446,7 +446,7 @@ opzione: opzione extra, per alcuni server
 ........................................
 ........................................
 
-[command]*`sajoin`* forza un utente ad entrare su uno o più canali::
+[command]*`sajoin`* force a user to join channel(s)::
 ........................................
 /sajoin  <nick> <channel>[,<channel>...]
 
@@ -462,7 +462,7 @@ canale: nome del canale
 modalità: modalità per il canale
 ........................................
 
-[command]*`sanick`* forza un utente ad utilizzare un altro nick::
+[command]*`sanick`* force a user to use another nick::
 ........................................
 /sanick  <nick> <new_nick>
 
@@ -470,7 +470,7 @@ modalità: modalità per il canale
 new_nick: new nick
 ........................................
 
-[command]*`sapart`* forza un utente a lasciare uno o più canali::
+[command]*`sapart`* force a user to leave channel(s)::
 ........................................
 /sapart  <nick> <channel>[,<channel>...]
 
@@ -478,7 +478,7 @@ new_nick: new nick
 channel: channel name
 ........................................
 
-[command]*`saquit`* forza un utente ad uscire dal server senza un motivo::
+[command]*`saquit`* force a user to quit server with a reason::
 ........................................
 /saquit  <nick> <reason>
 

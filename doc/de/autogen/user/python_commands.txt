@@ -5,15 +5,15 @@
          autoload
          reload|unload [<name>]
 
-    list: list loaded scripts
-listfull: list loaded scripts (verbose)
-    load: load a script
-autoload: load all scripts in "autoload" directory
-  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
-  unload: unload a script (if no name given, unload all scripts)
-filename: script (file) to load
-    name: a script name (name used in call to "register" function)
+    list: installierte Erweiterungen werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Erweiterungen
+    load: installiert eine Erweiterung
+autoload: installiert automatisch alle Erweiterungen aus System- oder Benutzerverzeichnis
+  reload: eine Erweiterung wird erneut installiert (falls kein Name angegeben wird dann werden alle Erweiterungen entfernt und erneut installiert)
+  unload: deinstalliert eine oder alle Erweiterungen
+filename: Skript (Datei) das geladen werden soll
+    name: Name eines Skripts (Name welcher mit der "register" Funktion genutzt wird)
 
-Without argument, this command lists all loaded scripts.
+Ohne Angabe eines Argumentes listet /plugin alle geladenen Erweiterungen auf.
 ........................................
 

@@ -241,7 +241,7 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 Wie kann ich 256 Farben in WeeChat nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat unterstützt ab der Version 0.3.4, 256 Farben.
+WeeChat unterstützt 256 Farben, ab der Version 0.3.4.
 
 Zuerst sollte überprüft werden ob die 'TERM'-Umgebungsvariable korrekt hinterlegt
 ist. Folgende Werte sind zu empfehlen:
@@ -249,10 +249,9 @@ ist. Folgende Werte sind zu empfehlen:
 * falls screen genutzt wird: 'screen-256color'
 * screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-// TRANSLATION MISSING
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
-variable.
+Es sollte das Paket "ncurses-term" installiert werden um die Werte der 'TERM'
+Variable nutzen zu können.
 
 Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
 '~/.screenrc':

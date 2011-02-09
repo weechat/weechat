@@ -894,10 +894,9 @@ nutzen möchte:
 * falls screen genutzt wird: 'screen-256color'
 * screen wird nicht genutzt: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-// TRANSLATION MISSING
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
-variable.
+Es sollte das Paket "ncurses-term" installiert werden um die Werte der 'TERM'
+Variable nutzen zu können.
 
 Sollte screen genutzt werden, fügt man folgende Zeile an das Ende der Datei
 '~/.screenrc':
@@ -1467,7 +1466,7 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 Zielbuffer für IRC Nachrichten
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Sie können einen Zielbuffer einstellen in dem IRC Nachrichten dargestellt werden sollen.
+Sie können einen Zielbuffer einstellen in welchem IRC Nachrichten dargestellt werden sollen.
 Dazu dienen die Optionen `irc.msgbuffer.*`.
 
 Für einige IRC Nachrichten (siehe unten) können zusätzliche Werte angepasst werden:
@@ -1479,29 +1478,26 @@ private::
     privaten Buffer, oder im aktuellen/Server Buffer falls nicht vorhanden (gemäß der Einstellung
     in der Option 'irc.look.msgbuffer_fallback')
 
-// TRANSLATION MISSING
 server::
-    server buffer
+    Server Buffer
 
 weechat::
     WeeChat "core" Buffer
 
-// TRANSLATION MISSING
-When option is not set (default), WeeChat chooses appropriate buffer, commonly
-server or channel buffer.
+Falls die Option nicht gesetzt ist (Standard) wählt WeeChat einen geeigneten Buffer aus,
+üblicherweise handelt es sich dabei um einen Server oder Channel-Buffer.
 
 Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
 
 [width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
 | Nachricht | alias         | Beschreibung
-// TRANSLATION MISSING
-| error     |               | error
+| error     |               | Fehler
 | invite    |               | Einladung in einen Channel
 | join      |               | join
 | kick      |               | kick
 | kill      |               | kill
-| mode      |               | mode
+| mode      |               | Modus
 | notice    |               | Mitteilung
 | part      |               | part
 | quit      |               | quit
@@ -1529,40 +1525,27 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 323       | list          | list (Ende)
 | 326       | whois         | whois (hat oper privs)
 | 327       | whois         | whois (Host)
-// TRANSLATION MISSING
-| 328       |               | channel URL
-// TRANSLATION MISSING
-| 329       |               | channel creation date
+| 328       |               | Channel URL
+| 329       |               | Erstellungsdatum des Channel
 | 330       | whois         | whois (eingelogged als)
-// TRANSLATION MISSING
-| 331       |               | no topic for channel
-// TRANSLATION MISSING
-| 332       |               | topic of channel
-// TRANSLATION MISSING
-| 333       |               | infos about topic
+| 331       |               | kein Topic für Channel
+| 332       |               | Channel-Topic
+| 333       |               | Infos über Topic
 | 335       | whois         | whois (ist ein Bot auf)
 | 338       | whois         | whois (Host)
 | 341       |               | inviting
 | 344       | reop          | channel reop
 | 345       | reop          | channel reop (Ende)
-// TRANSLATION MISSING
-| 346       | invitelist    | invite list
-// TRANSLATION MISSING
-| 347       | invitelist    | invite list (end)
-// TRANSLATION MISSING
+| 346       | invitelist    | Einladung list
+| 347       | invitelist    | Einladung list (Ende)
 | 348       | exceptionlist | exception list
-// TRANSLATION MISSING
 | 349       | exceptionlist | exception list (end)
 | 351       |               | Server Version
 | 352       | who           | who
-// TRANSLATION MISSING
-| 353       | names         | list of users on channel
-// TRANSLATION MISSING
-| 366       | names         | end of /names list
-// TRANSLATION MISSING
-| 367       | banlist       | ban list
-// TRANSLATION MISSING
-| 368       | banlist       | end of ban list
+| 353       | names         | Liste von Usern im Channel
+| 366       | names         | Ende der /names Liste
+| 367       | banlist       | ban Liste
+| 368       | banlist       | Ende der ban Liste
 | 369       | whowas        | whowas (Ende)
 | 378       | whois         | whois (Verbindung von)
 | 379       | whois         | whois (genutzte Modi)
