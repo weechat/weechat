@@ -145,7 +145,7 @@ command: command to execute (a '/' is automatically added if not found at beginn
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|windows|term|color
+        buffer|color|memory|term|windows
 
    list: list plugins with debug levels
     set: set debug level for plugin
@@ -153,9 +153,10 @@ command: command to execute (a '/' is automatically added if not found at beginn
   level: debug level for plugin (0 = disable debug)
    dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
  buffer: dump buffer content with hexadecimal values in log file
-windows: display windows tree
-   term: display infos about terminal
   color: display infos about current color pairs
+ memory: display infos about memory usage
+   term: display infos about terminal
+windows: display windows tree
 ........................................
 
 [command]*`filter`* filter messages in buffers, to hide/show them according to tags or regex::

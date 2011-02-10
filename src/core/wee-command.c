@@ -1125,17 +1125,21 @@ COMMAND_CALLBACK(debug)
                          _("Raw content of buffers has been written in log "
                            "file"));
     }
-    else if (string_strcasecmp (argv[1], "windows") == 0)
+    else if (string_strcasecmp (argv[1], "color") == 0)
     {
-        debug_windows_tree ();
+        gui_color_dump (buffer);
+    }
+    else if (string_strcasecmp (argv[1], "memory") == 0)
+    {
+        debug_memory ();
     }
     else if (string_strcasecmp (argv[1], "term") == 0)
     {
         gui_window_term_display_infos ();
     }
-    else if (string_strcasecmp (argv[1], "color") == 0)
+    else if (string_strcasecmp (argv[1], "windows") == 0)
     {
-        gui_color_dump (buffer);
+        debug_windows_tree ();
     }
     else if (string_strcasecmp (argv[1], "set") == 0)
     {
@@ -4718,7 +4722,7 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|windows|term|color"),
+                     " || buffer|color|memory|term|windows"),
                   N_("   list: list plugins with debug levels\n"
                      "    set: set debug level for plugin\n"
                      " plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -4727,16 +4731,18 @@ command_init ()
                      "dump is written when WeeChat crashes)\n"
                      " buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
-                     "windows: display windows tree\n"
+                     "  color: display infos about current color pairs\n"
+                     " memory: display infos about memory usage\n"
                      "   term: display infos about terminal\n"
-                     "  color: display infos about current color pairs"),
+                     "windows: display windows tree"),
                   "list"
                   " || set %(plugins_names)|core"
                   " || dump %(plugins_names)|core"
                   " || buffer"
-                  " || windows"
+                  " || color"
+                  " || memory"
                   " || term"
-                  " || color",
+                  " || windows",
                   &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "

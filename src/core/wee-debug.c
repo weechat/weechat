@@ -26,6 +26,9 @@
 #endif
 
 #include <stdlib.h>
+#ifdef HAVE_MALLINFO
+#include <malloc.h>
+#endif
 
 #include "weechat.h"
 #include "wee-backtrace.h"
@@ -254,6 +257,37 @@ debug_windows_cb (void *data, const char *signal, const char *type_data,
     debug_windows_tree ();
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * debug_memory: display information about dynamic memory allocation
+ */
+
+void
+debug_memory ()
+{
+#ifdef HAVE_MALLINFO
+    struct mallinfo info;
+    
+    info = mallinfo ();
+    
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, _("Memory usage (see \"man mallinfo\" for help):"));
+    gui_chat_printf (NULL, "  arena   :%10d", info.arena);
+    gui_chat_printf (NULL, "  ordblks :%10d", info.ordblks);
+    gui_chat_printf (NULL, "  smblks  :%10d", info.smblks);
+    gui_chat_printf (NULL, "  hblks   :%10d", info.hblks);
+    gui_chat_printf (NULL, "  hblkhd  :%10d", info.hblkhd);
+    gui_chat_printf (NULL, "  usmblks :%10d", info.usmblks);
+    gui_chat_printf (NULL, "  fsmblks :%10d", info.fsmblks);
+    gui_chat_printf (NULL, "  uordblks:%10d", info.uordblks);
+    gui_chat_printf (NULL, "  fordblks:%10d", info.fordblks);
+    gui_chat_printf (NULL, "  keepcost:%10d", info.keepcost);
+#else
+    gui_chat_printf (NULL,
+                     _("Memory usage not available (function \"mallinfo\" not "
+                       "found)"));
+#endif
 }
 
 /*

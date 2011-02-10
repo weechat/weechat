@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-08 12:28+0100\n"
+"POT-Creation-Date: 2011-02-10 17:05+0100\n"
 "PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1054,7 +1054,8 @@ msgstr "cotrolar depuração para core/plugins"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|windows|term|color"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
+"windows"
 msgstr "[list | set plugin level | dump [plugin] | buffer | windows | term]"
 
 # find a better translation to dump?
@@ -1068,9 +1069,10 @@ msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
+"  color: display infos about current color pairs\n"
+" memory: display infos about memory usage\n"
 "   term: display infos about terminal\n"
-"  color: display infos about current color pairs"
+"windows: display windows tree"
 msgstr ""
 "    set: configura o nível de log para o plugin\n"
 " plugin: nome do plugin (\"core\" para o core do WeeChat)\n"
@@ -2479,6 +2481,12 @@ msgid "Reloading configuration file %s"
 msgstr ""
 
 msgid "Windows tree:"
+msgstr ""
+
+msgid "Memory usage (see \"man mallinfo\" for help):"
+msgstr ""
+
+msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr ""
 
 #, c-format

@@ -96,7 +96,7 @@ AC_MSG_RESULT($ac_cv_type_socklen_t)
 # Checks for library functions.
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strndup strncasecmp strpbrk strrchr strstr regexec])
+AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strndup strncasecmp strpbrk strrchr strstr regexec mallinfo])
 
 # Variables in config.h
 
