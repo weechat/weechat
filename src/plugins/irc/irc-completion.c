@@ -550,12 +550,15 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
     (void) data;
     (void) completion_item;
     
-    msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
-                                        IRC_SERVER_OPTION_DEFAULT_MSG_PART);
-    if (msg_part && msg_part[0])
+    if (ptr_server)
     {
-        weechat_hook_completion_list_add (completion, msg_part,
-                                          0, WEECHAT_LIST_POS_SORT);
+        msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
+                                            IRC_SERVER_OPTION_DEFAULT_MSG_PART);
+        if (msg_part && msg_part[0])
+        {
+            weechat_hook_completion_list_add (completion, msg_part,
+                                              0, WEECHAT_LIST_POS_SORT);
+        }
     }
     
     return WEECHAT_RC_OK;
