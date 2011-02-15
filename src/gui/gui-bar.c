@@ -2258,13 +2258,13 @@ gui_bar_print_log ()
                     gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT])]);
         log_printf ("  size . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]));
         log_printf ("  size_max . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE_MAX]));
-        log_printf ("  color_fg . . . . . . . : %d",
+        log_printf ("  color_fg . . . . . . . : %d (%s)",
                     CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_FG]),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_FG])));
-        log_printf ("  color_delim. . . . . . : %d",
+        log_printf ("  color_delim. . . . . . : %d (%s)",
                     CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_DELIM]),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_DELIM])));
-        log_printf ("  color_bg . . . . . . . : %d",
+        log_printf ("  color_bg . . . . . . . : %d (%s)",
                     CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG]),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG])));
         log_printf ("  separator. . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SEPARATOR]));
