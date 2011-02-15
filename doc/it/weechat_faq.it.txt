@@ -241,10 +241,9 @@ valori raccomandati sono:
 * con screen: 'screen-256color'
 * al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-// TRANSLATION MISSING
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
-variable.
+Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
+questi valori nella variabile 'TERM'.
 
 Se si sta utilizzando screen, è possibile aggiungere questa riga al
 proprio '~/.screenrc':
@@ -261,12 +260,10 @@ niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell
 /upgrade
 ----------------------------------------
 
-// TRANSLATION MISSING
-For version 0.3.4, you must use command `/color` to add new colors.
+Per la versione 0.3.4, bisogna usare il comando `/color` per aggiungere nuovi colori.
 
-// TRANSLATION MISSING
-For versions > = 0.3.5, you can use any color number in options (optional: you
-can add color aliases with command `/color`).
+Per le versioni > = 0.3.5, è possibile usare qualsiasi numero di colore nelle
+opzioni (opzionale: si possono aggiungere gli alias ai colori con il comando `/color`).
 
 Per favore consultare la guida per l'utente per maggiori informazioni sulla gestione
 dei colori.
