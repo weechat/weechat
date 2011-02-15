@@ -1,7 +1,7 @@
 [command]*`logger`* configurazione del plugin logger::
 ........................................
 /logger  list
-         set <level>
+         set <livello>
          disable
 
    list: mostra lo stato del logging per i buffer aperti

@@ -92,7 +92,7 @@
 
 | weechat | nicks | nick nella lista nick del buffer corrente
 
-| weechat | palette_colors | palette colors
+| weechat | palette_colors | Tavolozza dei colori
 
 | weechat | plugins_commands | comandi definiti dai plugin
 

@@ -49,7 +49,7 @@
 ** valori: un nome colore (valore predefinito: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** descrizione: `text color for nicks (comma separated list of colors, background is allowed with format: "fg/bg", for example: "blue/red")`
+** descrizione: `colore del testo per i nick (elenco separato da virgole di colori, quello di sfondo è consentito con il formato "fg/bg", ad esempio: "blue/red")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
@@ -344,7 +344,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *weechat.look.hline_char*
-** descrizione: `char used to draw horizontal separators around bars (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
+** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre (un valore vuoto disegnerà una vera riga con ncurses, ma può causare errori con la selezione dell'URL in alcuni terminali), i caratteri wide NON sono consentiti`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
@@ -389,7 +389,7 @@
 ** valori: 0 .. 100 (valore predefinito: `20`)
 
 * *weechat.look.input_share*
-** descrizione: `condivide comandi, testo o entrambi in input per tutti i buffer (resta tuttavia la cronologia locale per ogni buffer)`
+** descrizione: `condivide comandi, testo o entrambi nell'input per tutti i buffer (resta tuttavia la cronologia locale per ogni buffer)`
 ** tipo: intero
 ** valori: none, commands, text, all (valore predefinito: `none`)
 

@@ -1,6 +1,6 @@
 [command]*`charset`* modifica il set di caratteri per il buffer corrente::
 ........................................
-/charset  decode|encode <charset>
+/charset  decode|encode <set_caratteri>
           reset
 
        decode: modifica il set di caratteri per la decodifica

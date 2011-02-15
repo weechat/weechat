@@ -1,6 +1,6 @@
 [command]*`me`* invia un'azione CTCP all'host remoto::
 ........................................
-/me  <message>
+/me  <messaggio>
 
 messaggio: messaggio da inviare
 ........................................

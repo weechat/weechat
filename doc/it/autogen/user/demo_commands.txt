@@ -1,13 +1,13 @@
 [command]*`demo_buffer`* apri un nuovo buffer::
 ........................................
-/demo_buffer  <name>
+/demo_buffer  <nome>
 ........................................
 
 [command]*`demo_info`* ricevi e visualizza un'informazione::
 ........................................
-/demo_info  <info> [<arguments>]
+/demo_info  <info> [<argomenti>]
 
-          info: informazioni da visualizzare
+     info: informazioni da visualizzare
 argomenti: argomenti opzionali per le informazioni
 
 Senza argomenti, questo comando visualizza un elenco di informazioni disponibili
@@ -15,17 +15,17 @@ Senza argomenti, questo comando visualizza un elenco di informazioni disponibili
 
 [command]*`demo_infolist`* ricevi e visualizza una lista info::
 ........................................
-/demo_infolist  <infolist> [<arguments>]
+/demo_infolist  <infolist> [<argomenti>]
 
-  infolist: lista info da visualizzare
- argomenti: argomenti opzionali per la lista info
+ infolist: lista info da visualizzare
+argomenti: argomenti opzionali per la lista info
 
 Senza argomento, il comando visualizza l'elenco delle liste info disponibili
 ........................................
 
 [command]*`demo_printf`* stampa alcuni messaggi sul buffer corrente::
 ........................................
-/demo_printf  <text>
+/demo_printf  <testo>
 
 testo: scrivi questo testo
 ........................................

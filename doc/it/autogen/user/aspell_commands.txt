@@ -1,9 +1,9 @@
 [command]*`aspell`* configurazione del plugin aspell::
 ........................................
 /aspell  dictlist
-         enable <lang>
+         enable <lingua>
          disable
-         addword [<lang>] <word>
+         addword [<lingua>] <parola>
 
 dictlist: mostra i dizionari installati
   enable: abilita aspell sul buffer corrente

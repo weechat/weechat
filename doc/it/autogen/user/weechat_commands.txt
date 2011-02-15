@@ -1,6 +1,6 @@
 [command]*`away`* attiva/disattiva lo stato di assenza::
 ........................................
-/away  [-all] [<message>]
+/away  [-all] [<messaggio>]
 
      -all: attiva/disattiva lo stato di assenza su tutti i server connessi
 messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene rimosso)
@@ -9,132 +9,132 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 [command]*`bar`* gestione barre::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      add <nome> <tipo>[,<cond1>[,<cond2>...]] <posizione> <dimensione> <separatore> <item1>[,<item2>...]
       default
-      del <name>|-all
-      set <name> <option> <value>
-      hide|show|toggle <name>
-      scroll <name> <buffer> <scroll_value>
+      del <nome>|-all
+      set <nome> <opzione> <valore>
+      hide|show|toggle <nome>
+      scroll <nome> <buffer> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-    cond1,...: condition(s) for displaying bar (only for type "window"):
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               without condition, bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create default bars
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
- scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
+         list: elenca tutte le barre
+     listfull: elenca tutte le barre (dettagliato)
+    listitems: elenca tutti gli elementi della barra
+          add: aggiunge una nuova barra
+         nome: nome della barra (deve essere unico)
+         tipo:   root: al di fuori delle finestre,
+               window: all'interno delle finestre, con opzioni condizionali (a seguire)
+    cond1,...: condizione(i) per visualizzare la barra (solo per il tipo "window"):
+                 active: sulla finestra attiva
+               inactive: sulle finestre inattive
+               nicklist: sulle finestre con la lista nick
+               senza condizione, viene sempre mostrata
+    posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
+   dimensione: dimensione della barra (in caratteri)
+   separatore: 1 per utilizzarlo (riga), 0 o nulla equivale a nessun separatore
+    item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
+      default: crea barre predefinite
+          del: elimina una barra (o tutte le barre con -all)
+          set: imposta un valore per la proprietà di una barra
+      opzione: opzione da cambiare (per una lista di opzioni, consultare /set weechat.bar.<barname>.*)
+       valore: nuovo valore per l'opzione
+         hide: nasconde una barra
+         show: mostra una barra nascosta
+       toggle: nascone/mostra una barra
+       scroll: scorre una barra
+       buffer: nome del buffer da scorrere ('*' indica il buffer corrente, si dovrebbe utilizzare '*' per le barre root)
+ scroll_value: valore per lo scorrimento: 'x' o 'y', seguite da '+', '-', 'b' (inizio) or 'e' (fine), valore (per +/-), e %% opzionale (per scorrere di %% di larghezza/altezza, altrimenti il valore è il numero di caratteri)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
-    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
-    /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+Esempi:
+  crea una barra con l'ora, numero del buffer + nome, e completamento:
+    /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  nasconde una barra:
+    /bar hide miabarra
+  scorre la lista nick di 10 righe in basso sul buffer corrente:
     /bar scroll nicklist * y+10
-  scroll nicklist one page up on #weechat buffer:
+  scorre la lista nick di una pagina in alto sul buffer #weechat:
     /bar scroll nicklist #weechat y-100%
-  scroll to end of nicklist on current buffer:
+  scorre fino alla fine della lista nick sul buffer corrente:
     /bar scroll nicklist * ye
 ........................................
 
 [command]*`buffer`* gestione buffer::
 ........................................
 /buffer  list
-         clear [<number>|-merged|-all]
-         move|merge <number>
-         unmerge [<number>]
+         clear [<numero>|-merged|-all]
+         move|merge <numero>
+         unmerge [<numero>]
          close [<n1>[-<n2>]]
-         notify <level>
+         notify <livello>
          localvar
-         set <property> <value>
-         get <property>
-         <number>|<name>
+         set <proprietà> <valore>
+         get <proprietà>
+         <numero>|<nome>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-   close: close buffer (number/range is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-    name: jump to buffer by (partial) name
+    list: elenca i buffer (senza argomento viene mostrata questa lista)
+   clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer incollati, -all per tutti i buffer o nessun parametro per quello corrente)
+    move: sposta il buffer nella lista (può essere relativo, ad esempio -1)
+   merge: unisce il buffer corrente ad un altro (l'area di chat risulterà un mix di entrambi)
+          (la combinazione predefinita ctrl-x alterna tra i buffer incollati)
+ unmerge: stacca il buffer dagli altri che hanno lo stesso numero
+   close: chiude buffer (numero/serie sono opzionali)
+  notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer deve essere aggiunto alla hotlist oppure no:
+               none: mai
+          highlight: solo per gli eventi
+            message: messaggi dagli utenti + eventi
+                all: tutti i messaggi
+              reset: ripristina al valore predefinito (tutto)
+localvar: visualizza le variabili locali per il buffer corrente
+     set: imposta una proprietà per il buffer corrente
+     get: mostra una proprietà del buffer corrente
+  numero: passa al buffer per numero, prefisso possibile:
+          '+': passaggio relativo, aggiunge un numero a quello corrente
+          '-': passaggio relativo, sottrae un numero a quello corrente
+          '*': passa al numero, usando l'opzione "weechat.look.jump_current_to_previous_buffer"
+    nome: passa al buffer tramite nome (parziale)
 
 Examples:
-  clear current buffer:
+  pulisce il buffer corrente:
     /buffer clear
-  move buffer to number 5:
+  sposta il buffer al numero 5:
     /buffer move 5
-  merge with core buffer:
+  unisce con il buffer core:
     /buffer merge 1
-  unmerge buffer:
+  stacca il buffer:
     /buffer unmerge
-  close current buffer:
+  chiude il buffer corrente:
     /buffer close
-  close buffers 5 to 7:
+  chiude i buffer da 5 a 7:
     /buffer close 5-7
-  jump to #weechat:
+  passa a #weechat:
     /buffer #weechat
-  jump to next buffer:
+  passa al buffer successivo:
     /buffer +1
 ........................................
 
-[command]*`color`* define color aliases and display palette of colors::
+[command]*`color`* definisce gli alias dei colori e visualizza la tavolozza dei colori::
 ........................................
-/color  alias <color> <alias>
-        unalias <color>
+/color  alias <colore> <alias>
+        unalias <colore>
         reset
 
-  alias: add an alias for a color
-unalias: delete an alias
-  color: color number (>= 0, max depends on terminal, commonly 63 or 255)
-   name: alias name for color (for example: "orange")
-  reset: reset all color pairs (useful when no more pairs are available)
+  alias: aggiunge un alias per un colore
+unalias: elimina un alias
+ colore: numero colore (>= 0, il massimo dipende dal terminale, di solito 63 o 255)
+   nome: nome alias per il colore (ad esempio: "arancione")
+  reset: ripristina tutte le coppie di colore (utile quando non ci sono più coppie disponibili)
 
-Without argument, this command displays colors in a new buffer.
+senza argomento, il comando mostra i colori in un nuovo buffer.
 
-Examples:
-  add alias "orange" for color 214:
+Esempi:
+  aggiunge alias "arancione" per il colore 214:
     /color alias 214 orange
-  delete color 214:
+  elimina il colore 214:
     /color unalias 214
 ........................................
 
 [command]*`command`* esegui comando o plugin di WeeChat esplicito::
 ........................................
-/command  <plugin> <command>
+/command  <plugin> <comando>
 
  plugin: nome plugin ('weechat' per il comando interno di WeeChat)
 comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trovata all'inizio del comando)
@@ -143,28 +143,28 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
 [command]*`debug`* attiva debug per core/plugin::
 ........................................
 /debug  list
-        set <plugin> <level>
+        set <plugin> <livello>
         dump [<plugin>]
         buffer|color|memory|term|windows
 
-   list: list plugins with debug levels
-    set: set debug level for plugin
- plugin: name of plugin ("core" for WeeChat core)
-  level: debug level for plugin (0 = disable debug)
-   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
- buffer: dump buffer content with hexadecimal values in log file
-  color: display infos about current color pairs
- memory: display infos about memory usage
-   term: display infos about terminal
-windows: display windows tree
+   list: elenca i plugin con i livelli di debug
+    set: imposta il livello di debug per il plugin
+ plugin: nome del plugin ("core" per il core di WeeChat)
+livello: livello di debug per il plugin (0 = disattiva debug)
+   dump: salva un dump della memoria nel file di log di WeeChat (lo stesso dump viene salvato in caso di crash di WeeChat)
+ buffer: esegue un dump del contenuto del buffer con valori esadecimali nel file di log
+  color: mostra informazioni sulle coppie di colore correnti
+ memory: mostra informazioni sull'uso della memoria
+   term: mostra informazioni sul terminale
+windows: mostra l'albero delle finestre
 ........................................
 
 [command]*`filter`* filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp::
 ........................................
 /filter  list
-         enable|disable|toggle [<name>]
-         add <name> <plugin.buffer> <tags> <regex>
-         del <name>|-all
+         enable|disable|toggle [<nome>]
+         add <nome> <plugin.buffer> <tag> <regex>]
+         del <nome>|-all
 
          list: elenca tutti i filtri
        enable: abilita filtri (i filtri sono abilitati di default)
@@ -210,20 +210,20 @@ Esempi:
 [command]*`help`* visualizza l'aiuto su comandi e opzioni::
 ........................................
 /help  -list|-listfull [<plugin> [<plugin>...]]
-       <command>
-       <option>
+       <comando>
+       <opzione>
 
-    -list: list commands, by plugin (without argument, this list is displayed)
--listfull: list commands with description, by plugin
-   plugin: list commands for this plugin
-  command: a command name
-   option: an option name (use /set to see list)
+    -list: elenca i comandi, per plugin (senza argomento, viene mostrata questa lista)
+-listfull: elenca i comandi con la relativa descrizione, per plugin
+   plugin: elenca i comandi per questo plugin
+  comando: nome di un comando
+  opzione: nome di un'opzione (usare /set per consultare la lista)
 ........................................
 
 [command]*`history`* mostra la cronologia dei comandi del buffer::
 ........................................
-/history  clear
-          <value>
+/history  <clear
+          valore>
 
  clear: pulisci cronologia
 valore: numero delle voci nella cronologia da mostrare
@@ -231,7 +231,7 @@ valore: numero delle voci nella cronologia da mostrare
 
 [command]*`input`* funzioni per la riga di comando::
 ........................................
-/input  <action> [<arguments>]
+/input  <azioni> [<argomenti>]
 
 list of actions:
   return: simulate key "enter"
@@ -279,9 +279,9 @@ This command is used by key bindings or plugins.
 [command]*`key`* associa/disassocia tasti::
 ........................................
 /key  list|listdefault|listdiff
-      bind <key> [<command> [<args>]]
-      unbind <key>
-      reset <key>
+      bind <tasto> [<comando> [<args>]]
+      unbind <tasto>
+      reset <tasto>
       resetall -yes
       missing
 
@@ -322,7 +322,7 @@ Senza argomenti, il comando visualizza il layout salvato.
 
 [command]*`mute`* esegue un comando in silenzio::
 ........................................
-/mute  [-current | -buffer <name> | -all] command
+/mute  [-current | -buffer <nome> | -all] comando
 
 -current: nessun output sul buffer corrente
  -buffer: nessun output sul buffer specificato
@@ -343,56 +343,56 @@ Esempi:
 
 [command]*`plugin`* elenca/attiva/disattiva plugin::
 ........................................
-/plugin  list|listfull [<name>]
-         load <filename>
+/plugin  list|listfull [<nome>]
+         load <nomefile>
          autoload
-         reload|unload [<name>]
+         reload|unload [<nome>]
 
-    list: list loaded plugins
-listfull: list loaded plugins (verbose)
-    load: load a plugin
-autoload: autoload plugins in system or user directory
-  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-  unload: unload a plugin (if no name given, unload all plugins)
+    list: elenca i plugin attivati
+listfull: elenca i plugin attivati (dettagliato)
+    load: attiva un plugin
+autoload: attiva automaticamente un plugin nella cartella di sistema o utente
+  reload: riattiva un plugin (se non viene dato un nome, disattiva e poi riattiva tutti i plugin)
+  unload: disattiva un plugin (se non viene dato un nome, disattiva tutti i plugin
 
-Without argument, this command lists loaded plugins.
+Senza argomento, questo comando elenca i plugin attivati.
 ........................................
 
 [command]*`proxy`* gestione proxy::
 ........................................
 /proxy  list
-        add <name> <type> <address> <port> [<username> [<password>]]
-        del <name>|-all
-        set <name> <option> <value>
+        add <nome> <tipo> <indirizzo> <porta> [<nomeutente> [<password>]]
+        del <nome>|-all
+        set <nome> <opzione> <valore>
 
-    list: list all proxies
-     add: add a new proxy
-    name: name of proxy (must be unique)
-    type: http, socks4 or socks5
- address: IP or hostname
-    port: port
-username: username (optional)
-password: password (optional)
-     del: delete a proxy (or all proxies with -all)
-     set: set a value for a proxy property
-  option: option to change (for options list, look at /set weechat.proxy.<proxyname>.*)
-   value: new value for option
+    list: elenca tutti i proxy
+     add: aggiunge un nuovo proxy
+    nome: nome del proxy (deve essere unico)
+    tipo: http, socks4 o socks5
+ address: IP o nome host
+    port: porta
+username: nome utente (opzionale)
+password: password (opzionale)
+     del: elimina un proxy (o tutti i proxy con -all)
+     set: imposta un valore per la proprietà di un proxy
+  option: opzione da modificare (per una lista di opzioni, consultare /set weechat.proxy.<nomeproxy>.*)
+   value: nuovo valore per l'opzione
 
-Examples:
-  create a http proxy, running on local host, port 8888:
+Esempi:
+  crea un proxy http, in esecuzione sull'host locale, porta 8888:
     /proxy add local http 127.0.0.1 8888
-  create a http proxy using IPv6 protocol:
+  crea un proxy http usando il protocollo IPv6:
     /proxy add local http 127.0.0.1 8888
     /proxy set local ipv6 on
-  create a socks5 proxy with username/password:
+  crea un proxy socks5 con nomeutente/password:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
-  delete a proxy:
-    /proxy del myproxy
+  elimina un proxy:
+    /proxy del mioproxy
 ........................................
 
 [command]*`quit`* esce da WeeChat::
 ........................................
-/quit  [-yes] [<arguments>]
+/quit  [-yes] [<argomenti>]
 
      -yes: richiesto se l'opzione option weechat.look.confirm_quit è abilitata
 argomenti: testo inviato con il segnale "quit"
@@ -401,72 +401,72 @@ argomenti: testo inviato con il segnale "quit"
 
 [command]*`reload`* ricarica i file di configurazione da disco::
 ........................................
-/reload  [<file> [<file>...]]
+/reload  [<file> [<file....>]]
 
-file: configuration file to reload (without extension ".conf")
+file: file di configurazione da ricaricare (senza estensione ".conf")
 
-Without argument, all files (WeeChat and plugins) are reloaded.
+Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 ........................................
 
 [command]*`save`* salva i file di configurazione su disco::
 ........................................
-/save  [<file> [<file>...]]
+/save  [<file> [<file....>]]
 
-file: configuration file to save (without extension ".conf")
+file: file di configurazione da salvare (senza estensione ".conf")
 
-Without argument, all files (WeeChat and plugins) are saved.
+Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
 ........................................
 
 [command]*`set`* imposta le opzioni di configurazione::
 ........................................
-/set  [<option> [<value>]]
+/set  [<opzione> [<valore>]]
 
-option: name of an option (can start or end with "*" to list many options)
- value: new value for option
+opzione: nome di un'opzione (può iniziare o terminare con "*" per visualizzare più opzioni)
+ valore: nuovo valore per l'opzione
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-  string : any string ("" for empty string)
-  color  : color name, ++number or --number
+Il nuovo valore può essere, a seconda del tipo di variabile:
+  booleano: on, off o toggle
+  intero  : numero, ++numero o --numero
+  stringa : qualsiasi stringa ("" per una stringa vuota)
+  colore  : nome colore, ++numeero o --numero
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+Per tutti i tipi, è possibile usare null per rimuovere il valore dell'opzione (valore non definito). Ciò funziona solo per alcune variabili speciali dei plugin.
 
-Examples:
-  display options about highlight:
+Esempi:
+  mostra le opzioni relative agli eventi:
     /set *highlight*
-  add a word to highlight:
+  aggiunge una parola all'evento:
     /set weechat.look.highlight "word"
 ........................................
 
 [command]*`unset`* annulla/ripristina opzione::
 ........................................
-/unset  <option>
+/unset  <opzione>
 
-option: name of an option (may begin or end with "*" to mass-reset options, use carefully!)
+opzione: nome di un'opzione (può iniziare o terminare con "*" per il ripristino di più opzioni, attenzione!)
 
-According to option, it's reset (for standard options) or removed (for optional settings, like server values).
+A seconda dell'opzione, essa viene ripristinata (per le opzioni standard) o rimossa (per le impostazioni opzionali, come i valori del server).
 
-Examples:
-  reset one option:
+Esempi:
+  ripristina un'opzione:
     /unset weechat.look.item_time_format
-  reset all color options:
+  ripristina tutte le opzioni del colore:
     /unset weechat.color.*
 ........................................
 
 [command]*`upgrade`* aggiorna WeeChat senza disconnettere dai server::
 ........................................
-/upgrade  [<path_to_binary>]
+/upgrade  [<percorso_del_binario>]
 
-path_to_binary: path to WeeChat binary (default is current binary)
+percorso_del_binario: percorso del binario di WeeChat (quello corrente è il predefinito)
 
-This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Il processo di aggiornamento è diviso in 4 fasi:
+  1. salvataggio della sessione in file per il core e i plugin (buffer, cronologia, ..)
+  2. disattivazione di tutti i plugin (salvataggio delle configurazioni .conf)
+  3. salvataggio della configurazione di WeeChat (weechat.conf)
+  4. esecuzione del nuovo binario di WeeChat.
 ........................................
 
 [command]*`uptime`* mostra l'uptime di WeeChat::
@@ -487,25 +487,25 @@ Upgrade process has 4 steps:
 
 [command]*`wait`* pianifica l'esecuzione di un comando::
 ........................................
-/wait  <number>[<unit>] <command>
+/wait  <numero>[<unità>] <comando>
 
- number: amount of time to wait (integer number)
-   unit: optional, values are:
-           ms: milliseconds
-            s: seconds (default)
-            m: minutes
-            h: hours
-command: command to execute (or text to send to buffer if command does not start with '/')
+ numero: tempo di attesa (numero intero)
+  unità: valori opzionali sono:
+           ms: millisecondi
+            s: secondi (predefinito)
+            m: minuti
+            h: ore
+comando: comando da eseguire (o testo da inviare al buffer se il comando non inizia con '/')
 
-Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
+Nota: il comando viene eseguito sui buffer dove /wait è stato eseguito (se il buffer non viene trovato (per esempio se è stato chiuso prima dell'esecuzione), allora il comando verrà eseguito sul buffer core di WeeChat)
 
-Examples:
-  join channel in 10 seconds:
+Esempi:
+  entra nel canale tra 10 secondi:
     /wait 10 /join #test
-  set away in 15 minutes:
-    /wait 15m /away -all I'm away
-  say 'hello' in 2 minutes:
-    /wait 2m hello
+  imposta assenza tra 15 minuti:
+    /wait 15m /away -all Sono assente
+  scrive 'ciao' tra 2 minuti:
+    /wait 2m ciao
 ........................................
 
 [command]*`window`* gestione finestre::

@@ -1,8 +1,8 @@
 [command]*`relay`* controllo relay::
 ........................................
 /relay  list|listfull|listrelay
-        add <protocol.name> <port>
-        del <protocol.name>
+        add <protocollo.nome> <porta>
+        del <protocollo.nome>
         raw
 
            list: elenca i client relay (solo quelli attivi)
