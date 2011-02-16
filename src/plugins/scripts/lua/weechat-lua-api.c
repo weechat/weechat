@@ -1258,7 +1258,6 @@ weechat_lua_api_config_reload_cb (void *data,
     {
         lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         lua_argv[1] = script_ptr2str (config_file);
-        lua_argv[2] = NULL;
         
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
