@@ -1,42 +1,42 @@
 * *relay.color.status_active*
 ** description: `couleur du texte pour le statut "connecté"`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightblue`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightblue`)
 
 * *relay.color.status_auth_failed*
 ** description: `couleur du texte pour le statut "échec auth"`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightred`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
 
 * *relay.color.status_connecting*
 ** description: `couleur du texte pour le statut "connexion"`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
 
 * *relay.color.status_disconnected*
 ** description: `couleur du texte pour le statut "déconnecté"`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightred`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
 
 * *relay.color.status_waiting_auth*
 ** description: `couleur du texte pour le statut "attente auth"`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `brown`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `brown`)
 
 * *relay.color.text*
 ** description: `couleur du texte`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
 * *relay.color.text_bg*
 ** description: `couleur du fond`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
 * *relay.color.text_selected*
 ** description: `couleur du texte pour la ligne client sélectionnée`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `white`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
 
 * *relay.look.auto_open_buffer*
 ** description: `ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau client est ajouté à la liste`

@@ -1,77 +1,77 @@
 * *irc.color.input_nick*
 ** description: `couleur du pseudo dans la barre de saisie`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightcyan`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightcyan`)
 
 * *irc.color.item_away*
 ** description: `couleur pour l'objet away`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
 
 * *irc.color.item_channel_modes*
 ** description: `couleur pour les modes du canal, à côté du nom du canal`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
 * *irc.color.item_lag_counting*
 ** description: `couleur pour l'indicateur de lag, lorsque le décompte est en cours (pong non reçu du serveur, le lag augmente)`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
 * *irc.color.item_lag_finished*
 ** description: `couleur pour l'indicateur de lag, lorsque le pong a été reçu du serveur`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
 
 * *irc.color.message_join*
 ** description: `couleur pour le texte dans les messages join`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * *irc.color.message_quit*
 ** description: `couleur pour le texte dans les messages part/quit`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `red`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `red`)
 
 * *irc.color.nick_prefix*
 ** description: `couleur pour le préfixe du pseudo (le préfixe est une chaîne personnalisée affichée avant le pseudo)`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * *irc.color.nick_prefix_halfop*
 ** description: `couleur pour le préfixe d'un pseudo qui est halfop sur le canal`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightmagenta`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightmagenta`)
 
 * *irc.color.nick_prefix_op*
 ** description: `couleur pour le préfixe d'un pseudo qui est op/admin/owner sur le canal`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `lightgreen`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightgreen`)
 
 * *irc.color.nick_prefix_user*
 ** description: `couleur pour le préfixe d'un pseudo qui est user sur le canal`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `blue`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `blue`)
 
 * *irc.color.nick_prefix_voice*
 ** description: `couleur pour le préfixe d'un pseudo qui a le voice sur le canal`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
 
 * *irc.color.nick_suffix*
 ** description: `couleur pour le suffixe du pseudo (le suffixe est une chaîne personnalisée affichée après le pseudo)`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * *irc.color.notice*
 ** description: `couleur pour le texte "Notice" dans les notices`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * *irc.color.reason_quit*
 ** description: `couleur pour la raison dans les messages part/quit`
 ** type: couleur
-** valeurs: un nom de couleur (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
 * *irc.look.color_nicks_in_server_messages*
 ** description: `utiliser la couleur du pseudo dans les messages du serveur`

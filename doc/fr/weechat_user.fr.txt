@@ -990,8 +990,8 @@ Ou si vous voulez un fond vert très foncé pour la barre de statut :
 ----------------------------------------
 
 [[colors_aliases]]
-Alias pour les couleurs
-^^^^^^^^^^^^^^^^^^^^^^^
+Alias
+^^^^^
 
 Vous pouvez ajouter des alias de couleur avec la commande `/color alias` puis
 utiliser cet alias dans n'importe quelle option de couleur.
@@ -1001,6 +1001,39 @@ Par exemple :
 ----------------------------------------
 /color alias 214 orange
 /set weechat.color.chat_delimiters orange
+----------------------------------------
+
+[[colors_attributes]]
+Attributs
+^^^^^^^^^
+
+Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
+attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
+
+* "*" : texte gras
+* "%" : mode vidéo inverse
+* "_" : texte souligné
+
+Par exemple si vous voulez votre pseudo en blanc souligné, faites :
+
+----------------------------------------
+/set weechat.color.chat_nick_self _white
+----------------------------------------
+
+Ou si vous voulez l'heure dans la barre de statut en orange souligné avec gras :
+
+----------------------------------------
+/set weechat.color.status_time *_214
+----------------------------------------
+
+Pour utiliser un attribut avec la couleur par défaut du terminal (-1), vous
+devez utiliser un nombre supérieur à la dernière couleur du terminal, par
+exemple la couleur maximum de WeeChat : 99999.
+
+Exemple de gras avec la couleur de texte du terminal :
+
+----------------------------------------
+/set weechat.color.status_time *99999
 ----------------------------------------
 
 

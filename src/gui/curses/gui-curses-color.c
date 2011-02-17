@@ -77,7 +77,6 @@ short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 
 /* pairs */
 int gui_color_num_pairs = 63;            /* number of pairs used by WeeChat */
-int gui_color_num_bg = 8;                /* number of backgrounds           */
 short *gui_color_pairs = NULL;           /* table with pair for each fg+bg  */
 int gui_color_pairs_used = 0;            /* number of pairs currently used  */
 int gui_color_warning_pairs_full = 0;    /* warning displayed?              */
@@ -118,24 +117,34 @@ gui_color_search (const char *color_name)
 int
 gui_color_assign (int *color, const char *color_name)
 {
-    int color_index, pair;
+    int flag, extra_attr, color_index, number;
     char *error;
     
-    /* search for color alias */
-    pair = gui_color_palette_get_alias (color_name);
-    if (pair >= 0)
+    /* read extended attributes */
+    extra_attr = 0;
+    while ((flag = gui_color_attr_get_flag (color_name[0])) > 0)
     {
-        *color = GUI_COLOR_EXTENDED_FLAG | pair;
+        extra_attr |= flag;
+        color_name++;
+    }
+    
+    /* is it a color alias? */
+    number = gui_color_palette_get_alias (color_name);
+    if (number >= 0)
+    {
+        *color = number | GUI_COLOR_EXTENDED_FLAG | extra_attr;
         return 1;
     }
     
-    /* is it pair number? */
+    /* is it a color number? */
     error = NULL;
-    pair = (int)strtol (color_name, &error, 10);
-    if (color_name[0] && error && !error[0] && (pair >= 0))
+    number = (int)strtol (color_name, &error, 10);
+    if (color_name[0] && error && !error[0] && (number >= 0))
     {
-        /* color_name is a number, use this pair number */
-        *color = GUI_COLOR_EXTENDED_FLAG | pair;
+        /* color_name is a number, use this color number */
+        if (number > GUI_COLOR_EXTENDED_MAX)
+            number = GUI_COLOR_EXTENDED_MAX;
+        *color = number | GUI_COLOR_EXTENDED_FLAG | extra_attr;
         return 1;
     }
     else
@@ -144,7 +153,7 @@ gui_color_assign (int *color, const char *color_name)
         color_index = gui_color_search (color_name);
         if (color_index >= 0)
         {
-            *color = color_index;
+            *color = color_index | extra_attr;
             return 1;
         }
     }
@@ -284,6 +293,11 @@ error:
     }
 }
 
+/*
+ * gui_color_timer_warning_pairs_full: display a warning when no more pair is
+ *                                     available in table
+ */
+
 int
 gui_color_timer_warning_pairs_full (void *data, int remaining_calls)
 {
@@ -383,30 +397,51 @@ gui_color_weechat_get_pair (int weechat_color)
 const char *
 gui_color_get_name (int num_color)
 {
-    static char color[32][16];
+    static char color[16][64];
     static int index_color = 0;
+    char str_attr[8];
     struct t_gui_color_palette *ptr_color_palette;
+    
+    /* init color string */
+    index_color = (index_color + 1) % 16;
+    color[index_color][0] = '\0';
+    
+    /* build string with extra-attributes */
+    gui_color_attr_build_string (num_color, str_attr);
     
     if (num_color & GUI_COLOR_EXTENDED_FLAG)
     {
+        /* search alias */
         ptr_color_palette = gui_color_palette_get (num_color & GUI_COLOR_EXTENDED_MASK);
         if (ptr_color_palette && ptr_color_palette->alias)
-            return ptr_color_palette->alias;
-        index_color = (index_color + 1) % 32;
-        color[index_color][0] = '\0';
+        {
+            /* alias */
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%s%s", str_attr, ptr_color_palette->alias);
+        }
+        else
+        {
+            /* color number */
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%s%d", str_attr, num_color & GUI_COLOR_EXTENDED_MASK);
+        }
+    }
+    else
+    {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%d", num_color & GUI_COLOR_EXTENDED_MASK);
-        return color[index_color];
+                  "%s%s",
+                  str_attr,
+                  gui_weechat_colors[num_color & GUI_COLOR_EXTENDED_MASK].string);
     }
     
-    return gui_weechat_colors[num_color].string;
+    return color[index_color];
 }
 
 /*
  * gui_color_build: build a WeeChat color with foreground and background
- *                  (foreground and background must be >= 0,
- *                  if they are >= 0x10000, then it is a pair number
- *                  (pair = value & 0xFFFF))
+ *                  Foreground and background must be >= 0 and can be a
+ *                  WeeChat or extended color, with optional attributes for
+ *                  foreground.
  */
 
 void
@@ -427,22 +462,28 @@ gui_color_build (int number, int foreground, int background)
     }
     
     /* set foreground and attributes */
-    if (foreground <= GUI_CURSES_NUM_WEECHAT_COLORS)
+    if (foreground & GUI_COLOR_EXTENDED_FLAG)
     {
-        gui_color[number]->foreground = gui_weechat_colors[foreground].foreground;
-        gui_color[number]->attributes = gui_weechat_colors[foreground].attributes;
-    }
-    else
-    {
-        gui_color[number]->foreground = foreground;
+        gui_color[number]->foreground = foreground & GUI_COLOR_EXTENDED_MASK;
         gui_color[number]->attributes = 0;
     }
+    else
+    {
+        gui_color[number]->foreground = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].foreground;
+        gui_color[number]->attributes = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].attributes;
+    }
+    if (foreground & GUI_COLOR_EXTENDED_BOLD_FLAG)
+        gui_color[number]->attributes |= A_BOLD;
+    if (foreground & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+        gui_color[number]->attributes |= A_REVERSE;
+    if (foreground & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+        gui_color[number]->attributes |= A_UNDERLINE;
     
     /* set background */
-    if (background <= GUI_CURSES_NUM_WEECHAT_COLORS)
-        gui_color[number]->background = gui_weechat_colors[background].foreground;
+    if (background & GUI_COLOR_EXTENDED_FLAG)
+        gui_color[number]->background = background & GUI_COLOR_EXTENDED_MASK;
     else
-        gui_color[number]->background = background;
+        gui_color[number]->background = gui_weechat_colors[background & GUI_COLOR_EXTENDED_MASK].background;
     
     /* set string */
     if (gui_color[number]->string)
@@ -467,7 +508,6 @@ gui_color_init_vars ()
     gui_color_term_color_pairs = 0;
     gui_color_term_can_change_color = 0;
     gui_color_num_pairs = 63;
-    gui_color_num_bg = 8;
     if (gui_color_pairs)
     {
         free (gui_color_pairs);
@@ -483,7 +523,6 @@ gui_color_init_vars ()
         
         gui_color_num_pairs = (gui_color_term_color_pairs >= 256) ?
             255 : gui_color_term_color_pairs - 1;
-        gui_color_num_bg = (gui_color_term_color_pairs >= 256) ? 16 : 8;
         if (gui_color_term_colors > 0)
         {
             size = (gui_color_term_colors + 2)

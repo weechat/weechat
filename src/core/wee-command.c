@@ -1946,7 +1946,15 @@ COMMAND_CALLBACK(help)
                 gui_chat_printf (NULL, "  %s: %s",
                                  _("type"), _("color"));
                 gui_chat_printf (NULL, "  %s: %s",
-                                 _("values"), _("a color name"));
+                                 _("values"),
+                                 _("a WeeChat color name (default, black, "
+                                   "(dark)gray, white, (light)red, (light)green, "
+                                   "brown, yellow, (light)blue, (light)magenta, "
+                                   "(light)cyan), a terminal color number or "
+                                   "an alias; attributes are allowed before "
+                                   "color (for text color only, not "
+                                   "background): \"*\" for bold, \"%\" for "
+                                   "reverse, \"_\" for underline"));
                 if (ptr_option->default_value)
                 {
                     gui_chat_printf (NULL, "  %s: %s",

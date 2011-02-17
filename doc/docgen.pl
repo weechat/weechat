@@ -491,7 +491,14 @@ sub docgen
                             }
                             if ($type eq "color")
                             {
-                                $values = weechat_gettext("a color name");
+                                $values = weechat_gettext("a WeeChat color name (default, black, "
+                                                          ."(dark)gray, white, (light)red, (light)green, "
+                                                          ."brown, yellow, (light)blue, (light)magenta, "
+                                                          ."(light)cyan), a terminal color number or "
+                                                          ."an alias; attributes are allowed before "
+                                                          ."color (for text color only, not "
+                                                          ."background): \"*\" for bold, \"%\" for "
+                                                          ."reverse, \"_\" for underline");
                             }
                             
                             print FILE "* *".$config.".".$section.".".$option."*\n";

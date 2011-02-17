@@ -194,12 +194,12 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         fg &= GUI_COLOR_EXTENDED_MASK;
     else
-        fg = gui_weechat_colors[fg].foreground;
+        fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
     
     if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
         bg &= GUI_COLOR_EXTENDED_MASK;
     else
-        bg = gui_weechat_colors[bg].background;
+        bg = gui_weechat_colors[bg & GUI_COLOR_EXTENDED_MASK].background;
     
     wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)));
     werase (window);
@@ -284,7 +284,6 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
     if ((num_color >= 0) && (num_color < GUI_COLOR_NUM_COLORS))
     {
         gui_window_reset_style (window, num_color);
-        wattron (window, gui_color[num_color]->attributes);
         fg = gui_color[num_color]->foreground;
         bg = gui_color[num_color]->background;
         
@@ -307,51 +306,6 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 }
 
 /*
- * gui_window_set_custom_color_fg_bg: set a custom color for a window
- *                                    (foreground and background)
- */
-
-void
-gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
-{
-    int attributes;
-    
-    if ((fg >= 0) && (bg >= 0))
-    {
-        gui_window_remove_color_style (window, A_BOLD);
-        
-        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
-            fg &= GUI_COLOR_EXTENDED_MASK;
-        else
-        {
-            attributes = gui_weechat_colors[fg].attributes;
-            wattron (window, attributes);
-            fg = gui_weechat_colors[fg].foreground;
-            
-            /*
-             * if not real white, we use default terminal foreground instead of
-             * white if bold attribute is set
-             */
-            if ((fg == COLOR_WHITE) && (attributes & A_BOLD)
-                && !CONFIG_BOOLEAN(config_look_color_real_white))
-            {
-                fg = -1;
-            }
-        }
-        
-        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
-            bg &= GUI_COLOR_EXTENDED_MASK;
-        else
-        {
-            bg = (gui_color_num_bg > 8) ?
-                gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground;
-        }
-        
-        gui_window_set_color (window, fg, bg);
-    }
-}
-
-/*
  * gui_window_set_custom_color_fg: set a custom color for a window
  *                                 (foreground only)
  */
@@ -365,19 +319,38 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
     {
         current_bg = window_current_style_bg;
         
-        gui_window_remove_color_style (window, A_BOLD);
-        
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
+            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                gui_window_set_color_style (window, A_BOLD);
+            else
+                gui_window_remove_color_style (window, A_BOLD);
+            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+                gui_window_set_color_style (window, A_REVERSE);
+            else
+                gui_window_remove_color_style (window, A_REVERSE);
+            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+                gui_window_set_color_style (window, A_UNDERLINE);
+            else
+                gui_window_remove_color_style (window, A_UNDERLINE);
             gui_window_set_color (window,
                                   fg & GUI_COLOR_EXTENDED_MASK,
                                   current_bg);
         }
-        else if (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
+        else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            attributes = gui_weechat_colors[fg].attributes;
+            gui_window_remove_color_style (window,
+                                           A_BOLD | A_REVERSE | A_UNDERLINE);
+            attributes = 0;
+            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                attributes |= A_BOLD;
+            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+                attributes |= A_REVERSE;
+            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+                attributes |= A_UNDERLINE;
+            attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
             gui_window_set_color_style (window, attributes);
-            fg = gui_weechat_colors[fg].foreground;
+            fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
             
             /*
              * if not real white, we use default terminal foreground instead of
@@ -415,13 +388,81 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
                                   current_fg,
                                   bg & GUI_COLOR_EXTENDED_MASK);
         }
-        else if (bg < GUI_CURSES_NUM_WEECHAT_COLORS)
+        else if ((bg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
+            bg &= GUI_COLOR_EXTENDED_MASK;
             gui_window_set_color_style (window, current_attr);
             gui_window_set_color (window, current_fg,
-                                  (gui_color_num_bg > 8) ?
+                                  (gui_color_term_colors >= 16) ?
                                   gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
         }
+    }
+}
+
+/*
+ * gui_window_set_custom_color_fg_bg: set a custom color for a window
+ *                                    (foreground and background)
+ */
+
+void
+gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
+{
+    int attributes;
+    
+    if ((fg >= 0) && (bg >= 0))
+    {
+        if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
+        {
+            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                gui_window_set_color_style (window, A_BOLD);
+            else
+                gui_window_remove_color_style (window, A_BOLD);
+            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+                gui_window_set_color_style (window, A_REVERSE);
+            else
+                gui_window_remove_color_style (window, A_REVERSE);
+            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+                gui_window_set_color_style (window, A_UNDERLINE);
+            else
+                gui_window_remove_color_style (window, A_UNDERLINE);
+            fg &= GUI_COLOR_EXTENDED_MASK;
+        }
+        else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
+        {
+            gui_window_remove_color_style (window,
+                                           A_BOLD | A_REVERSE | A_UNDERLINE);
+            attributes = 0;
+            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
+                attributes |= A_BOLD;
+            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+                attributes |= A_REVERSE;
+            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+                attributes |= A_UNDERLINE;
+            attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
+            gui_window_set_color_style (window, attributes);
+            fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
+            
+            /*
+             * if not real white, we use default terminal foreground instead of
+             * white if bold attribute is set
+             */
+            if ((fg == COLOR_WHITE) && (attributes & A_BOLD)
+                && !CONFIG_BOOLEAN(config_look_color_real_white))
+            {
+                fg = -1;
+            }
+        }
+        
+        if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
+            bg &= GUI_COLOR_EXTENDED_MASK;
+        else
+        {
+            bg &= GUI_COLOR_EXTENDED_MASK;
+            bg = (gui_color_term_colors >= 16) ?
+                gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground;
+        }
+        
+        gui_window_set_color (window, fg, bg);
     }
 }
 
@@ -435,7 +476,8 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
 {
     if ((pair >= 0) && (pair <= gui_color_num_pairs))
     {
-        gui_window_remove_color_style (window, A_BOLD);
+        gui_window_remove_color_style (window,
+                                       A_BOLD | A_REVERSE | A_UNDERLINE);
         wattron (window, COLOR_PAIR(pair));
     }
 }
@@ -448,36 +490,49 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
  */
 
 void
-gui_window_string_apply_color_fg (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_fg[6], *error;
-    int fg;
+    int fg, extra_attr, flag;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
     {
-        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-            && ptr_string[4] && ptr_string[5])
+        ptr_string++;
+        extra_attr = 0;
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
+        {
+            extra_attr |= flag;
+            ptr_string++;
+        }
+        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+            && ptr_string[3] && ptr_string[4])
         {
             if (window)
             {
-                memcpy (str_fg, ptr_string + 1, 5);
+                memcpy (str_fg, ptr_string, 5);
                 str_fg[5] = '\0';
                 error = NULL;
                 fg = (int)strtol (str_fg, &error, 10);
                 if (error && !error[0])
                 {
                     gui_window_set_custom_color_fg (window,
-                                                    fg | GUI_COLOR_EXTENDED_FLAG);
+                                                    fg | GUI_COLOR_EXTENDED_FLAG | extra_attr);
                 }
             }
-            ptr_string += 6;
+            ptr_string += 5;
         }
     }
     else
     {
+        extra_attr = 0;
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
+        {
+            extra_attr |= flag;
+            ptr_string++;
+        }
         if (ptr_string[0] && ptr_string[1])
         {
             if (window)
@@ -489,14 +544,14 @@ gui_window_string_apply_color_fg (unsigned char **str, WINDOW *window)
                 fg = (int)strtol (str_fg, &error, 10);
                 if (error && !error[0])
                 {
-                    gui_window_set_custom_color_fg (window, fg);
+                    gui_window_set_custom_color_fg (window, fg | extra_attr);
                 }
             }
             ptr_string += 2;
         }
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -507,13 +562,13 @@ gui_window_string_apply_color_fg (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_bg (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_bg[6], *error;
     int bg;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
     {
@@ -555,7 +610,7 @@ gui_window_string_apply_color_bg (unsigned char **str, WINDOW *window)
         }
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -567,13 +622,13 @@ gui_window_string_apply_color_bg (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_fg[6], str_bg[6], *error;
-    int fg, bg;
+    int fg, bg, extra_attr, flag;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     str_fg[0] = '\0';
     str_bg[0] = '\0';
@@ -581,25 +636,38 @@ gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
     bg = -1;
     if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
     {
-        if (ptr_string[1] && ptr_string[2] && ptr_string[3]
-            && ptr_string[4] && ptr_string[5])
+        ptr_string++;
+        extra_attr = 0;
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
+        {
+            extra_attr |= flag;
+            ptr_string++;
+        }
+        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+            && ptr_string[3] && ptr_string[4])
         {
             if (window)
             {
-                memcpy (str_fg, ptr_string + 1, 5);
+                memcpy (str_fg, ptr_string, 5);
                 str_fg[5] = '\0';
                 error = NULL;
                 fg = (int)strtol (str_fg, &error, 10);
                 if (!error || error[0])
                     fg = -1;
                 else
-                    fg |= GUI_COLOR_EXTENDED_FLAG;
+                    fg |= GUI_COLOR_EXTENDED_FLAG | extra_attr;
             }
-            ptr_string += 6;
+            ptr_string += 5;
         }
     }
     else
     {
+        extra_attr = 0;
+        while ((flag = gui_color_attr_get_flag (ptr_string[0])) > 0)
+        {
+            extra_attr |= flag;
+            ptr_string++;
+        }
         if (ptr_string[0] && ptr_string[1])
         {
             if (window)
@@ -611,6 +679,8 @@ gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
                 fg = (int)strtol (str_fg, &error, 10);
                 if (!error || error[0])
                     fg = -1;
+                else
+                    fg |= extra_attr;
             }
             ptr_string += 2;
         }
@@ -660,7 +730,7 @@ gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
         gui_window_set_custom_color_fg_bg (window, fg, bg);
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -672,13 +742,13 @@ gui_window_string_apply_color_fg_bg (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_pair (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_pair[6], *error;
     int pair;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
         && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
@@ -698,7 +768,7 @@ gui_window_string_apply_color_pair (unsigned char **str, WINDOW *window)
         ptr_string += 5;
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -711,13 +781,13 @@ gui_window_string_apply_color_pair (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_weechat (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     char str_number[3], *error;
     int weechat_color;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
     {
@@ -737,7 +807,7 @@ gui_window_string_apply_color_weechat (unsigned char **str, WINDOW *window)
         ptr_string += 2;
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -750,11 +820,11 @@ gui_window_string_apply_color_weechat (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_set_attr (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     switch (ptr_string[0])
     {
@@ -779,7 +849,7 @@ gui_window_string_apply_color_set_attr (unsigned char **str, WINDOW *window)
             break;
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*
@@ -792,11 +862,11 @@ gui_window_string_apply_color_set_attr (unsigned char **str, WINDOW *window)
  */
 
 void
-gui_window_string_apply_color_remove_attr (unsigned char **str, WINDOW *window)
+gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
     
-    ptr_string = *str;
+    ptr_string = *string;
     
     switch (ptr_string[0])
     {
@@ -821,7 +891,7 @@ gui_window_string_apply_color_remove_attr (unsigned char **str, WINDOW *window)
             break;
     }
     
-    *str = ptr_string;
+    *string = ptr_string;
 }
 
 /*

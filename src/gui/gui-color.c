@@ -85,17 +85,66 @@ gui_color_search_config (const char *color_name)
 }
 
 /*
+ * gui_color_attr_get_flag: return flag for attribute char of a color
+ *                          If char is unknown, 0 is returned
+ */
+
+int
+gui_color_attr_get_flag (char c)
+{
+    if (c == GUI_COLOR_EXTENDED_BOLD_CHAR)
+        return GUI_COLOR_EXTENDED_BOLD_FLAG;
+    
+    if (c == GUI_COLOR_EXTENDED_REVERSE_CHAR)
+        return GUI_COLOR_EXTENDED_REVERSE_FLAG;
+    
+    if (c == GUI_COLOR_EXTENDED_ITALIC_CHAR)
+        return GUI_COLOR_EXTENDED_ITALIC_FLAG;
+    
+    if (c == GUI_COLOR_EXTENDED_UNDERLINE_CHAR)
+        return GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
+    
+    return 0;
+}
+
+/*
+ * gui_color_attr_build_string: build string with attributes of color
+ *                              The str_attr must be at least 5 bytes long
+ *                              (4 for attributes + final '\0')
+ */
+
+void
+gui_color_attr_build_string (int color, char *str_attr)
+{
+    int i;
+    
+    i = 0;
+    
+    if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_BOLD_CHAR;
+    if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_REVERSE_CHAR;
+    if (color & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_ITALIC_CHAR;
+    if (color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_UNDERLINE_CHAR;
+    
+    str_attr[i] = '\0';
+}
+
+/*
  * gui_color_get_custom: get a custom color with a name (GUI dependent)
  */
 
 const char *
 gui_color_get_custom (const char *color_name)
 {
-    int fg, bg, fg_pair, bg_pair, pair;
-    static char color[32][16];
+    int fg, bg, fg_term, bg_term, term_color;
+    static char color[32][32];
     static int index_color = 0;
     char color_fg[32], color_bg[32];
-    char *pos_delim, *str_fg, *pos_bg, *error;
+    char *pos_delim, *str_fg, *pos_bg, *error, *color_attr;
+    const char *ptr_color_name;
     
     /* attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 32;
@@ -193,44 +242,58 @@ gui_color_get_custom (const char *color_name)
     else
     {
         /* custom color name (GUI dependent) */
-        pos_delim = strchr (color_name, ',');
+        fg_term = -1;
+        bg_term = -1;
+        fg = -1;
+        bg = -1;
+        color_attr = NULL;
+        color_fg[0] = '\0';
+        color_bg[0] = '\0';
+        
+        /* read extra attributes (bold, ..) */
+        ptr_color_name = color_name;
+        while (gui_color_attr_get_flag (ptr_color_name[0]) > 0)
+        {
+            ptr_color_name++;
+        }
+        if (ptr_color_name != color_name)
+        {
+            color_attr = string_strndup (color_name,
+                                         ptr_color_name - color_name);
+        }
+        
+        pos_delim = strchr (ptr_color_name, ',');
         if (!pos_delim)
-            pos_delim = strchr (color_name, '/');
+            pos_delim = strchr (ptr_color_name, '/');
         if (pos_delim)
         {
-            if (pos_delim == color_name)
+            if (pos_delim == ptr_color_name)
                 str_fg = NULL;
             else
-                str_fg = string_strndup (color_name, pos_delim - color_name);
+                str_fg = string_strndup (ptr_color_name,
+                                         pos_delim - ptr_color_name);
             pos_bg = pos_delim + 1;
         }
         else
         {
-            str_fg = strdup (color_name);
+            str_fg = strdup (ptr_color_name);
             pos_bg = NULL;
         }
         
-        fg_pair = -1;
-        bg_pair = -1;
-        fg = -1;
-        bg = -1;
-        color_fg[0] = '\0';
-        color_bg[0] = '\0';
-        
         if (str_fg)
         {
-            fg_pair = gui_color_palette_get_alias (str_fg);
-            if (fg_pair < 0)
+            fg_term = gui_color_palette_get_alias (str_fg);
+            if (fg_term < 0)
             {
                 error = NULL;
-                pair = (int)strtol (str_fg, &error, 10);
+                term_color = (int)strtol (str_fg, &error, 10);
                 if (error && !error[0])
                 {
-                    fg_pair = pair;
-                    if (fg_pair < 0)
-                        fg_pair = 0;
-                    else if (fg_pair > 99999)
-                        fg_pair = 99999;
+                    fg_term = term_color;
+                    if (fg_term < 0)
+                        fg_term = 0;
+                    else if (fg_term > GUI_COLOR_EXTENDED_MAX)
+                        fg_term = GUI_COLOR_EXTENDED_MAX;
                 }
                 else
                     fg = gui_color_search (str_fg);
@@ -238,41 +301,43 @@ gui_color_get_custom (const char *color_name)
         }
         if (pos_bg)
         {
-            bg_pair = gui_color_palette_get_alias (pos_bg);
-            if (bg_pair < 0)
+            bg_term = gui_color_palette_get_alias (pos_bg);
+            if (bg_term < 0)
             {
                 error = NULL;
-                pair = (int)strtol (pos_bg, &error, 10);
+                term_color = (int)strtol (pos_bg, &error, 10);
                 if (error && !error[0])
                 {
-                    bg_pair = pair;
-                    if (bg_pair < 0)
-                        bg_pair = 0;
-                    else if (bg_pair > 99999)
-                        bg_pair = 99999;
+                    bg_term = term_color;
+                    if (bg_term < 0)
+                        bg_term = 0;
+                    else if (bg_term > GUI_COLOR_EXTENDED_MAX)
+                        bg_term = GUI_COLOR_EXTENDED_MAX;
                 }
                 else
                     bg = gui_color_search (pos_bg);
             }
         }
         
-        if (fg_pair >= 0)
+        if (fg_term >= 0)
         {
-            snprintf (color_fg, sizeof (color_fg), "%c%05d",
+            snprintf (color_fg, sizeof (color_fg), "%c%s%05d",
                       GUI_COLOR_EXTENDED_CHAR,
-                      fg_pair);
+                      (color_attr) ? color_attr : "",
+                      fg_term);
         }
         else if (fg >= 0)
         {
-            snprintf (color_fg, sizeof (color_fg), "%02d",
+            snprintf (color_fg, sizeof (color_fg), "%s%02d",
+                      (color_attr) ? color_attr : "",
                       fg);
         }
         
-        if (bg_pair >= 0)
+        if (bg_term >= 0)
         {
             snprintf (color_bg, sizeof (color_bg), "%c%05d",
                       GUI_COLOR_EXTENDED_CHAR,
-                      bg_pair);
+                      bg_term);
         }
         else if (bg >= 0)
         {
@@ -306,6 +371,8 @@ gui_color_get_custom (const char *color_name)
                       color_bg);
         }
         
+        if (color_attr)
+            free (color_attr);
         if (str_fg)
             free (str_fg);
     }
@@ -349,34 +416,70 @@ gui_color_decode (const char *string, const char *replacement)
                 switch (ptr_string[0])
                 {
                     case GUI_COLOR_FG_CHAR:
-                    case GUI_COLOR_BG_CHAR:
-                        if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
+                        ptr_string++;
+                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
                         {
-                            if (ptr_string[2] && ptr_string[3] && ptr_string[4]
-                                && ptr_string[5] && ptr_string[6])
+                            ptr_string++;
+                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
                             {
-                                ptr_string += 7;
+                                ptr_string++;
+                            }
+                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                                && ptr_string[3] && ptr_string[4])
+                            {
+                                ptr_string += 5;
                             }
                         }
                         else
                         {
-                            if (ptr_string[1] && ptr_string[2])
-                                ptr_string += 3;
+                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                            {
+                                ptr_string++;
+                            }
+                            if (ptr_string[0] && ptr_string[1])
+                                ptr_string += 2;
+                        }
+                        break;
+                    case GUI_COLOR_BG_CHAR:
+                        ptr_string++;
+                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+                        {
+                            ptr_string++;
+                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                                && ptr_string[3] && ptr_string[4])
+                            {
+                                ptr_string += 5;
+                            }
+                        }
+                        else
+                        {
+                            if (ptr_string[0] && ptr_string[1])
+                                ptr_string += 2;
                         }
                         break;
                     case GUI_COLOR_FG_BG_CHAR:
-                        if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
+                        ptr_string++;
+                        if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
                         {
-                            if (ptr_string[2] && ptr_string[3] && ptr_string[4]
-                                && ptr_string[5] && ptr_string[6])
+                            ptr_string++;
+                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
                             {
-                                ptr_string += 7;
+                                ptr_string++;
+                            }
+                            if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                                && ptr_string[3] && ptr_string[4])
+                            {
+                                ptr_string += 5;
                             }
                         }
                         else
                         {
-                            if (ptr_string[1] && ptr_string[2])
-                                ptr_string += 3;
+                            while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                            {
+                                ptr_string++;
+                            }
+                            if (ptr_string[0] && ptr_string[1])
+                                ptr_string += 2;
                         }
                         if (ptr_string[0] == ',')
                         {

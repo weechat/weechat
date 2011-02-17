@@ -1,42 +1,42 @@
 * *relay.color.status_active*
 ** Beschreibung: `Textfarbe für Status: "Verbindung hergestellt"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `lightblue`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `lightblue`)
 
 * *relay.color.status_auth_failed*
 ** Beschreibung: `Textfarbe für Status: "Authentifizierung gescheitert"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `lightred`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `lightred`)
 
 * *relay.color.status_connecting*
 ** Beschreibung: `Textfarbe für Status: "verbinde"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `yellow`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `yellow`)
 
 * *relay.color.status_disconnected*
 ** Beschreibung: `Textfarbe für Status: "Verbindung getrennt"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `lightred`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `lightred`)
 
 * *relay.color.status_waiting_auth*
 ** Beschreibung: `Textfarbe für Status: "warte auf Authentifizierung"`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `brown`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `brown`)
 
 * *relay.color.text*
 ** Beschreibung: `Textfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `default`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `default`)
 
 * *relay.color.text_bg*
 ** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `default`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `default`)
 
 * *relay.color.text_selected*
 ** Beschreibung: `Textfarbe für selektierten Client-Linie`
 ** Typ: Farbe
-** Werte: ein Farbname (Standardwert: `white`)
+** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (Standardwert: `white`)
 
 * *relay.look.auto_open_buffer*
 ** Beschreibung: `Öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird`

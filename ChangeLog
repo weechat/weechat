@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-02-10
+v0.3.5-dev, 2011-02-17
 
 
 Version 0.3.5 (under dev!)
@@ -16,6 +16,7 @@ Version 0.3.5 (under dev!)
 * core: add some chars after cursor when scrolling input line: new option
   weechat.look.input_cursor_scroll (bug #21391)
 * core: add color "gray"
+* core: add attributes for colors ("*": bold, "%": reverse, "_": underline)
 * core: dynamically allocate color pairs (extended colors can be used without
   being added with command "/color")
 * core: allow background for nick colors (using "/")

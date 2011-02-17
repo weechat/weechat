@@ -969,8 +969,8 @@ oder falls man den Hintergrund der Statusbar in einm sehr dunklen Grün haben m�
 ----------------------------------------
 
 [[colors_aliases]]
-Alias für Farben definieren
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Alias
+^^^^^
 
 Man kann einer Farbe einen Alias zuordnen um diesen Alias anstelle einer Zahl in
 die Optionen einzutragen. Um einen Alias zu definieren nutzt man den Befehl
@@ -981,6 +981,39 @@ Beispiel:
 ----------------------------------------
 /color alias 214 orange
 /set weechat.color.chat_delimiters orange
+----------------------------------------
+
+// TRANSLATION MISSING
+[[colors_attributes]]
+Attributes
+^^^^^^^^^^
+
+It is possible to use some attributes for colors. One or more attributes can be
+added before color name or number:
+
+* "*": bold text
+* "%": reverse video
+* "_": underlined text
+
+For example if you want self nick as white underlined, do:
+
+----------------------------------------
+/set weechat.color.chat_nick_self _white
+----------------------------------------
+
+Or if you want time in status bar as orange underlined with bold:
+
+----------------------------------------
+/set weechat.color.status_time *_214
+----------------------------------------
+
+To use an attribute with default terminal color (-1), you must use a number
+greater than last terminal color, for example max color in WeeChat: 99999.
+
+Example of bold with terminal foreground color:
+
+----------------------------------------
+/set weechat.color.status_time *99999
 ----------------------------------------
 
 

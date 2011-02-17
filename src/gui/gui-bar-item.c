@@ -291,7 +291,7 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     const char *ptr, *start, *end;
     char *prefix, *item_name, *suffix;
     char *item_value, delimiter_color[32], bar_color[32];
-    char *result;
+    char *result, str_attr[8];
     int valid_char, length;
     struct t_gui_bar_item *ptr_item;
     struct t_weechat_plugin *ptr_plugin;
@@ -377,39 +377,50 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
             bar_color[0] = '\0';
             if (prefix || suffix)
             {
-                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
-                {
-                    snprintf (delimiter_color, sizeof (delimiter_color),
-                              "%c%c%c%05d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              GUI_COLOR_EXTENDED_CHAR,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
-                }
-                else
-                {
-                    snprintf (delimiter_color, sizeof (delimiter_color),
-                              "%c%c%02d",
-                              GUI_COLOR_COLOR_CHAR,
-                              GUI_COLOR_FG_CHAR,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]));
-                }
+                /* color for text in bar */
+                gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                             str_attr);
                 if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_FLAG)
                 {
                     snprintf (bar_color, sizeof (bar_color),
-                              "%c%c%c%05d",
+                              "%c%c%c%s%05d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_FG_CHAR,
                               GUI_COLOR_EXTENDED_CHAR,
+                              str_attr,
                               CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
                 }
                 else
                 {
                     snprintf (bar_color, sizeof (bar_color),
-                              "%c%c%02d",
+                              "%c%c%s%02d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_FG_CHAR,
-                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]));
+                              str_attr,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_FG]) & GUI_COLOR_EXTENDED_MASK);
+                }
+                
+                /* color for bar delimiters */
+                gui_color_attr_build_string (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]),
+                                             str_attr);
+                if (CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_FLAG)
+                {
+                    snprintf (delimiter_color, sizeof (delimiter_color),
+                              "%c%c%c%s%05d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
+                              GUI_COLOR_EXTENDED_CHAR,
+                              str_attr,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
+                }
+                else
+                {
+                    snprintf (delimiter_color, sizeof (delimiter_color),
+                              "%c%c%s%02d",
+                              GUI_COLOR_COLOR_CHAR,
+                              GUI_COLOR_FG_CHAR,
+                              str_attr,
+                              CONFIG_COLOR(bar->options[GUI_BAR_OPTION_COLOR_DELIM]) & GUI_COLOR_EXTENDED_MASK);
                 }
             }
             snprintf (result, length,

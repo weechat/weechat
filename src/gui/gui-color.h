@@ -90,6 +90,10 @@ enum t_gui_color_enum
 #define GUI_COLOR_BG_CHAR                     'B'
 #define GUI_COLOR_FG_BG_CHAR                  '*'
 #define GUI_COLOR_EXTENDED_CHAR               '@'
+#define GUI_COLOR_EXTENDED_BOLD_CHAR          '*'
+#define GUI_COLOR_EXTENDED_REVERSE_CHAR       '%'
+#define GUI_COLOR_EXTENDED_ITALIC_CHAR        '/'
+#define GUI_COLOR_EXTENDED_UNDERLINE_CHAR     '_'
 
 /* color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
@@ -100,25 +104,30 @@ enum t_gui_color_enum
 #define GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR '-'
 #define GUI_COLOR_BAR_MOVE_CURSOR_CHAR        '#'
 
-#define GUI_COLOR_EXTENDED_FLAG 0x10000
-#define GUI_COLOR_EXTENDED_MASK 0xFFFF
+#define GUI_COLOR_EXTENDED_FLAG               0x0100000
+#define GUI_COLOR_EXTENDED_BOLD_FLAG          0x0200000
+#define GUI_COLOR_EXTENDED_REVERSE_FLAG       0x0400000
+#define GUI_COLOR_EXTENDED_ITALIC_FLAG        0x0800000
+#define GUI_COLOR_EXTENDED_UNDERLINE_FLAG     0x1000000
+#define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
+#define GUI_COLOR_EXTENDED_MAX                99999
 
 /* color structure */
 
 struct t_gui_color
 {
-    int foreground;                 /* foreground color                     */
-    int background;                 /* background color                     */
-    int attributes;                 /* attributes (bold, ..)                */
-    char *string;                   /* WeeChat color: "\x19??", ?? is #color*/
+    int foreground;                /* foreground color                      */
+    int background;                /* background color                      */
+    int attributes;                /* attributes (bold, ..)                 */
+    char *string;                  /* WeeChat color: "\x19??", ?? is #color */
 };
 
 /* custom color in palette */
 
 struct t_gui_color_palette
 {
-    char *alias;                    /* alias name for this color pair       */
-    int r, g, b;                    /* red/green/blue values for color      */
+    char *alias;                   /* alias name for this color pair        */
+    int r, g, b;                   /* red/green/blue values for color       */
 };
 
 /* color variables */
@@ -131,6 +140,8 @@ extern struct t_weelist *gui_color_list_with_alias;
 /* color functions */
 
 extern const char *gui_color_search_config (const char *color_name);
+extern int gui_color_attr_get_flag (char c);
+extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_string_replace_colors (const char *string);
