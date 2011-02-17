@@ -302,7 +302,7 @@ Die Liste der hier dargestellten Modi ist nicht vollständig. Es sollte die Doku
 
 Beispiele:
   Schützt das Topic des Channels #weechat:
-    /mode #weecht +t
+    /mode #weechat +t
   sich auf dem Server unsichtbar machen:
     /mode nick +i
 ........................................

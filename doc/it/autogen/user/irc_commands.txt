@@ -302,7 +302,7 @@ L'elenco delle modalità non è completa, è necessario leggere la documentazion
 
 Esempi:
   protegge l'argomento sul canale #weechat:
-    /mode #weecht +t
+    /mode #weechat +t
   diventa invisibile sul server:
     /mode nick +i
 ........................................

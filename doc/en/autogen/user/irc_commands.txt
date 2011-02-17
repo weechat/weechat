@@ -302,7 +302,7 @@ List of modes is not comprehensive, you should read documentation about your ser
 
 Examples:
   protect topic on channel #weechat:
-    /mode #weecht +t
+    /mode #weechat +t
   become invisible on server:
     /mode nick +i
 ........................................

@@ -4916,7 +4916,7 @@ irc_command_init ()
                              "possible modes.\n\n"
                              "Examples:\n"
                              "  protect topic on channel #weechat:\n"
-                             "    /mode #weecht +t\n"
+                             "    /mode #weechat +t\n"
                              "  become invisible on server:\n"
                              "    /mode nick +i"),
                           "%(irc_channel)|%(irc_server_nick)", &irc_command_mode, NULL);
