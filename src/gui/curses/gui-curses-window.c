@@ -1420,6 +1420,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
                         int simulate)
 {
     int size1, size2;
+    struct t_gui_window_tree *parent;
     
     if (!gui_ok)
         return 0;
@@ -1436,6 +1437,22 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
                 tree->window->win_y = y;
                 tree->window->win_width = width;
                 tree->window->win_height = height;
+                parent = tree->parent_node;
+                if (parent)
+                {
+                    if (parent->split_horizontal)
+                    {
+                        tree->window->win_width_pct = 100;
+                        tree->window->win_height_pct = (tree == parent->child1) ?
+                            100 - parent->split_pct : parent->split_pct;
+                    }
+                    else
+                    {
+                        tree->window->win_width_pct = (tree == parent->child1) ?
+                            parent->split_pct : 100 - parent->split_pct;
+                        tree->window->win_height_pct = 100;
+                    }
+                }
             }
         }
         else
