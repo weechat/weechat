@@ -213,7 +213,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
             snprintf (format,
                       sizeof (format),
                       "%%-%dsnode: 0x%%lx (parent:0x%%lx), win=0x%%lx, "
-                      "child1=0x%%lx, child2=0x%%lx)",
+                      "child1=0x%%lx, child2=0x%%lx",
                       indent * 2);
             gui_chat_printf (NULL,
                              format,
