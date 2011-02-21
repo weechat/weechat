@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-02-17
+v0.3.5-dev, 2011-02-21
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: add some default keys for gnome-terminal (home/end, ctrl+up/down,
+  alt+pgup/pgdn)
 * core: add option "memory" to command /debug
 * core: add option weechat.look.read_marker_string
 * core: improve display of commands lists in /help (add arguments -list
