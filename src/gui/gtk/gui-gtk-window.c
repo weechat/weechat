@@ -577,6 +577,18 @@ gui_window_resize (struct t_gui_window *window, int percentage)
 }
 
 /*
+ * gui_window_resize_delta: resize window using delta percentage
+ */
+
+void
+gui_window_resize_delta (struct t_gui_window *window, int delta_percentage)
+{
+    /* TODO: write this function for Gtk */
+    (void) window;
+    (void) delta_percentage;
+}
+
+/*
  * gui_window_merge: merge window with its sister
  */
 

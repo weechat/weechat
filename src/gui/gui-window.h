@@ -163,6 +163,8 @@ extern struct t_gui_window *gui_window_split_horizontal (struct t_gui_window *wi
 extern struct t_gui_window *gui_window_split_vertical (struct t_gui_window *window,
                                                        int percentage);
 extern void gui_window_resize (struct t_gui_window *window, int percentage);
+extern void gui_window_resize_delta (struct t_gui_window *window,
+                                     int delta_percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);
 extern void gui_window_switch_up (struct t_gui_window *window);

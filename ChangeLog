@@ -7,6 +7,7 @@ v0.3.5-dev, 2011-02-21
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: allow relative size for command /window resize
 * core: add some default keys for gnome-terminal (home/end, ctrl+up/down,
   alt+pgup/pgdn)
 * core: add option "memory" to command /debug

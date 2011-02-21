@@ -513,7 +513,7 @@ Exemples:
 /window  list
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
-         resize <pct>
+         resize [+/-]<pct>
          merge [all]
          page_up|page_down
          refresh

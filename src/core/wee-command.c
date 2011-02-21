@@ -4418,11 +4418,27 @@ COMMAND_CALLBACK(window)
     {
         if (argc > 2)
         {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0]
-                && (number > 0) && (number < 100))
-                gui_window_resize (gui_current_window, number);
+            if ((argv[2][0] == '+') || (argv[2][0] == '-'))
+            {
+                error = NULL;
+                number = strtol (argv[2] + 1, &error, 10);
+                if (error && !error[0])
+                {
+                    if (argv[2][0] == '-')
+                        number *= -1;
+                    gui_window_resize_delta (gui_current_window, number);
+                }
+            }
+            else
+            {
+                error = NULL;
+                number = strtol (argv[2], &error, 10);
+                if (error && !error[0]
+                    && (number > 0) && (number < 100))
+                {
+                    gui_window_resize (gui_current_window, number);
+                }
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -5162,7 +5178,7 @@ command_init ()
                   N_("list"
                      " || -1|+1|b#|up|down|left|right"
                      " || splith|splitv [<pct>]"
-                     " || resize <pct>"
+                     " || resize [+/-]<pct>"
                      " || merge [all]"
                      " || page_up|page_down"
                      " || refresh"
