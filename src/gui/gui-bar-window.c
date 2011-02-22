@@ -557,7 +557,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             }
                         }
                         else
-                            split_items[i] = NULL;
+                            split_items[i][sub] = NULL;
                     }
                 }
                 else
