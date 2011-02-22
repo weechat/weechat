@@ -49,7 +49,7 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "%" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** description: `couleur du texte pour les pseudos (liste de couleurs séparées par une virgule, un fond est autorisé avec le format: "couleur/fond", par exemple: "blue/red")`
+** description: `couleur du texte pour les pseudos (liste de couleurs séparées par une virgule, un fond est autorisé avec le format: "couleur:fond", par exemple: "lightred:blue")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 

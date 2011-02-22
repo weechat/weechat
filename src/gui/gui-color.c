@@ -264,7 +264,7 @@ gui_color_get_custom (const char *color_name)
         
         pos_delim = strchr (ptr_color_name, ',');
         if (!pos_delim)
-            pos_delim = strchr (ptr_color_name, '/');
+            pos_delim = strchr (ptr_color_name, ':');
         if (pos_delim)
         {
             if (pos_delim == ptr_color_name)

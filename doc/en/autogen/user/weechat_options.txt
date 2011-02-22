@@ -49,7 +49,7 @@
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "%" for reverse, "_" for underline (default value: `lightcyan`)
 
 * *weechat.color.chat_nick_colors*
-** description: `text color for nicks (comma separated list of colors, background is allowed with format: "fg/bg", for example: "blue/red")`
+** description: `text color for nicks (comma separated list of colors, background is allowed with format: "fg:bg", for example: "lightred:blue")`
 ** type: string
 ** values: any string (default value: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 

@@ -1889,8 +1889,10 @@ config_weechat_init_options ()
     config_color_chat_nick_colors = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_colors", "string",
+        /* TRANSLATORS: please do not translate "lightred:blue" */
         N_("text color for nicks (comma separated list of colors, background "
-            "is allowed with format: \"fg/bg\", for example: \"blue/red\")"),
+           "is allowed with format: \"fg:bg\", for example: "
+           "\"lightred:blue\")"),
         NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
         "lightmagenta,lightgreen,blue", NULL, 0,
         NULL, NULL, &config_change_nick_colors, NULL, NULL, NULL);
