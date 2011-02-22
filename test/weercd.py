@@ -52,8 +52,8 @@
 
 import sys, socket, select, time, random, string
 
-NAME     = 'weercd'
-VERSION  = '0.1'
+NAME    = 'weercd'
+VERSION = '0.2'
 
 options = {
     'host'       : ['',     'Host for socket bind'],
@@ -113,7 +113,7 @@ def readconfig(filename):
     try:
         lines = open(filename, 'rb').readlines()
         for line in lines:
-            setoption(line)
+            setoption(str(line.decode('utf-8')))
     except:
         pass
 
