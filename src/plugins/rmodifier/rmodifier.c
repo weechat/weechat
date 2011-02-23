@@ -212,35 +212,6 @@ rmodifier_modifier_cb (void *data, const char *modifier,
 }
 
 /*
- * rmodifier_create_regex: create regex for a rmodifier
- */
-
-void
-rmodifier_create_regex (struct t_rmodifier *rmodifier)
-{
-    if (rmodifier->regex)
-    {
-        regfree (rmodifier->regex);
-        free (rmodifier->regex);
-    }
-    
-    rmodifier->regex = malloc (sizeof (*rmodifier->regex));
-    if (!rmodifier->regex)
-        return;
-    
-    if (regcomp (rmodifier->regex, rmodifier->str_regex,
-                 REG_EXTENDED | REG_ICASE) != 0)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error compiling regular expression \"%s\""),
-                        weechat_prefix ("error"), RMODIFIER_PLUGIN_NAME,
-                        rmodifier->str_regex);
-        free (rmodifier->regex);
-        return;
-    }
-}
-
-/*
  * rmodifier_hook_modifiers: hook modifiers for a rmodifier
  */
 
@@ -284,10 +255,26 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
                const char *groups)
 {
     struct t_rmodifier *new_rmodifier, *ptr_rmodifier;
+    regex_t *regex;
     
     if (!name || !name[0] || !modifiers || !modifiers[0]
         || !str_regex || !str_regex[0])
         return NULL;
+    
+    regex = malloc (sizeof (*regex));
+    if (!regex)
+        return NULL;
+    
+    if (regcomp (regex, str_regex,
+                 REG_EXTENDED | REG_ICASE) != 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error compiling regular expression \"%s\""),
+                        weechat_prefix ("error"), RMODIFIER_PLUGIN_NAME,
+                        str_regex);
+        free (regex);
+        return NULL;
+    }
     
     ptr_rmodifier = rmodifier_search (name);
     if (ptr_rmodifier)
@@ -300,11 +287,10 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
         new_rmodifier->hooks = NULL;
         new_rmodifier->modifiers = strdup (modifiers);
         new_rmodifier->str_regex = strdup (str_regex);
-        new_rmodifier->regex = NULL;
+        new_rmodifier->regex = regex;
         new_rmodifier->groups = strdup ((groups) ? groups : "");
         
-        /* create regex and modifiers */
-        rmodifier_create_regex (new_rmodifier);
+        /* create modifiers */
         rmodifier_hook_modifiers (new_rmodifier);
         
         if (rmodifier_list)

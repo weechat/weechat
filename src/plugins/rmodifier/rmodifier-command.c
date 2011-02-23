@@ -128,7 +128,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             _("%sError: missing arguments for \"%s\" "
                               "command"),
                             weechat_prefix ("error"), "rmodifier");
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
         ptr_rmodifier = rmodifier_new (argv[2], argv[3], argv_eol[5], argv[4]);
         if (!ptr_rmodifier)
@@ -137,7 +137,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             _("%s%s: error creating rmodifier \"%s\""),
                             weechat_prefix ("error"), RMODIFIER_PLUGIN_NAME,
                             argv[2]);
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
         /* create config option */
         ptr_option = weechat_config_search_option (rmodifier_config_file,
@@ -165,7 +165,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             _("%sError: missing arguments for \"%s\" "
                               "command"),
                             weechat_prefix ("error"), "rmodifier");
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
         if (weechat_strcasecmp (argv[2], "-all") == 0)
         {
@@ -217,7 +217,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             _("%sError: \"-yes\" argument is required for "
                               "restoring default rmodifiers (security reason)"),
                             weechat_prefix ("error"));
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
         return WEECHAT_RC_OK;
     }
