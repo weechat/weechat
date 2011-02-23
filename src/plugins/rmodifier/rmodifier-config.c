@@ -62,6 +62,7 @@ rmodifier_config_reload (void *data, struct t_config_file *config_file)
     (void) data;
     
     rmodifier_free_all ();
+    weechat_config_section_free_options (rmodifier_config_section_modifier);
     
     return weechat_config_reload (config_file);
 }

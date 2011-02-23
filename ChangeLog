@@ -7,7 +7,6 @@ v0.3.5-dev, 2011-02-23
 Version 0.3.5 (under dev!)
 --------------------------
 
-* core: fix crash when adding rmodifier with invalid regex
 * core: fix crash when using column filling in bars with some empty items
   (bug #32565)
 * core: allow relative size for command /window resize
@@ -30,6 +29,8 @@ Version 0.3.5 (under dev!)
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)
 * lua: fix crash when many scripts are executing callbacks at same time
+* rmodifier: fix reload of file rmodifier.conf
+* rmodifier: fix crash when adding rmodifier with invalid regex
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
 Version 0.3.4 (2011-01-16)
