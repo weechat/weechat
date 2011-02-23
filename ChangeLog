@@ -25,6 +25,7 @@ Version 0.3.5 (under dev!)
 * core: dynamically allocate color pairs (extended colors can be used without
   being added with command "/color")
 * core: allow background for nick colors (using ":")
+* irc: add new option irc.look.color_nicks_in_nicklist
 * irc: fix crash when completing /part command on a non-irc buffer (bug #32402)
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)

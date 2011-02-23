@@ -50,6 +50,7 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
+struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_server_buffer;
@@ -227,6 +228,41 @@ irc_config_change_nick_colors_cb (void *data, const char *option,
     irc_config_compute_nick_colors ();
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_config_change_look_color_nicks_in_nicklist: called when the
+ *                                                 "color nicks in nicklist"
+ *                                                 option is changed
+ */
+
+void
+irc_config_change_look_color_nicks_in_nicklist (void *data,
+                                                struct t_config_option *option)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                irc_nick_nicklist_set (ptr_channel, ptr_nick, "color",
+                                       irc_nick_get_color_for_nicklist (ptr_server,
+                                                                        ptr_nick));
+            }
+        }
+    }
 }
 
 /*
@@ -1765,7 +1801,13 @@ irc_config_init ()
         weechat_config_free (irc_config_file);
         return 0;
     }
-    
+
+    irc_config_look_color_nicks_in_nicklist = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "color_nicks_in_nicklist", "boolean",
+        N_("use nick color in nicklist"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &irc_config_change_look_color_nicks_in_nicklist, NULL, NULL, NULL);
     irc_config_look_color_nicks_in_server_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "color_nicks_in_server_messages", "boolean",

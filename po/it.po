@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-22 19:27+0100\n"
+"POT-Creation-Date: 2011-02-23 16:43+0100\n"
 "PO-Revision-Date: 2011-02-22 19:26+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4936,6 +4936,10 @@ msgstr "%s%s: errore durante la creazione del server \"%s\""
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
+
+#, fuzzy
+msgid "use nick color in nicklist"
+msgstr "colore del testo per i gruppi nella lista nick"
 
 msgid "use nick color in messages from server"
 msgstr "utilizza i colori dei nick nei messaggi dal server"

@@ -58,6 +58,11 @@ extern int irc_nick_has_prefix_mode (struct t_irc_server *server,
 extern int irc_nick_get_prefix_color (struct t_irc_server *server,
                                       struct t_irc_nick *nick);
 extern const char *irc_nick_get_prefix_color_name (int prefix_color);
+extern const char *irc_nick_get_color_for_nicklist (struct t_irc_server *server,
+                                                    struct t_irc_nick *nick);
+extern void irc_nick_nicklist_set (struct t_irc_channel *channel,
+                                   struct t_irc_nick *nick,
+                                   const char *property, const char *value);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *nickname,
