@@ -1011,7 +1011,7 @@ Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
 attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
 
 * "*" : texte gras
-* "%" : mode vidéo inverse
+* "!" : mode vidéo inverse
 * "_" : texte souligné
 
 Par exemple si vous voulez votre pseudo en blanc souligné, faites :

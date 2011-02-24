@@ -1953,7 +1953,7 @@ COMMAND_CALLBACK(help)
                                    "(light)cyan), a terminal color number or "
                                    "an alias; attributes are allowed before "
                                    "color (for text color only, not "
-                                   "background): \"*\" for bold, \"%\" for "
+                                   "background): \"*\" for bold, \"!\" for "
                                    "reverse, \"_\" for underline"));
                 if (ptr_option->default_value)
                 {

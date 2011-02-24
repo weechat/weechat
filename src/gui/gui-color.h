@@ -91,7 +91,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_FG_BG_CHAR                  '*'
 #define GUI_COLOR_EXTENDED_CHAR               '@'
 #define GUI_COLOR_EXTENDED_BOLD_CHAR          '*'
-#define GUI_COLOR_EXTENDED_REVERSE_CHAR       '%'
+#define GUI_COLOR_EXTENDED_REVERSE_CHAR       '!'
 #define GUI_COLOR_EXTENDED_ITALIC_CHAR        '/'
 #define GUI_COLOR_EXTENDED_UNDERLINE_CHAR     '_'
 
