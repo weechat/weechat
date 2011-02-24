@@ -190,6 +190,10 @@ irc_config_compute_nick_colors ()
             }
         }
     }
+    
+    /* if colors are displayed for nicks in nicklist, refresh them */
+    if (weechat_config_boolean(irc_config_look_color_nicks_in_nicklist))
+        irc_nick_nicklist_set_color_all ();
 }
 
 /*
@@ -243,29 +247,11 @@ void
 irc_config_change_look_color_nicks_in_nicklist (void *data,
                                                 struct t_config_option *option)
 {
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
-    
     /* make C compiler happy */
     (void) data;
     (void) option;
     
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        for (ptr_channel = ptr_server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                 ptr_nick = ptr_nick->next_nick)
-            {
-                irc_nick_nicklist_set (ptr_channel, ptr_nick, "color",
-                                       irc_nick_get_color_for_nicklist (ptr_server,
-                                                                        ptr_nick));
-            }
-        }
-    }
+    irc_nick_nicklist_set_color_all ();
 }
 
 /*
