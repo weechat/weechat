@@ -181,9 +181,12 @@ irc_config_compute_nick_colors ()
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                if (ptr_nick->color)
-                    free (ptr_nick->color);
-                ptr_nick->color = strdup (irc_nick_find_color (ptr_nick->name));
+                if (weechat_strcasecmp (ptr_nick->name, ptr_server->nick) != 0)
+                {
+                    if (ptr_nick->color)
+                        free (ptr_nick->color);
+                    ptr_nick->color = strdup (irc_nick_find_color (ptr_nick->name));
+                }
             }
         }
     }
