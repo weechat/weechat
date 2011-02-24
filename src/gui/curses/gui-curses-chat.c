@@ -442,36 +442,28 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     int i, length, length_allowed, num_spaces;
     struct t_gui_lines *mixed_lines;
     
+    if (!simulate)
+        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
+    
     /* display time */
     if (window->buffer->time_for_each_line
         && (line->data->str_time && line->data->str_time[0]))
     {
-        if (!simulate)
-            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
-        
         gui_chat_display_word (window, line, line->data->str_time,
                                NULL, 1, num_lines, count, lines_displayed,
                                simulate);
+        
+        if (!simulate)
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
         gui_chat_display_word (window, line, str_space,
                                NULL, 1, num_lines, count, lines_displayed,
                                simulate);
-    }
-    else
-    {
-        if (!simulate)
-            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
     }
     
     /* display buffer name (if many buffers are merged) */
     mixed_lines = line->data->buffer->mixed_lines;
     if (mixed_lines)
     {
-        if (!simulate)
-        {
-            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                          GUI_COLOR_CHAT_PREFIX_BUFFER);
-        }
-        
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
             && (CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE))
         {
@@ -487,12 +479,23 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         
         if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
         {
+            if (!simulate)
+            {
+                gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                        GUI_COLOR_CHAT);
+            }
             for (i = 0; i < num_spaces; i++)
             {
                 gui_chat_display_word (window, line, str_space,
                                        NULL, 1, num_lines, count,
                                        lines_displayed, simulate);
             }
+        }
+        
+        if (!simulate)
+        {
+            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                          GUI_COLOR_CHAT_PREFIX_BUFFER);
         }
         
         /* not enough space to display full buffer name? => truncate it! */
@@ -531,6 +534,11 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         }
         else
         {
+            if (!simulate)
+            {
+                gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                        GUI_COLOR_CHAT);
+            }
             if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
                 || ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
