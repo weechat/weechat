@@ -384,398 +384,147 @@ La barre 'status' contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Objet (item)          | Exemple        | Description
-
-| time                  | [12:55]        |
-  heure
-
-| buffer_count          | [4]            |
-  nombre de tampons ouverts
-
-| buffer_plugin         | [irc/freenode] |
-  extension du tampon courant (l'extension irc peut afficher le nom du serveur
-  IRC auquel est rattaché ce tampon)
-
-| buffer_number         | 3              |
-  numéro du tampon courant
-
-| buffer_name           | #test(+n)      |
-  nom du tampon courant
-
-| buffer_nicklist_count | {5}            |
-  nombre de pseudos dans la liste des pseudos
-
-| buffer_filter         | *              |
-  indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées),
-  une valeur vide signifie que toutes les lignes sont affichées
-
-| lag                   | [Lag: 2.5]     |
-  indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag
-  est faible)
-
-| hotlist               | [Act: 4,2]     |
-  liste des tampons où il y a de l'activité (messages non lus)
-
-| completion            | abc(2) def(5)  |
-  liste des mots pour la complétion, avec le nombre de complétions possibles
-  pour chaque mot
-
-| scroll                | -PLUS(50)-     |
-  indicateur de scroll, avec le nombre de lignes sous la dernière ligne
-  affichée
+| time                  | [12:55]        | heure
+| buffer_count          | [4]            | nombre de tampons ouverts
+| buffer_plugin         | [irc/freenode] | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
+| buffer_number         | 3              | numéro du tampon courant
+| buffer_name           | #test(+n)      | nom du tampon courant
+| buffer_nicklist_count | {5}            | nombre de pseudos dans la liste des pseudos
+| buffer_filter         | *              | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
+| lag                   | [Lag: 2.5]     | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
+| hotlist               | [Act: 4,2]     | liste des tampons où il y a de l'activité (messages non lus)
+| completion            | abc(2) def(5)  | liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
+| scroll                | -PLUS(50)-     | indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 |========================================
 
 La barre 'input' contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Objet (item)     | Exemple | Description
-
-| input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] |
-  question à l'utilisateur pour coller des lignes
-
-| input_prompt     | [pseudo] |
-  prompt (pseudo pour l'extension irc)
-
-| away             | (absent) |
-  indicateur d'absence
-
-| input_search     | [Recherche texte] |
-  indicateur de recherche de texte
-
-| input_text       | bla bla... |
-  texte entré
+| Objet (item)     | Exemple                                       | Description
+| input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
+| input_prompt     | [pseudo]                                      | prompt (pseudo pour l'extension irc)
+| away             | (absent)                                      | indicateur d'absence
+| input_search     | [Recherche texte]                             | indicateur de recherche de texte
+| input_text       | bla bla...                                    | texte entré
 |========================================
 
 [[key_bindings]]
 Raccourcis clavier par défaut
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
+
 [[key_bindings_command_line]]
 Touches pour la ligne de commande
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Touches | Description et commande
-
-| Flèche gauche +
-  Ctrl + "b" |
-  Aller au caractère précédent sur la ligne de commande +
-  `/input move_previous_char`
-
-| Flèche droite +
-  Ctrl + "f" |
-  Aller au caractère suivant sur la ligne de commande +
-  `/input move_next_char`
-
-| Ctrl + flèche gauche +
-  Alt + "b" |
-  Aller au mot précédent sur la ligne de commande +
-  `/input move_previous_word`
-
-| Ctrl + flèche droite +
-  Alt + "f" |
-  Aller au mot suivant sur la ligne de commande +
-  `/input move_next_word`
-
-| Home +
-  Ctrl + "a" |
-  Aller au début de la ligne de commande +
-  `/input move_beginning_of_line`
-
-| End +
-  Ctrl + "e" |
-  Aller à la fin de la ligne de commande +
-  `/input move_end_of_line`
-
-| Ctrl + "c" puis "b" |
-  Insérer le code pour mettre le texte en gras +
-  `/input insert \x02`
-
-| Ctrl + "c" puis "c" |
-  Insérer le code pour écrire en couleur +
-  `/input insert \x03`
-
-| Ctrl + "c" puis "i" |
-  Insérer le code pour mettre le texte en italique +
-  `/input insert \x1D`
-
-| Ctrl + "c" puis "o" |
-  Insérer le code pour réinitaliser la couleur +
-  `/input insert \x0F`
-
-| Ctrl + "c" puis "r" |
-  Insérer le code pour écrire en couleur inversée +
-  `/input insert \x12`
-
-| Ctrl + "c" puis "u" |
-  Insérer le code pour écrire en souligné +
-  `/input insert \x15`
-
-| Delete +
-  Ctrl + "d" |
-  Effacer le caractère suivant sur la ligne de commande +
-  `/input delete_next_char`
-
-| Backspace +
-  Ctrl + "h" |
-  Effacer le caractère précédent sur la ligne de commande +
-  `/input delete_previous_char`
-
-| Ctrl + "k" |
-  Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne
-  supprimée est copiée dans le presse-papiers) +
-  `/input delete_end_of_line`
-
-| Ctrl + "r" |
-  Chercher du texte dans l'historique du tampon (deux appuis successifs pour
-  rechercher du texte exact), les occurrences suivantes/précédentes peuvent être
-  trouvées avec les flèches haut et bas +
-  `/input search_text`
-
-| Ctrl + "t" |
-  Inverser deux caractères +
-  `/input transpose_chars`
-
-| Ctrl + "u" |
-  Effacer du curseur jusqu'au début de la ligne de commande (la chaîne
-  supprimée est copiée dans le presse-papiers) +
-  `/input delete_beginning_of_line`
-
-| Ctrl + "w" |
-  Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est
-  copiée dans le presse-papiers) +
-  `/input delete_previous_word`
-
-| Ctrl + "y" |
-  Coller le contenu du presse-papiers +
-  `/input clipboard_paste`
-
-| Ctrl + "_" |
-  Défaire la dernière action sur la ligne de commande +
-  `/input undo`
-
-| Alt + "_" |
-  Refaire la dernière action sur la ligne de commande +
-  `/input redo`
-
-| Tab |
-  Compléter la commande ou le pseudo (Tab de nouveau : trouver la complétion
-  suivante) +
-  `/input complete_next`
-
-| Shift + Tab |
-  Sans complétion, effectue une complétion partielle. Avec une complétion en
-  cours, complète avec la complétion précédente +
-  `/input complete_previous`
-
-| Tout caractère |
-  Insérer le caractère à la position du curseur sur la ligne de commande
-
-| Enter +
-  Ctrl + "j" +
-  Ctrl + "m" |
-  Exécuter la commande ou envoyer le message (en mode recherche : arrêter la
-  recherche) +
-  `/input return`
-
-| Flèche haut |
-  Rappeler la commande précédente (en mode recherche : chercher plus haut) +
-  `/input history_previous`
-
-| Flèche bas |
-  Rappeler la commande suivante (en mode recherche : chercher plus bas) +
-  `/input history_next`
-
-| Ctrl + flèche haut |
-  Rappeler la commande précédente dans l'historique global (commun à tous les
-  tampons) +
-  `/input history_global_previous`
-
-| Ctrl + flèche bas |
-  Rappeler la commande suivante dans l'historique global (commun à tous les
-  tampons) +
-  `/input history_global_next`
-
-| Alt + "d" |
-  Effacer le mot suivant (la chaîne supprimée est copiée dans le
-  presse-papiers) +
-  `/input delete_next_word`
-
-| Alt + "k" |
-  Capturer une touche et insérer son code (et la commande associée si la
-  commande existe) sur la ligne de commande +
-  `/input grab_key_command`
-
-| Alt + "r" |
-  Effacer entièrement la ligne de commande +
-  `/input delete_line`
+| Touche              | Description | Commande
+| @k(←)               .2+| Aller au caractère précédent sur la ligne de commande .2+| /input move_previous_char
+| @k(C-)@k(b)
+| @k(→)               .2+| Aller au caractère suivant sur la ligne de commande .2+| /input move_next_char
+| @k(C-)@k(f)
+| @k(C-)@k(←)         .2+| Aller au mot précédent sur la ligne de commande .2+| /input move_previous_word
+| @k(A-)@k(b)
+| @k(C-)@k(→)         .2+| Aller au mot suivant sur la ligne de commande .2+| /input move_next_word
+| @k(A-)@k(f)
+| @k(Home)            .2+| Aller au début de la ligne de commande .2+| /input move_beginning_of_line
+| @k(C-)@k(a)
+| @k(End)             .2+| Aller à la fin de la ligne de commande .2+| /input move_end_of_line
+| @k(C-)@k(e)
+| @k(C-)@k(c) , @k(b) | Insérer le code pour mettre le texte en gras | /input insert \x02
+| @k(C-)@k(c) , @k(c) | Insérer le code pour écrire en couleur | /input insert \x03
+| @k(C-)@k(c) , @k(i) | Insérer le code pour mettre le texte en italique | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | Insérer le code pour réinitaliser la couleur | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | Insérer le code pour écrire en couleur inversée | /input insert \x12
+| @k(C-)@k(c) , @k(u) | Insérer le code pour écrire en souligné | /input insert \x15
+| @k(Del)             .2+| Effacer le caractère suivant sur la ligne de commande .2+| /input delete_next_char
+| @k(C-)@k(d)
+| @k(Backsp.)         .2+| Effacer le caractère précédent sur la ligne de commande .2+| /input delete_previous_char
+| @k(C-)@k(h)
+| @k(C-)@k(k)         | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_end_of_line
+| @k(C-)@k(r)         | Chercher du texte dans l'historique du tampon (deux appuis successifs pour rechercher du texte exact), @k(↑): précédent, @k(↓): suivant, @k(Enter): arrêter | /input search_text
+| @k(C-)@k(t)         | Inverser deux caractères | /input transpose_chars
+| @k(C-)@k(u)         | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_beginning_of_line
+| @k(C-)@k(w)         | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_previous_word
+| @k(C-)@k(y)         | Coller le contenu du presse-papiers | /input clipboard_paste
+| @k(C-)@k(_)         | Défaire la dernière action sur la ligne de commande | /input undo
+| @k(A-)@k(_)         | Refaire la dernière action sur la ligne de commande | /input redo
+| @k(Tab)             | Compléter la commande ou le pseudo (@k(Tab) de nouveau : trouver la complétion suivante) | /input complete_next
+| @k(S-)@k(Tab)       | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente | /input complete_previous
+| @k(Enter)           .3+| Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche) .3+| /input return
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+| @k(↑)               | Rappeler la commande précédente (en mode recherche : chercher plus haut) | /input history_previous
+| @k(↓)               | Rappeler la commande suivante (en mode recherche : chercher plus bas) | /input history_next
+| @k(C-)@k(↑)         | Rappeler la commande précédente dans l'historique global (commun à tous les tampons) | /input history_global_previous
+| @k(C-)@k(↓)         | Rappeler la commande suivante dans l'historique global (commun à tous les tampons) | /input history_global_next
+| @k(A-)@k(d)         | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_next_word
+| @k(A-)@k(k)         | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | /input grab_key_command
+| @k(A-)@k(r)         | Effacer entièrement la ligne de commande | /input delete_line
 |========================================
 
 [[key_bindings_buffers_windows]]
 Touches pour les tampons / fenêtres
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Touches | Description et commande
-
-| Ctrl + "l" (L) |
-  Réafficher toute la fenêtre +
-  `/window refresh`
-
-| Ctrl + "s" puis Ctrl + "u" |
-  Positionner le marqueur de données non lues sur tous les tampons +
-  `/input set_unread`
-
-| Ctrl + "x" |
-  Changer de tampon courant si plusieurs tampons sont attachés avec le même
-  numéro +
-  `/input switch_active_buffer`
-
-| Page haut |
-  Monter d'une page dans l'historique du tampon +
-  `/window page_up`
-
-| Page bas |
-  Descendre d'une page dans l'historique du tampon +
-  `/window page_down`
-
-| Alt + Page haut |
-  Monter de quelques lignes dans l'historique du tampon +
-  `/window scroll_up`
-
-| Alt + Page bas |
-  Descendre de quelques lignes dans l'historique du tampon +
-  `/window scroll_down`
-
-| Alt + Home |
-  Aller au début du tampon +
-  `/window scroll_top`
-
-| Alt + End |
-  Aller à la fin du tampon +
-  `/window scroll_bottom`
-
-| Alt + flèche gauche +
-  Alt + flèche haut +
-  Ctrl + "p" +
-  F5 |
-  Aller au tampon précédent +
-  `/buffer -1`
-
-| Alt + flèche droite +
-  Alt + flèche bas +
-  Ctrl + "n" +
-  F6 |
-  Aller au tampon suivant +
-  `/buffer +1`
-
-| F7 |
-  Aller à la fenêtre précédente +
-  `/window -1`
-
-| F8 |
-  Aller à la fenêtre suivante +
-  `/window +1`
-
-| F9 |
-  Faire défiler le titre du tampon vers la gauche +
-  `/bar scroll title * x-50%`
-
-| F10 |
-  Faire défiler le titre du tampon vers la droite +
-  `/bar scroll title * x+50%`
-
-| F11 |
-  Monter d'une page dans la liste des pseudos +
-  `/bar scroll nicklist * y-100%`
-
-| F12 |
-  Descendre d'une page dans la liste des pseudos +
-  `/bar scroll nicklist * y+100%`
-
-| Alt + F11 |
-  Aller au début de la liste des pseudos +
-  `/bar scroll nicklist * yb`
-
-| Alt + F12 |
-  Aller à la fin de la liste des pseudos +
-  `/bar scroll nicklist * ye`
-
-| Alt + "a" |
-  Sauter au prochain tampon avec activité (avec priorité : highlight, message,
-  autre) +
-  `/input jump_smart`
-
-| Alt + "j" puis Alt + "l" (L) |
-  Sauter au dernier tampon +
-  `/input jump_last_buffer`
-
-| Alt + "j" puis Alt + "r" |
-  Sauter au tampon IRC de données brutes +
-  `/server raw`
-
-| Alt + "j" puis Alt + "s" |
-  Sauter au tampon IRC du serveur +
-  `/server jump`
-
-| Alt + chiffre (0-9) |
-  Sauter au tampon qui porte ce numéro (0 = 10) +
-  `/buffer *N`
-
-| Alt + "j" puis nombre (01-99) |
-  Sauter au tampon qui porte ce numéro +
-  `/buffer NN`
-
-| Alt + "n" |
-  Se positionner sur le highlight suivant +
-  `/window scroll_next_highlight`
-
-| Alt + "p" |
-  Se positionner sur le highlight précédent +
-  `/window scroll_previous_highlight`
-
-| Alt + "u" |
-  Se positionner sur la première ligne non lue du tampon +
-  `/input scroll_unread`
-
-| Alt + "w" puis Alt + flèche |
-  Sauter à une fenêtre avec une direction +
-  `/window up` +
-  `/window down` +
-  `/window left` +
-  `/window right`
-
-| Alt + "z" |
-  Zoom sur la fenêtre courante (Alt + Z de nouveau : restaurer l'état initial
-  des fenêtres, avant le zoom) +
-  `/window zoom`
-
-| Alt + "<" |
-  Sauter au tampon précédent dans la liste des tampons visités +
-  `/input jump_previously_visited_buffer`
-
-| Alt + ">" |
-  Sauter au tampon suivant dans la liste des tampons visités +
-  `/input jump_next_visited_buffer`
+| Touche                    | Description | Commande
+| @k(C-)@k(l)               | Réafficher toute la fenêtre | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | Positionner le marqueur de données non lues sur tous les tampons | /input set_unread
+| @k(C-)@k(x)               | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro | /input switch_active_buffer
+| @k(PgUp)                  | Monter d'une page dans l'historique du tampon | /window page_up
+| @k(PgDn)                  | Descendre d'une page dans l'historique du tampon | /window page_down
+| @k(A-)@k(PgUp)            | Monter de quelques lignes dans l'historique du tampon | /window scroll_up
+| @k(A-)@k(PgDn)            | Descendre de quelques lignes dans l'historique du tampon | /window scroll_down
+| @k(A-)@k(Home)            | Aller au début du tampon | /window scroll_top
+| @k(A-)@k(End)             | Aller à la fin du tampon | /window scroll_bottom
+| @k(A-)@k(←)               .4+| Aller au tampon précédent .4+| /buffer -1
+| @k(A-)@k(↑)
+| @k(C-)@k(p)
+| @k(F5)
+| @k(A-)@k(→)               .4+| Aller au tampon suivant .4+| /buffer +1
+| @k(A-)@k(↓)
+| @k(C-)@k(n)
+| @k(F6)
+| @k(F7)                    | Aller à la fenêtre précédente | /window -1
+| @k(F8)                    | Aller à la fenêtre suivante | /window +1
+| @k(F9)                    | Faire défiler le titre du tampon vers la gauche | /bar scroll title * x-50%
+| @k(F10)                   | Faire défiler le titre du tampon vers la droite | /bar scroll title * x+50%
+| @k(F11)                   | Monter d'une page dans la liste des pseudos | /bar scroll nicklist * y-100%
+| @k(F12)                   | Descendre d'une page dans la liste des pseudos | /bar scroll nicklist * y+100%
+| @k(A-)@k(F11)             | ller au début de la liste des pseudos | /bar scroll nicklist * yb
+| @k(A-)@k(F12)             | Aller à la fin de la liste des pseudos | /bar scroll nicklist * ye
+| @k(A-)@k(a)               | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | /input jump_smart
+| @k(A-)@k(j) , @k(A-)@k(l) | Sauter au dernier tampon | /input jump_last_buffer
+| @k(A-)@k(j) , @k(A-)@k(r) | Sauter au tampon IRC de données brutes | /server raw
+| @k(A-)@k(j) , @k(A-)@k(s) | Sauter au tampon IRC du serveur | /server jump
+| @k(A-)@k(0...9)           | Sauter au tampon qui porte ce numéro (0 = 10) | /buffer *N
+| @k(A-)@k(j) , @k(01...99) | Sauter au tampon qui porte ce numéro | /buffer NN
+| @k(A-)@k(n)               | Se positionner sur le highlight suivant | /window scroll_next_highlight
+| @k(A-)@k(p)               | Se positionner sur le highlight précédent | /window scroll_previous_highlight
+| @k(A-)@k(u)               | Se positionner sur la première ligne non lue du tampon | /input scroll_unread
+| @k(A-)@k(w) , @k(A-)@k(↑) | Sauter à la fenêtre au dessus | /window up
+| @k(A-)@k(w) , @k(A-)@k(↓) | Sauter à la fenêtre en dessous | /window down
+| @k(A-)@k(w) , @k(A-)@k(←) | Sauter à la fenêtre de gauche | /window left
+| @k(A-)@k(w) , @k(A-)@k(→) | Sauter à la fenêtre de droite | /window right
+| @k(A-)@k(z)               | Zoom sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
+| @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | /input jump_next_visited_buffer
 |========================================
 
 [[key_bindings_other]]
 Autres touches
 ^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Touches | Description et commande
-
-| Alt + "h" |
-  Vider la hotlist (notification d'activité sur les autres tampons) +
-  `/input hotlist_clear`
-
-| Alt + "=" |
-  Active/désactive les filtres +
-  `/filter toggle`
+| Touche      | Description | Commande
+| @k(A-)@k(h) | Vider la hotlist (notification d'activité sur les autres tampons) | /input hotlist_clear
+| @k(A-)@k(=) | Active/désactive les filtres | /filter toggle
 |========================================
 
 [[command_line]]

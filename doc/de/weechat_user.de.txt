@@ -374,387 +374,152 @@ Die 'status'-Bar besitzt als Standardeinträge:
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Item                  | Beispiel       | Beschreibung
-
-| time                  | [12:55]        |
-  Uhrzeit
-
-| buffer_count          | [4]            |
-  Anzahl der geöffneten Buffer
-
-| buffer_plugin         | [irc/freenode] |
-  Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
-
-| buffer_number         | 3              |
-  aktuelle Nummer des Buffers
-
-| buffer_name           | #test(+n)      |
-  Name des aktuellen Buffers
-
-| buffer_nicklist_count | {5}            |
-  Anzahl der Nicks in Nickliste
-
-| buffer_filter         | *              |
-  Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag
-  zeigt an dass alle Zeilen dargestellt werden
-
-| lag                   | [Lag: 2.5]     |
-  Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
-
-| hotlist               | [Act: 4,2]     |
-  Liste der Buffer mit Aktivität (ungelesene Nachrichten)
-
-| completion            | abc(2) def(5)  |
-  Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich
-  sind
-
-| scroll                | -MORE(50)-     |
-  Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile
-  vorhanden sind
+| time                  | [12:55]        | Uhrzeit
+| buffer_count          | [4]            | Anzahl der geöffneten Buffer
+| buffer_plugin         | [irc/freenode] | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
+| buffer_number         | 3              | aktuelle Nummer des Buffers
+| buffer_name           | #test(+n)      | Name des aktuellen Buffers
+| buffer_nicklist_count | {5}            | Anzahl der Nicks in Nickliste
+| buffer_filter         | *              | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
+| lag                   | [Lag: 2.5]     | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
+| hotlist               | [Act: 4,2]     | Liste der Buffer mit Aktivität (ungelesene Nachrichten)
+| completion            | abc(2) def(5)  | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
+| scroll                | -MORE(50)-     | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
 |========================================
 
 In der 'input' Bar lautet die Standardeinstellung:
 
-[width="100%",cols="^3,^6m,8",options="header"]
+[width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Item             | Beispiel| Beschreibung
-
-| input_paste      | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] |
-  Nachfrage ob sieben Zeilen eingefügt werden sollen
-
-| input_prompt     | [nick] |
-  input prompt (Nickname für den IRC)
-
-| away             | (away) |
-  Abwesenheitsanzeige
-
-| input_search     | [Text search] |
-  Textsuche
-
-| input_text       | bla bla... |
-  Text der eingegeben wird
+| Item             | Beispiel                                    | Beschreibung
+| input_paste      | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
+| input_prompt     | [nick]                                      | input prompt (Nickname für den IRC)
+| away             | (away)                                      | Abwesenheitsanzeige
+| input_search     | [Text search]                               | Textsuche
+| input_text       | bla bla...                                  | Text der eingegeben wird
 |========================================
 
 [[key_bindings]]
 Standard Tastenbelegung
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
+
 [[key_bindings_command_line]]
 Tastenbefehle für die Befehlszeile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Taste| Beschreibung und Befehl
-
-| Pfeil links +
-  Ctrl + "b" |
-  setzt den Cursor eine Position nach links +
-  `/input move_previous_char`
-
-| Pfeil rechts +
-  Ctrl + "f" |
-  setzt den Cursor eine Position nach rechts +
-  `/input move_next_char`
-
-| Ctrl + Pfeil links +
-  Alt + "b" |
-  springt zum Anfang des vorherigen Wortes in der Befehlszeile +
-  `/input move_previous_word`
-
-| Ctrl + Pfeil rechts +
-  Alt + "f" |
-  sprint zum Anfang des nächsten Wortes in der Befehlszeile +
-  `/input move_next_word`
-
-| Home +
-  Ctrl + "a" |
-  sprint zum Anfang der Befehlszeile +
-  `/input move_beginning_of_line`
-
-| End +
-  Ctrl + "e" |
-  springt ans Ende der Befehlszeile +
-  `/input move_end_of_line`
-
-| Ctrl + "c" dann "b" |
-  Fügt Steuerzeichen für fett geschrieben Text ein +
-  `/input insert \x02`
-
-| Ctrl + "c" dann "c" |
-  Fügt Steuerzeichen für Textfarbe ein +
-  `/input insert \x03`
-
-| Ctrl + "c" dann "i" |
-  Fügt Steuerzeichen für kursiven Text ein +
-  `/input insert \x1D`
-
-| Ctrl + "c" dann "o" |
-  Fügt Steuerzeichen für Standardfarbe ein +
-  `/input insert \x0F`
-
-| Ctrl + "c" dann "r" |
-  Fügt Steuerzeichen für Hintergrundfarbe ein +
-  `/input insert \x12`
-
-| Ctrl + "c" dann "u" |
-  Fügt Steuerzeichen für unterstrichenen Text ein +
-  `/input insert \x15`
-
-| Delete +
-  Ctrl + "d" |
-  entfernt nächstes Zeichen in der Befehlszeile +
-  `/input delete_next_char`
-
-| Backspace +
-  Ctrl + "h" |
-  entfernt vorheriges Zeichen in der Befehlszeile +
-  `/input delete_previous_char`
-
-| Ctrl + "k" |
-  entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage
-  kopiert) +
-  `/input delete_end_of_line`
-
-| Ctrl + "r" |
-  Sucht in der Protokolldatei nach einem Text (zweimaliges Drücken: sucht nach exaktem Text),
-  mittels Pfeiltaste hoch/runter kann zum nächsten/vorherigen Treffer gesprungen werden +
-  `/input search_text`
-
-| Ctrl + "t" |
-  Zeichen austauschen +
-  `/input transpose_chars`
-
-| Ctrl + "u" |
-  entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage
-  kopiert) +
-  `/input delete_beginning_of_line`
-
-| Ctrl + "w" |
-  entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) +
-  `/input delete_previous_word`
-
-| Ctrl + "y" |
-  fügt Zeichenkette aus Zwischenablage ein +
-  `/input clipboard_paste`
-
-| Ctrl + "_" |
-  Rückgängig machen in Befehlszeile +
-  `/input undo`
-
-| Alt + "_" |
-  Wiederherstellen in der Befehlszeile +
-  `/input redo`
-
-| Tab |
-  Vervollständigung von Befehlen oder Nicks (nochmaliges Tab: findet nächste Vervollständigung) +
-  `/input complete_next`
-
-| Shift + Tab |
-  ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung :
-   wird die vorherige Vervollständigung genutzt +
-  `/input complete_previous`
-
-| jedwedes Zeichen |
-  schreibt das Zeichen in die Befehlszeile
-
-| Enter +
-  Ctrl + "j" +
-  Ctrl + "m" |
-  führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) +
-  `/input return`
-
-| Pfeil hoch |
-  ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen) +
-  `/input history_previous`
-
-| Pfeil runter |
-  ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen) +
-  `/input history_next`
-
-| Ctrl + Pfeil hoch |
-  ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
-  `/input history_global_previous`
-
-| Ctrl + Pfeil runter |
-  ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) +
-  `/input history_global_next`
-
-| Alt + "d" |
-  löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) +
-  `/input delete_next_word`
-
-| Alt + "k" |
-  zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in
-  die Befehlszeile ein +
-  `/input grab_key_command`
-
-| Alt + "r" |
-  löscht komplette Eingabezeile +
-  `/input delete_line`
+| Taste               | Beschreibung | Befehl
+| @k(←)               .2+| setzt den Cursor eine Position nach links .2+| /input move_previous_char
+| @k(C-)@k(b)
+| @k(→)               .2+| setzt den Cursor eine Position nach rechts .2+| /input move_next_char
+| @k(C-)@k(f)
+| @k(C-)@k(←)         .2+| springt zum Anfang des vorherigen Wortes in der Befehlszeile .2+| /input move_previous_word
+| @k(A-)@k(b)
+| @k(C-)@k(→)         .2+| sprint zum Anfang des nächsten Wortes in der Befehlszeile .2+| /input move_next_word
+| @k(A-)@k(f)
+| @k(Home)            .2+| sprint zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
+| @k(C-)@k(a)
+| @k(End)             .2+| springt ans Ende der Befehlszeile .2+| /input move_end_of_line
+| @k(C-)@k(e)
+| @k(C-)@k(c) , @k(b) | Fügt Steuerzeichen für fett geschrieben Text ein | /input insert \x02
+| @k(C-)@k(c) , @k(c) | Fügt Steuerzeichen für Textfarbe ein | /input insert \x03
+| @k(C-)@k(c) , @k(i) | Fügt Steuerzeichen für kursiven Text ein | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | Fügt Steuerzeichen für Standardfarbe ein | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | Fügt Steuerzeichen für Hintergrundfarbe ein | /input insert \x12
+| @k(C-)@k(c) , @k(u) | Fügt Steuerzeichen für unterstrichenen Text ein | /input insert \x15
+| @k(Del)             .2+| entfernt nächstes Zeichen in der Befehlszeile .2+| /input delete_next_char
+| @k(C-)@k(d)
+| @k(Backsp.)         .2+| entfernt vorheriges Zeichen in der Befehlszeile .2+| /input delete_previous_char
+| @k(C-)@k(h)
+| @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
+// TRANSLATION MISSING
+| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(t)         | Zeichen austauschen | /input transpose_chars
+| @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_beginning_of_line
+| @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | /input delete_previous_word
+| @k(C-)@k(y)         | fügt Zeichenkette aus Zwischenablage ein | /input clipboard_paste
+| @k(C-)@k(_)         | Rückgängig machen in Befehlszeile | /input undo
+| @k(A-)@k(_)         | Wiederherstellen in der Befehlszeile | /input redo
+| @k(Tab)             | Vervollständigung von Befehlen oder Nicks (nochmaliges @k(Tab): findet nächste Vervollständigung) | /input complete_next
+| @k(S-)@k(Tab)       | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt | /input complete_previous
+| @k(Enter)           .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| /input return
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+| @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen) | /input history_previous
+| @k(↓)               | ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen) | /input history_next
+| @k(C-)@k(↑)         | ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) | /input history_global_previous
+| @k(C-)@k(↓)         | ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) | /input history_global_next
+| @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | /input delete_next_word
+| @k(A-)@k(k)         | zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein | /input grab_key_command
+| @k(A-)@k(r)         | löscht komplette Eingabezeile | /input delete_line
 |========================================
 
 [[key_bindings_buffers_windows]]
 Tastenbefehle für Buffer / Fenster
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Keys | Description and command
-
-| Ctrl + "l" (L) |
-  zeichnet das Fenster neu +
-  `/window refresh`
-
-| Ctrl + "s" dann Ctrl + "u" |
-  Setzt die ungelesen Markierung für alle Buffer +
-  `/input set_unread`
-
-| Ctrl + "x" |
-  sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch +
-  `/input switch_active_buffer`
-
-| Seite hoch |
-  Eine Seite im Buffer Verlaufsspeicher nach oben blättern +
-  `/window page_up`
-
-| Seite runter |
-  Eine Seite im Buffer Verlaufsspeicher nach unten blättern +
-  `/window page_down`
-
-| Alt + Seite hoch |
-  einige Zeilen im Buffer Verlaufsspeicher nach oben blättern +
-  `/window scroll_up`
-
-| Alt + Seite runter |
-  einige Zeilen im Buffer Verlaufsspeicher nach unten blättern +
-  `/window scroll_down`
-
-| Alt + Home |
-  springt zur ersten Zeile im Buffer Verlaufsspeicher +
-  `/window scroll_top`
-
-| Alt + End |
-  springt zur letzten Zeile im Buffer Verlaufsspeicher +
-  `/window scroll_bottom`
-
-| Alt + Pfeil links +
-  Alt + Pfeil hoch +
-  Ctrl + "p" +
-  F5 |
-  zum vorherigen Buffer springen +
-  `/buffer -1`
-
-| Alt + Pfeil rechts +
-  Alt + Pfeil runter +
-  Ctrl + "n" +
-  F6 |
-  zum nächsten Buffer springen +
-  `/buffer +1`
-
-| F7 |
-  zum vorherigen Fenster wechseln +
-  `/window -1`
-
-| F8 |
-  zum nächsten Fenster wechseln +
-  `/window +1`
-
-| F9 |
-  Buffer Title nach links verschieben +
-  `/bar scroll title * x-50%`
-
-| F10 |
-  Buffer Titel nach rechts verschieben +
-  `/bar scroll title * x+50%`
-
-| F11 |
-  Nickliste um eine Seite nach oben scrollen +
-  `/bar scroll nicklist * y-100%`
-
-| F12 |
-  Nickliste um eine Seite nach unten scrollen +
-  `/bar scroll nicklist * y+100%`
-
-| Alt + F11 |
-  springt zum Anfang der Nickliste +
-  `/bar scroll nicklist * yb`
-
-| Alt + F12 |
-  springt zum Ende der Nickliste +
-  `/bar scroll nicklist * ye`
-
-| Alt + "a" |
-  wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht,
-  ...) +
-  `/input jump_smart`
-
-| Alt + "j" dann Alt + "l" (L) |
-  wechselt zum letzten Buffer +
-  `/input jump_last_buffer`
-
-| Alt + "j" dann Alt + "r" |
-  wechselt zum IRC raw Buffer +
-  `/server raw`
-
-| Alt + "j" dann Alt + "s" |
-  wechselt zum IRC Server Buffer +
-  `/server jump`
-
-| Alt + Ziffer (0-9) |
-  wechselt zum Buffer mit der Nummer (0 = 10) +
-  `/buffer *N`
-
-| Alt + "j" dann Ziffern (01-99) |
-  wechselt zum Buffer mit der Nummer +
-  `/buffer NN`
-
-| Alt + "n" |
-  springe zur nächsten Highlight Nachricht +
-  `/window scroll_next_highlight`
-
-| Alt + "p" |
-  springe zur vorherigen Highlight Nachricht +
-  `/window scroll_previous_highlight`
-
-| Alt + "u" |
-  springe zur ersten ungelesenen Zeile im Buffer +
-  `/input scroll_unread`
-
-| Alt + "w" dann Alt + Pfeiltaste |
-  wechselt zum Fenster durch Richtungsanweisung +
-  `/window up` +
-  `/window down` +
-  `/window left` +
-  `/window right`
-
-| Alt + "z" |
-  Zoom für aktuelles Fenster (nochmals Alt + Z: stellt die vorherigen Einstellungen wieder her) +
-  `/window zoom`
-
-| Alt + "<" |
-  wechselt zum vorherigen Buffer der letzten aufgerufenen Buffer +
-  `/input jump_previously_visited_buffer`
-
-| Alt + ">" |
-  wechselt zum nächsten Buffer der letzten aufgerufenen Buffer +
-  `/input jump_next_visited_buffer`
+| Taste                     | Beschreibung | Befehl
+| @k(C-)@k(l)               | zeichnet das Fenster neu | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | Setzt die ungelesen Markierung für alle Buffer | /input set_unread
+| @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | /input switch_active_buffer
+| @k(PgUp)                  | Eine Seite im Buffer Verlaufsspeicher nach oben blättern | /window page_up
+| @k(PgDn)                  | Eine Seite im Buffer Verlaufsspeicher nach unten blättern | /window page_down
+| @k(A-)@k(PgUp)            | einige Zeilen im Buffer Verlaufsspeicher nach oben blättern | /window scroll_up
+| @k(A-)@k(PgDn)            | einige Zeilen im Buffer Verlaufsspeicher nach unten blättern | /window scroll_down
+| @k(A-)@k(Home)            | springt zur ersten Zeile im Buffer Verlaufsspeicher | /window scroll_top
+| @k(A-)@k(End)             | springt zur letzten Zeile im Buffer Verlaufsspeicher | /window scroll_bottom
+| @k(A-)@k(←)               .4+| zum vorherigen Buffer springen .4+| /buffer -1
+| @k(A-)@k(↑)
+| @k(C-)@k(p)
+| @k(F5)
+| @k(A-)@k(→)               .4+| zum nächsten Buffer springen .4+| /buffer +1
+| @k(A-)@k(↓)
+| @k(C-)@k(n)
+| @k(F6)
+| @k(F7)                    | zum vorherigen Fenster wechseln | /window -1
+| @k(F8)                    | zum nächsten Fenster wechseln | /window +1
+| @k(F9)                    | Buffer Title nach links verschieben | /bar scroll title * x-50%
+| @k(F10)                   | Buffer Titel nach rechts verschieben | /bar scroll title * x+50%
+| @k(F11)                   | Nickliste um eine Seite nach oben scrollen | /bar scroll nicklist * y-100%
+| @k(F12)                   | Nickliste um eine Seite nach unten scrollen | /bar scroll nicklist * y+100%
+| @k(A-)@k(F11)             | springt zum Anfang der Nickliste | /bar scroll nicklist * yb
+| @k(A-)@k(F12)             | springt zum Ende der Nickliste | /bar scroll nicklist * ye
+| @k(A-)@k(a)               | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | /input jump_smart
+| @k(A-)@k(j) , @k(A-)@k(l) | wechselt zum letzten Buffer | /input jump_last_buffer
+| @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC raw Buffer | /server raw
+| @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | /server jump
+| @k(A-)@k(0...9)           | wechselt zum Buffer mit der Nummer (0 = 10) | /buffer *N
+| @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der Nummer | /buffer NN
+| @k(A-)@k(n)               | springe zur nächsten Highlight Nachricht | /window scroll_next_highlight
+| @k(A-)@k(p)               | springe zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
+| @k(A-)@k(u)               | springe zur ersten ungelesenen Zeile im Buffer | /input scroll_unread
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
+| @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
+| @k(A-)@k(<)               | wechselt zum vorherigen Buffer der letzten aufgerufenen Buffer | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | wechselt zum nächsten Buffer der letzten aufgerufenen Buffer | /input jump_next_visited_buffer
 |========================================
 
 [[key_bindings_other]]
 andere Tastenbefehle
 ^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-|Tasten| Beschreibung und Befehl
-
-| Alt + "h" |
-  löscht Hotliste (Aktivitätsanzeige für die Buffer) +
-  `/input hotlist_clear` +
-
-| Alt + "=" |
-  schaltet Filterfunktion an/aus +
-  `/filter toggle` +
+| Taste       | Beschreibung | Befehl
+| @k(A-)@k(h) | löscht Hotliste (Aktivitätsanzeige für die Buffer) | /input hotlist_clear
+| @k(A-)@k(=) | schaltet Filterfunktion an/aus | /filter toggle
 |========================================
 
 [[command_line]]

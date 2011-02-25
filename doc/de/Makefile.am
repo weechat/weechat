@@ -36,7 +36,7 @@ all-local: weechat_user.de.html \
 
 # user's guide
 weechat_user.de.html: weechat_user.de.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_user.de.html weechat_user.de.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_user.de.html weechat_user.de.txt
 
 # scripting guide
 weechat_scripting.de.html: weechat_scripting.de.txt

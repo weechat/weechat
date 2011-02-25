@@ -383,393 +383,152 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Elemento                   | Esempio         | Descrizione
-
-| time                       | [12:55]         |
-  ora
-
-| buffer_count               | [4]             |
-  numero di buffer aperti
-
-| buffer_plugin              | [irc/freenode]  |
-  plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc
-  usato dal buffer)
-
-| buffer_number              | 3               |
-  numero del buffer corrente
-
-| buffer_name                | #test(+n)       |
-  nome del buffer attivo
-
-| buffer_nicklist_count      | {5}             |
-  numero di nick nella lista nick
-
-| buffer_filter              | *               |
-  indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste),
-  valori vuoti indicano che tutte le righe sono visualizzate
-
-| lag                        | [Ritardo: 2.5]  |
-  indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-
-| hotlist                    | [Attività: 4,2] |
-  elenco dei buffer con attività (messaggi non letti)
-
-| completion                 | abc(2) def(5)   |
-  elenco di parole per il completamento, con il numero di completamenti
-  possibili per ogni parola
-
-| scroll                     | -ANCORA(50)-    |
-  indicatore di scorrimento, con il numero di righe sotto l'ultima
-  riga visualizzata
+| time                       | [12:55]         | ora
+| buffer_count               | [4]             | numero di buffer aperti
+| buffer_plugin              | [irc/freenode]  | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
+| buffer_number              | 3               | numero del buffer corrente
+| buffer_name                | #test(+n)       | nome del buffer attivo
+| buffer_nicklist_count      | {5}             | numero di nick nella lista nick
+| buffer_filter              | *               | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
+| lag                        | [Ritardo: 2.5]  | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
+| hotlist                    | [Attività: 4,2] | elenco dei buffer con attività (messaggi non letti)
+| completion                 | abc(2) def(5)   | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
+| scroll                     | -ANCORA(50)-    | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
 
 La barra 'input' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Elemento         | Esempio | Descrizione
-
-| input_paste      | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] |
-  chiede all'utente se incollare le righe
-
-| input_prompt     | [nick] |
-  prompt per l'input (nick per il plugin irc)
-
-| away             | (assente) |
-  indicatore di assenza
-
-| input_search     | [Ricerca testo] |
-  indicatore di ricerca testo
-
-| input_text       | bla bla... |
-  testo in input
+| Elemento         | Esempio                                       | Descrizione
+| input_paste      | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
+| input_prompt     | [nick]                                        | prompt per l'input (nick per il plugin irc)
+| away             | (assente)                                     | indicatore di assenza
+| input_search     | [Ricerca testo]                               | indicatore di ricerca testo
+| input_text       | bla bla...                                    | testo in input
 |========================================
 
 [[key_bindings]]
 Associazione tasti predefinita
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
+
 [[key_bindings_command_line]]
 Tasti per la riga di comando
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Tasti | Descrizione e comando
-
-| Freccia sinistra +
-  Ctrl + "b" |
-  Passa al carattere precedente nella riga di comando +
-  `/input move_previous_char`
-
-| Freccia destra +
-  Ctrl + "f" |
-  Passa al carattere successivo nella riga di comando +
-  `/input move_next_char`
-
-| Ctrl + freccia sinistra +
-  Alt + "b" |
-  Passa alla parola precedente nella riga di comando +
-  `/input move_previous_word`
-
-| Ctrl + freccia destra +
-  Alt + "f" |
-  Passa alla parola successiva nella riga di comando +
-  `/input move_next_word`
-
-| Home +
-  Ctrl + "a" |
-  Si sposta all'inizio della riga di comando +
-  `/input move_beginning_of_line`
-
-| Fine +
-  Ctrl + "e" |
-  Si sposta alla fine della riga di comando +
-  `/input move_end_of_line`
-
-| Ctrl + "c" poi "b" |
-  Inserisce il codice per il testo in grassetto +
-  `/input insert \x02`
-
-| Ctrl + "c" poi "c" |
-  Inserisce il codice per il testo colorato +
-  `/input insert \x03`
-
-| Ctrl + "c" poi "i" |
-  Inserisce il codice per il testo in corsivo +
-  `/input insert \x1D`
-
-| Ctrl + "c" poi "o" |
-  Inserisce il codice per il reset dei colori +
-  `/input insert \x0F`
-
-| Ctrl + "c" then "r" |
-  Inserisce il codice per l'inversione dei colori +
-  `/input insert \x12`
-
-| Ctrl + "c" poi "u" |
-  Inserisce il codice per il testo sottolineato +
-  `/input insert \x15`
-
-| Canc +
-  Ctrl + "d" |
-  Elimina il carattere successivo nella riga di comando +
-  `/input delete_next_char`
-
-| Backspace +
-  Ctrl + "h" |
-  Elimina il carattere precedente nella riga di comando +
-  `/input delete_previous_char`
-
-| Ctrl + "k" |
-  Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata
-  viene copiata negli appunti) +
-  `/input delete_end_of_line`
-
-| Ctrl + "r" |
-  Cerca il testo nella cronologia del buffer (due volte: cerca testo esatto),
-  ricorrenze successive/precedenti possono essere trovate con le frecce su/giù +
-  `/input search_text`
-
-| Ctrl + "t" |
-  Inverti caratteri +
-  `/input transpose_chars`
-
-| Ctrl + "u" |
-  Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata
-  viene copiata negli appunti) +
-  `/input delete_beginning_of_line`
-
-| Ctrl + "w" |
-  Elimina la parola precedente nella riga di comando (la stringa eliminata viene
-  copiata negli appunti) +
-  `/input delete_previous_word`
-
-| Ctrl + "y" |
-  Incolla il contenuto degli appunti +
-  `/input clipboard_paste`
-
-| Ctrl + "_" |
-  Annulla l'ultima azione sulla riga di comando +
-  `/input undo`
-
-| Alt + "_" |
-  Ripete l'ultima azione sulla riga di comando +
-  `/input redo`
-
-| Tab |
-  Completa comando o nick (Tab di nuovo: trova prossimo completamento) +
-  `/input complete_next`
-
-| Shift + Tab |
-  Senza completamento: effettua un completamento parziale, con
-  completamento in sospeso: completa con il completamento precedente +
-  `/input complete_previous`
-
-| Qualsiasi carattere |
-  Inserisce carattere alla posizione del cursore nella riga di comando
-
-| Invio +
-  Ctrl + "j" +
-  Ctrl + "m" |
-  Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) +
-  `/input return`
-
-| Freccia in alto |
-  Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) +
-  `/input history_previous`
-
-| Freccia giù |
-  Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) +
-  `/input history_next`
-
-| Ctrl + freccia su |
-  Chiama il comando/messaggio precedente nella cronologia globale (identico
-  per tutti i buffer) +
-  `/input history_global_previous`
-
-| Ctrl + freccia giù |
-  Chiama il comando/messaggio successivo nella cronologia globale (identico
-  per tutti i buffer) +
-  `/input history_global_next`
-
-| Alt + "d" |
-  Elimina la parola successiva nella riga di comando (la stringa eliminata viene
-  copiata negli appunti) +
-  `/input delete_next_word`
-
-| Alt + "k" |
-  Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto
-  esiste) nella riga di comando +
-  `/input grab_key_command`
-
-| Alt + "r" |
-  Elimina l'intera riga di comando +
-  `/input delete_line`
+| Tasti               | Descrizione | Comando
+| @k(←)               .2+| Passa al carattere precedente nella riga di comando .2+| /input move_previous_char
+| @k(C-)@k(b)
+| @k(→)               .2+| Passa al carattere successivo nella riga di comando .2+| /input move_next_char
+| @k(C-)@k(f)
+| @k(C-)@k(←)         .2+| Passa alla parola precedente nella riga di comando .2+| /input move_previous_word
+| @k(A-)@k(b)
+| @k(C-)@k(→)         .2+| Passa alla parola successiva nella riga di comando .2+| /input move_next_word
+| @k(A-)@k(f)
+| @k(Home)            .2+| Si sposta all'inizio della riga di comando .2+| /input move_beginning_of_line
+| @k(C-)@k(a)
+| @k(End)             .2+| Si sposta alla fine della riga di comando .2+| /input move_end_of_line
+| @k(C-)@k(e)
+| @k(C-)@k(c) , @k(b) | Inserisce il codice per il testo in grassetto | /input insert \x02
+| @k(C-)@k(c) , @k(c) | Inserisce il codice per il testo colorato | /input insert \x03
+| @k(C-)@k(c) , @k(i) | Inserisce il codice per il testo in corsivo | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | Inserisce il codice per il reset dei colori | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | Inserisce il codice per l'inversione dei colori | /input insert \x12
+| @k(C-)@k(c) , @k(u) | Inserisce il codice per il testo sottolineato | /input insert \x15
+| @k(Del)             .2+| Elimina il carattere successivo nella riga di comando .2+| /input delete_next_char
+| @k(C-)@k(d)
+| @k(Backsp.)         .2+| Elimina il carattere precedente nella riga di comando .2+| /input delete_previous_char
+| @k(C-)@k(h)
+| @k(C-)@k(k)         | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_end_of_line
+// TRANSLATION MISSING
+| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(t)         | Inverti caratteri | /input transpose_chars
+| @k(C-)@k(u)         | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_beginning_of_line
+| @k(C-)@k(w)         | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_previous_word
+| @k(C-)@k(y)         | Incolla il contenuto degli appunti | /input clipboard_paste
+| @k(C-)@k(_)         | Annulla l'ultima azione sulla riga di comando | /input undo
+| @k(A-)@k(_)         | Ripete l'ultima azione sulla riga di comando | /input redo
+| @k(Tab)             | Completa comando o nick (@k(Tab) di nuovo: trova prossimo completamento) | /input complete_next
+| @k(S-)@k(Tab)       | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente | /input complete_previous
+| @k(Enter)           .3+| Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) .3+| /input return
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+| @k(↑)               | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) | /input history_previous
+| @k(↓)               | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) | /input history_next
+| @k(C-)@k(↑)         | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer) | /input history_global_previous
+| @k(C-)@k(↓)         | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer) | /input history_global_next
+| @k(A-)@k(d)         | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_next_word
+| @k(A-)@k(k)         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | /input grab_key_command
+| @k(A-)@k(r)         | Elimina l'intera riga di comando | /input delete_line
 |========================================
 
 [[key_bindings_buffers_windows]]
 Tasti per buffer / finestre
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Tasti | Descrizione e comando
-
-| Ctrl + "l" (L) |
-  Ridisegna l'intera finestra +
-  `/window refresh`
-
-| Ctrl + "s" poi Ctrl + "u" |
-  Imposta l'evidenziatore dei messaggi non letti su tutti i buffer +
-  `/input set_unread`
-
-| Ctrl + "x" |
-  Passa al buffer attivo se i buffer sono collegati con lo stesso numero +
-  `/input switch_active_buffer`
-
-| Pagina su |
-  Scorre in alto di una pagina nella cronologia del buffer +
-  `/window page_up`
-
-| Pagina giù |
-  Scorre di una pagina in basso nella cronologia del buffer +
-  `/window page_down`
-
-| Alt + Pagina su |
-  Scorre di qualche riga in alto nella cronologia del buffer +
-  `/window scroll_up`
-
-| Alt + Pagina giù |
-  Scorre di qualche riga in basso nella cronologia del buffer +
-  `/window scroll_down`
-
-| Alt + Home |
-  Scorre in cima al buffer +
-  `/window scroll_top`
-
-| Alt + Fine |
-  Scorre alla fine del del buffer +
-  `/window scroll_bottom`
-
-| Alt + freccia sinistra +
-  Alt + freccia su +
-  Ctrl + "p" +
-  F5 |
-  Passa al buffer precedente +
-  `/buffer -1`
-
-| Alt + freccia destra +
-  Alt + freccia giù +
-  Ctrl + "n" +
-  F6 |
-  Passa al buffer successivo +
-  `/buffer +1`
-
-| F7 |
-  Passa alla finestra precedente +
-  `/window -1`
-
-| F8 |
-  Passa alla finestra successiva +
-  `/window +1`
-
-| F9 |
-  Scorre il titolo del buffer sulla sinistra +
-  `/bar scroll title * x-50%`
-
-| F10 |
-  Scorre il titolo del buffer sulla destra +
-  `/bar scroll title * x+50%`
-
-| F11 |
-  Scorre di una pagina in alto nella lista nick +
-  `/bar scroll nicklist * y-100%`
-
-| F12 |
-  Scorre di una pagina in basso nella lista nick +
-  `/bar scroll nicklist * y+100%`
-
-| Alt + F11 |
-  Sposta all'inizio della lista nick +
-  `/bar scroll nicklist * yb`
-
-| Alt + F12 |
-  Sposta alla fine della lista nick +
-  `/bar scroll nicklist * ye`
-
-| Alt + "a" |
-  Passa al buffer successivo con attività (con priorità: evento, messaggio,
-  altro) +
-  `/input jump_smart`
-
-| Alt + "j" poi Alt + "l" (L) |
-  Passa all'ultimo buffer +
-  `/input jump_last_buffer`
-
-| Alt + "j" poi Alt + "r" |
-  Passa al buffer raw IRC +
-  `/server raw`
-
-| Alt + "j" poi Alt + "s" |
-  Passa al buffer server IRC +
-  `/server jump`
-
-| Alt + num (0-9) |
-  Passa al buffer numero (0 = 10) +
-  `/buffer *N`
-
-| Alt + "j" poi numero (01-99) |
-  Passa al buffer numero +
-  `/buffer NN`
-
-| Alt + "n" |
-  Scorre fino all'evento successivo +
-  `/window scroll_next_highlight`
-
-| Alt + "p" |
-  Scorre fino all'evento precedente +
-  `/window scroll_previous_highlight`
-
-| Alt + "u" |
-  Scorre fino alla prima riga non letta nel buffer +
-  `/input scroll_unread`
-
-| Alt + "w" poi Alt + freccia |
-  Passa alla finestra con direzione +
-  `/window up` (in alto) +
-  `/window down` (in basso) +
-  `/window left` (a sinistra) +
-  `/window right` (a destra)
-
-| Alt + "z" |
-  Ingrandimento sulla finestra attiva (Alt + Z di nuovo: ripristina lo stato iniziale
-  della finestra, prima dell'ingrandimento) +
-  `/window zoom`
-
-| Alt + "<" |
-  Passa al buffer precedente nella lista dei buffer visitati +
-  `/input jump_previously_visited_buffer`
-
-| Alt + ">" |
-  Passa al buffer successivo nella lista dei buffer visitati +
-  `/input jump_next_visited_buffer`
+| Tasti                     | Descrizione | Comando
+| @k(C-)@k(l)               | Ridisegna l'intera finestra | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | /input set_unread
+| @k(C-)@k(x)               | Passa al buffer attivo se i buffer sono collegati con lo stesso numero | /input switch_active_buffer
+| @k(PgUp)                  | Scorre in alto di una pagina nella cronologia del buffer | /window page_up
+| @k(PgDn)                  | Scorre di una pagina in basso nella cronologia del buffer | /window page_down
+| @k(A-)@k(PgUp)            | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up
+| @k(A-)@k(PgDn)            | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down
+| @k(A-)@k(Home)            | Scorre in cima al buffer | /window scroll_top
+| @k(A-)@k(End)             | Scorre alla fine del del buffer | /window scroll_bottom
+| @k(A-)@k(←)               .4+| Passa al buffer precedente .4+| /buffer -1
+| @k(A-)@k(↑)
+| @k(C-)@k(p)
+| @k(F5)
+| @k(A-)@k(→)               .4+| Passa al buffer successivo .4+| /buffer +1
+| @k(A-)@k(↓)
+| @k(C-)@k(n)
+| @k(F6)
+| @k(F7)                    | Passa alla finestra precedente | /window -1
+| @k(F8)                    | Passa alla finestra successiva | /window +1
+| @k(F9)                    | Scorre il titolo del buffer sulla sinistra | /bar scroll title * x-50%
+| @k(F10)                   | Scorre il titolo del buffer sulla destra | /bar scroll title * x+50%
+| @k(F11)                   | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist * y-100%
+| @k(F12)                   | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist * y+100%
+| @k(A-)@k(F11)             | Sposta all'inizio della lista nick | /bar scroll nicklist * yb
+| @k(A-)@k(F12)             | Sposta alla fine della lista nick | /bar scroll nicklist * ye
+| @k(A-)@k(a)               | Passa al buffer successivo con attività (con priorità: evento, messaggio, altro) | /input jump_smart
+| @k(A-)@k(j) , @k(A-)@k(l) | Passa all'ultimo buffer | /input jump_last_buffer
+| @k(A-)@k(j) , @k(A-)@k(r) | Passa al buffer raw IRC | /server raw
+| @k(A-)@k(j) , @k(A-)@k(s) | Passa al buffer server IRC | /server jump
+| @k(A-)@k(0...9)           | Passa al buffer numero (0 = 10) | /buffer *N
+| @k(A-)@k(j) , @k(01...99) | Passa al buffer numero | /buffer NN
+| @k(A-)@k(n)               | Scorre fino all'evento successivo | /window scroll_next_highlight
+| @k(A-)@k(p)               | Scorre fino all'evento precedente | /window scroll_previous_highlight
+| @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /input scroll_unread
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
+| @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | /window zoom
+| @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | /input jump_next_visited_buffer
 |========================================
 
 [[key_bindings_other]]
 Altri tasti
 ^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Tasti | Descrizione e comando
-
-| Alt + "h" |
-  Pulisce hotlist (notifica di attività su altri buffer) +
-  `/input hotlist_clear` +
-
-| Alt + "=" |
-  Attiva/disattiva filtri +
-  `/filter toggle` +
+| Tasti       | Descrizione | Comando
+| @k(A-)@k(h) | Pulisce hotlist (notifica di attività su altri buffer) | /input hotlist_clear
+| @k(A-)@k(=) | Attiva/disattiva filtri | /filter toggle
 |========================================
 
 [[command_line]]

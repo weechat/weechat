@@ -376,387 +376,147 @@ Bar 'status' has following default items:
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Item                  | Example        | Description
-
-| time                  | [12:55]        |
-  time
-
-| buffer_count          | [4]            |
-  number of opened buffers
-
-| buffer_plugin         | [irc/freenode] |
-  plugin of current buffer (irc plugin can add IRC server name used by buffer)
-
-| buffer_number         | 3              |
-  current buffer number
-
-| buffer_name           | #test(+n)      |
-  current buffer name
-
-| buffer_nicklist_count | {5}            |
-  number of nicks in nicklist
-
-| buffer_filter         | *              |
-  filtering indicator: `*` means some lines are filtered (hidden), empty value
-  means all lines are displayed
-
-| lag                   | [Lag: 2.5]     |
-  lag indicator, in seconds (hidden if lag is low)
-
-| hotlist               | [Act: 4,2]     |
-  list of buffers with activity (unread messages)
-
-| completion            | abc(2) def(5)  |
-  list of words for completion, with number of possible completions for each
-  word
-
-| scroll                | -MORE(50)-     |
-  scroll indicator, with number of lines below last line displayed
+| time                  | [12:55]        | time
+| buffer_count          | [4]            | number of opened buffers
+| buffer_plugin         | [irc/freenode] | plugin of current buffer (irc plugin can add IRC server name used by buffer)
+| buffer_number         | 3              | current buffer number
+| buffer_name           | #test(+n)      | current buffer name
+| buffer_nicklist_count | {5}            | number of nicks in nicklist
+| buffer_filter         | *              | filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
+| lag                   | [Lag: 2.5]     | lag indicator, in seconds (hidden if lag is low)
+| hotlist               | [Act: 4,2]     | list of buffers with activity (unread messages)
+| completion            | abc(2) def(5)  | list of words for completion, with number of possible completions for each word
+| scroll                | -MORE(50)-     | scroll indicator, with number of lines below last line displayed
 |========================================
 
 Bar 'input' has following default items:
 
-[width="100%",cols="^3,^6m,8",options="header"]
+[width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Item             | Example | Description
-
-| input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] |
-  question to user for pasting lines
-
-| input_prompt     | [nick] |
-  input prompt (nick for irc plugin)
-
-| away             | (away) |
-  away indicator
-
-| input_search     | [Text search] |
-  text search indicator
-
-| input_text       | bla bla... |
-  input text
+| Item             | Example                                    | Description
+| input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
+| input_prompt     | [nick]                                     | input prompt (nick for irc plugin)
+| away             | (away)                                     | away indicator
+| input_search     | [Text search]                              | text search indicator
+| input_text       | bla bla...                                 | input text
 |========================================
 
 [[key_bindings]]
 Default key bindings
 ~~~~~~~~~~~~~~~~~~~~
 
+// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
+
 [[key_bindings_command_line]]
 Keys for command line
 ^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Keys | Description and command
-
-| Left arrow +
-  Ctrl + "b" |
-  Go to previous char in command line +
-  `/input move_previous_char`
-
-| Right arrow +
-  Ctrl + "f" |
-  Go to next char in command line +
-  `/input move_next_char`
-
-| Ctrl + left arrow +
-  Alt + "b" |
-  Go to previous word in command line +
-  `/input move_previous_word`
-
-| Ctrl + right arrow +
-  Alt + "f" |
-  Go to next word in command line +
-  `/input move_next_word`
-
-| Home +
-  Ctrl + "a" |
-  Go to the beginning of command line +
-  `/input move_beginning_of_line`
-
-| End +
-  Ctrl + "e" |
-  Go to the end of command line +
-  `/input move_end_of_line`
-
-| Ctrl + "c" then "b" |
-  Insert code for bold text +
-  `/input insert \x02`
-
-| Ctrl + "c" then "c" |
-  Insert code for colored text +
-  `/input insert \x03`
-
-| Ctrl + "c" then "i" |
-  Insert code for italic text +
-  `/input insert \x1D`
-
-| Ctrl + "c" then "o" |
-  Insert code for color reset +
-  `/input insert \x0F`
-
-| Ctrl + "c" then "r" |
-  Insert code for reverse color +
-  `/input insert \x12`
-
-| Ctrl + "c" then "u" |
-  Insert code for underlined text +
-  `/input insert \x15`
-
-| Delete +
-  Ctrl + "d" |
-  Delete next char in command line +
-  `/input delete_next_char`
-
-| Backspace +
-  Ctrl + "h" |
-  Delete previous char in command line +
-  `/input delete_previous_char`
-
-| Ctrl + "k" |
-  Delete from cursor until end of command line (deleted string is copied to
-  clipboard) +
-  `/input delete_end_of_line`
-
-| Ctrl + "r" |
-  Search for text in buffer history (two times: search exact text),
-  next/previous occurrences can be found with up and down arrows +
-  `/input search_text`
-
-| Ctrl + "t" |
-  Transpose chars +
-  `/input transpose_chars`
-
-| Ctrl + "u" |
-  Delete from cursor until beginning of command line (deleted string is copied
-  to clipboard) +
-  `/input delete_beginning_of_line`
-
-| Ctrl + "w" |
-  Delete previous word of command line (deleted string is copied to clipboard) +
-  `/input delete_previous_word`
-
-| Ctrl + "y" |
-  Paste clipboard content +
-  `/input clipboard_paste`
-
-| Ctrl + "_" |
-  Undo last action on command line +
-  `/input undo`
-
-| Alt + "_" |
-  Redo last action on command line +
-  `/input redo`
-
-| Tab |
-  Complete command or nick (Tab again: find next completion) +
-  `/input complete_next`
-
-| Shift + Tab |
-  Without completion: do a partial completion, with pending completion:
-  complete with previous completion +
-  `/input complete_previous`
-
-| Any char |
-  Insert char at cursor position in command line
-
-| Enter +
-  Ctrl + "j" +
-  Ctrl + "m" |
-  Execute command or send message (in search mode: stop search) +
-  `/input return`
-
-| Up arrow |
-  Call previous command/message (in search mode: search up) +
-  `/input history_previous`
-
-| Down arrow |
-  Call next command/message (in search mode: search down) +
-  `/input history_next`
-
-| Ctrl + up arrow |
-  Call previous command/message in global history (common for all buffers) +
-  `/input history_global_previous`
-
-| Ctrl + down arrow |
-  Call next command/message in global history (common for all buffers) +
-  `/input history_global_next`
-
-| Alt + "d" |
-  Delete next word in command line (deleted string is copied to clipboard) +
-  `/input delete_next_word`
-
-| Alt + "k" |
-  Grab a key and insert its code (and command bound if key exists) in command
-  line +
-  `/input grab_key_command`
-
-| Alt + "r" |
-  Delete entire command line +
-  `/input delete_line`
+| Key                 | Description | Command
+| @k(←)               .2+| Go to previous char in command line .2+| /input move_previous_char
+| @k(C-)@k(b)
+| @k(→)               .2+| Go to next char in command line .2+| /input move_next_char
+| @k(C-)@k(f)
+| @k(C-)@k(←)         .2+| Go to previous word in command line .2+| /input move_previous_word
+| @k(A-)@k(b)
+| @k(C-)@k(→)         .2+| Go to next word in command line .2+| /input move_next_word
+| @k(A-)@k(f)
+| @k(Home)            .2+| Go to the beginning of command line .2+| /input move_beginning_of_line
+| @k(C-)@k(a)
+| @k(End)             .2+| Go to the end of command line .2+| /input move_end_of_line
+| @k(C-)@k(e)
+| @k(C-)@k(c) , @k(b) | Insert code for bold text | /input insert \x02
+| @k(C-)@k(c) , @k(c) | Insert code for colored text | /input insert \x03
+| @k(C-)@k(c) , @k(i) | Insert code for italic text | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | Insert code for color reset | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | Insert code for reverse color | /input insert \x12
+| @k(C-)@k(c) , @k(u) | Insert code for underlined text | /input insert \x15
+| @k(Del)             .2+| Delete next char in command line .2+| /input delete_next_char
+| @k(C-)@k(d)
+| @k(Backsp.)         .2+| Delete previous char in command line .2+| /input delete_previous_char
+| @k(C-)@k(h)
+| @k(C-)@k(k)         | Delete from cursor until end of command line (deleted string is copied to clipboard) | /input delete_end_of_line
+| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(t)         | Transpose chars | /input transpose_chars
+| @k(C-)@k(u)         | Delete from cursor until beginning of command line (deleted string is copied to clipboard) | /input delete_beginning_of_line
+| @k(C-)@k(w)         | Delete previous word of command line (deleted string is copied to clipboard) | /input delete_previous_word
+| @k(C-)@k(y)         | Paste clipboard content | /input clipboard_paste
+| @k(C-)@k(_)         | Undo last action on command line | /input undo
+| @k(A-)@k(_)         | Redo last action on command line | /input redo
+| @k(Tab)             | Complete command or nick (@k(Tab) again: find next completion) | /input complete_next
+| @k(S-)@k(Tab)       | Without completion: do a partial completion, with pending completion: complete with previous completion | /input complete_previous
+| @k(Enter)           .3+| Execute command or send message (in search mode: stop search) .3+| /input return
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+| @k(↑)               | Call previous command/message (in search mode: search up) | /input history_previous
+| @k(↓)               | Call next command/message (in search mode: search down) | /input history_next
+| @k(C-)@k(↑)         | Call previous command/message in global history (common for all buffers) | /input history_global_previous
+| @k(C-)@k(↓)         | Call next command/message in global history (common for all buffers) | /input history_global_next
+| @k(A-)@k(d)         | Delete next word in command line (deleted string is copied to clipboard) | /input delete_next_word
+| @k(A-)@k(k)         | Grab a key and insert its code (and command bound if key exists) in command line | /input grab_key_command
+| @k(A-)@k(r)         | Delete entire command line | /input delete_line
 |========================================
 
 [[key_bindings_buffers_windows]]
 Keys for buffers / windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Keys | Description and command
-
-| Ctrl + "l" (L) |
-  Redraw whole window +
-  `/window refresh`
-
-| Ctrl + "s" then Ctrl + "u" |
-  Set unread marker on all buffers +
-  `/input set_unread`
-
-| Ctrl + "x" |
-  Switch current buffer if buffers are attached with same number +
-  `/input switch_active_buffer`
-
-| Page up |
-  Scroll up one page in buffer history +
-  `/window page_up`
-
-| Page down |
-  Scroll down one page in buffer history +
-  `/window page_down`
-
-| Alt + Page up |
-  Scroll up a few lines in buffer history +
-  `/window scroll_up`
-
-| Alt + Page down |
-  Scroll down a few lines in buffer history +
-  `/window scroll_down`
-
-| Alt + Home |
-  Scroll to top of buffer +
-  `/window scroll_top`
-
-| Alt + End |
-  Scroll to bottom of buffer +
-  `/window scroll_bottom`
-
-| Alt + left arrow +
-  Alt + up arrow +
-  Ctrl + "p" +
-  F5 |
-  Switch to previous buffer +
-  `/buffer -1`
-
-| Alt + right arrow +
-  Alt + down arrow +
-  Ctrl + "n" +
-  F6 |
-  Switch to next buffer +
-  `/buffer +1`
-
-| F7 |
-  Switch to previous window +
-  `/window -1`
-
-| F8 |
-  Switch to next window +
-  `/window +1`
-
-| F9 |
-  Scroll buffer's title on the left +
-  `/bar scroll title * x-50%`
-
-| F10 |
-  Scroll buffer's title on the right +
-  `/bar scroll title * x+50%`
-
-| F11 |
-  Scroll up one page in nicklist +
-  `/bar scroll nicklist * y-100%`
-
-| F12 |
-  Scroll down one page in nicklist +
-  `/bar scroll nicklist * y+100%`
-
-| Alt + F11 |
-  Go to the beginning of nicklist +
-  `/bar scroll nicklist * yb`
-
-| Alt + F12 |
-  Go to the end of nicklist +
-  `/bar scroll nicklist * ye`
-
-| Alt + "a" |
-  Switch to next buffer with activity (with priority: highlight, message,
-  other) +
-  `/input jump_smart`
-
-| Alt + "j" then Alt + "l" (L) |
-  Switch to last buffer +
-  `/input jump_last_buffer`
-
-| Alt + "j" then Alt + "r" |
-  Switch to IRC raw buffer +
-  `/server raw`
-
-| Alt + "j" then Alt + "s" |
-  Switch to IRC server buffer +
-  `/server jump`
-
-| Alt + digit (0-9) |
-  Switch to buffer by number (0 = 10) +
-  `/buffer *N`
-
-| Alt + "j" then number (01-99) |
-  Switch to buffer by number +
-  `/buffer NN`
-
-| Alt + "n" |
-  Scroll to next highlight +
-  `/window scroll_next_highlight`
-
-| Alt + "p" |
-  Scroll to previous highlight +
-  `/window scroll_previous_highlight`
-
-| Alt + "u" |
-  Scroll to first unread line in buffer +
-  `/input scroll_unread`
-
-| Alt + "w" then Alt + arrow |
-  Switch to window with direction +
-  `/window up` +
-  `/window down` +
-  `/window left` +
-  `/window right`
-
-| Alt + "z" |
-  Zoom on current window (Alt + Z again: restore initial windows state, before
-  zoom) +
-  `/window zoom`
-
-| Alt + "<" |
-  Switch to previous buffer in list of visited buffers +
-  `/input jump_previously_visited_buffer`
-
-| Alt + ">" |
-  Switch to next buffer in list of visited buffers +
-  `/input jump_next_visited_buffer`
+| Key                       | Description | Command
+| @k(C-)@k(l)               | Redraw whole window | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | Set unread marker on all buffers | /input set_unread
+| @k(C-)@k(x)               | Switch current buffer if buffers are attached with same number | /input switch_active_buffer
+| @k(PgUp)                  | Scroll up one page in buffer history | /window page_up
+| @k(PgDn)                  | Scroll down one page in buffer history | /window page_down
+| @k(A-)@k(PgUp)            | Scroll up a few lines in buffer history | /window scroll_up
+| @k(A-)@k(PgDn)            | Scroll down a few lines in buffer history | /window scroll_down
+| @k(A-)@k(Home)            | Scroll to top of buffer | /window scroll_top
+| @k(A-)@k(End)             | Scroll to bottom of buffer | /window scroll_bottom
+| @k(A-)@k(←)               .4+| Switch to previous buffer .4+| /buffer -1
+| @k(A-)@k(↑)
+| @k(C-)@k(p)
+| @k(F5)
+| @k(A-)@k(→)               .4+| Switch to next buffer .4+| /buffer +1
+| @k(A-)@k(↓)
+| @k(C-)@k(n)
+| @k(F6)
+| @k(F7)                    | Switch to previous window | /window -1
+| @k(F8)                    | Switch to next window | /window +1
+| @k(F9)                    | Scroll buffer's title on the left | /bar scroll title * x-50%
+| @k(F10)                   | Scroll buffer's title on the right | /bar scroll title * x+50%
+| @k(F11)                   | Scroll up one page in nicklist | /bar scroll nicklist * y-100%
+| @k(F12)                   | Scroll down one page in nicklist | /bar scroll nicklist * y+100%
+| @k(A-)@k(F11)             | Go to the beginning of nicklist | /bar scroll nicklist * yb
+| @k(A-)@k(F12)             | Go to the end of nicklist | /bar scroll nicklist * ye
+| @k(A-)@k(a)               | Switch to next buffer with activity (with priority: highlight, message, other) | /input jump_smart
+| @k(A-)@k(j) , @k(A-)@k(l) | Switch to last buffer | /input jump_last_buffer
+| @k(A-)@k(j) , @k(A-)@k(r) | Switch to IRC raw buffer | /server raw
+| @k(A-)@k(j) , @k(A-)@k(s) | Switch to IRC server buffer | /server jump
+| @k(A-)@k(0...9)           | Switch to buffer by number (0 = 10) | /buffer *N
+| @k(A-)@k(j) , @k(01...99) | Switch to buffer by number | /buffer NN
+| @k(A-)@k(n)               | Scroll to next highlight | /window scroll_next_highlight
+| @k(A-)@k(p)               | Scroll to previous highlight | /window scroll_previous_highlight
+| @k(A-)@k(u)               | Scroll to first unread line in buffer | /input scroll_unread
+| @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
+| @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
+| @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
+| @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
+| @k(A-)@k(z)               | Zoom on current window (@k(A-)@k(z) again: restore initial windows state, before zoom) | /window zoom
+| @k(A-)@k(<)               | Switch to previous buffer in list of visited buffers | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | Switch to next buffer in list of visited buffers | /input jump_next_visited_buffer
 |========================================
 
 [[key_bindings_other]]
 Other keys
 ^^^^^^^^^^
 
-[width="100%",cols="^.^4,.^15",options="header"]
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Keys | Description and command
-
-| Alt + "h" |
-  Clear hotlist (activity notification on other buffers) +
-  `/input hotlist_clear` +
-
-| Alt + "=" |
-  Toggle filters on/off +
-  `/filter toggle` +
+| Key         | Description | Command
+| @k(A-)@k(h) | Clear hotlist (activity notification on other buffers) | /input hotlist_clear
+| @k(A-)@k(=) | Toggle filters on/off | /filter toggle
 |========================================
 
 [[command_line]]
