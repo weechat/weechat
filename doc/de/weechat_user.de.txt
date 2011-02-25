@@ -416,45 +416,44 @@ Tastenbefehle für die Befehlszeile
 | @k(C-)@k(b)
 | @k(→)               .2+| setzt den Cursor eine Position nach rechts .2+| /input move_next_char
 | @k(C-)@k(f)
-| @k(C-)@k(←)         .2+| springt zum Anfang des vorherigen Wortes in der Befehlszeile .2+| /input move_previous_word
+| @k(C-)@k(←)         .2+| springt in der Befehlszeile zum Anfang des vorherigen Wortes .2+| /input move_previous_word
 | @k(A-)@k(b)
-| @k(C-)@k(→)         .2+| sprint zum Anfang des nächsten Wortes in der Befehlszeile .2+| /input move_next_word
+| @k(C-)@k(→)         .2+| springt in der Befehlszeile zum Anfang des nächsten Wortes .2+| /input move_next_word
 | @k(A-)@k(f)
-| @k(Home)            .2+| sprint zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
+| @k(Home)            .2+| springt zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
 | @k(C-)@k(a)
 | @k(End)             .2+| springt ans Ende der Befehlszeile .2+| /input move_end_of_line
 | @k(C-)@k(e)
-| @k(C-)@k(c) , @k(b) | Fügt Steuerzeichen für fett geschrieben Text ein | /input insert \x02
-| @k(C-)@k(c) , @k(c) | Fügt Steuerzeichen für Textfarbe ein | /input insert \x03
-| @k(C-)@k(c) , @k(i) | Fügt Steuerzeichen für kursiven Text ein | /input insert \x1D
-| @k(C-)@k(c) , @k(o) | Fügt Steuerzeichen für Standardfarbe ein | /input insert \x0F
-| @k(C-)@k(c) , @k(r) | Fügt Steuerzeichen für Hintergrundfarbe ein | /input insert \x12
-| @k(C-)@k(c) , @k(u) | Fügt Steuerzeichen für unterstrichenen Text ein | /input insert \x15
-| @k(Del)             .2+| entfernt nächstes Zeichen in der Befehlszeile .2+| /input delete_next_char
+| @k(C-)@k(c) , @k(b) | fügt Steuerzeichen für fett geschrieben Text ein | /input insert \x02
+| @k(C-)@k(c) , @k(c) | fügt Steuerzeichen für Textfarbe ein | /input insert \x03
+| @k(C-)@k(c) , @k(i) | fügt Steuerzeichen für kursiven Text ein | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | fügt Steuerzeichen für Standardfarbe ein | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | fügt Steuerzeichen für Hintergrundfarbe ein | /input insert \x12
+| @k(C-)@k(c) , @k(u) | fügt Steuerzeichen für unterstrichenen Text ein | /input insert \x15
+| @k(Del)             .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| /input delete_next_char
 | @k(C-)@k(d)
-| @k(Backsp.)         .2+| entfernt vorheriges Zeichen in der Befehlszeile .2+| /input delete_previous_char
+| @k(Backsp.)         .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
-// TRANSLATION MISSING
-| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (zweimaliges Drücken: exakte Textsuche), @k(↑): vorheriges, @k(↓): nächstes, @k(Enter): beenden | /input search_text
 | @k(C-)@k(t)         | Zeichen austauschen | /input transpose_chars
 | @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | /input delete_previous_word
 | @k(C-)@k(y)         | fügt Zeichenkette aus Zwischenablage ein | /input clipboard_paste
-| @k(C-)@k(_)         | Rückgängig machen in Befehlszeile | /input undo
-| @k(A-)@k(_)         | Wiederherstellen in der Befehlszeile | /input redo
+| @k(C-)@k(_)         | Rückgängig machen der letzten Aktion, in der Befehlszeile | /input undo
+| @k(A-)@k(_)         | Wiederherstellen der letzten Aktion, in der Befehlszeile | /input redo
 | @k(Tab)             | Vervollständigung von Befehlen oder Nicks (nochmaliges @k(Tab): findet nächste Vervollständigung) | /input complete_next
 | @k(S-)@k(Tab)       | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt | /input complete_previous
 | @k(Enter)           .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| /input return
 | @k(C-)@k(j)
 | @k(C-)@k(m)
-| @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen) | /input history_previous
-| @k(↓)               | ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen) | /input history_next
-| @k(C-)@k(↑)         | ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) | /input history_global_previous
-| @k(C-)@k(↓)         | ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer) | /input history_global_next
+| @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen) | /input history_previous
+| @k(↓)               | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen) | /input history_next
+| @k(C-)@k(↑)         | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | /input history_global_previous
+| @k(C-)@k(↓)         | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | /input history_global_next
 | @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | /input delete_next_word
-| @k(A-)@k(k)         | zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein | /input grab_key_command
-| @k(A-)@k(r)         | löscht komplette Eingabezeile | /input delete_line
+| @k(A-)@k(k)         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | /input grab_key_command
+| @k(A-)@k(r)         | komplette Eingabezeile löschen| /input delete_line
 |========================================
 
 [[key_bindings_buffers_windows]]
@@ -464,15 +463,15 @@ Tastenbefehle für Buffer / Fenster
 [width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
 | Taste                     | Beschreibung | Befehl
-| @k(C-)@k(l)               | zeichnet das Fenster neu | /window refresh
-| @k(C-)@k(s) , @k(C-)@k(u) | Setzt die ungelesen Markierung für alle Buffer | /input set_unread
+| @k(C-)@k(l)               | Fenster wird neu gezeichnet | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | setzt für alle Buffer die Markierung für ungelesene Nachrichten | /input set_unread
 | @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | /input switch_active_buffer
-| @k(PgUp)                  | Eine Seite im Buffer Verlaufsspeicher nach oben blättern | /window page_up
-| @k(PgDn)                  | Eine Seite im Buffer Verlaufsspeicher nach unten blättern | /window page_down
-| @k(A-)@k(PgUp)            | einige Zeilen im Buffer Verlaufsspeicher nach oben blättern | /window scroll_up
-| @k(A-)@k(PgDn)            | einige Zeilen im Buffer Verlaufsspeicher nach unten blättern | /window scroll_down
-| @k(A-)@k(Home)            | springt zur ersten Zeile im Buffer Verlaufsspeicher | /window scroll_top
-| @k(A-)@k(End)             | springt zur letzten Zeile im Buffer Verlaufsspeicher | /window scroll_bottom
+| @k(PgUp)                  | eine Seite im Verlaufsspeicher des Buffers nach oben blättern | /window page_up
+| @k(PgDn)                  | eine Seite im Verlaufsspeicher des Buffer nach unten blättern | /window page_down
+| @k(A-)@k(PgUp)            | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up
+| @k(A-)@k(PgDn)            | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down
+| @k(A-)@k(Home)            | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffers| /window scroll_top
+| @k(A-)@k(End)             | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers | /window scroll_bottom
 | @k(A-)@k(←)               .4+| zum vorherigen Buffer springen .4+| /buffer -1
 | @k(A-)@k(↑)
 | @k(C-)@k(p)
@@ -483,32 +482,28 @@ Tastenbefehle für Buffer / Fenster
 | @k(F6)
 | @k(F7)                    | zum vorherigen Fenster wechseln | /window -1
 | @k(F8)                    | zum nächsten Fenster wechseln | /window +1
-| @k(F9)                    | Buffer Title nach links verschieben | /bar scroll title * x-50%
-| @k(F10)                   | Buffer Titel nach rechts verschieben | /bar scroll title * x+50%
-| @k(F11)                   | Nickliste um eine Seite nach oben scrollen | /bar scroll nicklist * y-100%
-| @k(F12)                   | Nickliste um eine Seite nach unten scrollen | /bar scroll nicklist * y+100%
+| @k(F9)                    | Titel des Buffers nach links verschieben | /bar scroll title * x-50%
+| @k(F10)                   | Titel des Buffers nach rechts verschieben | /bar scroll title * x+50%
+| @k(F11)                   | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist * y-100%
+| @k(F12)                   | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist * y+100%
 | @k(A-)@k(F11)             | springt zum Anfang der Nickliste | /bar scroll nicklist * yb
 | @k(A-)@k(F12)             | springt zum Ende der Nickliste | /bar scroll nicklist * ye
 | @k(A-)@k(a)               | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | /input jump_smart
 | @k(A-)@k(j) , @k(A-)@k(l) | wechselt zum letzten Buffer | /input jump_last_buffer
-| @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC raw Buffer | /server raw
+| @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC RAW Buffer | /server raw
 | @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | /server jump
 | @k(A-)@k(0...9)           | wechselt zum Buffer mit der Nummer (0 = 10) | /buffer *N
-| @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der Nummer | /buffer NN
-| @k(A-)@k(n)               | springe zur nächsten Highlight Nachricht | /window scroll_next_highlight
-| @k(A-)@k(p)               | springe zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
-| @k(A-)@k(u)               | springe zur ersten ungelesenen Zeile im Buffer | /input scroll_unread
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
+| @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der angegeben Nummer | /buffer NN
+| @k(A-)@k(n)               | springt zur nächsten Highlight Nachricht | /window scroll_next_highlight
+| @k(A-)@k(p)               | springt zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
+| @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | /input scroll_unread
+| @k(A-)@k(w) , @k(A-)@k(↑) | wechselt zum oberen Fenster | /window up
+| @k(A-)@k(w) , @k(A-)@k(↓) | wechselt zum unteren Fenster | /window down
+| @k(A-)@k(w) , @k(A-)@k(←) | wechselt zum linken Fenster | /window left
+| @k(A-)@k(w) , @k(A-)@k(→) | wechselt zum rechten Fenster | /window right
 | @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
-| @k(A-)@k(<)               | wechselt zum vorherigen Buffer der letzten aufgerufenen Buffer | /input jump_previously_visited_buffer
-| @k(A-)@k(>)               | wechselt zum nächsten Buffer der letzten aufgerufenen Buffer | /input jump_next_visited_buffer
+| @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
 |========================================
 
 [[key_bindings_other]]
@@ -548,7 +543,7 @@ Hallo
 ----------------------------------------
 
 Dennoch ist es möglich einen Text in den Buffer zu schreiben der mit dem Zeichen "/" beginnt.
-Dazu muss ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu senden:
+Dazu muss dem ersten "/" ein zweites "/" vorangestellt werden. Um den Befehl'/set' als Text zu senden:
 
 ----------------------------------------
 //set
@@ -711,7 +706,7 @@ Basisfarben in WeeChat sind:
 erweiterte Farbpalette
 ^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat belegt, dynamisch, Farbpaare sobald die Farbe genutzt werden sollte. Zum Beispiel
+WeeChat belegt die Farbpaare dynamisch, sobald die Farbe genutzt werden sollte. Zum Beispiel
 um mit einer Farbe Buffer oder Bars zu nutzen.
 
 Zu den Basisfarben können zusätzlich Farben zwischen eins und der maximalen Anzahl an Farben
@@ -748,34 +743,36 @@ Beispiel:
 /set weechat.color.chat_delimiters orange
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_attributes]]
-Attributes
-^^^^^^^^^^
+Attribute
+^^^^^^^^^
 
-It is possible to use some attributes for colors. One or more attributes can be
-added before color name or number:
+Er ist möglich einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
+Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
-* "*": bold text
-* "!": reverse video
-* "_": underlined text
+* "*": fett
+* "!": invertierte Darstellung
+* "_": unterstrichen
 
-For example if you want self nick as white underlined, do:
+Um zum Beispiel dem eigenen Nick die Farbe weiß und unterstrichen
+zuzuordnen:
 
 ----------------------------------------
 /set weechat.color.chat_nick_self _white
 ----------------------------------------
 
-Or if you want time in status bar as orange underlined with bold:
+oder um die Zeitanzeige in der Statusbar orange, fett und unterstrichen
+darzustellen:
 
 ----------------------------------------
 /set weechat.color.status_time *_214
 ----------------------------------------
 
-To use an attribute with default terminal color (-1), you must use a number
-greater than last terminal color, for example max color in WeeChat: 99999.
+Um einer Standard-Terminalfarbe (-1) ein Attribut hinzuzufügen muss eine Zahl
+gewählt werden die größer ist als die letzte genutzte Farbe des Terminals.
+Zum Beispiel; maximale Farbwahl in WeeChat: 99999.
 
-Example of bold with terminal foreground color:
+Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 
 ----------------------------------------
 /set weechat.color.status_time *99999

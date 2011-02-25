@@ -1,47 +1,47 @@
 * *xfer.color.status_aborted*
 ** Beschreibung: `Textfarbe für Status: "abgebrochen"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightred`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 
 * *xfer.color.status_active*
 ** Beschreibung: `Textfarbe für Status: "aktiv"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightblue`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightblue`)
 
 * *xfer.color.status_connecting*
 ** Beschreibung: `Textfarbe für Status: "verbinde"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `yellow`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * *xfer.color.status_done*
 ** Beschreibung: `Textfarbe für Status: "fertig"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightgreen`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightgreen`)
 
 * *xfer.color.status_failed*
 ** Beschreibung: `Textfarbe für Status: "fehlgeschlagen"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightred`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 
 * *xfer.color.status_waiting*
 ** Beschreibung: `Textfarbe für Status: "wartend"`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightcyan`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightcyan`)
 
 * *xfer.color.text*
 ** Beschreibung: `Textfarbe`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *xfer.color.text_bg*
 ** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *xfer.color.text_selected*
 ** Beschreibung: `Farbe der selektierten Transfer-Zeile`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `white`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * *xfer.file.auto_accept_chats*
 ** Beschreibung: `Die Annahme einer Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`

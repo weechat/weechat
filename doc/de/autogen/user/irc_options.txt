@@ -1,80 +1,80 @@
 * *irc.color.input_nick*
 ** Beschreibung: `Farbe des eigenen Nicknamens in der Eingabezeile`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightcyan`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightcyan`)
 
 * *irc.color.item_away*
 ** Beschreibung: `Farbe des Abwesenheit-Textes in der Eingabezeile`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `yellow`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * *irc.color.item_channel_modes*
 ** Beschreibung: `Farbe der Channel-Modes (neben dem Channelnamen)`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.color.item_lag_counting*
 ** Beschreibung: `Farbe in der der Lag-Indikator dargestellt werden soll wenn auf Antwort gewartet wird ("pong" wurde vom Server nicht empfangen und die Verzögerungszeit wird erhöht)`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.color.item_lag_finished*
 ** Beschreibung: `Farbe in der der Lag-Indikator dargestellt werden soll, falls ein "pong" vom Server empfangen wurde`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `yellow`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * *irc.color.message_join*
 ** Beschreibung: `Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt werden soll`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `green`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * *irc.color.message_quit*
 ** Beschreibung: `Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels angezeigt werden soll`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `red`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `red`)
 
 * *irc.color.nick_prefix*
 ** Beschreibung: `Farbe für den Nick Präfix (Präfix ist die editierbare Zeichenkette die vor dem Nick steht)`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `green`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * *irc.color.nick_prefix_halfop*
 ** Beschreibung: `Textfarbe für den Nick-Präfix des halfop in einem Channel`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightmagenta`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightmagenta`)
 
 * *irc.color.nick_prefix_op*
 ** Beschreibung: `Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `lightgreen`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightgreen`)
 
 * *irc.color.nick_prefix_user*
 ** Beschreibung: `Textfarbe für den Nick-Präfix eines Users in einem Channel`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `blue`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `blue`)
 
 * *irc.color.nick_prefix_voice*
 ** Beschreibung: `Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem Channel`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `yellow`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * *irc.color.nick_suffix*
 ** Beschreibung: `Farbe für den Nick Suffix (Suffix ist die editierbare Zeichenkette die nach dem Nick steht)`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `green`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * *irc.color.notice*
 ** Beschreibung: `Farbe des "Notice"-Textes in Notizen`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `green`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * *irc.color.reason_quit*
 ** Beschreibung: `Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden soll`
 ** Typ: Farbe
-** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (Standardwert: `default`)
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.look.color_nicks_in_nicklist*
-** Beschreibung: `use nick color in nicklist`
+** Beschreibung: `Nutze Nickfarbe in Nicklist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
