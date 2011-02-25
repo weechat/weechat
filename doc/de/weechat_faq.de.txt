@@ -179,6 +179,30 @@ in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere F
 angezeigt.
 
 
+// TRANSLATION MISSING
+[[one_input_root_bar]]
+Is it possible to display only one input bar for all windows (after split)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Yes, you will have to create a bar with type "root" (with an item to know in
+which window you are), then delete current input bar.
+
+For example:
+
+----------------------------------------
+/bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
+/bar del input
+----------------------------------------
+
+If ever you are not satisfied with that, just delete new bar, WeeChat will
+automatically create default bar "input" if item "input_text" is not used in
+any bar:
+
+----------------------------------------
+/bar del rootinput
+----------------------------------------
+
+
 [[terminal_copy_paste]]
 Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit eingefügt wird?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

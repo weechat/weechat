@@ -175,6 +175,29 @@ Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
 aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 
 
+[[one_input_root_bar]]
+Est-il possible d'avoir une seule bar input pour toutes les fenêtres (après un découpage) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Oui, vous devez créer une barre de type "root" (avec un objet pour savoir dans
+quelle fenêtre vous êtes), puis supprimer la barre input courante.
+
+Par exemple :
+
+----------------------------------------
+/bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
+/bar del input
+----------------------------------------
+
+Si jamais vous n'étiez pas satisfait avec ça, supprimez simplement la nouvelle
+barre, WeeChat recrééra automatiquement la barre par défaut "input" si l'objet
+"input_text" n'est utilisé dans aucune barre :
+
+----------------------------------------
+/bar del rootinput
+----------------------------------------
+
+
 [[terminal_copy_paste]]
 Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
