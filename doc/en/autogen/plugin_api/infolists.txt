@@ -44,7 +44,7 @@
 
 | weechat | history | history of commands | buffer pointer (if not set, return global history) (optional) | -
 
-| weechat | hook | list of hooks | - | hook type: command, timer, .. (optional)
+| weechat | hook | list of hooks | - | type,arguments (type is command/timer/.., arguments to get only some hooks, both are optional)
 
 | weechat | hotlist | list of buffers in hotlist | - | -
 

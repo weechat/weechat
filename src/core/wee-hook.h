@@ -498,7 +498,7 @@ extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();
 extern int hook_add_to_infolist (struct t_infolist *infolist,
-                                 const char *type);
+                                 const char *arguments);
 extern void hook_print_log ();
 
 #endif /* __WEECHAT_HOOK_H */

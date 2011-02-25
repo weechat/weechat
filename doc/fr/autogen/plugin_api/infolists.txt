@@ -44,7 +44,7 @@
 
 | weechat | history | historique des commandes | pointeur vers le tampon (si non défini, retourne l'historique global) (optionnel) | -
 
-| weechat | hook | liste des hooks | - | type de hook: command, timer, .. (optionnel)
+| weechat | hook | liste des hooks | - | type,paramètres (le type est command/timer/.., paramètres pour avoir seulement quelques hooks, les deux sont optionnels)
 
 | weechat | hotlist | liste des tampons dans la hotlist | - | -
 

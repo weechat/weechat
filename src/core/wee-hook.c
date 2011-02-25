@@ -2847,16 +2847,33 @@ unhook_all ()
  */
 
 int
-hook_add_to_infolist_type (struct t_infolist *infolist,
-                           int type)
+hook_add_to_infolist_type (struct t_infolist *infolist, int type,
+                           const char *arguments)
 {
     struct t_hook *ptr_hook;
     struct t_infolist_item *ptr_item;
     char value[64];
+    int match;
 
     for (ptr_hook = weechat_hooks[type]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
+        match = 1;
+        if (arguments && !ptr_hook->deleted)
+        {
+            switch (ptr_hook->type)
+            {
+                case HOOK_TYPE_COMMAND:
+                    match = (strcmp (HOOK_COMMAND(ptr_hook, command), arguments) == 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        if (!match)
+            continue;
+        
         ptr_item = infolist_new_item (infolist);
         if (!ptr_item)
             return 0;
@@ -3190,26 +3207,46 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
 
 /*
  * hook_add_to_infolist: add hooks in an infolist
- *                       if type == NULL or is not found, all types are returned
+ *                       arguments can be a hook type with optional comma +
+ *                       name after
  *                       return 1 if ok, 0 if error
  */
 
 int
-hook_add_to_infolist (struct t_infolist *infolist,
-                      const char *type)
+hook_add_to_infolist (struct t_infolist *infolist, const char *arguments)
 {
+    const char *pos_arguments;
+    char *type;
     int i, type_int;
     
     if (!infolist)
         return 0;
+    
+    type = NULL;
+    pos_arguments = NULL;
+    
+    if (arguments)
+    {
+        pos_arguments = strchr (arguments, ',');
+        if (pos_arguments)
+        {
+            type = string_strndup (arguments, pos_arguments - arguments);
+            pos_arguments++;
+        }
+        else
+            type = strdup (arguments);
+    }
     
     type_int = (type) ? hook_search_type (type) : -1;
     
     for (i = 0; i < HOOK_NUM_TYPES; i++)
     {
         if ((type_int < 0) || (type_int == i))
-            hook_add_to_infolist_type (infolist, i);
+            hook_add_to_infolist_type (infolist, i, pos_arguments);
     }
+    
+    if (type)
+        free (type);
     
     return 1;
 }

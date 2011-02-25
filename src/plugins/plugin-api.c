@@ -1004,7 +1004,8 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook", N_("list of hooks"),
                    NULL,
-                   N_("hook type: command, timer, .. (optional)"),
+                   N_("type,arguments (type is command/timer/.., arguments to "
+                      "get only some hooks, both are optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
                    NULL,

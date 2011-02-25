@@ -44,7 +44,7 @@
 
 | weechat | history | cronologia dei comandi | puntatore al buffer (se non impostato, restituisce la cronologia globale) (opzionale) | -
 
-| weechat | hook | elenco di hook | - | tipo hook: comando, timer, ... (opzionale)
+| weechat | hook | elenco di hook | - | type,arguments (type is command/timer/.., arguments to get only some hooks, both are optional)
 
 | weechat | hotlist | elenco dei buffer nella hotlist | - | -
 
