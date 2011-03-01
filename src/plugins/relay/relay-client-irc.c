@@ -564,8 +564,11 @@ relay_client_irc_send_join_channels (struct t_relay_client *client)
     {
         while (weechat_infolist_next (infolist_channels))
         {
-            channel = weechat_infolist_string (infolist_channels, "name");
-            relay_client_irc_send_join (client, channel);
+            if (weechat_infolist_integer (infolist_channels, "nicks_count") > 0)
+            {
+                channel = weechat_infolist_string (infolist_channels, "name");
+                relay_client_irc_send_join (client, channel);
+            }
         }
         weechat_infolist_free (infolist_channels);
     }
