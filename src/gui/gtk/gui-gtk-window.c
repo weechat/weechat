@@ -202,8 +202,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     if (window->buffer != buffer)
     {
-        window->start_line = NULL;
-        window->start_line_pos = 0;
+        window->scroll->start_line = NULL;
+        window->scroll->start_line_pos = 0;
         if (!gui_buffers_visited_frozen)
         {
             gui_buffer_visited_add (window->buffer);
@@ -244,8 +244,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         gtk_text_buffer_apply_tag (GUI_WINDOW_OBJECTS(window)->textbuffer_chat, GUI_WINDOW_OBJECTS(window)->texttag_chat, &start, &end);
     }
     
-    window->start_line = NULL;
-    window->start_line_pos = 0;
+    window->scroll->start_line = NULL;
+    window->scroll->start_line_pos = 0;
     
     gui_buffer_add_value_num_displayed (buffer, 1);
     
@@ -262,11 +262,11 @@ gui_window_page_up (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (!window->first_line_displayed)
+    if (!window->scroll->first_line_displayed)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      (window->start_line) ?
+        gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                      &window->scroll->start_line_pos,
+                                      (window->scroll->start_line) ?
                                       (-1) * (window->win_chat_height - 1) :
                                       (-1) * ((window->win_chat_height - 1) * 2));
         gui_chat_draw (window->buffer, 0);
@@ -286,22 +286,22 @@ gui_window_page_down (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (window->start_line)
+    if (window->scroll->start_line)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
+        gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                      &window->scroll->start_line_pos,
                                       window->win_chat_height - 1);
         
         /* check if we can display all */
-        ptr_line = window->start_line;
-        line_pos = window->start_line_pos;
+        ptr_line = window->scroll->start_line;
+        line_pos = window->scroll->start_line_pos;
         gui_chat_calculate_line_diff (window, &ptr_line,
                                       &line_pos,
                                       window->win_chat_height - 1);
         if (!ptr_line)
         {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
+            window->scroll->start_line = NULL;
+            window->scroll->start_line_pos = 0;
         }
         
         gui_chat_draw (window->buffer, 0);
@@ -318,11 +318,11 @@ gui_window_scroll_up (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (!window->first_line_displayed)
+    if (!window->scroll->first_line_displayed)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      (window->start_line) ?
+        gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                      &window->scroll->start_line_pos,
+                                      (window->scroll->start_line) ?
                                       (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
                                       (-1) * ( (window->win_chat_height - 1) +
                                                CONFIG_INTEGER(config_look_scroll_amount)));
@@ -343,23 +343,23 @@ gui_window_scroll_down (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (window->start_line)
+    if (window->scroll->start_line)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
+        gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                      &window->scroll->start_line_pos,
                                       CONFIG_INTEGER(config_look_scroll_amount));
         
         /* check if we can display all */
-        ptr_line = window->start_line;
-        line_pos = window->start_line_pos;
+        ptr_line = window->scroll->start_line;
+        line_pos = window->scroll->start_line_pos;
         gui_chat_calculate_line_diff (window, &ptr_line,
                                       &line_pos,
                                       window->win_chat_height - 1);
         
         if (!ptr_line)
         {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
+            window->scroll->start_line = NULL;
+            window->scroll->start_line_pos = 0;
         }
         
         gui_chat_draw (window->buffer, 0);
@@ -376,10 +376,10 @@ gui_window_scroll_top (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (!window->first_line_displayed)
+    if (!window->scroll->first_line_displayed)
     {
-        window->start_line = window->buffer->lines->first_line;
-        window->start_line_pos = 0;
+        window->scroll->start_line = window->buffer->lines->first_line;
+        window->scroll->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
     }
 }
@@ -394,10 +394,10 @@ gui_window_scroll_bottom (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (window->start_line)
+    if (window->scroll->start_line)
     {
-        window->start_line = NULL;
-        window->start_line_pos = 0;
+        window->scroll->start_line = NULL;
+        window->scroll->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
     }
 }

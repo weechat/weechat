@@ -144,6 +144,180 @@ gui_window_tree_free (struct t_gui_window_tree **tree)
 }
 
 /*
+ * gui_window_scroll_search: search a scroll with buffer pointer
+ */
+
+struct t_gui_window_scroll *
+gui_window_scroll_search (struct t_gui_window *window,
+                          struct t_gui_buffer *buffer)
+{
+    struct t_gui_window_scroll *ptr_scroll;
+    
+    if (!window || !buffer)
+        return NULL;
+    
+    for (ptr_scroll = window->scroll; ptr_scroll;
+         ptr_scroll = ptr_scroll->next_scroll)
+    {
+        if (ptr_scroll->buffer == buffer)
+            return ptr_scroll;
+    }
+    
+    /* scroll not found for buffer */
+    return NULL;
+}
+
+/*
+ * gui_window_scroll_init: initialize a window scroll structure
+ */
+
+void
+gui_window_scroll_init (struct t_gui_window_scroll *window_scroll,
+                        struct t_gui_buffer *buffer)
+{
+    window_scroll->buffer = buffer;
+    window_scroll->first_line_displayed = 0;
+    window_scroll->start_line = NULL;
+    window_scroll->start_line_pos = 0;
+    window_scroll->scrolling = 0;
+    window_scroll->lines_after = 0;
+    window_scroll->reset_allowed = 0;
+    window_scroll->prev_scroll = NULL;
+    window_scroll->next_scroll = NULL;
+}
+
+/*
+ * gui_window_scroll_free: free a scroll structure in a window
+ */
+
+void
+gui_window_scroll_free (struct t_gui_window *window,
+                        struct t_gui_window_scroll *scroll)
+{
+    if (scroll->prev_scroll)
+        (scroll->prev_scroll)->next_scroll = scroll->next_scroll;
+    if (scroll->next_scroll)
+        (scroll->next_scroll)->prev_scroll = scroll->prev_scroll;
+    if (window->scroll == scroll)
+        window->scroll = scroll->next_scroll;
+    
+    free (scroll);
+}
+
+/*
+ * gui_window_scroll_free_all: free all scroll structures in a window
+ */
+
+void
+gui_window_scroll_free_all (struct t_gui_window *window)
+{
+    while (window->scroll)
+    {
+        gui_window_scroll_free (window, window->scroll);
+    }
+}
+
+/*
+ * gui_window_scroll_remove_not_scrolled: remove all scroll structures which
+ *                                        are empty (not scrolled)
+ *                                        Note: the first scroll in list
+ *                                        (current buffer) is NOT removed by
+ *                                        this function.
+ */
+
+void
+gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
+{
+    struct t_gui_window_scroll *ptr_scroll, *next_scroll;
+    
+    if (window)
+    {
+        ptr_scroll = window->scroll->next_scroll;
+        while (ptr_scroll)
+        {
+            next_scroll = ptr_scroll->next_scroll;
+            
+            if ((ptr_scroll->first_line_displayed == 0)
+                && (ptr_scroll->start_line == NULL)
+                && (ptr_scroll->start_line_pos == 0)
+                && (ptr_scroll->scrolling == 0)
+                && (ptr_scroll->lines_after == 0)
+                && (ptr_scroll->reset_allowed == 0))
+            {
+                gui_window_scroll_free (window, ptr_scroll);
+            }
+            
+            ptr_scroll = next_scroll;
+        }
+    }
+}
+
+/*
+ * gui_window_scroll_switch: switch scroll to a buffer
+ */
+
+void
+gui_window_scroll_switch (struct t_gui_window *window,
+                          struct t_gui_buffer *buffer)
+{
+    struct t_gui_window_scroll *ptr_scroll, *new_scroll;
+    
+    if (window && buffer)
+    {
+        ptr_scroll = gui_window_scroll_search (window, buffer);
+        
+        /* scroll is already selected (first in list)? */
+        if (ptr_scroll && (ptr_scroll == window->scroll))
+            return;
+        
+        if (ptr_scroll)
+        {
+            /* scroll found, move it in first position */
+            if (ptr_scroll->prev_scroll)
+                (ptr_scroll->prev_scroll)->next_scroll = ptr_scroll->next_scroll;
+            if (ptr_scroll->next_scroll)
+                (ptr_scroll->next_scroll)->prev_scroll = ptr_scroll->prev_scroll;
+            (window->scroll)->prev_scroll = ptr_scroll;
+            ptr_scroll->prev_scroll = NULL;
+            ptr_scroll->next_scroll = window->scroll;
+            window->scroll = ptr_scroll;
+        }
+        else
+        {
+            /* scroll not found, create one and add it at first position */
+            new_scroll = malloc (sizeof (*new_scroll));
+            if (new_scroll)
+            {
+                gui_window_scroll_init (new_scroll, buffer);
+                new_scroll->next_scroll = window->scroll;
+                (window->scroll)->prev_scroll = new_scroll;
+                window->scroll = new_scroll;
+            }
+        }
+        
+        gui_window_scroll_remove_not_scrolled (window);
+    }
+}
+
+/*
+ * gui_window_scroll_remove_buffer: remove buffer from scroll list in a window
+ */
+
+void
+gui_window_scroll_remove_buffer (struct t_gui_window *window,
+                                 struct t_gui_buffer *buffer)
+{
+    struct t_gui_window_scroll *ptr_scroll;
+    
+    if (window && buffer)
+    {
+        ptr_scroll = gui_window_scroll_search (window, buffer);
+        if (ptr_scroll)
+            gui_window_scroll_free (window, ptr_scroll);
+    }
+}
+
+/*
  * gui_window_new: create a new window
  */
 
@@ -211,9 +385,18 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     
     if ((new_window = (malloc (sizeof (*new_window)))))
     {
+        /* create scroll structure */
+        new_window->scroll = malloc (sizeof (*new_window->scroll));
+        if (!new_window->scroll)
+        {
+            free (new_window);
+            return NULL;
+        }
+        
         /* create window objects */
         if (!gui_window_objects_init (new_window))
         {
+            free (new_window->scroll);
             free (new_window);
             return NULL;
         }
@@ -247,13 +430,9 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         new_window->layout_buffer_name = NULL;
         
         /* scroll */
-        new_window->first_line_displayed = 0;
-        new_window->start_line = NULL;
-        new_window->start_line_pos = 0;
-        new_window->scroll = 0;
-        new_window->scroll_lines_after = 0;
-        new_window->scroll_reset_allowed = 0;
+        gui_window_scroll_init (new_window->scroll, buffer);
         
+        /* tree */
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
         
@@ -334,11 +513,11 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
         if (string_strcasecmp (property, "win_chat_height") == 0)
             return window->win_chat_height;
         if (string_strcasecmp (property, "first_line_displayed") == 0)
-            return window->first_line_displayed;
-        if (string_strcasecmp (property, "scroll") == 0)
-            return window->scroll;
-        if (string_strcasecmp (property, "scroll_lines_after") == 0)
-            return window->scroll_lines_after;
+            return window->scroll->first_line_displayed;
+        if (string_strcasecmp (property, "scrolling") == 0)
+            return window->scroll->scrolling;
+        if (string_strcasecmp (property, "lines_after") == 0)
+            return window->scroll->lines_after;
     }
     
     return 0;
@@ -444,6 +623,9 @@ gui_window_free (struct t_gui_window *window)
         free (window->layout_plugin_name);
     if (window->layout_buffer_name)
         free (window->layout_buffer_name);
+    
+    /* remove scroll list */
+    gui_window_scroll_free_all (window);
     
     /* remove window from windows list */
     if (window->prev_window)
@@ -582,8 +764,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         count_msg = 0;
         if (direction < 0)
         {
-            ptr_line = (window->start_line) ?
-                window->start_line : window->buffer->lines->last_line;
+            ptr_line = (window->scroll->start_line) ?
+                window->scroll->start_line : window->buffer->lines->last_line;
             while (ptr_line && !gui_line_is_displayed (ptr_line))
             {
                 ptr_line = ptr_line->prev_line;
@@ -591,8 +773,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         }
         else
         {
-            ptr_line = (window->start_line) ?
-                window->start_line : window->buffer->lines->first_line;
+            ptr_line = (window->scroll->start_line) ?
+                window->scroll->start_line : window->buffer->lines->first_line;
             while (ptr_line && !gui_line_is_displayed (ptr_line))
             {
                 ptr_line = ptr_line->next_line;
@@ -717,10 +899,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                 }
                 if (stop)
                 {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == gui_line_get_first_displayed (window->buffer));
+                    window->scroll->start_line = ptr_line;
+                    window->scroll->start_line_pos = 0;
+                    window->scroll->first_line_displayed =
+                        (window->scroll->start_line == gui_line_get_first_displayed (window->buffer));
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
                     return;
                 }
@@ -750,16 +932,16 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
     {
         if (window->buffer->lines->first_line)
         {
-            ptr_line = (window->start_line) ?
-                window->start_line->prev_line : window->buffer->lines->last_line;
+            ptr_line = (window->scroll->start_line) ?
+                window->scroll->start_line->prev_line : window->buffer->lines->last_line;
             while (ptr_line)
             {
                 if (ptr_line->data->highlight)
                 {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines->first_line);
+                    window->scroll->start_line = ptr_line;
+                    window->scroll->start_line_pos = 0;
+                    window->scroll->first_line_displayed =
+                        (window->scroll->start_line == window->buffer->lines->first_line);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
                     return;
                 }
@@ -783,16 +965,16 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
     {
         if (window->buffer->lines->first_line)
         {
-            ptr_line = (window->start_line) ?
-                window->start_line->next_line : window->buffer->lines->first_line->next_line;
+            ptr_line = (window->scroll->start_line) ?
+                window->scroll->start_line->next_line : window->buffer->lines->first_line->next_line;
             while (ptr_line)
             {
                 if (ptr_line->data->highlight)
                 {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines->first_line);
+                    window->scroll->start_line = ptr_line;
+                    window->scroll->start_line_pos = 0;
+                    window->scroll->first_line_displayed =
+                        (window->scroll->start_line == window->buffer->lines->first_line);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
                     return;
                 }
@@ -816,8 +998,8 @@ gui_window_search_text (struct t_gui_window *window)
         if (window->buffer->lines->first_line
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
         {
-            ptr_line = (window->start_line) ?
-                gui_line_get_prev_displayed (window->start_line) :
+            ptr_line = (window->scroll->start_line) ?
+                gui_line_get_prev_displayed (window->scroll->start_line) :
                 gui_line_get_last_displayed (window->buffer);
             while (ptr_line)
             {
@@ -825,10 +1007,10 @@ gui_window_search_text (struct t_gui_window *window)
                                           window->buffer->input_buffer,
                                           window->buffer->text_search_exact))
                 {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == gui_line_get_first_displayed (window->buffer));
+                    window->scroll->start_line = ptr_line;
+                    window->scroll->start_line_pos = 0;
+                    window->scroll->first_line_displayed =
+                        (window->scroll->start_line == gui_line_get_first_displayed (window->buffer));
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
                     return 1;
                 }
@@ -841,8 +1023,8 @@ gui_window_search_text (struct t_gui_window *window)
         if (window->buffer->lines->first_line
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
         {
-            ptr_line = (window->start_line) ?
-                gui_line_get_next_displayed (window->start_line) :
+            ptr_line = (window->scroll->start_line) ?
+                gui_line_get_next_displayed (window->scroll->start_line) :
                 gui_line_get_first_displayed (window->buffer);
             while (ptr_line)
             {
@@ -850,10 +1032,10 @@ gui_window_search_text (struct t_gui_window *window)
                                           window->buffer->input_buffer,
                                           window->buffer->text_search_exact))
                 {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines->first_line);
+                    window->scroll->start_line = ptr_line;
+                    window->scroll->start_line_pos = 0;
+                    window->scroll->first_line_displayed =
+                        (window->scroll->start_line == window->buffer->lines->first_line);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
                     return 1;
                 }
@@ -893,8 +1075,8 @@ gui_window_search_start (struct t_gui_window *window)
 void
 gui_window_search_restart (struct t_gui_window *window)
 {
-    window->start_line = NULL;
-    window->start_line_pos = 0;
+    window->scroll->start_line = NULL;
+    window->scroll->start_line_pos = 0;
     window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
     window->buffer->text_search_found = 0;
     if (gui_window_search_text (window))
@@ -928,8 +1110,8 @@ gui_window_search_stop (struct t_gui_window *window)
         free (window->buffer->text_search_input);
         window->buffer->text_search_input = NULL;
     }
-    window->start_line = NULL;
-    window->start_line_pos = 0;
+    window->scroll->start_line = NULL;
+    window->scroll->start_line_pos = 0;
     gui_hotlist_remove_buffer (window->buffer);
     gui_buffer_ask_chat_refresh (window->buffer, 2);
 }
@@ -1014,8 +1196,8 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "start_line_y",
                                    ((window->buffer->type == GUI_BUFFER_TYPE_FREE)
-                                    && (window->start_line)) ?
-                                   window->start_line->data->y : 0))
+                                    && (window->scroll->start_line)) ?
+                                   window->scroll->start_line->data->y : 0))
         return 0;
     
     return 1;
@@ -1029,6 +1211,7 @@ void
 gui_window_print_log ()
 {
     struct t_gui_window *ptr_window;
+    struct t_gui_window_scroll *ptr_scroll;
     struct t_gui_bar_window *ptr_bar_win;
     
     log_printf ("");
@@ -1060,15 +1243,26 @@ gui_window_print_log ()
         log_printf ("  buffer. . . . . . . : 0x%lx", ptr_window->buffer);
         log_printf ("  layout_plugin_name. : '%s'",  ptr_window->layout_plugin_name);
         log_printf ("  layout_buffer_name. : '%s'",  ptr_window->layout_buffer_name);
-        log_printf ("  first_line_displayed: %d",    ptr_window->first_line_displayed);
-        log_printf ("  start_line. . . . . : 0x%lx", ptr_window->start_line);
-        log_printf ("  start_line_pos. . . : %d",    ptr_window->start_line_pos);
-        log_printf ("  scroll. . . . . . . : %d",    ptr_window->scroll);
-        log_printf ("  scroll_lines_after. : %d",    ptr_window->scroll_lines_after);
-        log_printf ("  scroll_reset_allowed: %d",    ptr_window->scroll_reset_allowed);
+        log_printf ("  scroll. . . . . . . : 0x%lx", ptr_window->scroll);
         log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);
+        
+        for (ptr_scroll = ptr_window->scroll; ptr_scroll;
+             ptr_scroll = ptr_scroll->next_scroll)
+        {
+            log_printf ("");
+            log_printf ("  [scroll (addr:0x%lx)]", ptr_scroll);
+            log_printf ("    buffer. . . . . . . : 0x%lx", ptr_scroll->buffer);
+            log_printf ("    first_line_displayed: %d",    ptr_scroll->first_line_displayed);
+            log_printf ("    start_line. . . . . : 0x%lx", ptr_scroll->start_line);
+            log_printf ("    start_line_pos. . . : %d",    ptr_scroll->start_line_pos);
+            log_printf ("    scrolling . . . . . : %d",    ptr_scroll->scrolling);
+            log_printf ("    lines_after . . . . : %d",    ptr_scroll->lines_after);
+            log_printf ("    reset_allowed . . . : %d",    ptr_scroll->reset_allowed);
+            log_printf ("    prev_scroll . . . . : 0x%lx", ptr_scroll->prev_scroll);
+            log_printf ("    next_scroll . . . . : 0x%lx", ptr_scroll->next_scroll);
+        }
         
         for (ptr_bar_win = ptr_window->bar_windows; ptr_bar_win;
              ptr_bar_win = ptr_bar_win->next_bar_window)

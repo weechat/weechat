@@ -1015,8 +1015,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     if (window->buffer->number != buffer->number)
     {
-        window->start_line = NULL;
-        window->start_line_pos = 0;
+        gui_window_scroll_switch (window, buffer);
         if (!gui_buffers_visited_frozen)
         {
             gui_buffer_visited_add (window->buffer);
@@ -1074,8 +1073,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     if (window->buffer->type == GUI_BUFFER_TYPE_FREE)
     {
-        window->scroll = 0;
-        window->scroll_lines_after = 0;
+        window->scroll->scrolling = 0;
+        window->scroll->lines_after = 0;
     }
     
     gui_buffer_set_active_buffer (buffer);
@@ -1153,19 +1152,19 @@ gui_window_page_up (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (!window->first_line_displayed)
+            if (!window->scroll->first_line_displayed)
             {
-                gui_chat_calculate_line_diff (window, &window->start_line,
-                                              &window->start_line_pos,
-                                              (window->start_line) ?
+                gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                              &window->scroll->start_line_pos,
+                                              (window->scroll->start_line) ?
                                               (-1) * (num_lines) :
                                               (-1) * (num_lines + window->win_chat_height - 1));
-                window->scroll_reset_allowed = 1;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
                 snprintf (scroll, sizeof (scroll), "-%d",
                           num_lines + 1);
@@ -1203,24 +1202,24 @@ gui_window_page_down (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
-                gui_chat_calculate_line_diff (window, &window->start_line,
-                                              &window->start_line_pos,
+                gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                              &window->scroll->start_line_pos,
                                               num_lines);
                 
                 /* check if we can display all */
-                ptr_line = window->start_line;
-                line_pos = window->start_line_pos;
+                ptr_line = window->scroll->start_line;
+                line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line,
                                               &line_pos,
                                               num_lines);
                 if (!ptr_line)
                 {
-                    window->start_line = NULL;
-                    window->start_line_pos = 0;
+                    window->scroll->start_line = NULL;
+                    window->scroll->start_line_pos = 0;
                 }
-                window->scroll_reset_allowed = 1;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1251,20 +1250,20 @@ gui_window_scroll_up (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (!window->first_line_displayed)
+            if (!window->scroll->first_line_displayed)
             {
-                gui_chat_calculate_line_diff (window, &window->start_line,
-                                              &window->start_line_pos,
-                                              (window->start_line) ?
+                gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                              &window->scroll->start_line_pos,
+                                              (window->scroll->start_line) ?
                                               (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
                                               (-1) * ( (window->win_chat_height - 1) +
                                                        CONFIG_INTEGER(config_look_scroll_amount)));
-                window->scroll_reset_allowed = 1;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
                 snprintf (scroll, sizeof (scroll), "-%d",
                           CONFIG_INTEGER(config_look_scroll_amount));
@@ -1295,25 +1294,25 @@ gui_window_scroll_down (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
-                gui_chat_calculate_line_diff (window, &window->start_line,
-                                              &window->start_line_pos,
+                gui_chat_calculate_line_diff (window, &window->scroll->start_line,
+                                              &window->scroll->start_line_pos,
                                               CONFIG_INTEGER(config_look_scroll_amount));
                 
                 /* check if we can display all */
-                ptr_line = window->start_line;
-                line_pos = window->start_line_pos;
+                ptr_line = window->scroll->start_line;
+                line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line,
                                               &line_pos,
                                               window->win_chat_height - 1);
                 
                 if (!ptr_line)
                 {
-                    window->start_line = NULL;
-                    window->start_line_pos = 0;
+                    window->scroll->start_line = NULL;
+                    window->scroll->start_line_pos = 0;
                 }
-                window->scroll_reset_allowed = 1;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1342,18 +1341,18 @@ gui_window_scroll_top (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (!window->first_line_displayed)
+            if (!window->scroll->first_line_displayed)
             {
-                window->start_line = gui_line_get_first_displayed (window->buffer);
-                window->start_line_pos = 0;
-                window->scroll_reset_allowed = 1;
+                window->scroll->start_line = gui_line_get_first_displayed (window->buffer);
+                window->scroll->start_line_pos = 0;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
-                window->start_line = NULL;
+                window->scroll->start_line = NULL;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
                 hook_signal_send ("window_scrolled",
                                   WEECHAT_HOOK_SIGNAL_POINTER, window);
@@ -1379,16 +1378,16 @@ gui_window_scroll_bottom (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (window->start_line)
+            if (window->scroll->start_line)
             {
-                window->start_line = NULL;
-                window->start_line_pos = 0;
-                window->scroll_reset_allowed = 1;
+                window->scroll->start_line = NULL;
+                window->scroll->start_line_pos = 0;
+                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            window->start_line = NULL;
+            window->scroll->start_line = NULL;
             if (window->buffer->lines->lines_count > window->win_chat_height)
             {
                 snprintf (scroll, sizeof (scroll), "-%d",

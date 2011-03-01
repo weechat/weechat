@@ -67,18 +67,29 @@ struct t_gui_window
                                        /* be assigned later)                */
     
     /* scroll */
-    int first_line_displayed;          /* = 1 if first line is displayed    */
-    struct t_gui_line *start_line;     /* pointer to line if scrolling      */
-    int start_line_pos;                /* position in first line displayed  */
-    int scroll;                        /* = 1 if "MORE" should be displayed */
-    int scroll_lines_after;            /* number of lines after last line   */
-                                       /* displayed (with scrolling)        */
-    int scroll_reset_allowed;          /* reset scroll allowed (when using  */
-                                       /* keys like page_up/down, end, ..)  */
+    struct t_gui_window_scroll *scroll; /* scroll infos for each buffer     */
+                                        /* scrolled in this window          */
+
+    /* tree */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
     
     struct t_gui_window *prev_window;  /* link to previous window           */
     struct t_gui_window *next_window;  /* link to next window               */
+};
+
+struct t_gui_window_scroll
+{
+    struct t_gui_buffer *buffer;       /* buffer scrolled in window         */
+    int first_line_displayed;          /* = 1 if first line is displayed    */
+    struct t_gui_line *start_line;     /* pointer to line if scrolling      */
+    int start_line_pos;                /* position in first line displayed  */
+    int scrolling;                     /* = 1 if "MORE" should be displayed */
+    int lines_after;                   /* number of lines after last line   */
+                                       /* displayed (with scrolling)        */
+    int reset_allowed;                 /* reset scroll allowed (when using  */
+                                       /* keys like page_up/down, end, ..)  */
+    struct t_gui_window_scroll *prev_scroll; /* link to prev. buf. scrolled */
+    struct t_gui_window_scroll *next_scroll; /* link to next buf. scrolled  */
 };
 
 struct t_gui_window_tree
@@ -108,6 +119,10 @@ extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                                           struct t_gui_window *window);
 extern void gui_window_tree_free (struct t_gui_window_tree **tree);
+extern void gui_window_scroll_switch (struct t_gui_window *window,
+                                      struct t_gui_buffer *buffer);
+extern void gui_window_scroll_remove_buffer (struct t_gui_window *window,
+                                             struct t_gui_buffer *buffer);
 extern struct t_gui_window *gui_window_new (struct t_gui_window *parent_window,
                                             struct t_gui_buffer *buffer,
                                             int x, int y, int width, int height,

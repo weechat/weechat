@@ -1300,17 +1300,17 @@ gui_input_scroll_unread (struct t_gui_window *window)
               window->buffer->lines->last_read_line != window->buffer->lines->last_line)))
         {
             if (window->buffer->lines->first_line_not_read)
-                window->start_line = window->buffer->lines->first_line;
+                window->scroll->start_line = window->buffer->lines->first_line;
             else
-                window->start_line = window->buffer->lines->last_read_line->next_line;
-            if (window->start_line)
+                window->scroll->start_line = window->buffer->lines->last_read_line->next_line;
+            if (window->scroll->start_line)
             {
-                if (!gui_line_is_displayed (window->start_line))
-                    window->start_line = gui_line_get_next_displayed (window->start_line);
+                if (!gui_line_is_displayed (window->scroll->start_line))
+                    window->scroll->start_line = gui_line_get_next_displayed (window->scroll->start_line);
             }
-            window->start_line_pos = 0;
-            window->first_line_displayed =
-                (window->start_line == gui_line_get_first_displayed (window->buffer));
+            window->scroll->start_line_pos = 0;
+            window->scroll->first_line_displayed =
+                (window->scroll->start_line == gui_line_get_first_displayed (window->buffer));
             gui_buffer_ask_chat_refresh (window->buffer, 2);
         }
     }

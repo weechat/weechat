@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-02-24
+v0.3.5-dev, 2011-03-01
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: remember scroll position for all buffers in windows (bug #25555)
 * core: fix crash when using column filling in bars with some empty items
   (bug #32565)
 * core: allow relative size for command /window resize

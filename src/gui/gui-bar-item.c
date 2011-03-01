@@ -1013,12 +1013,12 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    if (!window->scroll)
+    if (!window->scroll->scrolling)
         return NULL;
     
     snprintf (buf, sizeof (buf), _("%s-MORE(%d)-"),
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_more))),
-              window->scroll_lines_after);
+              window->scroll->lines_after);
     
     return strdup (buf);
 }

@@ -1806,7 +1806,7 @@ gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
         {
             buffer_found = 1;
             /* buffer found and not scrolled, exit immediately */
-            if (!ptr_win->scroll)
+            if (!ptr_win->scroll->scrolling)
                 return 0;
         }
     }
@@ -1839,9 +1839,9 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
     {
         if (ptr_win->buffer == buffer)
         {
-            ptr_win->first_line_displayed = 1;
-            ptr_win->start_line = NULL;
-            ptr_win->start_line_pos = 0;
+            ptr_win->scroll->first_line_displayed = 1;
+            ptr_win->scroll->start_line = NULL;
+            ptr_win->scroll->start_line_pos = 0;
         }
     }
     
@@ -1950,6 +1950,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                                                      1);
                     }
                 }
+                gui_window_scroll_remove_buffer (ptr_window, buffer);
             }
         }
     }

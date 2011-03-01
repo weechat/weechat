@@ -550,16 +550,21 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                            int free_data)
 {
     struct t_gui_window *ptr_win;
+    struct t_gui_window_scroll *ptr_scroll;
     int update_prefix_max_length;
     
-    /* reset scroll for any window starting with this line */
+    /* reset scroll for any window scroll starting with this line */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->start_line == line)
+        for (ptr_scroll = ptr_win->scroll; ptr_scroll;
+             ptr_scroll = ptr_scroll->next_scroll)
         {
-            ptr_win->start_line = ptr_win->start_line->next_line;
-            ptr_win->start_line_pos = 0;
-            gui_buffer_ask_chat_refresh (buffer, 2);
+            if (ptr_scroll->start_line == line)
+            {
+                ptr_scroll->start_line = ptr_scroll->start_line->next_line;
+                ptr_scroll->start_line_pos = 0;
+                gui_buffer_ask_chat_refresh (buffer, 2);
+            }
         }
     }
     
