@@ -205,7 +205,8 @@ typedef int (t_hook_callback_connect)(void *data, int status,
 typedef int (gnutls_callback_t)(void *data, gnutls_session_t tls_session,
                                 const gnutls_datum_t *req_ca, int nreq,
                                 const gnutls_pk_algorithm_t *pk_algos,
-                                int pk_algos_len, gnutls_retr_st *answer);
+                                int pk_algos_len, gnutls_retr_st *answer,
+                                int action);
 #endif
 
 struct t_hook_connect
@@ -411,6 +412,7 @@ extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     t_hook_callback_connect *callback,
                                     void *callback_data);
 #ifdef HAVE_GNUTLS
+extern int hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session);
 extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                                  const gnutls_datum_t *req_ca, int nreq,
                                                  const gnutls_pk_algorithm_t *pk_algos,

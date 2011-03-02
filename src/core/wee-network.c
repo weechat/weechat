@@ -94,6 +94,8 @@ network_init ()
         }
         free (ca_path);
     }
+    gnutls_certificate_set_verify_function (gnutls_xcred,
+                                            &hook_connect_gnutls_verify_certificates);
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
     network_init_ok = 1;
