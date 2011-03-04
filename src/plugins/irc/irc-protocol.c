@@ -3539,7 +3539,7 @@ IRC_PROTOCOL_CALLBACK(366)
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string;
-    const char *prefix;
+    const char *prefix, *nickname;
     
     /*
      * 366 message looks like:
@@ -3568,7 +3568,7 @@ IRC_PROTOCOL_CALLBACK(366)
                     length +=
                         ((ptr_option) ? strlen (weechat_color (weechat_config_string (ptr_option))) : 0) +
                         strlen (weechat_infolist_string (infolist, "prefix")) +
-                        strlen (IRC_COLOR_CHAT) +
+                        16 + /* nick color */
                         strlen (weechat_infolist_string (infolist, "name")) + 1;
                 }
             }
@@ -3597,8 +3597,17 @@ IRC_PROTOCOL_CALLBACK(366)
                                     strcat (string, weechat_color (weechat_config_string (ptr_option)));
                                 strcat (string, prefix);
                             }
-                            strcat (string, IRC_COLOR_CHAT);
-                            strcat (string, weechat_infolist_string (infolist, "name"));
+                            nickname = weechat_infolist_string (infolist, "name");
+                            if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
+                            {
+                                if (weechat_strcasecmp (nickname, server->nick) == 0)
+                                    strcat (string, IRC_COLOR_CHAT_NICK_SELF);
+                                else
+                                    strcat (string, irc_nick_find_color (nickname));
+                            }
+                            else
+                                strcat (string, IRC_COLOR_CHAT);
+                            strcat (string, nickname);
                             i++;
                         }
                     }

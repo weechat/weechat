@@ -73,6 +73,11 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
 
+* *irc.look.color_nicks_in_names*
+** descrizione: `use nick color in output of /names (or list of nicks displayed when joining a channel)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * *irc.look.color_nicks_in_nicklist*
 ** descrizione: `use nick color in nicklist`
 ** tipo: bool

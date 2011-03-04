@@ -50,6 +50,7 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
+struct t_config_option *irc_config_look_color_nicks_in_names;
 struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
@@ -1791,6 +1792,13 @@ irc_config_init ()
         return 0;
     }
 
+    irc_config_look_color_nicks_in_names = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "color_nicks_in_names", "boolean",
+        N_("use nick color in output of /names (or list of nicks displayed "
+           "when joining a channel)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_color_nicks_in_nicklist = weechat_config_new_option (
         irc_config_file, ptr_section,
         "color_nicks_in_nicklist", "boolean",

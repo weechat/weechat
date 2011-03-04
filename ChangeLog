@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-03
+v0.3.5-dev, 2011-03-04
 
 
 Version 0.3.5 (under dev!)
@@ -30,7 +30,8 @@ Version 0.3.5 (under dev!)
 * core: allow background for nick colors (using ":")
 * irc: fix crash when setting wrong value in option
   irc.server.xxx.sasl_mechanism (bug #32670)
-* irc: add new option irc.look.color_nicks_in_nicklist
+* irc: add new options irc.look.color_nicks_in_nicklist and
+  irc.look.color_nicks_in_names
 * irc: fix crash when completing /part command on a non-irc buffer (bug #32402)
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)

@@ -73,6 +73,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
+* *irc.look.color_nicks_in_names*
+** Beschreibung: `use nick color in output of /names (or list of nicks displayed when joining a channel)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * *irc.look.color_nicks_in_nicklist*
 ** Beschreibung: `Nutze Nickfarbe in Nicklist`
 ** Typ: boolesch

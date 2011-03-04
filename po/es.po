@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-02-25 23:15+0100\n"
+"POT-Creation-Date: 2011-03-04 13:51+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5022,6 +5022,11 @@ msgstr "%s%s: error al crear el servidor \"%s\""
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s%s: error al crear la opción \"%s\" del servidor"
+
+msgid ""
+"use nick color in output of /names (or list of nicks displayed when joining "
+"a channel)"
+msgstr ""
 
 #, fuzzy
 msgid "use nick color in nicklist"
