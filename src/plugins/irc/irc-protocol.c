@@ -558,14 +558,7 @@ IRC_PROTOCOL_CALLBACK(kick)
     
     ptr_channel = irc_channel_search (server, argv[2]);
     if (!ptr_channel)
-    {
-        weechat_printf (server->buffer,
-                        _("%s%s: channel \"%s\" not found for "
-                          "\"%s\" command"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[2],
-                        "kick");
         return WEECHAT_RC_OK;
-    }
     
     ptr_nick = irc_nick_search (ptr_channel, nick);
     ptr_nick_kicked = irc_nick_search (ptr_channel, argv[3]);
