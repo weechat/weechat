@@ -50,10 +50,10 @@
 #      Yeah, it's stable \o/
 #
 
-import sys, socket, select, time, random, string
+import sys, socket, select, time, random, string, re
 
 NAME    = 'weercd'
-VERSION = '0.2'
+VERSION = '0.3'
 
 options = {
     'host'       : ['',     'Host for socket bind'],
@@ -164,6 +164,12 @@ class Client:
             self.send('PONG :%s' % args)
         elif data.startswith('NICK '):
             self.nick = data[5:]
+        elif data.startswith('PART '):
+            m = re.search('^PART :?(#[^ ]+)', data)
+            if m:
+                channel = m.group(1)
+                if channel in self.channels:
+                    del self.channels[channel]
         elif data.startswith('QUIT '):
             self.quit = True
         self.incount += 1
