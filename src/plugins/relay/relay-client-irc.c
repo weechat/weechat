@@ -711,7 +711,7 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
             {
                 if (irc_args && irc_args[0]
                     && (strcmp (weechat_config_string (relay_config_network_password),
-                                irc_args) == 0))
+                                (irc_args[0] == ':') ? irc_args + 1 : irc_args) == 0))
                 {
                     RELAY_IRC_DATA(client, password_ok) = 1;
                 }
