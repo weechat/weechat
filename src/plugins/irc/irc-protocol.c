@@ -456,11 +456,20 @@ IRC_PROTOCOL_CALLBACK(join)
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
     
+    local_join = (strcmp (nick, server->nick) == 0);
+    
     pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
     
     ptr_channel = irc_channel_search (server, pos_channel);
     if (!ptr_channel)
     {
+        /*
+         * if someone else joins and channel is not opened, then just
+         * ignore it (we should receive our self join first)
+         */
+        if (!local_join)
+            return WEECHAT_RC_OK;
+        
         ptr_channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL,
                                        pos_channel, 1, 1);
         if (!ptr_channel)
@@ -487,7 +496,6 @@ IRC_PROTOCOL_CALLBACK(join)
     
     if (!ignored)
     {
-        local_join = (strcmp (nick, server->nick) == 0);
         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                              && (weechat_config_boolean (irc_config_look_smart_filter_join))) ?
             irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
