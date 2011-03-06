@@ -7,6 +7,8 @@ v0.3.5-dev, 2011-03-06
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: reload file with certificate authorities when option
+  weechat.network.gnutls_ca_file is changed
 * core: rebuild bar content when items are changed in an hidden bar
 * core: fix verification of SSL certificates by calling gnutls verify callback
   (patch #7459)

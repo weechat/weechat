@@ -41,6 +41,7 @@
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-log.h"
+#include "wee-network.h"
 #include "wee-util.h"
 #include "wee-list.h"
 #include "wee-proxy.h"
@@ -420,6 +421,23 @@ config_change_nick_colors (void *data, struct t_config_option *option)
     
     gui_color_buffer_display ();
 }
+
+/*
+ * config_change_network_gnutls_ca_file: called when gnutls_ca_file is changed
+ */
+
+void
+config_change_network_gnutls_ca_file (void *data,
+                                      struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (network_init_ok)
+        network_set_gnutls_ca_file ();
+}
+
 
 /*
  * config_day_change_timer_cb: timer callback for displaying
@@ -2191,7 +2209,8 @@ config_weechat_init_options ()
         "gnutls_ca_file", "string",
         N_("file containing the certificate authorities (\"%h\" will be "
            "replaced by WeeChat home, \"~/.weechat\" by default)"),
-        NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL,
+        &config_change_network_gnutls_ca_file, NULL, NULL, NULL);
     config_network_gnutls_handshake_timeout = config_file_new_option (
         weechat_config_file, ptr_section,
         "gnutls_handshake_timeout", "integer",

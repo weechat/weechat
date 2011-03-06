@@ -40,6 +40,9 @@ struct t_network_socks5
                           /*              auth(user/pass) (2), ...          */
 };
 
+extern int network_init_ok;
+
+extern void network_set_gnutls_ca_file ();
 extern void network_init ();
 extern void network_end ();
 extern int network_pass_proxy (const char *proxy, int sock,

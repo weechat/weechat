@@ -70,17 +70,14 @@ const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 
 
 /*
- * network_init: init network
+ * network_set_gnutls_ca_file: set trust file with option gnutls_ca_file
  */
 
 void
-network_init ()
+network_set_gnutls_ca_file ()
 {
 #ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
-
-    gnutls_global_init ();
-    gnutls_certificate_allocate_credentials (&gnutls_xcred);
     
     ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
     if (ca_path)
@@ -94,6 +91,21 @@ network_init ()
         }
         free (ca_path);
     }
+#endif
+}
+
+/*
+ * network_init: init network
+ */
+
+void
+network_init ()
+{
+#ifdef HAVE_GNUTLS
+    gnutls_global_init ();
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+    
+    network_set_gnutls_ca_file ();
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a
     gnutls_certificate_set_verify_function (gnutls_xcred,
                                             &hook_connect_gnutls_verify_certificates);
