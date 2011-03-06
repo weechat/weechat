@@ -521,6 +521,31 @@ diesem Fall weniger sicher):
 ----------------------------------------
 
 
+// TRANSLATION MISSING
+[[irc_ssl_freenode]]
+How can I connect to freenode server using SSL?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You must download certificate, convert it, then add it in WeeChat:
+
+----------------------------------------
+$ cd /tmp
+$ wget http://crt.gandi.net/GandiStandardSSLCA.crt
+$ openssl x509 -inform der -outform pem < GandiStandardSSLCA.crt > GandiStandardSSLCA.pem
+$ mkdir ~/.weechat/ssl
+$ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
+----------------------------------------
+
+Under WeeChat, setup server port, SSL, dhkey_size, then connect:
+
+----------------------------------------
+/set irc.server.freenode.addresses "chat.freenode.net/7000"
+/set irc.server.freenode.ssl on
+/set irc.server.freenode.ssl_dhkey_size 1024
+/connect freenode
+----------------------------------------
+
+
 [[plugins_scripts]]
 Erweiterungen / Skripten
 ------------------------
@@ -610,7 +635,7 @@ Wenn man WeeChat in gdb startet kann ein Thread-Fehler auftreten. Was beudeutet 
 Falls man WeeChat in gdb ausführt kann folgende Fehlermeldung erscheinen:
 
 ----------------------------------------
-gdb /Pfad/zu/weechat-curses
+$ gdb /Pfad/zu/weechat-curses
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -620,7 +645,7 @@ Um diesen Fehler zu beheben sollte man gdb wie folgt aufrufen (der Pfad zu
 libpthread und WeeChat muss natürlich an das eigene System angepasst werden):
 
 ----------------------------------------
-LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat-curses
 (gdb) run
 ----------------------------------------
 
