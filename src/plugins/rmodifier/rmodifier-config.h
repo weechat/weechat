@@ -25,7 +25,7 @@
 extern struct t_config_file *rmodifier_config_file;
 extern struct t_config_section *rmodifier_config_section_modifier;
 
-struct t_config_option *rmodifier_config_look_hide_char;
+extern struct t_config_option *rmodifier_config_look_hide_char;
 
 extern char *rmodifier_config_default_list[][4];
 
