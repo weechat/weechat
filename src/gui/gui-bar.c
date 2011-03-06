@@ -1043,12 +1043,9 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
     if (ptr_bar)
     {
         gui_bar_set_items_array (ptr_bar, CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]));
-        
+        gui_bar_content_build_bar_windows (ptr_bar);
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
-        {
-            gui_bar_content_build_bar_windows (ptr_bar);
             gui_bar_ask_refresh (ptr_bar);
-        }
     }
 }
 

@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-05
+v0.3.5-dev, 2011-03-06
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: rebuild bar content when items are changed in an hidden bar
 * core: fix verification of SSL certificates by calling gnutls verify callback
   (patch #7459)
 * core: remember scroll position for all buffers in windows (bug #25555)
