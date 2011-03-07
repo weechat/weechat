@@ -55,8 +55,9 @@
 #include "../plugins/plugin.h"
 
 
-#ifdef HAVE_GNUTLS
 int network_init_ok = 0;
+
+#ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred; /* GnuTLS client credentials   */
 const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010700
@@ -112,13 +113,13 @@ network_init ()
 #endif
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
-    network_init_ok = 1;
 #endif
 #ifdef HAVE_GCRYPT
     gcry_check_version (GCRYPT_VERSION);
     gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
     gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 #endif
+    network_init_ok = 1;
 }
 
 /*
