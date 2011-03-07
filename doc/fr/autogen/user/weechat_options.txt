@@ -246,7 +246,7 @@
 * *weechat.completion.nick_ignore_chars*
 ** description: `caractères à ignorer pour la complétion des pseudos`
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"[]-^"`)
+** valeurs: toute chaîne (valeur par défaut: `"[]`_-^"`)
 
 * *weechat.completion.partial_completion_alert*
 ** description: `alterte l'utilisateur lorsqu'une complétion partielle survient`

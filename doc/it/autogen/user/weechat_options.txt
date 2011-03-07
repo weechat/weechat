@@ -246,7 +246,7 @@
 * *weechat.completion.nick_ignore_chars*
 ** descrizione: `caratteri ignorati per il completamento dei nick`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"[]-^"`)
+** valori: qualsiasi stringa (valore predefinito: `"[]`_-^"`)
 
 * *weechat.completion.partial_completion_alert*
 ** descrizione: `avvisa l'utente quando si verifica un completamento parziale`

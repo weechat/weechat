@@ -2114,7 +2114,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "nick_ignore_chars", "string",
         N_("chars ignored for nick completion"),
-        NULL, 0, 0, "[]-^", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "[]`_-^", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_alert = config_file_new_option (
         weechat_config_file, ptr_section,
         "partial_completion_alert", "boolean",
