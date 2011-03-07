@@ -254,7 +254,7 @@
 ** Werte: merge_with_core, merge_without_core, independent (Standardwert: `merge_with_core`)
 
 * *irc.look.smart_filter*
-** Beschreibung: `Filtert join/part/quit Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter im tag "irc_smart_filter" erstellt werden.`
+** Beschreibung: `filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -265,6 +265,11 @@
 
 * *irc.look.smart_filter_join*
 ** Beschreibung: `aktiviert einen Filter für "join" Nachrichten`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
+* *irc.look.smart_filter_nick*
+** Beschreibung: `enable smart filter for "nick" messages`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

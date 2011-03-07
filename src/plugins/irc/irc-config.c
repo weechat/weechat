@@ -90,6 +90,7 @@ struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
 struct t_config_option *irc_config_look_smart_filter_quit;
+struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_topic_strip_colors;
 
 /* IRC config, color section */
@@ -2030,8 +2031,8 @@ irc_config_init ()
     irc_config_look_smart_filter = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter", "boolean",
-        N_("filter join/part/quit messages for a nick if not speaking for "
-           "some minutes on channel (you must create a filter on tag "
+        N_("filter join/part/quit/nick messages for a nick if not speaking "
+           "for some minutes on channel (you must create a filter on tag "
            "\"irc_smart_filter\")"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
@@ -2042,12 +2043,20 @@ irc_config_init ()
     irc_config_look_smart_filter_join = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_join", "boolean",
+        /* TRANSLATORS: please do not translate "join" */
         N_("enable smart filter for \"join\" messages"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_quit", "boolean",
+        /* TRANSLATORS: please do not translate "part" and "quit" */
         N_("enable smart filter for \"part\" and \"quit\" messages"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_nick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_nick", "boolean",
+        /* TRANSLATORS: please do not translate "nick" */
+        N_("enable smart filter for \"nick\" messages"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (
         irc_config_file, ptr_section,

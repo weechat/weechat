@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-04 13:51+0100\n"
+"POT-Creation-Date: 2011-03-07 12:20+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5197,9 +5197,10 @@ msgstr ""
 "número de mensajes brutos a mantener en memoria cuando el buffer de datos en "
 "bruto está cerrado (los mensajes serán mostrados cuando sea abra este buffer)"
 
+#, fuzzy
 msgid ""
-"filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel (you must create a filter on tag \"irc_smart_filter\")"
+"filter join/part/quit/nick messages for a nick if not speaking for some "
+"minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 "filtrar mensajes de unión/abandono/salida para apodos que no hayan hablado "
 "en los últimos minutos en el canal (debes crear un filtro para la etiqueta "
@@ -5209,11 +5210,18 @@ msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
 "tiempo de espera para filtrar mensajes de unión/abandono/salida (en minutos)"
 
+#. TRANSLATORS: please do not translate "join"
 msgid "enable smart filter for \"join\" messages"
 msgstr "habilitar el filtro inteligente para mensajes de unión"
 
+#. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "habilitar el filtro inteligente para mensajes de abandono y salida"
+
+#. TRANSLATORS: please do not translate "nick"
+#, fuzzy
+msgid "enable smart filter for \"nick\" messages"
+msgstr "habilitar el filtro inteligente para mensajes de unión"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
@@ -5590,10 +5598,6 @@ msgstr "%s%s: no es posible crear el nuevo canal \"%s\""
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s se ha unido a %s%s%s"
-
-#, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s%s: canal \"%s\" no encontrado para el comando \"%s\""
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -7620,6 +7624,9 @@ msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s%s: canal \"%s\" no encontrado para el comando \"%s\""
 
 #~ msgid "hook type: command, timer, .. (optional)"
 #~ msgstr "tipo de enganche: comando, temporizador, .. (opcional)"

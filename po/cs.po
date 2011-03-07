@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-04 13:51+0100\n"
+"POT-Creation-Date: 2011-03-07 12:20+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5070,9 +5070,10 @@ msgstr ""
 "počet čistých IRC zpráv uložených v paměti při zavření bufferu s čistými "
 "daty (zprávy budou zobrazeny při otevření bufferu s čistými daty)"
 
+#, fuzzy
 msgid ""
-"filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel (you must create a filter on tag \"irc_smart_filter\")"
+"filter join/part/quit/nick messages for a nick if not speaking for some "
+"minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 "filtrovat join/part/quit zprávy pro přezdívky pokud po nějaký čas nemluví na "
 "kanále (musíte vytvořit filter na tag \"irc_smart_filter\")"
@@ -5080,11 +5081,18 @@ msgstr ""
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr "zpoždění pro filtrování zpráv join/part/quit (v minutách)"
 
+#. TRANSLATORS: please do not translate "join"
 msgid "enable smart filter for \"join\" messages"
 msgstr "povolit chytrý filter pro \"join\" zprávy"
 
+#. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "povolit chytrý filter pro \"part\" a \"quit\" zprávy"
+
+#. TRANSLATORS: please do not translate "nick"
+#, fuzzy
+msgid "enable smart filter for \"nick\" messages"
+msgstr "povolit chytrý filter pro \"join\" zprávy"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
@@ -5462,10 +5470,6 @@ msgstr "%s%s: nemohu vytvořit nový kanál \"%s\""
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s%s%s%s%s%s%s%s%s se připojil %s%s%s"
-
-#, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -7438,6 +7442,9 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""
 
 #~ msgid "hook type: command, timer, .. (optional)"
 #~ msgstr "typ napojení: příkaz, časovač, .. (volitelné)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-04 13:51+0100\n"
+"POT-Creation-Date: 2011-03-07 12:20+0100\n"
 "PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4748,19 +4748,26 @@ msgid ""
 msgstr ""
 
 msgid ""
-"filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel (you must create a filter on tag \"irc_smart_filter\")"
+"filter join/part/quit/nick messages for a nick if not speaking for some "
+"minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "join"
 #, fuzzy
 msgid "enable smart filter for \"join\" messages"
 msgstr "цвет  текущего окна с сообщениями"
 
+#. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
+
+#. TRANSLATORS: please do not translate "nick"
+#, fuzzy
+msgid "enable smart filter for \"nick\" messages"
+msgstr "цвет  текущего окна с сообщениями"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
@@ -5152,10 +5159,6 @@ msgstr "%s не могу создать новый канал \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s зашёл на канал %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s канал \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -7090,6 +7093,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "минута"
+
+#, fuzzy
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s канал \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy
 #~ msgid "a color name"

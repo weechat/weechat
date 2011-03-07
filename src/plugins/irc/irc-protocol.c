@@ -809,6 +809,7 @@ IRC_PROTOCOL_CALLBACK(nick)
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
     char *new_nick, *old_color, *buffer_name;
     int local_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     
     /*
      * NICK message looks like:
@@ -877,8 +878,16 @@ IRC_PROTOCOL_CALLBACK(nick)
                         if (!irc_ignore_check (server, ptr_channel->name,
                                                nick, host))
                         {
+                            ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                                 && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
+                                irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                             weechat_printf_tags (ptr_channel->buffer,
-                                                 irc_protocol_tags (command, NULL, NULL),
+                                                 irc_protocol_tags (command,
+                                                                    (!weechat_config_boolean (irc_config_look_smart_filter)
+                                                                     || !weechat_config_boolean (irc_config_look_smart_filter_nick)
+                                                                     || ptr_nick_speaking) ?
+                                                                    NULL : "irc_smart_filter",
+                                                                    NULL),
                                                  _("%s%s%s%s is now known as "
                                                    "%s%s%s"),
                                                  weechat_prefix ("network"),

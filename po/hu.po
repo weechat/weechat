@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-04 13:51+0100\n"
+"POT-Creation-Date: 2011-03-07 12:20+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4741,19 +4741,26 @@ msgid ""
 msgstr ""
 
 msgid ""
-"filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel (you must create a filter on tag \"irc_smart_filter\")"
+"filter join/part/quit/nick messages for a nick if not speaking for some "
+"minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "join"
 #, fuzzy
 msgid "enable smart filter for \"join\" messages"
 msgstr "új üzenetet tartalmazó ablak színe"
 
+#. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
+
+#. TRANSLATORS: please do not translate "nick"
+#, fuzzy
+msgid "enable smart filter for \"nick\" messages"
+msgstr "új üzenetet tartalmazó ablak színe"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
@@ -5138,10 +5145,6 @@ msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
 msgstr "%s%s %s(%s%s%s)%s belépett a(z) %s%s szobába\n"
-
-#, fuzzy, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
@@ -7081,6 +7084,10 @@ msgstr ""
 #, fuzzy
 msgid "Pointer"
 msgstr "perc"
+
+#, fuzzy
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
 
 #, fuzzy
 #~ msgid "a color name"

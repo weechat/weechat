@@ -254,7 +254,7 @@
 ** valeurs: merge_with_core, merge_without_core, independent (valeur par défaut: `merge_with_core`)
 
 * *irc.look.smart_filter*
-** description: `filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")`
+** description: `filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -265,6 +265,11 @@
 
 * *irc.look.smart_filter_join*
 ** description: `activer le filtre intelligent pour les messages "join"`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* *irc.look.smart_filter_nick*
+** description: `activer le filtre intelligent pour les messages "nick"`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
