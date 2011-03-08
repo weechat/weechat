@@ -74,12 +74,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.look.color_nicks_in_names*
-** Beschreibung: `use nick color in output of /names (or list of nicks displayed when joining a channel)`
+** Beschreibung: `nutzt in der Ausgabe von /names die Nickfarbe (oder bei der Auflistung der Nicks wenn man einen Channel betritt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *irc.look.color_nicks_in_nicklist*
-** Beschreibung: `Nutze Nickfarbe in Nicklist`
+** Beschreibung: `Nutzt die Nickfarben in der Nicklist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -254,7 +254,7 @@
 ** Werte: merge_with_core, merge_without_core, independent (Standardwert: `merge_with_core`)
 
 * *irc.look.smart_filter*
-** Beschreibung: `filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")`
+** Beschreibung: `Filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter im tag "irc_smart_filter" erstellt werden.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -269,7 +269,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *irc.look.smart_filter_nick*
-** Beschreibung: `enable smart filter for "nick" messages`
+** Beschreibung: `aktiviert einen Filter für Nachrichten von einem "Nick"`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

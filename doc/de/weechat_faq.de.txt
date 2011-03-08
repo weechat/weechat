@@ -179,24 +179,23 @@ in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere F
 angezeigt.
 
 
-// TRANSLATION MISSING
 [[one_input_root_bar]]
-Is it possible to display only one input bar for all windows (after split)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ist es möglich nur eine Eingabezeile für alle Fenster zu nutzen (auch falls diese geteilt sind)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Yes, you will have to create a bar with type "root" (with an item to know in
-which window you are), then delete current input bar.
+Ja, dazu muss eine Bar des Typs "root" erstellt werden (dass ein Item besitzt, dass anzeigt
+in welchem Fenster man sich befindet) und die aktuelle Eingabezeile gelöscht werden.
 
-For example:
+Zum Beispiel:
 
 ----------------------------------------
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
 ----------------------------------------
 
-If ever you are not satisfied with that, just delete new bar, WeeChat will
-automatically create default bar "input" if item "input_text" is not used in
-any bar:
+Falls Du doch nicht zufrieden sein solltest, dann lösche einfach die neue Bar. WeeChat erstellt
+automatisch eine neue Eingabezeile sofern das Item "input_text" in keiner anderen Bar genutzt
+werden sollte:
 
 ----------------------------------------
 /bar del rootinput
@@ -521,12 +520,12 @@ diesem Fall weniger sicher):
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_ssl_freenode]]
-How can I connect to freenode server using SSL?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich eine SSL gesicherte Verbindung zum freenode Server herstellen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must download certificate, convert it, then add it in WeeChat:
+Zuerst muss ein Zertifikat heruntergeladen werden, dieses muss konvertiert
+und dann in WeeChat hinzugefügt werden:
 
 ----------------------------------------
 $ cd /tmp
@@ -536,7 +535,8 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-Under WeeChat, setup server port, SSL, dhkey_size, then connect:
+In WeeChat muss nun der Serverport, SSL und dhkey_size eingerichtet werden um
+eine Verbindung herzustellen:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"

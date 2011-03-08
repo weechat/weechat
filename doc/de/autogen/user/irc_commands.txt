@@ -175,7 +175,7 @@ Ziel: Servername
 channel: Channel für den die Einladung gelten soll
 ........................................
 
-[command]*`ison`* Überprüft ob ein Nick  gegenwärtig auf IRC angemeldet ist::
+[command]*`ison`* Überprüft ob ein Nick gegenwärtig auf IRC angemeldet ist::
 ........................................
 /ison  <nick> [<nick>...]
 
