@@ -564,6 +564,7 @@ gui_filter_print_log ()
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_filter->name);
         log_printf ("  buffer_name. . . . . . : '%s'",  ptr_filter->buffer_name);
         log_printf ("  num_buffers. . . . . . : %d",    ptr_filter->num_buffers);
+        log_printf ("  buffers. . . . . . . . : 0x%lx", ptr_filter->buffers);
         for (i = 0; i < ptr_filter->num_buffers; i++)
         {
             log_printf ("  buffers[%03d] . . . . . : '%s'", i, ptr_filter->buffers[i]);
