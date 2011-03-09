@@ -1183,7 +1183,7 @@ void
 command_filter_display (struct t_gui_filter *filter)
 {
     gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                               _("  %s[%s%s%s]%s buffer: %s%s%s%s%s "
+                               _("  %s[%s%s%s]%s buffer: %s%s%s "
                                  "/ tags: %s / regex: %s %s"),
                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                GUI_COLOR(GUI_COLOR_CHAT),
@@ -1191,8 +1191,6 @@ command_filter_display (struct t_gui_filter *filter)
                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                GUI_COLOR(GUI_COLOR_CHAT),
                                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                               (filter->plugin_name) ? filter->plugin_name : "",
-                               (filter->plugin_name) ? "." : "",
                                filter->buffer_name,
                                GUI_COLOR(GUI_COLOR_CHAT),
                                filter->tags,
@@ -4773,28 +4771,34 @@ command_init ()
                      "to tags or regex"),
                   N_("list"
                      " || enable|disable|toggle [<name>]"
-                     " || add <name> <plugin.buffer> <tags> <regex>"
+                     " || add <name> <buffer>[,<buffer>...] <tags> <regex>"
                      " || del <name>|-all"),
-                  N_("         list: list all filters\n"
-                     "       enable: enable filters (filters are enabled by "
+                  N_("   list: list all filters\n"
+                     " enable: enable filters (filters are enabled by "
                       "default)\n"
-                     "      disable: disable filters\n"
-                     "       toggle: toggle filters\n"
-                     "         name: filter name\n"
-                     "          add: add a filter\n"
-                     "          del: delete a filter\n"
-                     "         -all: delete all filters\n"
-                     "plugin.buffer: plugin and buffer where filter is active "
-                     "(\"*\" for all buffers)\n"
-                     "         tags: comma separated list of tags, for "
+                     "disable: disable filters\n"
+                     " toggle: toggle filters\n"
+                     "   name: filter name\n"
+                     "    add: add a filter\n"
+                     "    del: delete a filter\n"
+                     "   -all: delete all filters\n"
+                     " buffer: comma separated list of buffers where filter "
+                     "is active:\n"
+                     "         - this is full name including plugin (example: "
+                     "\"irc.freenode.#weechat\")\n"
+                     "         - \"*\" means all buffers\n"
+                     "         - a name starting with '!' is excluded\n"
+                     "         - name can start or end with '*' to "
+                     "match many buffers\n"
+                     "   tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
-                     "        regex: regular expression to search in line\n"
-                     "               - use '\\t' to separate prefix from message, special "
+                     "  regex: regular expression to search in line\n"
+                     "         - use '\\t' to separate prefix from message, special "
                      "chars like '|' must be escaped: '\\|'\n"
-                     "               - if regex starts with '!', then matching "
+                     "         - if regex starts with '!', then matching "
                      "result is reversed (use '\\!' to start with '!')\n"
-                     "               note: two regex are created: one for prefix "
-                     "and one for message\n\n"
+                     "         - two regular expressions are created: one for "
+                     "prefix and one for message\n\n"
                      "The default key alt+'=' toggles filtering on/off.\n\n"
                      "Tags most commonly used:\n"
                      "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
@@ -4804,8 +4808,11 @@ command_init ()
                      "  irc_numeric, irc_error, irc_action, irc_ctcp, "
                      "irc_ctcp_reply, irc_smart_filter, away_info.\n\n"
                      "Examples:\n"
-                     "  use IRC smart filter for join/part/quit messages:\n"
+                     "  use IRC smart filter on all buffers:\n"
                      "    /filter add irc_smart * irc_smart_filter *\n"
+                     "  use IRC smart filter on all buffers except those with "
+                     "\"#weechat\" in name:\n"
+                     "    /filter add irc_smart *,!*#weechat* irc_smart_filter *\n"
                      "  filter all IRC join/part/quit messages:\n"
                      "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
                      "  filter nicks displayed when joining channels or with /names:\n"
@@ -5082,7 +5089,7 @@ command_init ()
     hook_command (NULL, "set",
                   N_("set config options"),
                   N_("[<option> [<value>]]"),
-                  N_("option: name of an option (can start or end with \"*\" "
+                  N_("option: name of an option (can start or end with '*' "
                      "to list many options)\n"
                      " value: new value for option\n\n"
                      "New value can be, according to variable type:\n"

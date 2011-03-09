@@ -163,23 +163,27 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
 ........................................
 /filter  list
          enable|disable|toggle [<nom>]
-         add <nom> <extension.tampon> <tags> <regex>
+         add <nom> <tampon>[,<tampon>...] <tags> <regex>
          del <nom>|-all
 
-            list: lister tous les filtres
-          enable: activer les filtres (par défaut les filtres sont activés)
-         disable: désactiver les filtres
-          toggle: activer/désactiver les filtres
-             nom: nom de filtre
-             add: ajouter un filtre
-             del: supprimer un filtre
-            -all: supprimer tous les filtres
-extension.tampon: extension et tampon où le filtre est actif ("*" pour tous les tampons)
-            tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
-           regex: expression régulière à rechercher dans la ligne
-                  - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
-                  - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
-                  note: deux regex sont créées: une pour le préfixe et une pour le message
+   list: lister tous les filtres
+ enable: activer les filtres (par défaut les filtres sont activés)
+disable: désactiver les filtres
+ toggle: activer/désactiver les filtres
+    nom: nom de filtre
+    add: ajouter un filtre
+    del: supprimer un filtre
+   -all: supprimer tous les filtres
+ tampon: liste des tampons, séparés par des virgules, où le filtre est actif :
+         - il s'agit du nom complet incluant l'extension (exemple: "irc.freenode.#weechat")
+         - "*" signifie tous les tampons
+         - un nom commençant par '!' est exclu
+         - le nom peut commencer ou se terminer par '*' pour plusieurs tampons
+   tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
+  regex: expression régulière à rechercher dans la ligne
+         - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
+         - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
+         - deux expressions régulières sont créées: une pour le préfixe et une pour le message
 
 La touche par défaut alt+'=' active/désactive le filtrage.
 
@@ -191,8 +195,10 @@ Les tags les plus couramment utilisés:
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 
 Exemples:
-  utiliser le filtre intelligent IRC pour les messages join/part/quit:
+  utiliser le filtre intelligent IRC sur tous les tampons:
     /filter add irc_smart * irc_smart_filter *
+  utiliser le filtre intelligent IRC sur tous les tampons sauf ceux avec "#weechat" dans le nom:
+    /filter add irc_smart *,!*#weechat* irc_smart_filter *
   filtrer tous les messages IRC join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
   filtrer les pseudos afficher en rejoignant les canaux ou avec /names:
@@ -421,7 +427,7 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
 ........................................
 /set  [<option> [<valeur>]]
 
-option: nom d'une option (peut démarrer ou se terminer par "*" pour lister plusieurs options)
+option: nom d'une option (peut démarrer ou se terminer par '*' pour lister plusieurs options)
 valeur: nouvelle valeur pour l'option
 
 La nouvelle valeur peut être, selon le type de l'option:

@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-07
+v0.3.5-dev, 2011-03-09
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: allow list of buffers in command /filter (exclusion with prefix "!")
+  (task #10880)
 * core: reload file with certificate authorities when option
   weechat.network.gnutls_ca_file is changed
 * core: rebuild bar content when items are changed in an hidden bar

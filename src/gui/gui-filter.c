@@ -68,15 +68,42 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
 }
 
 /*
+ * gui_filter_match_buffer: return 1 if filters matches full name of buffer
+ */
+
+int
+gui_filter_match_buffer (struct t_gui_filter *filter, const char *full_name)
+{
+    int i, match;
+    char *ptr_name;
+    
+    match = 0;
+    for (i = 0; i < filter->num_buffers; i++)
+    {
+        ptr_name = filter->buffers[i];
+        if (ptr_name[0] == '!')
+            ptr_name++;
+        if (string_match (full_name, ptr_name, 0))
+        {
+            if (filter->buffers[i][0] == '!')
+                return 0;
+            else
+                match = 1;
+        }
+    }
+    
+    return match;
+}
+
+/*
  * gui_filter_check_line: return 1 if a line should be displayed, or
  *                        0 if line is hidden (tag or regex found)
  */
 
 int
-gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
+gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
 {
     struct t_gui_filter *ptr_filter;
-    const char *buffer_plugin_name;
     int rc;
     
     /* line is always displayed if filters are disabled */
@@ -85,19 +112,14 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     
     if (gui_filter_line_has_tag_no_filter (line))
         return 1;
-
-    buffer_plugin_name = (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
-        buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin);
     
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
         if (ptr_filter->enabled)
         {
-            /* check plugin and buffer names */
-            if ((!ptr_filter->plugin_name
-                 || (string_strcasecmp (buffer_plugin_name, ptr_filter->plugin_name) == 0))
-                && string_match (buffer->name, ptr_filter->buffer_name, 0))
+            /* check buffer */
+            if (gui_filter_match_buffer (ptr_filter, buffer_full_name))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
                     || (gui_line_match_tags (line,
@@ -136,15 +158,21 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
     int line_displayed, lines_hidden;
+    char buffer_full_name[512];
     
     lines_hidden = 0;
     
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     
+    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
+              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
+              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              buffer->name);
+    
     for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        line_displayed = gui_filter_check_line (buffer, ptr_line);
+        line_displayed = gui_filter_check_line (ptr_line, buffer_full_name);
         
         if (line_displayed
             && (ptr_line->data->prefix_length > buffer->lines->prefix_max_length))
@@ -247,28 +275,6 @@ gui_filter_disable (struct t_gui_filter *filter)
 }
 
 /*
- * gui_filter_search: search a filter
- */
-
-struct t_gui_filter *
-gui_filter_search (const char *buffer_name, const char *tags, const char *regex)
-{
-    struct t_gui_filter *ptr_filter;
-    
-    for (ptr_filter = gui_filters; ptr_filter;
-         ptr_filter = ptr_filter->next_filter)
-    {
-        if ((strcmp (ptr_filter->buffer_name, buffer_name) == 0)
-            && (strcmp (ptr_filter->tags, tags) == 0)
-            && (strcmp (ptr_filter->regex, regex) == 0))
-            return ptr_filter;
-    }
-    
-    /* filter not found */
-    return NULL;
-}
-
-/*
  * gui_filter_search_by_name: search a filter by name
  */
 
@@ -298,7 +304,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *pos_point, *regex_prefix;
+    char *pos_tab, *regex_prefix;
     const char *ptr_start_regex, *pos_regex_message;
     
     if (!name || !buffer_name || !tags || !regex)
@@ -372,22 +378,10 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         /* init filter */
         new_filter->enabled = enabled;
         new_filter->name = strdup (name);
-        new_filter->plugin_name = NULL;
-        if (buffer_name)
-        {
-            pos_point = strchr (buffer_name, '.');
-            if (pos_point)
-            {
-                new_filter->plugin_name = string_strndup (buffer_name, pos_point - buffer_name);
-                new_filter->buffer_name = strdup (pos_point + 1);
-            }
-            else
-                new_filter->buffer_name = strdup (buffer_name);
-        }
-        else
-        {
-            new_filter->buffer_name = strdup ("*");
-        }
+        new_filter->buffer_name = strdup ((buffer_name) ? buffer_name : "*");
+        new_filter->buffers = string_split (new_filter->buffer_name,
+                                            ",", 0, 0,
+                                            &new_filter->num_buffers);
         if (tags)
         {
             new_filter->tags = (tags) ? strdup (tags) : NULL;
@@ -454,10 +448,10 @@ gui_filter_free (struct t_gui_filter *filter)
     /* free data */
     if (filter->name)
         free (filter->name);
-    if (filter->plugin_name)
-        free (filter->plugin_name);
     if (filter->buffer_name)
         free (filter->buffer_name);
+    if (filter->buffers)
+        string_free_split (filter->buffers);
     if (filter->tags)
         free (filter->tags);
     if (filter->tags_array)
@@ -529,8 +523,6 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", filter->name))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "plugin_name", filter->plugin_name))
-        return 0;
     if (!infolist_new_var_string (ptr_item, "buffer_name", filter->buffer_name))
         return 0;
     if (!infolist_new_var_string (ptr_item, "tags", filter->tags))
@@ -558,6 +550,7 @@ void
 gui_filter_print_log ()
 {
     struct t_gui_filter *ptr_filter;
+    int i;
     
     log_printf ("");
     log_printf ("gui_filters_enabled = %d", gui_filters_enabled);
@@ -569,8 +562,12 @@ gui_filter_print_log ()
         log_printf ("[filter (addr:0x%lx)]", ptr_filter);
         log_printf ("  enabled. . . . . . . . : %d",    ptr_filter->enabled);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_filter->name);
-        log_printf ("  plugin_name. . . . . . : '%s'",  ptr_filter->plugin_name);
         log_printf ("  buffer_name. . . . . . : '%s'",  ptr_filter->buffer_name);
+        log_printf ("  num_buffers. . . . . . : %d",    ptr_filter->num_buffers);
+        for (i = 0; i < ptr_filter->num_buffers; i++)
+        {
+            log_printf ("  buffers[%03d] . . . . . : '%s'", i, ptr_filter->buffers[i]);
+        }
         log_printf ("  tags . . . . . . . . . : '%s'",  ptr_filter->tags);
         log_printf ("  regex. . . . . . . . . : '%s'",  ptr_filter->regex);
         log_printf ("  regex_prefix . . . . . : 0x%lx", ptr_filter->regex_prefix);

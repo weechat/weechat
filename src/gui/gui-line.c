@@ -754,7 +754,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
     struct t_gui_window *ptr_win;
-    char *message_for_signal;
+    char *message_for_signal, buffer_full_name[512];
     const char *nick;
     int notify_level, *max_notify_level;
     
@@ -819,7 +819,12 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     gui_line_add_to_list (buffer->own_lines, new_line);
     
     /* check if line is filtered or not */
-    new_line->data->displayed = gui_filter_check_line (buffer, new_line);
+    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
+              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
+              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              buffer->name);
+    new_line->data->displayed = gui_filter_check_line (new_line,
+                                                       buffer_full_name);
     if (new_line->data->displayed)
     {
         if (new_line->data->highlight)
@@ -900,6 +905,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 {
     struct t_gui_line *ptr_line, *new_line;
     struct t_gui_line_data *new_line_data;
+    char buffer_full_name[512];
     
     /* search if line exists for "y" */
     for (ptr_line = buffer->own_lines->first_line; ptr_line;
@@ -975,7 +981,12 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     ptr_line->data->message = (message) ? strdup (message) : strdup ("");
     
     /* check if line is filtered or not */
-    ptr_line->data->displayed = gui_filter_check_line (buffer, ptr_line);
+    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
+              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
+              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              buffer->name);
+    ptr_line->data->displayed = gui_filter_check_line (ptr_line,
+                                                       buffer_full_name);
     if (!ptr_line->data->displayed)
     {
         if (!buffer->own_lines->lines_hidden)
