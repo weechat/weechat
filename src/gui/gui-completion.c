@@ -588,11 +588,10 @@ gui_completion_build_list (struct t_gui_completion *completion)
     }
     if (repeat_last)
     {
-        pos_space = rindex (HOOK_COMMAND(ptr_hook, completion), ' ');
+        pos_space = rindex (template, ' ');
         gui_completion_build_list_template (completion,
                                             (pos_space) ?
-                                            pos_space + 1 : HOOK_COMMAND(ptr_hook,
-                                                                         completion),
+                                            pos_space + 1 : template,
                                             ptr_hook->plugin);
     }
     free (template);
