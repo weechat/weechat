@@ -220,6 +220,10 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                   const char *string);
+extern int gui_buffer_full_name_match_list (const char *full_name,
+                                            int num_buffers, char **buffers);
+extern int gui_buffer_match_list (struct t_gui_buffer *buffer,
+                                  const char *string);
 extern void gui_buffer_set_plugin_for_upgrade (char *name,
                                                struct t_weechat_plugin *plugin);
 extern int gui_buffer_property_in_list (char *properties[], char *property);

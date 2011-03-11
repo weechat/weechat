@@ -1290,7 +1290,7 @@ _Novità nella versione 0.3.2._
 
 Codifica una stringa in base64.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -1361,7 +1361,7 @@ _Novità nella versione 0.3.2._
 Verifica che il primo carattere della stringa sia un carattere comando
 (il comando carattere predefinito è '/').
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -1389,7 +1389,7 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 is_cmdchar = weechat.string_is_command_char(string)
 
 # esempi
@@ -1405,7 +1405,7 @@ _Novità nella versione 0.3.2._
 Restituisce il puntatore al testo in input per il buffer (puntatore all'interno
 dell'argomento "string"), oppure NULL se è un comando.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -1433,7 +1433,7 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 str = weechat.string_input_for_buffer(string)
 
 # esempi
@@ -2947,7 +2947,7 @@ struct t_hashtable *weechat_hashtable_new (int size,
                                                                   const void *key2));
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
 * 'size': dimensione dell'array interno per memorizzare le chiavi con hash, un
   valore più alto usa più memoria, ma ha migliori performance. (questo *non* è
@@ -3007,7 +3007,7 @@ int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
                                      const void *value, int value_size);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
 * 'hashtable': puntatore alla tabella hash
 * 'key': puntatore alla chiave
@@ -3222,7 +3222,7 @@ _Novità nella versione 0.3.4._
 
 Restituisce il valore stringa della proprietà di una tabella hash.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -4039,7 +4039,7 @@ void weechat_config_search_section_option (struct t_config_file *config_file,
                                            struct t_config_option **option_found);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
 * 'config_file': puntatore al file di configurazione
 * 'section': puntatore alla sezione
@@ -7924,7 +7924,7 @@ _Novità nella versione 0.3.4._
 
 Hook su una informazione (la callback prende e restituisce una tabella hash).
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
@@ -7981,7 +7981,7 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 hook = weechat.hook_info_hashtable(info_name, description, args_description,
                                    output_description, callback, callback_data)
 
@@ -8942,6 +8942,65 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 # str contains "test with abc"
 ----------------------------------------
 
+weechat_buffer_match_list
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.5._
+
+// TRANSLATION MISSING
+Check if buffer matches a list of buffers.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
+----------------------------------------
+
+Argomenti:
+
+* 'buffer': puntatore al buffer
+// TRANSLATION MISSING
+* 'string': comma-separated list of buffers:
+** "*" means all buffers
+** name beginning with "!" is excluded
+** name can start or end with "*" to match many buffers
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* 1 if buffer matches list of buffers, 0 otherwise
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+struct t_gui_buffer *buffer = weechat_buffer_search ("irc", "freenode.#weechat");
+if (buffer)
+{
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*"));                   /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "*,!*#weechat*"));       /* 0 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.freenode.*"));      /* 1 */
+    weechat_printf (NULL, "%d", weechat_buffer_match_list (buffer, "irc.oftc.*,python.*")); /* 0 */
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+match = weechat.buffer_match_list(buffer, string)
+
+# esempio
+buffer = weechat.buffer_search("irc", "freenode.#weechat")
+if buffer:
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                   # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*,!*#weechat*"))       # 0
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.freenode.*"))      # 1
+    weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*")) # 0
+----------------------------------------
+
 [[windows]]
 Finestre
 ~~~~~~~~
@@ -9663,7 +9722,7 @@ Argomenti:
   "0" = gruppo nascosto, "1" = gruppo visibile
 |========================================
 
-C examples:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -10563,7 +10622,7 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
                                                 struct t_hashtable *hashtable);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
 * 'info_name': nome della info da leggere
 include::autogen/plugin_api/infos_hashtable.txt[]
@@ -10608,7 +10667,7 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 dict = weechat.info_get_hashtable(info_name, dict_in)
 
 # esempio

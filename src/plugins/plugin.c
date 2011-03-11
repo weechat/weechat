@@ -619,6 +619,7 @@ plugin_load (const char *filename)
         new_plugin->buffer_set = &gui_buffer_set;
         new_plugin->buffer_set_pointer = &gui_buffer_set_pointer;
         new_plugin->buffer_string_replace_local_var = &gui_buffer_string_replace_local_var;
+        new_plugin->buffer_match_list = &gui_buffer_match_list;
         
         new_plugin->window_get_integer = &gui_window_get_integer;
         new_plugin->window_get_string = &gui_window_get_string;

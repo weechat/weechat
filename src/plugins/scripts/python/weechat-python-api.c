@@ -4853,7 +4853,7 @@ weechat_python_api_buffer_unmerge (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_buffer_get_integer get a buffer property as integer
+ * weechat_python_api_buffer_get_integer: get a buffer property as integer
  */
 
 static PyObject *
@@ -5019,6 +5019,40 @@ weechat_python_api_buffer_string_replace_local_var (PyObject *self, PyObject *ar
     result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
     
     PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_buffer_match_list: return 1 if buffer matches list of
+ *                                       buffers
+ */
+
+static PyObject *
+weechat_python_api_buffer_match_list (PyObject *self, PyObject *args)
+{
+    char *buffer, *string;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    buffer = NULL;
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_buffer_match_list (script_str2ptr (buffer), string);
+    
+    PYTHON_RETURN_INT(value);
 }
 
 /*
@@ -7040,6 +7074,7 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },
     { "buffer_string_replace_local_var", &weechat_python_api_buffer_string_replace_local_var, METH_VARARGS, "" },
+    { "buffer_match_list", &weechat_python_api_buffer_match_list, METH_VARARGS, "" },
     { "current_window", &weechat_python_api_current_window, METH_VARARGS, "" },
     { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
     { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },

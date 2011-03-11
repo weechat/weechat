@@ -5328,6 +5328,42 @@ weechat_tcl_api_buffer_string_replace_local_var (ClientData clientData, Tcl_Inte
 }
 
 /*
+ * weechat_tcl_api_buffer_match_list: return 1 if buffers matches list of buffers
+ */
+
+static int
+weechat_tcl_api_buffer_match_list (ClientData clientData, Tcl_Interp *interp,
+                                   int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *string;
+    int result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        TCL_RETURN_INT(0);
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    string = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_buffer_match_list (script_str2ptr (buffer), string);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
  * weechat_tcl_api_current_window: get current window
  */
 
@@ -7650,6 +7686,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_buffer_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::buffer_string_replace_local_var",
                           weechat_tcl_api_buffer_string_replace_local_var, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::buffer_match_list",
+                          weechat_tcl_api_buffer_match_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::current_window",
                           weechat_tcl_api_current_window, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::window_get_integer",

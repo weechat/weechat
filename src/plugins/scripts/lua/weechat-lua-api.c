@@ -5244,6 +5244,42 @@ weechat_lua_api_buffer_string_replace_local_var (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_buffer_match_list: return 1 if buffer matches list of buffers
+ */
+
+static int
+weechat_lua_api_buffer_match_list (lua_State *L)
+{
+    const char *buffer, *string;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        LUA_RETURN_INT(0);
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    string = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_buffer_match_list (script_str2ptr (buffer),
+                                       string);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_current_window: get current window
  */
 
@@ -7769,6 +7805,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },
     { "buffer_string_replace_local_var", &weechat_lua_api_buffer_string_replace_local_var },
+    { "buffer_match_list", &weechat_lua_api_buffer_match_list },
     { "current_window", &weechat_lua_api_current_window },
     { "window_get_integer", &weechat_lua_api_window_get_integer },
     { "window_get_string", &weechat_lua_api_window_get_string },

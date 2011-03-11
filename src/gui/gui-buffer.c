@@ -618,6 +618,76 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_buffer_full_name_match_list: return 1 if full name of buffer matches
+ *                                  list of buffers
+ */
+
+int
+gui_buffer_full_name_match_list (const char *full_name,
+                                 int num_buffers, char **buffers)
+{
+    int i, match;
+    char *ptr_name;
+    
+    match = 0;
+    
+    for (i = 0; i < num_buffers; i++)
+    {
+        ptr_name = buffers[i];
+        if (ptr_name[0] == '!')
+            ptr_name++;
+        if (string_match (full_name, ptr_name, 0))
+        {
+            if (buffers[i][0] == '!')
+                return 0;
+            else
+                match = 1;
+        }
+    }
+    
+    return match;
+}
+
+/*
+ * gui_buffer_match_list: return 1 if buffer matches list of buffers
+ *                        list is a string with list of buffers, where
+ *                        exclusion is possible with char '!', and "*" means
+ *                        all buffers
+ *                        Examples:
+ *                          "*"
+ *                          "*,!*#weechat*"
+ *                          "irc.freenode.*"
+ *                          "irc.freenode.*,irc.oftc.#channel"
+ *                          "irc.freenode.#weechat,irc.freenode.#other"
+ */
+
+int
+gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
+{
+    char **buffers, buffer_full_name[512];
+    int num_buffers, match;
+    
+    if (!string || !string[0])
+        return 0;
+    
+    match = 0;
+    
+    buffers = string_split (string, ",", 0, 0, &num_buffers);
+    if (buffers)
+    {
+        snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
+                  (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
+                  buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+                  buffer->name);
+        match = gui_buffer_full_name_match_list (buffer_full_name,
+                                                 num_buffers, buffers);
+        string_free_split (buffers);
+    }
+    
+    return match;
+}
+
+/*
  * gui_buffer_set_plugin_for_upgrade: set plugin pointer for buffers with a
  *                                    given name (used after /upgrade)
  */

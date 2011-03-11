@@ -68,34 +68,6 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
 }
 
 /*
- * gui_filter_match_buffer: return 1 if filters matches full name of buffer
- */
-
-int
-gui_filter_match_buffer (struct t_gui_filter *filter, const char *full_name)
-{
-    int i, match;
-    char *ptr_name;
-    
-    match = 0;
-    for (i = 0; i < filter->num_buffers; i++)
-    {
-        ptr_name = filter->buffers[i];
-        if (ptr_name[0] == '!')
-            ptr_name++;
-        if (string_match (full_name, ptr_name, 0))
-        {
-            if (filter->buffers[i][0] == '!')
-                return 0;
-            else
-                match = 1;
-        }
-    }
-    
-    return match;
-}
-
-/*
  * gui_filter_check_line: return 1 if a line should be displayed, or
  *                        0 if line is hidden (tag or regex found)
  */
@@ -119,7 +91,9 @@ gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
         if (ptr_filter->enabled)
         {
             /* check buffer */
-            if (gui_filter_match_buffer (ptr_filter, buffer_full_name))
+            if (gui_buffer_full_name_match_list (buffer_full_name,
+                                                 ptr_filter->num_buffers,
+                                                 ptr_filter->buffers))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
                     || (gui_line_match_tags (line,

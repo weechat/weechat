@@ -4766,6 +4766,39 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
 }
 
 /*
+ * weechat::buffer_match_list: return 1 if buffer matches list of buffers
+ */
+
+XS (XS_weechat_api_buffer_match_list)
+{
+    char *buffer, *string;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "buffer_match_list");
+        PERL_RETURN_INT(0);
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    string = SvPV (ST (1), PL_na);
+    
+    value = weechat_buffer_match_list (script_str2ptr (buffer), string);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
  * weechat::current_window: get current window
  */
 
@@ -6707,6 +6740,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_get_pointer", XS_weechat_api_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_api_buffer_set, "weechat");
     newXS ("weechat::buffer_string_replace_local_var", XS_weechat_api_buffer_string_replace_local_var, "weechat");
+    newXS ("weechat::buffer_match_list", XS_weechat_api_buffer_match_list, "weechat");
     newXS ("weechat::current_window", XS_weechat_api_current_window, "weechat");
     newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
     newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
