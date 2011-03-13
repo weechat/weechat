@@ -564,33 +564,33 @@ Codes couleurs
 ^^^^^^^^^^^^^^
 
 Pour certaines extensions comme IRC, il est possible d'utiliser des codes
-couleur et attributs comme suit (appuyer sur Ctrl-C puis sur la lettre qui
+couleur et attributs comme suit (appuyer sur @k(C-)@k(c) puis sur la lettre qui
 suit et éventuellement une valeur) :
 
-^Cb::
+@k(C-)@k(c) , @k(b)::
     texte gras
 
-^Ccxx::
+@k(C-)@k(c) , @k(c) , @k(xx)::
     couleur du texte `xx` (voir la liste des couleurs ci-dessous)
 
-^Ccxx,yy::
+@k(C-)@k(c) , @k(c) , @k(xx,yy)::
     couleur du texte `xx` et du fond `yy` (voir la liste des couleurs
     ci-dessous)
 
-^Co::
+@k(C-)@k(c) , @k(o)::
     désactiver la couleur et tous les attributs
 
-^Cr::
+@k(C-)@k(c) , @k(r)::
     vidéo inverse (inversion de la couleur d'écriture et du fond)
 
-^Cu::
+@k(C-)@k(c) , @k(u)::
     texte souligné
 
 [NOTE]
-Le même code (sans le numéro pour ^Cc) peut être utilisé pour stopper
-l'attribut défini.
+Le même code (sans le numéro pour @k(C-)@k(c) , @k(c)) peut être utilisé pour
+stopper l'attribut défini.
 
-Les codes couleur pour ^Cc sont :
+Les codes couleur pour @k(C-)@k(c) , @k(c) sont :
 
 [width="50%",cols="^1m,3,3",options="header"]
 |========================================
@@ -617,7 +617,7 @@ Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
 gras, et "tout le monde" en rouge clair souligné :
 
 ----------------------------------------
-^Cc12^Cbbonjour^Cb^Cc04^Cu tout le monde^Cu^Cc!
+^Cc12^Cbbonjour ^Cb^Cc04^Cutout le monde^Cu^Cc !
 ----------------------------------------
 
 [[weechat_options]]

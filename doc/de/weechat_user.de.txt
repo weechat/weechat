@@ -554,32 +554,32 @@ Farbkodierung
 ^^^^^^^^^^^^^
 
 Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbkodierungen und Attribute für den
-Text gesetzt werden. Dazu muss die Tastenkombination "Ctrl-C", gefolgt von einem der folgenden
+Text gesetzt werden. Dazu muss die Tastenkombination @k(C-)@k(c), gefolgt von einem der folgenden
 Zeichen, genutzt werden:
 
-^Cb::
+@k(C-)@k(c) , @k(b)::
     Text wird fett dargestellt
 
-^Ccxx::
+@k(C-)@k(c) , @k(c) , @k(xx)::
     Textfarbe `xx` (siehe Farbtabelle)
 
-^Ccxx,yy::
+@k(C-)@k(c) , @k(c) , @k(xx,yy)::
     Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
 
-^Co::
+@k(C-)@k(c) , @k(o)::
     deaktiviert Farben und Attribute
 
-^Cr::
+@k(C-)@k(c) , @k(r)::
     Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
 
-^Cu::
+@k(C-)@k(c) , @k(u)::
     Text wird mit Unterstrich dargestellt
 
 [NOTE]
-Der selbe Befehl (ohne den Wert für ^Cc) sollte genutzt werden um die Farbkodierungen bzw. Attribute
-zu deaktivieren.
+Der selbe Befehl (ohne den Wert für @k(C-)@k(c) , @k(c)) sollte genutzt werden
+um die Farbkodierungen bzw. Attribute zu deaktivieren.
 
-Farbtabelle für ^Cc:
+Farbtabelle für @k(C-)@k(c) , @k(c):
 
 [width="50%",cols="^1m,3,3",options="header"]
 |========================================

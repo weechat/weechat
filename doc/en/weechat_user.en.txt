@@ -556,31 +556,31 @@ Color codes
 ^^^^^^^^^^^
 
 For some plugins like IRC, you can use color codes and attributes, as
-follow (press Ctrl-C then following letter, with optional value):
+follow (press @k(C-)@k(c) then following letter, with optional value):
 
-^Cb::
+@k(C-)@k(c) , @k(b)::
     bold text
 
-^Ccxx::
+@k(C-)@k(c) , @k(c) , @k(xx)::
     text color `xx` (see list of colors below)
 
-^Ccxx,yy::
+@k(C-)@k(c) , @k(c) , @k(xx,yy)::
     text color `xx` and background `yy` (see list of colors below)
 
-^Co::
+@k(C-)@k(c) , @k(o)::
     disable color and attributes
 
-^Cr::
+@k(C-)@k(c) , @k(r)::
     reverse video (revert text color with background)
 
-^Cu::
+@k(C-)@k(c) , @k(u)::
     underlined text
 
 [NOTE]
-The same code (without number for ^Cc) may be used to stop the
+The same code (without number for @k(C-)@k(c) , @k(c)) may be used to stop the
 attribute.
 
-Color codes for ^Cc are:
+Color codes for @k(C-)@k(c) , @k(c) are:
 
 [width="50%",cols="^1m,3,3",options="header"]
 |========================================
@@ -607,7 +607,7 @@ Example: display of "hello everybody!" with "hello" in light blue bold and
 "everybody" in light red underlined:
 
 ----------------------------------------
-^Cc12^Cbhello^Cb^Cc04^Cu everybody^Cu^Cc!
+^Cc12^Cbhello ^Cb^Cc04^Cueverybody^Cu^Cc!
 ----------------------------------------
 
 [[weechat_options]]

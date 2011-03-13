@@ -569,35 +569,35 @@ Codici colore
 ^^^^^^^^^^^^^
 
 Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
-come segue (digitare Ctrl-C poi la lettera che segue, con il valore
+come segue (digitare @k(C-)@k(c) poi la lettera che segue, con il valore
 opzionale):
 
-^Cb::
+@k(C-)@k(c) , @k(b)::
     testo in grassetto
 
-^Ccxx::
+@k(C-)@k(c) , @k(c) , @k(xx)::
     colore del testo `xx` (consultare la lista di colori che segue)
 
-^Ccxx,yy::
+@k(C-)@k(c) , @k(c) , @k(xx,yy)::
     colore del testo `xx` e di sfondo `yy` (consultare la lista di colori
     che segue)
 
-^Co::
+@k(C-)@k(c) , @k(o)::
     disabilita colori ed attributi
 
-^Cr::
+@k(C-)@k(c) , @k(r)::
     video inverso (inverte il colore del testo con quello di sfondo)
 
-^Cu::
+@k(C-)@k(c) , @k(u)::
     testo sottolineato
 
 [NOTE]
-Lo stesso codice (senza numero per ^Cc) può essere usato per
+Lo stesso codice (senza numero per @k(C-)@k(c) , @k(c)) può essere usato per
 terminare l'attributo.
 
-I codici colore per ^Cc sono:
+I codici colore per @k(C-)@k(c) , @k(c) sono:
 
-[width="35%",cols="^1m,3,3",options="header"]
+[width="50%",cols="^1m,3,3",options="header"]
 |=======================================
 | Codice | IRC            | WeeChat (curses)
 | 00     | bianco         | white
@@ -622,7 +622,7 @@ Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
 e "a tutti" in rosso chiaro sottolineato:
 
 ----------------------------------------
-^Cc12^Cbciao^Cb^Cc04^Cu a tutti^Cu^Cc!
+^Cc12^Cbciao ^Cb^Cc04^Cua tutti^Cu^Cc !
 ----------------------------------------
 
 [[weechat_options]]
