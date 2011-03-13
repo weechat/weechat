@@ -649,8 +649,8 @@ tester WeeChat.
 
 
 [[help_developers]]
-Je souhaiterai aider les développeurs WeeChat. Que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Je souhaiterais aider les développeurs WeeChat. Que puis-je faire ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il y a plusieurs choses à faire (test, code, documentation, etc...)
 
