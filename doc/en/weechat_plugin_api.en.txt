@@ -8786,13 +8786,13 @@ weechat.buffer_set("", "hotlist", "-")
 weechat.buffer_set("", "hotlist", "+")
 
 # change buffer name
-weechat.buffet_set(my_buffer, "name", "my_new_name")
+weechat.buffer_set(my_buffer, "name", "my_new_name")
 
 # add new local variable "toto" with value "abc"
-weechat.buffet_set(my_buffer, "localvar_set_toto", "abc")
+weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 
 # remove local variable "toto"
-weechat.buffet_set(my_buffer, "localvar_del_toto", "")
+weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 ----------------------------------------
 
 weechat_buffer_set_pointer

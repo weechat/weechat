@@ -8927,13 +8927,13 @@ weechat.buffer_set("", "hotlist", "-")
 weechat.buffer_set("", "hotlist", "+")
 
 # changer le nom du tampon
-weechat.buffet_set(my_buffer, "name", "my_new_name")
+weechat.buffer_set(my_buffer, "name", "my_new_name")
 
 # ajouter une variable locale "toto" avec la valeur "abc"
-weechat.buffet_set(my_buffer, "localvar_set_toto", "abc")
+weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 
 # supprimer la variable locale "toto"
-weechat.buffet_set(my_buffer, "localvar_del_toto", "")
+weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 ----------------------------------------
 
 weechat_buffer_set_pointer
