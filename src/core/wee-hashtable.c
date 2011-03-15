@@ -431,20 +431,24 @@ hashtable_map (struct t_hashtable *hashtable,
                void *callback_map_data)
 {
     int i;
-    struct t_hashtable_item *ptr_item;
+    struct t_hashtable_item *ptr_item, *ptr_next_item;
     
     if (!hashtable)
         return;
     
     for (i = 0; i < hashtable->size; i++)
     {
-        for (ptr_item = hashtable->htable[i]; ptr_item;
-             ptr_item = ptr_item->next_item)
+        ptr_item = hashtable->htable[i];
+        while (ptr_item)
         {
+            ptr_next_item = ptr_item->next_item;
+            
             (void) (callback_map) (callback_map_data,
                                    hashtable,
                                    ptr_item->key,
                                    ptr_item->value);
+            
+            ptr_item = ptr_next_item;
         }
     }
 }
