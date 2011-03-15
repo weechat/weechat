@@ -36,7 +36,7 @@ Version 0.3.5 (under dev!)
   being added with command "/color")
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
-* irc: add new option irc.look.buffer_auto_switch_on_join
+* irc: add new option irc.look.buffer_auto_switch_on_join (task #8542)
 * irc: add new option irc.look.smart_filter_nick
 * irc: ignore join if nick is not self nick and if channel buffer does not exist
   (bug #32667)
