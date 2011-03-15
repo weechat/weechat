@@ -3156,10 +3156,10 @@ Prototype:
 [source,C]
 ----------------------------------------
 void hashtable_map (struct t_hashlist *hashlist,
-                    int (*callback_map)(void *data,
-                                        struct t_hashtable *hashtable,
-                                        const void *key,
-                                        const void *value),
+                    void (*callback_map)(void *data,
+                                         struct t_hashtable *hashtable,
+                                         const void *key,
+                                         const void *value),
                     void *callback_map_data);
 ----------------------------------------
 
