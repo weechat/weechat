@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-11
+v0.3.5-dev, 2011-03-15
 
 
 Version 0.3.5 (under dev!)
@@ -36,6 +36,7 @@ Version 0.3.5 (under dev!)
   being added with command "/color")
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
+* irc: add new option irc.look.buffer_auto_switch_on_join
 * irc: add new option irc.look.smart_filter_nick
 * irc: ignore join if nick is not self nick and if channel buffer does not exist
   (bug #32667)

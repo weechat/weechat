@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-09 10:06+0100\n"
+"POT-Creation-Date: 2011-03-15 11:39+0100\n"
 "PO-Revision-Date: 2011-03-09 09:29+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4944,6 +4944,9 @@ msgstr "%s%s: errore durante la creazione del server \"%s\""
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s%s: errore durante la creazione dell'opzione del server \"%s\""
+
+msgid "auto switch to channel buffer on join"
+msgstr ""
 
 msgid ""
 "use nick color in output of /names (or list of nicks displayed when joining "

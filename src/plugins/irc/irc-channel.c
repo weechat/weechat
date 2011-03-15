@@ -283,7 +283,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         server->channels = new_channel;
     server->last_channel = new_channel;
     
-    if (switch_to_channel)
+    if (switch_to_channel
+        && ((channel_type != IRC_CHANNEL_TYPE_CHANNEL)
+            || weechat_config_boolean (irc_config_look_buffer_auto_switch_on_join)))
     {
         weechat_buffer_set (new_buffer, "display",
                             (auto_switch) ? "auto" : "1");
