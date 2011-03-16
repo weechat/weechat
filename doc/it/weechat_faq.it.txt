@@ -59,8 +59,7 @@ Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
 Il metodo raccomandato per compilare WeeChat è utilizzando cmake.
 
 Se si sta compilando con autotools (e non cmake), verificare che siano installate
-le ultime versioni di autoconf e automake (WeeChat è sviluppato con autoconf
-2.61 e automake 1.10.1).
+le ultime versioni di autoconf e automake.
 
 L'altro metodo è installare il "pacchetto di sviluppo", che richiede meno
 dipendenze. Questo pacchetto viene generato  quasi tutti i giorni utilizzando
@@ -203,7 +202,7 @@ Come posso copiare/incollare testo senza incollare la lista nick?
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
-generale è ctrl + alt + selezione mouse.
+generale è @k(C-)@k(A-) selezione mouse.
 
 Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
@@ -323,16 +322,16 @@ Come posso personalizzare le associazioni dei tasti?
 
 Le associazioni dei tasti sono personalizzabili con il comando `/key`.
 
-Il tasto predefinito Meta-k (di solito Alt-k) consente di registrare il codice
-tasto ed inserirlo nella riga di comando.
+Il tasto predefinito @k(A-)@k(k) consente di registrare il codice tasto ed
+inserirlo nella riga di comando.
 
 
 [[jump_to_buffer_11_or_higher]]
 Qual è il tasto per passare al buffer 11 (o superiore)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Il tasto è alt-j seguito da due numeri, ad esempio alt-j e 1, 1 per passare
-al buffer 11.
+Il tasto è @k(A-)@k(j) seguito da due numeri, ad esempio @k(A-)@k(j) e @k(1),
+@k(1) per passare al buffer 11.
 
 È possibile associare un tasto, ad esempio:
 
@@ -350,7 +349,7 @@ How to use global history (instead of buffer history) with up and down keys?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can bind the up and down keys on global history (default keys for global
-history are ctrl+up and ctrl+down).
+history are @k(C-)@k(↑) and @k(C-)@k(↓)).
 
 Example:
 
@@ -361,7 +360,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press alt-k then key (up or down).
+code press @k(A-)@k(k) then key (up or down).
 
 
 [[irc]]
@@ -385,7 +384,7 @@ buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
 o espressioni regolari per il prefisso ed il contenuto delle righe.
 Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
-alt +  "=" abilita/disabilita i filtri).
+@k(A-)@k(=) abilita/disabilita i filtri).
 
 
 [[filter_irc_join_part_quit]]

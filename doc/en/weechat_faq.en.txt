@@ -59,8 +59,7 @@ I can't compile WeeChat after cloning git repository, why?
 The recommended way to compile WeeChat is with cmake.
 
 If you're compiling with autotools (and not cmake), check that you have latest
-version of autoconf and automake (WeeChat is developed with autoconf 2.61 and
-automake 1.10.1).
+version of autoconf and automake.
 
 The other way is to install the "devel package", which needs less dependencies.
 This package is built almost every day using git repository. Note that this
@@ -198,7 +197,7 @@ How can I copy/paste text without pasting nicklist?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
-konsole, gnome-terminal, ...). Key is usually ctrl + alt + mouse selection.
+konsole, gnome-terminal, ...). Key is usually @k(C-)@k(A-) mouse selection.
 
 Another solution is to move nicklist to top or bottom, for example:
 
@@ -315,16 +314,15 @@ How can I customize key bindings?
 
 Key bindings are customizable with `/key` command.
 
-Default key Meta-k (usually Alt-k) lets you grab key code and insert it in
-command line.
+Default key @k(A-)@k(k) lets you grab key code and insert it in command line.
 
 
 [[jump_to_buffer_11_or_higher]]
 What is the key to jump to buffer 11 (or higher number)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The key is alt-j and then 2 digits, for example alt-j then 1, 1 to jump to
-buffer 11.
+The key is @k(A-)@k(j) and then 2 digits, for example @k(A-)@k(j) then @k(1),
+@k(1) to jump to buffer 11.
 
 You can bind a key, for example:
 
@@ -340,7 +338,7 @@ How to use global history (instead of buffer history) with up and down keys?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can bind the up and down keys on global history (default keys for global
-history are ctrl+up and ctrl+down).
+history are @k(C-)@k(↑) and @k(C-)@k(↓)).
 
 Example:
 
@@ -351,7 +349,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press alt-k then key (up or down).
+code press @k(A-)@k(k) then key (up or down).
 
 
 [[irc]]
@@ -374,7 +372,7 @@ The `/filter` command is a core command, so it applies to any buffer.
 It lets you filter some lines in buffers with tags or regular expression for
 prefix and content of line.
 Filtered lines are only hidden, not deleted, and you can see them if you
-disable filters (by default, the key alt + "=" toggles filters).
+disable filters (by default, the key @k(A-)@k(=) toggles filters).
 
 
 [[filter_irc_join_part_quit]]

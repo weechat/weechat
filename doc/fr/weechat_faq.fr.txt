@@ -59,8 +59,7 @@ Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 La méthode recommandée pour compiler WeeChat est d'utiliser cmake.
 
 Si vous compilez avec les autotools (et non cmake), vérifiez que vous avez bien
-la dernière version d'autoconf et automake (WeeChat est développé avec autoconf
-2.61 et automake 1.10.1).
+la dernière version d'autoconf et automake.
 
 Une autre façon de faire est de compiler le "paquet devel", qui nécessite moins
 de dépendences. Ce paquet est construit quasiment tous les jours à partir de la
@@ -204,7 +203,7 @@ Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
-ctrl + alt + sélection à la souris.
+@k(C-)@k(A-) sélection à la souris.
 
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
@@ -329,16 +328,16 @@ Comment puis-je configurer les raccourcis clavier ?
 
 Les raccourcis clavier sont modifiables avec la commande `/key`.
 
-La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code d'une
-touche et de l'inclure dans la ligne de commande.
+La touche par défaut @k(A-)@k(k) permet de capturer le code d'une touche et de
+l'inclure dans la ligne de commande.
 
 
 [[jump_to_buffer_11_or_higher]]
 Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La touche est alt-j puis 2 chiffres, par exemple alt-j puis 1, 1 pour sauter
-au tampon 11.
+La touche est @k(A-)@k(j) puis 2 chiffres, par exemple @k(A-)@k(j) puis @k(1),
+@k(1) pour sauter au tampon 11.
 
 Vous pouvez définir une touche, par exemple :
 
@@ -354,7 +353,7 @@ Comment utiliser l'historique global (au lieu de l'historique du tampon) avec le
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vous pouvez assigner les touches haut et bas sur l'historique global (les
-touches par défaut pour l'historique global sont ctrl+haut et ctrl+bas).
+touches par défaut pour l'historique global sont @k(C-)@k(↑) et @k(C-)@k(↓)).
 
 Exemple :
 
@@ -365,8 +364,8 @@ Exemple :
 
 [NOTE]
 Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur alt-k puis la touche (haut ou
-bas).
+Pour trouver le code de la touche appuyez sur @k(A-)@k(k) puis la touche (haut
+ou bas).
 
 
 [[irc]]
@@ -390,7 +389,7 @@ quel tampon.
 Elle permet de filtrer des lignes dans les tampons à l'aide de tags ou
 d'expression régulière pour le préfixe et contenu de la ligne.
 Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
-de les voir en désactivant les filtres (par défaut, la touche alt + "="
+de les voir en désactivant les filtres (par défaut, la touche @k(A-)@k(=)
 active/désactive les filtres).
 
 

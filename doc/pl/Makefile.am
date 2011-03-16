@@ -31,7 +31,7 @@ all-local: weechat_faq.pl.html \
 
 # FAQ
 weechat_faq.pl.html: weechat_faq.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_faq.pl.html weechat_faq.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_faq.pl.html weechat_faq.pl.txt
 
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.txt

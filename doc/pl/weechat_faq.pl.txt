@@ -59,8 +59,7 @@ Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 Zalecaną metodą kompilacji WeeChat jest użycie cmake.
 
 Jeśli kompilujesz używając autotools (nie cmake), upewnij się, że posiadasz
-najnowszą wersję autoconf i automake (WeeChat jest rozwijany z użyciem autoconf 2.61
-oraz automake 1.10.1).
+najnowszą wersję autoconf i automake.
 
 Innym sposobem jest zainstalowanie "paczki deweloperskiej", która wymaga mniej
 zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium
@@ -199,7 +198,7 @@ Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
-konsole, gnome-terminal, ...). Klawisze to zazwyczaj ctrl + alt + zaznaczenie myszką.
+konsole, gnome-terminal, ...). Klawisze to zazwyczaj @k(C-)@k(A-) zaznaczenie myszką.
 
 Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na przykład:
 
@@ -320,16 +319,16 @@ Jak mogę zmienić przypisania klawiszy?
 
 Przypisania klawiszy mozna dostosować za pomocą komendy `/key`.
 
-Domyślnie Meta-k (zazwyczaj Alt-k) pozwala pobrać kod klawiszy i umieścić
-go w wierszu poleceń.
+Domyślnie @k(A-)@k(k) pozwala pobrać kod klawiszy i umieścić go w wierszu
+poleceń.
 
 
 [[jump_to_buffer_11_or_higher]]
 Jakim skrótem można przejść do buforu 11 (lub o więszym numerze)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Skrót to alt-j i dwie cyfry, na przykład alt-j później 1, 1 przejdzie do
-buforu 11.
+Skrót to @k(A-)@k(j) i dwie cyfry, na przykład @k(A-)@k(j) później @k(1), @k(1)
+przejdzie do buforu 11.
 
 Można również samemu stworzyć skrót, na przykład:
 
@@ -346,7 +345,7 @@ How to use global history (instead of buffer history) with up and down keys?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can bind the up and down keys on global history (default keys for global
-history are ctrl+up and ctrl+down).
+history are @k(C-)@k(↑) and @k(C-)@k(↓)).
 
 Example:
 
@@ -357,7 +356,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press alt-k then key (up or down).
+code press @k(A-)@k(k) then key (up or down).
 
 
 [[irc]]
@@ -380,7 +379,7 @@ Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
 Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
 regularnych dla przedrostków i zawartości lini.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
-filtry (domyślnie alt + "=" zmienia stan filtrów).
+filtry (domyślnie @k(A-)@k(=) zmienia stan filtrów).
 
 
 [[filter_irc_join_part_quit]]

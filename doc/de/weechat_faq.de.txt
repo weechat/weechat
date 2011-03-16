@@ -62,7 +62,7 @@ Es wird empfohlen zum kompilieren von WeeChat, cmake zu nutzen.
 
 Falls Du WeeChat mit Hilfe der autotools kompilieren solltest (dich also nicht
 für cmake entscheidest), stelle sicher, dass Du die neueste Version von autoconf
-und automake besitzt (WeeChat wird mit autoconf 2.61 und automake 1.10.1 entwickelt).
+und automake besitzt.
 
 Die zweite Möglichkeit besteht darin das "Entwickler-Paket" zu installieren. Dies
 besitzt weniger Abhängigkeiten. Das Paket wird quasi täglich aus dem git Repository erstellt.
@@ -208,7 +208,7 @@ Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit eingef
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
-ctrl + alt in Verbindung mit der Auswahl durch die Maus.
+@k(C-)@k(A-) in Verbindung mit der Auswahl durch die Maus.
 
 Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu verschieben:
 
@@ -334,7 +334,7 @@ Wie kann ich die Tastaturbelegung anpassen?
 
 Die Tasten werden mit dem Befehl `/key` belegt.
 
-Mit der voreingestellten Tastenkombination Meta-k (normal Alt-k) kann man sich den
+Mit der voreingestellten Tastenkombination @k(A-)@k(k) kann man sich den
 Code der jeweiligen Taste anzeigen lassen und in die Eingabezeile einfügen.
 
 
@@ -342,8 +342,8 @@ Code der jeweiligen Taste anzeigen lassen und in die Eingabezeile einfügen.
 Mit welcher Tastenkombination kann ich zum Buffer 11 (oder höher) wechseln?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Die Tastenkombination lautet alt-j gefolgt von den zwei Ziffern des Buffers.
-Zum Beispiel, "alt-j 1 1" um zum Buffer 11 zu wechseln.
+Die Tastenkombination lautet @k(A-)@k(j) gefolgt von den zwei Ziffern des Buffers.
+Zum Beispiel, @k(A-)@k(j), @k(1), @k(1) um zum Buffer 11 zu wechseln.
 
 Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 
@@ -360,7 +360,7 @@ How to use global history (instead of buffer history) with up and down keys?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can bind the up and down keys on global history (default keys for global
-history are ctrl+up and ctrl+down).
+history are @k(C-)@k(↑) and @k(C-)@k(↓)).
 
 Example:
 
@@ -371,7 +371,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press alt-k then key (up or down).
+code press @k(A-)@k(k) then key (up or down).
 
 
 [[irc]]
@@ -396,7 +396,7 @@ Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Ta
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
 Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt.
 Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Filter deaktiviert
-(Voreinstellung zum aktivieren/deaktivieren der Filter: Alt-Taste + "=").
+(Voreinstellung zum aktivieren/deaktivieren der Filter: @k(A-)@k(=)).
 
 
 [[filter_irc_join_part_quit]]

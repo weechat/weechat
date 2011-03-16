@@ -44,7 +44,7 @@ weechat_scripting.de.html: weechat_scripting.de.txt
 
 # FAQ
 weechat_faq.de.html: weechat_faq.de.txt
-	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_faq.de.html weechat_faq.de.txt
+	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_faq.de.html weechat_faq.de.txt
 
 # quickstart
 weechat_quickstart.de.html: weechat_quickstart.de.txt

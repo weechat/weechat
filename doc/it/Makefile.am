@@ -50,7 +50,7 @@ weechat_scripting.it.html: weechat_scripting.it.txt
 
 # FAQ
 weechat_faq.it.html: weechat_faq.it.txt
-	$(ASCIIDOC) -a toc -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_faq.it.html weechat_faq.it.txt
+	$(ASCIIDOC) -a toc -a toc-title='Indice' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_faq.it.html weechat_faq.it.txt
 
 # quickstart
 weechat_quickstart.it.html: weechat_quickstart.it.txt

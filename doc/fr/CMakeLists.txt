@@ -55,7 +55,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html DESTINATION 
 # FAQ
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
   COMMENT "Building weechat_faq.fr.html"
