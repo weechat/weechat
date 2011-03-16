@@ -349,6 +349,26 @@ Vous pouvez définir une touche, par exemple :
 La liste des touches par défaut est dans le Guide utlisateur.
 
 
+[[global_history]]
+Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous pouvez assigner les touches haut et bas sur l'historique global (les
+touches par défaut pour l'historique global sont ctrl+haut et ctrl+bas).
+
+Exemple :
+
+----------------------------------------
+/key bind meta2-A /input history_global_previous
+/key bind meta2-B /input history_global_next
+----------------------------------------
+
+[NOTE]
+Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
+Pour trouver le code de la touche appuyez sur alt-k puis la touche (haut ou
+bas).
+
+
 [[irc]]
 IRC
 ---

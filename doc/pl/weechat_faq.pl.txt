@@ -340,6 +340,26 @@ Można również samemu stworzyć skrót, na przykład:
 Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 
 
+// TRANSLATION MISSING
+[[global_history]]
+How to use global history (instead of buffer history) with up and down keys?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can bind the up and down keys on global history (default keys for global
+history are ctrl+up and ctrl+down).
+
+Example:
+
+----------------------------------------
+/key bind meta2-A /input history_global_previous
+/key bind meta2-B /input history_global_next
+----------------------------------------
+
+[NOTE]
+Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
+code press alt-k then key (up or down).
+
+
 [[irc]]
 IRC
 ---
