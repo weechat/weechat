@@ -36,6 +36,7 @@ Version 0.3.5 (under dev!)
   being added with command "/color")
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
+* aspell: fix spellers used after switch of window (bug #32811)
 * irc: add new options irc.look.buffer_switch_autojoin and
   irc.look.buffer_switch_join (task #8542, task #10506)
 * irc: add new option irc.look.smart_filter_nick

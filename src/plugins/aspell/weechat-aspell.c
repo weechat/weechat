@@ -43,6 +43,8 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;
 
+struct t_gui_buffer *aspell_buffer_spellers = NULL;
+
 char *aspell_last_modifier_string = NULL; /* last str. received by modifier */
 char *aspell_last_modifier_result = NULL; /* last str. built by modifier    */
 
@@ -335,24 +337,6 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
             }
         }
     }
-}
-
-/*
- * weechat_aspell_buffer_switch_cb: callback for "buffer_switch" signel
- */
-
-int
-weechat_aspell_buffer_switch_cb (void *data, const char *signal,
-                                 const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    
-    weechat_aspell_create_spellers (signal_data);
-    
-    return WEECHAT_RC_OK;
 }
 
 /*
@@ -674,7 +658,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     struct t_gui_buffer *buffer;
     char *result, *ptr_string, *pos_space, *ptr_end, save_end;
     const char *color_normal, *color_error;
-    int utf8_char_int, char_size;
+    int buffer_has_changed, utf8_char_int, char_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error, rc;
     
@@ -690,6 +674,14 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         return NULL;
     
     buffer = (struct t_gui_buffer *)value;
+
+    buffer_has_changed = 0;
+    if (buffer != aspell_buffer_spellers)
+    {
+        weechat_aspell_create_spellers (buffer);
+        aspell_buffer_spellers = buffer;
+        buffer_has_changed = 1;
+    }
     
     if (!weechat_aspell_spellers)
         return NULL;
@@ -704,7 +696,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
      * same (for example user just change cursor position, or input text is
      * refreshed with same content)
      */
-    if (aspell_last_modifier_string
+    if (!buffer_has_changed
+        && aspell_last_modifier_string
         && (strcmp (string, aspell_last_modifier_string) == 0))
     {
         return (aspell_last_modifier_result) ?
@@ -986,10 +979,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              N_("list of supported langs for aspell"),
                              &weechat_aspell_completion_langs_cb, NULL);
     
-    /* callback for buffer_switch */
-    weechat_hook_signal ("buffer_switch",
-                         &weechat_aspell_buffer_switch_cb, NULL);
-    
     /*
      * callback for spell checking input text
      * we use a low priority here, so that other modifiers "input_text_display"
@@ -997,8 +986,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      */
     weechat_hook_modifier ("500|input_text_display",
                            &weechat_aspell_modifier_cb, NULL);
-    
-    weechat_aspell_create_spellers (weechat_current_buffer ());
     
     return WEECHAT_RC_OK;
 }
