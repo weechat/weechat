@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-15 11:39+0100\n"
+"POT-Creation-Date: 2011-03-16 09:26+0100\n"
 "PO-Revision-Date: 2011-02-07 17:30+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4605,7 +4605,13 @@ msgstr "%s недостаточно памяти для сообщения в с
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
-msgid "auto switch to channel buffer on join"
+msgid ""
+"auto switch to channel buffer when it is auto joined (with server option "
+"\"autojoin\")"
+msgstr ""
+
+msgid ""
+"auto switch to channel buffer when it is manually joined (with /join command)"
 msgstr ""
 
 msgid ""

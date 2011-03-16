@@ -150,8 +150,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
-    int i, buffer_created, current_buffer_number, buffer_position;
-    char *buffer_name, str_number[32], str_group[32];
+    int i, buffer_created, current_buffer_number, buffer_position, manual_join;
+    char *buffer_name, str_number[32], str_group[32], *channel_name_lower;
     const char *prefix_modes;
     
     /* alloc memory for new channel */
@@ -283,13 +283,39 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         server->channels = new_channel;
     server->last_channel = new_channel;
     
-    if (switch_to_channel
-        && ((channel_type != IRC_CHANNEL_TYPE_CHANNEL)
-            || weechat_config_boolean (irc_config_look_buffer_auto_switch_on_join)))
+    manual_join = 0;
+    channel_name_lower = NULL;
+    if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        weechat_buffer_set (new_buffer, "display",
-                            (auto_switch) ? "auto" : "1");
+        channel_name_lower = strdup (channel_name);
+        if (channel_name_lower)
+        {
+            weechat_string_tolower (channel_name_lower);
+            manual_join = weechat_hashtable_has_key (server->manual_joins,
+                                                     channel_name_lower);
+        }
     }
+    
+    if (switch_to_channel)
+    {
+        if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
+        {
+            if ((manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_join))
+                || (!manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
+                switch_to_channel = 0;
+        }
+        
+        if (switch_to_channel)
+        {
+            weechat_buffer_set (new_buffer, "display",
+                                (auto_switch) ? "auto" : "1");
+        }
+    }
+    
+    if (manual_join)
+        weechat_hashtable_remove (server->manual_joins, channel_name_lower);
+    if (channel_name_lower)
+        free (channel_name_lower);
     
     weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
                               "irc_channel_opened" : "irc_pv_opened",
@@ -654,7 +680,7 @@ irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
               (channel->key) ? " " : "",
               (channel->key) ? channel->key : "");
     
-    irc_command_join_server (server, join_args);
+    irc_command_join_server (server, join_args, 0);
 }
 
 /*

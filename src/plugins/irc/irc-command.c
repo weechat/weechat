@@ -1757,8 +1757,13 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_join_server (struct t_irc_server *server, const char *arguments)
+irc_command_join_server (struct t_irc_server *server, const char *arguments,
+                         int manual_join)
 {
+    char *args, **channels, *pos_space;
+    int i, length, num_channels;
+    int time_now;
+    
     if (server->sock < 0)
     {
         weechat_printf (NULL,
@@ -1766,19 +1771,42 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments)
                           "connected irc server"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
                         "join");
+        return;
     }
+    
+    if (irc_channel_is_channel (arguments))
+        args = strdup (arguments);
     else
     {
-        if (irc_channel_is_channel (arguments))
+        length = 1 + strlen (arguments) + 1;
+        args = malloc (length);
+        if (args)
+            snprintf (args, length, "#%s", arguments);
+    }
+    if (args)
+    {
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "JOIN %s", args);
+        if (manual_join)
         {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "JOIN %s", arguments);
+            pos_space = strchr (args, ' ');
+            if (pos_space)
+                pos_space[0] = '\0';
+            channels = weechat_string_split (args, ",", 0, 0, &num_channels);
+            if (channels)
+            {
+                time_now = (int)time (NULL);
+                for (i = 0; i < num_channels; i++)
+                {
+                    weechat_string_tolower (channels[i]);
+                    weechat_hashtable_set (server->manual_joins,
+                                           channels[i],
+                                           &time_now);
+                }
+                weechat_string_free_split (channels);
+            }
         }
-        else
-        {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "JOIN #%s", arguments);
-        }
+        free (args);
     }
 }
 
@@ -1802,13 +1830,13 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
             ptr_server = irc_server_search (argv[2]);
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            irc_command_join_server (ptr_server, argv_eol[3]);
+            irc_command_join_server (ptr_server, argv_eol[3], 1);
         }
         else
         {
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            irc_command_join_server (ptr_server, argv_eol[1]);
+            irc_command_join_server (ptr_server, argv_eol[1], 1);
         }
     }
     else
@@ -1816,7 +1844,7 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             && !ptr_channel->nicks)
         {
-            irc_command_join_server (ptr_server, ptr_channel->name);
+            irc_command_join_server (ptr_server, ptr_channel->name, 1);
         }
         else
         {

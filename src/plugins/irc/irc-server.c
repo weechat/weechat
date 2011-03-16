@@ -98,6 +98,8 @@ char *irc_server_prefix_chars_default = "~&@%+-";
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
                                                   /* sending a message       */
 
+time_t irc_server_last_check_manual_joins = 0;
+
 
 void irc_server_reconnect (struct t_irc_server *server);
 void irc_server_free_data (struct t_irc_server *server);
@@ -656,6 +658,11 @@ irc_server_alloc (const char *name)
     new_server->last_redirect = NULL;
     new_server->notify_list = NULL;
     new_server->last_notify = NULL;
+    new_server->manual_joins = weechat_hashtable_new (4,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_INTEGER,
+                                                      NULL,
+                                                      NULL);
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -1095,6 +1102,7 @@ irc_server_free_data (struct t_irc_server *server)
         irc_server_outqueue_free_all (server, i);
     }
     irc_notify_free_all (server);
+    weechat_hashtable_free (server->manual_joins);
     irc_redirect_free_all (server);
     if (server->channels)
         irc_channel_free_all (server);
@@ -2187,6 +2195,26 @@ irc_server_timer_sasl_cb (void *data, int remaining_calls)
 }
 
 /*
+ * irc_server_check_manual_joins_cb: callback called for each manual join of a
+ *                                   server, it will delete old channels in
+ *                                   this hashtable
+ */
+
+void
+irc_server_check_manual_joins_cb (void *data, struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    struct t_irc_server *server;
+    
+    server = (struct t_irc_server *)data;
+    if (server)
+    {
+        if (*((int *)value) + 60 < time (NULL))
+            weechat_hashtable_remove (hashtable, key);
+    }
+}
+
+/*
  * irc_server_timer_cb: timer called each second to perform some operations
  *                      on servers
  */
@@ -2298,6 +2326,14 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     
                     ptr_redirect = ptr_next_redirect;
                 }
+                
+                /* remove old channels in "manual_joins" (each 60 seconds) */
+                if (current_time > irc_server_last_check_manual_joins + 60)
+                {
+                    weechat_hashtable_map (ptr_server->manual_joins,
+                                           &irc_server_check_manual_joins_cb,
+                                           ptr_server);
+                }
             }
         }
     }
@@ -2373,6 +2409,9 @@ irc_server_close_connection (struct t_irc_server *server)
     
     /* remove all redirects */
     irc_redirect_free_all (server);
+    
+    /* remove all manual joins */
+    weechat_hashtable_remove_all (server->manual_joins);
     
     /* server is now disconnected */
     server->is_connected = 0;
@@ -3484,7 +3523,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
         /* auto-join when connecting to server for first time */
         autojoin = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN);
         if (!server->disable_autojoin && autojoin && autojoin[0])
-            irc_command_join_server (server, autojoin);
+            irc_command_join_server (server, autojoin, 0);
     }
     
     server->disable_autojoin = 0;
@@ -4317,6 +4356,9 @@ irc_server_print_log ()
         weechat_log_printf ("  last_redirect. . . . : 0x%lx", ptr_server->last_redirect);
         weechat_log_printf ("  notify_list. . . . . : 0x%lx", ptr_server->notify_list);
         weechat_log_printf ("  last_notify. . . . . : 0x%lx", ptr_server->last_notify);
+        weechat_log_printf ("  manual_joins . . . . : 0x%lx (hashtable: '%s')",
+                            ptr_server->manual_joins,
+                            weechat_hashtable_get_string (ptr_server->manual_joins, "keys_values"));
         weechat_log_printf ("  buffer . . . . . . . : 0x%lx", ptr_server->buffer);
         weechat_log_printf ("  buffer_as_string . . : 0x%lx", ptr_server->buffer_as_string);
         weechat_log_printf ("  channels . . . . . . : 0x%lx", ptr_server->channels);

@@ -176,6 +176,7 @@ struct t_irc_server
     struct t_irc_redirect *last_redirect;    /* last command redirection     */
     struct t_irc_notify *notify_list;        /* list of notify               */
     struct t_irc_notify *last_notify;        /* last notify                  */
+    struct t_hashtable *manual_joins;        /* manual joins pending         */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
     char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */

@@ -73,8 +73,13 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
 
-* *irc.look.buffer_auto_switch_on_join*
-** description: `auto switch to channel buffer on join`
+* *irc.look.buffer_switch_autojoin*
+** description: `auto switch to channel buffer when it is auto joined (with server option "autojoin")`
+** type: boolean
+** values: on, off (default value: `on`)
+
+* *irc.look.buffer_switch_join*
+** description: `auto switch to channel buffer when it is manually joined (with /join command)`
 ** type: boolean
 ** values: on, off (default value: `on`)
 
