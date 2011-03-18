@@ -152,7 +152,7 @@ command_bar_list (int full)
 
 COMMAND_CALLBACK(bar)
 {
-    int type, position;
+    int i, type, position;
     char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
@@ -283,7 +283,22 @@ COMMAND_CALLBACK(bar)
     /* create default bars */
     if (string_strcasecmp (argv[1], "default") == 0)
     {
-        gui_bar_create_default ();
+        if (argc > 2)
+        {
+            for (i = 2; i < argc; i++)
+            {
+                if (string_strcasecmp (argv[i], "input") == 0)
+                    gui_bar_create_default_input ();
+                else if (string_strcasecmp (argv[i], "title") == 0)
+                    gui_bar_create_default_title ();
+                else if (string_strcasecmp (argv[i], "status") == 0)
+                    gui_bar_create_default_status ();
+                else if (string_strcasecmp (argv[i], "nicklist") == 0)
+                    gui_bar_create_default_nicklist ();
+            }
+        }
+        else
+            gui_bar_create_default ();
         return WEECHAT_RC_OK;
     }
     
@@ -4568,7 +4583,7 @@ command_init ()
                   N_("list|listfull|listitems"
                      " || add <name> <type>[,<cond1>[,<cond2>...]] <position> "
                      "<size> <separator> <item1>[,<item2>...]"
-                     " || default"
+                     " || default [input|title|status|nicklist]"
                      " || del <name>|-all"
                      " || set <name> <option> <value>"
                      " || hide|show|toggle <name>"
@@ -4593,7 +4608,8 @@ command_init ()
                      "means no separator\n"
                      "    item1,...: items for this bar (items can be separated "
                      "by comma (space between items) or \"+\" (glued items))\n"
-                     "      default: create default bars\n"
+                     "      default: create a default bar (all default bars "
+                     "if no bar name is given)\n"
                      "          del: delete a bar (or all bars with -all)\n"
                      "          set: set a value for a bar property\n"
                      "       option: option to change (for options list, look "
@@ -4624,7 +4640,7 @@ command_init ()
                   " || listfull"
                   " || listitems"
                   " || add %(bars_names) root|window bottom|top|left|right"
-                  " || default"
+                  " || default input|title|status|nicklist|%*"
                   " || del %(bars_names)|-all"
                   " || set %(bars_names) %(bars_options)"
                   " || hide %(bars_names)"

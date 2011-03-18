@@ -142,6 +142,9 @@ extern struct t_gui_bar *gui_bar_new (const char *name,
                                       const char *items);
 extern void gui_bar_use_temp_bars ();
 extern void gui_bar_create_default_input ();
+extern void gui_bar_create_default_title ();
+extern void gui_bar_create_default_status ();
+extern void gui_bar_create_default_nicklist ();
 extern void gui_bar_create_default ();
 extern void gui_bar_update (const char *name);
 extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,

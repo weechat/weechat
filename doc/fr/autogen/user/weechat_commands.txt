@@ -10,7 +10,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
 ........................................
 /bar  list|listfull|listitems
       add <nom> <type>[,<cond1>[,<cond2>...]] <position> <taille> <séparateur> <objet1>[,<objet2>...]
-      default
+      default [input|title|status|nicklist]
       del <nom>|-all
       set <nom> <option> <valeur>
       hide|show|toggle <nom>
@@ -32,7 +32,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
        taille: taille de la barre (en caractères)
    séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
    objet1,...: objets pour cette barre (les objets peuvent être séparés par une virgule (espace entre les objets) ou "+" (objets collés))
-      default: créer les barres par défaut
+      default: créer une barre par défaut (toutes les barres par défaut si aucun nom de barre n'est donné)
           del: supprimer une barre (ou toutes les barres avec -all)
           set: changer la valeur d'une propriété de la barre
        option: option à modifier (pour la liste des options, voir /set weechat.bar.<nombarre>.*
