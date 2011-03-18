@@ -7,6 +7,7 @@ v0.3.5-dev, 2011-03-18
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: create default bars only if no bar is defined in configuration file
 * core: add new option weechat.look.highlight_tags (force highlight on tags)
 * core: fix bug with repeat of last completion ("%*"), which failed when many
   templates are used in completion

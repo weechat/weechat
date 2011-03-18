@@ -527,6 +527,38 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 }
 
 /*
+ * config_weechat_init_after_read: initialize some things after reading (or
+ *                                 reloading) configuration file
+ */
+
+void
+config_weechat_init_after_read ()
+{
+    gui_buffer_notify_set_all ();
+    
+    proxy_use_temp_proxies ();
+    
+    gui_bar_use_temp_bars ();
+    if (gui_bars)
+    {
+        /*
+         * at least one bar defined => just ensure that at least one bar is
+         * using item "input_text"
+         */
+        gui_bar_create_default_input ();
+    }
+    else
+    {
+        /* no bar defined => create default bars */
+        gui_bar_create_default ();
+    }
+    
+    /* if no key was found config file, then we use default bindings */
+    if (!gui_keys)
+        gui_keyboard_default_bindings ();
+}
+
+/*
  * config_weechat_reload_cb: reload WeeChat configuration file
  *                           return one of these values:
  *                             WEECHAT_CONFIG_READ_OK
@@ -564,15 +596,7 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
     rc = config_file_reload (config_file);
     
     if (rc == WEECHAT_CONFIG_READ_OK)
-    {
-        gui_buffer_notify_set_all ();
-        proxy_use_temp_proxies ();
-        gui_bar_use_temp_bars ();
-        gui_bar_create_default ();
-        /* if no key was found config file, then we use default bindings */
-        if (!gui_keys)
-            gui_keyboard_default_bindings ();
-    }
+        config_weechat_init_after_read ();
     
     return rc;
 }
@@ -2428,14 +2452,7 @@ config_weechat_read ()
     
     rc = config_file_read (weechat_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
-    {
-        proxy_use_temp_proxies ();
-        gui_bar_use_temp_bars ();
-        gui_bar_create_default ();
-        /* if no key was found config file, then we use default bindings */
-        if (!gui_keys)
-            gui_keyboard_default_bindings ();
-    }
+        config_weechat_init_after_read ();
     
     if (rc != WEECHAT_CONFIG_READ_OK)
     {
