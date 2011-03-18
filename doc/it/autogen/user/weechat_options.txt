@@ -343,6 +343,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
+* *weechat.look.highlight_tags*
+** descrizione: `comma separated list of tags to highlight (case insensitive comparison, examples: "irc_notice" for IRC notices, "nick_flashcode" for messages from nick "FlashCode")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
 * *weechat.look.hline_char*
 ** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre (un valore vuoto disegnerà una vera riga con ncurses, ma può causare errori con la selezione dell'URL in alcuni terminali), i caratteri wide NON sono consentiti`
 ** tipo: stringa

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-16 09:26+0100\n"
+"POT-Creation-Date: 2011-03-18 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2048,6 +2048,16 @@ msgstr ""
 "podświetlenie czy nie, przynajmniej jeden dopasowany ciąg musi być otoczony "
 "znakami (alfanumierycznymi, \"-\", \"_\" lub \"|\"), wyrażenia regularne są "
 "czułe na wielkość znaków, np: \"FlashCode|flashy\""
+
+#, fuzzy
+msgid ""
+"comma separated list of tags to highlight (case insensitive comparison, "
+"examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
+"from nick \"FlashCode\")"
+msgstr ""
+"lista słów do podświetlania oddzielona przecinkami (porównanie wrażliwe na "
+"wielkość znaków, słowa mogą się zaczynać lub kończyć \"*\" dla częściowego "
+"dopasowania)"
 
 #, fuzzy
 msgid ""
@@ -7562,6 +7572,10 @@ msgstr "Hashtable (wyjście)"
 
 msgid "Pointer"
 msgstr "Wskaźnik"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
 
 #~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 #~ msgstr "%s%s: nie znaleziono kanału \"%s\" dla komendy \"%s\" "

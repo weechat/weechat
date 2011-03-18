@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-16 09:26+0100\n"
+"POT-Creation-Date: 2011-03-18 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2040,6 +2040,16 @@ msgstr ""
 "menos una coincidencia en el texto debe estar rodeado por letras "
 "(alfanumérico, \"-\", \"_\" o \"|\"), la expresión regular distingue "
 "mayúsculas/minúsculas, ejemplo: \"FlashCode|flashy\""
+
+#, fuzzy
+msgid ""
+"comma separated list of tags to highlight (case insensitive comparison, "
+"examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
+"from nick \"FlashCode\")"
+msgstr ""
+"lista separada por comas de palabras a resaltar (comparación insensible a "
+"mayúsculas, las palabras pueden empezar o terminar con \"*\" para una "
+"concordancia parcial)"
 
 #, fuzzy
 msgid ""
@@ -7640,6 +7650,10 @@ msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr "lista separada por comas de diccionarios para usar en este buffer"
 
 #~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 #~ msgstr "%s%s: canal \"%s\" no encontrado para el comando \"%s\""

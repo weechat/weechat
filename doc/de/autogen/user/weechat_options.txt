@@ -343,6 +343,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* *weechat.look.highlight_tags*
+** Beschreibung: `comma separated list of tags to highlight (case insensitive comparison, examples: "irc_notice" for IRC notices, "nick_flashcode" for messages from nick "FlashCode")`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * *weechat.look.hline_char*
 ** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
 ** Typ: Zeichenkette

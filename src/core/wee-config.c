@@ -86,6 +86,7 @@ struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
+struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hline_char;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
@@ -206,6 +207,8 @@ struct t_config_option *config_plugin_save_config_on_unload;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 regex_t *config_highlight_regex = NULL;
+char **config_highlight_tags = NULL;
+int config_num_highlight_tags = 0;
 
 
 /*
@@ -321,6 +324,32 @@ config_change_highlight_regex (void *data, struct t_config_option *option)
                 config_highlight_regex = NULL;
             }
         }
+    }
+}
+
+/*
+ * config_change_highlight_tags: called when highlight_tags changes
+ */
+
+void
+config_change_highlight_tags (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (config_highlight_tags)
+    {
+        string_free_split (config_highlight_tags);
+        config_highlight_tags = NULL;
+    }
+    config_num_highlight_tags = 0;
+    
+    if (CONFIG_STRING(config_look_highlight_tags)
+        && CONFIG_STRING(config_look_highlight_tags)[0])
+    {
+        config_highlight_tags = string_split (CONFIG_STRING(config_look_highlight_tags),
+                                              ",", 0, 0, &config_num_highlight_tags);
     }
 }
 
@@ -1528,6 +1557,13 @@ config_weechat_init_options ()
             "(alphanumeric, \"-\", \"_\" or \"|\"), regular expression is case "
            "sensitive, example: \"FlashCode|flashy\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_regex, NULL, NULL, NULL);
+    config_look_highlight_tags = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "highlight_tags", "string",
+        N_("comma separated list of tags to highlight (case insensitive "
+           "comparison, examples: \"irc_notice\" for IRC notices, "
+           "\"nick_flashcode\" for messages from nick \"FlashCode\")"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_tags, NULL, NULL, NULL);
     config_look_hline_char = config_file_new_option (
         weechat_config_file, ptr_section,
         "hline_char", "string",
@@ -2371,6 +2407,8 @@ config_weechat_init ()
     }
     if (!config_highlight_regex)
         config_change_highlight_regex (NULL, NULL);
+    if (!config_highlight_tags)
+        config_change_highlight_tags (NULL, NULL);
     
     return rc;
 }

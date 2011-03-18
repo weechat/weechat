@@ -219,6 +219,8 @@ extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
 extern regex_t *config_highlight_regex;
+extern char **config_highlight_tags;
+extern int config_num_highlight_tags;
 
 
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);

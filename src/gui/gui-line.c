@@ -404,7 +404,7 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 int
 gui_line_has_highlight (struct t_gui_line *line)
 {
-    int rc, i;
+    int rc, i, j, no_highlight;
     char *msg_no_color, *highlight_words;
     
     /*
@@ -415,12 +415,27 @@ gui_line_has_highlight (struct t_gui_line *line)
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
         return 0;
     
-    /* check if highlight is disabled for line */
+    /*
+     * check if highlight is forced by a tag (with option highlight_tags) or
+     * disabled for line
+     */
+    no_highlight = 0;
     for (i = 0; i < line->data->tags_count; i++)
     {
+        if (config_highlight_tags)
+        {
+            for (j = 0; j < config_num_highlight_tags; j++)
+            {
+                if (string_strcasecmp (line->data->tags_array[i],
+                                       config_highlight_tags[j]) == 0)
+                    return 1;
+            }
+        }
         if (strcmp (line->data->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
-            return 0;
+            no_highlight = 1;
     }
+    if (no_highlight)
+        return 0;
     
     /*
      * check that line matches highlight tags, if any (if no tag is specified,

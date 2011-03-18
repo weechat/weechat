@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-16 09:26+0100\n"
+"POT-Creation-Date: 2011-03-18 12:15+0100\n"
 "PO-Revision-Date: 2011-02-07 17:29+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1990,6 +1990,15 @@ msgid ""
 "\"_\" or \"|\"), regular expression is case sensitive, example: \"FlashCode|"
 "flashy\""
 msgstr ""
+
+#, fuzzy
+msgid ""
+"comma separated list of tags to highlight (case insensitive comparison, "
+"examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
+"from nick \"FlashCode\")"
+msgstr ""
+"čárkou oddělený seznam slov pro zvýraznění (neporovnává se velikost písmen, "
+"slova mohou začínat nebo končit \"*\" pro částečnou schodu)"
 
 #, fuzzy
 msgid ""
@@ -7457,6 +7466,10 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
 
 #~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 #~ msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""

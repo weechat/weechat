@@ -343,6 +343,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* *weechat.look.highlight_tags*
+** description: `liste des tags pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, exemples: "irc_notice" pour les notices IRC, "nick_flashcode" pour les messages du pseudo "FlashCode")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
 * *weechat.look.hline_char*
 ** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
 ** type: chaîne

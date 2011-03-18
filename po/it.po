@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-16 09:26+0100\n"
+"POT-Creation-Date: 2011-03-18 12:15+0100\n"
 "PO-Revision-Date: 2011-03-09 09:29+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2034,6 +2034,16 @@ msgstr ""
 "evento oppure no, almeno una corrispondenza nella stringa deve essere "
 "circondata da caratteri :(alfanumerici, \"-\", \"_\" or \"|\"), "
 "l'espressione regolare è esatta, esempio \"FlashCode|flashy\""
+
+#, fuzzy
+msgid ""
+"comma separated list of tags to highlight (case insensitive comparison, "
+"examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
+"from nick \"FlashCode\")"
+msgstr ""
+"elenco separato da virgole di finestre da evidenziare (maiuscole/minuscole, "
+"le parole potrebbero cominciare o terminare con \"*\" per un riscontro "
+"parziale)"
 
 msgid ""
 "char used to draw horizontal separators around bars (empty value will draw a "
@@ -7544,6 +7554,11 @@ msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr ""
+#~ "elenco separato da virgole di dizionari da utilizzare su questo buffer"
 
 #~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 #~ msgstr "%s%s: canale \"%s\" non trovato per il comando \"%s\""
