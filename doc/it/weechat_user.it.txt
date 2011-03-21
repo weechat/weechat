@@ -444,8 +444,7 @@ Tasti per la riga di comando
 | @k(Backsp.)         .2+| Elimina il carattere precedente nella riga di comando .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_end_of_line
-// TRANSLATION MISSING
-| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(r)         | Cerca del testo nella cronologia del buffer (due volte: cerca testo esatto), @k(↑): precedente, @k(↓): successivo, @k(Enter): stop | /input search_text
 | @k(C-)@k(t)         | Inverti caratteri | /input transpose_chars
 | @k(C-)@k(u)         | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_previous_word
@@ -507,14 +506,10 @@ Tasti per buffer / finestre
 | @k(A-)@k(n)               | Scorre fino all'evento successivo | /window scroll_next_highlight
 | @k(A-)@k(p)               | Scorre fino all'evento precedente | /window scroll_previous_highlight
 | @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /input scroll_unread
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
+| @k(A-)@k(w) , @k(A-)@k(↑) | Passa alla finestra in alto | /window up
+| @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | /window down
+| @k(A-)@k(w) , @k(A-)@k(←) | Passa alla finestra sulla sinistra | /window left
+| @k(A-)@k(w) , @k(A-)@k(→) | Passa alla finestrs sulla destra | /window right
 | @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | /window zoom
 | @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | /input jump_next_visited_buffer
@@ -668,10 +663,9 @@ Alcuni valori raccomandati per 'TERM' se si desiderano 256 colori:
 * con screen: 'screen-256color'
 * al di fuori di screen: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-// TRANSLATION MISSING
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
-variable.
+Potrebbe essere necessario installare il pacchetto "ncurses-term" per usare
+questi valori nella variabile 'TERM'.
 
 Se si sta utilizzando screen, è possibile aggiungere questa riga al
 proprio '~/.screenrc':
@@ -716,19 +710,18 @@ I colori base in WeeChat sono:
 | white        | bianco
 |========================================
 
-// TRANSLATION MISSING
 [[colors_extended]]
-Extended colors
-^^^^^^^^^^^^^^^
+Colori estesi
+^^^^^^^^^^^^^
 
-WeeChat dynamically allocates color pairs when colors are used on screen (to
-display buffers and bars).
+WeeChat alloca dinamicamente le coppie colore quando vengono usati i colori
+sullo schermo (per mostrare buffer e barre).
 
-In addition to basic colors, you can use a color number between 1 and the limit
-of your terminal.
+In aggiunta ai colori di base, si può usare un numero per il colore compreso
+tra 1 e il limite del proprio terminale.
 
-Use command `/color` to see current colors and limits. With 'alt+c' you can
-temporarily switch to terminal colors to choose a color.
+Il comando '/color' mostra i colori attivi ed i limiti. Com 'alt+c' si può
+passare temporaneamente ai colori del terminale per sceglierne uno.
 
 For example if you want to display time in orange in buffer, do:
 
@@ -736,55 +729,55 @@ For example if you want to display time in orange in buffer, do:
 /set weechat.color.chat_time 214
 ----------------------------------------
 
-Or if you want a very dark green background for status bar:
+O se si desidera uno sfondo verde scuro per la barra di stato:
 
 ----------------------------------------
 /set weechat.bar.status.color_bg 22
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_aliases]]
-Aliases
-^^^^^^^
+Alias
+^^^^^
 
-You can add color aliases with command `/color alias` and then use this alias
-in any color option.
+Si possono aggiungere degli alias ai colori con il comando '/color alias' e
+usarli in ogni opzione relativa al colore.
 
-For example:
+Ad esempio:
 
 ----------------------------------------
 /color alias 214 orange
 /set weechat.color.chat_delimiters orange
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[colors_attributes]]
-Attributes
-^^^^^^^^^^
+Attributi
+^^^^^^^^^
 
-It is possible to use some attributes for colors. One or more attributes can be
-added before color name or number:
+Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
+del nome o del numero del colore:
 
-* "*": bold text
-* "!": reverse video
-* "_": underlined text
+* "*": testo in grassetto
+* "!": video inverso
+* "_": testo sottolineato
 
-For example if you want self nick as white underlined, do:
+Ad esempio se si vuole il proprio nick bianco e sottolineato:
 
 ----------------------------------------
 /set weechat.color.chat_nick_self _white
 ----------------------------------------
 
-Or if you want time in status bar as orange underlined with bold:
+O se si desidera l'ora nella barra di stato arancione sottolineata
+e in grassetto:
 
 ----------------------------------------
 /set weechat.color.status_time *_214
 ----------------------------------------
 
-To use an attribute with default terminal color (-1), you must use a number
-greater than last terminal color, for example max color in WeeChat: 99999.
+Per usare un attributo con il colore predefinito del terminale (-1), bisogna
+usare un numero maggiore dell'ultimo colore del terminale, ad esempio il
+numero massimo in WeeChat: 99999.
 
-Example of bold with terminal foreground color:
+Esempio di grassetto con il colore di primo piano del terminale:
 
 ----------------------------------------
 /set weechat.color.status_time *99999
@@ -1291,16 +1284,14 @@ private::
     buffer privato per il nick, o il buffer corrente se non trovato
     (in base all'opzione 'irc.look.msgbuffer_fallback')
 
-// TRANSLATION MISSING
 server::
-    server buffer
+    buffer del server
 
 weechat::
     Il buffer "core" di WeeChat
 
-// TRANSLATION MISSING
-When option is not set (default), WeeChat chooses appropriate buffer, commonly
-server or channel buffer.
+Quando l'opzione non è impostata (default), WeeChat sceglie il buffer
+appropriato, di solito quello del server o del canale.
 
 Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
 personalizzare:
@@ -1308,8 +1299,7 @@ personalizzare:
 [width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
 | messaggio | alias         | descrizione
-// TRANSLATION MISSING
-| error     |               | error
+| error     |               | errore
 | invite    |               | invitato su un canale
 | join      |               | channel join
 | kick      |               | kick
@@ -1342,40 +1332,27 @@ personalizzare:
 | 323       | list          | list (fine)
 | 326       | whois         | whois (con privilegi di operatore)
 | 327       | whois         | whois (host)
-// TRANSLATION MISSING
-| 328       |               | channel URL
-// TRANSLATION MISSING
-| 329       |               | channel creation date
+| 328       |               | URL del canale
+| 329       |               | data di creazione del canale
 | 330       | whois         | whois (loggato come)
-// TRANSLATION MISSING
-| 331       |               | no topic for channel
-// TRANSLATION MISSING
-| 332       |               | topic of channel
-// TRANSLATION MISSING
-| 333       |               | infos about topic
+| 331       |               | nessun argomento per il canale
+| 332       |               | argomento del canale
+| 333       |               | informazioni sull'argomento
 | 335       | whois         | whois (è un bot su)
 | 338       | whois         | whois (host)
 | 341       |               | invito
 | 344       | reop          | reop sul canale
 | 345       | reop          | reop sul canale (fine)
-// TRANSLATION MISSING
-| 346       | invitelist    | invite list
-// TRANSLATION MISSING
-| 347       | invitelist    | invite list (end)
-// TRANSLATION MISSING
-| 348       | exceptionlist | exception list
-// TRANSLATION MISSING
-| 349       | exceptionlist | exception list (end)
+| 346       | invitelist    | lista di inviti
+| 347       | invitelist    | lista di inviti (fine)
+| 348       | exceptionlist | lista di eccezioni
+| 349       | exceptionlist | lista di eccezioni (fine)
 | 351       |               | versione del server
 | 352       | who           | who
-// TRANSLATION MISSING
-| 353       | names         | list of users on channel
-// TRANSLATION MISSING
-| 366       | names         | end of /names list
-// TRANSLATION MISSING
-| 367       | banlist       | ban list
-// TRANSLATION MISSING
-| 368       | banlist       | end of ban list
+| 353       | names         | elenco di utenti su un canale
+| 366       | names         | fine dell'elenco /names
+| 367       | banlist       | elenco dei ban
+| 368       | banlist       | fine della lista dei ban
 | 369       | whowas        | whowas (fine)
 | 378       | whois         | whois (connesso da)
 | 379       | whois         | whois (usa le modalità)

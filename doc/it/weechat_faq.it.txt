@@ -172,24 +172,23 @@ Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualiz
 da una finestra) o visualizzato da una o più finestre.
 
 
-// TRANSLATION MISSING
 [[one_input_root_bar]]
-Is it possible to display only one input bar for all windows (after split)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+È possibile mostrare solo una barra di input per tutte le finestre (dopo lo split)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Yes, you will have to create a bar with type "root" (with an item to know in
-which window you are), then delete current input bar.
+Sì, bisogna creare una barra con il tipo "root" (con un elemento per sapere in
+quale finestra ci si trova), poi eliminare la barra di input corrente.
 
-For example:
+Ad esempio:
 
 ----------------------------------------
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
 ----------------------------------------
 
-If ever you are not satisfied with that, just delete new bar, WeeChat will
-automatically create default bar "input" if item "input_text" is not used in
-any bar:
+Se non si è soddisfatti del risultato, basta eliminare la nuova barra, WeeChat
+creerà automaticamente la barra predefinita "input" se l'elemento "input_text"
+non viene usato da un'altra barra:
 
 ----------------------------------------
 /bar del rootinput
@@ -343,15 +342,14 @@ List of default keys is in User's guide.
 L'elenco dei tasti predefiniti è nella Guida dell'utente.
 
 
-// TRANSLATION MISSING
 [[global_history]]
-How to use global history (instead of buffer history) with up and down keys?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can bind the up and down keys on global history (default keys for global
-history are @k(C-)@k(↑) and @k(C-)@k(↓)).
+È possibile associare i tasti su e giù alla cronologia globale (quelli predefiniti
+sono @k(C-)@k(↑) e @k(C-)@k(↓)).
 
-Example:
+Esempio:
 
 ----------------------------------------
 /key bind meta2-A /input history_global_previous
@@ -361,6 +359,8 @@ Example:
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
 code press @k(A-)@k(k) then key (up or down).
+I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
+Per trovare il codice tasto digitare @k(A-)@k(k) poi il tast (su o giù).
 
 
 [[irc]]
@@ -522,12 +522,11 @@ Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_ssl_freenode]]
-How can I connect to freenode server using SSL?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come ci si può connettere al server freenode via SSL?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must download certificate, convert it, then add it in WeeChat:
+Bisogna scaricare il certificato, convertirlo, poi aggiungerlo a WeeChat:
 
 ----------------------------------------
 $ cd /tmp
@@ -537,7 +536,7 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-Under WeeChat, setup server port, SSL, dhkey_size, then connect:
+In WeeChat, impostare la porta del server, SSL, dhkey_size, e infine connettersi:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"

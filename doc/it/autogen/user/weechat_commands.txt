@@ -9,51 +9,51 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 [command]*`bar`* gestione barre::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      add <nome> <tipo>[,<cond1>[,<cond2>...]] <posizione> <dimensione> <separatore> <elemento1>[,<elemento2>...]
       default [input|title|status|nicklist]
-      del <name>|-all
-      set <name> <option> <value>
-      hide|show|toggle <name>
-      scroll <name> <buffer> <scroll_value>
+      del <nome>|-all
+      set <nome> <opzione> <valore>
+      hide|show|toggle <nome>
+      scroll <nome> <buffer> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-    cond1,...: condition(s) for displaying bar (only for type "window"):
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               without condition, bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
- scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
+         list: elenca tutte le barre
+     listfull: elenca tutte le barre (dettagliato)
+    listitems: elenca tutti gli elementi della barra
+          add: aggiunge una nuova barra
+         nome: nome della barra (deve essere unico)
+         tipo:   root: al di fuori delle finestre,
+               window: all'interno delle finestre, con opzioni condizionali (a seguire)
+    cond1,...: condizione(i) per visualizzare la barra (solo per il tipo "window"):
+                 active: sulla finestra attiva
+               inactive: sulle finestre inattive
+               nicklist: sulle finestre con la lista nick
+               senza condizione, viene sempre mostrata
+    posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
+   dimensione: dimensione della barra (in caratteri)
+   separatore: 1 per utilizzarlo (riga), 0 o nulla equivale a nessun separatore
+    item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
+      default: crea una barra predefinita (saranno tutte predefinite se non viene dato un nome per la barra)
+          del: elimina una barra (o tutte le barre con -all)
+          set: imposta un valore per la proprietà di una barra
+      opzione: opzione da cambiare (per una lista di opzioni, consultare /set weechat.bar.<barname>.*)
+       valore: nuovo valore per l'opzione
+         hide: nasconde una barra
+         show: mostra una barra nascosta
+       toggle: nascone/mostra una barra
+       scroll: scorre una barra
+       buffer: nome del buffer da scorrere ('*' indica il buffer corrente, si dovrebbe utilizzare '*' per le barre root)
+ scroll_value: valore per lo scorrimento: 'x' o 'y', seguite da '+', '-', 'b' (inizio) or 'e' (fine), valore (per +/-), e %% opzionale (per scorrere di %% di larghezza/altezza, altrimenti il valore è il numero di caratteri)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
-    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
-    /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+Esempi:
+  crea una barra con l'ora, numero del buffer + nome, e completamento:
+    /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  nasconde una barra:
+    /bar hide miabarra
+  scorre la lista nick di 10 righe in basso sul buffer corrente:
     /bar scroll nicklist * y+10
-  scroll nicklist one page up on #weechat buffer:
+  scorre la lista nick di una pagina in alto sul buffer #weechat:
     /bar scroll nicklist #weechat y-100%
-  scroll to end of nicklist on current buffer:
+  scorre fino alla fine della lista nick sul buffer corrente:
     /bar scroll nicklist * ye
 ........................................
 
@@ -162,55 +162,55 @@ windows: mostra l'albero delle finestre
 [command]*`filter`* filtra messaggi nei buffer, per nascondere/mostrare in base a tag o regexp::
 ........................................
 /filter  list
-         enable|disable|toggle [<name>]
-         add <name> <buffer>[,<buffer>...] <tags> <regex>
-         del <name>|-all
+         enable|disable|toggle [<nome>]
+         add <nome> <buffer>[,<buffer>...] <tag> <regex>]
+         del <nome>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
+         list: elenca tutti i filtri
+       enable: abilita filtri (i filtri sono abilitati di default)
+      disable: disabilita filtri
+       toggle: abilita/disabilita filtri
+         nome: nome del filtro
+          add: aggiunge un filtro
+          del: elimina un filtro
+         -all: elimina tutti i filtri
+       buffer: elenco separato da virgole di buffer in cui il filtro è attivo:
+               - nome completo che include il plugin (esempio: "irc.freenode.#weechat)
+               - "*" indica tutti i buffer
+               - un nome preceduto da '!' viene escluso
+               - un nome può iniziare o terminare con '*' per includere più buffer
+          tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+        regex: espressione regolare da cercare nella riga
+               - usare '\t' per separare il prefisso dal messaggio, caratteri speciali come "|" vanno preceduti dal carattere escape: '\|')
+               - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
 
-The default key alt+'=' toggles filtering on/off.
+               -vengono create due espressioni regolari: una per il prefisso e l'altra per il messaggio
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Il tasto predefinito alt+'=' abilita/disabilita il filtro.
+
+Tag utilizzati di frequente:
+  no_filter, no_highlight, no_log, log0..log9 (livello di log),
   notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message),
-  irc_xxx (xxx is command name or number, see /server raw),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+  nick_xxx (xxx è il nick nel messaggio),
+  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 
-Examples:
-  use IRC smart filter on all buffers:
-    /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
-    /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
-    /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+Esempi:
+  usa il filtro intelligente IRC per tutti i buffer:
+     /filter add irc_smart * irc_smart_filter *
+  usa il filtro intelligente IRC su tutti i buffer tranne quelli che contengono "#weechat" nel nome:
+     /filter add irc_smart *,!*weechat* irc_smart_filter
+  filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+     /filter add joinquit * irc_join,irc_part,irc_quit *
+  filtra i nick visualizzati all'ingresso in un canale o con /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat * toto\t
-  keep only nick "titi" on IRC channel #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filter lines containing word "spam":
+  filtra il nick "tizio" sul canale IRC #weechat
+    /filter add tizio irc.freenode.#esempio * tizio\t
+  filtra solo il nick "caio" sul canale IRC #test:
+    /filter add caio irc.freenode.#test * !caio\t
+  filtra le righe contententi la parola "spam":
     /filter add filterspam * * spam
-  filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+  filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
+    /filter add schifo irc.freenode.#weechat * weechat fa schifo
 ........................................
 
 [command]*`help`* visualizza l'aiuto su comandi e opzioni::
@@ -239,47 +239,47 @@ valore: numero delle voci nella cronologia da mostrare
 ........................................
 /input  <azioni> [<argomenti>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key
-  grab_key_command: grab a key with its associated command
-  scroll_unread: scroll to unread marker
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  insert: insert text in command line
+elenco di azioni:
+  return: simula il tasto "invio"
+  complete_next: completa la parola con il completamento successivo
+  complete_previous: completa la parola con il completamento precedente
+  search_text: cerca testo nel buffer
+  delete_previous_char: elimina carattere precedente
+  delete_next_char: elimina carattere successivo
+  delete_previous_word: elimina parola precedente
+  delete_next_word: elimina parola successiva
+  delete_beginning_of_line: elimina da inizio riga fino al cursore
+  delete_end_of_line: elimina dal cursore fino a fine riga
+  delete_line: elimina intera riga
+  clipboard_paste: incolla dagli appunti
+  transpose_chars: inverti l'ordine di due caratteri
+  undo: annulla l'ultima azione nella riga di comando
+  redo: rifai l'ultima azione nella riga di comando
+  move_beginning_of_line: sposta il cursore ad inizio riga
+  move_end_of_line: sposta il cursore a fine riga
+  move_previous_char: sposta cursore al carattere precedente
+  move_next_char: sposta cursore al carattere successivo
+  move_previous_word: sposta cursore alla parola precedente
+  move_next_word: sposta cursore alla parola successiva
+  history_previous: richiama il comando precedente nella cronologia del buffer corrente
+  history_next: richiama il comando successivo nella cronologia del buffer corrente
+  history_global_previous: richiama il comando precedente nella cronologia globale
+  history_global_next: richiama il comando successivo nella cronologia globale
+  jump_smart: passa al buffer successivo con attività
+  jump_last_buffer: passa all'ultimo buffer
+  jump_previously_visited_buffer: passa al precedente buffer visualizzato
+  jump_next_visited_buffer: passa al successivo buffer visualizzato
+  hotlist_clear: elimina hotlist
+  grab_key: ottiene un tasto
+  grab_key_command: ottiene un tasto con il suo comando associato
+  scroll_unread: scorri fino al segnalibro non letto
+  set_unread: imposta il segnalibro non letto per tutti i buffer
+  set_unread_current_buffer: imposta il segnalibro non letto per il buffer corrente
+  switch_active_buffer: passa al successivo buffer incollato
+  switch_active_buffer_previous: passa al precedente buffer incollato
+  insert: inserisci testo nella riga di comando
 
-This command is used by key bindings or plugins.
+Questo comando viene usato dall'associazione tasti o dai plugin.
 ........................................
 
 [command]*`key`* associa/disassocia tasti::
@@ -427,7 +427,7 @@ Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
 ........................................
 /set  [<opzione> [<valore>]]
 
-opzione: nome di un'opzione (può iniziare o terminare con '*' per visualizzare più opzioni)
+opzione: nome di un'opzione (può iniziare o terminare con '*' per elencare più opzioni)
  valore: nuovo valore per l'opzione
 
 Il nuovo valore può essere, a seconda del tipo di variabile:
@@ -519,7 +519,7 @@ Esempi:
 /window  list
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
-         resize [+/-]<pct>
+         resize [+/-] <pct>
          merge [all]
          page_up|page_down
          refresh

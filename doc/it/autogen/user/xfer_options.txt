@@ -1,47 +1,47 @@
 * *xfer.color.status_aborted*
 ** descrizione: `colore del testo per lo status "annullato"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightred`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
 
 * *xfer.color.status_active*
 ** descrizione: `colore del testo per lo status "attivo"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightblue`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightblue`)
 
 * *xfer.color.status_connecting*
 ** descrizione: `colore del testo per lo status "connessione in corso"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `yellow`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * *xfer.color.status_done*
 ** descrizione: `colore del testo per lo status "completato"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightgreen`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightgreen`)
 
 * *xfer.color.status_failed*
 ** descrizione: `colore del testo per lo status "fallito"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightred`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
 
 * *xfer.color.status_waiting*
 ** descrizione: `colore del testo per lo status "in attesa"`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightcyan`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
 * *xfer.color.text*
 ** descrizione: `colore del testo`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *xfer.color.text_bg*
 ** descrizione: `colore di sfondo`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *xfer.color.text_selected*
 ** descrizione: `colore del testo per la riga xfer selezionata`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `white`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * *xfer.file.auto_accept_chats*
 ** descrizione: `accetta automaticamente le richieste di chat (usare con cautela!)`

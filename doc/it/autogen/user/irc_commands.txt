@@ -209,23 +209,23 @@ motivo: motivo per il kick
 ........................................
 /kickban  [<canale>] <nick> [<motivo>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick
+  canale: canale in cui si trova l'utente
+    nick: nick da cacciare e bannare
+commento: motivo per il kick
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+È possibile cacciare/bannare con una mask, il nick verrà estratto dalla mask e sostituito da "*".
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
-    /kickban toto!*@host.com
+Esempio:
+  banna "*!*@host.com" e poi caccia "tizio":
+    /kickban tizio!*@host.com
 ........................................
 
 [command]*`kill`* chiude connessione client-server::
 ........................................
 /kill  <nick> <motivo>
 
-  nick: nick to kill
-reason: reason for kill
+  nick: nick per il kill
+motivo: motivo per il kill
 ........................................
 
 [command]*`links`* elenca tutti i nomi server conosciuti dal server che risponde alla richiesta::
@@ -280,10 +280,10 @@ messaggio: messaggio da inviare
 modalità canale:
   canale: nome canale da modificare (quello attivo è il predefinito)
   o: concede/nega i privilegi di operatore del canale
-  p: canale privato
-  s: canale segreto
-  i: canale a solo invito
-  t: argomento modificabile solo dall'operatore del canale
+  p: flag: canale privato
+  s: flag: canale segreto
+  i: flag: canale a solo invito
+  t: flag: argomento modificabile solo dall'operatore del canale
   n: nessun messaggio al canale da client esterni
   m: canale moderato
   l: imposta il limite massimo di utenti sul canale
@@ -296,13 +296,13 @@ modalità utente:
   i: marca un utente come invisibile
   s: marca un utente per la ricezione dei messaggi dal server
   w: l'utente riceve wallops
-  o: flag operatore
+  o: flag: operatore
 
 L'elenco delle modalità non è completa, è necessario leggere la documentazione del server per tutte le modalità disponibili.
 
 Esempi:
   protegge l'argomento sul canale #weechat:
-    /mode #weechat +t
+    /mode #weecht +t
   diventa invisibile sul server:
     /mode nick +i
 ........................................
@@ -446,7 +446,7 @@ opzione: opzione extra, per alcuni server
 ........................................
 ........................................
 
-[command]*`sajoin`* force a user to join channel(s)::
+[command]*`sajoin`* forza un utente ad entrare su uno o più canali::
 ........................................
 /sajoin  <nick> <canale>[,<canale>...]
 
@@ -470,7 +470,7 @@ modalità: modalità per il canale
 nuovo_nick: nuovo nick
 ........................................
 
-[command]*`sapart`* force a user to leave channel(s)::
+[command]*`sapart`* forza un utente a lasciare uno o più canali::
 ........................................
 /sapart  <nick> <canale>[,<canale>...]
 
@@ -478,7 +478,7 @@ nuovo_nick: nuovo nick
 canale: nome del canale
 ........................................
 
-[command]*`saquit`* force a user to quit server with a reason::
+[command]*`saquit`* forza un utente ad abbandonare il server con un motivo::
 ........................................
 /saquit  <nick> <motivo>
 
@@ -494,28 +494,28 @@ motivo: motivo
          del|keep <server>
          deloutq|jump|raw
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: create a new server
-  server: server name, for internal and display use
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-    temp: create temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
+     list: elenca i server (senza argomento, viene mostrata questa lista)
+ listfull: elenca i server con tutte le informazioni dettagliate
+      add: crea un nuovo server
+   server: nome server, per il solo uso interno e di visualizzazione
+nome_host: nome o indirizzo IP del server, con porta opzionale (predefinita: 6667), più indirizzi possono essere separati da virgole
+     temp: crea server temporaneo (non salvato)
+  opzione: imposta opzione per il server (per opzioni bool, il valore può essere omesso)
+ nooption: imposta l'opzione bool su 'off' (per esempio: -nossl)
+     copy: duplica un server
+   rename: rinomina un server
+     keep: salva server nel file di configurazione (solo per server temporanei)
+      del: elimina un server
+  deloutq: elimina i messaggi fuori coda per tutti i server (tutti i messaggi che WeeChat sta inviando)
+     jump: passa al buffer del server
+      raw: apri buffer con dati raw IRC
 
-Examples:
+Esempi:
   /server listfull
   /server add oftc irc.oftc.net/6697 -ssl -autoconnect
   /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
   /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
-  /server add freenode3 irc.freenode.net -password=mypass
+  /server add freenode3 irc.freenode.net -password=miapassword
   /server copy oftc oftcbis
   /server rename oftc newoftc
   /server del freenode
@@ -524,10 +524,10 @@ Examples:
 
 [command]*`service`* registra un nuovo servizio::
 ........................................
-/service  <nick> <reserved> <distribution> <type> <reserved> <info>
+/service  <nick> <riservato> <distribuzione> <tipo> <riservato> <info>
 
 distrubuzione: visibilità del servizio
-        tipo: riservato per un utilizzo futuro
+         tipo: riservato per un utilizzo futuro
 ........................................
 
 [command]*`servlist`* elenca servizi attualmente connessi al network::
@@ -648,8 +648,8 @@ testo: testo da inviare
 ........................................
 /who  [<mask> [o]]
 
-mask: only information which match this mask
-   o: only operators are returned according to the mask supplied
+mask: solo l'informazione corrispondente al mask
+   o: vengono restituiti solo gli operatori in base alla mask fornita
 ........................................
 
 [command]*`whois`* richiedi informazioni su uno (o più) utenti::

@@ -8947,8 +8947,7 @@ weechat_buffer_match_list
 
 _Novità nella versione 0.3.5._
 
-// TRANSLATION MISSING
-Check if buffer matches a list of buffers.
+Verifica se il buffer corrisponde ad una lista di buffer.
 
 Prototipo:
 
@@ -8960,16 +8959,14 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 Argomenti:
 
 * 'buffer': puntatore al buffer
-// TRANSLATION MISSING
-* 'string': comma-separated list of buffers:
-** "*" means all buffers
-** name beginning with "!" is excluded
-** name can start or end with "*" to match many buffers
+* 'string': elenco separato da virgole di buffer:
+** "*" indica tutti i buffer
+** il nome preceduto da "!" viene escluso
+** il nome può iniziare o terminare con "*" per corrispondere a più buffer
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* 1 if buffer matches list of buffers, 0 otherwise
+* 1 se il buffer coincide con la lista, altrimenti 0
 
 Esempio in C:
 

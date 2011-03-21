@@ -1,95 +1,95 @@
 * *irc.color.input_nick*
 ** descrizione: `colore per il nick nella riga di input`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightcyan`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
 * *irc.color.item_away*
 ** descrizione: `colore per l'elemento assenza`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `yellow`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * *irc.color.item_channel_modes*
 ** descrizione: `colore per le modalità dei canali, vicino ai nomi dei canali`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *irc.color.item_lag_counting*
 ** descrizione: `colore per l'indicatore del lag, durante il conteggio (pong non ricevuto dal server, lag in aumento)`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *irc.color.item_lag_finished*
 ** descrizione: `colore per l'indicatore di ritardo, quando il pong viene ricevuto dal server`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `yellow`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * *irc.color.message_join*
 ** descrizione: `colore per il testo nei messaggi di entrata`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `green`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * *irc.color.message_quit*
 ** descrizione: `colore per il testo nei messaggi di uscita/abbandono`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `red`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
 * *irc.color.nick_prefix*
 ** descrizione: `colore per il prefisso del nick (il prefisso è la stringa personalizzata visualizzata prima del nick)`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `green`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * *irc.color.nick_prefix_halfop*
 ** descrizione: `colore per il prefisso del nick che è halfop sul canale`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightmagenta`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightmagenta`)
 
 * *irc.color.nick_prefix_op*
 ** descrizione: `colore per il prefisso del nick che è operatore/amministratore/proprietario del canale`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `lightgreen`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightgreen`)
 
 * *irc.color.nick_prefix_user*
 ** descrizione: `colore per il prefisso del nick che è utente sul canale`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `blue`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `blue`)
 
 * *irc.color.nick_prefix_voice*
 ** descrizione: `colore per il prefisso del nick che ha il voice sul canale`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `yellow`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * *irc.color.nick_suffix*
 ** descrizione: `colore per il suffisso del nick (il suffisso è la stringa personalizzata visualizzata dopo il nick)`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `green`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * *irc.color.notice*
 ** descrizione: `colore per il testo "Notifica" nelle notifiche`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `green`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * *irc.color.reason_quit*
 ** descrizione: `colore per il motivo nei messaggi di uscita/abbandono`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (valore predefinito: `default`)
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *irc.look.buffer_switch_autojoin*
-** descrizione: `auto switch to channel buffer when it is auto joined (with server option "autojoin")`
+** descrizione: `passa automaticamente al buffer del canale con l'ingresso automatico abilitato (con l'opzione del server "autojoin")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.look.buffer_switch_join*
-** descrizione: `auto switch to channel buffer when it is manually joined (with /join command)`
+** descrizione: `passa automaticamente al buffer del canale quando si entra manualmente (con il comando /join)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.look.color_nicks_in_names*
-** descrizione: `use nick color in output of /names (or list of nicks displayed when joining a channel)`
+** descrizione: `usa colore nick nell'output di /names (o l'elenco di nick mostrati all'ingresso di un canale)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
 * *irc.look.color_nicks_in_nicklist*
-** descrizione: `use nick color in nicklist`
+** descrizione: `usa il colore del nick nella lista nick`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -264,7 +264,7 @@
 ** valori: merge_with_core, merge_without_core, independent (valore predefinito: `merge_with_core`)
 
 * *irc.look.smart_filter*
-** descrizione: `filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")`
+** descrizione: `filtra i messaggi di entrata/uscita/abbandono/utente per un nick se inattivo per alcuni minuti sul canale (è necessario creare un filtro sul tag "irc_smart_filter")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -279,7 +279,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.look.smart_filter_nick*
-** descrizione: `enable smart filter for "nick" messages`
+** descrizione: `abilita filtro smart per i messaggi "nick"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -289,7 +289,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.look.topic_strip_colors*
-** descrizione: `elimina colori nell'argomento (utilizzato solo quando viene visualizzato il titolo del buffer)`
+** descrizione: `elimina colori nell'argomento (usato solo quando mostrato il titolo del buffer)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
