@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-18 15:29+0100\n"
+"POT-Creation-Date: 2011-03-23 16:22+0100\n"
 "PO-Revision-Date: 2011-03-12 10:15+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5374,19 +5374,12 @@ msgstr ""
 "Textfarbe in der die Meldungen für das Verlassen/Beenden eines Channels "
 "angezeigt werden soll"
 
-msgid "color for prefix of nick which is op/admin/owner on channel"
-msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
-
-msgid "color for prefix of nick which is halfop on channel"
-msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
-
-msgid "color for prefix of nick which has voice on channel"
+msgid ""
+"color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), "
+"format is: \"o:color1;h:color2;v:color3\" (if a mode is not found, WeeChat "
+"will try with next modes received from server (\"PREFIX\"); a special mode "
+"\"*\" can be used as default color if no mode has been found in list)"
 msgstr ""
-"Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
-"Channel"
-
-msgid "color for prefix of nick which is user on channel"
-msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
 
 msgid "color for nick prefix (prefix is custom string displayed before nick)"
 msgstr ""
@@ -7799,6 +7792,20 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "color for prefix of nick which is op/admin/owner on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
+
+#~ msgid "color for prefix of nick which is halfop on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
+
+#~ msgid "color for prefix of nick which has voice on channel"
+#~ msgstr ""
+#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
+#~ "Channel"
+
+#~ msgid "color for prefix of nick which is user on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
 
 #, fuzzy
 #~ msgid "comma separated list of tags that will force highlight"

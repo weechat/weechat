@@ -384,52 +384,48 @@ irc_nick_get_nicklist_group (struct t_irc_server *server,
 }
 
 /*
- * irc_nick_get_prefix_color: get prefix color index for a nick
- */
-
-int
-irc_nick_get_prefix_color (struct t_irc_server *server,
-                           struct t_irc_nick *nick)
-{
-    int index, prefix_color;
-    
-    prefix_color = 0;
-    index = irc_server_get_prefix_char_index (server, nick->prefix[0]);
-    if (index >= 0)
-    {
-        if (index <= irc_server_get_prefix_mode_index (server, 'o'))
-            prefix_color = 1; /* color for op (or better than op) */
-        else if (index == irc_server_get_prefix_mode_index (server, 'h'))
-            prefix_color = 2; /* color for halh-op */
-        else if (index == irc_server_get_prefix_mode_index (server, 'v'))
-            prefix_color = 3; /* color for voice */
-        else if (index == irc_server_get_prefix_mode_index (server, 'u'))
-            prefix_color = 4; /* color for chan user */
-    }
-    
-    return prefix_color;
-}
-
-/*
- * irc_nick_get_prefix_color_name: return name of color with a prefix number
+ * irc_nick_get_prefix_color_name: return name of prefix color for a nick
  */
 
 const char *
-irc_nick_get_prefix_color_name (int prefix_color)
+irc_nick_get_prefix_color_name (struct t_irc_server *server,
+                                struct t_irc_nick *nick)
 {
-    static char *color_for_prefix[] = {
-        "chat",
-        "irc.color.nick_prefix_op",
-        "irc.color.nick_prefix_halfop",
-        "irc.color.nick_prefix_voice",
-        "irc.color.nick_prefix_user",
-    };
+    static char *default_color = "chat";
+    const char *prefix_modes, *color;
+    char mode[2];
+    int i, index;
     
-    if ((prefix_color >= 0) && (prefix_color <= 4))
-        return color_for_prefix[prefix_color];
+    if (irc_config_hashtable_nick_prefixes)
+    {
+        index = irc_server_get_prefix_char_index (server, nick->prefix[0]);
+        if (index >= 0)
+        {
+            mode[0] = ' ';
+            mode[1] = '\0';
+            prefix_modes = irc_server_get_prefix_modes (server);
+            for (i = index; prefix_modes[i]; i++)
+            {
+                mode[0] = prefix_modes[i];
+                color = weechat_hashtable_get (irc_config_hashtable_nick_prefixes,
+                                               mode);
+                if (color)
+                    return color;
+            }
+            /*
+             * no color found with mode (and following modes)?
+             * => fallback to "*"
+             */
+            mode[0] = '*';
+            color = weechat_hashtable_get (irc_config_hashtable_nick_prefixes,
+                                           mode);
+            if (color)
+                return color;
+        }
+    }
     
-    /* no color by default (should not happen) */
-    return color_for_prefix[0];
+    /* no color by default */
+    return default_color;
 }
 
 /*
@@ -467,16 +463,14 @@ irc_nick_nicklist_add (struct t_irc_server *server,
                        struct t_irc_channel *channel,
                        struct t_irc_nick *nick)
 {
-    int prefix_color;
     struct t_gui_nick_group *ptr_group;
     
     ptr_group = irc_nick_get_nicklist_group (server, channel->buffer, nick);
-    prefix_color = irc_nick_get_prefix_color (server, nick);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name,
                                irc_nick_get_color_for_nicklist (server, nick),
                                nick->prefix,
-                               irc_nick_get_prefix_color_name (prefix_color),
+                               irc_nick_get_prefix_color_name (server, nick),
                                1);
 }
 
@@ -513,6 +507,35 @@ irc_nick_nicklist_set (struct t_irc_channel *channel,
     if (ptr_nick)
     {
         weechat_nicklist_nick_set (channel->buffer, ptr_nick, property, value);
+    }
+}
+
+/*
+ * irc_nick_nicklist_set_prefix_color_all: set nick prefix colors in nicklist
+ *                                         for all servers/channels
+ */
+
+void
+irc_nick_nicklist_set_prefix_color_all ()
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                 ptr_nick = ptr_nick->next_nick)
+            {
+                irc_nick_nicklist_set (ptr_channel, ptr_nick, "prefix_color",
+                                       irc_nick_get_prefix_color_name (ptr_server,
+                                                                       ptr_nick));
+            }
+        }
     }
 }
 
@@ -840,19 +863,17 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
     static char result[256];
     char prefix[2];
     const char *str_prefix_color;
-    int prefix_color;
-
+    
     prefix[0] = (nick) ? nick->prefix[0] : '\0';
     prefix[1] = '\0';
     if (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode")))
     {
         if (nick)
         {
-            prefix_color = irc_nick_get_prefix_color (server, nick);
             if ((prefix[0] == ' ')
                 && !weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty")))
                 prefix[0] = '\0';
-            str_prefix_color = weechat_color (weechat_config_string (weechat_config_get (irc_nick_get_prefix_color_name (prefix_color))));
+            str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server, nick));
         }
         else
         {

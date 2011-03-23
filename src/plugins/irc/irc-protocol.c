@@ -3549,7 +3549,7 @@ IRC_PROTOCOL_CALLBACK(366)
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string;
-    const char *prefix, *nickname;
+    const char *prefix, *prefix_color, *nickname;
     
     /*
      * 366 message looks like:
@@ -3599,12 +3599,21 @@ IRC_PROTOCOL_CALLBACK(366)
                             prefix = weechat_infolist_string (infolist, "prefix");
                             if (prefix[0] && (prefix[0] != ' '))
                             {
-                                weechat_config_search_with_string (weechat_infolist_string (infolist,
-                                                                                            "prefix_color"),
-                                                                   NULL, NULL, &ptr_option,
-                                                                   NULL);
-                                if (ptr_option)
-                                    strcat (string, weechat_color (weechat_config_string (ptr_option)));
+                                prefix_color = weechat_infolist_string (infolist,
+                                                                        "prefix_color");
+                                if (strchr (prefix_color, '.'))
+                                {
+                                    weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                                                "prefix_color"),
+                                                                       NULL, NULL, &ptr_option,
+                                                                       NULL);
+                                    if (ptr_option)
+                                        strcat (string, weechat_color (weechat_config_string (ptr_option)));
+                                }
+                                else
+                                {
+                                    strcat (string, weechat_color (prefix_color));
+                                }
                                 strcat (string, prefix);
                             }
                             nickname = weechat_infolist_string (infolist, "name");

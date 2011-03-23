@@ -122,10 +122,7 @@ extern struct t_config_option *irc_config_look_topic_strip_colors;
 
 extern struct t_config_option *irc_config_color_message_join;
 extern struct t_config_option *irc_config_color_message_quit;
-extern struct t_config_option *irc_config_color_nick_prefix_op;
-extern struct t_config_option *irc_config_color_nick_prefix_halfop;
-extern struct t_config_option *irc_config_color_nick_prefix_voice;
-extern struct t_config_option *irc_config_color_nick_prefix_user;
+extern struct t_config_option *irc_config_color_nick_prefixes;
 extern struct t_config_option *irc_config_color_nick_prefix;
 extern struct t_config_option *irc_config_color_nick_suffix;
 extern struct t_config_option *irc_config_color_notice;
@@ -154,6 +151,7 @@ extern char **irc_config_nick_colors;
 extern int irc_config_num_nick_colors;
 
 extern struct t_hashtable *irc_config_hashtable_nick_color_force;
+extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 
 extern void irc_config_set_nick_colors ();
 extern void irc_config_server_change_cb (void *data,

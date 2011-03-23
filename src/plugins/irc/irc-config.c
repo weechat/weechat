@@ -99,10 +99,7 @@ struct t_config_option *irc_config_look_topic_strip_colors;
 
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
-struct t_config_option *irc_config_color_nick_prefix_op;
-struct t_config_option *irc_config_color_nick_prefix_halfop;
-struct t_config_option *irc_config_color_nick_prefix_voice;
-struct t_config_option *irc_config_color_nick_prefix_user;
+struct t_config_option *irc_config_color_nick_prefixes;
 struct t_config_option *irc_config_color_nick_prefix;
 struct t_config_option *irc_config_color_nick_suffix;
 struct t_config_option *irc_config_color_notice;
@@ -135,6 +132,7 @@ struct t_hook *irc_config_hook_config_nick_colors = NULL;
 char **irc_config_nick_colors = NULL;
 int irc_config_num_nick_colors = 0;
 struct t_hashtable *irc_config_hashtable_nick_color_force = NULL;
+struct t_hashtable *irc_config_hashtable_nick_prefixes = NULL;
 
 int irc_config_write_temp_servers = 0;
 
@@ -586,17 +584,51 @@ irc_config_change_color_item_lag (void *data,
 }
 
 /*
- * irc_config_change_color_nick_prefix: called when the color of a nick prefix
- *                                      is changed
+ * irc_config_change_color_nick_prefixes: called when the string with color of
+ *                                        nick prefixes is changed
  */
 
 void
-irc_config_change_color_nick_prefix (void *data,
-                                     struct t_config_option *option)
+irc_config_change_color_nick_prefixes (void *data,
+                                       struct t_config_option *option)
 {
+    char **items, *pos;
+    int num_items, i;
+    
     /* make C compiler happy */
     (void) data;
     (void) option;
+    
+    if (!irc_config_hashtable_nick_prefixes)
+    {
+        irc_config_hashtable_nick_prefixes = weechat_hashtable_new (8,
+                                                                    WEECHAT_HASHTABLE_STRING,
+                                                                    WEECHAT_HASHTABLE_STRING,
+                                                                    NULL,
+                                                                    NULL);
+    }
+    else
+        weechat_hashtable_remove_all (irc_config_hashtable_nick_prefixes);
+    
+    items = weechat_string_split (weechat_config_string (irc_config_color_nick_prefixes),
+                                  ";", 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                weechat_hashtable_set (irc_config_hashtable_nick_prefixes,
+                                       items[i],
+                                       pos + 1);
+            }
+        }
+        weechat_string_free_split (items);
+    }
+    
+    irc_nick_nicklist_set_prefix_color_all ();
     
     weechat_bar_item_update ("input_prompt");
     weechat_bar_item_update ("nicklist");
@@ -1777,6 +1809,11 @@ irc_config_init ()
                                                                    WEECHAT_HASHTABLE_STRING,
                                                                    NULL,
                                                                    NULL);
+    irc_config_hashtable_nick_prefixes = weechat_hashtable_new (8,
+                                                                WEECHAT_HASHTABLE_STRING,
+                                                                WEECHAT_HASHTABLE_STRING,
+                                                                NULL,
+                                                                NULL);
     
     irc_config_file = weechat_config_new (IRC_CONFIG_NAME,
                                           &irc_config_reload, NULL);
@@ -2105,30 +2142,17 @@ irc_config_init ()
         N_("color for text in part/quit messages"),
         NULL, -1, 0, "red", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
-    irc_config_color_nick_prefix_op = weechat_config_new_option (
+    irc_config_color_nick_prefixes = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "nick_prefix_op", "color",
-        N_("color for prefix of nick which is op/admin/owner on channel"),
-        NULL, -1, 0, "lightgreen", NULL, 0, NULL, NULL,
-        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
-    irc_config_color_nick_prefix_halfop = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_prefix_halfop", "color",
-        N_("color for prefix of nick which is halfop on channel"),
-        NULL, -1, 0, "lightmagenta", NULL, 0, NULL, NULL,
-        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
-    irc_config_color_nick_prefix_voice = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_prefix_voice", "color",
-        N_("color for prefix of nick which has voice on channel"),
-        NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
-        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
-    irc_config_color_nick_prefix_user = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "nick_prefix_user", "color",
-        N_("color for prefix of nick which is user on channel"),
-        NULL, -1, 0, "blue", NULL, 0, NULL, NULL,
-        &irc_config_change_color_nick_prefix, NULL, NULL, NULL);
+        "nick_prefixes", "string",
+        N_("color for nick prefixes using mode char (o=op, h=halfop, v=voice, "
+           "..), format is: \"o:color1;h:color2;v:color3\" (if a mode is not "
+           "found, WeeChat will try with next modes received from server "
+           "(\"PREFIX\"); a special mode \"*\" can be used as default color "
+           "if no mode has been found in list)"),
+        NULL, 0, 0, "q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;"
+        "v:yellow;*:lightblue", NULL, 0, NULL, NULL,
+        &irc_config_change_color_nick_prefixes, NULL, NULL, NULL);
     irc_config_color_nick_prefix = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_prefix", "color",
@@ -2360,6 +2384,8 @@ irc_config_read ()
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         irc_notify_new_for_all_servers ();
+        irc_config_change_look_nick_color_force (NULL, NULL);
+        irc_config_change_color_nick_prefixes (NULL, NULL);
         irc_config_change_network_notify_check_ison (NULL, NULL);
         irc_config_change_network_notify_check_whois (NULL, NULL);
     }
@@ -2403,5 +2429,11 @@ irc_config_free ()
     {
         weechat_hashtable_free (irc_config_hashtable_nick_color_force);
         irc_config_hashtable_nick_color_force = NULL;
+    }
+    
+    if (irc_config_hashtable_nick_prefixes)
+    {
+        weechat_hashtable_free (irc_config_hashtable_nick_prefixes);
+        irc_config_hashtable_nick_prefixes = NULL;
     }
 }

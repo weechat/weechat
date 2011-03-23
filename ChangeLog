@@ -40,6 +40,8 @@ Version 0.3.5 (under dev!)
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
 * aspell: fix spellers used after switch of window (bug #32811)
+* irc: replace options irc.color.nick_prefix_{op|halfop|voice|user} by a single
+  option irc.color.nick_prefixes (task #10888)
 * irc: fix local variable "away" on server buffer (set/delete it each time away
   is set or removed on server)
 * irc: add new options irc.look.buffer_switch_autojoin and

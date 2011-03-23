@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-01-31
+v0.3.5-dev, 2011-03-23
 
 
 Version 0.3.5 (under dev!)
@@ -12,6 +12,10 @@ Important release notes:
 * if you have some colors defined in section "palette" with version 0.3.4, you
   should remove all colors defined, and add new aliases (it's not needed any
   more to add colors before using them)
+* colors for nick prefixes (char for op, voice, ..) are defined in a single
+  option 'irc.color.nick_prefixes', therefore following options will be lost:
+  'irc.color.nick_prefix_op', 'irc.color.nick_prefix_halfop',
+  'irc.color.nick_prefix_voice', 'irc.color.nick_prefix_user'
 
 Version 0.3.4 (2011-01-16)
 --------------------------
@@ -20,8 +24,8 @@ Important release notes:
 
 * if you are using `/upgrade` from a previous release:
 ** some nick prefixes can be wrong, so it is recommended to do `/allchan names`
-** nick colors are defined with a new option "weechat.color.chat_nick_colors",
-   therefore old options "weechat.color.chat_nick_color1..10" will be lost when
+** nick colors are defined with a new option 'weechat.color.chat_nick_colors',
+   therefore old options 'weechat.color.chat_nick_color1..10' will be lost when
    upgrading
 ** nick colors in messages displayed will be wrong if you changed some nick colors
    (old default colors will be used)
