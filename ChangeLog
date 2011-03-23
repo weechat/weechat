@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-18
+v0.3.5-dev, 2011-03-23
 
 
 Version 0.3.5 (under dev!)
@@ -40,6 +40,8 @@ Version 0.3.5 (under dev!)
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
 * aspell: fix spellers used after switch of window (bug #32811)
+* irc: fix local variable "away" on server buffer (set/delete it each time away
+  is set or removed on server)
 * irc: add new options irc.look.buffer_switch_autojoin and
   irc.look.buffer_switch_join (task #8542, task #10506)
 * irc: add new option irc.look.smart_filter_nick
