@@ -391,7 +391,7 @@ const char *
 irc_nick_get_prefix_color_name (struct t_irc_server *server,
                                 struct t_irc_nick *nick)
 {
-    static char *default_color = "chat";
+    static char *default_color = "";
     const char *prefix_modes, *color;
     char mode[2];
     int i, index;
