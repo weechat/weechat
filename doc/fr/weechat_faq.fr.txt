@@ -7,6 +7,17 @@ Général
 -------
 
 
+[[weechat_name]]
+D'où vient le nom "WeeChat" ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Wee" est un acronyme récursif qui signifie "Wee Enhanced Environment".
+Donc le nom complet est "Wee Enhanced Environment for Chat".
+
+"Wee" signifie également "très petit" (et oui, il y a une autre signification,
+mais elle ne s'applique pas à WeeChat !).
+
+
 [[why_choose_weechat]]
 Pourquoi choisir WeeChat ? X-Chat et Irssi sont si bien...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
