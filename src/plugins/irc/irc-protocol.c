@@ -823,6 +823,9 @@ IRC_PROTOCOL_CALLBACK(nick)
     
     local_nick = (strcmp (nick, server->nick) == 0) ? 1 : 0;
     
+    if (local_nick)
+        irc_server_set_nick (server, new_nick);
+    
     ptr_nick_found = NULL;
     
     for (ptr_channel = server->channels; ptr_channel;
@@ -869,7 +872,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                              _("%sYou are now known as "
                                                "%s%s%s"),
                                              weechat_prefix ("network"),
-                                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                             IRC_COLOR_CHAT_NICK_SELF,
                                              new_nick,
                                              IRC_COLOR_CHAT);
                     }
@@ -915,9 +918,7 @@ IRC_PROTOCOL_CALLBACK(nick)
         }
     }
     
-    if (local_nick)
-        irc_server_set_nick (server, new_nick);
-    else
+    if (!local_nick)
         irc_channel_display_nick_back_in_pv (server, ptr_nick_found, new_nick);
     
     return WEECHAT_RC_OK;
