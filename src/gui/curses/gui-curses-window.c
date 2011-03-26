@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdarg.h>
@@ -2057,6 +2058,7 @@ gui_window_set_title (const char *title)
                 printf ("\33]0;%s\7", "Terminal");
             }
         }
+        fflush (stdout);
     }
 }
 
