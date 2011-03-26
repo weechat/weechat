@@ -72,10 +72,14 @@ STRING(REGEX REPLACE
 
 SET(TCL_POSSIBLE_LIB_PATHS
   "${TCL_INCLUDE_PATH_PARENT}/lib"
+  "${TCL_INCLUDE_PATH_PARENT}/lib64"
   "${TCL_LIBRARY_PATH}"
   "${TCL_TCLSH_PATH_PARENT}/lib"
+  "${TCL_TCLSH_PATH_PARENT}/lib64"
   /usr/lib
+  /usr/lib64
   /usr/local/lib
+  /usr/local/lib64
   )
 
 IF(WIN32)

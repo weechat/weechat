@@ -716,7 +716,7 @@ if test "x$enable_tcl" = "xyes" ; then
     
     AC_MSG_CHECKING(for tclConfig.sh)
     tcl_found="no"
-    tcl_dirs="/usr/lib/tcl8.5 /lib /usr/lib /usr/tcl/lib /usr/local/tcl-8.5/lib /usr/local/lib /usr/local/tcl/lib /opt/lib"
+    tcl_dirs="/usr/lib/tcl8.5 /usr/lib64/tcl8.5 /lib /lib64 /usr/lib /usr/lib64 /usr/tcl/lib /usr/tcl/lib64 /usr/local/tcl-8.5/lib /usr/local/tcl-8.5/lib64 /usr/local/lib /usr/local/lib64 /usr/local/tcl/lib /usr/local/tcl/lib64 /opt/lib /opt/lib64"
     if test "x$tclconfig" != "x" ; then
       tcl_dirs="${tclconfig} ${tcl_dirs}"
     fi

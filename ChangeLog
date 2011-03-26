@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-23
+v0.3.5-dev, 2011-03-26
 
 
 Version 0.3.5 (under dev!)
@@ -61,6 +61,7 @@ Version 0.3.5 (under dev!)
 * relay: do not send join for private buffers to client
 * rmodifier: fix reload of file rmodifier.conf
 * rmodifier: fix crash when adding rmodifier with invalid regex
+* tcl: fix tcl detection on some 64-bits systems (bug #32915)
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
 Version 0.3.4 (2011-01-16)
