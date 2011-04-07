@@ -3001,10 +3001,8 @@ void
 gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    int num_line, msg_pos;
-    char *message_without_colors, *tags;
-    char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
-    int hexa_pos, ascii_pos;
+    int num_line;
+    char *prefix_without_colors, *message_without_colors, *tags;
     
     log_printf ("[buffer dump hexa (addr:0x%lx)]", buffer);
     num_line = 1;
@@ -3012,13 +3010,17 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
          ptr_line = ptr_line->next_line)
     {
         /* display line without colors */
+        prefix_without_colors = (ptr_line->data->prefix) ?
+            gui_color_decode (ptr_line->data->prefix, NULL) : NULL;
         message_without_colors = (ptr_line->data->message) ?
             gui_color_decode (ptr_line->data->message, NULL) : NULL;
         log_printf ("");
-        log_printf ("  line %d: %s",
+        log_printf ("  line %d: %s | %s",
                     num_line,
-                    (message_without_colors) ?
-                    message_without_colors : "(null)");
+                    (prefix_without_colors) ? prefix_without_colors : "(null)",
+                    (message_without_colors) ? message_without_colors : "(null)");
+        if (prefix_without_colors)
+            free (prefix_without_colors);
         if (message_without_colors)
             free (message_without_colors);
         tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
@@ -3031,31 +3033,24 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
         if (ptr_line->data->message)
         {
             log_printf ("");
-            log_printf ("  raw data for line %d (with color codes):",
-                        num_line);
-            msg_pos = 0;
-            hexa_pos = 0;
-            ascii_pos = 0;
-            while (ptr_line->data->message[msg_pos])
+            if (ptr_line->data->prefix && ptr_line->data->prefix[0])
             {
-                snprintf (hexa + hexa_pos, 4, "%02X ",
-                          (unsigned char)(ptr_line->data->message[msg_pos]));
-                hexa_pos += 3;
-                snprintf (ascii + ascii_pos, 3, "%c ",
-                          ((((unsigned char)ptr_line->data->message[msg_pos]) < 32)
-                           || (((unsigned char)ptr_line->data->message[msg_pos]) > 127)) ?
-                          '.' : (unsigned char)(ptr_line->data->message[msg_pos]));
-                ascii_pos += 2;
-                if (ascii_pos == 32)
-                {
-                    log_printf ("    %-48s  %s", hexa, ascii);
-                    hexa_pos = 0;
-                    ascii_pos = 0;
-                }
-                msg_pos++;
+                log_printf ("  raw prefix for line %d:", num_line);
+                log_printf_hexa ("    ", ptr_line->data->prefix);
             }
-            if (ascii_pos > 0)
-                log_printf ("    %-48s  %s", hexa, ascii);
+            else
+            {
+                log_printf ("  no prefix for line %d", num_line);
+            }
+            if (ptr_line->data->message && ptr_line->data->message[0])
+            {
+                log_printf ("  raw message for line %d:", num_line);
+                log_printf_hexa ("    ", ptr_line->data->message);
+            }
+            else
+            {
+                log_printf ("  no message for line %d", num_line);
+            }
         }
         
         num_line++;

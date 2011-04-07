@@ -170,6 +170,40 @@ log_printf (const char *message, ...)
 }
 
 /*
+ * log_printf_hexa: dump a string as hexa data in log file
+ */
+
+void
+log_printf_hexa (const char *spaces, const char *string)
+{
+    int msg_pos, hexa_pos, ascii_pos;
+    char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
+    
+    msg_pos = 0;
+    hexa_pos = 0;
+    ascii_pos = 0;
+    while (string[msg_pos])
+    {
+        snprintf (hexa + hexa_pos, 4, "%02X ", (unsigned char)(string[msg_pos]));
+        hexa_pos += 3;
+        snprintf (ascii + ascii_pos, 3, "%c ",
+                  ((((unsigned char)string[msg_pos]) < 32)
+                   || (((unsigned char)string[msg_pos]) > 127)) ?
+                  '.' : (unsigned char)(string[msg_pos]));
+        ascii_pos += 2;
+        if (ascii_pos == 32)
+        {
+            log_printf ("%s%-48s  %s", spaces, hexa, ascii);
+            hexa_pos = 0;
+            ascii_pos = 0;
+        }
+        msg_pos++;
+    }
+    if (ascii_pos > 0)
+        log_printf ("%s%-48s  %s", spaces, hexa, ascii);
+}
+
+/*
  * log_close: close log file
  */
 
