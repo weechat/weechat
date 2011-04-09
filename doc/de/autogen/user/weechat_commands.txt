@@ -16,44 +16,44 @@ message: Abwesenheitsnachricht (ohne eine Nachricht wird der Abwesenheitszustand
       hide|show|toggle <name>
       scroll <name> <buffer> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-    cond1,...: condition(s) for displaying bar (only for type "window"):
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               without condition, bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
- scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
+         list: listet alle Infobars auf
+     listfull: listet alle Infobars detailliert auf (Standardaufruf)
+    listitems: listet alle Items auf, die in den Infobars genutzt werden
+          add: füge eine neue Infobar hinzu
+         name: Name der Infobar (muss einmalig sein)
+         type:   root: außerhalb des Fensters,
+               window: innerhalb des Fensters, mit optionalen Merkmalen (siehe unten)
+    cond1,...: Merkmal(e) für eine Infobar (nur nutzbar mit der Type-Option "window"):
+                 active: in einem aktiven Fenster
+               inactive: in einem inaktiven Fenster
+               nicklist: in Fenstern mit einer Nickliste
+               werden keine Merkmale angegeben, ist die Infobar immer sichtbar
+     position: bottom (unten), top (oben), left (links) oder right (rechts)
+         size: Größe der Infobar (in Zeichen)
+    separator: 1 um eine Trennlinien zu zeichnen, bei 0 oder ohne eine Angabe wird keine Trennlinien gezeichnet
+    item1,...: Items die in der Infobar genutzt werden sollen (Items können durch Kommata oder Leerzeichen getrennt werden ("+" (verbindet Items))
+      default: erstellt standardisierte Infobars
+          del: entfernt eine Infobar (alle Infobars können mit der Option "-all" entfernt werden).
+          set: setzt einen Wert für Infobar
+       option: Optionen die geändert werden (für eine List der möglichen Optionen, bitte folgenden Befehl nutzen: /set weechat.bar.<barname>.*)
+        value: neuer Wert für Option
+         hide: Infobar wird ausgeblendet
+         show: zeigt eine ausgeblendete Infobar an
+       toggle: zeigt/versteckt eine Infobar
+       scroll: scrollt Infobar hoch/runter
+       buffer: Name des Buffer der gescrollt werden soll ('*' für aktuellen Buffer, man sollte '*' für root-Infobars nutzen)
+ scroll_value: Werte für Scroll-Funktion: 'x' oder 'y', gefolgt von '+', '-', 'b' (Beginn) oder 'e' (Ende), Wert (für +/-), und Optional %% (zum scrollen für %% der Breite/Höhe, ansonsten wird der Wert als Anzahl der Zeichen interpretiert um die gescrollt werden soll)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
+Beispiele:
+  erstellt eine Infobar mit den Items: time, buffer number + name, und Vervollständigung:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
-    /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+  versteckt die Infobar (meinebar):
+    /bar hide meinebar
+  scrollt die Nickliste im aktuellen Buffer um 10 Zeilen nach unten:
     /bar scroll nicklist * y+10
-  scroll nicklist one page up on #weechat buffer:
+  scrollt die Nickliste im Buffer #weechat eine ganze Seite nach oben:
     /bar scroll nicklist #weechat y-100%
-  scroll to end of nicklist on current buffer:
+  scrollt zum Ende der Nicklist im aktuellen Buffer:
     /bar scroll nicklist * ye
 ........................................
 

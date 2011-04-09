@@ -8,16 +8,15 @@ Allgemein
 ---------
 
 
-// TRANSLATION MISSING
 [[weechat_name]]
-Where does the name "WeeChat" come from?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Woher kommt eigentlich der Name "WeeChat"?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"Wee" is a recursive acronym and stands for "Wee Enhanced Environment".
-So complete name is "Wee Enhanced Environment for Chat".
+"Wee" ist ein sich selbst nutzendes Akronym und bedeutet "Wee Enhanced Environment".
+Somit lautet de vollständige Name "Wee Enhanced Environment for Chat".
 
-"Wee" also means "very small" (and yes, there is other meaning, but it does not
-apply to WeeChat!).
+"Wee" bedeutet außerdem "sehr klein" (und ja, es gibt noch eine andere Bedeutung des Wortes.
+Aber dieses trifft nicht auf WeeChat zu!)
 
 
 [[why_choose_weechat]]
@@ -366,15 +365,14 @@ Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 Eine Auflistung der Standardtastenbelegung findet man in der Benutzeranleitung.
 
 
-// TRANSLATION MISSING
 [[global_history]]
-How to use global history (instead of buffer history) with up and down keys?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich den globalen Verlaufsspeicher (anstelle des Buffer eigenen) mit den Up-/Down-Tasten nutzen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can bind the up and down keys on global history (default keys for global
-history are @k(C-)@k(↑) and @k(C-)@k(↓)).
+Du kannst die Up-/Down-Tasten für den globalen Verlaufsspeicher belegen (als Standardtasten werden
+genutzt: @k(C-)@k(↑) and @k(C-)@k(↓)).
 
-Example:
+Beispiele:
 
 ----------------------------------------
 /key bind meta2-A /input history_global_previous
@@ -382,8 +380,8 @@ Example:
 ----------------------------------------
 
 [NOTE]
-Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press @k(A-)@k(k) then key (up or down).
+Die Tasten "meta2-A" und "meta2-B" können nach dem jeweils genutzten Terminal variieren. Um die
+korrekten Tasten zu finden sollte man @k(A-)@k(k) und dann (Up- oder die Down-Taste) drücken.
 
 
 [[irc]]

@@ -344,7 +344,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *weechat.look.highlight_tags*
-** Beschreibung: `comma separated list of tags to highlight (case insensitive comparison, examples: "irc_notice" for IRC notices, "nick_flashcode" for messages from nick "FlashCode")`
+** Beschreibung: `Durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet. Beispiele: "irc_notice" für IRC Nachrichten, "nick_flashcode" für Nachrichten vom Nick "FlashCode")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

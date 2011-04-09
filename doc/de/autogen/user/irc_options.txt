@@ -39,7 +39,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * *irc.color.nick_prefixes*
-** Beschreibung: `color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), format is: "o:color1;h:color2;v:color3" (if a mode is not found, WeeChat will try with next modes received from server ("PREFIX"); a special mode "*" can be used as default color if no mode has been found in list)`
+** Beschreibung: `Farben für Nick Prefix  für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format ist: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -59,12 +59,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.look.buffer_switch_autojoin*
-** Beschreibung: `auto switch to channel buffer when it is auto joined (with server option "autojoin")`
+** Beschreibung: `wechselt automatisch zum Channel-Buffer falls dieser automatisch betreten wurde (mittels der Server-Option "autojoin")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *irc.look.buffer_switch_join*
-** Beschreibung: `auto switch to channel buffer when it is manually joined (with /join command)`
+** Beschreibung: `wechselt automatisch zum Channel-Buffer falls dieser manuell betreten wurde (mittels dem /join Befehl)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
