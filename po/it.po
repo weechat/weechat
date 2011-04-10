@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-23 16:22+0100\n"
-"PO-Revision-Date: 2011-03-21 12:10+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -110,7 +110,7 @@ msgid ""
 "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
 "%s"
 msgstr ""
-"%s%s%s: %s%s%s (cond: %s), %s, riempimento: %s(alto/basso/%s(sinistra/"
+"  %s%s%s: %s%s%s (cond: %s), %s, riempimento: %s(alto/basso/%s(sinistra/"
 "destra), %s: %s"
 
 msgid "(hidden)"
@@ -200,7 +200,7 @@ msgstr "Elenco buffer:"
 
 #, c-format
 msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
-msgstr " %s[%s%d%s]%s (%s) %s%s%s (notifica: %s)"
+msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notifica: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -513,13 +513,13 @@ msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr "      %d (flag: 0x%x:%s%s%s)"
 
 msgid " read"
-msgstr "lettura"
+msgstr " lettura"
 
 msgid " write"
-msgstr "scrittura"
+msgstr " scrittura"
 
 msgid " exception"
-msgstr "eccezione"
+msgstr " eccezione"
 
 msgid "    process hooked:"
 msgstr "    hook sul processo:"
@@ -2447,7 +2447,8 @@ msgstr "colore del testo per il buffer con nuovi dati (barra di stato)"
 msgid "text color for time (status bar)"
 msgstr "colore del testo per l'ora (barra di stato)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr "colore del testo per la ricerca del testo fallita sulla riga di input"
 
 msgid "text color for actions in input line"
@@ -3491,7 +3492,7 @@ msgstr "%s%s: server \"%s\" non trovato"
 
 #, c-format
 msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
-msgstr " %s[%s%d%s]%s mask: %s / server: %s / canale: %s"
+msgstr "  %s[%s%d%s]%s mask: %s / server: %s / canale: %s"
 
 #, c-format
 msgid "%s: ignore list:"
@@ -5380,7 +5381,7 @@ msgid "not connected"
 msgstr "non connesso"
 
 msgid " (temporary)"
-msgstr "(temporaneo)"
+msgstr " (temporaneo)"
 
 msgid "on"
 msgstr "attivo"
@@ -7599,160 +7600,3 @@ msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr ""
-#~ "colore per il prefisso del nick che è operatore/amministratore/"
-#~ "proprietario del canale"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "colore per il prefisso del nick che è halfop sul canale"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr "colore per il prefisso del nick che ha il voice sul canale"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "colore per il prefisso del nick che è utente sul canale"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: canale \"%s\" non trovato per il comando \"%s\""
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "tipo hook: comando, timer, ... (opzionale)"
-
-#~ msgid "a color name"
-#~ msgstr "un nome colore"
-
-#~ msgid "%s internal commands:"
-#~ msgstr "comandi interni di %s:"
-
-#~ msgid "Other commands:"
-#~ msgstr "Altri comandi:"
-
-#~ msgid "<command> || <option>"
-#~ msgstr "<comando> || <opzione>"
-
-#~ msgid ""
-#~ "command: a command name\n"
-#~ " option: an option name (use /set to see list)"
-#~ msgstr ""
-#~ "comando: nome comando\n"
-#~ "opzione: nome opzione (utilizza /set per vedere l'elenco)"
-
-#, fuzzy
-#~ msgid "remove half channel operator status from nick(s)"
-#~ msgstr "rimuove lo stato di half-op da uno (o più) nick"
-
-#, fuzzy
-#~ msgid "give half channel operator status to nick(s)"
-#~ msgstr "concede lo stato di halfop ad uno (o più) nick"
-
-#, fuzzy
-#~ msgid "char used to draw read marker line"
-#~ msgstr "carattere usato per nascondere parte di una stringa"
-
-#~ msgid "user/password: used to get privileges on current IRC server"
-#~ msgstr ""
-#~ "utente/password: utilizzata per ottenere i privilegi sul server IRC "
-#~ "corrente"
-
-#~ msgid ""
-#~ "file: configuration file to save\n"
-#~ "\n"
-#~ "Without argument, all files (WeeChat and plugins) are saved."
-#~ msgstr ""
-#~ "file: file di configurazione da salvare\n"
-#~ "\n"
-#~ "Senza argomento, tutti i file (WeeChat e plugin) verranno salvati."
-
-#, fuzzy
-#~ msgid ""
-#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
-#~ "autoload"
-#~ msgstr ""
-#~ "[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload "
-#~ "[nome]] | [unload [nome]]"
-
-#~ msgid "This command is used by key bindings or plugins."
-#~ msgstr "Questo comando è utilizzato da combinazioni di tasti o plugin."
-
-#~ msgid "message"
-#~ msgstr "messaggio"
-
-#, fuzzy
-#~ msgid ""
-#~ "filename: script (file) to load\n"
-#~ "    name: a script name (name used in call to \"register\" function)\n"
-#~ "\n"
-#~ "Without argument, this command lists all loaded scripts."
-#~ msgstr ""
-#~ "nome_file: file script da attivare\n"
-#~ "      nome: il nome dello script\n"
-#~ "\n"
-#~ "Senza argomenti, il comando elenca tutti gli script attivati"
-
-#~ msgid ""
-#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
-#~ "[reload [name]] | [unload [name]]"
-#~ msgstr ""
-#~ "[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload "
-#~ "[nome]] | [unload [nome]]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<message>]"
-#~ msgstr "[canale[,canale]] [messaggio]"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>]] [<part_message>]"
-#~ msgstr "[canale[,canale]] [messaggio]"
-
-#~ msgid ""
-#~ "     channel: channel name for cycle\n"
-#~ "part_message: part message (displayed to other users)"
-#~ msgstr ""
-#~ "   canale: nome canale per il ciclo\n"
-#~ "messaggio: messaggio di uscita (mostrato agli altri utenti)"
-
-#~ msgid "action [nickname [file]]"
-#~ msgstr "azione [nick] [file]]"
-
-#~ msgid "[nickname [nickname]]"
-#~ msgstr "[nick [nick]]"
-
-#~ msgid "[-all | servername [servername ...]]"
-#~ msgstr "[-all | nome_server [nome_server ...]]"
-
-#~ msgid ""
-#~ "      -all: disconnect from all servers\n"
-#~ "servername: server name to disconnect"
-#~ msgstr ""
-#~ "     -all: disconnetti da tutti i server\n"
-#~ "nome_server: nome del server da cui disconnettersi"
-
-#~ msgid "nickname comment"
-#~ msgstr "nick commento"
-
-#~ msgid ""
-#~ "nickname: nickname\n"
-#~ " comment: comment for kill"
-#~ msgstr ""
-#~ "    nick: nick\n"
-#~ "commento: commento per il kill"
-
-#~ msgid "nickname [nickname]"
-#~ msgstr "nick [nick]"
-
-#~ msgid "[option]"
-#~ msgstr "[opzione]"
-
-#~ msgid "text"
-#~ msgstr "testo"
-
-#~ msgid "[text]"
-#~ msgstr "[testo]"
-
-#~ msgid "set a buffer property"
-#~ msgstr "imposta una proprietà del buffer"
-
-#~ msgid "property value"
-#~ msgstr "valore della proprietà"

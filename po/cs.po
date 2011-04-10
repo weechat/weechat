@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-23 16:22+0100\n"
-"PO-Revision-Date: 2011-02-07 17:29+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -2045,7 +2045,7 @@ msgstr ""
 "druh řazení hotlistu (group_time_asc [skupina_čas_vzestupně] (výchozí), "
 "group_time_desc [skupina_čas_sestupne], group_number_asc "
 "[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
-"number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
+"number_asc [číslo_vzestupně], number_desc [číslo_sestupně] )"
 
 #, fuzzy
 msgid ""
@@ -2328,7 +2328,8 @@ msgstr "barva textu pro buffer s novými daty (status bar)"
 msgid "text color for time (status bar)"
 msgstr "barva textu pro čas (stavový řádek)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr "barva textu pro nepovedené hledání textu ve vstupní rádce"
 
 msgid "text color for actions in input line"
@@ -7460,38 +7461,3 @@ msgstr ""
 
 msgid "Pointer"
 msgstr "Ukazatel"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr ""
-#~ "barva prefixu přezdívky, která je operátorem/administratorem/vlastníkem "
-#~ "na kanálu"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "barva prefixu přezdívky, která je částečným operátorem na kanálu"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr "barva prefixu přezdívky, která může mluvit na kanálu"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "barva prefixu přezdívky, která je uživatelem na kanálu"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: kanál \"%s\" nebyl nalezen příkazem \"%s\""
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "typ napojení: příkaz, časovač, .. (volitelné)"
-
-#~ msgid "a color name"
-#~ msgstr "jméno barvy"
-
-#, fuzzy
-#~ msgid "remove half channel operator status from nick(s)"
-#~ msgstr "odebrat status polovičního operátora kanálu z přezdívky (přezdívek)"
-
-#, fuzzy
-#~ msgid "give half channel operator status to nick(s)"
-#~ msgstr "dát přezdívce (přezdívkám) status polovičního operátora kanálu"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-23 16:22+0100\n"
-"PO-Revision-Date: 2011-02-07 17:29+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -201,7 +201,7 @@ msgstr "Lista de buffers:"
 
 #, c-format
 msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
-msgstr " %s[%s%d%s]%s (%s) %s%s%s (aviso: %s)"
+msgstr "  %s[%s%d%s]%s (%s) %s%s%s (aviso: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -2392,7 +2392,8 @@ msgstr "color para un buffer con nuevos datos (barra de estado)"
 msgid "text color for time (status bar)"
 msgstr "color para el texto de la hora (en la barra de estado)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr "color para una búsqueda fallida en la línea de entrada"
 
 msgid "text color for actions in input line"
@@ -6700,12 +6701,12 @@ msgid ""
 "  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
 "recv, %lu sent"
 msgstr ""
-" id: %d, %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
+"  id: %d, %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
 "recibidos, %lu enviados"
 
 #, c-format
 msgid "  id: %d, %s%s%s, started on: %s"
-msgstr "id: %d, %s%s%s, iniciado en: %s"
+msgstr "  id: %d, %s%s%s, iniciado en: %s"
 
 msgid "No client for relay"
 msgstr "Ningún cliente para retransmitir"
@@ -6715,7 +6716,7 @@ msgstr "Escuchando en los puertos:"
 
 #, c-format
 msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr " puerto %s%d%s, repetidor: %s%s.%s%s, iniciado en: %s"
+msgstr "  puerto %s%d%s, repetidor: %s%s.%s%s, iniciado en: %s"
 
 msgid "No server for relay"
 msgstr "Ningún servidor para retransmitir"
@@ -7645,38 +7646,3 @@ msgstr "Tabla hash (salida)"
 
 msgid "Pointer"
 msgstr "Puntero"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr ""
-#~ "color del prefijo del apodo cuando este es op/administrador/dueño del "
-#~ "canal"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "color del prefijo del apodo cuando es semi-op del canal"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr "color del prefijo del apodo cuando tiene voz en el canal"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "color del prefijo del apodo cuando es un usuario del canal"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr "lista separada por comas de diccionarios para usar en este buffer"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: canal \"%s\" no encontrado para el comando \"%s\""
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "tipo de enganche: comando, temporizador, .. (opcional)"
-
-#~ msgid "a color name"
-#~ msgstr "nombre de un color"
-
-#, fuzzy
-#~ msgid "remove half channel operator status from nick(s)"
-#~ msgstr "remueve el estado semi-operador del canal de el/los apodo(s)"
-
-#, fuzzy
-#~ msgid "give half channel operator status to nick(s)"
-#~ msgstr "dar el estado de semi-operador del canal a el/los apodo(s)"

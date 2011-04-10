@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-23 16:22+0100\n"
-"PO-Revision-Date: 2011-03-23 10:34+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -2466,7 +2466,8 @@ msgstr ""
 msgid "text color for time (status bar)"
 msgstr "couleur du texte pour l'heure (barre de statut)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr ""
 "couleur du texte pour la recherche infructueuse de texte dans la ligne de "
 "saisie"
@@ -7660,25 +7661,3 @@ msgstr "Hashtable (sortie)"
 
 msgid "Pointer"
 msgstr "Pointeur"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr ""
-#~ "couleur pour le préfixe d'un pseudo qui est op/admin/owner sur le canal"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "couleur pour le préfixe d'un pseudo qui est halfop sur le canal"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr "couleur pour le préfixe d'un pseudo qui a le voice sur le canal"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "couleur pour le préfixe d'un pseudo qui est user sur le canal"
-
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr "liste des tags (séparés par des virgules) qui forcent un highlight"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: canal \"%s\" non trouvé pour la commande \"%s\""
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "type de hook: command, timer, .. (optionnel)"

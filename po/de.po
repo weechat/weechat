@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-09 09:48+0200\n"
-"PO-Revision-Date: 2011-03-30 18:10+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -499,7 +499,7 @@ msgid "    command_run hooked:"
 msgstr "    Befehl_läuft ge-hooked:"
 
 msgid "    timers hooked:"
-msgstr "     eingehangene (hooked) Timer:"
+msgstr "    eingehangene (hooked) Timer:"
 
 #, c-format
 msgid "      %d %s (%d calls remaining)"
@@ -527,10 +527,10 @@ msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr "      %d (Flags: 0x%x:%s%s%s)"
 
 msgid " read"
-msgstr "lese"
+msgstr " lese"
 
 msgid " write"
-msgstr "schreibe"
+msgstr " schreibe"
 
 msgid " exception"
 msgstr " Unterbrechung"
@@ -2520,7 +2520,8 @@ msgstr "Farbe eines Buffers mit neuen Daten (Statusbar)"
 msgid "text color for time (status bar)"
 msgstr "Textfarbe für die Uhrzeit (Statusbar)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr "Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche "
 
 msgid "text color for actions in input line"
@@ -2989,7 +2990,7 @@ msgid ""
 msgstr ""
 "Darstellung innerhalb der Infobar, falls die Infobar links/rechts angezeigt "
 "wird (\"horizontal\" (von links nach rechts) oder \"vertikal\" (von oben "
-"nach unten)) "
+"nach unten))"
 
 msgid "bar size in chars (0 = auto size)"
 msgstr "Größe der Infobar, in Zeichen (0 = automatische Anpassung)"
@@ -6788,7 +6789,7 @@ msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s[%s%s%s%s] %s (gestartet am:: %s%s%s%s)"
 
 msgid "ended on: "
-msgstr "geendet am:"
+msgstr "geendet am: "
 
 #, c-format
 msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
@@ -7798,32 +7799,3 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr ""
-#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
-#~ "Channel"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr ""
-#~ "Durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer "
-#~ "genutzt werden"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: Channel \"%s\" für den \"%s\"-Befehl nicht gefunden"
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "hook Type: command, timer, .. (optional)"
-
-#~ msgid "a color name"
-#~ msgstr "ein Farbname"

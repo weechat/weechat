@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-03-23 16:22+0100\n"
-"PO-Revision-Date: 2011-02-07 17:29+0100\n"
+"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"PO-Revision-Date: 2011-04-10 11:00+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -425,7 +425,7 @@ msgstr "Przywrócono domyślne ustawienia klawiszy"
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%sBłąd: argument \"-yes\" wymagany do zresetowania ustawień klawiszy "
-"(względy bezpieczeństwa) "
+"(względy bezpieczeństwa)"
 
 #, c-format
 msgid "%d new key added"
@@ -527,7 +527,7 @@ msgstr "    powiązany proces:"
 
 #, c-format
 msgid "      command: '%s', child pid: %d"
-msgstr "     komenda: '%s', pid potomka: %d"
+msgstr "      komenda: '%s', pid potomka: %d"
 
 msgid "    connect hooked:"
 msgstr "    powiązane połączenia:"
@@ -573,11 +573,11 @@ msgid "No plugin found"
 msgstr "Nie znaleziono wtyczki"
 
 msgid "  (no plugin)"
-msgstr "(brak wtyczki)"
+msgstr "  (brak wtyczki)"
 
 #, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%sBłąd: zła liczba argumentów dla komendy \"%s\" "
+msgstr "%sBłąd: zła liczba argumentów dla komendy \"%s\""
 
 msgid "List of proxies:"
 msgstr "Lista proxy:"
@@ -595,7 +595,7 @@ msgstr "%sBłąd: zły typ \"%s\" dla proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" created"
-msgstr "Utworzono proxy \"%s\" "
+msgstr "Utworzono proxy \"%s\""
 
 #, c-format
 msgid "%sError: failed to create proxy \"%s\""
@@ -663,12 +663,10 @@ msgstr "Nie znaleziono żadnej opcji konfiguracyjnej"
 #, c-format
 msgid "%s%d%s configuration option found matching with \"%s\""
 msgid_plural "%s%d%s configuration options found matching with \"%s\""
-msgstr[0] ""
-"Znaleziono %s%d%s opcję konfiguracyjną pasującą do wyrażenia \"%s\" "
-msgstr[1] ""
-"Znaleziono %s%d%s opcje konfiguracyjne pasujące do wyrażenia \"%s\" "
+msgstr[0] "Znaleziono %s%d%s opcję konfiguracyjną pasującą do wyrażenia \"%s\""
+msgstr[1] "Znaleziono %s%d%s opcje konfiguracyjne pasujące do wyrażenia \"%s\""
 msgstr[2] ""
-"Znaleziono %s%d%s opcji konfiguracyjnych pasujących do wyrażenia \"%s\" "
+"Znaleziono %s%d%s opcji konfiguracyjnych pasujących do wyrażenia \"%s\""
 
 #, c-format
 msgid "%s%d%s configuration option found"
@@ -683,13 +681,13 @@ msgstr "%sBłąd: nie udało się ustawić opcji \"%s\""
 
 #, c-format
 msgid "%sError: configuration option \"%s\" not found"
-msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\" "
+msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\""
 
 msgid "Option changed: "
-msgstr "Opcja zmieniona:"
+msgstr "Opcja zmieniona: "
 
 msgid "Option created: "
-msgstr "Opcja utworzona:"
+msgstr "Opcja utworzona: "
 
 msgid "Option changed"
 msgstr "Zmieniono opcję"
@@ -699,7 +697,7 @@ msgid "%sFailed to unset option \"%s\""
 msgstr "%sNie powiodło się wyzerowanie opcji \"%s\""
 
 msgid "Option reset: "
-msgstr "Reset opcji:"
+msgstr "Reset opcji: "
 
 #, c-format
 msgid "Option removed: %s"
@@ -719,7 +717,7 @@ msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
-msgstr "%sNie można uaktualnić: plik binarny WeeChat  \"%s\" nie istnieje "
+msgstr "%sNie można uaktualnić: plik binarny WeeChat  \"%s\" nie istnieje"
 
 #, c-format
 msgid ""
@@ -2392,7 +2390,8 @@ msgstr "kolor bufora z nowymi zdarzeniami (pasek statusu)"
 msgid "text color for time (status bar)"
 msgstr "kolor czasu (pasek statusu)"
 
-msgid "text color for unsucessful text search in input line"
+#, fuzzy
+msgid "text color for unsuccessful text search in input line"
 msgstr "kolor nieudanego wyszukiwania tekstu w wprowadzonej linii"
 
 msgid "text color for actions in input line"
@@ -2888,7 +2887,7 @@ msgid "%s-MORE(%d)-"
 msgstr "%s-Więcej(%d)-"
 
 msgid "Act: "
-msgstr "Akt:"
+msgstr "Akt: "
 
 #, c-format
 msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -2930,7 +2929,7 @@ msgstr "%s%s: błąd podczas tworzenia aliasu \"%s\" => \"%s\""
 
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created"
-msgstr "Utworzono alias \"%s\" => \"%s\" "
+msgstr "Utworzono alias \"%s\" => \"%s\""
 
 msgid "List of aliases:"
 msgstr "Lista aliasów:"
@@ -3303,7 +3302,7 @@ msgstr "%s: otwarto strumień"
 
 #, c-format
 msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr "%s%s: nie można otworzyć do odczytu strumienia (%s) "
+msgstr "%s%s: nie można otworzyć do odczytu strumienia (%s)"
 
 #, c-format
 msgid "%s%s: unable to create pipe for remote control (%s)"
@@ -3570,7 +3569,7 @@ msgstr "%s%s: nie można utworzyć serwera"
 
 #, c-format
 msgid "%s: server %s%s%s created"
-msgstr "%s: utworzono serwer %s%s%s "
+msgstr "%s: utworzono serwer %s%s%s"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
@@ -3618,7 +3617,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
-msgstr "%s%s: niewłaściwa ilość argumentów dla komędy \"%s\" "
+msgstr "%s%s: niewłaściwa ilość argumentów dla komędy \"%s\""
 
 #, c-format
 msgid "%s%s: you are not on channel \"%s\""
@@ -5140,10 +5139,10 @@ msgstr ""
 "ustawione jst +k)"
 
 msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\" "
+msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\""
 
 msgid "display nick prefix in \"input_prompt\" bar item"
-msgstr "wyświetl przedrostek nicka w elemencie paska \"input_prompt\" "
+msgstr "wyświetl przedrostek nicka w elemencie paska \"input_prompt\""
 
 msgid "hide password displayed by nickserv"
 msgstr "ukryj hasło wyświetlane przez nickserv"
@@ -5341,7 +5340,7 @@ msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
 msgstr "%sCTCP zażądane przez %s%s%s: %s%s%s%s%s%s"
 
 msgid " (blocked)"
-msgstr "(zablokowane)"
+msgstr " (zablokowane)"
 
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
@@ -5987,7 +5986,7 @@ msgstr "%s: połączono z %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
-msgstr "%s%s: nie znaleziono adresu proxy \"%s\" "
+msgstr "%s%s: nie znaleziono adresu proxy \"%s\""
 
 #, c-format
 msgid "%s%s: address \"%s\" not found"
@@ -6518,7 +6517,7 @@ msgstr ""
 msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sBłąd: symbol \"%s\" nie znaleziony we wtyczce \"%s\", nie udało się "
-"załadować "
+"załadować"
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
@@ -6589,7 +6588,7 @@ msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
 msgstr "%s%s[%s%s%s%s] %s (rozpoczęto: %s%s%s%s)"
 
 msgid "ended on: "
-msgstr "zakończono:"
+msgstr "zakończono: "
 
 #, c-format
 msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
@@ -6759,16 +6758,16 @@ msgid "text color for \"connecting\" status"
 msgstr "kolor statusu \"connecting\""
 
 msgid "text color for \"waiting authentication\" status"
-msgstr "kolor statusu \"waiting authentication\" "
+msgstr "kolor statusu \"waiting authentication\""
 
 msgid "text color for \"connected\" status"
-msgstr "kolor statusu \"connected\" "
+msgstr "kolor statusu \"connected\""
 
 msgid "text color for \"authentication failed\" status"
 msgstr "kolor statusu \"authentication failed\""
 
 msgid "text color for \"disconnected\" status"
-msgstr "kolor statusu \"disconnected\" "
+msgstr "kolor statusu \"disconnected\""
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
@@ -6859,7 +6858,7 @@ msgid ""
 "(security reason)"
 msgstr ""
 "%sBłąd: argument \"-yes\" wymagany do przywrócenia domyślnych rmodifierów "
-"(względy bezpieczeństwa) "
+"(względy bezpieczeństwa)"
 
 msgid "alter modifier strings with regular expressions"
 msgstr "zmiany ciągów modyfikujących przez wyrażenia regularne"
@@ -7171,7 +7170,7 @@ msgid "    written by \"%s\", license: %s"
 msgstr "    napisane przez \"%s\", licencja: %s"
 
 msgid "  (none)"
-msgstr "(żaden)"
+msgstr "  (żaden)"
 
 #, c-format
 msgid "%s: scripts unloaded"
@@ -7510,7 +7509,7 @@ msgstr "%s%s: nie można utworzyć strumienia"
 
 #, c-format
 msgid "%s%s: unable to read local file"
-msgstr "%s%s: nie można odczytać pliku "
+msgstr "%s%s: nie można odczytać pliku"
 
 #, c-format
 msgid "%s%s: unable to send block to receiver"
@@ -7568,36 +7567,3 @@ msgstr "Hashtable (wyjście)"
 
 msgid "Pointer"
 msgstr "Wskaźnik"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr "kolor prefixu nicka operatora/administratora/właściciela kanału"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "kolor prefixu nicka posiadajacego halfopa"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr "kolor prefiksu nicka posiadającego voice"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "kolor prefixu nicka użytkownika na kanale"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: nie znaleziono kanału \"%s\" dla komendy \"%s\" "
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "typ uchwytu: komenda, timer, .. (opcjonalne)"
-
-#~ msgid "a color name"
-#~ msgstr "nazwa koloru"
-
-#, fuzzy
-#~ msgid "remove half channel operator status from nick(s)"
-#~ msgstr "usuwa status półoperatora kanału (halfopa)"
-
-#, fuzzy
-#~ msgid "give half channel operator status to nick(s)"
-#~ msgstr "nadaje status półoperatora (halfopa)"

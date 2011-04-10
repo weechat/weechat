@@ -2105,7 +2105,7 @@ config_weechat_init_options ()
     config_color_input_text_not_found = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_text_not_found", "color",
-        N_("text color for unsucessful text search in input line"),
+        N_("text color for unsuccessful text search in input line"),
         NULL, -1, 0, "red", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_actions = config_file_new_option (
