@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-03-26
+v0.3.5-dev, 2011-04-10
 
 
 Version 0.3.5 (under dev!)
@@ -42,6 +42,7 @@ Version 0.3.5 (under dev!)
 * aspell: fix spellers used after switch of window (bug #32811)
 * irc: replace options irc.color.nick_prefix_{op|halfop|voice|user} by a single
   option irc.color.nick_prefixes (task #10888)
+* irc: update short name of server buffer when server is renamed
 * irc: fix local variable "away" on server buffer (set/delete it each time away
   is set or removed on server)
 * irc: add new options irc.look.buffer_switch_autojoin and
