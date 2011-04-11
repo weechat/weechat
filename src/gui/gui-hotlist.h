@@ -20,22 +20,28 @@
 #ifndef __WEECHAT_GUI_HOTLIST_H
 #define __WEECHAT_GUI_HOTLIST_H 1
 
-#define GUI_HOTLIST_LOW       0
-#define GUI_HOTLIST_MESSAGE   1
-#define GUI_HOTLIST_PRIVATE   2
-#define GUI_HOTLIST_HIGHLIGHT 3
+enum t_gui_hotlist_priority
+{
+    GUI_HOTLIST_LOW = 0,
+    GUI_HOTLIST_MESSAGE,
+    GUI_HOTLIST_PRIVATE,
+    GUI_HOTLIST_HIGHLIGHT,
+    /* number of priorities */
+    GUI_HOTLIST_NUM_PRIORITIES,
+};
 
-#define GUI_HOTLIST_MIN       0
-#define GUI_HOTLIST_MAX       3
+#define GUI_HOTLIST_MIN 0
+#define GUI_HOTLIST_MAX (GUI_HOTLIST_NUM_PRIORITIES - 1)
 
 struct t_gui_hotlist
 {
-    int priority;                      /* 0=crappy msg (join/part), 1=msg,  */
-                                       /* 2=pv, 3=nick highlight            */
-    struct timeval creation_time;      /* time when entry was added         */
-    struct t_gui_buffer *buffer;       /* associated buffer                 */
-    struct t_gui_hotlist *prev_hotlist;/* link to previous hotlist          */
-    struct t_gui_hotlist *next_hotlist;/* link to next hotlist              */
+    enum t_gui_hotlist_priority priority;  /* 0=crappy msg (join/part),     */
+                                           /* 1=msg, 2=pv, 3=nick highlight */
+    struct timeval creation_time;          /* time when entry was added     */
+    struct t_gui_buffer *buffer;           /* associated buffer             */
+    int count[GUI_HOTLIST_NUM_PRIORITIES]; /* number of msgs by priority    */
+    struct t_gui_hotlist *prev_hotlist;    /* link to previous hotlist      */
+    struct t_gui_hotlist *next_hotlist;    /* link to next hotlist          */
 };
 
 /* history variables */
@@ -47,9 +53,10 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
-extern void gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
-                             struct timeval *creation_time,
-                             int allow_current_buffer);
+extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
+                                              enum t_gui_hotlist_priority priority,
+                                              struct timeval *creation_time,
+                                              int allow_current_buffer);
 extern void gui_hotlist_resort ();
 extern void gui_hotlist_clear ();
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);

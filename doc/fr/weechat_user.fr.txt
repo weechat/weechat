@@ -361,7 +361,7 @@ Exemple de terminal avec WeeChat :
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
+│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Act: 4:#abc(2,5), 6]                         │
 │[flashy] salut joe !█                                                                    │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
@@ -383,18 +383,18 @@ La barre 'status' contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Objet (item)          | Exemple        | Description
-| time                  | [12:55]        | heure
-| buffer_count          | [4]            | nombre de tampons ouverts
-| buffer_plugin         | [irc/freenode] | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
-| buffer_number         | 3              | numéro du tampon courant
-| buffer_name           | #test(+n)      | nom du tampon courant
-| buffer_nicklist_count | {5}            | nombre de pseudos dans la liste des pseudos
-| buffer_filter         | *              | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
-| lag                   | [Lag: 2.5]     | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
-| hotlist               | [Act: 4,2]     | liste des tampons où il y a de l'activité (messages non lus)
-| completion            | abc(2) def(5)  | liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
-| scroll                | -PLUS(50)-     | indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
+| Objet (item)          | Exemple               | Description
+| time                  | [12:55]               | heure
+| buffer_count          | [6]                   | nombre de tampons ouverts
+| buffer_plugin         | [irc/freenode]        | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
+| buffer_number         | 3                     | numéro du tampon courant
+| buffer_name           | #test(+n)             | nom du tampon courant (avec les modes du canal pour les canaux irc)
+| buffer_nicklist_count | {5}                   | nombre de pseudos dans la liste des pseudos
+| buffer_filter         | *                     | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
+| lag                   | [Lag: 2.5]            | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
+| hotlist               | [Act: 4:#abc(2,5), 6] | liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le buffer numéro 6)
+| completion            | abc(2) def(5)         | liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
+| scroll                | -PLUS(50)-            | indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 |========================================
 
 La barre 'input' contient les objets (items) suivants par défaut :
@@ -403,10 +403,10 @@ La barre 'input' contient les objets (items) suivants par défaut :
 |========================================
 | Objet (item)     | Exemple                                       | Description
 | input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
-| input_prompt     | [pseudo]                                      | prompt (pseudo pour l'extension irc)
+| input_prompt     | [flashy]                                      | prompt (pseudo pour l'extension irc)
 | away             | (absent)                                      | indicateur d'absence
 | input_search     | [Recherche texte]                             | indicateur de recherche de texte
-| input_text       | bla bla...                                    | texte entré
+| input_text       | salut joe !                                   | texte entré
 |========================================
 
 [[key_bindings]]

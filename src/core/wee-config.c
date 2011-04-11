@@ -88,6 +88,9 @@ struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hline_char;
+struct t_config_option *config_look_hotlist_buffer_separator;
+struct t_config_option *config_look_hotlist_count_max;
+struct t_config_option *config_look_hotlist_count_min_msg;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
@@ -161,6 +164,10 @@ struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_data_highlight;
 struct t_config_option *config_color_status_data_other;
+struct t_config_option *config_color_status_count_msg;
+struct t_config_option *config_color_status_count_private;
+struct t_config_option *config_color_status_count_highlight;
+struct t_config_option *config_color_status_count_other;
 struct t_config_option *config_color_status_more;
 struct t_config_option *config_color_status_time;
 struct t_config_option *config_color_input_text_not_found;
@@ -1595,6 +1602,23 @@ config_weechat_init_options ()
            "will draw a real line with ncurses, but may cause bugs with URL "
            "selection under some terminals), wide chars are NOT allowed here"),
         NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_hotlist_buffer_separator = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_buffer_separator", "string",
+        N_("string displayed between buffers in hotlist"),
+        NULL, 0, 0, ", ", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_count_max = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_count_max", "integer",
+        N_("max number of messages count to display in hotlist for a buffer "
+           "(0 = never display messages count)"),
+        NULL, 0, GUI_HOTLIST_NUM_PRIORITIES, "2", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_count_min_msg = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_count_min_msg", "integer",
+        N_("display messages count if number of messages is greater or equal "
+           "to this value"),
+        NULL, 1, 100, "2", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_names_count = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_names_count", "integer",
@@ -2087,6 +2111,30 @@ config_weechat_init_options ()
         "status_data_other", "color",
         N_("text color for buffer with new data (not messages) "
            "(status bar)"),
+        NULL, -1, 0, "default", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_count_msg = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_count_msg", "color",
+        N_("text color for count of messages in hotlist (status bar)"),
+        NULL, -1, 0, "brown", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_count_private = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_count_private", "color",
+        N_("text color for count of private messages in hotlist (status bar)"),
+        NULL, -1, 0, "green", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_count_highlight = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_count_highlight", "color",
+        N_("text color for count of highlight messages in hotlist (status bar)"),
+        NULL, -1, 0, "magenta", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_status_count_other = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "status_count_other", "color",
+        N_("text color for count of other messages in hotlist (status bar)"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_more = config_file_new_option (

@@ -1346,7 +1346,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             error = NULL;
             number = strtol (value, &error, 10);
             if (error && !error[0])
-                gui_hotlist_add (buffer, number, NULL, 1);
+                (void) gui_hotlist_add (buffer, number, NULL, 1);
         }
     }
     

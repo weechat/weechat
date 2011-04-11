@@ -1,12 +1,17 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-04-10
+v0.3.5-dev, 2011-04-11
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: add option weechat.look.hotlist_buffer_separator
+* core: add messages counts in hotlist for each buffer, new options:
+  weechat.look.hotlist_count_max, weechat.look.hotlist_count_min_msg and
+  weechat.color.status_count_{msg|private|highlight|other}
+* core: add tag "notify_none" (line with this tag will not update hotlist)
 * core: add optional bar name in command /bar default
 * core: create default bars only if no bar is defined in configuration file
 * core: add new option weechat.look.highlight_tags (force highlight on tags)

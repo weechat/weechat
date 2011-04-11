@@ -352,7 +352,7 @@ Beispiel des WeeChat-Terminals:
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
+│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Act: 4:#abc(2,5), 6]                         │
 │[flashy] hi joe!█                                                                        │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
@@ -373,18 +373,20 @@ Die 'status'-Bar besitzt als Standardeinträge:
 
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Item                  | Beispiel       | Beschreibung
-| time                  | [12:55]        | Uhrzeit
-| buffer_count          | [4]            | Anzahl der geöffneten Buffer
-| buffer_plugin         | [irc/freenode] | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
-| buffer_number         | 3              | aktuelle Nummer des Buffers
-| buffer_name           | #test(+n)      | Name des aktuellen Buffers
-| buffer_nicklist_count | {5}            | Anzahl der Nicks in Nickliste
-| buffer_filter         | *              | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
-| lag                   | [Lag: 2.5]     | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
-| hotlist               | [Act: 4,2]     | Liste der Buffer mit Aktivität (ungelesene Nachrichten)
-| completion            | abc(2) def(5)  | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
-| scroll                | -MORE(50)-     | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
+| Item                  | Beispiel              | Beschreibung
+| time                  | [12:55]               | Uhrzeit
+| buffer_count          | [6]                   | Anzahl der geöffneten Buffer
+| buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
+| buffer_number         | 3                     | aktuelle Nummer des Buffers
+// TRANSLATION MISSING
+| buffer_name           | #test(+n)             | Name des aktuellen Buffers (with channel modes for irc channels)
+| buffer_nicklist_count | {5}                   | Anzahl der Nicks in Nickliste
+| buffer_filter         | *                     | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
+| lag                   | [Lag: 2.5]            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
+// TRANSLATION MISSING
+| hotlist               | [Act: 4:#abc(2,5), 6] | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
+| completion            | abc(2) def(5)         | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
+| scroll                | -MORE(50)-            | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
 |========================================
 
 In der 'input' Bar lautet die Standardeinstellung:
@@ -393,10 +395,10 @@ In der 'input' Bar lautet die Standardeinstellung:
 |========================================
 | Item             | Beispiel                                    | Beschreibung
 | input_paste      | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
-| input_prompt     | [nick]                                      | input prompt (Nickname für den IRC)
+| input_prompt     | [flashy]                                    | input prompt (Nickname für den IRC)
 | away             | (away)                                      | Abwesenheitsanzeige
 | input_search     | [Text search]                               | Textsuche
-| input_text       | bla bla...                                  | Text der eingegeben wird
+| input_text       | hi joe!                                     | Text der eingegeben wird
 |========================================
 
 [[key_bindings]]

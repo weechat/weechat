@@ -173,6 +173,26 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `blue`)
 
+* *weechat.color.status_count_highlight*
+** description: `couleur du texte pour le nombre de highlights dans la hotlist (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `magenta`)
+
+* *weechat.color.status_count_msg*
+** description: `couleur du texte pour le nombre de messages dans la hotlist (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `brown`)
+
+* *weechat.color.status_count_other*
+** description: `couleur du texte pour le nombre d'autres messages dans la hotlist (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* *weechat.color.status_count_private*
+** description: `couleur du texte pour le nombre de messages privés dans la hotlist (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
+
 * *weechat.color.status_data_highlight*
 ** description: `couleur du texte pour un tampon avec un highlight (barre de statut)`
 ** type: couleur
@@ -352,6 +372,21 @@
 ** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-"`)
+
+* *weechat.look.hotlist_buffer_separator*
+** description: `chaîne affichée entre les tampons dans la hotlist`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `", "`)
+
+* *weechat.look.hotlist_count_max*
+** description: `nombre maximum de compteurs de messages à afficher dans la hotlist pour un tampon (0 = ne jamais afficher les compteurs de messages)`
+** type: entier
+** valeurs: 0 .. 4 (valeur par défaut: `2`)
+
+* *weechat.look.hotlist_count_min_msg*
+** description: `afficher les compteurs de messages si le nombre de messages est supérieur ou égal à cette valeur`
+** type: entier
+** valeurs: 1 .. 100 (valeur par défaut: `2`)
 
 * *weechat.look.hotlist_names_count*
 ** description: `nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)`

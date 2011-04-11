@@ -354,7 +354,7 @@ Example of terminal with WeeChat:
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Act: 4,2]                                    │
+│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Act: 4:#abc(2,5), 6]                         │
 │[flashy] hi joe!█                                                                        │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
@@ -375,18 +375,18 @@ Bar 'status' has following default items:
 
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Item                  | Example        | Description
-| time                  | [12:55]        | time
-| buffer_count          | [4]            | number of opened buffers
-| buffer_plugin         | [irc/freenode] | plugin of current buffer (irc plugin can add IRC server name used by buffer)
-| buffer_number         | 3              | current buffer number
-| buffer_name           | #test(+n)      | current buffer name
-| buffer_nicklist_count | {5}            | number of nicks in nicklist
-| buffer_filter         | *              | filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
-| lag                   | [Lag: 2.5]     | lag indicator, in seconds (hidden if lag is low)
-| hotlist               | [Act: 4,2]     | list of buffers with activity (unread messages)
-| completion            | abc(2) def(5)  | list of words for completion, with number of possible completions for each word
-| scroll                | -MORE(50)-     | scroll indicator, with number of lines below last line displayed
+| Item                  | Example               | Description
+| time                  | [12:55]               | time
+| buffer_count          | [6]                   | number of opened buffers
+| buffer_plugin         | [irc/freenode]        | plugin of current buffer (irc plugin can add IRC server name used by buffer)
+| buffer_number         | 3                     | current buffer number
+| buffer_name           | #test(+n)             | current buffer name (with channel modes for irc channels)
+| buffer_nicklist_count | {5}                   | number of nicks in nicklist
+| buffer_filter         | *                     | filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
+| lag                   | [Lag: 2.5]            | lag indicator, in seconds (hidden if lag is low)
+| hotlist               | [Act: 4:#abc(2,5), 6] | list of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
+| completion            | abc(2) def(5)         | list of words for completion, with number of possible completions for each word
+| scroll                | -MORE(50)-            | scroll indicator, with number of lines below last line displayed
 |========================================
 
 Bar 'input' has following default items:
@@ -395,10 +395,10 @@ Bar 'input' has following default items:
 |========================================
 | Item             | Example                                    | Description
 | input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
-| input_prompt     | [nick]                                     | input prompt (nick for irc plugin)
+| input_prompt     | [flashy]                                   | input prompt (nick for irc plugin)
 | away             | (away)                                     | away indicator
 | input_search     | [Text search]                              | text search indicator
-| input_text       | bla bla...                                 | input text
+| input_text       | hi joe!                                    | input text
 |========================================
 
 [[key_bindings]]

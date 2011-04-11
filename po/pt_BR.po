@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-10 10:36+0200\n"
+"POT-Creation-Date: 2011-04-11 11:50+0200\n"
 "PO-Revision-Date: 2011-04-10 11:22+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1133,7 +1133,7 @@ msgid ""
 "\n"
 "Tags most commonly used:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
-"  notify_message, notify_private, notify_highlight,\n"
+"  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx is nick in message),\n"
 "  irc_xxx (xxx is command name or number, see /server raw),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
@@ -2059,6 +2059,19 @@ msgstr ""
 "vai desenha ruma linha real com ncurses, mas pode causar bugs com seleção de "
 "URL em alguns terminais"
 
+msgid "string displayed between buffers in hotlist"
+msgstr ""
+
+msgid ""
+"max number of messages count to display in hotlist for a buffer (0 = never "
+"display messages count)"
+msgstr ""
+
+msgid ""
+"display messages count if number of messages is greater or equal to this "
+"value"
+msgstr ""
+
 # Find a better translation to 'hotlist'
 #, fuzzy
 msgid ""
@@ -2342,6 +2355,18 @@ msgid "text color for buffer with highlight (status bar)"
 msgstr ""
 
 msgid "text color for buffer with new data (not messages) (status bar)"
+msgstr ""
+
+msgid "text color for count of messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of private messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of highlight messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of other messages in hotlist (status bar)"
 msgstr ""
 
 msgid "text color for buffer with new data (status bar)"
@@ -2799,6 +2824,7 @@ msgstr ""
 msgid "%s-MORE(%d)-"
 msgstr ""
 
+#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
 msgid "Act: "
 msgstr ""
 

@@ -149,7 +149,7 @@
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightgreen`)
 
 * *weechat.color.input_text_not_found*
-** description: `text color for unsucessful text search in input line`
+** description: `text color for unsuccessful text search in input line`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `red`)
 
@@ -172,6 +172,26 @@
 ** description: `background color for window separators (when split)`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `blue`)
+
+* *weechat.color.status_count_highlight*
+** description: `text color for count of highlight messages in hotlist (status bar)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `magenta`)
+
+* *weechat.color.status_count_msg*
+** description: `text color for count of messages in hotlist (status bar)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `brown`)
+
+* *weechat.color.status_count_other*
+** description: `text color for count of other messages in hotlist (status bar)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* *weechat.color.status_count_private*
+** description: `text color for count of private messages in hotlist (status bar)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `green`)
 
 * *weechat.color.status_data_highlight*
 ** description: `text color for buffer with highlight (status bar)`
@@ -352,6 +372,21 @@
 ** description: `char used to draw horizontal separators around bars (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
 ** type: string
 ** values: any string (default value: `"-"`)
+
+* *weechat.look.hotlist_buffer_separator*
+** description: `string displayed between buffers in hotlist`
+** type: string
+** values: any string (default value: `", "`)
+
+* *weechat.look.hotlist_count_max*
+** description: `max number of messages count to display in hotlist for a buffer (0 = never display messages count)`
+** type: integer
+** values: 0 .. 4 (default value: `2`)
+
+* *weechat.look.hotlist_count_min_msg*
+** description: `display messages count if number of messages is greater or equal to this value`
+** type: integer
+** values: 1 .. 100 (default value: `2`)
 
 * *weechat.look.hotlist_names_count*
 ** description: `max number of names in hotlist (0 = no name displayed, only buffer numbers)`

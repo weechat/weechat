@@ -738,6 +738,8 @@ gui_line_free_all (struct t_gui_buffer *buffer)
 
 /*
  * gui_line_get_notify_level: get notify level for a line
+ *                            return -1 if "notify_none" is found (no notify
+ *                            for line)
  */
 
 int
@@ -747,6 +749,8 @@ gui_line_get_notify_level (struct t_gui_line *line)
     
     for (i = 0; i < line->data->tags_count; i++)
     {
+        if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
+            return -1;
         if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
             return GUI_HOTLIST_HIGHLIGHT;
         if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
@@ -844,7 +848,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     {
         if (new_line->data->highlight)
         {
-            gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 1);
+            (void) gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 1);
             if (!weechat_upgrading)
             {
                 message_for_signal = gui_chat_build_string_prefix_message (new_line);
@@ -871,7 +875,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                 }
             }
             if (notify_level >= GUI_HOTLIST_MIN)
-                gui_hotlist_add (buffer, notify_level, NULL, 1);
+                (void) gui_hotlist_add (buffer, notify_level, NULL, 1);
         }
     }
     else

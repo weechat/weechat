@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-10 10:36+0200\n"
-"PO-Revision-Date: 2011-04-10 11:21+0200\n"
+"POT-Creation-Date: 2011-04-11 11:50+0200\n"
+"PO-Revision-Date: 2011-04-10 17:33+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -1127,6 +1127,7 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
+#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1156,7 +1157,7 @@ msgid ""
 "\n"
 "Tags most commonly used:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
-"  notify_message, notify_private, notify_highlight,\n"
+"  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx is nick in message),\n"
 "  irc_xxx (xxx is command name or number, see /server raw),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
@@ -2176,6 +2177,20 @@ msgstr ""
 "Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls "
 "die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt."
 
+#, fuzzy
+msgid "string displayed between buffers in hotlist"
+msgstr "Liste der Buffer in Hotlist"
+
+msgid ""
+"max number of messages count to display in hotlist for a buffer (0 = never "
+"display messages count)"
+msgstr ""
+
+msgid ""
+"display messages count if number of messages is greater or equal to this "
+"value"
+msgstr ""
+
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
@@ -2514,13 +2529,28 @@ msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 "Farbe eines Buffers mit neuen Daten (nicht Nachrichten in der Statusbar)"
 
+#, fuzzy
+msgid "text color for count of messages in hotlist (status bar)"
+msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+
+#, fuzzy
+msgid "text color for count of private messages in hotlist (status bar)"
+msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+
+#, fuzzy
+msgid "text color for count of highlight messages in hotlist (status bar)"
+msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+
+#, fuzzy
+msgid "text color for count of other messages in hotlist (status bar)"
+msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Buffers mit neuen Daten (Statusbar)"
 
 msgid "text color for time (status bar)"
 msgstr "Textfarbe für die Uhrzeit (Statusbar)"
 
-#, fuzzy
 msgid "text color for unsuccessful text search in input line"
 msgstr "Textfarbe in der Eingabezeile bei einer erfolglosen Textsuche "
 
@@ -3035,8 +3065,9 @@ msgstr "Textsuche (genau)"
 msgid "%s-MORE(%d)-"
 msgstr "%s-MEHR(%d)-"
 
+#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
 msgid "Act: "
-msgstr "Aktiv: "
+msgstr "Akt: "
 
 #, c-format
 msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""

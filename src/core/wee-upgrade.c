@@ -304,9 +304,10 @@ upgrade_weechat_read_cb (void *data,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
     struct t_gui_line *new_line;
+    struct t_gui_hotlist *new_hotlist;
     struct timeval creation_time;
     void *buf;
-    int size, index, length;
+    int i, size, index, length;
     
     /* make C compiler happy */
     (void) data;
@@ -563,10 +564,20 @@ upgrade_weechat_read_cb (void *data,
                         if (buf)
                         {
                             memcpy (&creation_time, buf, size);
-                            gui_hotlist_add (ptr_buffer,
-                                             infolist_integer (infolist, "priority"),
-                                             &creation_time,
-                                             1);
+                            new_hotlist = gui_hotlist_add (ptr_buffer,
+                                                           infolist_integer (infolist, "priority"),
+                                                           &creation_time,
+                                                           1);
+                            if (new_hotlist)
+                            {
+                                for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
+                                {
+                                    snprintf (option_name, sizeof (option_name),
+                                              "count_%02d", i);
+                                    new_hotlist->count[i] = infolist_integer (infolist,
+                                                                              option_name);
+                                }
+                            }
                         }
                     }
                 }

@@ -361,8 +361,8 @@ Esempio di terminale con WeeChat:
 │                                                                              │          │
 │                                                                              │          │
 │                                                                              │          │
-│[12:55] [4] [irc/freenode] 3:#test(+n){5}* [Attività: 4,2]                    │          │
-│[flashy] ciao joe!█                                                           │          │
+│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Att: 4:#abc(2,5), 6]                         │
+│[flashy] ciao joe!█                                                                      │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -382,18 +382,20 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Elemento                   | Esempio         | Descrizione
-| time                       | [12:55]         | ora
-| buffer_count               | [4]             | numero di buffer aperti
-| buffer_plugin              | [irc/freenode]  | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
-| buffer_number              | 3               | numero del buffer corrente
-| buffer_name                | #test(+n)       | nome del buffer attivo
-| buffer_nicklist_count      | {5}             | numero di nick nella lista nick
-| buffer_filter              | *               | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
-| lag                        | [Ritardo: 2.5]  | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-| hotlist                    | [Attività: 4,2] | elenco dei buffer con attività (messaggi non letti)
-| completion                 | abc(2) def(5)   | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
-| scroll                     | -ANCORA(50)-    | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
+| Elemento                   | Esempio               | Descrizione
+| time                       | [12:55]               | ora
+| buffer_count               | [6]                   | numero di buffer aperti
+| buffer_plugin              | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
+| buffer_number              | 3                     | numero del buffer corrente
+// TRANSLATION MISSING
+| buffer_name                | #test(+n)             | nome del buffer attivo (with channel modes for irc channels)
+| buffer_nicklist_count      | {5}                   | numero di nick nella lista nick
+| buffer_filter              | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
+| lag                        | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
+// TRANSLATION MISSING
+| hotlist                    | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
+| completion                 | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
+| scroll                     | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
 
 La barra 'input' ha i seguenti elementi predefiniti:
@@ -402,10 +404,10 @@ La barra 'input' ha i seguenti elementi predefiniti:
 |========================================
 | Elemento         | Esempio                                       | Descrizione
 | input_paste      | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
-| input_prompt     | [nick]                                        | prompt per l'input (nick per il plugin irc)
+| input_prompt     | [flashy]                                      | prompt per l'input (nick per il plugin irc)
 | away             | (assente)                                     | indicatore di assenza
 | input_search     | [Ricerca testo]                               | indicatore di ricerca testo
-| input_text       | bla bla...                                    | testo in input
+| input_text       | ciao joe!                                     | testo in input
 |========================================
 
 [[key_bindings]]

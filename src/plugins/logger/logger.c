@@ -944,18 +944,19 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         {
             if (datetime != 0)
             {
-                weechat_printf_date_tags (buffer, datetime, "no_highlight",
+                weechat_printf_date_tags (buffer, datetime,
+                                          "no_highlight,notify_none",
                                           "%s", pos_message + 1);
             }
             else
             {
-                weechat_printf_tags (buffer, "no_highlight",
+                weechat_printf_tags (buffer, "no_highlight,notify_none",
                                      "%s", ptr_lines->data);
             }
         }
         else
         {
-            weechat_printf_tags (buffer, "no_highlight",
+            weechat_printf_tags (buffer, "no_highlight,notify_none",
                                  "%s", ptr_lines->data);
         }
         num_lines++;
@@ -965,9 +966,9 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         logger_tail_free (last_lines);
     if (num_lines > 0)
     {
-        weechat_printf (buffer,
-                        _("===\t========== End of backlog (%d lines) =========="),
-                        num_lines);
+        weechat_printf_tags (buffer, "no_highlight,notify_none",
+                             _("===\t========== End of backlog (%d lines) =========="),
+                             num_lines);
         weechat_buffer_set (buffer, "unread", "");
     }
     weechat_buffer_set (buffer, "print_hooks_enabled", "1");
