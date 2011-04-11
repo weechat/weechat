@@ -523,16 +523,14 @@ gui_color_init_vars ()
         
         gui_color_num_pairs = (gui_color_term_color_pairs >= 256) ?
             255 : gui_color_term_color_pairs - 1;
-        if (gui_color_term_colors > 0)
-        {
-            size = (gui_color_term_colors + 2)
-                * (gui_color_term_colors + 2)
-                * sizeof (gui_color_pairs[0]);
-            gui_color_pairs = malloc (size);
-            if (gui_color_pairs)
-                memset (gui_color_pairs, 0, size);
-            gui_color_pairs_used = 0;
-        }
+        size = (gui_color_term_colors + 2)
+            * (gui_color_term_colors + 2)
+            * sizeof (gui_color_pairs[0]);
+        gui_color_pairs = malloc (size);
+        if (gui_color_pairs)
+            memset (gui_color_pairs, 0, size);
+        gui_color_pairs_used = 0;
+        
         /* reserved for future usage */
         /*
         gui_color_term_color_content = malloc (sizeof (gui_color_term_color_content[0]) *
@@ -548,6 +546,18 @@ gui_color_init_vars ()
             }
         }
         */
+    }
+    else
+    {
+        gui_color_term_colors = 1;
+        gui_color_term_color_pairs = 1;
+        gui_color_term_can_change_color = 0;
+        gui_color_num_pairs = 1;
+        size = sizeof (gui_color_pairs[0]);
+        gui_color_pairs = malloc (size);
+        if (gui_color_pairs)
+            memset (gui_color_pairs, 0, size);
+        gui_color_pairs_used = 0;
     }
 }
 
