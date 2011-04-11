@@ -45,6 +45,8 @@ Version 0.3.5 (under dev!)
 * core: allow background for nick colors (using ":")
 * api: add new function buffer_match_list
 * aspell: fix spellers used after switch of window (bug #32811)
+* irc: do not rejoin channels where /part has been issued before reconnection
+  to server (bug #33029)
 * irc: use nick color for users outside the channel
 * irc: replace options irc.color.nick_prefix_{op|halfop|voice|user} by a single
   option irc.color.nick_prefixes (task #10888)

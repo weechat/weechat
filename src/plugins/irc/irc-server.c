@@ -3499,7 +3499,8 @@ irc_server_autojoin_channels (struct t_irc_server *server)
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                && !ptr_channel->part)
             {
                 if (ptr_channel->key)
                 {

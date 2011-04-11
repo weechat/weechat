@@ -461,7 +461,11 @@ IRC_PROTOCOL_CALLBACK(join)
     pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
     
     ptr_channel = irc_channel_search (server, pos_channel);
-    if (!ptr_channel)
+    if (ptr_channel)
+    {
+        ptr_channel->part = 0;
+    }
+    else
     {
         /*
          * if someone else joins and channel is not opened, then just
@@ -1272,6 +1276,8 @@ IRC_PROTOCOL_CALLBACK(part)
                 {
                     if (weechat_config_boolean (irc_config_look_part_closes_buffer))
                         weechat_buffer_close (ptr_channel->buffer);
+                    else
+                        ptr_channel->part = 1;
                 }
             }
             else

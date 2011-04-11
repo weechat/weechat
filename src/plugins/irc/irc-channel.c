@@ -260,6 +260,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->away_message = NULL;
     new_channel->has_quit_server = 0;
     new_channel->cycle = 0;
+    new_channel->part = 0;
     new_channel->display_creation_date = 0;
     new_channel->nick_completion_reset = 0;
     new_channel->pv_remote_nick_color = NULL;
@@ -887,6 +888,8 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "cycle", channel->cycle))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "part", channel->part))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "display_creation_date", channel->display_creation_date))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "nick_completion_reset", channel->nick_completion_reset))
@@ -955,6 +958,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       away_message . . . . . . : '%s'",  channel->away_message);
     weechat_log_printf ("       has_quit_server. . . . . : %d",    channel->has_quit_server);
     weechat_log_printf ("       cycle. . . . . . . . . . : %d",    channel->cycle);
+    weechat_log_printf ("       part . . . . . . . . . . : %d",    channel->part);
     weechat_log_printf ("       display_creation_date. . : %d",    channel->display_creation_date);
     weechat_log_printf ("       nick_completion_reset. . : %d",    channel->nick_completion_reset);
     weechat_log_printf ("       pv_remote_nick_color . . : '%s'",  channel->pv_remote_nick_color);

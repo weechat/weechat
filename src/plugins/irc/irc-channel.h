@@ -52,6 +52,7 @@ struct t_irc_channel
     int has_quit_server;               /* =1 if nick has quit (pv only), to */
                                        /* display message when he's back    */
     int cycle;                         /* currently cycling (/part + /join) */
+    int part;                          /* /part done on channel?            */
     int display_creation_date;         /* 1 for displaying creation date    */
     int nick_completion_reset;         /* 1 for resetting nick completion   */
                                        /* there was some join/part on chan  */
