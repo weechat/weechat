@@ -116,13 +116,17 @@ gui_keyboard_default_bindings ()
     BIND(/* ^F          */ "ctrl-F",             "/input move_next_char");
     BIND(/* m-b         */ "meta-b",             "/input move_previous_word");
     BIND(/* ^left       */ "meta-Od",            "/input move_previous_word");
+    BIND(/* ^left       */ "meta-OD",            "/input move_previous_word");
     BIND(/* m-f         */ "meta-f",             "/input move_next_word");
     BIND(/* ^right      */ "meta-Oc",            "/input move_next_word");
+    BIND(/* ^right      */ "meta-OC",            "/input move_next_word");
     BIND(/* up          */ "meta2-A",            "/input history_previous");
     BIND(/* down        */ "meta2-B",            "/input history_next");
     BIND(/* ^up         */ "meta-Oa",            "/input history_global_previous");
+    BIND(/* ^up         */ "meta-OA",            "/input history_global_previous");
     BIND(/* ^up         */ "meta2-1;5A",         "/input history_global_previous");
     BIND(/* ^down       */ "meta-Ob",            "/input history_global_next");
+    BIND(/* ^down       */ "meta-OB",            "/input history_global_next");
     BIND(/* ^down       */ "meta2-1;5B",         "/input history_global_next");
     BIND(/* m-a         */ "meta-a",             "/input jump_smart");
     BIND(/* m-j,m-l     */ "meta-jmeta-l",       "/input jump_last_buffer");
