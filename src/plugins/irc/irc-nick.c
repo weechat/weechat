@@ -897,7 +897,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
               weechat_config_string (irc_config_look_nick_prefix) : "",
               str_prefix_color,
               prefix,
-              (force_color) ? force_color : ((nick) ? nick->color : IRC_COLOR_CHAT_NICK),
+              (force_color) ? force_color : ((nick) ? nick->color : ((nickname) ? irc_nick_find_color (nickname) : IRC_COLOR_CHAT_NICK)),
               (nick) ? nick->name : nickname,
               (weechat_config_string (irc_config_look_nick_suffix)
                && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
