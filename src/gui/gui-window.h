@@ -128,6 +128,7 @@ extern struct t_gui_window *gui_window_new (struct t_gui_window *parent_window,
                                             int x, int y, int width, int height,
                                             int width_pct, int height_pct);
 extern int gui_window_valid (struct t_gui_window *window);
+extern struct t_gui_window *gui_window_search_with_buffer (struct t_gui_buffer *buffer);
 extern int gui_window_get_integer (struct t_gui_window *window,
                                    const char *property);
 extern const char *gui_window_get_string (struct t_gui_window *window,

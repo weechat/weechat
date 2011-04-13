@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20110311-01"
+#define WEECHAT_PLUGIN_API_VERSION "20110413-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -600,6 +600,7 @@ struct t_weechat_plugin
     int (*buffer_match_list) (struct t_gui_buffer *buffer, const char *string);
     
     /* windows */
+    struct t_gui_window *(*window_search_with_buffer) (struct t_gui_buffer *buffer);
     int (*window_get_integer) (struct t_gui_window *window,
                                const char *property);
     const char *(*window_get_string) (struct t_gui_window *window,
@@ -1260,6 +1261,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->buffer_match_list(__buffer, __string)
 
 /* windows */
+#define weechat_window_search_with_buffer(__buffer)                     \
+    weechat_plugin->window_search_with_buffer(__buffer)
 #define weechat_window_get_integer(__window, __property)                \
     weechat_plugin->window_get_integer(__window, __property)
 #define weechat_window_get_string(__window, __property)                 \

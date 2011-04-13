@@ -5498,6 +5498,41 @@ weechat_ruby_api_current_window (VALUE class)
 }
 
 /*
+ * weechat_ruby_api_window_search_with_buffer: search a window with buffer
+ *                                             pointer
+ */
+
+static VALUE
+weechat_ruby_api_window_search_with_buffer (VALUE class, VALUE buffer)
+{
+    char *c_buffer, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    
+    c_buffer = StringValuePtr (buffer);
+    
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (c_buffer)));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_window_get_integer: get a window property as integer
  */
 
@@ -7745,6 +7780,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "buffer_string_replace_local_var", &weechat_ruby_api_buffer_string_replace_local_var, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_match_list", &weechat_ruby_api_buffer_match_list, 2);
     rb_define_module_function (ruby_mWeechat, "current_window", &weechat_ruby_api_current_window, 0);
+    rb_define_module_function (ruby_mWeechat, "window_search_with_buffer", &weechat_ruby_api_window_search_with_buffer, 1);
     rb_define_module_function (ruby_mWeechat, "window_get_integer", &weechat_ruby_api_window_get_integer, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_string", &weechat_ruby_api_window_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "window_get_pointer", &weechat_ruby_api_window_get_pointer, 2);

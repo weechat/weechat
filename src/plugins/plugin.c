@@ -621,6 +621,7 @@ plugin_load (const char *filename)
         new_plugin->buffer_string_replace_local_var = &gui_buffer_string_replace_local_var;
         new_plugin->buffer_match_list = &gui_buffer_match_list;
         
+        new_plugin->window_search_with_buffer = &gui_window_search_with_buffer;
         new_plugin->window_get_integer = &gui_window_get_integer;
         new_plugin->window_get_string = &gui_window_get_string;
         new_plugin->window_get_pointer = &gui_window_get_pointer;

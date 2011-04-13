@@ -5081,6 +5081,39 @@ weechat_python_api_current_window (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_window_search_with_buffer: search a window with buffer
+ *                                               pointer
+ */
+
+static PyObject *
+weechat_python_api_window_search_with_buffer (PyObject *self, PyObject *args)
+{
+    char *buffer, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    buffer = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (buffer)));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_window_get_integer get a window property as integer
  */
 
@@ -7076,6 +7109,7 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_string_replace_local_var", &weechat_python_api_buffer_string_replace_local_var, METH_VARARGS, "" },
     { "buffer_match_list", &weechat_python_api_buffer_match_list, METH_VARARGS, "" },
     { "current_window", &weechat_python_api_current_window, METH_VARARGS, "" },
+    { "window_search_with_buffer", &weechat_python_api_window_search_with_buffer, METH_VARARGS, "" },
     { "window_get_integer", &weechat_python_api_window_get_integer, METH_VARARGS, "" },
     { "window_get_string", &weechat_python_api_window_get_string, METH_VARARGS, "" },
     { "window_get_pointer", &weechat_python_api_window_get_pointer, METH_VARARGS, "" },

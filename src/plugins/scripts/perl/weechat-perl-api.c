@@ -4823,6 +4823,36 @@ XS (XS_weechat_api_current_window)
 }
 
 /*
+ * weechat::window_search_with_buffer: search a window with buffer pointer
+ */
+
+XS (XS_weechat_api_window_search_with_buffer)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (SvPV (ST (0), PL_na))));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+
+/*
  * weechat::window_get_integer: get a window property as integer
  */
 
@@ -6742,6 +6772,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_string_replace_local_var", XS_weechat_api_buffer_string_replace_local_var, "weechat");
     newXS ("weechat::buffer_match_list", XS_weechat_api_buffer_match_list, "weechat");
     newXS ("weechat::current_window", XS_weechat_api_current_window, "weechat");
+    newXS ("weechat::window_search_with_buffer", XS_weechat_api_window_search_with_buffer, "weechat");
     newXS ("weechat::window_get_integer", XS_weechat_api_window_get_integer, "weechat");
     newXS ("weechat::window_get_string", XS_weechat_api_window_get_string, "weechat");
     newXS ("weechat::window_get_pointer", XS_weechat_api_window_get_pointer, "weechat");

@@ -8674,7 +8674,7 @@ Script (Python):
 value = weechat.buffer_get_pointer(buffer, property)
 
 # esempio
-weechat.prnt("", "plugin pointer of my buffer: %lx" % weechat.buffer_get_pointer(my_buffer, "plugin"))
+weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
 ----------------------------------------
 
 weechat_buffer_set
@@ -9038,6 +9038,50 @@ window = weechat.current_window()
 current_window = weechat.current_window()
 ----------------------------------------
 
+// TRANSLATION MISSING
+weechat_window_search_with_buffer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.5._
+
+Return pointer to window displaying buffer.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buffer);
+----------------------------------------
+
+Argomenti:
+
+* 'buffer': buffer pointer
+
+Valore restituito:
+
+* pointer to window displaying buffer (NULL if no window is displaying buffer)
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL,
+                "window displaying core buffer: %lx",
+                weechat_window_search_with_buffer (weechat_buffer_search_main ()));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+window = weechat.window_search_with_buffer(buffer)
+
+# esempio
+weechat.prnt("", "window displaying core buffer: %s"
+    % weechat.window_search_with_buffer(weechat.buffer_search_main()))
+----------------------------------------
+
 weechat_window_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -9168,7 +9212,7 @@ Script (Python):
 value = weechat.window_get_pointer(window, property)
 
 # esempio
-weechat.prnt("", "buffer displayed in current window: %lx"
+weechat.prnt("", "buffer displayed in current window: %s"
     % weechat.window_get_pointer(weechat.current_window(), "buffer"))
 ----------------------------------------
 
@@ -11333,7 +11377,7 @@ Script (Python):
 value = weechat.infolist_pointer(infolist, var)
 
 # esempio
-weechat.prnt("", "pointer = 0x%lx" % weechat.infolist_pointer(infolist, "my_pointer"))
+weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----------------------------------------
 
 weechat_infolist_buffer

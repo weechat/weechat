@@ -484,6 +484,38 @@ gui_window_valid (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_search_with_buffer: search window displaying a buffer
+ *                                return NULL if no window is displaying given
+ *                                buffer
+ *                                If many windows are displaying this buffer,
+ *                                the first window in list is returned (or
+ *                                current window if it is displaying this
+ *                                buffer)
+ */
+
+struct t_gui_window *
+gui_window_search_with_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *ptr_window;
+    
+    if (!buffer)
+        return NULL;
+    
+    if (gui_current_window->buffer == buffer)
+        return gui_current_window;
+    
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (ptr_window->buffer == buffer)
+            return ptr_window;
+    }
+    
+    /* no window displaying buffer */
+    return NULL;
+}
+
+/*
  * gui_window_get_integer: get a window property as integer
  */
 
@@ -1064,7 +1096,7 @@ gui_window_search_start (struct t_gui_window *window)
     if (window->buffer->input_buffer && window->buffer->input_buffer[0])
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
-    gui_input_delete_line (window);
+    gui_input_delete_line (window->buffer);
 }
 
 /*
@@ -1101,7 +1133,7 @@ gui_window_search_stop (struct t_gui_window *window)
 {
     window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
-    gui_input_delete_line (window);
+    gui_input_delete_line (window->buffer);
     if (window->buffer->text_search_input)
     {
         gui_input_insert_string (window->buffer,

@@ -740,8 +740,7 @@ COMMAND_CALLBACK(buffer)
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
         COMMAND_MIN_ARGS(3, "buffer notify");
-        config_weechat_notify_set (gui_current_window->buffer,
-                                   argv_eol[2]);
+        config_weechat_notify_set (buffer, argv_eol[2]);
         return WEECHAT_RC_OK;
     }
     
@@ -860,15 +859,15 @@ COMMAND_CALLBACK(buffer)
         if (error && !error[0])
         {
             /* buffer is currently displayed ? then jump to previous buffer */
-            if ((number == gui_current_window->buffer->number)
+            if ((number == buffer->number)
                 && (CONFIG_BOOLEAN(config_look_jump_current_to_previous_buffer))
                 && gui_buffers_visited)
             {
-                gui_input_jump_previously_visited_buffer (gui_current_window);
+                gui_input_jump_previously_visited_buffer (buffer);
             }
             else
             {
-                if (number != gui_current_window->buffer->number)
+                if (number != buffer->number)
                 {
                     gui_buffer_switch_by_number (gui_current_window,
                                                  (int) number);
@@ -883,8 +882,10 @@ COMMAND_CALLBACK(buffer)
     error = NULL;
     number = strtol (argv[1], &error, 10);
     if (error && !error[0])
+    {
         gui_buffer_switch_by_number (gui_current_window,
                                      (int) number);
+    }
     else
     {
         ptr_buffer = NULL;
@@ -2078,89 +2079,88 @@ COMMAND_CALLBACK(input)
 {
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
     
     if (argc > 1)
     {
         if (string_strcasecmp (argv[1], "clipboard_paste") == 0)
-            gui_input_clipboard_paste (gui_current_window);
+            gui_input_clipboard_paste (buffer);
         else if (string_strcasecmp (argv[1], "return") == 0)
-            gui_input_return (gui_current_window);
+            gui_input_return (buffer);
         else if (string_strcasecmp (argv[1], "complete_next") == 0)
-            gui_input_complete_next (gui_current_window);
+            gui_input_complete_next (buffer);
         else if (string_strcasecmp (argv[1], "complete_previous") == 0)
-            gui_input_complete_previous (gui_current_window);
+            gui_input_complete_previous (buffer);
         else if (string_strcasecmp (argv[1], "search_text") == 0)
-            gui_input_search_text (gui_current_window);
+            gui_input_search_text (buffer);
         else if (string_strcasecmp (argv[1], "delete_previous_char") == 0)
-            gui_input_delete_previous_char (gui_current_window);
+            gui_input_delete_previous_char (buffer);
         else if (string_strcasecmp (argv[1], "delete_next_char") == 0)
-            gui_input_delete_next_char (gui_current_window);
+            gui_input_delete_next_char (buffer);
         else if (string_strcasecmp (argv[1], "delete_previous_word") == 0)
-            gui_input_delete_previous_word (gui_current_window);
+            gui_input_delete_previous_word (buffer);
         else if (string_strcasecmp (argv[1], "delete_next_word") == 0)
-            gui_input_delete_next_word (gui_current_window);
+            gui_input_delete_next_word (buffer);
         else if (string_strcasecmp (argv[1], "delete_beginning_of_line") == 0)
-            gui_input_delete_beginning_of_line (gui_current_window);
+            gui_input_delete_beginning_of_line (buffer);
         else if (string_strcasecmp (argv[1], "delete_end_of_line") == 0)
-            gui_input_delete_end_of_line (gui_current_window);
+            gui_input_delete_end_of_line (buffer);
         else if (string_strcasecmp (argv[1], "delete_line") == 0)
-            gui_input_delete_line (gui_current_window);
+            gui_input_delete_line (buffer);
         else if (string_strcasecmp (argv[1], "transpose_chars") == 0)
-            gui_input_transpose_chars (gui_current_window);
+            gui_input_transpose_chars (buffer);
         else if (string_strcasecmp (argv[1], "move_beginning_of_line") == 0)
-            gui_input_move_beginning_of_line (gui_current_window);
+            gui_input_move_beginning_of_line (buffer);
         else if (string_strcasecmp (argv[1], "move_end_of_line") == 0)
-            gui_input_move_end_of_line (gui_current_window);
+            gui_input_move_end_of_line (buffer);
         else if (string_strcasecmp (argv[1], "move_previous_char") == 0)
-            gui_input_move_previous_char (gui_current_window);
+            gui_input_move_previous_char (buffer);
         else if (string_strcasecmp (argv[1], "move_next_char") == 0)
-            gui_input_move_next_char (gui_current_window);
+            gui_input_move_next_char (buffer);
         else if (string_strcasecmp (argv[1], "move_previous_word") == 0)
-            gui_input_move_previous_word (gui_current_window);
+            gui_input_move_previous_word (buffer);
         else if (string_strcasecmp (argv[1], "move_next_word") == 0)
-            gui_input_move_next_word (gui_current_window);
+            gui_input_move_next_word (buffer);
         else if (string_strcasecmp (argv[1], "history_previous") == 0)
-            gui_input_history_local_previous (gui_current_window);
+            gui_input_history_local_previous (buffer);
         else if (string_strcasecmp (argv[1], "history_next") == 0)
-            gui_input_history_local_next (gui_current_window);
+            gui_input_history_local_next (buffer);
         else if (string_strcasecmp (argv[1], "history_global_previous") == 0)
-            gui_input_history_global_previous (gui_current_window);
+            gui_input_history_global_previous (buffer);
         else if (string_strcasecmp (argv[1], "history_global_next") == 0)
-            gui_input_history_global_next (gui_current_window);
+            gui_input_history_global_next (buffer);
         else if (string_strcasecmp (argv[1], "jump_smart") == 0)
-            gui_input_jump_smart (gui_current_window);
+            gui_input_jump_smart (buffer);
         else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
-            gui_input_jump_last_buffer (gui_current_window);
+            gui_input_jump_last_buffer (buffer);
         else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
-            gui_input_jump_previously_visited_buffer (gui_current_window);
+            gui_input_jump_previously_visited_buffer (buffer);
         else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
-            gui_input_jump_next_visited_buffer (gui_current_window);
+            gui_input_jump_next_visited_buffer (buffer);
         else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
-            gui_input_hotlist_clear (gui_current_window);
+            gui_input_hotlist_clear (buffer);
         else if (string_strcasecmp (argv[1], "grab_key") == 0)
-            gui_input_grab_key (gui_current_window);
+            gui_input_grab_key (buffer);
         else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
-            gui_input_grab_key_command (gui_current_window);
+            gui_input_grab_key_command (buffer);
         else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
-            gui_input_scroll_unread (gui_current_window);
+            gui_input_scroll_unread (buffer);
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
             gui_input_set_unread ();
         else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
-            gui_input_set_unread_current (gui_current_window);
+            gui_input_set_unread_current (buffer);
         else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
-            gui_input_switch_active_buffer (gui_current_window);
+            gui_input_switch_active_buffer (buffer);
         else if (string_strcasecmp (argv[1], "switch_active_buffer_previous") == 0)
-            gui_input_switch_active_buffer_previous (gui_current_window);
+            gui_input_switch_active_buffer_previous (buffer);
         else if (string_strcasecmp (argv[1], "insert") == 0)
         {
             if (argc > 2)
-                gui_input_insert (gui_current_window, argv_eol[2]);
+                gui_input_insert (buffer, argv_eol[2]);
         }
         else if (string_strcasecmp (argv[1], "undo") == 0)
-            gui_input_undo (gui_current_window);
+            gui_input_undo (buffer);
         else if (string_strcasecmp (argv[1], "redo") == 0)
-            gui_input_redo (gui_current_window);
+            gui_input_redo (buffer);
     }
     
     return WEECHAT_RC_OK;

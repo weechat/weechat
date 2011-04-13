@@ -5303,6 +5303,42 @@ weechat_lua_api_current_window (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_window_search_with_buffer: search a window with buffer
+ *                                            pointer
+ */
+
+static int
+weechat_lua_api_window_search_with_buffer (lua_State *L)
+{
+    const char *buffer;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (buffer)));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_window_get_integer: get a window property as integer
  */
 
@@ -7807,6 +7843,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_string_replace_local_var", &weechat_lua_api_buffer_string_replace_local_var },
     { "buffer_match_list", &weechat_lua_api_buffer_match_list },
     { "current_window", &weechat_lua_api_current_window },
+    { "window_search_with_buffer", &weechat_lua_api_window_search_with_buffer },
     { "window_get_integer", &weechat_lua_api_window_get_integer },
     { "window_get_string", &weechat_lua_api_window_get_string },
     { "window_get_pointer", &weechat_lua_api_window_get_pointer },

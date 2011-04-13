@@ -5391,6 +5391,41 @@ weechat_tcl_api_current_window (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_window_search_with_buffer: search a window with buffer
+ *                                            pointer
+ */
+
+static int
+weechat_tcl_api_window_search_with_buffer (ClientData clientData, Tcl_Interp *interp,
+                                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *buffer, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "window_search_with_buffer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (buffer)));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_window_get_integer: get a window property as integer
  */
 
@@ -7690,6 +7725,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_buffer_match_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::current_window",
                           weechat_tcl_api_current_window, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::window_search_with_buffer",
+                          weechat_tcl_api_window_search_with_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::window_get_integer",
                           weechat_tcl_api_window_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::window_get_string",

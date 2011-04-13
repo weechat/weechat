@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-dev, 2011-04-11
+v0.3.5-dev, 2011-04-13
 
 
 Version 0.3.5 (under dev!)
@@ -43,7 +43,7 @@ Version 0.3.5 (under dev!)
 * core: dynamically allocate color pairs (extended colors can be used without
   being added with command "/color")
 * core: allow background for nick colors (using ":")
-* api: add new function buffer_match_list
+* api: add new functions buffer_match_list and window_search_with_buffer
 * aspell: fix spellers used after switch of window (bug #32811)
 * irc: do not rejoin channels where /part has been issued before reconnection
   to server (bug #33029)
