@@ -26,20 +26,29 @@ p.table {
 .key.ctrl {
     font-size: 0.75em;
     font-variant: small-caps;
-    border-top: solid 1px #DAD0D0;
-    border-left: solid 1px #DAD0D0;
-    border-bottom: solid 1px #AAA0A0;
-    border-right: solid 1px #AAA0A0;
-    background-color: #FAF0F0;
+    border-top: solid 1px #DFD0D0;
+    border-left: solid 1px #DFD0D0;
+    border-bottom: solid 1px #AFA0A0;
+    border-right: solid 1px #AFA0A0;
+    background-color: #FFF0F0;
 }
 .key.alt {
     font-size: 0.75em;
     font-variant: small-caps;
-    border-top: solid 1px #D0C5C5;
-    border-left: solid 1px #D0C5C5;
-    border-bottom: solid 1px #A09595;
-    border-right: solid 1px #A09595;
-    background-color: #F0E5E5;
+    border-top: solid 1px #DFBBAB;
+    border-left: solid 1px #DFBBAB;
+    border-bottom: solid 1px #AF8B7B;
+    border-right: solid 1px #AF8B7B;
+    background-color: #FFDBCB;
+}
+.key.shift {
+    font-size: 0.75em;
+    font-variant: small-caps;
+    border-top: solid 1px #D5D5D5;
+    border-left: solid 1px #D5D5D5;
+    border-bottom: solid 1px #A5A5A5;
+    border-right: solid 1px #A5A5A5;
+    background-color: #F5F5F5;
 }
 .key.other {
     font-size: 0.75em;
