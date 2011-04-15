@@ -170,6 +170,7 @@ script_upgrade_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                 }
             }
         }
+        weechat_infolist_free (infolist);
     }
 }
 

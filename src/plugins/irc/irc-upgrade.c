@@ -258,6 +258,7 @@ irc_upgrade_set_buffer_callbacks ()
                 }
             }
         }
+        weechat_infolist_free (infolist);
     }
 }
 
