@@ -174,22 +174,22 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `blue`)
 
 * *weechat.color.status_count_highlight*
-** Beschreibung: `text color for count of highlight messages in hotlist (status bar)`
+** Beschreibung: `Farbe für die Anzahl der Highlight-Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `magenta`)
 
 * *weechat.color.status_count_msg*
-** Beschreibung: `text color for count of messages in hotlist (status bar)`
+** Beschreibung: `Farbe für die Anzahl der Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * *weechat.color.status_count_other*
-** Beschreibung: `text color for count of other messages in hotlist (status bar)`
+** Beschreibung: `Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *weechat.color.status_count_private*
-** Beschreibung: `text color for count of private messages in hotlist (status bar)`
+** Beschreibung: `Farbe für die Anzahl der privaten Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
@@ -374,17 +374,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * *weechat.look.hotlist_buffer_separator*
-** Beschreibung: `string displayed between buffers in hotlist`
+** Beschreibung: `Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der Hotlist genutzt werden soll.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `", "`)
 
 * *weechat.look.hotlist_count_max*
-** Beschreibung: `max number of messages count to display in hotlist for a buffer (0 = never display messages count)`
+** Beschreibung: `Maximale Anzahl an Nachrichten für den Nachrichtenzähler in der Hotlist, pro Buffer (0 = der Nachrichtenzähler wird nicht dargestellt)`
 ** Typ: integer
 ** Werte: 0 .. 4 (Standardwert: `2`)
 
 * *weechat.look.hotlist_count_min_msg*
-** Beschreibung: `display messages count if number of messages is greater or equal to this value`
+** Beschreibung: `Zeigt einen Nachrichtenzähler an sofern die Anzahl der Nachrichten größer oder gleich diesen Wertes ist.`
 ** Typ: integer
 ** Werte: 1 .. 100 (Standardwert: `2`)
 

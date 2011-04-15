@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2011-04-15 12:10+0200\n"
-"PO-Revision-Date: 2011-04-14 10:00+0200\n"
+"PO-Revision-Date: 2011-04-15 21:04+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -1127,7 +1127,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1215,10 +1214,10 @@ msgstr ""
 "\n"
 "Die am häufigsten gebrauchten Tags lauten:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (log Level),\n"
-"  notify_message, notify_private, notify_highlight,\n"
+"  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx ist durch den Nicknamen zu ersetzen),\n"
-"  irc_xxx (xxx ist durch einen IRC Befehl oder die IRC Nummer zu ersetzen, "
-"siehe /server raw)\n"
+"  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server "
+"raw)\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "\n"
@@ -2177,19 +2176,24 @@ msgstr ""
 "Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls "
 "die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt."
 
-#, fuzzy
 msgid "string displayed between buffers in hotlist"
-msgstr "Liste der Buffer in Hotlist"
+msgstr ""
+"Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der "
+"Hotlist genutzt werden soll."
 
 msgid ""
 "max number of messages count to display in hotlist for a buffer (0 = never "
 "display messages count)"
 msgstr ""
+"Maximale Anzahl an Nachrichten für den Nachrichtenzähler in der Hotlist, pro "
+"Buffer (0 = der Nachrichtenzähler wird nicht dargestellt)"
 
 msgid ""
 "display messages count if number of messages is greater or equal to this "
 "value"
 msgstr ""
+"Zeigt einen Nachrichtenzähler an sofern die Anzahl der Nachrichten größer "
+"oder gleich diesen Wertes ist."
 
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
@@ -2529,21 +2533,25 @@ msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 "Farbe eines Buffers mit neuen Daten (nicht Nachrichten in der Statusbar)"
 
-#, fuzzy
 msgid "text color for count of messages in hotlist (status bar)"
-msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+msgstr ""
+"Farbe für die Anzahl der Nachrichten die in der Hotlist  (Statusbar) "
+"dargestellt werden."
 
-#, fuzzy
 msgid "text color for count of private messages in hotlist (status bar)"
-msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+msgstr ""
+"Farbe für die Anzahl der privaten Nachrichten die in der Hotlist  "
+"(Statusbar) dargestellt werden."
 
-#, fuzzy
 msgid "text color for count of highlight messages in hotlist (status bar)"
-msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+msgstr ""
+"Farbe für die Anzahl der Highlight-Nachrichten die in der Hotlist  "
+"(Statusbar) dargestellt werden."
 
-#, fuzzy
 msgid "text color for count of other messages in hotlist (status bar)"
-msgstr "Farbe eines Buffers mit Highlight-Nachricht (Statusbar)"
+msgstr ""
+"Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist  "
+"(Statusbar) dargestellt werden."
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Buffers mit neuen Daten (Statusbar)"
@@ -3067,7 +3075,7 @@ msgstr "%s-MEHR(%d)-"
 
 #. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
 msgid "Act: "
-msgstr "Akt: "
+msgstr "Aktiv: "
 
 #, c-format
 msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -3273,7 +3281,7 @@ msgstr ""
 "definieren Sie ein Wörterbuch"
 
 msgid "aspell plugin configuration"
-msgstr "Konfiguration für aspell-Erweiterung"
+msgstr "Konfiguration für Aspell-Erweiterung"
 
 msgid "dictlist || enable <lang> || disable || addword [<lang>] <word>"
 msgstr "dictlist || enable <lang> || disable || addword [<lang>] <word>"
@@ -3287,15 +3295,15 @@ msgid ""
 "Input line beginning with a '/' is not checked, except for some commands."
 msgstr ""
 "dictlist: listet installierte Wörterbücher auf\n"
-"  enable: aktiviert aspell in aktuellem Buffer [lang = Wörterbuch)\n"
-" disable: deaktiviert aspell in aktuellem Buffer\n"
-" addword: fügt ein Wort in das persönliche Wörterbuch von aspell hinzu\n"
+"  enable: aktiviert Aspell in aktuellem Buffer [lang = Wörterbuch)\n"
+" disable: deaktiviert Aspell in aktuellem Buffer\n"
+" addword: fügt ein Wort in das persönliche Wörterbuch von Aspell hinzu\n"
 "\n"
 "Eingaben die mit '/' beginnen werden nicht überprüft, außer bei einigen "
 "Befehle."
 
 msgid "list of supported langs for aspell"
-msgstr "Liste der Unterstützten Übersetzungen (lang) für aspell"
+msgstr "Liste der Unterstützten Übersetzungen (lang) für Aspell"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
@@ -3304,16 +3312,19 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: Fehler beim Erstellen des aspell-Wörterbuches \"%s\" => \"%s\""
+msgstr "%s%s: Fehler beim Erstellen des Aspell-Wörterbuches \"%s\" => \"%s\""
 
 msgid ""
 "option for aspell (for list of available options and format, run command "
 "\"aspell config\" in a shell)"
 msgstr ""
+"Option für Aspell (um eine detaillierte Liste aller verfügbaren Optionen und "
+"Formate zu erhalten, muss der Befehl  \"aspell config\" in einer Shell "
+"ausgeführt werden)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr "%s%s: Fehler beim Erstellen des aspell-Wörterbuches \"%s\" => \"%s\""
+msgstr "%s%s: Fehler beim Erstellen der Aspell-Option \"%s\" => \"%s\""
 
 msgid "color used for misspelled words"
 msgstr ""
@@ -7839,3 +7850,32 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "color for prefix of nick which is op/admin/owner on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
+
+#~ msgid "color for prefix of nick which is halfop on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
+
+#~ msgid "color for prefix of nick which has voice on channel"
+#~ msgstr ""
+#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
+#~ "Channel"
+
+#~ msgid "color for prefix of nick which is user on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr ""
+#~ "Durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer "
+#~ "genutzt werden"
+
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s%s: Channel \"%s\" für den \"%s\"-Befehl nicht gefunden"
+
+#~ msgid "hook type: command, timer, .. (optional)"
+#~ msgstr "hook Type: command, timer, .. (optional)"
+
+#~ msgid "a color name"
+#~ msgstr "ein Farbname"

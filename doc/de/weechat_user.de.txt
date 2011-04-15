@@ -378,13 +378,11 @@ Die 'status'-Bar besitzt als Standardeinträge:
 | buffer_count          | [6]                   | Anzahl der geöffneten Buffer
 | buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
 | buffer_number         | 3                     | aktuelle Nummer des Buffers
-// TRANSLATION MISSING
-| buffer_name           | #test(+n)             | Name des aktuellen Buffers (with channel modes for irc channels)
+| buffer_name           | #test(+n)             | Name des aktuellen Buffers (mit Channel-Modi für IRC-Channels)
 | buffer_nicklist_count | {5}                   | Anzahl der Nicks in Nickliste
 | buffer_filter         | *                     | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
 | lag                   | [Lag: 2.5]            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
-// TRANSLATION MISSING
-| hotlist               | [Act: 4:#abc(2,5), 6] | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
+| hotlist               | [Act: 4:#abc(2,5), 6] | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel '#abc', eine ungelesene Nachricht in Buffer #6)
 | completion            | abc(2) def(5)         | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
 | scroll                | -MORE(50)-            | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
 |========================================
@@ -871,22 +869,21 @@ Befehle
 
 include::autogen/user/aspell_commands.txt[]
 
-// TRANSLATION MISSING
 [[aspell_speller_options]]
-Speller options
-^^^^^^^^^^^^^^^
+Optionen für Rechtschreibprüfung
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Speller options can be defined by adding options in section "option" of aspell
-configuration.
+Optionen für die Rechtschreibprüfung können definiert werden indem man die entsprechende
+Option in die Sektion "option" der Aspell-Konfiguration hinzufügt.
 
-The option name is an aspell configuration option. List of options can be found
-in a shell with following command:
+Den Name der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
+möglichen Optionen erhält man durch:
 
 ----------------------------------------
 $ aspell config
 ----------------------------------------
 
-For example, to enable option "ignore-case":
+Um zum Beispiel die Option "ignore-case" einzuschalten:
 
 ----------------------------------------
 /set aspell.option.ignore-case "true"

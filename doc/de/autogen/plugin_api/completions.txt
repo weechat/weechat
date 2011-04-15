@@ -6,7 +6,7 @@
 
 | alias | alias_value | Wert von Alias
 
-| aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für aspell
+| aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für Aspell
 
 | irc | irc_channel | Aktueller IRC-Channel
 
