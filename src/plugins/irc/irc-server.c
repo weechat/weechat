@@ -1187,23 +1187,27 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
         snprintf (mask, length, "irc.server.%s.*", server->name);
         infolist = weechat_infolist_get ("option", NULL, mask);
         free (mask);
-        while (weechat_infolist_next (infolist))
+        if (infolist)
         {
-            if (!weechat_infolist_integer (infolist, "value_is_null"))
+            while (weechat_infolist_next (infolist))
             {
-                option_name = weechat_infolist_string (infolist, "option_name");
-                pos = strrchr (option_name, '.');
-                if (pos)
+                if (!weechat_infolist_integer (infolist, "value_is_null"))
                 {
-                    index_option = irc_server_search_option (pos + 1);
-                    if (index_option >= 0)
+                    option_name = weechat_infolist_string (infolist, "option_name");
+                    pos = strrchr (option_name, '.');
+                    if (pos)
                     {
-                        weechat_config_option_set (new_server->options[index_option],
-                                                   weechat_infolist_string (infolist, "value"),
-                                                   1);
+                        index_option = irc_server_search_option (pos + 1);
+                        if (index_option >= 0)
+                        {
+                            weechat_config_option_set (new_server->options[index_option],
+                                                       weechat_infolist_string (infolist, "value"),
+                                                       1);
+                        }
                     }
                 }
             }
+            weechat_infolist_free (infolist);
         }
     }
     
@@ -1238,35 +1242,38 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     snprintf (mask, length, "irc.server.%s.*", server->name);
     infolist = weechat_infolist_get ("option", NULL, mask);
     free (mask);
-    while (weechat_infolist_next (infolist))
+    if (infolist)
     {
-        weechat_config_search_with_string (weechat_infolist_string (infolist,
-                                                                    "full_name"),
-                                           NULL, NULL, &ptr_option,
-                                           NULL);
-        if (ptr_option)
+        while (weechat_infolist_next (infolist))
         {
-            option_name = weechat_infolist_string (infolist, "option_name");
-            if (option_name)
+            weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                        "full_name"),
+                                               NULL, NULL, &ptr_option,
+                                               NULL);
+            if (ptr_option)
             {
-                pos_option = strrchr (option_name, '.');
-                if (pos_option)
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
                 {
-                    pos_option++;
-                    length = strlen (new_server_name) + 1 + strlen (pos_option) + 1;
-                    new_option_name = malloc (length);
-                    if (new_option_name)
+                    pos_option = strrchr (option_name, '.');
+                    if (pos_option)
                     {
-                        snprintf (new_option_name, length,
-                                  "%s.%s", new_server_name, pos_option);
-                        weechat_config_option_rename (ptr_option, new_option_name);
-                        free (new_option_name);
+                        pos_option++;
+                        length = strlen (new_server_name) + 1 + strlen (pos_option) + 1;
+                        new_option_name = malloc (length);
+                        if (new_option_name)
+                        {
+                            snprintf (new_option_name, length,
+                                      "%s.%s", new_server_name, pos_option);
+                            weechat_config_option_rename (ptr_option, new_option_name);
+                            free (new_option_name);
+                        }
                     }
                 }
             }
         }
+        weechat_infolist_free (infolist);
     }
-    weechat_infolist_free (infolist);
     
     /* rename server */
     if (server->name)

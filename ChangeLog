@@ -47,6 +47,7 @@ Version 0.3.5 (under dev!)
 * plugins: fix memory leaks when setting buffer callbacks after /upgrade
   (plugins: irc, relay, xfer, scripts)
 * aspell: fix spellers used after switch of window (bug #32811)
+* irc: fix memory leak when copying or renaming server
 * irc: do not rejoin channels where /part has been issued before reconnection
   to server (bug #33029)
 * irc: use nick color for users outside the channel
