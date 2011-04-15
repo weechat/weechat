@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-11 11:50+0200\n"
-"PO-Revision-Date: 2011-04-11 11:50+0200\n"
+"POT-Creation-Date: 2011-04-15 12:10+0200\n"
+"PO-Revision-Date: 2011-04-15 12:02+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3247,6 +3247,17 @@ msgstr ""
 #, c-format
 msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
 msgstr "%s%s: erreur en création du dictionnaire aspell \"%s\" => \"%s\""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+"option pour aspell (pour la liste des options disponibles et le format, "
+"lancer la commande \"aspell config\" dans un shell)"
+
+#, c-format
+msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
+msgstr "%s%s: erreur en création de l'option aspell \"%s\" => \"%s\""
 
 msgid "color used for misspelled words"
 msgstr "couleur utilisée pour les mots mal orthographiés"

@@ -878,6 +878,26 @@ Commandes
 
 include::autogen/user/aspell_commands.txt[]
 
+[[aspell_speller_options]]
+Options du vérificateur d'orthographe
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
+options dans la section "option" de la configuration aspell.
+
+Le nom de l'option est une option de configuration aspell. La liste des options
+peut être trouvée par la commande suivante sous le shell :
+
+----------------------------------------
+$ aspell config
+----------------------------------------
+
+Par exemple, pour activer l'option "ignore-case":
+
+----------------------------------------
+/set aspell.option.ignore-case "true"
+----------------------------------------
+
 [[charset_plugin]]
 Extension Charset
 ~~~~~~~~~~~~~~~~~

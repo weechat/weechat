@@ -46,6 +46,7 @@ Version 0.3.5 (under dev!)
 * api: add new functions buffer_match_list and window_search_with_buffer
 * plugins: fix memory leaks when setting buffer callbacks after /upgrade
   (plugins: irc, relay, xfer, scripts)
+* aspell: add section "option" in aspell.conf for speller options (task #11083)
 * aspell: fix spellers used after switch of window (bug #32811)
 * irc: fix memory leak when copying or renaming server
 * irc: do not rejoin channels where /part has been issued before reconnection

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-11 11:50+0200\n"
+"POT-Creation-Date: 2011-04-15 12:10+0200\n"
 "PO-Revision-Date: 2011-04-10 17:33+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3212,6 +3212,15 @@ msgstr "elenco separato da virgole di dizionari da utilizzare su questo buffer"
 
 #, c-format
 msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
+msgstr "%s%s: errore nella creazione del dizionario aspell \"%s\" => \"%s\""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
 msgstr "%s%s: errore nella creazione del dizionario aspell \"%s\" => \"%s\""
 
 msgid "color used for misspelled words"

@@ -131,6 +131,7 @@ weechat_aspell_speller_new (const char *lang)
     struct t_aspell_speller *new_speller;
     AspellConfig *config;
     AspellCanHaveError *ret;
+    struct t_infolist *infolist;
     
     if (!lang)
         return NULL;
@@ -145,6 +146,19 @@ weechat_aspell_speller_new (const char *lang)
     /* create a speller instance for the newly created cell */
     config = new_aspell_config();
     aspell_config_replace (config, "lang", lang);
+
+    /* apply all options on speller */
+    infolist = weechat_infolist_get ("option", NULL, "aspell.option.*");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            aspell_config_replace (config,
+                                   weechat_infolist_string (infolist, "option_name"),
+                                   weechat_infolist_string (infolist, "value"));
+        }
+        weechat_infolist_free (infolist);
+    }
     
     ret = new_aspell_speller (config);
     

@@ -146,6 +146,7 @@ weechat_aspell_config_dict_delete_option (void *data,
     (void) section;
     
     weechat_config_option_free (option);
+    
     weechat_aspell_create_spellers (weechat_current_buffer ());
     
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
@@ -216,6 +217,115 @@ weechat_aspell_config_dict_create_option (void *data,
     }
     else
         weechat_aspell_create_spellers (weechat_current_buffer ());
+    
+    return rc;
+}
+
+/*
+ * weechat_aspell_config_option_change: called when an aspell option is changed
+ */
+
+void
+weechat_aspell_config_option_change (void *data,
+                                     struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_aspell_speller_free_all ();
+    weechat_aspell_create_spellers (weechat_current_buffer ());
+}
+
+/*
+ * weechat_aspell_config_option_delete_option: delete option in "option" section
+ */
+
+int
+weechat_aspell_config_option_delete_option (void *data,
+                                            struct t_config_file *config_file,
+                                            struct t_config_section *section,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    weechat_config_option_free (option);
+    
+    weechat_aspell_speller_free_all ();
+    weechat_aspell_create_spellers (weechat_current_buffer ());
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+/*
+ * weechat_aspell_config_option_create_option: create option in "option" section
+ */
+
+int
+weechat_aspell_config_option_create_option (void *data,
+                                            struct t_config_file *config_file,
+                                            struct t_config_section *section,
+                                            const char *option_name,
+                                            const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    if (option_name)
+    {
+        ptr_option = weechat_config_search_option (config_file, section,
+                                                   option_name);
+        if (ptr_option)
+        {
+            if (value && value[0])
+                rc = weechat_config_option_set (ptr_option, value, 1);
+            else
+            {
+                weechat_config_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value && value[0])
+            {
+                ptr_option = weechat_config_new_option (
+                    config_file, section,
+                    option_name, "string",
+                    _("option for aspell (for list of available options and "
+                      "format, run command \"aspell config\" in a shell)"),
+                    NULL, 0, 0, "", value, 0,
+                    NULL, NULL,
+                    &weechat_aspell_config_option_change, NULL,
+                    NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+    
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error creating aspell option \"%s\" => \"%s\""),
+                        weechat_prefix ("error"), ASPELL_PLUGIN_NAME,
+                        option_name, value);
+    }
+    else
+    {
+        weechat_aspell_speller_free_all ();
+        weechat_aspell_create_spellers (weechat_current_buffer ());
+    }
     
     return rc;
 }
@@ -341,6 +451,20 @@ weechat_aspell_config_init ()
     }
     
     weechat_aspell_config_section_dict = ptr_section;
+    
+    /* option */
+    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "option",
+                                              1, 1,
+                                              NULL, NULL,
+                                              NULL, NULL,
+                                              NULL, NULL,
+                                              &weechat_aspell_config_option_create_option, NULL,
+                                              &weechat_aspell_config_option_delete_option, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (weechat_aspell_config_file);
+        return 0;
+    }
     
     return 1;
 }

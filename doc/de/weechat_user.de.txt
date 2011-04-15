@@ -871,6 +871,27 @@ Befehle
 
 include::autogen/user/aspell_commands.txt[]
 
+// TRANSLATION MISSING
+[[aspell_speller_options]]
+Speller options
+^^^^^^^^^^^^^^^
+
+Speller options can be defined by adding options in section "option" of aspell
+configuration.
+
+The option name is an aspell configuration option. List of options can be found
+in a shell with following command:
+
+----------------------------------------
+$ aspell config
+----------------------------------------
+
+For example, to enable option "ignore-case":
+
+----------------------------------------
+/set aspell.option.ignore-case "true"
+----------------------------------------
+
 [[charset_plugin]]
 Charset Erweiterung
 ~~~~~~~~~~~~~~~~~~~
