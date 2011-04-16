@@ -3629,6 +3629,13 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             argv[2]);
             return WEECHAT_RC_OK;
         }
+        if (argv[2][0] == '#')
+        {
+            weechat_printf (NULL,
+                            _("%s%s: name can not start with \"#\""),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
         
         new_server = irc_server_alloc (argv[2]);
         if (!new_server)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-15 12:10+0200\n"
+"POT-Creation-Date: 2011-04-16 10:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,6 +109,10 @@ msgid "  %s (plugin: %s)"
 msgstr ""
 
 msgid "No bar item defined"
+msgstr ""
+
+#, c-format
+msgid "%sError: name can not start with \"#\""
 msgstr ""
 
 #, c-format
@@ -2899,6 +2903,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: name can not start with \"#\""
 msgstr ""
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-15 12:10+0200\n"
+"POT-Creation-Date: 2011-04-16 10:41+0200\n"
 "PO-Revision-Date: 2011-04-10 17:33+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -149,6 +149,10 @@ msgstr "  (нет pluginа)\n"
 #, fuzzy
 msgid "No bar item defined"
 msgstr "Сокращения не заданы.\n"
+
+#, fuzzy, c-format
+msgid "%sError: name can not start with \"#\""
+msgstr "%s не могу создать файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sNot enough memory"
@@ -3312,6 +3316,10 @@ msgstr "Серверы с '%s' не найдены.\n"
 #, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: name can not start with \"#\""
+msgstr "%s нет доступа к файлу \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create server"

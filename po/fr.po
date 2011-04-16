@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-15 12:10+0200\n"
-"PO-Revision-Date: 2011-04-15 12:02+0200\n"
+"POT-Creation-Date: 2011-04-16 10:41+0200\n"
+"PO-Revision-Date: 2011-04-16 10:42+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -146,6 +146,10 @@ msgstr "  %s (extension: %s)"
 
 msgid "No bar item defined"
 msgstr "Pas d'objet de barre défini"
+
+#, c-format
+msgid "%sError: name can not start with \"#\""
+msgstr "%sErreur: le nom ne peut pas commencer par \"#\""
 
 #, c-format
 msgid "%sNot enough memory"
@@ -3706,6 +3710,10 @@ msgstr "Pas de serveur trouvé avec \"%s\""
 #, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s%s: le serveur \"%s\" existe déjà, impossible de le créer !"
+
+#, c-format
+msgid "%s%s: name can not start with \"#\""
+msgstr "%s%s: le nom ne peut pas commencer par \"#\""
 
 #, c-format
 msgid "%s%s: unable to create server"
