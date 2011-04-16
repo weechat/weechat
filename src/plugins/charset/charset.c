@@ -464,7 +464,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                 weechat_prefix ("error"), CHARSET_PLUGIN_NAME);
                 if (option_name)
                     free (option_name);
-                return WEECHAT_RC_ERROR;
+                return WEECHAT_RC_OK;
             }
         }
         else
@@ -478,7 +478,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             ptr_charset);
             if (option_name)
                 free (option_name);
-            return WEECHAT_RC_ERROR;
+            return WEECHAT_RC_OK;
         }
         if (ptr_section)
         {
@@ -524,7 +524,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_printf (NULL,
                         _("%s%s: error creating configuration file"),
                         weechat_prefix("error"), CHARSET_PLUGIN_NAME);
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     charset_config_read ();
     

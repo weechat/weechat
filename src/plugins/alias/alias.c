@@ -343,7 +343,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                           "alias \"%s\""),
                         weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
                         ptr_alias->name);
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     else
     {
@@ -693,7 +693,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                   "=> \"%s\""),
                                 weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
                                 ptr_alias_name, ptr_command);
-                return WEECHAT_RC_ERROR;
+                return WEECHAT_RC_OK;
             }
             
             /* create config option for command */
@@ -953,7 +953,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_printf (NULL,
                         _("%s%s: error creating configuration file"),
                         weechat_prefix("error"), ALIAS_PLUGIN_NAME);
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
     }
     alias_config_read ();
     
