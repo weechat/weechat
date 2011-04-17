@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
+#include <time.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-command.h"
@@ -224,7 +225,7 @@ gui_main_refreshs ()
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
-
+    
     /* refresh color buffer if needed */
     if (gui_color_buffer_refresh_needed)
     {
@@ -325,10 +326,21 @@ gui_main_loop ()
         
         /* execute hook timers */
         hook_timer_exec ();
+
+        /* auto reset of color pairs */
+        if (gui_color_pairs_auto_reset)
+        {
+            gui_color_reset_pairs ();
+            gui_color_pairs_auto_reset_last = time (NULL);
+            gui_color_pairs_auto_reset = 0;
+            gui_color_pairs_auto_reset_pending = 1;
+        }
         
         gui_main_refreshs ();
         if (gui_window_refresh_needed)
             gui_main_refreshs ();
+        
+        gui_color_pairs_auto_reset_pending = 0;
         
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);

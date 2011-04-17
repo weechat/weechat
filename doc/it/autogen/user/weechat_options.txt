@@ -328,6 +328,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
 
+* *weechat.look.color_pairs_auto_reset*
+** descrizione: `automatically reset table of color pairs when number of available pairs is lower or equal to this number (-1 = disable automatic reset, and then a manual "/color reset" is needed when table is full)`
+** tipo: intero
+** valori: -1 .. 256 (valore predefinito: `5`)
+
 * *weechat.look.color_real_white*
 ** descrizione: `se impostato, utilizza il colore bianco reale, disabilitato sui terminali con lo sfondo bianco (se non utilizzato, l'opzione dovrebbe essere attivata per visualizzare il bianco reale invece del colore di primo piano predefinito del terminale)`
 ** tipo: bool

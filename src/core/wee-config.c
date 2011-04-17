@@ -79,6 +79,7 @@ struct t_config_option *config_startup_display_version;
 struct t_config_option *config_look_align_end_of_lines;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_color_pairs_auto_reset;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_confirm_quit;
@@ -1556,6 +1557,14 @@ config_weechat_init_options ()
            "\"${color}\", for example french time: "
            "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
+    config_look_color_pairs_auto_reset = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_pairs_auto_reset", "integer",
+        N_("automatically reset table of color pairs when number of available "
+           "pairs is lower or equal to this number (-1 = disable automatic "
+           "reset, and then a manual \"/color reset\" is needed when table "
+            "is full)"),
+        NULL, -1, 256, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_color_real_white = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_real_white", "boolean",

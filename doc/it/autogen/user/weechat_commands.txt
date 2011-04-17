@@ -117,18 +117,18 @@ Examples:
         unalias <colore>
         reset
 
-  alias: aggiunge un alias per un colore
-unalias: elimina un alias
- colore: numero colore (>= 0, il massimo dipende dal terminale, di solito 63 o 255)
-   nome: nome alias per il colore (ad esempio: "arancione")
-  reset: ripristina tutte le coppie di colore (utile quando non ci sono più coppie disponibili)
+  alias: add an alias for a color
+unalias: delete an alias
+  color: color number (>= 0, max depends on terminal, commonly 63 or 255)
+   name: alias name for color (for example: "orange")
+  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
 
-senza argomento, il comando mostra i colori in un nuovo buffer.
+Without argument, this command displays colors in a new buffer.
 
-Esempi:
-  aggiunge alias "arancione" per il colore 214:
+Examples:
+  add alias "orange" for color 214:
     /color alias 214 orange
-  elimina il colore 214:
+  delete color 214:
     /color unalias 214
 ........................................
 

@@ -45,7 +45,8 @@ Version 0.3.5 (under dev!)
 * core: add color "gray"
 * core: add attributes for colors ("*": bold, "!": reverse, "_": underline)
 * core: dynamically allocate color pairs (extended colors can be used without
-  being added with command "/color")
+  being added with command "/color"), auto reset of color pairs with option
+  weechat.look.color_pairs_auto_reset
 * core: allow background for nick colors (using ":")
 * api: add new functions buffer_match_list and window_search_with_buffer
 * plugins: fix memory leaks when setting buffer callbacks after /upgrade

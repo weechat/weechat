@@ -328,6 +328,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 
+* *weechat.look.color_pairs_auto_reset*
+** description: `réinitialisation automatique de la table des paires de couleurs quand le nombre de paires disponibles est inférieur ou égal à ce nombre (-1 = désactiver la réinitialisation automatique, et donc un "/color reset" manuel est nécessaire quand la table est pleine)`
+** type: entier
+** valeurs: -1 .. 256 (valeur par défaut: `5`)
+
 * *weechat.look.color_real_white*
 ** description: `si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)`
 ** type: booléen

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-16 10:41+0200\n"
+"POT-Creation-Date: 2011-04-17 11:00+0200\n"
 "PO-Revision-Date: 2011-04-10 11:22+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1032,7 +1032,9 @@ msgid ""
 "unalias: delete an alias\n"
 "  color: color number (>= 0, max depends on terminal, commonly 63 or 255)\n"
 "   name: alias name for color (for example: \"orange\")\n"
-"  reset: reset all color pairs (useful when no more pairs are available)\n"
+"  reset: reset all color pairs (required when no more color pairs are "
+"available if automatic reset is disabled, see option weechat.look."
+"color_pairs_auto_reset)\n"
 "\n"
 "Without argument, this command displays colors in a new buffer.\n"
 "\n"
@@ -1992,6 +1994,12 @@ msgstr ""
 "o formato de tempo para cada linha mostrada nos buffers (veja man strftime "
 "paraespecificadores de data/horário"
 
+msgid ""
+"automatically reset table of color pairs when number of available pairs is "
+"lower or equal to this number (-1 = disable automatic reset, and then a "
+"manual \"/color reset\" is needed when table is full)"
+msgstr ""
+
 # Find a better translation for foreground' in this context
 #, fuzzy
 msgid ""
@@ -2718,6 +2726,10 @@ msgstr ""
 
 #, c-format
 msgid "WeeChat color pairs (in use: %d, left: %d):"
+msgstr ""
+
+#, c-format
+msgid "Last auto reset of pairs: %s"
 msgstr ""
 
 msgid "WeeChat basic colors:"

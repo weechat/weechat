@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -80,6 +81,9 @@ int gui_color_num_pairs = 63;            /* number of pairs used by WeeChat */
 short *gui_color_pairs = NULL;           /* table with pair for each fg+bg  */
 int gui_color_pairs_used = 0;            /* number of pairs currently used  */
 int gui_color_warning_pairs_full = 0;    /* warning displayed?              */
+int gui_color_pairs_auto_reset = 0;         /* auto reset of pairs needed   */
+int gui_color_pairs_auto_reset_pending = 0; /* auto reset is pending        */
+time_t gui_color_pairs_auto_reset_last = 0; /* time of last auto reset      */
 
 /* color buffer */
 struct t_gui_buffer *gui_color_buffer = NULL; /* buffer with colors         */
@@ -343,8 +347,10 @@ gui_color_get_pair (int fg, int bg)
         if (gui_color_pairs_used >= gui_color_num_pairs)
         {
             /* oh no, no more pair available! */
-            if (!gui_color_warning_pairs_full)
+            if (!gui_color_warning_pairs_full
+                && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) < 0))
             {
+                /* display warning if auto reset of pairs is disabled */
                 hook_timer (NULL, 1, 0, 1,
                             &gui_color_timer_warning_pairs_full, NULL);
                 gui_color_warning_pairs_full = 1;
@@ -356,6 +362,12 @@ gui_color_get_pair (int fg, int bg)
         gui_color_pairs_used++;
         gui_color_pairs[index] = gui_color_pairs_used;
         init_pair (gui_color_pairs_used, fg, bg);
+        if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
+            && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0)
+            && (gui_color_num_pairs - gui_color_pairs_used <= CONFIG_INTEGER(config_look_color_pairs_auto_reset)))
+        {
+            gui_color_pairs_auto_reset = 1;
+        }
         gui_color_buffer_refresh_needed = 1;
     }
     
@@ -812,6 +824,13 @@ gui_color_buffer_display ()
 
     if (gui_color_buffer_extra_info)
     {
+        /* display time of last auto reset of color pairs */
+        y++;
+        gui_chat_printf_y (gui_color_buffer, y++,
+                           _("Last auto reset of pairs: %s"),
+                           (gui_color_pairs_auto_reset_last == 0) ?
+                           "-" : ctime (&gui_color_pairs_auto_reset_last));
+        
         /* display WeeChat basic colors */
         y++;
         gui_chat_printf_y (gui_color_buffer, y++,
@@ -1074,7 +1093,7 @@ gui_color_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     }
     else if (string_strcasecmp (input_data, "z") == 0)
     {
-        gui_color_reset_pairs (buffer);
+        gui_color_reset_pairs ();
     }
     
     return WEECHAT_RC_OK;

@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_CURSES_H
 #define __WEECHAT_GUI_CURSES_H 1
 
+#include <time.h>
+
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
 #elif HAVE_NCURSES_H
@@ -59,6 +61,9 @@ extern int gui_term_cols, gui_term_lines;
 extern struct t_gui_color gui_weechat_colors[];
 extern int gui_color_term_colors;
 extern int gui_color_num_pairs;
+extern int gui_color_pairs_auto_reset;
+extern int gui_color_pairs_auto_reset_pending;
+extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
 
 /* color functions */

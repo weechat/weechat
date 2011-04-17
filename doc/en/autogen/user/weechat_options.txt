@@ -328,6 +328,11 @@
 ** type: string
 ** values: any string (default value: `"%H:%M:%S"`)
 
+* *weechat.look.color_pairs_auto_reset*
+** description: `automatically reset table of color pairs when number of available pairs is lower or equal to this number (-1 = disable automatic reset, and then a manual "/color reset" is needed when table is full)`
+** type: integer
+** values: -1 .. 256 (default value: `5`)
+
 * *weechat.look.color_real_white*
 ** description: `if set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)`
 ** type: boolean
