@@ -283,6 +283,20 @@ config_change_buffer_content (void *data, struct t_config_option *option)
 }
 
 /*
+ * config_change_buffer_notify_default: called when buffer default notify changes
+ */
+
+void
+config_change_buffer_notify_default (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    gui_buffer_notify_set_all ();
+}
+
+/*
  * config_change_buffer_time_format: called when buffer time format changes
  */
 
@@ -1533,7 +1547,7 @@ config_weechat_init_options ()
            "message=messages+highlights, highlight=highlights only, "
            "none=never display in hotlist"),
         "none|highlight|message|all", 0, 0, "all", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &config_change_buffer_notify_default, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
