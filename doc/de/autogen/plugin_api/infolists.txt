@@ -44,7 +44,7 @@
 
 | weechat | history | Verlaufspeicher der Befehle | Buffer Pointer (falls nicht gesetzt, wird der globale Verlauf zurückgegeben) (optional) | -
 
-| weechat | hook | Auflistung der Hooks | - | type,arguments (type ist command/timer/.., arguments dient dazu nur einige hooks abzufragen, beide Optionen sind optional)
+| weechat | hook | Auflistung der Hooks | - | type,arguments (type is command/timer/.., arguments to get only some hooks (can start or end with "*" as wildcard), both are optional)
 
 | weechat | hotlist | Liste der Buffer in Hotlist | - | -
 

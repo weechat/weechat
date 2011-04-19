@@ -2898,7 +2898,7 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
             switch (ptr_hook->type)
             {
                 case HOOK_TYPE_COMMAND:
-                    match = (strcmp (HOOK_COMMAND(ptr_hook, command), arguments) == 0);
+                    match = string_match (HOOK_COMMAND(ptr_hook, command), arguments, 0);
                     break;
                 default:
                     break;
