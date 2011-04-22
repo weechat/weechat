@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-rc1, 2011-04-21
+v0.3.5-rc1, 2011-04-22
 
 
 Version 0.3.5 (under dev!)
 --------------------------
 
+* core: add option "swap" for command /window (key: alt+"w" + alt+"s")
+  (task #11001)
 * core: apply new value of option weechat.look.buffer_notify_default to all
   opened buffers
 * core: prohibit names beginning with "#" for bars, proxies, filters and IRC

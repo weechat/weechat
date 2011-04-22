@@ -1955,6 +1955,63 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_swap: swap buffers of two windows
+ *                  direction can be: 0 = auto (swap with sister)
+ *                                    1 = window above
+ *                                    2 = window on the right
+ *                                    3 = window below
+ *                                    4 = window on the left
+ */
+
+void
+gui_window_swap (struct t_gui_window *window, int direction)
+{
+    struct t_gui_window_tree *parent, *sister;
+    struct t_gui_window *window2, *ptr_win;
+    struct t_gui_buffer *buffer1;
+    
+    if (!window || !gui_ok)
+        return;
+    
+    window2 = NULL;
+    
+    if (direction == 0)
+    {
+        /* search sister window */
+        parent = window->ptr_tree->parent_node;
+        if (parent)
+        {
+            sister = (parent->child1->window == window) ?
+                parent->child2 : parent->child1;
+            if (sister->window)
+                window2 = sister->window;
+        }
+    }
+    else
+    {
+        /* search window using direction */
+        for (ptr_win = gui_windows; ptr_win;
+             ptr_win = ptr_win->next_window)
+        {
+            if ((ptr_win != window) &&
+                (gui_window_side_by_side (window, ptr_win) == direction))
+            {
+                window2 = ptr_win;
+                break;
+            }
+        }
+    }
+    
+    /* let's swap! */
+    if (window2 && (window->buffer != window2->buffer))
+    {
+        buffer1 = window->buffer;
+        gui_window_switch_to_buffer (window, window2->buffer, 0);
+        gui_window_switch_to_buffer (window2, buffer1, 0);
+    }
+}
+
+/*
  * gui_window_refresh_screen: called when term size is modified
  *                            full_refresh == 1 when Ctrl+L is pressed,
  *                            or if terminal is resized

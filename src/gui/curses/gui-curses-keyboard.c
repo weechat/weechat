@@ -185,6 +185,7 @@ gui_keyboard_default_bindings ()
     BIND(/* m-w,m-right */ "meta-wmeta2-1;3C",   "/window right");
     BIND(/* m-w,m-left  */ "meta-wmeta-meta2-D", "/window left");
     BIND(/* m-w,m-left  */ "meta-wmeta2-1;3D",   "/window left");
+    BIND(/* m-w,m-s     */ "meta-wmeta-s",       "/window swap");
     BIND(/* m-z         */ "meta-z",             "/window zoom");
     BIND(/* m-=         */ "meta-=",             "/filter toggle");
     BIND(/* m-0         */ "meta-0",             "/buffer *10");

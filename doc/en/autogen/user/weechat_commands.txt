@@ -524,6 +524,7 @@ Examples:
          page_up|page_down
          refresh
          scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         swap [up|down|left|right]
          zoom
 
          list: list opened windows (without argument, this list is displayed)
@@ -548,6 +549,7 @@ Examples:
 scroll_bottom: scroll to bottom of buffer
 scroll_previous_highlight: scroll to previous highlight
 scroll_next_highlight: scroll to next highlight
+         swap: swap buffers of two windows (with optional direction for target window)
          zoom: zoom on window
 
 For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4

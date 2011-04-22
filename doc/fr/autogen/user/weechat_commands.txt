@@ -524,6 +524,7 @@ Exemples:
          page_up|page_down
          refresh
          scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         swap [up|down|left|right]
          zoom
 
          list: lister les fenêtres ouvertes (sans paramètre, cette liste est affichée)
@@ -548,6 +549,7 @@ Exemples:
 scroll_bottom: faire défiler jusqu'en bas du tampon
 scroll_previous_highlight: faire défiler jusqu'au highlight précédent
 scroll_next_highlight: faire défiler jusqu'au highlight suivant
+         swap: échanger les tampons de deux fenêtres (avec une direction facultative pour la fenêtre cible)
          zoom: zoomer sur la fenêtre
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4

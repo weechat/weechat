@@ -4568,7 +4568,37 @@ COMMAND_CALLBACK(window)
             gui_window_scroll (gui_current_window, argv[2]);
         return WEECHAT_RC_OK;
     }
-
+    
+    /* swap windows */
+    if (string_strcasecmp (argv[1], "swap") == 0)
+    {
+        if (argc > 2)
+        {
+            if (string_strcasecmp (argv[2], "up") == 0)
+                gui_window_swap (gui_current_window, 1);
+            else if (string_strcasecmp (argv[2], "down") == 0)
+                gui_window_swap (gui_current_window, 3);
+            else if (string_strcasecmp (argv[2], "left") == 0)
+                gui_window_swap (gui_current_window, 4);
+            else if (string_strcasecmp (argv[2], "right") == 0)
+                gui_window_swap (gui_current_window, 2);
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unknown option for \"%s\" "
+                                   "command"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 "window swap");
+                return WEECHAT_RC_OK;
+            }
+        }
+        else
+        {
+            gui_window_swap (gui_current_window, 0);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
     /* zoom window */
     if (string_strcasecmp (argv[1], "zoom") == 0)
     {
@@ -5231,6 +5261,7 @@ command_init ()
                      " || scroll|scroll_up|scroll_down|scroll_top|"
                      "scroll_bottom|scroll_previous_highlight|"
                      "scroll_next_highlight"
+                     " || swap [up|down|left|right]"
                      " || zoom"),
                   N_("         list: list opened windows (without argument, "
                      "this list is displayed)\n"
@@ -5258,6 +5289,8 @@ command_init ()
                      "scroll_bottom: scroll to bottom of buffer\n"
                      "scroll_previous_highlight: scroll to previous highlight\n"
                      "scroll_next_highlight: scroll to next highlight\n"
+                     "         swap: swap buffers of two windows (with optional "
+                     "direction for target window)\n"
                      "         zoom: zoom on window\n\n"
                      "For splith and splitv, pct is a percentage which "
                      "represents size of new window, computed with current "
@@ -5272,11 +5305,12 @@ command_init ()
                      "    /window scroll -2d\n"
                      "  scroll to beginning of current day:\n"
                      "    /window scroll -d"),
-                  "list|-1|+1|up|down|left|right|splith|splitv|resize|page_up|"
-                  "page_down|refresh|scroll_up|scroll|scroll_down|scroll_top|"
-                  "scroll_bottom|scroll_previous_highlight|"
-                  "scroll_next_highlight|zoom"
-                  " || merge all",
+                  "list || -1 || +1 || up || down || left || right"
+                  " || splith || splitv || resize || page_up || page_down"
+                  " || refresh || scroll || scroll_up || scroll_down"
+                  " || scroll_top || scroll_bottom"
+                  " || scroll_previous_highlight || scroll_next_highlight"
+                  " || swap up|down|left|right || zoom || merge all",
                   &command_window, NULL);
 }
 

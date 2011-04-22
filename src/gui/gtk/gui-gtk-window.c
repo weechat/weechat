@@ -792,6 +792,24 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_swap: swap buffer of two windows
+ *                  direction can be: 0 = auto (swap with sister)
+ *                                    1 = window above
+ *                                    2 = window on the right
+ *                                    3 = window below
+ *                                    4 = window on the left
+ */
+
+void
+gui_window_swap (struct t_gui_window *window, int direction)
+{
+    (void) window;
+    (void) direction;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_window_refresh_screen: called when term size is modified
  */
 
