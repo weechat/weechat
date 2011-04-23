@@ -792,6 +792,21 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_balance: balance windows (set all splits to 50%)
+ *                     return 1 if some windows have been balanced
+ *                            0 if nothing was changed
+ */
+
+int
+gui_window_balance (struct t_gui_window_tree *tree)
+{
+    (void) tree;
+    
+    /* TODO: write this function for Gtk */
+    return 0;
+}
+
+/*
  * gui_window_swap: swap buffer of two windows
  *                  direction can be: 0 = auto (swap with sister)
  *                                    1 = window above

@@ -502,6 +502,7 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(w) , @k(A-)@k(←) | wechselt zum linken Fenster | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | wechselt zum rechten Fenster | /window right
 // TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(b) | Resize all windows to 50% | /window balance
 | @k(A-)@k(w) , @k(A-)@k(s) | Swap buffers of two windows | /window swap
 | @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
 | @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer

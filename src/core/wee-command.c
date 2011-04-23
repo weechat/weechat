@@ -4477,6 +4477,14 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
     
+    /* balance windows */
+    if (string_strcasecmp (argv[1], "balance") == 0)
+    {
+        if (gui_window_balance (gui_windows_tree))
+            gui_window_ask_refresh (1);
+        return WEECHAT_RC_OK;
+    }
+    
     /* merge windows */
     if (string_strcasecmp (argv[1], "merge") == 0)
     {
@@ -4515,8 +4523,10 @@ COMMAND_CALLBACK(window)
         error = NULL;
         number = strtol (argv[1] + 1, &error, 10);
         if (error && !error[0])
+        {
             gui_window_switch_by_buffer (gui_current_window, number);
-        return WEECHAT_RC_OK;
+            return WEECHAT_RC_OK;
+        }
     }
     
     /* switch to previous window */
@@ -5255,6 +5265,7 @@ command_init ()
                      " || -1|+1|b#|up|down|left|right"
                      " || splith|splitv [<pct>]"
                      " || resize [+/-]<pct>"
+                     " || balance"
                      " || merge [all]"
                      " || page_up|page_down"
                      " || refresh"
@@ -5276,6 +5287,7 @@ command_init ()
                      "       splitv: split current window vertically\n"
                      "       resize: resize window size, new size is <pct> "
                      "percentage of parent window\n"
+                     "      balance: resize all windows to 50%\n"
                      "        merge: merge window with another (all = keep only one "
                      "window)\n"
                      "      page_up: scroll one page up\n"
@@ -5306,9 +5318,9 @@ command_init ()
                      "  scroll to beginning of current day:\n"
                      "    /window scroll -d"),
                   "list || -1 || +1 || up || down || left || right"
-                  " || splith || splitv || resize || page_up || page_down"
-                  " || refresh || scroll || scroll_up || scroll_down"
-                  " || scroll_top || scroll_bottom"
+                  " || splith || splitv || resize || balance || page_up"
+                  " || page_down || refresh || scroll || scroll_up"
+                  " || scroll_down || scroll_top || scroll_bottom"
                   " || scroll_previous_highlight || scroll_next_highlight"
                   " || swap up|down|left|right || zoom || merge all",
                   &command_window, NULL);

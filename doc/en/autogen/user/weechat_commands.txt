@@ -520,6 +520,7 @@ Examples:
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
          resize [+/-]<pct>
+         balance
          merge [all]
          page_up|page_down
          refresh
@@ -538,6 +539,7 @@ Examples:
        splith: split current window horizontally
        splitv: split current window vertically
        resize: resize window size, new size is <pct> percentage of parent window
+      balance: resize all windows to 50%
         merge: merge window with another (all = keep only one window)
       page_up: scroll one page up
     page_down: scroll one page down

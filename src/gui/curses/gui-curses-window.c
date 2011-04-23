@@ -1955,6 +1955,31 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_balance: balance windows (set all splits to 50%)
+ *                     return 1 if some windows have been balanced
+ *                            0 if nothing was changed
+ */
+
+int
+gui_window_balance (struct t_gui_window_tree *tree)
+{
+    int balanced;
+    
+    balanced = 0;
+    if (tree && tree->child1 && tree->child2)
+    {
+        if (tree->split_pct != 50)
+        {
+            tree->split_pct = 50;
+            balanced = 1;
+        }
+        balanced |= gui_window_balance (tree->child1);
+        balanced |= gui_window_balance (tree->child2);
+    }
+    return balanced;
+}
+
+/*
  * gui_window_swap: swap buffers of two windows
  *                  direction can be: 0 = auto (swap with sister)
  *                                    1 = window above
