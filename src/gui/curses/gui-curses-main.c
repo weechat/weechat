@@ -127,6 +127,8 @@ gui_main_init ()
     {
         gui_init_ok = 1;
         
+        ptr_buffer->num_displayed = 1;
+        
         /* set title for core buffer */
         gui_buffer_set_title (ptr_buffer,
                               "WeeChat " PACKAGE_VERSION " "

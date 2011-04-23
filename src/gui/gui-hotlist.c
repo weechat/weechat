@@ -31,6 +31,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -282,21 +283,22 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
 struct t_gui_hotlist *
 gui_hotlist_add (struct t_gui_buffer *buffer,
                  enum t_gui_hotlist_priority priority,
-                 struct timeval *creation_time, int allow_current_buffer)
+                 struct timeval *creation_time)
 {
     struct t_gui_hotlist *new_hotlist, *ptr_hotlist;
     int i, count[GUI_HOTLIST_NUM_PRIORITIES];
+    const char *away;
     
     if (!buffer || !gui_add_hotlist)
         return NULL;
     
-    /* do not add current buffer */
-    if ((buffer == gui_current_window->buffer)
-        && (!allow_current_buffer || (!gui_buffer_is_scrolled (buffer))))
+    /* do not add core buffer if upgrading */
+    if (weechat_upgrading && (buffer == gui_buffer_search_main ()))
         return NULL;
     
-    /* do not add buffer if it is displayed in a window */
-    if (buffer->num_displayed > 0)
+    /* do not add buffer if it is displayed and away is not set */
+    away = hashtable_get (buffer->local_variables, "away");
+    if ((buffer->num_displayed > 0) && (!away || !away[0]))
         return NULL;
     
     if (priority > GUI_HOTLIST_MAX)
@@ -430,6 +432,9 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
     int hotlist_changed;
     struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
+    
+    if (weechat_upgrading)
+        return;
     
     hotlist_changed = 0;
     

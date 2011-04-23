@@ -1130,7 +1130,6 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     {
                         ptr_win->scroll->start_line = NULL;
                         ptr_win->scroll->start_line_pos = 0;
-                        gui_hotlist_remove_buffer (ptr_win->buffer);
                     }
                     
                     /* cursor is below end line of chat window? */

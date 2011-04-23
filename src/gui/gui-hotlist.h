@@ -55,8 +55,7 @@ extern int gui_add_hotlist;
 
 extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               enum t_gui_hotlist_priority priority,
-                                              struct timeval *creation_time,
-                                              int allow_current_buffer);
+                                              struct timeval *creation_time);
 extern void gui_hotlist_resort ();
 extern void gui_hotlist_clear ();
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);

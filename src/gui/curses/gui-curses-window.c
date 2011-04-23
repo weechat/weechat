@@ -1040,7 +1040,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     window->buffer = buffer;
     gui_buffer_add_value_num_displayed (buffer, 1);
     
-    gui_hotlist_remove_buffer (buffer);
+    if (!weechat_upgrading && (old_buffer != buffer))
+        gui_hotlist_remove_buffer (buffer);
     
     if (gui_ok)
     {
