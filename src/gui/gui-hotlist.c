@@ -298,7 +298,9 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
     
     /* do not add buffer if it is displayed and away is not set */
     away = hashtable_get (buffer->local_variables, "away");
-    if ((buffer->num_displayed > 0) && (!away || !away[0]))
+    if ((buffer->num_displayed > 0)
+        && ((!away || !away[0])
+            || !CONFIG_BOOLEAN(config_look_hotlist_add_buffer_if_away)))
         return NULL;
     
     if (priority > GUI_HOTLIST_MAX)

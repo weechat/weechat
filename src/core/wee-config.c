@@ -89,6 +89,7 @@ struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hline_char;
+struct t_config_option *config_look_hotlist_add_buffer_if_away;
 struct t_config_option *config_look_hotlist_buffer_separator;
 struct t_config_option *config_look_hotlist_count_max;
 struct t_config_option *config_look_hotlist_count_min_msg;
@@ -1625,6 +1626,12 @@ config_weechat_init_options ()
            "will draw a real line with ncurses, but may cause bugs with URL "
            "selection under some terminals), wide chars are NOT allowed here"),
         NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_hotlist_add_buffer_if_away = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_add_buffer_if_away", "boolean",
+        N_("add any buffer to hotlist (including current or visible buffers) "
+           "if local variable \"away\" is set on buffer"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_buffer_separator = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_buffer_separator", "string",

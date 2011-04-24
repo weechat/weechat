@@ -378,6 +378,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-"`)
 
+* *weechat.look.hotlist_add_buffer_if_away*
+** description: `ajouter tout tampon dans la hotlist (incluant le tampon courant ou les tampons visibles) si la variable locale "away" est définie sur le tampon`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * *weechat.look.hotlist_buffer_separator*
 ** description: `chaîne affichée entre les tampons dans la hotlist`
 ** type: chaîne

@@ -115,6 +115,7 @@ extern struct t_config_option *config_look_day_change_time_format;
 extern struct t_config_option *config_look_highlight;
 extern struct t_config_option *config_look_highlight_regex;
 extern struct t_config_option *config_look_hline_char;
+extern struct t_config_option *config_look_hotlist_add_buffer_if_away;
 extern struct t_config_option *config_look_hotlist_buffer_separator;
 extern struct t_config_option *config_look_hotlist_count_max;
 extern struct t_config_option *config_look_hotlist_count_min_msg;

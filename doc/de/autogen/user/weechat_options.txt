@@ -378,6 +378,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
+* *weechat.look.hotlist_add_buffer_if_away*
+** Beschreibung: `add any buffer to hotlist (including current or visible buffers) if local variable "away" is set on buffer`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * *weechat.look.hotlist_buffer_separator*
 ** Beschreibung: `Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der Hotlist genutzt werden soll.`
 ** Typ: Zeichenkette

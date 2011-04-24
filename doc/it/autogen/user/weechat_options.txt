@@ -378,6 +378,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
+* *weechat.look.hotlist_add_buffer_if_away*
+** descrizione: `add any buffer to hotlist (including current or visible buffers) if local variable "away" is set on buffer`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * *weechat.look.hotlist_buffer_separator*
 ** descrizione: `string displayed between buffers in hotlist`
 ** tipo: stringa
