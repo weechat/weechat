@@ -798,7 +798,9 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         {
             ptr_line = (window->scroll->start_line) ?
                 window->scroll->start_line : window->buffer->lines->last_line;
-            while (ptr_line && !gui_line_is_displayed (ptr_line))
+            while (ptr_line
+                   && (!gui_line_is_displayed (ptr_line)
+                       || (ptr_line->data->date == 0)))
             {
                 ptr_line = ptr_line->prev_line;
             }
@@ -807,7 +809,9 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         {
             ptr_line = (window->scroll->start_line) ?
                 window->scroll->start_line : window->buffer->lines->first_line;
-            while (ptr_line && !gui_line_is_displayed (ptr_line))
+            while (ptr_line
+                   && (!gui_line_is_displayed (ptr_line)
+                       || (ptr_line->data->date == 0)))
             {
                 ptr_line = ptr_line->next_line;
             }
@@ -825,7 +829,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             ptr_line = (direction < 0) ?
                 gui_line_get_prev_displayed (ptr_line) : gui_line_get_next_displayed (ptr_line);
             
-            if (ptr_line)
+            if (ptr_line && (ptr_line->data->date != 0))
             {
                 if (time_letter == ' ')
                 {
