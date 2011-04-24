@@ -3006,6 +3006,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
     struct t_gui_line *ptr_line;
     int num_line;
     char *prefix_without_colors, *message_without_colors, *tags;
+    char buf[256];
     
     log_printf ("[buffer dump hexa (addr:0x%lx)]", buffer);
     num_line = 1;
@@ -3031,6 +3032,12 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
         log_printf ("  tags: %s", (tags) ? tags : "(none)");
         if (tags)
             free (tags);
+        snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date));
+        buf[strlen (buf) - 1] = '\0';
+        log_printf ("  date:         %d = %s", ptr_line->data->date, buf);
+        snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date_printed));
+        buf[strlen (buf) - 1] = '\0';
+        log_printf ("  date_printed: %d = %s", ptr_line->data->date_printed, buf);
         
         /* display raw message for line */
         if (ptr_line->data->message)
