@@ -898,6 +898,9 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
         if (buffer->short_name)
             free (buffer->short_name);
         buffer->short_name = strdup (short_name);
+        if (buffer->mixed_lines)
+            gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
+        gui_buffer_ask_chat_refresh (buffer, 1);
         
         hook_signal_send ("buffer_renamed",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
