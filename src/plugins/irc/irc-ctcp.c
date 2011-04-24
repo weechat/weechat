@@ -263,7 +263,8 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
     {
         weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
                              irc_protocol_tags (command,
-                                                "irc_ctcp,irc_ctcp_reply,no_highlight",
+                                                "irc_ctcp,irc_ctcp_reply,"
+                                                "notify_none,no_highlight",
                                                 NULL),
                              _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
                              weechat_prefix ("network"),
@@ -931,7 +932,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                     weechat_printf_tags (ptr_channel->buffer,
                                          irc_protocol_tags (command,
                                                             (nick_is_me) ?
-                                                            "irc_action,notify_private,no_highlight" :
+                                                            "irc_action,notify_none,no_highlight" :
                                                             "irc_action,notify_private",
                                                             nick),
                                          "%s%s%s%s%s%s",

@@ -1446,7 +1446,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         weechat_printf_tags (ptr_channel->buffer,
                              irc_protocol_tags (command,
                                                 (nick_is_me) ?
-                                                "notify_private,no_highlight" :
+                                                "notify_none,no_highlight" :
                                                 "notify_private",
                                                 nick),
                              "%s%s",

@@ -353,9 +353,9 @@ irc_command_me_channel (struct t_irc_server *server,
                           weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
     weechat_printf_tags (channel->buffer,
                          irc_protocol_tags ("privmsg",
-                                            "irc_action,no_highlight",
+                                            "irc_action,notify_none,no_highlight",
                                             server->nick),
-                         "%s%s%s %s%s",
+                         "%s%s%s%s %s",
                          weechat_prefix ("action"),
                          IRC_COLOR_CHAT_NICK_SELF,
                          server->nick,
@@ -2675,18 +2675,19 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         string = irc_color_decode (argv_eol[arg_text],
                                    weechat_config_boolean (irc_config_network_colors_receive));
         ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
-        weechat_printf ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
-                        "%s%s%s%s -> %s%s%s: %s",
-                        weechat_prefix ("network"),
-                        IRC_COLOR_NOTICE,
-                        /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
-                        _("Notice"),
-                        IRC_COLOR_CHAT,
-                        (irc_channel_is_channel (argv[arg_nick])) ?
-                        IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
-                        argv[arg_nick],
-                        IRC_COLOR_CHAT,
-                        (string) ? string : argv_eol[arg_text]);
+        weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
+                             "notify_none,no_highlight",
+                             "%s%s%s%s -> %s%s%s: %s",
+                             weechat_prefix ("network"),
+                             IRC_COLOR_NOTICE,
+                             /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                             _("Notice"),
+                             IRC_COLOR_CHAT,
+                             (irc_channel_is_channel (argv[arg_nick])) ?
+                             IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
+                             argv[arg_nick],
+                             IRC_COLOR_CHAT,
+                             (string) ? string : argv_eol[arg_text]);
         if (string)
             free (string);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,

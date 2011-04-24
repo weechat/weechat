@@ -60,7 +60,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
         
         weechat_printf_tags (buffer,
                              irc_protocol_tags ("privmsg",
-                                                "notify_message,no_highlight",
+                                                "notify_none,no_highlight",
                                                 (ptr_nick) ? ptr_nick->name : ptr_server->nick),
                              "%s%s",
                              irc_nick_as_prefix (ptr_server,
