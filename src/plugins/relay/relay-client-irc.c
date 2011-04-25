@@ -1017,7 +1017,10 @@ relay_client_irc_alloc_with_infolist (struct t_relay_client *client,
     {
         RELAY_IRC_DATA(client, address) = strdup (weechat_infolist_string (infolist, "address"));
         RELAY_IRC_DATA(client, password_ok) = weechat_infolist_integer (infolist, "password_ok");
-        RELAY_IRC_DATA(client, nick) = strdup (weechat_infolist_string (infolist, "nick"));
+        if (weechat_infolist_string (infolist, "nick"))
+            RELAY_IRC_DATA(client, nick) = strdup (weechat_infolist_string (infolist, "nick"));
+        else
+            RELAY_IRC_DATA(client, nick) = NULL;
         RELAY_IRC_DATA(client, user_received) = weechat_infolist_integer (infolist, "user_received");
         RELAY_IRC_DATA(client, connected) = weechat_infolist_integer (infolist, "connected");
         if (RELAY_IRC_DATA(client, connected))

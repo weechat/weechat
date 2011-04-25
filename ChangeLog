@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-rc1, 2011-04-24
+v0.3.5-rc1, 2011-04-25
 
 
 Version 0.3.5 (under dev!)
@@ -84,6 +84,7 @@ Version 0.3.5 (under dev!)
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)
 * lua: fix crash when many scripts are executing callbacks at same time
+* relay: fix crash on /upgrade when nick in irc client is not yet set
 * relay: allow colon in server password received from client
 * relay: do not send join for private buffers to client
 * rmodifier: fix reload of file rmodifier.conf
