@@ -5517,7 +5517,7 @@ Script (Python):
 rc = weechat.config_set_plugin(option_name, value)
 
 # example
-rc = weechat.config_is_set_plugin("option", "test_value")
+rc = weechat.config_set_plugin("option", "test_value")
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
 elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
