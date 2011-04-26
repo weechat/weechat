@@ -43,6 +43,7 @@
 
 struct t_config_file *plugin_config_file = NULL;
 struct t_config_section *plugin_config_section_var = NULL;
+struct t_config_section *plugin_config_section_desc = NULL;
 
 
 /*
@@ -131,6 +132,85 @@ plugin_config_set (const char *plugin_name, const char *option_name,
 }
 
 /*
+ * plugin_config_desc_changed_cb: called when description of an option is
+ *                                changed
+ */
+
+void
+plugin_config_desc_changed_cb (void *data, struct t_config_option *option)
+{
+    struct t_config_option *ptr_option;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_option = config_file_search_option (plugin_config_file,
+                                            plugin_config_section_var,
+                                            option->name);
+    if (ptr_option)
+    {
+        if (ptr_option->description)
+        {
+            free (ptr_option->description);
+            ptr_option->description = NULL;
+        }
+        if (option->value)
+            ptr_option->description = strdup (option->value);
+    }
+}
+
+/*
+ * plugin_config_set_desc_internal: set description for a plugin option
+ *                                  (internal function)
+ *                                  This function should not be called directly.
+ */
+
+void
+plugin_config_set_desc_internal (const char *option, const char *value)
+{
+    struct t_config_option *ptr_option;
+    
+    ptr_option = config_file_search_option (plugin_config_file,
+                                            plugin_config_section_desc,
+                                            option);
+    if (ptr_option)
+    {
+        config_file_option_set (ptr_option, value, 1);
+    }
+    else
+    {
+        ptr_option = config_file_new_option (
+            plugin_config_file, plugin_config_section_desc,
+            option, "string", _("description of plugin option"),
+            NULL, 0, 0, "", value, 0, NULL, NULL,
+            &plugin_config_desc_changed_cb, NULL, NULL, NULL);
+    }
+}
+
+/*
+ * plugin_config_set_desc: set description for a plugin option
+ */
+
+void
+plugin_config_set_desc (const char *plugin_name, const char *option_name,
+                        const char *description)
+{
+    int length;
+    char *option_full_name;
+    
+    length = strlen (plugin_name) + 1 + strlen (option_name) + 1;
+    option_full_name = malloc (length);
+    if (option_full_name)
+    {
+        snprintf (option_full_name, length, "%s.%s",
+                  plugin_name, option_name);
+        string_tolower (option_full_name);
+        plugin_config_set_desc_internal (option_full_name, description);
+        free (option_full_name);
+    }
+}
+
+/*
  * plugin_config_reload: reload plugins configuration file
  */
 
@@ -140,8 +220,9 @@ plugin_config_reload (void *data, struct t_config_file *config_file)
     /* make C compiler happy */
     (void) data;
     
-    /* remove all plugin options */
+    /* remove all plugin options and descriptions */
     config_file_section_free_options (plugin_config_section_var);
+    config_file_section_free_options (plugin_config_section_desc);
     
     /* reload plugins config file */
     return config_file_reload (config_file);
@@ -156,18 +237,91 @@ plugin_config_create_option (void *data, struct t_config_file *config_file,
                              struct t_config_section *section,
                              const char *option_name, const char *value)
 {
-    struct t_config_option *ptr_option;
+    struct t_config_option *ptr_option_desc, *ptr_option;
     
     /* make C compiler happy */
     (void) data;
+
+    ptr_option_desc = config_file_search_option (config_file,
+                                                 plugin_config_section_desc,
+                                                 option_name);
     
     ptr_option = config_file_new_option (
         config_file, section,
-        option_name, "string", NULL,
+        option_name, "string",
+        (ptr_option_desc) ? CONFIG_STRING(ptr_option_desc) : NULL,
         NULL, 0, 0, "", value, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     
     return (ptr_option) ?
         WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+}
+
+/*
+ * plugin_config_create_desc: set plugin option description
+ */
+
+int
+plugin_config_create_desc (void *data, struct t_config_file *config_file,
+                           struct t_config_section *section,
+                           const char *option_name, const char *value)
+{
+    struct t_config_option *ptr_option_var, *ptr_option;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_option_var = config_file_search_option (config_file,
+                                                plugin_config_section_var,
+                                                option_name);
+    if (ptr_option_var)
+    {
+        if (ptr_option_var->description)
+        {
+            free (ptr_option_var->description);
+            ptr_option_var->description = NULL;
+        }
+        if (value)
+            ptr_option_var->description = strdup (value);
+    }
+    
+    ptr_option = config_file_new_option (
+        config_file, section,
+        option_name, "string", _("description of plugin option"),
+        NULL, 0, 0, "", value, 0, NULL, NULL,
+        &plugin_config_desc_changed_cb, NULL, NULL, NULL);
+    
+    return (ptr_option) ?
+        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+}
+
+/*
+ * plugin_config_delete_desc: delete plugin option description
+ */
+
+int
+plugin_config_delete_desc (void *data, struct t_config_file *config_file,
+                           struct t_config_section *section,
+                           struct t_config_option *option)
+{
+    struct t_config_option *ptr_option_var;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) section;
+    
+    ptr_option_var = config_file_search_option (config_file,
+                                                plugin_config_section_var,
+                                                option->name);
+    if (ptr_option_var)
+    {
+        if (ptr_option_var->description)
+        {
+            free (ptr_option_var->description);
+            ptr_option_var->description = NULL;
+        }
+    }
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
 /*
@@ -188,9 +342,19 @@ plugin_config_init ()
             NULL, NULL,
             &plugin_config_create_option, NULL,
             NULL, NULL);
+        plugin_config_section_desc = config_file_new_section (
+            plugin_config_file, "desc", 1, 1,
+            NULL, NULL,
+            NULL, NULL,
+            NULL, NULL,
+            &plugin_config_create_desc, NULL,
+            &plugin_config_delete_desc, NULL);
     }
     else
+    {
         plugin_config_section_var = NULL;
+        plugin_config_section_desc = NULL;
+    }
 }
 
 /*
@@ -220,6 +384,7 @@ plugin_config_write ()
 void
 plugin_config_end ()
 {
-    /* free all plugin config options */
+    /* free all plugin config options and descriptions */
     config_file_section_free_options (plugin_config_section_var);
+    config_file_section_free_options (plugin_config_section_desc);
 }

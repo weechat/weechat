@@ -2993,6 +2993,45 @@ weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
 }
 
 /*
+ * weechat_ruby_api_config_set_desc_plugin: set description of a plugin option
+ */
+
+static VALUE
+weechat_ruby_api_config_set_desc_plugin (VALUE class, VALUE option,
+                                         VALUE description)
+{
+    char *c_option, *c_description;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (option) || NIL_P (description))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (option, T_STRING);
+    Check_Type (description, T_STRING);
+    
+    c_option = StringValuePtr (option);
+    c_description = StringValuePtr (description);
+    
+    script_api_config_set_desc_plugin (weechat_ruby_plugin,
+                                       ruby_current_script,
+                                       c_option,
+                                       c_description);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_config_unset_plugin: unset plugin option
  */
 
@@ -7737,6 +7776,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "config_get_plugin", &weechat_ruby_api_config_get_plugin, 1);
     rb_define_module_function (ruby_mWeechat, "config_is_set_plugin", &weechat_ruby_api_config_is_set_plugin, 1);
     rb_define_module_function (ruby_mWeechat, "config_set_plugin", &weechat_ruby_api_config_set_plugin, 2);
+    rb_define_module_function (ruby_mWeechat, "config_set_desc_plugin", &weechat_ruby_api_config_set_desc_plugin, 2);
     rb_define_module_function (ruby_mWeechat, "config_unset_plugin", &weechat_ruby_api_config_unset_plugin, 1);
     rb_define_module_function (ruby_mWeechat, "prefix", &weechat_ruby_api_prefix, 1);
     rb_define_module_function (ruby_mWeechat, "color", &weechat_ruby_api_color, 1);

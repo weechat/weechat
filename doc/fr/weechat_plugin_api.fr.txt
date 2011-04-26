@@ -5586,6 +5586,52 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----------------------------------------
 
+weechat_config_set_desc_plugin
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.5._
+
+Affecter une description pour une option dans le fichier de configuration des
+extensions (plugins.conf).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_config_set_desc_plugin (const char *option_name,
+                                     const char *description);
+----------------------------------------
+
+Paramètres :
+
+* 'option_name' : nom de l'option, WeeChat ajoutera le préfixe
+  "plugins.desc.xxx." (où "xxx" est le nom de l'extension courante)
+* 'description' : description pour l'option
+
+[NOTE]
+Ce n'est pas un problème si l'option (plugins.var.xxx.option_name) n'existe pas.
+Une création future de cette option utilisera cette description.
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_config_set_desc_plugin ("option", "description de l'option");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+weechat.config_set_desc_plugin(option_name, description)
+
+# exemple
+version = weechat.info_get("version_number", "") or 0
+if int(version) >= 0x00030500:
+    weechat.config_set_desc_plugin("option", "description de l'option")
+----------------------------------------
+
 weechat_config_unset_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

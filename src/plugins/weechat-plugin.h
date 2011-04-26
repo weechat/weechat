@@ -45,7 +45,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20110413-01"
+#define WEECHAT_PLUGIN_API_VERSION "20110426-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -407,6 +407,9 @@ struct t_weechat_plugin
                                  const char *option_name);
     int (*config_set_plugin) (struct t_weechat_plugin *plugin,
                               const char *option_name, const char *value);
+    void (*config_set_desc_plugin) (struct t_weechat_plugin *plugin,
+                                    const char *option_name,
+                                    const char *description);
     int (*config_unset_plugin) (struct t_weechat_plugin *plugin,
                                 const char *option_name);
     
@@ -1101,6 +1104,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_config_set_plugin(__option, __value)                    \
     weechat_plugin->config_set_plugin(weechat_plugin, __option,         \
                                       __value)
+#define weechat_config_set_desc_plugin(__option, __description)         \
+    weechat_plugin->config_set_desc_plugin(weechat_plugin, __option,    \
+                                      __description)
 #define weechat_config_unset_plugin(__option)                           \
     weechat_plugin->config_unset_plugin(weechat_plugin, __option)
 

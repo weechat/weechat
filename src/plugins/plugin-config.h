@@ -29,6 +29,9 @@ extern struct t_config_option *plugin_config_search (const char *plugin_name,
                                                      const char *option_name);
 extern int plugin_config_set (const char *plugin_name, const char *option_name,
                               const char *value);
+extern void plugin_config_set_desc (const char *plugin_name,
+                                    const char *option_name,
+                                    const char *description);
 extern void plugin_config_init ();
 extern int plugin_config_read ();
 extern int plugin_config_write ();

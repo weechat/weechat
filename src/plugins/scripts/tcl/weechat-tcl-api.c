@@ -2985,6 +2985,44 @@ weechat_tcl_api_config_set_plugin (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_config_set_desc_plugin: set description of a plugin option
+ */
+
+static int
+weechat_tcl_api_config_set_desc_plugin (ClientData clientData, Tcl_Interp *interp,
+                                        int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *option, *description;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        TCL_RETURN_ERROR;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        TCL_RETURN_ERROR;
+    }
+    
+    option = Tcl_GetStringFromObj (objv[1], &i);
+    description = Tcl_GetStringFromObj (objv[2], &i);
+    
+    script_api_config_set_desc_plugin (weechat_tcl_plugin,
+                                       tcl_current_script,
+                                       option,
+                                       description);
+    
+    TCL_RETURN_OK;
+}
+
+/*
  * weechat_tcl_api_config_set_plugin: unset plugin option
  */
 
@@ -7639,6 +7677,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_config_is_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_set_plugin",
                           weechat_tcl_api_config_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::config_set_desc_plugin",
+                          weechat_tcl_api_config_set_desc_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_unset_plugin",
                           weechat_tcl_api_config_unset_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::prefix",

@@ -2611,6 +2611,41 @@ XS (XS_weechat_api_config_set_plugin)
 }
 
 /*
+ * weechat::config_set_desc_plugin: set description of a plugin option
+ */
+
+XS (XS_weechat_api_config_set_desc_plugin)
+{
+    char *option, *description;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        PERL_RETURN_ERROR;
+    }
+    
+    option = SvPV (ST (0), PL_na);
+    description = SvPV (ST (1), PL_na);
+    
+    script_api_config_set_desc_plugin (weechat_perl_plugin,
+                                       perl_current_script,
+                                       option,
+                                       description);
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::config_unset_plugin: unset a plugin option
  */
 
@@ -6729,6 +6764,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_get_plugin", XS_weechat_api_config_get_plugin, "weechat");
     newXS ("weechat::config_is_set_plugin", XS_weechat_api_config_is_set_plugin, "weechat");
     newXS ("weechat::config_set_plugin", XS_weechat_api_config_set_plugin, "weechat");
+    newXS ("weechat::config_set_desc_plugin", XS_weechat_api_config_set_desc_plugin, "weechat");
     newXS ("weechat::config_unset_plugin", XS_weechat_api_config_unset_plugin, "weechat");
     newXS ("weechat::prefix", XS_weechat_api_prefix, "weechat");
     newXS ("weechat::color", XS_weechat_api_color, "weechat");

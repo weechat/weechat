@@ -36,6 +36,9 @@ extern int plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
 extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
                                          const char *option_name,
                                          const char *value);
+extern void plugin_api_config_set_desc_plugin (struct t_weechat_plugin *plugin,
+                                               const char *option_name,
+                                               const char *description);
 extern int plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
                                            const char *option_name);
 

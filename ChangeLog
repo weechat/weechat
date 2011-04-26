@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-rc1, 2011-04-25
+v0.3.5-rc1, 2011-04-26
 
 
 Version 0.3.5 (under dev!)
@@ -57,6 +57,7 @@ Version 0.3.5 (under dev!)
   being added with command "/color"), auto reset of color pairs with option
   weechat.look.color_pairs_auto_reset
 * core: allow background for nick colors (using ":")
+* api: add new function config_set_desc_plugin (task #10925)
 * api: add new functions buffer_match_list and window_search_with_buffer
 * plugins: fix memory leaks when setting buffer callbacks after /upgrade
   (plugins: irc, relay, xfer, scripts)

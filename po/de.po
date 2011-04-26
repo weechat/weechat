@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-24 08:57+0200\n"
+"POT-Creation-Date: 2011-04-26 17:47+0200\n"
 "PO-Revision-Date: 2011-04-15 21:04+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6851,6 +6851,10 @@ msgstr "%sFehler: Die Erweiterung \"%s\" wurde nicht gefunden"
 
 msgid "Plugins unloaded"
 msgstr "Erweiterungen wurden deinstalliert"
+
+#, fuzzy
+msgid "description of plugin option"
+msgstr "Skript Pointer (optional)"
 
 msgid "Actions (letter+enter):"
 msgstr "Aktion (Zeichen+Enter):"

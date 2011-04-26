@@ -1681,6 +1681,31 @@ script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_config_set_plugin: set value of a script config option
+ *                               format in file is "plugin.script.option"
+ */
+
+void
+script_api_config_set_desc_plugin (struct t_weechat_plugin *weechat_plugin,
+                                   struct t_plugin_script *script,
+                                   const char *option, const char *description)
+{
+    char *option_fullname;
+    
+    option_fullname = malloc ((strlen (script->name) +
+                               strlen (option) + 2));
+    if (!option_fullname)
+        return;
+    
+    strcpy (option_fullname, script->name);
+    strcat (option_fullname, ".");
+    strcat (option_fullname, option);
+    
+    weechat_config_set_desc_plugin (option_fullname, description);
+    free (option_fullname);
+}
+
+/*
  * script_api_config_unset_plugin: unset script config option
  *                                 format in file is "plugin.script.option"
  */

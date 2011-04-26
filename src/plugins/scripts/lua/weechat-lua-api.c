@@ -2912,6 +2912,44 @@ weechat_lua_api_config_set_plugin (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_set_desc_plugin: set description of a plugin option
+ */
+
+static int
+weechat_lua_api_config_set_desc_plugin (lua_State *L)
+{
+    const char *option, *description;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        LUA_RETURN_ERROR;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -2);
+    description = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_config_set_desc_plugin (weechat_lua_plugin,
+                                       lua_current_script,
+                                       option,
+                                       description);
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_config_unset_plugin: unset plugin option
  */
 
@@ -7800,6 +7838,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_get_plugin", &weechat_lua_api_config_get_plugin },
     { "config_is_set_plugin", &weechat_lua_api_config_is_set_plugin },
     { "config_set_plugin", &weechat_lua_api_config_set_plugin },
+    { "config_set_desc_plugin", &weechat_lua_api_config_set_desc_plugin },
     { "config_unset_plugin", &weechat_lua_api_config_unset_plugin },
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },

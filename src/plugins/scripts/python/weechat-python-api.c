@@ -2760,6 +2760,41 @@ weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_set_desc_plugin: set description of a plugin option
+ */
+
+static PyObject *
+weechat_python_api_config_set_desc_plugin (PyObject *self, PyObject *args)
+{
+    char *option, *description;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    description = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &option, &description))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "config_set_desc_plugin");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_config_set_desc_plugin (weechat_python_plugin,
+                                       python_current_script,
+                                       option,
+                                       description);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_config_unset_plugin: unset plugin option
  */
 
@@ -7066,6 +7101,7 @@ PyMethodDef weechat_python_funcs[] =
     { "config_get_plugin", &weechat_python_api_config_get_plugin, METH_VARARGS, "" },
     { "config_is_set_plugin", &weechat_python_api_config_is_set_plugin, METH_VARARGS, "" },
     { "config_set_plugin", &weechat_python_api_config_set_plugin, METH_VARARGS, "" },
+    { "config_set_desc_plugin", &weechat_python_api_config_set_desc_plugin, METH_VARARGS, "" },
     { "config_unset_plugin", &weechat_python_api_config_unset_plugin, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },

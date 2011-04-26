@@ -317,6 +317,10 @@ extern int script_api_config_is_set_plugin (struct t_weechat_plugin *weechat_plu
 extern int script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
                                          struct t_plugin_script *script,
                                          const char *option, const char *value);
+extern void script_api_config_set_desc_plugin (struct t_weechat_plugin *weechat_plugin,
+                                               struct t_plugin_script *script,
+                                               const char *option,
+                                               const char *description);
 extern int script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script *script,
                                            const char *option);

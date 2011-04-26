@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-24 08:57+0200\n"
+"POT-Creation-Date: 2011-04-26 17:47+0200\n"
 "PO-Revision-Date: 2011-04-10 17:31+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6692,6 +6692,10 @@ msgstr "%sError: plugin \"%s\" no encontrado"
 
 msgid "Plugins unloaded"
 msgstr "Plugins descargados"
+
+#, fuzzy
+msgid "description of plugin option"
+msgstr "puntero del script (opcional)"
 
 msgid "Actions (letter+enter):"
 msgstr "Acciones (letra+enter)"

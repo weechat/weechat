@@ -169,6 +169,19 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_config_set_desc_plugin: set description of a plugin config option
+ */
+
+void
+plugin_api_config_set_desc_plugin (struct t_weechat_plugin *plugin,
+                                   const char *option_name,
+                                   const char *description)
+{
+    if (plugin && option_name)
+        plugin_config_set_desc (plugin->name, option_name, description);
+}
+
+/*
  * plugin_api_config_unset_plugin: unset plugin config option
  */
 

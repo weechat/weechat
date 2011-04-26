@@ -575,6 +575,7 @@ plugin_load (const char *filename)
         new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
         new_plugin->config_is_set_plugin = &plugin_api_config_is_set_plugin;
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
+        new_plugin->config_set_desc_plugin = &plugin_api_config_set_desc_plugin;
         new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
         
         new_plugin->prefix = &plugin_api_prefix;
