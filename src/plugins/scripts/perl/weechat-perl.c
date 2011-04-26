@@ -207,43 +207,6 @@ weechat_perl_hash_to_hashtable (SV *hash, int hashtable_size)
 }
 
 /*
- * weechat_perl_exec_pv: encapsulation of call to perl_call_pv
- */
-
-int
-weechat_perl_exec_pv (const char *func, const char *format, void **argv)
-{
-    int i, argc;
-    HV *hash;
-    
-    dSP;
-    
-    PUSHMARK(SP);
-    if (format && format[0])
-    {
-        argc = strlen (format);
-        for (i = 0; i < argc; i++)
-        {
-            switch (format[i])
-            {
-                case 's': /* string */
-                    XPUSHs(sv_2mortal(newSVpv((char *)argv[i], 0)));
-                    break;
-                case 'i': /* integer */
-                    XPUSHs(sv_2mortal(newSViv(*((int *)argv[i]))));
-                    break;
-                case 'h': /* hash */
-                    hash = weechat_perl_hashtable_to_hash (argv[i]);
-                    XPUSHs(sv_2mortal((SV *)hash));
-                    break;
-            }
-        }
-        PUTBACK;
-    }
-    return perl_call_pv (func, G_EVAL | G_SCALAR);
-}
-
-/*
  * weechat_perl_exec: execute a perl function
  */
 
@@ -255,15 +218,13 @@ weechat_perl_exec (struct t_plugin_script *script,
     char *func;
     unsigned int count;
     void *ret_value;
-    int *ret_i, mem_err, length;
+    int *ret_i, mem_err, length, i, argc;
     SV *ret_s;
+    HV *hash;
     struct t_plugin_script *old_perl_current_script;
 #ifdef MULTIPLICITY
     void *old_context;
 #endif
-    
-    /* this code is placed here to conform ISO C90 */
-    dSP;
     
     old_perl_current_script = perl_current_script;
     perl_current_script = script;
@@ -285,10 +246,33 @@ weechat_perl_exec (struct t_plugin_script *script,
               function);
 #endif
     
+    dSP;
     ENTER;
     SAVETMPS;
     
-    count = weechat_perl_exec_pv (func, format, argv);
+    PUSHMARK(SP);
+    if (format && format[0])
+    {
+        argc = strlen (format);
+        for (i = 0; i < argc; i++)
+        {
+            switch (format[i])
+            {
+                case 's': /* string */
+                    XPUSHs(sv_2mortal(newSVpv((char *)argv[i], 0)));
+                    break;
+                case 'i': /* integer */
+                    XPUSHs(sv_2mortal(newSViv(*((int *)argv[i]))));
+                    break;
+                case 'h': /* hash */
+                    hash = weechat_perl_hashtable_to_hash (argv[i]);
+                    XPUSHs(sv_2mortal((SV *)hash));
+                    break;
+            }
+        }
+    }
+    PUTBACK;
+    count = perl_call_pv (func, G_EVAL | G_SCALAR);
     
     ret_value = NULL;
     mem_err = 1;
@@ -346,7 +330,8 @@ weechat_perl_exec (struct t_plugin_script *script,
             }
         }
     }
-    
+
+    PUTBACK;
     FREETMPS;
     LEAVE;
     

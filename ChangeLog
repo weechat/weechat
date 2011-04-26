@@ -86,6 +86,7 @@ Version 0.3.5 (under dev!)
 * irc: add many missing commands for target buffer (options irc.msgbuffer.xxx)
   (bug #32216)
 * lua: fix crash when many scripts are executing callbacks at same time
+* perl: fix memory leak when calling perl functions (bug #32895)
 * relay: fix crash on /upgrade when nick in irc client is not yet set
 * relay: allow colon in server password received from client
 * relay: do not send join for private buffers to client
