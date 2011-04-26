@@ -63,6 +63,7 @@ Version 0.3.5 (under dev!)
   (plugins: irc, relay, xfer, scripts)
 * aspell: add section "option" in aspell.conf for speller options (task #11083)
 * aspell: fix spellers used after switch of window (bug #32811)
+* irc: add modifier "irc_in2_xxx" (called after charset decoding)
 * irc: fix memory leak when copying or renaming server
 * irc: do not rejoin channels where /part has been issued before reconnection
   to server (bug #33029)

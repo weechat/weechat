@@ -7825,7 +7825,12 @@ Paramètres :
 
 | irc | irc_in_xxx ^(1)^ |
   nom de serveur |
-  contenu du message reçu du serveur IRC |
+  contenu du message reçu du serveur IRC (avant décodage du jeu de caractères) |
+  nouveau contenu du message
+
+| irc | irc_in2_xxx ^(1)^ |
+  nom de serveur |
+  contenu du message reçu du serveur IRC (après décodage du jeu de caractères) |
   nouveau contenu du message
 
 | irc | irc_out_xxx ^(1)^ |

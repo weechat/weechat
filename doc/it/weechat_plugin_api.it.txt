@@ -6736,7 +6736,7 @@ Argomenti:
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato)
 
-| irc | xxx,irc_out_yyy ^1^ | string: messaggio |
+| irc | xxx,irc_out_yyy ^(1)^ | string: messaggio |
   messaggio irc inviato al server
 
 | irc | xxx,irc_outtags_yyy ^(1)^ | stringa: tag + ";" + messaggio |
@@ -7745,17 +7745,24 @@ Argomenti:
   qualsiasi stringa |
   stringa con i codici colori IRC, o senza colore
 
-| irc | irc_in_xxx ^1^ |
+// TRANSLATION MISSING
+| irc | irc_in_xxx ^(1)^ |
   nome server |
-  contenuto del messaggio ricevuto dal server IRC |
+  contenuto del messaggio ricevuto dal server IRC (before charset decoding) |
   nuovo contenuto del messaggio
 
-| irc | irc_out_xxx ^1^ |
+// TRANSLATION MISSING
+| irc | irc_in2_xxx ^(1)^ |
+  nome server |
+  contenuto del messaggio ricevuto dal server IRC (after charset decoding) |
+  nuovo contenuto del messaggio
+
+| irc | irc_out_xxx ^(1)^ |
   nome server |
   contenuto del messaggio che sta per essere inviato al server IRC |
   nuovo contenuto del messaggio
 
-| weechat | bar_condition_yyy ^2^ |
+| weechat | bar_condition_yyy ^(2)^ |
   stringa con puntatore alla finestra ("0x123..") |
   stringa vuota |
   "1" per visualizzare la barra, "0" per nasconderla
@@ -7789,8 +7796,8 @@ Argomenti:
 |========================================
 
 [NOTE]
-^1^ 'xxx' è il nome del comando IRC. +
-^2^ 'yyy' è il nome della barra.
+^(1)^ 'xxx' è il nome del comando IRC. +
+^(2)^ 'yyy' è il nome della barra.
 
 * 'callback': funzione chiamata quando viene usato il modificatore,
   argomenti:

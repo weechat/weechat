@@ -7710,7 +7710,12 @@ Arguments:
 
 | irc | irc_in_xxx ^(1)^ |
   server name |
-  content of message received from IRC server |
+  content of message received from IRC server (before charset decoding) |
+  new content of message
+
+| irc | irc_in2_xxx ^(1)^ |
+  server name |
+  content of message received from IRC server (after charset decoding) |
   new content of message
 
 | irc | irc_out_xxx ^(1)^ |

@@ -1902,7 +1902,7 @@ void
 irc_server_msgq_flush ()
 {
     struct t_irc_message *next;
-    char *ptr_data, *new_msg, *ptr_msg, *pos;
+    char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
     char *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[64], modifier_data[256];
@@ -1997,24 +1997,46 @@ irc_server_msgq_flush ()
                             weechat_string_remove_color ((msg_decoded) ? msg_decoded : ptr_msg,
                                                          "?");
                         
-                        /* parse and execute command */
-                        if (irc_redirect_message (irc_recv_msgq->server,
-                                                  (msg_decoded_without_color) ?
-                                                  msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
-                                                  command, arguments))
+                        /* call modifier after charset */
+                        ptr_msg2 = (msg_decoded_without_color) ?
+                            msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg);
+                        snprintf (str_modifier, sizeof (str_modifier),
+                                  "irc_in2_%s",
+                                  (command) ? command : "unknown");
+                        new_msg2 = weechat_hook_modifier_exec (str_modifier,
+                                                               irc_recv_msgq->server->name,
+                                                               ptr_msg2);
+                        if (new_msg2 && (strcmp (ptr_msg2, new_msg2) == 0))
                         {
-                            /* message redirected, we'll not display it! */
-                        }
-                        else
-                        {
-                            /* message not redirected, display it */
-                            irc_protocol_recv_command (irc_recv_msgq->server,
-                                                       (msg_decoded_without_color) ?
-                                                       msg_decoded_without_color : ((msg_decoded) ? msg_decoded : ptr_msg),
-                                                       command,
-                                                       channel);
+                            free (new_msg2);
+                            new_msg2 = NULL;
                         }
                         
+                        /* message not dropped? */
+                        if (!new_msg2 || new_msg2[0])
+                        {
+                            /* use new message (returned by plugin) */
+                            if (new_msg2)
+                                ptr_msg2 = new_msg2;
+                            
+                            /* parse and execute command */
+                            if (irc_redirect_message (irc_recv_msgq->server,
+                                                      ptr_msg2, command,
+                                                      arguments))
+                            {
+                                /* message redirected, we'll not display it! */
+                            }
+                            else
+                            {
+                                /* message not redirected, display it */
+                                irc_protocol_recv_command (irc_recv_msgq->server,
+                                                           ptr_msg2, command,
+                                                           channel);
+                            }
+                        }
+                        
+                        if (new_msg2)
+                            free (new_msg2);
                         if (nick)
                             free (nick);
                         if (host)
