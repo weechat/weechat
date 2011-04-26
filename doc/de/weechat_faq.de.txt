@@ -698,7 +698,7 @@ Ich möchte den Entwicklern von WeeChat helfen. Was kann ich tun?
 Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
 Bitte kontaktiere uns via IRC oder email, schaue auf die Support-Seite:
-http://www.weechat.org/about
+http://www.weechat.org/support
 
 
 [[donate]]

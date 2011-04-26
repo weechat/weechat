@@ -659,7 +659,7 @@ I want to help WeeChat developers. What can I do?
 There's many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
-http://www.weechat.org/about
+http://www.weechat.org/support
 
 
 [[donate]]

@@ -679,7 +679,7 @@ Voglio aiutare gli sviluppatori di WeeChat. Cosa posso fare?
 Ci sono molti compiti da fare (testing, scrittura del codice, documentazione, ...)
 
 Per favore contattateci su IRC o via mail e consultate la pagina di supporto:
-http://www.weechat.org/about
+http://www.weechat.org/support
 
 
 [[donate]]

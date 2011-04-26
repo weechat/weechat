@@ -668,7 +668,7 @@ Chcę pomóc programistą WeeChat. Co mogę zrobić?
 Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
 Skontaktuj się z nami na IRC lub mailowo, szczegóły:
-http://www.weechat.org/about
+http://www.weechat.org/support
 
 
 [[donate]]
