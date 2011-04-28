@@ -221,6 +221,7 @@ struct t_hook_connect
     gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
+    char *gnutls_priorities;           /* GnuTLS priorities                 */
 #endif
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
@@ -408,6 +409,7 @@ extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     int port, int sock, int ipv6,
                                     void *gnutls_session, void *gnutls_cb,
                                     int gnutls_dhkey_size,
+                                    const char *gnutls_priorities,
                                     const char *local_hostname,
                                     t_hook_callback_connect *callback,
                                     void *callback_data);

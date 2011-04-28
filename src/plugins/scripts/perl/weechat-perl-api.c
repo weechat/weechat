@@ -3355,6 +3355,7 @@ XS (XS_weechat_api_hook_connect)
                                                       NULL, /* gnutls session */
                                                       NULL, /* gnutls callback */
                                                       0,    /* gnutls DH key size */
+                                                      NULL, /* gnutls priorities */
                                                       local_hostname,
                                                       &weechat_perl_api_hook_connect_cb,
                                                       function,

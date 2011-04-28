@@ -801,6 +801,76 @@ irc_config_server_default_change_cb (void *data, struct t_config_option *option)
 }
 
 /*
+ * irc_config_check_gnutls_priorities: check string with GnuTLS priorities
+ *                                     return NULL if ok, or pointer to char
+ *                                     with error in string
+ */
+
+const char *
+irc_config_check_gnutls_priorities (const char *priorities)
+{
+#ifdef HAVE_GNUTLS
+    gnutls_priority_t priority_cache;
+    const char *pos_error;
+    int rc;
+    
+    if (!priorities || !priorities[0])
+        return NULL;
+
+    rc = gnutls_priority_init (&priority_cache, priorities, &pos_error);
+    if (rc == GNUTLS_E_SUCCESS)
+        return NULL;
+    if (pos_error)
+        return pos_error;
+    return priorities;
+#else
+    /* make C compiler happy */
+    (void) priorities;
+
+    return NULL;
+#endif
+}
+
+/*
+ * irc_config_server_check_value_cb: callback called to check a server option
+ *                                   when it is modified
+ */
+
+int
+irc_config_server_check_value_cb (void *data,
+                                  struct t_config_option *option,
+                                  const char *value)
+{
+    int index_option;
+    const char *pos_error;
+    
+    /* make C compiler happy */
+    (void) option;
+    
+    index_option = irc_server_search_option (data);
+    if (index_option >= 0)
+    {
+        switch (index_option)
+        {
+            case IRC_SERVER_OPTION_SSL_PRIORITIES:
+                pos_error = irc_config_check_gnutls_priorities (value);
+                if (pos_error)
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: invalid priorities string, error "
+                                      "at this position in string: \"%s\""),
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                    pos_error);
+                    return 0;
+                }
+                break;
+        }
+    }
+    
+    return 1;
+}
+
+/*
  * irc_config_server_change_cb: callback called when a server option is modified
  */
 
@@ -1185,6 +1255,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                               const char *default_value,
                               const char *value,
                               int null_value_allowed,
+                              void *callback_check_value,
+                              void *callback_check_value_data,
                               void *callback_change,
                               void *callback_change_data)
 {
@@ -1202,7 +1274,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1214,7 +1286,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1226,7 +1298,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1238,7 +1310,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1252,7 +1324,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SSL_PRIORITIES:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("string with priorities for gnutls (for syntax, see "
+                   "documentation of function gnutls_priority_init in gnutls "
+                   "manual, common strings are: \"PERFORMANCE\", \"NORMAL\", "
+                    "\"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1264,7 +1351,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, INT_MAX,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1276,7 +1363,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1288,7 +1375,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1300,7 +1387,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 "plain|dh-blowfish", 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1312,7 +1399,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1324,7 +1411,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1337,7 +1424,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 1, 3600,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1349,7 +1436,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1361,7 +1448,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1373,7 +1460,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 1, 65535,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1385,7 +1472,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1397,7 +1484,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1409,7 +1496,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1422,7 +1509,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1437,7 +1524,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1450,7 +1537,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 3600,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1463,7 +1550,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1475,7 +1562,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1487,7 +1574,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 3600*24,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1502,7 +1589,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 1, 3600,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1516,7 +1603,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 60,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1530,7 +1617,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 60,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1543,7 +1630,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 60 * 24 * 7,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1556,7 +1643,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 1000000,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1569,7 +1656,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1582,7 +1669,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
-                NULL, NULL,
+                callback_check_value, callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1596,8 +1683,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 default_value, value,
                 null_value_allowed,
                 (section == irc_config_section_server_default) ?
-                &irc_config_server_default_check_notify : NULL,
-                NULL,
+                &irc_config_server_default_check_notify : callback_check_value,
+                callback_check_value_data,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
@@ -1782,6 +1869,8 @@ irc_config_server_create_default_options (struct t_config_section *section)
             irc_server_option_default[i],
             default_value,
             0,
+            &irc_config_server_check_value_cb,
+            irc_server_option_string[i],
             &irc_config_server_default_change_cb,
             irc_server_option_string[i]);
     }

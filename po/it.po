@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-26 17:47+0200\n"
+"POT-Creation-Date: 2011-04-28 11:55+0200\n"
 "PO-Revision-Date: 2011-04-10 17:33+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2743,6 +2743,9 @@ msgstr ""
 "Se un'altra istanza di WeeChat usa questo file, eseguire WeeChat\n"
 "con un'altra home usando l'opzione da riga di comando  \"--dir\".\n"
 
+msgid "invalid priorities"
+msgstr ""
+
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "tipo di proxy (http (predefinito), socks4, socks5)"
 
@@ -4883,6 +4886,11 @@ msgstr "nick nella lista notifiche"
 
 #, c-format
 msgid ""
+"%s%s: invalid priorities string, error at this position in string: \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
@@ -4933,6 +4941,12 @@ msgstr ""
 "file del certificato ssl usato per identificare automaticamente il proprio "
 "nick (\"%h\" sarà sostituito dalla home di WeeChat, \"~/.weechat come "
 "predefinita)"
+
+msgid ""
+"string with priorities for gnutls (for syntax, see documentation of function "
+"gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
+"\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
+msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""

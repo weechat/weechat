@@ -929,6 +929,7 @@ script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                          const char *proxy, const char *address, int port,
                          int sock, int ipv6, void *gnutls_sess,
                          void *gnutls_cb, int gnutls_dhkey_size,
+                         const char *gnutls_priorities,
                          const char *local_hostname,
                          int (*callback)(void *data, int status,
                                          int gnutls_rc,
@@ -946,8 +947,8 @@ script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
     
     new_hook = weechat_hook_connect (proxy, address, port, sock, ipv6,
                                      gnutls_sess, gnutls_cb, gnutls_dhkey_size,
-                                     local_hostname, callback,
-                                     new_script_callback);
+                                     gnutls_priorities, local_hostname,
+                                     callback, new_script_callback);
     if (!new_hook)
     {
         script_callback_free_data (new_script_callback);

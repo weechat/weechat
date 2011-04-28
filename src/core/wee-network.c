@@ -59,14 +59,6 @@ int network_init_ok = 0;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred; /* GnuTLS client credentials   */
-const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010700
-    const int gnutls_prot_prio[] = { GNUTLS_TLS1_2, GNUTLS_TLS1_1,
-                                     GNUTLS_TLS1_0, GNUTLS_SSL3, 0 };
-#else
-    const int gnutls_prot_prio[] = { GNUTLS_TLS1_1, GNUTLS_TLS1_0,
-                                     GNUTLS_SSL3, 0 };
-#endif
 #endif
 
 
@@ -1004,6 +996,10 @@ void
 network_connect_with_fork (struct t_hook *hook_connect)
 {
     int child_pipe[2];
+#ifdef HAVE_GNUTLS
+    int rc;
+    const char *pos_error;
+#endif
 #ifndef __CYGWIN__
     pid_t pid;
 #endif
@@ -1012,20 +1008,27 @@ network_connect_with_fork (struct t_hook *hook_connect)
     /* initialize GnuTLS if SSL asked */
     if (HOOK_CONNECT(hook_connect, gnutls_sess))
     {
-        if (gnutls_init (HOOK_CONNECT(hook_connect, gnutls_sess), GNUTLS_CLIENT) != 0)
+        if (gnutls_init (HOOK_CONNECT(hook_connect, gnutls_sess), GNUTLS_CLIENT) != GNUTLS_E_SUCCESS)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
-                 '0' + WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                 WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
                  0, NULL, NULL);
             unhook (hook_connect);
             return;
         }
-        gnutls_set_default_priority (*HOOK_CONNECT(hook_connect, gnutls_sess));
-        gnutls_certificate_type_set_priority (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                              gnutls_cert_type_prio);
-        gnutls_protocol_set_priority (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                      gnutls_prot_prio);
+        rc = gnutls_priority_set_direct (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                         HOOK_CONNECT(hook_connect, gnutls_priorities),
+                                         &pos_error);
+        if (rc != GNUTLS_E_SUCCESS)
+        {
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_data,
+                 WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                 0, _("invalid priorities"), NULL);
+            unhook (hook_connect);
+            return;
+        }
         gnutls_credentials_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                 GNUTLS_CRD_CERTIFICATE,
                                 gnutls_xcred);
@@ -1039,7 +1042,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
-             '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+             WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
              0, NULL, NULL);
         unhook (hook_connect);
         return;
@@ -1062,7 +1065,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
         case -1:
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
-                 '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+                 WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
                  0, NULL, NULL);
             unhook (hook_connect);
             return;

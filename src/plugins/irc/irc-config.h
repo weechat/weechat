@@ -154,6 +154,9 @@ extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 
 extern void irc_config_set_nick_colors ();
+extern int irc_config_server_check_value_cb (void *data,
+                                             struct t_config_option *option,
+                                             const char *value);
 extern void irc_config_server_change_cb (void *data,
                                          struct t_config_option *option);
 struct t_config_option *irc_config_server_new_option (struct t_config_file *config_file,
@@ -163,6 +166,8 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
                                                       const char *default_value,
                                                       const char *value,
                                                       int null_value_allowed,
+                                                      void *callback_check_value,
+                                                      void *callback_check_value_data,
                                                       void *callback_change,
                                                       void *callback_change_data);
 extern int irc_config_init ();

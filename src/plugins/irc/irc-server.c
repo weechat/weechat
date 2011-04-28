@@ -66,7 +66,7 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 { "addresses", "proxy", "ipv6",
-  "ssl", "ssl_cert", "ssl_dhkey_size", "ssl_verify",
+  "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_verify",
   "password", "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout",
   "autoconnect", "autoreconnect", "autoreconnect_delay",
   "nicks", "username", "realname", "local_hostname",
@@ -80,7 +80,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 { "", "", "off",
-  "off", "", "2048", "on",
+  "off", "", "NORMAL", "2048", "on",
   "", "plain", "", "", "15",
   "off", "on", "10",
   "", "", "", "",
@@ -687,6 +687,8 @@ irc_server_alloc (const char *name)
                                               NULL,
                                               NULL,
                                               1,
+                                              &irc_config_server_check_value_cb,
+                                              irc_server_option_string[i],
                                               &irc_config_server_change_cb,
                                               irc_server_option_string[i]);
             irc_config_server_change_cb (irc_server_option_string[i],
@@ -3359,6 +3361,7 @@ irc_server_connect (struct t_irc_server *server)
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
                                                  (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
                                                  IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+                                                 IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
                                                  &irc_server_connect_cb,
                                                  server);
@@ -3368,7 +3371,7 @@ irc_server_connect (struct t_irc_server *server)
                                                  server->current_port,
                                                  server->sock,
                                                  IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-                                                 NULL, NULL, 0,
+                                                 NULL, NULL, 0, NULL,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
                                                  &irc_server_connect_cb,
                                                  server);
@@ -3976,6 +3979,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "ssl_cert",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "ssl_priorities",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl_dhkey_size",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE)))
         return 0;
@@ -4166,6 +4172,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  ssl_cert . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]));
+        /* ssl_priorities */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
+            weechat_log_printf ("  ssl_priorities . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_PRIORITIES));
+        else
+            weechat_log_printf ("  ssl_priorities . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]));
         /* ssl_dhkey_size */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
             weechat_log_printf ("  ssl_dhkey_size . . . : null ('%d')",

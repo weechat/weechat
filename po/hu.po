@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-26 17:47+0200\n"
+"POT-Creation-Date: 2011-04-28 11:55+0200\n"
 "PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2410,6 +2410,9 @@ msgstr ""
 "Ha egy másik WeeChat folyamat használja ezt a fájlt, próbálja másik\n"
 "saját könyvtárral futtatni a WeeChat-et a \"--dir\" opció segítségével!\n"
 
+msgid "invalid priorities"
+msgstr ""
+
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "proxy típus (http (alapértelmezett), socks4, socks5)"
 
@@ -4489,6 +4492,11 @@ msgstr "%s nem található ilyen mellőzés\n"
 
 #, c-format
 msgid ""
+"%s%s: invalid priorities string, error at this position in string: \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
@@ -4532,6 +4540,12 @@ msgid ""
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+msgid ""
+"string with priorities for gnutls (for syntax, see documentation of function "
+"gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
+"\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
+msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""

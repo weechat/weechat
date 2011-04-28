@@ -1638,9 +1638,10 @@ hook_process_run (struct t_hook *hook_process)
  */
 
 struct t_hook *
-hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *address,
-              int port, int sock, int ipv6, void *gnutls_sess, void *gnutls_cb,
-              int gnutls_dhkey_size, const char *local_hostname,
+hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
+              const char *address, int port, int sock, int ipv6,
+              void *gnutls_sess, void *gnutls_cb, int gnutls_dhkey_size,
+              const char *gnutls_priorities, const char *local_hostname,
               t_hook_callback_connect *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -1651,6 +1652,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *ad
     (void) gnutls_sess;
     (void) gnutls_cb;
     (void) gnutls_dhkey_size;
+    (void) gnutls_priorities;
 #endif
     
     if ((sock < 0) || !address || (port <= 0) || !callback)
@@ -1680,6 +1682,8 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy, const char *ad
     new_hook_connect->gnutls_sess = gnutls_sess;
     new_hook_connect->gnutls_cb = gnutls_cb;
     new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
+    new_hook_connect->gnutls_priorities = (gnutls_priorities) ?
+        strdup (gnutls_priorities) : NULL;
 #endif
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
@@ -3418,6 +3422,7 @@ hook_print_log ()
                         log_printf ("    gnutls_sess . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_sess));
                         log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_cb));
                         log_printf ("    gnutls_dhkey_size . . : %d",    HOOK_CONNECT(ptr_hook, gnutls_dhkey_size));
+                        log_printf ("    gnutls_priorities . . : '%s'",  HOOK_CONNECT(ptr_hook, gnutls_priorities));
 #endif
                         log_printf ("    local_hostname. . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));

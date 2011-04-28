@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-26 17:47+0200\n"
+"POT-Creation-Date: 2011-04-28 11:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2074,6 +2074,9 @@ msgid ""
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
 
+msgid "invalid priorities"
+msgstr ""
+
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr ""
 
@@ -3825,6 +3828,11 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: invalid priorities string, error at this position in string: \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
@@ -3863,6 +3871,12 @@ msgstr ""
 msgid ""
 "ssl certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+
+msgid ""
+"string with priorities for gnutls (for syntax, see documentation of function "
+"gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
+"\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
 msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"

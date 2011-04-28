@@ -3856,6 +3856,7 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
                                                       NULL, /* gnutls session */
                                                       NULL, /* gnutls callback */
                                                       0,    /* gnutls DH key size */
+                                                      NULL, /* gnutls priorities */
                                                       c_local_hostname,
                                                       &weechat_ruby_api_hook_connect_cb,
                                                       c_function,

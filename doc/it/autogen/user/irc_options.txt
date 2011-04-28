@@ -483,6 +483,11 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2048`)
 
+* *irc.server_default.ssl_priorities*
+** descrizione: `string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"NORMAL"`)
+
 * *irc.server_default.ssl_verify*
 ** descrizione: `verifica che la connessione ssl sia totalmente fidata`
 ** tipo: bool
