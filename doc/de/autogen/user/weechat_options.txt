@@ -329,7 +329,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
 * *weechat.look.color_pairs_auto_reset*
-** Beschreibung: `automatically reset table of color pairs when number of available pairs is lower or equal to this number (-1 = disable automatic reset, and then a manual "/color reset" is needed when table is full)`
+** Beschreibung: `automatischer Reset der Farbpaarungen sobald die verfügbare Anzahl an Paaren kleiner oder gleich der hier angegebenen Anzahl ist (-1 = deaktiviert den automatischen Reset, dann ist ein manueller Reset mittels "/color reset" notwendig falls alle Farbpaarungen belegt sind)`
 ** Typ: integer
 ** Werte: -1 .. 256 (Standardwert: `5`)
 
@@ -379,7 +379,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * *weechat.look.hotlist_add_buffer_if_away*
-** Beschreibung: `add any buffer to hotlist (including current or visible buffers) if local variable "away" is set on buffer`
+** Beschreibung: `fügt einen beliebigen Buffer zur Hotlist hinzu (dies schließt den aktuellen oder jeden anderen sichtbaren Buffer ein) sofern die lokale Variable "away" für den Buffer gesetzt wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
