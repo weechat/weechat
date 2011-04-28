@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 11:55+0200\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
 "PO-Revision-Date: 2011-04-10 17:32+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5358,6 +5358,14 @@ msgstr "kolor wskaźnika opóźnienia, kiedy otrzymamy pong od serwera"
 msgid "color for reason in part/quit messages"
 msgstr "kolor tekstu powodu opuszczenia kanału/wyjścia z IRC"
 
+#, fuzzy
+msgid "color for old channel topic (when topic is changed)"
+msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
+
+#, fuzzy
+msgid "color for new channel topic (when topic is changed)"
+msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5727,16 +5735,16 @@ msgstr "%s%s%s%s%s%s%s%s%s%s wyszedł z IRC"
 msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: \"%s\" komenda otrzymana bez kanału"
 
-#, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s%s zmienił temat %s%s%s z \"%s%s\" na \"%s%s\""
 
-#, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
 msgstr "%s%s%s%s zmienił temat %s%s%s na \"%s%s\""
 
-#, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
 msgstr "%s%s%s%s skasował temat dla %s%s%s (stary temat: \"%s%s\")"
 
 #, c-format

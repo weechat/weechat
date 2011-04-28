@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 11:55+0200\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
 "PO-Revision-Date: 2011-04-10 11:21+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4921,6 +4921,12 @@ msgstr ""
 msgid "color for reason in part/quit messages"
 msgstr "alapértelmezett kilépő üzenet"
 
+msgid "color for old channel topic (when topic is changed)"
+msgstr ""
+
+msgid "color for new channel topic (when topic is changed)"
+msgstr ""
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5301,15 +5307,15 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s \"%s\" parancs érkezett szoba megadása nélkül\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format

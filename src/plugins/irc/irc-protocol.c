@@ -1696,7 +1696,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                                                       ptr_buffer),
                                      irc_protocol_tags (command, NULL, NULL),
                                      _("%s%s%s%s has changed topic for %s%s%s "
-                                       "from \"%s%s\" to \"%s%s\""),
+                                       "from \"%s%s%s\" to \"%s%s%s\""),
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
@@ -1704,8 +1704,10 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
                                      IRC_COLOR_CHAT,
+                                     IRC_COLOR_TOPIC_OLD,
                                      (old_topic_color) ? old_topic_color : ptr_channel->topic,
                                      IRC_COLOR_CHAT,
+                                     IRC_COLOR_TOPIC_NEW,
                                      (topic_color) ? topic_color : pos_topic,
                                      IRC_COLOR_CHAT);
                 if (old_topic_color)
@@ -1717,8 +1719,8 @@ IRC_PROTOCOL_CALLBACK(topic)
                                                                       command, NULL,
                                                                       ptr_buffer),
                                      irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%s%s%s has changed topic for %s%s%s to "
-                                       "\"%s%s\""),
+                                     _("%s%s%s%s has changed topic for %s%s%s "
+                                       "to \"%s%s%s\""),
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
@@ -1726,6 +1728,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
                                      IRC_COLOR_CHAT,
+                                     IRC_COLOR_TOPIC_NEW,
                                      (topic_color) ? topic_color : pos_topic,
                                      IRC_COLOR_CHAT);
             }
@@ -1744,7 +1747,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                                                       ptr_buffer),
                                      irc_protocol_tags (command, NULL, NULL),
                                      _("%s%s%s%s has unset topic for %s%s%s "
-                                       "(old topic: \"%s%s\")"),
+                                       "(old topic: \"%s%s%s\")"),
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
@@ -1752,6 +1755,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
                                      IRC_COLOR_CHAT,
+                                     IRC_COLOR_TOPIC_OLD,
                                      (old_topic_color) ? old_topic_color : ptr_channel->topic,
                                      IRC_COLOR_CHAT);
                 if (old_topic_color)

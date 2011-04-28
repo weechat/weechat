@@ -109,6 +109,8 @@ struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_reason_quit;
+struct t_config_option *irc_config_color_topic_old;
+struct t_config_option *irc_config_color_topic_new;
 
 /* IRC config, network section */
 
@@ -2298,6 +2300,18 @@ irc_config_init ()
         "reason_quit", "color",
         N_("color for reason in part/quit messages"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_color_topic_old = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "topic_old", "color",
+        N_("color for old channel topic (when topic is changed)"),
+        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_color_topic_new = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "topic_new", "color",
+        N_("color for new channel topic (when topic is changed)"),
+        NULL, -1, 0, "white", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     
     /* network */

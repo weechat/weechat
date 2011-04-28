@@ -132,6 +132,8 @@ extern struct t_config_option *irc_config_color_item_channel_modes;
 extern struct t_config_option *irc_config_color_item_lag_counting;
 extern struct t_config_option *irc_config_color_item_lag_finished;
 extern struct t_config_option *irc_config_color_reason_quit;
+extern struct t_config_option *irc_config_color_topic_old;
+extern struct t_config_option *irc_config_color_topic_new;
 
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;

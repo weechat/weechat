@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 11:55+0200\n"
-"PO-Revision-Date: 2011-04-28 11:56+0200\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
+"PO-Revision-Date: 2011-04-28 14:20+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -5425,6 +5425,12 @@ msgstr ""
 msgid "color for reason in part/quit messages"
 msgstr "couleur pour la raison dans les messages part/quit"
 
+msgid "color for old channel topic (when topic is changed)"
+msgstr "couleur pour l'ancien titre du canal (lorsque le titre est changé)"
+
+msgid "color for new channel topic (when topic is changed)"
+msgstr "couleur pour le nouveau titre du canal (lorsque le titre est changé)"
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5794,16 +5800,16 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: commande \"%s\" reçue sans canal"
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
-msgstr "%s%s%s%s a changé le titre pour %s%s%s de \"%s%s\" en \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
+msgstr "%s%s%s%s a changé le titre pour %s%s%s de \"%s%s%s\" en \"%s%s%s\""
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
-msgstr "%s%s%s%s a changé le titre pour %s%s%s en \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgstr "%s%s%s%s a changé le titre pour %s%s%s en \"%s%s%s\""
 
 #, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
-msgstr "%s%s%s%s a retiré le titre pour %s%s%s (ancien titre: \"%s%s\")"
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
+msgstr "%s%s%s%s a retiré le titre pour %s%s%s (ancien titre: \"%s%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"

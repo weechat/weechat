@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 11:55+0200\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
 "PO-Revision-Date: 2011-04-10 17:32+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5251,6 +5251,14 @@ msgstr "barva ukazatele lagu, pokud bylo od serveru obdrženo pong"
 msgid "color for reason in part/quit messages"
 msgstr "barva textu důvodu ve zprávách odchodu/ukončení"
 
+#, fuzzy
+msgid "color for old channel topic (when topic is changed)"
+msgstr "zobrazit staré téma rozhovoru, když se téma změní"
+
+#, fuzzy
+msgid "color for new channel topic (when topic is changed)"
+msgstr "zobrazit staré téma rozhovoru, když se téma změní"
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5624,16 +5632,16 @@ msgstr "%s%s%s%s%s%s%s%s%s%s skončil"
 msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: obdržen \"%s\" příkaz bez kanálu"
 
-#, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s%s změnil téma pro %s%s%s z \"%s%s\" na \"%s%s\""
 
-#, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
 msgstr "%s%s%s%s změnil téma pro %s%s%s na \"%s%s\""
 
 #, fuzzy, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
 msgstr "%s%s%s%s změnil téma pro %s%s%s na \"%s%s\""
 
 #, c-format

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 11:55+0200\n"
-"PO-Revision-Date: 2011-04-10 17:33+0200\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
+"PO-Revision-Date: 2011-04-28 14:24+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -5361,6 +5361,14 @@ msgstr ""
 msgid "color for reason in part/quit messages"
 msgstr "colore per il motivo nei messaggi di uscita/abbandono"
 
+#, fuzzy
+msgid "color for old channel topic (when topic is changed)"
+msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
+
+#, fuzzy
+msgid "color for new channel topic (when topic is changed)"
+msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5732,17 +5740,17 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: comando \"%s\" ricevuto senza alcun canale"
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
-msgstr "%s%s%s%s ha cambiato l'argomento per %s%s%s da \"%s%s\" a \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
+msgstr "%s%s%s%s ha cambiato l'argomento per %s%s%s da \"%s%s%s\" a \"%s%s%s\""
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
-msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgstr "%s%s%s%s ha cambiato argomento per %s%s%s in \"%s%s%s\""
 
 #, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
 msgstr ""
-"%s%s%s%s ha rimosso l'argomento per %s%s%s (argomento precedente: \"%s%s\")"
+"%s%s%s%s ha rimosso l'argomento per %s%s%s (argomento precedente: \"%s%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"

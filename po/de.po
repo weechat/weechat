@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 12:34+0200\n"
-"PO-Revision-Date: 2011-04-26 19:39+0100\n"
+"POT-Creation-Date: 2011-04-28 14:19+0200\n"
+"PO-Revision-Date: 2011-04-28 14:22+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -5532,6 +5532,14 @@ msgstr ""
 "Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden "
 "soll"
 
+#, fuzzy
+msgid "color for old channel topic (when topic is changed)"
+msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
+
+#, fuzzy
+msgid "color for new channel topic (when topic is changed)"
+msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
+
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
 "delay*2 for each retry, ..)"
@@ -5907,19 +5915,19 @@ msgid "%s%s: \"%s\" command received without channel"
 msgstr "%s%s: Der Befehl \"%s\" wurde ohne Channel empfangen"
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s\" to \"%s%s\""
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
-"%s%s%s%s hat das Topic für den Channel %s%s%s von \"%s%s\" auf \"%s%s\" "
+"%s%s%s%s hat das Topic für den Channel %s%s%s von \"%s%s%s\" auf \"%s%s%s\" "
 "geändert."
 
 #, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s\""
-msgstr "%s%s%s%s hat das Topic für den Channel %s%s%s auf \"%s%s\" gesetzt."
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgstr "%s%s%s%s hat das Topic für den Channel %s%s%s auf \"%s%s%s\" gesetzt."
 
 #, c-format
-msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s\")"
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
 msgstr ""
-"%s%s%s%s hat das Thema für %s%s%s zurückgesetzt (altes Thema: \"%s%s\")"
+"%s%s%s%s hat das Thema für %s%s%s zurückgesetzt (altes Thema: \"%s%s%s\")"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
@@ -7907,32 +7915,3 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr ""
-#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
-#~ "Channel"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr ""
-#~ "Durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer "
-#~ "genutzt werden"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: Channel \"%s\" für den \"%s\"-Befehl nicht gefunden"
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "hook Type: command, timer, .. (optional)"
-
-#~ msgid "a color name"
-#~ msgstr "ein Farbname"
