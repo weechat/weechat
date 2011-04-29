@@ -3883,11 +3883,11 @@ struct t_config_option *weechat_config_new_option (
                                 struct t_config_option *option,
                                 const char *value),
     void *callback_check_value_data,
-    int (*callback_change)(void *data,
-                           struct t_config_option *option),
+    void (*callback_change)(void *data,
+                            struct t_config_option *option),
     void *callback_change_data,
-    int (*callback_delete)(void *data,
-                           struct t_config_option *option),
+    void (*callback_delete)(void *data,
+                            struct t_config_option *option),
     void *callback_delete_data);
 ----------------------------------------
 
@@ -3922,21 +3922,15 @@ Paramètres :
 * 'callback_check_value_data' : pointeur donné au "callback" lorsqu'il est
   appelé par WeeChat
 * 'callback_change' : fonction appelée lorsque la valeur de l'option a changé
-  (optionnel), paramètres et valeur de retour :
+  (optionnel), paramètres :
 ** 'void *data' : pointeur
 ** 'struct t_config_option *option' : pointeur vers l'option
-** valeur de retour :
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
 * 'callback_change_data' : pointeur donné au "callback" lorsqu'il est appelé
   par WeeChat
 * 'callback_delete' : fonction appelée lorsque l'option est supprimée
-  (optionnel), paramètres et valeur de retour :
+  (optionnel), paramètres :
 ** 'void *data' : pointeur
 ** 'struct t_config_option *option' : pointeur vers l'option
-** valeur de retour :
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
 * 'callback_delete_data' : pointeur donné au "callback" lorsqu'il est appelé
   par WeeChat
 

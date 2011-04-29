@@ -3840,11 +3840,11 @@ struct t_config_option *weechat_config_new_option (
                                 struct t_config_option *option,
                                 const char *value),
     void *callback_check_value_data,
-    int (*callback_change)(void *data,
-                           struct t_config_option *option),
+    void (*callback_change)(void *data,
+                            struct t_config_option *option),
     void *callback_change_data,
-    int (*callback_delete)(void *data,
-                           struct t_config_option *option),
+    void (*callback_delete)(void *data,
+                            struct t_config_option *option),
     void *callback_delete_data);
 ----------------------------------------
 
@@ -3880,21 +3880,15 @@ Argomenti:
 * 'callback_check_value_data': puntatore fornito alla callback check_value
   quando chiamato da WeeChat
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
-  cambiata (opzionale), argomenti e valore restituito:
+  cambiata (opzionale), argomenti:
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
-** valore restituito:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
 * 'callback_change_data': puntatore fornito per cambiare alla callback quando
   chiamato da WeeChat
 * 'callback_delete': funzione chiamata quando l'opzione verrà eliminata
-  (opzionale), argomenti e valore restituito:
+  (opzionale), argomenti:
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
-** valore restituito:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_ERROR'
 * 'callback_delete_data': puntatore fornito per eiliminare alla callback quando
   chiamato da WeeChat
 
