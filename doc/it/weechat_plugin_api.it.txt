@@ -2967,10 +2967,25 @@ Argomenti:
 * 'callback_hash_key': callback utilizzata per effettuare un "hash" di una
   chiave (chiave come valore intero), può essere NULL se il tipo della chiave è
   "string" (viene usata una funzione predefinita per le stringhe, e solo per le
-  stringhe)
+  stringhe), argomenti e valore restituito:
+** 'struct t_hashtable *hashtable': puntatore alla tabella hash
+// TRANSLATION MISSING
+** 'const void *key': key
+// TRANSLATION MISSING
+** return value: hash of the key
 * 'callback_keycmp': callback utilizzata per comparare due chiavi, può essere
   NULL se il tipo di valore è "string" (una funzione di confronto predefinita è
-  usata per le stringhe e solo per le stringhe)
+  usata per le stringhe e solo per le stringhe), argomenti e valore restituito:
+** 'struct t_hashtable *hashtable': puntatore alla tabella hash
+// TRANSLATION MISSING
+** 'const void *key1': first key
+// TRANSLATION MISSING
+** 'const void *key2': second key
+// TRANSLATION MISSING
+** return value:
+*** negative number if 'key1' is less than 'key2'
+*** 0 if 'key1' equals 'key2'
+*** positive number if 'key1' is greater than 'key2'
 
 Valore restituito:
 
@@ -3462,9 +3477,14 @@ Argomenti:
 
 * 'name': nome del file di configurazione (senza percorso o estensione)
 * 'callback_reload': funzione chiamata quando il file di configurazione viene
-  ricaricato con `/reload` (opzionale, può essere NULL), argomenti:
+  ricaricato con `/reload` (opzionale, può essere NULL), argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
+** valore restituito:
+*** 'WEECHAT_CONFIG_READ_OK'
+*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
 * 'callback_reload_data': puntatore fornito per ricaricare il callback
   quando richiesto da WeeChat
 
@@ -3562,45 +3582,67 @@ Argomenti:
   oppure 0 se non gli è consentito
 * 'callback_read': funzione chiamata quando un'opzione nella sezione viene letta
   da disco (dovrebbe essere NULL in molti casi, tranne se l'opzione nella sezione
-  necessita di una funzione personalizza), argomenti:
+  necessita di una funzione personalizza), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
 ** 'const char *option_name': nome dell'opzione
 ** 'const char *value': valore
+** valore restituito:
+*** 'WEECHAT_CONFIG_READ_OK'
+*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
 * 'callback_read_data': puntatore fornito al callback quando chiamato da WeeChat
 * 'callback_write': funzione chiamata quando la sezione è scritta nel file (dovrebbe
   essere NULL in molti casi, tranne se la sezione necessita di una funzione
-  personalizzata), argomenti:
+  personalizzata), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
 ** 'const char *option_name': nome dell'opzione
+** valore restituito:
+*** 'WEECHAT_CONFIG_WRITE_OK'
+*** 'WEECHAT_CONFIG_WRITE_ERROR'
+*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
 * callback_write_data: puntatore fornito al callback quando chiamato da WeeChat
 * callback_write_default: funzione chiamata quando i valori predefiniti per la sezione
-  devono essere scritti in un file, argomenti:
+  devono essere scritti in un file, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'const char *section_name': nome della sezione
+** valore restituito:
+*** 'WEECHAT_CONFIG_WRITE_OK'
+*** 'WEECHAT_CONFIG_WRITE_ERROR'
+*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
 * 'callback_write_default_data': puntatore fornito al callback quando chiamato da
   WeeChat
 * 'callback_create_option': funzione chiamata quando viene creata una nuova
   opzione nella sezione (NULL se la sezione non consente di creare nuove
-  opzioni), argomenti:
+  opzioni), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
 ** 'const char *option_name': nome dell'opzione
 ** 'const char *value': valore
+** valore restituito:
+*** 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
+*** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
+*** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+*** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
 * 'callback_create_option_data': puntatore fornito al callback quando chiamato
   da WeeChat
 * 'callback_delete_option': funzione chiamata quando un'opzione viene eliminata
   nella sezione (NULL se la sezione non consente di eliminare delle opzioni),
-  argomenti:
+  argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_file *config_file': puntatore al file di configurazione
 ** 'struct t_config_section *section': puntatore alla sezione
 ** 'struct t_config_option *option': puntatore all'opzione
+** valore restituito:
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
 * 'callback_delete_option_data': puntatore fornito al callback quando chiamato
   da WeeChat
 
@@ -3826,22 +3868,33 @@ Argomenti:
 * 'null_value_allowed': 1 se 'null' (valore non definito) è consentito per l'opzione,
   altrimenti 0
 * 'callback_check_value': funzione chiamata per verificare il nuovo valore per
-  l'opzione (ozionale), argomenti:
+  l'opzione (ozionale), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
 ** 'const char *value': nuovo valore per l'opzione
+** valore restituito:
+// TRANSLATION MISSING
+*** 1 if value is ok
+// TRANSLATION MISSING
+*** 0 if value is invalid
 * 'callback_check_value_data': puntatore fornito alla callback check_value
   quando chiamato da WeeChat
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
-  cambiata (opzionale), argomenti:
+  cambiata (opzionale), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_change_data': puntatore fornito per cambiare alla callback quando
   chiamato da WeeChat
 * 'callback_delete': funzione chiamata quando l'opzione verrà eliminata
-  (opzionale), argomenti:
+  (opzionale), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_config_option *option': puntatore all'opzione
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_delete_data': puntatore fornito per eiliminare alla callback quando
   chiamato da WeeChat
 
@@ -6045,13 +6098,17 @@ Argomenti:
   per ogni argomento, separati da spazio. Sono possibili più  completamenti sono
   possibili per un singolo argomento, separati da "|". Più modelli sono possibili per
   lo stesso comando, separati da "||".
-* 'callback': funzione chiamata quando viene utilizzato il comando, argomenti:
+* 'callback': funzione chiamata quando viene utilizzato il comando, argomenti e
+  valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer quando il comando viene eseguito
 ** 'int argc': numero di argomenti forniti per un comando
 ** 'char **argv': argomenti forniti per un comando
 ** 'char **argv_eol': argomenti forniti per un comando (fino a fine riga per ogni
    argomento)
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito dalla callback quando chiamata da WeeChat
 
 I codici predefiniti per il completamento sono:
@@ -6164,10 +6221,15 @@ Argomenti:
 * 'command': comando su cui eseguire l'hook, può iniziare o terminare con "*"
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>)
-* 'callback': funzione chiamata quando il comando è in esecuzione, argomenti:
+* 'callback': funzione chiamata quando il comando è in esecuzione, argomenti e
+  valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il comando
 ** 'const char *command': il comando eseguito, con i propri argomenti
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 [NOTE]
@@ -6235,9 +6297,13 @@ Argomenti:
   if interval = 60000 (60 seconds), and align_second = 60, then timer is
   called each minute when second is 00
 * 'max_calls': number of calls to timer (if 0, then timer has no end)
-* 'callback': function called when time is reached, arguments:
+* 'callback': function called when time is reached, argomenti e valore
+  restituito:
 ** 'void *data': pointer
 ** 'int remaining_calls': remaining calls (-1 if timer has no end)
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Valore restituito:
@@ -6301,9 +6367,12 @@ Argomenti:
 * 'flag_write': 1 = cattura l'evento scrittura (write), 0 = ignora
 * 'flag_exception': 1 = cattura l'eccezione evento (event), 0 = ignora
 * 'callback': funzione che chiama un evento selezionato che si verifica
-  per un file (o un socket), argomenti:
+  per un file (o un socket), argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'int fd': descrittore file
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla calback quando chiamata da WeeChat
 
 Valore restituito:
@@ -6369,7 +6438,7 @@ Argomenti:
 * 'timeout': timeout per il comando (in millisecondi): dopo questo timeout,
   il processo figlio viene terminato (0 vuol dire nessun timeout)
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
-  oppure quando è terminato, argomenti:
+  oppure quando è terminato, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'const char *command': comando eseguito dal processo figlio
 ** 'int return_code': codice restituito:
@@ -6379,6 +6448,9 @@ Argomenti:
     esecuzione del comando)
 ** 'out': output standard del comando (stdout)
 ** 'err': output di errore del comando (stderr)
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando fornita da WeeChat
 
 Valore restituito:
@@ -6500,7 +6572,7 @@ Argomenti:
 * 'local_hostname': nome host locale da utilizzare per la connessione
   (opzionale)
 * 'callback': funzione chiamata quando la connessione è avvenuta con
-  successo oppure no, argomenti:
+  successo oppure no, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'int status': stato della connessione:
 *** 'WEECHAT_HOOK_CONNECT_OK': connessione avvenuta con successo
@@ -6515,6 +6587,9 @@ Argomenti:
 ** 'gnutls_rc': valore del risultato di 'gnutls_handshake()'
 ** 'const char *error': valore del risultato di 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address': indirizzo IP trovato
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -6638,7 +6713,8 @@ Argomenti:
 * 'message': verranno catturati solo i messaggi con questa stringa (opzionale)
 * 'strip_colors': se 1, i colori verranno estratti dal messaggio visualizzato, prima
   di chiamare la callback
-* 'callback': funzione chiamata quando viene stampato un messaggio, argomenti:
+* 'callback': funzione chiamata quando viene stampato un messaggio, argomenti e
+  valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_gui_buffer *buffer': puntatore al buffer
 ** 'time_t date': data
@@ -6648,6 +6724,9 @@ Argomenti:
 ** 'int highlight': 1 se la riga viene evidenziata, altrimenti 0
 ** 'const char *prefix': prefisso
 ** 'const char *message': messaggio
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -6928,7 +7007,8 @@ Argomenti:
 [NOTE]
 ^(1)^ 'xxx' è il nome del server IRC, 'yyy' è il nome del comando IRC.
 
-* 'callback': funzione chiamata a segnale ricevuto, argomenti:
+* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'const char *signal': segnale ricevuto
 ** 'const char *type_data': tipo di dati inviati con il segnale:
@@ -6936,6 +7016,9 @@ Argomenti:
 *** 'WEECHAT_HOOK_SIGNAL_INT': numero intero
 *** 'WEECHAT_HOOK_SIGNAL_POINTER': puntatore
 ** 'void *signal_data': dati inviati con il segnale
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -7204,10 +7287,14 @@ Argomenti:
 ^(1)^ 'xxx' è l'argomento del segnale usato nella redirezione, 'yyy' è lo schema
 di redirezione.
 
-* 'callback': funzione chiamata a segnale ricevuto, argomenti:
+* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'const char *signal': segnale ricevuto
 ** 'struct t_hashtable *hashtable': tabella hash
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -7478,10 +7565,13 @@ Argomenti:
   (priorità consentita, consultare la note riguardo la
   <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando l'opzione di configurazione è cambiata,
-  argomenti:
+  argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'const char *option': nome dell'opzione
 ** 'const char *value': nuovo valore per l'opzione
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -7545,13 +7635,17 @@ Argomenti:
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando viene usato l'elemento completamento
-  (l'utente sta completando qualcosa usando questo elemento), argomenti:
+  (l'utente sta completando qualcosa usando questo elemento), argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'const char *completion_item': nome dell'elemento del completamento
 ** 'struct t_gui_buffer *buffer': buffer dove viene eseguito il completamento
 ** 'struct t_gui_completion *completion': struttura usata per aggiungere
    parole per il completamento (consultare
    <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 [NOTE]
@@ -7800,13 +7894,13 @@ Argomenti:
 ^(2)^ 'yyy' è il nome della barra.
 
 * 'callback': funzione chiamata quando viene usato il modificatore,
-  argomenti:
+  argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'const char *modifier': nome del modificatore
 ** 'const char *modifier_data': dati per il modificatore
-** 'const char *string': stringa da modificare (la funzione deve restituire
-   una copia di questa stringa, non è consentito alcun cambiamento in
-    questa stringa)
+** 'const char *string': stringa da modificare
+// TRANSLATION MISSING
+** valore restituito: new string
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -7926,10 +8020,13 @@ Argomenti:
   <<hook_priority,priority>>)
 * 'description': descrizione
 * 'args_description': descrizione degli argomenti
-* 'callback': funzione chiamata alla richiesta di una info, argomenti:
+* 'callback': funzione chiamata alla richiesta di una info, argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'const char *arguments': argomenti addizionali, dipendono dalle info
+// TRANSLATION MISSING
+** valore restituito: value of info asked
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8000,10 +8097,13 @@ Argomenti:
   essere NULL)
 * 'output_description': descrizione della tabella hash restituita dalla
   callback (opzionale, può essere NULL)
-* 'callback': funzione chiamata alla richiesta della info, argomenti:
+* 'callback': funzione chiamata alla richiesta della info, argomenti e valore
+  restituito:
 ** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'struct t_hashtable *hashtable': tabella hash, in base alla info
+// TRANSLATION MISSING
+** valore restituito: hashtable asked
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8061,10 +8161,10 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
                                       const char *pointer_description,
                                       const char *args_description,
-                                      const char *(*callback)(void *data,
-                                                              const char *infolist_name,
-                                                              void *pointer,
-                                      const char *arguments),
+                                      struct t_infolist *(*callback)(void *data,
+                                                                     const char *infolist_name,
+                                                                     void *pointer,
+                                                                     const char *arguments),
                                       void *callback_data);
 ----------------------------------------
 
@@ -8076,12 +8176,15 @@ Argomenti:
 * 'description': descrizione
 * 'pointer_description': descrizione del puntatore (opzionale, può essere NULL)
 * 'args_description': descrizione degli argomenti (opzionale, può essere NULL)
-* 'callback': funzione chiamata alla richiesta della lista info, argomenti:
+* 'callback': funzione chiamata alla richiesta della lista info, argomenti e
+  valore restituito:
 ** 'void *data': puntatore
 ** 'const char *infolist_name': nome della lista info
 ** 'void *pointer': puntatore ad un oggetto che la lista info deve restituire
    (per ricevere un solo elemento della lista info)
 ** 'const char *arguments': argomento aggiuntivo, dipende dalla lista info
+// TRANSLATION MISSING
+** valore restituito: infolist asked
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8227,14 +8330,21 @@ Argomenti:
 
 * 'name': nome del buffer (deve essere unico per il plugin)
 * 'input_callback': funzione chiamata quando il testo in input è stato
-  inserito nel buffer, argomenti:
-*** 'void *data': puntatore
-*** 'struct t_gui_buffer *buffer': puntatore al buffer
-*** 'const char *input_data': dati in input
+  inserito nel buffer, argomenti e valore restituito:
+** 'void *data': puntatore
+** 'struct t_gui_buffer *buffer': puntatore al buffer
+** 'const char *input_data': dati in input
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
-* 'close_callback': funzione chiamata alla chiusura del buffer, argomenti:
-*** 'void *data': puntatore
-*** 'struct t_gui_buffer *buffer': puntatore al buffer
+* 'close_callback': funzione chiamata alla chiusura del buffer, argomenti e
+  valore restituito:
+** 'void *data': puntatore
+** 'struct t_gui_buffer *buffer': puntatore al buffer
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -10131,7 +10241,12 @@ Argomenti:
 
 * 'name': nome dell'elemento barra
 * 'build_callback': funzione chiamata quando l'elemento barra viene
-  compilato; deve restituire il contenuto dell'elemento barra
+  compilato, argomenti e valore restituito:
+** 'void *data': puntatore
+** 'struct t_gui_bar_item *item': puntatore all'elemento barra
+** 'struct t_gui_window *window': puntatore alla finestra
+// TRANSLATION MISSING
+** valore restituito: content of bar item
 * 'build_callback_data': puntatore fornito alla callback quando
   chiamata da WeeChat
 
@@ -11663,7 +11778,16 @@ Argomenti:
 
 * 'upgrade_file': puntatore al file di aggiornamento
 * 'callback_read': funzione chiamata per ogni oggetto letto nel file
-  di aggiornamento
+  di aggiornamento, argomenti e valore restituito:
+** 'void *data': puntatore
+** 'struct t_upgrade_file *upgrade_file': puntatore al file di aggiornamento
+// TRANSLATION MISSING
+** 'int object_id': object id
+// TRANSLATION MISSING
+** 'struct t_infolist *infolist': infolist with content of object
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_read_data': puntatore assegnato per la lettura della chiamata
   quando chiamato da WeeChat
 

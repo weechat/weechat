@@ -2975,10 +2975,20 @@ Arguments:
 ** 'WEECHAT_HASHTABLE_TIME'
 * 'callback_hash_key': callback used to "hash" a key (key as integer value), can
   be NULL if key type is "string" (a default function is used for strings, and
-  only for strings)
+  only for strings), arguments and return value:
+** 'struct t_hashtable *hashtable': hashtable pointer
+** 'const void *key': key
+** return value: hash of the key
 * 'callback_keycmp': callback used to compare two keys, can be NULL if value
   type is "string" (a default comparison function is used for strings, and only
-  for strings)
+  for strings), arguments and return value:
+** 'struct t_hashtable *hashtable': hashtable pointer
+** 'const void *key1': first key
+** 'const void *key2': second key
+** return value:
+*** negative number if 'key1' is less than 'key2'
+*** 0 if 'key1' equals 'key2'
+*** positive number if 'key1' is greater than 'key2'
 
 Return value:
 
@@ -3471,9 +3481,13 @@ Arguments:
 
 * 'name': name of configuration file (without path or extension)
 * 'callback_reload': function called when configuration file is reloaded with
-  `/reload` (optional, can be NULL), arguments:
+  `/reload` (optional, can be NULL), arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
+** return value:
+*** 'WEECHAT_CONFIG_READ_OK'
+*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
 * 'callback_reload_data': pointer given to reload callback when it is called
   by WeeChat
 
@@ -3571,45 +3585,67 @@ Arguments:
   it is forbidden
 * 'callback_read': function called when an option in section is read from disk
   (should be NULL in most cases, except if options in section need custom
-  function), arguments:
+  function), arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
 ** 'const char *value': value
+** return value:
+*** 'WEECHAT_CONFIG_READ_OK'
+*** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
+*** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
 * 'callback_read_data': pointer given to callback when it is called by WeeChat
 * 'callback_write': function called when section is written in file (should be
   NULL for most cases, except if section needs to be written by a custom
-  function), arguments:
+  function), arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
+** return value:
+*** 'WEECHAT_CONFIG_WRITE_OK'
+*** 'WEECHAT_CONFIG_WRITE_ERROR'
+*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
 * callback_write_data: pointer given to callback when it is called by WeeChat
 * callback_write_default: function called when default values for section must
   be written in file, arguments:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'const char *section_name': name of section
+** return value:
+*** 'WEECHAT_CONFIG_WRITE_OK'
+*** 'WEECHAT_CONFIG_WRITE_ERROR'
+*** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
 * 'callback_write_default_data': pointer given to callback when it is called by
   WeeChat
 * 'callback_create_option': function called when a new option is created in
   section (NULL if section does not allow new options to be created),
-  arguments:
+  arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'const char *option_name': name of option
 ** 'const char *value': value
+** return value:
+*** 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED'
+*** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
+*** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
+*** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
 * 'callback_create_option_data': pointer given to callback when it is called by
   WeeChat
 * 'callback_delete_option': function called when an option is deleted in
   section (NULL if section does not allow options to be deleted),
-  arguments:
+  arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'struct t_config_section *section': section pointer
 ** 'struct t_config_option *option': option pointer
+** return value:
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
+*** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
 * 'callback_delete_option_data': pointer given to callback when it is called by
   WeeChat
 
@@ -3835,22 +3871,31 @@ Arguments:
 * 'null_value_allowed': 1 if 'null' (undefined value) is allowed for option,
   otherwise 0
 * 'callback_check_value': function called to check new value for option
-  (optional), arguments:
+  (optional), arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_option *option': option pointer
 ** 'const char *value': new value for option
+** return value:
+*** 1 if value is ok
+*** 0 if value is invalid
 * 'callback_check_value_data': pointer given to check_value callback when it
   is called by WeeChat
 * 'callback_change': function called when value of option has changed
-  (optional), arguments:
+  (optional), arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_option *option': option pointer
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_change_data': pointer given to change callback when it is called
   by WeeChat
 * 'callback_delete': function called when option will be deleted (optional),
-  arguments:
+  arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_option *option': option pointer
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_delete_data': pointer given to delete callback when it is called
   by WeeChat
 
@@ -6038,13 +6083,16 @@ Arguments:
   argument, separated by space. Many completions are possible for one
   argument, separated by "|". Many templates are possible for same command,
   separated by "||".
-* 'callback': function called when command is used, arguments:
+* 'callback': function called when command is used, arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
 ** 'int argc': number of arguments given for command
 ** 'char **argv': arguments given for command
 ** 'char **argv_eol': arguments given for command (until end of line for each
    argument)
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Default completion codes are:
@@ -6154,10 +6202,14 @@ Arguments:
 
 * 'command': command to hook, can start or end with "*" as wildcard
   (priority allowed, see note about <<hook_priority,priority>>)
-* 'callback': function called when command is run, arguments:
+* 'callback': function called when command is run, arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer where command is executed
 ** 'const char *command': the command executed, with its arguments
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 [NOTE]
@@ -6225,9 +6277,12 @@ Arguments:
   if interval = 60000 (60 seconds), and align_second = 60, then timer is
   called each minute when second is 00
 * 'max_calls': number of calls to timer (if 0, then timer has no end)
-* 'callback': function called when time is reached, arguments:
+* 'callback': function called when time is reached, arguments and return value:
 ** 'void *data': pointer
 ** 'int remaining_calls': remaining calls (-1 if timer has no end)
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -6291,9 +6346,12 @@ Arguments:
 * 'flag_write': 1 = catch write event, 0 = ignore
 * 'flag_exception': 1 = catch exception event, 0 = ignore
 * 'callback': function called a selected event occurs for file (or socket),
-  arguments:
+  arguments and return value:
 ** 'void *data': pointer
 ** 'int fd': file descriptor
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -6359,7 +6417,7 @@ Arguments:
 * 'timeout': timeout for command (in milliseconds): after this timeout, child
   process is killed (0 means no timeout)
 * 'callback': function called when data from child is available, or when child
-  has ended, arguments:
+  has ended, arguments and return value:
 ** 'void *data': pointer
 ** 'const char *command': command executed by child
 ** 'int return_code': return code:
@@ -6368,6 +6426,9 @@ Arguments:
     running) or 'WEECHAT_HOOK_PROCESS_ERROR' (error when launching command)
 ** 'out': standard output of command (stdout)
 ** 'err': error output of command (stderr)
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -6486,7 +6547,8 @@ Arguments:
 * 'gnutls_dhkey_size': size of the key used during the Diffie-Hellman Key
   Exchange (GnuTLS)
 * 'local_hostname': local hostname to use for connection (optional)
-* 'callback': function called when connection is ok or failed, arguments:
+* 'callback': function called when connection is ok or failed, arguments and
+  return value:
 ** 'void *data': pointer
 ** 'int status': connection status:
 *** 'WEECHAT_HOOK_CONNECT_OK': connection ok
@@ -6501,6 +6563,9 @@ Arguments:
 ** 'gnutls_rc': result value of 'gnutls_handshake()'
 ** 'const char *error': result value of 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address': IP address found
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -6623,7 +6688,8 @@ Arguments:
 * 'message': only messages with this string will be caught (optional)
 * 'strip_colors': if 1, colors will be stripped from message displayed, before
   calling callback
-* 'callback': function called when a message is printed, arguments:
+* 'callback': function called when a message is printed, arguments and return
+  value:
 ** 'void *data': pointer
 ** 'struct t_gui_buffer *buffer': buffer pointer
 ** 'time_t date': date
@@ -6633,6 +6699,9 @@ Arguments:
 ** 'int highlight': 1 if line has highlight, otherwise 0
 ** 'const char *prefix': prefix
 ** 'const char *message': message
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -6906,7 +6975,8 @@ Arguments:
 [NOTE]
 ^(1)^ 'xxx' is IRC server name, 'yyy' is IRC command name.
 
-* 'callback': function called when signal is received, arguments:
+* 'callback': function called when signal is received, arguments and return
+  value:
 ** 'void *data': pointer
 ** 'const char *signal': signal received
 ** 'const char *type_data': type of data sent with signal:
@@ -6914,6 +6984,9 @@ Arguments:
 *** 'WEECHAT_HOOK_SIGNAL_INT': integer number
 *** 'WEECHAT_HOOK_SIGNAL_POINTER': pointer
 ** 'void *signal_data': data sent with signal
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -7174,10 +7247,14 @@ Arguments:
 ^(1)^ 'xxx' is signal argument used in redirection, 'yyy' is redirection
 pattern.
 
-* 'callback': function called when signal is received, arguments:
+* 'callback': function called when signal is received, arguments and return
+  value:
 ** 'void *data': pointer
 ** 'const char *signal': signal received
 ** 'struct t_hashtable *hashtable': hashtable
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -7444,10 +7521,14 @@ Arguments:
 * 'option': option, format is full name, as used with command `/set` (for
   example: `weechat.look.item_time_format`)
   (priority allowed, see note about <<hook_priority,priority>>)
-* 'callback': function called when configuration option is changed, arguments:
+* 'callback': function called when configuration option is changed, arguments
+  and return value:
 ** 'void *data': pointer
 ** 'const char *option': name of option
 ** 'const char *value': new value for option
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -7511,13 +7592,16 @@ Arguments:
   (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description of completion
 * 'callback': function called when completion item is used (user is completing
-  something using this item), arguments:
+  something using this item), arguments and return value:
 ** 'void *data': pointer
 ** 'const char *completion_item': name of completion item
 ** 'struct t_gui_buffer *buffer': buffer where completion is made
 ** 'struct t_gui_completion *completion': structure used to add words for
    completion (see
    <<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>)
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 [NOTE]
@@ -7758,12 +7842,12 @@ Arguments:
 ^(1)^ 'xxx' is IRC command name. +
 ^(2)^ 'yyy' is bar name.
 
-* 'callback': function called when modifier is used, arguments:
+* 'callback': function called when modifier is used, arguments and return value:
 ** 'void *data': pointer
 ** 'const char *modifier': name of modifier
 ** 'const char *modifier_data': data for modifier
-** 'const char *string': string to modify (function must return copy of this
-   string, no changes are allowed in this string)
+** 'const char *string': string to modify
+** return value: new string
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -7881,10 +7965,11 @@ Arguments:
   (priority allowed, see note about <<hook_priority,priority>>)
 * 'description': description
 * 'args_description': description of arguments (optional, can be NULL)
-* 'callback': function called when info is asked, arguments:
+* 'callback': function called when info is asked, arguments and return value:
 ** 'void *data': pointer
 ** 'const char *info_name': name of info
 ** 'const char *arguments': additional arguments, depending on info
+** return value: value of info asked
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -7953,10 +8038,11 @@ Arguments:
 * 'args_description': description of expected hashtable (optional, can be NULL)
 * 'output_description': description of hashtable returned by callback
   (optional, can be NULL)
-* 'callback': function called when info is asked, arguments:
+* 'callback': function called when info is asked, arguments and return value:
 ** 'void *data': pointer
 ** 'const char *info_name': name of info
 ** 'struct t_hashtable *hashtable': hashtable, depending on info
+** return value: hashtable asked
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -8013,10 +8099,10 @@ struct t_hook *weechat_hook_infolist (const char *infolist_name,
                                       const char *description,
                                       const char *pointer_description,
                                       const char *args_description,
-                                      const char *(*callback)(void *data,
-                                                              const char *infolist_name,
-                                                              void *pointer,
-                                      const char *arguments),
+                                      struct t_infolist *(*callback)(void *data,
+                                                                     const char *infolist_name,
+                                                                     void *pointer,
+                                                                     const char *arguments),
                                       void *callback_data);
 ----------------------------------------
 
@@ -8027,12 +8113,14 @@ Arguments:
 * 'description': description
 * 'pointer_description': description of pointer (optional, can be NULL)
 * 'args_description': description of arguments (optional, can be NULL)
-* 'callback': function called when infolist is asked, arguments:
+* 'callback': function called when infolist is asked, arguments and return
+  value:
 ** 'void *data': pointer
 ** 'const char *infolist_name': name of infolist
 ** 'void *pointer': pointer to an object that infolist must return (to get only
    one item in infolist)
 ** 'const char *arguments': additional arguments, depending on infolist
+** return value: infolist asked
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -8177,14 +8265,21 @@ Arguments:
 
 * 'name': name of buffer (must be unique for plugin)
 * 'input_callback': function called when input text is entered on buffer,
-  arguments:
-*** 'void *data': pointer
-*** 'struct t_gui_buffer *buffer': buffer pointer
-*** 'const char *input_data': input data
+  arguments and return value:
+** 'void *data': pointer
+** 'struct t_gui_buffer *buffer': buffer pointer
+** 'const char *input_data': input data
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
-* 'close_callback': function called when buffer is closed, arguments:
-*** 'void *data': pointer
-*** 'struct t_gui_buffer *buffer': buffer pointer
+* 'close_callback': function called when buffer is closed, arguments and return
+  value:
+** 'void *data': pointer
+** 'struct t_gui_buffer *buffer': buffer pointer
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 Return value:
@@ -10061,8 +10156,12 @@ struct t_gui_bar_item *weechat_bar_item_new (const char *name,
 Arguments:
 
 * 'name': bar item name
-* 'build_callback': function called when bar item is built: it must return
-  content of bar item
+* 'build_callback': function called when bar item is built, arguments and
+  return value:
+** 'void *data': pointer
+** 'struct t_gui_bar_item *item': item pointer
+** 'struct t_gui_window *window': window pointer
+** return value: content of bar item
 * 'build_callback_data': pointer given to build callback, when it is called by
   WeeChat
 
@@ -11565,7 +11664,15 @@ int weechat_upgrade_read (struct t_upgrade_file *upgrade_file,
 Arguments:
 
 * 'upgrade_file': upgrade file pointer
-* 'callback_read': function called for each object read in upgrade file
+* 'callback_read': function called for each object read in upgrade file,
+  arguments and return value:
+** 'void *data': pointer
+** 'struct t_upgrade_file *upgrade_file': pointer to upgrade file
+** 'int object_id': object id
+** 'struct t_infolist *infolist': infolist with content of object
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_ERROR'
 * 'callback_read_data': pointer given to read callback when it is called by
   WeeChat
 
