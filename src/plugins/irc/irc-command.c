@@ -2513,15 +2513,18 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         }
                         else
                         {
-                            weechat_printf (ptr_server->buffer,
-                                            "%sMSG%s(%s%s%s)%s: %s",
-                                            weechat_prefix ("network"),
-                                            IRC_COLOR_CHAT_DELIMITERS,
-                                            IRC_COLOR_CHAT_NICK,
-                                            targets[i],
-                                            IRC_COLOR_CHAT_DELIMITERS,
-                                            IRC_COLOR_CHAT,
-                                            (string) ? string : argv_eol[arg_text]);
+                            weechat_printf_tags (ptr_server->buffer,
+                                                 irc_protocol_tags ("privmsg",
+                                                                    "notify_none,no_highlight",
+                                                                    ptr_server->nick),
+                                                 "%sMSG%s(%s%s%s)%s: %s",
+                                                 weechat_prefix ("network"),
+                                                 IRC_COLOR_CHAT_DELIMITERS,
+                                                 IRC_COLOR_CHAT_NICK,
+                                                 targets[i],
+                                                 IRC_COLOR_CHAT_DELIMITERS,
+                                                 IRC_COLOR_CHAT,
+                                                 (string) ? string : argv_eol[arg_text]);
                         }
                         if (string)
                             free (string);
