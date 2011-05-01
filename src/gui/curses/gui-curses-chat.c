@@ -317,7 +317,9 @@ gui_chat_display_word (struct t_gui_window *window,
     int pos_saved_char, chars_to_display, num_displayed;
     int length_align;
     attr_t attrs;
+    attr_t *ptr_attrs;
     short pair;
+    short *ptr_pair;
     
     if (!data ||
         ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
@@ -360,7 +362,10 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 if (!simulate)
                 {
-                    wattr_get (GUI_WINDOW_OBJECTS(window)->win_chat, &attrs, &pair, NULL);
+                    ptr_attrs = &attrs;
+                    ptr_pair = &pair;
+                    wattr_get (GUI_WINDOW_OBJECTS(window)->win_chat,
+                               ptr_attrs, ptr_pair, NULL);
                     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
                     gui_chat_display_word_raw (window,
