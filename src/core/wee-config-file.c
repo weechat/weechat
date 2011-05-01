@@ -1046,7 +1046,6 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
     int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
-    int num_colors;
     long number;
     char *error;
     
@@ -1267,7 +1266,6 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     old_value = CONFIG_COLOR(option);
                 if (option->value)
                 {
-                    num_colors = gui_color_get_weechat_colors_number ();
                     value_int = -1;
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)

@@ -2209,7 +2209,6 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 {
     struct t_gui_buffer *ptr_first_buffer, *ptr_last_buffer, *ptr_buffer;
     struct t_gui_buffer *ptr_buffer_pos;
-    char buf1_str[16], buf2_str[16], *argv[2] = { NULL, NULL };
     
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
@@ -2242,8 +2241,6 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     /* if group of buffers found is all buffers, then we can't move buffers! */
     if ((ptr_first_buffer == gui_buffers) && (ptr_last_buffer == last_gui_buffer))
         return;
-    
-    snprintf (buf2_str, sizeof (buf2_str) - 1, "%d", buffer->number);
     
     /* remove buffer(s) from list */
     if (ptr_first_buffer == gui_buffers)
@@ -2330,10 +2327,6 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     {
         ptr_buffer->number++;
     }
-    
-    snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
-    argv[0] = buf1_str;
-    argv[1] = buf2_str;
     
     hook_signal_send ("buffer_moved",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
