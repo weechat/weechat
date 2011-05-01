@@ -236,14 +236,14 @@ fifo_remove ()
 void
 fifo_exec (const char *text)
 {
-    char *text2, *pos_msg, *pos_buffer, *pos;
+    char *text2, *pos_msg, *pos_buffer;
     struct t_gui_buffer *ptr_buffer;
     
     text2 = strdup (text);
     if (!text2)
         return;
     
-    pos = NULL;
+    pos_msg = NULL;
     ptr_buffer = NULL;
     
     /*
