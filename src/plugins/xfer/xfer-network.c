@@ -92,7 +92,6 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
     struct t_xfer *xfer;
     char bufpipe[1 + 1 + 32 + 1];
     int num_read;
-    char *error;
     
     /* make C compiler happy */
     (void) fd;
@@ -102,7 +101,6 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
     num_read = read (xfer->child_read, bufpipe, sizeof (bufpipe));
     if (num_read > 0)
     {
-        error = NULL;
         sscanf (bufpipe + 2, "%llu", &xfer->pos);
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
