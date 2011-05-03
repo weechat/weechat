@@ -149,7 +149,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightgreen`)
 
 * *weechat.color.input_text_not_found*
-** descrizione: `colore del testo per la ricerca del testo fallita sulla riga di input`
+** descrizione: `colore del testo per la ricerca del testo fallita nella riga di input`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
@@ -174,22 +174,22 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `blue`)
 
 * *weechat.color.status_count_highlight*
-** descrizione: `text color for count of highlight messages in hotlist (status bar)`
+** descrizione: `colore del testo per il conteggio dei messaggi evento nella hotlist (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `magenta`)
 
 * *weechat.color.status_count_msg*
-** descrizione: `text color for count of messages in hotlist (status bar)`
+** descrizione: `colore del testo per il conteggio dei messaggi nella hotlist (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
 * *weechat.color.status_count_other*
-** descrizione: `text color for count of other messages in hotlist (status bar)`
+** descrizione: `colore del testo per il conteggio di altri messaggi nella hotlist (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *weechat.color.status_count_private*
-** descrizione: `text color for count of private messages in hotlist (status bar)`
+** descrizione: `colore del testo per il conteggio dei messaggi privati nella hotlist (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
@@ -329,7 +329,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
 
 * *weechat.look.color_pairs_auto_reset*
-** descrizione: `automatically reset table of color pairs when number of available pairs is lower or equal to this number (-1 = disable automatic reset, and then a manual "/color reset" is needed when table is full)`
+** descrizione: `ripristina automaticamente la tabella delle coppie colore quando il numero di coppie disponibili è minore o uguale a questo numero (-1 = disabilita il ripristino automatico, dunque è necessario "/color reset" quando la tabella è al completo)`
 ** tipo: intero
 ** valori: -1 .. 256 (valore predefinito: `5`)
 
@@ -369,7 +369,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *weechat.look.highlight_tags*
-** descrizione: `comma separated list of tags to highlight (case insensitive comparison, examples: "irc_notice" for IRC notices, "nick_flashcode" for messages from nick "FlashCode")`
+** descrizione: `elenco separato da virgole di tag da evidenziare (senza differenza tra maiuscole/minuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -379,22 +379,22 @@
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
 * *weechat.look.hotlist_add_buffer_if_away*
-** descrizione: `add any buffer to hotlist (including current or visible buffers) if local variable "away" is set on buffer`
+** descrizione: `aggiunge qualsiasi buffer alla hotlist (inclusi buffer corrente o visibili) se la variabile locale "away" è impostata sul buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * *weechat.look.hotlist_buffer_separator*
-** descrizione: `string displayed between buffers in hotlist`
+** descrizione: `stringa mostrata tra i buffer nella hotlist`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `", "`)
 
 * *weechat.look.hotlist_count_max*
-** descrizione: `max number of messages count to display in hotlist for a buffer (0 = never display messages count)`
+** descrizione: `numero massimo del conteggio di messaggi da mostrare nella hotlist per un buffer (0 = non mostrare mai il contatore messaggi)`
 ** tipo: intero
 ** valori: 0 .. 4 (valore predefinito: `2`)
 
 * *weechat.look.hotlist_count_min_msg*
-** descrizione: `display messages count if number of messages is greater or equal to this value`
+** descrizione: `mostra il conteggio dei messaggi se il numero di messaggi è maggiore o uguale a questo valore`
 ** tipo: intero
 ** valori: 1 .. 100 (valore predefinito: `2`)
 
@@ -434,7 +434,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *weechat.look.input_cursor_scroll*
-** descrizione: `number of chars displayed after end of input line when scrolling to display end of line`
+** descrizione: `numero di caratteri mostrati dopo la fine della riga di input quando si scorre per mostrare la fine riga`
 ** tipo: intero
 ** valori: 0 .. 100 (valore predefinito: `20`)
 

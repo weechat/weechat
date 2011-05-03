@@ -387,13 +387,11 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 | buffer_count               | [6]                   | numero di buffer aperti
 | buffer_plugin              | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
 | buffer_number              | 3                     | numero del buffer corrente
-// TRANSLATION MISSING
-| buffer_name                | #test(+n)             | nome del buffer attivo (with channel modes for irc channels)
+| buffer_name                | #test(+n)             | nome del buffer attivo (con le modalità canale per i canali irc)
 | buffer_nicklist_count      | {5}                   | numero di nick nella lista nick
 | buffer_filter              | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
 | lag                        | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-// TRANSLATION MISSING
-| hotlist                    | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
+| hotlist                    | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 eventi e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
 | completion                 | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
 | scroll                     | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
@@ -512,9 +510,8 @@ Tasti per buffer / finestre
 | @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Passa alla finestra sulla sinistra | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | Passa alla finestrs sulla destra | /window right
-// TRANSLATION MISSING
-| @k(A-)@k(w) , @k(A-)@k(b) | Resize all windows to 50% | /window balance
-| @k(A-)@k(w) , @k(A-)@k(s) | Swap buffers of two windows | /window swap
+| @k(A-)@k(w) , @k(A-)@k(b) | Ridimensione tutte le finestre al 50% | /window balance
+| @k(A-)@k(w) , @k(A-)@k(s) | Scambia i buffer di due finestra | /window swap
 | @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | /window zoom
 | @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | /input jump_next_visited_buffer
@@ -880,22 +877,21 @@ Comandi
 
 include::autogen/user/aspell_commands.txt[]
 
-// TRANSLATION MISSING
 [[aspell_speller_options]]
-Speller options
-^^^^^^^^^^^^^^^
+Opzioni ortografiche
+^^^^^^^^^^^^^^^^^^^^
 
-Speller options can be defined by adding options in section "option" of aspell
-configuration.
+Le opzioni ortografiche possono essere definite aggiungendo opzioni nella
+sezione "opzioni" della configurazione di aspell.
 
-The option name is an aspell configuration option. List of options can be found
-in a shell with following command:
+Il nome dell'opzione è un parametro di configurazione per aspell. L'elenco
+delle opzioni disponibili può essere trovato nel terminale col seguente comando:
 
 ----------------------------------------
 $ aspell config
 ----------------------------------------
 
-For example, to enable option "ignore-case":
+Ad esempio, per abilitare l'opzione "ignore-case":
 
 ----------------------------------------
 /set aspell.option.ignore-case "true"

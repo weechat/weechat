@@ -8,16 +8,15 @@ Generale
 --------
 
 
-// TRANSLATION MISSING
 [[weechat_name]]
-Where does the name "WeeChat" come from?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Da dove viene il nome "WeeChat"?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"Wee" is a recursive acronym and stands for "Wee Enhanced Environment".
-So complete name is "Wee Enhanced Environment for Chat".
+"Wee" è un acronimo ricorsivo che sta per "Wee Enhanced Environment".
+Quindi il nome completo è "Wee Enhanced Envoronment for Chat."
 
-"Wee" also means "very small" (and yes, there is other meaning, but it does not
-apply to WeeChat!).
+"Wee" significa anche "molto piccolo" (e sì, c'è un altro significato, ma
+non c'entra con WeeChat!).
 
 
 [[why_choose_weechat]]

@@ -2969,23 +2969,18 @@ Argomenti:
   "string" (viene usata una funzione predefinita per le stringhe, e solo per le
   stringhe), argomenti e valore restituito:
 ** 'struct t_hashtable *hashtable': puntatore alla tabella hash
-// TRANSLATION MISSING
-** 'const void *key': key
-// TRANSLATION MISSING
-** return value: hash of the key
+** 'const void *key': chiave
+** return value: hash della chiave
 * 'callback_keycmp': callback utilizzata per comparare due chiavi, può essere
   NULL se il tipo di valore è "string" (una funzione di confronto predefinita è
   usata per le stringhe e solo per le stringhe), argomenti e valore restituito:
 ** 'struct t_hashtable *hashtable': puntatore alla tabella hash
-// TRANSLATION MISSING
-** 'const void *key1': first key
-// TRANSLATION MISSING
-** 'const void *key2': second key
-// TRANSLATION MISSING
-** return value:
-*** negative number if 'key1' is less than 'key2'
-*** 0 if 'key1' equals 'key2'
-*** positive number if 'key1' is greater than 'key2'
+** 'const void *key1': prima chiave
+** 'const void *key2': seconda chiave
+** valore restituito:
+*** numero negativo se 'key1' è minore di 'key2'
+*** 0 se 'key1' è uguale a 'key2'
+*** numero positivo se 'key1' è maggiore di 'key2'
 
 Valore restituito:
 
@@ -3873,10 +3868,8 @@ Argomenti:
 ** 'struct t_config_option *option': puntatore all'opzione
 ** 'const char *value': nuovo valore per l'opzione
 ** valore restituito:
-// TRANSLATION MISSING
-*** 1 if value is ok
-// TRANSLATION MISSING
-*** 0 if value is invalid
+*** 1 se il valore è corretto
+*** 0 se il valore non è valido
 * 'callback_check_value_data': puntatore fornito alla callback check_value
   quando chiamato da WeeChat
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
@@ -5575,13 +5568,13 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
     # ...
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_config_set_desc_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.5._
 
-Set description for option in plugins configuration file (plugins.conf).
+Imposta la descrizione per l'opzione nel file di configurazione dei plugin
+(plugins.conf).
 
 Prototipo:
 
@@ -5593,13 +5586,13 @@ void weechat_config_set_desc_plugin (const char *option_name,
 
 Argomenti:
 
-* 'option_name': option name, WeeChat will add prefix "plugins.desc.xxx."
-  (where "xxx" is current plugin name)
-* 'description': description for option
+* 'option_name': nome dell'opzione, WeeChat aggiungerà il prefisso "plugins.desc.xxx."
+  (dove "xxx" è il nome del plugin corrente)
+* 'description': descrizione per l'opzione
 
 [NOTE]
-It is not a problem if option (plugins.var.xxx.option_name) does not exist.
-A future creation of option with this name will use this description.
+Non è un problema se l'opzione (plugins.var.xx.option_name) non esiste.
+Una futura creazione dell'opzione con questo nome userà questa descrizione.
 
 Esempio in C:
 
@@ -7833,16 +7826,14 @@ Argomenti:
   qualsiasi stringa |
   stringa con i codici colori IRC, o senza colore
 
-// TRANSLATION MISSING
 | irc | irc_in_xxx ^(1)^ |
   nome server |
-  contenuto del messaggio ricevuto dal server IRC (before charset decoding) |
+  contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri) |
   nuovo contenuto del messaggio
 
-// TRANSLATION MISSING
 | irc | irc_in2_xxx ^(1)^ |
   nome server |
-  contenuto del messaggio ricevuto dal server IRC (after charset decoding) |
+  contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
   nuovo contenuto del messaggio
 
 | irc | irc_out_xxx ^(1)^ |
@@ -7893,8 +7884,7 @@ Argomenti:
 ** 'const char *modifier': nome del modificatore
 ** 'const char *modifier_data': dati per il modificatore
 ** 'const char *string': stringa da modificare
-// TRANSLATION MISSING
-** valore restituito: new string
+** valore restituito: nuova stringa
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8019,8 +8009,7 @@ Argomenti:
 ** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'const char *arguments': argomenti addizionali, dipendono dalle info
-// TRANSLATION MISSING
-** valore restituito: value of info asked
+** valore restituito: valore dell'info richiesta
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8096,8 +8085,7 @@ Argomenti:
 ** 'void *data': puntatore
 ** 'const char *info_name': nome della info
 ** 'struct t_hashtable *hashtable': tabella hash, in base alla info
-// TRANSLATION MISSING
-** valore restituito: hashtable asked
+** valore restituito: tabella hash richiesta
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -8177,8 +8165,7 @@ Argomenti:
 ** 'void *pointer': puntatore ad un oggetto che la lista info deve restituire
    (per ricevere un solo elemento della lista info)
 ** 'const char *arguments': argomento aggiuntivo, dipende dalla lista info
-// TRANSLATION MISSING
-** valore restituito: infolist asked
+** valore restituito: lista info richiesta
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
@@ -9194,13 +9181,12 @@ window = weechat.current_window()
 current_window = weechat.current_window()
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_window_search_with_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.5._
 
-Return pointer to window displaying buffer.
+Restituisce il puntatore alla finestra che mostra il buffer.
 
 Prototipo:
 
@@ -9211,11 +9197,12 @@ struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buf
 
 Argomenti:
 
-* 'buffer': buffer pointer
+* 'buffer': puntatore al buffer
 
 Valore restituito:
 
-* pointer to window displaying buffer (NULL if no window is displaying buffer)
+* puntatore alla finestra che mostra il buffer (NULL se nessuna finestra sta
+  mostrando il buffer)
 
 Esempio in C:
 
@@ -10239,8 +10226,7 @@ Argomenti:
 ** 'void *data': puntatore
 ** 'struct t_gui_bar_item *item': puntatore all'elemento barra
 ** 'struct t_gui_window *window': puntatore alla finestra
-// TRANSLATION MISSING
-** valore restituito: content of bar item
+** valore restituito: contenuto dell'elemento barra
 * 'build_callback_data': puntatore fornito alla callback quando
   chiamata da WeeChat
 
@@ -11775,10 +11761,8 @@ Argomenti:
   di aggiornamento, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_upgrade_file *upgrade_file': puntatore al file di aggiornamento
-// TRANSLATION MISSING
-** 'int object_id': object id
-// TRANSLATION MISSING
-** 'struct t_infolist *infolist': infolist with content of object
+** 'int object_id': id dell'oggetto
+** 'struct t_infolist *infolist': lista info con il contenuto dell'oggetto
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'

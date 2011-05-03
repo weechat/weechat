@@ -117,18 +117,18 @@ Examples:
         unalias <colore>
         reset
 
-  alias: add an alias for a color
-unalias: delete an alias
-  color: color number (>= 0, max depends on terminal, commonly 63 or 255)
-   name: alias name for color (for example: "orange")
-  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+  alias: aggiunge un alias per un colore
+unalias: elimina un alias
+ colore: numero colore (>= 0, il massimo dipende dal terminale, di solito 63 o 255)
+   nome: nome alias per il colore (ad esempio: "arancione")
+  reset: ripristina tutte le coppie di colore (richiesto quando non ci sono più coppie disponibili se il ripristino automatico è disabilitato, consultare l'opzione weechat.look.color_pairs_auto_reset)
 
-Without argument, this command displays colors in a new buffer.
+Senza argomento, il comando mostra i colori in un nuovo buffer.
 
-Examples:
-  add alias "orange" for color 214:
-    /color alias 214 orange
-  delete color 214:
+Esempi:
+  aggiunge alias "arancione" per il colore 214:
+    /color alias 214 arancione
+  elimina il colore 214:
     /color unalias 214
 ........................................
 
@@ -166,51 +166,51 @@ windows: mostra l'albero delle finestre
          add <nome> <buffer>[,<buffer>...] <tag> <regex>]
          del <nome>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
+         list: elenca tutti i filtri
+       enable: abilita filtri (i filtri sono abilitati di default)
+      disable: disabilita filtri
+       toggle: abilita/disabilita filtri
+         nome: nome del filtro
+          add: aggiunge un filtro
+          del: elimina un filtro
+         -all: elimina tutti i filtri
+       buffer: elenco separato da virgole di buffer in cui il filtro è attivo:
+               - nome completo che include il plugin (esempio: "irc.freenode.#weechat)
+               - "*" indica tutti i buffer
+               - un nome preceduto da '!' viene escluso
+               - un nome può iniziare o terminare con '*' per includere più buffer
+          tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+        regex: espressione regolare da cercare nella riga
+               - usare '\t' per separare il prefisso dal messaggio, caratteri speciali come "|" vanno preceduti dal carattere escape: '\|')
+               - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
 
-The default key alt+'=' toggles filtering on/off.
+               -vengono create due espressioni regolari: una per il prefisso e l'altra per il messaggio
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Il tasto predefinito alt+'=' abilita/disabilita il filtro.
+
+Tag utilizzati di frequente:
+  no_filter, no_highlight, no_log, log0..log9 (livello di log),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message),
-  irc_xxx (xxx is command name or number, see /server raw),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+  nick_xxx (xxx è il nick nel messaggio),
+  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 
-Examples:
-  use IRC smart filter on all buffers:
-    /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
-    /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
-    /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+Esempi:
+  usa il filtro intelligente IRC per tutti i buffer:
+     /filter add irc_smart * irc_smart_filter *
+  usa il filtro intelligente IRC su tutti i buffer tranne quelli che contengono "#weechat" nel nome:
+     /filter add irc_smart *,!*weechat* irc_smart_filter
+  filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+     /filter add joinquit * irc_join,irc_part,irc_quit *
+  filtra i nick visualizzati all'ingresso in un canale o con /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat * toto\t
-  keep only nick "titi" on IRC channel #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filter lines containing word "spam":
+  filtra il nick "tizio" sul canale IRC #weechat
+    /filter add tizio irc.freenode.#esempio * tizio\t
+  filtra solo il nick "caio" sul canale IRC #test:
+    /filter add caio irc.freenode.#test * !caio\t
+  filtra le righe contententi la parola "spam":
     /filter add filterspam * * spam
-  filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+  filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
+    /filter add schifo irc.freenode.#weechat * weechat fa schifo
 ........................................
 
 [command]*`help`* visualizza l'aiuto su comandi e opzioni::
@@ -519,7 +519,7 @@ Esempi:
 /window  list
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
-         resize [+/-]<pct>
+         resize [+/-] <pct>
          balance
          merge [all]
          page_up|page_down
@@ -528,42 +528,42 @@ Esempi:
          swap [up|down|left|right]
          zoom
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: resize all windows to 50%
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
+         list: elenca le finestre aperte (senza argomento, questa lista viene visualizzata)
+           -1: salta alla finestra precedente
+           +1: salta alla finestra successiva
+           b#: salta alla finestra successiva che visualizza il buffer numero #
+           up: passa alla finestra superiore a quella corrente
+         down: passa alla finestra inferiore a quella attiva
+         left: passa alla finestra a sinistra
+        right: passa alla finestra a destra
+       splith: divide la finestra attiva orizzontalmente
+       splitv: divide la finestra attiva verticalmente
+       resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
+      balance: ridimensiona tutte le finestre al 50%
+        merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
+      page_up: scorre di una pagina in alto
+    page_down: scorre di una pagina in basso
+      refresh: aggiorna lo schermo
+       scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
+    scroll_up: scorre di alcune righe in alto
+  scroll_down: scorre di alcune righe in basso
+   scroll_top: scorre fino all'inizio del buffer
+scroll_bottom: scorre fino alla fine del buffer buffer
+scroll_previous_highlight: passa all'evento precedente
+    scroll_next_highlight: passa all'evento successivo
+         swap: scambia i buffer di due finestra (con direzione opzionale per la finestra di destinazione)
+         zoom: ingrandimento sulla finestra
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
 
-Examples:
-  jump to window displaying buffer #1:
+Esempi:
+  salta alla finestra che visualizza il buffer #1:
     /window b1
-  scroll 2 lines up:
+  scorre di due righe in alto:
     /window scroll -2
-  scroll 2 days up:
+  scorre all'indietro di due giorni:
     /window scroll -2d
-  scroll to beginning of current day:
-    /window scroll -d
+  scorre all'inizio del giorno attuale:
+     /window scroll -d
 ........................................
 

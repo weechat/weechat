@@ -39,7 +39,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * *irc.color.nick_prefixes*
-** descrizione: `color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), format is: "o:color1;h:color2;v:color3" (if a mode is not found, WeeChat will try with next modes received from server ("PREFIX"); a special mode "*" can be used as default color if no mode has been found in list)`
+** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voce, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -59,12 +59,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * *irc.color.topic_new*
-** descrizione: `color for new channel topic (when topic is changed)`
+** descrizione: `colore del nuovo argomento del canale (quando viene cambiato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * *irc.color.topic_old*
-** descrizione: `color for old channel topic (when topic is changed)`
+** descrizione: `colore del precedente argomento del canale (quando viene cambiato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
@@ -374,7 +374,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.server_default.autoreconnect_delay*
-** descrizione: `ritardo (in secondi) prima di effettuare una nuova connessione al server`
+** descrizione: `ritardo (in secondi) prima di riprovare a riconnettersi al server`
 ** tipo: intero
 ** valori: 1 .. 65535 (valore predefinito: `10`)
 
@@ -404,7 +404,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.command_delay*
-** descrizione: `ritardo (in secondi) dopo l'esecuzione del programma (esempio: fornire il tempo per l'autenticazione)`
+** descrizione: `ritardo (in secondi) dopo l'esecuzione del comando (esempio: fornire il tempo per l'autenticazione)`
 ** tipo: intero
 ** valori: 0 .. 3600 (valore predefinito: `0`)
 
@@ -494,7 +494,7 @@
 ** valori: 0 .. 2147483647 (valore predefinito: `2048`)
 
 * *irc.server_default.ssl_priorities*
-** descrizione: `string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** descrizione: `stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"NORMAL"`)
 

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 14:19+0200\n"
-"PO-Revision-Date: 2011-04-28 14:24+0200\n"
+"POT-Creation-Date: 2011-05-02 18:26+0200\n"
+"PO-Revision-Date: 2011-05-02 18:05+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -145,9 +145,9 @@ msgstr "  %s (plugin: %s)"
 msgid "No bar item defined"
 msgstr "Nessun elemento barra definito"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: name can not start with \"#\""
-msgstr "%sErrore: impossibile creare il file \"%s\""
+msgstr "%sErrore: il nome non può iniziare con \"#\""
 
 #, c-format
 msgid "%sNot enough memory"
@@ -1015,7 +1015,6 @@ msgstr "definisce gli alias dei colori e visualizza la tavolozza dei colori"
 msgid "alias <color> <alias> || unalias <color> || reset"
 msgstr "alias <colore> <alias> || unalias <colore> || reset"
 
-#, fuzzy
 msgid ""
 "  alias: add an alias for a color\n"
 "unalias: delete an alias\n"
@@ -1038,14 +1037,15 @@ msgstr ""
 " colore: numero colore (>= 0, il massimo dipende dal terminale, di solito 63 "
 "o 255)\n"
 "   nome: nome alias per il colore (ad esempio: \"arancione\")\n"
-"  reset: ripristina tutte le coppie di colore (utile quando non ci sono più "
-"coppie disponibili)\n"
+"  reset: ripristina tutte le coppie di colore (richiesto quando non ci sono "
+"più coppie disponibili se il ripristino automatico è disabilitato, "
+"consultare l'opzione weechat.look.color_pairs_auto_reset)\n"
 "\n"
-"senza argomento, il comando mostra i colori in un nuovo buffer.\n"
+"Senza argomento, il comando mostra i colori in un nuovo buffer.\n"
 "\n"
 "Esempi:\n"
 "  aggiunge alias \"arancione\" per il colore 214:\n"
-"    /color alias 214 orange\n"
+"    /color alias 214 arancione\n"
 "  elimina il colore 214:\n"
 "    /color unalias 214"
 
@@ -1112,7 +1112,6 @@ msgstr ""
 "list || enable|disable|toggle [<nome>] || add <nome> <buffer>[,<buffer>...] "
 "<tag> <regex>] || del <nome>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1198,7 +1197,7 @@ msgstr ""
 "\n"
 "Tag utilizzati di frequente:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (livello di log),\n"
-"  notify_message, notify_private, notify_highlight,\n"
+"  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx è il nick nel messaggio),\n"
 "  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   "
 "irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
@@ -1808,7 +1807,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "gestione finestre"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize [+/-]"
 "<pct> || balance || merge [all] || page_up|page_down || refresh || scroll|"
@@ -1816,11 +1814,10 @@ msgid ""
 "scroll_next_highlight || swap [up|down|left|right] || zoom"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize [+/-] "
-"<pct> || merge [all] || page_up|page_down || refresh || scroll|scroll_up|"
-"scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
-"scroll_next_highlight || zoom"
+"<pct> || balance || merge [all] || page_up|page_down || refresh || scroll|"
+"scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
+"scroll_next_highlight || swap [up|down|left|right] || zoom"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -1880,6 +1877,7 @@ msgstr ""
 "       splitv: divide la finestra attiva verticalmente\n"
 "       resize: ridimensiona finestra, la nuova dimensione è <pct> "
 "percentuale della finestra genitore\n"
+"      balance: ridimensiona tutte le finestre al 50%\n"
 "        merge: unisce la finestra con un'altra (all = mantiente una sola "
 "finestra)\n"
 "      page_up: scorre di una pagina in alto\n"
@@ -1893,6 +1891,8 @@ msgstr ""
 "scroll_bottom: scorre fino alla fine del buffer buffer\n"
 "scroll_previous_highlight: passa all'evento precedente\n"
 "    scroll_next_highlight: passa all'evento successivo\n"
+"         swap: scambia i buffer di due finestra (con direzione opzionale per "
+"la finestra di destinazione)\n"
 "         zoom: ingrandimento sulla finestra\n"
 "\n"
 "Per splith e splitv, pct è una percentuale che rappresenta la dimensione "
@@ -2060,6 +2060,10 @@ msgid ""
 "lower or equal to this number (-1 = disable automatic reset, and then a "
 "manual \"/color reset\" is needed when table is full)"
 msgstr ""
+"ripristina automaticamente la tabella delle coppie colore quando il numero "
+"di coppie disponibili è minore o uguale a questo numero (-1 = disabilita il "
+"ripristino automatico, dunque è necessario \"/color reset\" quando la "
+"tabella è al completo)"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -2112,14 +2116,14 @@ msgstr ""
 "circondata da caratteri :(alfanumerici, \"-\", \"_\" or \"|\"), "
 "l'espressione regolare è esatta, esempio \"FlashCode|flashy\""
 
-#, fuzzy
 msgid ""
 "comma separated list of tags to highlight (case insensitive comparison, "
 "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
 "from nick \"FlashCode\")"
 msgstr ""
-"elenco separato da virgole di tag da evidenziare (maiuscole/minuscole, le "
-"parole potrebbero cominciare o terminare con \"*\" per un riscontro parziale)"
+"elenco separato da virgole di tag da evidenziare (senza differenza tra "
+"maiuscole/minuscole, esempi: \"irc_notice\" per gli annunci IRC, "
+"\"nick_flashcode\" per i messaggi dal nick \"FlashCode\")"
 
 msgid ""
 "char used to draw horizontal separators around bars (empty value will draw a "
@@ -2135,20 +2139,25 @@ msgid ""
 "add any buffer to hotlist (including current or visible buffers) if local "
 "variable \"away\" is set on buffer"
 msgstr ""
+"aggiunge qualsiasi buffer alla hotlist (inclusi buffer corrente o visibili) "
+"se la variabile locale \"away\" è impostata sul buffer"
 
-#, fuzzy
 msgid "string displayed between buffers in hotlist"
-msgstr "elenco dei buffer nella hotlist"
+msgstr "stringa mostrata tra i buffer nella hotlist"
 
 msgid ""
 "max number of messages count to display in hotlist for a buffer (0 = never "
 "display messages count)"
 msgstr ""
+"numero massimo del conteggio di messaggi da mostrare nella hotlist per un "
+"buffer (0 = non mostrare mai il contatore messaggi)"
 
 msgid ""
 "display messages count if number of messages is greater or equal to this "
 "value"
 msgstr ""
+"mostra il conteggio dei messaggi se il numero di messaggi è maggiore o "
+"uguale a questo valore"
 
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
@@ -2194,13 +2203,12 @@ msgstr ""
 "mantiene solo numeri univoci nella hotlist (vale solo per gli elementi della "
 "hotlist per cui il nome NON viene visualizzato dopo il numero)"
 
-#, fuzzy
 msgid ""
 "number of chars displayed after end of input line when scrolling to display "
 "end of line"
 msgstr ""
-"numero di caratteri mostrati dopo la fine della riga di input allo "
-"scorrimento per visualizzare la fine riga"
+"numero di caratteri mostrati dopo la fine della riga di input quando si "
+"scorre per mostrare la fine riga"
 
 msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
@@ -2479,21 +2487,24 @@ msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 "colore del testo per il buffer con nuovi dati (non messaggi) (barra di stato)"
 
-#, fuzzy
 msgid "text color for count of messages in hotlist (status bar)"
-msgstr "colore del testo per il buffer con evento (barra di stato)"
+msgstr ""
+"colore del testo per il conteggio dei messaggi nella hotlist (barra di stato)"
 
-#, fuzzy
 msgid "text color for count of private messages in hotlist (status bar)"
-msgstr "colore del testo per il buffer con evento (barra di stato)"
+msgstr ""
+"colore del testo per il conteggio dei messaggi privati nella hotlist (barra "
+"di stato)"
 
-#, fuzzy
 msgid "text color for count of highlight messages in hotlist (status bar)"
-msgstr "colore del testo per il buffer con evento (barra di stato)"
+msgstr ""
+"colore del testo per il conteggio dei messaggi evento nella hotlist (barra "
+"di stato)"
 
-#, fuzzy
 msgid "text color for count of other messages in hotlist (status bar)"
-msgstr "colore del testo per il buffer con evento (barra di stato)"
+msgstr ""
+"colore del testo per il conteggio di altri messaggi nella hotlist (barra di "
+"stato)"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "colore del testo per il buffer con nuovi dati (barra di stato)"
@@ -2502,7 +2513,7 @@ msgid "text color for time (status bar)"
 msgstr "colore del testo per l'ora (barra di stato)"
 
 msgid "text color for unsuccessful text search in input line"
-msgstr "colore del testo per la ricerca del testo fallita sulla riga di input"
+msgstr "colore del testo per la ricerca del testo fallita nella riga di input"
 
 msgid "text color for actions in input line"
 msgstr "colore del testo per le azioni sulla riga di input"
@@ -2744,7 +2755,7 @@ msgstr ""
 "con un'altra home usando l'opzione da riga di comando  \"--dir\".\n"
 
 msgid "invalid priorities"
-msgstr ""
+msgstr "priorità non valide"
 
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "tipo di proxy (http (predefinito), socks4, socks5)"
@@ -2892,7 +2903,7 @@ msgstr "Coppie colore di WeeChat (in uso: %d, rimaste: %d):"
 
 #, c-format
 msgid "Last auto reset of pairs: %s"
-msgstr ""
+msgstr "Ultimo ripristino automatico delle coppie: %s"
 
 msgid "WeeChat basic colors:"
 msgstr "Colori base di WeeChat"
@@ -3016,7 +3027,7 @@ msgstr "%s-ANCORA(%d)-"
 
 #. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
 msgid "Act: "
-msgstr "Att: "
+msgstr "Attività: "
 
 #, c-format
 msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -3248,10 +3259,12 @@ msgid ""
 "option for aspell (for list of available options and format, run command "
 "\"aspell config\" in a shell)"
 msgstr ""
+"opzione per aspell (per un elenco di opzioni e formato disponibili, eseguire "
+"il comando \"aspell config\" in un terminale)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr "%s%s: errore nella creazione del dizionario aspell \"%s\" => \"%s\""
+msgstr "%s%s: errore nella creazione dell'opzione aspell \"%s\" => \"%s\""
 
 msgid "color used for misspelled words"
 msgstr "colore utilizzato per le parole non corrette"
@@ -3700,9 +3713,9 @@ msgstr "Nessun server trovato con \"%s\""
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s%s: il server \"%s\" esiste già, impossibile crearlo!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: name can not start with \"#\""
-msgstr "%s%s: impossibile accedere al file \"%s\""
+msgstr "%s%s: il nome non può iniziare con \"#\""
 
 #, c-format
 msgid "%s%s: unable to create server"
@@ -4888,6 +4901,7 @@ msgstr "nick nella lista notifiche"
 msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
+"%s%s: stringa delle proprietà non valida, errore in questa posizione: \"%s\""
 
 #, c-format
 msgid ""
@@ -4947,6 +4961,10 @@ msgid ""
 "gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
 "\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
 msgstr ""
+"stringa con le priorità per gnutls (per la sintassi, consultare la "
+"documentazione per la funzione gnutls_priority_init nel manuale di gnutls, "
+"stringhe comuni sono: \"PERFORMANCE\", \"NORMAL\", \"SECURE128\", "
+"\"SECURE256\", \"EXPORT\", \"NONE\")"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
@@ -4977,8 +4995,7 @@ msgid "automatically reconnect to server when disconnected"
 msgstr "riconnette automaticamente al server alla disconnessione"
 
 msgid "delay (in seconds) before trying again to reconnect to server"
-msgstr ""
-"ritardo (in secondi) prima di effettuare una nuova connessione al server"
+msgstr "ritardo (in secondi) prima di riprovare a riconnettersi al server"
 
 msgid "nicknames to use on server (separated by comma)"
 msgstr "nick da utilizzare sul server (separati da virgole)"
@@ -5009,7 +5026,7 @@ msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
 msgstr ""
-"ritardo (in secondi) dopo l'esecuzione del programma (esempio: fornire il "
+"ritardo (in secondi) dopo l'esecuzione del comando (esempio: fornire il "
 "tempo per l'autenticazione)"
 
 msgid ""
@@ -5324,6 +5341,11 @@ msgid ""
 "will try with next modes received from server (\"PREFIX\"); a special mode "
 "\"*\" can be used as default color if no mode has been found in list)"
 msgstr ""
+"colore per i prefissi dei nick usando il carattere di modalità (o=operatore, "
+"h=halfop, v=voce, ..), il formato è: \"o:colore1;h:colore2;v:colore3\" (se "
+"una modalità non viene trovata, WeeChat proverà con le modalità successive "
+"ricevute dal server (\"PREFIX\"); può essere usata una modalità speciale \"*"
+"\" come colore prefefinito se non viene trovata nessuna modalità nella lista)"
 
 msgid "color for nick prefix (prefix is custom string displayed before nick)"
 msgstr ""
@@ -5361,13 +5383,11 @@ msgstr ""
 msgid "color for reason in part/quit messages"
 msgstr "colore per il motivo nei messaggi di uscita/abbandono"
 
-#, fuzzy
 msgid "color for old channel topic (when topic is changed)"
-msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
+msgstr "colore del precedente argomento del canale (quando viene cambiato)"
 
-#, fuzzy
 msgid "color for new channel topic (when topic is changed)"
-msgstr "visualizza l'argomento del canale precedente quando viene cambiato"
+msgstr "colore del nuovo argomento del canale (quando viene cambiato)"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -6569,13 +6589,13 @@ msgstr ""
 msgid "list of hooks"
 msgstr "elenco di hook"
 
-#, fuzzy
 msgid ""
 "type,arguments (type is command/timer/.., arguments to get only some hooks "
 "(can start or end with \"*\" as wildcard), both are optional)"
 msgstr ""
-"tipo,argomenti (il tipo è comando/timer/.., l'argomento solo per ottenere "
-"alcuni hook, entrambi sono opzionali)"
+"tipo,argomenti (il tipo è comando/timer/.., gli argomenti sono necessari "
+"solo per ottenere alcuni hook, (possono iniziare o terminare con \"*\" come "
+"carattere jolly, entrambi sono opzionali)"
 
 msgid "list of buffers in hotlist"
 msgstr "elenco dei buffer nella hotlist"
@@ -6686,9 +6706,8 @@ msgstr "%sErrore: plugin \"%s\" non trovato"
 msgid "Plugins unloaded"
 msgstr "Plugin disattivati"
 
-#, fuzzy
 msgid "description of plugin option"
-msgstr "puntatore allo script (opzionale)"
+msgstr "descrizione dell'opzione del plugin"
 
 msgid "Actions (letter+enter):"
 msgstr "Azioni (lettera+invio)"
@@ -7698,3 +7717,160 @@ msgstr "Tabella hash (output)"
 
 msgid "Pointer"
 msgstr "Puntatore"
+
+#~ msgid "color for prefix of nick which is op/admin/owner on channel"
+#~ msgstr ""
+#~ "colore per il prefisso del nick che è operatore/amministratore/"
+#~ "proprietario del canale"
+
+#~ msgid "color for prefix of nick which is halfop on channel"
+#~ msgstr "colore per il prefisso del nick che è halfop sul canale"
+
+#~ msgid "color for prefix of nick which has voice on channel"
+#~ msgstr "colore per il prefisso del nick che ha il voice sul canale"
+
+#~ msgid "color for prefix of nick which is user on channel"
+#~ msgstr "colore per il prefisso del nick che è utente sul canale"
+
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s%s: canale \"%s\" non trovato per il comando \"%s\""
+
+#~ msgid "hook type: command, timer, .. (optional)"
+#~ msgstr "tipo hook: comando, timer, ... (opzionale)"
+
+#~ msgid "a color name"
+#~ msgstr "un nome colore"
+
+#~ msgid "%s internal commands:"
+#~ msgstr "comandi interni di %s:"
+
+#~ msgid "Other commands:"
+#~ msgstr "Altri comandi:"
+
+#~ msgid "<command> || <option>"
+#~ msgstr "<comando> || <opzione>"
+
+#~ msgid ""
+#~ "command: a command name\n"
+#~ " option: an option name (use /set to see list)"
+#~ msgstr ""
+#~ "comando: nome comando\n"
+#~ "opzione: nome opzione (utilizza /set per vedere l'elenco)"
+
+#, fuzzy
+#~ msgid "remove half channel operator status from nick(s)"
+#~ msgstr "rimuove lo stato di half-op da uno (o più) nick"
+
+#, fuzzy
+#~ msgid "give half channel operator status to nick(s)"
+#~ msgstr "concede lo stato di halfop ad uno (o più) nick"
+
+#, fuzzy
+#~ msgid "char used to draw read marker line"
+#~ msgstr "carattere usato per nascondere parte di una stringa"
+
+#~ msgid "user/password: used to get privileges on current IRC server"
+#~ msgstr ""
+#~ "utente/password: utilizzata per ottenere i privilegi sul server IRC "
+#~ "corrente"
+
+#~ msgid ""
+#~ "file: configuration file to save\n"
+#~ "\n"
+#~ "Without argument, all files (WeeChat and plugins) are saved."
+#~ msgstr ""
+#~ "file: file di configurazione da salvare\n"
+#~ "\n"
+#~ "Senza argomento, tutti i file (WeeChat e plugin) verranno salvati."
+
+#, fuzzy
+#~ msgid ""
+#~ "list|listfull [<name>] || load <filename> || reload|unload <name> || "
+#~ "autoload"
+#~ msgstr ""
+#~ "[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload "
+#~ "[nome]] | [unload [nome]]"
+
+#~ msgid "This command is used by key bindings or plugins."
+#~ msgstr "Questo comando è utilizzato da combinazioni di tasti o plugin."
+
+#~ msgid "message"
+#~ msgstr "messaggio"
+
+#, fuzzy
+#~ msgid ""
+#~ "filename: script (file) to load\n"
+#~ "    name: a script name (name used in call to \"register\" function)\n"
+#~ "\n"
+#~ "Without argument, this command lists all loaded scripts."
+#~ msgstr ""
+#~ "nome_file: file script da attivare\n"
+#~ "      nome: il nome dello script\n"
+#~ "\n"
+#~ "Senza argomenti, il comando elenca tutti gli script attivati"
+
+#~ msgid ""
+#~ "[list [name]] | [listfull [name]] | [load filename] | [autoload] | "
+#~ "[reload [name]] | [unload [name]]"
+#~ msgstr ""
+#~ "[list [nome]] | [listfull [nome]] | [load file] | [autoload] | [reload "
+#~ "[nome]] | [unload [nome]]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<message>]"
+#~ msgstr "[canale[,canale]] [messaggio]"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>]] [<part_message>]"
+#~ msgstr "[canale[,canale]] [messaggio]"
+
+#~ msgid ""
+#~ "     channel: channel name for cycle\n"
+#~ "part_message: part message (displayed to other users)"
+#~ msgstr ""
+#~ "   canale: nome canale per il ciclo\n"
+#~ "messaggio: messaggio di uscita (mostrato agli altri utenti)"
+
+#~ msgid "action [nickname [file]]"
+#~ msgstr "azione [nick] [file]]"
+
+#~ msgid "[nickname [nickname]]"
+#~ msgstr "[nick [nick]]"
+
+#~ msgid "[-all | servername [servername ...]]"
+#~ msgstr "[-all | nome_server [nome_server ...]]"
+
+#~ msgid ""
+#~ "      -all: disconnect from all servers\n"
+#~ "servername: server name to disconnect"
+#~ msgstr ""
+#~ "     -all: disconnetti da tutti i server\n"
+#~ "nome_server: nome del server da cui disconnettersi"
+
+#~ msgid "nickname comment"
+#~ msgstr "nick commento"
+
+#~ msgid ""
+#~ "nickname: nickname\n"
+#~ " comment: comment for kill"
+#~ msgstr ""
+#~ "    nick: nick\n"
+#~ "commento: commento per il kill"
+
+#~ msgid "nickname [nickname]"
+#~ msgstr "nick [nick]"
+
+#~ msgid "[option]"
+#~ msgstr "[opzione]"
+
+#~ msgid "text"
+#~ msgstr "testo"
+
+#~ msgid "[text]"
+#~ msgstr "[testo]"
+
+#~ msgid "set a buffer property"
+#~ msgstr "imposta una proprietà del buffer"
+
+#~ msgid "property value"
+#~ msgstr "valore della proprietà"
