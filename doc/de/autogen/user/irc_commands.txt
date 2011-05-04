@@ -236,7 +236,7 @@ reason: Begründung für den Rauswurf
 Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen
 ........................................
 
-[command]*`list`* Channels mit ihren Topics auflisten::
+[command]*`list`* Channels mit ihrem Thema auflisten::
 ........................................
 /list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
 
@@ -283,7 +283,7 @@ Channel-Modi:
   p: privater Channel
   s: geheimer Channel
   i: geschlossener Channel (Zutritt nur mit Einladung)
-  t: nur Operatoren dürfen das Topic setzen
+  t: nur Operatoren dürfen das Thema setzen
   n: keine Channeln-Nachrichten von außerhalb des Channels
   m: moderierter Channel (schreiben nur mit Voice)
   l: maximale Anzahl an Usern im Channel festlegen
@@ -301,7 +301,7 @@ User-Modi:
 Die Liste der hier dargestellten Modi ist nicht vollständig. Es sollte die Dokumentation des jeweiligen Servers zu Rate gezogen werden um alle verfügbaren Modi zu erfahren.
 
 Beispiele:
-  Schützt das Topic des Channels #weechat:
+  Schützt das Thema des Channels #weechat:
     /mode #weechat +t
   sich auf dem Server unsichtbar machen:
     /mode nick +i

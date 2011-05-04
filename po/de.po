@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-04-28 14:19+0200\n"
-"PO-Revision-Date: 2011-04-28 14:22+0200\n"
+"POT-Creation-Date: 2011-05-02 18:26+0200\n"
+"PO-Revision-Date: 2011-04-29 13:06+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -2839,7 +2839,7 @@ msgstr ""
 "Verzeichnis zu starten.\n"
 
 msgid "invalid priorities"
-msgstr ""
+msgstr "ungültige Priorität"
 
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "Proxy-Typ (http (Standard), socks4, socks5)"
@@ -4288,7 +4288,7 @@ msgstr ""
 "Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen"
 
 msgid "list channels and their topic"
-msgstr "Channels mit ihren Topics auflisten"
+msgstr "Channels mit ihrem Thema auflisten"
 
 msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 msgstr "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
@@ -4389,7 +4389,7 @@ msgstr ""
 "  p: privater Channel\n"
 "  s: geheimer Channel\n"
 "  i: geschlossener Channel (Zutritt nur mit Einladung)\n"
-"  t: nur Operatoren dürfen das Topic setzen\n"
+"  t: nur Operatoren dürfen das Thema setzen\n"
 "  n: keine Channeln-Nachrichten von außerhalb des Channels\n"
 "  m: moderierter Channel (schreiben nur mit Voice)\n"
 "  l: maximale Anzahl an Usern im Channel festlegen\n"
@@ -4409,7 +4409,7 @@ msgstr ""
 "verfügbaren Modi zu erfahren.\n"
 "\n"
 "Beispiele:\n"
-"  Schützt das Topic des Channels #weechat:\n"
+"  Schützt das Thema des Channels #weechat:\n"
 "    /mode #weechat +t\n"
 "  sich auf dem Server unsichtbar machen:\n"
 "    /mode nick +i"
@@ -5005,7 +5005,7 @@ msgid "nicks and hostnames of current IRC channel"
 msgstr "Liste der Nicks und Hostnamen des aktuellen Channels"
 
 msgid "topic of current IRC channel"
-msgstr "Topic des aktuellen IRC-Channels"
+msgstr "Thema des aktuellen IRC-Channels"
 
 msgid "channels on all IRC servers"
 msgstr "Channels auf allen IRC Servern"
@@ -5026,6 +5026,8 @@ msgstr "Nicks für die eine Benachrichtigung existiert"
 msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
+"%s%s: ungültige Zeichenkette für Prioritäten, Fehler befindet sich an "
+"folgender Position der Zeichenkette: \"%s\""
 
 #, c-format
 msgid ""
@@ -5089,6 +5091,10 @@ msgid ""
 "gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
 "\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
 msgstr ""
+"Zeichenkette mit Prioritäten für gnutls (für die korrekte Syntax siehe "
+"gnutls Dokumentation unter Funktion gnutls_priority_init. Gebräuchliche "
+"Zeichenketten sind: \"PERFORMANCE\", \"NORMAL\", \"SECURE128\", "
+"\"SECURE256\", \"EXPORT\", \"NONE\")"
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
@@ -5351,7 +5357,7 @@ msgid "display host in part/quit messages"
 msgstr "Zeigt den Host in einer part/quit Nachricht an"
 
 msgid "display old topic when channel topic is changed"
-msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
+msgstr "Zeige das alte Thema, falls das Thema des Channels geändert wurde"
 
 msgid "display remote away message only once in private"
 msgstr ""
@@ -5467,8 +5473,8 @@ msgstr "aktiviert einen Filter für Nachrichten von einem \"Nick\""
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
-"Farben werden im Topic gestrippt (wird nur genutzt wenn der Buffer-Titel "
-"angezeigt wird)"
+"Farben werden im Channel-Thema entfernt (wird nur genutzt wenn der Buffer-"
+"Titel angezeigt wird)"
 
 msgid "color for text in join messages"
 msgstr ""
@@ -5532,13 +5538,15 @@ msgstr ""
 "Textfarbe in der die Begründung einer part/quit Nachricht angezeigt werden "
 "soll"
 
-#, fuzzy
 msgid "color for old channel topic (when topic is changed)"
-msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
+msgstr ""
+"Farbe in dem das alte Thema des Channels dargestellt werden soll, falls das "
+"Thema des Channels geändert wurde"
 
-#, fuzzy
 msgid "color for new channel topic (when topic is changed)"
-msgstr "Zeige den alten Topic, falls der Channel-Topic geändert wurde"
+msgstr ""
+"Farbe in dem das neue Thema des Channels dargestellt werden soll, falls das "
+"Thema des Channels geändert wurde"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -5917,12 +5925,12 @@ msgstr "%s%s: Der Befehl \"%s\" wurde ohne Channel empfangen"
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
-"%s%s%s%s hat das Topic für den Channel %s%s%s von \"%s%s%s\" auf \"%s%s%s\" "
+"%s%s%s%s hat das Thema für den Channel %s%s%s von \"%s%s%s\" auf \"%s%s%s\" "
 "geändert."
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
-msgstr "%s%s%s%s hat das Topic für den Channel %s%s%s auf \"%s%s%s\" gesetzt."
+msgstr "%s%s%s%s hat das Thema für den Channel %s%s%s auf \"%s%s%s\" gesetzt."
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
@@ -5931,7 +5939,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s"
-msgstr "%s%s%s%s hat das Topic von %s%s%s entfernt"
+msgstr "%s%s%s%s hat das Thema von %s%s%s entfernt"
 
 #, c-format
 msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
@@ -5992,32 +6000,32 @@ msgstr "%sChannel %s%s%s erstellt am %s"
 
 #, c-format
 msgid "%sNo topic set for channel %s%s"
-msgstr "%sKein Topic für %s%s gesetzt"
+msgstr "%sKein Thema für %s%s gesetzt"
 
 #, c-format
 msgid "%sTopic for %s%s%s is \"%s%s\""
-msgstr "%sDas Topic von %s%s%s lautet: \"%s%s\""
+msgstr "%sDas Thema von %s%s%s lautet: \"%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTopic festgelegt von %s%s%s%s%s%s%s%s%s am %s"
+msgstr "%sThema wurde festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set on %s"
-msgstr "%sTopic festgelegt am %s"
+msgstr "%sThema festgelegt am %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sTopic für %s%s%s festgelegt von %s%s%s%s%s%s%s%s%s am %s"
+msgstr "%sThema für %s%s%s festgelegt von %s%s%s%s%s%s%s%s%s am %s"
 
 # "%s" nach "on" ist ein Datum
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
-msgstr "%sDas Topic von %s%s%s wurde festgelegt am: %s"
+msgstr "%sDas Thema von %s%s%s wurde festgelegt am: %s"
 
 #, c-format
 msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
@@ -7915,3 +7923,32 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+#~ msgid "color for prefix of nick which is op/admin/owner on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
+
+#~ msgid "color for prefix of nick which is halfop on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
+
+#~ msgid "color for prefix of nick which has voice on channel"
+#~ msgstr ""
+#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
+#~ "Channel"
+
+#~ msgid "color for prefix of nick which is user on channel"
+#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
+
+#, fuzzy
+#~ msgid "comma separated list of tags that will force highlight"
+#~ msgstr ""
+#~ "Durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer "
+#~ "genutzt werden"
+
+#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+#~ msgstr "%s%s: Channel \"%s\" für den \"%s\"-Befehl nicht gefunden"
+
+#~ msgid "hook type: command, timer, .. (optional)"
+#~ msgstr "hook Type: command, timer, .. (optional)"
+
+#~ msgid "a color name"
+#~ msgstr "ein Farbname"

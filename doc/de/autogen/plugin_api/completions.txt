@@ -12,7 +12,7 @@
 
 | irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Channels
 
-| irc | irc_channel_topic | Topic des aktuellen IRC-Channels
+| irc | irc_channel_topic | Thema des aktuellen IRC-Channels
 
 | irc | irc_channels | Channels auf allen IRC Servern
 

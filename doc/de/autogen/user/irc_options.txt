@@ -59,12 +59,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.color.topic_new*
-** Beschreibung: `color for new channel topic (when topic is changed)`
+** Beschreibung: `Farbe in dem das neue Thema des Channels dargestellt werden soll, falls das Thema des Channels geändert wurde`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * *irc.color.topic_old*
-** Beschreibung: `color for old channel topic (when topic is changed)`
+** Beschreibung: `Farbe in dem das alte Thema des Channels dargestellt werden soll, falls das Thema des Channels geändert wurde`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
@@ -134,7 +134,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *irc.look.display_old_topic*
-** Beschreibung: `Zeige den alten Topic, falls der Channel-Topic geändert wurde`
+** Beschreibung: `Zeige das alte Thema, falls das Thema des Channels geändert wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -284,7 +284,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *irc.look.topic_strip_colors*
-** Beschreibung: `Farben werden im Topic gestrippt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)`
+** Beschreibung: `Farben werden im Channel-Thema entfernt (wird nur genutzt wenn der Buffer-Titel angezeigt wird)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -494,7 +494,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `2048`)
 
 * *irc.server_default.ssl_priorities*
-** Beschreibung: `string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** Beschreibung: `Zeichenkette mit Prioritäten für gnutls (für die korrekte Syntax siehe gnutls Dokumentation unter Funktion gnutls_priority_init. Gebräuchliche Zeichenketten sind: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL"`)
 
