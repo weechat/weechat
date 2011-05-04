@@ -90,19 +90,19 @@ compiler WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Paquet ^(1)^           | Requis | Fonctionnalité
-| cmake                  | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^(2)^ | *oui*  | interface ncurses
-| libgcrypt11-dev        | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
-| libgnutls-dev          | non    | connexion SSL au serveur IRC
-| libaspell-dev          | non    | extension aspell
-| libperl-dev            | non    | extension perl
-| python-dev             | non    | extension python
-| ruby1.8-dev            | non    | extension ruby
-| liblua5.1-0-dev        | non    | extension lua
-| tcl-dev (>= 8.5)       | non    | extension tcl
-| asciidoc (>= 8.5.0)    | non    | construction de la documentation (fichiers HTML)
-| source-highlight       | non    | coloration des sources dans la documentation HTML
+| Paquet ^(1)^             | Requis | Fonctionnalité
+| cmake                    | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^   | *oui*  | interface ncurses
+| libgcrypt11-dev          | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
+| libgnutls-dev (>= 2.2.0) | non    | connexion SSL au serveur IRC
+| libaspell-dev            | non    | extension aspell
+| libperl-dev              | non    | extension perl
+| python-dev               | non    | extension python
+| ruby1.8-dev              | non    | extension ruby
+| liblua5.1-0-dev          | non    | extension lua
+| tcl-dev (>= 8.5)         | non    | extension tcl
+| asciidoc (>= 8.5.0)      | non    | construction de la documentation (fichiers HTML)
+| source-highlight         | non    | coloration des sources dans la documentation HTML
 |========================================
 
 [NOTE]

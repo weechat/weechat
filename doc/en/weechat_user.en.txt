@@ -88,19 +88,19 @@ compile WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Package ^(1)^          | Required | Feature
-| cmake                  | *yes*    | build (autotools still possible, but cmake is recommended)
-| libncursesw5-dev ^(2)^ | *yes*    | ncurses interface
-| libgcrypt11-dev        | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
-| libgnutls-dev          | no       | SSL connection to IRC server
-| libaspell-dev          | no       | aspell plugin
-| libperl-dev            | no       | perl plugin
-| python-dev             | no       | python plugin
-| ruby1.8-dev            | no       | ruby plugin
-| liblua5.1-0-dev        | no       | lua plugin
-| tcl-dev (>= 8.5)       | no       | tcl plugin
-| asciidoc (>= 8.5.0)    | no       | build documentation (HTML files)
-| source-highlight       | no       | syntax highlight for sources in HTML documentation
+| Package ^(1)^            | Required | Feature
+| cmake                    | *yes*    | build (autotools still possible, but cmake is recommended)
+| libncursesw5-dev ^(2)^   | *yes*    | ncurses interface
+| libgcrypt11-dev          | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
+| libgnutls-dev (>= 2.2.0) | no       | SSL connection to IRC server
+| libaspell-dev            | no       | aspell plugin
+| libperl-dev              | no       | perl plugin
+| python-dev               | no       | python plugin
+| ruby1.8-dev              | no       | ruby plugin
+| liblua5.1-0-dev          | no       | lua plugin
+| tcl-dev (>= 8.5)         | no       | tcl plugin
+| asciidoc (>= 8.5.0)      | no       | build documentation (HTML files)
+| source-highlight         | no       | syntax highlight for sources in HTML documentation
 |========================================
 
 [NOTE]
