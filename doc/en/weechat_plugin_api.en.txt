@@ -5847,7 +5847,7 @@ void weechat_printf_date (struct t_gui_buffer *buffer, time_t date,
 Arguments:
 
 * 'buffer': buffer pointer, if NULL, message is displayed on WeeChat buffer
-* 'date': date for message
+* 'date': date for message (0 means current date/time)
 * 'message': message to display
 
 C example:
@@ -5906,7 +5906,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 Arguments:
 
 * 'buffer': buffer pointer, if NULL, message is displayed on WeeChat buffer
-* 'date': date for message
+* 'date': date for message (0 means current date/time)
 * 'tags': comma separated list of tags
 * 'message': message to display
 
