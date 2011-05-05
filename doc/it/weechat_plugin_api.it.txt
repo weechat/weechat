@@ -5852,8 +5852,7 @@ Argomenti:
 
 * 'buffer': puntatore al buffer, se NULL, il messaggio viene visualizzato
   sul buffer di WeeChat
-// TRANSLATION MISSING
-* 'date': data per il messaggio (0 means current date/time)
+* 'date': data per il messaggio (0 vuol dire data/ora corrente)
 * 'message': messaggio da visualizzare
 
 Esempio in C:
@@ -5914,8 +5913,7 @@ Argomenti:
 
 * 'buffer': puntatore al buffer, se NULL il messaggio viene visualizzato
   sul buffer di WeeChat
-// TRANSLATION MISSING
-* 'date': data per il messaggio (0 means current date/time)
+* 'date': data per il messaggio (0 vuol dire data/ora corrente)
 * 'tags': lista di tag separati da virgole
 * 'message': messaggio da visualizzare
 
