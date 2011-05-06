@@ -53,22 +53,23 @@
 import sys, socket, select, time, random, string, re
 
 NAME    = 'weercd'
-VERSION = '0.3'
+VERSION = '0.4'
 
 options = {
-    'host'       : ['',     'Host for socket bind'],
-    'port'       : ['7777', 'Port for socket bind'],
-    'debug'      : ['off',  'Debug (on/off)'],
-    'wait'       : ['0',    'Time to wait before flooding client (float, in seconds)'],
-    'sleep'      : ['0',    'Sleep for select, delay between 2 messages sent to client (float, in seconds)'],
-    'maxchans'   : ['5',    'Max channels to join'],
-    'maxnicks'   : ['100',  'Max nicks per channel'],
-    'usernotices': ['on',   'Send notices to user (on/off)'],
-    'channotices': ['on',   'Send notices to channels (on/off)'],
+    'host'       : ['',      'Host for socket bind'],
+    'port'       : ['7777',  'Port for socket bind'],
+    'debug'      : ['off',   'Debug (on/off)'],
+    'action'     : ['flood', 'Action of server: "flood" = flood client, "user" = send custom messages to client'],
+    'wait'       : ['0',     'Time to wait before flooding client (float, in seconds)'],
+    'sleep'      : ['0',     'Sleep for select, delay between 2 messages sent to client (float, in seconds)'],
+    'maxchans'   : ['5',     'Max channels to join'],
+    'maxnicks'   : ['100',   'Max nicks per channel'],
+    'usernotices': ['on',    'Send notices to user (on/off)'],
+    'channotices': ['on',    'Send notices to channels (on/off)'],
 }
 
 def usage():
-    ''' Display usage. '''
+    """Display usage."""
     global options
     print('\nUsage: %s [option=value [option=value ...]] | [-h | --help]\n' % sys.argv[0])
     print('  option=value  option with value (see table below)')
@@ -81,7 +82,7 @@ def usage():
     sys.exit(0)
 
 def setoption(string):
-    ''' Set option with string using format "option=value". '''
+    """Set option with string using format "option=value"."""
     global options
     items = string.strip().split('=', 1)
     if len(items) == 2:
@@ -94,14 +95,14 @@ def setoption(string):
                 print('WARNING: unknown option "%s"' % key)
 
 def getoption(option):
-    ''' Get value of an option. '''
+    """Get value of an option."""
     global options
     if option in options:
         return options[option][0]
     return None
 
 def getdictoptions():
-    ''' Get dict with options and values. '''
+    """Get dict with options and values."""
     global options
     d = {}
     for key in options:
@@ -109,7 +110,7 @@ def getdictoptions():
     return d
 
 def readconfig(filename):
-    ''' Read configuration file. '''
+    """Read configuration file."""
     try:
         lines = open(filename, 'rb').readlines()
         for line in lines:
@@ -118,7 +119,7 @@ def readconfig(filename):
         pass
 
 def strrand(minlength=1, maxlength=50, spaces=False):
-    ''' Return string with random lenght and content. '''
+    """Return string with random lenght and content."""
     length = random.randint(minlength, maxlength)
     strspace = ''
     if spaces:
@@ -142,10 +143,14 @@ class Client:
         self.starttime = time.time()
         self.connect()
         if not self.quit:
-            self.flood()
+            action = getoption('action')
+            if action == 'flood':
+                self.acion_flood()
+            elif action == 'user':
+                self.action_user()
 
     def send(self, data):
-        ''' Send one message to client. '''
+        """Send one message to client."""
         if getoption('debug') == 'on':
             print('<-- %s' % data)
         msg = '%s\r\n' % data
@@ -154,7 +159,7 @@ class Client:
         self.outcount += 1
 
     def recv(self, data):
-        ''' Read one message from client. '''
+        """Read one message from client."""
         if getoption('debug') == 'on':
             print('--> %s' % data)
         if data.startswith('PING '):
@@ -175,7 +180,7 @@ class Client:
         self.incount += 1
 
     def read(self, timeout):
-        ''' Read data from client. '''
+        """Read data from client."""
         inr, outr, exceptr = select.select([self.sock], [], [], timeout)
         if inr:
             data = self.sock.recv(4096)
@@ -192,7 +197,7 @@ class Client:
                 self.lastbuf = data
 
     def connect(self):
-        ''' Tell client that connection is ok. '''
+        """Tell client that connection is ok."""
         try:
             while self.nick == '':
                 self.read(0.1)
@@ -213,8 +218,8 @@ class Client:
             rnick = self.channels[channel][random.randint(0, len(self.channels[channel])-1)]
         return rnick
 
-    def flood(self):
-        ''' Yay, funny stuff here! Flood client! '''
+    def action_flood(self):
+        """Yay, funny stuff here! Flood client!"""
         wait = int(getoption('wait'))
         if wait > 0:
             print('Wait %d seconds' % wait)
@@ -304,6 +309,22 @@ class Client:
             return
         else:
             self.endmsg = 'quit received'
+            return
+
+    def action_user(self):
+        """Send custom messages to client"""
+        try:
+            while 1:
+                sys.stdout.write('Message to send to client: ')
+                sys.stdout.flush()
+                message = sys.stdin.readline()
+                self.send(message)
+        except Exception as e:
+            self.endmsg = 'connection lost'
+            self.endexcept = e
+            return
+        except KeyboardInterrupt:
+            self.endmsg = 'interrupted'
             return
 
     def stats(self):
