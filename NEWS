@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.5-rc2, 2011-05-01
+v0.3.5-rc2, 2011-05-06
 
 
 Version 0.3.5 (under dev!)
@@ -16,6 +16,14 @@ Important release notes:
   option 'irc.color.nick_prefixes', therefore following options will be lost:
   'irc.color.nick_prefix_op', 'irc.color.nick_prefix_halfop',
   'irc.color.nick_prefix_voice', 'irc.color.nick_prefix_user'
+* count of messages have been added to hotlist by default, if you want to come
+  back to old behaviour, do that:
+** `/set weechat.look.hotlist_count_max 0`
+** `/set weechat.look.hotlist_buffer_separator ","`
+* when you are away, all buffers are now added to hotlist by default (even if
+  they are displayed in a window), if you want to come back to old behaviour, do
+  that:
+** `/set weechat.look.hotlist_add_buffer_if_away off`
 
 Version 0.3.4 (2011-01-16)
 --------------------------
