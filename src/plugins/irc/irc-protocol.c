@@ -2838,27 +2838,36 @@ IRC_PROTOCOL_CALLBACK(332)
      *   :server 332 mynick #channel :topic of channel
      */
     
-    IRC_PROTOCOL_MIN_ARGS(5);
+    IRC_PROTOCOL_MIN_ARGS(4);
     
-    pos_topic = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+    pos_topic = NULL;
+    if (argc >= 5)
+        pos_topic = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
     
     ptr_channel = irc_channel_search (server, argv[3]);
     
     if (ptr_channel && ptr_channel->nicks)
     {
-        topic_no_color = (weechat_config_boolean (irc_config_network_colors_receive)) ?
-            NULL : irc_color_decode (pos_topic, 0);
-        irc_channel_set_topic (ptr_channel,
-                               (topic_no_color) ? topic_no_color : pos_topic);
-        if (topic_no_color)
-            free (topic_no_color);
+        if (pos_topic)
+        {
+            topic_no_color = (weechat_config_boolean (irc_config_network_colors_receive)) ?
+                NULL : irc_color_decode (pos_topic, 0);
+            irc_channel_set_topic (ptr_channel,
+                                   (topic_no_color) ? topic_no_color : pos_topic);
+            if (topic_no_color)
+                free (topic_no_color);
+        }
         ptr_buffer = ptr_channel->buffer;
     }
     else
         ptr_buffer = server->buffer;
-
-    topic_color = irc_color_decode (pos_topic,
-                                    (weechat_config_boolean (irc_config_network_colors_receive)) ? 1 : 0);
+    
+    topic_color = NULL;
+    if (pos_topic)
+    {
+        topic_color = irc_color_decode (pos_topic,
+                                        (weechat_config_boolean (irc_config_network_colors_receive)) ? 1 : 0);
+    }
     weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
                                                           command, NULL,
                                                           ptr_buffer),
@@ -2868,7 +2877,7 @@ IRC_PROTOCOL_CALLBACK(332)
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
                          IRC_COLOR_CHAT,
-                         (topic_color) ? topic_color : pos_topic,
+                         (topic_color) ? topic_color : ((pos_topic) ? pos_topic : ""),
                          IRC_COLOR_CHAT);
     if (topic_color)
         free (topic_color);
