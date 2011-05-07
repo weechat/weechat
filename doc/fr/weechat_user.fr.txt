@@ -511,7 +511,7 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(w) , @k(A-)@k(↓) | Sauter à la fenêtre en dessous | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Sauter à la fenêtre de gauche | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | Sauter à la fenêtre de droite | /window right
-| @k(A-)@k(w) , @k(A-)@k(b) | Redimensionner toutes les fenêtres à 50% | /window balance
+| @k(A-)@k(w) , @k(A-)@k(b) | Equilibrer la taille de toutes les fenêtres | /window balance
 | @k(A-)@k(w) , @k(A-)@k(s) | Echanger les tampons de deux fenêtres | /window swap
 | @k(A-)@k(z)               | Zoom sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
 | @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer

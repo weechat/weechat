@@ -5287,7 +5287,7 @@ command_init ()
                      "       splitv: split current window vertically\n"
                      "       resize: resize window size, new size is <pct> "
                      "percentage of parent window\n"
-                     "      balance: resize all windows to 50%\n"
+                     "      balance: balance the sizes of all windows\n"
                      "        merge: merge window with another (all = keep only one "
                      "window)\n"
                      "      page_up: scroll one page up\n"

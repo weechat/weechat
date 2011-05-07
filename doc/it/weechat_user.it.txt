@@ -510,7 +510,8 @@ Tasti per buffer / finestre
 | @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Passa alla finestra sulla sinistra | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | Passa alla finestrs sulla destra | /window right
-| @k(A-)@k(w) , @k(A-)@k(b) | Ridimensione tutte le finestre al 50% | /window balance
+// TRANSLATION MISSING
+| @k(A-)@k(w) , @k(A-)@k(b) | Balance the sizes of all windows | /window balance
 | @k(A-)@k(w) , @k(A-)@k(s) | Scambia i buffer di due finestra | /window swap
 | @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | /window zoom
 | @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | /input jump_previously_visited_buffer

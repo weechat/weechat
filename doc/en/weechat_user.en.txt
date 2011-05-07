@@ -503,7 +503,7 @@ Keys for buffers / windows
 | @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | Switch to window on the right | /window right
-| @k(A-)@k(w) , @k(A-)@k(b) | Resize all windows to 50% | /window balance
+| @k(A-)@k(w) , @k(A-)@k(b) | Balance the sizes of all windows | /window balance
 | @k(A-)@k(w) , @k(A-)@k(s) | Swap buffers of two windows | /window swap
 | @k(A-)@k(z)               | Zoom on current window (@k(A-)@k(z) again: restore initial windows state, before zoom) | /window zoom
 | @k(A-)@k(<)               | Switch to previous buffer in list of visited buffers | /input jump_previously_visited_buffer

@@ -1956,6 +1956,33 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
+ * gui_window_balance_count: count number of windows in a tree with a given
+ *                           split, for balancing windows
+ */
+
+int
+gui_window_balance_count (struct t_gui_window_tree *tree, int split_horizontal)
+{
+    int count;
+    
+    count = 0;
+    if (tree)
+    {
+        if (!tree->window && (tree->split_horizontal == split_horizontal))
+        {
+            if ((tree->child1 && tree->child1->window)
+                || (tree->child2 && tree->child2->window))
+            {
+                count++;
+            }
+        }
+        count += gui_window_balance_count (tree->child1, split_horizontal);
+        count += gui_window_balance_count (tree->child2, split_horizontal);
+    }
+    return count;
+}
+
+/*
  * gui_window_balance: balance windows (set all splits to 50%)
  *                     return 1 if some windows have been balanced
  *                            0 if nothing was changed
@@ -1964,14 +1991,20 @@ gui_window_switch_right (struct t_gui_window *window)
 int
 gui_window_balance (struct t_gui_window_tree *tree)
 {
-    int balanced;
+    int balanced, count_left, count_right, new_split;
     
     balanced = 0;
     if (tree && tree->child1 && tree->child2)
     {
-        if (tree->split_pct != 50)
+        count_left = gui_window_balance_count (tree->child1, tree->split_horizontal) + 1;
+        count_right = gui_window_balance_count (tree->child2, tree->split_horizontal) + 1;
+        if (count_right > count_left)
+            new_split = 100 - ((count_left * 100) / (count_left + count_right));
+        else
+            new_split = (count_right * 100) / (count_left + count_right);
+        if (tree->split_pct != new_split)
         {
-            tree->split_pct = 50;
+            tree->split_pct = new_split;
             balanced = 1;
         }
         balanced |= gui_window_balance (tree->child1);

@@ -539,7 +539,7 @@ Exemples:
        splith: éclater la fenêtre en deux horizontalement
        splitv: éclater la fenêtre en deux verticalement
        resize: redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
-      balance: redimensionner toutes les fenêtres à 50%
+      balance: équilibrer la taille de toutes les fenêtres
         merge: fusionner la fenêtre avec une autre
       page_up: faire défiler d'une page vers le haut
     page_down: faire défiler d'une page vers le bas
