@@ -145,7 +145,7 @@ class Client:
         if not self.quit:
             action = getoption('action')
             if action == 'flood':
-                self.acion_flood()
+                self.action_flood()
             elif action == 'user':
                 self.action_user()
 
