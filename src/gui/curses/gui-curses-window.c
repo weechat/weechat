@@ -1999,9 +1999,12 @@ gui_window_balance (struct t_gui_window_tree *tree)
         count_left = gui_window_balance_count (tree->child1, tree->split_horizontal) + 1;
         count_right = gui_window_balance_count (tree->child2, tree->split_horizontal) + 1;
         if (count_right > count_left)
-            new_split = 100 - ((count_left * 100) / (count_left + count_right));
+            new_split = (count_left * 100) / (count_left + count_right);
         else
             new_split = (count_right * 100) / (count_left + count_right);
+        if ((tree->split_horizontal && (count_right > count_left))
+            || (!tree->split_horizontal && (count_left > count_right)))
+            new_split = 100 - new_split;
         if (tree->split_pct != new_split)
         {
             tree->split_pct = new_split;
