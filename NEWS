@@ -24,6 +24,8 @@ Important release notes:
   they are displayed in a window), if you want to come back to old behaviour, do
   that:
 ** `/set weechat.look.hotlist_add_buffer_if_away off`
+* new keys were added, use command `/key missing` to add them or `/key listdiff`
+  to see differences between your current keys and WeeChat default keys
 
 Version 0.3.4 (2011-01-16)
 --------------------------
