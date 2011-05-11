@@ -4786,7 +4786,7 @@ command_init ()
                   &command_buffer, NULL);
     hook_command (NULL, "color",
                   N_("define color aliases and display palette of colors"),
-                  N_("alias <color> <alias>"
+                  N_("alias <color> <name>"
                      " || unalias <color>"
                      " || reset"),
                   N_("  alias: add an alias for a color\n"

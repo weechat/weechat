@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.5-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-08 12:54+0200\n"
-"PO-Revision-Date: 2011-05-07 20:59+0100\n"
+"POT-Creation-Date: 2011-05-11 17:56+0200\n"
+"PO-Revision-Date: 2011-05-11 17:59+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -1032,8 +1032,8 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "definiert Farbaliase und stellt eine Palette der möglichen Farben dar"
 
-msgid "alias <color> <alias> || unalias <color> || reset"
-msgstr "alias <color> <alias> || unalias <color> || reset"
+msgid "alias <color> <name> || unalias <color> || reset"
+msgstr "alias <color> <name> || unalias <color> || reset"
 
 msgid ""
 "  alias: add an alias for a color\n"
@@ -7923,32 +7923,3 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
-
-#~ msgid "color for prefix of nick which is op/admin/owner on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix von op/admin/owner in einem Channel"
-
-#~ msgid "color for prefix of nick which is halfop on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix des halfop in einem Channel"
-
-#~ msgid "color for prefix of nick which has voice on channel"
-#~ msgstr ""
-#~ "Textfarbe für den Nick-Präfix für einen User mit Voice Rechten in einem "
-#~ "Channel"
-
-#~ msgid "color for prefix of nick which is user on channel"
-#~ msgstr "Textfarbe für den Nick-Präfix eines Users in einem Channel"
-
-#, fuzzy
-#~ msgid "comma separated list of tags that will force highlight"
-#~ msgstr ""
-#~ "Durch Kommata getrennte Liste der Wörterbücher, die in diesem Buffer "
-#~ "genutzt werden"
-
-#~ msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-#~ msgstr "%s%s: Channel \"%s\" für den \"%s\"-Befehl nicht gefunden"
-
-#~ msgid "hook type: command, timer, .. (optional)"
-#~ msgstr "hook Type: command, timer, .. (optional)"
-
-#~ msgid "a color name"
-#~ msgstr "ein Farbname"

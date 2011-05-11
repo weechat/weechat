@@ -113,7 +113,7 @@ Beispiele:
 
 [command]*`color`* definiert Farbaliase und stellt eine Palette der möglichen Farben dar::
 ........................................
-/color  alias <color> <alias>
+/color  alias <color> <name>
         unalias <color>
         reset
 

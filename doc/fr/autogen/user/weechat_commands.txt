@@ -113,7 +113,7 @@ Exemples:
 
 [command]*`color`* définir des alias de couleurs et afficher la palette des couleurs::
 ........................................
-/color  alias <couleur> <alias>
+/color  alias <couleur> <nom>
         unalias <couleur>
         reset
 
