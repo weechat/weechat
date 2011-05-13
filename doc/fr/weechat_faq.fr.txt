@@ -42,7 +42,7 @@ Quelques fonctionnalités (version > = 0.3.x) :
 * support aspell
 * double encodage (décodage/encodage)
 * développé à partir de zéro (non basé sur un quelconque client)
-* multi-platformes
+* multi plates-formes
 * 100% GPL et libre
 
 Plus d'infos sur cette page : http://www.weechat.org/features
@@ -73,7 +73,7 @@ Si vous compilez avec les autotools (et non cmake), vérifiez que vous avez bien
 la dernière version d'autoconf et automake.
 
 Une autre façon de faire est de compiler le "paquet devel", qui nécessite moins
-de dépendences. Ce paquet est construit quasiment tous les jours à partir de la
+de dépendances. Ce paquet est construit quasiment tous les jours à partir de la
 base git. Notez que ce paquet peut ne pas correspondre exactement à la base
 git et qu'il est moins pratique que de cloner la base git pour installer des
 mises à jour.
@@ -178,7 +178,7 @@ Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
 (ainsi que d'autres données).
 
 Une fenêtre ('window') est une zone de l'écran affichant un tampon. Il est
-possible de découper l'écran horizontaleent ou verticalement en plusieurs
+possible de découper l'écran horizontalement ou verticalement en plusieurs
 fenêtres.
 
 Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
@@ -200,7 +200,7 @@ Par exemple :
 ----------------------------------------
 
 Si jamais vous n'étiez pas satisfait avec ça, supprimez simplement la nouvelle
-barre, WeeChat recrééra automatiquement la barre par défaut "input" si l'objet
+barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 "input_text" n'est utilisé dans aucune barre :
 
 ----------------------------------------
@@ -356,7 +356,7 @@ Vous pouvez définir une touche, par exemple :
 /key bind meta-q /buffer *11
 ----------------------------------------
 
-La liste des touches par défaut est dans le Guide utlisateur.
+La liste des touches par défaut est dans le Guide utilisateur.
 
 
 [[global_history]]
@@ -392,7 +392,7 @@ La commande `/ignore` est une commande IRC, donc elle s'applique uniquement aux
 tampons IRC (serveurs et canaux).
 Elle permet d'ignorer des pseudos ou nom d'hôtes pour un serveur ou un canal
 (la commande ne s'applique pas au contenu des messages).
-Les messages corespondants sont supprimés par l'extension IRC avant affichage
+Les messages correspondants sont supprimés par l'extension IRC avant affichage
 (donc vous ne les verrez jamais).
 
 La commande `/filter` est une commande "core", donc elle s'applique à n"importe
@@ -511,7 +511,7 @@ Selon la version de WeeChat :
 * avec WeeChat > = 0.3.x : utilisez le script 'launcher.pl' (disponible sur la
   page des scripts), puis configurez une commande système (jouant un son,
   affichant un message à l'écran, etc...) comme ceci : +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande parametres"`
+  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande paramètres"`
 
 De nombreux autres scripts de notification existent, merci de consulter la
 liste des extensions/scripts : http://www.weechat.org/scripts
@@ -668,13 +668,13 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 
 
 [[supported_os]]
-Quelle est la liste des plate-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Quelle est la liste des plates-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La liste complète est sur cette page : http://www.weechat.org/download
 
-Nous faisons le maximum pour supporter le plus de plate-formes possible.
-Toute aide est la bienvenue pour les systèmes que nous n'avons pas, pous y
+Nous faisons le maximum pour supporter le plus de plates-formes possible.
+Toute aide est la bienvenue pour les systèmes que nous n'avons pas, pour y
 tester WeeChat.
 
 

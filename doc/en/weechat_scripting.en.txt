@@ -733,7 +733,7 @@ WeeChat version
 ^^^^^^^^^^^^^^^
 
 The best way to check version is to ask "version_number" and make integer
-comparison with hexidecimal version number.
+comparison with hexadecimal version number.
 
 Example:
 

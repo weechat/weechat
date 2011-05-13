@@ -715,8 +715,8 @@ Zu den Basisfarben können zusätzlich Farben zwischen eins und der maximalen An
 genutzt werden die vom jeweiligen Terminal zur Verfügung gestellt werden.
 
 Mit dem `/color` Befehl kann man sich sowohl die aktuelle Farbpalette anzeigen lassen als
-auch die Anzahl der zu nutzenden Farben. Mit 'alt+c' kann man vorübergehend zu den Terminalfarben
-wechseln um eine Farbe auszuwählen.
+auch die Anzahl der zu nutzenden Farben. Mit @k(A-)@k(c) kann man vorübergehend zu den
+Terminalfarben wechseln um eine Farbe auszuwählen.
 
 Um zum Beispiel die Uhrzeit in einem Buffer in einem schönen Orange darzustellen:
 

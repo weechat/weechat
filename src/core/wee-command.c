@@ -5061,7 +5061,7 @@ command_init ()
     hook_command (NULL, "mute",
                   N_("execute a command silently"),
                   N_("[-current | -buffer <name> | -all] command"),
-                  N_("-current: no output on curent buffer\n"
+                  N_("-current: no output on current buffer\n"
                      " -buffer: no output on specified buffer\n"
                      "    name: full buffer name (examples: "
                      "\"irc.server.freenode\", \"irc.freenode.#weechat\")\n"

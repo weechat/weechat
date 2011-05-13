@@ -496,7 +496,7 @@ Touches pour les tampons / fenêtres
 | @k(F10)                   | Faire défiler le titre du tampon vers la droite | /bar scroll title * x+50%
 | @k(F11)                   | Monter d'une page dans la liste des pseudos | /bar scroll nicklist * y-100%
 | @k(F12)                   | Descendre d'une page dans la liste des pseudos | /bar scroll nicklist * y+100%
-| @k(A-)@k(F11)             | ller au début de la liste des pseudos | /bar scroll nicklist * yb
+| @k(A-)@k(F11)             | Aller au début de la liste des pseudos | /bar scroll nicklist * yb
 | @k(A-)@k(F12)             | Aller à la fin de la liste des pseudos | /bar scroll nicklist * ye
 | @k(A-)@k(a)               | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | /input jump_smart
 | @k(A-)@k(j) , @k(A-)@k(l) | Sauter au dernier tampon | /input jump_last_buffer
@@ -724,7 +724,7 @@ En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
 et la limite de votre terminal.
 
 Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
-touche 'alt+c', vous pouvez basculer temporairement vers les couleurs du
+touche @k(A-)@k(c), vous pouvez basculer temporairement vers les couleurs du
 terminal pour choisir une couleur.
 
 Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,
@@ -1274,7 +1274,7 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | Code         | Description                       | Valeur / exemple
 | $clientinfo  | liste des CTCP supportés          | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
 | $version     | version de WeeChat                | 0.3.0
-| $compilation | date de compi lation WeeChat      | Sep 13 2009
+| $compilation | date de compilation WeeChat       | Sep 13 2009
 | $osinfo      | information sur l'OS              | Linux 2.6.31 / i686
 | $site        | site WeeChat                      | http://www.weechat.org
 | $download    | site WeeChat, page téléchargement | http://www.weechat.org/download
@@ -1382,7 +1382,7 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | 367     | banlist       | liste de bannissement
 | 368     | banlist       | fin de la liste de bannissement
 | 369     | whowas        | whowas (fin)
-| 378     | whois         | whois (connection depuis)
+| 378     | whois         | whois (connexion depuis)
 | 379     | whois         | whois (utilise les modes)
 | 432     |               | pseudo erroné
 | 433     |               | pseudo déjà en cours d'utilisation
@@ -1667,7 +1667,7 @@ Exemple du rmodifier par défaut pour la commande `/oper` :
 * groupes : `1,2*`
 
 A chaque fois que les modifiers "history_add" ou "input_text_display" sont
-appelés, l'expression régulière est vérifiée. Si la chaîne correspont, alors
+appelés, l'expression régulière est vérifiée. Si la chaîne correspond, alors
 elle est remplacée par les groupes capturés, tels que définis dans la chaîne
 des groupes.
 

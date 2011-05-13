@@ -330,7 +330,7 @@ Without argument, this command displays saved layout.
 ........................................
 /mute  [-current | -buffer <name> | -all] command
 
--current: no output on curent buffer
+-current: no output on current buffer
  -buffer: no output on specified buffer
     name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
     -all: no output on ALL buffers

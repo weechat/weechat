@@ -711,7 +711,7 @@ display buffers and bars).
 In addition to basic colors, you can use a color number between 1 and the limit
 of your terminal.
 
-Use command `/color` to see current colors and limits. With 'alt+c' you can
+Use command `/color` to see current colors and limits. With @k(A-)@k(c) you can
 temporarily switch to terminal colors to choose a color.
 
 For example if you want to display time in orange in buffer, do:
@@ -1244,8 +1244,8 @@ when replying to CTCP:
 | $site        | WeeChat site                | http://www.weechat.org
 | $download    | WeeChat site, download page | http://www.weechat.org/download
 | $time        | current date/time           | Sun Sep 13 15:48:31 2009
-| $username    | username on IRC server      | nick
-| $realname    | realname on IRC server      | My name
+| $username    | user name on IRC server     | nick
+| $realname    | real name on IRC server     | My name
 |========================================
 
 If CTCP options are not defined (by default), CTCP replies are:
