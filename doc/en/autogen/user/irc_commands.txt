@@ -230,7 +230,7 @@ reason: reason for kill
 
 [command]*`links`* list all servernames which are known by the server answering the query::
 ........................................
-/links  [[<server>>] <server_mask>]
+/links  [[<server>] <server_mask>]
 
      server: this server should answer the query
 server_mask: list of servers must match this mask

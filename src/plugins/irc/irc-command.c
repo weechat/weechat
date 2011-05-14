@@ -4881,7 +4881,7 @@ irc_command_init ()
     weechat_hook_command ("links",
                           N_("list all servernames which are known by the "
                              "server answering the query"),
-                          N_("[[<server>>] <server_mask>]"),
+                          N_("[[<server>] <server_mask>]"),
                           N_("     server: this server should answer the "
                              "query\n"
                              "server_mask: list of servers must match this "

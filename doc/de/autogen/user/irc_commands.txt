@@ -230,7 +230,7 @@ reason: Begründung für den Rauswurf
 
 [command]*`links`* Alle dem antwortenden Server bekannten Servernamen auflisten::
 ........................................
-/links  [[<server>>] <server_mask>]
+/links  [[<server>] <server_mask>]
 
      Server: dieser Server soll die Anfrage beantworten
 Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen
