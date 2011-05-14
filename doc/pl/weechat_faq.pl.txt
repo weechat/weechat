@@ -8,16 +8,16 @@ Ogólne
 ------
 
 
-// TRANSLATION MISSING
+
 [[weechat_name]]
-Where does the name "WeeChat" come from?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Skąd się wzieła nazwa "WeeChat"?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"Wee" is a recursive acronym and stands for "Wee Enhanced Environment".
-So complete name is "Wee Enhanced Environment for Chat".
+"Wee" to akronim rekursywny oznaczającym "Wee Enhanced Environment".
+Stąd kompletna nazwa to "Wee Enhanced Environment for Chat".
 
-"Wee" also means "very small" (and yes, there is other meaning, but it does not
-apply to WeeChat!).
+"Wee" oznacza również "bardzo mały" (tak jest jeszcze inne znaczenie, ale nie
+pasuje ono do WeeChat!).
 
 
 [[why_choose_weechat]]
@@ -181,24 +181,23 @@ Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany pr
 okno) lub wyświetlany w jednym lub więcej oknach.
 
 
-// TRANSLATION MISSING
 [[one_input_root_bar]]
-Is it possible to display only one input bar for all windows (after split)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Czy jest możliwe wyświetlanie tylko jednego paska wejściowego dla wszystkich okien (po podzieleniu)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Yes, you will have to create a bar with type "root" (with an item to know in
-which window you are), then delete current input bar.
+Tak, należy stworzyć pasek typu "root" (z elementem mówiącym, w którym oknie
+aktualnie jesteśmy), następnie usunąć obecny pasek wejściowy.
 
-For example:
+Na przykład:
 
 ----------------------------------------
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
 ----------------------------------------
 
-If ever you are not satisfied with that, just delete new bar, WeeChat will
-automatically create default bar "input" if item "input_text" is not used in
-any bar:
+Jeśli kiedyś przestanie ci to odpowiadać, po prostu usuń ten pasek, WeeChat 
+autmatycznie stwrzy nowy pasek "input" jeśli element "input_text" nie zostanie 
+użyty w żadnym z pasków:
 
 ----------------------------------------
 /bar del rootinput
@@ -272,10 +271,9 @@ zalecane wartości to:
 * w screenie: 'screen-256color'
 * poza screenem: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
-// TRANSLATION MISSING
 [NOTE]
-You may have to install package "ncurses-term" to use these values in 'TERM'
-variable.
+Może okazać się konieczne zainstalownie pakietu "ncurses-term" w celu użycia 
+tych wartości w zmiennej 'TERM'.
 
 Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
 
@@ -291,12 +289,10 @@ nie należy panikować! Można to zmienić bez konieczności restartu, za pomoc�
 /upgrade
 ----------------------------------------
 
-// TRANSLATION MISSING
-For version 0.3.4, you must use command `/color` to add new colors.
+Dla wersji 0.3.4, musisz użyć komendy `/color` w celu dodania nowych kolorów.
 
-// TRANSLATION MISSING
-For versions > = 0.3.5, you can use any color number in options (optional: you
-can add color aliases with command `/color`).
+Dla wersji > = 0.3.5, można używać dowolnego numeru koloru w opcjach (opcjonalnie:
+można stworzyć alias dla koloru za pomocą komendy `/color`).
 
 Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku użytkownika.
 
@@ -351,15 +347,14 @@ Można również samemu stworzyć skrót, na przykład:
 Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 
 
-// TRANSLATION MISSING
 [[global_history]]
-How to use global history (instead of buffer history) with up and down keys?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak używać globalnej histori (zamiast histori buforu) za pomoca strzałek góra/dół?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can bind the up and down keys on global history (default keys for global
-history are @k(C-)@k(↑) and @k(C-)@k(↓)).
+Możesz przypisać strzałki w góre i dół do globalnej histori (domyślnie dla 
+globalnej historii przypisane są klawisze @k(C-)@k(↑) oraz @k(C-)@k(↓)).
 
-Example:
+Przykład:
 
 ----------------------------------------
 /key bind meta2-A /input history_global_previous
@@ -367,8 +362,8 @@ Example:
 ----------------------------------------
 
 [NOTE]
-Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press @k(A-)@k(k) then key (up or down).
+Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego treminala. W celu 
+znalezienia ich kodów wciśnij @k(A-)@k(k) następnie przycisk (góra lub dół).
 
 
 [[irc]]
@@ -524,12 +519,11 @@ Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opjcę "s
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_ssl_freenode]]
-How can I connect to freenode server using SSL?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę połączyć się z serwerem freenode używając SSL?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must download certificate, convert it, then add it in WeeChat:
+Musisz pobrać certyfikat, skonwertowć go, następnie dodać go w WeeChat:
 
 ----------------------------------------
 $ cd /tmp
@@ -539,7 +533,7 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-Under WeeChat, setup server port, SSL, dhkey_size, then connect:
+Pod WeeChat, ustawić port serwera, SSL, dhkey_size, następnie się połączyć:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
