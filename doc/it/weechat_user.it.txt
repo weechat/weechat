@@ -725,7 +725,7 @@ tra 1 e il limite del proprio terminale.
 Il comando '/color' mostra i colori attivi ed i limiti. Com @k(A-)@k(c) si può
 passare temporaneamente ai colori del terminale per sceglierne uno.
 
-For example if you want to display time in orange in buffer, do:
+Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:
 
 ----------------------------------------
 /set weechat.color.chat_time 214
