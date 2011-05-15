@@ -31,15 +31,15 @@ all-local: weechat_faq.pl.html \
 
 # FAQ
 weechat_faq.pl.html: weechat_faq.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_faq.pl.html weechat_faq.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.pl.html weechat_faq.pl.txt
 
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_quickstart.pl.html weechat_quickstart.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.pl.html weechat_quickstart.pl.txt
 
 # tester's guide
 weechat_tester.pl.html: weechat_tester.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_tester.pl.html weechat_tester.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.pl.html weechat_tester.pl.txt
 
 # install docs
 

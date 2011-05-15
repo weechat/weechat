@@ -39,27 +39,27 @@ all-local: weechat_user.fr.html \
 
 # user's guide
 weechat_user.fr.html: weechat_user.fr.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_user.fr.html weechat_user.fr.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.fr.html weechat_user.fr.txt
 
 # plugin API reference
 weechat_plugin_api.fr.html: weechat_plugin_api.fr.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_plugin_api.fr.html weechat_plugin_api.fr.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_plugin_api.fr.html weechat_plugin_api.fr.txt
 
 # scripting guide
 weechat_scripting.fr.html: weechat_scripting.fr.txt
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_scripting.fr.html weechat_scripting.fr.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.fr.html weechat_scripting.fr.txt
 
 # FAQ
 weechat_faq.fr.html: weechat_faq.fr.txt
-	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -f `pwd`/../asciidoc.conf -n -o weechat_faq.fr.html weechat_faq.fr.txt
+	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.fr.html weechat_faq.fr.txt
 
 # quickstart
 weechat_quickstart.fr.html: weechat_quickstart.fr.txt
-	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_quickstart.fr.html weechat_quickstart.fr.txt
+	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.fr.html weechat_quickstart.fr.txt
 
 # tester's guide
 weechat_tester.fr.html: weechat_tester.fr.txt
-	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=`pwd`/../asciidoc.css -n -o weechat_tester.fr.html weechat_tester.fr.txt
+	$(ASCIIDOC) -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.fr.html weechat_tester.fr.txt
 
 # install docs
 
