@@ -360,6 +360,8 @@ listfull: list loaded plugins (verbose)
 autoload: autoload plugins in system or user directory
   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
   unload: unload a plugin (if no name given, unload all plugins)
+filename: plugin (file) to load
+    name: a plugin name
 
 Without argument, this command lists loaded plugins.
 ........................................

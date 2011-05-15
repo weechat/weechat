@@ -354,14 +354,16 @@ Beispiele:
          autoload
          reload|unload [<name>]
 
-    list: installierte Erweiterungen werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Erweiterungen
-    load: installiert eine Erweiterung
-autoload: installiert automatisch alle Erweiterungen aus System- oder Benutzerverzeichnis
-  reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
-  unload: deinstalliere eine oder alle Erweiterungen (falls kein Name angegeben wird werden alle Erweiterung entfernt)
+    list: list loaded plugins
+listfull: list loaded plugins (verbose)
+    load: load a plugin
+autoload: autoload plugins in system or user directory
+  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+  unload: unload a plugin (if no name given, unload all plugins)
+filename: plugin (file) to load
+    name: a plugin name
 
-Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
+Without argument, this command lists loaded plugins.
 ........................................
 
 [command]*`proxy`* Proxies verwalten::

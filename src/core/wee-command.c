@@ -5093,7 +5093,9 @@ command_init ()
                      "  reload: reload a plugin (if no name given, unload "
                      "all plugins, then autoload plugins)\n"
                      "  unload: unload a plugin (if no name given, unload "
-                     "all plugins)\n\n"
+                     "all plugins)\n"
+                     "filename: plugin (file) to load\n"
+                     "    name: a plugin name\n\n"
                      "Without argument, this command lists loaded plugins."),
                   "list %(plugins_names)"
                   " || listfull %(plugins_names)"

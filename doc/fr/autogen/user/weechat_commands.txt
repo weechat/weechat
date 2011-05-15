@@ -360,6 +360,8 @@ listfull: lister les extensions chargées (verbeux)
 autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
   reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis recharger automatiquement les extensions)
   unload: décharger une extension (si pas de nom donné, décharger toutes les extensions)
+ fichier: extension (fichier) à charger
+     nom: nom d'extension
 
 Sans paramètre, cette commande liste les extensions chargées.
 ........................................

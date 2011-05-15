@@ -354,14 +354,16 @@ Esempi:
          autoload
          reload|unload [<nome>]
 
-    list: elenca i plugin attivati
-listfull: elenca i plugin attivati (dettagliato)
-    load: attiva un plugin
-autoload: attiva automaticamente un plugin nella cartella di sistema o utente
-  reload: riattiva un plugin (se non viene dato un nome, disattiva e poi riattiva tutti i plugin)
-  unload: disattiva un plugin (se non viene dato un nome, disattiva tutti i plugin
+    list: list loaded plugins
+listfull: list loaded plugins (verbose)
+    load: load a plugin
+autoload: autoload plugins in system or user directory
+  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+  unload: unload a plugin (if no name given, unload all plugins)
+filename: plugin (file) to load
+    name: a plugin name
 
-Senza argomento, questo comando elenca i plugin attivati.
+Without argument, this command lists loaded plugins.
 ........................................
 
 [command]*`proxy`* gestione proxy::
