@@ -184,6 +184,8 @@ plugin_config_set_desc_internal (const char *option, const char *value)
             option, "string", _("description of plugin option"),
             NULL, 0, 0, "", value, 0, NULL, NULL,
             &plugin_config_desc_changed_cb, NULL, NULL, NULL);
+        if (ptr_option)
+            plugin_config_desc_changed_cb (NULL, ptr_option);
     }
 }
 
