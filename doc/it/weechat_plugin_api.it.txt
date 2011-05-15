@@ -6535,6 +6535,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                      void *gnutls_sess,
                                      void *gnutls_cb,
                                      int gnutls_dhkey_size,
+                                     const char *gnutls_priorities,
                                      const char *local_hostname,
                                      int (*callback)(void *data,
                                                      int status,
@@ -6556,6 +6557,15 @@ Argomenti:
 * 'gnutls_cb' callback GnuTLS (opzionale)
 * 'gnutls_dhkey_size': dimensione della chiave utilizzata nello Scambio
   Chiavi Diffie-Hellman (GnuTLS)
+// TRANSLATION MISSING
+* 'gnutls_priorities': priorities for gnutls (for syntax, see documentation of
+  function 'gnutls_priority_init' in gnutls manual), basic values are:
+** 'PERFORMANCE'
+** 'NORMAL' (default)
+** 'SECURE128'
+** 'SECURE256'
+** 'EXPORT'
+** 'NONE'
 * 'local_hostname': nome host locale da utilizzare per la connessione
   (opzionale)
 * 'callback': funzione chiamata quando la connessione è avvenuta con
