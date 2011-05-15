@@ -143,11 +143,10 @@ server: server name to disconnect
 
      list: list all ignores
       add: add an ignore
-     nick: nick or hostname (can be regular expression if "re:" is given)
+     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
       del: delete an ignore
    number: number of ignore to delete (look at list to find it)
      -all: delete all ignores
-nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
    server: internal server name where ignore is working
   channel: channel name where ignore is working
 

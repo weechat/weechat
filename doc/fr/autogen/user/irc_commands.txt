@@ -143,11 +143,10 @@ serveur: nom du serveur pour se déconecter
 
        list: lister tous les ignores
         add: ajouter un ignore
-     pseudo: pseudo ou hôte (peut être une expression régulière si "re:" est donné)
+     pseudo: pseudo ou hôte (peut être une expression régulière si "re:" est donné ou un masque avec "*" pour remplacer un ou plusieurs caractères)
         del: supprimer un ignore
      numéro: numéro du ignore à supprimer (voir la liste des ignore pour le trouver)
        -all: supprimer tous les ignores
-pseudo/hôte: pseudo ou hôte à ignorer: la syntaxe est "re:regex" ou "masque" (un masque est une chaîne avec des "*" pour remplacer un ou plusieurs caractères)
     serveur: nom de serveur interne où le ignore fonctionnera
       canal: canal où le ignore fonctionnera
 
