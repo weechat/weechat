@@ -526,7 +526,9 @@ Examples:
          merge [all]
          page_up|page_down
          refresh
-         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         scroll [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
          swap [up|down|left|right]
          zoom
 
@@ -546,7 +548,8 @@ Examples:
       page_up: scroll one page up
     page_down: scroll one page down
       refresh: refresh screen
-       scroll: scroll number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
     scroll_up: scroll a few lines up
   scroll_down: scroll a few lines down
    scroll_top: scroll to top of buffer

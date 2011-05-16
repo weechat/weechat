@@ -4364,6 +4364,25 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
     
+    /* vertical scroll in window */
+    if (string_strcasecmp (argv[1], "scroll") == 0)
+    {
+        if (argc > 2)
+            gui_window_scroll (gui_current_window, argv[2]);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* horizontal scroll in window (for buffers with free content) */
+    if (string_strcasecmp (argv[1], "scroll_horiz") == 0)
+    {
+        if ((argc > 2)
+            && (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FREE))
+        {
+            gui_window_scroll_horiz (gui_current_window, argv[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
     /* scroll up current window */
     if (string_strcasecmp (argv[1], "scroll_up") == 0)
     {
@@ -4517,18 +4536,6 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
     
-    /* jump to window by buffer number */
-    if (string_strncasecmp (argv[1], "b", 1) == 0)
-    {
-        error = NULL;
-        number = strtol (argv[1] + 1, &error, 10);
-        if (error && !error[0])
-        {
-            gui_window_switch_by_buffer (gui_current_window, number);
-            return WEECHAT_RC_OK;
-        }
-    }
-    
     /* switch to previous window */
     if (string_strcasecmp (argv[1], "-1") == 0)
     {
@@ -4571,14 +4578,6 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
     
-    /* scroll in window */
-    if (string_strcasecmp (argv[1], "scroll") == 0)
-    {
-        if (argc > 2)
-            gui_window_scroll (gui_current_window, argv[2]);
-        return WEECHAT_RC_OK;
-    }
-    
     /* swap windows */
     if (string_strcasecmp (argv[1], "swap") == 0)
     {
@@ -4614,6 +4613,18 @@ COMMAND_CALLBACK(window)
     {
         gui_window_zoom (gui_current_window);
         return WEECHAT_RC_OK;
+    }
+    
+    /* jump to window by buffer number */
+    if (string_strncasecmp (argv[1], "b", 1) == 0)
+    {
+        error = NULL;
+        number = strtol (argv[1] + 1, &error, 10);
+        if (error && !error[0])
+        {
+            gui_window_switch_by_buffer (gui_current_window, number);
+            return WEECHAT_RC_OK;
+        }
     }
     
     gui_chat_printf (NULL,
@@ -5271,7 +5282,9 @@ command_init ()
                      " || merge [all]"
                      " || page_up|page_down"
                      " || refresh"
-                     " || scroll|scroll_up|scroll_down|scroll_top|"
+                     " || scroll [+/-]<value>[s|m|h|d|M|y]"
+                     " || scroll_horiz [+/-]<value>[%]"
+                     " || scroll_up|scroll_down|scroll_top|"
                      "scroll_bottom|scroll_previous_highlight|"
                      "scroll_next_highlight"
                      " || swap [up|down|left|right]"
@@ -5295,8 +5308,11 @@ command_init ()
                      "      page_up: scroll one page up\n"
                      "    page_down: scroll one page down\n"
                      "      refresh: refresh screen\n"
-                     "       scroll: scroll number of lines (+/-N) or with time: "
+                     "       scroll: scroll a number of lines (+/-N) or with time: "
                      "s=seconds, m=minutes, h=hours, d=days, M=months, y=years\n"
+                     " scroll_horiz: scroll horizontally a number of columns "
+                     "(+/-N) or percentage of window size (this scrolling is "
+                     "possible only on buffers with free content)\n"
                      "    scroll_up: scroll a few lines up\n"
                      "  scroll_down: scroll a few lines down\n"
                      "   scroll_top: scroll to top of buffer\n"
@@ -5321,8 +5337,8 @@ command_init ()
                      "    /window scroll -d"),
                   "list || -1 || +1 || up || down || left || right"
                   " || splith || splitv || resize || balance || page_up"
-                  " || page_down || refresh || scroll || scroll_up"
-                  " || scroll_down || scroll_top || scroll_bottom"
+                  " || page_down || refresh || scroll || scroll_horiz"
+                  " || scroll_up || scroll_down || scroll_top || scroll_bottom"
                   " || scroll_previous_highlight || scroll_next_highlight"
                   " || swap up|down|left|right || zoom || merge all",
                   &command_window, NULL);

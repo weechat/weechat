@@ -84,6 +84,8 @@ struct t_gui_window_scroll
     struct t_gui_line *start_line;     /* pointer to line if scrolling      */
     int start_line_pos;                /* position in first line displayed  */
     int scrolling;                     /* = 1 if "MORE" should be displayed */
+    int start_col;                     /* first column displayed            */
+                                       /* (for horizontal scrolling)        */
     int lines_after;                   /* number of lines after last line   */
                                        /* displayed (with scrolling)        */
     int reset_allowed;                 /* reset scroll allowed (when using  */
@@ -145,6 +147,7 @@ extern void gui_window_switch_next (struct t_gui_window *window);
 extern void gui_window_switch_by_buffer (struct t_gui_window *window,
                                          int buffer_number);
 extern void gui_window_scroll (struct t_gui_window *window, char *scroll);
+extern void gui_window_scroll_horiz (struct t_gui_window *window, char *scroll);
 extern void gui_window_scroll_previous_highlight (struct t_gui_window *window);
 extern void gui_window_scroll_next_highlight (struct t_gui_window *window);
 extern void gui_window_search_start (struct t_gui_window *window);

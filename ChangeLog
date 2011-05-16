@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-05-15
+v0.3.6-dev, 2011-05-16
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add horizontal scrolling for buffers with free content (command
+  /window scroll_horiz) (task #11112)
 * api: fix bug with function config_set_desc_plugin (use immediately
   description for option when function is called)
 

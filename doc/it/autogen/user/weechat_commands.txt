@@ -521,51 +521,54 @@ Esempi:
 /window  list
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
-         resize [+/-] <pct>
+         resize [+/-]<pct>
          balance
          merge [all]
          page_up|page_down
          refresh
-         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         scroll [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
          swap [up|down|left|right]
          zoom
 
-         list: elenca le finestre aperte (senza argomento, questa lista viene visualizzata)
-           -1: salta alla finestra precedente
-           +1: salta alla finestra successiva
-           b#: salta alla finestra successiva che visualizza il buffer numero #
-           up: passa alla finestra superiore a quella corrente
-         down: passa alla finestra inferiore a quella attiva
-         left: passa alla finestra a sinistra
-        right: passa alla finestra a destra
-       splith: divide la finestra attiva orizzontalmente
-       splitv: divide la finestra attiva verticalmente
-       resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
-      balance: bilancia le dimensioni tutte le finestre
-        merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
-      page_up: scorre di una pagina in alto
-    page_down: scorre di una pagina in basso
-      refresh: aggiorna lo schermo
-       scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
-    scroll_up: scorre di alcune righe in alto
-  scroll_down: scorre di alcune righe in basso
-   scroll_top: scorre fino all'inizio del buffer
-scroll_bottom: scorre fino alla fine del buffer buffer
-scroll_previous_highlight: passa all'evento precedente
-    scroll_next_highlight: passa all'evento successivo
-         swap: scambia i buffer di due finestra (con direzione opzionale per la finestra di destinazione)
-         zoom: ingrandimento sulla finestra
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is <pct> percentage of parent window
+      balance: balance the sizes of all windows
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+         swap: swap buffers of two windows (with optional direction for target window)
+         zoom: zoom on window
 
-Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
-Esempi:
-  salta alla finestra che visualizza il buffer #1:
+Examples:
+  jump to window displaying buffer #1:
     /window b1
-  scorre di due righe in alto:
+  scroll 2 lines up:
     /window scroll -2
-  scorre all'indietro di due giorni:
+  scroll 2 days up:
     /window scroll -2d
-  scorre all'inizio del giorno attuale:
-     /window scroll -d
+  scroll to beginning of current day:
+    /window scroll -d
 ........................................
 

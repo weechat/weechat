@@ -526,46 +526,49 @@ Beispiele:
          merge [all]
          page_up|page_down
          refresh
-         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         scroll [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
          swap [up|down|left|right]
          zoom
 
-         list: listet die geöffneten Fenster (ohne Angabe von Parametern wird diese Funktion aufgerufen)
-           -1: springt zum vorherigen Fenster
-           +1: springt zum nächsten Fenster
-           b#: springt zum nächsten Fenster, welches die Buffer Nummer # besitzt
-           up: wechselt zum Fenster über dem aktuellen
-         down: wechselt zum Fenster unter dem aktuellen
-         left: wechselt zum linken Fenster
-        right: wechselt zum rechten Fenster
-       splith: teilt das aktuelle Fenster horizontal
-       splitv: teilt das aktuelle Fenster vertikal
-       resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
-      balance: passt die Größe aller Fenster an
-        merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
-      page_up: scrollt eine Seite nach oben
-    page_down: scrollt eine Seite nach unten
-      refresh: Seite wird neu aufgebaut
-       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer gewissen Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre
-    scroll_up: scrollt ein paar Zeilen nach oben
-  scroll_down: scrollt ein paar Zeilen nach unten
-   scroll_top: scrollt zum Anfang des Buffers
-scroll_bottom: scrollt zum Ende des  Buffers
-scroll_previous_highlight: scrollt zum vorherigen Hightlight
-scroll_next_highlight: scrollt zum nächsten Highlight
-         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
-         zoom: vergrößert auf Fenster
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is <pct> percentage of parent window
+      balance: balance the sizes of all windows
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+         swap: swap buffers of two windows (with optional direction for target window)
+         zoom: zoom on window
 
-Bei splith und splitv gibt "pct" die neue Größe des Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hat.
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
-Beispiele:
-  Springt zum Fenster mit dem Buffer #1:
+Examples:
+  jump to window displaying buffer #1:
     /window b1
-   Scrollt zwei Zeilen hoch:
+  scroll 2 lines up:
     /window scroll -2
-  Scrollt zwei Tage hoch: /window scroll -2d
+  scroll 2 days up:
     /window scroll -2d
-  Scrollt zum Beginn des aktuellen Tages:
+  scroll to beginning of current day:
     /window scroll -d
 ........................................
 

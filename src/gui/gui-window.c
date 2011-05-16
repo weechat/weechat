@@ -180,6 +180,7 @@ gui_window_scroll_init (struct t_gui_window_scroll *window_scroll,
     window_scroll->start_line = NULL;
     window_scroll->start_line_pos = 0;
     window_scroll->scrolling = 0;
+    window_scroll->start_col = 0;
     window_scroll->lines_after = 0;
     window_scroll->reset_allowed = 0;
     window_scroll->prev_scroll = NULL;
@@ -241,6 +242,7 @@ gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
                 && (ptr_scroll->start_line == NULL)
                 && (ptr_scroll->start_line_pos == 0)
                 && (ptr_scroll->scrolling == 0)
+                && (ptr_scroll->start_col == 0)
                 && (ptr_scroll->lines_after == 0)
                 && (ptr_scroll->reset_allowed == 0))
             {
@@ -959,6 +961,75 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
 }
 
 /*
+ * gui_window_scroll_horiz: horizontal scroll window
+ */
+
+void
+gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
+{
+    int direction, percentage, start_col;
+    char saved_char, *pos, *error;
+    long number;
+    
+    if (window->buffer->lines->first_line)
+    {
+        direction = 1;
+        number = 0;
+        percentage = 0;
+        
+        /* search direction */
+        if (scroll[0] == '-')
+        {
+            direction = -1;
+            scroll++;
+        }
+        else if (scroll[0] == '+')
+        {
+            direction = +1;
+            scroll++;
+        }
+        
+        /* search number and percentage */
+        pos = scroll;
+        while (pos && pos[0] && isdigit (pos[0]))
+        {
+            pos++;
+        }
+        if (pos && (pos > scroll))
+        {
+            percentage = (pos[0] == '%') ? 1 : 0;
+            saved_char = pos[0];
+            pos[0] = '\0';
+            error = NULL;
+            number = strtol (scroll, &error, 10);
+            if (!error || error[0])
+                number = 0;
+            pos[0] = saved_char;
+        }
+        
+        /* for percentage, compute number of columns */
+        if (percentage)
+        {
+            number = (window->win_chat_width * number) / 100;
+        }
+        
+        /* number must be different from 0 */
+        if (number == 0)
+            return;
+        
+        /* do the horizontal scroll! */
+        start_col = window->scroll->start_col + (number * direction);
+        if (start_col < 0)
+            start_col = 0;
+        if (start_col != window->scroll->start_col)
+        {
+            window->scroll->start_col = start_col;
+            gui_buffer_ask_chat_refresh (window->buffer, 2);
+        }
+    }
+}
+
+/*
  * gui_window_scroll_previous_highlight: scroll to previous highlight
  */
 
@@ -1298,6 +1369,7 @@ gui_window_print_log ()
             log_printf ("    start_line. . . . . : 0x%lx", ptr_scroll->start_line);
             log_printf ("    start_line_pos. . . : %d",    ptr_scroll->start_line_pos);
             log_printf ("    scrolling . . . . . : %d",    ptr_scroll->scrolling);
+            log_printf ("    start_col . . . . . : %d",    ptr_scroll->start_col);
             log_printf ("    lines_after . . . . : %d",    ptr_scroll->lines_after);
             log_printf ("    reset_allowed . . . : %d",    ptr_scroll->reset_allowed);
             log_printf ("    prev_scroll . . . . : 0x%lx", ptr_scroll->prev_scroll);

@@ -526,7 +526,9 @@ Exemples:
          merge [all]
          page_up|page_down
          refresh
-         scroll|scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
+         scroll [+/-]<valeur>[s|m|h|d|M|y]
+         scroll_horiz [+/-]<valeur>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
          swap [up|down|left|right]
          zoom
 
@@ -547,6 +549,7 @@ Exemples:
     page_down: faire défiler d'une page vers le bas
       refresh: redessiner l'écran
        scroll: faire défiler d'un nombre de lignes (+/-N) ou avec du temps: s=secondes, m=minutes, h=heures, d=jours, M=mois, y=année
+ scroll_horiz: faire défiler horizontalement d'un nombre de colonnes (+/-N) ou un pourcentage de la taille de fenêtre (ce défilement est possible seulement sur les tampons avec contenu libre)
     scroll_up: faire défiler de quelques lignes vers le haut
   scroll_down: faire défiler de quelques lignes vers le bas
    scroll_top: faire défiler jusqu'au début du tampon
