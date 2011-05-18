@@ -53,6 +53,7 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
+struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
 char *logger_buf_write = NULL;         /* buffer for writing a line         */
 
 
@@ -588,6 +589,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                      "%s\n", (message) ? message : logger_buf_write);
             if (message)
                 free (message);
+            logger_buffer->flush_needed = 1;
         }
         logger_buffer->write_start_info_line = 0;
     }
@@ -601,9 +603,15 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     
     fprintf (logger_buffer->log_file,
              "%s\n", (message) ? message : logger_buf_write);
-    fflush (logger_buffer->log_file);
     if (message)
         free (message);
+    logger_buffer->flush_needed = 1;
+    
+    if (!logger_timer)
+    {
+        fflush (logger_buffer->log_file);
+        logger_buffer->flush_needed = 0;
+    }
 }
 
 /*
@@ -1201,6 +1209,40 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 }
 
 /*
+ * logger_timer_cb: callback for logger timer
+ */
+
+int
+logger_timer_cb (void *data, int remaining_calls)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+    
+    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    {
+        if (ptr_logger_buffer->log_file && ptr_logger_buffer->flush_needed)
+        {
+            if (weechat_logger_plugin->debug >= 2)
+            {
+                weechat_printf_tags (NULL,
+                                     "no_log",
+                                     "%s: flush file %s",
+                                     LOGGER_PLUGIN_NAME,
+                                     ptr_logger_buffer->log_filename);
+            }
+            fflush (ptr_logger_buffer->log_file);
+            ptr_logger_buffer->flush_needed = 0;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize logger plugin
  */
 
@@ -1284,6 +1326,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+    
+    if (logger_timer)
+    {
+        weechat_unhook (logger_timer);
+        logger_timer = NULL;
+    }
     
     logger_config_write ();
     

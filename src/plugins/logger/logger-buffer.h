@@ -31,6 +31,7 @@ struct t_logger_buffer
     int log_level;                        /* log level (0..9)               */
     int write_start_info_line;            /* 1 if start info line must be   */
                                           /* written in file                */
+    int flush_needed;                     /* flush needed?                  */
     struct t_logger_buffer *prev_buffer;  /* link to previous buffer        */
     struct t_logger_buffer *next_buffer;  /* link to next buffer            */
 };

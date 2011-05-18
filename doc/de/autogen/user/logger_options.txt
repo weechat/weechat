@@ -3,6 +3,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* *logger.file.flush_delay*
+** Beschreibung: `number of seconds between flush of log files (0 = write in log files immediately for each line printed)`
+** Typ: integer
+** Werte: 0 .. 3600 (Standardwert: `120`)
+
 * *logger.file.info_lines*
 ** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, falls die Protokollierung gestartet oder beendet wird`
 ** Typ: boolesch

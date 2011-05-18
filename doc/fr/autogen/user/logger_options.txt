@@ -3,6 +3,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* *logger.file.flush_delay*
+** description: `nombre de secondes entre les "flush" (écriture) dans les fichiers de log (0 = écrire immédiatement dans les fichiers de log pour chaque ligne affichée)`
+** type: entier
+** valeurs: 0 .. 3600 (valeur par défaut: `120`)
+
 * *logger.file.info_lines*
 ** description: `écrire une ligne d'information dans le fichier log quand le log démarre ou se termine pour un tampon`
 ** type: booléen

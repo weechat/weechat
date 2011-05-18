@@ -3,6 +3,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* *logger.file.flush_delay*
+** description: `number of seconds between flush of log files (0 = write in log files immediately for each line printed)`
+** type: integer
+** values: 0 .. 3600 (default value: `120`)
+
 * *logger.file.info_lines*
 ** description: `write information line in log file when log starts or ends for a buffer`
 ** type: boolean

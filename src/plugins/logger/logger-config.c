@@ -42,6 +42,7 @@ struct t_config_option *logger_config_look_backlog;
 /* logger config, file section */
 
 struct t_config_option *logger_config_file_auto_log;
+struct t_config_option *logger_config_file_flush_delay;
 struct t_config_option *logger_config_file_name_lower_case;
 struct t_config_option *logger_config_file_path;
 struct t_config_option *logger_config_file_mask;
@@ -66,6 +67,49 @@ logger_config_change_file_option_restart_log (void *data,
     
     if (!logger_config_loading)
         logger_adjust_log_filenames ();
+}
+
+/*
+ * logger_config_flush_delay_change: called when flush delay is changed
+ */
+
+void
+logger_config_flush_delay_change (void *data,
+                                  struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (logger_config_loading)
+        return;
+    
+    if (logger_timer)
+    {
+        if (weechat_logger_plugin->debug)
+        {
+            weechat_printf_tags (NULL,
+                                 "no_log",
+                                 "%s: stopping timer", LOGGER_PLUGIN_NAME);
+        }
+        weechat_unhook (logger_timer);
+        logger_timer = NULL;
+    }
+    
+    if (weechat_config_integer (logger_config_file_flush_delay) > 0)
+    {
+        if (weechat_logger_plugin->debug)
+        {
+            weechat_printf_tags (NULL,
+                                 "no_log",
+                                 "%s: starting timer (interval: %d seconds)",
+                                 LOGGER_PLUGIN_NAME,
+                                 weechat_config_integer (logger_config_file_flush_delay));
+        }
+        logger_timer = weechat_hook_timer (weechat_config_integer (logger_config_file_flush_delay) * 1000,
+                                           0, 0,
+                                           &logger_timer_cb, NULL);
+    }
 }
 
 /*
@@ -352,6 +396,13 @@ logger_config_init ()
         N_("automatically save content of buffers to files (unless a buffer "
            "disables log)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_flush_delay = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "flush_delay", "integer",
+        N_("number of seconds between flush of log files (0 = write in log "
+           "files immediately for each line printed)"),
+        NULL, 0, 3600, "120", NULL, 0, NULL, NULL,
+        &logger_config_flush_delay_change, NULL, NULL, NULL);
     logger_config_file_name_lower_case = weechat_config_new_option (
         logger_config_file, ptr_section,
         "name_lower_case", "boolean",
@@ -441,6 +492,8 @@ logger_config_read ()
     logger_config_loading = 1;
     rc = weechat_config_read (logger_config_file);
     logger_config_loading = 0;
+    
+    logger_config_flush_delay_change (NULL, NULL);
     
     return rc;
 }

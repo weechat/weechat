@@ -3,6 +3,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* *logger.file.flush_delay*
+** descrizione: `number of seconds between flush of log files (0 = write in log files immediately for each line printed)`
+** tipo: intero
+** valori: 0 .. 3600 (valore predefinito: `120`)
+
 * *logger.file.info_lines*
 ** descrizione: `scrive una riga informativa nel file di log quando il log inizia o termina per un buffer`
 ** tipo: bool
