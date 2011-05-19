@@ -1,9 +1,19 @@
+weechat (0.3.1-1) unstable; urgency=low
+
+  This release introduces important changes with the usage of SSL. There
+  are stronger checks while connecting with SSL. By default, if a connection
+  is not fully trusted it will fail.
+  You can find more information on how to handle this new behaviour here:
+    http://dev.weechat.org/post/2009/12/01/SSL-certificates
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 25 Jan 2010 12:35:11 +0100
+
 weechat (0.3.0-1) unstable; urgency=low
 
   This release introduces major changes. Large part of code was
   rewritten without keeping compatibility with older versions.
 
   Please refer to the file /usr/share/doc/weechat-core/UPGRADE_0.3
-  for more informations on upgrade from a version 0.2.x to 0.3.x.
+  for more information on upgrade from a version 0.2.x to 0.3.x.
 
  -- Emmanuel Bouthenot <kolter@openics.org>  Tue, 15 Sep 2009 20:59:42 +0000

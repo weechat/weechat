@@ -5,9 +5,6 @@ Abstract: This document describes how to test and report
  bugs against the WeeChat IRC Client (French version).
 Section: Network/Communication
 
-Format: text
-Files: /usr/share/doc/weechat-doc/weechat_tester.fr.txt.gz
-
 Format: HTML
 Index: /usr/share/doc/weechat-doc/weechat_tester.fr.html
 Files: /usr/share/doc/weechat-doc/weechat_tester.fr.html

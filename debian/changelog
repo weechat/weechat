@@ -1,3 +1,104 @@
+weechat (0.3.5-1) unstable; urgency=low
+
+  * New upstream release
+    - Fix usage of deprecated _set_priority GnuTLS functions (Closes: #624055)
+  * Remove patch added to fix crash when completing /part command
+  * Bump Standards-Version to 3.9.2
+  * Update debian/copyright, switch to DEP5 format
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 16 May 2011 11:40:09 +0000
+
+weechat (0.3.4-2) unstable; urgency=low
+
+  * Add a patch which fix a crash when completing /part command on a
+  non-irc buffer.
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 13 Feb 2011 21:13:35 +0000
+
+weechat (0.3.4-1) unstable; urgency=low
+
+  * New upstream release (add relay and rmodifier plugins).
+  * Update Build depends (tcl-dev, ruby-dev, asciidoc).
+  * Remove the patch to make weechat aware of python 2.7 (merged upstream).
+  * Remove the backported patch which fix the bug with hostmasks in IRC
+    command /ignore.
+  * Update lintian override on weechat-curses.
+  * Update long descriptions regarding the new features.
+  * Add source/local-options file.
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 16 Jan 2011 11:54:55 +0000
+
+weechat (0.3.3-3) unstable; urgency=low
+
+  * Upload to unstable.
+  * Downgrade tcl-dev dependency to 8.4 until tcl 8.5 hit unstable.
+  * Add a patch to make cmake aware of python 2.7 (Closes: #606989).
+    Thanks to Matthias Klose.
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 27 Dec 2010 23:29:46 +0000
+
+weechat (0.3.3-2) experimental; urgency=low
+
+  * Switch to dpkg-source 3.0 (quilt) format
+  * Add a patch to fix bug with hostmasks in IRC command /ignore
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 20 Aug 2010 20:39:06 +0000
+
+weechat (0.3.3-1) experimental; urgency=low
+
+  * New upstream release
+  * Add new doc-base files (German translations).
+  * Update Standards-Version to 3.9.1
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 10 Aug 2010 11:23:14 +0000
+
+weechat (0.3.2-2) experimental; urgency=low
+
+  * Fix Vcs-Browser url (Closes: #580859).
+  * Rebuild against tcl-dev (>= 8.5) (Closes: #582588).
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 23 May 2010 08:32:37 +0000
+
+weechat (0.3.2-1) unstable; urgency=low
+
+  * New upstream release
+    - Add SASL authentication support (Closes: #574053)
+    - Add Build-Depend on libgcrypt11-dev (needed by SASL auth.)
+  * Fix build dependency against asciidoc (>=8.4 is needed). Thanks
+    to Michal Suchanek who spotted this bug (Closes: #574050).
+  * Update Standards-Version to 3.8.4
+  * Add debian/source/format to make lintian happy.
+  * Update lintian-override for weechat-curses manpage.
+  * Add new doc-base files (italian translations).
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 20 Mar 2010 18:09:38 +0100
+
+weechat (0.3.1.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 31 Jan 2010 19:18:42 +0000
+
+weechat (0.3.1-1) unstable; urgency=low
+
+  * New upstream release:
+   - Add ssl client certificate support (Closes: #453348)
+   - Fix a color bug in status line (Closes: #512957)
+  * Remove patch 'fix_ftbfs_kfreebsd' (fixed upstream)
+  * Maintainer became Debian Developer: adjust email, VCS and DM fields.
+  * Update doc-base files:
+   - Remove not needed asciidoc templates
+   - Add new translations
+  * Update debian/NEWS about new SSL behaviour.
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 16 Jan 2010 12:16:26 +0100
+
+weechat (0.3.0-2) unstable; urgency=low
+
+  * Add a patch to fix a FTBFS on GNU/kFreeBSD.
+
+ -- Emmanuel Bouthenot <kolter@openics.org>  Sat, 03 Oct 2009 13:22:10 +0000
+
 weechat (0.3.0-1) unstable; urgency=low
 
   * New (final) upstream release.
@@ -288,52 +389,52 @@ weechat (0.0.9-1) unstable; urgency=low
 
   * WeeChat version 0.0.9, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 01 Jan 2005 13:00:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 01 Jan 2005 13:00:00 +0200
 
 weechat (0.0.8-1) unstable; urgency=low
 
   * WeeChat version 0.0.8, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
 
 weechat (0.0.7-1) unstable; urgency=low
 
   * WeeChat version 0.0.7, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 08 Aug 2004 21:00:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 08 Aug 2004 21:00:00 +0200
 
 weechat (0.0.6-1) unstable; urgency=low
 
   * WeeChat version 0.0.6, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 05 Jun 2004 11:30:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 05 Jun 2004 11:30:00 +0200
 
 weechat (0.0.5-1) unstable; urgency=low
 
   * WeeChat version 0.0.5, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 07 Feb 2004 20:30:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 07 Feb 2004 20:30:00 +0200
 
 weechat (0.0.4-1) unstable; urgency=low
 
   * WeeChat version 0.0.4, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Thu, 01 Jan 2004 13:00:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Thu, 01 Jan 2004 13:00:00 +0200
 
 weechat (0.0.3-1) unstable; urgency=low
 
   * WeeChat version 0.0.3, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Mon, 03 Nov 2003 23:15:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Mon, 03 Nov 2003 23:15:00 +0200
 
 weechat (0.0.2-1) unstable; urgency=low
 
   * WeeChat version 0.0.2, see ChangeLog for detail.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sun, 05 Oct 2003 12:00:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sun, 05 Oct 2003 12:00:00 +0200
 
 weechat (0.0.1-1) unstable; urgency=low
 
   * First version.
   
- -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 27 Sep 2003 12:00:00 +0200
+ -- FlashCode <flashcode@flashtux.org>  Sat, 27 Sep 2003 12:00:00 +0200

@@ -1,0 +1,10 @@
+Document: weechat-tester-it
+Title: WeeChat Tester's Guide (Italian)
+Author: Sebastien Helleu
+Abstract: This document describes how to test and report
+ bugs against the WeeChat IRC Client (Italian version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_tester.it.html
+Files: /usr/share/doc/weechat-doc/weechat_tester.it.html

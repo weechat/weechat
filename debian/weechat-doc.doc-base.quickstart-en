@@ -4,9 +4,6 @@ Author: Sebastien Helleu
 Abstract: A short HowTo for new WeeChat users (English version).
 Section: Network/Communication
 
-Format: text
-Files: /usr/share/doc/weechat-doc/weechat_quickstart.en.txt.gz
-
 Format: HTML
 Index: /usr/share/doc/weechat-doc/weechat_quickstart.en.html
 Files: /usr/share/doc/weechat-doc/weechat_quickstart.en.html

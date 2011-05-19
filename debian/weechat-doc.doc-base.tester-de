@@ -1,0 +1,10 @@
+Document: weechat-tester-de
+Title: WeeChat Tester's Guide (German)
+Author: Sebastien Helleu
+Abstract: This document describes how to test and report
+ bugs against the WeeChat IRC Client (German version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_tester.de.html
+Files: /usr/share/doc/weechat-doc/weechat_tester.de.html

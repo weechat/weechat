@@ -1,0 +1,10 @@
+Document: weechat-scripting-it
+Title: WeeChat Scripting Guide (Italian)
+Author: Sebastien Helleu
+Abstract: This document describes the API to create scripts
+ for WeeChat (Italian version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/weechat_scripting.it.html
+Files: /usr/share/doc/weechat-doc/weechat_scripting.it.html

@@ -1,16 +1,15 @@
 Source: weechat
 Section: net
 Priority: optional
-Maintainer: Emmanuel Bouthenot <kolter@openics.org>
-Build-Depends-Indep: asciidoc (>= 8.5.0), source-highlight
+Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+Build-Depends-Indep: asciidoc (>= 8.5), source-highlight
 Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
- ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl8.5-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
-Standards-Version: 3.8.3
+ ruby1.9.1, ruby1.9.1-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
+ tcl8.5-dev, libgcrypt11-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
+Standards-Version: 3.9.2
 Homepage: http://weechat.org/
-Vcs-Git: git://git.debian.org/users/kolter-guest/weechat.git
-Vcs-Browser: http://git.debian.org/git/users/kolter-guest/weechat.git
-DM-Upload-Allowed: yes
+Vcs-Git: git://git.debian.org/users/kolter/weechat.git
+Vcs-Browser: http://git.debian.org/?p=users/kolter/weechat.git
 
 Package: weechat
 Architecture: all
@@ -21,10 +20,15 @@ Description: Fast, light and extensible chat client
  It is customizable and extensible with plugins/scripts, and includes:
   - nicklist
   - smart hotlist
-  - infobar with highlight notification
   - horizontal and vertical split
   - double charset support (decode/encode)
   - FIFO pipe for remote control
+  - 256 colors support
+  - incremental text search
+  - dynamic filtering of buffer content
+  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - spell checking
+  - highly customizable and extensible
   - and much more!
 
 Package: weechat-curses
@@ -39,10 +43,15 @@ Description: Fast, light and extensible chat client - console client
  It is customizable and extensible with plugins/scripts, and includes:
   - nicklist
   - smart hotlist
-  - infobar with highlight notification
   - horizontal and vertical split
   - double charset support (decode/encode)
   - FIFO pipe for remote control
+  - 256 colors support
+  - incremental text search
+  - dynamic filtering of buffer content
+  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - spell checking
+  - highly customizable and extensible
   - and much more!
  .
  This package provides the console client (ncurses).
@@ -72,7 +81,9 @@ Description: Fast, light and extensible chat client - plugins
  ships the following plugins:
   - Perl, Python, Ruby, Lua, and Tcl scripting
   - Spell checking (thanks to aspell)
-  - And many others (Fifo, ...)
+  - FIFO pipe for remote control
+  - IRC proxy
+  - Realtime input/output changes through regular expressions
 
 Package: weechat-doc
 Section: doc
