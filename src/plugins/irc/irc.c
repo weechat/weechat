@@ -35,6 +35,7 @@
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-debug.h"
+#include "irc-ignore.h"
 #include "irc-info.h"
 #include "irc-input.h"
 #include "irc-nick.h"
@@ -265,6 +266,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_config_write (0);
         irc_server_disconnect_all ();
     }
+    
+    irc_ignore_free_all ();
     
     irc_raw_message_free_all ();
     
