@@ -194,6 +194,17 @@ irc_message_parse_to_hashtable (const char *message)
     weechat_hashtable_set (hashtable, "channel", (channel) ? channel : empty_str);
     weechat_hashtable_set (hashtable, "arguments", (arguments) ? arguments : empty_str);
     
+    if (nick)
+        free (nick);
+    if (host)
+        free (host);
+    if (command)
+        free (command);
+    if (channel)
+        free (channel);
+    if (arguments)
+        free (arguments);
+    
     return hashtable;
 }
 
