@@ -14,6 +14,7 @@ Version 0.3.6 (under dev!)
 * irc: fix memory leak in message parser (when called from other plugins like
   relay) (bug #33387)
 * irc: fix memory leak on plugin unload (free ignores)
+* relay: fix memory leak (free some parsed messages) (bug #33387)
 * logger: add option logger.file.flush_delay (task #11118)
 
 Version 0.3.5 (2011-05-15)

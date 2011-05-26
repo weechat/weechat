@@ -248,6 +248,8 @@ relay_client_irc_signal_irc_in2_cb (void *data, const char *signal,
                                     irc_command,
                                     irc_args);
         }
+        
+        weechat_hashtable_free (hash_parsed);
     }
     
     return WEECHAT_RC_OK;
@@ -739,7 +741,7 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
                                                 RELAY_IRC_DATA(client, address));
                         relay_client_set_status (client,
                                                  RELAY_STATUS_DISCONNECTED);
-                        return;
+                        goto end;
                     }
                     if (irc_args && irc_args[0])
                     {
@@ -760,7 +762,7 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
                                         RELAY_IRC_DATA(client, address));
                 relay_client_set_status (client,
                                          RELAY_STATUS_DISCONNECTED);
-                return;
+                goto end;
             }
             
             RELAY_IRC_DATA(client, connected) = 1;
