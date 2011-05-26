@@ -31,6 +31,7 @@
 #include "relay-completion.h"
 #include "relay-config.h"
 #include "relay-info.h"
+#include "relay-raw.h"
 #include "relay-server.h"
 #include "relay-upgrade.h"
 
@@ -192,13 +193,15 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         relay_upgrade_save ();
     else
     {
-        /* remove all servers */
+        relay_raw_message_free_all ();
+        
         relay_server_free_all ();
         
-        /* remove all clients */
         relay_client_disconnect_all ();
+        
         if (relay_buffer)
             weechat_buffer_close (relay_buffer);
+        
         relay_client_free_all ();
     }
     
