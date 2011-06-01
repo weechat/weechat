@@ -29,6 +29,8 @@
 #ifdef HAVE_MALLINFO
 #include <malloc.h>
 #endif
+#include <string.h>
+#include <time.h>
 
 #include "weechat.h"
 #include "wee-backtrace.h"
@@ -290,6 +292,95 @@ debug_memory ()
                      _("Memory usage not available (function \"mallinfo\" not "
                        "found)"));
 #endif
+}
+
+/*
+ * debug_infolists: display list of infolists in memory
+ */
+
+void
+debug_infolists ()
+{
+    struct t_infolist *ptr_infolist;
+    struct t_infolist_item *ptr_item;
+    struct t_infolist_var *ptr_var;
+    int i, count, count_items, count_vars, size_structs, size_data;
+    int total_items, total_vars, total_size;
+    
+    count = 0;
+    for (ptr_infolist = weechat_infolists; ptr_infolist;
+         ptr_infolist = ptr_infolist->next_infolist)
+    {
+        count++;
+    }
+    
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, "%d infolists in memory (%s)", count,
+                     (count == 0) ?
+                     "this is ok!" :
+                     "WARNING: this is probably a memory leak in WeeChat or "
+                     "plugins/scripts!");
+    
+    if (count > 0)
+    {
+        i = 0;
+        total_items = 0;
+        total_vars = 0;
+        total_size = 0;
+        for (ptr_infolist = weechat_infolists; ptr_infolist;
+             ptr_infolist = ptr_infolist->next_infolist)
+        {
+            count_items = 0;
+            count_vars = 0;
+            size_structs = sizeof (*ptr_infolist);
+            size_data = 0;
+            for (ptr_item = ptr_infolist->items; ptr_item;
+                 ptr_item = ptr_item->next_item)
+            {
+                count_items++;
+                total_items++;
+                size_structs += sizeof (*ptr_item);
+                for (ptr_var = ptr_item->vars; ptr_var;
+                     ptr_var = ptr_var->next_var)
+                {
+                    count_vars++;
+                    total_vars++;
+                    size_structs += sizeof (*ptr_var);
+                    if (ptr_var->value)
+                    {
+                        switch (ptr_var->type)
+                        {
+                            case INFOLIST_INTEGER:
+                                size_data += sizeof (int);
+                                break;
+                            case INFOLIST_STRING:
+                                size_data += strlen ((char *)(ptr_var->value));
+                                break;
+                            case INFOLIST_POINTER:
+                                size_data += sizeof (void *);
+                                break;
+                            case INFOLIST_BUFFER:
+                                size_data += ptr_var->size;
+                                break;
+                            case INFOLIST_TIME:
+                                size_data += sizeof (time_t);
+                                break;
+                        }
+                    }
+                }
+            }
+            gui_chat_printf (NULL,
+                             "  %d: infolist 0x%lx: %d items, %d vars - "
+                             "structs: %d, data: %d (total: %d bytes)",
+                             i + 1, ptr_infolist, count_items, count_vars,
+                             size_structs, size_data, size_structs + size_data);
+            total_size += size_structs + size_data;
+            i++;
+        }
+        gui_chat_printf (NULL,
+                         "  Total: %d items, %d vars - %d bytes",
+                         total_items, total_vars, total_size);
+    }
 }
 
 /*

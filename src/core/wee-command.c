@@ -1152,6 +1152,10 @@ COMMAND_CALLBACK(debug)
     {
         gui_color_dump (buffer);
     }
+    else if (string_strcasecmp (argv[1], "infolists") == 0)
+    {
+        debug_infolists ();
+    }
     else if (string_strcasecmp (argv[1], "memory") == 0)
     {
         debug_memory ();
@@ -4833,24 +4837,26 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|memory|term|windows"),
-                  N_("   list: list plugins with debug levels\n"
-                     "    set: set debug level for plugin\n"
-                     " plugin: name of plugin (\"core\" for WeeChat core)\n"
-                     "  level: debug level for plugin (0 = disable debug)\n"
-                     "   dump: save memory dump in WeeChat log file (same "
+                     " || buffer|color|infolists|memory|term|windows"),
+                  N_("     list: list plugins with debug levels\n"
+                     "      set: set debug level for plugin\n"
+                     "   plugin: name of plugin (\"core\" for WeeChat core)\n"
+                     "    level: debug level for plugin (0 = disable debug)\n"
+                     "     dump: save memory dump in WeeChat log file (same "
                      "dump is written when WeeChat crashes)\n"
-                     " buffer: dump buffer content with hexadecimal values "
+                     "   buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
-                     "  color: display infos about current color pairs\n"
-                     " memory: display infos about memory usage\n"
-                     "   term: display infos about terminal\n"
-                     "windows: display windows tree"),
+                     "    color: display infos about current color pairs\n"
+                     "infolists: display infos about infolists\n"
+                     "   memory: display infos about memory usage\n"
+                     "     term: display infos about terminal\n"
+                     "  windows: display windows tree"),
                   "list"
                   " || set %(plugins_names)|core"
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || color"
+                  " || infolists"
                   " || memory"
                   " || term"
                   " || windows",
