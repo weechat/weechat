@@ -100,28 +100,29 @@ AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa mem
 
 # Variables in config.h
 
-AH_VERBATIM([PREFIX],           [#undef PREFIX])
-AH_VERBATIM([WEECHAT_LIBDIR],   [#undef WEECHAT_LIBDIR])
-AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
-AH_VERBATIM([HAVE_GCRYPT],      [#undef HAVE_GCRYPT])
-AH_VERBATIM([HAVE_GNUTLS],      [#undef HAVE_GNUTLS])
-AH_VERBATIM([HAVE_FLOCK],       [#undef HAVE_FLOCK])
-AH_VERBATIM([PLUGIN_ALIAS],     [#undef PLUGIN_ALIAS])
-AH_VERBATIM([PLUGIN_ASPELL],    [#undef PLUGIN_ASPELL])
-AH_VERBATIM([PLUGIN_CHARSET],   [#undef PLUGIN_CHARSET])
-AH_VERBATIM([PLUGIN_DEMO],      [#undef PLUGIN_DEMO])
-AH_VERBATIM([PLUGIN_FIFO],      [#undef PLUGIN_FIFO])
-AH_VERBATIM([PLUGIN_IRC],       [#undef PLUGIN_IRC])
-AH_VERBATIM([PLUGIN_LOGGER],    [#undef PLUGIN_LOGGER])
-AH_VERBATIM([PLUGIN_RELAY],     [#undef PLUGIN_RELAY])
-AH_VERBATIM([PLUGIN_RMODIFIER], [#undef PLUGIN_RMODIFIER])
-AH_VERBATIM([PLUGIN_PERL],      [#undef PLUGIN_PERL])
-AH_VERBATIM([PLUGIN_PYTHON],    [#undef PLUGIN_PYTHON])
-AH_VERBATIM([PLUGIN_RUBY],      [#undef PLUGIN_RUBY])
-AH_VERBATIM([PLUGIN_LUA],       [#undef PLUGIN_LUA])
-AH_VERBATIM([PLUGIN_TCL],       [#undef PLUGIN_TCL])
-AH_VERBATIM([PLUGIN_XFER],      [#undef PLUGIN_XFER])
-AH_VERBATIM([DOC],              [#undef DOC])
+AH_VERBATIM([PREFIX],                  [#undef PREFIX])
+AH_VERBATIM([WEECHAT_LIBDIR],          [#undef WEECHAT_LIBDIR])
+AH_VERBATIM([WEECHAT_SHAREDIR],        [#undef WEECHAT_SHAREDIR])
+AH_VERBATIM([HAVE_GCRYPT],             [#undef HAVE_GCRYPT])
+AH_VERBATIM([HAVE_GNUTLS],             [#undef HAVE_GNUTLS])
+AH_VERBATIM([HAVE_FLOCK],              [#undef HAVE_FLOCK])
+AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
+AH_VERBATIM([PLUGIN_ALIAS],            [#undef PLUGIN_ALIAS])
+AH_VERBATIM([PLUGIN_ASPELL],           [#undef PLUGIN_ASPELL])
+AH_VERBATIM([PLUGIN_CHARSET],          [#undef PLUGIN_CHARSET])
+AH_VERBATIM([PLUGIN_DEMO],             [#undef PLUGIN_DEMO])
+AH_VERBATIM([PLUGIN_FIFO],             [#undef PLUGIN_FIFO])
+AH_VERBATIM([PLUGIN_IRC],              [#undef PLUGIN_IRC])
+AH_VERBATIM([PLUGIN_LOGGER],           [#undef PLUGIN_LOGGER])
+AH_VERBATIM([PLUGIN_RELAY],            [#undef PLUGIN_RELAY])
+AH_VERBATIM([PLUGIN_RMODIFIER],        [#undef PLUGIN_RMODIFIER])
+AH_VERBATIM([PLUGIN_PERL],             [#undef PLUGIN_PERL])
+AH_VERBATIM([PLUGIN_PYTHON],           [#undef PLUGIN_PYTHON])
+AH_VERBATIM([PLUGIN_RUBY],             [#undef PLUGIN_RUBY])
+AH_VERBATIM([PLUGIN_LUA],              [#undef PLUGIN_LUA])
+AH_VERBATIM([PLUGIN_TCL],              [#undef PLUGIN_TCL])
+AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
+AH_VERBATIM([DOC],                     [#undef DOC])
 
 # Arguments for ./configure
 
@@ -865,6 +866,25 @@ if test "x$debug" != "x0" ; then
 fi
 
 # ------------------------------------------------------------------------------
+#                             eat_newline_glitch
+# ------------------------------------------------------------------------------
+
+enable_eatnewlineglitch="no"
+AC_CACHE_CHECK([for eat_newline_glitch support], ac_have_eatnewlineglitch, [
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+[[ #include <term.h> ]],
+[[ eat_newline_glitch = 0; ]])],
+[ ac_have_eatnewlineglitch="yes" ],
+[ ac_have_eatnewlineglitch="no" ])])
+
+if test "x$ac_have_eatnewlineglitch" = "xyes"; then
+    enable_eatnewlineglitch="yes"
+    AC_DEFINE(HAVE_EAT_NEWLINE_GLITCH)
+else
+    not_found="$not_found eat_newline_glitch"
+fi
+
+# ------------------------------------------------------------------------------
 #                               documentation
 # ------------------------------------------------------------------------------
 
@@ -981,29 +1001,30 @@ CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENS
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
-AM_CONDITIONAL(HAVE_GCRYPT,      test "$enable_gcrypt" = "yes")
-AM_CONDITIONAL(HAVE_GNUTLS,      test "$enable_gnutls" = "yes")
-AM_CONDITIONAL(HAVE_FLOCK,       test "$enable_flock" = "yes")
-AM_CONDITIONAL(GUI_NCURSES,      test "$enable_ncurses" = "yes")
-AM_CONDITIONAL(GUI_WXWIDGETS,    test "$enable_wxwidgets" = "yes")
-AM_CONDITIONAL(GUI_GTK,          test "$enable_gtk" = "yes")
-AM_CONDITIONAL(GUI_QT,           test "$enable_qt" = "yes")
-AM_CONDITIONAL(PLUGIN_ALIAS,     test "$enable_alias" = "yes")
-AM_CONDITIONAL(PLUGIN_ASPELL,    test "$enable_aspell" = "yes")
-AM_CONDITIONAL(PLUGIN_CHARSET,   test "$enable_charset" = "yes")
-AM_CONDITIONAL(PLUGIN_DEMO,      test "$enable_demo" = "yes")
-AM_CONDITIONAL(PLUGIN_FIFO,      test "$enable_fifo" = "yes")
-AM_CONDITIONAL(PLUGIN_IRC,       test "$enable_irc" = "yes")
-AM_CONDITIONAL(PLUGIN_LOGGER,    test "$enable_logger" = "yes")
-AM_CONDITIONAL(PLUGIN_RELAY,     test "$enable_relay" = "yes")
-AM_CONDITIONAL(PLUGIN_RMODIFIER, test "$enable_rmodifier" = "yes")
-AM_CONDITIONAL(PLUGIN_PERL,      test "$enable_perl" = "yes")
-AM_CONDITIONAL(PLUGIN_PYTHON,    test "$enable_python" = "yes")
-AM_CONDITIONAL(PLUGIN_RUBY,      test "$enable_ruby" = "yes")
-AM_CONDITIONAL(PLUGIN_LUA,       test "$enable_lua" = "yes")
-AM_CONDITIONAL(PLUGIN_TCL,       test "$enable_tcl" = "yes")
-AM_CONDITIONAL(PLUGIN_XFER,      test "$enable_xfer" = "yes")
-AM_CONDITIONAL(DOC,              test "$enable_doc" = "yes")
+AM_CONDITIONAL(HAVE_GCRYPT,             test "$enable_gcrypt" = "yes")
+AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
+AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
+AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(GUI_WXWIDGETS,           test "$enable_wxwidgets" = "yes")
+AM_CONDITIONAL(GUI_GTK,                 test "$enable_gtk" = "yes")
+AM_CONDITIONAL(GUI_QT,                  test "$enable_qt" = "yes")
+AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
+AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
+AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
+AM_CONDITIONAL(PLUGIN_DEMO,             test "$enable_demo" = "yes")
+AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
+AM_CONDITIONAL(PLUGIN_IRC,              test "$enable_irc" = "yes")
+AM_CONDITIONAL(PLUGIN_LOGGER,           test "$enable_logger" = "yes")
+AM_CONDITIONAL(PLUGIN_RELAY,            test "$enable_relay" = "yes")
+AM_CONDITIONAL(PLUGIN_RMODIFIER,        test "$enable_rmodifier" = "yes")
+AM_CONDITIONAL(PLUGIN_PERL,             test "$enable_perl" = "yes")
+AM_CONDITIONAL(PLUGIN_PYTHON,           test "$enable_python" = "yes")
+AM_CONDITIONAL(PLUGIN_RUBY,             test "$enable_ruby" = "yes")
+AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
+AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
+AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
+AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile

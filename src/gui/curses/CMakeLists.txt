@@ -30,6 +30,7 @@ gui-curses-chat.c
 gui-curses-color.c
 gui-curses-keyboard.c
 gui-curses-main.c
+gui-curses-term.c
 gui-curses-window.c)
 
 SET(EXECUTABLE weechat-curses)

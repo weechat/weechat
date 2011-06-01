@@ -7,6 +7,8 @@ v0.3.6-dev, 2011-06-01
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix bug with new line inserted at end of each line displayed (set
+  eat_newline_glitch to 0 if available)
 * core: add option "infolists" for command /debug
 * core: add horizontal scrolling for buffers with free content (command
   /window scroll_horiz) (task #11112)

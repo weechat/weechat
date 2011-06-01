@@ -82,6 +82,9 @@ extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
 extern void gui_keyboard_default_bindings ();
 extern int gui_keyboard_read_cb (void *data, int fd);
 
+/* terminal functions */
+extern void gui_term_set_eat_newline_glitch (int value);
+
 /* window functions */
 extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);

@@ -92,6 +92,8 @@ gui_main_init ()
     
     initscr ();
     
+    gui_term_set_eat_newline_glitch (0);
+    
     curs_set (1);
     noecho ();
     nodelay (stdscr, TRUE);

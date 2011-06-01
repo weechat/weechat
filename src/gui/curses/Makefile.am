@@ -37,6 +37,7 @@ weechat_curses_SOURCES = gui-curses-bar-window.c \
                          gui-curses-color.c \
                          gui-curses-keyboard.c \
                          gui-curses-main.c \
+                         gui-curses-term.c \
                          gui-curses-window.c \
                          gui-curses.h
 

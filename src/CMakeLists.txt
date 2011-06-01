@@ -23,6 +23,7 @@ ADD_DEFINITIONS(-DHAVE_CONFIG_H)
 
 INCLUDE(CheckIncludeFiles)
 INCLUDE(CheckFunctionExists)
+INCLUDE(CheckSymbolExists)
 
 CHECK_INCLUDE_FILES("arpa/inet.h" HAVE_ARPA_INET_H)
 CHECK_INCLUDE_FILES("limits.h" HAVE_LIMITS_H)
@@ -66,9 +67,9 @@ CHECK_FUNCTION_EXISTS(mallinfo HAVE_MALLINFO)
 CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
 CHECK_FUNCTION_EXISTS(regexec HAVE_REGEXEC)
 
+CHECK_SYMBOL_EXISTS("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
 
-#needs to be splitted in subdirectories
-# FIXME: weechat_gui_common MUST be the first lib in the list
+# weechat_gui_common MUST be the first lib in the list
 SET(STATIC_LIBS weechat_gui_common)
 
 # Check for Large File Support

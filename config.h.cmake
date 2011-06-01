@@ -22,6 +22,7 @@
 #cmakedefine ICONV_2ARG_IS_CONST 1
 #cmakedefine HAVE_TCL_CREATE_NS
 #cmakedefine HAVE_MALLINFO
+#cmakedefine HAVE_EAT_NEWLINE_GLITCH
 #define PACKAGE_VERSION "@VERSION@"
 #define PACKAGE "@PROJECT_NAME@"
 #define PACKAGE_NAME "@PROJECT_NAME@"
