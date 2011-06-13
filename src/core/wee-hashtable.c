@@ -480,7 +480,7 @@ hashtable_compute_length_keys_cb (void *data,
                                   struct t_hashtable *hashtable,
                                   const void *key, const void *value)
 {
-    char str_int[64];
+    char str_value[128];
     int *length;
     
     /* make C compiler happy */
@@ -491,15 +491,21 @@ hashtable_compute_length_keys_cb (void *data,
     switch (hashtable->type_keys)
     {
         case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
-            *length += strlen (str_int) + 1;
+            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
+            *length += strlen (str_value) + 1;
             break;
         case HASHTABLE_STRING:
             *length += strlen ((char *)key) + 1;
             break;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
+            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
+            *length += strlen (str_value) + 1;
+            break;
         case HASHTABLE_TIME:
+            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
+            *length += strlen (str_value) + 1;
+            break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
@@ -514,7 +520,7 @@ hashtable_compute_length_values_cb (void *data,
                                     struct t_hashtable *hashtable,
                                     const void *key, const void *value)
 {
-    char str_int[64];
+    char str_value[128];
     int *length;
     
     /* make C compiler happy */
@@ -527,15 +533,21 @@ hashtable_compute_length_values_cb (void *data,
         switch (hashtable->type_values)
         {
             case HASHTABLE_INTEGER:
-                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-                *length += strlen (str_int) + 1;
+                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                *length += strlen (str_value) + 1;
                 break;
             case HASHTABLE_STRING:
                 *length += strlen ((char *)value) + 1;
                 break;
             case HASHTABLE_POINTER:
             case HASHTABLE_BUFFER:
+                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
+                *length += strlen (str_value) + 1;
+                break;
             case HASHTABLE_TIME:
+                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
+                *length += strlen (str_value) + 1;
+                break;
             case HASHTABLE_NUM_TYPES:
                 break;
         }
@@ -568,7 +580,7 @@ hashtable_build_string_keys_cb (void *data,
                                 struct t_hashtable *hashtable,
                                 const void *key, const void *value)
 {
-    char str_int[64];
+    char str_value[128];
     char *str;
     
     /* make C compiler happy */
@@ -582,15 +594,21 @@ hashtable_build_string_keys_cb (void *data,
     switch (hashtable->type_keys)
     {
         case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
-            strcat (str, str_int);
+            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
+            strcat (str, str_value);
             break;
         case HASHTABLE_STRING:
             strcat (str, (char *)key);
             break;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
+            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
+            strcat (str, str_value);
+            break;
         case HASHTABLE_TIME:
+            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
+            strcat (str, str_value);
+            break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
@@ -605,7 +623,7 @@ hashtable_build_string_values_cb (void *data,
                                   struct t_hashtable *hashtable,
                                   const void *key, const void *value)
 {
-    char str_int[64];
+    char str_value[128];
     char *str;
     
     /* make C compiler happy */
@@ -621,15 +639,21 @@ hashtable_build_string_values_cb (void *data,
         switch (hashtable->type_values)
         {
             case HASHTABLE_INTEGER:
-                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-                strcat (str, str_int);
+                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                strcat (str, str_value);
                 break;
             case HASHTABLE_STRING:
                 strcat (str, (char *)value);
                 break;
             case HASHTABLE_POINTER:
             case HASHTABLE_BUFFER:
+                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
+                strcat (str, str_value);
+                break;
             case HASHTABLE_TIME:
+                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
+                strcat (str, str_value);
+                break;
             case HASHTABLE_NUM_TYPES:
                 break;
         }
@@ -649,11 +673,8 @@ hashtable_build_string_keys_values_cb (void *data,
                                        struct t_hashtable *hashtable,
                                        const void *key, const void *value)
 {
-    char str_int[64];
+    char str_value[128];
     char *str;
-    
-    /* make C compiler happy */
-    (void) key;
     
     str = (char *)data;
     
@@ -663,15 +684,21 @@ hashtable_build_string_keys_values_cb (void *data,
     switch (hashtable->type_keys)
     {
         case HASHTABLE_INTEGER:
-            snprintf (str_int, sizeof (str_int), "%d", *((int *)key));
-            strcat (str, str_int);
+            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
+            strcat (str, str_value);
             break;
         case HASHTABLE_STRING:
             strcat (str, (char *)key);
             break;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
+            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
+            strcat (str, str_value);
+            break;
         case HASHTABLE_TIME:
+            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
+            strcat (str, str_value);
+            break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
@@ -683,15 +710,21 @@ hashtable_build_string_keys_values_cb (void *data,
         switch (hashtable->type_values)
         {
             case HASHTABLE_INTEGER:
-                snprintf (str_int, sizeof (str_int), "%d", *((int *)value));
-                strcat (str, str_int);
+                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                strcat (str, str_value);
                 break;
             case HASHTABLE_STRING:
                 strcat (str, (char *)value);
                 break;
             case HASHTABLE_POINTER:
             case HASHTABLE_BUFFER:
+                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
+                strcat (str, str_value);
+                break;
             case HASHTABLE_TIME:
+                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
+                strcat (str, str_value);
+                break;
             case HASHTABLE_NUM_TYPES:
                 break;
         }
