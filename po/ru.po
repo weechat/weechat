@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 15:19+0200\n"
+"POT-Creation-Date: 2011-06-13 21:33+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6211,11 +6211,12 @@ msgid "buffer"
 msgstr "управление буферами"
 
 #, fuzzy
-msgid "completion"
-msgstr "собран:"
+msgid "structure with completion"
+msgstr "вставить строку в поле ввода"
 
-msgid "partial completion"
-msgstr ""
+#, fuzzy
+msgid "structure with partial completion"
+msgstr "вставить строку в поле ввода"
 
 #, fuzzy
 msgid "config file"
@@ -6289,19 +6290,19 @@ msgid "hook of type \"hdata\""
 msgstr ""
 
 #, fuzzy
-msgid "undo for input line"
+msgid "structure with undo for input line"
 msgstr "вставить строку в поле ввода"
 
-msgid "key"
+msgid "a key (keyboard shortcut)"
 msgstr ""
 
-msgid "lines"
+msgid "structure with lines"
 msgstr ""
 
-msgid "line"
+msgid "structure with one line"
 msgstr ""
 
-msgid "line data"
+msgid "structure with one line data"
 msgstr ""
 
 #, fuzzy
@@ -7387,3 +7388,7 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "completion"
+#~ msgstr "собран:"

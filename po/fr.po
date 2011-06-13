@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 15:19+0200\n"
-"PO-Revision-Date: 2011-06-13 15:20+0200\n"
+"POT-Creation-Date: 2011-06-13 21:33+0200\n"
+"PO-Revision-Date: 2011-06-13 21:33+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6755,11 +6755,11 @@ msgstr "objet de barre"
 msgid "buffer"
 msgstr "tampon"
 
-msgid "completion"
-msgstr "complétion"
+msgid "structure with completion"
+msgstr "structure avec une complétion"
 
-msgid "partial completion"
-msgstr "complétion partielle"
+msgid "structure with partial completion"
+msgstr "structure avec une complétion partielle"
 
 msgid "config file"
 msgstr "fichier de configuration"
@@ -6827,20 +6827,20 @@ msgstr "hook de type \"infolist\""
 msgid "hook of type \"hdata\""
 msgstr "hook de type \"hdata\""
 
-msgid "undo for input line"
-msgstr "undo pour la ligne de commande"
+msgid "structure with undo for input line"
+msgstr "structure avec le \"unco\" pour la ligne de commande"
 
-msgid "key"
-msgstr "touche"
+msgid "a key (keyboard shortcut)"
+msgstr "une touche (un raccourci clavier)"
 
-msgid "lines"
-msgstr "lignes"
+msgid "structure with lines"
+msgstr "structure avec des lignes"
 
-msgid "line"
-msgstr "ligne"
+msgid "structure with one line"
+msgstr "structure avec une ligne"
 
-msgid "line data"
-msgstr "données de la ligne"
+msgid "structure with one line data"
+msgstr "structure avec les données d'une ligne"
 
 msgid "group in nicklist"
 msgstr "groupe dans la liste de pseudos"
@@ -7959,3 +7959,21 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
+
+#~ msgid "completion"
+#~ msgstr "complétion"
+
+#~ msgid "undo for input line"
+#~ msgstr "undo pour la ligne de commande"
+
+#~ msgid "key"
+#~ msgstr "touche"
+
+#~ msgid "lines"
+#~ msgstr "lignes"
+
+#~ msgid "line"
+#~ msgstr "ligne"
+
+#~ msgid "line data"
+#~ msgstr "données de la ligne"

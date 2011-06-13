@@ -1057,9 +1057,9 @@ plugin_api_init ()
                 &gui_bar_item_hdata_bar_item_cb, NULL);
     hook_hdata (NULL, "buffer", N_("buffer"),
                 &gui_buffer_hdata_buffer_cb, NULL);
-    hook_hdata (NULL, "completion", N_("completion"),
+    hook_hdata (NULL, "completion", N_("structure with completion"),
                 &gui_completion_hdata_completion_cb, NULL);
-    hook_hdata (NULL, "completion_partial", N_("partial completion"),
+    hook_hdata (NULL, "completion_partial", N_("structure with partial completion"),
                 &gui_completion_hdata_completion_partial_cb, NULL);
     hook_hdata (NULL, "config_file", N_("config file"),
                 &config_file_hdata_config_file_cb, NULL);
@@ -1105,15 +1105,15 @@ plugin_api_init ()
                 &hook_hdata_hook_infolist_cb, NULL);
     hook_hdata (NULL, "hook_hdata", N_("hook of type \"hdata\""),
                 &hook_hdata_hook_hdata_cb, NULL);
-    hook_hdata (NULL, "input_undo", N_("undo for input line"),
+    hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),
                 &gui_buffer_hdata_input_undo_cb, NULL);
-    hook_hdata (NULL, "key", N_("key"),
+    hook_hdata (NULL, "key", N_("a key (keyboard shortcut)"),
                 &gui_keyboard_hdata_key_cb, NULL);
-    hook_hdata (NULL, "lines", N_("lines"),
+    hook_hdata (NULL, "lines", N_("structure with lines"),
                 &gui_line_hdata_lines_cb, NULL);
-    hook_hdata (NULL, "line", N_("line"),
+    hook_hdata (NULL, "line", N_("structure with one line"),
                 &gui_line_hdata_line_cb, NULL);
-    hook_hdata (NULL, "line_data", N_("line data"),
+    hook_hdata (NULL, "line_data", N_("structure with one line data"),
                 &gui_line_hdata_line_data_cb, NULL);
     hook_hdata (NULL, "nick_group", N_("group in nicklist"),
                 &gui_nicklist_hdata_nick_group_cb, NULL);

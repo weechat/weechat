@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 15:19+0200\n"
+"POT-Creation-Date: 2011-06-13 21:33+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6895,11 +6895,12 @@ msgid "buffer"
 msgstr "Buffer verwalten"
 
 #, fuzzy
-msgid "completion"
-msgstr "kompiliert am"
+msgid "structure with completion"
+msgstr "Funktionen für die Befehlszeile"
 
-msgid "partial completion"
-msgstr ""
+#, fuzzy
+msgid "structure with partial completion"
+msgstr "Informiert User wenn eine teilweise Vervollständigung auftritt"
 
 #, fuzzy
 msgid "config file"
@@ -6973,23 +6974,20 @@ msgid "hook of type \"hdata\""
 msgstr ""
 
 #, fuzzy
-msgid "undo for input line"
+msgid "structure with undo for input line"
 msgstr "Funktionen für die Befehlszeile"
 
-msgid "key"
+msgid "a key (keyboard shortcut)"
 msgstr ""
 
-#, fuzzy
-msgid "lines"
-msgstr "Online"
+msgid "structure with lines"
+msgstr ""
 
-#, fuzzy
-msgid "line"
-msgstr "Online"
+msgid "structure with one line"
+msgstr ""
 
-#, fuzzy
-msgid "line data"
-msgstr "Online"
+msgid "structure with one line data"
+msgstr ""
 
 #, fuzzy
 msgid "group in nicklist"
@@ -8118,3 +8116,19 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "completion"
+#~ msgstr "kompiliert am"
+
+#, fuzzy
+#~ msgid "lines"
+#~ msgstr "Online"
+
+#, fuzzy
+#~ msgid "line"
+#~ msgstr "Online"
+
+#, fuzzy
+#~ msgid "line data"
+#~ msgstr "Online"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 15:19+0200\n"
+"POT-Creation-Date: 2011-06-13 21:33+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6196,11 +6196,12 @@ msgid "buffer"
 msgstr "pufferek kezelése"
 
 #, fuzzy
-msgid "completion"
-msgstr "lefordítva:"
+msgid "structure with completion"
+msgstr "szöveg beillesztése a parancssorba"
 
-msgid "partial completion"
-msgstr ""
+#, fuzzy
+msgid "structure with partial completion"
+msgstr "szöveg beillesztése a parancssorba"
 
 #, fuzzy
 msgid "config file"
@@ -6274,19 +6275,19 @@ msgid "hook of type \"hdata\""
 msgstr ""
 
 #, fuzzy
-msgid "undo for input line"
+msgid "structure with undo for input line"
 msgstr "szöveg beillesztése a parancssorba"
 
-msgid "key"
+msgid "a key (keyboard shortcut)"
 msgstr ""
 
-msgid "lines"
+msgid "structure with lines"
 msgstr ""
 
-msgid "line"
+msgid "structure with one line"
 msgstr ""
 
-msgid "line data"
+msgid "structure with one line data"
 msgstr ""
 
 #, fuzzy
@@ -7378,3 +7379,7 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "completion"
+#~ msgstr "lefordítva:"

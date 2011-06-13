@@ -774,8 +774,8 @@ sub docgen
                         my $vars = $plugin_hdata{$plugin}{$hdata}{"vars"};
                         my $lists = $plugin_hdata{$plugin}{$hdata}{"lists"};
                         print FILE "| ".escape_table($plugin)." | ".escape_table($hdata)
-                            ." | ".escape_table($description)." | ".escape_table($vars)
-                            ." | ".escape_table($lists)."\n\n";
+                            ." | ".escape_table($description)." |".escape_table($vars)
+                            ." |".escape_table($lists)."\n\n";
                     }
                 }
                 print FILE "|========================================\n";

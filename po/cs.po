@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 15:19+0200\n"
+"POT-Creation-Date: 2011-06-13 21:33+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6613,11 +6613,12 @@ msgid "buffer"
 msgstr "řídit buffery"
 
 #, fuzzy
-msgid "completion"
-msgstr "kompilováno"
+msgid "structure with completion"
+msgstr "funkce pro příkazovou řádku"
 
-msgid "partial completion"
-msgstr ""
+#, fuzzy
+msgid "structure with partial completion"
+msgstr "upozornit uživatele pokud nastane částečné doplnění"
 
 #, fuzzy
 msgid "config file"
@@ -6691,23 +6692,20 @@ msgid "hook of type \"hdata\""
 msgstr ""
 
 #, fuzzy
-msgid "undo for input line"
+msgid "structure with undo for input line"
 msgstr "funkce pro příkazovou řádku"
 
-msgid "key"
+msgid "a key (keyboard shortcut)"
 msgstr ""
 
-#, fuzzy
-msgid "lines"
-msgstr "online"
+msgid "structure with lines"
+msgstr ""
 
-#, fuzzy
-msgid "line"
-msgstr "online"
+msgid "structure with one line"
+msgstr ""
 
-#, fuzzy
-msgid "line data"
-msgstr "online"
+msgid "structure with one line data"
+msgstr ""
 
 #, fuzzy
 msgid "group in nicklist"
@@ -7803,3 +7801,19 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "completion"
+#~ msgstr "kompilováno"
+
+#, fuzzy
+#~ msgid "lines"
+#~ msgstr "online"
+
+#, fuzzy
+#~ msgid "line"
+#~ msgstr "online"
+
+#, fuzzy
+#~ msgid "line data"
+#~ msgstr "online"
