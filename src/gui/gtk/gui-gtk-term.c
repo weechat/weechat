@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2011 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -17,17 +17,21 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_MAIN_H
-#define __WEECHAT_GUI_MAIN_H 1
+/*
+ * gui-gtk-term.c: terminal functions for Gtk GUI
+ */
 
-/* main functions (GUI dependent) */
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-extern void gui_main_loop ();
-extern void gui_main_pre_init (int *argc, char **argv[]);
-extern void gui_main_init ();
-extern void gui_main_end (int clean_exit);
+/*
+ * gui_term_set_eat_newline_glitch: not used in Gtk GUI
+ */
 
-/* terminal functions (GUI dependent) */
-extern void gui_term_set_eat_newline_glitch (int value);
-
-#endif /* __WEECHAT_GUI_MAIN_H */
+void
+gui_term_set_eat_newline_glitch (int value)
+{
+    /* make C compiler happy */
+    (void) value;
+}

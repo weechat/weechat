@@ -37,6 +37,7 @@ weechat_gtk_SOURCES = gui-gtk-bar-window.c \
                       gui-gtk-color.c \
                       gui-gtk-keyboard.c \
                       gui-gtk-main.c \
+                      gui-gtk-term.c \
                       gui-gtk-window.c \
                       gui-gtk.h
 

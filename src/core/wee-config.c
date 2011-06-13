@@ -55,6 +55,7 @@
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
+#include "../gui/gui-main.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -85,6 +86,7 @@ struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
+struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
@@ -313,6 +315,26 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
     gui_chat_change_time_format ();
     if (gui_ok)
         gui_window_ask_refresh (1);
+}
+
+/*
+ * config_change_eat_newline_glitch: called when eat_newline_glitch changes
+ */
+
+void
+config_change_eat_newline_glitch (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (gui_ok)
+    {
+        if (CONFIG_BOOLEAN(config_look_eat_newline_glitch))
+            gui_term_set_eat_newline_glitch (0);
+        else
+            gui_term_set_eat_newline_glitch (1);
+    }
 }
 
 /*
@@ -1598,6 +1620,16 @@ config_weechat_init_options ()
         "day_change_time_format", "string",
         N_("time format for date displayed when day changed"),
         NULL, 0, 0, "%a, %d %b %Y", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_eat_newline_glitch = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "eat_newline_glitch", "boolean",
+        N_("if set, the eat_newline_glitch will be set to 0; this is used to "
+           "not add new line char at end of each line, and then not break "
+           "text when you copy/paste text from WeeChat to another application "
+           "(this option is disabled by default because it can cause serious "
+           "display bugs)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &config_change_eat_newline_glitch, NULL, NULL, NULL);
     config_look_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight", "string",

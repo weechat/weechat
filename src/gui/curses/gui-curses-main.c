@@ -92,7 +92,8 @@ gui_main_init ()
     
     initscr ();
     
-    gui_term_set_eat_newline_glitch (0);
+    if (CONFIG_BOOLEAN(config_look_eat_newline_glitch))
+        gui_term_set_eat_newline_glitch (0);
     
     curs_set (1);
     noecho ();

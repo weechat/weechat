@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 11:52+0200\n"
+"POT-Creation-Date: 2011-06-13 12:56+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2114,6 +2114,13 @@ msgstr "mostra uma mensagem especial quando o dia muda"
 
 msgid "time format for date displayed when day changed"
 msgstr "formato de hora tempo para a data mostrada quando o dia muda"
+
+msgid ""
+"if set, the eat_newline_glitch will be set to 0; this is used to not add new "
+"line char at end of each line, and then not break text when you copy/paste "
+"text from WeeChat to another application (this option is disabled by default "
+"because it can cause serious display bugs)"
+msgstr ""
 
 # Does it worth translating 'case insensitive'?
 #, fuzzy

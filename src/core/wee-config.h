@@ -112,6 +112,7 @@ extern struct t_config_option *config_look_color_pairs_auto_reset;
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_day_change;
 extern struct t_config_option *config_look_day_change_time_format;
+extern struct t_config_option *config_look_eat_newline_glitch;
 extern struct t_config_option *config_look_highlight;
 extern struct t_config_option *config_look_highlight_regex;
 extern struct t_config_option *config_look_hline_char;

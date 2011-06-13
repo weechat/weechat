@@ -358,6 +358,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y"`)
 
+* *weechat.look.eat_newline_glitch*
+** Beschreibung: `if set, the eat_newline_glitch will be set to 0; this is used to not add new line char at end of each line, and then not break text when you copy/paste text from WeeChat to another application (this option is disabled by default because it can cause serious display bugs)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * *weechat.look.highlight*
 ** Beschreibung: `Durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet. Die Schlagwörter können mit "*", als Joker, beginnen oder enden)`
 ** Typ: Zeichenkette

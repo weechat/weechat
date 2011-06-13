@@ -358,6 +358,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y"`)
 
+* *weechat.look.eat_newline_glitch*
+** description: `si activé, le eat_newline_glitch sera positionné à 0; cela est utilisé pour ne pas ajouter de nouvelle ligne à la fin de chaque ligne, et donc ne pas couper le texte quand vous copiez/collez du texte depuis WeeChat vers une autre application (cette option est désactivée par défaut car elle peut causer de sérieux problèmes d'affichages)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * *weechat.look.highlight*
 ** description: `liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)`
 ** type: chaîne
