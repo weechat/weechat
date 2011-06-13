@@ -39,6 +39,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
@@ -604,6 +605,7 @@ plugin_load (const char *filename)
         new_plugin->hook_info = &hook_info;
         new_plugin->hook_info_hashtable = &hook_info_hashtable;
         new_plugin->hook_infolist = &hook_infolist;
+        new_plugin->hook_hdata = &hook_hdata;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
         
@@ -680,6 +682,24 @@ plugin_load (const char *filename)
         new_plugin->infolist_buffer = &plugin_api_infolist_buffer;
         new_plugin->infolist_time = &plugin_api_infolist_time;
         new_plugin->infolist_free = &plugin_api_infolist_free;
+
+        new_plugin->hdata_new = &hdata_new;
+        new_plugin->hdata_new_var = &hdata_new_var;
+        new_plugin->hdata_new_list = &hdata_new_list;
+        new_plugin->hdata_get = &hook_hdata_get;
+        new_plugin->hdata_get_var_offset = &hdata_get_var_offset;
+        new_plugin->hdata_get_var_type = &hdata_get_var_type;
+        new_plugin->hdata_get_var_type_string = &hdata_get_var_type_string;
+        new_plugin->hdata_get_var = &hdata_get_var;
+        new_plugin->hdata_get_var_at_offset = &hdata_get_var_at_offset;
+        new_plugin->hdata_get_list = &hdata_get_list;
+        new_plugin->hdata_move = &hdata_move;
+        new_plugin->hdata_integer = &hdata_integer;
+        new_plugin->hdata_long = &hdata_long;
+        new_plugin->hdata_string = &hdata_string;
+        new_plugin->hdata_pointer = &hdata_pointer;
+        new_plugin->hdata_time = &hdata_time;
+        new_plugin->hdata_get_string = &hdata_get_string;
         
         new_plugin->upgrade_new = &upgrade_file_new;
         new_plugin->upgrade_write_object = &upgrade_file_write_object;

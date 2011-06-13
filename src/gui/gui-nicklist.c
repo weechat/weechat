@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
@@ -35,6 +36,7 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -44,6 +46,10 @@
 #include "gui-nicklist.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+
+
+struct t_hdata *gui_nicklist_hdata_nick_group = NULL;
+struct t_hdata *gui_nicklist_hdata_nick = NULL;
 
 
 /*
@@ -937,6 +943,71 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
         gui_nicklist_send_signal ("nicklist_nick_changed", buffer,
                                   nick->name);
     }
+}
+
+/*
+ * gui_nicklist_hdata_nick_group_cb: return hdata for nick_group
+ */
+
+struct t_hdata *
+gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_nicklist_hdata_nick_group)
+        return gui_nicklist_hdata_nick_group;
+    
+    hdata = hdata_new (hdata_name, "prev_group", "next_group");
+    if (hdata)
+    {
+        gui_nicklist_hdata_nick_group = hdata;
+        HDATA_VAR(struct t_gui_nick_group, name, STRING);
+        HDATA_VAR(struct t_gui_nick_group, color, STRING);
+        HDATA_VAR(struct t_gui_nick_group, visible, INTEGER);
+        HDATA_VAR(struct t_gui_nick_group, level, INTEGER);
+        HDATA_VAR(struct t_gui_nick_group, parent, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, childs, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, last_child, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, nicks, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, last_nick, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, prev_group, POINTER);
+        HDATA_VAR(struct t_gui_nick_group, next_group, POINTER);
+    }
+    return gui_nicklist_hdata_nick_group;
+}
+
+/*
+ * gui_nicklist_hdata_nick_cb: return hdata for nick
+ */
+
+struct t_hdata *
+gui_nicklist_hdata_nick_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_nicklist_hdata_nick)
+        return gui_nicklist_hdata_nick;
+    
+    hdata = hdata_new (hdata_name, "prev_nick", "next_nick");
+    if (hdata)
+    {
+        gui_nicklist_hdata_nick = hdata;
+        HDATA_VAR(struct t_gui_nick, group, POINTER);
+        HDATA_VAR(struct t_gui_nick, name, STRING);
+        HDATA_VAR(struct t_gui_nick, color, STRING);
+        HDATA_VAR(struct t_gui_nick, prefix, STRING);
+        HDATA_VAR(struct t_gui_nick, prefix_color, STRING);
+        HDATA_VAR(struct t_gui_nick, visible, INTEGER);
+        HDATA_VAR(struct t_gui_nick, prev_nick, POINTER);
+        HDATA_VAR(struct t_gui_nick, next_nick, POINTER);
+    }
+    return gui_nicklist_hdata_nick;
 }
 
 /*

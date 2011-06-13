@@ -20,6 +20,12 @@
 #ifndef __WEECHAT_PLUGIN_API_H
 #define __WEECHAT_PLUGIN_API_H 1
 
+struct t_plugin_api_hdata
+{
+    char *name;                              /* hdata name                  */
+    struct t_hdata *(*callback_get_hdata)(); /* callback to get hdata       */
+};
+
 /* strings */
 extern void plugin_api_charset_set (struct t_weechat_plugin *plugin,
                                     const char *charset);

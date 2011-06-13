@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-31 09:11+0200\n"
-"PO-Revision-Date: 2011-05-31 09:12+0200\n"
+"POT-Creation-Date: 2011-06-13 11:52+0200\n"
+"PO-Revision-Date: 2011-06-12 11:27+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -1076,10 +1076,10 @@ msgid "control debug for core/plugins"
 msgstr "contrôle du debug pour le coeur/les extensions"
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|term|windows"
 msgstr ""
-"list || set <extension> <niveau> || dump [<extension>] || buffer|color|"
+"list || set <extension> <niveau> || dump [<extension>] || buffer|color|hdata|"
 "infolists|memory|term|windows"
 
 msgid ""
@@ -1091,6 +1091,7 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"    hdata: display infos about hdata\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     term: display infos about terminal\n"
@@ -1105,6 +1106,7 @@ msgstr ""
 "   buffer: afficher le contenu du tampon en valeurs hexadécimales dans le "
 "fichier log\n"
 "    color: afficher des infos sur les paires de couleur courantes\n"
+"    hdata: afficher des infos sur les hdata\n"
 "infolists: afficher des infos sur les infolists\n"
 "   memory: afficher des infos sur l'utilisation de la mémoire\n"
 "     term: afficher des infos sur le terminal\n"
@@ -5664,6 +5666,30 @@ msgstr "liste des notifications"
 msgid "notify pointer (optional)"
 msgstr "pointeur vers la notification (optionnel)"
 
+msgid "irc nick"
+msgstr "pseudo irc"
+
+msgid "irc channel"
+msgstr "canal irc"
+
+msgid "irc channel_speaking"
+msgstr "channel_speaking irc"
+
+msgid "irc ignore"
+msgstr "ignore irc"
+
+msgid "irc notify"
+msgstr "notify irc"
+
+msgid "pattern for irc redirect"
+msgstr "modèle pour une redirection irc"
+
+msgid "irc redirect"
+msgstr "redirection irc"
+
+msgid "irc server"
+msgstr "serveur irc"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: vous n'êtes pas connecté au serveur"
@@ -6698,6 +6724,117 @@ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "nom de fenêtre (peut démarrer ou se terminer par \"*\" comme joker) "
 "(optionnel)"
+
+msgid "bar"
+msgstr "barre"
+
+msgid "bar item"
+msgstr "objet de barre"
+
+msgid "buffer"
+msgstr "tampon"
+
+msgid "completion"
+msgstr "complétion"
+
+msgid "partial completion"
+msgstr "complétion partielle"
+
+msgid "config file"
+msgstr "fichier de configuration"
+
+msgid "config section"
+msgstr "section de configuration"
+
+msgid "config option"
+msgstr "option de configuration"
+
+msgid "filter"
+msgstr "filtre"
+
+msgid "history of commands in buffer"
+msgstr "historique des commandes dans le tampon"
+
+msgid "hook (variables common to all hook types)"
+msgstr "hook (variables communes à tous les types de hooks)"
+
+msgid "hook of type \"command\""
+msgstr "hook de type \"command\""
+
+msgid "hook of type \"command_run\""
+msgstr "hook de type \"command_run\""
+
+msgid "hook of type \"timer\""
+msgstr "hook de type \"timer\""
+
+msgid "hook of type \"fd\""
+msgstr "hook de type \"fd\""
+
+msgid "hook of type \"process\""
+msgstr "hook de type \"process\""
+
+msgid "hook of type \"connect\""
+msgstr "hook de type \"connect\""
+
+msgid "hook of type \"print\""
+msgstr "hook de type \"print\""
+
+msgid "hook of type \"signal\""
+msgstr "hook de type \"signal\""
+
+msgid "hook of type \"hsignal\""
+msgstr "hook de type \"hsignal\""
+
+msgid "hook of type \"config\""
+msgstr "hook de type \"config\""
+
+msgid "hook of type \"completion\""
+msgstr "hook de type \"completion\""
+
+msgid "hook of type \"modifier\""
+msgstr "hook de type \"modifier\""
+
+msgid "hook of type \"info\""
+msgstr "hook de type \"info\""
+
+msgid "hook of type \"info_hashtable\""
+msgstr "hook de type \"info_hashtable\""
+
+msgid "hook of type \"infolist\""
+msgstr "hook de type \"infolist\""
+
+msgid "hook of type \"hdata\""
+msgstr "hook de type \"hdata\""
+
+msgid "undo for input line"
+msgstr "undo pour la ligne de commande"
+
+msgid "key"
+msgstr "touche"
+
+msgid "lines"
+msgstr "lignes"
+
+msgid "line"
+msgstr "ligne"
+
+msgid "line data"
+msgstr "données de la ligne"
+
+msgid "group in nicklist"
+msgstr "groupe dans la liste de pseudos"
+
+msgid "nick in nicklist"
+msgstr "pseudo dans la liste de pseudos"
+
+msgid "window"
+msgstr "fenêtre"
+
+msgid "scroll info in window"
+msgstr "info de défilement dans la fenêtre"
+
+msgid "tree of windows"
+msgstr "arbre des fenêtres"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -7795,3 +7932,9 @@ msgstr "Hashtable (sortie)"
 
 msgid "Pointer"
 msgstr "Pointeur"
+
+msgid "Variables"
+msgstr "Variables"
+
+msgid "Lists"
+msgstr "Listes"

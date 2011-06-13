@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-06-01
+v0.3.6-dev, 2011-06-13
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add "hdata" (direct access to WeeChat/plugin data)
 * core: fix bug with new line inserted at end of each line displayed (set
   eat_newline_glitch to 0 if available)
 * core: add option "infolists" for command /debug

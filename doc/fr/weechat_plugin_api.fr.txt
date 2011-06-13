@@ -3279,7 +3279,7 @@ Prototype :
 [source,C]
 ----------------------------------------
 const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
-                                          void *property);
+                                          const char *property);
 ----------------------------------------
 
 Paramètres :
@@ -6109,7 +6109,7 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
 Les types de "hooks" suivants autorisent une priorité : command, command_run,
-signal, hsignal, config, completion, modifier, info, infolist.
+signal, hsignal, config, completion, modifier, info, info_hashtable, infolist, hdata.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -8302,6 +8302,63 @@ hook = weechat.hook_infolist("mon_infolist", "Mon infolist",
                              "Info sur le pointeur", "Info sur les paramètres",
                              "my_infolist_cb", "")
 ----------------------------------------
+
+weechat_hook_hdata
+^^^^^^^^^^^^^^^^^^
+
+Accroche un hdata : le "callback" retournera un pointeur vers le hdata demandé.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_hdata (const char *hdata_name,
+                                   const char *description,
+                                   struct t_hdata *(*callback)(void *data,
+                                                               const char *hdata_name),
+                                   void *callback_data);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata_name' : nom du hdata
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+* 'description' : description
+* 'callback' : fonction appelée quand le hdata est demandé, paramètres et valeur
+  de retour :
+** 'void *data' : pointeur
+** 'const char *hdata_name' : nom du hdata
+** valeur de retour : hdata demandé
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *
+my_hdata_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *mon_hdata;
+    
+    /* construction du hdata */
+    /* ... */
+    
+    return mon_hdata;
+}
+
+/* ajouts le hdata "mon_hdata" */
+struct t_hook *my_hdata = weechat_hook_hdata ("mon_hdata",
+                                              "Hdata pour ma structure",
+                                              &my_hdata_cb, NULL);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 weechat_unhook
 ^^^^^^^^^^^^^^
@@ -11274,6 +11331,15 @@ weechat_infolist_get
 
 Retourne une "infolist" de WeeChat ou d'une extension.
 
+[IMPORTANT]
+Le contenu d'une infolist est une duplication des données réelles. Donc si vous
+demandez une infolist avec beaucoup de données (comme "buffer_lines"), WeeChat
+allouera de la mémoire pour dupliquer toutes les données, et cela peut prendre
+du temps. +
+Au lieu d'utiliser une grosse infolist, il est préférable d'utiliser un hdata
+(mais l'infolist peut contenir plus de données que le hdata, qui contient des
+données brutes), voir <<hdata,hdata>>.
+
 Prototype :
 
 [source,C]
@@ -11731,6 +11797,861 @@ weechat.infolist_free(infolist)
 
 # exemple
 weechat.infolist_free(infolist)
+----------------------------------------
+
+[[hdata]]
+Hdata
+~~~~~
+
+Fonctions pour les hdata (accès brut aux données de WeeChat ou des extensions).
+
+[IMPORTANT]
+Le "hdata" fournit seulement un accès en lecture seule aux données. Il est
+*STRICTEMENT INTERDIT* d'écrire quelque chose dans une zone mémoire pointée par
+les variables du hdata.
+
+weechat_hdata_new
+^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Créé un "hdata".
+
+[NOTE]
+.hdata vs infolist
+========================================
+Le "hdata" est un moyen rapide de lire des données de WeeChat ou des extensions.
+Il est similaire à l'infolist, mais il y a quelques différences :
+
+* il est plus rapide et utilise moins de mémoire : accès direct aux données sans
+  duplication
+* il peut contenir des informations différentes de l'infolist : il contient les
+  données brutes des structures (l'infolist peut ajouter des données
+  supplémentaires pour plus de commodité)
+========================================
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata_name' : nom du hdata
+* 'var_prev' : nom de la variable dans la structure qui est un pointeur vers
+  l'élément précédent dans la liste (peut être NULL si une telle variable
+  n'existe pas)
+* 'var_next' : nom de la variable dans la structure qui est un pointeur vers
+  l'élément suivant dans la liste (peut être NULL si une telle variable
+  n'existe pas)
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hdata"
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_new_var
+^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Créé une nouvelle variable dans le hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la variable
+* 'offset' : position (offset) de la variable dans la structure
+* 'type' : type de la variable, un parmi ceux-ci :
+** WEECHAT_HDATA_INTEGER
+** WEECHAT_HDATA_LONG
+** WEECHAT_HDATA_STRING
+** WEECHAT_HDATA_POINTER
+** WEECHAT_HDATA_TIME
+** WEECHAT_HDATA_OTHER
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_myplugin_list
+{
+    char *name;
+    struct t_gui_buffer *buffer;
+    int count;
+    struct t_myplugin_list *prev;
+    struct t_myplugin_list *next;
+};
+
+/* ... */
+
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER);
+----------------------------------------
+
+La macro "WEECHAT_HDATA_VAR" peut être utilisée pour raccourcir le code :
+
+[source,C]
+----------------------------------------
+WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, count, INTEGER);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_new_list
+^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Créé un nouveau pointer vers une liste dans le hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la variable
+* 'pointer' : pointeur vers la liste
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_myplugin_list
+{
+    char *name;
+    struct t_gui_buffer *buffer;
+    int count;
+    struct t_myplugin_list *prev;
+    struct t_myplugin_list *next;
+};
+
+struct t_myplugin_list *buffers = NULL;
+struct t_myplugin_list *last_buffer = NULL;
+
+/* ... */
+
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_list (hdata, "buffers", &buffers);
+weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
+----------------------------------------
+
+La macro "WEECHAT_HDATA_LIST" peut être utilisée pour raccourcir le code :
+
+[source,C]
+----------------------------------------
+WEECHAT_HDATA_LIST(buffers);
+WEECHAT_HDATA_LIST(last_buffer);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_get
+^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne un "hdata" pour une structure de WeeChat ou d'une extension.
+
+[NOTE]
+Le "hdata" ne contient aucune donnée, il s'agit seulement d'une hashtable avec
+la position (offset) des variables dans la structure. Cela signifie que vous
+aurez besoin de ce hdata et d'un pointeur vers un objet WeeChat ou d'une
+extension pour lire des données.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hdata *weechat_hdata_get (const char *hdata_name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata_name' : nom du hdata :
+include::autogen/plugin_api/hdata.txt[]
+
+Valeur de retour :
+
+* pointeur vers le hdata, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("irc_server");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+hdata = weechat.hdata_get(hdata_name)
+
+# exemple
+hdata = weechat.hdata_get("irc_server")
+----------------------------------------
+
+weechat_hdata_get_var_offset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la position (offset) de la variable dans le hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* position (offset) de la variable, 0 en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int offset = weechat_hdata_get_var_offset (hdata, "name");
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_get_var_type
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne le type de la variable dans le hdata (sous forme d'entier).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* type de la variable, -1 en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int type = weechat_hdata_get_var_type (hdata, "name");
+switch (type)
+{
+    case WEECHAT_HDATA_INTEGER:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_LONG:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_STRING:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_POINTER:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_TIME:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_OTHER:
+        /* ... */
+        break;
+    default:
+        /* variable non trouvée */
+        break;
+}
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_get_var_type_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne le type de la variable dans le hdata (sous forme de chaîne).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* type de la variable, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "type = %s",
+                weechat_hdata_get_var_type_string (hdata, "name"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+type = weechat.hdata_get_var_type_string(hdata, name)
+
+# exemple
+weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
+----------------------------------------
+
+weechat_hdata_get_var
+^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne un pointeur vers le contenu de la variable dans le hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* pointeur vers le contenu de la variable, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+void *pointer = weechat_hdata_get_var (hdata, buffer, "name");
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_get_var_at_offset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne un pointeur vers le contenu de la variable dans le hdata, en utilisant
+une position (offset).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'offset' : position (offset) de la variable
+
+Valeur de retour :
+
+* pointeur vers le contenu de la variable, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+int offset = weechat_hdata_get_var_offset (hdata, "name");
+void *pointer = weechat_hdata_get_var_at_offset (hdata, buffer, offset);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hdata_get_list
+^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne un pointeur de liste du hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'name' : nom de la liste
+
+Valeur de retour :
+
+* pointeur vers la liste, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+list = weechat.hdata_get_list(hdata, name)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffers = weechat.hdata_get_list(hdata, "gui_buffers")
+----------------------------------------
+
+weechat_hdata_move
+^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Déplace le pointeur vers un autre élément dans la liste.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'count' : nombre de saut(s) à exécuter (entier négatif ou positif, différent
+  de 0)
+
+Valeur de retour :
+
+* pointeur vers l'élément atteint, NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+
+/* se déplacer au tampon suivant, 2 fois */
+buffer = weechat_hdata_move (hdata, buffer, 2);
+
+/* se déplacer au tampon précédent */
+if (buffer)
+    buffer = weechat_hdata_move (hdata, buffer, -1);
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+pointer = weechat.hdata_move(hdata, pointer, count)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffer = weechat.buffer_search_main()
+
+# se déplacer au tampon suivant, 2 fois
+buffer = weechat.hdata_move(hdata, buffer, 2)
+
+# se déplacer au tampon précédent
+if buffer:
+    buffer = weechat.hdata_move(hdata, buffer, -1)
+----------------------------------------
+
+weechat_hdata_integer
+^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme d'entier.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "integer")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme d'entier
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+weechat_printf (NULL, "number = %d", weechat_hdata_integer (hdata, buffer, "number"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_integer(hdata, pointer, name)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffer = weechat.buffer_search_main()
+weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
+----------------------------------------
+
+weechat_hdata_long
+^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme d'entier long.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "long")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme d'entier long
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "longvar"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_long(hdata, pointer, name)
+
+# exemple
+weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
+----------------------------------------
+
+weechat_hdata_string
+^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme de chaîne.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "string")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+weechat_printf (NULL, "name = %s", weechat_hdata_string (hdata, buffer, "name"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_string(hdata, pointer, name)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffer = weechat.buffer_search_main()
+weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
+----------------------------------------
+
+weechat_hdata_pointer
+^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme de pointeur.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "pointeur")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme de pointeur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "lines"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_pointer(hdata, pointer, name)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffer = weechat.buffer_search_main()
+weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
+----------------------------------------
+
+weechat_hdata_time
+^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme de date/heure.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "time")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme de date/heure
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *ptr = weechat_buffer_search_main ();
+ptr = weechat_hdata_pointer (hdata, ptr, "lines");
+if (ptr)
+{
+    hdata = weechat_hdata_get ("lines");
+    ptr = weechat_hdata_pointer (hdata, ptr, "first_line");
+    if (ptr)
+    {
+        hdata = weechat_hdata_get ("line");
+        ptr = weechat_hdata_pointer (hdata, ptr, "data");
+        if (ptr)
+        {
+            hdata = weechat_hdata_get ("line_data");
+            time_t date = weechat_hdata_time (hdata, hdata, "date");
+            weechat_printf (NULL, "heure de la première ligne affichée = %s", ctime (&date));
+        }
+    }
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_time(hdata, pointer, name)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+ptr = weechat.buffer_search_main()
+ptr = weechat.hdata_pointer(hdata, ptr, "lines")
+if ptr:
+    hdata = weechat.hdata_get("lines")
+    ptr = weechat.hdata_pointer(hdata, ptr, "first_line")
+    if ptr:
+        hdata = weechat.hdata_get("line")
+        ptr = weechat.hdata_pointer(hdata, ptr, "data")
+        if ptr:
+            hdata = weechat.hdata_get("line_data")
+            weechat.prnt("", "heure de la première ligne affichée = %s" % weechat.hdata_time(hdata, ptr, "date"))
+----------------------------------------
+
+weechat_hdata_get_string
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
+
+Retourne une valeur pour une propriété d'un hdata sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *property);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'property' : nom de la propriété :
+** 'var_keys' : chaîne avec la liste des clés pour les variables du hdata
+   (format : "key1,key2,key3")
+** 'var_values' : chaîne avec la liste des valeurs pour les variables du hdata
+   (format : "value1,value2,value3")
+** 'var_keys_values' : chaîne avec la liste des clés et valeurs pour les
+   variables du hdata (format : "key1:value1,key2:value2,key3:value3")
+** 'var_prev' : nom de la variable dans la structure qui est un pointeur vers
+   l'élément précédent dans la liste
+** 'var_next' : nom de la variable dans la structure qui est un pointeur vers
+   l'élément suivant dans la liste
+** 'list_keys' : chaîne avec la liste des clés pour les listes du hdata
+   (format : "key1,key2,key3")
+** 'list_values' : chaîne avec la liste des valeurs pour les listes du hdata
+   (format : "value1,value2,value3")
+** 'list_keys_values' : chaîne avec la liste des clés et valeurs pour les listes
+   du hdata (format : "key1:value1,key2:value2,key3:value3")
+
+Valeur de retour :
+
+* valeur de la propriété sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "variables dans le hdata: %s" weechat_hdata_get_string (hdata, "var_keys"));
+weechat_printf (NULL, "listes dans le hdata: %s" weechat_hdata_get_string (hdata, "list_keys"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_get_string(hdata, property)
+
+# exemple
+weechat.prnt("", "variables dans le hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
+weechat.prnt("", "listes dans le hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
 ----------------------------------------
 
 [[upgrade]]

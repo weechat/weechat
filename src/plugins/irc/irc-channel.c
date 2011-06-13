@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +38,10 @@
 #include "irc-nick.h"
 #include "irc-server.h"
 #include "irc-input.h"
+
+
+struct t_hdata *irc_channel_hdata_channel = NULL;
+struct t_hdata *irc_channel_hdata_channel_speaking = NULL;
 
 
 /*
@@ -830,6 +835,81 @@ irc_channel_free_all (struct t_irc_server *server)
     {
         irc_channel_free (server, server->channels);
     }
+}
+
+/*
+ * irc_channel_hdata_channel_cb: return hdata for channel
+ */
+
+struct t_hdata *
+irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (irc_channel_hdata_channel)
+        return irc_channel_hdata_channel;
+    
+    hdata = weechat_hdata_new (hdata_name, "prev_channel", "next_channel");
+    if (hdata)
+    {
+        irc_channel_hdata_channel = hdata;
+        WEECHAT_HDATA_VAR(struct t_irc_channel, type, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, name, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, topic, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, modes, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, limit, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, key, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, checking_away, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, away_message, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, has_quit_server, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, cycle, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, part, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, display_creation_date, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, nick_completion_reset, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, pv_remote_nick_color, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, hook_autorejoin, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_count, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, nicks, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, last_nick, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking_time, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, last_nick_speaking_time, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, buffer, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, buffer_as_string, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, prev_channel, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, next_channel, POINTER);
+    }
+    return irc_channel_hdata_channel;
+}
+
+/*
+ * irc_channel_hdata_channel_speaking_cb: return hdata for channel_speaking
+ */
+
+struct t_hdata *
+irc_channel_hdata_channel_speaking_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (irc_channel_hdata_channel_speaking)
+        return irc_channel_hdata_channel_speaking;
+    
+    hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick");
+    if (hdata)
+    {
+        irc_channel_hdata_channel_speaking = hdata;
+        WEECHAT_HDATA_VAR(struct t_irc_channel_speaking, nick, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_channel_speaking, time_last_message, TIME);
+        WEECHAT_HDATA_VAR(struct t_irc_channel_speaking, prev_nick, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_channel_speaking, next_nick, POINTER);
+    }
+    return irc_channel_hdata_channel_speaking;
 }
 
 /*

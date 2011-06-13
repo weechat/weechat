@@ -145,7 +145,7 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|memory|term|windows
+        buffer|color|hdata|infolists|memory|term|windows
 
      list: list plugins with debug levels
       set: set debug level for plugin
@@ -154,6 +154,7 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
      dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
    buffer: dump buffer content with hexadecimal values in log file
     color: display infos about current color pairs
+    hdata: display infos about hdata
 infolists: display infos about infolists
    memory: display infos about memory usage
      term: display infos about terminal

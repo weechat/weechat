@@ -108,6 +108,10 @@ extern void *gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
 extern void gui_nicklist_nick_set (struct t_gui_buffer *buffer,
                                    struct t_gui_nick *nick,
                                    const char *property, const char *value);
+extern struct t_hdata *gui_nicklist_hdata_nick_group_cb (void *data,
+                                                         const char *hdata_name);
+extern struct t_hdata *gui_nicklist_hdata_nick_cb (void *data,
+                                                   const char *hdata_name);
 extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_buffer *buffer,
                                          const char *name);

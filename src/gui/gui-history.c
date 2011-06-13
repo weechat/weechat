@@ -27,13 +27,16 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-string.h"
+#include "../plugins/plugin.h"
 #include "gui-history.h"
 #include "gui-buffer.h"
 
@@ -42,6 +45,8 @@ struct t_gui_history *history_global = NULL;
 struct t_gui_history *last_history_global = NULL;
 struct t_gui_history *history_global_ptr = NULL;
 int num_history_global = 0;
+
+struct t_hdata *gui_history_hdata_history = NULL;
 
 
 /*
@@ -210,6 +215,32 @@ gui_history_buffer_free (struct t_gui_buffer *buffer)
     buffer->last_history = NULL;
     buffer->ptr_history = NULL;
     buffer->num_history = 0;
+}
+
+/*
+ * gui_history_hdata_history_cb: return hdata for history
+ */
+
+struct t_hdata *
+gui_history_hdata_history_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_history_hdata_history)
+        return gui_history_hdata_history;
+    
+    hdata = hdata_new (hdata_name, "prev_history", "next_history");
+    if (hdata)
+    {
+        gui_history_hdata_history = hdata;
+        HDATA_VAR(struct t_gui_history, text, STRING);
+        HDATA_VAR(struct t_gui_history, prev_history, POINTER);
+        HDATA_VAR(struct t_gui_history, next_history, POINTER);
+    }
+    return gui_history_hdata_history;
 }
 
 /*

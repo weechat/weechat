@@ -36,23 +36,25 @@
 
 #define PYTHON_RETURN_OK return Py_BuildValue ("i", 1);
 #define PYTHON_RETURN_ERROR return Py_BuildValue ("i", 0);
-#define PYTHON_RETURN_EMPTY \
-    Py_INCREF(Py_None);     \
+#define PYTHON_RETURN_EMPTY                                             \
+    Py_INCREF(Py_None);                                                 \
     return Py_None;
-#define PYTHON_RETURN_STRING(__string)             \
-    if (__string)                                  \
-        return Py_BuildValue ("s", __string);      \
+#define PYTHON_RETURN_STRING(__string)                                  \
+    if (__string)                                                       \
+        return Py_BuildValue ("s", __string);                           \
     return Py_BuildValue ("s", "")
-#define PYTHON_RETURN_STRING_FREE(__string)        \
-    if (__string)                                  \
-    {                                              \
-        object = Py_BuildValue ("s", __string);    \
-        free (__string);                           \
-        return object;                             \
-    }                                              \
+#define PYTHON_RETURN_STRING_FREE(__string)                             \
+    if (__string)                                                       \
+    {                                                                   \
+        object = Py_BuildValue ("s", __string);                         \
+        free (__string);                                                \
+        return object;                                                  \
+    }                                                                   \
     return Py_BuildValue ("s", "")
-#define PYTHON_RETURN_INT(__int)                \
+#define PYTHON_RETURN_INT(__int)                                        \
     return Py_BuildValue("i", __int);
+#define PYTHON_RETURN_LONG(__long)                                      \
+    return Py_BuildValue("l", __long);
 
 
 /*
@@ -6842,6 +6844,364 @@ weechat_python_api_infolist_free (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hdata_get: get hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get (PyObject *self, PyObject *args)
+{
+    char *name, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_hdata_get (name));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hdata_get_var_type_string: get type of variable as string
+ *                                               in hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_var_type_string (PyObject *self, PyObject *args)
+{
+    char *hdata, *name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &hdata, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_hdata_get_list: get list pointer in hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_list (PyObject *self, PyObject *args)
+{
+    char *hdata, *name, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &hdata, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
+                                                     name));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hdata_move: move pointer to another element in list
+ */
+
+static PyObject *
+weechat_python_api_hdata_move (PyObject *self, PyObject *args)
+{
+    char *result, *hdata, *pointer;
+    int count;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_move");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    count = 0;
+    
+    if (!PyArg_ParseTuple (args, "ssi", &hdata, &pointer, &count))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_move");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
+                                                 script_str2ptr (pointer),
+                                                 count));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hdata_integer: get integer value of a variable in
+ *                                   structure using hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_integer (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_integer");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_integer");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_hdata_integer (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_hdata_long: get long value of a variable in structure
+ *                                using hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_long (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name;
+    long value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_long");
+        PYTHON_RETURN_LONG(0);
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_long");
+        PYTHON_RETURN_LONG(0);
+    }
+    
+    value = weechat_hdata_long (script_str2ptr (hdata),
+                                script_str2ptr (pointer),
+                                name);
+    
+    PYTHON_RETURN_LONG(value);
+}
+
+/*
+ * weechat_python_api_hdata_string: get string value of a variable in structure
+ *                                  using hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_string (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_hdata_string (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_hdata_pointer: get pointer value of a variable in
+ *                                   structure using hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_pointer (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
+                                                    script_str2ptr (pointer),
+                                                    name));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hdata_time: get time value of a variable in structure
+ *                                using hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_time (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name, timebuffer[64], *result;
+    time_t time;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_time");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_time");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    time = weechat_hdata_time (script_str2ptr (hdata),
+                               script_str2ptr (pointer),
+                               name);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    result = strdup (timebuffer);
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hdata_get_string: get hdata property as string
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_string (PyObject *self, PyObject *args)
+{
+    char *hdata, *property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &hdata, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_hdata_get_string (script_str2ptr (hdata), property);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
  * weechat_python_api_upgrade_new: create an upgrade file
  */
 
@@ -7194,6 +7554,16 @@ PyMethodDef weechat_python_funcs[] =
     { "infolist_pointer", &weechat_python_api_infolist_pointer, METH_VARARGS, "" },
     { "infolist_time", &weechat_python_api_infolist_time, METH_VARARGS, "" },
     { "infolist_free", &weechat_python_api_infolist_free, METH_VARARGS, "" },
+    { "hdata_get", &weechat_python_api_hdata_get, METH_VARARGS, "" },
+    { "hdata_get_var_type_string", &weechat_python_api_hdata_get_var_type_string, METH_VARARGS, "" },
+    { "hdata_get_list", &weechat_python_api_hdata_get_list, METH_VARARGS, "" },
+    { "hdata_move", &weechat_python_api_hdata_move, METH_VARARGS, "" },
+    { "hdata_integer", &weechat_python_api_hdata_integer, METH_VARARGS, "" },
+    { "hdata_long", &weechat_python_api_hdata_long, METH_VARARGS, "" },
+    { "hdata_string", &weechat_python_api_hdata_string, METH_VARARGS, "" },
+    { "hdata_pointer", &weechat_python_api_hdata_pointer, METH_VARARGS, "" },
+    { "hdata_time", &weechat_python_api_hdata_time, METH_VARARGS, "" },
+    { "hdata_get_string", &weechat_python_api_hdata_get_string, METH_VARARGS, "" },
     { "upgrade_new", &weechat_python_api_upgrade_new, METH_VARARGS, "" },
     { "upgrade_write_object", &weechat_python_api_upgrade_write_object, METH_VARARGS, "" },
     { "upgrade_read", &weechat_python_api_upgrade_read, METH_VARARGS, "" },

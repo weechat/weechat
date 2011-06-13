@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -41,6 +42,8 @@ struct t_hook *irc_notify_timer_whois = NULL;   /* timer for "whois"        */
 
 /* hsignal for redirected commands */
 struct t_hook *irc_notify_hsignal = NULL;
+
+struct t_hdata *irc_notify_hdata_notify = NULL;
 
 
 /*
@@ -806,6 +809,37 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
     }
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_notify_hdata_notify_cb: return hdata for notify
+ */
+
+struct t_hdata *
+irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (irc_notify_hdata_notify)
+        return irc_notify_hdata_notify;
+    
+    hdata = weechat_hdata_new (hdata_name, "prev_notify", "next_notify");
+    if (hdata)
+    {
+        irc_notify_hdata_notify = hdata;
+        WEECHAT_HDATA_VAR(struct t_irc_notify, server, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, nick, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, check_away, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, is_on_server, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, away_message, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, ison_received, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, prev_notify, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, next_notify, POINTER);
+    }
+    return irc_notify_hdata_notify;
 }
 
 /*

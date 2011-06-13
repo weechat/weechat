@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-31 09:11+0200\n"
+"POT-Creation-Date: 2011-06-13 11:52+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1071,8 +1071,8 @@ msgstr "spřáva ladění pro jádro/pluginy"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|term|windows"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -1087,6 +1087,7 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"    hdata: display infos about hdata\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     term: display infos about terminal\n"
@@ -5531,6 +5532,34 @@ msgstr "seznam notifikací"
 msgid "notify pointer (optional)"
 msgstr "ukazatel notifikace (volitelné)"
 
+#, fuzzy
+msgid "irc nick"
+msgstr "přezdívka: přezdívka"
+
+#, fuzzy
+msgid "irc channel"
+msgstr "kanál"
+
+msgid "irc channel_speaking"
+msgstr ""
+
+msgid "irc ignore"
+msgstr ""
+
+#, fuzzy
+msgid "irc notify"
+msgstr "seznam notifikací"
+
+msgid "pattern for irc redirect"
+msgstr ""
+
+msgid "irc redirect"
+msgstr ""
+
+#, fuzzy
+msgid "irc server"
+msgstr "server"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: nejste připojen k serveru"
@@ -6557,6 +6586,133 @@ msgstr "ukazatel okna (volitelné)"
 msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "jméno okna (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
+
+msgid "bar"
+msgstr ""
+
+#, fuzzy
+msgid "bar item"
+msgstr "seznam položek polí"
+
+#, fuzzy
+msgid "buffer"
+msgstr "řídit buffery"
+
+#, fuzzy
+msgid "completion"
+msgstr "kompilováno"
+
+msgid "partial completion"
+msgstr ""
+
+#, fuzzy
+msgid "config file"
+msgstr "konfigurační soubory"
+
+#, fuzzy
+msgid "config section"
+msgstr "nastaví konfigurační možnosti"
+
+#, fuzzy
+msgid "config option"
+msgstr "nastaví konfigurační možnosti"
+
+msgid "filter"
+msgstr ""
+
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "historie příkazů"
+
+msgid "hook (variables common to all hook types)"
+msgstr ""
+
+#, fuzzy
+msgid "hook of type \"command\""
+msgstr "historie příkazů"
+
+msgid "hook of type \"command_run\""
+msgstr ""
+
+msgid "hook of type \"timer\""
+msgstr ""
+
+msgid "hook of type \"fd\""
+msgstr ""
+
+msgid "hook of type \"process\""
+msgstr ""
+
+msgid "hook of type \"connect\""
+msgstr ""
+
+msgid "hook of type \"print\""
+msgstr ""
+
+msgid "hook of type \"signal\""
+msgstr ""
+
+msgid "hook of type \"hsignal\""
+msgstr ""
+
+msgid "hook of type \"config\""
+msgstr ""
+
+msgid "hook of type \"completion\""
+msgstr ""
+
+msgid "hook of type \"modifier\""
+msgstr ""
+
+msgid "hook of type \"info\""
+msgstr ""
+
+msgid "hook of type \"info_hashtable\""
+msgstr ""
+
+msgid "hook of type \"infolist\""
+msgstr ""
+
+msgid "hook of type \"hdata\""
+msgstr ""
+
+#, fuzzy
+msgid "undo for input line"
+msgstr "funkce pro příkazovou řádku"
+
+msgid "key"
+msgstr ""
+
+#, fuzzy
+msgid "lines"
+msgstr "online"
+
+#, fuzzy
+msgid "line"
+msgstr "online"
+
+#, fuzzy
+msgid "line data"
+msgstr "online"
+
+#, fuzzy
+msgid "group in nicklist"
+msgstr "barva textu pro skupiny v seznamu přezdívek"
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "přezdívky v seznamu notifikací"
+
+#, fuzzy
+msgid "window"
+msgstr "spravuje okna"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "seznam oken"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -7627,3 +7783,9 @@ msgstr "Hash tabulka (výstup)"
 
 msgid "Pointer"
 msgstr "Ukazatel"
+
+msgid "Variables"
+msgstr ""
+
+msgid "Lists"
+msgstr ""

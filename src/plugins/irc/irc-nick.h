@@ -90,6 +90,8 @@ extern char *irc_nick_as_prefix (struct t_irc_server *server,
                                  const char *force_color);
 extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
                                            const char *nickname);
+extern struct t_hdata *irc_nick_hdata_nick_cb (void *data,
+                                               const char *hdata_name);
 extern int irc_nick_add_to_infolist (struct t_infolist *infolist,
                                      struct t_irc_nick *nick);
 extern void irc_nick_print_log (struct t_irc_nick *nick);

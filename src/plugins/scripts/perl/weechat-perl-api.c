@@ -39,29 +39,32 @@
 #define PERL_RETURN_OK XSRETURN_YES
 #define PERL_RETURN_ERROR XSRETURN_NO
 #define PERL_RETURN_EMPTY XSRETURN_EMPTY
-#define PERL_RETURN_STRING(__string)              \
-    if (__string)                                 \
-    {                                             \
-        XST_mPV (0, __string);                    \
-        XSRETURN (1);                             \
-    }                                             \
-    XST_mPV (0, "");                              \
+#define PERL_RETURN_STRING(__string)                                    \
+    if (__string)                                                       \
+    {                                                                   \
+        XST_mPV (0, __string);                                          \
+        XSRETURN (1);                                                   \
+    }                                                                   \
+    XST_mPV (0, "");                                                    \
     XSRETURN (1)
-#define PERL_RETURN_STRING_FREE(__string)         \
-    if (__string)                                 \
-    {                                             \
-        XST_mPV (0, __string);                    \
-        free (__string);                          \
-        XSRETURN (1);                             \
-    }                                             \
-    XST_mPV (0, "");                              \
+#define PERL_RETURN_STRING_FREE(__string)                               \
+    if (__string)                                                       \
+    {                                                                   \
+        XST_mPV (0, __string);                                          \
+        free (__string);                                                \
+        XSRETURN (1);                                                   \
+    }                                                                   \
+    XST_mPV (0, "");                                                    \
     XSRETURN (1)
-#define PERL_RETURN_INT(__int)                    \
-    XST_mIV (0, __int);                           \
+#define PERL_RETURN_INT(__int)                                          \
+    XST_mIV (0, __int);                                                 \
     XSRETURN (1);
-#define PERL_RETURN_OBJ(__obj)                    \
-    ST (0) = newRV_inc((SV *)__obj);              \
-    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));       \
+#define PERL_RETURN_LONG(__long)                                        \
+    XST_mIV (0, __long);                                                \
+    XSRETURN (1);
+#define PERL_RETURN_OBJ(__obj)                                          \
+    ST (0) = newRV_inc((SV *)__obj);                                    \
+    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));                             \
     XSRETURN (1);
 
 
@@ -6502,6 +6505,358 @@ XS (XS_weechat_api_infolist_free)
 }
 
 /*
+ * weechat::hdata_get: get hdata
+ */
+
+XS (XS_weechat_api_hdata_get)
+{
+    char *result, *name;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get");
+        PERL_RETURN_EMPTY;
+    }
+    
+    name = SvPV (ST (0), PL_na);
+    
+    result = script_ptr2str (weechat_hdata_get (name));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hdata_get_var_type_string: get type of variable as string in hdata
+ */
+
+XS (XS_weechat_api_hdata_get_var_type_string)
+{
+    const char *result;
+    char *hdata, *name;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::hdata_get_list: get list pointer in hdata
+ */
+
+XS (XS_weechat_api_hdata_get_list)
+{
+    char *hdata, *name;
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
+                                                     name));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hdata_move: move pointer to another element in list
+ */
+
+XS (XS_weechat_api_hdata_move)
+{
+    char *result, *hdata, *pointer;
+    int count;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_move");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_move");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    count = SvIV(ST (2));
+    
+    result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
+                                                 script_str2ptr (pointer),
+                                                 count));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hdata_integer: get integer value of a variable in structure using
+ *                         hdata
+ */
+
+XS (XS_weechat_api_hdata_integer)
+{
+    char *hdata, *pointer, *name;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_integer");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_integer");
+        PERL_RETURN_INT(0);
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    name = SvPV (ST (2), PL_na);
+    
+    value = weechat_hdata_integer (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::hdata_long: get long value of a variable in structure using hdata
+ */
+
+XS (XS_weechat_api_hdata_long)
+{
+    char *hdata, *pointer, *name;
+    long value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_long");
+        PERL_RETURN_LONG(0);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_long");
+        PERL_RETURN_LONG(0);
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    name = SvPV (ST (2), PL_na);
+    
+    value = weechat_hdata_long (script_str2ptr (hdata),
+                                script_str2ptr (pointer),
+                                name);
+    
+    PERL_RETURN_LONG(value);
+}
+
+/*
+ * weechat::hdata_string: get string value of a variable in structure using
+ *                        hdata
+ */
+
+XS (XS_weechat_api_hdata_string)
+{
+    char *hdata, *pointer, *name;
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    name = SvPV (ST (2), PL_na);
+    
+    result = weechat_hdata_string (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::hdata_pointer: get pointer value of a variable in structure using
+ *                         hdata
+ */
+
+XS (XS_weechat_api_hdata_pointer)
+{
+    char *hdata, *pointer, *name;
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    name = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
+                                                    script_str2ptr (pointer),
+                                                    name));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hdata_time: get time value of a variable in structure using hdata
+ */
+
+XS (XS_weechat_api_hdata_time)
+{
+    time_t time;
+    char timebuffer[64], *result, *hdata, *pointer, *name;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_time");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_time");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    pointer = SvPV (ST (1), PL_na);
+    name = SvPV (ST (2), PL_na);
+    
+    time = weechat_hdata_time (script_str2ptr (hdata),
+                               script_str2ptr (pointer),
+                               name);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    result = strdup (timebuffer);
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hdata_get_string: get hdata property as string
+ */
+
+XS (XS_weechat_api_hdata_get_string)
+{
+    char *hdata, *property;
+    const char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na);
+    
+    result = weechat_hdata_get_string (script_str2ptr (hdata), property);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
  * weechat::upgrade_new: create an upgrade file
  */
 
@@ -6857,6 +7212,16 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::infolist_pointer", XS_weechat_api_infolist_pointer, "weechat");
     newXS ("weechat::infolist_time", XS_weechat_api_infolist_time, "weechat");
     newXS ("weechat::infolist_free", XS_weechat_api_infolist_free, "weechat");
+    newXS ("weechat::hdata_get", XS_weechat_api_hdata_get, "weechat");
+    newXS ("weechat::hdata_get_var_type_string", XS_weechat_api_hdata_get_var_type_string, "weechat");
+    newXS ("weechat::hdata_get_list", XS_weechat_api_hdata_get_list, "weechat");
+    newXS ("weechat::hdata_move", XS_weechat_api_hdata_move, "weechat");
+    newXS ("weechat::hdata_integer", XS_weechat_api_hdata_integer, "weechat");
+    newXS ("weechat::hdata_long", XS_weechat_api_hdata_long, "weechat");
+    newXS ("weechat::hdata_string", XS_weechat_api_hdata_string, "weechat");
+    newXS ("weechat::hdata_pointer", XS_weechat_api_hdata_pointer, "weechat");
+    newXS ("weechat::hdata_time", XS_weechat_api_hdata_time, "weechat");
+    newXS ("weechat::hdata_get_string", XS_weechat_api_hdata_get_string, "weechat");
     newXS ("weechat::upgrade_new", XS_weechat_api_upgrade_new, "weechat");
     newXS ("weechat::upgrade_write_object", XS_weechat_api_upgrade_write_object, "weechat");
     newXS ("weechat::upgrade_read", XS_weechat_api_upgrade_read, "weechat");

@@ -39,6 +39,8 @@ extern void gui_history_global_add (const char *string);
 extern void gui_history_add (struct t_gui_buffer *buffer, const char *string);
 extern void gui_history_global_free ();
 extern void gui_history_buffer_free (struct t_gui_buffer *buffer);
+extern struct t_hdata *gui_history_hdata_history_cb (void *data,
+                                                     const char *hdata_name);
 extern int gui_history_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_history *history);
 

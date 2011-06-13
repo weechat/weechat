@@ -155,6 +155,12 @@ extern void gui_window_search_restart (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window);
 extern int gui_window_search_text (struct t_gui_window *window);
 extern void gui_window_zoom (struct t_gui_window *window);
+extern struct t_hdata *gui_window_hdata_window_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *gui_window_hdata_window_scroll_cb (void *data,
+                                                          const char *hdata_name);
+extern struct t_hdata *gui_window_hdata_window_tree_cb (void *data,
+                                                        const char *hdata_name);
 extern int gui_window_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_window *window);
 extern void gui_window_print_log ();

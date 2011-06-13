@@ -272,6 +272,8 @@ extern int irc_server_xfer_resume_ready_cb (void *data, const char *signal,
 extern int irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
                                                   const char *type_data,
                                                   void *signal_data);
+extern struct t_hdata *irc_server_hdata_server_cb (void *data,
+                                                   const char *hdata_name);
 extern int irc_server_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_server *server);
 extern void irc_server_print_log ();

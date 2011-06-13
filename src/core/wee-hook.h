@@ -50,6 +50,7 @@ enum t_hook_type
     HOOK_TYPE_INFO,                    /* get some info as string           */
     HOOK_TYPE_INFO_HASHTABLE,          /* get some info as hashtable        */
     HOOK_TYPE_INFOLIST,                /* get some info as infolist         */
+    HOOK_TYPE_HDATA,                   /* get hdata pointer                 */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };
@@ -89,6 +90,7 @@ enum t_hook_type
 #define HOOK_INFO(hook, var) (((struct t_hook_info *)hook->hook_data)->var)
 #define HOOK_INFO_HASHTABLE(hook, var) (((struct t_hook_info_hashtable *)hook->hook_data)->var)
 #define HOOK_INFOLIST(hook, var) (((struct t_hook_infolist *)hook->hook_data)->var)
+#define HOOK_HDATA(hook, var) (((struct t_hook_hdata *)hook->hook_data)->var)
 
 struct t_hook
 {
@@ -358,6 +360,18 @@ struct t_hook_infolist
     char *args_description;             /* description of arguments         */
 };
 
+/* hook hdata */
+
+typedef struct t_hdata *(t_hook_callback_hdata)(void *data,
+                                                const char *hdata_name);
+
+struct t_hook_hdata
+{
+    t_hook_callback_hdata *callback;    /* hdata callback                   */
+    char *hdata_name;                   /* hdata name                       */
+    char *description;                  /* description                      */
+};
+
 /* hook variables */
 
 extern struct t_hook *weechat_hooks[];
@@ -498,9 +512,50 @@ extern struct t_infolist *hook_infolist_get (struct t_weechat_plugin *plugin,
                                              const char *infolist_name,
                                              void *pointer,
                                              const char *arguments);
+extern struct t_hook *hook_hdata (struct t_weechat_plugin *plugin,
+                                  const char *hdata_name,
+                                  const char *description,
+                                  t_hook_callback_hdata *callback,
+                                  void *callback_data);
+extern struct t_hdata *hook_hdata_get (struct t_weechat_plugin *plugin,
+                                       const char *hdata_name);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();
+extern struct t_hdata *hook_hdata_hook_cb (void *data,
+                                           const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_command_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_command_run_cb (void *data,
+                                                       const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_timer_cb (void *data,
+                                                 const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_fd_cb (void *data,
+                                              const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_process_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_connect_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_print_cb (void *data,
+                                                 const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_signal_cb (void *data,
+                                                  const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_hsignal_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_config_cb (void *data,
+                                                  const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_completion_cb (void *data,
+                                                      const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_modifier_cb (void *data,
+                                                    const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_info_cb (void *data,
+                                                const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_info_hashtable_cb (void *data,
+                                                          const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_infolist_cb (void *data,
+                                                    const char *hdata_name);
+extern struct t_hdata *hook_hdata_hook_hdata_cb (void *data,
+                                                 const char *hdata_name);
 extern int hook_add_to_infolist (struct t_infolist *infolist,
                                  const char *arguments);
 extern void hook_print_log ();

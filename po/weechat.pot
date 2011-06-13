@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-31 09:11+0200\n"
+"POT-Creation-Date: 2011-06-13 11:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -891,8 +891,8 @@ msgid "control debug for core/plugins"
 msgstr ""
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|term|windows"
 msgstr ""
 
 msgid ""
@@ -904,6 +904,7 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"    hdata: display infos about hdata\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     term: display infos about terminal\n"
@@ -4416,6 +4417,30 @@ msgstr ""
 msgid "notify pointer (optional)"
 msgstr ""
 
+msgid "irc nick"
+msgstr ""
+
+msgid "irc channel"
+msgstr ""
+
+msgid "irc channel_speaking"
+msgstr ""
+
+msgid "irc ignore"
+msgstr ""
+
+msgid "irc notify"
+msgstr ""
+
+msgid "pattern for irc redirect"
+msgstr ""
+
+msgid "irc redirect"
+msgstr ""
+
+msgid "irc server"
+msgstr ""
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr ""
@@ -5334,6 +5359,117 @@ msgid "window pointer (optional)"
 msgstr ""
 
 msgid "window name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "bar"
+msgstr ""
+
+msgid "bar item"
+msgstr ""
+
+msgid "buffer"
+msgstr ""
+
+msgid "completion"
+msgstr ""
+
+msgid "partial completion"
+msgstr ""
+
+msgid "config file"
+msgstr ""
+
+msgid "config section"
+msgstr ""
+
+msgid "config option"
+msgstr ""
+
+msgid "filter"
+msgstr ""
+
+msgid "history of commands in buffer"
+msgstr ""
+
+msgid "hook (variables common to all hook types)"
+msgstr ""
+
+msgid "hook of type \"command\""
+msgstr ""
+
+msgid "hook of type \"command_run\""
+msgstr ""
+
+msgid "hook of type \"timer\""
+msgstr ""
+
+msgid "hook of type \"fd\""
+msgstr ""
+
+msgid "hook of type \"process\""
+msgstr ""
+
+msgid "hook of type \"connect\""
+msgstr ""
+
+msgid "hook of type \"print\""
+msgstr ""
+
+msgid "hook of type \"signal\""
+msgstr ""
+
+msgid "hook of type \"hsignal\""
+msgstr ""
+
+msgid "hook of type \"config\""
+msgstr ""
+
+msgid "hook of type \"completion\""
+msgstr ""
+
+msgid "hook of type \"modifier\""
+msgstr ""
+
+msgid "hook of type \"info\""
+msgstr ""
+
+msgid "hook of type \"info_hashtable\""
+msgstr ""
+
+msgid "hook of type \"infolist\""
+msgstr ""
+
+msgid "hook of type \"hdata\""
+msgstr ""
+
+msgid "undo for input line"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "lines"
+msgstr ""
+
+msgid "line"
+msgstr ""
+
+msgid "line data"
+msgstr ""
+
+msgid "group in nicklist"
+msgstr ""
+
+msgid "nick in nicklist"
+msgstr ""
+
+msgid "window"
+msgstr ""
+
+msgid "scroll info in window"
+msgstr ""
+
+msgid "tree of windows"
 msgstr ""
 
 #, c-format
@@ -6292,4 +6428,10 @@ msgid "Hashtable (output)"
 msgstr ""
 
 msgid "Pointer"
+msgstr ""
+
+msgid "Variables"
+msgstr ""
+
+msgid "Lists"
 msgstr ""

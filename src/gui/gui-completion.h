@@ -78,6 +78,10 @@ extern void gui_completion_search (struct t_gui_completion *completion,
                                    int pos);
 extern const char *gui_completion_get_string (struct t_gui_completion *completion,
                                               const char *property);
+extern struct t_hdata *gui_completion_hdata_completion_cb (void *data,
+                                                           const char *hdata_name);
+extern struct t_hdata *gui_completion_hdata_completion_partial_cb (void *data,
+                                                                   const char *hdata_name);
 extern void gui_completion_print_log (struct t_gui_completion *completion);
 
 #endif /* __WEECHAT_GUI_COMPLETION_H */

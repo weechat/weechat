@@ -18,7 +18,7 @@
  */
 
 /*
- * irc-info.c: info and infolist hooks for IRC plugin
+ * irc-info.c: info, infolist and hdata hooks for IRC plugin
  */
 
 #include <stdlib.h>
@@ -34,6 +34,7 @@
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
+#include "irc-redirect.h"
 #include "irc-server.h"
 
 
@@ -626,4 +627,22 @@ irc_info_init ()
                            N_("notify pointer (optional)"),
                            N_("server name (can start or end with \"*\" as wildcard) (optional)"),
                            &irc_info_get_infolist_cb, NULL);
+
+    /* hdata hooks */
+    weechat_hook_hdata ("irc_nick", N_("irc nick"),
+                        &irc_nick_hdata_nick_cb, NULL);
+    weechat_hook_hdata ("irc_channel", N_("irc channel"),
+                        &irc_channel_hdata_channel_cb, NULL);
+    weechat_hook_hdata ("irc_channel_speaking", N_("irc channel_speaking"),
+                        &irc_channel_hdata_channel_speaking_cb, NULL);
+    weechat_hook_hdata ("irc_ignore", N_("irc ignore"),
+                        &irc_ignore_hdata_ignore_cb, NULL);
+    weechat_hook_hdata ("irc_notify", N_("irc notify"),
+                        &irc_notify_hdata_notify_cb, NULL);
+    weechat_hook_hdata ("irc_redirect_pattern", N_("pattern for irc redirect"),
+                        &irc_redirect_hdata_redirect_pattern_cb, NULL);
+    weechat_hook_hdata ("irc_redirect", N_("irc redirect"),
+                        &irc_redirect_hdata_redirect_cb, NULL);
+    weechat_hook_hdata ("irc_server", N_("irc server"),
+                        &irc_server_hdata_server_cb, NULL);
 }

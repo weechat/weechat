@@ -40,21 +40,24 @@
 
 #define LUA_RETURN_OK return 1
 #define LUA_RETURN_ERROR return 0
-#define LUA_RETURN_EMPTY                                \
-    lua_pushstring (lua_current_interpreter, "");       \
+#define LUA_RETURN_EMPTY                                                \
+    lua_pushstring (lua_current_interpreter, "");                       \
     return 0
-#define LUA_RETURN_STRING(__string)                     \
-    lua_pushstring (lua_current_interpreter,            \
-                    (__string) ? __string : "");        \
+#define LUA_RETURN_STRING(__string)                                     \
+    lua_pushstring (lua_current_interpreter,                            \
+                    (__string) ? __string : "");                        \
     return 1;
-#define LUA_RETURN_STRING_FREE(__string)                \
-    lua_pushstring (lua_current_interpreter,            \
-                    (__string) ? __string : "");        \
-    if (__string)                                       \
-        free (__string);                                \
+#define LUA_RETURN_STRING_FREE(__string)                                \
+    lua_pushstring (lua_current_interpreter,                            \
+                    (__string) ? __string : "");                        \
+    if (__string)                                                       \
+        free (__string);                                                \
     return 1;
-#define LUA_RETURN_INT(__int)                           \
-    lua_pushnumber (lua_current_interpreter, __int);    \
+#define LUA_RETURN_INT(__int)                                           \
+    lua_pushnumber (lua_current_interpreter, __int);                    \
+    return 1;
+#define LUA_RETURN_LONG(__long)                                         \
+    lua_pushnumber (lua_current_interpreter, __long);                   \
     return 1;
 
 
@@ -7187,7 +7190,390 @@ weechat_lua_api_infolist_free (lua_State *L)
 }
 
 /*
- * weechat_lua_api_config_new: create a new configuration file
+ * weechat_lua_api_hdata_get: get hdata
+ */
+
+static int
+weechat_lua_api_hdata_get (lua_State *L)
+{
+    const char *name;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get");
+        LUA_RETURN_EMPTY;
+    }
+    
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_hdata_get (name));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hdata_get_var_type_string: get type of variable as string in
+ *                                            hdata
+ */
+
+static int
+weechat_lua_api_hdata_get_var_type_string (lua_State *L)
+{
+    const char *hdata, *name, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_hdata_get_list: get list pointer in hdata
+ */
+
+static int
+weechat_lua_api_hdata_get_list (lua_State *L)
+{
+    const char *hdata, *name;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
+                                                     name));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hdata_move: move pointer to another element in list
+ */
+
+static int
+weechat_lua_api_hdata_move (lua_State *L)
+{
+    const char *hdata, *pointer;
+    char *result;
+    int count, n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_move");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_move");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    count = lua_tonumber (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
+                                                 script_str2ptr (pointer),
+                                                 count));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hdata_integer: get integer value of a variable in structure
+ *                                using hdata
+ */
+
+static int
+weechat_lua_api_hdata_integer (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_integer");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_integer");
+        LUA_RETURN_INT(0);
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_hdata_integer (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_hdata_long: get long value of a variable in structure using
+ *                             hdata
+ */
+
+static int
+weechat_lua_api_hdata_long (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    long value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_long");
+        LUA_RETURN_LONG(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_long");
+        LUA_RETURN_LONG(0);
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_hdata_long (script_str2ptr (hdata),
+                                script_str2ptr (pointer),
+                                name);
+    
+    LUA_RETURN_LONG(value);
+}
+
+/*
+ * weechat_lua_api_hdata_string: get string value of a variable in structure
+ *                               using hdata
+ */
+
+static int
+weechat_lua_api_hdata_string (lua_State *L)
+{
+    const char *hdata, *pointer, *name, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_hdata_string (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_hdata_pointer: get pointer value of a variable in structure
+ *                                using hdata
+ */
+
+static int
+weechat_lua_api_hdata_pointer (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
+                                                    script_str2ptr (pointer),
+                                                    name));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hdata_time: get time value of a variable in structure using
+ *                             hdata
+ */
+
+static int
+weechat_lua_api_hdata_time (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    time_t time;
+    char timebuffer[64], *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_time");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_time");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    time = weechat_hdata_time (script_str2ptr (hdata),
+                               script_str2ptr (pointer),
+                               name);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    result = strdup (timebuffer);
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hdata_get_string: get hdata property as string
+ */
+
+static int
+weechat_lua_api_hdata_get_string (lua_State *L)
+{
+    const char *hdata, *property, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_hdata_get_string (script_str2ptr (hdata), property);
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_upgrade_new: create an upgrade file
  */
 
 static int
@@ -7931,6 +8317,16 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "infolist_pointer", &weechat_lua_api_infolist_pointer },
     { "infolist_time", &weechat_lua_api_infolist_time },
     { "infolist_free", &weechat_lua_api_infolist_free },
+    { "hdata_get", &weechat_lua_api_hdata_get },
+    { "hdata_get_var_type_string", &weechat_lua_api_hdata_get_var_type_string },
+    { "hdata_get_list", &weechat_lua_api_hdata_get_list },
+    { "hdata_move", &weechat_lua_api_hdata_move },
+    { "hdata_integer", &weechat_lua_api_hdata_integer },
+    { "hdata_long", &weechat_lua_api_hdata_long },
+    { "hdata_string", &weechat_lua_api_hdata_string },
+    { "hdata_pointer", &weechat_lua_api_hdata_pointer },
+    { "hdata_time", &weechat_lua_api_hdata_time },
+    { "hdata_get_string", &weechat_lua_api_hdata_get_string },
     { "upgrade_new", &weechat_lua_api_upgrade_new },
     { "upgrade_write_object", &weechat_lua_api_upgrade_write_object },
     { "upgrade_read", &weechat_lua_api_upgrade_read },

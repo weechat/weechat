@@ -137,7 +137,7 @@ struct t_gui_buffer
     int input_buffer_1st_display;      /* first char displayed on screen    */
     
     /* undo/redo for input */
-    struct t_gui_input_undo input_undo_snap;  /* snapshot of input buffer   */
+    struct t_gui_input_undo *input_undo_snap; /* snapshot of input buffer   */
     struct t_gui_input_undo *input_undo;      /* undo for input             */
     struct t_gui_input_undo *last_input_undo; /* last undo for input        */
     struct t_gui_input_undo *ptr_input_undo;  /* pointer to current undo    */
@@ -284,6 +284,10 @@ extern void gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer_visited *gui_buffer_visited_add (struct t_gui_buffer *buffer);
 extern int gui_buffer_visited_get_index_previous ();
 extern int gui_buffer_visited_get_index_next ();
+extern struct t_hdata *gui_buffer_hdata_buffer_cb (void *data,
+                                                   const char *hdata_name);
+extern struct t_hdata *gui_buffer_hdata_input_undo_cb (void *data,
+                                                       const char *hdata_name);
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);

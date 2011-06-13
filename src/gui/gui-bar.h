@@ -151,6 +151,8 @@ extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
                            const char *scroll);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();
+extern struct t_hdata *gui_bar_hdata_bar_cb (void *data,
+                                             const char *hdata_name);
 extern int gui_bar_add_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_bar *bar);
 extern void gui_bar_print_log ();

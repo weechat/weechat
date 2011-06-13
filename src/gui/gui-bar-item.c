@@ -26,12 +26,14 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -77,6 +79,8 @@ char *gui_bar_items_default_for_bars[][2] =
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
+
+struct t_hdata *gui_bar_item_hdata_bar_item = NULL;
 
 
 /*
@@ -1683,6 +1687,37 @@ gui_bar_item_end ()
     
     /* remove bar items */
     gui_bar_item_free_all ();
+}
+
+/*
+ * gui_bar_item_hdata_bar_item_cb: return hdata for bar item
+ */
+
+struct t_hdata *
+gui_bar_item_hdata_bar_item_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_bar_item_hdata_bar_item)
+        return gui_bar_item_hdata_bar_item;
+    
+    hdata = hdata_new (hdata_name, "prev_item", "next_item");
+    if (hdata)
+    {
+        gui_bar_item_hdata_bar_item = hdata;
+        HDATA_VAR(struct t_gui_bar_item, plugin, POINTER);
+        HDATA_VAR(struct t_gui_bar_item, name, STRING);
+        HDATA_VAR(struct t_gui_bar_item, build_callback, POINTER);
+        HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER);
+        HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER);
+        HDATA_VAR(struct t_gui_bar_item, next_item, POINTER);
+        HDATA_LIST(gui_bar_items);
+        HDATA_LIST(last_gui_bar_item);
+    }
+    return gui_bar_item_hdata_bar_item;
 }
 
 /*

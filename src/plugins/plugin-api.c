@@ -37,6 +37,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
@@ -47,6 +48,7 @@
 #include "../gui/gui-bar-window.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-completion.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
@@ -56,6 +58,7 @@
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
+#include "plugin-api.h"
 #include "plugin-config.h"
 
 
@@ -1046,4 +1049,80 @@ plugin_api_init ()
                    N_("window pointer (optional)"),
                    N_("window name (can start or end with \"*\" as wildcard) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
+    
+    /* WeeChat core hdata */
+    hook_hdata (NULL, "bar", N_("bar"),
+                &gui_bar_hdata_bar_cb, NULL);
+    hook_hdata (NULL, "bar_item", N_("bar item"),
+                &gui_bar_item_hdata_bar_item_cb, NULL);
+    hook_hdata (NULL, "buffer", N_("buffer"),
+                &gui_buffer_hdata_buffer_cb, NULL);
+    hook_hdata (NULL, "completion", N_("completion"),
+                &gui_completion_hdata_completion_cb, NULL);
+    hook_hdata (NULL, "completion_partial", N_("partial completion"),
+                &gui_completion_hdata_completion_partial_cb, NULL);
+    hook_hdata (NULL, "config_file", N_("config file"),
+                &config_file_hdata_config_file_cb, NULL);
+    hook_hdata (NULL, "config_section", N_("config section"),
+                &config_file_hdata_config_section_cb, NULL);
+    hook_hdata (NULL, "config_option", N_("config option"),
+                &config_file_hdata_config_option_cb, NULL);
+    hook_hdata (NULL, "filter", N_("filter"),
+                &gui_filter_hdata_filter_cb, NULL);
+    hook_hdata (NULL, "history", N_("history of commands in buffer"),
+                &gui_history_hdata_history_cb, NULL);
+    hook_hdata (NULL, "hook", N_("hook (variables common to all hook types)"),
+                &hook_hdata_hook_cb, NULL);
+    hook_hdata (NULL, "hook_command", N_("hook of type \"command\""),
+                &hook_hdata_hook_command_cb, NULL);
+    hook_hdata (NULL, "hook_command_run", N_("hook of type \"command_run\""),
+                &hook_hdata_hook_command_run_cb, NULL);
+    hook_hdata (NULL, "hook_timer", N_("hook of type \"timer\""),
+                &hook_hdata_hook_timer_cb, NULL);
+    hook_hdata (NULL, "hook_fd", N_("hook of type \"fd\""),
+                &hook_hdata_hook_fd_cb, NULL);
+    hook_hdata (NULL, "hook_process", N_("hook of type \"process\""),
+                &hook_hdata_hook_process_cb, NULL);
+    hook_hdata (NULL, "hook_connect", N_("hook of type \"connect\""),
+                &hook_hdata_hook_connect_cb, NULL);
+    hook_hdata (NULL, "hook_print", N_("hook of type \"print\""),
+                &hook_hdata_hook_print_cb, NULL);
+    hook_hdata (NULL, "hook_signal", N_("hook of type \"signal\""),
+                &hook_hdata_hook_signal_cb, NULL);
+    hook_hdata (NULL, "hook_hsignal", N_("hook of type \"hsignal\""),
+                &hook_hdata_hook_hsignal_cb, NULL);
+    hook_hdata (NULL, "hook_config", N_("hook of type \"config\""),
+                &hook_hdata_hook_config_cb, NULL);
+    hook_hdata (NULL, "hook_completion", N_("hook of type \"completion\""),
+                &hook_hdata_hook_completion_cb, NULL);
+    hook_hdata (NULL, "hook_modifier", N_("hook of type \"modifier\""),
+                &hook_hdata_hook_modifier_cb, NULL);
+    hook_hdata (NULL, "hook_info", N_("hook of type \"info\""),
+                &hook_hdata_hook_info_cb, NULL);
+    hook_hdata (NULL, "hook_info_hashtable", N_("hook of type \"info_hashtable\""),
+                &hook_hdata_hook_info_hashtable_cb, NULL);
+    hook_hdata (NULL, "hook_infolist", N_("hook of type \"infolist\""),
+                &hook_hdata_hook_infolist_cb, NULL);
+    hook_hdata (NULL, "hook_hdata", N_("hook of type \"hdata\""),
+                &hook_hdata_hook_hdata_cb, NULL);
+    hook_hdata (NULL, "input_undo", N_("undo for input line"),
+                &gui_buffer_hdata_input_undo_cb, NULL);
+    hook_hdata (NULL, "key", N_("key"),
+                &gui_keyboard_hdata_key_cb, NULL);
+    hook_hdata (NULL, "lines", N_("lines"),
+                &gui_line_hdata_lines_cb, NULL);
+    hook_hdata (NULL, "line", N_("line"),
+                &gui_line_hdata_line_cb, NULL);
+    hook_hdata (NULL, "line_data", N_("line data"),
+                &gui_line_hdata_line_data_cb, NULL);
+    hook_hdata (NULL, "nick_group", N_("group in nicklist"),
+                &gui_nicklist_hdata_nick_group_cb, NULL);
+    hook_hdata (NULL, "nick", N_("nick in nicklist"),
+                &gui_nicklist_hdata_nick_cb, NULL);
+    hook_hdata (NULL, "window", N_("window"),
+                &gui_window_hdata_window_cb, NULL);
+    hook_hdata (NULL, "window_scroll", N_("scroll info in window"),
+                &gui_window_hdata_window_scroll_cb, NULL);
+    hook_hdata (NULL, "window_tree", N_("tree of windows"),
+                &gui_window_hdata_window_tree_cb, NULL);
 }

@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <strings.h>
 #include <sys/stat.h>
@@ -37,6 +38,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-completion.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-list.h"
 #include "../core/wee-log.h"
@@ -44,6 +46,10 @@
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-completion.h"
+
+
+struct t_hdata *gui_completion_hdata_completion = NULL;
+struct t_hdata *gui_completion_hdata_completion_partial = NULL;
 
 
 /*
@@ -1179,6 +1185,76 @@ gui_completion_get_string (struct t_gui_completion *completion,
     }
     
     return NULL;
+}
+
+/*
+ * gui_completion_hdata_completion_cb: return hdata for completion
+ */
+
+struct t_hdata *
+gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_completion_hdata_completion)
+        return gui_completion_hdata_completion;
+    
+    hdata = hdata_new (hdata_name, NULL, NULL);
+    if (hdata)
+    {
+        gui_completion_hdata_completion = hdata;
+        HDATA_VAR(struct t_gui_completion, buffer, POINTER);
+        HDATA_VAR(struct t_gui_completion, context, INTEGER);
+        HDATA_VAR(struct t_gui_completion, base_command, STRING);
+        HDATA_VAR(struct t_gui_completion, base_command_arg_index, INTEGER);
+        HDATA_VAR(struct t_gui_completion, base_word, STRING);
+        HDATA_VAR(struct t_gui_completion, base_word_pos, INTEGER);
+        HDATA_VAR(struct t_gui_completion, position, INTEGER);
+        HDATA_VAR(struct t_gui_completion, args, STRING);
+        HDATA_VAR(struct t_gui_completion, direction, INTEGER);
+        HDATA_VAR(struct t_gui_completion, add_space, INTEGER);
+        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER);
+        HDATA_VAR(struct t_gui_completion, completion_list, POINTER);
+        HDATA_VAR(struct t_gui_completion, word_found, STRING);
+        HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER);
+        HDATA_VAR(struct t_gui_completion, position_replace, INTEGER);
+        HDATA_VAR(struct t_gui_completion, diff_size, INTEGER);
+        HDATA_VAR(struct t_gui_completion, diff_length, INTEGER);
+        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER);
+        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER);
+    }
+    return gui_completion_hdata_completion;
+}
+
+/*
+ * gui_completion_hdata_completion_partial_cb: return hdata for partial
+ *                                             completion
+ */
+
+struct t_hdata *
+gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_completion_hdata_completion_partial)
+        return gui_completion_hdata_completion_partial;
+    
+    hdata = hdata_new (hdata_name, "prev_item", "next_item");
+    if (hdata)
+    {
+        gui_completion_hdata_completion_partial = hdata;
+        HDATA_VAR(struct t_gui_completion_partial, word, STRING);
+        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER);
+        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER);
+        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER);
+    }
+    return gui_completion_hdata_completion_partial;
 }
 
 /*

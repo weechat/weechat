@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
@@ -34,6 +35,9 @@
 #include "irc-mode.h"
 #include "irc-server.h"
 #include "irc-channel.h"
+
+
+struct t_hdata *irc_nick_hdata_nick = NULL;
 
 
 /*
@@ -925,6 +929,37 @@ irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
     }
     
     return IRC_COLOR_CHAT_NICK_OTHER;
+}
+
+/*
+ * irc_nick_hdata_nick_cb: return hdata for nick
+ */
+
+struct t_hdata *
+irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (irc_nick_hdata_nick)
+        return irc_nick_hdata_nick;
+    
+    hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick");
+    if (hdata)
+    {
+        irc_nick_hdata_nick = hdata;
+        WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER);
+    }
+    return irc_nick_hdata_nick;
 }
 
 /*

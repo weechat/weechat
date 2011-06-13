@@ -102,6 +102,12 @@ extern void gui_line_add_y (struct t_gui_buffer *buffer, int y,
                             const char *message);
 extern void gui_line_clear (struct t_gui_line *line);
 extern void gui_line_mix_buffers (struct t_gui_buffer *buffer);
+extern struct t_hdata *gui_line_hdata_lines_cb (void *data,
+                                                const char *hdata_name);
+extern struct t_hdata *gui_line_hdata_line_cb (void *data,
+                                               const char *hdata_name);
+extern struct t_hdata *gui_line_hdata_line_data_cb (void *data,
+                                                    const char *hdata_name);
 extern int gui_line_add_to_infolist (struct t_infolist *infolist,
                                      struct t_gui_lines *lines,
                                      struct t_gui_line *line);

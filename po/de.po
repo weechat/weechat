@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-31 09:11+0200\n"
+"POT-Creation-Date: 2011-06-13 11:52+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1090,8 +1090,8 @@ msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|term|windows"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -1106,6 +1106,7 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"    hdata: display infos about hdata\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     term: display infos about terminal\n"
@@ -5788,6 +5789,34 @@ msgstr "Liste mit Benachrichtigungen"
 msgid "notify pointer (optional)"
 msgstr "Benachrichtigungspointer (optional)"
 
+#, fuzzy
+msgid "irc nick"
+msgstr "nick: nick"
+
+#, fuzzy
+msgid "irc channel"
+msgstr "Channel"
+
+msgid "irc channel_speaking"
+msgstr ""
+
+msgid "irc ignore"
+msgstr ""
+
+#, fuzzy
+msgid "irc notify"
+msgstr "Liste mit Benachrichtigungen"
+
+msgid "pattern for irc redirect"
+msgstr ""
+
+msgid "irc redirect"
+msgstr ""
+
+#, fuzzy
+msgid "irc server"
+msgstr "Server"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: Es besteht keine Verbindung zum Server"
@@ -6837,6 +6866,133 @@ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "Fenstername (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
 "(optional)"
+
+msgid "bar"
+msgstr ""
+
+#, fuzzy
+msgid "bar item"
+msgstr "Liste der Bar-Items"
+
+#, fuzzy
+msgid "buffer"
+msgstr "Buffer verwalten"
+
+#, fuzzy
+msgid "completion"
+msgstr "kompiliert am"
+
+msgid "partial completion"
+msgstr ""
+
+#, fuzzy
+msgid "config file"
+msgstr "Konfigurationsdateien"
+
+#, fuzzy
+msgid "config section"
+msgstr "Konfigurationsparameter setzen"
+
+#, fuzzy
+msgid "config option"
+msgstr "Konfigurationsparameter setzen"
+
+msgid "filter"
+msgstr ""
+
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "Verlaufspeicher der Befehle"
+
+msgid "hook (variables common to all hook types)"
+msgstr ""
+
+#, fuzzy
+msgid "hook of type \"command\""
+msgstr "Verlaufspeicher der Befehle"
+
+msgid "hook of type \"command_run\""
+msgstr ""
+
+msgid "hook of type \"timer\""
+msgstr ""
+
+msgid "hook of type \"fd\""
+msgstr ""
+
+msgid "hook of type \"process\""
+msgstr ""
+
+msgid "hook of type \"connect\""
+msgstr ""
+
+msgid "hook of type \"print\""
+msgstr ""
+
+msgid "hook of type \"signal\""
+msgstr ""
+
+msgid "hook of type \"hsignal\""
+msgstr ""
+
+msgid "hook of type \"config\""
+msgstr ""
+
+msgid "hook of type \"completion\""
+msgstr ""
+
+msgid "hook of type \"modifier\""
+msgstr ""
+
+msgid "hook of type \"info\""
+msgstr ""
+
+msgid "hook of type \"info_hashtable\""
+msgstr ""
+
+msgid "hook of type \"infolist\""
+msgstr ""
+
+msgid "hook of type \"hdata\""
+msgstr ""
+
+#, fuzzy
+msgid "undo for input line"
+msgstr "Funktionen für die Befehlszeile"
+
+msgid "key"
+msgstr ""
+
+#, fuzzy
+msgid "lines"
+msgstr "Online"
+
+#, fuzzy
+msgid "line"
+msgstr "Online"
+
+#, fuzzy
+msgid "line data"
+msgstr "Online"
+
+#, fuzzy
+msgid "group in nicklist"
+msgstr "Textfarbe für Gruppen in Nickliste"
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "Nicks für die eine Benachrichtigung existiert"
+
+#, fuzzy
+msgid "window"
+msgstr "Fenster verwalten"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "Auflistung der Windows"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -7940,3 +8096,9 @@ msgstr "Hashtable (Ausgabe)"
 
 msgid "Pointer"
 msgstr "Pointer"
+
+msgid "Variables"
+msgstr ""
+
+msgid "Lists"
+msgstr ""

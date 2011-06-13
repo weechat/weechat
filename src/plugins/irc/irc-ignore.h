@@ -51,6 +51,8 @@ extern int irc_ignore_check (struct t_irc_server *server,
                              const char *host);
 extern void irc_ignore_free (struct t_irc_ignore *ignore);
 extern void irc_ignore_free_all ();
+extern struct t_hdata *irc_ignore_hdata_ignore_cb (void *data,
+                                                   const char *hdata_name);
 extern int irc_ignore_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_ignore *ignore);
 extern void irc_ignore_print_log ();

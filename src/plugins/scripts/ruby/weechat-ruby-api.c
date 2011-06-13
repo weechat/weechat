@@ -36,20 +36,22 @@
 #define RUBY_RETURN_OK return INT2FIX (1);
 #define RUBY_RETURN_ERROR return INT2FIX (0);
 #define RUBY_RETURN_EMPTY return Qnil;
-#define RUBY_RETURN_STRING(__string)                        \
-    if (__string)                                           \
-        return rb_str_new2 (__string);                      \
+#define RUBY_RETURN_STRING(__string)                                    \
+    if (__string)                                                       \
+        return rb_str_new2 (__string);                                  \
     return rb_str_new2 ("")
-#define RUBY_RETURN_STRING_FREE(__string)                   \
-    if (__string)                                           \
-    {                                                       \
-        return_value = rb_str_new2 (__string);              \
-        free (__string);                                    \
-        return return_value;                                \
-    }                                                       \
+#define RUBY_RETURN_STRING_FREE(__string)                               \
+    if (__string)                                                       \
+    {                                                                   \
+        return_value = rb_str_new2 (__string);                          \
+        free (__string);                                                \
+        return return_value;                                            \
+    }                                                                   \
     return rb_str_new2 ("")
-#define RUBY_RETURN_INT(__int)                  \
+#define RUBY_RETURN_INT(__int)                                          \
     return INT2FIX(__int);
+#define RUBY_RETURN_LONG(__long)                                        \
+    return LONG2FIX(__long);
 
 
 /*
@@ -7455,6 +7457,407 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
 }
 
 /*
+ * weechat_ruby_api_hdata_get: get hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get (VALUE class, VALUE name)
+{
+    char *c_name, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    
+    c_name = StringValuePtr (name);
+    
+    result = script_ptr2str (weechat_hdata_get (c_name));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_get_var_type_string: get type of variable as string
+ *                                             in hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
+                                            VALUE name)
+{
+    char *c_hdata, *c_name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_name = StringValuePtr (name);
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (c_hdata), c_name);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_get_list: get list pointer in hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_list (VALUE class, VALUE hdata, VALUE name)
+{
+    char *c_hdata, *c_name, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_name = StringValuePtr (name);
+    
+    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (c_hdata),
+                                                     c_name));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_move: move pointer to another element in list
+ */
+
+static VALUE
+weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
+                             VALUE count)
+{
+    char *c_hdata, *c_pointer, *result;
+    int c_count;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_move");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (count))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_move");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (count, T_FIXNUM);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_count = FIX2INT (count);
+    
+    result = weechat_hdata_move (script_str2ptr (c_hdata),
+                                 script_str2ptr (c_pointer),
+                                 c_count);
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_integer: get integer value of a variable in structure
+ *                                 using hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_integer (VALUE class, VALUE hdata, VALUE pointer,
+                                VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_integer");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_integer");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+    
+    value = weechat_hdata_integer (script_str2ptr (c_hdata),
+                                   script_str2ptr (c_pointer),
+                                   c_name);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_hdata_long: get long value of a variable in structure using
+ *                              hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_long (VALUE class, VALUE hdata, VALUE pointer,
+                             VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    long value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_long");
+        RUBY_RETURN_LONG(0);
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_long");
+        RUBY_RETURN_LONG(0);
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+    
+    value = weechat_hdata_long (script_str2ptr (c_hdata),
+                                script_str2ptr (c_pointer),
+                                c_name);
+    
+    RUBY_RETURN_LONG(value);
+}
+
+/*
+ * weechat_ruby_api_hdata_string: get string value of a variable in structure
+ *                                using hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_string (VALUE class, VALUE hdata, VALUE pointer,
+                               VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+    
+    result = weechat_hdata_string (script_str2ptr (c_hdata),
+                                   script_str2ptr (c_pointer),
+                                   c_name);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_pointer: get pointer value of a variable in structure
+ *                                 using hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_pointer (VALUE class, VALUE hdata, VALUE pointer,
+                                VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+    
+    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (c_hdata),
+                                                    script_str2ptr (c_pointer),
+                                                    c_name));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_time: get time value of a variable in structure using
+ *                              hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
+                             VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name, timebuffer[64], *result;
+    time_t time;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_time");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_time");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+    
+    time = weechat_hdata_time (script_str2ptr (c_hdata),
+                               script_str2ptr (c_pointer),
+                               c_name);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    result = strdup (timebuffer);
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_get_string: get hdata property as string
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
+{
+    char *c_hdata, *c_property;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_property = StringValuePtr (property);
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (c_hdata),
+                                                c_property);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
  * weechat_ruby_api_upgrade_new: create an upgrade file
  */
 
@@ -7869,6 +8272,16 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "infolist_pointer", &weechat_ruby_api_infolist_pointer, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_time", &weechat_ruby_api_infolist_time, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_free", &weechat_ruby_api_infolist_free, 1);
+    rb_define_module_function (ruby_mWeechat, "hdata_get", &weechat_ruby_api_hdata_get, 1);
+    rb_define_module_function (ruby_mWeechat, "hdata_get_var_type_string", &weechat_ruby_api_hdata_get_var_type_string, 2);
+    rb_define_module_function (ruby_mWeechat, "hdata_get_list", &weechat_ruby_api_hdata_get_list, 2);
+    rb_define_module_function (ruby_mWeechat, "hdata_move", &weechat_ruby_api_hdata_move, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_integer", &weechat_ruby_api_hdata_integer, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_long", &weechat_ruby_api_hdata_long, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_string", &weechat_ruby_api_hdata_string, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_pointer", &weechat_ruby_api_hdata_pointer, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_time", &weechat_ruby_api_hdata_time, 3);
+    rb_define_module_function (ruby_mWeechat, "hdata_get_string", &weechat_ruby_api_hdata_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "upgrade_new", &weechat_ruby_api_upgrade_new, 2);
     rb_define_module_function (ruby_mWeechat, "upgrade_write_object", &weechat_ruby_api_upgrade_write_object, 3);
     rb_define_module_function (ruby_mWeechat, "upgrade_read", &weechat_ruby_api_upgrade_read, 3);

@@ -35,7 +35,10 @@
 #include "weechat.h"
 #include "wee-backtrace.h"
 #include "wee-config-file.h"
+#include "wee-hashtable.h"
+#include "wee-hdata.h"
 #include "wee-infolist.h"
+#include "wee-list.h"
 #include "wee-log.h"
 #include "wee-hook.h"
 #include "wee-proxy.h"
@@ -94,6 +97,8 @@ debug_dump (int crash)
     gui_bar_print_log ();
     gui_bar_item_print_log ();
     gui_hotlist_print_log ();
+    
+    hdata_print_log ();
     
     infolist_print_log ();
     
@@ -295,6 +300,108 @@ debug_memory ()
 }
 
 /*
+ * debug_hdata_hash_var_map_cb: function called for each variable in hdata
+ */
+
+void
+debug_hdata_hash_var_map_cb (void *data,
+                             struct t_hashtable *hashtable,
+                             const void *key, const void *value)
+{
+    struct t_weelist *list;
+    char str_offset[16];
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    list = (struct t_weelist *)data;
+    
+    snprintf (str_offset, sizeof (str_offset),
+              "%12d", (*((int *)value)) & 0xFFFF);
+    weelist_add (list, str_offset, WEECHAT_LIST_POS_SORT, (void *)key);
+}
+
+/*
+ * debug_hdata_hash_list_map_cb: function called for each list in hdata
+ */
+
+void
+debug_hdata_hash_list_map_cb (void *data,
+                              struct t_hashtable *hashtable,
+                              const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    
+    gui_chat_printf (NULL,
+                     "        list: %s -> 0x%lx",
+                     (char *)key,
+                     *((void **)value));
+}
+
+/*
+ * debug_hdata: display list of hdata in memory
+ */
+
+void
+debug_hdata ()
+{
+    struct t_hdata *ptr_hdata;
+    int i, count;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
+    void *value;
+    
+    count = 0;
+    for (ptr_hdata = weechat_hdata; ptr_hdata;
+         ptr_hdata = ptr_hdata->next_hdata)
+    {
+        count++;
+    }
+    
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, "%d hdata in memory", count);
+    
+    if (count > 0)
+    {
+        i = 0;
+        for (ptr_hdata = weechat_hdata; ptr_hdata;
+             ptr_hdata = ptr_hdata->next_hdata)
+        {
+            gui_chat_printf (NULL,
+                             "%4d: hdata 0x%lx: \"%s\", %d vars, %d lists:",
+                             i + 1, ptr_hdata,
+                             ptr_hdata->name,
+                             hashtable_get_integer (ptr_hdata->hash_var,
+                                                    "items_count"),
+                             hashtable_get_integer (ptr_hdata->hash_list,
+                                                    "items_count"));
+            list = weelist_new ();
+            hashtable_map (ptr_hdata->hash_var,
+                           &debug_hdata_hash_var_map_cb, list);
+            for (ptr_item = list->items; ptr_item;
+                 ptr_item = ptr_item->next_item)
+            {
+                value = hashtable_get (ptr_hdata->hash_var, ptr_item->user_data);
+                if (value)
+                {
+                    gui_chat_printf (NULL,
+                                     "        %04d -> %s (%s)",
+                                     (*((int *)value)) & 0xFFFF,
+                                     (char *)ptr_item->user_data,
+                                     hdata_type_string[(*((int *)value)) >> 16]);
+                }
+            }
+            weelist_free (list);
+            hashtable_map (ptr_hdata->hash_list,
+                           &debug_hdata_hash_list_map_cb, NULL);
+            i++;
+        }
+    }
+}
+
+/*
  * debug_infolists: display list of infolists in memory
  */
 
@@ -370,7 +477,7 @@ debug_infolists ()
                 }
             }
             gui_chat_printf (NULL,
-                             "  %d: infolist 0x%lx: %d items, %d vars - "
+                             "%4d: infolist 0x%lx: %d items, %d vars - "
                              "structs: %d, data: %d (total: %d bytes)",
                              i + 1, ptr_infolist, count_items, count_vars,
                              size_structs, size_data, size_structs + size_data);
@@ -378,7 +485,7 @@ debug_infolists ()
             i++;
         }
         gui_chat_printf (NULL,
-                         "  Total: %d items, %d vars - %d bytes",
+                         "Total: %d items, %d vars - %d bytes",
                          total_items, total_vars, total_size);
     }
 }

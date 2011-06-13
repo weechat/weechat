@@ -1,0 +1,659 @@
+[width="100%",cols="^1,^2,5,5,5",options="header"]
+|========================================
+| Extension | Nom | Description | Variables | Listes
+
+| irc | irc_channel | canal irc | 
+  'type' (integer) +
+  'name' (string) +
+  'topic' (string) +
+  'modes' (string) +
+  'limit' (integer) +
+  'key' (string) +
+  'checking_away' (integer) +
+  'away_message' (string) +
+  'has_quit_server' (integer) +
+  'cycle' (integer) +
+  'part' (integer) +
+  'display_creation_date' (integer) +
+  'nick_completion_reset' (integer) +
+  'pv_remote_nick_color' (string) +
+  'hook_autorejoin' (pointer) +
+  'nicks_count' (integer) +
+  'nicks' (pointer) +
+  'last_nick' (pointer) +
+  'nicks_speaking' (pointer) +
+  'nicks_speaking_time' (pointer) +
+  'last_nick_speaking_time' (pointer) +
+  'buffer' (pointer) +
+  'buffer_as_string' (string) +
+  'prev_channel' (pointer) +
+  'next_channel' (pointer) | 
+  -
+
+| irc | irc_channel_speaking | channel_speaking irc | 
+  'nick' (string) +
+  'time_last_message' (time) +
+  'prev_nick' (pointer) +
+  'next_nick' (pointer) | 
+  -
+
+| irc | irc_ignore | ignore irc | 
+  'number' (integer) +
+  'mask' (string) +
+  'regex_mask' (pointer) +
+  'server' (string) +
+  'channel' (string) +
+  'prev_ignore' (pointer) +
+  'next_ignore' (pointer) | 
+  'irc_ignore_list' +
+  'last_irc_ignore'
+
+| irc | irc_nick | pseudo irc | 
+  'name' (string) +
+  'host' (string) +
+  'prefixes' (string) +
+  'prefix' (string) +
+  'away' (integer) +
+  'color' (string) +
+  'prev_nick' (pointer) +
+  'next_nick' (pointer) | 
+  -
+
+| irc | irc_notify | notify irc | 
+  'server' (pointer) +
+  'nick' (string) +
+  'check_away' (integer) +
+  'is_on_server' (integer) +
+  'away_message' (string) +
+  'ison_received' (integer) +
+  'prev_notify' (pointer) +
+  'next_notify' (pointer) | 
+  -
+
+| irc | irc_redirect | redirection irc | 
+  'server' (pointer) +
+  'pattern' (string) +
+  'signal' (string) +
+  'count' (integer) +
+  'current_count' (integer) +
+  'string' (string) +
+  'timeout' (integer) +
+  'command' (string) +
+  'start_time' (time) +
+  'cmd_start' (pointer) +
+  'cmd_stop' (pointer) +
+  'cmd_extra' (pointer) +
+  'cmd_start_received' (integer) +
+  'cmd_stop_received' (integer) +
+  'cmd_filter' (pointer) +
+  'output' (string) +
+  'output_size' (integer) +
+  'prev_redirect' (pointer) +
+  'next_redirect' (pointer) | 
+  -
+
+| irc | irc_redirect_pattern | modèle pour une redirection irc | 
+  'name' (string) +
+  'temp_pattern' (integer) +
+  'timeout' (integer) +
+  'cmd_start' (string) +
+  'cmd_stop' (string) +
+  'cmd_extra' (string) +
+  'prev_redirect' (pointer) +
+  'next_redirect' (pointer) | 
+  'irc_redirect_patterns' +
+  'last_irc_redirect_pattern'
+
+| irc | irc_server | serveur irc | 
+  'name' (string) +
+  'options' (pointer) +
+  'temp_server' (integer) +
+  'reloading_from_config' (integer) +
+  'reloaded_from_config' (integer) +
+  'addresses_count' (integer) +
+  'addresses_array' (pointer) +
+  'ports_array' (pointer) +
+  'index_current_address' (integer) +
+  'current_address' (string) +
+  'current_ip' (string) +
+  'current_port' (integer) +
+  'sock' (integer) +
+  'hook_connect' (pointer) +
+  'hook_fd' (pointer) +
+  'hook_timer_connection' (pointer) +
+  'hook_timer_sasl' (pointer) +
+  'is_connected' (integer) +
+  'ssl_connected' (integer) +
+  'gnutls_sess' (other) +
+  'tls_cert' (other) +
+  'tls_cert_key' (other) +
+  'unterminated_message' (string) +
+  'nicks_count' (integer) +
+  'nicks_array' (pointer) +
+  'nick_first_tried' (integer) +
+  'nick' (string) +
+  'nick_modes' (string) +
+  'isupport' (string) +
+  'prefix_modes' (string) +
+  'prefix_chars' (string) +
+  'reconnect_delay' (integer) +
+  'reconnect_start' (time) +
+  'command_time' (time) +
+  'reconnect_join' (integer) +
+  'disable_autojoin' (integer) +
+  'is_away' (integer) +
+  'away_message' (string) +
+  'away_time' (time) +
+  'lag' (integer) +
+  'lag_check_time' (other) +
+  'lag_next_check' (time) +
+  'lag_last_refresh' (time) +
+  'cmd_list_regexp' (pointer) +
+  'last_user_message' (time) +
+  'last_away_check' (time) +
+  'outqueue' (pointer) +
+  'last_outqueue' (pointer) +
+  'redirects' (pointer) +
+  'last_redirect' (pointer) +
+  'notify_list' (pointer) +
+  'last_notify' (pointer) +
+  'manual_joins' (pointer) +
+  'buffer' (pointer) +
+  'buffer_as_string' (string) +
+  'channels' (pointer) +
+  'last_channel' (pointer) +
+  'prev_server' (pointer) +
+  'next_server' (pointer) | 
+  'irc_servers' +
+  'last_irc_server'
+
+| weechat | bar | barre | 
+  'name' (string) +
+  'options' (pointer) +
+  'conditions_count' (integer) +
+  'conditions_array' (pointer) +
+  'items_count' (integer) +
+  'items_subcount' (pointer) +
+  'items_array' (pointer) +
+  'bar_window' (pointer) +
+  'bar_refresh_needed' (integer) +
+  'prev_bar' (pointer) +
+  'next_bar' (pointer) | 
+  'gui_bars' +
+  'last_gui_bar'
+
+| weechat | bar_item | objet de barre | 
+  'plugin' (pointer) +
+  'name' (string) +
+  'build_callback' (pointer) +
+  'build_callback_data' (pointer) +
+  'prev_item' (pointer) +
+  'next_item' (pointer) | 
+  'gui_bar_items' +
+  'last_gui_bar_item'
+
+| weechat | buffer | tampon | 
+  'plugin' (pointer) +
+  'plugin_name_for_upgrade' (string) +
+  'merge_for_upgrade' (pointer) +
+  'number' (integer) +
+  'layout_number' (integer) +
+  'layout_applied' (integer) +
+  'name' (string) +
+  'short_name' (string) +
+  'type' (integer) +
+  'notify' (integer) +
+  'num_displayed' (integer) +
+  'active' (integer) +
+  'print_hooks_enabled' (integer) +
+  'close_callback' (pointer) +
+  'close_callback_data' (pointer) +
+  'title' (string) +
+  'own_lines' (pointer) +
+  'mixed_lines' (pointer) +
+  'lines' (pointer) +
+  'time_for_each_line' (integer) +
+  'chat_refresh_needed' (integer) +
+  'nicklist' (integer) +
+  'nicklist_case_sensitive' (integer) +
+  'nicklist_root' (pointer) +
+  'nicklist_max_length' (integer) +
+  'nicklist_display_groups' (integer) +
+  'nicklist_visible_count' (integer) +
+  'input' (integer) +
+  'input_callback' (pointer) +
+  'input_callback_data' (pointer) +
+  'input_get_unknown_commands' (integer) +
+  'input_buffer' (string) +
+  'input_buffer_alloc' (integer) +
+  'input_buffer_size' (integer) +
+  'input_buffer_length' (integer) +
+  'input_buffer_pos' (integer) +
+  'input_buffer_1st_display' (integer) +
+  'input_undo_snap' (pointer) +
+  'input_undo' (pointer) +
+  'last_input_undo' (pointer) +
+  'ptr_input_undo' (pointer) +
+  'input_undo_count' (integer) +
+  'completion' (pointer) +
+  'history' (pointer) +
+  'last_history' (pointer) +
+  'ptr_history' (pointer) +
+  'num_history' (integer) +
+  'text_search' (integer) +
+  'text_search_exact' (integer) +
+  'text_search_found' (integer) +
+  'text_search_input' (string) +
+  'highlight_words' (string) +
+  'highlight_tags' (string) +
+  'highlight_tags_count' (integer) +
+  'highlight_tags_array' (pointer) +
+  'hotlist_max_level_nicks' (pointer) +
+  'keys' (pointer) +
+  'last_key' (pointer) +
+  'keys_count' (integer) +
+  'local_variables' (pointer) +
+  'prev_buffer' (pointer) +
+  'next_buffer' (pointer) | 
+  'gui_buffers' +
+  'last_gui_buffer'
+
+| weechat | completion | complétion | 
+  'buffer' (pointer) +
+  'context' (integer) +
+  'base_command' (string) +
+  'base_command_arg_index' (integer) +
+  'base_word' (string) +
+  'base_word_pos' (integer) +
+  'position' (integer) +
+  'args' (string) +
+  'direction' (integer) +
+  'add_space' (integer) +
+  'force_partial_completion' (integer) +
+  'completion_list' (pointer) +
+  'word_found' (string) +
+  'word_found_is_nick' (integer) +
+  'position_replace' (integer) +
+  'diff_size' (integer) +
+  'diff_length' (integer) +
+  'partial_completion_list' (pointer) +
+  'last_partial_completion' (pointer) | 
+  -
+
+| weechat | completion_partial | complétion partielle | 
+  'word' (string) +
+  'count' (integer) +
+  'prev_item' (pointer) +
+  'next_item' (pointer) | 
+  -
+
+| weechat | config_file | fichier de configuration | 
+  'plugin' (pointer) +
+  'name' (string) +
+  'filename' (string) +
+  'file' (pointer) +
+  'callback_reload' (pointer) +
+  'callback_reload_data' (pointer) +
+  'sections' (pointer) +
+  'last_section' (pointer) +
+  'prev_config' (pointer) +
+  'next_config' (pointer) | 
+  'config_files' +
+  'last_config_file'
+
+| weechat | config_option | option de configuration | 
+  'config_file' (pointer) +
+  'section' (pointer) +
+  'name' (string) +
+  'type' (integer) +
+  'description' (string) +
+  'string_values' (pointer) +
+  'min' (integer) +
+  'max' (integer) +
+  'default_value' (pointer) +
+  'value' (pointer) +
+  'null_value_allowed' (integer) +
+  'callback_check_value' (pointer) +
+  'callback_check_value_data' (pointer) +
+  'callback_change' (pointer) +
+  'callback_change_data' (pointer) +
+  'callback_delete' (pointer) +
+  'callback_delete_data' (pointer) +
+  'loaded' (integer) +
+  'prev_option' (pointer) +
+  'next_option' (pointer) | 
+  -
+
+| weechat | config_section | section de configuration | 
+  'config_file' (pointer) +
+  'name' (string) +
+  'user_can_add_options' (integer) +
+  'user_can_delete_options' (integer) +
+  'callback_read' (pointer) +
+  'callback_read_data' (pointer) +
+  'callback_write' (pointer) +
+  'callback_write_data' (pointer) +
+  'callback_write_default' (pointer) +
+  'callback_write_default_data' (pointer) +
+  'callback_create_option' (pointer) +
+  'callback_create_option_data' (pointer) +
+  'callback_delete_option' (pointer) +
+  'callback_delete_option_data' (pointer) +
+  'options' (pointer) +
+  'last_option' (pointer) +
+  'prev_section' (pointer) +
+  'next_section' (pointer) | 
+  -
+
+| weechat | filter | filtre | 
+  'enabled' (integer) +
+  'name' (string) +
+  'buffer_name' (string) +
+  'num_buffers' (integer) +
+  'buffers' (pointer) +
+  'tags' (string) +
+  'tags_count' (integer) +
+  'tags_array' (pointer) +
+  'regex' (string) +
+  'regex_prefix' (pointer) +
+  'regex_message' (pointer) +
+  'prev_filter' (pointer) +
+  'next_filter' (pointer) | 
+  'gui_filters' +
+  'last_gui_filter'
+
+| weechat | history | historique des commandes dans le tampon | 
+  'text' (string) +
+  'next_history' (pointer) +
+  'prev_history' (pointer) | 
+  -
+
+| weechat | hook | hook (variables communes à tous les types de hooks) | 
+  'plugin' (pointer) +
+  'type' (integer) +
+  'deleted' (integer) +
+  'running' (integer) +
+  'priority' (integer) +
+  'callback_data' (pointer) +
+  'hook_data' (pointer) +
+  'prev_hook' (pointer) +
+  'next_hook' (pointer) | 
+  -
+
+| weechat | hook_command | hook de type "command" | 
+  'callback' (pointer) +
+  'command' (string) +
+  'description' (string) +
+  'args' (string) +
+  'args_description' (string) +
+  'completion' (string) +
+  'cplt_num_templates' (integer) +
+  'cplt_templates' (pointer) +
+  'cplt_templates_static' (pointer) +
+  'cplt_template_num_args' (pointer) +
+  'cplt_template_args' (pointer) +
+  'cplt_template_num_args_concat' (integer) +
+  'cplt_template_args_concat' (pointer) | 
+  'last_weechat_hook_command' +
+  'weechat_hooks_command'
+
+| weechat | hook_command_run | hook de type "command_run" | 
+  'callback' (pointer) +
+  'command' (string) | 
+  'last_weechat_hook_command_run' +
+  'weechat_hooks_command_run'
+
+| weechat | hook_completion | hook de type "completion" | 
+  'callback' (pointer) +
+  'completion_item' (string) +
+  'description' (string) | 
+  'last_weechat_hook_completion' +
+  'weechat_hooks_completion'
+
+| weechat | hook_config | hook de type "config" | 
+  'callback' (pointer) +
+  'option' (string) | 
+  'last_weechat_hook_config' +
+  'weechat_hooks_config'
+
+| weechat | hook_connect | hook de type "connect" | 
+  'callback' (pointer) +
+  'proxy' (string) +
+  'address' (string) +
+  'port' (integer) +
+  'sock' (integer) +
+  'ipv6' (integer) +
+  'gnutls_sess' (pointer) +
+  'gnutls_cb' (pointer) +
+  'gnutls_dhkey_size' (integer) +
+  'gnutls_priorities' (string) +
+  'local_hostname' (string) +
+  'child_read' (integer) +
+  'child_write' (integer) +
+  'child_pid' (other) +
+  'hook_fd' (pointer) +
+  'handshake_hook_fd' (pointer) +
+  'handshake_hook_timer' (pointer) +
+  'handshake_fd_flags' (integer) +
+  'handshake_ip_address' (string) | 
+  'last_weechat_hook_connect' +
+  'weechat_hooks_connect'
+
+| weechat | hook_fd | hook de type "fd" | 
+  'callback' (pointer) +
+  'fd' (integer) +
+  'flags' (integer) | 
+  'last_weechat_hook_fd' +
+  'weechat_hooks_fd'
+
+| weechat | hook_hdata | hook de type "hdata" | 
+  'callback' (pointer) +
+  'hdata_name' (string) +
+  'description' (string) | 
+  'last_weechat_hook_hdata' +
+  'weechat_hooks_hdata'
+
+| weechat | hook_hsignal | hook de type "hsignal" | 
+  'callback' (pointer) +
+  'signal' (string) | 
+  'last_weechat_hook_hsignal' +
+  'weechat_hooks_hsignal'
+
+| weechat | hook_info | hook de type "info" | 
+  'callback' (pointer) +
+  'info_name' (string) +
+  'description' (string) +
+  'args_description' (string) | 
+  'last_weechat_hook_info' +
+  'weechat_hooks_info'
+
+| weechat | hook_info_hashtable | hook de type "info_hashtable" | 
+  'callback' (pointer) +
+  'info_name' (string) +
+  'description' (string) +
+  'args_description' (string) +
+  'output_description' (string) | 
+  'last_weechat_hook_info_hashtable' +
+  'weechat_hooks_info_hashtable'
+
+| weechat | hook_infolist | hook de type "infolist" | 
+  'callback' (pointer) +
+  'infolist_name' (string) +
+  'description' (string) +
+  'pointer_description' (string) +
+  'args_description' (string) | 
+  'last_weechat_hook_infolist' +
+  'weechat_hooks_infolist'
+
+| weechat | hook_modifier | hook de type "modifier" | 
+  'callback' (pointer) +
+  'modifier' (string) | 
+  'last_weechat_hook_modifier' +
+  'weechat_hooks_modifier'
+
+| weechat | hook_print | hook de type "print" | 
+  'callback' (pointer) +
+  'buffer' (pointer) +
+  'tags_count' (integer) +
+  'tags_array' (pointer) +
+  'message' (string) +
+  'strip_colors' (integer) | 
+  'last_weechat_hook_print' +
+  'weechat_hooks_print'
+
+| weechat | hook_process | hook de type "process" | 
+  'callback' (pointer) +
+  'command' (string) +
+  'timeout' (long) +
+  'child_read' (pointer) +
+  'child_write' (pointer) +
+  'child_pid' (other) +
+  'hook_fd' (pointer) +
+  'hook_timer' (pointer) +
+  'buffer' (pointer) +
+  'buffer_size' (pointer) | 
+  'last_weechat_hook_process' +
+  'weechat_hooks_process'
+
+| weechat | hook_signal | hook de type "signal" | 
+  'callback' (pointer) +
+  'signal' (string) | 
+  'last_weechat_hook_signal' +
+  'weechat_hooks_signal'
+
+| weechat | hook_timer | hook de type "timer" | 
+  'callback' (pointer) +
+  'interval' (long) +
+  'align_second' (integer) +
+  'remaining_calls' (integer) +
+  'last_exec' (other) +
+  'next_exec' (other) | 
+  'last_weechat_hook_timer' +
+  'weechat_hooks_timer'
+
+| weechat | input_undo | undo pour la ligne de commande | 
+  'data' (string) +
+  'pos' (integer) +
+  'prev_undo' (pointer) +
+  'next_undo' (pointer) | 
+  -
+
+| weechat | key | touche | 
+  'key' (string) +
+  'command' (string) +
+  'prev_key' (pointer) +
+  'next_key' (pointer) | 
+  'gui_default_keys' +
+  'gui_keys' +
+  'last_gui_default_key' +
+  'last_gui_key'
+
+| weechat | line | ligne | 
+  'data' (pointer) +
+  'prev_line' (pointer) +
+  'next_line' (pointer) | 
+  -
+
+| weechat | line_data | données de la ligne | 
+  'buffer' (pointer) +
+  'y' (integer) +
+  'date' (time) +
+  'date_printed' (time) +
+  'str_time' (string) +
+  'tags_count' (integer) +
+  'tags_array' (pointer) +
+  'displayed' (integer) +
+  'highlight' (integer) +
+  'refresh_needed' (integer) +
+  'prefix' (string) +
+  'prefix_length' (integer) +
+  'message' (string) | 
+  -
+
+| weechat | lines | lignes | 
+  'first_line' (pointer) +
+  'last_line' (pointer) +
+  'last_read_line' (pointer) +
+  'lines_count' (integer) +
+  'first_line_not_read' (integer) +
+  'lines_hidden' (integer) +
+  'buffer_max_length' (integer) +
+  'prefix_max_length' (integer) | 
+  -
+
+| weechat | nick | pseudo dans la liste de pseudos | 
+  'group' (pointer) +
+  'name' (string) +
+  'color' (string) +
+  'prefix' (string) +
+  'prefix_color' (string) +
+  'visible' (integer) +
+  'prev_nick' (pointer) +
+  'next_nick' (pointer) | 
+  -
+
+| weechat | nick_group | groupe dans la liste de pseudos | 
+  'name' (string) +
+  'color' (string) +
+  'visible' (integer) +
+  'level' (integer) +
+  'parent' (pointer) +
+  'childs' (pointer) +
+  'last_child' (pointer) +
+  'nicks' (pointer) +
+  'last_nick' (pointer) +
+  'prev_group' (pointer) +
+  'next_group' (pointer) | 
+  -
+
+| weechat | window | fenêtre | 
+  'win_x' (integer) +
+  'win_y' (integer) +
+  'win_width' (integer) +
+  'win_height' (integer) +
+  'win_width_pct' (integer) +
+  'win_height_pct' (integer) +
+  'win_chat_x' (integer) +
+  'win_chat_y' (integer) +
+  'win_chat_width' (integer) +
+  'win_chat_height' (integer) +
+  'win_chat_cursor_x' (integer) +
+  'win_chat_cursor_y' (integer) +
+  'bar_windows' (pointer) +
+  'last_bar_window' (pointer) +
+  'refresh_needed' (integer) +
+  'gui_objects' (pointer) +
+  'buffer' (pointer) +
+  'layout_plugin_name' (string) +
+  'layout_buffer_name' (string) +
+  'scroll' (pointer) +
+  'ptr_tree' (pointer) +
+  'prev_window' (pointer) +
+  'next_window' (pointer) | 
+  'gui_current_window' +
+  'gui_windows' +
+  'last_gui_window'
+
+| weechat | window_scroll | info de défilement dans la fenêtre | 
+  'buffer' (pointer) +
+  'first_line_displayed' (integer) +
+  'start_line' (pointer) +
+  'start_line_pos' (integer) +
+  'scrolling' (integer) +
+  'start_col' (integer) +
+  'lines_after' (integer) +
+  'reset_allowed' (integer) +
+  'prev_scroll' (pointer) +
+  'next_scroll' (pointer) | 
+  -
+
+| weechat | window_tree | arbre des fenêtres | 
+  'parent_node' (pointer) +
+  'split_pct' (integer) +
+  'split_horizontal' (integer) +
+  'child1' (pointer) +
+  'child2' (pointer) +
+  'window' (pointer) | 
+  'gui_windows_tree'
+
+|========================================

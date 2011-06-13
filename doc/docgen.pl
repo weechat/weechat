@@ -42,7 +42,7 @@ my $version = "0.1";
 
 # -------------------------------[ config ]------------------------------------
 
-# default path where doc XML files will be written (should be doc/ in sources
+# default path where doc files will be written (should be doc/ in sources
 # package tree)
 # path must have subdirectories with languages and autogen directory:
 #      path
@@ -53,7 +53,7 @@ my $version = "0.1";
 #       ...
 my $default_path = "~/src/weechat/doc";
 
-# list of locales for which we want to build XML doc files to include
+# list of locales for which we want to build doc files to include
 my @all_locale_list = qw(en_US fr_FR it_IT de_DE);
 
 # all commands/options/.. of following plugins will produce a file
@@ -100,6 +100,9 @@ my @ignore_infos_hashtable_plugins = ();
 
 # infolists to ignore
 my @ignore_infolists_plugins = ();
+
+# hdata to ignore
+my @ignore_hdata_plugins = ();
 
 # completions to ignore
 my @ignore_completions_plugins = ();
@@ -291,6 +294,78 @@ sub get_infolists
     return %infolists;
 }
 
+# get list of hdata hooked by plugins in a hash with 3 indexes: plugin, name, xxx
+sub get_hdata
+{
+    my %hdata;
+    
+    # get hdata hooked
+    my $infolist = weechat::infolist_get("hook", "", "hdata");
+    while (weechat::infolist_next($infolist))
+    {
+        my $hdata_name = weechat::infolist_string($infolist, "hdata_name");
+        my $plugin = weechat::infolist_string($infolist, "plugin_name");
+        $plugin = "weechat" if ($plugin eq "");
+        
+        # check if hdata is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_hdata_plugins)
+        {
+            $ignore = 1 if ($plugin =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            $hdata{$plugin}{$hdata_name}{"description"} = weechat::infolist_string($infolist, "description");
+            
+            my $vars = "";
+            my $lists = "";
+            my $ptr_hdata = weechat::hdata_get($hdata_name);
+            if ($ptr_hdata ne "")
+            {
+                my $str = weechat::hdata_get_string($ptr_hdata, "var_keys_values");
+                my @items = split(/,/, $str);
+                my %hdata2;
+                foreach my $item (@items)
+                {
+                    my ($key, $value) = split(/:/, $item);
+                    my $type = int($value) >> 16;
+                    my $offset = int($value) & 0xFFFF;
+                    my $stroffset = sprintf("%08d", $offset);
+                    $hdata2{$stroffset} = "'".$key."' (".weechat::hdata_get_var_type_string($ptr_hdata, $key).")";
+                }
+                foreach my $offset (sort keys %hdata2)
+                {
+                    $vars .= " +\n" if ($vars ne "");
+                    $vars .= "  ".$hdata2{$offset};
+                }
+                $hdata{$plugin}{$hdata_name}{"vars"} = "\n".$vars;
+                
+                $str = weechat::hdata_get_string($ptr_hdata, "list_keys");
+                if ($str ne "")
+                {
+                    my @items = split(/,/, $str);
+                    @items = sort(@items);
+                    foreach my $item (@items)
+                    {
+                        $lists .= " +\n" if ($lists ne "");
+                        $lists .= "  '".$item."'";
+                    }
+                    $lists = "\n".$lists;
+                }
+                else
+                {
+                    $lists = "\n  -";
+                }
+                $hdata{$plugin}{$hdata_name}{"lists"} = $lists;
+            }
+        }
+    }
+    weechat::infolist_free($infolist);
+    
+    return %hdata;
+}
+
 # get list of completions hooked by plugins in a hash with 3 indexes: plugin, item, xxx
 sub get_completions
 {
@@ -339,7 +414,7 @@ sub escape_table
     return $str;
 }
 
-# build XML doc files (command /docgen)
+# build doc files (command /docgen)
 sub docgen
 {
     my ($data, $buffer, $args) = ($_[0], $_[1], $_[2]);
@@ -352,6 +427,7 @@ sub docgen
     my %plugin_infos = get_infos();
     my %plugin_infos_hashtable = get_infos_hashtable();
     my %plugin_infolists = get_infolists();
+    my %plugin_hdata = get_hdata();
     my %plugin_completions = get_completions();
     
     # get path and replace ~ by home if needed
@@ -377,6 +453,8 @@ sub docgen
         my $num_files_infos_hashtable_updated = 0;
         my $num_files_infolists = 0;
         my $num_files_infolists_updated = 0;
+        my $num_files_hdata = 0;
+        my $num_files_hdata_updated = 0;
         my $num_files_completions = 0;
         my $num_files_completions_updated = 0;
         
@@ -678,6 +756,50 @@ sub docgen
                 weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
             }
             
+            # write hdata hooked
+            $filename = $dir."plugin_api/hdata.txt";
+            if (open(FILE, ">".$filename.".tmp"))
+            {
+                print FILE "[width=\"100%\",cols=\"^1,^2,5,5,5\",options=\"header\"]\n";
+                print FILE "|========================================\n";
+                print FILE "| ".weechat_gettext("Plugin")." | ".weechat_gettext("Name")
+                    ." | ".weechat_gettext("Description")." | ".weechat_gettext("Variables")
+                    ." | ".weechat_gettext("Lists")."\n\n";
+                foreach my $plugin (sort keys %plugin_hdata)
+                {
+                    foreach my $hdata (sort keys %{$plugin_hdata{$plugin}})
+                    {
+                        my $description = $plugin_hdata{$plugin}{$hdata}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        my $vars = $plugin_hdata{$plugin}{$hdata}{"vars"};
+                        my $lists = $plugin_hdata{$plugin}{$hdata}{"lists"};
+                        print FILE "| ".escape_table($plugin)." | ".escape_table($hdata)
+                            ." | ".escape_table($description)." | ".escape_table($vars)
+                            ." | ".escape_table($lists)."\n\n";
+                    }
+                }
+                print FILE "|========================================\n";
+                #weechat::print("", "docgen: file ok: '$filename'");
+                my $rc = system("diff ".$filename." ".$filename.".tmp >/dev/null 2>&1");
+                if ($rc != 0)
+                {
+                    system("mv -f ".$filename.".tmp ".$filename);
+                    $num_files_updated++;
+                    $num_files_hdata_updated++;
+                }
+                else
+                {
+                    system("rm ".$filename.".tmp");
+                }
+                $num_files++;
+                $num_files_hdata++;
+                close(FILE);
+            }
+            else
+            {
+                weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+            }
+            
             # write completions hooked
             $filename = $dir."plugin_api/completions.txt";
             if (open(FILE, ">".$filename.".tmp"))
@@ -725,27 +847,31 @@ sub docgen
         }
         my $total_files = $num_files_commands + $num_files_options
             + $num_files_infos + $num_files_infos_hashtable
-            + $num_files_infolists + $num_files_completions;
+            + $num_files_infolists + $num_files_hdata + $num_files_completions;
         my $total_files_updated = $num_files_commands_updated
             + $num_files_options_updated + $num_files_infos_updated
             + $num_files_infos_hashtable_updated + $num_files_infolists_updated
-            + $num_files_completions_updated;
-        weechat::print("", "docgen: ".$locale.": ".$total_files." files ("
-                       .$num_files_commands." cmd, "
-                       .$num_files_options." opt, "
-                       .$num_files_infos." infos, "
-                       .$num_files_infos." infos (hashtable), "
-                       .$num_files_infolists." infolists, "
-                       .$num_files_completions." complt) -- "
-                       .$total_files_updated." updated ("
-                       .$num_files_commands_updated." cmd, "
-                       .$num_files_options_updated." opt, "
-                       .$num_files_infos_updated." infos, "
-                       .$num_files_infos_hashtable_updated." infos (hashtable), "
-                       .$num_files_infolists_updated." infolists, "
-                       .$num_files_completions_updated." complt)");
+            + $num_files_hdata_updated + $num_files_completions_updated;
+        weechat::print("",
+                       sprintf ("docgen: %s: %3d files   (%2d cmd, %2d opt, %2d infos, "
+                                ."%2d infos_hash, %2d infolists, %2d hdata, "
+                                ."%2d complt)",
+                                $locale, $total_files, $num_files_commands,
+                                $num_files_options, $num_files_infos, $num_files_infos,
+                                $num_files_infolists, $num_files_hdata,
+                                $num_files_completions));
+        weechat::print("",
+                       sprintf ("               %3d updated (%2d cmd, %2d opt, %2d infos, "
+                                ."%2d infos_hash, %2d infolists, %2d hdata, "
+                                ."%2d complt)",
+                                $total_files_updated, $num_files_commands_updated,
+                                $num_files_options_updated, $num_files_infos_updated,
+                                $num_files_infos_updated, $num_files_infolists_updated,
+                                $num_files_hdata_updated, $num_files_completions_updated));
     }
-    weechat::print("", "docgen: total: ".$num_files." files (".$num_files_updated." updated)");
+    weechat::print("",
+                   sprintf ("docgen: total: %d files, %d updated",
+                            $num_files, $num_files_updated));
     
     setlocale(LC_MESSAGES, $old_locale);
     

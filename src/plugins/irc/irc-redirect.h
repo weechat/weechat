@@ -108,6 +108,10 @@ extern int irc_redirect_message (struct t_irc_server *server,
                                  const char *arguments);
 extern void irc_redirect_free (struct t_irc_redirect *redirect);
 extern void irc_redirect_free_all (struct t_irc_server *server);
+extern struct t_hdata *irc_redirect_hdata_redirect_pattern_cb (void *data,
+                                                               const char *hdata_name);
+extern struct t_hdata *irc_redirect_hdata_redirect_cb (void *data,
+                                                       const char *hdata_name);
 extern int irc_redirect_pattern_add_to_infolist (struct t_infolist *infolist,
                                                  struct t_irc_redirect_pattern *redirect_pattern);
 extern int irc_redirect_add_to_infolist (struct t_infolist *infolist,

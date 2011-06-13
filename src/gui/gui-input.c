@@ -275,14 +275,14 @@ gui_input_move_to_buffer (struct t_gui_buffer *from_buffer,
     
     /* move undo data */
     gui_buffer_undo_free_all (to_buffer);
-    (to_buffer->input_undo_snap).data = (from_buffer->input_undo_snap).data;
-    (to_buffer->input_undo_snap).pos = (from_buffer->input_undo_snap).pos;
+    (to_buffer->input_undo_snap)->data = (from_buffer->input_undo_snap)->data;
+    (to_buffer->input_undo_snap)->pos = (from_buffer->input_undo_snap)->pos;
     to_buffer->input_undo = from_buffer->input_undo;
     to_buffer->last_input_undo = from_buffer->last_input_undo;
     to_buffer->ptr_input_undo = from_buffer->ptr_input_undo;
     to_buffer->input_undo_count = from_buffer->input_undo_count;
-    (from_buffer->input_undo_snap).data = NULL;
-    (from_buffer->input_undo_snap).pos = 0;
+    (from_buffer->input_undo_snap)->data = NULL;
+    (from_buffer->input_undo_snap)->pos = 0;
     from_buffer->input_undo = NULL;
     from_buffer->last_input_undo = NULL;
     from_buffer->ptr_input_undo = NULL;

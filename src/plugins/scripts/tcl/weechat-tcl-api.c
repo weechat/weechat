@@ -36,130 +36,145 @@
 #include "../script-callback.h"
 #include "weechat-tcl.h"
 
-#define TCL_RETURN_OK                            \
-    {                                            \
-        objp = Tcl_GetObjResult (interp);        \
-        if (Tcl_IsShared (objp))                 \
-        {                                        \
-            objp = Tcl_DuplicateObj (objp);      \
-            Tcl_IncrRefCount (objp);             \
-            Tcl_SetIntObj (objp, 1);             \
-            Tcl_SetObjResult (interp, objp);     \
-            Tcl_DecrRefCount (objp);             \
-        }                                        \
-        else                                     \
-            Tcl_SetIntObj (objp, 1);             \
-        return TCL_OK;                           \
+#define TCL_RETURN_OK                                                   \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            Tcl_SetIntObj (objp, 1);                                    \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+            Tcl_SetIntObj (objp, 1);                                    \
+        return TCL_OK;                                                  \
     }
-#define TCL_RETURN_ERROR                          \
-    {                                             \
-        objp = Tcl_GetObjResult (interp);         \
-        if (Tcl_IsShared (objp))                  \
-        {                                         \
-            objp = Tcl_DuplicateObj (objp);       \
-            Tcl_IncrRefCount (objp);              \
-            Tcl_SetIntObj (objp, 0);              \
-            Tcl_SetObjResult (interp, objp);      \
-            Tcl_DecrRefCount (objp);              \
-        }                                         \
-        else                                      \
-            Tcl_SetIntObj (objp, 0);              \
-        return TCL_ERROR;                         \
+#define TCL_RETURN_ERROR                                                \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            Tcl_SetIntObj (objp, 0);                                    \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+            Tcl_SetIntObj (objp, 0);                                    \
+        return TCL_ERROR;                                               \
     }
-#define TCL_RETURN_EMPTY                          \
-    {                                             \
-        objp = Tcl_GetObjResult (interp);         \
-        if (Tcl_IsShared (objp))                  \
-        {                                         \
-            objp = Tcl_DuplicateObj (objp);       \
-            Tcl_IncrRefCount (objp);              \
-            Tcl_SetStringObj (objp, "", -1);      \
-            Tcl_SetObjResult (interp, objp);      \
-            Tcl_DecrRefCount (objp);              \
-        }                                         \
-        else                                      \
-            Tcl_SetStringObj (objp, "", -1);      \
-        return TCL_OK;                            \
+#define TCL_RETURN_EMPTY                                                \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            Tcl_SetStringObj (objp, "", -1);                            \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+            Tcl_SetStringObj (objp, "", -1);                            \
+        return TCL_OK;                                                  \
     }
-#define TCL_RETURN_STRING(__string)                         \
-    {                                                       \
-        objp = Tcl_GetObjResult (interp);                   \
-        if (Tcl_IsShared (objp))                            \
-        {                                                   \
-            objp = Tcl_DuplicateObj (objp);                 \
-            Tcl_IncrRefCount (objp);                        \
-            if (__string)                                   \
-            {                                               \
-                Tcl_SetStringObj (objp, __string, -1);      \
-                Tcl_SetObjResult (interp, objp);            \
-                Tcl_DecrRefCount (objp);                    \
-                return TCL_OK;                              \
-            }                                               \
-            Tcl_SetStringObj (objp, "", -1);                \
-            Tcl_SetObjResult (interp, objp);                \
-            Tcl_DecrRefCount (objp);                        \
-        }                                                   \
-        else                                                \
-        {                                                   \
-            if (__string)                                   \
-            {                                               \
-                Tcl_SetStringObj (objp, __string, -1);      \
-                return TCL_OK;                              \
-            }                                               \
-            Tcl_SetStringObj (objp, "", -1);                \
-        }                                                   \
-        return TCL_OK;                                      \
+#define TCL_RETURN_STRING(__string)                                     \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            if (__string)                                               \
+            {                                                           \
+                Tcl_SetStringObj (objp, __string, -1);                  \
+                Tcl_SetObjResult (interp, objp);                        \
+                Tcl_DecrRefCount (objp);                                \
+                return TCL_OK;                                          \
+            }                                                           \
+            Tcl_SetStringObj (objp, "", -1);                            \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            if (__string)                                               \
+            {                                                           \
+                Tcl_SetStringObj (objp, __string, -1);                  \
+                return TCL_OK;                                          \
+            }                                                           \
+            Tcl_SetStringObj (objp, "", -1);                            \
+        }                                                               \
+        return TCL_OK;                                                  \
     }
-#define TCL_RETURN_STRING_FREE(__string)                    \
-    {                                                       \
-        objp = Tcl_GetObjResult (interp);                   \
-        if (Tcl_IsShared (objp))                            \
-        {                                                   \
-            objp = Tcl_DuplicateObj (objp);                 \
-            Tcl_IncrRefCount (objp);                        \
-            if (__string)                                   \
-            {                                               \
-                Tcl_SetStringObj (objp, __string, -1);      \
-                Tcl_SetObjResult (interp, objp);            \
-                Tcl_DecrRefCount (objp);                    \
-                free (__string);                            \
-                return TCL_OK;                              \
-            }                                               \
-            Tcl_SetStringObj (objp, "", -1);                \
-            Tcl_SetObjResult (interp, objp);                \
-            Tcl_DecrRefCount (objp);                        \
-        }                                                   \
-        else                                                \
-        {                                                   \
-            if (__string)                                   \
-            {                                               \
-                Tcl_SetStringObj (objp, __string, -1);      \
-                free (__string);                            \
-                return TCL_OK;                              \
-            }                                               \
-            Tcl_SetStringObj (objp, "", -1);                \
-        }                                                   \
-        return TCL_OK;                                      \
+#define TCL_RETURN_STRING_FREE(__string)                                \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            if (__string)                                               \
+            {                                                           \
+                Tcl_SetStringObj (objp, __string, -1);                  \
+                Tcl_SetObjResult (interp, objp);                        \
+                Tcl_DecrRefCount (objp);                                \
+                free (__string);                                        \
+                return TCL_OK;                                          \
+            }                                                           \
+            Tcl_SetStringObj (objp, "", -1);                            \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            if (__string)                                               \
+            {                                                           \
+                Tcl_SetStringObj (objp, __string, -1);                  \
+                free (__string);                                        \
+                return TCL_OK;                                          \
+            }                                                           \
+            Tcl_SetStringObj (objp, "", -1);                            \
+        }                                                               \
+        return TCL_OK;                                                  \
     }
-#define TCL_RETURN_INT(__int)                     \
-    {                                             \
-        objp = Tcl_GetObjResult (interp);         \
-        if (Tcl_IsShared (objp))                  \
-        {                                         \
-            objp = Tcl_DuplicateObj (objp);       \
-            Tcl_IncrRefCount (objp);              \
-            Tcl_SetIntObj (objp, __int);          \
-            Tcl_SetObjResult (interp, objp);      \
-            Tcl_DecrRefCount (objp);              \
-        }                                         \
-        else                                      \
-            Tcl_SetIntObj (objp, __int);          \
-        return TCL_OK;                            \
+#define TCL_RETURN_INT(__int)                                           \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            Tcl_SetIntObj (objp, __int);                                \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+            Tcl_SetIntObj (objp, __int);                                \
+        return TCL_OK;                                                  \
     }
-#define TCL_RETURN_OBJ(__obj)                     \
-    {                                             \
-        Tcl_SetObjResult (interp, __obj);         \
-        return TCL_OK;                            \
+#define TCL_RETURN_LONG(__long)                                         \
+    {                                                                   \
+        objp = Tcl_GetObjResult (interp);                               \
+        if (Tcl_IsShared (objp))                                        \
+        {                                                               \
+            objp = Tcl_DuplicateObj (objp);                             \
+            Tcl_IncrRefCount (objp);                                    \
+            Tcl_SetLongObj (objp, __long);                              \
+            Tcl_SetObjResult (interp, objp);                            \
+            Tcl_DecrRefCount (objp);                                    \
+        }                                                               \
+        else                                                            \
+            Tcl_SetLongObj (objp, __long);                              \
+        return TCL_OK;                                                  \
+    }
+#define TCL_RETURN_OBJ(__obj)                                           \
+    {                                                                   \
+        Tcl_SetObjResult (interp, __obj);                               \
+        return TCL_OK;                                                  \
     }
 
 
@@ -7235,6 +7250,393 @@ weechat_tcl_api_infolist_free (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hdata_get: get hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get (ClientData clientData, Tcl_Interp *interp,
+                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result, *name;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get");
+        TCL_RETURN_EMPTY;
+    }
+    
+    name = Tcl_GetStringFromObj (objv[1], &i);
+    
+    result = script_ptr2str (weechat_hdata_get (name));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_get_var_type_string: get type of variable as string in
+ *                                            hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get_var_type_string (ClientData clientData,
+                                           Tcl_Interp *interp,
+                                           int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *name;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_type_string");
+        TCL_RETURN_EMPTY;
+    }
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    name = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_get_list: get list pointer in hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get_list (ClientData clientData, Tcl_Interp *interp,
+                                int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *name, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get_list");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    name = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
+                                                     name));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_move: move pointer to another element in list
+ */
+
+static int
+weechat_tcl_api_hdata_move (ClientData clientData, Tcl_Interp *interp,
+                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *result;
+    int i, count;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_move");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_move");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    
+    if (Tcl_GetIntFromObj (interp, objv[3], &count) != TCL_OK)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_move");
+        TCL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
+                                                 script_str2ptr (pointer),
+                                                 count));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_integer: get integer value of a variable in structure
+ *                                using hdata
+ */
+
+static int
+weechat_tcl_api_hdata_integer (ClientData clientData, Tcl_Interp *interp,
+                               int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    int result, i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_integer");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_integer");
+        TCL_RETURN_INT(0);
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_hdata_integer (script_str2ptr (hdata),
+                                    script_str2ptr (pointer),
+                                    name);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_long: get long value of a variable in structure using
+ *                             hdata
+ */
+
+static int
+weechat_tcl_api_hdata_long (ClientData clientData, Tcl_Interp *interp,
+                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    int result, i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_long");
+        TCL_RETURN_LONG(0);
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_long");
+        TCL_RETURN_LONG(0);
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_hdata_long (script_str2ptr (hdata),
+                                 script_str2ptr (pointer),
+                                 name);
+    
+    TCL_RETURN_LONG(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_string: get string value of a variable in structure
+ *                               using hdata
+ */
+
+static int
+weechat_tcl_api_hdata_string (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = weechat_hdata_string (script_str2ptr (hdata),
+                                   script_str2ptr (pointer),
+                                   name);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_pointer: get pointer value of a variable in structure
+ *                                using hdata
+ */
+
+static int
+weechat_tcl_api_hdata_pointer (ClientData clientData, Tcl_Interp *interp,
+                               int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name, *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_pointer");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
+                                                    script_str2ptr (pointer),
+                                                    name));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_time: get time value of a variable in structure using
+ *                             hdata
+ */
+
+static int
+weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
+                               int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    time_t time;
+    char timebuffer[64], *result, *hdata, *pointer, *name;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_time");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_time");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+    
+    time = weechat_hdata_time (script_str2ptr (hdata),
+                               script_str2ptr (pointer),
+                               name);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    
+    result = strdup (timebuffer);
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_get_string: get hdata property as string
+ */
+
+static int
+weechat_tcl_api_hdata_get_string (ClientData clientData, Tcl_Interp *interp,
+                                  int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *property;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get_string");
+        TCL_RETURN_EMPTY;
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_hdata_get_string (script_str2ptr (hdata), property);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
  * weechat_tcl_api_upgrade_new: create an upgrade file
  */
 
@@ -7862,6 +8264,26 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_infolist_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::infolist_free",
                           weechat_tcl_api_infolist_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get",
+                          weechat_tcl_api_hdata_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_type_string",
+                          weechat_tcl_api_hdata_get_var_type_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get_list",
+                          weechat_tcl_api_hdata_get_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_move",
+                          weechat_tcl_api_hdata_move, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_integer",
+                          weechat_tcl_api_hdata_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_long",
+                          weechat_tcl_api_hdata_long, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_string",
+                          weechat_tcl_api_hdata_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_pointer",
+                          weechat_tcl_api_hdata_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_time",
+                          weechat_tcl_api_hdata_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get_string",
+                          weechat_tcl_api_hdata_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::upgrade_new",
                           weechat_tcl_api_upgrade_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::upgrade_write_object",

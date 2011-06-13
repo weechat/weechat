@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-05-31 09:11+0200\n"
+"POT-Creation-Date: 2011-06-13 11:52+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1091,8 +1091,8 @@ msgstr "cotrolar depuração para core/plugins"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|term|windows"
 msgstr "[list | set plugin level | dump [plugin] | buffer | windows | term]"
 
 # find a better translation to dump?
@@ -1107,6 +1107,7 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"    hdata: display infos about hdata\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     term: display infos about terminal\n"
@@ -5026,6 +5027,30 @@ msgstr ""
 msgid "notify pointer (optional)"
 msgstr ""
 
+msgid "irc nick"
+msgstr ""
+
+msgid "irc channel"
+msgstr ""
+
+msgid "irc channel_speaking"
+msgstr ""
+
+msgid "irc ignore"
+msgstr ""
+
+msgid "irc notify"
+msgstr ""
+
+msgid "pattern for irc redirect"
+msgstr ""
+
+msgid "irc redirect"
+msgstr ""
+
+msgid "irc server"
+msgstr ""
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr ""
@@ -5945,6 +5970,127 @@ msgstr ""
 
 msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
+
+msgid "bar"
+msgstr ""
+
+#, fuzzy
+msgid "bar item"
+msgstr "Lista de itens da barra:"
+
+#, fuzzy
+msgid "buffer"
+msgstr "gerenciar buffers"
+
+#, fuzzy
+msgid "completion"
+msgstr "compilado em"
+
+msgid "partial completion"
+msgstr ""
+
+#, fuzzy
+msgid "config file"
+msgstr "arquivos de configuração"
+
+#, fuzzy
+msgid "config section"
+msgstr "define opções de configuração"
+
+#, fuzzy
+msgid "config option"
+msgstr "define opções de configuração"
+
+msgid "filter"
+msgstr ""
+
+msgid "history of commands in buffer"
+msgstr ""
+
+msgid "hook (variables common to all hook types)"
+msgstr ""
+
+msgid "hook of type \"command\""
+msgstr ""
+
+msgid "hook of type \"command_run\""
+msgstr ""
+
+msgid "hook of type \"timer\""
+msgstr ""
+
+msgid "hook of type \"fd\""
+msgstr ""
+
+msgid "hook of type \"process\""
+msgstr ""
+
+msgid "hook of type \"connect\""
+msgstr ""
+
+msgid "hook of type \"print\""
+msgstr ""
+
+msgid "hook of type \"signal\""
+msgstr ""
+
+msgid "hook of type \"hsignal\""
+msgstr ""
+
+msgid "hook of type \"config\""
+msgstr ""
+
+msgid "hook of type \"completion\""
+msgstr ""
+
+msgid "hook of type \"modifier\""
+msgstr ""
+
+msgid "hook of type \"info\""
+msgstr ""
+
+msgid "hook of type \"info_hashtable\""
+msgstr ""
+
+msgid "hook of type \"infolist\""
+msgstr ""
+
+msgid "hook of type \"hdata\""
+msgstr ""
+
+#, fuzzy
+msgid "undo for input line"
+msgstr "funções para linha de comando"
+
+msgid "key"
+msgstr ""
+
+msgid "lines"
+msgstr ""
+
+msgid "line"
+msgstr ""
+
+msgid "line data"
+msgstr ""
+
+msgid "group in nicklist"
+msgstr ""
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "apelidos na lista de apelidos no buffer atual"
+
+#, fuzzy
+msgid "window"
+msgstr "gerencia janelas"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "Restauração da disposição das janelas"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -6917,4 +7063,10 @@ msgid "Hashtable (output)"
 msgstr ""
 
 msgid "Pointer"
+msgstr ""
+
+msgid "Variables"
+msgstr ""
+
+msgid "Lists"
 msgstr ""

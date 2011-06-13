@@ -1152,6 +1152,10 @@ COMMAND_CALLBACK(debug)
     {
         gui_color_dump (buffer);
     }
+    else if (string_strcasecmp (argv[1], "hdata") == 0)
+    {
+        debug_hdata ();
+    }
     else if (string_strcasecmp (argv[1], "infolists") == 0)
     {
         debug_infolists ();
@@ -4837,7 +4841,7 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|infolists|memory|term|windows"),
+                     " || buffer|color|hdata|infolists|memory|term|windows"),
                   N_("     list: list plugins with debug levels\n"
                      "      set: set debug level for plugin\n"
                      "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -4847,6 +4851,7 @@ command_init ()
                      "   buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
                      "    color: display infos about current color pairs\n"
+                     "    hdata: display infos about hdata\n"
                      "infolists: display infos about infolists\n"
                      "   memory: display infos about memory usage\n"
                      "     term: display infos about terminal\n"
@@ -4856,6 +4861,7 @@ command_init ()
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || color"
+                  " || hdata"
                   " || infolists"
                   " || memory"
                   " || term"

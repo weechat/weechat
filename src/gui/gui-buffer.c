@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
@@ -37,6 +38,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
@@ -68,6 +70,10 @@ struct t_gui_buffer_visited *last_gui_buffer_visited = NULL;
 int gui_buffers_visited_index = -1;             /* index of pointer in list */
 int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
+
+struct t_hdata *gui_buffer_hdata_buffer = NULL;
+struct t_hdata *gui_buffer_hdata_input_undo = NULL;
+struct t_hdata *gui_buffer_hdata_buffer_visited = NULL;
 
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
@@ -426,10 +432,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         gui_buffer_input_buffer_init (new_buffer);
         
         /* undo for input */
-        (new_buffer->input_undo_snap).data = NULL;
-        (new_buffer->input_undo_snap).pos = 0;
-        (new_buffer->input_undo_snap).prev_undo = NULL; /* not used */
-        (new_buffer->input_undo_snap).next_undo = NULL; /* not used */
+        new_buffer->input_undo_snap = malloc (sizeof (*(new_buffer->input_undo_snap)));
+        (new_buffer->input_undo_snap)->data = NULL;
+        (new_buffer->input_undo_snap)->pos = 0;
+        (new_buffer->input_undo_snap)->prev_undo = NULL; /* not used */
+        (new_buffer->input_undo_snap)->next_undo = NULL; /* not used */
         new_buffer->input_undo = NULL;
         new_buffer->last_input_undo = NULL;
         new_buffer->ptr_input_undo = NULL;
@@ -2058,6 +2065,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     gui_buffer_undo_free_all (buffer);
+    if (buffer->input_undo_snap)
+        free (buffer->input_undo_snap);
     if (buffer->completion)
         gui_completion_free (buffer->completion);
     gui_history_buffer_free (buffer);
@@ -2523,18 +2532,18 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 void
 gui_buffer_undo_snap (struct t_gui_buffer *buffer)
 {
-    if ((buffer->input_undo_snap).data)
+    if ((buffer->input_undo_snap)->data)
     {
-        free ((buffer->input_undo_snap).data);
-        (buffer->input_undo_snap).data = NULL;
+        free ((buffer->input_undo_snap)->data);
+        (buffer->input_undo_snap)->data = NULL;
     }
-    (buffer->input_undo_snap).pos = 0;
+    (buffer->input_undo_snap)->pos = 0;
     
     if (CONFIG_INTEGER(config_look_input_undo_max) > 0)
     {
-        (buffer->input_undo_snap).data = (buffer->input_buffer) ?
+        (buffer->input_undo_snap)->data = (buffer->input_buffer) ?
             strdup (buffer->input_buffer) : NULL;
-        (buffer->input_undo_snap).pos = buffer->input_buffer_pos;
+        (buffer->input_undo_snap)->pos = buffer->input_buffer_pos;
     }
 }
 
@@ -2545,12 +2554,12 @@ gui_buffer_undo_snap (struct t_gui_buffer *buffer)
 void
 gui_buffer_undo_snap_free (struct t_gui_buffer *buffer)
 {
-    if ((buffer->input_undo_snap).data)
+    if ((buffer->input_undo_snap)->data)
     {
-        free ((buffer->input_undo_snap).data);
-        (buffer->input_undo_snap).data = NULL;
+        free ((buffer->input_undo_snap)->data);
+        (buffer->input_undo_snap)->data = NULL;
     }
-    (buffer->input_undo_snap).pos = 0;
+    (buffer->input_undo_snap)->pos = 0;
 }
 
 /*
@@ -2572,8 +2581,8 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
      * if nothing has changed since snapshot of input buffer, then do nothing
      * (just discard snapshot)
      */
-    if ((buffer->input_undo_snap).data
-        && (strcmp (buffer->input_buffer, (buffer->input_undo_snap).data) == 0))
+    if ((buffer->input_undo_snap)->data
+        && (strcmp (buffer->input_buffer, (buffer->input_undo_snap)->data) == 0))
     {
         goto end;
     }
@@ -2598,8 +2607,8 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
     /* if input is the same as current undo, then do not add it */
     if (buffer->ptr_input_undo
         && (buffer->ptr_input_undo)->data
-        && (buffer->input_undo_snap).data
-        && (strcmp ((buffer->input_undo_snap).data, (buffer->ptr_input_undo)->data) == 0))
+        && (buffer->input_undo_snap)->data
+        && (strcmp ((buffer->input_undo_snap)->data, (buffer->ptr_input_undo)->data) == 0))
     {
         goto end;
     }
@@ -2608,10 +2617,10 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
     if (!new_undo)
         goto end;
     
-    if ((buffer->input_undo_snap).data)
+    if ((buffer->input_undo_snap)->data)
     {
-        new_undo->data = strdup ((buffer->input_undo_snap).data);
-        new_undo->pos = (buffer->input_undo_snap).pos;
+        new_undo->data = strdup ((buffer->input_undo_snap)->data);
+        new_undo->pos = (buffer->input_undo_snap)->pos;
     }
     else
     {
@@ -2874,6 +2883,148 @@ gui_buffer_visited_get_index_next ()
 }
 
 /*
+ * gui_buffer_hdata_buffer_cb: return hdata for buffer
+ */
+
+struct t_hdata *
+gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_buffer_hdata_buffer)
+        return gui_buffer_hdata_buffer;
+    
+    hdata = hdata_new (hdata_name, "prev_buffer", "next_buffer");
+    if (hdata)
+    {
+        gui_buffer_hdata_buffer = hdata;
+        HDATA_VAR(struct t_gui_buffer, plugin, POINTER);
+        HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING);
+        HDATA_VAR(struct t_gui_buffer, merge_for_upgrade, POINTER);
+        HDATA_VAR(struct t_gui_buffer, number, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, layout_applied, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, name, STRING);
+        HDATA_VAR(struct t_gui_buffer, short_name, STRING);
+        HDATA_VAR(struct t_gui_buffer, type, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, notify, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, active, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, close_callback, POINTER);
+        HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER);
+        HDATA_VAR(struct t_gui_buffer, title, STRING);
+        HDATA_VAR(struct t_gui_buffer, own_lines, POINTER);
+        HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER);
+        HDATA_VAR(struct t_gui_buffer, lines, POINTER);
+        HDATA_VAR(struct t_gui_buffer, time_for_each_line, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, chat_refresh_needed, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, nicklist, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, nicklist_case_sensitive, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, nicklist_root, POINTER);
+        HDATA_VAR(struct t_gui_buffer, nicklist_max_length, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, nicklist_display_groups, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_callback, POINTER);
+        HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER);
+        HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_buffer, STRING);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_alloc, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_size, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_length, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_pos, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_1st_display, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, input_undo_snap, POINTER);
+        HDATA_VAR(struct t_gui_buffer, input_undo, POINTER);
+        HDATA_VAR(struct t_gui_buffer, last_input_undo, POINTER);
+        HDATA_VAR(struct t_gui_buffer, ptr_input_undo, POINTER);
+        HDATA_VAR(struct t_gui_buffer, input_undo_count, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, completion, POINTER);
+        HDATA_VAR(struct t_gui_buffer, history, POINTER);
+        HDATA_VAR(struct t_gui_buffer, last_history, POINTER);
+        HDATA_VAR(struct t_gui_buffer, ptr_history, POINTER);
+        HDATA_VAR(struct t_gui_buffer, num_history, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, text_search, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, text_search_exact, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, text_search_input, STRING);
+        HDATA_VAR(struct t_gui_buffer, highlight_words, STRING);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER);
+        HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, POINTER);
+        HDATA_VAR(struct t_gui_buffer, keys, POINTER);
+        HDATA_VAR(struct t_gui_buffer, last_key, POINTER);
+        HDATA_VAR(struct t_gui_buffer, keys_count, INTEGER);
+        HDATA_VAR(struct t_gui_buffer, local_variables, POINTER);
+        HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER);
+        HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER);
+        HDATA_LIST(gui_buffers);
+        HDATA_LIST(last_gui_buffer);
+    }
+    return gui_buffer_hdata_buffer;
+}
+
+/*
+ * gui_buffer_hdata_input_undo_cb: return hdata for input undo
+ */
+
+struct t_hdata *
+gui_buffer_hdata_input_undo_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_buffer_hdata_input_undo)
+        return gui_buffer_hdata_input_undo;
+    
+    hdata = hdata_new (hdata_name, "prev_undo", "next_undo");
+    if (hdata)
+    {
+        gui_buffer_hdata_input_undo = hdata;
+        HDATA_VAR(struct t_gui_input_undo, data, STRING);
+        HDATA_VAR(struct t_gui_input_undo, pos, INTEGER);
+        HDATA_VAR(struct t_gui_input_undo, prev_undo, POINTER);
+        HDATA_VAR(struct t_gui_input_undo, next_undo, POINTER);
+    }
+    return gui_buffer_hdata_input_undo;
+}
+
+/*
+ * gui_buffer_hdata_buffer_visited_cb: return hdata for buffer visited
+ */
+
+struct t_hdata *
+gui_buffer_hdata_buffer_visited_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_buffer_hdata_buffer_visited)
+        return gui_buffer_hdata_buffer_visited;
+    
+    hdata = hdata_new (hdata_name, "prev_buffer", "next_buffer");
+    if (hdata)
+    {
+        gui_buffer_hdata_buffer_visited = hdata;
+        HDATA_VAR(struct t_gui_buffer_visited, buffer, POINTER);
+        HDATA_VAR(struct t_gui_buffer_visited, prev_buffer, POINTER);
+        HDATA_VAR(struct t_gui_buffer_visited, next_buffer, POINTER);
+        HDATA_LIST(gui_buffers_visited);
+        HDATA_LIST(last_gui_buffer_visited);
+    }
+    return gui_buffer_hdata_buffer_visited;
+}
+
+/*
  * gui_buffer_add_to_infolist: add a buffer in an infolist
  *                             return 1 if ok, 0 if error
  */
@@ -3118,8 +3269,8 @@ gui_buffer_print_log ()
         log_printf ("  input_buffer_length. . : %d",    ptr_buffer->input_buffer_length);
         log_printf ("  input_buffer_pos . . . : %d",    ptr_buffer->input_buffer_pos);
         log_printf ("  input_buffer_1st_disp. : %d",    ptr_buffer->input_buffer_1st_display);
-        log_printf ("  input_undo_snap.data . : '%s'",  (ptr_buffer->input_undo_snap).data);
-        log_printf ("  input_undo_snap.pos. . : %d",    (ptr_buffer->input_undo_snap).pos);
+        log_printf ("  input_undo_snap->data. : '%s'",  (ptr_buffer->input_undo_snap)->data);
+        log_printf ("  input_undo_snap->pos . : %d",    (ptr_buffer->input_undo_snap)->pos);
         log_printf ("  input_undo . . . . . . : 0x%lx", ptr_buffer->input_undo);
         log_printf ("  last_input_undo. . . . : 0x%lx", ptr_buffer->last_input_undo);
         log_printf ("  ptr_input_undo . . . . : 0x%lx", ptr_buffer->ptr_input_undo);

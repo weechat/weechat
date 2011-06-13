@@ -69,6 +69,8 @@ extern int gui_filter_rename (struct t_gui_filter *filter,
                               const char *new_name);
 extern void gui_filter_free (struct t_gui_filter *filter);
 extern void gui_filter_free_all ();
+extern struct t_hdata *gui_filter_hdata_filter_cb (void *data,
+                                                   const char *hdata_name);
 extern int gui_filter_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_filter *filter);
 extern void gui_filter_print_log ();
