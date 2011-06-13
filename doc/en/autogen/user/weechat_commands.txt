@@ -145,7 +145,7 @@ command: command to execute (a '/' is automatically added if not found at beginn
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|hdata|infolists|memory|term|windows
+        buffer|color|hdata|infolists|memory|tags|term|windows
 
      list: list plugins with debug levels
       set: set debug level for plugin
@@ -157,6 +157,7 @@ command: command to execute (a '/' is automatically added if not found at beginn
     hdata: display infos about hdata
 infolists: display infos about infolists
    memory: display infos about memory usage
+     tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
 ........................................
@@ -195,6 +196,7 @@ Tags most commonly used:
   nick_xxx (xxx is nick in message),
   irc_xxx (xxx is command name or number, see /server raw),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+To see tags for lines in buffers: /debug tags
 
 Examples:
   use IRC smart filter on all buffers:

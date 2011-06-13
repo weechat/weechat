@@ -157,6 +157,7 @@ struct t_config_option *config_color_chat_highlight;
 struct t_config_option *config_color_chat_highlight_bg;
 struct t_config_option *config_color_chat_read_marker;
 struct t_config_option *config_color_chat_read_marker_bg;
+struct t_config_option *config_color_chat_tags;
 struct t_config_option *config_color_chat_text_found;
 struct t_config_option *config_color_chat_text_found_bg;
 struct t_config_option *config_color_chat_value;
@@ -2105,6 +2106,13 @@ config_weechat_init_options ()
         "chat_read_marker_bg", "color",
         N_("background color for unread data marker"),
         NULL, -1, 0, "default", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_tags = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_tags", "color",
+        N_("text color for tags after messages (displayed with command /debug "
+           "tags)"),
+        NULL, GUI_COLOR_CHAT_TAGS, 0, "red", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_text_found = config_file_new_option (
         weechat_config_file, ptr_section,

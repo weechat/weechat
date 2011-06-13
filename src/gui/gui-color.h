@@ -61,6 +61,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_TEXT_FOUND,
     GUI_COLOR_CHAT_VALUE,
     GUI_COLOR_CHAT_PREFIX_BUFFER,
+    GUI_COLOR_CHAT_TAGS,
     
     /* number of colors */
     GUI_COLOR_NUM_COLORS,

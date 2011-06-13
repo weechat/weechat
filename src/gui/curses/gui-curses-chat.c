@@ -712,7 +712,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
     char *ptr_data, *ptr_end_offset, *next_char;
-    char *ptr_style;
+    char *ptr_style, *message_with_tags;
     
     if (!line)
         return 0;
@@ -762,7 +762,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
     else
     {
-        ptr_data = line->data->message;
+        message_with_tags = (gui_chat_display_tags) ?
+            gui_chat_build_string_message_tags (line) : NULL;
+        ptr_data = (message_with_tags) ?
+            message_with_tags : line->data->message;
         while (ptr_data && ptr_data[0])
         {
             gui_chat_get_word_info (window,
@@ -838,6 +841,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 ptr_data = NULL;
             }
         }
+        if (message_with_tags)
+            free (message_with_tags);
     }
     
     if (marker_line)

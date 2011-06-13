@@ -52,6 +52,7 @@ char gui_chat_prefix_empty[] = "";              /* empty prefix             */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 int gui_chat_mute = GUI_CHAT_MUTE_DISABLED;     /* mute mode                */
 struct t_gui_buffer *gui_chat_mute_buffer = NULL; /* mute buffer            */
+int gui_chat_display_tags = 0;                  /* display tags?            */
 
 
 /*
@@ -478,6 +479,45 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
     }
     
     return string;
+}
+
+/*
+ * gui_chat_build_string_prefix_message: build a string with message and tags
+ */
+
+
+char *
+gui_chat_build_string_message_tags (struct t_gui_line *line)
+{
+    int i, length;
+    char *buf;
+    
+    length = 64 + 2;
+    if (line->data->message)
+        length += strlen (line->data->message);
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        length += strlen (line->data->tags_array[i]) + 1;
+    }
+    length += 2;
+    
+    buf = malloc (length);
+    buf[0] = '\0';
+    if (line->data->message)
+        strcat (buf, line->data->message);
+    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    strcat (buf, " [");
+    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_TAGS));
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        strcat (buf, line->data->tags_array[i]);
+        if (i < line->data->tags_count - 1)
+            strcat (buf, ",");
+    }
+    strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+    strcat (buf, "]");
+    
+    return buf;
 }
 
 /*

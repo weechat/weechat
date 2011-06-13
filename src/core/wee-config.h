@@ -180,6 +180,7 @@ extern struct t_config_option *config_color_chat_highlight;
 extern struct t_config_option *config_color_chat_highlight_bg;
 extern struct t_config_option *config_color_chat_read_marker;
 extern struct t_config_option *config_color_chat_read_marker_bg;
+extern struct t_config_option *config_color_chat_tags;
 extern struct t_config_option *config_color_chat_text_found;
 extern struct t_config_option *config_color_chat_text_found_bg;
 extern struct t_config_option *config_color_chat_value;

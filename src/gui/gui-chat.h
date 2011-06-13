@@ -52,6 +52,7 @@ extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
 extern int gui_chat_mute;
 extern struct t_gui_buffer *gui_chat_mute_buffer;
+extern int gui_chat_display_tags;
 
 /* chat functions */
 
@@ -70,6 +71,7 @@ extern char *gui_chat_get_time_string (time_t date);
 extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
 extern char *gui_chat_build_string_prefix_message (struct t_gui_line *line);
+extern char *gui_chat_build_string_message_tags (struct t_gui_line *line);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, const char *tags,
                                        const char *message, ...);

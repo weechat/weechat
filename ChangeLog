@@ -10,7 +10,7 @@ Version 0.3.6 (under dev!)
 * core: add "hdata" (direct access to WeeChat/plugin data)
 * core: add option weechat.look.eat_newline_glitch (do not add new line at end
   of each line displayed)
-* core: add option "infolists" for command /debug
+* core: add options "infolists", "hdata" and "tags" for command /debug
 * core: add horizontal scrolling for buffers with free content (command
   /window scroll_horiz) (task #11112)
 * api: fix bug with function config_set_desc_plugin (use immediately

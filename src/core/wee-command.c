@@ -1164,6 +1164,11 @@ COMMAND_CALLBACK(debug)
     {
         debug_memory ();
     }
+    else if (string_strcasecmp (argv[1], "tags") == 0)
+    {
+        gui_chat_display_tags ^= 1;
+        gui_window_ask_refresh (2);
+    }
     else if (string_strcasecmp (argv[1], "term") == 0)
     {
         gui_window_term_display_infos ();
@@ -4841,7 +4846,8 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|hdata|infolists|memory|term|windows"),
+                     " || buffer|color|hdata|infolists|memory|tags|term"
+                     "|windows"),
                   N_("     list: list plugins with debug levels\n"
                      "      set: set debug level for plugin\n"
                      "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -4854,6 +4860,7 @@ command_init ()
                      "    hdata: display infos about hdata\n"
                      "infolists: display infos about infolists\n"
                      "   memory: display infos about memory usage\n"
+                     "     tags: display tags for lines\n"
                      "     term: display infos about terminal\n"
                      "  windows: display windows tree"),
                   "list"
@@ -4864,6 +4871,7 @@ command_init ()
                   " || hdata"
                   " || infolists"
                   " || memory"
+                  " || tags"
                   " || term"
                   " || windows",
                   &command_debug, NULL);
@@ -4908,7 +4916,8 @@ command_init ()
                      "  nick_xxx (xxx is nick in message),\n"
                      "  irc_xxx (xxx is command name or number, see /server raw),\n"
                      "  irc_numeric, irc_error, irc_action, irc_ctcp, "
-                     "irc_ctcp_reply, irc_smart_filter, away_info.\n\n"
+                     "irc_ctcp_reply, irc_smart_filter, away_info.\n"
+                     "To see tags for lines in buffers: /debug tags\n\n"
                      "Examples:\n"
                      "  use IRC smart filter on all buffers:\n"
                      "    /filter add irc_smart * irc_smart_filter *\n"

@@ -145,7 +145,7 @@ extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
 /debug  list
         set <extension> <niveau>
         dump [<extension>]
-        buffer|color|hdata|infolists|memory|term|windows
+        buffer|color|hdata|infolists|memory|tags|term|windows
 
      list: lister les extensions avec leur niveau de debug
       set: définir le niveau de debug pour l'extension
@@ -157,6 +157,7 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
     hdata: afficher des infos sur les hdata
 infolists: afficher des infos sur les infolists
    memory: afficher des infos sur l'utilisation de la mémoire
+     tags: afficher les étiquettes pour les lignes
      term: afficher des infos sur le terminal
   windows: afficher l'arbre des fenêtres
 ........................................
@@ -195,6 +196,7 @@ Les tags les plus couramment utilisés:
   nick_xxx (xxx est le pseudo dans le message),
   irc_xxx (xxx est un nom de commande ou nombre, voir /server raw),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+Pour voir les tags des lignes affichées: /debug tags
 
 Exemples:
   utiliser le filtre intelligent IRC sur tous les tampons:
