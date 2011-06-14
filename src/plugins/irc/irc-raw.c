@@ -182,6 +182,9 @@ irc_raw_message_add_to_list (time_t date, const char *prefix,
 {
     struct t_irc_raw_message *new_raw_message;
     
+    if (!prefix || !message)
+        return NULL;
+    
     irc_raw_message_remove_old ();
     
     new_raw_message = malloc (sizeof (*new_raw_message));
