@@ -8892,6 +8892,7 @@ Paramètres :
 ** 'input' : texte saisi
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
 ** 'highlight_words' : liste des mots pour le highlight
+** 'highlight_regex' : expression régulière pour le highlight
 ** 'highlight_tags' : liste des étiquettes pour le highlight
 ** 'hotlist_max_level_nicks' : niveau maximum pour la hotlist pour certains
    pseudos
@@ -8943,6 +8944,7 @@ Paramètres :
 * 'property' : nom de la propriété :
 ** 'plugin' : pointeur vers l'extension qui a créé le tampon (NULL pour le
    tampon principal WeeChat)
+** 'highlight_regex_compiled' : expression régulière 'highlight_regex' compilée
 
 Valeur de retour :
 
@@ -9054,6 +9056,9 @@ Paramètres :
 | highlight_words_del | liste de mots séparés par des virgules |
   liste de mots à supprimer de la liste des mots à mettre en valeur dans ce
   tampon
+
+| highlight_regex | toute chaîne |
+  expression régulière pour le highlight
 
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   liste d'étiquettes ("tags") à mettre en valeur pour ce tampon

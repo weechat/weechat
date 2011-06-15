@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_BUFFER_H
 #define __WEECHAT_GUI_BUFFER_H 1
 
+#include <regex.h>
+
 struct t_hashtable;
 struct t_gui_window;
 struct t_infolist;
@@ -160,6 +162,8 @@ struct t_gui_buffer
     
     /* highlight settings for buffer */
     char *highlight_words;             /* list of words to highlight        */
+    char *highlight_regex;             /* regex for highlight               */
+    regex_t *highlight_regex_compiled; /* compiled regex                    */
     char *highlight_tags;              /* tags to highlight                 */
     int highlight_tags_count;          /* number of tags to highlight       */
                                        /* (if 0, any tag is highlighted)    */
@@ -239,6 +243,8 @@ extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
                                   const char *new_title);
 extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
+extern void gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
+                                            const char *new_highlight_regex);
 extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                            const char *new_highlight_tags);
 extern void gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,

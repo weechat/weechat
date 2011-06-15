@@ -90,19 +90,20 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "plugin", "name", "short_name", "title", "input", "text_search_input",
-  "highlight_words", "highlight_tags", "hotlist_max_level_nicks",
+  "highlight_words", "highlight_regex", "highlight_tags",
+  "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
-{ "plugin",
+{ "plugin", "highlight_regex_compiled",
   NULL
 };
 char *gui_buffer_properties_set[] =
 { "unread", "display", "print_hooks_enabled", "number", "name", "short_name",
   "type", "notify", "title", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_display_groups", "highlight_words",
-  "highlight_words_add", "highlight_words_del", "highlight_tags",
-  "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
+  "highlight_words_add", "highlight_words_del", "highlight_regex",
+  "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
   "hotlist_max_level_nicks_del", "input", "input_pos",
   "input_get_unknown_commands",
   NULL
@@ -464,6 +465,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         
         /* highlight */
         new_buffer->highlight_words = NULL;
+        new_buffer->highlight_regex = NULL;
+        new_buffer->highlight_regex_compiled = NULL;
         new_buffer->highlight_tags = NULL;
         new_buffer->highlight_tags_count = 0;
         new_buffer->highlight_tags_array = NULL;
@@ -830,6 +833,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->text_search_input;
         else if (string_strcasecmp (property, "highlight_words") == 0)
             return buffer->highlight_words;
+        else if (string_strcasecmp (property, "highlight_regex") == 0)
+            return buffer->highlight_regex;
         else if (string_strcasecmp (property, "highlight_tags") == 0)
             return buffer->highlight_tags;
         else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
@@ -857,6 +862,8 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
     {
         if (string_strcasecmp (property, "plugin") == 0)
             return buffer->plugin;
+        else if (string_strcasecmp (property, "highlight_regex_compiled") == 0)
+            return buffer->highlight_regex_compiled;
     }
     
     return NULL;
@@ -1155,6 +1162,47 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_buffer_set_highlight_regex: set highlight regex for a buffer
+ */
+
+void
+gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
+                                const char *new_highlight_regex)
+{
+    if (buffer->highlight_regex)
+    {
+        free (buffer->highlight_regex);
+        buffer->highlight_regex = NULL;
+    }
+    if (buffer->highlight_regex_compiled)
+    {
+        regfree (buffer->highlight_regex_compiled);
+        free (buffer->highlight_regex_compiled);
+        buffer->highlight_regex_compiled = NULL;
+    }
+    
+    if (new_highlight_regex && new_highlight_regex[0])
+    {
+        buffer->highlight_regex = strdup (new_highlight_regex);
+        if (buffer->highlight_regex)
+        {
+            buffer->highlight_regex_compiled =
+                malloc (sizeof (*buffer->highlight_regex_compiled));
+            if (buffer->highlight_regex_compiled)
+            {
+                if (regcomp (buffer->highlight_regex_compiled,
+                             buffer->highlight_regex,
+                             REG_EXTENDED) != 0)
+                {
+                    free (buffer->highlight_regex_compiled);
+                    buffer->highlight_regex_compiled = NULL;
+                }
+            }
+        }
+    }
+}
+
+/*
  * gui_buffer_set_highlight_tags: set highlight tags for a buffer
  */
 
@@ -1163,9 +1211,16 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                const char *new_highlight_tags)
 {
     if (buffer->highlight_tags)
+    {
         free (buffer->highlight_tags);
+        buffer->highlight_tags = NULL;
+    }
     if (buffer->highlight_tags_array)
+    {
         string_free_split (buffer->highlight_tags_array);
+        buffer->highlight_tags_array = NULL;
+    }
+    buffer->highlight_tags_count = 0;
     
     if (new_highlight_tags)
     {
@@ -1176,12 +1231,6 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                                          ",", 0, 0,
                                                          &buffer->highlight_tags_count);
         }
-    }
-    else
-    {
-        buffer->highlight_tags = NULL;
-        buffer->highlight_tags_count = 0;
-        buffer->highlight_tags_array = NULL;
     }
 }
 
@@ -1464,6 +1513,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "highlight_words_del") == 0)
     {
         gui_buffer_remove_highlight_words (buffer, value);
+    }
+    else if (string_strcasecmp (property, "highlight_regex") == 0)
+    {
+        gui_buffer_set_highlight_regex (buffer, value);
     }
     else if (string_strcasecmp (property, "highlight_tags") == 0)
     {
@@ -2076,6 +2129,13 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     if (buffer->highlight_words)
         free (buffer->highlight_words);
+    if (buffer->highlight_regex)
+        free (buffer->highlight_regex);
+    if (buffer->highlight_regex_compiled)
+    {
+        regfree (buffer->highlight_regex_compiled);
+        free (buffer->highlight_regex_compiled);
+    }
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
@@ -2953,6 +3013,8 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER);
         HDATA_VAR(struct t_gui_buffer, text_search_input, STRING);
         HDATA_VAR(struct t_gui_buffer, highlight_words, STRING);
+        HDATA_VAR(struct t_gui_buffer, highlight_regex, STRING);
+        HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER);
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER);
@@ -3117,6 +3179,10 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_words", buffer->highlight_words))
         return 0;
+    if (!infolist_new_var_string (ptr_item, "highlight_regex", buffer->highlight_regex))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "highlight_regex_compiled", buffer->highlight_regex_compiled))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_tags", buffer->highlight_tags))
         return 0;
     if (!infolist_new_var_string (ptr_item, "hotlist_max_level_nicks", hashtable_get_string (buffer->hotlist_max_level_nicks, "keys_values")))
@@ -3230,78 +3296,80 @@ gui_buffer_print_log ()
     {
         log_printf ("");
         log_printf ("[buffer (addr:0x%lx)]", ptr_buffer);
-        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
+        log_printf ("  plugin. . . . . . . . . : 0x%lx ('%s')",
                     ptr_buffer->plugin, plugin_get_name (ptr_buffer->plugin));
-        log_printf ("  plugin_name_for_upgrade: '%s'",  ptr_buffer->plugin_name_for_upgrade);
-        log_printf ("  number . . . . . . . . : %d",    ptr_buffer->number);
-        log_printf ("  layout_number. . . . . : %d",    ptr_buffer->layout_number);
-        log_printf ("  layout_applied . . . . : %d",    ptr_buffer->layout_applied);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_buffer->name);
-        log_printf ("  short_name . . . . . . : '%s'",  ptr_buffer->short_name);
-        log_printf ("  type . . . . . . . . . : %d",    ptr_buffer->type);
-        log_printf ("  notify . . . . . . . . : %d",    ptr_buffer->notify);
-        log_printf ("  num_displayed. . . . . : %d",    ptr_buffer->num_displayed);
-        log_printf ("  active . . . . . . . . : %d",    ptr_buffer->active);
-        log_printf ("  print_hooks_enabled. . : %d",    ptr_buffer->print_hooks_enabled);
-        log_printf ("  close_callback . . . . : 0x%lx", ptr_buffer->close_callback);
-        log_printf ("  close_callback_data. . : 0x%lx", ptr_buffer->close_callback_data);
-        log_printf ("  title. . . . . . . . . : '%s'",  ptr_buffer->title);
-        log_printf ("  own_lines. . . . . . . : 0x%lx", ptr_buffer->own_lines);
+        log_printf ("  plugin_name_for_upgrade : '%s'",  ptr_buffer->plugin_name_for_upgrade);
+        log_printf ("  number. . . . . . . . . : %d",    ptr_buffer->number);
+        log_printf ("  layout_number . . . . . : %d",    ptr_buffer->layout_number);
+        log_printf ("  layout_applied. . . . . : %d",    ptr_buffer->layout_applied);
+        log_printf ("  name. . . . . . . . . . : '%s'",  ptr_buffer->name);
+        log_printf ("  short_name. . . . . . . : '%s'",  ptr_buffer->short_name);
+        log_printf ("  type. . . . . . . . . . : %d",    ptr_buffer->type);
+        log_printf ("  notify. . . . . . . . . : %d",    ptr_buffer->notify);
+        log_printf ("  num_displayed . . . . . : %d",    ptr_buffer->num_displayed);
+        log_printf ("  active. . . . . . . . . : %d",    ptr_buffer->active);
+        log_printf ("  print_hooks_enabled . . : %d",    ptr_buffer->print_hooks_enabled);
+        log_printf ("  close_callback. . . . . : 0x%lx", ptr_buffer->close_callback);
+        log_printf ("  close_callback_data . . : 0x%lx", ptr_buffer->close_callback_data);
+        log_printf ("  title . . . . . . . . . : '%s'",  ptr_buffer->title);
+        log_printf ("  own_lines . . . . . . . : 0x%lx", ptr_buffer->own_lines);
         gui_lines_print_log (ptr_buffer->own_lines);
-        log_printf ("  mixed_lines. . . . . . : 0x%lx", ptr_buffer->mixed_lines);
+        log_printf ("  mixed_lines . . . . . . : 0x%lx", ptr_buffer->mixed_lines);
         gui_lines_print_log (ptr_buffer->mixed_lines);
-        log_printf ("  lines. . . . . . . . . : 0x%lx", ptr_buffer->lines);
-        log_printf ("  time_for_each_line . . : %d",    ptr_buffer->time_for_each_line);
-        log_printf ("  chat_refresh_needed. . : %d",    ptr_buffer->chat_refresh_needed);
-        log_printf ("  nicklist . . . . . . . : %d",    ptr_buffer->nicklist);
-        log_printf ("  nicklist_case_sensitive: %d",    ptr_buffer->nicklist_case_sensitive);
-        log_printf ("  nicklist_root. . . . . : 0x%lx", ptr_buffer->nicklist_root);
-        log_printf ("  nicklist_max_length. . : %d",    ptr_buffer->nicklist_max_length);
-        log_printf ("  nicklist_display_groups: %d",    ptr_buffer->nicklist_display_groups);
-        log_printf ("  nicklist_visible_count.: %d",    ptr_buffer->nicklist_visible_count);
-        log_printf ("  input. . . . . . . . . : %d",    ptr_buffer->input);
-        log_printf ("  input_callback . . . . : 0x%lx", ptr_buffer->input_callback);
-        log_printf ("  input_callback_data. . : 0x%lx", ptr_buffer->input_callback_data);
-        log_printf ("  input_get_unknown_cmd. : %d",    ptr_buffer->input_get_unknown_commands);
-        log_printf ("  input_buffer . . . . . : '%s'",  ptr_buffer->input_buffer);
-        log_printf ("  input_buffer_alloc . . : %d",    ptr_buffer->input_buffer_alloc);
-        log_printf ("  input_buffer_size. . . : %d",    ptr_buffer->input_buffer_size);
-        log_printf ("  input_buffer_length. . : %d",    ptr_buffer->input_buffer_length);
-        log_printf ("  input_buffer_pos . . . : %d",    ptr_buffer->input_buffer_pos);
-        log_printf ("  input_buffer_1st_disp. : %d",    ptr_buffer->input_buffer_1st_display);
-        log_printf ("  input_undo_snap->data. : '%s'",  (ptr_buffer->input_undo_snap)->data);
-        log_printf ("  input_undo_snap->pos . : %d",    (ptr_buffer->input_undo_snap)->pos);
-        log_printf ("  input_undo . . . . . . : 0x%lx", ptr_buffer->input_undo);
-        log_printf ("  last_input_undo. . . . : 0x%lx", ptr_buffer->last_input_undo);
-        log_printf ("  ptr_input_undo . . . . : 0x%lx", ptr_buffer->ptr_input_undo);
-        log_printf ("  input_undo_count . . . : %d",    ptr_buffer->input_undo_count);
+        log_printf ("  lines . . . . . . . . . : 0x%lx", ptr_buffer->lines);
+        log_printf ("  time_for_each_line. . . : %d",    ptr_buffer->time_for_each_line);
+        log_printf ("  chat_refresh_needed . . : %d",    ptr_buffer->chat_refresh_needed);
+        log_printf ("  nicklist. . . . . . . . : %d",    ptr_buffer->nicklist);
+        log_printf ("  nicklist_case_sensitive : %d",    ptr_buffer->nicklist_case_sensitive);
+        log_printf ("  nicklist_root . . . . . : 0x%lx", ptr_buffer->nicklist_root);
+        log_printf ("  nicklist_max_length . . : %d",    ptr_buffer->nicklist_max_length);
+        log_printf ("  nicklist_display_groups : %d",    ptr_buffer->nicklist_display_groups);
+        log_printf ("  nicklist_visible_count. : %d",    ptr_buffer->nicklist_visible_count);
+        log_printf ("  input . . . . . . . . . : %d",    ptr_buffer->input);
+        log_printf ("  input_callback. . . . . : 0x%lx", ptr_buffer->input_callback);
+        log_printf ("  input_callback_data . . : 0x%lx", ptr_buffer->input_callback_data);
+        log_printf ("  input_get_unknown_cmd . : %d",    ptr_buffer->input_get_unknown_commands);
+        log_printf ("  input_buffer. . . . . . : '%s'",  ptr_buffer->input_buffer);
+        log_printf ("  input_buffer_alloc. . . : %d",    ptr_buffer->input_buffer_alloc);
+        log_printf ("  input_buffer_size . . . : %d",    ptr_buffer->input_buffer_size);
+        log_printf ("  input_buffer_length . . : %d",    ptr_buffer->input_buffer_length);
+        log_printf ("  input_buffer_pos. . . . : %d",    ptr_buffer->input_buffer_pos);
+        log_printf ("  input_buffer_1st_disp . : %d",    ptr_buffer->input_buffer_1st_display);
+        log_printf ("  input_undo_snap->data . : '%s'",  (ptr_buffer->input_undo_snap)->data);
+        log_printf ("  input_undo_snap->pos. . : %d",    (ptr_buffer->input_undo_snap)->pos);
+        log_printf ("  input_undo. . . . . . . : 0x%lx", ptr_buffer->input_undo);
+        log_printf ("  last_input_undo . . . . : 0x%lx", ptr_buffer->last_input_undo);
+        log_printf ("  ptr_input_undo. . . . . : 0x%lx", ptr_buffer->ptr_input_undo);
+        log_printf ("  input_undo_count. . . . : %d",    ptr_buffer->input_undo_count);
         num = 0;
         for (ptr_undo = ptr_buffer->input_undo; ptr_undo;
              ptr_undo = ptr_undo->next_undo)
         {
-            log_printf ("    undo[%04d] . . . . . : 0x%lx ('%s' / %d)",
+            log_printf ("    undo[%04d]. . . . . . : 0x%lx ('%s' / %d)",
                         num, ptr_undo, ptr_undo->data, ptr_undo->pos);
             num++;
         }
-        log_printf ("  completion . . . . . . : 0x%lx", ptr_buffer->completion);
-        log_printf ("  history. . . . . . . . : 0x%lx", ptr_buffer->history);
-        log_printf ("  last_history . . . . . : 0x%lx", ptr_buffer->last_history);
-        log_printf ("  ptr_history. . . . . . : 0x%lx", ptr_buffer->ptr_history);
-        log_printf ("  num_history. . . . . . : %d",    ptr_buffer->num_history);
-        log_printf ("  text_search. . . . . . : %d",    ptr_buffer->text_search);
-        log_printf ("  text_search_exact. . . : %d",    ptr_buffer->text_search_exact);
-        log_printf ("  text_search_found. . . : %d",    ptr_buffer->text_search_found);
-        log_printf ("  text_search_input. . . : '%s'",  ptr_buffer->text_search_input);
-        log_printf ("  highlight_words. . . . : '%s'",  ptr_buffer->highlight_words);
-        log_printf ("  highlight_tags . . . . : '%s'",  ptr_buffer->highlight_tags);
-        log_printf ("  highlight_tags_count . : %d",    ptr_buffer->highlight_tags_count);
-        log_printf ("  highlight_tags_array . : 0x%lx", ptr_buffer->highlight_tags_array);
-        log_printf ("  keys . . . . . . . . . : 0x%lx", ptr_buffer->keys);
-        log_printf ("  last_key . . . . . . . : 0x%lx", ptr_buffer->last_key);
-        log_printf ("  keys_count . . . . . . : %d",    ptr_buffer->keys_count);
-        log_printf ("  local_variables. . . . : 0x%lx", ptr_buffer->local_variables);
-        log_printf ("  prev_buffer. . . . . . : 0x%lx", ptr_buffer->prev_buffer);
-        log_printf ("  next_buffer. . . . . . : 0x%lx", ptr_buffer->next_buffer);
+        log_printf ("  completion. . . . . . . : 0x%lx", ptr_buffer->completion);
+        log_printf ("  history . . . . . . . . : 0x%lx", ptr_buffer->history);
+        log_printf ("  last_history. . . . . . : 0x%lx", ptr_buffer->last_history);
+        log_printf ("  ptr_history . . . . . . : 0x%lx", ptr_buffer->ptr_history);
+        log_printf ("  num_history . . . . . . : %d",    ptr_buffer->num_history);
+        log_printf ("  text_search . . . . . . : %d",    ptr_buffer->text_search);
+        log_printf ("  text_search_exact . . . : %d",    ptr_buffer->text_search_exact);
+        log_printf ("  text_search_found . . . : %d",    ptr_buffer->text_search_found);
+        log_printf ("  text_search_input . . . : '%s'",  ptr_buffer->text_search_input);
+        log_printf ("  highlight_words . . . . : '%s'",  ptr_buffer->highlight_words);
+        log_printf ("  highlight_regex . . . . : '%s'",  ptr_buffer->highlight_regex);
+        log_printf ("  highlight_regex_compiled: 0x%lx", ptr_buffer->highlight_regex_compiled);
+        log_printf ("  highlight_tags. . . . . : '%s'",  ptr_buffer->highlight_tags);
+        log_printf ("  highlight_tags_count. . : %d",    ptr_buffer->highlight_tags_count);
+        log_printf ("  highlight_tags_array. . : 0x%lx", ptr_buffer->highlight_tags_array);
+        log_printf ("  keys. . . . . . . . . . : 0x%lx", ptr_buffer->keys);
+        log_printf ("  last_key. . . . . . . . : 0x%lx", ptr_buffer->last_key);
+        log_printf ("  keys_count. . . . . . . : %d",    ptr_buffer->keys_count);
+        log_printf ("  local_variables . . . . : 0x%lx", ptr_buffer->local_variables);
+        log_printf ("  prev_buffer . . . . . . : 0x%lx", ptr_buffer->prev_buffer);
+        log_printf ("  next_buffer . . . . . . : 0x%lx", ptr_buffer->next_buffer);
         
         if (ptr_buffer->hotlist_max_level_nicks)
         {

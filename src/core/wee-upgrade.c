@@ -414,6 +414,8 @@ upgrade_weechat_read_cb (void *data,
                                 strdup (infolist_string (infolist, "text_search_input"));
                         gui_buffer_set_highlight_words (upgrade_current_buffer,
                                                         infolist_string (infolist, "highlight_words"));
+                        gui_buffer_set_highlight_regex (upgrade_current_buffer,
+                                                        infolist_string (infolist, "highlight_regex"));
                         gui_buffer_set_highlight_tags (upgrade_current_buffer,
                                                        infolist_string (infolist, "highlight_tags"));
                         gui_buffer_set_hotlist_max_level_nicks (upgrade_current_buffer,

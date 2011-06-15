@@ -490,6 +490,12 @@ gui_line_has_highlight (struct t_gui_line *line)
                                                   config_highlight_regex);
     }
     
+    if (!rc && line->data->buffer->highlight_regex_compiled)
+    {
+        rc = string_has_highlight_regex_compiled (msg_no_color,
+                                                  line->data->buffer->highlight_regex_compiled);
+    }
+    
     free (msg_no_color);
     
     return rc;
@@ -1315,13 +1321,13 @@ gui_lines_print_log (struct t_gui_lines *lines)
 {
     if (lines)
     {
-        log_printf ("    first_line . . . . . : 0x%lx", lines->first_line);
-        log_printf ("    last_line. . . . . . : 0x%lx", lines->last_line);
-        log_printf ("    last_read_line . . . : 0x%lx", lines->last_read_line);
-        log_printf ("    lines_count. . . . . : %d",    lines->lines_count);
-        log_printf ("    first_line_not_read. : %d",    lines->first_line_not_read);
-        log_printf ("    lines_hidden . . . . : %d",    lines->lines_hidden);
-        log_printf ("    buffer_max_length. . : %d",    lines->buffer_max_length);
-        log_printf ("    prefix_max_length. . : %d",    lines->prefix_max_length);
+        log_printf ("    first_line. . . . . . : 0x%lx", lines->first_line);
+        log_printf ("    last_line . . . . . . : 0x%lx", lines->last_line);
+        log_printf ("    last_read_line. . . . : 0x%lx", lines->last_read_line);
+        log_printf ("    lines_count . . . . . : %d",    lines->lines_count);
+        log_printf ("    first_line_not_read . : %d",    lines->first_line_not_read);
+        log_printf ("    lines_hidden. . . . . : %d",    lines->lines_hidden);
+        log_printf ("    buffer_max_length . . : %d",    lines->buffer_max_length);
+        log_printf ("    prefix_max_length . . : %d",    lines->prefix_max_length);
     }
 }

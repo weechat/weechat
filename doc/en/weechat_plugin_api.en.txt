@@ -8756,6 +8756,7 @@ Arguments:
 ** 'input': input text
 ** 'text_search_input': input saved before text search
 ** 'highlight_words': list of words to highlight
+** 'highlight_regex': regular expression for highlight
 ** 'highlight_tags': list of tags to highlight
 ** 'hotlist_max_level_nicks': max hotlist level for some nicks
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
@@ -8806,6 +8807,7 @@ Arguments:
 * 'property': property name:
 ** 'plugin': pointer to plugin which created this buffer (NULL for WeeChat main
    buffer)
+** 'highlight_regex_compiled': regular expression 'highlight_regex' compiled
 
 Return value:
 
@@ -8910,6 +8912,9 @@ Arguments:
 
 | highlight_words_del | comma separated list of words |
   comma separated list of words to remove from highlighted words on buffer
+
+| highlight_regex | any string |
+  regular expression for highlight
 
 | highlight_tags | comma separated list of tags |
   comma separated list of tags to highlight in this buffer

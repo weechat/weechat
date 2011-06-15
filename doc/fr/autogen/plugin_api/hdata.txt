@@ -245,6 +245,8 @@
   'text_search_found' (integer) +
   'text_search_input' (string) +
   'highlight_words' (string) +
+  'highlight_regex' (string) +
+  'highlight_regex_compiled' (pointer) +
   'highlight_tags' (string) +
   'highlight_tags_count' (integer) +
   'highlight_tags_array' (pointer) +

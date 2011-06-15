@@ -8814,6 +8814,8 @@ Argomenti:
 ** 'input': testo in ingresso
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
+// TRANSLATION MISSING
+** 'highlight_regex': regular expression for highlight
 ** 'highlight_tags': elenco di tag da evidenziare
 ** 'hotlist_max_level_nicks': livello massimo della hotlist per alcuni nick
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
@@ -8864,6 +8866,8 @@ Argomenti:
 * 'property': nome proprietà:
 ** 'plugin': puntatore al plugin che ha creato questo buffer (NULL
    per il buffer principale di WeeChat)
+// TRANSLATION MISSING
+** 'highlight_regex_compiled': regular expression 'highlight_regex' compiled
 
 Valore restituito:
 
@@ -8977,6 +8981,10 @@ Argomenti:
 | highlight_words_del | elenco di parole separate da virgole|
   elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer
+
+// TRANSLATION MISSING
+| highlight_regex | qualsiasi stringa |
+  regular expression for highlight
 
 | highlight_tags | elenco separato da virgole di tag |
   elenco separato da virgole di tag da evidenziare in questo buffer
