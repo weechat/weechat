@@ -56,28 +56,27 @@ xfer_buffer_refresh (const char *hotlist)
         weechat_buffer_clear (xfer_buffer);
         line = 0;
         xfer_selected = xfer_search_by_number (xfer_buffer_selected_line);
-        if (xfer_selected)
-        {
-            weechat_printf_y (xfer_buffer, 0,
-                              "%s%s%s%s%s%s%s%s",
-                              weechat_color("green"),
-                              _("Actions (letter+enter):"),
-                              weechat_color("lightgreen"),
-                              /* accept */
-                              (XFER_IS_RECV(xfer_selected->type)
-                               && (xfer_selected->status == XFER_STATUS_WAITING)) ?
-                              _("  [A] Accept") : "",
-                              /* cancel */
-                              (!XFER_HAS_ENDED(xfer_selected->status)) ?
-                              _("  [C] Cancel") : "",
-                              /* remove */
-                              (XFER_HAS_ENDED(xfer_selected->status)) ?
-                              _("  [R] Remove") : "",
-                              /* purge old */
-                              _("  [P] Purge finished"),
-                              /* quit */
-                              _("  [Q] Close this buffer"));
-        }
+        weechat_printf_y (xfer_buffer, 0,
+                          "%s%s%s%s%s%s%s%s",
+                          weechat_color("green"),
+                          _("Actions (letter+enter):"),
+                          weechat_color("lightgreen"),
+                          /* accept */
+                          (xfer_selected && XFER_IS_RECV(xfer_selected->type)
+                           && (xfer_selected->status == XFER_STATUS_WAITING)) ?
+                          _("  [A] Accept") : "",
+                          /* cancel */
+                          (xfer_selected
+                           && !XFER_HAS_ENDED(xfer_selected->status)) ?
+                          _("  [C] Cancel") : "",
+                          /* remove */
+                          (xfer_selected
+                           && XFER_HAS_ENDED(xfer_selected->status)) ?
+                          _("  [R] Remove") : "",
+                          /* purge old */
+                          _("  [P] Purge finished"),
+                          /* quit */
+                          _("  [Q] Close this buffer"));
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
             suffix[0] = '\0';

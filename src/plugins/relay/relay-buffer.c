@@ -57,24 +57,23 @@ relay_buffer_refresh (const char *hotlist)
         weechat_buffer_clear (relay_buffer);
         line = 0;
         client_selected = relay_client_search_by_number (relay_buffer_selected_line);
-        if (client_selected)
-        {
-            weechat_printf_y (relay_buffer, 0,
-                              "%s%s%s%s%s%s%s",
-                              weechat_color("green"),
-                              _("Actions (letter+enter):"),
-                              weechat_color("lightgreen"),
-                              /* disconnect */
-                              (RELAY_CLIENT_HAS_ENDED(client_selected->status)) ?
-                              "" : _("  [D] Disconnect"),
-                              /* remove */
-                              (RELAY_CLIENT_HAS_ENDED(client_selected->status)) ?
-                              _("  [R] Remove") : "",
-                              /* purge old */
-                              _("  [P] Purge finished"),
-                              /* quit */
-                              _("  [Q] Close this buffer"));
-        }
+        weechat_printf_y (relay_buffer, 0,
+                          "%s%s%s%s%s%s%s",
+                          weechat_color("green"),
+                          _("Actions (letter+enter):"),
+                          weechat_color("lightgreen"),
+                          /* disconnect */
+                          (client_selected
+                           && !RELAY_CLIENT_HAS_ENDED(client_selected->status)) ?
+                          _("  [D] Disconnect") : "",
+                          /* remove */
+                          (client_selected
+                           && RELAY_CLIENT_HAS_ENDED(client_selected->status)) ?
+                          _("  [R] Remove") : "",
+                          /* purge old */
+                          _("  [P] Purge finished"),
+                          /* quit */
+                          _("  [Q] Close this buffer"));
         for (ptr_client = relay_clients; ptr_client;
              ptr_client = ptr_client->next_client)
         {
