@@ -3412,24 +3412,31 @@ IRC_PROTOCOL_CALLBACK(352)
     }
     
     ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_nick = (ptr_channel) ? irc_nick_search (ptr_channel, argv[7]) : NULL;
+    
+    /* update host for nick */
+    if (ptr_nick)
+    {
+        if (ptr_nick->host)
+            free (ptr_nick->host);
+        length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
+        ptr_nick->host = malloc (length);
+        if (ptr_nick->host)
+            snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
+    }
+    
     if (ptr_channel && (ptr_channel->checking_away > 0))
     {
-        ptr_nick = irc_nick_search (ptr_channel, argv[7]);
-        if (ptr_nick)
+        if (ptr_nick && pos_attr)
         {
-            if (ptr_nick->host)
-                free (ptr_nick->host);
-            length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
-            ptr_nick->host = malloc (length);
-            if (ptr_nick->host)
-                snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
-            if (pos_attr)
-                irc_nick_set_away (server, ptr_channel, ptr_nick,
-                                   (pos_attr[0] == 'G') ? 1 : 0);
+            /* (re)set away flag */
+            irc_nick_set_away (server, ptr_channel, ptr_nick,
+                               (pos_attr[0] == 'G') ? 1 : 0);
         }
     }
     else
     {
+        /* display output of who (manual who from user) */
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
                                                               command, "who",
                                                               NULL),
