@@ -1818,6 +1818,10 @@ int
 irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
+    int arg_channels, length;
+    char *pos_comma, *channel_name;
+    struct t_irc_channel *ptr_channel2;
+    
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
@@ -1830,14 +1834,43 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
             ptr_server = irc_server_search (argv[2]);
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            irc_command_join_server (ptr_server, argv_eol[3], 1);
+            arg_channels = 3;
         }
         else
         {
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            irc_command_join_server (ptr_server, argv_eol[1], 1);
+            arg_channels = 1;
         }
+        irc_command_join_server (ptr_server, argv_eol[arg_channels], 1);
+        
+        /*
+         * if buffer for first channel of list already exists,
+         * then switch to it
+         */
+        pos_comma = strchr (argv[arg_channels], ',');
+        if (pos_comma)
+            pos_comma[0] = '\0';
+        if (irc_channel_is_channel (argv[arg_channels]))
+            channel_name = strdup (argv[arg_channels]);
+        else
+        {
+            length = 1 + strlen (argv[arg_channels]) + 1;
+            channel_name = malloc (length);
+            if (channel_name)
+                snprintf (channel_name, length, "#%s", argv[arg_channels]);
+        }
+        if (channel_name)
+        {
+            ptr_channel2 = irc_channel_search (ptr_server, channel_name);
+            if (ptr_channel2)
+            {
+                weechat_buffer_set (ptr_channel2->buffer, "display", "1");
+            }
+            free (channel_name);
+        }
+        if (pos_comma)
+            pos_comma[0] = ',';
     }
     else
     {
