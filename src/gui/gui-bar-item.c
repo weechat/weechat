@@ -1154,7 +1154,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
             {
                 private = (ptr_hotlist->count[GUI_HOTLIST_PRIVATE] > 0) ? 1 : 0;
                 priority_min_displayed = ptr_hotlist->priority + 1;
-                priority_min = ptr_hotlist->priority - CONFIG_INTEGER(config_look_hotlist_count_max);
+                priority_min = ptr_hotlist->priority - CONFIG_INTEGER(config_look_hotlist_count_max) + 1;
                 if (priority_min < 0)
                     priority_min = 0;
                 for (priority = ptr_hotlist->priority;

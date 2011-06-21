@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-06-16
+v0.3.6-dev, 2011-06-21
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix bug with option weechat.look.hotlist_count_max (value+1 was used)
 * core: add local variable "highlight_regex" in buffers
 * core: add "hdata" (direct access to WeeChat/plugin data)
 * core: add option weechat.look.eat_newline_glitch (do not add new line at end
