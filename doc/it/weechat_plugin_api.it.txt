@@ -11750,8 +11750,8 @@ Hdata is a fast way to read WeeChat or plugins data. It is similar to
 infolist, but there are some differences:
 
 * it is faster and uses less memory: direct read of data without duplication
-* it may have different info than infolist: it only raw data in structures
-  (infolist may add some extra data for convenience)
+* it may have different info than infolist: it contains only raw data in
+  structures (infolist may add some extra data for convenience)
 ========================================
 
 Prototipo:

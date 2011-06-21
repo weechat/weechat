@@ -11830,9 +11830,9 @@ Il est similaire à l'infolist, mais il y a quelques différences :
 
 * il est plus rapide et utilise moins de mémoire : accès direct aux données sans
   duplication
-* il peut contenir des informations différentes de l'infolist : il contient les
-  données brutes des structures (l'infolist peut ajouter des données
-  supplémentaires pour plus de commodité)
+* il peut contenir des informations différentes de l'infolist : il contient
+  seulement les données brutes des structures (l'infolist peut ajouter des
+  données supplémentaires pour plus de commodité)
 ========================================
 
 Prototype :
