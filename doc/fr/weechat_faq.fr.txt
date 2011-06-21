@@ -3,6 +3,10 @@ WeeChat FAQ (Questions Fréquemment Posées)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
+[NOTE]
+Ce document est écrit pour les versions de WeeChat > = 0.3.0.
+
+
 Général
 -------
 
@@ -34,7 +38,8 @@ Quelques fonctionnalités (version > = 0.3.x) :
 * filtrage de l'affichage avec tags et expressions régulières
 * découpage de la fenêtre horizontalement et verticalement
 * barres personnalisables et extensibles
-* liste des pseudos disponible dans toutes les interfaces
+* liste des pseudos en natif
+* liste des tampons (script buffers.pl)
 * proxy IRC
 * redirection des commandes IRC
 * recherche incrémentale de texte dans les tampons, saut aux highlights
@@ -100,11 +105,7 @@ Je ne vois pas bien certains accents dans WeeChat, que faire ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
-points ci-dessous.
-
-Pour les versions < 0.2.3, merci d'installer la dernière version stable.
-
-Pour les versions > = 0.2.3 :
+points ci-dessous :
 
 * vérifiez que weechat-curses est lié avec libncursesw (attention : nécessaire
   sur beaucoup de distributions, mais pas toutes) :
@@ -116,8 +117,7 @@ Pour les versions > = 0.2.3 :
   'ISO-XXXXXX' ou 'UTF-8' pour le charset du terminal. Si vous voyez
   'ANSI_X3.4-1968' ou d'autres valeurs, votre locale est probablement erronée.
 * affectez la valeur pour le décodage global, par exemple :
-** avec WeeChat < = 0.2.6 : `/setp charset.global.decode = ISO-8859-15`
-** avec WeeChat > = 0.3.x : `/set charset.default.decode "ISO-8859-15"`
+  `/set charset.default.decode "ISO-8859-15"`
 * si vous utilisez la locale UTF-8 :
 ** vérifiez que votre terminal est compatible UTF-8
    (un terminal conseillé pour l'UTF-8 est rxvt-unicode)
@@ -185,6 +185,42 @@ Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
 aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 
 
+[[buffers_list]]
+Comment afficher la liste des tampons sur la gauche ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Utilisez le script 'buffers.pl'.
+
+Pour limiter la taille de la barre :
+
+----------------------------------------
+/set weechat.bar.buffers.size_max 15
+----------------------------------------
+
+Pour déplacer la barre en bas :
+
+----------------------------------------
+/set weechat.bar.buffers.position bottom
+----------------------------------------
+
+
+[[customize_prefix]]
+Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pour réduire la longueur maxi des pseudos dans la zone de discussion :
+
+----------------------------------------
+/set weechat.look.prefix_align_max 15
+----------------------------------------
+
+Pour supprimer l'alignement sur les pseudos :
+
+----------------------------------------
+/set weechat.look.prefix_align none
+----------------------------------------
+
+
 [[one_input_root_bar]]
 Est-il possible d'avoir une seule bar input pour toutes les fenêtres (après un découpage) ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,10 +255,9 @@ rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
 
-* avec WeeChat < = 0.2.6 : +
-  `/set look_nicklist_position = top`
-* avec WeeChat > = 0.3.x : +
-  `/bar set nicklist position top`
+----------------------------------------
+/set weechat.bar.nicklist.position top
+----------------------------------------
 
 
 [[urls]]
@@ -306,6 +341,16 @@ options (facultatif : vous pouvez ajouter des alias de couleurs avec la commande
 
 Merci de lire le guide utilisateur pour plus d'information sur la gestion des
 couleurs.
+
+
+[[search_text]]
+Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La touche par défaut est @k(C-)@k(r) (la commande est : `/input search_text`).
+
+Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
+(raccourcis clavier par défaut).
 
 
 [[key_bindings]]
@@ -408,25 +453,22 @@ active/désactive les filtres).
 Comment puis-je filter les messages join/part/quit sur les canaux IRC ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Selon la version de WeeChat :
+Avec le filtre intelligent (pour garder les join/part/quit des utilisateurs qui
+ont parlé récemment) :
 
-* avec WeeChat < = 0.2.6 : +
-  `/ignore * join #weechat freenode` +
-  `/ignore * part #weechat freenode` +
-  `/ignore * quit #weechat freenode` +
-  (le canal et/ou le serveur peuvent être "*", `/help ignore` pour l'aide)
+----------------------------------------
+/set irc.look.smart_filter on
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
 
-* avec WeeChat > = 0.3.x :
+Avec un filtre global (pour cacher *tous* les join/part/quit) :
 
-** filtre intelligent (pour garder les join/part/quit des utilisateurs qui ont
-   parlé récemment) : +
-   `/set irc.look.smart_filter on` +
-   `/filter add irc_smart * irc_smart_filter *` +
-    (`/help irc.look.smart_filter` et `/help filter` pour l'aide)
+----------------------------------------
+/filter add jpk * irc_join,irc_part,irc_quit *
+----------------------------------------
 
-** filtre global (pour cacher *tous* les join/part/quit) : +
-   `/filter add irc_jpk * irc_join,irc_part,irc_quit *` +
-   (`/help filter` pour l'aide)
+[NOTE]
+Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 
 
 [[filter_irc_join_channel_messages]]
@@ -467,12 +509,21 @@ voice. Par conséquent, vous pouvez changer cela et laisser WeeChat utiliser une
 couleur spéciale pour les pseudos absents dans la liste des pseudos.
 
 Sur le canal '&bitlbee', faites :
+
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
 Pour vérifier les pseudos absents dans WeeChat, voir la question à propos des
 <<color_away_nicks,pseudos absents>>.
+
+Si vous voulez vraiment filtrer les messages voice, vous pouvez utiliser cette
+commande, mais elle n'est pas parfaite (elle fonctionne seulement si le
+premier mode changé est voice) :
+
+----------------------------------------
+/filter add hidevoices * irc_mode \(\+\|\-\)v
+----------------------------------------
 
 
 [[color_away_nicks]]
@@ -502,19 +553,15 @@ Pour WeeChat < = 0.3.3, les options sont 'irc.network.away_check' et
 Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Selon la version de WeeChat :
+Vous pouvez utiliser un script comme 'beep.pl' ou 'launcher.pl'.
 
-* avec WeeChat < = 0.2.6 : utilisez le script 'sound.pl' (disponible sur la
-  page des scripts), puis configurez une commande système (jouant un son,
-  affichant un message à l'écran, etc...) comme ceci : +
-  `/setp perl.sound.cmd_highlight = "/chemin/vers/commande parametres"`
-* avec WeeChat > = 0.3.x : utilisez le script 'launcher.pl' (disponible sur la
-  page des scripts), puis configurez une commande système (jouant un son,
-  affichant un message à l'écran, etc...) comme ceci : +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande paramètres"`
+Pour 'launcher.pl', vous devez configurer la commande :
 
-De nombreux autres scripts de notification existent, merci de consulter la
-liste des extensions/scripts : http://www.weechat.org/scripts
+----------------------------------------
+/set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande paramètres"
+----------------------------------------
+
+Autres scripts sur ce sujet : http://www.weechat.org/scripts/stable/tag/notify/
 
 
 [[irc_ssl_connection]]
@@ -563,6 +610,13 @@ connectez-vous :
 ----------------------------------------
 
 
+[[irc_target_server]]
+Comment puis-je changer le serveur cible sur le tampon avec les serveurs ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La touche par défaut est @k(C-)@k(x) (la commande est : `/input switch_active_buffer`).
+
+
 [[plugins_scripts]]
 Extensions / scripts
 --------------------
@@ -577,12 +631,10 @@ Linux).
 
 Vous devez configurer ça :
 
-* avec WeeChat < = 0.2.6 : +
-  `/set plugins_extension = ".so.0.0"`
-* avec WeeChat > = 0.3.x : +
-  `/set weechat.plugin.extension ".so.0.0"`
-
-Puis: `/plugin autoload`.
+----------------------------------------
+/set weechat.plugin.extension ".so.0.0"
+/plugin autoload
+----------------------------------------
 
 
 [[load_scripts]]

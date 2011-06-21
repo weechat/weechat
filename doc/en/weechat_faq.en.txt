@@ -3,6 +3,10 @@ WeeChat FAQ (Frequently Asked Questions)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
+[NOTE]
+This document is written for WeeChat versions > = 0.3.0.
+
+
 [[general]]
 General
 -------
@@ -35,7 +39,8 @@ Some features (version > = 0.3.x):
 * display filtering by tags and regular expressions
 * horizontal and vertical window split
 * customizable and extensible bars
-* nicklist available in all GUI's
+* native nicklist
+* list of buffers (script buffers.pl)
 * IRC proxy
 * redirection of IRC commands
 * incremental text search in buffers, jump to highlights
@@ -98,11 +103,7 @@ Display
 I don't see some chars with accents, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's common issue, please read carefully and check *ALL* solutions below.
-
-For versions < 0.2.3, please upgrade to the latest stable version.
-
-For versions > = 0.2.3:
+It's common issue, please read carefully and check *ALL* solutions below:
 
 * check that weechat-curses is linked to libncursesw (warning: needed on most
   distributions but not all): `ldd /path/to/weechat-curses`
@@ -112,8 +113,7 @@ For versions > = 0.2.3:
   'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or other values,
   your locale is probably wrong.
 * setup global decode value, for example:
-** with WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-15`
-** with WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-15"`
+  `/set charset.default.decode "ISO-8859-15"`
 * if you are using UTF-8 locale:
 ** check that your terminal is UTF-8 ready (terminal recommended for UTF-8 is
    rxvt-unicode)
@@ -180,6 +180,42 @@ Each window displays one buffer. A buffer can be hidden (not displayed by a
 window) or displayed by one or more windows.
 
 
+[[buffers_list]]
+How to display the buffers list on the left side?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use script 'buffers.pl'.
+
+To limit size of bar:
+
+----------------------------------------
+/set weechat.bar.buffers.size_max 15
+----------------------------------------
+
+To move bar to bottom:
+
+----------------------------------------
+/set weechat.bar.buffers.position bottom
+----------------------------------------
+
+
+[[customize_prefix]]
+How can I reduce length of nicks or remove nick alignment in chat area?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To reduce max length of nicks in chat area:
+
+----------------------------------------
+/set weechat.look.prefix_align_max 15
+----------------------------------------
+
+To remove nick alignment:
+
+----------------------------------------
+/set weechat.look.prefix_align none
+----------------------------------------
+
+
 [[one_input_root_bar]]
 Is it possible to display only one input bar for all windows (after split)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -212,10 +248,9 @@ konsole, gnome-terminal, ...). Key is usually @k(C-)@k(A-) mouse selection.
 
 Another solution is to move nicklist to top or bottom, for example:
 
-* with WeeChat < = 0.2.6: +
-  `set look_nicklist_position = top`
-* with WeeChat > = 0.3.x: +
-  `/bar set nicklist position top`
+----------------------------------------
+/set weechat.bar.nicklist.position top
+----------------------------------------
 
 
 [[urls]]
@@ -293,6 +328,15 @@ For versions > = 0.3.5, you can use any color number in options (optional: you
 can add color aliases with command `/color`).
 
 Please read user's guide for more information about colors management.
+
+
+[[search_text]]
+How can I search text in buffer (like /lastlog in irssi)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default key is @k(C-)@k(r) (command is: `/input search_text`).
+
+See user's guide for more info about this feature (default key bindings).
 
 
 [[key_bindings]]
@@ -390,24 +434,21 @@ disable filters (by default, the key @k(A-)@k(=) toggles filters).
 How can I filter join/part/quit messages on IRC channels?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-According to WeeChat version:
+With smart filter (keep join/part/quit from users who spoke recently):
 
-* with WeeChat < = 0.2.6: +
-  `/ignore * join #weechat freenode` +
-  `/ignore * part #weechat freenode` +
-  `/ignore * quit #weechat freenode` +
-  (channel and/or server may be "*", `/help ignore` for help)
+----------------------------------------
+/set irc.look.smart_filter on
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
 
-* with WeeChat > = 0.3.x:
+With a global filter (hide *all* join/part/quit):
 
-** smart filter (keep join/part/quit from users who spoke recently): +
-   `/set irc.look.smart_filter on` +
-   `/filter add irc_smart * irc_smart_filter *` +
-   (`/help irc.look.smart_filter` and `/help filter` for help)
+----------------------------------------
+/filter add jpk * irc_join,irc_part,irc_quit *
+----------------------------------------
 
-** global filter (hide *all* join/part/quit): +
-   `/filter add jpk * irc_join,irc_part,irc_quit *` +
-   (`/help filter` for help)
+[NOTE]
+For help: `/help filter` and `/help irc.look.smart_filter`
 
 
 [[filter_irc_join_channel_messages]]
@@ -447,12 +488,20 @@ away users, and you are flooded with voice messages. Therefore, you can change
 that and let WeeChat use a special color for away nicks in nicklist.
 
 On channel '&bitlbee', do:
+
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
 For checking away nicks in WeeChat, see question about
 <<color_away_nicks,away nicks>>.
+
+If you really want to filter voice messages, you can use this command, but this
+is not perfect (will work only if first mode changed is voice):
+
+----------------------------------------
+/filter add hidevoices * irc_mode \(\+\|\-\)v
+----------------------------------------
 
 
 [[color_away_nicks]]
@@ -482,19 +531,15 @@ For WeeChat < = 0.3.3, options are 'irc.network.away_check' and
 How can I be warned when someone highlights me on a channel?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-According to WeeChat version:
+You can use a script like 'beep.pl' or 'launcher.pl'.
 
-* with WeeChat < = 0.2.6: use script 'sound.pl' (available on scripts page),
-  and then setup a system command (to play sound, display message, ..) with
-  this command: +
-  `/setp perl.sound.cmd_highlight = "/path/to/command arguments"`
-* with WeeChat > = 0.3.x: use script 'launcher.pl' (available on scripts page),
-  and then setup a system command (to play sound, display message, ..) with
-  this command: +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
+For 'launcher.pl', you have to setup command:
 
-Many other scripts exist for notification, please look at plugins/scripts page:
-http://www.weechat.org/scripts
+----------------------------------------
+/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
+----------------------------------------
+
+Other scripts on this subject: http://www.weechat.org/scripts/stable/tag/notify/
 
 
 [[irc_ssl_connection]]
@@ -540,6 +585,13 @@ Under WeeChat, setup server port, SSL, dhkey_size, then connect:
 ----------------------------------------
 
 
+[[irc_target_server]]
+How can I change target server on buffer with servers?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default key is @k(C-)@k(x) (command is: `/input switch_active_buffer`).
+
+
 [[plugins_scripts]]
 Plugins / scripts
 -----------------
@@ -553,12 +605,10 @@ Under OpenBSD, plugin filenames end with ".so.0.0" (".so" for Linux).
 
 You must set that up:
 
-* with WeeChat < = 0.2.6: +
-  `/set plugins_extension = ".so.0.0"`
-* with WeeChat > = 0.3.x: +
-  `/set weechat.plugin.extension ".so.0.0"`
-
-Then: `/plugin autoload`.
+----------------------------------------
+/set weechat.plugin.extension ".so.0.0"
+/plugin autoload
+----------------------------------------
 
 
 [[load_scripts]]

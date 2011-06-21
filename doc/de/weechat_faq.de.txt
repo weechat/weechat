@@ -3,6 +3,11 @@ WeeChat FAQ (häufig gestellte Fragen)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
+// TRANSLATION MISSING
+[NOTE]
+This document is written for WeeChat versions > = 0.3.0.
+
+
 [[general]]
 Allgemein
 ---------
@@ -35,7 +40,10 @@ Einige Funktionen (Version > = 0.3.x):
 * Filterung der Anzeige mittels Tags und regulären Ausdrücken
 * horizontale und vertikale Einteilung der Fenster
 * anpassbare und erweiterbare Leisten
-* Nickliste in allen GUI's verfügbar
+// TRANSLATION MISSING
+* native nicklist
+// TRANSLATION MISSING
+* list of buffers (script buffers.pl)
 * IRC Proxy
 * Umleitung von IRC Befehlen
 * inkrementelle Textsuche in Buffern, zu Highlights springen
@@ -106,11 +114,7 @@ Teilweise fehlen den Zeichen die Akzente. Wie kann ich das korrigieren?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dies ist ein bekanntes Problem. Bitte lese deshalb die nachfolgende Erklärung
-sorgfältig durch und überprüfe *alle* aufgezeigten Lösungsmöglichkeiten.
-
-Für Versionen < 0.2.3: Bitte auf die neueste stabile Version von WeeChat wechseln.
-
-Für Versionen > = 0.2.3:
+sorgfältig durch und überprüfe *alle* aufgezeigten Lösungsmöglichkeiten:
 
 * überprüfe, ob weechat-curses mit libncursesw verlinkt ist (Warnung: nötig bei den
   meisten Distributionen - jedoch nicht bei allen): `ldd /path/to/weechat-curses`
@@ -121,8 +125,7 @@ Für Versionen > = 0.2.3:
   'ANSI_X3.4-1968' oder einen anderen Wert bekommen solltest, ist Deine Einstellung der
   locale möglicherweise falsch.
 * Einstellen des globalen decode Wertes, z.B.:
-** WeeChat < = 0.2.6: `/setp charset.global.decode = ISO-8859-15`
-** WeeChat > = 0.3.x: `/set charset.default.decode "ISO-8859-15"`
+  `/set charset.default.decode "ISO-8859-15"`
 * Falls Du UTF-8 locale nutzt:
 ** prüfe, ob Dein Terminal UTF-8 fähig ist (der empfohlene Terminal für UTF-8
    ist rxvt-unicode)
@@ -190,6 +193,44 @@ in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere F
 angezeigt.
 
 
+// TRANSLATION MISSING
+[[buffers_list]]
+How to display the buffers list on the left side?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use script 'buffers.pl'.
+
+To limit size of bar:
+
+----------------------------------------
+/set weechat.bar.buffers.size_max 15
+----------------------------------------
+
+To move bar to bottom:
+
+----------------------------------------
+/set weechat.bar.buffers.position bottom
+----------------------------------------
+
+
+// TRANSLATION MISSING
+[[customize_prefix]]
+How can I reduce length of nicks or remove nick alignment in chat area?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To reduce max length of nicks in chat area:
+
+----------------------------------------
+/set weechat.look.prefix_align_max 15
+----------------------------------------
+
+To remove nick alignment:
+
+----------------------------------------
+/set weechat.look.prefix_align none
+----------------------------------------
+
+
 [[one_input_root_bar]]
 Ist es möglich nur eine Eingabezeile für alle Fenster zu nutzen (auch falls diese geteilt sind)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,10 +264,9 @@ konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der 
 
 Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu verschieben:
 
-* WeeChat < = 0.2.6: +
-  `set look_nicklist_position = top`
-* WeeChat > = 0.3.x: +
-  `/bar set nicklist position top`
+----------------------------------------
+/set weechat.bar.nicklist.position top
+----------------------------------------
 
 
 [[urls]]
@@ -310,6 +350,16 @@ Zahl eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias 
 eine Farbe definieren).
 
 Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranleitung.
+
+
+// TRANSLATION MISSING
+[[search_text]]
+How can I search text in buffer (like /lastlog in irssi)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default key is @k(C-)@k(r) (command is: `/input search_text`).
+
+See user's guide for more info about this feature (default key bindings).
 
 
 [[key_bindings]]
@@ -409,28 +459,26 @@ Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Fi
 (Voreinstellung zum aktivieren/deaktivieren der Filter: @k(A-)@k(=)).
 
 
+// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
 Wie kann ich join/part/quit Meldungen in den IRC Channels filtern (A.d.ü.: unterdrücken)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Entsprechend der WeeChat-Version:
+With smart filter (keep join/part/quit from users who spoke recently):
 
-* WeeChat < = 0.2.6: +
-  `/ignore * join #weechat freenode` +
-  `/ignore * part #weechat freenode` +
-  `/ignore * quit #weechat freenode` +
-  (Channel und/oder Server können durch "*" ersetzt werden, Hilfe mit: `/help ignore`)
+----------------------------------------
+/set irc.look.smart_filter on
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
 
-* WeeChat > = 0.3.x:
+With a global filter (hide *all* join/part/quit):
 
-** Intelligenter Filter (erhalte join/part/quit der User, mit denen Du kürzlich gesprochen hast): +
-   `/set irc.look.smart_filter on` +
-   `/filter add irc_smart * irc_smart_filter *` +
-   (Hilfe mit: `/help irc.look.smart_filter` und `/help filter`)
+----------------------------------------
+/filter add jpk * irc_join,irc_part,irc_quit *
+----------------------------------------
 
-** globaler Filter (unterdrückt *alle* join/part/quit): +
-   `/filter add jpk * irc_join,irc_part,irc_quit *` +
-   (Hilfe mit: `/help filter`)
+[NOTE]
+For help: `/help filter` and `/help irc.look.smart_filter`
 
 
 [[filter_irc_join_channel_messages]]
@@ -471,12 +519,21 @@ Mitteilungen überflutet werden möchte), kann man WeeChat anweisen abwesende Ni
 in einer anderen Farbe darzustellen.
 
 Im Channel '&bitlbee':
+
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
 Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 <<color_away_nicks,abwesende Nicks>>.
+
+// TRANSLATION MISSING
+If you really want to filter voice messages, you can use this command, but this
+is not perfect (will work only if first mode changed is voice):
+
+----------------------------------------
+/filter add hidevoices * irc_mode \(\+\|\-\)v
+----------------------------------------
 
 
 [[color_away_nicks]]
@@ -506,27 +563,20 @@ Für Weechat < = 0.3.3, lauten die Optionen 'irc.network.away_check' und
 'irc.network.away_check_max_nicks'.
 
 
+// TRANSLATION MISSING
 [[highlight_notification]]
 Wie kann ich mich darüber informieren lassen falls mich jemand in einem Channel highlighted
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-((A.d.Ü) Highlight bedeutet, dass der eigene (Nick)Name im Channel genannt wird. Man wird
-also direkt, persönlich, angesprochen. Der Nick, der Person die mich anschreibt wird dabei
-farblich hervorgehoben)
+You can use a script like 'beep.pl' or 'launcher.pl'.
 
-Die Einstellung geschieht abhängig von der WeeChat Version:
+For 'launcher.pl', you have to setup command:
 
-* WeeChat < = 0.2.6: nutze das Skript 'sound.pl' (verfügbar auf der Skript-Seite),
-  und nehme Einstellungen für einen System-Befehl (um einen Klang abzuspielen,
-  eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
-  `/setp perl.sound.cmd_highlight = "/path/to/command arguments"`
-* WeeChat > = 0.3.x: nutze das Skript 'launcher.pl' (verfügbar auf der Skript-Seite),
-  und nehme Einstellungen für einen System-Befehl (um einen Klang abzuspielen,
-  eine Meldung anzuzeigen, ...) mit folgendem Befehl vor: +
-  `/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"`
+----------------------------------------
+/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
+----------------------------------------
 
-Es gibt noch andere Skripten, die über verschiedene Ereignisse informieren , bitte
-besuche dazu die Skripten-Webseite: http://www.weechat.org/scripts/
+Other scripts on this subject: http://www.weechat.org/scripts/stable/tag/notify/
 
 
 [[irc_ssl_connection]]
@@ -576,6 +626,14 @@ eine Verbindung herzustellen:
 ----------------------------------------
 
 
+// TRANSLATION MISSING
+[[irc_target_server]]
+How can I change target server on buffer with servers?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default key is @k(C-)@k(x) (command is: `/input switch_active_buffer`).
+
+
 [[plugins_scripts]]
 Erweiterungen / Skripten
 ------------------------
@@ -589,12 +647,10 @@ Unter OpenBSD enden die Dateinamen von Erweiterungen mit ".so.0.0" (".so" bei Li
 
 Um dies zu beheben muss folgendes konfiguriert werden:
 
-* WeeChat < = 0.2.6: +
-  `/set plugins_extension = ".so.0.0"`
-* WeeChat > = 0.3.x: +
-  `/set weechat.plugin.extension ".so.0.0"`
-
-Danach: `/plugin autoload`.
+----------------------------------------
+/set weechat.plugin.extension ".so.0.0"
+/plugin autoload
+----------------------------------------
 
 
 [[load_scripts]]
