@@ -288,7 +288,7 @@ url selection):
 This option may cause display bugs. If you experience such problem, you must
 turn off this option.
 
-Other solution is to use onf of following scripts:
+Other solution is to use one of following scripts:
 
 urlbar.py::
     visualizza URL in una barra
