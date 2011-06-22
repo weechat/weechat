@@ -1760,9 +1760,10 @@ void
 irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join)
 {
-    char *args, **channels, *pos_space;
-    int i, length, num_channels;
+    char *new_args, **channels, *pos_space;
+    int i, num_channels, length;
     int time_now;
+    struct t_irc_channel *ptr_channel;
     
     if (server->sock < 0)
     {
@@ -1774,39 +1775,72 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         return;
     }
     
-    if (irc_channel_is_channel (arguments))
-        args = strdup (arguments);
+    /* split channels */
+    channels = NULL;
+    pos_space = strchr (arguments, ' ');
+    if (pos_space)
+        new_args = weechat_strndup (arguments, pos_space - arguments);
     else
+        new_args = strdup (arguments);
+    if (new_args)
     {
-        length = 1 + strlen (arguments) + 1;
-        args = malloc (length);
-        if (args)
-            snprintf (args, length, "#%s", arguments);
+        channels = weechat_string_split (new_args, ",", 0, 0,
+                                         &num_channels);
+        free (new_args);
     }
-    if (args)
+    
+    /*
+     * add "#" in front of each channel if no prefix is given
+     * (exception if there is only "0", which is a special join argument to
+     * part all channels)
+     */
+    if (channels)
     {
-        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "JOIN %s", args);
-        if (manual_join)
+        length = strlen (arguments) + num_channels + 1;
+        new_args = malloc (length);
+        if (new_args)
         {
-            pos_space = strchr (args, ' ');
-            if (pos_space)
-                pos_space[0] = '\0';
-            channels = weechat_string_split (args, ",", 0, 0, &num_channels);
-            if (channels)
+            if (manual_join)
             {
-                time_now = (int)time (NULL);
-                for (i = 0; i < num_channels; i++)
+                snprintf (new_args, length, "%s%s",
+                          (irc_channel_is_channel (channels[0])) ? "" : "#",
+                          channels[0]);
+                ptr_channel = irc_channel_search (server, new_args);
+                if (ptr_channel)
+                {
+                    weechat_buffer_set (ptr_channel->buffer,
+                                        "display", "1");
+                }
+            }
+            new_args[0] = '\0';
+            time_now = (int)time (NULL);
+            for (i = 0; i < num_channels; i++)
+            {
+                if (i > 0)
+                    strcat (new_args, ",");
+                if (((num_channels > 1) || (strcmp (channels[i], "0") != 0))
+                    && !irc_channel_is_channel (channels[i]))
+                {
+                    strcat (new_args, "#");
+                }
+                strcat (new_args, channels[i]);
+                if (manual_join)
                 {
                     weechat_string_tolower (channels[i]);
                     weechat_hashtable_set (server->manual_joins,
                                            channels[i],
                                            &time_now);
                 }
-                weechat_string_free_split (channels);
             }
+            if (pos_space)
+                strcat (new_args, pos_space);
+            
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "JOIN %s", new_args);
+            
+            free (new_args);
         }
-        free (args);
+        weechat_string_free_split (channels);
     }
 }
 
@@ -1818,10 +1852,6 @@ int
 irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    int arg_channels, length;
-    char *pos_comma, *channel_name;
-    struct t_irc_channel *ptr_channel2;
-    
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
@@ -1834,43 +1864,14 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
             ptr_server = irc_server_search (argv[2]);
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            arg_channels = 3;
+            irc_command_join_server (ptr_server, argv_eol[3], 1);
         }
         else
         {
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            arg_channels = 1;
+            irc_command_join_server (ptr_server, argv_eol[1], 1);
         }
-        irc_command_join_server (ptr_server, argv_eol[arg_channels], 1);
-        
-        /*
-         * if buffer for first channel of list already exists,
-         * then switch to it
-         */
-        pos_comma = strchr (argv[arg_channels], ',');
-        if (pos_comma)
-            pos_comma[0] = '\0';
-        if (irc_channel_is_channel (argv[arg_channels]))
-            channel_name = strdup (argv[arg_channels]);
-        else
-        {
-            length = 1 + strlen (argv[arg_channels]) + 1;
-            channel_name = malloc (length);
-            if (channel_name)
-                snprintf (channel_name, length, "#%s", argv[arg_channels]);
-        }
-        if (channel_name)
-        {
-            ptr_channel2 = irc_channel_search (ptr_server, channel_name);
-            if (ptr_channel2)
-            {
-                weechat_buffer_set (ptr_channel2->buffer, "display", "1");
-            }
-            free (channel_name);
-        }
-        if (pos_comma)
-            pos_comma[0] = ',';
     }
     else
     {
