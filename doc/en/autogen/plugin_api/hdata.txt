@@ -444,7 +444,8 @@
 | weechat | hook_fd | hook of type "fd" |
   'callback' (pointer) +
   'fd' (integer) +
-  'flags' (integer) |
+  'flags' (integer) +
+  'error' (integer) |
   'last_weechat_hook_fd' +
   'weechat_hooks_fd'
 

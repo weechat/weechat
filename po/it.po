@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 21:33+0200\n"
+"POT-Creation-Date: 2011-06-22 15:36+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2745,6 +2745,10 @@ msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Rilevato ritardo nell'orologio di sistema (%+ld secondi), reset di tutti i "
 "timer"
+
+#, c-format
+msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgstr ""
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"

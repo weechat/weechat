@@ -1194,6 +1194,7 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
     new_hook_fd->callback = callback;
     new_hook_fd->fd = fd;
     new_hook_fd->flags = 0;
+    new_hook_fd->error = 0;
     if (flag_read)
         new_hook_fd->flags |= HOOK_FD_FLAG_READ;
     if (flag_write)
@@ -1224,8 +1225,20 @@ hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
         if (!ptr_hook->deleted)
         {
             /* skip invalid file descriptors */
-            if ((fcntl (HOOK_FD(ptr_hook,fd), F_GETFD) != -1)
-                || (errno != EBADF))
+            if ((fcntl (HOOK_FD(ptr_hook,fd), F_GETFD) == -1)
+                && (errno == EBADF))
+            {
+                if (HOOK_FD(ptr_hook, error) == 0)
+                {
+                    HOOK_FD(ptr_hook, error) = errno;
+                    gui_chat_printf (NULL,
+                                     _("%sError: bad file descriptor (%d) "
+                                       "used in hook_fd"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     HOOK_FD(ptr_hook, fd));
+                }
+            }
+            else
             {
                 if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
                 {
@@ -3152,6 +3165,7 @@ hook_hdata_hook_fd_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_hook_fd, callback, POINTER);
         HDATA_VAR(struct t_hook_fd, fd, INTEGER);
         HDATA_VAR(struct t_hook_fd, flags, INTEGER);
+        HDATA_VAR(struct t_hook_fd, error, INTEGER);
         hdata_new_list(hdata, "weechat_hooks_fd", &weechat_hooks[HOOK_TYPE_FD]);
         hdata_new_list(hdata, "last_weechat_hook_fd", &last_weechat_hook[HOOK_TYPE_FD]);
     }
@@ -3654,6 +3668,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "flags", HOOK_FD(ptr_hook, flags)))
                         return 0;
+                    if (!infolist_new_var_integer (ptr_item, "error", HOOK_FD(ptr_hook, error)))
+                        return 0;
                 }
                 break;
             case HOOK_TYPE_PROCESS:
@@ -4051,6 +4067,7 @@ hook_print_log ()
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_FD(ptr_hook, callback));
                         log_printf ("    fd. . . . . . . . . . : %d",    HOOK_FD(ptr_hook, fd));
                         log_printf ("    flags . . . . . . . . : %d",    HOOK_FD(ptr_hook, flags));
+                        log_printf ("    error . . . . . . . . : %d",    HOOK_FD(ptr_hook, error));
                     }
                     break;
                 case HOOK_TYPE_PROCESS:

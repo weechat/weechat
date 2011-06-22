@@ -174,6 +174,8 @@ struct t_hook_fd
     t_hook_callback_fd *callback;      /* fd callback                       */
     int fd;                            /* socket or file descriptor         */
     int flags;                         /* fd flags (read,write,..)          */
+    int error;                         /* contains errno if error occured   */
+                                       /* with fd                           */
 };
 
 /* hook process */
