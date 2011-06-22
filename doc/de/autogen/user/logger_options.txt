@@ -4,7 +4,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *logger.file.flush_delay*
-** Beschreibung: `number of seconds between flush of log files (0 = write in log files immediately for each line printed)`
+** Beschreibung: `Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert werden soll (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)`
 ** Typ: integer
 ** Werte: 0 .. 3600 (Standardwert: `120`)
 

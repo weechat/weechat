@@ -147,19 +147,19 @@ Erweiterung: Name der Erweiterung ('weechat' für interne WeeChat Befehle)
         dump [<plugin>]
         buffer|color|hdata|infolists|memory|tags|term|windows
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-    hdata: display infos about hdata
-infolists: display infos about infolists
-   memory: display infos about memory usage
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: zeigt alle Erweiterungen mit Debuglevel an
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    color: zeigt Informationen über die aktuellen Farbpaarungen an
+    hdata: zeigt Informationen zu hdata an (direkter Daten-Zugriff auf WeeChat/Erweiterungen)
+infolists: zeigt Information über die Infolists an
+   memory: gibt Informationen über den genutzten Speicher aus
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an
+     term: gibt Informationen über das Terminal und verfügbare Farben aus
+  windows: zeigt die Fensterstruktur an
 ........................................
 
 [command]*`filter`* Filterfunktion um Nachrichten in Buffern zu aus- oder einzublenden, dazu können Tags oder regulären Ausdrücken verwendet werden::
@@ -169,51 +169,51 @@ infolists: display infos about infolists
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
+   list: alle Filter auflisten
+ enable: Filter wird aktiviert (Filter werden standardmässig aktiviert)
+disable: Filter deaktivieren
+ toggle: Filter de-/aktivieren
+   name: Name des Filters
+    add: Filter hinzufügen
+    del: Filter entfernen
+   -all: entfernt alle Filter
+ buffer: durch Kommata getrennte Liste von Buffern in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffers inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+         - "*" bedeutet alle Buffer
+         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
+   tags: durch Kommata  getrennte Liste mit Tags. Zum Beispiel: "irc_join,irc_part,irc_quit"
+        regex: regulärer Ausdruck um in einer Zeile zu suchen
+               - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+               - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+               - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
 
-The default key alt+'=' toggles filtering on/off.
+Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Tags lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message),
-  irc_xxx (xxx is command name or number, see /server raw),
+  nick_xxx (xxx ist durch den Nicknamen zu ersetzen),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Um sich die Tags jeder einzelnen Zeile darstellen zu lassen: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names:" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat * toto\t
-  keep only nick "titi" on IRC channel #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filter lines containing word "spam":
+  nur der Nick "tutu" wird im IRC Channel #test angezeigt:
+    /filter add tutu irc.freenode.#test * !tutu\t
+  filtert Zeilen die das Wort "spam" enthalten:
     /filter add filterspam * * spam
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
@@ -243,7 +243,7 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ........................................
 /input  <action> [<arguments>]
 
-Liste der Aktionen:
+Auflistung der Aktionen:
   return: simuliert die "enter" Taste
   complete_next: vervollständigt Word mit nächster Komplettierung
   complete_previous: vervollständigt Word mit vorheriger Komplettierung
@@ -283,7 +283,7 @@ Liste der Aktionen:
   switch_active_buffer_previous: springt zum vorherigen zusammengefügten Buffer
   insert: fügt einen Text in die Eingabezeile ein
 
-This command is used by key bindings or plugins.
+Dieser Befehl wird durch Tastenbelegungen oder Erweiterungen genutzt.
 ........................................
 
 [command]*`key`* Einer Taste einen Befehl zuordnen oder entfernen::
@@ -358,16 +358,16 @@ Beispiele:
          autoload
          reload|unload [<name>]
 
-    list: list loaded plugins
-listfull: list loaded plugins (verbose)
-    load: load a plugin
-autoload: autoload plugins in system or user directory
-  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-  unload: unload a plugin (if no name given, unload all plugins)
-filename: plugin (file) to load
-    name: a plugin name
+    list: installierte Erweiterungen werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Erweiterungen
+    load: installiert eine Erweiterung
+autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
+  reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
+  unload: deinstalliere eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung entfernt)
+filename: Erweiterung (Datei) welche installiert werden soll
+    name: Name einer Erweiterung
 
-Without argument, this command lists loaded plugins.
+Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ........................................
 
 [command]*`proxy`* Proxies verwalten::
@@ -536,43 +536,43 @@ Beispiele:
          swap [up|down|left|right]
          zoom
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
+         list: listet die geöffneten Fenster (ohne Angabe von Parametern wird diese Funktion aufgerufen)
+           -1: springt zum vorherigen Fenster
+           +1: springt zum nächsten Fenster
+           b#: springt zum nächsten Fenster, welches die Buffer Nummer # besitzt
+           up: wechselt zum Fenster über dem aktuellen
+         down: wechselt zum Fenster unter dem aktuellen
+         left: wechselt zum linken Fenster
+        right: wechselt zum rechten Fenster
+       splith: teilt das aktuelle Fenster horizontal
+       splitv: teilt das aktuelle Fenster vertikal
+       resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
+      balance: passt die Größe aller Fenster an
+        merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+      page_up: scrollt eine Seite nach oben
+    page_down: scrollt eine Seite nach unten
+      refresh: Seite wird neu aufgebaut
+       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer gewissen Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre
+ scroll_horiz: scrollt horizontal eine Anzahl an Spalten (+/-N) oder prozentual von der Fenstergröße ausgehend (dieses scrolling ist nur in Buffern möglich die über einen freien Inhalt verfügen)
+    scroll_up: scrollt ein paar Zeilen nach oben
+  scroll_down: scrollt ein paar Zeilen nach unten
+   scroll_top: scrollt zum Anfang des Buffers
+scroll_bottom: scrollt zum Ende des  Buffers
+scroll_previous_highlight: scrollt zum vorherigen Hightlight
+scroll_next_highlight: scrollt zum nächsten Highlight
+         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
+         zoom: vergrößert auf Fenster
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Bei splith und splitv gibt "pct" die neue Größe des Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hat.
 
-Examples:
-  jump to window displaying buffer #1:
+Beispiele:
+  Springt zum Fenster mit dem Buffer #1:
     /window b1
-  scroll 2 lines up:
+   Scrollt zwei Zeilen hoch:
     /window scroll -2
-  scroll 2 days up:
+  Scrollt zwei Tage hoch: /window scroll -2d
     /window scroll -2d
-  scroll to beginning of current day:
+  Scrollt zum Beginn des aktuellen Tages:
     /window scroll -d
 ........................................
 

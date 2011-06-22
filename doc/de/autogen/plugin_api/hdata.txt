@@ -1,8 +1,8 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
 |========================================
-| Erweiterung | Name | Beschreibung | Variables | Lists
+| Erweiterung | Name | Beschreibung | Variablen | Listen
 
-| irc | irc_channel | irc channel |
+| irc | irc_channel | IRC-Channel |
   'type' (integer) +
   'name' (string) +
   'topic' (string) +
@@ -30,14 +30,14 @@
   'next_channel' (pointer) |
   -
 
-| irc | irc_channel_speaking | irc channel_speaking |
+| irc | irc_channel_speaking | IRC channel_speaking |
   'nick' (string) +
   'time_last_message' (time) +
   'prev_nick' (pointer) +
   'next_nick' (pointer) |
   -
 
-| irc | irc_ignore | irc ignore |
+| irc | irc_ignore | IRC ignorieren |
   'number' (integer) +
   'mask' (string) +
   'regex_mask' (pointer) +
@@ -48,7 +48,7 @@
   'irc_ignore_list' +
   'last_irc_ignore'
 
-| irc | irc_nick | irc nick |
+| irc | irc_nick | IRC-Nick |
   'name' (string) +
   'host' (string) +
   'prefixes' (string) +
@@ -59,7 +59,7 @@
   'next_nick' (pointer) |
   -
 
-| irc | irc_notify | irc notify |
+| irc | irc_notify | IRC-Benachrichtigungen |
   'server' (pointer) +
   'nick' (string) +
   'check_away' (integer) +
@@ -70,7 +70,7 @@
   'next_notify' (pointer) |
   -
 
-| irc | irc_redirect | irc redirect |
+| irc | irc_redirect | IRC Umlenkung |
   'server' (pointer) +
   'pattern' (string) +
   'signal' (string) +
@@ -92,7 +92,7 @@
   'next_redirect' (pointer) |
   -
 
-| irc | irc_redirect_pattern | pattern for irc redirect |
+| irc | irc_redirect_pattern | Muster für IRC Umlenkung |
   'name' (string) +
   'temp_pattern' (integer) +
   'timeout' (integer) +
@@ -104,7 +104,7 @@
   'irc_redirect_patterns' +
   'last_irc_redirect_pattern'
 
-| irc | irc_server | irc server |
+| irc | irc_server | IRC-Server |
   'name' (string) +
   'options' (pointer) +
   'temp_server' (integer) +
@@ -167,7 +167,7 @@
   'irc_servers' +
   'last_irc_server'
 
-| weechat | bar | bar |
+| weechat | bar | Bar |
   'name' (string) +
   'options' (pointer) +
   'conditions_count' (integer) +
@@ -182,7 +182,7 @@
   'gui_bars' +
   'last_gui_bar'
 
-| weechat | bar_item | bar item |
+| weechat | bar_item | Bar-Item |
   'plugin' (pointer) +
   'name' (string) +
   'build_callback' (pointer) +
@@ -192,7 +192,7 @@
   'gui_bar_items' +
   'last_gui_bar_item'
 
-| weechat | buffer | buffer |
+| weechat | buffer | Buffer |
   'plugin' (pointer) +
   'plugin_name_for_upgrade' (string) +
   'merge_for_upgrade' (pointer) +
@@ -260,7 +260,7 @@
   'gui_buffers' +
   'last_gui_buffer'
 
-| weechat | completion | structure with completion |
+| weechat | completion | Struktur mit Vervollständigung |
   'buffer' (pointer) +
   'context' (integer) +
   'base_command' (string) +
@@ -282,14 +282,14 @@
   'last_partial_completion' (pointer) |
   -
 
-| weechat | completion_partial | structure with partial completion |
+| weechat | completion_partial | Struktur mit teilweise Vervollständigung |
   'word' (string) +
   'count' (integer) +
   'prev_item' (pointer) +
   'next_item' (pointer) |
   -
 
-| weechat | config_file | config file |
+| weechat | config_file | Konfigurationsdatei |
   'plugin' (pointer) +
   'name' (string) +
   'filename' (string) +
@@ -303,7 +303,7 @@
   'config_files' +
   'last_config_file'
 
-| weechat | config_option | config option |
+| weechat | config_option | Konfigurationsoptionen |
   'config_file' (pointer) +
   'section' (pointer) +
   'name' (string) +
@@ -326,7 +326,7 @@
   'next_option' (pointer) |
   -
 
-| weechat | config_section | config section |
+| weechat | config_section | Konfigurationssektion |
   'config_file' (pointer) +
   'name' (string) +
   'user_can_add_options' (integer) +
@@ -347,7 +347,7 @@
   'next_section' (pointer) |
   -
 
-| weechat | filter | filter |
+| weechat | filter | Filter |
   'enabled' (integer) +
   'name' (string) +
   'buffer_name' (string) +
@@ -364,13 +364,13 @@
   'gui_filters' +
   'last_gui_filter'
 
-| weechat | history | history of commands in buffer |
+| weechat | history | Verlaufspeicher von Befehlen in einem Buffer |
   'text' (string) +
   'next_history' (pointer) +
   'prev_history' (pointer) |
   -
 
-| weechat | hook | hook (variables common to all hook types) |
+| weechat | hook | Hook (Variablen die für alle Hook-Typen geläufig sind) |
   'plugin' (pointer) +
   'type' (integer) +
   'deleted' (integer) +
@@ -382,7 +382,7 @@
   'next_hook' (pointer) |
   -
 
-| weechat | hook_command | hook of type "command" |
+| weechat | hook_command | Hook des Typs "command" |
   'callback' (pointer) +
   'command' (string) +
   'description' (string) +
@@ -399,26 +399,26 @@
   'last_weechat_hook_command' +
   'weechat_hooks_command'
 
-| weechat | hook_command_run | hook of type "command_run" |
+| weechat | hook_command_run | Hook vom Typ "command_run" |
   'callback' (pointer) +
   'command' (string) |
   'last_weechat_hook_command_run' +
   'weechat_hooks_command_run'
 
-| weechat | hook_completion | hook of type "completion" |
+| weechat | hook_completion | Hook vom Typ "completion" |
   'callback' (pointer) +
   'completion_item' (string) +
   'description' (string) |
   'last_weechat_hook_completion' +
   'weechat_hooks_completion'
 
-| weechat | hook_config | hook of type "config" |
+| weechat | hook_config | Hook vom Typ "config" |
   'callback' (pointer) +
   'option' (string) |
   'last_weechat_hook_config' +
   'weechat_hooks_config'
 
-| weechat | hook_connect | hook of type "connect" |
+| weechat | hook_connect | Hook vom Typ "connect" |
   'callback' (pointer) +
   'proxy' (string) +
   'address' (string) +
@@ -441,27 +441,27 @@
   'last_weechat_hook_connect' +
   'weechat_hooks_connect'
 
-| weechat | hook_fd | hook of type "fd" |
+| weechat | hook_fd | Hook vom Typ "fd" |
   'callback' (pointer) +
   'fd' (integer) +
   'flags' (integer) |
   'last_weechat_hook_fd' +
   'weechat_hooks_fd'
 
-| weechat | hook_hdata | hook of type "hdata" |
+| weechat | hook_hdata | Hook vom Typ "hdata" |
   'callback' (pointer) +
   'hdata_name' (string) +
   'description' (string) |
   'last_weechat_hook_hdata' +
   'weechat_hooks_hdata'
 
-| weechat | hook_hsignal | hook of type "hsignal" |
+| weechat | hook_hsignal | Hook vom Typ "" |
   'callback' (pointer) +
   'signal' (string) |
   'last_weechat_hook_hsignal' +
   'weechat_hooks_hsignal'
 
-| weechat | hook_info | hook of type "info" |
+| weechat | hook_info | Hook vom Typ "info" |
   'callback' (pointer) +
   'info_name' (string) +
   'description' (string) +
@@ -469,7 +469,7 @@
   'last_weechat_hook_info' +
   'weechat_hooks_info'
 
-| weechat | hook_info_hashtable | hook of type "info_hashtable" |
+| weechat | hook_info_hashtable | Hook vom Typ "info_hashtable" |
   'callback' (pointer) +
   'info_name' (string) +
   'description' (string) +
@@ -478,7 +478,7 @@
   'last_weechat_hook_info_hashtable' +
   'weechat_hooks_info_hashtable'
 
-| weechat | hook_infolist | hook of type "infolist" |
+| weechat | hook_infolist | Hook vom Typ "infolist" |
   'callback' (pointer) +
   'infolist_name' (string) +
   'description' (string) +
@@ -487,13 +487,13 @@
   'last_weechat_hook_infolist' +
   'weechat_hooks_infolist'
 
-| weechat | hook_modifier | hook of type "modifier" |
+| weechat | hook_modifier | Hook vom Typ "modifier" |
   'callback' (pointer) +
   'modifier' (string) |
   'last_weechat_hook_modifier' +
   'weechat_hooks_modifier'
 
-| weechat | hook_print | hook of type "print" |
+| weechat | hook_print | Hook vom Typ "print" |
   'callback' (pointer) +
   'buffer' (pointer) +
   'tags_count' (integer) +
@@ -503,7 +503,7 @@
   'last_weechat_hook_print' +
   'weechat_hooks_print'
 
-| weechat | hook_process | hook of type "process" |
+| weechat | hook_process | Hook vom Typ "process" |
   'callback' (pointer) +
   'command' (string) +
   'timeout' (long) +
@@ -517,13 +517,13 @@
   'last_weechat_hook_process' +
   'weechat_hooks_process'
 
-| weechat | hook_signal | hook of type "signal" |
+| weechat | hook_signal | Hook vom Typ "signal" |
   'callback' (pointer) +
   'signal' (string) |
   'last_weechat_hook_signal' +
   'weechat_hooks_signal'
 
-| weechat | hook_timer | hook of type "timer" |
+| weechat | hook_timer | Hook vom Typ "timer" |
   'callback' (pointer) +
   'interval' (long) +
   'align_second' (integer) +
@@ -533,14 +533,14 @@
   'last_weechat_hook_timer' +
   'weechat_hooks_timer'
 
-| weechat | input_undo | structure with undo for input line |
+| weechat | input_undo | Struktur der Rücknahmen für die Befehlszeile |
   'data' (string) +
   'pos' (integer) +
   'prev_undo' (pointer) +
   'next_undo' (pointer) |
   -
 
-| weechat | key | a key (keyboard shortcut) |
+| weechat | key | Tastenbelegung (Tastaturkurzbefehl) |
   'key' (string) +
   'command' (string) +
   'prev_key' (pointer) +
@@ -550,13 +550,13 @@
   'last_gui_default_key' +
   'last_gui_key'
 
-| weechat | line | structure with one line |
+| weechat | line | Struktur mit einer Zeile |
   'data' (pointer) +
   'prev_line' (pointer) +
   'next_line' (pointer) |
   -
 
-| weechat | line_data | structure with one line data |
+| weechat | line_data | Struktur mit einzeiligen Daten |
   'buffer' (pointer) +
   'y' (integer) +
   'date' (time) +
@@ -572,7 +572,7 @@
   'message' (string) |
   -
 
-| weechat | lines | structure with lines |
+| weechat | lines | Struktur mit Zeilen |
   'first_line' (pointer) +
   'last_line' (pointer) +
   'last_read_line' (pointer) +
@@ -583,7 +583,7 @@
   'prefix_max_length' (integer) |
   -
 
-| weechat | nick | nick in nicklist |
+| weechat | nick | Nick in Nickliste |
   'group' (pointer) +
   'name' (string) +
   'color' (string) +
@@ -594,7 +594,7 @@
   'next_nick' (pointer) |
   -
 
-| weechat | nick_group | group in nicklist |
+| weechat | nick_group | Gruppen in Nickliste |
   'name' (string) +
   'color' (string) +
   'visible' (integer) +
@@ -608,7 +608,7 @@
   'next_group' (pointer) |
   -
 
-| weechat | window | window |
+| weechat | window | Fenster |
   'win_x' (integer) +
   'win_y' (integer) +
   'win_width' (integer) +
@@ -636,7 +636,7 @@
   'gui_windows' +
   'last_gui_window'
 
-| weechat | window_scroll | scroll info in window |
+| weechat | window_scroll | Scroll-Info in Fenstern |
   'buffer' (pointer) +
   'first_line_displayed' (integer) +
   'start_line' (pointer) +
@@ -649,7 +649,7 @@
   'next_scroll' (pointer) |
   -
 
-| weechat | window_tree | tree of windows |
+| weechat | window_tree | Baumstruktur der Fenster |
   'parent_node' (pointer) +
   'split_pct' (integer) +
   'split_horizontal' (integer) +

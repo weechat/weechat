@@ -141,21 +141,21 @@ server: server name to disconnect
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
 
-     list: list all ignores
-      add: add an ignore
-     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
-      del: delete an ignore
-   number: number of ignore to delete (look at list to find it)
-     -all: delete all ignores
-   server: internal server name where ignore is working
-  channel: channel name where ignore is working
+     list: zeigt alle Ignorierungen an
+      add: fügt eine Ignorierung hinzu
+     nick: Nick oder Hostname (dies kann ein regulärer Ausdruck sein, sofern "re:" angegeben wird oder eine Maske mittels "*" genutzt wird um ein oder mehrere Zeichen zu ersetzen)
+      del: entfernt eine Ignorierung
+   number: Nummer der Ignorierung die entfernt werden soll (nutze "list" um den entsprechenden Eintrag zu finden)
+     -all: entfernt alle Einträge
+   server: interner Name des Server auf welchem die Ignorierung statt finden soll
+  channel: Name des Channel, in dem die Ignorierung statt finden soll
 
-Examples:
-  ignore nick "toto" everywhere:
+Beispiele:
+  ignoriert den Nick "toto" global:
     /ignore add toto
-  ignore host "toto@domain.com" on freenode server:
+  ignoriert den Host "toto@domain.com" auf dem freenode Server:
     /ignore add toto@domain.com freenode
-  ignore host "toto*@*.domain.com" on freenode/#weechat:
+  ignoriert den Host "toto*@*.domain.com" im Chat  freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
 ........................................
 

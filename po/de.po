@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-13 21:33+0200\n"
-"PO-Revision-Date: 2011-05-15 10:51+0200\n"
+"POT-Creation-Date: 2011-06-22 10:56+0200\n"
+"PO-Revision-Date: 2011-06-15 18:51+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -1088,15 +1088,13 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
-#, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
 "infolists|memory|tags|term|windows"
 msgstr ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
-"windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
+"infolists|memory|tags|term|windows"
 
-#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1113,18 +1111,22 @@ msgid ""
 "     term: display infos about terminal\n"
 "  windows: display windows tree"
 msgstr ""
-"   list: zeigt alle Erweiterungen mit Debuglevel an\n"
-"    set: setzt den Level der Protokollierung für eine Erweiterung\n"
-" plugin: Name der Erweiterung (\"core\" für den WeeChat Kern)\n"
-"  level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)\n"
-"   dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei "
+"     list: zeigt alle Erweiterungen mit Debuglevel an\n"
+"      set: setzt den Level der Protokollierung für eine Erweiterung\n"
+"   plugin: Name der Erweiterung (\"core\" für den WeeChat Kern)\n"
+"    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)\n"
+"     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei "
 "einem Programmabsturz)\n"
-" buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die "
+"   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die "
 "Protokolldatei\n"
-"  color: zeigt Informationen über die aktuellen Farbpaarungen an\n"
-" memory: gibt Informationen über den genutzten Speicher aus\n"
-"   term: gibt Informationen über das Terminal und verfügbare Farben aus\n"
-"windows: zeigt die Fensterstruktur an"
+"    color: zeigt Informationen über die aktuellen Farbpaarungen an\n"
+"    hdata: zeigt Informationen zu hdata an (direkter Daten-Zugriff auf "
+"WeeChat/Erweiterungen)\n"
+"infolists: zeigt Information über die Infolists an\n"
+"   memory: gibt Informationen über den genutzten Speicher aus\n"
+"     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an\n"
+"     term: gibt Informationen über das Terminal und verfügbare Farben aus\n"
+"  windows: zeigt die Fensterstruktur an"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1139,7 +1141,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1234,6 +1235,7 @@ msgstr ""
 "raw)\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
+"Um sich die Tags jeder einzelnen Zeile darstellen zu lassen: /debug tags\n"
 "\n"
 "Beispiele:\n"
 "  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten "
@@ -1340,7 +1342,7 @@ msgid ""
 "\n"
 "This command is used by key bindings or plugins."
 msgstr ""
-"Liste der Aktionen:\n"
+"Auflistung der Aktionen:\n"
 "  return: simuliert die \"enter\" Taste\n"
 "  complete_next: vervollständigt Word mit nächster Komplettierung\n"
 "  complete_previous: vervollständigt Word mit vorheriger Komplettierung\n"
@@ -1392,7 +1394,7 @@ msgstr ""
 "Buffer\n"
 "  insert: fügt einen Text in die Eingabezeile ein\n"
 "\n"
-"This command is used by key bindings or plugins."
+"Dieser Befehl wird durch Tastenbelegungen oder Erweiterungen genutzt."
 
 msgid "bind/unbind keys"
 msgstr "Einer Taste einen Befehl zuordnen oder entfernen"
@@ -1545,7 +1547,6 @@ msgstr ""
 "list|listfull [<name>] || load <filename> || autoload || reload|unload "
 "[<name>]"
 
-#, fuzzy
 msgid ""
 "    list: list loaded plugins\n"
 "listfull: list loaded plugins (verbose)\n"
@@ -1562,12 +1563,14 @@ msgstr ""
 "    list: installierte Erweiterungen werden aufgelistet\n"
 "listfull: detaillierte Auflistung aller installierten Erweiterungen\n"
 "    load: installiert eine Erweiterung\n"
-"autoload: installiert automatisch alle Erweiterungen aus System- oder "
+"autoload: installiert automatisch alle Erweiterungen aus dem System- oder "
 "Benutzerverzeichnis\n"
 "  reload: installiert eine Erweiterung erneut (falls kein Name angegeben "
 "wird, werden alle Erweiterungen entfernt und neu installiert)\n"
-"  unload: deinstalliere eine oder alle Erweiterungen (falls kein Name "
-"angegeben wird werden alle Erweiterung entfernt)\n"
+"  unload: deinstalliere eine oder alle Erweiterungen (wird kein Name "
+"angegeben dann werden alle Erweiterung entfernt)\n"
+"filename: Erweiterung (Datei) welche installiert werden soll\n"
+"    name: Name einer Erweiterung\n"
 "\n"
 "Ohne Angabe eines Arguments werden alle installierten Erweiterungen "
 "angezeigt."
@@ -1871,7 +1874,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "Fenster verwalten"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize [+/-]"
 "<pct> || balance || merge [all] || page_up|page_down || refresh || scroll "
@@ -1880,11 +1882,11 @@ msgid ""
 "scroll_next_highlight || swap [up|down|left|right] || zoom"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize [+/-]"
-"<pct> || balance || merge [all] || page_up|page_down || refresh || scroll|"
-"scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
+"<pct> || balance || merge [all] || page_up|page_down || refresh || scroll "
+"[+/-]<value>[s|m|h|d|M|y] || scroll_horiz [+/-]<value>[%] || scroll_up|"
+"scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
 "scroll_next_highlight || swap [up|down|left|right] || zoom"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -1955,6 +1957,9 @@ msgstr ""
 "      refresh: Seite wird neu aufgebaut\n"
 "       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer gewissen "
 "Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre\n"
+" scroll_horiz: scrollt horizontal eine Anzahl an Spalten (+/-N) oder "
+"prozentual von der Fenstergröße ausgehend (dieses scrolling ist nur in "
+"Buffern möglich die über einen freien Inhalt verfügen)\n"
 "    scroll_up: scrollt ein paar Zeilen nach oben\n"
 "  scroll_down: scrollt ein paar Zeilen nach unten\n"
 "   scroll_top: scrollt zum Anfang des Buffers\n"
@@ -2182,6 +2187,8 @@ msgid ""
 "text from WeeChat to another application (this option is disabled by default "
 "because it can cause serious display bugs)"
 msgstr ""
+"wird diese Option aktiviert, dann wird /\"eat_newline_glitch/\" auf 0 "
+"gesetzt; dies wird genutzt um keinen Zeilenumbruch am Ende einer Zeile "
 
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
@@ -2315,7 +2322,7 @@ msgstr ""
 
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
-"maximale Anzahl für \"Zurücknahme\" von Befehlen im Verlauf, pro Buffer (0: "
+"maximale Anzahl von \"Rücknahmen\" für Befehle im Verlauf, pro Buffer (0: "
 "deaktiviert die Funktion)"
 
 msgid ""
@@ -2549,11 +2556,10 @@ msgstr "Farbe in der das Lesezeichen angezeigt werden soll"
 msgid "background color for unread data marker"
 msgstr "Hintergrundfarbe in der das Lesezeichen angezeigt werden soll"
 
-#, fuzzy
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""
-"Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist  "
-"(Statusbar) dargestellt werden."
+"Textfarbe für die Anzeige der Tags nach der jeweiligen Nachricht (wird durch "
+"den Befehl \"/debug tags\" angezeigt)"
 
 msgid "text color for marker on lines where text sought is found"
 msgstr "Farbe zur Hervorhebung des gesuchten Textes in einer Zeile"
@@ -4154,7 +4160,6 @@ msgstr "Ignoriert Nicks/Hosts von Channels oder Servern"
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 
-#, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
@@ -4176,15 +4181,13 @@ msgid ""
 msgstr ""
 "     list: zeigt alle Ignorierungen an\n"
 "      add: fügt eine Ignorierung hinzu\n"
-"     nick: Nick oder Hostname (kann ein regulärer Ausdruck sein, sofern \"re:"
-"\" angegeben wird)\n"
+"     nick: Nick oder Hostname (dies kann ein regulärer Ausdruck sein, sofern "
+"\"re:\" angegeben wird oder eine Maske mittels \"*\" genutzt wird um ein "
+"oder mehrere Zeichen zu ersetzen)\n"
 "      del: entfernt eine Ignorierung\n"
 "   number: Nummer der Ignorierung die entfernt werden soll (nutze \"list\" "
 "um den entsprechenden Eintrag zu finden)\n"
 "     -all: entfernt alle Einträge\n"
-"nick/host: Nick oder Host der ignoriert werden soll: Syntax ist \"re:regex\" "
-"oder \"mask\" (Eine Maske ist eine Zeichenkette in der mittels \"*\" ein- "
-"oder mehrere Zeichen ersetzt werden können)\n"
 "   server: interner Name des Server auf welchem die Ignorierung statt finden "
 "soll\n"
 "  channel: Name des Channel, in dem die Ignorierung statt finden soll\n"
@@ -5553,14 +5556,14 @@ msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
 msgstr ""
-"Farbe in der der Lag-Indikator dargestellt werden soll wenn auf Antwort "
-"gewartet wird (\"pong\" wurde vom Server nicht empfangen und die "
-"Verzögerungszeit wird erhöht)"
+"Farbe in der die Anzeige für die Verzögerung (Lag) dargestellt werden soll, "
+"sobald auf Antwort gewartet wird (\"pong\" wurde vom Server nicht empfangen "
+"und die Verzögerungszeit wird erhöht)"
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
-"Farbe in der der Lag-Indikator dargestellt werden soll, falls ein \"pong\" "
-"vom Server empfangen wurde"
+"Farbe in der die Anzeige für die Verzögerung (Lag) dargestellt werden soll, "
+"sobald ein \"pong\" vom Server empfangen wurde"
 
 msgid "color for reason in part/quit messages"
 msgstr ""
@@ -5604,8 +5607,8 @@ msgstr ""
 
 msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
-"Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine "
-"Überprüfung)"
+"Intervall zwischen zwei Überprüfungen auf Verfügbarkeit (Lag) des Servers "
+"(in Sekunden, 0 = keine Überprüfung)"
 
 msgid "minimum lag to show (in milliseconds)"
 msgstr ""
@@ -5613,14 +5616,15 @@ msgstr ""
 
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
-"Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)"
+"Maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = "
+"niemals trennen)"
 
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
 "seconds)"
 msgstr ""
-"Intervall zwischen zwei Aktualisierungen des Lag-Items, wenn die "
-"Verzögerungszeit sich erhöht (in Sekunden)"
+"Intervall zwischen zwei Aktualisierungen der Verzögerungsanzeige (Lag-Item), "
+"wenn die Verzögerungszeit sich erhöht (in Sekunden)"
 
 msgid "send unknown commands to server"
 msgstr "Sende unbekannte Befehle an den Server"
@@ -5805,33 +5809,29 @@ msgstr "Liste mit Benachrichtigungen"
 msgid "notify pointer (optional)"
 msgstr "Benachrichtigungspointer (optional)"
 
-#, fuzzy
 msgid "irc nick"
-msgstr "nick: nick"
+msgstr "IRC-Nick"
 
-#, fuzzy
 msgid "irc channel"
-msgstr "Channel"
+msgstr "IRC-Channel"
 
 msgid "irc channel_speaking"
-msgstr ""
+msgstr "IRC channel_speaking"
 
 msgid "irc ignore"
-msgstr ""
+msgstr "IRC ignorieren"
 
-#, fuzzy
 msgid "irc notify"
-msgstr "Liste mit Benachrichtigungen"
+msgstr "IRC-Benachrichtigungen"
 
 msgid "pattern for irc redirect"
-msgstr ""
+msgstr "Muster für IRC Umlenkung"
 
 msgid "irc redirect"
-msgstr ""
+msgstr "IRC Umlenkung"
 
-#, fuzzy
 msgid "irc server"
-msgstr "Server"
+msgstr "IRC-Server"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -6222,36 +6222,36 @@ msgstr "IRC Roh-Nachricht"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
-msgstr "%s%s: fehlendes Argument, \"%s\", für Umleitungsmuster"
+msgstr "%s%s: fehlendes Argument, \"%s\", für Umlenkungsmuster"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%s%s: Muster \"%s\" existiert bereits für eine Umleitung"
+msgstr "%s%s: Muster \"%s\" existiert bereits für eine Umlenkung"
 
 #, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
 msgstr ""
-"%s%s: Keine Verbindung zum Server \"%s\" um eine Umleitung zu erstellen"
+"%s%s: Keine Verbindung zum Server \"%s\" um eine Umlenkung zu erstellen"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: fehlendes Argument, \"%s\", für Umleitung"
+msgstr "%s%s: fehlendes Argument, \"%s\", für Umlenkung"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
-msgstr "%s%s: Muster \"%s\" für eine Umleitung nicht gefunden"
+msgstr "%s%s: Muster \"%s\" für eine Umlenkung nicht gefunden"
 
 #, c-format
 msgid ""
 "%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
 "pattern: \"%s\")"
 msgstr ""
-"%s: führe eine Umleitung für den Befehl \"%s\" auf dem Server \"%s\" aus "
-"(Muster für Umleitung: \"%s\")"
+"%s: führe eine Umlenkung für den Befehl \"%s\" auf dem Server \"%s\" aus "
+"(Muster der Umlenkung: \"%s\")"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for redirect"
-msgstr "%s%s: Server \"%s\" für eine Umleitung wurde nicht gefunden"
+msgstr "%s%s: Server \"%s\" für eine Umlenkung wurde nicht gefunden"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -6310,7 +6310,7 @@ msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
 #, c-format
 msgid "%s: lag is high, disconnecting from server..."
-msgstr "%s: Lag ist zu hoch, die Verbindung wird getrennt..."
+msgstr "%s: Verzögerung ist zu hoch, die Verbindung wird getrennt..."
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s, %d %s"
@@ -6676,6 +6676,9 @@ msgid ""
 "number of seconds between flush of log files (0 = write in log files "
 "immediately for each line printed)"
 msgstr ""
+"Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert werden "
+"soll (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile "
+"dargestellt wurde)"
 
 msgid "use only lower case for log filenames"
 msgstr "Benutze ausschließlich Kleinschreibung für Protokoll-Dateien"
@@ -6884,129 +6887,115 @@ msgstr ""
 "(optional)"
 
 msgid "bar"
-msgstr ""
+msgstr "Bar"
 
-#, fuzzy
 msgid "bar item"
-msgstr "Liste der Bar-Items"
+msgstr "Bar-Item"
 
-#, fuzzy
 msgid "buffer"
-msgstr "Buffer verwalten"
+msgstr "Buffer"
 
-#, fuzzy
 msgid "structure with completion"
-msgstr "Funktionen für die Befehlszeile"
+msgstr "Struktur mit Vervollständigung"
 
-#, fuzzy
 msgid "structure with partial completion"
-msgstr "Informiert User wenn eine teilweise Vervollständigung auftritt"
+msgstr "Struktur mit teilweise Vervollständigung"
 
-#, fuzzy
 msgid "config file"
-msgstr "Konfigurationsdateien"
+msgstr "Konfigurationsdatei"
 
-#, fuzzy
 msgid "config section"
-msgstr "Konfigurationsparameter setzen"
+msgstr "Konfigurationssektion"
 
-#, fuzzy
 msgid "config option"
-msgstr "Konfigurationsparameter setzen"
+msgstr "Konfigurationsoptionen"
 
 msgid "filter"
-msgstr ""
+msgstr "Filter"
 
-#, fuzzy
 msgid "history of commands in buffer"
-msgstr "Verlaufspeicher der Befehle"
+msgstr "Verlaufspeicher von Befehlen in einem Buffer"
 
 msgid "hook (variables common to all hook types)"
-msgstr ""
+msgstr "Hook (Variablen die für alle Hook-Typen geläufig sind)"
 
-#, fuzzy
 msgid "hook of type \"command\""
-msgstr "Verlaufspeicher der Befehle"
+msgstr "Hook des Typs \"command\""
 
 msgid "hook of type \"command_run\""
-msgstr ""
+msgstr "Hook vom Typ \"command_run\""
 
 msgid "hook of type \"timer\""
-msgstr ""
+msgstr "Hook vom Typ \"timer\""
 
 msgid "hook of type \"fd\""
-msgstr ""
+msgstr "Hook vom Typ \"fd\""
 
 msgid "hook of type \"process\""
-msgstr ""
+msgstr "Hook vom Typ \"process\""
 
 msgid "hook of type \"connect\""
-msgstr ""
+msgstr "Hook vom Typ \"connect\""
 
 msgid "hook of type \"print\""
-msgstr ""
+msgstr "Hook vom Typ \"print\""
 
 msgid "hook of type \"signal\""
-msgstr ""
+msgstr "Hook vom Typ \"signal\""
 
 msgid "hook of type \"hsignal\""
-msgstr ""
+msgstr "Hook vom Typ \"\""
 
 msgid "hook of type \"config\""
-msgstr ""
+msgstr "Hook vom Typ \"config\""
 
 msgid "hook of type \"completion\""
-msgstr ""
+msgstr "Hook vom Typ \"completion\""
 
 msgid "hook of type \"modifier\""
-msgstr ""
+msgstr "Hook vom Typ \"modifier\""
 
 msgid "hook of type \"info\""
-msgstr ""
+msgstr "Hook vom Typ \"info\""
 
 msgid "hook of type \"info_hashtable\""
-msgstr ""
+msgstr "Hook vom Typ \"info_hashtable\""
 
 msgid "hook of type \"infolist\""
-msgstr ""
+msgstr "Hook vom Typ \"infolist\""
 
 msgid "hook of type \"hdata\""
-msgstr ""
+msgstr "Hook vom Typ \"hdata\""
 
-#, fuzzy
 msgid "structure with undo for input line"
-msgstr "Funktionen für die Befehlszeile"
+msgstr "Struktur der Rücknahmen für die Befehlszeile"
 
 msgid "a key (keyboard shortcut)"
-msgstr ""
+msgstr "Tastenbelegung (Tastaturkurzbefehl)"
 
 msgid "structure with lines"
-msgstr ""
+msgstr "Struktur mit Zeilen"
 
 msgid "structure with one line"
-msgstr ""
+msgstr "Struktur mit einer Zeile"
 
 msgid "structure with one line data"
-msgstr ""
+msgstr "Struktur mit einzeiligen Daten"
 
-#, fuzzy
 msgid "group in nicklist"
-msgstr "Textfarbe für Gruppen in Nickliste"
+msgstr "Gruppen in Nickliste"
 
-#, fuzzy
 msgid "nick in nicklist"
-msgstr "Nicks für die eine Benachrichtigung existiert"
+msgstr "Nick in Nickliste"
 
-#, fuzzy
 msgid "window"
-msgstr "Fenster verwalten"
+msgstr "Fenster"
 
 msgid "scroll info in window"
-msgstr ""
+msgstr "Scroll-Info in Fenstern"
 
-#, fuzzy
 msgid "tree of windows"
-msgstr "Auflistung der Windows"
+msgstr "Baumstruktur der Fenster"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -8112,23 +8101,22 @@ msgid "Pointer"
 msgstr "Pointer"
 
 msgid "Variables"
-msgstr ""
+msgstr "Variablen"
 
 msgid "Lists"
-msgstr ""
+msgstr "Listen"
 
-#, fuzzy
 #~ msgid "completion"
-#~ msgstr "kompiliert am"
+#~ msgstr "Vervollständigung"
 
-#, fuzzy
+#~ msgid "key"
+#~ msgstr "Taste"
+
 #~ msgid "lines"
-#~ msgstr "Online"
+#~ msgstr "Linien"
 
-#, fuzzy
 #~ msgid "line"
-#~ msgstr "Online"
+#~ msgstr "Linie"
 
-#, fuzzy
 #~ msgid "line data"
-#~ msgstr "Online"
+#~ msgstr "Zeilendaten"

@@ -14,12 +14,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.color.item_lag_counting*
-** Beschreibung: `Farbe in der der Lag-Indikator dargestellt werden soll wenn auf Antwort gewartet wird ("pong" wurde vom Server nicht empfangen und die Verzögerungszeit wird erhöht)`
+** Beschreibung: `Farbe in der die Anzeige für die Verzögerung (Lag) dargestellt werden soll, sobald auf Antwort gewartet wird ("pong" wurde vom Server nicht empfangen und die Verzögerungszeit wird erhöht)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * *irc.color.item_lag_finished*
-** Beschreibung: `Farbe in der der Lag-Indikator dargestellt werden soll, falls ein "pong" vom Server empfangen wurde`
+** Beschreibung: `Farbe in der die Anzeige für die Verzögerung (Lag) dargestellt werden soll, sobald ein "pong" vom Server empfangen wurde`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
@@ -309,12 +309,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *irc.network.lag_check*
-** Beschreibung: `Intervall zwischen zwei Lag-Überprüfungen (in Sekunden, 0 = keine Überprüfung)`
+** Beschreibung: `Intervall zwischen zwei Überprüfungen auf Verfügbarkeit (Lag) des Servers (in Sekunden, 0 = keine Überprüfung)`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `60`)
 
 * *irc.network.lag_disconnect*
-** Beschreibung: `Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)`
+** Beschreibung: `Maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)`
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: `0`)
 
@@ -324,7 +324,7 @@
 ** Werte: 0 .. 86400000 (Standardwert: `500`)
 
 * *irc.network.lag_refresh_interval*
-** Beschreibung: `Intervall zwischen zwei Aktualisierungen des Lag-Items, wenn die Verzögerungszeit sich erhöht (in Sekunden)`
+** Beschreibung: `Intervall zwischen zwei Aktualisierungen der Verzögerungsanzeige (Lag-Item), wenn die Verzögerungszeit sich erhöht (in Sekunden)`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `1`)
 

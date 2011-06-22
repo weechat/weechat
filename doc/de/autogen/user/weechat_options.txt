@@ -119,7 +119,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * *weechat.color.chat_tags*
-** Beschreibung: `text color for tags after messages (displayed with command /debug tags)`
+** Beschreibung: `Textfarbe für die Anzeige der Tags nach der jeweiligen Nachricht (wird durch den Befehl "/debug tags" angezeigt)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `red`)
 
@@ -364,7 +364,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y"`)
 
 * *weechat.look.eat_newline_glitch*
-** Beschreibung: `if set, the eat_newline_glitch will be set to 0; this is used to not add new line char at end of each line, and then not break text when you copy/paste text from WeeChat to another application (this option is disabled by default because it can cause serious display bugs)`
+** Beschreibung: `wird diese Option aktiviert, dann wird /"eat_newline_glitch/" auf 0 gesetzt; dies wird genutzt um keinen Zeilenumbruch am Ende einer Zeile `
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -459,7 +459,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.input_undo_max*
-** Beschreibung: `maximale Anzahl für "Zurücknahme" von Befehlen im Verlauf, pro Buffer (0: deaktiviert die Funktion)`
+** Beschreibung: `maximale Anzahl von "Rücknahmen" für Befehle im Verlauf, pro Buffer (0: deaktiviert die Funktion)`
 ** Typ: integer
 ** Werte: 0 .. 65535 (Standardwert: `32`)
 
