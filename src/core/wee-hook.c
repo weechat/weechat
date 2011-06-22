@@ -34,6 +34,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #include "weechat.h"
 #include "wee-hook.h"
@@ -1221,23 +1223,28 @@ hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
     {
         if (!ptr_hook->deleted)
         {
-            if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
+            /* skip invalid file descriptors */
+            if ((fcntl (HOOK_FD(ptr_hook,fd), F_GETFD) != -1)
+                || (errno != EBADF))
             {
-                FD_SET (HOOK_FD(ptr_hook, fd), read_fds);
-                if (HOOK_FD(ptr_hook, fd) > max_fd)
-                    max_fd = HOOK_FD(ptr_hook, fd);
-            }
-            if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
-            {
-                FD_SET (HOOK_FD(ptr_hook, fd), write_fds);
-                if (HOOK_FD(ptr_hook, fd) > max_fd)
-                    max_fd = HOOK_FD(ptr_hook, fd);
-            }
-            if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
-            {
-                FD_SET (HOOK_FD(ptr_hook, fd), exception_fds);
-                if (HOOK_FD(ptr_hook, fd) > max_fd)
-                    max_fd = HOOK_FD(ptr_hook, fd);
+                if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
+                {
+                    FD_SET (HOOK_FD(ptr_hook, fd), read_fds);
+                    if (HOOK_FD(ptr_hook, fd) > max_fd)
+                        max_fd = HOOK_FD(ptr_hook, fd);
+                }
+                if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
+                {
+                    FD_SET (HOOK_FD(ptr_hook, fd), write_fds);
+                    if (HOOK_FD(ptr_hook, fd) > max_fd)
+                        max_fd = HOOK_FD(ptr_hook, fd);
+                }
+                if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
+                {
+                    FD_SET (HOOK_FD(ptr_hook, fd), exception_fds);
+                    if (HOOK_FD(ptr_hook, fd) > max_fd)
+                        max_fd = HOOK_FD(ptr_hook, fd);
+                }
             }
         }
     }

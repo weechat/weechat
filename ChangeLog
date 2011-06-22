@@ -7,6 +7,7 @@ v0.3.6-dev, 2011-06-22
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix freeze when hook_fd is called with a bad file/socket (bug #33619)
 * core: fix bug with option weechat.look.hotlist_count_max (value+1 was used)
 * core: add local variable "highlight_regex" in buffers
 * core: add "hdata" (direct access to WeeChat/plugin data)
