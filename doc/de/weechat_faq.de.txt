@@ -269,12 +269,29 @@ Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu ve
 Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Da WeeChat sowohl die Uhrzeit als auch einen Präfix in jeder Zeile darstellt
-und ein Chatfenster durch die zusätzliche Nutzung von Bars verkleinert werden,
-ist es möglich, dass überlange URLs abgeschnitten werden und diese dadurch
-nicht mehr aufgerufen werden können.
+// TRANSLATION MISSING
+By default, WeeChat displays time and prefix for each line and optional bars
+around chat area. To make easier url click, you can move nicklist to top and
+remove alignment on nick:
 
-Deshalb sollte man eines der folgenden Skripten nutzen:
+----------------------------------------
+/set weechat.bar.nicklist.position top
+/set weechat.look.prefix_align none
+----------------------------------------
+
+With WeeChat > = 0.3.6, you can enable option "eat_newline_glitch", so that
+new line char is not added at the end of each line displayed (it will not break
+url selection):
+
+----------------------------------------
+/set weechat.look.eat_newline_glitch on
+----------------------------------------
+
+[IMPORTANT]
+This option may cause display bugs. If you experience such problem, you must
+turn off this option.
+
+Other solution is to use onf of following scripts:
 
 urlbar.py::
     stellt die URL in einer Bar dar.

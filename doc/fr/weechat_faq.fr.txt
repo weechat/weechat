@@ -264,11 +264,29 @@ exemple :
 Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat affiche l'heure et un préfixe pour chaque ligne avec des barres
-optionnelles autour de la zone de discussion, donc il n'est pas possible
-d'afficher les longs URLs sans les tronquer.
+Par défaut, WeeChat affiche l'heure et un préfixe pour chaque ligne avec des
+barres optionnelles autour de la zone de discussion. Pour rendre la le clic
+d'URL plus facile, vous pouvez déplacer la liste des pseudos en haut et
+supprimer l'alignement sur les pseudos :
 
-Vous pouvez utiliser un des scripts suivants :
+----------------------------------------
+/set weechat.bar.nicklist.position top
+/set weechat.look.prefix_align none
+----------------------------------------
+
+Avec WeeChat > = 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour
+éviter qu'un caractère de nouvelle ligne soit affiché après chaque ligne (donc
+cela ne cassera pas la sélection d'une URL) :
+
+----------------------------------------
+/set weechat.look.eat_newline_glitch on
+----------------------------------------
+
+[IMPORTANT]
+Cette option peut causer des problèmes d'affichage. Si vous rencontrez de tels
+problèmes, vous devez désactiver cette option.
+
+Une autre solution est d'utiliser l'un des scripts suivants :
 
 urlbar.py::
     affiche les URLs dans une barre
