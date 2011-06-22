@@ -628,9 +628,9 @@ connectez-vous :
 ----------------------------------------
 
 
-[[irc_target_server]]
-Comment puis-je changer le serveur cible sur le tampon avec les serveurs ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[[irc_target_buffer]]
+Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 La touche par défaut est @k(C-)@k(x) (la commande est : `/input switch_active_buffer`).
 

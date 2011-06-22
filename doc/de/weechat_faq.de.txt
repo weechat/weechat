@@ -637,9 +637,10 @@ eine Verbindung herzustellen zu können:
 ----------------------------------------
 
 
-[[irc_target_server]]
-Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// TRANSLATION MISSING
+[[irc_target_buffer]]
+How can I change target buffer for commands on merged buffers (like buffer with servers)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Die Standardtastenkombination lautet @k(C-)@k(x) (der dazugehörige Befehl: `/input switch_active_buffer`).
 
