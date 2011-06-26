@@ -58,6 +58,7 @@
 #include "wee-completion.h"
 #include "wee-config.h"
 #include "wee-debug.h"
+#include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-network.h"
@@ -411,6 +412,7 @@ main (int argc, char *argv[])
     util_catch_signal (SIGPIPE, SIG_IGN); /* ignore SIGPIPE signal          */
     util_catch_signal (SIGSEGV,
                        &debug_sigsegv); /* crash dump for SIGSEGV signal    */
+    hdata_init ();                      /* initialize hdata                 */
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
@@ -451,6 +453,7 @@ main (int argc, char *argv[])
     config_file_free_all ();            /* free all configuration files     */
     gui_keyboard_end ();                /* end keyboard                     */
     unhook_all ();                      /* remove all hooks                 */
+    hdata_end ();                       /* end hdata                        */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     
     return EXIT_SUCCESS;                /* make C compiler happy            */

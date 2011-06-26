@@ -1071,40 +1071,6 @@ plugin_api_init ()
                 &gui_filter_hdata_filter_cb, NULL);
     hook_hdata (NULL, "history", N_("history of commands in buffer"),
                 &gui_history_hdata_history_cb, NULL);
-    hook_hdata (NULL, "hook", N_("hook (variables common to all hook types)"),
-                &hook_hdata_hook_cb, NULL);
-    hook_hdata (NULL, "hook_command", N_("hook of type \"command\""),
-                &hook_hdata_hook_command_cb, NULL);
-    hook_hdata (NULL, "hook_command_run", N_("hook of type \"command_run\""),
-                &hook_hdata_hook_command_run_cb, NULL);
-    hook_hdata (NULL, "hook_timer", N_("hook of type \"timer\""),
-                &hook_hdata_hook_timer_cb, NULL);
-    hook_hdata (NULL, "hook_fd", N_("hook of type \"fd\""),
-                &hook_hdata_hook_fd_cb, NULL);
-    hook_hdata (NULL, "hook_process", N_("hook of type \"process\""),
-                &hook_hdata_hook_process_cb, NULL);
-    hook_hdata (NULL, "hook_connect", N_("hook of type \"connect\""),
-                &hook_hdata_hook_connect_cb, NULL);
-    hook_hdata (NULL, "hook_print", N_("hook of type \"print\""),
-                &hook_hdata_hook_print_cb, NULL);
-    hook_hdata (NULL, "hook_signal", N_("hook of type \"signal\""),
-                &hook_hdata_hook_signal_cb, NULL);
-    hook_hdata (NULL, "hook_hsignal", N_("hook of type \"hsignal\""),
-                &hook_hdata_hook_hsignal_cb, NULL);
-    hook_hdata (NULL, "hook_config", N_("hook of type \"config\""),
-                &hook_hdata_hook_config_cb, NULL);
-    hook_hdata (NULL, "hook_completion", N_("hook of type \"completion\""),
-                &hook_hdata_hook_completion_cb, NULL);
-    hook_hdata (NULL, "hook_modifier", N_("hook of type \"modifier\""),
-                &hook_hdata_hook_modifier_cb, NULL);
-    hook_hdata (NULL, "hook_info", N_("hook of type \"info\""),
-                &hook_hdata_hook_info_cb, NULL);
-    hook_hdata (NULL, "hook_info_hashtable", N_("hook of type \"info_hashtable\""),
-                &hook_hdata_hook_info_hashtable_cb, NULL);
-    hook_hdata (NULL, "hook_infolist", N_("hook of type \"infolist\""),
-                &hook_hdata_hook_infolist_cb, NULL);
-    hook_hdata (NULL, "hook_hdata", N_("hook of type \"hdata\""),
-                &hook_hdata_hook_hdata_cb, NULL);
     hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),
                 &gui_buffer_hdata_input_undo_cb, NULL);
     hook_hdata (NULL, "key", N_("a key (keyboard shortcut)"),
@@ -1119,6 +1085,8 @@ plugin_api_init ()
                 &gui_nicklist_hdata_nick_group_cb, NULL);
     hook_hdata (NULL, "nick", N_("nick in nicklist"),
                 &gui_nicklist_hdata_nick_cb, NULL);
+    hook_hdata (NULL, "plugin", N_("plugin"),
+                &plugin_hdata_plugin_cb, NULL);
     hook_hdata (NULL, "window", N_("window"),
                 &gui_window_hdata_window_cb, NULL);
     hook_hdata (NULL, "window_scroll", N_("scroll info in window"),

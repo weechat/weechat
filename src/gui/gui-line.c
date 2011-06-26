@@ -47,11 +47,6 @@
 #include "gui-window.h"
 
 
-struct t_hdata *gui_line_hdata_lines = NULL;
-struct t_hdata *gui_line_hdata_line = NULL;
-struct t_hdata *gui_line_hdata_line_data = NULL;
-
-
 /*
  * gui_lines_alloc: alloc structure "t_gui_lines" and initialize it
  */
@@ -1157,23 +1152,19 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_line_hdata_lines)
-        return gui_line_hdata_lines;
-    
-    hdata = hdata_new (hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
-        gui_line_hdata_lines = hdata;
-        HDATA_VAR(struct t_gui_lines, first_line, POINTER);
-        HDATA_VAR(struct t_gui_lines, last_line, POINTER);
-        HDATA_VAR(struct t_gui_lines, last_read_line, POINTER);
-        HDATA_VAR(struct t_gui_lines, lines_count, INTEGER);
-        HDATA_VAR(struct t_gui_lines, first_line_not_read, INTEGER);
-        HDATA_VAR(struct t_gui_lines, lines_hidden, INTEGER);
-        HDATA_VAR(struct t_gui_lines, buffer_max_length, INTEGER);
-        HDATA_VAR(struct t_gui_lines, prefix_max_length, INTEGER);
+        HDATA_VAR(struct t_gui_lines, first_line, POINTER, "line");
+        HDATA_VAR(struct t_gui_lines, last_line, POINTER, "line");
+        HDATA_VAR(struct t_gui_lines, last_read_line, POINTER, "line");
+        HDATA_VAR(struct t_gui_lines, lines_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_lines, first_line_not_read, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_lines, lines_hidden, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_lines, buffer_max_length, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_lines, prefix_max_length, INTEGER, NULL);
     }
-    return gui_line_hdata_lines;
+    return hdata;
 }
 
 /*
@@ -1188,18 +1179,14 @@ gui_line_hdata_line_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_line_hdata_line)
-        return gui_line_hdata_line;
-    
-    hdata = hdata_new (hdata_name, "prev_line", "next_line");
+    hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line");
     if (hdata)
     {
-        gui_line_hdata_line = hdata;
-        HDATA_VAR(struct t_gui_line, data, POINTER);
-        HDATA_VAR(struct t_gui_line, prev_line, POINTER);
-        HDATA_VAR(struct t_gui_line, next_line, POINTER);
+        HDATA_VAR(struct t_gui_line, data, POINTER, "line_data");
+        HDATA_VAR(struct t_gui_line, prev_line, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_line, next_line, POINTER, hdata_name);
     }
-    return gui_line_hdata_line;
+    return hdata;
 }
 
 /*
@@ -1214,28 +1201,24 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_line_hdata_line_data)
-        return gui_line_hdata_line_data;
-    
-    hdata = hdata_new (hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
-        gui_line_hdata_line_data = hdata;
-        HDATA_VAR(struct t_gui_line_data, buffer, POINTER);
-        HDATA_VAR(struct t_gui_line_data, y, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, date, TIME);
-        HDATA_VAR(struct t_gui_line_data, date_printed, TIME);
-        HDATA_VAR(struct t_gui_line_data, str_time, STRING);
-        HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, tags_array, POINTER);
-        HDATA_VAR(struct t_gui_line_data, displayed, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, highlight, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, refresh_needed, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, prefix, STRING);
-        HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER);
-        HDATA_VAR(struct t_gui_line_data, message, STRING);
+        HDATA_VAR(struct t_gui_line_data, buffer, POINTER, "buffer");
+        HDATA_VAR(struct t_gui_line_data, y, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, date, TIME, NULL);
+        HDATA_VAR(struct t_gui_line_data, date_printed, TIME, NULL);
+        HDATA_VAR(struct t_gui_line_data, str_time, STRING, NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_array, POINTER, NULL);
+        HDATA_VAR(struct t_gui_line_data, displayed, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, highlight, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, refresh_needed, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, prefix, STRING, NULL);
+        HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, message, STRING, NULL);
     }
-    return gui_line_hdata_line_data;
+    return hdata;
 }
 
 /*

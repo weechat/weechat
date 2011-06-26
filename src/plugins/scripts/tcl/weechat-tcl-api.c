@@ -7284,6 +7284,41 @@ weechat_tcl_api_hdata_get (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hdata_get_var_offset: get offset of variable in hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get_var_offset (ClientData clientData, Tcl_Interp *interp,
+                                      int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *name;
+    int result, i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        TCL_RETURN_INT(0);
+    }
+    
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    name = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
+    
+    TCL_RETURN_INT(result);
+}
+
+/*
  * weechat_tcl_api_hdata_get_var_type_string: get type of variable as string in
  *                                            hdata
  */
@@ -7317,6 +7352,42 @@ weechat_tcl_api_hdata_get_var_type_string (ClientData clientData,
     name = Tcl_GetStringFromObj (objv[2], &i);
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_get_var_hdata: get hdata for variable in hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get_var_hdata (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *name;
+    const char *result;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        TCL_RETURN_EMPTY;
+    }
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    name = Tcl_GetStringFromObj (objv[2], &i);
+    
+    result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
     
     TCL_RETURN_STRING(result);
 }
@@ -8266,8 +8337,12 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_infolist_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_get",
                           weechat_tcl_api_hdata_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_offset",
+                          weechat_tcl_api_hdata_get_var_offset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_type_string",
                           weechat_tcl_api_hdata_get_var_type_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_hdata",
+                          weechat_tcl_api_hdata_get_var_hdata, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_get_list",
                           weechat_tcl_api_hdata_get_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_move",

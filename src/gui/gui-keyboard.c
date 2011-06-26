@@ -74,8 +74,6 @@ int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste    */
 
 time_t gui_keyboard_last_activity_time = 0; /* last activity time (key)     */
 
-struct t_hdata *gui_keyboard_hdata_key = NULL;
-
 
 /*
  * gui_keyboard_init: init keyboard
@@ -761,23 +759,19 @@ gui_keyboard_hdata_key_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_keyboard_hdata_key)
-        return gui_keyboard_hdata_key;
-    
-    hdata = hdata_new (hdata_name, "prev_key", "next_key");
+    hdata = hdata_new (NULL, hdata_name, "prev_key", "next_key");
     if (hdata)
     {
-        gui_keyboard_hdata_key = hdata;
-        HDATA_VAR(struct t_gui_key, key, STRING);
-        HDATA_VAR(struct t_gui_key, command, STRING);
-        HDATA_VAR(struct t_gui_key, prev_key, POINTER);
-        HDATA_VAR(struct t_gui_key, next_key, POINTER);
+        HDATA_VAR(struct t_gui_key, key, STRING, NULL);
+        HDATA_VAR(struct t_gui_key, command, STRING, NULL);
+        HDATA_VAR(struct t_gui_key, prev_key, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_key, next_key, POINTER, hdata_name);
         HDATA_LIST(gui_keys);
         HDATA_LIST(last_gui_key);
         HDATA_LIST(gui_default_keys);
         HDATA_LIST(last_gui_default_key);
     }
-    return gui_keyboard_hdata_key;
+    return hdata;
 }
 
 /*

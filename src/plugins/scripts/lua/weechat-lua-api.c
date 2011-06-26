@@ -7225,6 +7225,41 @@ weechat_lua_api_hdata_get (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hdata_get_var_offset: get offset of variable in hdata
+ */
+
+static int
+weechat_lua_api_hdata_get_var_offset (lua_State *L)
+{
+    const char *hdata, *name;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        LUA_RETURN_INT(0);
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_hdata_get_var_type_string: get type of variable as string in
  *                                            hdata
  */
@@ -7256,6 +7291,41 @@ weechat_lua_api_hdata_get_var_type_string (lua_State *L)
     name = lua_tostring (lua_current_interpreter, -1);
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
+ * weechat_lua_api_hdata_get_var_hdata: get hdata for variable in hdata
+ */
+
+static int
+weechat_lua_api_hdata_get_var_hdata (lua_State *L)
+{
+    const char *hdata, *name, *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        LUA_RETURN_EMPTY;
+    }
+    
+    hdata = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
     
     LUA_RETURN_STRING(result);
 }
@@ -8318,7 +8388,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "infolist_time", &weechat_lua_api_infolist_time },
     { "infolist_free", &weechat_lua_api_infolist_free },
     { "hdata_get", &weechat_lua_api_hdata_get },
+    { "hdata_get_var_offset", &weechat_lua_api_hdata_get_var_offset },
     { "hdata_get_var_type_string", &weechat_lua_api_hdata_get_var_type_string },
+    { "hdata_get_var_hdata", &weechat_lua_api_hdata_get_var_hdata },
     { "hdata_get_list", &weechat_lua_api_hdata_get_list },
     { "hdata_move", &weechat_lua_api_hdata_move },
     { "hdata_integer", &weechat_lua_api_hdata_integer },

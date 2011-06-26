@@ -1711,23 +1711,19 @@ gui_bar_item_hdata_bar_item_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_bar_item_hdata_bar_item)
-        return gui_bar_item_hdata_bar_item;
-    
-    hdata = hdata_new (hdata_name, "prev_item", "next_item");
+    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item");
     if (hdata)
     {
-        gui_bar_item_hdata_bar_item = hdata;
-        HDATA_VAR(struct t_gui_bar_item, plugin, POINTER);
-        HDATA_VAR(struct t_gui_bar_item, name, STRING);
-        HDATA_VAR(struct t_gui_bar_item, build_callback, POINTER);
-        HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER);
-        HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER);
-        HDATA_VAR(struct t_gui_bar_item, next_item, POINTER);
+        HDATA_VAR(struct t_gui_bar_item, plugin, POINTER, "plugin");
+        HDATA_VAR(struct t_gui_bar_item, name, STRING, NULL);
+        HDATA_VAR(struct t_gui_bar_item, build_callback, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_bar_item, next_item, POINTER, hdata_name);
         HDATA_LIST(gui_bar_items);
         HDATA_LIST(last_gui_bar_item);
     }
-    return gui_bar_item_hdata_bar_item;
+    return hdata;
 }
 
 /*

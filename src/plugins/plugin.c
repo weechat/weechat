@@ -690,6 +690,7 @@ plugin_load (const char *filename)
         new_plugin->hdata_get_var_offset = &hdata_get_var_offset;
         new_plugin->hdata_get_var_type = &hdata_get_var_type;
         new_plugin->hdata_get_var_type_string = &hdata_get_var_type_string;
+        new_plugin->hdata_get_var_hdata = &hdata_get_var_hdata;
         new_plugin->hdata_get_var = &hdata_get_var;
         new_plugin->hdata_get_var_at_offset = &hdata_get_var_at_offset;
         new_plugin->hdata_get_list = &hdata_get_list;
@@ -927,6 +928,12 @@ plugin_remove (struct t_weechat_plugin *plugin)
     /* remove all hooks */
     unhook_all_plugin (plugin);
     
+    /* remove all infolists */
+    infolist_free_all_plugin (plugin);
+    
+    /* remove all hdata */
+    hdata_free_all_plugin (plugin);
+    
     /* remove all bar items */
     gui_bar_item_free_all_plugin (plugin);
     
@@ -1153,6 +1160,38 @@ plugin_end ()
     
     /* free all plugin options */
     plugin_config_end ();
+}
+
+/*
+ * plugin_hdata_plugin_cb: return hdata for plugin
+ */
+
+struct t_hdata *
+plugin_hdata_plugin_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    hdata = hdata_new (NULL, hdata_name, "prev_plugin", "next_plugin");
+    if (hdata)
+    {
+        HDATA_VAR(struct t_weechat_plugin, filename, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, handle, POINTER, NULL);
+        HDATA_VAR(struct t_weechat_plugin, name, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, description, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, author, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, version, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, license, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, charset, STRING, NULL);
+        HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, NULL);
+        HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, hdata_name);
+        HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, hdata_name);
+        HDATA_LIST(weechat_plugins);
+        HDATA_LIST(last_weechat_plugin);
+    }
+    return hdata;
 }
 
 /*

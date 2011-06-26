@@ -7491,6 +7491,42 @@ weechat_ruby_api_hdata_get (VALUE class, VALUE name)
 }
 
 /*
+ * weechat_ruby_api_hdata_get_var_offset: get offset of variable in hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_var_offset (VALUE class, VALUE hdata, VALUE name)
+{
+    char *c_hdata, *c_name;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (hdata) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_name = StringValuePtr (name);
+    
+    value = weechat_hdata_get_var_offset (script_str2ptr (c_hdata), c_name);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
  * weechat_ruby_api_hdata_get_var_type_string: get type of variable as string
  *                                             in hdata
  */
@@ -7524,6 +7560,42 @@ weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
     c_name = StringValuePtr (name);
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (c_hdata), c_name);
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
+ * weechat_ruby_api_hdata_get_var_hdata: get hdata for variable in hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_var_hdata (VALUE class, VALUE hdata, VALUE name)
+{
+    char *c_hdata, *c_name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (hdata) || NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (hdata, T_STRING);
+    Check_Type (name, T_STRING);
+    
+    c_hdata = StringValuePtr (hdata);
+    c_name = StringValuePtr (name);
+    
+    result = weechat_hdata_get_var_hdata (script_str2ptr (c_hdata), c_name);
     
     RUBY_RETURN_STRING(result);
 }
@@ -8273,7 +8345,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "infolist_time", &weechat_ruby_api_infolist_time, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_free", &weechat_ruby_api_infolist_free, 1);
     rb_define_module_function (ruby_mWeechat, "hdata_get", &weechat_ruby_api_hdata_get, 1);
+    rb_define_module_function (ruby_mWeechat, "hdata_get_var_offset", &weechat_ruby_api_hdata_get_var_offset, 2);
     rb_define_module_function (ruby_mWeechat, "hdata_get_var_type_string", &weechat_ruby_api_hdata_get_var_type_string, 2);
+    rb_define_module_function (ruby_mWeechat, "hdata_get_var_hdata", &weechat_ruby_api_hdata_get_var_hdata, 2);
     rb_define_module_function (ruby_mWeechat, "hdata_get_list", &weechat_ruby_api_hdata_get_list, 2);
     rb_define_module_function (ruby_mWeechat, "hdata_move", &weechat_ruby_api_hdata_move, 3);
     rb_define_module_function (ruby_mWeechat, "hdata_integer", &weechat_ruby_api_hdata_integer, 3);

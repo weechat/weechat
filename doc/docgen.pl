@@ -332,7 +332,9 @@ sub get_hdata
                     my $type = int($value) >> 16;
                     my $offset = int($value) & 0xFFFF;
                     my $stroffset = sprintf("%08d", $offset);
-                    $hdata2{$stroffset} = "'".$key."' (".weechat::hdata_get_var_type_string($ptr_hdata, $key).")";
+                    my $var_hdata = weechat::hdata_get_var_hdata($ptr_hdata, $key);
+                    $var_hdata = ", hdata: '".$var_hdata."'" if ($var_hdata ne "");
+                    $hdata2{$stroffset} = "'".$key."' (".weechat::hdata_get_var_type_string($ptr_hdata, $key).$var_hdata.")";
                 }
                 foreach my $offset (sort keys %hdata2)
                 {

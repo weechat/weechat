@@ -40,6 +40,7 @@
 #include "wee-config-file.h"
 #include "wee-debug.h"
 #include "wee-hashtable.h"
+#include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-list.h"
@@ -1154,7 +1155,10 @@ COMMAND_CALLBACK(debug)
     }
     else if (string_strcasecmp (argv[1], "hdata") == 0)
     {
-        debug_hdata ();
+        if ((argc > 2) && (string_strcasecmp (argv[2], "free") == 0))
+            hdata_free_all ();
+        else
+            debug_hdata ();
     }
     else if (string_strcasecmp (argv[1], "infolists") == 0)
     {
@@ -4846,8 +4850,8 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|hdata|infolists|memory|tags|term"
-                     "|windows"),
+                     " || buffer|color|infolists|memory|tags|term|windows"
+                     " || hdata [free]"),
                   N_("     list: list plugins with debug levels\n"
                      "      set: set debug level for plugin\n"
                      "   plugin: name of plugin (\"core\" for WeeChat core)\n"
@@ -4857,7 +4861,8 @@ command_init ()
                      "   buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
                      "    color: display infos about current color pairs\n"
-                     "    hdata: display infos about hdata\n"
+                     "    hdata: display infos about hdata (with free: remove "
+                     "all hdata in memory)\n"
                      "infolists: display infos about infolists\n"
                      "   memory: display infos about memory usage\n"
                      "     tags: display tags for lines\n"
@@ -4868,7 +4873,7 @@ command_init ()
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || color"
-                  " || hdata"
+                  " || hdata free"
                   " || infolists"
                   " || memory"
                   " || tags"

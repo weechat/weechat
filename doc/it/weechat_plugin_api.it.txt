@@ -11795,7 +11795,8 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type);
+void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
+                            const char *hdata_name);
 ----------------------------------------
 
 Argomenti:
@@ -11810,6 +11811,7 @@ Argomenti:
 ** WEECHAT_HDATA_POINTER
 ** WEECHAT_HDATA_TIME
 ** WEECHAT_HDATA_OTHER
+* 'hdata_name': name of a hdata (if it's a pointer to a structure with hdata)
 
 Esempio in C:
 
@@ -11827,22 +11829,22 @@ struct t_myplugin_list
 /* ... */
 
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
-weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING);
-weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER);
-weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL);
+weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER, NULL);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, "myplugin_list");
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, "myplugin_list");
 ----------------------------------------
 
 The macro "WEECHAT_HDATA_VAR" can be used to shorten code:
 
 [source,C]
 ----------------------------------------
-WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, count, INTEGER);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, count, INTEGER, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, "myplugin_list");
+WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, "myplugin_list");
 ----------------------------------------
 
 [NOTE]
@@ -11888,11 +11890,11 @@ struct t_myplugin_list *last_buffer = NULL;
 /* ... */
 
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
-weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING);
-weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER);
-weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL);
+weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER, NULL);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, "myplugin_list");
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, "myplugin_list");
 weechat_hdata_new_list (hdata, "buffers", &buffers);
 weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
 ----------------------------------------
@@ -12087,7 +12089,49 @@ Script (Python):
 type = weechat.hdata_get_var_type_string(hdata, name)
 
 # esempio
-weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
+weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_hdata_get_var_hdata
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.6._
+
+Return hdata for variable in hdata.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name);
+----------------------------------------
+
+Argomenti:
+
+* 'hdata': hdata pointer
+* 'name': variable name
+
+Valore restituito:
+
+* hdata for variable, NULL if no hdata or if an error occured
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+hdata_name = weechat.hdata_get_var_hdata(hdata, name)
+
+# esempio
+weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----------------------------------------
 
 // TRANSLATION MISSING

@@ -47,8 +47,6 @@ struct t_gui_filter *gui_filters = NULL;           /* first filter          */
 struct t_gui_filter *last_gui_filter = NULL;       /* last filter           */
 int gui_filters_enabled = 1;                       /* filters enabled?      */
 
-struct t_hdata *gui_filter_hdata_filter = NULL;
-
 
 /*
  * gui_filter_line_has_tag_no_filter: return 1 if line has tag "no_filter",
@@ -489,30 +487,26 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_filter_hdata_filter)
-        return gui_filter_hdata_filter;
-    
-    hdata = hdata_new (hdata_name, "prev_filter", "next_filter");
+    hdata = hdata_new (NULL, hdata_name, "prev_filter", "next_filter");
     if (hdata)
     {
-        gui_filter_hdata_filter = hdata;
-        HDATA_VAR(struct t_gui_filter, enabled, INTEGER);
-        HDATA_VAR(struct t_gui_filter, name, STRING);
-        HDATA_VAR(struct t_gui_filter, buffer_name, STRING);
-        HDATA_VAR(struct t_gui_filter, num_buffers, INTEGER);
-        HDATA_VAR(struct t_gui_filter, buffers, POINTER);
-        HDATA_VAR(struct t_gui_filter, tags, STRING);
-        HDATA_VAR(struct t_gui_filter, tags_count, INTEGER);
-        HDATA_VAR(struct t_gui_filter, tags_array, POINTER);
-        HDATA_VAR(struct t_gui_filter, regex, STRING);
-        HDATA_VAR(struct t_gui_filter, regex_prefix, POINTER);
-        HDATA_VAR(struct t_gui_filter, regex_message, POINTER);
-        HDATA_VAR(struct t_gui_filter, prev_filter, POINTER);
-        HDATA_VAR(struct t_gui_filter, next_filter, POINTER);
+        HDATA_VAR(struct t_gui_filter, enabled, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_filter, name, STRING, NULL);
+        HDATA_VAR(struct t_gui_filter, buffer_name, STRING, NULL);
+        HDATA_VAR(struct t_gui_filter, num_buffers, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_filter, buffers, POINTER, NULL);
+        HDATA_VAR(struct t_gui_filter, tags, STRING, NULL);
+        HDATA_VAR(struct t_gui_filter, tags_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_filter, tags_array, POINTER, NULL);
+        HDATA_VAR(struct t_gui_filter, regex, STRING, NULL);
+        HDATA_VAR(struct t_gui_filter, regex_prefix, POINTER, NULL);
+        HDATA_VAR(struct t_gui_filter, regex_message, POINTER, NULL);
+        HDATA_VAR(struct t_gui_filter, prev_filter, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_filter, next_filter, POINTER, hdata_name);
         HDATA_LIST(gui_filters);
         HDATA_LIST(last_gui_filter);
     }
-    return gui_filter_hdata_filter;
+    return hdata;
 }
 
 /*

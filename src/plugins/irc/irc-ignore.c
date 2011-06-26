@@ -35,8 +35,6 @@
 struct t_irc_ignore *irc_ignore_list = NULL; /* list of ignore              */
 struct t_irc_ignore *last_irc_ignore = NULL; /* last ignore in list         */
 
-struct t_hdata *irc_ignore_hdata_ignore = NULL;
-
 
 /*
  * irc_ignore_valid: check if an ignore pointer exists
@@ -316,24 +314,20 @@ irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (irc_ignore_hdata_ignore)
-        return irc_ignore_hdata_ignore;
-    
     hdata = weechat_hdata_new (hdata_name, "prev_ignore", "next_ignore");
     if (hdata)
     {
-        irc_ignore_hdata_ignore = hdata;
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, number, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, mask, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, regex_mask, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, server, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, channel, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, prev_ignore, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, next_ignore, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, number, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, mask, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, regex_mask, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, server, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, channel, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, prev_ignore, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, next_ignore, POINTER, hdata_name);
         WEECHAT_HDATA_LIST(irc_ignore_list);
         WEECHAT_HDATA_LIST(last_irc_ignore);
     }
-    return irc_ignore_hdata_ignore;
+    return hdata;
 }
 
 /*

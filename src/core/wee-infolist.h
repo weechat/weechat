@@ -52,6 +52,8 @@ struct t_infolist_item
 
 struct t_infolist
 {
+    struct t_weechat_plugin *plugin;   /* plugin which created this infolist*/
+                                       /* (NULL if created by WeeChat)      */
     struct t_infolist_item *items;     /* link to items                     */
     struct t_infolist_item *last_item; /* last variable                     */
     struct t_infolist_item *ptr_item;  /* pointer to current item           */
@@ -100,6 +102,7 @@ extern void *infolist_buffer (struct t_infolist *infolist,
 extern time_t infolist_time (struct t_infolist *infolist,
                              const char *var);
 extern void infolist_free (struct t_infolist *infolist);
+extern void infolist_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void infolist_print_log ();
 
 #endif /* __WEECHAT_INFOLIST_H */

@@ -1,3 +1,6 @@
+body {
+    margin: 1em 2em 1em 2em;
+}
 div.sectionbody {
     font-family: serif,Helvetica,arial;
 }

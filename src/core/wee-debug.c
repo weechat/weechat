@@ -335,9 +335,60 @@ debug_hdata_hash_list_map_cb (void *data,
     (void) hashtable;
     
     gui_chat_printf (NULL,
-                     "        list: %s -> 0x%lx",
+                     "    list: %s -> 0x%lx",
                      (char *)key,
                      *((void **)value));
+}
+
+/*
+ * debug_hdata_map_cb: function called for each hdata in memory
+ */
+
+void
+debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
+                    const void *key, const void *value)
+{
+    struct t_hdata *ptr_hdata;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
+    void *ptr_value;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    
+    ptr_hdata = (struct t_hdata *)value;
+    
+    gui_chat_printf (NULL,
+                     "  hdata 0x%lx: \"%s\", %d vars, %d lists:",
+                     ptr_hdata, (const char *)key,
+                     hashtable_get_integer (ptr_hdata->hash_var,
+                                            "items_count"),
+                     hashtable_get_integer (ptr_hdata->hash_list,
+                                            "items_count"));
+    
+    /* display lists */
+    hashtable_map (ptr_hdata->hash_list,
+                   &debug_hdata_hash_list_map_cb, NULL);
+    
+    /* display vars */
+    list = weelist_new ();
+    hashtable_map (ptr_hdata->hash_var,
+                   &debug_hdata_hash_var_map_cb, list);
+    for (ptr_item = list->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        ptr_value = hashtable_get (ptr_hdata->hash_var, ptr_item->user_data);
+        if (ptr_value)
+        {
+            gui_chat_printf (NULL,
+                             "    %04d -> %s (%s)",
+                             (*((int *)ptr_value)) & 0xFFFF,
+                             (char *)ptr_item->user_data,
+                             hdata_type_string[(*((int *)ptr_value)) >> 16]);
+        }
+    }
+    weelist_free (list);
 }
 
 /*
@@ -347,58 +398,15 @@ debug_hdata_hash_list_map_cb (void *data,
 void
 debug_hdata ()
 {
-    struct t_hdata *ptr_hdata;
-    int i, count;
-    struct t_weelist *list;
-    struct t_weelist_item *ptr_item;
-    void *value;
+    int count;
     
-    count = 0;
-    for (ptr_hdata = weechat_hdata; ptr_hdata;
-         ptr_hdata = ptr_hdata->next_hdata)
-    {
-        count++;
-    }
+    count = hashtable_get_integer (weechat_hdata, "items_count");
     
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "%d hdata in memory", count);
     
     if (count > 0)
-    {
-        i = 0;
-        for (ptr_hdata = weechat_hdata; ptr_hdata;
-             ptr_hdata = ptr_hdata->next_hdata)
-        {
-            gui_chat_printf (NULL,
-                             "%4d: hdata 0x%lx: \"%s\", %d vars, %d lists:",
-                             i + 1, ptr_hdata,
-                             ptr_hdata->name,
-                             hashtable_get_integer (ptr_hdata->hash_var,
-                                                    "items_count"),
-                             hashtable_get_integer (ptr_hdata->hash_list,
-                                                    "items_count"));
-            list = weelist_new ();
-            hashtable_map (ptr_hdata->hash_var,
-                           &debug_hdata_hash_var_map_cb, list);
-            for (ptr_item = list->items; ptr_item;
-                 ptr_item = ptr_item->next_item)
-            {
-                value = hashtable_get (ptr_hdata->hash_var, ptr_item->user_data);
-                if (value)
-                {
-                    gui_chat_printf (NULL,
-                                     "        %04d -> %s (%s)",
-                                     (*((int *)value)) & 0xFFFF,
-                                     (char *)ptr_item->user_data,
-                                     hdata_type_string[(*((int *)value)) >> 16]);
-                }
-            }
-            weelist_free (list);
-            hashtable_map (ptr_hdata->hash_list,
-                           &debug_hdata_hash_list_map_cb, NULL);
-            i++;
-        }
-    }
+        hashtable_map (weechat_hdata, &debug_hdata_map_cb, NULL);
 }
 
 /*

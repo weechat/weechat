@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-22 15:36+0200\n"
+"POT-Creation-Date: 2011-06-26 18:05+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1035,8 +1035,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || hdata [free]"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1049,7 +1049,8 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
-"    hdata: display infos about hdata\n"
+"    hdata: display infos about hdata (with free: remove all hdata in "
+"memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     tags: display tags for lines\n"
@@ -6241,58 +6242,6 @@ msgstr ""
 msgid "history of commands in buffer"
 msgstr "Внутренние команды %s:\n"
 
-msgid "hook (variables common to all hook types)"
-msgstr ""
-
-#, fuzzy
-msgid "hook of type \"command\""
-msgstr "Внутренние команды %s:\n"
-
-msgid "hook of type \"command_run\""
-msgstr ""
-
-msgid "hook of type \"timer\""
-msgstr ""
-
-msgid "hook of type \"fd\""
-msgstr ""
-
-msgid "hook of type \"process\""
-msgstr ""
-
-msgid "hook of type \"connect\""
-msgstr ""
-
-msgid "hook of type \"print\""
-msgstr ""
-
-msgid "hook of type \"signal\""
-msgstr ""
-
-msgid "hook of type \"hsignal\""
-msgstr ""
-
-msgid "hook of type \"config\""
-msgstr ""
-
-msgid "hook of type \"completion\""
-msgstr ""
-
-msgid "hook of type \"modifier\""
-msgstr ""
-
-msgid "hook of type \"info\""
-msgstr ""
-
-msgid "hook of type \"info_hashtable\""
-msgstr ""
-
-msgid "hook of type \"infolist\""
-msgstr ""
-
-msgid "hook of type \"hdata\""
-msgstr ""
-
 #, fuzzy
 msgid "structure with undo for input line"
 msgstr "вставить строку в поле ввода"
@@ -6316,6 +6265,10 @@ msgstr "цвет ника"
 #, fuzzy
 msgid "nick in nicklist"
 msgstr "%s игнорирования не найдены\n"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (нет pluginа)\n"
 
 #, fuzzy
 msgid "window"
@@ -7392,6 +7345,10 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "hook of type \"command\""
+#~ msgstr "Внутренние команды %s:\n"
 
 #, fuzzy
 #~ msgid "completion"

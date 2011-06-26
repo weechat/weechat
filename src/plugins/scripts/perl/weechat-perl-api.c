@@ -6536,6 +6536,39 @@ XS (XS_weechat_api_hdata_get)
 }
 
 /*
+ * weechat::hdata_get_var_offset: get offset of variable in hdata
+ */
+
+XS (XS_weechat_api_hdata_get_var_offset)
+{
+    char *hdata, *name;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        PERL_RETURN_INT(0);
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    value = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
  * weechat::hdata_get_var_type_string: get type of variable as string in hdata
  */
 
@@ -6564,6 +6597,39 @@ XS (XS_weechat_api_hdata_get_var_type_string)
     name = SvPV (ST (1), PL_na);
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::hdata_get_var_hdata: get hdata for variable in hdata
+ */
+
+XS (XS_weechat_api_hdata_get_var_hdata)
+{
+    const char *result;
+    char *hdata, *name;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        PERL_RETURN_EMPTY;
+    }
+    
+    hdata = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
     
     PERL_RETURN_STRING(result);
 }
@@ -7213,7 +7279,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::infolist_time", XS_weechat_api_infolist_time, "weechat");
     newXS ("weechat::infolist_free", XS_weechat_api_infolist_free, "weechat");
     newXS ("weechat::hdata_get", XS_weechat_api_hdata_get, "weechat");
+    newXS ("weechat::hdata_get_var_offset", XS_weechat_api_hdata_get_var_offset, "weechat");
     newXS ("weechat::hdata_get_var_type_string", XS_weechat_api_hdata_get_var_type_string, "weechat");
+    newXS ("weechat::hdata_get_var_hdata", XS_weechat_api_hdata_get_var_hdata, "weechat");
     newXS ("weechat::hdata_get_list", XS_weechat_api_hdata_get_list, "weechat");
     newXS ("weechat::hdata_move", XS_weechat_api_hdata_move, "weechat");
     newXS ("weechat::hdata_integer", XS_weechat_api_hdata_integer, "weechat");

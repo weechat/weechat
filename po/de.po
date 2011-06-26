@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-22 15:36+0200\n"
+"POT-Creation-Date: 2011-06-26 18:05+0200\n"
 "PO-Revision-Date: 2011-06-15 18:51+0100\n"
 "Last-Translator: Nils G.\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1088,13 +1088,15 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
+#, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || hdata [free]"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
 "infolists|memory|tags|term|windows"
 
+#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1104,7 +1106,8 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
-"    hdata: display infos about hdata\n"
+"    hdata: display infos about hdata (with free: remove all hdata in "
+"memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     tags: display tags for lines\n"
@@ -6920,57 +6923,6 @@ msgstr "Filter"
 msgid "history of commands in buffer"
 msgstr "Verlaufspeicher von Befehlen in einem Buffer"
 
-msgid "hook (variables common to all hook types)"
-msgstr "Hook (Variablen die für alle Hook-Typen geläufig sind)"
-
-msgid "hook of type \"command\""
-msgstr "Hook des Typs \"command\""
-
-msgid "hook of type \"command_run\""
-msgstr "Hook vom Typ \"command_run\""
-
-msgid "hook of type \"timer\""
-msgstr "Hook vom Typ \"timer\""
-
-msgid "hook of type \"fd\""
-msgstr "Hook vom Typ \"fd\""
-
-msgid "hook of type \"process\""
-msgstr "Hook vom Typ \"process\""
-
-msgid "hook of type \"connect\""
-msgstr "Hook vom Typ \"connect\""
-
-msgid "hook of type \"print\""
-msgstr "Hook vom Typ \"print\""
-
-msgid "hook of type \"signal\""
-msgstr "Hook vom Typ \"signal\""
-
-msgid "hook of type \"hsignal\""
-msgstr "Hook vom Typ \"\""
-
-msgid "hook of type \"config\""
-msgstr "Hook vom Typ \"config\""
-
-msgid "hook of type \"completion\""
-msgstr "Hook vom Typ \"completion\""
-
-msgid "hook of type \"modifier\""
-msgstr "Hook vom Typ \"modifier\""
-
-msgid "hook of type \"info\""
-msgstr "Hook vom Typ \"info\""
-
-msgid "hook of type \"info_hashtable\""
-msgstr "Hook vom Typ \"info_hashtable\""
-
-msgid "hook of type \"infolist\""
-msgstr "Hook vom Typ \"infolist\""
-
-msgid "hook of type \"hdata\""
-msgstr "Hook vom Typ \"hdata\""
-
 msgid "structure with undo for input line"
 msgstr "Struktur der Rücknahmen für die Befehlszeile"
 
@@ -6991,6 +6943,10 @@ msgstr "Gruppen in Nickliste"
 
 msgid "nick in nicklist"
 msgstr "Nick in Nickliste"
+
+#, fuzzy
+msgid "plugin"
+msgstr "Erweiterung"
 
 msgid "window"
 msgstr "Fenster"
@@ -8109,6 +8065,57 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
+
+#~ msgid "hook (variables common to all hook types)"
+#~ msgstr "Hook (Variablen die für alle Hook-Typen geläufig sind)"
+
+#~ msgid "hook of type \"command\""
+#~ msgstr "Hook des Typs \"command\""
+
+#~ msgid "hook of type \"command_run\""
+#~ msgstr "Hook vom Typ \"command_run\""
+
+#~ msgid "hook of type \"timer\""
+#~ msgstr "Hook vom Typ \"timer\""
+
+#~ msgid "hook of type \"fd\""
+#~ msgstr "Hook vom Typ \"fd\""
+
+#~ msgid "hook of type \"process\""
+#~ msgstr "Hook vom Typ \"process\""
+
+#~ msgid "hook of type \"connect\""
+#~ msgstr "Hook vom Typ \"connect\""
+
+#~ msgid "hook of type \"print\""
+#~ msgstr "Hook vom Typ \"print\""
+
+#~ msgid "hook of type \"signal\""
+#~ msgstr "Hook vom Typ \"signal\""
+
+#~ msgid "hook of type \"hsignal\""
+#~ msgstr "Hook vom Typ \"\""
+
+#~ msgid "hook of type \"config\""
+#~ msgstr "Hook vom Typ \"config\""
+
+#~ msgid "hook of type \"completion\""
+#~ msgstr "Hook vom Typ \"completion\""
+
+#~ msgid "hook of type \"modifier\""
+#~ msgstr "Hook vom Typ \"modifier\""
+
+#~ msgid "hook of type \"info\""
+#~ msgstr "Hook vom Typ \"info\""
+
+#~ msgid "hook of type \"info_hashtable\""
+#~ msgstr "Hook vom Typ \"info_hashtable\""
+
+#~ msgid "hook of type \"infolist\""
+#~ msgstr "Hook vom Typ \"infolist\""
+
+#~ msgid "hook of type \"hdata\""
+#~ msgstr "Hook vom Typ \"hdata\""
 
 #~ msgid "completion"
 #~ msgstr "Vervollständigung"

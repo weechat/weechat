@@ -46,8 +46,6 @@ struct t_gui_history *last_history_global = NULL;
 struct t_gui_history *history_global_ptr = NULL;
 int num_history_global = 0;
 
-struct t_hdata *gui_history_hdata_history = NULL;
-
 
 /*
  * gui_history_buffer_add: add a text/command to buffer's history
@@ -229,18 +227,14 @@ gui_history_hdata_history_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_history_hdata_history)
-        return gui_history_hdata_history;
-    
-    hdata = hdata_new (hdata_name, "prev_history", "next_history");
+    hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history");
     if (hdata)
     {
-        gui_history_hdata_history = hdata;
-        HDATA_VAR(struct t_gui_history, text, STRING);
-        HDATA_VAR(struct t_gui_history, prev_history, POINTER);
-        HDATA_VAR(struct t_gui_history, next_history, POINTER);
+        HDATA_VAR(struct t_gui_history, text, STRING, NULL);
+        HDATA_VAR(struct t_gui_history, prev_history, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_history, next_history, POINTER, hdata_name);
     }
-    return gui_history_hdata_history;
+    return hdata;
 }
 
 /*

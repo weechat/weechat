@@ -37,9 +37,6 @@
 #include "irc-channel.h"
 
 
-struct t_hdata *irc_nick_hdata_nick = NULL;
-
-
 /*
  * irc_nick_valid: check if a nick pointer exists for a channel
  *                 return 1 if nick exists
@@ -943,23 +940,19 @@ irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (irc_nick_hdata_nick)
-        return irc_nick_hdata_nick;
-    
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick");
     if (hdata)
     {
-        irc_nick_hdata_nick = hdata;
-        WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER, hdata_name);
     }
-    return irc_nick_hdata_nick;
+    return hdata;
 }
 
 /*

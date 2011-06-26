@@ -43,13 +43,14 @@ struct t_infolist *last_weechat_infolist = NULL;
  */
 
 struct t_infolist *
-infolist_new ()
+infolist_new (struct t_weechat_plugin *plugin)
 {
     struct t_infolist *new_infolist;
 
     new_infolist = malloc (sizeof (*new_infolist));
     if (new_infolist)
     {
+        new_infolist->plugin = plugin;
         new_infolist->items = NULL;
         new_infolist->last_item = NULL;
         new_infolist->ptr_item = NULL;
@@ -645,6 +646,25 @@ infolist_free (struct t_infolist *infolist)
 }
 
 /*
+ * infolist_free_all_plugin: free all infolists created by a plugin
+ */
+
+void
+infolist_free_all_plugin (struct t_weechat_plugin *plugin)
+{
+    struct t_infolist *ptr_infolist, *next_infolist;
+    
+    ptr_infolist = weechat_infolists;
+    while (ptr_infolist)
+    {
+        next_infolist = ptr_infolist->next_infolist;
+        if (ptr_infolist->plugin == plugin)
+            infolist_free (ptr_infolist);
+        ptr_infolist = next_infolist;
+    }
+}
+
+/*
  * infolist_print_log: print infolists infos in log (usually for crash dump)
  */
 
@@ -660,6 +680,7 @@ infolist_print_log ()
     {
         log_printf ("");
         log_printf ("[infolist (addr:0x%lx)]", ptr_infolist);
+        log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_infolist->plugin);
         log_printf ("  items. . . . . . . . . : 0x%lx", ptr_infolist->items);
         log_printf ("  last_item. . . . . . . : 0x%lx", ptr_infolist->last_item);
         log_printf ("  ptr_item . . . . . . . : 0x%lx", ptr_infolist->ptr_item);

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-22 15:36+0200\n"
+"POT-Creation-Date: 2011-06-26 18:05+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1091,8 +1091,8 @@ msgstr "cotrolar depuração para core/plugins"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || hdata [free]"
 msgstr "[list | set plugin level | dump [plugin] | buffer | windows | term]"
 
 # find a better translation to dump?
@@ -1107,7 +1107,8 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
-"    hdata: display infos about hdata\n"
+"    hdata: display infos about hdata (with free: remove all hdata in "
+"memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     tags: display tags for lines\n"
@@ -6024,57 +6025,6 @@ msgstr ""
 msgid "history of commands in buffer"
 msgstr ""
 
-msgid "hook (variables common to all hook types)"
-msgstr ""
-
-msgid "hook of type \"command\""
-msgstr ""
-
-msgid "hook of type \"command_run\""
-msgstr ""
-
-msgid "hook of type \"timer\""
-msgstr ""
-
-msgid "hook of type \"fd\""
-msgstr ""
-
-msgid "hook of type \"process\""
-msgstr ""
-
-msgid "hook of type \"connect\""
-msgstr ""
-
-msgid "hook of type \"print\""
-msgstr ""
-
-msgid "hook of type \"signal\""
-msgstr ""
-
-msgid "hook of type \"hsignal\""
-msgstr ""
-
-msgid "hook of type \"config\""
-msgstr ""
-
-msgid "hook of type \"completion\""
-msgstr ""
-
-msgid "hook of type \"modifier\""
-msgstr ""
-
-msgid "hook of type \"info\""
-msgstr ""
-
-msgid "hook of type \"info_hashtable\""
-msgstr ""
-
-msgid "hook of type \"infolist\""
-msgstr ""
-
-msgid "hook of type \"hdata\""
-msgstr ""
-
 #, fuzzy
 msgid "structure with undo for input line"
 msgstr "funções para linha de comando"
@@ -6097,6 +6047,10 @@ msgstr ""
 #, fuzzy
 msgid "nick in nicklist"
 msgstr "apelidos na lista de apelidos no buffer atual"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (nenhum plugin)"
 
 #, fuzzy
 msgid "window"

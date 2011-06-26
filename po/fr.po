@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-22 15:36+0200\n"
-"PO-Revision-Date: 2011-06-22 15:28+0200\n"
+"POT-Creation-Date: 2011-06-26 18:05+0200\n"
+"PO-Revision-Date: 2011-06-26 18:05+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -1076,11 +1076,11 @@ msgid "control debug for core/plugins"
 msgstr "contrôle du debug pour le coeur/les extensions"
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || hdata [free]"
 msgstr ""
-"list || set <extension> <niveau> || dump [<extension>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
+"list || set <extension> <niveau> || dump [<extension>] || buffer|color|"
+"infolists|memory|tags|term|windows || hdata [free]"
 
 msgid ""
 "     list: list plugins with debug levels\n"
@@ -1091,7 +1091,8 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
-"    hdata: display infos about hdata\n"
+"    hdata: display infos about hdata (with free: remove all hdata in "
+"memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
 "     tags: display tags for lines\n"
@@ -1107,7 +1108,8 @@ msgstr ""
 "   buffer: afficher le contenu du tampon en valeurs hexadécimales dans le "
 "fichier log\n"
 "    color: afficher des infos sur les paires de couleur courantes\n"
-"    hdata: afficher des infos sur les hdata\n"
+"    hdata: afficher des infos sur les hdata (avec free: supprimer tous les "
+"hdata en mémoire)\n"
 "infolists: afficher des infos sur les infolists\n"
 "   memory: afficher des infos sur l'utilisation de la mémoire\n"
 "     tags: afficher les étiquettes pour les lignes\n"
@@ -6780,59 +6782,8 @@ msgstr "filtre"
 msgid "history of commands in buffer"
 msgstr "historique des commandes dans le tampon"
 
-msgid "hook (variables common to all hook types)"
-msgstr "hook (variables communes à tous les types de hooks)"
-
-msgid "hook of type \"command\""
-msgstr "hook de type \"command\""
-
-msgid "hook of type \"command_run\""
-msgstr "hook de type \"command_run\""
-
-msgid "hook of type \"timer\""
-msgstr "hook de type \"timer\""
-
-msgid "hook of type \"fd\""
-msgstr "hook de type \"fd\""
-
-msgid "hook of type \"process\""
-msgstr "hook de type \"process\""
-
-msgid "hook of type \"connect\""
-msgstr "hook de type \"connect\""
-
-msgid "hook of type \"print\""
-msgstr "hook de type \"print\""
-
-msgid "hook of type \"signal\""
-msgstr "hook de type \"signal\""
-
-msgid "hook of type \"hsignal\""
-msgstr "hook de type \"hsignal\""
-
-msgid "hook of type \"config\""
-msgstr "hook de type \"config\""
-
-msgid "hook of type \"completion\""
-msgstr "hook de type \"completion\""
-
-msgid "hook of type \"modifier\""
-msgstr "hook de type \"modifier\""
-
-msgid "hook of type \"info\""
-msgstr "hook de type \"info\""
-
-msgid "hook of type \"info_hashtable\""
-msgstr "hook de type \"info_hashtable\""
-
-msgid "hook of type \"infolist\""
-msgstr "hook de type \"infolist\""
-
-msgid "hook of type \"hdata\""
-msgstr "hook de type \"hdata\""
-
 msgid "structure with undo for input line"
-msgstr "structure avec le \"unco\" pour la ligne de commande"
+msgstr "structure avec le \"undo\" pour la ligne de commande"
 
 msgid "a key (keyboard shortcut)"
 msgstr "une touche (un raccourci clavier)"
@@ -6851,6 +6802,9 @@ msgstr "groupe dans la liste de pseudos"
 
 msgid "nick in nicklist"
 msgstr "pseudo dans la liste de pseudos"
+
+msgid "plugin"
+msgstr "extension"
 
 msgid "window"
 msgstr "fenêtre"
@@ -7963,21 +7917,3 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
-
-#~ msgid "completion"
-#~ msgstr "complétion"
-
-#~ msgid "undo for input line"
-#~ msgstr "undo pour la ligne de commande"
-
-#~ msgid "key"
-#~ msgstr "touche"
-
-#~ msgid "lines"
-#~ msgstr "lignes"
-
-#~ msgid "line"
-#~ msgstr "ligne"
-
-#~ msgid "line data"
-#~ msgstr "données de la ligne"

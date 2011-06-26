@@ -36,8 +36,7 @@
 #include "../plugins/plugin.h"
 
 
-struct t_hdata *weechat_hdata = NULL;
-struct t_hdata *last_weechat_hdata = NULL;
+struct t_hashtable *weechat_hdata = NULL;
 
 char *hdata_type_string[6] =
 { "other", "integer", "long", "string", "pointer", "time" };
@@ -48,7 +47,8 @@ char *hdata_type_string[6] =
  */
 
 struct t_hdata *
-hdata_new (const char *hdata_name, const char *var_prev, const char *var_next)
+hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
+           const char *var_prev, const char *var_next)
 {
     struct t_hdata *new_hdata;
     
@@ -58,7 +58,7 @@ hdata_new (const char *hdata_name, const char *var_prev, const char *var_next)
     new_hdata = malloc (sizeof (*new_hdata));
     if (new_hdata)
     {
-        new_hdata->name = strdup (hdata_name);
+        new_hdata->plugin = plugin;
         new_hdata->hash_var = hashtable_new (8,
                                              WEECHAT_HASHTABLE_STRING,
                                              WEECHAT_HASHTABLE_INTEGER,
@@ -66,19 +66,17 @@ hdata_new (const char *hdata_name, const char *var_prev, const char *var_next)
                                              NULL);
         new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
         new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
+        new_hdata->hash_var_hdata = hashtable_new (8,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   NULL,
+                                                   NULL);
         new_hdata->hash_list = hashtable_new (8,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
                                               NULL,
                                               NULL);
-        
-        new_hdata->prev_hdata = last_weechat_hdata;
-        new_hdata->next_hdata = NULL;
-        if (weechat_hdata)
-            last_weechat_hdata->next_hdata = new_hdata;
-        else
-            weechat_hdata = new_hdata;
-        last_weechat_hdata = new_hdata;
+        hashtable_set (weechat_hdata, hdata_name, new_hdata);
     }
     
     return new_hdata;
@@ -89,7 +87,8 @@ hdata_new (const char *hdata_name, const char *var_prev, const char *var_next)
  */
 
 void
-hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type)
+hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
+               const char *hdata_name)
 {
     int value;
     
@@ -97,6 +96,8 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type)
     {
         value = (type << 16) | (offset & 0xFFFF);
         hashtable_set (hdata->hash_var, name, &value);
+        if (hdata_name && hdata_name[0])
+            hashtable_set (hdata->hash_var_hdata, name, hdata_name);
     }
 }
 
@@ -164,6 +165,20 @@ hdata_get_var_type_string (struct t_hdata *hdata, const char *name)
         if (ptr_value)
             return hdata_type_string[(*ptr_value) >> 16];
     }
+    
+    return NULL;
+}
+
+/*
+ * hdata_get_var_hdata: get hdata name for a variable (NULL if variable has
+ *                      no hdata)
+ */
+
+const char *
+hdata_get_var_hdata (struct t_hdata *hdata, const char *name)
+{
+    if (hdata && name)
+        return (const char *)hashtable_get (hdata->hash_var_hdata, name);
     
     return NULL;
 }
@@ -360,6 +375,12 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
             return hdata->var_prev;
         else if (string_strcasecmp (property, "var_next") == 0)
             return hdata->var_next;
+        else if (string_strcasecmp (property, "var_hdata_keys") == 0)
+            return hashtable_get_string (hdata->hash_var_hdata, "keys");
+        else if (string_strcasecmp (property, "var_hdata_values") == 0)
+            return hashtable_get_string (hdata->hash_var_hdata, "values");
+        else if (string_strcasecmp (property, "var_hdata_keys_values") == 0)
+            return hashtable_get_string (hdata->hash_var_hdata, "keys_values");
         else if (string_strcasecmp (property, "list_keys") == 0)
             return hashtable_get_string (hdata->hash_list, "keys");
         else if (string_strcasecmp (property, "list_values") == 0)
@@ -372,29 +393,147 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
 }
 
 /*
+ * hdata_free: free a hdata
+ */
+
+void
+hdata_free (struct t_hdata *hdata)
+{
+    if (hdata->hash_var)
+        hashtable_free (hdata->hash_var);
+    if (hdata->var_prev)
+        free (hdata->var_prev);
+    if (hdata->var_next)
+        free (hdata->var_next);
+    if (hdata->hash_var_hdata)
+        hashtable_free (hdata->hash_var_hdata);
+    if (hdata->hash_list)
+        hashtable_free (hdata->hash_list);
+    
+    free (hdata);
+}
+
+/*
+ * hdata_free_all_plugin_map_cb: function called for each hdata in memory
+ */
+
+void
+hdata_free_all_plugin_map_cb (void *data, struct t_hashtable *hashtable,
+                              const void *key, const void *value)
+{
+    struct t_hdata *ptr_hdata;
+    
+    ptr_hdata = (struct t_hdata *)value;
+    
+    if (ptr_hdata->plugin == (struct t_weechat_plugin *)data)
+    {
+        hdata_free (ptr_hdata);
+        hashtable_remove (hashtable, key);
+    }
+}
+
+/*
+ * hdata_free_all_plugin: free all hdata created by a plugin
+ */
+
+void
+hdata_free_all_plugin (struct t_weechat_plugin *plugin)
+{
+    hashtable_map (weechat_hdata, &hdata_free_all_plugin_map_cb, plugin);
+}
+
+/*
+ * hdata_free_all_map_cb: function called for each hdata in memory
+ */
+
+void
+hdata_free_all_map_cb (void *data, struct t_hashtable *hashtable,
+                       const void *key, const void *value)
+{
+    struct t_hdata *ptr_hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_hdata = (struct t_hdata *)value;
+    
+    hdata_free (ptr_hdata);
+    hashtable_remove (hashtable, key);
+}
+
+/*
+ * hdata_free_all: free all hdata
+ */
+
+void
+hdata_free_all ()
+{
+    hashtable_map (weechat_hdata, &hdata_free_all_map_cb, NULL);
+}
+
+/*
+ * hdata_print_log_map_cb: function called for each hdata in memory
+ */
+
+void
+hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
+                        const void *key, const void *value)
+{
+    struct t_hdata *ptr_hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    
+    ptr_hdata = (struct t_hdata *)value;
+    
+    log_printf ("");
+    log_printf ("[hdata (addr:0x%lx, name:'%s')]", ptr_hdata, (const char *)key);
+    log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_hdata->plugin);
+    log_printf ("  hash_var . . . . . . . : 0x%lx (hashtable: '%s')",
+                ptr_hdata->hash_var,
+                hashtable_get_string (ptr_hdata->hash_var, "keys_values"));
+    log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
+    log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
+    log_printf ("  hash_var_hdata . . . . : 0x%lx (hashtable: '%s')",
+                ptr_hdata->hash_var_hdata,
+                hashtable_get_string (ptr_hdata->hash_var_hdata, "keys_values"));
+    log_printf ("  hash_list. . . . . . . : 0x%lx (hashtable: '%s')",
+                ptr_hdata->hash_list,
+                hashtable_get_string (ptr_hdata->hash_list, "keys_values"));
+}
+
+/*
  * hdata_print_log: print hdata in log (usually for crash dump)
  */
 
 void
 hdata_print_log ()
 {
-    struct t_hdata *ptr_hdata;
-    
-    for (ptr_hdata = weechat_hdata; ptr_hdata;
-         ptr_hdata = ptr_hdata->next_hdata)
-    {
-        log_printf ("");
-        log_printf ("[hdata (addr:0x%lx)]", ptr_hdata);
-        log_printf ("  name . . . . . . . . . : '%s'",  ptr_hdata->name);
-        log_printf ("  hash_var . . . . . . . : 0x%lx (hashtable: '%s')",
-                    ptr_hdata->hash_var,
-                    hashtable_get_string (ptr_hdata->hash_var, "keys_values"));
-        log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
-        log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
-        log_printf ("  hash_list. . . . . . . : 0x%lx (hashtable: '%s')",
-                    ptr_hdata->hash_list,
-                    hashtable_get_string (ptr_hdata->hash_list, "keys_values"));
-        log_printf ("  prev_hdata . . . . . . : 0x%lx", ptr_hdata->prev_hdata);
-        log_printf ("  next_hdata . . . . . . : 0x%lx", ptr_hdata->next_hdata);
-    }
+    hashtable_map (weechat_hdata, &hdata_print_log_map_cb, NULL);
+}
+
+/*
+ * hdata_init: create hashtable with hdata
+ */
+
+void
+hdata_init ()
+{
+    weechat_hdata = hashtable_new (16,
+                                   WEECHAT_HASHTABLE_STRING,
+                                   WEECHAT_HASHTABLE_POINTER,
+                                   NULL,
+                                   NULL);
+}
+
+/*
+ * hdata_end: free all hdata and hashtable with hdata
+ */
+
+void
+hdata_end ()
+{
+    hdata_free_all ();
+    hashtable_free (weechat_hdata);
 }

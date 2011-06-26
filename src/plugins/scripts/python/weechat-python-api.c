@@ -6876,6 +6876,39 @@ weechat_python_api_hdata_get (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hdata_get_var_offset: get offset of variable in hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_var_offset (PyObject *self, PyObject *args)
+{
+    char *hdata, *name;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    hdata = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &hdata, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_offset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
  * weechat_python_api_hdata_get_var_type_string: get type of variable as string
  *                                               in hdata
  */
@@ -6905,6 +6938,39 @@ weechat_python_api_hdata_get_var_type_string (PyObject *self, PyObject *args)
     }
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_hdata_get_var_hdata: get hdata for variable in hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_var_hdata (PyObject *self, PyObject *args)
+{
+    char *hdata, *name;
+    const char *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    hdata = NULL;
+    name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &hdata, &name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hdata_get_var_hdata");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
     
     PYTHON_RETURN_STRING(result);
 }
@@ -7555,7 +7621,9 @@ PyMethodDef weechat_python_funcs[] =
     { "infolist_time", &weechat_python_api_infolist_time, METH_VARARGS, "" },
     { "infolist_free", &weechat_python_api_infolist_free, METH_VARARGS, "" },
     { "hdata_get", &weechat_python_api_hdata_get, METH_VARARGS, "" },
+    { "hdata_get_var_offset", &weechat_python_api_hdata_get_var_offset, METH_VARARGS, "" },
     { "hdata_get_var_type_string", &weechat_python_api_hdata_get_var_type_string, METH_VARARGS, "" },
+    { "hdata_get_var_hdata", &weechat_python_api_hdata_get_var_hdata, METH_VARARGS, "" },
     { "hdata_get_list", &weechat_python_api_hdata_get_list, METH_VARARGS, "" },
     { "hdata_move", &weechat_python_api_hdata_move, METH_VARARGS, "" },
     { "hdata_integer", &weechat_python_api_hdata_integer, METH_VARARGS, "" },

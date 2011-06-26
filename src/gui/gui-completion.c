@@ -48,10 +48,6 @@
 #include "gui-completion.h"
 
 
-struct t_hdata *gui_completion_hdata_completion = NULL;
-struct t_hdata *gui_completion_hdata_completion_partial = NULL;
-
-
 /*
  * gui_completion_buffer_init: init completion for a buffer
  */
@@ -1199,34 +1195,30 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_completion_hdata_completion)
-        return gui_completion_hdata_completion;
-    
-    hdata = hdata_new (hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
-        gui_completion_hdata_completion = hdata;
-        HDATA_VAR(struct t_gui_completion, buffer, POINTER);
-        HDATA_VAR(struct t_gui_completion, context, INTEGER);
-        HDATA_VAR(struct t_gui_completion, base_command, STRING);
-        HDATA_VAR(struct t_gui_completion, base_command_arg_index, INTEGER);
-        HDATA_VAR(struct t_gui_completion, base_word, STRING);
-        HDATA_VAR(struct t_gui_completion, base_word_pos, INTEGER);
-        HDATA_VAR(struct t_gui_completion, position, INTEGER);
-        HDATA_VAR(struct t_gui_completion, args, STRING);
-        HDATA_VAR(struct t_gui_completion, direction, INTEGER);
-        HDATA_VAR(struct t_gui_completion, add_space, INTEGER);
-        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER);
-        HDATA_VAR(struct t_gui_completion, completion_list, POINTER);
-        HDATA_VAR(struct t_gui_completion, word_found, STRING);
-        HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER);
-        HDATA_VAR(struct t_gui_completion, position_replace, INTEGER);
-        HDATA_VAR(struct t_gui_completion, diff_size, INTEGER);
-        HDATA_VAR(struct t_gui_completion, diff_length, INTEGER);
-        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER);
-        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER);
+        HDATA_VAR(struct t_gui_completion, buffer, POINTER, "buffer");
+        HDATA_VAR(struct t_gui_completion, context, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, base_command, STRING, NULL);
+        HDATA_VAR(struct t_gui_completion, base_command_arg_index, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, base_word, STRING, NULL);
+        HDATA_VAR(struct t_gui_completion, base_word_pos, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, position, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, args, STRING, NULL);
+        HDATA_VAR(struct t_gui_completion, direction, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, add_space, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, completion_list, POINTER, NULL);
+        HDATA_VAR(struct t_gui_completion, word_found, STRING, NULL);
+        HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, position_replace, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, diff_size, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, diff_length, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER, "completion_partial");
+        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER, "completion_partial");
     }
-    return gui_completion_hdata_completion;
+    return hdata;
 }
 
 /*
@@ -1242,19 +1234,15 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_completion_hdata_completion_partial)
-        return gui_completion_hdata_completion_partial;
-    
-    hdata = hdata_new (hdata_name, "prev_item", "next_item");
+    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item");
     if (hdata)
     {
-        gui_completion_hdata_completion_partial = hdata;
-        HDATA_VAR(struct t_gui_completion_partial, word, STRING);
-        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER);
-        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER);
-        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER);
+        HDATA_VAR(struct t_gui_completion_partial, word, STRING, NULL);
+        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER, hdata_name);
     }
-    return gui_completion_hdata_completion_partial;
+    return hdata;
 }
 
 /*

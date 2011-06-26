@@ -71,10 +71,6 @@ int gui_buffers_visited_index = -1;             /* index of pointer in list */
 int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 
-struct t_hdata *gui_buffer_hdata_buffer = NULL;
-struct t_hdata *gui_buffer_hdata_input_undo = NULL;
-struct t_hdata *gui_buffer_hdata_buffer_visited = NULL;
-
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
@@ -2954,81 +2950,77 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_buffer_hdata_buffer)
-        return gui_buffer_hdata_buffer;
-    
-    hdata = hdata_new (hdata_name, "prev_buffer", "next_buffer");
+    hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer");
     if (hdata)
     {
-        gui_buffer_hdata_buffer = hdata;
-        HDATA_VAR(struct t_gui_buffer, plugin, POINTER);
-        HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING);
-        HDATA_VAR(struct t_gui_buffer, merge_for_upgrade, POINTER);
-        HDATA_VAR(struct t_gui_buffer, number, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, layout_applied, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, name, STRING);
-        HDATA_VAR(struct t_gui_buffer, short_name, STRING);
-        HDATA_VAR(struct t_gui_buffer, type, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, notify, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, active, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, close_callback, POINTER);
-        HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER);
-        HDATA_VAR(struct t_gui_buffer, title, STRING);
-        HDATA_VAR(struct t_gui_buffer, own_lines, POINTER);
-        HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER);
-        HDATA_VAR(struct t_gui_buffer, lines, POINTER);
-        HDATA_VAR(struct t_gui_buffer, time_for_each_line, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, chat_refresh_needed, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, nicklist, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, nicklist_case_sensitive, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, nicklist_root, POINTER);
-        HDATA_VAR(struct t_gui_buffer, nicklist_max_length, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, nicklist_display_groups, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_callback, POINTER);
-        HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER);
-        HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_buffer, STRING);
-        HDATA_VAR(struct t_gui_buffer, input_buffer_alloc, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_buffer_size, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_buffer_length, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_buffer_pos, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_buffer_1st_display, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, input_undo_snap, POINTER);
-        HDATA_VAR(struct t_gui_buffer, input_undo, POINTER);
-        HDATA_VAR(struct t_gui_buffer, last_input_undo, POINTER);
-        HDATA_VAR(struct t_gui_buffer, ptr_input_undo, POINTER);
-        HDATA_VAR(struct t_gui_buffer, input_undo_count, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, completion, POINTER);
-        HDATA_VAR(struct t_gui_buffer, history, POINTER);
-        HDATA_VAR(struct t_gui_buffer, last_history, POINTER);
-        HDATA_VAR(struct t_gui_buffer, ptr_history, POINTER);
-        HDATA_VAR(struct t_gui_buffer, num_history, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, text_search, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, text_search_exact, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, text_search_input, STRING);
-        HDATA_VAR(struct t_gui_buffer, highlight_words, STRING);
-        HDATA_VAR(struct t_gui_buffer, highlight_regex, STRING);
-        HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER);
-        HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, POINTER);
-        HDATA_VAR(struct t_gui_buffer, keys, POINTER);
-        HDATA_VAR(struct t_gui_buffer, last_key, POINTER);
-        HDATA_VAR(struct t_gui_buffer, keys_count, INTEGER);
-        HDATA_VAR(struct t_gui_buffer, local_variables, POINTER);
-        HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER);
-        HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER);
+        HDATA_VAR(struct t_gui_buffer, plugin, POINTER, "plugin");
+        HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, merge_for_upgrade, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, number, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, layout_applied, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, name, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, short_name, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, type, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, notify, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, active, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, close_callback, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, title, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, own_lines, POINTER, "lines");
+        HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER, "lines");
+        HDATA_VAR(struct t_gui_buffer, lines, POINTER, "lines");
+        HDATA_VAR(struct t_gui_buffer, time_for_each_line, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, chat_refresh_needed, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_case_sensitive, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_root, POINTER, "nick_group");
+        HDATA_VAR(struct t_gui_buffer, nicklist_max_length, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_display_groups, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_callback, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_alloc, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_size, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_length, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_pos, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_buffer_1st_display, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_undo_snap, POINTER, "input_undo");
+        HDATA_VAR(struct t_gui_buffer, input_undo, POINTER, "input_undo");
+        HDATA_VAR(struct t_gui_buffer, last_input_undo, POINTER, "input_undo");
+        HDATA_VAR(struct t_gui_buffer, ptr_input_undo, POINTER, "input_undo");
+        HDATA_VAR(struct t_gui_buffer, input_undo_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, completion, POINTER, "completion");
+        HDATA_VAR(struct t_gui_buffer, history, POINTER, "history");
+        HDATA_VAR(struct t_gui_buffer, last_history, POINTER, "history");
+        HDATA_VAR(struct t_gui_buffer, ptr_history, POINTER, "history");
+        HDATA_VAR(struct t_gui_buffer, num_history, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_exact, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_found, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, text_search_input, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_words, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_regex, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, keys, POINTER, "key");
+        HDATA_VAR(struct t_gui_buffer, last_key, POINTER, "key");
+        HDATA_VAR(struct t_gui_buffer, keys_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, local_variables, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER, hdata_name);
         HDATA_LIST(gui_buffers);
         HDATA_LIST(last_gui_buffer);
     }
-    return gui_buffer_hdata_buffer;
+    return hdata;
 }
 
 /*
@@ -3043,19 +3035,15 @@ gui_buffer_hdata_input_undo_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_buffer_hdata_input_undo)
-        return gui_buffer_hdata_input_undo;
-    
-    hdata = hdata_new (hdata_name, "prev_undo", "next_undo");
+    hdata = hdata_new (NULL, hdata_name, "prev_undo", "next_undo");
     if (hdata)
     {
-        gui_buffer_hdata_input_undo = hdata;
-        HDATA_VAR(struct t_gui_input_undo, data, STRING);
-        HDATA_VAR(struct t_gui_input_undo, pos, INTEGER);
-        HDATA_VAR(struct t_gui_input_undo, prev_undo, POINTER);
-        HDATA_VAR(struct t_gui_input_undo, next_undo, POINTER);
+        HDATA_VAR(struct t_gui_input_undo, data, STRING, NULL);
+        HDATA_VAR(struct t_gui_input_undo, pos, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_input_undo, prev_undo, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_input_undo, next_undo, POINTER, hdata_name);
     }
-    return gui_buffer_hdata_input_undo;
+    return hdata;
 }
 
 /*
@@ -3070,20 +3058,16 @@ gui_buffer_hdata_buffer_visited_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (gui_buffer_hdata_buffer_visited)
-        return gui_buffer_hdata_buffer_visited;
-    
-    hdata = hdata_new (hdata_name, "prev_buffer", "next_buffer");
+    hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer");
     if (hdata)
     {
-        gui_buffer_hdata_buffer_visited = hdata;
-        HDATA_VAR(struct t_gui_buffer_visited, buffer, POINTER);
-        HDATA_VAR(struct t_gui_buffer_visited, prev_buffer, POINTER);
-        HDATA_VAR(struct t_gui_buffer_visited, next_buffer, POINTER);
+        HDATA_VAR(struct t_gui_buffer_visited, buffer, POINTER, "buffer");
+        HDATA_VAR(struct t_gui_buffer_visited, prev_buffer, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_buffer_visited, next_buffer, POINTER, hdata_name);
         HDATA_LIST(gui_buffers_visited);
         HDATA_LIST(last_gui_buffer_visited);
     }
-    return gui_buffer_hdata_buffer_visited;
+    return hdata;
 }
 
 /*

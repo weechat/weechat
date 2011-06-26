@@ -762,10 +762,11 @@ struct t_weechat_plugin
     void (*infolist_free) (struct t_infolist *infolist);
     
     /* hdata */
-    struct t_hdata *(*hdata_new) (const char *hdata_name, const char *var_prev,
+    struct t_hdata *(*hdata_new) (struct t_weechat_plugin *plugin,
+                                  const char *hdata_name, const char *var_prev,
                                   const char *var_next);
     void (*hdata_new_var) (struct t_hdata *hdata, const char *name, int offset,
-                           int type);
+                           int type, const char *hdata_name);
     void (*hdata_new_list) (struct t_hdata *hdata, const char *name,
                             void *pointer);
     struct t_hdata *(*hdata_get) (struct t_weechat_plugin *plugin,
@@ -774,6 +775,8 @@ struct t_weechat_plugin
     int (*hdata_get_var_type) (struct t_hdata *hdata, const char *name);
     const char *(*hdata_get_var_type_string) (struct t_hdata *hdata,
                                               const char *name);
+    const char *(*hdata_get_var_hdata) (struct t_hdata *hdata,
+                                        const char *name);
     void *(*hdata_get_var) (struct t_hdata *hdata, void *pointer,
                             const char *name);
     void *(*hdata_get_var_at_offset) (struct t_hdata *hdata, void *pointer,
@@ -1477,12 +1480,15 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 /* hdata */
 #define weechat_hdata_new(__hdata_name, __var_prev, __var_next)         \
-    weechat_plugin->hdata_new(__hdata_name, __var_prev, __var_next)
-#define weechat_hdata_new_var(__hdata, __name, __offset, __type)        \
-    weechat_plugin->hdata_new_var(__hdata, __name, __offset, __type)
-#define WEECHAT_HDATA_VAR(__struct, __name, __type)                     \
+    weechat_plugin->hdata_new(weechat_plugin, __hdata_name, __var_prev, \
+                              __var_next)
+#define weechat_hdata_new_var(__hdata, __name, __offset, __type,        \
+                              __hdata_name)                             \
+    weechat_plugin->hdata_new_var(__hdata, __name, __offset, __type,    \
+                                  __hdata_name)
+#define WEECHAT_HDATA_VAR(__struct, __name, __type, __hdata_name)       \
     weechat_hdata_new_var (hdata, #__name, offsetof (__struct, __name), \
-                           WEECHAT_HDATA_##__type);
+                           WEECHAT_HDATA_##__type, __hdata_name)
 #define weechat_hdata_new_list(__hdata, __name, __pointer)              \
     weechat_plugin->hdata_new_list(__hdata, __name, __pointer)
 #define WEECHAT_HDATA_LIST(__name)                                      \
@@ -1495,6 +1501,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hdata_get_var_type(__hdata, __name)
 #define weechat_hdata_get_var_type_string(__hdata, __name)              \
     weechat_plugin->hdata_get_var_type_string(__hdata, __name)
+#define weechat_hdata_get_var_hdata(__hdata, __name)                    \
+    weechat_plugin->hdata_get_var_hdata(__hdata, __name)
 #define weechat_hdata_get_var(__hdata, __pointer, __name)               \
     weechat_plugin->hdata_get_var(__hdata, __pointer, __name)
 #define weechat_hdata_get_var_at_offset(__hdata, __pointer, __offset)   \

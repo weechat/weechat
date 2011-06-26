@@ -37,9 +37,6 @@
 struct t_irc_redirect_pattern *irc_redirect_patterns = NULL;
 struct t_irc_redirect_pattern *last_irc_redirect_pattern = NULL;
 
-struct t_hdata *irc_redirect_hdata_redirect_pattern = NULL;
-struct t_hdata *irc_redirect_hdata_redirect = NULL;
-
 /* default redirect patterns */
 struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
 {
@@ -967,25 +964,21 @@ irc_redirect_hdata_redirect_pattern_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (irc_redirect_hdata_redirect_pattern)
-        return irc_redirect_hdata_redirect_pattern;
-    
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect");
     if (hdata)
     {
-        irc_redirect_hdata_redirect_pattern = hdata;
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, name, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, temp_pattern, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, timeout, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_start, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_stop, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_extra, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, prev_redirect, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, next_redirect, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, name, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, temp_pattern, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, timeout, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_start, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_stop, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_extra, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, prev_redirect, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, next_redirect, POINTER, hdata_name);
         WEECHAT_HDATA_LIST(irc_redirect_patterns);
         WEECHAT_HDATA_LIST(last_irc_redirect_pattern);
     }
-    return irc_redirect_hdata_redirect_pattern;
+    return hdata;
 }
 
 /*
@@ -1000,34 +993,30 @@ irc_redirect_hdata_redirect_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
     
-    if (irc_redirect_hdata_redirect)
-        return irc_redirect_hdata_redirect;
-    
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect");
     if (hdata)
     {
-        irc_redirect_hdata_redirect = hdata;
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, server, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, pattern, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, signal, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, count, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, current_count, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, string, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, timeout, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, command, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, start_time, TIME);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_extra, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start_received, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop_received, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_filter, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, output, STRING);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, output_size, INTEGER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, prev_redirect, POINTER);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, next_redirect, POINTER);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, server, POINTER, "irc_server");
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, pattern, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, signal, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, count, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, current_count, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, string, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, timeout, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, command, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, start_time, TIME, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_extra, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start_received, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop_received, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_filter, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, output, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, output_size, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, prev_redirect, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, next_redirect, POINTER, hdata_name);
     }
-    return irc_redirect_hdata_redirect;
+    return hdata;
 }
 
 /*

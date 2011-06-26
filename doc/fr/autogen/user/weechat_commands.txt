@@ -145,7 +145,8 @@ extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
 /debug  list
         set <extension> <niveau>
         dump [<extension>]
-        buffer|color|hdata|infolists|memory|tags|term|windows
+        buffer|color|infolists|memory|tags|term|windows
+        hdata [free]
 
      list: lister les extensions avec leur niveau de debug
       set: définir le niveau de debug pour l'extension
@@ -154,7 +155,7 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
      dump: afficher les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
    buffer: afficher le contenu du tampon en valeurs hexadécimales dans le fichier log
     color: afficher des infos sur les paires de couleur courantes
-    hdata: afficher des infos sur les hdata
+    hdata: afficher des infos sur les hdata (avec free: supprimer tous les hdata en mémoire)
 infolists: afficher des infos sur les infolists
    memory: afficher des infos sur l'utilisation de la mémoire
      tags: afficher les étiquettes pour les lignes
