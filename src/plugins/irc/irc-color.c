@@ -140,20 +140,17 @@ irc_color_decode (const char *string, int keep_colors)
                         ptr_string++;
                     }
                 }
-                if (ptr_string[0] == ',')
+                if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
                 {
+                    ptr_string++;
+                    str_bg[0] = ptr_string[0];
+                    str_bg[1] = '\0';
                     ptr_string++;
                     if (isdigit (ptr_string[0]))
                     {
-                        str_bg[0] = ptr_string[0];
-                        str_bg[1] = '\0';
+                        str_bg[1] = ptr_string[0];
+                        str_bg[2] = '\0';
                         ptr_string++;
-                        if (isdigit (ptr_string[0]))
-                        {
-                            str_bg[1] = ptr_string[0];
-                            str_bg[2] = '\0';
-                            ptr_string++;
-                        }
                     }
                 }
                 if (keep_colors)
