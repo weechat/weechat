@@ -383,11 +383,6 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
-* *weechat.look.hline_char*
-** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
-
 * *weechat.look.hotlist_add_buffer_if_away*
 ** Beschreibung: `fügt einen beliebigen Buffer zur Hotlist hinzu (dies schließt den aktuellen oder jeden anderen sichtbaren Buffer ein) sofern die lokale Variable "away" für den Buffer gesetzt wurde`
 ** Typ: boolesch
@@ -597,6 +592,16 @@
 ** Beschreibung: `Informiert den Anwender falls der gesuchte Text nicht im Buffer gefunden wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
+
+* *weechat.look.separator_horizontal*
+** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
+
+* *weechat.look.separator_vertical*
+** Beschreibung: `char used to draw vertical separators around bars (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * *weechat.look.set_title*
 ** Beschreibung: `setzen des Fenstertitels (oder Terminal-Titel im Curses-GUI), mit Name und Version`

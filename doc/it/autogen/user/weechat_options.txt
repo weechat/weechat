@@ -383,11 +383,6 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *weechat.look.hline_char*
-** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre (un valore vuoto disegnerà una vera riga con ncurses, ma può causare errori con la selezione dell'URL in alcuni terminali), i caratteri wide NON sono consentiti`
-** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"-"`)
-
 * *weechat.look.hotlist_add_buffer_if_away*
 ** descrizione: `aggiunge qualsiasi buffer alla hotlist (inclusi buffer corrente o visibili) se la variabile locale "away" è impostata sul buffer`
 ** tipo: bool
@@ -597,6 +592,16 @@
 ** descrizione: `avvisa l'utente quando il testo cercato non viene trovato nel buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
+
+* *weechat.look.separator_horizontal*
+** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre (un valore vuoto disegnerà una vera riga con ncurses, ma può causare errori con la selezione dell'URL in alcuni terminali), i caratteri wide NON sono consentiti`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"-"`)
+
+* *weechat.look.separator_vertical*
+** descrizione: `char used to draw vertical separators around bars (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *weechat.look.set_title*
 ** descrizione: `imposta titolo per la finestra (terminale per interfacce Curses) con nome e versione`

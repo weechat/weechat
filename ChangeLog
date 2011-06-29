@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-06-26
+v0.3.6-dev, 2011-06-29
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add new option weechat.look.separator_vertical, rename option
+  weechat.look.hline_char to weechat.look.separator_horizontal
 * core: fix freeze when hook_fd is called with a bad file/socket (bug #33619)
 * core: fix bug with option weechat.look.hotlist_count_max (value+1 was used)
 * core: add local variable "highlight_regex" in buffers

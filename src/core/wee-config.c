@@ -90,7 +90,6 @@ struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
-struct t_config_option *config_look_hline_char;
 struct t_config_option *config_look_hotlist_add_buffer_if_away;
 struct t_config_option *config_look_hotlist_buffer_separator;
 struct t_config_option *config_look_hotlist_count_max;
@@ -129,6 +128,8 @@ struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
+struct t_config_option *config_look_separator_horizontal;
+struct t_config_option *config_look_separator_vertical;
 struct t_config_option *config_look_set_title;
 struct t_config_option *config_look_time_format;
 
@@ -1652,13 +1653,6 @@ config_weechat_init_options ()
            "comparison, examples: \"irc_notice\" for IRC notices, "
            "\"nick_flashcode\" for messages from nick \"FlashCode\")"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_tags, NULL, NULL, NULL);
-    config_look_hline_char = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "hline_char", "string",
-        N_("char used to draw horizontal separators around bars (empty value "
-           "will draw a real line with ncurses, but may cause bugs with URL "
-           "selection under some terminals), wide chars are NOT allowed here"),
-        NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_hotlist_add_buffer_if_away = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_add_buffer_if_away", "boolean",
@@ -1898,6 +1892,20 @@ config_weechat_init_options ()
         "search_text_not_found_alert", "boolean",
         N_("alert user when text sought is not found in buffer"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_separator_horizontal = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "separator_horizontal", "string",
+        N_("char used to draw horizontal separators around bars (empty value "
+           "will draw a real line with ncurses, but may cause bugs with URL "
+           "selection under some terminals), wide chars are NOT allowed here"),
+        NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_separator_vertical = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "separator_vertical", "string",
+        N_("char used to draw vertical separators around bars (empty value "
+           "will draw a real line with ncurses), wide chars are NOT allowed "
+           "here"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_set_title = config_file_new_option (
         weechat_config_file, ptr_section,
         "set_title", "boolean",

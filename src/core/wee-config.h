@@ -115,7 +115,6 @@ extern struct t_config_option *config_look_day_change_time_format;
 extern struct t_config_option *config_look_eat_newline_glitch;
 extern struct t_config_option *config_look_highlight;
 extern struct t_config_option *config_look_highlight_regex;
-extern struct t_config_option *config_look_hline_char;
 extern struct t_config_option *config_look_hotlist_add_buffer_if_away;
 extern struct t_config_option *config_look_hotlist_buffer_separator;
 extern struct t_config_option *config_look_hotlist_count_max;
@@ -154,6 +153,8 @@ extern struct t_config_option *config_look_save_layout_on_exit;
 extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
+extern struct t_config_option *config_look_separator_horizontal;
+extern struct t_config_option *config_look_separator_vertical;
 extern struct t_config_option *config_look_set_title;
 extern struct t_config_option *config_look_time_format;
 

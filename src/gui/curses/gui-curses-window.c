@@ -942,6 +942,8 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 void
 gui_window_draw_separator (struct t_gui_window *window)
 {
+    int separator_vertical;
+    
     if (GUI_WINDOW_OBJECTS(window)->win_separator)
     {
         delwin (GUI_WINDOW_OBJECTS(window)->win_separator);
@@ -956,8 +958,16 @@ gui_window_draw_separator (struct t_gui_window *window)
                                                             window->win_x - 1);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator,
                                       GUI_COLOR_SEPARATOR);
-        mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator, 0, 0, ACS_VLINE,
-                  window->win_height);
+        separator_vertical = ACS_VLINE;
+        if (CONFIG_STRING(config_look_separator_vertical)
+            && CONFIG_STRING(config_look_separator_vertical)[0])
+        {
+            separator_vertical = utf8_char_int (CONFIG_STRING(config_look_separator_vertical));
+            if (separator_vertical > 127)
+                separator_vertical = ACS_VLINE;
+        }
+        mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator, 0, 0,
+                  separator_vertical, window->win_height);
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator);
         refresh ();
     }

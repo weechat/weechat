@@ -383,11 +383,6 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
-* *weechat.look.hline_char*
-** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"-"`)
-
 * *weechat.look.hotlist_add_buffer_if_away*
 ** description: `ajouter tout tampon dans la hotlist (incluant le tampon courant ou les tampons visibles) si la variable locale "away" est définie sur le tampon`
 ** type: booléen
@@ -597,6 +592,16 @@
 ** description: `alterte l'utilisateur lorsque le texte cherché n'est pas trouvé dans le tampon`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
+
+* *weechat.look.separator_horizontal*
+** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"-"`)
+
+* *weechat.look.separator_vertical*
+** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses), les caractères larges ne sont PAS autorisés ici`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * *weechat.look.set_title*
 ** description: `définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version`

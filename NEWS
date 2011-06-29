@@ -1,13 +1,16 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-05-15
+v0.3.6-dev, 2011-06-29
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
-No release note.
+Important release notes:
+
+* option 'weechat.look.hline_char' has been renamed to
+  'weechat.look.separator_horizontal'
 
 Version 0.3.5 (2011-05-15)
 --------------------------
