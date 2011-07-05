@@ -244,76 +244,89 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ........................................
 /input  <action> [<arguments>]
 
-Auflistung der Aktionen:
-  return: simuliert die "enter" Taste
-  complete_next: vervollständigt Word mit nächster Komplettierung
-  complete_previous: vervollständigt Word mit vorheriger Komplettierung
-  search_text: sucht nach Text im Buffer
-  delete_previous_char: entfernt vorheriges Zeichen
-  delete_next_char: entfernt nächstes Zeichen
-  delete_previous_word: entfernt vorheriges Wort
-  delete_next_word: entfernt nächstes Wort
-  delete_beginning_of_line: entfernt alle Zeichen ab Zeilenanfang bis zum Cursor
-  delete_end_of_line: entfernt alle Zeichen ab Cursor bis zum Ende der Zeile
-  delete_line: löscht die komplette Eingabezeile
-  clipboard_paste: fügt Zeichenkette aus der Zwischenablage ein
-  transpose_chars: Zeichen austauschen
-  undo: letzten Befehl in der Eingabezeile rückgängig machen
-  redo: letzten Befehl in der Eingabezeile wiederherstellen
-  move_beginning_of_line: springt an den Anfang der Eingabezeile
-  move_end_of_line: springt ans Ende der Eingabezeile
-  move_previous_char: setzt den Cursor eine Position nach links
-  move_next_char: setzt den Cursor eine Position nach rechts
-  move_previous_word: springt zum Anfang des vorherigen Wortes, in der Eingabezeile
-  move_next_word: springt zum Anfang des nächsten Wortes, in der Eingabezeile
-  history_previous: ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen)
-  history_next: ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen)
-  history_global_previous: ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  history_global_next: ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  jump_smart: wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, …)
-  jump_last_buffer: wechselt zum letzten Buffer
-  jump_previously_visited_buffer: springt zum letzten besuchten Buffer
-  jump_next_visited_buffer: springt zum nächsten besuchten Buffer
-  hotlist_clear: löscht Hotliste (Aktivitätsanzeige für die Buffer)
-  grab_key: fängt eine Taste
-  grab_key_command: zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein
-  scroll_unread: springe zur ersten ungelesenen Zeile im Buffer
-  set_unread: setzt die ungelesen Markierung für alle Buffer
-  set_unread_current_buffer: setzt die ungelesen Markierung für den aktuellen Buffer
-  switch_active_buffer: springt zum nächsten zusammengefügten Buffer
-  switch_active_buffer_previous: springt zum vorherigen zusammengefügten Buffer
-  insert: fügt einen Text in die Eingabezeile ein
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_previous: search previous line
+  search_next: search next line
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer: jump to last buffer
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist
+  grab_key: grab a key
+  grab_key_command: grab a key with its associated command
+  scroll_unread: scroll to unread marker
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  insert: insert text in command line
 
-Dieser Befehl wird durch Tastenbelegungen oder Erweiterungen genutzt.
+This command is used by key bindings or plugins.
 ........................................
 
 [command]*`key`* Einer Taste einen Befehl zuordnen oder entfernen::
 ........................................
-/key  list|listdefault|listdiff
+/key  list|listdefault|listdiff [<context>]
       bind <key> [<command> [<args>]]
+      bindctxt <context> <key> [<command> [<args>]]
       unbind <key>
+      unbindctxt <context> <key>
       reset <key>
-      resetall -yes
-      missing
+      resetctxt <context> <key>
+      resetall -yes [<context>]
+      missing [<context>]
 
-       list: zeigt die aktuelle Tastenbelegungen an (Standardaufruf)
-listdefault: zeigt die Standardeinstellung der Tastenbelegung an
-   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
-       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde
-     unbind: hebt eine Tastenbelegung auf
-      reset: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt
-   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
-    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam dies mittels alt+k (oder Esc und k) zu machen um dann die Taste auszuwählen, die belegt werden soll. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-Beispiele:
-  Mit der Tastenkombination "alt-x" kann die Nicklist-Bar an-und aus geschaltet werden:
+Examples:
+  key alt-x to toggle nicklist bar:
     /key bind meta-x /bar toggle nicklist
-  Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:
+  restore default binding for key alt-r:
     /key reset meta-r
+  key "tab" to stop search in buffer:
+    /key bindctxt search ctrl-I /input search_stop
 ........................................
 
 [command]*`layout`* Layout für Buffer und Fenster speichern, anwenden oder zurücksetzen::

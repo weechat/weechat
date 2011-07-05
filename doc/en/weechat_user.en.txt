@@ -437,7 +437,7 @@ Keys for command line
 | @k(Backsp.)         .2+| Delete previous char in command line .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | Delete from cursor until end of command line (deleted string is copied to clipboard) | /input delete_end_of_line
-| @k(C-)@k(r)         | Search for text in buffer history (two times: search exact text), @k(↑): previous, @k(↓): next, @k(Enter): stop | /input search_text
+| @k(C-)@k(r)         | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>) | /input search_text
 | @k(C-)@k(t)         | Transpose chars | /input transpose_chars
 | @k(C-)@k(u)         | Delete from cursor until beginning of command line (deleted string is copied to clipboard) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | Delete previous word of command line (deleted string is copied to clipboard) | /input delete_previous_word
@@ -508,6 +508,24 @@ Keys for buffers / windows
 | @k(A-)@k(z)               | Zoom on current window (@k(A-)@k(z) again: restore initial windows state, before zoom) | /window zoom
 | @k(A-)@k(<)               | Switch to previous buffer in list of visited buffers | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Switch to next buffer in list of visited buffers | /input jump_next_visited_buffer
+|========================================
+
+[[key_bindings_search_context]]
+Keys for "search" context
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+These keys are used in context "search" (when @k(C-)@k(r) is pressed to search
+text in buffer).
+
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+|========================================
+| Key         | Description | Command
+| @k(C-)@k(r) | Switch exact case for search | /input search_switch_case
+| @k(↑)       | Search previous line | /input search_previous
+| @k(↓)       | Search next line | /input search_next
+| @k(Enter)   .3+| Stop search .3+| /input search_stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
 |========================================
 
 [[key_bindings_other]]

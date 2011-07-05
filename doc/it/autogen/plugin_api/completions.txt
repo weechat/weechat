@@ -90,6 +90,8 @@
 
 | weechat | keys_codes_for_reset | codici tasti che possono essere ripristinati (tasti aggiunti, ridefiniti o rimossi)
 
+| weechat | keys_contexts | key contexts
+
 | weechat | nicks | nick nella lista nick del buffer corrente
 
 | weechat | palette_colors | Tavolozza dei colori

@@ -48,7 +48,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
-#include "../gui/gui-keyboard.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
 
 
@@ -1106,6 +1106,32 @@ completion_list_add_proxies_options_cb (void *data,
 }
 
 /*
+ * completion_list_add_keys_contexts_cb: add keys contexts to completion list
+ */
+
+int
+completion_list_add_keys_contexts_cb (void *data,
+                                      const char *completion_item,
+                                      struct t_gui_buffer *buffer,
+                                      struct t_gui_completion *completion)
+{
+    int i;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    {
+        gui_completion_list_add (completion, gui_key_context_string[i],
+                                 0, WEECHAT_LIST_POS_END);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * completion_list_add_keys_codes_cb: add keys to completion list
  */
 
@@ -1115,6 +1141,7 @@ completion_list_add_keys_codes_cb (void *data,
                                    struct t_gui_buffer *buffer,
                                    struct t_gui_completion *completion)
 {
+    int i;
     struct t_gui_key *ptr_key;
     char *expanded_name;
     
@@ -1122,15 +1149,18 @@ completion_list_add_keys_codes_cb (void *data,
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
-        gui_completion_list_add (completion,
-                                 (expanded_name) ? expanded_name : ptr_key->key,
-                                 0, WEECHAT_LIST_POS_SORT);
-        if (expanded_name)
-            free (expanded_name);
+        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
+        {
+            expanded_name = gui_key_get_expanded_name (ptr_key->key);
+            gui_completion_list_add (completion,
+                                     (expanded_name) ? expanded_name : ptr_key->key,
+                                     0, WEECHAT_LIST_POS_SORT);
+            if (expanded_name)
+                free (expanded_name);
+        }
     }
     
     return WEECHAT_RC_OK;
@@ -1148,6 +1178,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
                                              struct t_gui_buffer *buffer,
                                              struct t_gui_completion *completion)
 {
+    int i;
     struct t_gui_key *ptr_key, *ptr_default_key;
     char *expanded_name;
     
@@ -1155,36 +1186,39 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
-    /* keys added or redefined */
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        ptr_default_key = gui_keyboard_search (gui_default_keys, ptr_key->key);
-        if (!ptr_default_key
-            || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
+        /* keys added or redefined */
+        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
         {
-            expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
-            gui_completion_list_add (completion,
-                                     (expanded_name) ? expanded_name : ptr_key->key,
-                                     0, WEECHAT_LIST_POS_SORT);
-            if (expanded_name)
-                free (expanded_name);
+            ptr_default_key = gui_key_search (gui_default_keys[i], ptr_key->key);
+            if (!ptr_default_key
+                || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
+            {
+                expanded_name = gui_key_get_expanded_name (ptr_key->key);
+                gui_completion_list_add (completion,
+                                         (expanded_name) ? expanded_name : ptr_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
+                if (expanded_name)
+                    free (expanded_name);
+            }
         }
-    }
-    
-    /* keys deleted */
-    for (ptr_default_key = gui_default_keys; ptr_default_key;
-         ptr_default_key = ptr_default_key->next_key)
-    {
-        ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
-        if (!ptr_key)
+        
+        /* keys deleted */
+        for (ptr_default_key = gui_default_keys[i]; ptr_default_key;
+             ptr_default_key = ptr_default_key->next_key)
         {
-            expanded_name = gui_keyboard_get_expanded_name (ptr_default_key->key);
-            gui_completion_list_add (completion,
-                                     (expanded_name) ? expanded_name : ptr_default_key->key,
-                                     0, WEECHAT_LIST_POS_SORT);
-            if (expanded_name)
-                free (expanded_name);
+            ptr_key = gui_key_search (gui_keys[i], ptr_default_key->key);
+            if (!ptr_key)
+            {
+                expanded_name = gui_key_get_expanded_name (ptr_default_key->key);
+                gui_completion_list_add (completion,
+                                         (expanded_name) ? expanded_name : ptr_default_key->key,
+                                         0, WEECHAT_LIST_POS_SORT);
+                if (expanded_name)
+                    free (expanded_name);
+            }
         }
     }
     
@@ -1264,10 +1298,16 @@ completion_init ()
     hook_completion (NULL, "bars_options",
                      N_("options for bars"),
                      &completion_list_add_bars_options_cb, NULL);
+    hook_completion (NULL, "keys_contexts",
+                     /* TRANSLATORS: "key" means "key on the keyboard" */
+                     N_("key contexts"),
+                     &completion_list_add_keys_contexts_cb, NULL);
     hook_completion (NULL, "keys_codes",
+                     /* TRANSLATORS: "key" means "key on the keyboard" */
                      N_("key codes"),
                      &completion_list_add_keys_codes_cb, NULL);
     hook_completion (NULL, "keys_codes_for_reset",
+                     /* TRANSLATORS: "key" means "key on the keyboard" */
                      N_("key codes that can be reset (keys added, redefined "
                         "or removed)"),
                      &completion_list_add_keys_codes_for_reset_cb, NULL);

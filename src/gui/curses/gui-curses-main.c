@@ -314,7 +314,7 @@ gui_main_loop ()
     
     /* hook stdin (read keyboard) */
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
-                                &gui_keyboard_read_cb, NULL);
+                                &gui_key_read_cb, NULL);
     
     gui_window_ask_refresh (1);
     

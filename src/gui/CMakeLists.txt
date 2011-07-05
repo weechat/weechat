@@ -29,7 +29,7 @@ gui-completion.c gui-completion.h
 gui-history.c gui-history.h
 gui-hotlist.c gui-hotlist.h
 gui-input.c gui-input.h
-gui-keyboard.c gui-keyboard.h
+gui-key.c gui-key.h
 gui-layout.c gui-layout.h
 gui-line.c gui-line.h
 gui-main.h

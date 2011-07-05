@@ -35,7 +35,7 @@ weechat_gtk_LDADD = ./../../core/lib_weechat_core.a \
 weechat_gtk_SOURCES = gui-gtk-bar-window.c \
                       gui-gtk-chat.c \
                       gui-gtk-color.c \
-                      gui-gtk-keyboard.c \
+                      gui-gtk-key.c \
                       gui-gtk-main.c \
                       gui-gtk-term.c \
                       gui-gtk-window.c \

@@ -40,14 +40,14 @@
 ./src/gui/curses/gui-curses-chat.c
 ./src/gui/curses/gui-curses-color.c
 ./src/gui/curses/gui-curses.h
-./src/gui/curses/gui-curses-keyboard.c
+./src/gui/curses/gui-curses-key.c
 ./src/gui/curses/gui-curses-main.c
 ./src/gui/curses/gui-curses-window.c
 ./src/gui/gtk/gui-gtk-bar-window.c
 ./src/gui/gtk/gui-gtk-chat.c
 ./src/gui/gtk/gui-gtk-color.c
 ./src/gui/gtk/gui-gtk.h
-./src/gui/gtk/gui-gtk-keyboard.c
+./src/gui/gtk/gui-gtk-key.c
 ./src/gui/gtk/gui-gtk-main.c
 ./src/gui/gtk/gui-gtk-window.c
 ./src/gui/gui-bar.c
@@ -72,8 +72,8 @@
 ./src/gui/gui-hotlist.h
 ./src/gui/gui-input.c
 ./src/gui/gui-input.h
-./src/gui/gui-keyboard.c
-./src/gui/gui-keyboard.h
+./src/gui/gui-key.c
+./src/gui/gui-key.h
 ./src/gui/gui-layout.c
 ./src/gui/gui-layout.h
 ./src/gui/gui-line.c

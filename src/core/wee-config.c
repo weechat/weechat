@@ -52,7 +52,7 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
-#include "../gui/gui-keyboard.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
 #include "../gui/gui-main.h"
@@ -581,6 +581,8 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 void
 config_weechat_init_after_read ()
 {
+    int i;
+    
     gui_buffer_notify_set_all ();
     
     proxy_use_temp_proxies ();
@@ -601,8 +603,11 @@ config_weechat_init_after_read ()
     }
     
     /* if no key was found config file, then we use default bindings */
-    if (!gui_keys)
-        gui_keyboard_default_bindings ();
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    {
+        if (!gui_keys[i])
+            gui_key_default_bindings (i);
+    }
 }
 
 /*
@@ -616,13 +621,17 @@ config_weechat_init_after_read ()
 int
 config_weechat_reload_cb (void *data, struct t_config_file *config_file)
 {
-    int rc;
+    int i, rc;
     
     /* make C compiler happy */
     (void) data;
     
     /* remove all keys */
-    gui_keyboard_free_all (&gui_keys, &last_gui_key, &gui_keys_count);
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+    {
+        gui_key_free_all (&gui_keys[i], &last_gui_key[i],
+                          &gui_keys_count[i]);
+    }
     
     /* remove all proxies */
     proxy_free_all ();
@@ -1425,22 +1434,33 @@ config_weechat_key_read_cb (void *data, struct t_config_file *config_file,
                             struct t_config_section *section,
                             const char *option_name, const char *value)
 {
+    int context;
+    char *pos;
+    
     /* make C compiler happy */
     (void) data;
     (void) config_file;
-    (void) section;
     
     if (option_name)
     {
+        context = GUI_KEY_CONTEXT_DEFAULT;
+        pos = strchr (section->name, '_');
+        if (pos)
+        {
+            context = gui_key_search_context (pos + 1);
+            if (context < 0)
+                context = GUI_KEY_CONTEXT_DEFAULT;
+        }
+        
         if (value && value[0])
         {
             /* bind key (overwrite any binding with same key) */
-            gui_keyboard_bind (NULL, option_name, value);
+            gui_key_bind (NULL, context, option_name, value);
         }
         else
         {
             /* unbind key if no value given */
-            gui_keyboard_unbind (NULL, option_name, 1);
+            gui_key_unbind (NULL, context, option_name, 1);
         }
     }
     
@@ -1456,18 +1476,26 @@ config_weechat_key_write_cb (void *data, struct t_config_file *config_file,
                              const char *section_name)
 {
     struct t_gui_key *ptr_key;
-    char *expanded_name;
-    int rc;
+    char *pos, *expanded_name;
+    int rc, context;
     
     /* make C compiler happy */
     (void) data;
     
     if (!config_file_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
-    
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+
+    context = GUI_KEY_CONTEXT_DEFAULT;
+    pos = strchr (section_name, '_');
+    if (pos)
     {
-        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
+        context = gui_key_search_context (pos + 1);
+        if (context < 0)
+            context = GUI_KEY_CONTEXT_DEFAULT;
+    }
+    for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        expanded_name = gui_key_get_expanded_name (ptr_key->key);
         if (expanded_name)
         {
             rc = config_file_write_line (config_file,
@@ -1493,6 +1521,8 @@ int
 config_weechat_init_options ()
 {
     struct t_config_section *ptr_section;
+    int i;
+    char section_name[128];
     
     weechat_config_file = config_file_new (NULL, WEECHAT_CONFIG_NAME,
                                            &config_weechat_reload_cb, NULL);
@@ -2507,16 +2537,23 @@ config_weechat_init_options ()
     }
     
     /* keys */
-    ptr_section = config_file_new_section (weechat_config_file, "key",
-                                           0, 0,
-                                           &config_weechat_key_read_cb, NULL,
-                                           &config_weechat_key_write_cb, NULL,
-                                           &config_weechat_key_write_cb, NULL,
-                                           NULL, NULL, NULL, NULL);
-    if (!ptr_section)
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        config_file_free (weechat_config_file);
-        return 0;
+        snprintf (section_name, sizeof (section_name),
+                  "key%s%s",
+                  (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
+                  (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
+        ptr_section = config_file_new_section (weechat_config_file, section_name,
+                                               0, 0,
+                                               &config_weechat_key_read_cb, NULL,
+                                               &config_weechat_key_write_cb, NULL,
+                                               &config_weechat_key_write_cb, NULL,
+                                               NULL, NULL, NULL, NULL);
+        if (!ptr_section)
+        {
+            config_file_free (weechat_config_file);
+            return 0;
+        }
     }
     
     return 1;

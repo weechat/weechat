@@ -48,6 +48,7 @@
 #include "../gui-color.h"
 #include "../gui-hotlist.h"
 #include "../gui-input.h"
+#include "../gui-key.h"
 #include "../gui-main.h"
 #include "../gui-line.h"
 #include "../gui-nicklist.h"

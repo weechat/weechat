@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-06-29 10:27+0200\n"
-"PO-Revision-Date: 2011-06-29 10:27+0200\n"
+"POT-Creation-Date: 2011-07-05 11:34+0200\n"
+"PO-Revision-Date: 2011-07-04 21:45+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -81,10 +81,10 @@ msgstr ""
 "d'information\n"
 "                    sur les options possibles)\n"
 
-#. TRANSLATORS: "%s" is "weechat"
+#. TRANSLATORS: first "%s" is "weechat"
 #, c-format
-msgid "%s default keys:\n"
-msgstr "Touches par défaut %s:\n"
+msgid "%s default keys (context: \"%s\"):\n"
+msgstr "Touches par défaut %s (contexte: \"%s\"):\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -378,29 +378,55 @@ msgid "default command:"
 msgstr "commande par défaut:"
 
 #, c-format
-msgid "Key bindings added or redefined (%d):"
-msgstr "Associations de touches ajoutées ou redéfinies (%d):"
+msgid "Key bindings added or redefined (%d) for context \"%s\":"
+msgstr ""
+"Associations de touches ajoutées ou redéfinies (%d) pour le contexte \"%s\":"
 
 #, c-format
-msgid "Key bindings deleted (%d):"
-msgstr "Associations de touches supprimées (%d):"
-
-msgid "No key binding added, redefined or removed"
-msgstr "Aucune association de touche ajoutée, redéfinie ou supprimée"
-
-msgid "No key binding defined"
-msgstr "Pas d'association de touche définie"
+msgid "Key bindings deleted (%d) for context \"%s\":"
+msgstr "Associations de touches supprimées (%d) pour le contexte \"%s\":"
 
 #, c-format
-msgid "Key bindings (%d):"
-msgstr "Associations de touches (%d):"
-
-msgid "No default key binding"
-msgstr "Pas de touche par défaut"
+msgid "No key binding added, redefined or removed for context \"%s\""
+msgstr ""
+"Aucune association de touche ajoutée, redéfinie ou supprimée pour le "
+"contexte \"%s\""
 
 #, c-format
-msgid "Default key bindings (%d):"
-msgstr "Associations de touches par défaut (%d):"
+msgid "%sError: unable to bind key \"%s\""
+msgstr "%sErreur: impossible de créer la touche \"%s\""
+
+#, c-format
+msgid "Key \"%s\" has already default value"
+msgstr "La touche \"%s\" a déjà la valeur par défaut"
+
+#, c-format
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr "Touche \"%s\" supprimée (contexte: \"%s\")"
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr "%sErreur: impossible de supprimer la touche \"%s\""
+
+#, c-format
+msgid "%sKey \"%s\" not found"
+msgstr "%sTouche \"%s\" non trouvée"
+
+#, c-format
+msgid "No key binding defined for context \"%s\""
+msgstr "Pas d'association de touche définie pour le contexte \"%s\""
+
+#, c-format
+msgid "Key bindings (%d) for context \"%s\":"
+msgstr "Associations de touches (%d) pour le contexte \"%s\":"
+
+#, c-format
+msgid "No default key binding for context \"%s\""
+msgstr "Pas de touche par défaut pour le contexte \"%s\""
+
+#, c-format
+msgid "Default key bindings (%d) for context \"%s\":"
+msgstr "Associations de touches par défaut (%d) pour le contexte \"%s\":"
 
 msgid "Key:"
 msgstr "Touche:"
@@ -409,27 +435,12 @@ msgid "No key found"
 msgstr "Aucune touche trouvée"
 
 #, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr "%sErreur: impossible de créer la touche \"%s\""
+msgid "%sError: context \"%s\" not found"
+msgstr "%sErreur: contexte \"%s\" non trouvé"
 
 #, c-format
-msgid "Key \"%s\" unbound"
-msgstr "Touche \"%s\" supprimée"
-
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr "%sErreur: impossible de supprimer la touche \"%s\""
-
-#, c-format
-msgid "Key \"%s\" has already default value"
-msgstr "La touche \"%s\" a déjà la valeur par défaut"
-
-#, c-format
-msgid "%sKey \"%s\" not found"
-msgstr "%sTouche \"%s\" non trouvée"
-
-msgid "Default key bindings restored"
-msgstr "Touches par défaut restaurées"
+msgid "Default key bindings restored for context \"%s\""
+msgstr "Touches par défaut restaurées pour le contexte \"%s\""
 
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
@@ -439,9 +450,9 @@ msgstr ""
 
 #, c-format
 msgid "%d new key added"
-msgid_plural "%d new keys added"
-msgstr[0] "%d nouvelle touche ajoutée"
-msgstr[1] "%d nouvelles touches ajoutées"
+msgid_plural "%d new keys added (context: \"%s\")"
+msgstr[0] "%d nouvelle touche ajoutée (contexte: \"%s\")"
+msgstr[1] "%d nouvelles touches ajoutées (contexte: \"%s\")"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -1287,6 +1298,10 @@ msgid ""
 "  complete_next: complete word with next completion\n"
 "  complete_previous: complete word with previous completion\n"
 "  search_text: search text in buffer\n"
+"  search_switch_case: switch exact case for search\n"
+"  search_previous: search previous line\n"
+"  search_next: search next line\n"
+"  search_stop: stop search\n"
 "  delete_previous_char: delete previous char\n"
 "  delete_next_char: delete next char\n"
 "  delete_previous_word: delete previous word\n"
@@ -1329,6 +1344,10 @@ msgstr ""
 "  complete_next: compléter le mot avec la complétion suivante\n"
 "  complete_previous: compléter le mot avec la complétion précédente\n"
 "  search_text: chercher du texte dans le tampon\n"
+"  search_switch_case: basculer la casse exacte pour la recherche\n"
+"  search_previous: chercher la ligne précédente\n"
+"  search_next: chercher la ligne suivante\n"
+"  search_stop: arrêter la recherche\n"
 "  delete_previous_char: effacer le caractère précédent\n"
 "  delete_next_char: effacer le caractère suivant\n"
 "  delete_previous_word: effacer le mot précédent\n"
@@ -1375,11 +1394,15 @@ msgid "bind/unbind keys"
 msgstr "associer/libérer des touches"
 
 msgid ""
-"list|listdefault|listdiff || bind <key> [<command> [<args>]] || unbind <key> "
-"|| reset <key> || resetall -yes || missing"
+"list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
+"bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
+"<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
+"[<context>] || missing [<context>]"
 msgstr ""
-"list|listdefault|listdiff || bind <touche> [<commande> [<args>]] || unbind "
-"<touche> || reset <touche> || resetall -yes || missing"
+"list|listdefault|listdiff [<contexte>] || bind <touche> [<commande> "
+"[<args>]] || bindctxt <contexte> <touche> [<commande> [<args>]] || unbind "
+"<touche> || unbindctxt <contexte> <touche> || reset <touche> || resetctxt "
+"<contexte> <touche> || resetall -yes [<contexte>] || missing [<contexte>]"
 
 msgid ""
 "       list: list all current keys (without argument, this list is "
@@ -1387,9 +1410,15 @@ msgid ""
 "listdefault: list default keys\n"
 "   listdiff: list differences between current and default keys (keys added, "
 "redefined or deleted)\n"
-"       bind: bind a command to a key or display command bound to key\n"
-"     unbind: remove a key binding\n"
-"      reset: reset a key to default binding\n"
+"    context: name of context (\"default\" or \"search\")\n"
+"       bind: bind a command to a key or display command bound to key (for "
+"context \"default\")\n"
+"   bindctxt: bind a command to a key or display command bound to key, for "
+"given context\n"
+"     unbind: remove a key binding (for context \"default\")\n"
+" unbindctxt: remove a key binding for given context\n"
+"      reset: reset a key to default binding (for context \"default\")\n"
+"  resetctxt: reset a key to default binding, for given context\n"
 "   resetall: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)\n"
 "    missing: add missing keys (using default bindings), useful after "
@@ -1405,17 +1434,25 @@ msgid ""
 "  key alt-r to jump to #weechat IRC channel:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  restore default binding for key alt-r:\n"
-"    /key reset meta-r"
+"    /key reset meta-r\n"
+"  key \"tab\" to stop search in buffer:\n"
+"    /key bindctxt search ctrl-I /input search_stop"
 msgstr ""
 "       list: afficher toutes les touches courantes (sans paramètre, cette "
 "liste est affichée)\n"
 "listdefault: afficher les touches par défaut\n"
 "   listdiff: afficher les différences entre les touches courantes et celles "
 "par défaut (touches ajoutées, redéfinies ou supprimées)\n"
+"   contexte: nom du contexte (\"default\" ou \"search\")\n"
 "       bind: associer une commande à une touche ou affiche la commande "
 "associée à la touche\n"
+"   bindctxt: associer une commande à une touche ou affiche la commande "
+"associée à la touche pour le contexte donné\n"
 "     unbind: supprimer l'association à une touche\n"
+" unbindctxt: supprimer l'association à une touche pour le contexte donné\n"
 "      reset: réinitialiser une touche à son association par défaut\n"
+"  resetctxt: réinitialiser une touche à son association par défaut pour le "
+"contexte donné\n"
 "   resetall: restaurer les touches aux valeurs par défaut et supprimer "
 "TOUTES les touches personnelles (utiliser avec précaution !)\n"
 "    missing: ajouter les touches manquantes (en utilisant les touches par "
@@ -1431,7 +1468,9 @@ msgstr ""
 "  touche alt-r pour aller sur le canal IRC #weechat:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  restaure l'association par défaut pour la touche alt-r:\n"
-"    /key reset meta-r"
+"    /key reset meta-r\n"
+"  touche \"tab\" pour arrêter la recherche dans le tampon:\n"
+"    /key bindctxt search ctrl-I /input search_stop"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "sauver/appliquer/réinitialiser la disposition des tampons et fenêtres"
@@ -2009,9 +2048,15 @@ msgstr "options pour les proxies"
 msgid "options for bars"
 msgstr "options pour les barres"
 
+#. TRANSLATORS: "key" means "key on the keyboard"
+msgid "key contexts"
+msgstr "contextes de touches"
+
+#. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes"
 msgstr "codes des touches"
 
+#. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
 "codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies "

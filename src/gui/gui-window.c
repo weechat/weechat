@@ -1099,6 +1099,7 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
 
 /*
  * gui_window_search_text: search text in a buffer
+ *                         return 1 if line has been found with text, otherwise 0
  */
 
 int

@@ -31,27 +31,28 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
-#include "../gui-keyboard.h"
+#include "../gui-key.h"
 #include "../gui-buffer.h"
 #include "gui-gtk.h"
 
 
 /*
- * gui_keyboard_default_bindings: create default key bindings
+ * gui_key_default_bindings: create default key bindings
  */
 
 void
-gui_keyboard_default_bindings ()
+gui_key_default_bindings (int context)
 {
     /* TODO: write this function for Gtk */
+    (void) context;
 }
 
 /*
- * gui_keyboard_read: read keyboard chars
+ * gui_key_read: read keyboard chars
  */
 
 void
-gui_keyboard_read ()
+gui_key_read ()
 {
     /* TODO: write this function for Gtk */
 }

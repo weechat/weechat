@@ -78,9 +78,9 @@ extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
                                           struct t_gui_line **line,
                                           int *line_pos, int difference);
 
-/* keyboard functions */
-extern void gui_keyboard_default_bindings ();
-extern int gui_keyboard_read_cb (void *data, int fd);
+/* key functions */
+extern void gui_key_default_bindings (int context);
+extern int gui_key_read_cb (void *data, int fd);
 
 /* window functions */
 extern void gui_window_read_terminal_size ();

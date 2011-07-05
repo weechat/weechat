@@ -249,6 +249,10 @@ list des actions:
   complete_next: compléter le mot avec la complétion suivante
   complete_previous: compléter le mot avec la complétion précédente
   search_text: chercher du texte dans le tampon
+  search_switch_case: basculer la casse exacte pour la recherche
+  search_previous: chercher la ligne précédente
+  search_next: chercher la ligne suivante
+  search_stop: arrêter la recherche
   delete_previous_char: effacer le caractère précédent
   delete_next_char: effacer le caractère suivant
   delete_previous_word: effacer le mot précédent
@@ -289,19 +293,26 @@ Cette commande est utilisé par les associations de touches ou les extensions.
 
 [command]*`key`* associer/libérer des touches::
 ........................................
-/key  list|listdefault|listdiff
+/key  list|listdefault|listdiff [<contexte>]
       bind <touche> [<commande> [<args>]]
+      bindctxt <contexte> <touche> [<commande> [<args>]]
       unbind <touche>
+      unbindctxt <contexte> <touche>
       reset <touche>
-      resetall -yes
-      missing
+      resetctxt <contexte> <touche>
+      resetall -yes [<contexte>]
+      missing [<contexte>]
 
        list: afficher toutes les touches courantes (sans paramètre, cette liste est affichée)
 listdefault: afficher les touches par défaut
    listdiff: afficher les différences entre les touches courantes et celles par défaut (touches ajoutées, redéfinies ou supprimées)
+   contexte: nom du contexte ("default" ou "search")
        bind: associer une commande à une touche ou affiche la commande associée à la touche
+   bindctxt: associer une commande à une touche ou affiche la commande associée à la touche pour le contexte donné
      unbind: supprimer l'association à une touche
+ unbindctxt: supprimer l'association à une touche pour le contexte donné
       reset: réinitialiser une touche à son association par défaut
+  resetctxt: réinitialiser une touche à son association par défaut pour le contexte donné
    resetall: restaurer les touches aux valeurs par défaut et supprimer TOUTES les touches personnelles (utiliser avec précaution !)
     missing: ajouter les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
 
@@ -314,6 +325,8 @@ Exemples:
     /key bind meta-r /buffer #weechat
   restaure l'association par défaut pour la touche alt-r:
     /key reset meta-r
+  touche "tab" pour arrêter la recherche dans le tampon:
+    /key bindctxt search ctrl-I /input search_stop
 ........................................
 
 [command]*`layout`* sauver/appliquer/réinitialiser la disposition des tampons et fenêtres::

@@ -445,7 +445,7 @@ Touches pour la ligne de commande
 | @k(Backsp.)         .2+| Effacer le caractère précédent sur la ligne de commande .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_end_of_line
-| @k(C-)@k(r)         | Chercher du texte dans l'historique du tampon (deux appuis successifs pour rechercher du texte exact), @k(↑): précédent, @k(↓): suivant, @k(Enter): arrêter | /input search_text
+| @k(C-)@k(r)         | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | /input search_text
 | @k(C-)@k(t)         | Inverser deux caractères | /input transpose_chars
 | @k(C-)@k(u)         | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_previous_word
@@ -517,6 +517,25 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | /input jump_next_visited_buffer
 |========================================
+
+[[key_bindings_search_context]]
+Keys for "search" context
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ces touches sont utilisées dans le contexte "search" (lorsque @k(C-)@k(r) est
+pressé pour chercher du texte dans le tampon).
+
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+|========================================
+| Touche      | Description | Commande
+| @k(C-)@k(r) | Basculer la casse exacte pour la recherche | /input search_switch_case
+| @k(↑)       | Chercher la ligne précédente | /input search_previous
+| @k(↓)       | Chercher la ligne suivante | /input search_next
+| @k(Enter)   .3+| Arrêter la recherche .3+| /input search_stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+|========================================
+
 
 [[key_bindings_other]]
 Autres touches

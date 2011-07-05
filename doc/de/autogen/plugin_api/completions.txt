@@ -90,6 +90,8 @@
 
 | weechat | keys_codes_for_reset | Tastenbelegungen die zurückgesetzt werden können (hinzugefügte/verändert/gelöschte Tastenbelegungen)
 
+| weechat | keys_contexts | key contexts
+
 | weechat | nicks | Nicks in Nickliste des aktuellen Buffers
 
 | weechat | palette_colors | Farbpalette

@@ -53,7 +53,7 @@
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-input.h"
-#include "gui-keyboard.h"
+#include "gui-key.h"
 #include "gui-layout.h"
 #include "gui-line.h"
 #include "gui-main.h"
@@ -1532,17 +1532,17 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strncasecmp (property, "key_bind_", 9) == 0)
     {
-        gui_keyboard_bind (buffer, property + 9, value);
+        gui_key_bind (buffer, 0, property + 9, value);
     }
     else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
     {
         if (strcmp (property + 11, "*") == 0)
         {
-            gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
-                                   &buffer->keys_count);
+            gui_key_free_all (&buffer->keys, &buffer->last_key,
+                              &buffer->keys_count);
         }
         else
-            gui_keyboard_unbind (buffer, property + 11, 1);
+            gui_key_unbind (buffer, 0, property + 11, 1);
     }
     else if (string_strcasecmp (property, "input") == 0)
     {
@@ -2138,8 +2138,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         string_free_split (buffer->highlight_tags_array);
     if (buffer->hotlist_max_level_nicks)
         hashtable_free (buffer->hotlist_max_level_nicks);
-    gui_keyboard_free_all (&buffer->keys, &buffer->last_key,
-                           &buffer->keys_count);
+    gui_key_free_all (&buffer->keys, &buffer->last_key,
+                      &buffer->keys_count);
     gui_buffer_local_var_remove_all (buffer);
     hashtable_free (buffer->local_variables);
     
@@ -3365,7 +3365,7 @@ gui_buffer_print_log ()
         {
             log_printf ("");
             log_printf ("  => keys:");
-            gui_keyboard_print_log (ptr_buffer);
+            gui_key_print_log (ptr_buffer);
         }
         
         if (ptr_buffer->local_variables)

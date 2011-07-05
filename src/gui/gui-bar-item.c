@@ -49,7 +49,7 @@
 #include "gui-completion.h"
 #include "gui-filter.h"
 #include "gui-hotlist.h"
-#include "gui-keyboard.h"
+#include "gui-key.h"
 #include "gui-line.h"
 #include "gui-nicklist.h"
 #include "gui-window.h"
@@ -628,7 +628,7 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
     if (window != gui_current_window)
         return NULL;
     
-    if (!gui_keyboard_paste_pending)
+    if (!gui_key_paste_pending)
         return NULL;
 
     ptr_message = _(text_paste_pending);
@@ -637,7 +637,7 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
     if (buf)
         snprintf (buf, length, ptr_message,
                   gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_actions))),
-                  gui_keyboard_get_paste_lines ());
+                  gui_key_get_paste_lines ());
     
     return buf;
 }

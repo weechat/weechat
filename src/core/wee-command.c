@@ -59,7 +59,7 @@
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-input.h"
-#include "../gui/gui-keyboard.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-window.h"
@@ -2123,6 +2123,14 @@ COMMAND_CALLBACK(input)
             gui_input_complete_previous (buffer);
         else if (string_strcasecmp (argv[1], "search_text") == 0)
             gui_input_search_text (buffer);
+        else if (string_strcasecmp (argv[1], "search_previous") == 0)
+            gui_input_search_previous (buffer);
+        else if (string_strcasecmp (argv[1], "search_next") == 0)
+            gui_input_search_next (buffer);
+        else if (string_strcasecmp (argv[1], "search_switch_case") == 0)
+            gui_input_search_switch_case (buffer);
+        else if (string_strcasecmp (argv[1], "search_stop") == 0)
+            gui_input_search_stop (buffer);
         else if (string_strcasecmp (argv[1], "delete_previous_char") == 0)
             gui_input_delete_previous_char (buffer);
         else if (string_strcasecmp (argv[1], "delete_next_char") == 0)
@@ -2208,7 +2216,7 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
     char str_spaces[20 + 1];
     int length_screen, num_spaces;
     
-    expanded_name = gui_keyboard_get_expanded_name (key->key);
+    expanded_name = gui_key_get_expanded_name (key->key);
     
     str_spaces[0] = '\0';
     length_screen = utf8_strlen_screen ((expanded_name) ?
@@ -2255,17 +2263,20 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 void
 command_key_display_list (const char *message_no_key,
                           const char *message_keys,
+                          int context,
                           struct t_gui_key *keys,
                           int keys_count)
 {
     struct t_gui_key *ptr_key;
     
     if (keys_count == 0)
-        gui_chat_printf (NULL, message_no_key);
+        gui_chat_printf (NULL, message_no_key,
+                         gui_key_context_string[context]);
     else
     {
         gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, message_keys, keys_count);
+        gui_chat_printf (NULL, message_keys,
+                         keys_count, gui_key_context_string[context]);
         for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
         {
             command_key_display (ptr_key, NULL);
@@ -2279,17 +2290,17 @@ command_key_display_list (const char *message_no_key,
  */
 
 void
-command_key_display_listdiff ()
+command_key_display_listdiff (int context)
 {
     struct t_gui_key *ptr_key, *ptr_default_key;
     int count_added, count_deleted;
     
     /* list keys added or redefined */
     count_added = 0;
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
     {
-        ptr_default_key = gui_keyboard_search (gui_default_keys,
-                                               ptr_key->key);
+        ptr_default_key = gui_key_search (gui_default_keys[context],
+                                          ptr_key->key);
         if (!ptr_default_key
             || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
         {
@@ -2299,12 +2310,15 @@ command_key_display_listdiff ()
     if (count_added > 0)
     {
         gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Key bindings added or redefined (%d):"),
-                         count_added);
-        for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+        gui_chat_printf (NULL,
+                         _("Key bindings added or redefined (%d) for "
+                           "context \"%s\":"),
+                         count_added,
+                         _(gui_key_context_string[context]));
+        for (ptr_key = gui_keys[context]; ptr_key; ptr_key = ptr_key->next_key)
         {
-            ptr_default_key = gui_keyboard_search (gui_default_keys,
-                                                   ptr_key->key);
+            ptr_default_key = gui_key_search (gui_default_keys[context],
+                                              ptr_key->key);
             if (!ptr_default_key
                 || (strcmp (ptr_default_key->command, ptr_key->command) != 0))
             {
@@ -2315,21 +2329,24 @@ command_key_display_listdiff ()
     
     /* list keys deleted */
     count_deleted = 0;
-    for (ptr_default_key = gui_default_keys; ptr_default_key;
+    for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
          ptr_default_key = ptr_default_key->next_key)
     {
-        ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
+        ptr_key = gui_key_search (gui_keys[context], ptr_default_key->key);
         if (!ptr_key)
             count_deleted++;
-    }
+        }
     if (count_deleted > 0)
     {
         gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Key bindings deleted (%d):"), count_deleted);
-        for (ptr_default_key = gui_default_keys; ptr_default_key;
+        gui_chat_printf (NULL,
+                         _("Key bindings deleted (%d) for context \"%s\":"),
+                         count_deleted,
+                         _(gui_key_context_string[context]));
+        for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
              ptr_default_key = ptr_default_key->next_key)
         {
-            ptr_key = gui_keyboard_search (gui_keys, ptr_default_key->key);
+            ptr_key = gui_key_search (gui_keys[context], ptr_default_key->key);
             if (!ptr_key)
             {
                 command_key_display (ptr_default_key, NULL);
@@ -2341,10 +2358,104 @@ command_key_display_listdiff ()
     if ((count_added == 0) && (count_deleted == 0))
     {
         gui_chat_printf (NULL,
-                         _("No key binding added, redefined or removed"));
+                         _("No key binding added, redefined or removed "
+                           "for context \"%s\""),
+                         _(gui_key_context_string[context]));
     }
 }
-        
+
+/*
+ * command_key_reset: reset a key for a given context
+ */
+
+int
+command_key_reset (int context, const char *key)
+{
+    char *internal_code;
+    struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
+    
+    internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return WEECHAT_RC_ERROR;
+    
+    ptr_key = gui_key_search (gui_keys[context],
+                              internal_code);
+    ptr_default_key = gui_key_search (gui_default_keys[context],
+                                      internal_code);
+    free (internal_code);
+    
+    if (ptr_key || ptr_default_key)
+    {
+        if (ptr_key && ptr_default_key)
+        {
+            if (strcmp (ptr_key->command, ptr_default_key->command) != 0)
+            {
+                gui_key_verbose = 1;
+                ptr_new_key = gui_key_bind (NULL, context, key,
+                                            ptr_default_key->command);
+                gui_key_verbose = 0;
+                if (!ptr_new_key)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sError: unable to bind key \"%s\""),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     key);
+                    return WEECHAT_RC_OK;
+                }
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("Key \"%s\" has already default "
+                                   "value"),
+                                 key);
+            }
+        }
+        else if (ptr_key)
+        {
+            /* no default key, so just unbind key */
+            if (gui_key_unbind (NULL, context, key, 1))
+            {
+                gui_chat_printf (NULL,
+                                 _("Key \"%s\" unbound (context: \"%s\")"),
+                                 key,
+                                 gui_key_context_string[context]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to unbind key \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 key);
+                return WEECHAT_RC_OK;
+            }
+        }
+        else
+        {
+            /* no key, but default key exists */
+            gui_key_verbose = 1;
+            ptr_new_key = gui_key_bind (NULL, context, key,
+                                        ptr_default_key->command);
+            gui_key_verbose = 0;
+            if (!ptr_new_key)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to bind key \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 key);
+                return WEECHAT_RC_OK;
+            }
+        }
+    }
+    else
+    {
+        gui_chat_printf (NULL, _("%sKey \"%s\" not found"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         key);
+    }
+    return WEECHAT_RC_OK;
+}
+
 /*
  * command_key: bind/unbind keys
  */
@@ -2352,8 +2463,8 @@ command_key_display_listdiff ()
 COMMAND_CALLBACK(key)
 {
     char *internal_code;
-    struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
-    int old_keys_count, keys_added;
+    struct t_gui_key *ptr_new_key;
+    int old_keys_count, keys_added, i, context;
     
     /* make C compiler happy */
     (void) data;
@@ -2362,39 +2473,68 @@ COMMAND_CALLBACK(key)
     /* display all key bindings (current keys) */
     if ((argc == 1) || (string_strcasecmp (argv[1], "list") == 0))
     {
-        command_key_display_list (_("No key binding defined"),
-                                  _("Key bindings (%d):"),
-                                  gui_keys,
-                                  gui_keys_count);
+        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        {
+            if ((argc < 3)
+                || (string_strcasecmp (argv[2], gui_key_context_string[i]) == 0))
+            {
+                command_key_display_list (_("No key binding defined for "
+                                            "context \"%s\""),
+                                          _("Key bindings (%d) for "
+                                            "context \"%s\":"),
+                                          i, gui_keys[i], gui_keys_count[i]);
+            }
+        }
         return WEECHAT_RC_OK;
     }
     
     /* display redefined or key bindings added */
     if (string_strcasecmp (argv[1], "listdiff") == 0)
     {
-        command_key_display_listdiff ();
+        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        {
+            if ((argc < 3)
+                || (string_strcasecmp (argv[2], gui_key_context_string[i]) == 0))
+            {
+                command_key_display_listdiff (i);
+            }
+        }
         return WEECHAT_RC_OK;
     }
     
     /* display default key bindings */
     if (string_strcasecmp (argv[1], "listdefault") == 0)
     {
-        command_key_display_list (_("No default key binding"),
-                                  _("Default key bindings (%d):"),
-                                  gui_default_keys,
-                                  gui_default_keys_count);
+        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        {
+            if ((argc < 3)
+                || (string_strcasecmp (argv[2], gui_key_context_string[i]) == 0))
+            {
+                command_key_display_list (_("No default key binding for "
+                                            "context \"%s\""),
+                                          _("Default key bindings (%d) for "
+                                            "context \"%s\":"),
+                                          i,
+                                          gui_default_keys[i],
+                                          gui_default_keys_count[i]);
+            }
+        }
         return WEECHAT_RC_OK;
     }
     
     /* bind a key (or display binding) */
     if (string_strcasecmp (argv[1], "bind") == 0)
     {
+        COMMAND_MIN_ARGS(3, "key bind");
+        
+        /* display a key binding */
         if (argc == 3)
         {
             ptr_new_key = NULL;
-            internal_code = gui_keyboard_get_internal_code (argv[2]);
+            internal_code = gui_key_get_internal_code (argv[2]);
             if (internal_code)
-                ptr_new_key = gui_keyboard_search (gui_keys, internal_code);
+                ptr_new_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
+                                              internal_code);
             if (ptr_new_key)
             {
                 gui_chat_printf (NULL, "");
@@ -2411,12 +2551,11 @@ COMMAND_CALLBACK(key)
             return WEECHAT_RC_OK;
         }
         
-        COMMAND_MIN_ARGS(4, "key bind");
-        
         /* bind new key */
-        gui_keyboard_verbose = 1;
-        ptr_new_key = gui_keyboard_bind (NULL, argv[2], argv_eol[3]);
-        gui_keyboard_verbose = 0;
+        gui_key_verbose = 1;
+        ptr_new_key = gui_key_bind (NULL, GUI_KEY_CONTEXT_DEFAULT,
+                                    argv[2], argv_eol[3]);
+        gui_key_verbose = 0;
         if (!ptr_new_key)
         {
             gui_chat_printf (NULL,
@@ -2428,25 +2567,115 @@ COMMAND_CALLBACK(key)
         return WEECHAT_RC_OK;
     }
     
-    /* unbind a key */
-    if (string_strcasecmp (argv[1], "unbind") == 0)
+    /* bind a key for given context (or display binding) */
+    if (string_strcasecmp (argv[1], "bindctxt") == 0)
     {
-        if (argc >= 3)
+        COMMAND_MIN_ARGS(4, "key bindctxt");
+        
+        /* search context */
+        context = gui_key_search_context (argv[2]);
+        if (context < 0)
         {
-            if (gui_keyboard_unbind (NULL, argv[2], 1))
+            gui_chat_printf (NULL,
+                             _("%sError: context \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
+
+        /* display a key binding */
+        if (argc == 4)
+        {
+            ptr_new_key = NULL;
+            internal_code = gui_key_get_internal_code (argv[2]);
+            if (internal_code)
+                ptr_new_key = gui_key_search (gui_keys[context],
+                                              internal_code);
+            if (ptr_new_key)
             {
-                gui_chat_printf (NULL,
-                                 _("Key \"%s\" unbound"),
-                                 argv[2]);
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, _("Key:"));
+                command_key_display (ptr_new_key, NULL);
             }
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: unable to unbind key \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_OK;
+                                 _("No key found"));
             }
+            if (internal_code)
+                free (internal_code);
+            return WEECHAT_RC_OK;
+        }
+        
+        /* bind new key */
+        gui_key_verbose = 1;
+        ptr_new_key = gui_key_bind (NULL, context,
+                                    argv[3], argv_eol[4]);
+        gui_key_verbose = 0;
+        if (!ptr_new_key)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to bind key \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3]);
+            return WEECHAT_RC_OK;
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* unbind a key */
+    if (string_strcasecmp (argv[1], "unbind") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "key unbind");
+        
+        if (gui_key_unbind (NULL, GUI_KEY_CONTEXT_DEFAULT, argv[2], 1))
+        {
+            gui_chat_printf (NULL,
+                             _("Key \"%s\" unbound (context: \"%s\")"),
+                             argv[2],
+                             gui_key_context_string[GUI_KEY_CONTEXT_DEFAULT]);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to unbind key \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* unbind a key for a given context */
+    if (string_strcasecmp (argv[1], "unbindctxt") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "key unbindctxt");
+
+        /* search context */
+        context = gui_key_search_context (argv[2]);
+        if (context < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: context \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
+        
+        if (gui_key_unbind (NULL, context, argv[3], 1))
+        {
+            gui_chat_printf (NULL,
+                             _("Key \"%s\" unbound (context: \"%s\")"),
+                             argv[3],
+                             gui_key_context_string[context]);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to unbind key \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3]);
+            return WEECHAT_RC_OK;
         }
         return WEECHAT_RC_OK;
     }
@@ -2454,86 +2683,28 @@ COMMAND_CALLBACK(key)
     /* reset a key to default binding */
     if (string_strcasecmp (argv[1], "reset") == 0)
     {
-        if (argc >= 3)
+        COMMAND_MIN_ARGS(3, "key reset");
+        
+        return command_key_reset (GUI_KEY_CONTEXT_DEFAULT, argv[2]);
+    }
+    
+    /* reset a key to default binding for a given context */
+    if (string_strcasecmp (argv[1], "resetctxt") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "key reset");
+        
+        /* search context */
+        context = gui_key_search_context (argv[2]);
+        if (context < 0)
         {
-            internal_code = gui_keyboard_get_internal_code (argv[2]);
-            if (!internal_code)
-                return WEECHAT_RC_ERROR;
-            
-            ptr_key = gui_keyboard_search (gui_keys, internal_code);
-            ptr_default_key = gui_keyboard_search (gui_default_keys, internal_code);
-            free (internal_code);
-            
-            if (ptr_key || ptr_default_key)
-            {
-                if (ptr_key && ptr_default_key)
-                {
-                    if (strcmp (ptr_key->command, ptr_default_key->command) != 0)
-                    {
-                        gui_keyboard_verbose = 1;
-                        ptr_new_key = gui_keyboard_bind (NULL, argv[2],
-                                                         ptr_default_key->command);
-                        gui_keyboard_verbose = 0;
-                        if (!ptr_new_key)
-                        {
-                            gui_chat_printf (NULL,
-                                             _("%sError: unable to bind key \"%s\""),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             argv[2]);
-                            return WEECHAT_RC_OK;
-                        }
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL,
-                                         _("Key \"%s\" has already default "
-                                           "value"),
-                                         argv[2]);
-                    }
-                }
-                else if (ptr_key)
-                {
-                    /* no default key, so just unbind key */
-                    if (gui_keyboard_unbind (NULL, argv[2], 1))
-                    {
-                        gui_chat_printf (NULL,
-                                         _("Key \"%s\" unbound"),
-                                         argv[2]);
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sError: unable to unbind key \"%s\""),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         argv[2]);
-                        return WEECHAT_RC_OK;
-                    }
-                }
-                else
-                {
-                    /* no key, but default key exists */
-                    gui_keyboard_verbose = 1;
-                    ptr_new_key = gui_keyboard_bind (NULL, argv[2],
-                                                     ptr_default_key->command);
-                    gui_keyboard_verbose = 0;
-                    if (!ptr_new_key)
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sError: unable to bind key \"%s\""),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         argv[2]);
-                        return WEECHAT_RC_OK;
-                    }
-                }
-            }
-            else
-            {
-                gui_chat_printf (NULL, _("%sKey \"%s\" not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-            }
+            gui_chat_printf (NULL,
+                             _("%sError: context \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
         }
-        return WEECHAT_RC_OK;
+        
+        return command_key_reset (context, argv[3]);
     }
     
     /* reset ALL keys (only with "-yes", for security reason) */
@@ -2541,10 +2712,20 @@ COMMAND_CALLBACK(key)
     {
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
-            gui_keyboard_free_all (&gui_keys, &last_gui_key, &gui_keys_count);
-            gui_keyboard_default_bindings ();
-            gui_chat_printf (NULL,
-                             _("Default key bindings restored"));
+            for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+            {
+                if ((argc < 4)
+                    || (string_strcasecmp (argv[3], gui_key_context_string[i]) == 0))
+                {
+                    gui_key_free_all (&gui_keys[i], &last_gui_key[i],
+                                      &gui_keys_count[i]);
+                    gui_key_default_bindings (i);
+                    gui_chat_printf (NULL,
+                                     _("Default key bindings restored for "
+                                       "context \"%s\""),
+                                     gui_key_context_string[i]);
+                }
+            }
         }
         else
         {
@@ -2560,15 +2741,24 @@ COMMAND_CALLBACK(key)
     /* add missing keys */
     if (string_strcasecmp (argv[1], "missing") == 0)
     {
-        old_keys_count = gui_keys_count;
-        gui_keyboard_verbose = 1;
-        gui_keyboard_default_bindings ();
-        gui_keyboard_verbose = 0;
-        keys_added = (gui_keys_count > old_keys_count) ?
-            gui_keys_count - old_keys_count : 0;
-        gui_chat_printf (NULL,
-                         NG_("%d new key added", "%d new keys added", keys_added),
-                         keys_added);
+        for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
+        {
+            if ((argc < 3)
+                || (string_strcasecmp (argv[2], gui_key_context_string[i]) == 0))
+            {
+                old_keys_count = gui_keys_count[i];
+                gui_key_verbose = 1;
+                gui_key_default_bindings (i);
+                gui_key_verbose = 0;
+                keys_added = (gui_keys_count[i] > old_keys_count) ?
+                    gui_keys_count[i] - old_keys_count : 0;
+                gui_chat_printf (NULL,
+                                 NG_("%d new key added", "%d new keys added "
+                                     "(context: \"%s\")", keys_added),
+                                 keys_added,
+                                 gui_key_context_string[i]);
+            }
+        }
         return WEECHAT_RC_OK;
     }
     
@@ -4980,6 +5170,10 @@ command_init ()
                      "  complete_previous: complete word with previous "
                      "completion\n"
                      "  search_text: search text in buffer\n"
+                     "  search_switch_case: switch exact case for search\n"
+                     "  search_previous: search previous line\n"
+                     "  search_next: search next line\n"
+                     "  search_stop: stop search\n"
                      "  delete_previous_char: delete previous char\n"
                      "  delete_next_char: delete next char\n"
                      "  delete_previous_word: delete previous word\n"
@@ -5027,6 +5221,7 @@ command_init ()
                      "  insert: insert text in command line\n\n"
                      "This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_text|"
+                  "search_switch_case|search_previous|search_next|search_stop|"
                   "delete_previous_char|delete_next_char|"
                   "delete_previous_word|delete_next_word|"
                   "delete_beginning_of_line|delete_end_of_line|"
@@ -5043,21 +5238,33 @@ command_init ()
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("list|listdefault|listdiff"
+                  N_("list|listdefault|listdiff [<context>]"
                      " || bind <key> [<command> [<args>]]"
+                     " || bindctxt <context> <key> [<command> [<args>]]"
                      " || unbind <key>"
+                     " || unbindctxt <context> <key>"
                      " || reset <key>"
-                     " || resetall -yes"
-                     " || missing"),
+                     " || resetctxt <context> <key>"
+                     " || resetall -yes [<context>]"
+                     " || missing [<context>]"),
                   N_("       list: list all current keys (without argument, "
                      "this list is displayed)\n"
                      "listdefault: list default keys\n"
                      "   listdiff: list differences between current and "
-                     "default keys (keys added, redefined or deleted)\n"
+                      "default keys (keys added, redefined or deleted)\n"
+                     "    context: name of context (\"default\" or "
+                     "\"search\")\n"
                      "       bind: bind a command to a key or display command "
-                     "bound to key\n"
-                     "     unbind: remove a key binding\n"
-                     "      reset: reset a key to default binding\n"
+                     "bound to key (for context \"default\")\n"
+                     "   bindctxt: bind a command to a key or display command "
+                     "bound to key, for given context\n"
+                     "     unbind: remove a key binding (for context "
+                     "\"default\")\n"
+                     " unbindctxt: remove a key binding for given context\n"
+                     "      reset: reset a key to default binding (for "
+                     "context \"default\")\n"
+                     "  resetctxt: reset a key to default binding, for given "
+                     "context\n"
                      "   resetall: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)\n"
                      "    missing: add missing keys (using default bindings), "
@@ -5071,15 +5278,20 @@ command_init ()
                      "  key alt-r to jump to #weechat IRC channel:\n"
                      "    /key bind meta-r /buffer #weechat\n"
                      "  restore default binding for key alt-r:\n"
-                     "    /key reset meta-r"),
-                  "list"
-                  " || listdefault"
-                  " || listdiff"
+                     "    /key reset meta-r\n"
+                     "  key \"tab\" to stop search in buffer:\n"
+                     "    /key bindctxt search ctrl-I /input search_stop"),
+                  "list %(keys_contexts)"
+                  " || listdefault %(keys_contexts)"
+                  " || listdiff %(keys_contexts)"
                   " || bind %(keys_codes) %(commands)"
+                  " || bindctxt %(keys_contexts) %(keys_codes) %(commands)"
                   " || unbind %(keys_codes)"
+                  " || unbindctxt %(keys_contexts) %(keys_codes)"
                   " || reset %(keys_codes_for_reset)"
+                  " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
                   " || resetall"
-                  " || missing",
+                  " || missing %(keys_contexts)",
                   &command_key, NULL);
     hook_command (NULL, "layout",
                   N_("save/apply/reset layout for buffers and windows"),

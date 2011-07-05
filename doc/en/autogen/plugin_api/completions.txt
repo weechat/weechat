@@ -90,6 +90,8 @@
 
 | weechat | keys_codes_for_reset | key codes that can be reset (keys added, redefined or removed)
 
+| weechat | keys_contexts | key contexts
+
 | weechat | nicks | nicks in nicklist of current buffer
 
 | weechat | palette_colors | palette colors

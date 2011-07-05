@@ -43,8 +43,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-hotlist.h \
                                    gui-input.c \
                                    gui-input.h \
-                                   gui-keyboard.c \
-                                   gui-keyboard.h \
+                                   gui-key.c \
+                                   gui-key.h \
                                    gui-layout.c \
                                    gui-layout.h \
                                    gui-line.c \

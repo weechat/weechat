@@ -435,7 +435,8 @@ Tastenbefehle für die Befehlszeile
 | @k(Backsp.)         .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
-| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (zweimaliges Drücken: exakte Textsuche), @k(↑): vorheriges, @k(↓): nächstes, @k(Enter): beenden | /input search_text
+// TRANSLATION MISSING
+| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (see <<key_bindings_search_context,keys for search context>>) | /input search_text
 | @k(C-)@k(t)         | Zeichen austauschen | /input transpose_chars
 | @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | /input delete_previous_word
@@ -506,6 +507,25 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
 | @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
+|========================================
+
+// TRANSLATION MISSING
+[[key_bindings_search_context]]
+Keys for "search" context
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+These keys are used in context "search" (when @k(C-)@k(r) is pressed to search
+text in buffer).
+
+[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+|========================================
+| Key         | Description | Command
+| @k(C-)@k(r) | Switch exact case for search | /input search_switch_case
+| @k(↑)       | Search previous line | /input search_previous
+| @k(↓)       | Search next line | /input search_next
+| @k(Enter)   .3+| Stop search .3+| /input search_stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
 |========================================
 
 [[key_bindings_other]]

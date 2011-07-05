@@ -53,7 +53,7 @@
 #include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
-#include "../gui/gui-keyboard.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -353,10 +353,10 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     }
     else if (string_strcasecmp (info_name, "inactivity") == 0)
     {
-        if (gui_keyboard_last_activity_time == 0)
+        if (gui_key_last_activity_time == 0)
             inactivity = 0;
         else
-            inactivity = time (NULL) - gui_keyboard_last_activity_time;
+            inactivity = time (NULL) - gui_key_last_activity_time;
         snprintf (value, sizeof (value), "%ld", (long int)inactivity);
         return value;
     }
@@ -394,6 +394,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_key *ptr_key;
     struct t_weechat_plugin *ptr_plugin;
     char buffer_full_name[1024];
+    int context;
     
     /* make C compiler happy */
     (void) data;
@@ -678,12 +679,17 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
-            for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+            context = gui_key_search_context (arguments);
+            if (context >= 0)
             {
-                if (!gui_keyboard_add_to_infolist (ptr_infolist, ptr_key))
+                for (ptr_key = gui_keys[context]; ptr_key;
+                     ptr_key = ptr_key->next_key)
                 {
-                    infolist_free (ptr_infolist);
-                    return NULL;
+                    if (!gui_key_add_to_infolist (ptr_infolist, ptr_key))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
                 }
             }
             return ptr_infolist;
@@ -1074,7 +1080,7 @@ plugin_api_init ()
     hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),
                 &gui_buffer_hdata_input_undo_cb, NULL);
     hook_hdata (NULL, "key", N_("a key (keyboard shortcut)"),
-                &gui_keyboard_hdata_key_cb, NULL);
+                &gui_key_hdata_key_cb, NULL);
     hook_hdata (NULL, "lines", N_("structure with lines"),
                 &gui_line_hdata_lines_cb, NULL);
     hook_hdata (NULL, "line", N_("structure with one line"),

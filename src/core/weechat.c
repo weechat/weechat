@@ -72,7 +72,7 @@
 #include "../gui/gui-completion.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
-#include "../gui/gui-keyboard.h"
+#include "../gui/gui-key.h"
 #include "../plugins/plugin.h"
 
 
@@ -164,22 +164,28 @@ weechat_display_keys ()
 {
     struct t_gui_key *ptr_key;
     char *expanded_name;
-    
-    gui_keyboard_default_bindings ();
-    string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: "%s" is "weechat" */
-                          _("%s default keys:\n"),
-                          PACKAGE_NAME);
-    string_iconv_fprintf (stdout, "\n");
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    int i;
+
+    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
-        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
+        gui_key_default_bindings (i);
         string_iconv_fprintf (stdout,
-                              "* %s => %s\n",
-                              (expanded_name) ? expanded_name : ptr_key->key,
-                              ptr_key->command);
-        if (expanded_name)
-            free (expanded_name);
+                              /* TRANSLATORS: first "%s" is "weechat" */
+                              _("%s default keys (context: \"%s\"):\n"),
+                              (gui_key_context_string[i] && gui_key_context_string[i][0]) ?
+                              _(gui_key_context_string[i]) : "",
+                              PACKAGE_NAME);
+        string_iconv_fprintf (stdout, "\n");
+        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
+        {
+            expanded_name = gui_key_get_expanded_name (ptr_key->key);
+            string_iconv_fprintf (stdout,
+                                  "* %s => %s\n",
+                                  (expanded_name) ? expanded_name : ptr_key->key,
+                                  ptr_key->command);
+            if (expanded_name)
+                free (expanded_name);
+        }
     }
 }
 
@@ -418,7 +424,7 @@ main (int argc, char *argv[])
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     command_init ();                    /* initialize WeeChat commands      */
     completion_init ();                 /* add core completion hooks        */
-    gui_keyboard_init ();               /* init keyboard                    */
+    gui_key_init ();                    /* init keys                        */
     if (!config_weechat_init ())        /* init options with default values */
         exit (EXIT_FAILURE);
     weechat_parse_args (argc, argv);    /* parse command line args          */
@@ -451,7 +457,7 @@ main (int argc, char *argv[])
     gui_main_end (1);                   /* shut down WeeChat GUI            */
     proxy_free_all ();                  /* free all proxies                 */
     config_file_free_all ();            /* free all configuration files     */
-    gui_keyboard_end ();                /* end keyboard                     */
+    gui_key_end ();                     /* remove all keys                  */
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */

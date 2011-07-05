@@ -90,6 +90,8 @@
 
 | weechat | keys_codes_for_reset | codes des touches pouvant être réinitialisées (touches ajoutées, redéfinies ou supprimées)
 
+| weechat | keys_contexts | contextes de touches
+
 | weechat | nicks | pseudos dans la liste des pseudos du tampon courant
 
 | weechat | palette_colors | couleurs de la palette
