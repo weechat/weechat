@@ -194,12 +194,12 @@
 ** valori: current, server (valore predefinito: `current`)
 
 * *irc.look.new_channel_position*
-** descrizione: `forza la posizione del nuovo canale nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer)r, next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
+** descrizione: `forza la posizione del nuovo canale nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer), next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
 ** tipo: intero
 ** valori: none, next, near_server (valore predefinito: `none`)
 
 * *irc.look.new_pv_position*
-** descrizione: `forza la posizione del nuovo buffer privato nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer)r, next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
+** descrizione: `forza la posizione del nuovo buffer privato nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer), next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
 ** tipo: intero
 ** valori: none, next, near_server (valore predefinito: `none`)
 

@@ -1978,7 +1978,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "new_channel_position", "integer",
         N_("force position of new channel in list of buffers "
-           "(none = default position (should be last buffer)r, "
+           "(none = default position (should be last buffer), "
            "next = current buffer + 1, near_server = after last channel/pv "
            "of server)"),
         "none|next|near_server", 0, 0, "none",
@@ -1987,7 +1987,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "new_pv_position", "integer",
         N_("force position of new private in list of buffers "
-           "(none = default position (should be last buffer)r, "
+           "(none = default position (should be last buffer), "
            "next = current buffer + 1, near_server = after last channel/pv "
            "of server)"),
         "none|next|near_server", 0, 0, "none",
