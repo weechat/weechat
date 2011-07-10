@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-05 15:37+0200\n"
+"POT-Creation-Date: 2011-07-10 23:03+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6718,6 +6718,9 @@ msgstr "lista de buffers en la lista de actividad"
 
 msgid "list of key bindings"
 msgstr "lista de atajos de teclas"
+
+msgid "context (\"default\" or \"search\") (optional)"
+msgstr ""
 
 msgid "nicks in nicklist for a buffer"
 msgstr "apodos en la lista de apodos de un buffer"

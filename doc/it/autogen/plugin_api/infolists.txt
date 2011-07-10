@@ -48,7 +48,7 @@
 
 | weechat | hotlist | elenco dei buffer nella hotlist | - | -
 
-| weechat | key | elenco di tasti associati | - | -
+| weechat | key | elenco di tasti associati | - | context ("default" or "search") (optional)
 
 | weechat | nicklist | nick nella lista nick per un buffer | puntatore al buffer | nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)
 

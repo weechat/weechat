@@ -679,7 +679,10 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
-            context = gui_key_search_context (arguments);
+            if (arguments && arguments[0])
+                context = gui_key_search_context (arguments);
+            else
+                context = GUI_KEY_CONTEXT_DEFAULT;
             if (context >= 0)
             {
                 for (ptr_key = gui_keys[context]; ptr_key;
@@ -1036,7 +1039,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "key", N_("list of key bindings"),
                    NULL,
-                   NULL,
+                   N_("context (\"default\" or \"search\") (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
                    N_("buffer pointer"),

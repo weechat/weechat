@@ -48,7 +48,7 @@
 
 | weechat | hotlist | liste des tampons dans la hotlist | - | -
 
-| weechat | key | liste des associations de touches | - | -
+| weechat | key | liste des associations de touches | - | contexte ("default" ou "search") (optionnel)
 
 | weechat | nicklist | pseudos dans la liste des pseudos pour un tampon | pointeur vers le tampon | nick_xxx ou group_xxx pour avoir seulement le pseudo/groupe xxx (optionnel)
 

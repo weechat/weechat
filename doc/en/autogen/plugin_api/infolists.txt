@@ -48,7 +48,7 @@
 
 | weechat | hotlist | list of buffers in hotlist | - | -
 
-| weechat | key | list of key bindings | - | -
+| weechat | key | list of key bindings | - | context ("default" or "search") (optional)
 
 | weechat | nicklist | nicks in nicklist for a buffer | buffer pointer | nick_xxx or group_xxx to get only nick/group xxx (optional)
 

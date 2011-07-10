@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-05 15:37+0200\n"
+"POT-Creation-Date: 2011-07-10 23:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5379,6 +5379,9 @@ msgid "list of buffers in hotlist"
 msgstr ""
 
 msgid "list of key bindings"
+msgstr ""
+
+msgid "context (\"default\" or \"search\") (optional)"
 msgstr ""
 
 msgid "nicks in nicklist for a buffer"
