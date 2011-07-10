@@ -202,7 +202,7 @@ relay_client_irc_signal_irc_in2_cb (void *data, const char *signal,
                                     const char *type_data, void *signal_data)
 {
     struct t_relay_client *client;
-    const char *ptr_msg, *irc_host, *irc_command, *irc_args;
+    const char *ptr_msg, *irc_nick, *irc_host, *irc_command, *irc_args;
     struct t_hashtable *hash_parsed;
     
     /* make C compiler happy */
@@ -223,19 +223,21 @@ relay_client_irc_signal_irc_in2_cb (void *data, const char *signal,
     hash_parsed = relay_client_irc_parse_message (ptr_msg);
     if (hash_parsed)
     {
+        irc_nick = weechat_hashtable_get (hash_parsed, "nick");
         irc_host = weechat_hashtable_get (hash_parsed, "host");
         irc_command = weechat_hashtable_get (hash_parsed, "command");
         irc_args = weechat_hashtable_get (hash_parsed, "arguments");
 
         /* if self nick has changed, update it in client data */
-        if (irc_command && (weechat_strcasecmp (irc_command, "nick") == 0))
+        if (irc_command && (weechat_strcasecmp (irc_command, "nick") == 0)
+            && irc_nick && irc_nick[0]
+            && irc_args && irc_args[0]
+            && (weechat_strcasecmp (irc_nick, RELAY_IRC_DATA(client, nick)) == 0))
         {
-            if (irc_args && irc_args[0])
-            {
-                if (RELAY_IRC_DATA(client, nick))
-                    free (RELAY_IRC_DATA(client, nick));
-                RELAY_IRC_DATA(client, nick) = strdup (irc_args);
-            }
+            if (RELAY_IRC_DATA(client, nick))
+                free (RELAY_IRC_DATA(client, nick));
+            RELAY_IRC_DATA(client, nick) = strdup ((irc_args[0] == ':') ?
+                                                   irc_args + 1 : irc_args);
         }
         
         /* relay all commands to client, but not ping/pong */

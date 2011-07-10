@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-05
+v0.3.6-dev, 2011-07-10
 
 
 Version 0.3.6 (under dev!)
@@ -35,6 +35,8 @@ Version 0.3.6 (under dev!)
 * irc: fix memory leak on plugin unload (free ignores)
 * irc: fix memory leak in message parser (when called from other plugins like
   relay) (bug #33387)
+* relay: fix bug with self nick when someone changes its nick on channel
+  (bug #33739)
 * relay: fix memory leak (free some parsed messages) (bug #33387)
 * relay: fix memory leak on plugin load (free raw messages)
 * logger: add option logger.file.flush_delay (task #11118)
