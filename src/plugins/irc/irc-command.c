@@ -1868,13 +1868,13 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            if (!ptr_server)
-                return WEECHAT_RC_ERROR;
+            IRC_COMMAND_CHECK_SERVER("join", 1);
             irc_command_join_server (ptr_server, argv_eol[1], 1);
         }
     }
     else
     {
+        IRC_COMMAND_CHECK_SERVER("join", 1);
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             && !ptr_channel->nicks)
         {
