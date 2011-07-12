@@ -46,6 +46,7 @@
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-completion.h"
+#include "gui-buffer.h"
 
 
 /*
@@ -213,9 +214,12 @@ gui_completion_stop (struct t_gui_completion *completion,
  */
 
 struct t_hook *
-gui_completion_search_command (const char *command)
+gui_completion_search_command (struct t_weechat_plugin *plugin,
+                               const char *command)
 {
-    struct t_hook *ptr_hook;
+    struct t_hook *ptr_hook, *hook_for_other_plugin;
+    
+    hook_for_other_plugin = NULL;
     
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
@@ -225,11 +229,15 @@ gui_completion_search_command (const char *command)
             && HOOK_COMMAND(ptr_hook, command)[0]
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    command) == 0))
-            return ptr_hook;
+        {
+            if (ptr_hook->plugin == plugin)
+                return ptr_hook;
+            
+            hook_for_other_plugin = ptr_hook;
+        }
     }
     
-    /* command not found */
-    return NULL;
+    return hook_for_other_plugin;
 }
 
 /*
@@ -494,7 +502,8 @@ gui_completion_get_template_for_args (struct t_gui_completion *completion,
         && (HOOK_COMMAND(hook_command, cplt_templates)[0][1] == '%')
         && (HOOK_COMMAND(hook_command, cplt_templates)[0][1]))
     {
-        hook_command = gui_completion_search_command (HOOK_COMMAND(hook_command, cplt_templates)[0] + 2);
+        hook_command = gui_completion_search_command (completion->buffer->plugin,
+                                                      HOOK_COMMAND(hook_command, cplt_templates)[0] + 2);
         if (!hook_command
             || ((HOOK_COMMAND(hook_command, cplt_templates)[0][0] == '%')
                 && (HOOK_COMMAND(hook_command, cplt_templates)[0][1] == '%')))
@@ -537,7 +546,8 @@ gui_completion_build_list (struct t_gui_completion *completion)
     
     repeat_last = 0;
     
-    ptr_hook = gui_completion_search_command (completion->base_command);
+    ptr_hook = gui_completion_search_command (completion->buffer->plugin,
+                                              completion->base_command);
     if (!ptr_hook || !HOOK_COMMAND(ptr_hook, completion))
     {
         completion->context = GUI_COMPLETION_AUTO;

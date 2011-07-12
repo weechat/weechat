@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-10
+v0.3.6-dev, 2011-07-12
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix completion for command arguments when same command exists in many
+  plugins (bug #33753)
 * core: add context "search" for keys (to define keys used during search in
   buffer with ctrl+"r")
 * core: add new option weechat.look.separator_vertical, rename option
