@@ -198,7 +198,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
      * if nick is the same as server, then we will not ignore
      * (it is possible when connected to an irc proxy)
      */
-    if (nick && (strcmp (server->nick, nick) == 0))
+    if (nick && server->nick && (strcmp (server->nick, nick) == 0))
         return 0;
     
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
