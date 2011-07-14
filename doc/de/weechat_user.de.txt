@@ -1199,7 +1199,7 @@ and groups to improve their privacy and security on the Internet.
 
 First, make sure to have WeeChat compiled with <<dependencies,libgcrypt11-dev>>
 (if built from sources); it's not mandatory, but DH-BLOWFISH ensures stronger
-security compared to PLAIN autenthication system with SASL.
+security compared to PLAIN authentication system with SASL.
 
 In first place, install TOR. For Debian (and derivated):
 
