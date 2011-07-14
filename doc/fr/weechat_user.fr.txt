@@ -1206,6 +1206,61 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 
 Pour plus d'informations, consulter http://www.oftc.net/oftc/NickServ/CertFP
 
+[[irc_tor_freenode]]
+Connexion à Freenode avec TOR/SASL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+En plus du SSL, les serveurs Freenode supportent les connexions avec TOR
+(https://www.torproject.org/), un réseau de tunnels virtuels qui permet aux
+personnes et groupes d'améliorer leur vie privée et sécurité sur Internet.
+
+Premièrement, assurez-vous d'avoir compilé WeeChat avec
+<<dependencies,libgcrypt11-dev>> (si construit depuis les sources); ce n'est
+pas obligatoire, mais DH-BLOWFISH assure une meilleure sécurité comparé à
+l'authentification PLAIN avec SASL.
+
+En premier lieu, installez TOR. Pour Debian (et dérivés) :
+
+----------------------------------------
+$ sudo apt-get install tor
+----------------------------------------
+
+Sous WeeChat vous devez créer un proxy socks5 pour le service TOR (le nom/IP
+et port dépend de votre configuration de TOR) :
+
+----------------------------------------
+/proxy add tor socks5 127.0.0.1 9050
+----------------------------------------
+
+Maintenant, créez un nouveau serveur, par exemple :
+
+----------------------------------------
+/server add freenode-tor p4fsi4ockecnea7l.onion
+----------------------------------------
+
+Définissez le proxy pour TOR :
+
+----------------------------------------
+/set irc.server.freenode-tor.proxy "tor"
+----------------------------------------
+
+Définissez l'authentification SASL :
+
+----------------------------------------
+/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
+/set irc.server.freenode-tor.sasl_username "your_nickname"
+/set irc.server.freenode-tor.sasl_password "your_password"
+----------------------------------------
+
+Et enfin, la connexion au serveur :
+
+----------------------------------------
+/connect freenode-tor
+----------------------------------------
+
+Pour plus d'informations à propos de Freenode et TOR :
+http://freenode.net/irc_servers.shtml#tor
+
 [[irc_smart_filter_join_part_quit]]
 Filtre intelligent pour les messages join/part/quit
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

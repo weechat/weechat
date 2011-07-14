@@ -1171,6 +1171,59 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 
 For more information, look at http://www.oftc.net/oftc/NickServ/CertFP
 
+[[irc_tor_freenode]]
+Connect to Freenode with TOR/SASL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In addition to SSL, Freenode servers support connections with TOR
+(https://www.torproject.org/), a network of virtual tunnels that allows people
+and groups to improve their privacy and security on the Internet.
+
+First, make sure to have WeeChat compiled with <<dependencies,libgcrypt11-dev>>
+(if built from sources); it's not mandatory, but DH-BLOWFISH ensures stronger
+security compared to PLAIN autenthication system with SASL.
+
+In first place, install TOR. For Debian (and derivated):
+
+----------------------------------------
+$ sudo apt-get install tor
+----------------------------------------
+
+In WeeChat you need to create a socks5 proxy for TOR service (hostname/IP and
+port depend on your TOR configuration):
+
+----------------------------------------
+/proxy add tor socks5 127.0.0.1 9050
+----------------------------------------
+
+Now, create a new server, for example:
+
+----------------------------------------
+/server add freenode-tor p4fsi4ockecnea7l.onion
+----------------------------------------
+
+Set proxy for TOR:
+
+----------------------------------------
+/set irc.server.freenode-tor.proxy "tor"
+----------------------------------------
+
+Set SASL authtentication:
+
+----------------------------------------
+/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
+/set irc.server.freenode-tor.sasl_username "your_nickname"
+/set irc.server.freenode-tor.sasl_password "your_password"
+----------------------------------------
+
+And finally, connection to server:
+
+----------------------------------------
+/connect freenode-tor
+----------------------------------------
+
+For more info about Freenode and TOR: http://freenode.net/irc_servers.shtml#tor
+
 [[irc_smart_filter_join_part_quit]]
 Smart filter for join/part/quit messages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
