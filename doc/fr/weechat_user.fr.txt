@@ -1248,8 +1248,8 @@ Définissez l'authentification SASL :
 
 ----------------------------------------
 /set irc.server.freenode-tor.sasl_mechanism dh-blowfish
-/set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_username "votre_pseudo"
+/set irc.server.freenode-tor.sasl_password "votre_mot_de_passe"
 ----------------------------------------
 
 Et enfin, la connexion au serveur :
