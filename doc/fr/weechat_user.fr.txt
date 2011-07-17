@@ -93,6 +93,7 @@ compiler WeeChat.
 | Paquet ^(1)^             | Requis | Fonctionnalité
 | cmake                    | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
 | libncursesw5-dev ^(2)^   | *oui*  | interface ncurses
+| gettext                  | non    | internationalisation (traduction des messages; la langue de base est l'anglais)
 | libgcrypt11-dev          | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
 | libgnutls-dev (>= 2.2.0) | non    | connexion SSL au serveur IRC
 | libaspell-dev            | non    | extension aspell
