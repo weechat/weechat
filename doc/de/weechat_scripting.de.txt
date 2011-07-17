@@ -582,7 +582,7 @@ def kernel_process_cb(data, command, rc, stdout, stderr):
         weechat.prnt("", kernel_txt)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("python -c \"import urllib; "
+weechat.hook_process("python -c \"import urllib; " \
                      "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
                      10 * 1000, "kernel_process_cb", "")
 ----------------------------------------
@@ -607,7 +607,7 @@ skript_optionen = {
     "Option2" : "Wert2",
     "Option3" : "Wert3",
 }
-for option, default_value in skript_optionen.iteritems():
+for option, standardwert in skript_optionen.iteritems():
     if not weechat.config_is_set_plugin(option):
         weechat.config_set_plugin(option, standardwert)
 ----------------------------------------

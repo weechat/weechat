@@ -435,8 +435,7 @@ Tastenbefehle für die Befehlszeile
 | @k(Backsp.)         .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
-// TRANSLATION MISSING
-| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (see <<key_bindings_search_context,keys for search context>>) | /input search_text
+| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | /input search_text
 | @k(C-)@k(t)         | Zeichen austauschen | /input transpose_chars
 | @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | /input delete_previous_word
@@ -509,21 +508,20 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
 |========================================
 
-// TRANSLATION MISSING
 [[key_bindings_search_context]]
-Keys for "search" context
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Tasten für "Suchen"-Kontext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-These keys are used in context "search" (when @k(C-)@k(r) is pressed to search
-text in buffer).
+Diese Tasten werden im Kontext "search" verwendet (wenn @k(C-)@k(r) genutzt wird um
+in einem Buffer nach einem Text zu suchen).
 
 [width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Key         | Description | Command
-| @k(C-)@k(r) | Switch exact case for search | /input search_switch_case
-| @k(↑)       | Search previous line | /input search_previous
-| @k(↓)       | Search next line | /input search_next
-| @k(Enter)   .3+| Stop search .3+| /input search_stop
+| Taste       | Beschreibung | Befehl
+| @k(C-)@k(r) | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
+| @k(↑)       | sucht vorheriger Zeile  | /input search_previous
+| @k(↓)       | sucht nächste Zeile  | /input search_next
+| @k(Enter)   .3+| Suche abbrechen .3+| /input search_stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -1188,45 +1186,44 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 
 Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/NickServ/CertFP
 
-// TRANSLATION MISSING
 [[irc_tor_freenode]]
-Connect to Freenode with TOR/SASL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Verbindung zu Freenode mittels TOR/SASL herstellen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In addition to SSL, Freenode servers support connections with TOR
-(https://www.torproject.org/), a network of virtual tunnels that allows people
-and groups to improve their privacy and security on the Internet.
+Neben der Möglichkeit eine Verbindung zum Freenode Server mittels SSL aufzubauen,
+kann man außerdem eine Verbindung via TOR (https://www.torproject.org/) herstellen.
+Dies dient dazu die eigene Privatsphäre und Sicherheit im Internet zu erhöhen.
 
-First, make sure to have WeeChat compiled with <<dependencies,libgcrypt11-dev>>
-(if built from sources); it's not mandatory, but DH-BLOWFISH ensures stronger
-security compared to PLAIN authentication system with SASL.
+Zuerst sollte man sicher gehen, dass WeeChat mit <<dependencies,libgcrypt11-dev>> kompiliert
+wurde (sofern WeeChat aus den Quellen erstellt wurde); es ist nicht verpflichtend, allerdings
+bietet DH-BLOWFISH eine größere Sicherheit als eine PLAIN Authentifikation mittels SASL.
 
-In first place, install TOR. For Debian (and derivated):
+Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 
 ----------------------------------------
 $ sudo apt-get install tor
 ----------------------------------------
 
-In WeeChat you need to create a socks5 proxy for TOR service (hostname/IP and
-port depend on your TOR configuration):
+In WeeChat muss nun ein socks5 Proxy für den TOR Service erstellt werden (Hostname/IP
+und Port müssen dabei an die eigene TOR Konfiguration angepasst werden):
 
 ----------------------------------------
 /proxy add tor socks5 127.0.0.1 9050
 ----------------------------------------
 
-Now, create a new server, for example:
+Nun erstellt man einen neuen Server, zum Beispiel:
 
 ----------------------------------------
 /server add freenode-tor p4fsi4ockecnea7l.onion
 ----------------------------------------
 
-Set proxy for TOR:
+Der Proxy muss für TOR angelegt werden:
 
 ----------------------------------------
 /set irc.server.freenode-tor.proxy "tor"
 ----------------------------------------
 
-Set SASL authentication:
+Die SASL Authentifikation einstellen:
 
 ----------------------------------------
 /set irc.server.freenode-tor.sasl_mechanism dh-blowfish
@@ -1234,13 +1231,13 @@ Set SASL authentication:
 /set irc.server.freenode-tor.sasl_password "your_password"
 ----------------------------------------
 
-And finally, connection to server:
+Zum Abschluss stellt man eine Verbindung zum Server her:
 
 ----------------------------------------
 /connect freenode-tor
 ----------------------------------------
 
-For more info about Freenode and TOR: http://freenode.net/irc_servers.shtml#tor
+Um mehr über Freenode und TOR zu erfahren: http://freenode.net/irc_servers.shtml#tor
 
 [[irc_smart_filter_join_part_quit]]
 einfacher Filter für join/part/quit Nachrichten
