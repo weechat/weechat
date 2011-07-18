@@ -3395,9 +3395,10 @@ IRC_PROTOCOL_CALLBACK(352)
      *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
      */
     
-    IRC_PROTOCOL_MIN_ARGS(9);
-    
     arg_start = (strcmp (argv[8], "*") == 0) ? 9 : 8;
+    
+    IRC_PROTOCOL_MIN_ARGS(arg_start + 1);
+    
     if (argv[arg_start][0] == ':')
     {
         pos_attr = NULL;
