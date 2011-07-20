@@ -21,11 +21,11 @@ libero, veloce e leggero, realizzato per diversi sistemi operativi.
 Caratteristiche
 ~~~~~~~~~~~~~~~
 
-Le caratteristiche principali:
+Le principali caratteristiche:
 
 * multi-protocollo (IRC, Jabber)
 * connessione a server multipli (con SSL, IPv6, proxy)
-* molte interfacce: Curses (wxWidgets, Gtk e Qt in fase di sviluppo)
+* interfacce multiple: Curses (wxWidgets, Gtk e Qt in fase di sviluppo)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
 * conforme alle RFC di IRC http://www.ietf.org/rfc/rfc1459.txt[1459],
@@ -61,9 +61,9 @@ Pacchetti binari
 
 I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 
-* Debian (o qualsiasi distribuzione compatibile):
+* Debian (o qualunque distribuzione compatibile):
   `apt-get install weechat-curses`
-* Mandriva/RedHat (o qualsiasi distribuzione compatibile con gli  RPM):
+* Mandriva/RedHat (o qualunque distribuzione compatibile con RPM):
   `rpm -i /percorso/per/weechat-x.y.z-1.i386.rpm`
 * Gentoo: `emerge weechat`
 * Arch Linux: `pacman -S weechat`
@@ -95,8 +95,7 @@ compilare WeeChat.
 | Pacchetto ^(1)^          | Richiesto | Caratteristica
 | cmake                    | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
 | libncursesw5-dev ^(2)^   | *sì*      | interfaccia ncurses
-// TRANSLATION MISSING
-| gettext                  | no        | internationalization (translation of messages; base language is english)
+| gettext                  | no        | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | libgcrypt11-dev          | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
 | libgnutls-dev (>= 2.2.0) | no        | connessione SSL al server IRC
 | libaspell-dev            | no        | plugin aspell
@@ -185,8 +184,8 @@ Poi seguire le istruzioni per i sorgenti (consultare
 Segnalare gli errori
 ~~~~~~~~~~~~~~~~~~~~
 
-Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore futuro
-di WeeChat, è necessario:
+Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore
+futuro di WeeChat, è necessario:
 
 * compilarlo con informazioni di debug (o installare il pacchetto binario con
   le informazioni di debug)
@@ -203,7 +202,7 @@ Se si compila con cmake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----------------------------------------
 
-Se si compila con gli autotools, il debug è predefinito (`--with-debug=1`).
+Se compilato con gli autotools, il debug è attivato automaticamente (`--with-debug=1`).
 
 Se è stato installato il pacchetto binario, installare il pacchetto 'weechat-gdb'.
 
@@ -446,8 +445,7 @@ Tasti per la riga di comando
 | @k(Backsp.)         .2+| Elimina il carattere precedente nella riga di comando .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_end_of_line
-// TRANSLATION MISSING
-| @k(C-)@k(r)         | Cerca del testo nella cronologia del buffer (see <<key_bindings_search_context,keys for search context>>) | /input search_text
+| @k(C-)@k(r)         | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | /input search_text
 | @k(C-)@k(t)         | Inverti caratteri | /input transpose_chars
 | @k(C-)@k(u)         | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_beginning_of_line
 | @k(C-)@k(w)         | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_previous_word
@@ -456,7 +454,7 @@ Tasti per la riga di comando
 | @k(A-)@k(_)         | Ripete l'ultima azione sulla riga di comando | /input redo
 | @k(Tab)             | Completa comando o nick (@k(Tab) di nuovo: trova prossimo completamento) | /input complete_next
 | @k(S-)@k(Tab)       | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente | /input complete_previous
-| @k(Enter)           .3+| Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) .3+| /input return
+| @k(Invio)           .3+| Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) .3+| /input return
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 | @k(↑)               | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) | /input history_previous
@@ -520,21 +518,20 @@ Tasti per buffer / finestre
 | @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | /input jump_next_visited_buffer
 |========================================
 
-// TRANSLATION MISSING
 [[key_bindings_search_context]]
-Keys for "search" context
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Tasti per il contesto "search"
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-These keys are used in context "search" (when @k(C-)@k(r) is pressed to search
-text in buffer).
+Questi tasti sono usati nel contesto "search" (quando viene digitato
+@k(C-)@k(r) per cercare del testo nel buffer).
 
 [width="100%",cols="^.^3,.^10,.^5m",options="header"]
 |========================================
-| Key         | Description | Command
-| @k(C-)@k(r) | Switch exact case for search | /input search_switch_case
-| @k(↑)       | Search previous line | /input search_previous
-| @k(↓)       | Search next line | /input search_next
-| @k(Enter)   .3+| Stop search .3+| /input search_stop
+| Key         | Descrizione | Comando
+| @k(C-)@k(r) | Passa alla ricerca esatta | /input search_switch_case
+| @k(↑)       | Cerca riga precedente | /input search_previous
+| @k(↓)       | Cerca riga successiva | /input search_next
+| @k(Invio)   .3+| Ferma ricerca .3+| /input search_stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -1197,45 +1194,45 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 
 Per maggiori informazioni consultare http://www.oftc.net/oftc/NickServ/CertFP
 
-// TRANSLATION MISSING
 [[irc_tor_freenode]]
-Connect to Freenode with TOR/SASL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Connessione a Freenode con TOR/SASL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In addition to SSL, Freenode servers support connections with TOR
-(https://www.torproject.org/), a network of virtual tunnels that allows people
-and groups to improve their privacy and security on the Internet.
+Oltre ad SSL, i server Freenode supportano connessioni con TOR
+(https://www.torproject.org), una rete di tunnel virtuali che consente ad
+utenti e gruppi di migliorare la propria privacy e la sicurezza su Internet.
 
-First, make sure to have WeeChat compiled with <<dependencies,libgcrypt11-dev>>
-(if built from sources); it's not mandatory, but DH-BLOWFISH ensures stronger
-security compared to PLAIN authentication system with SASL.
+Per prima cosa, assicurarsi che WeeChat sia compilato con
+<<dependencies,libgcrypt11-dev>> (se compilato da sorgenti); non è
+obbligatorio, ma DH-BLOWFISH assicura una maggiore sicurezza rispetto al
+sistema di autenticazione con SASL.
 
-In first place, install TOR. For Debian (and derivated):
+Il primo passo consiste nell'installare TOR. Per Debian (e derivate):
 
 ----------------------------------------
 $ sudo apt-get install tor
 ----------------------------------------
 
-In WeeChat you need to create a socks5 proxy for TOR service (hostname/IP and
-port depend on your TOR configuration):
+In WeeChat è necessario creare un proxy socks5 per il servizio TOR (nome
+host/IP e porta dipendono dalla propria configurazione di TOR):
 
 ----------------------------------------
 /proxy add tor socks5 127.0.0.1 9050
 ----------------------------------------
 
-Now, create a new server, for example:
+Ora, bisogna creare un nuovo server, ad esempio:
 
 ----------------------------------------
 /server add freenode-tor p4fsi4ockecnea7l.onion
 ----------------------------------------
 
-Set proxy for TOR:
+Impostare il proxy per TOR:
 
 ----------------------------------------
 /set irc.server.freenode-tor.proxy "tor"
 ----------------------------------------
 
-Set SASL authentication:
+Impostare l'autenticazione SASL:
 
 ----------------------------------------
 /set irc.server.freenode-tor.sasl_mechanism dh-blowfish
@@ -1243,13 +1240,14 @@ Set SASL authentication:
 /set irc.server.freenode-tor.sasl_password "your_password"
 ----------------------------------------
 
-And finally, connection to server:
+E alla fine, connettersi al server:
 
 ----------------------------------------
 /connect freenode-tor
 ----------------------------------------
 
-For more info about Freenode and TOR: http://freenode.net/irc_servers.shtml#tor
+Per maggiori informazioni su Freenode e TOR:
+http://freenode.net/irc_servers.shtml#tor
 
 [[irc_smart_filter_join_part_quit]]
 Filtro smart per i messaggi di entrata/uscita/disconnessione
@@ -1741,7 +1739,7 @@ In questo esempio, il numero 1 resta così com'è, e sostituiamo tutti i
 caratteri del gruppo 2 con il carattere di sostituzione definito nella
 configurazione (opzione 'rmodifier.look.hide_char').
 
-Se la riga di comando contiene: `/oper nick password` allora a video diventa:
+Se la riga di comando contiene: `/oper nick password` allora sullo schermo diventa:
 `/oper nick ********`.
 
 [[scripts_plugins]]
@@ -1749,7 +1747,7 @@ Plugin per gli script
 ~~~~~~~~~~~~~~~~~~~~~
 
 WeeChat fornisce 5 plugin per lo scripting: Perl, Python, Ruby, Lua, Tcl.
-Questi plugin possono caricare, eseguire e disattivare gli script per questi
+Questi plugin possono attivare, eseguire e disattivare gli script per questi
 linguaggi.
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
@@ -1842,7 +1840,7 @@ Patches::
 Supporto
 --------
 
-Prima di chieder supporto, assicurarsi di aver letto la documentazione e le FAQ
+Prima di chiedere supporto, assicurarsi di aver letto la documentazione e le FAQ
 fornite con WeeChat (la documentazione è questo documento, se non sono state
 lette tutte le righe prima di questa frase, è possibile ricominciare!).
 

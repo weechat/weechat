@@ -3,9 +3,8 @@ FAQ di WeeChat (Domande Frequenti)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
-// TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions > = 0.3.0.
+Questo documento è valido per le versioni di WeeChat > = 0.3.0.
 
 
 [[general]]
@@ -40,10 +39,8 @@ Alcune caratteristiche (versione > = 0.3.x):
 * filtri di visualizzazione con tag ed espressioni regolari
 * divisione finestre in orizzontale e verticale
 * barre personalizzabili ed estensibili
-// TRANSLATION MISSING
-* native nicklist
-// TRANSLATION MISSING
-* list of buffers (script buffers.pl)
+* lista nick nativa
+* elenco di buffer (script buffers.pl)
 * proxy IRC
 * redirezione dei comandi IRC
 * ricerca incrementale nei buffer, passaggio rapido agli eventi importanti
@@ -186,38 +183,37 @@ Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualiz
 da una finestra) o visualizzato da una o più finestre.
 
 
-// TRANSLATION MISSING
 [[buffers_list]]
-How to display the buffers list on the left side?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come si può visualizzare la lista dei buffer sulla sinistra?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use script 'buffers.pl'.
+Utilizzando lo script 'buffers.pl'.
 
-To limit size of bar:
+Per limitare la dimensione della barra:
 
 ----------------------------------------
 /set weechat.bar.buffers.size_max 15
 ----------------------------------------
 
-To move bar to bottom:
+Per spostare la barra in basso:
 
 ----------------------------------------
 /set weechat.bar.buffers.position bottom
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[customize_prefix]]
-How can I reduce length of nicks or remove nick alignment in chat area?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come si può ridurre la lunghezza dei nick o rimuovere l'allineamento nella finestra di chat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To reduce max length of nicks in chat area:
+Per ridurre la lunghezza massima dei nick nell'area di chat:
 
 ----------------------------------------
 /set weechat.look.prefix_align_max 15
 ----------------------------------------
 
 To remove nick alignment:
+Per rimuovere l'allineamento dei nick:
 
 ----------------------------------------
 /set weechat.look.prefix_align none
@@ -266,29 +262,29 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 Come posso cliccare su URL lunghi (più di una riga)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-By default, WeeChat displays time and prefix for each line and optional bars
-around chat area. To make easier url click, you can move nicklist to top and
-remove alignment on nick:
+Con le impostazioni predefinite, WeeChat mostra l'ora ed il prefisso per ogni
+riga e le barre opzionali intorno all'area di chat. Per facilitare il clic
+delle url, è possibile spostare la lista nick in alto e rimuovere
+l'allineamento sul nick:
 
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-With WeeChat > = 0.3.6, you can enable option "eat_newline_glitch", so that
-new line char is not added at the end of each line displayed (it will not break
-url selection):
+Con WeeChat > = 0.3.6, si può abilitare l'opzione "eat_newline_glitch", in
+modo che non venga aggiunto il carattere di nuova riga all'inizio di ogni riga
+visualizzata (non interferisce con la selezione delle url):
 
 ----------------------------------------
 /set weechat.look.eat_newline_glitch on
 ----------------------------------------
 
 [IMPORTANT]
-This option may cause display bugs. If you experience such problem, you must
-turn off this option.
+Questa opzione può causare bug di visualizzazione. Se si dovessero verificare
+tali problemi, è necessario disabilitare questa opzione.
 
-Other solution is to use one of following scripts:
+Una soluzione alternativa è l'uso di uno dei seguenti script:
 
 urlbar.py::
     visualizza URL in una barra
@@ -360,14 +356,14 @@ Per favore consultare la guida per l'utente per maggiori informazioni sulla gest
 dei colori.
 
 
-// TRANSLATION MISSING
 [[search_text]]
-How can I search text in buffer (like /lastlog in irssi)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso cercare testo nel buffer (come /lastlog con irssi)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default key is @k(C-)@k(r) (command is: `/input search_text`).
+Il tasto predefinito è @k(C-)@k(r) (il comando è: `/input search-text`).
 
-See user's guide for more info about this feature (default key bindings).
+Consultare la guida per l'utente per maggiori informazioni su questa funzione
+(combinazioni tasti predefiniti).
 
 
 [[key_bindings]]
@@ -466,26 +462,26 @@ visualizzarle se i filtri vengono disabilitati (il comando predefinito
 @k(A-)@k(=) abilita/disabilita i filtri).
 
 
-// TRANSLATION MISSING
 [[filter_irc_join_part_quit]]
 Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With smart filter (keep join/part/quit from users who spoke recently):
+Con il filtro intelligente (mantiene entrata/uscita/abbandono degli utenti che
+hanno scritto di recente):
 
 ----------------------------------------
 /set irc.look.smart_filter on
 /filter add irc_smart * irc_smart_filter *
 ----------------------------------------
 
-With a global filter (hide *all* join/part/quit):
+Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
 
 ----------------------------------------
 /filter add jpk * irc_join,irc_part,irc_quit *
 ----------------------------------------
 
 [NOTE]
-For help: `/help filter` and `/help irc.look.smart_filter`
+Per aiuto: `/help filter` e `/help irc.look.smart_filter`
 
 
 [[filter_irc_join_channel_messages]]
@@ -534,9 +530,9 @@ set away_devoice false
 Per verificare i nick assenti in WeeChat, consultare la domanda
 relativa a <<color_away_nicks,nick assenti>>.
 
-// TRANSLATION MISSING
-If you really want to filter voice messages, you can use this command, but this
-is not perfect (will work only if first mode changed is voice):
+Se davvero di desidera filtrare i messaggi voice, è possibile usare questo
+comando, ma non funzionerà perfettamente (funziona se la prima modalità
+modificata è il voice):
 
 ----------------------------------------
 /filter add hidevoices * irc_mode \(\+\|\-\)v
@@ -566,20 +562,19 @@ Per WeeChat < = 0.3.3, le opzioni sono 'irc.network.away_check' e
 'irc.network.away_check_max_nicks'.
 
 
-// TRANSLATION MISSING
 [[highlight_notification]]
 Come posso essere avvisato quando qualcuno mi cerca in un canale?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use a script like 'beep.pl' or 'launcher.pl'.
+E' possibile usare script come 'beep.pl" o 'launcher.pl'.
 
-For 'launcher.pl', you have to setup command:
+Per 'launcher.pl', bisogna impostare il comando:
 
 ----------------------------------------
-/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
+/set plugins.var.perl.launcher.signal.weechat_highlight "/percorso/del/comando argomenti"
 ----------------------------------------
 
-Other scripts on this subject: http://www.weechat.org/scripts/stable/tag/notify/
+Altri script correlati: http://www.weechat.org/scripts/stable/tag/notify/
 
 
 [[irc_ssl_connection]]
@@ -625,12 +620,11 @@ In WeeChat, impostare la porta del server, SSL, dhkey_size, e infine connettersi
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_target_buffer]]
-How can I change target buffer for commands on merged buffers (like buffer with servers)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default key is @k(C-)@k(x) (command is: `/input switch_active_buffer`).
+Il tasto predefinito è @k(C-)@k(x) (il comando è: `/input switch_active_buffer`).
 
 
 [[plugins_scripts]]
