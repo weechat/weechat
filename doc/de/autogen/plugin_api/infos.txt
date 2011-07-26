@@ -28,6 +28,8 @@
 
 | weechat | charset_terminal | Terminal Zeichensatz | -
 
+| weechat | cursor_mode | 1 if cursor mode is enabled | -
+
 | weechat | date | Datum der WeeChat Kompilierung | -
 
 | weechat | dir_separator | Verzeichnis-Trennzeichen | -

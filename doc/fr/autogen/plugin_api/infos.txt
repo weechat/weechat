@@ -28,6 +28,8 @@
 
 | weechat | charset_terminal | charset du terminal | -
 
+| weechat | cursor_mode | 1 si le mode curseur est activé | -
+
 | weechat | date | date de compilation de WeeChat | -
 
 | weechat | dir_separator | séparateur de répertoire | -

@@ -4693,6 +4693,76 @@ weechat_lua_api_hook_infolist (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hook_focus_cb: callback for focus hooked
+ */
+
+struct t_hashtable *
+weechat_lua_api_hook_focus_cb (void *data,
+                               struct t_hashtable *info)
+{
+    struct t_script_callback *script_callback;
+    void *lua_argv[2];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        lua_argv[1] = info;
+        
+        return (struct t_hashtable *)weechat_lua_exec (script_callback->script,
+                                                       WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                       script_callback->function,
+                                                       "sh", lua_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_lua_api_hook_focus: hook a focus
+ */
+
+static int
+weechat_lua_api_hook_focus (lua_State *L)
+{
+    const char *area, *function, *data;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "hook_focus");
+        LUA_RETURN_EMPTY;
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "hook_focus");
+        LUA_RETURN_EMPTY;
+    }
+    
+    area = lua_tostring (lua_current_interpreter, -3);
+    function = lua_tostring (lua_current_interpreter, -2);
+    data = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_focus (weechat_lua_plugin,
+                                                    lua_current_script,
+                                                    area,
+                                                    &weechat_lua_api_hook_focus_cb,
+                                                    function,
+                                                    data));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_unhook: unhook something
  */
 
@@ -8322,6 +8392,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_info", &weechat_lua_api_hook_info },
     { "hook_info_hashtable", &weechat_lua_api_hook_info_hashtable },
     { "hook_infolist", &weechat_lua_api_hook_infolist },
+    { "hook_focus", &weechat_lua_api_hook_focus },
     { "unhook", &weechat_lua_api_unhook },
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },

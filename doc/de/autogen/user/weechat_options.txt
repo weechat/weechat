@@ -364,7 +364,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y"`)
 
 * *weechat.look.eat_newline_glitch*
-** Beschreibung: `wird diese Option aktiviert, dann wird /"eat_newline_glitch/" auf 0 gesetzt; dies wird genutzt um keinen Zeilenumbruch am Ende einer Zeile `
+** Beschreibung: `aktiviert man diese Option, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch angehangen wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Option ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -472,6 +472,11 @@
 ** Beschreibung: `Wechselt zum vorher genutzten Buffer falls der aktuelle Buffer geschlossen wird (wenn diese Funktion deaktiviert ist wird zum Buffer gewechselt der die Position -1 einnimmt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
+
+* *weechat.look.mouse*
+** Beschreibung: `enable mouse support at startup (to enable it now, see /help mouse)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.nickmode*
 ** Beschreibung: `Nickmode ((half)op/voice [@%+]) vor dem Nicknamen anzeigen`
@@ -599,7 +604,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * *weechat.look.separator_vertical*
-** Beschreibung: `char used to draw vertical separators around bars (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** Beschreibung: `Das angegebene Zeichen wird genutzt um damit die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene Linie. Wide Chars sind für diese Option NICHT erlaubt.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

@@ -25,6 +25,7 @@ gui-gtk-chat.c
 gui-gtk-color.c
 gui-gtk-key.c
 gui-gtk-main.c
+gui-gtk-mouse.c
 gui-gtk-term.c
 gui-gtk-window.c)
 

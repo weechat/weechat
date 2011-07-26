@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-10 23:03+0200\n"
-"PO-Revision-Date: 2011-07-05 15:37+0200\n"
-"Last-Translator: Nils G.\n"
+"POT-Creation-Date: 2011-07-26 14:08+0200\n"
+"PO-Revision-Date: 2011-07-14 20:53+0100\n"
+"Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -88,9 +88,9 @@ msgstr ""
 "                    zu den mögliche Optionen zu erhalten.)\n"
 
 #. TRANSLATORS: first "%s" is "weechat"
-#, fuzzy, c-format
+#, c-format
 msgid "%s default keys (context: \"%s\"):\n"
-msgstr "%s Standardtastenbelegungen:\n"
+msgstr "%s Standardtastenbelegungen (Kontext: \"%s\"):\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -386,18 +386,23 @@ msgstr "Befehlsverlauf des Buffers:"
 msgid "default command:"
 msgstr "Standardbefehl:"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings added or redefined (%d) for context \"%s\":"
-msgstr "Tastenbelegungen die hinzugefügt oder verändert wurden (%d):"
+msgid "%d key bindings added or redefined for context \"%s\":"
+msgstr ""
+"Tastenbelegungen die hinzugefügt oder verändert wurden (%d) für Kontext \"%s"
+"\":"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings deleted (%d) for context \"%s\":"
-msgstr "Tastenbelegungen die gelöscht wurden (%d):"
+msgid "%d key bindings deleted for context \"%s\":"
+msgstr "Tastenbelegungen die gelöscht wurden (%d), für Kontext \"%s\":"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr ""
-"Es sind keine Tastenbelegungen hinzugefügt, verändert oder gelöscht worden"
+"Es sind für Kontext \"%s\" weder Tastenbelegungen hinzugefügt, verändert "
+"oder gelöscht worden"
 
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
@@ -407,9 +412,9 @@ msgstr "%sFehler: kann die Taste \"%s\" nicht zuordnen"
 msgid "Key \"%s\" has already default value"
 msgstr "Die Taste \"%s\" ist schon mit einem Standardbefehl belegt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Tastenbelegung \"%s\" entfernt"
+msgstr "Tastenbelegung \"%s\" entfernt (Kontext: \"%s\")"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -419,21 +424,23 @@ msgstr "%sFehler: kann die Tastenbelegung \"%s\" nicht entfernen"
 msgid "%sKey \"%s\" not found"
 msgstr "%sTastenbelegung \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No key binding defined for context \"%s\""
-msgstr "Keine Tastenbelegung definiert"
+msgstr "Keine Tastenbelegung für Kontext \"%s\" definiert"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings (%d) for context \"%s\":"
-msgstr "Tastenbelegungen (%d):"
+msgid "%d key bindings for context \"%s\":"
+msgstr "Tastenbelegungen die gelöscht wurden (%d), für Kontext \"%s\":"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No default key binding for context \"%s\""
-msgstr "keine Standardtastenbelegungen vorhanden"
+msgstr "keine Standardtastenbelegungen für Kontext \"%s\" vorhanden"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Default key bindings (%d) for context \"%s\":"
-msgstr "Standardtastenbelegungen (%d):"
+msgid "%d default key bindings for context \"%s\":"
+msgstr "keine Standardtastenbelegungen für Kontext \"%s\" vorhanden"
 
 msgid "Key:"
 msgstr "Taste:"
@@ -441,13 +448,13 @@ msgstr "Taste:"
 msgid "No key found"
 msgstr "Keine Taste gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: context \"%s\" not found"
-msgstr "%sFehler: Filter \"%s\" nicht gefunden"
+msgstr "%sFehler: Kontext\"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Default key bindings restored for context \"%s\""
-msgstr "Standardtastenbelegungen wiederhergestellt"
+msgstr "Standardtastenbelegungen wiederhergestellt für Kontext \"%s\""
 
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
@@ -455,11 +462,11 @@ msgstr ""
 "%sFehler: \"-yes\" Argument ist aus Sicherheitsgründen für den Reset der "
 "Tastenbelegung notwendig"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "(%d) neue Taste hinzugefügt"
-msgstr[1] "(%d) neue Tasten hinzugefügt"
+msgstr[1] "(%d) neue Tasten hinzugefügt (Kontext: \"%s\")"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -830,6 +837,7 @@ msgstr ""
 "status|nicklist] || del <name>|-all || set <name> <option> <value> || hide|"
 "show|toggle <name> || scroll <name> <buffer> <scroll_value>"
 
+#, fuzzy
 msgid ""
 "         list: list all bars\n"
 "     listfull: list all bars (verbose)\n"
@@ -862,9 +870,9 @@ msgid ""
 "       scroll: scroll bar\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
-" scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', "
-"'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
-"%% of width/height, otherwise value is number of chars)\n"
+" scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', "
+"'-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to "
+"scroll by % of width/height, otherwise value is number of chars)\n"
 "\n"
 "Examples:\n"
 "  create a bar with time, buffer number + name, and completion:\n"
@@ -1093,16 +1101,44 @@ msgstr ""
 "    Befehl: auszuführender Befehl (es wird automatisch ein '/' "
 "vorangestellt, falls dieser nicht angegeben wurde)"
 
+msgid ""
+"free movement of cursor on screen to execute actions on specific areas of "
+"screen"
+msgstr ""
+
+msgid ""
+"go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|area_left|"
+"area_right || stop"
+msgstr ""
+
+msgid ""
+"  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
+"\"\n"
+"move: move cursor with direction\n"
+"stop: stop cursor mode\n"
+"\n"
+"Without argument, this command toggles cursor mode.\n"
+"\n"
+"When mouse is enabled (see /help mouse), by default a middle click will "
+"start cursor mode at this point.\n"
+"\n"
+"Examples:\n"
+"  go to nicklist:\n"
+"    /cursor go nicklist\n"
+"  go to coordinates x=10, y=5:\n"
+"    /cursor go 10,5"
+msgstr ""
+
 msgid "control debug for core/plugins"
 msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
 #, fuzzy
 msgid ""
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
+"infolists|memory|mouse|tags|term|windows || hdata [free]"
+msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || hdata [free]"
-msgstr ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|hdata|"
-"infolists|memory|tags|term|windows"
 
 #, fuzzy
 msgid ""
@@ -1114,10 +1150,12 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"   cursor: toggle debug for cursor mode\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
+"    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
 "  windows: display windows tree"
@@ -1131,8 +1169,8 @@ msgstr ""
 "   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die "
 "Protokolldatei\n"
 "    color: zeigt Informationen über die aktuellen Farbpaarungen an\n"
-"    hdata: zeigt Informationen zu hdata an (direkter Daten-Zugriff auf "
-"WeeChat/Erweiterungen)\n"
+"    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata "
+"Informationen aus dem Speicher entfernt)\n"
 "infolists: zeigt Information über die Infolists an\n"
 "   memory: gibt Informationen über den genutzten Speicher aus\n"
 "     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an\n"
@@ -1347,8 +1385,10 @@ msgid ""
 "  jump_previously_visited_buffer: jump to previously visited buffer\n"
 "  jump_next_visited_buffer: jump to next visited buffer\n"
 "  hotlist_clear: clear hotlist\n"
-"  grab_key: grab a key\n"
-"  grab_key_command: grab a key with its associated command\n"
+"  grab_key: grab a key (optional argument: delay for end of grab, default is "
+"500 milliseconds)\n"
+"  grab_key_command: grab a key with its associated command (optional "
+"argument: delay for end of grab, default is 500 milliseconds)\n"
 "  scroll_unread: scroll to unread marker\n"
 "  set_unread: set unread marker for all buffers\n"
 "  set_unread_current_buffer: set unread marker for current buffer\n"
@@ -1363,6 +1403,10 @@ msgstr ""
 "  complete_next: vervollständigt Word mit nächster Komplettierung\n"
 "  complete_previous: vervollständigt Word mit vorheriger Komplettierung\n"
 "  search_text: sucht nach Text im Buffer\n"
+"  search_switch_case: schaltet Groß-/Kleinschreibung ein und aus\n"
+"  search_previous: sucht vorheriger Zeile\n"
+"  search_next: sucht nächste Zeile\n"
+"  search_stop: suche stoppen\n"
 "  delete_previous_char: entfernt vorheriges Zeichen\n"
 "  delete_next_char: entfernt nächstes Zeichen\n"
 "  delete_previous_word: entfernt vorheriges Wort\n"
@@ -1415,15 +1459,16 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "Einer Taste einen Befehl zuordnen oder entfernen"
 
-#, fuzzy
 msgid ""
 "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
 "bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
 "<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
 "[<context>] || missing [<context>]"
 msgstr ""
-"list|listdefault|listdiff || bind <key> [<command> [<args>]] || unbind <key> "
-"|| reset <key> || resetall -yes || missing"
+"list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
+"bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
+"<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
+"[<context>] || missing [<context>]"
 
 #, fuzzy
 msgid ""
@@ -1450,6 +1495,15 @@ msgid ""
 "then k), and then press the key to bind: this will insert key code in "
 "command line.\n"
 "\n"
+"For context \"mouse\" (possible in context \"cursor\" too), key has format: "
+"\"@area:key\" where area can be:\n"
+"  *: any area on screen\n"
+"  chat: chat area\n"
+"  bar(*): any bar\n"
+"  bar(xxx): bar \"xxx\"\n"
+"  item(*): any bar item\n"
+"  item(xxx): bar item \"xxx\"\n"
+"\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
 "    /key bind meta-x /bar toggle nicklist\n"
@@ -1458,39 +1512,52 @@ msgid ""
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r\n"
 "  key \"tab\" to stop search in buffer:\n"
-"    /key bindctxt search ctrl-I /input search_stop"
+"    /key bindctxt search ctrl-I /input search_stop\n"
+"  middle button of mouse on a nick to retrieve info on nick:\n"
+"    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
+"${nick}"
 msgstr ""
 "       list: zeigt die aktuelle Tastenbelegungen an (Standardaufruf)\n"
 "listdefault: zeigt die Standardeinstellung der Tastenbelegung an\n"
 "   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten "
 "Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/"
 "gelöschte Tastenbelegungen)\n"
+"    context: Name des Kontextes (\"default\" oder \"search\")\n"
 "       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl "
-"auf eine Taste gelegt wurde\n"
-"     unbind: hebt eine Tastenbelegung auf\n"
+"auf eine Taste gelegt wurde (für Kontext  \"default\")\n"
+"   bindctxt: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl "
+"auf eine Taste gelegt wurde, dies trifft für Kontext definierte Tasten zu\n"
+"     unbind: hebt eine Tastenbelegung auf (für Kontext \"default\")\n"
+" unbindctxt: hebt eine Tastenbelegung für den angegebenen Kontext auf\n"
 "      reset: die Tastenbelegung wird für die ausgewählte Taste auf die "
-"Standardeinstellung zurück gesetzt\n"
+"Standardeinstellung zurück gesetzt (für Kontext \"default\")\n"
+"  resetctxt: die Tastenbelegung wird für die ausgewählte Taste auf die "
+"Standardeinstellung zurück gesetzt, dies trifft für den ausgewählten Kontext "
+"zu\n"
 "   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück "
 "gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)\n"
 "    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die "
 "Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue "
 "WeeChat Version umgestiegen ist\n"
 "\n"
-"Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam dies "
-"mittels alt+k (oder Esc und k) zu machen um dann die Taste auszuwählen, die "
-"belegt werden soll. Durch diesen Schritt wird der entsprechende Tasten-Code "
-"in die Befehlszeile übernommen.\n"
+"Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit "
+"der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren und "
+"damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der "
+"entsprechende Tasten-Code in die Befehlszeile übernommen.\n"
 "\n"
 "Beispiele:\n"
-"  Mit der Tastenkombination \"alt-x\" kann die Nicklist-Bar an-und aus "
-"geschaltet werden:\n"
+"  Mit der Tastenkombination  kann die Nicklist-Bar an-und aus geschaltet "
+"werden:\n"
 "    /key bind meta-x /bar toggle nicklist\n"
 "  Mit der Tastenkombination \"alt-r\" wird direkt zum IRC #weechat Buffer "
 "gewechselt:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  Die Tastenkombination \"alt-r\" wird auf die Standardfunktion "
 "zurückgesetzt:\n"
-"    /key reset meta-r"
+"    /key reset meta-r\n"
+"  \"Tab\"-Taste nutzen um im Kontext \"search\" die Suche innerhalb eines "
+"Buffers zu beenden:\n"
+"    /key bindctxt search ctrl-I /input search_stop"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "Layout für Buffer und Fenster speichern, anwenden oder zurücksetzen"
@@ -1518,6 +1585,30 @@ msgstr ""
 "\n"
 "Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout "
 "dargestellt."
+
+#, fuzzy
+msgid "mouse control"
+msgstr "Transfer-Steuerung"
+
+msgid "enable|disable|toggle [<delay>]"
+msgstr ""
+
+msgid ""
+" enable: enable mouse\n"
+"disable: disable mouse\n"
+" toggle: toggle mouse\n"
+"  delay: delay (in seconds) after which initial mouse state is restored "
+"(useful to temporarily disable mouse)\n"
+"\n"
+"To enable/disable mouse at startup, use:\n"
+"  /set weechat.look.mouse on/off\n"
+"\n"
+"Examples:\n"
+"  enable mouse:\n"
+"    /mouse enable\n"
+"  toggle mouse for 5 seconds:\n"
+"    /mouse toggle 5"
+msgstr ""
 
 msgid "execute a command silently"
 msgstr "Führt einen Befehl ohne Textausgabe aus"
@@ -2083,9 +2174,8 @@ msgid "options for bars"
 msgstr "Optionen für Infobars"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
-#, fuzzy
 msgid "key contexts"
-msgstr "Tastaturcodes"
+msgstr "Tastaturkontext"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes"
@@ -2096,6 +2186,9 @@ msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
 "Tastenbelegungen die zurückgesetzt werden können (hinzugefügte/verändert/"
 "gelöschte Tastenbelegungen)"
+
+msgid "areas (\"chat\" or bar name) for free cursor movement"
+msgstr ""
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -2222,8 +2315,11 @@ msgid ""
 "text from WeeChat to another application (this option is disabled by default "
 "because it can cause serious display bugs)"
 msgstr ""
-"wird diese Option aktiviert, dann wird /\"eat_newline_glitch/\" auf 0 "
-"gesetzt; dies wird genutzt um keinen Zeilenumbruch am Ende einer Zeile "
+"aktiviert man diese Option, dann wird \"eat_newline_glitch\" auf 0 gesetzt; "
+"dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch angehangen wird "
+"und somit der Text beim kopieren aus WeeChat und beim einfügen in einer "
+"anderen Applikation nicht umgebrochen wird (diese Option ist standardmäßig "
+"deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)"
 
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
@@ -2373,6 +2469,9 @@ msgstr ""
 "wird (wenn diese Funktion deaktiviert ist wird zum Buffer gewechselt der die "
 "Position -1 einnimmt)"
 
+msgid "enable mouse support at startup (to enable it now, see /help mouse)"
+msgstr ""
+
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "Nickmode ((half)op/voice [@%+]) vor dem Nicknamen anzeigen"
 
@@ -2488,15 +2587,13 @@ msgstr ""
 "Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls "
 "die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt."
 
-#, fuzzy
 msgid ""
 "char used to draw vertical separators around bars (empty value will draw a "
 "real line with ncurses), wide chars are NOT allowed here"
 msgstr ""
-"Das angegebene Zeichen wird genutzt um damit die horizontalen Linien zu "
+"Das angegebene Zeichen wird genutzt um damit die vertikale Linien zu "
 "zeichnen. Wird kein Zeichen angegeben zeichnet ncurses eine durchgezogene "
-"Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls "
-"die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt."
+"Linie. Wide Chars sind für diese Option NICHT erlaubt."
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
@@ -2879,7 +2976,7 @@ msgstr ""
 
 #, c-format
 msgid "%sError: bad file descriptor (%d) used in hook_fd"
-msgstr ""
+msgstr "%sFehler: bad file descriptor (%d) wurde in hook_fd Funktion genutzt"
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
@@ -3098,6 +3195,14 @@ msgstr "Signal %s empfangen, beende WeeChat..."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP empfangen, lese Konfigurationsdateien neu"
 
+#, fuzzy
+msgid "Mouse is enabled"
+msgstr "1, falls Filter aktiviert sind"
+
+#, fuzzy
+msgid "Mouse is disabled"
+msgstr "Filterung von Nachrichten deaktiviert"
+
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
@@ -3213,12 +3318,20 @@ msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sFehler: Es ist nur möglich Buffer mit formatiertem Inhalt zusammenzufügen"
 
+#, fuzzy
+msgid "Debug enabled for cursor mode"
+msgstr "Debug deaktiviert für \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for cursor mode"
+msgstr "Debug deaktiviert für \"%s\""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 "Fehler: nicht genügend Speicher um den Buffer der Hotlist hinzu zu fügen"
 
-#, c-format
-msgid "New key binding: %s%s => %s%s"
+#, fuzzy, c-format
+msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Neue Tastenbelegung: %s%s => %s%s"
 
 #, c-format
@@ -3230,6 +3343,14 @@ msgstr "Fehler: nicht genügend Speicher für Tastenzuordnung"
 
 msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für eine neue Zeile"
+
+#, fuzzy
+msgid "Debug enabled for mouse"
+msgstr "Debug deaktiviert für \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Debug deaktiviert für \"%s\""
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -5370,18 +5491,20 @@ msgid ""
 "(should be last buffer), next = current buffer + 1, near_server = after last "
 "channel/pv of server)"
 msgstr ""
-"Ein öffentlicher Channel wird auf eine Position gezwungen (none = "
-"standardmäßige Position (sollte die letzte Position sein), next = aktueller "
-"Buffer + 1, near_server = nach letztem Channel/privaten Buffer des Servers)"
+"Ein neu geöffneter Channel wird auf eine Position gezwungen (none = "
+"standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = "
+"aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer "
+"des jeweiligen Servers)"
 
 msgid ""
 "force position of new private in list of buffers (none = default position "
 "(should be last buffer), next = current buffer + 1, near_server = after last "
 "channel/pv of server)"
 msgstr ""
-"Ein privater Buffer wird auf eine Position gezwungen (none = standardmäßige "
-"Position (sollte die letzte Position sein), next = aktueller Buffer + 1, "
-"near_server = nach letztem Channel/privaten Buffer des Servers)"
+"Ein neuer privater Buffer wird auf eine Position gezwungen (none = "
+"standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = "
+"aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer "
+"des jeweiligen Servers)"
 
 msgid "text to display before nick in chat window"
 msgstr "Text, der im Chatfenster vor dem Nickname erscheinen soll"
@@ -6820,6 +6943,10 @@ msgstr "Inaktivität der Tastatur (Sekunden)"
 msgid "1 if filters are enabled"
 msgstr "1, falls Filter aktiviert sind"
 
+#, fuzzy
+msgid "1 if cursor mode is enabled"
+msgstr "1, falls Filter aktiviert sind"
+
 msgid "list of bars"
 msgstr "Auflistung der Bars"
 
@@ -6899,7 +7026,7 @@ msgid "list of key bindings"
 msgstr "Auflistung der Tastenzuweisungen"
 
 msgid "context (\"default\" or \"search\") (optional)"
-msgstr ""
+msgstr "Kontext (\"default\" oder \"search\") (optional)"
 
 msgid "nicks in nicklist for a buffer"
 msgstr "Nicks in Nickliste für einen Buffer"
@@ -6943,6 +7070,10 @@ msgstr "Bar"
 
 msgid "bar item"
 msgstr "Bar-Item"
+
+#, fuzzy
+msgid "bar window"
+msgstr "Fenster"
 
 msgid "buffer"
 msgstr "Buffer"
@@ -6989,7 +7120,6 @@ msgstr "Gruppen in Nickliste"
 msgid "nick in nicklist"
 msgstr "Nick in Nickliste"
 
-#, fuzzy
 msgid "plugin"
 msgstr "Erweiterung"
 
@@ -8110,6 +8240,12 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
+
+#~ msgid "Key bindings (%d) for context \"%s\":"
+#~ msgstr "Tastenbelegungen (%d) für Kontext \"%s\":"
+
+#~ msgid "Default key bindings (%d) for context \"%s\":"
+#~ msgstr "Standardtastenbelegungen (%d) für Kontext \"%s\" :"
 
 #~ msgid "hook (variables common to all hook types)"
 #~ msgstr "Hook (Variablen die für alle Hook-Typen geläufig sind)"

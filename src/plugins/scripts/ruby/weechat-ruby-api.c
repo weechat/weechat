@@ -4874,6 +4874,78 @@ weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
 }
 
 /*
+ * weechat_ruby_api_hook_focus_cb: callback for focus hooked
+ */
+
+struct t_hashtable *
+weechat_ruby_api_hook_focus_cb (void *data,
+                                struct t_hashtable *info)
+{
+    struct t_script_callback *script_callback;
+    void *ruby_argv[2];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        ruby_argv[1] = info;
+        
+        return (struct t_hashtable *)weechat_ruby_exec (script_callback->script,
+                                                        WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                        script_callback->function,
+                                                        "sh", ruby_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_ruby_api_hook_focus: hook a focus
+ */
+
+static VALUE
+weechat_ruby_api_hook_focus (VALUE class, VALUE area, VALUE function,
+                             VALUE data)
+{
+    char *c_area, *c_function, *c_data, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "hook_focus");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (area) || NIL_P (function) || NIL_P (data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "hook_focus");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (area, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+    
+    c_area = StringValuePtr (area);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+    
+    result = script_ptr2str (script_api_hook_focus (weechat_ruby_plugin,
+                                                    ruby_current_script,
+                                                    c_area,
+                                                    &weechat_ruby_api_hook_focus_cb,
+                                                    c_function,
+                                                    c_data));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_unhook: unhook something
  */
 
@@ -8279,6 +8351,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_info", &weechat_ruby_api_hook_info, 5);
     rb_define_module_function (ruby_mWeechat, "hook_info_hashtable", &weechat_ruby_api_hook_info_hashtable, 6);
     rb_define_module_function (ruby_mWeechat, "hook_infolist", &weechat_ruby_api_hook_infolist, 6);
+    rb_define_module_function (ruby_mWeechat, "hook_focus", &weechat_ruby_api_hook_focus, 3);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 5);

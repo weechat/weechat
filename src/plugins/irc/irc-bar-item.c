@@ -493,6 +493,49 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * irc_bar_item_focus_buffer_nicklist: focus on nicklist
+ */
+
+struct t_hashtable *
+irc_bar_item_focus_buffer_nicklist (void *data,
+                                    struct t_hashtable *info)
+{
+    long unsigned int value;
+    int rc;
+    struct t_gui_buffer *buffer;
+    struct t_irc_nick *ptr_nick;
+    const char *str_buffer, *nick;
+    
+    str_buffer = weechat_hashtable_get (info, "_buffer");
+    rc = sscanf (str_buffer, "%lx", &value);
+    if ((rc == EOF) || (rc == 0))
+        return NULL;
+    
+    buffer = (struct t_gui_buffer *)value;
+    
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (ptr_channel)
+    {
+        nick = weechat_hashtable_get (info, "nick");
+        if (nick)
+        {
+            ptr_nick = irc_nick_search (ptr_channel, nick);
+            if (ptr_nick && ptr_nick->host)
+            {
+                weechat_hashtable_set (info, "host", ptr_nick->host);
+                return info;
+            }
+        }
+    }
+    
+    return NULL;
+}
+
+/*
  * irc_bar_item_init: initialize IRC bar items
  */
 
@@ -506,4 +549,6 @@ irc_bar_item_init ()
     weechat_bar_item_new ("irc_channel", &irc_bar_item_channel, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
+    weechat_hook_focus ("500|buffer_nicklist",
+                        &irc_bar_item_focus_buffer_nicklist, NULL);
 }

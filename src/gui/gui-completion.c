@@ -1027,7 +1027,7 @@ gui_completion_complete (struct t_gui_completion *completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (string_strcasecmp (ptr_item->data, completion->word_found) == 0))
+            (strcmp (ptr_item->data, completion->word_found) == 0))
             word_found_seen = 1;
         
         if (completion->direction < 0)

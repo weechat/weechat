@@ -22,6 +22,8 @@
 
 #include <regex.h>
 
+struct t_hashtable;
+
 extern char *string_strndup (const char *string, int length);
 extern void string_tolower (char *string);
 extern void string_toupper (char *string);
@@ -66,5 +68,8 @@ extern void string_encode_base64 (const char *from, int length, char *to);
 extern int string_decode_base64 (const char *from, char *to);
 extern int string_is_command_char (const char *string);
 extern const char *string_input_for_buffer (const char *string);
+extern char *string_replace_with_hashtable (const char *string,
+                                            struct t_hashtable *hashtable,
+                                            int *errors);
 
 #endif /* __WEECHAT_STRING_H */

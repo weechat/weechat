@@ -74,13 +74,15 @@ extern char *gui_bar_items_default_for_bars[][2];
 
 extern int gui_bar_item_valid (struct t_gui_bar_item *bar_item);
 extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
-extern int gui_bar_item_string_is_item (const char *string,
-                                        const char *item_name);
 extern int gui_bar_item_used_in_a_bar (const char *item_name,
                                        int partial_name);
-extern char *gui_bar_item_get_value (const char *name,
-                                     struct t_gui_bar *bar,
-                                     struct t_gui_window *window);
+extern void gui_bar_item_set_prefix_name_suffix (const char *item_name,
+                                                 char **prefix, char **name,
+                                                 char **suffix);
+extern char *gui_bar_item_get_value (struct t_gui_bar *bar,
+                                     struct t_gui_window *window,
+                                     int item, int subitem);
+extern int gui_bar_item_count_lines (char *string);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
                                                 char *(*build_callback)(void *data,

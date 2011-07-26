@@ -4267,6 +4267,72 @@ XS (XS_weechat_api_hook_infolist)
 }
 
 /*
+ * weechat_perl_api_hook_focus_cb: callback for focus hooked
+ */
+
+struct t_hashtable *
+weechat_perl_api_hook_focus_cb (void *data,
+                                struct t_hashtable *info)
+{
+    struct t_script_callback *script_callback;
+    void *perl_argv[2];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        perl_argv[1] = info;
+        
+        return (struct t_hashtable *)weechat_perl_exec (script_callback->script,
+                                                        WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                        script_callback->function,
+                                                        "sh", perl_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat::hook_focus: hook a focus
+ */
+
+XS (XS_weechat_api_hook_focus)
+{
+    char *result, *area, *function, *data;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "hook_focus");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "hook_focus");
+        PERL_RETURN_EMPTY;
+    }
+    
+    area = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
+    data = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (script_api_hook_focus (weechat_perl_plugin,
+                                                    perl_current_script,
+                                                    area,
+                                                    &weechat_perl_api_hook_focus_cb,
+                                                    function,
+                                                    data));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::unhook: unhook something
  */
 
@@ -7213,6 +7279,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_info", XS_weechat_api_hook_info, "weechat");
     newXS ("weechat::hook_info_hashtable", XS_weechat_api_hook_info_hashtable, "weechat");
     newXS ("weechat::hook_infolist", XS_weechat_api_hook_infolist, "weechat");
+    newXS ("weechat::hook_focus", XS_weechat_api_hook_focus, "weechat");
     newXS ("weechat::unhook", XS_weechat_api_unhook, "weechat");
     newXS ("weechat::unhook_all", XS_weechat_api_unhook_all, "weechat");
     newXS ("weechat::buffer_new", XS_weechat_api_buffer_new, "weechat");

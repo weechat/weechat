@@ -78,6 +78,8 @@
 
 | weechat | config_options | opzioni di configurazione
 
+| weechat | cursor_areas | areas ("chat" or bar name) for free cursor movement
+
 | weechat | filename | nome file
 
 | weechat | filters_names | nomi dei filtri
@@ -86,7 +88,7 @@
 
 | weechat | infos | nomi degli hook sulle info
 
-| weechat | keys_codes | codici tasti
+| weechat | keys_codes | codici tasto
 
 | weechat | keys_codes_for_reset | codici tasti che possono essere ripristinati (tasti aggiunti, ridefiniti o rimossi)
 

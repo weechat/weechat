@@ -39,6 +39,7 @@
 #include "../gui-bar-window.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
+#include "../gui-cursor.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
 
@@ -89,6 +90,9 @@ gui_bar_window_objects_free (struct t_gui_bar_window *bar_window)
 void
 gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 {
+    if (CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+        return;
+    
     if (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar)
     {
         delwin (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
@@ -152,14 +156,15 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int *x, int *y,
                              const char *string,
                              int reset_color_before_display,
-                             int hide_chars_if_scrolling)
+                             int hide_chars_if_scrolling,
+                             int *index_item, int *index_subitem, int *index_line)
 {
     int x_with_hidden, size_on_screen, low_char, hidden;
     char utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
         return 1;
-    
+
     wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, *y, *x);
 
     if (reset_color_before_display)
@@ -238,6 +243,40 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                        bar_window->cursor_x);
                                 bar_window->cursor_x += bar_window->x;
                                 bar_window->cursor_y += bar_window->y;
+                                break;
+                            case GUI_COLOR_BAR_START_ITEM:
+                                string += 2;
+                                if (*index_item < 0)
+                                {
+                                    *index_item = 0;
+                                    *index_subitem = 0;
+                                }
+                                else
+                                {
+                                    (*index_subitem)++;
+                                    if (*index_subitem >= bar_window->items_subcount[*index_item])
+                                    {
+                                        (*index_item)++;
+                                        *index_subitem = 0;
+                                    }
+                                }
+                                *index_line = 0;
+                                gui_bar_window_coords_add (bar_window,
+                                                           (*index_item >= bar_window->items_count) ? -1 : *index_item,
+                                                           (*index_item >= bar_window->items_count) ? -1 : *index_subitem,
+                                                           *index_line,
+                                                           *x + bar_window->x,
+                                                           *y + bar_window->y);
+                                break;
+                            case GUI_COLOR_BAR_START_LINE_ITEM:
+                                string += 2;
+                                (*index_line)++;
+                                gui_bar_window_coords_add (bar_window,
+                                                           *index_item,
+                                                           *index_subitem,
+                                                           *index_line,
+                                                           *x + bar_window->x,
+                                                           *y + bar_window->y);
                                 break;
                             default:
                                 string++;
@@ -353,10 +392,11 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int length_screen_before_cursor, length_screen_after_cursor;
     int diff, max_length, optimal_number_of_lines;
     int some_data_not_displayed, separator_horizontal, separator_vertical;
+    int index_item, index_subitem, index_line;
     
     if (!gui_init_ok)
         return;
-
+    
     if (!str_start_input[0])
     {
         snprintf (str_start_input, sizeof (str_start_input), "%c%c%c",
@@ -383,6 +423,12 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
      */
     bar_window->cursor_x = -1;
     bar_window->cursor_y = -1;
+    
+    /* remove coords */
+    gui_bar_window_coords_free (bar_window);
+    index_item = -1;
+    index_subitem = -1;
+    index_line = 0;
     
     filling = gui_bar_get_filling (bar_window->bar);
     
@@ -547,7 +593,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     if (!gui_bar_window_print_string (bar_window, filling,
                                                       &x, &y,
-                                                      items[line], 1, 1))
+                                                      items[line], 1, 1,
+                                                      &index_item,
+                                                      &index_subitem,
+                                                      &index_line))
                     {
                         some_data_not_displayed = 1;
                     }
@@ -571,7 +620,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         while (x < bar_window->width)
                         {
                             gui_bar_window_print_string (bar_window, filling,
-                                                         &x, &y, " ", 0, 0);
+                                                         &x, &y, " ", 0, 0,
+                                                         &index_item,
+                                                         &index_subitem,
+                                                         &index_line);
                         }
                     }
                     
@@ -618,7 +670,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
     }
-
+    
     /*
      * move cursor if it was asked in an item content (input_text does that
      * to move cursor in user input text)
@@ -632,7 +684,12 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             x = bar_window->width - 2;
         wmove (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, y, x);
         wrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
-        move (bar_window->cursor_y, bar_window->cursor_x);
+        if (!gui_cursor_mode)
+        {
+            gui_window_cursor_x = bar_window->cursor_x;
+            gui_window_cursor_y = bar_window->cursor_y;
+            move (bar_window->cursor_y, bar_window->cursor_x);
+        }
     }
     else
         wnoutrefresh (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);

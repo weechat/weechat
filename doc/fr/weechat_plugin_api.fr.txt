@@ -6109,7 +6109,8 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
 Les types de "hooks" suivants autorisent une priorité : command, command_run,
-signal, hsignal, config, completion, modifier, info, info_hashtable, infolist, hdata.
+signal, hsignal, config, completion, modifier, info, info_hashtable, infolist,
+hdata, focus.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -8294,7 +8295,7 @@ hook = weechat.hook_infolist(infolist_name, description, pointer_description,
 
 # exemple
 def my_infolist_cb(data, infolist_name, pointer, arguments):
-    # build infolist
+    # construction de l'infolist
     # ...
     return my_infolist
 
@@ -8351,7 +8352,7 @@ my_hdata_cb (void *data, const char *hdata_name)
     return mon_hdata;
 }
 
-/* ajouts le hdata "mon_hdata" */
+/* ajoute le hdata "mon_hdata" */
 struct t_hook *my_hdata = weechat_hook_hdata ("mon_hdata",
                                               "Hdata pour ma structure",
                                               &my_hdata_cb, NULL);
@@ -8359,6 +8360,92 @@ struct t_hook *my_hdata = weechat_hook_hdata ("mon_hdata",
 
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
+
+weechat_hook_focus
+^^^^^^^^^^^^^^^^^^
+
+Accroche un focus : évènement souris ou touche du clavier pressée dans le mode
+"curseur" (mouvement libre du curseur).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_focus (const char *area,
+                                   struct t_hashtable *(*callback)(void *data,
+                                                                   struct t_hashtable *info),
+                                   void *callback_data);
+----------------------------------------
+
+Paramètres :
+
+* 'area' : "chat" pour la zone de discussion, ou un nom d'objet de barre
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+* 'callback' : fonction appelée quand le focus est fait paramètres et valeur de
+  retour :
+** 'void *data' : pointeur
+** 'struct t_hashtable *info' : hashtable avec les informations sur le focus et
+   les chaînes retournées par les autres appels aux "callbacks" de focus (avec
+   plus haute priorité); les clés et valeurs sont de type "string"; les
+   informations sur le focus (remplies par WeeChat) sont :
+*** '_x' : colonne du focus sur l'écran (la première colonne sur la gauche
+    est "0")
+*** '_y' : ligne du focus sur l'écran (la première ligne en haut est "0")
+*** '_window' : pointeur de la fenêtre avec le focus (NULL pour une barre de
+    type "root" ou pour une zone inconnue)
+*** '_bar_name' : nom de la barre avec le focus (NULL pour la zone de discussion
+    ("chat") ou pour une zone inconnue)
+*** '_bar_item_name' : nom de l'objet de barre avec le focus (NULL si le focus
+    n'est pas dans une barre ou si le focus est après le dernier objet de barre)
+*** '_item_line' : ligne avec le focus dans l'objet de barre (la première ligne
+    de l'objet de barre est "0")
+*** '_item_col' : colonne avec le focus dans l'objet de barre (la première
+    colonne de l'objet de barre est "0")
+** valeur de retour : soit le pointeur vers la hashtable "info" (avec la
+   hashtable complétée), ou un pointeur vers une nouvelle hashtable (créée par
+   le "callback", avec clés et valeurs de type "string"), le contenu de cette
+   nouvelle hashtable sera ajouté à 'info' pour les autres appels aux
+   "callbacks" focus
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+   WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *
+my_focus_nicklist_cb (void *data, struct t_hashtable *info)
+{
+    /* ajout de chaînes dans la hashtable */
+    /* ... */
+    
+    return info;
+}
+
+/* ajoute le focus sur la liste des pseudos */
+struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
+                                              &my_focus_nicklist_cb, NULL);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+hook = weechat.hook_focus(area, callback, callback_data)
+
+# exemple
+def my_focus_nicklist_cb(data, info):
+    # construction du dict
+    # ...
+    return my_dict
+
+hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
+----------------------------------------
 
 weechat_unhook
 ^^^^^^^^^^^^^^

@@ -175,7 +175,10 @@
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +
-  'bar_window' (pointer) +
+  'items_prefix' (pointer) +
+  'items_name' (pointer) +
+  'items_suffix' (pointer) +
+  'bar_window' (pointer, hdata: 'bar_window') +
   'bar_refresh_needed' (integer) +
   'prev_bar' (pointer, hdata: 'bar') +
   'next_bar' (pointer, hdata: 'bar') |
@@ -191,6 +194,30 @@
   'next_item' (pointer, hdata: 'bar_item') |
   'gui_bar_items' +
   'last_gui_bar_item'
+
+| weechat | bar_window | bar window |
+  'bar' (pointer, hdata: 'bar') +
+  'x' (integer) +
+  'y' (integer) +
+  'width' (integer) +
+  'height' (integer) +
+  'scroll_x' (integer) +
+  'scroll_y' (integer) +
+  'cursor_x' (integer) +
+  'cursor_y' (integer) +
+  'current_size' (integer) +
+  'items_count' (integer) +
+  'items_subcount' (pointer) +
+  'items_content' (pointer) +
+  'items_num_lines' (pointer) +
+  'items_refresh_needed' (pointer) +
+  'screen_col_size' (integer) +
+  'coords_count' (integer) +
+  'coords' (pointer) +
+  'gui_objects' (pointer) +
+  'prev_bar_window' (pointer, hdata: 'bar_window') +
+  'next_bar_window' (pointer, hdata: 'bar_window') |
+  -
 
 | weechat | buffer | buffer |
   'plugin' (pointer, hdata: 'plugin') +
@@ -383,9 +410,21 @@
   'prev_key' (pointer, hdata: 'key') +
   'next_key' (pointer, hdata: 'key') |
   'gui_default_keys' +
+  'gui_default_keys_cursor' +
+  'gui_default_keys_mouse' +
+  'gui_default_keys_search' +
   'gui_keys' +
+  'gui_keys_cursor' +
+  'gui_keys_mouse' +
+  'gui_keys_search' +
   'last_gui_default_key' +
-  'last_gui_key'
+  'last_gui_default_key_cursor' +
+  'last_gui_default_key_mouse' +
+  'last_gui_default_key_search' +
+  'last_gui_key' +
+  'last_gui_key_cursor' +
+  'last_gui_key_mouse' +
+  'last_gui_key_search'
 
 | weechat | line | structure with one line |
   'data' (pointer, hdata: 'line_data') +
@@ -473,8 +512,8 @@
   'win_chat_height' (integer) +
   'win_chat_cursor_x' (integer) +
   'win_chat_cursor_y' (integer) +
-  'bar_windows' (pointer) +
-  'last_bar_window' (pointer) +
+  'bar_windows' (pointer, hdata: 'bar_window') +
+  'last_bar_window' (pointer, hdata: 'bar_window') +
   'refresh_needed' (integer) +
   'gui_objects' (pointer) +
   'buffer' (pointer, hdata: 'buffer') +

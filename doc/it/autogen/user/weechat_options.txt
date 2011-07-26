@@ -119,7 +119,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
 * *weechat.color.chat_tags*
-** descrizione: `text color for tags after messages (displayed with command /debug tags)`
+** descrizione: `colore del testo per i tago dopo i messaggi (mostrati con il comando /debug tags)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
@@ -364,7 +364,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y"`)
 
 * *weechat.look.eat_newline_glitch*
-** descrizione: `if set, the eat_newline_glitch will be set to 0; this is used to not add new line char at end of each line, and then not break text when you copy/paste text from WeeChat to another application (this option is disabled by default because it can cause serious display bugs)`
+** descrizione: `se attivo, eat_newline_glitch verrà impostato a 0; viene usato per non aggiungere il carattere a capo alla fine di ogni riga, al fine di non danneggiare il testo quando viene copiato/incollato da WeeChat in un'altra applicazione (l'opzione è disabilitata per default, dato che può causare seri errori di visualizzazione)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -472,6 +472,11 @@
 ** descrizione: `passa al buffer visitato in precedenza alla chiusura di un buffer (se disabilitato, allora passa al buffer numero -1)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
+
+* *weechat.look.mouse*
+** descrizione: `enable mouse support at startup (to enable it now, see /help mouse)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
 
 * *weechat.look.nickmode*
 ** descrizione: `mostra modalità nick ((half)op/voice) prima di ogni nick`
@@ -599,7 +604,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
 * *weechat.look.separator_vertical*
-** descrizione: `char used to draw vertical separators around bars (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** descrizione: `carattere usato per disegnare i separatori verticali intorno alle barre (un valore vuoto disegnerà una riga reale con ncurses), i caratteri wide NON sono consentiti`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

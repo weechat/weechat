@@ -30,13 +30,15 @@ weechat_curses_LDADD = ./../../core/lib_weechat_core.a \
                        $(PLUGINS_LFLAGS) \
                        $(NCURSES_LFLAGS) \
                        $(GCRYPT_LFLAGS) \
-                       $(GNUTLS_LFLAGS)
+                       $(GNUTLS_LFLAGS) \
+                       -lm
 
 weechat_curses_SOURCES = gui-curses-bar-window.c \
                          gui-curses-chat.c \
                          gui-curses-color.c \
                          gui-curses-key.c \
                          gui-curses-main.c \
+                         gui-curses-mouse.c \
                          gui-curses-term.c \
                          gui-curses-window.c \
                          gui-curses.h

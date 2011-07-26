@@ -78,6 +78,8 @@
 
 | weechat | config_options | configuration options
 
+| weechat | cursor_areas | areas ("chat" or bar name) for free cursor movement
+
 | weechat | filename | filename
 
 | weechat | filters_names | names of filters

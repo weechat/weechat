@@ -30,6 +30,7 @@ gui-curses-chat.c
 gui-curses-color.c
 gui-curses-key.c
 gui-curses-main.c
+gui-curses-mouse.c
 gui-curses-term.c
 gui-curses-window.c)
 
@@ -67,6 +68,8 @@ ENDIF(ICONV_LIBRARY)
 IF(LIBINTL_LIBRARY)
   LIST(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
 ENDIF(LIBINTL_LIBRARY)
+
+LIST(APPEND EXTRA_LIBS "m")
 
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
 

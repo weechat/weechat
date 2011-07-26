@@ -276,6 +276,13 @@ extern struct t_hook *script_api_hook_infolist (struct t_weechat_plugin *weechat
                                                                                const char *arguments),
                                                 const char *function,
                                                 const char *data);
+extern struct t_hook *script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
+                                             struct t_plugin_script *script,
+                                             const char *area,
+                                             struct t_hashtable *(*callback)(void *data,
+                                                                             struct t_hashtable *info),
+                                             const char *function,
+                                             const char *data);
 extern void script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_hook *hook);

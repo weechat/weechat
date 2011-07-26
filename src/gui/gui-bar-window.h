@@ -20,8 +20,18 @@
 #ifndef __WEECHAT_GUI_BAR_WINDOW_H
 #define __WEECHAT_GUI_BAR_WINDOW_H 1
 
+struct t_infolist;
 struct t_gui_window;
 enum t_gui_bar_position;
+
+struct t_gui_bar_window_coords
+{
+    int item;                       /* index of item                        */
+    int subitem;                    /* index of sub item                    */
+    int line;                       /* line                                 */
+    int x;                          /* X on screen                          */
+    int y;                          /* Y on screen                          */
+};
 
 struct t_gui_bar_window
 {
@@ -34,8 +44,14 @@ struct t_gui_bar_window
     int current_size;               /* current size (width or height)       */
     int items_count;                /* number of bar items                  */
     int *items_subcount;            /* number of sub items                  */
-    char ***items_content;          /* content for each item/sub item of bar*/
+    char ***items_content;          /* content for each (sub)item of bar    */
+    int **items_num_lines;          /* number of lines for each (sub)item   */
     int **items_refresh_needed;     /* refresh needed for (sub)item?        */
+    int screen_col_size;            /* size of columns on screen            */
+                                    /* (for filling with columns)           */
+    int coords_count;               /* number of coords saved               */
+    struct t_gui_bar_window_coords **coords; /* coords for filling horiz.   */
+                                    /* (size is 5 * coords_count)           */
     void *gui_objects;              /* pointer to a GUI specific struct     */
     struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
                                               /* (only for non-root bars)   */
@@ -46,6 +62,12 @@ struct t_gui_bar_window
 /* functions */
 
 extern int gui_bar_window_valid (struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_search_by_xy (struct t_gui_window *window,
+                                         int x, int y,
+                                         struct t_gui_bar_window **bar_window,
+                                         char **bar_item,
+                                         int *item_line,
+                                         int *item_col);
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
 extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
@@ -61,8 +83,15 @@ extern void gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window
 extern int gui_bar_window_get_size (struct t_gui_bar *bar,
                                     struct t_gui_window *window,
                                     enum t_gui_bar_position position);
-extern int gui_bar_window_new (struct t_gui_bar *bar,
-                               struct t_gui_window *window);
+extern void gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
+                                       int index_item, int index_subitem,
+                                       int index_line,
+                                       int x, int y);
+extern void gui_bar_window_coords_free (struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_insert (struct t_gui_bar_window *bar_window,
+                                   struct t_gui_window *window);
+extern void gui_bar_window_new (struct t_gui_bar *bar,
+                                struct t_gui_window *window);
 extern void gui_bar_window_free (struct t_gui_bar_window *bar_window,
                                  struct t_gui_window *window);
 extern int gui_bar_window_remove_unused_bars (struct t_gui_window *window);
@@ -72,6 +101,8 @@ extern void gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
                                    int add_x, int scroll_beginning,
                                    int scroll_end, int add, int percent,
                                    int value);
+extern struct t_hdata *gui_bar_window_hdata_bar_window_cb (void *data,
+                                                           const char *hdata_name);
 extern int gui_bar_window_add_to_infolist (struct t_infolist *infolist,
                                            struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_print_log (struct t_gui_bar_window *bar_window);

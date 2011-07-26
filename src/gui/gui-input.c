@@ -38,6 +38,7 @@
 #include "gui-input.h"
 #include "gui-buffer.h"
 #include "gui-completion.h"
+#include "gui-cursor.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-key.h"
@@ -117,26 +118,29 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
 {
     char str_buffer[128], *new_input;
     
-    if (save_undo)
-        gui_buffer_undo_add (buffer);
-    
-    /* send modifier, and change input if needed */
-    snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (long unsigned int)buffer);
-    new_input = hook_modifier_exec (NULL,
-                                    "input_text_content",
-                                    str_buffer,
-                                    (buffer->input_buffer) ?
-                                    buffer->input_buffer : "");
-    if (new_input)
+    if (!gui_cursor_mode)
     {
-        if (!buffer->input_buffer
-            || strcmp (new_input, buffer->input_buffer) != 0)
+        if (save_undo)
+            gui_buffer_undo_add (buffer);
+        
+        /* send modifier, and change input if needed */
+        snprintf (str_buffer, sizeof (str_buffer),
+                  "0x%lx", (long unsigned int)buffer);
+        new_input = hook_modifier_exec (NULL,
+                                        "input_text_content",
+                                        str_buffer,
+                                        (buffer->input_buffer) ?
+                                        buffer->input_buffer : "");
+        if (new_input)
         {
-            /* input has been changed by modifier, use it */
-            gui_input_replace_input (buffer, new_input);
+            if (!buffer->input_buffer
+                || strcmp (new_input, buffer->input_buffer) != 0)
+            {
+                /* input has been changed by modifier, use it */
+                gui_input_replace_input (buffer, new_input);
+            }
+            free (new_input);
         }
-        free (new_input);
     }
     
     /* send signal */
@@ -1339,10 +1343,10 @@ gui_input_hotlist_clear (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_grab_key (struct t_gui_buffer *buffer)
+gui_input_grab_key (struct t_gui_buffer *buffer, const char *delay)
 {
     if (buffer->input)
-        gui_key_grab_init (0);
+        gui_key_grab_init (0, delay);
 }
 
 /*
@@ -1351,10 +1355,10 @@ gui_input_grab_key (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_grab_key_command (struct t_gui_buffer *buffer)
+gui_input_grab_key_command (struct t_gui_buffer *buffer, const char *delay)
 {
     if (buffer->input)
-        gui_key_grab_init (1);
+        gui_key_grab_init (1, delay);
 }
 
 /*

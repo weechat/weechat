@@ -4792,6 +4792,75 @@ weechat_tcl_api_hook_infolist (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hook_focus_cb: callback for focus hooked
+ */
+
+struct t_hashtable *
+weechat_tcl_api_hook_focus_cb (void *data,
+                               struct t_hashtable *info)
+{
+    struct t_script_callback *script_callback;
+    void *tcl_argv[2];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        tcl_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        tcl_argv[1] = info;
+        
+        return (struct t_hashtable *)weechat_tcl_exec (script_callback->script,
+                                                       WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                       script_callback->function,
+                                                       "sh", tcl_argv);
+    }
+    
+    return NULL;
+}
+    
+/*
+ * weechat_tcl_api_hook_focus: hook a focus
+ */
+
+static int
+weechat_tcl_api_hook_focus (ClientData clientData, Tcl_Interp *interp,
+                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *result, *area, *function, *data;
+    int i;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "hook_focus");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "hook_focus");
+        TCL_RETURN_EMPTY;
+    }
+    
+    area = Tcl_GetStringFromObj (objv[1], &i);
+    function = Tcl_GetStringFromObj (objv[2], &i);
+    data = Tcl_GetStringFromObj (objv[3], &i);
+    
+    result = script_ptr2str (script_api_hook_focus (weechat_tcl_plugin,
+                                                    tcl_current_script,
+                                                    area,
+                                                    &weechat_tcl_api_hook_focus_cb,
+                                                    function,
+                                                    data));
+    
+    TCL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_unhook: unhook something
  */
 
@@ -8205,6 +8274,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_hook_info_hashtable, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hook_infolist",
                           weechat_tcl_api_hook_infolist, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hook_focus",
+                          weechat_tcl_api_hook_focus, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::unhook",
                           weechat_tcl_api_unhook, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::unhook_all",

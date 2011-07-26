@@ -56,6 +56,7 @@
 #include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
 #include "../gui/gui-main.h"
+#include "../gui/gui-mouse.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -108,6 +109,7 @@ struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
+struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_nickmode;
 struct t_config_option *config_look_nickmode_empty;
 struct t_config_option *config_look_paste_max_lines;
@@ -1794,6 +1796,11 @@ config_weechat_init_options ()
         N_("jump to previously visited buffer when closing a buffer (if "
            "disabled, then jump to buffer number - 1)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_mouse = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "mouse", "boolean",
+        N_("enable mouse support at startup (to enable it now, see /help mouse)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nickmode = config_file_new_option (
         weechat_config_file, ptr_section,
         "nickmode", "boolean",

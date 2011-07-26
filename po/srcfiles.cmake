@@ -43,6 +43,7 @@ SET(WEECHAT_SOURCES
 ./src/gui/curses/gui-curses.h
 ./src/gui/curses/gui-curses-key.c
 ./src/gui/curses/gui-curses-main.c
+./src/gui/curses/gui-curses-mouse.c
 ./src/gui/curses/gui-curses-window.c
 ./src/gui/gtk/gui-gtk-bar-window.c
 ./src/gui/gtk/gui-gtk-chat.c
@@ -50,6 +51,7 @@ SET(WEECHAT_SOURCES
 ./src/gui/gtk/gui-gtk.h
 ./src/gui/gtk/gui-gtk-key.c
 ./src/gui/gtk/gui-gtk-main.c
+./src/gui/gtk/gui-gtk-mouse.c
 ./src/gui/gtk/gui-gtk-window.c
 ./src/gui/gui-bar.c
 ./src/gui/gui-bar.h
@@ -63,6 +65,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-chat.h
 ./src/gui/gui-color.c
 ./src/gui/gui-color.h
+./src/gui/gui-cursor.c
+./src/gui/gui-cursor.h
 ./src/gui/gui-completion.c
 ./src/gui/gui-completion.h
 ./src/gui/gui-filter.c
@@ -80,6 +84,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-line.c
 ./src/gui/gui-line.h
 ./src/gui/gui-main.h
+./src/gui/gui-mouse.c
+./src/gui/gui-mouse.h
 ./src/gui/gui-nicklist.c
 ./src/gui/gui-nicklist.h
 ./src/gui/gui-window.c

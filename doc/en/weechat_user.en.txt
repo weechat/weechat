@@ -412,20 +412,20 @@ Default key bindings
 Keys for command line
 ^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Key                 | Description | Command
-| @k(←)               .2+| Go to previous char in command line .2+| /input move_previous_char
+| @k(←)            .2+| Go to previous char in command line .2+| /input move_previous_char
 | @k(C-)@k(b)
-| @k(→)               .2+| Go to next char in command line .2+| /input move_next_char
+| @k(→)            .2+| Go to next char in command line .2+| /input move_next_char
 | @k(C-)@k(f)
-| @k(C-)@k(←)         .2+| Go to previous word in command line .2+| /input move_previous_word
+| @k(C-)@k(←)      .2+| Go to previous word in command line .2+| /input move_previous_word
 | @k(A-)@k(b)
-| @k(C-)@k(→)         .2+| Go to next word in command line .2+| /input move_next_word
+| @k(C-)@k(→)      .2+| Go to next word in command line .2+| /input move_next_word
 | @k(A-)@k(f)
-| @k(Home)            .2+| Go to the beginning of command line .2+| /input move_beginning_of_line
+| @k(Home)         .2+| Go to the beginning of command line .2+| /input move_beginning_of_line
 | @k(C-)@k(a)
-| @k(End)             .2+| Go to the end of command line .2+| /input move_end_of_line
+| @k(End)          .2+| Go to the end of command line .2+| /input move_end_of_line
 | @k(C-)@k(e)
 | @k(C-)@k(c) , @k(b) | Insert code for bold text | /input insert \x02
 | @k(C-)@k(c) , @k(c) | Insert code for colored text | /input insert \x03
@@ -433,9 +433,9 @@ Keys for command line
 | @k(C-)@k(c) , @k(o) | Insert code for color reset | /input insert \x0F
 | @k(C-)@k(c) , @k(r) | Insert code for reverse color | /input insert \x12
 | @k(C-)@k(c) , @k(u) | Insert code for underlined text | /input insert \x15
-| @k(Del)             .2+| Delete next char in command line .2+| /input delete_next_char
+| @k(Del)          .2+| Delete next char in command line .2+| /input delete_next_char
 | @k(C-)@k(d)
-| @k(Backsp.)         .2+| Delete previous char in command line .2+| /input delete_previous_char
+| @k(Backsp.)      .2+| Delete previous char in command line .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | Delete from cursor until end of command line (deleted string is copied to clipboard) | /input delete_end_of_line
 | @k(C-)@k(r)         | Search for text in buffer history (see <<key_bindings_search_context,keys for search context>>) | /input search_text
@@ -447,7 +447,7 @@ Keys for command line
 | @k(A-)@k(_)         | Redo last action on command line | /input redo
 | @k(Tab)             | Complete command or nick (@k(Tab) again: find next completion) | /input complete_next
 | @k(S-)@k(Tab)       | Without completion: do a partial completion, with pending completion: complete with previous completion | /input complete_previous
-| @k(Enter)           .3+| Execute command or send message (in search mode: stop search) .3+| /input return
+| @k(Enter)        .3+| Execute command or send message (in search mode: stop search) .3+| /input return
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 | @k(↑)               | Call previous command/message (in search mode: search up) | /input history_previous
@@ -463,7 +463,7 @@ Keys for command line
 Keys for buffers / windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Key                       | Description | Command
 | @k(C-)@k(l)               | Redraw whole window | /window refresh
@@ -475,23 +475,24 @@ Keys for buffers / windows
 | @k(A-)@k(PgDn)            | Scroll down a few lines in buffer history | /window scroll_down
 | @k(A-)@k(Home)            | Scroll to top of buffer | /window scroll_top
 | @k(A-)@k(End)             | Scroll to bottom of buffer | /window scroll_bottom
-| @k(A-)@k(←)               .4+| Switch to previous buffer .4+| /buffer -1
+| @k(A-)@k(←)            .4+| Switch to previous buffer .4+| /buffer -1
 | @k(A-)@k(↑)
 | @k(C-)@k(p)
 | @k(F5)
-| @k(A-)@k(→)               .4+| Switch to next buffer .4+| /buffer +1
+| @k(A-)@k(→)            .4+| Switch to next buffer .4+| /buffer +1
 | @k(A-)@k(↓)
 | @k(C-)@k(n)
 | @k(F6)
 | @k(F7)                    | Switch to previous window | /window -1
 | @k(F8)                    | Switch to next window | /window +1
-| @k(F9)                    | Scroll buffer's title on the left | /bar scroll title * x-50%
-| @k(F10)                   | Scroll buffer's title on the right | /bar scroll title * x+50%
-| @k(F11)                   | Scroll up one page in nicklist | /bar scroll nicklist * y-100%
-| @k(F12)                   | Scroll down one page in nicklist | /bar scroll nicklist * y+100%
-| @k(A-)@k(F11)             | Go to the beginning of nicklist | /bar scroll nicklist * yb
-| @k(A-)@k(F12)             | Go to the end of nicklist | /bar scroll nicklist * ye
+| @k(F9)                    | Scroll buffer's title on the left | /bar scroll title * -30%
+| @k(F10)                   | Scroll buffer's title on the right | /bar scroll title * +30%
+| @k(F11)                   | Scroll up one page in nicklist | /bar scroll nicklist * -100%
+| @k(F12)                   | Scroll down one page in nicklist | /bar scroll nicklist * +100%
+| @k(A-)@k(F11)             | Go to the beginning of nicklist | /bar scroll nicklist * b
+| @k(A-)@k(F12)             | Go to the end of nicklist | /bar scroll nicklist * e
 | @k(A-)@k(a)               | Switch to next buffer with activity (with priority: highlight, message, other) | /input jump_smart
+| @k(A-)@k(h)               | Clear hotlist (activity notification on other buffers) | /input hotlist_clear
 | @k(A-)@k(j) , @k(A-)@k(l) | Switch to last buffer | /input jump_last_buffer
 | @k(A-)@k(j) , @k(A-)@k(r) | Switch to IRC raw buffer | /server raw
 | @k(A-)@k(j) , @k(A-)@k(s) | Switch to IRC server buffer | /server jump
@@ -509,6 +510,7 @@ Keys for buffers / windows
 | @k(A-)@k(z)               | Zoom on current window (@k(A-)@k(z) again: restore initial windows state, before zoom) | /window zoom
 | @k(A-)@k(<)               | Switch to previous buffer in list of visited buffers | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Switch to next buffer in list of visited buffers | /input jump_next_visited_buffer
+| @k(A-)@k(=)               | Toggle filters on/off | /filter toggle
 |========================================
 
 [[key_bindings_search_context]]
@@ -518,26 +520,71 @@ Keys for "search" context
 These keys are used in context "search" (when @k(C-)@k(r) is pressed to search
 text in buffer).
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
-| Key         | Description | Command
-| @k(C-)@k(r) | Switch exact case for search | /input search_switch_case
-| @k(↑)       | Search previous line | /input search_previous
-| @k(↓)       | Search next line | /input search_next
-| @k(Enter)   .3+| Stop search .3+| /input search_stop
+| Key          | Description | Command
+| @k(C-)@k(r)  | Switch exact case for search | /input search_switch_case
+| @k(↑)        | Search previous line | /input search_previous
+| @k(↓)        | Search next line | /input search_next
+| @k(Enter) .3+| Stop search .3+| /input search_stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
 
-[[key_bindings_other]]
-Other keys
-^^^^^^^^^^
+[[key_bindings_cursor_context]]
+Keys for "cursor" context
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+These keys are used in context "cursor" (free movement of cursor on screen).
+
+[width="100%",cols="^.^3,^.^3,.^10,.^5l",options="header"]
 |========================================
-| Key         | Description | Command
-| @k(A-)@k(h) | Clear hotlist (activity notification on other buffers) | /input hotlist_clear
-| @k(A-)@k(=) | Toggle filters on/off | /filter toggle
+| Key          | Area     | Description | Command
+| @k(↑)        | -        | Move cursor one line up | /cursor move up
+| @k(↓)        | -        | Move cursor one line down | /cursor move down
+| @k(←)        | -        | Move cursor one column left | /cursor move left
+| @k(→)        | -        | Move cursor one column right | /cursor move right
+| @k(A-)@k(↑)  | -        | Move cursor one area up | /cursor move area_up
+| @k(A-)@k(↓)  | -        | Move cursor one area down | /cursor move area_down
+| @k(A-)@k(←)  | -        | Move cursor one area left | /cursor move area_left
+| @k(A-)@k(→)  | -        | Move cursor one area right | /cursor move area_right
+| @k(b)        | nicklist | Ban nick | /ban ${nick}
+| @k(k)        | nicklist | Kick nick | /kick ${nick}
+| @k(K)        | nicklist | Kick and ban nick | /kickban ${nick}
+| @k(q)        | nicklist | Open query with nick | /query ${nick};/cursor stop
+| @k(w)        | nicklist | Do a whois on nick | /whois ${nick}
+| @k(Enter) .3+| -     .3+| Stop cursor mode .3+| /cursor stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+|========================================
+
+[[key_bindings_mouse_context]]
+Keys for "mouse" context
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+These keys are used in context "mouse", namely when a mouse event occurs.
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^5l",options="header"]
+|========================================
+| Button  | Gesture      | Area     | Description | Command
+| ◾◽◽     | left         | chat     | Switch to previous buffer | /buffer +1
+| ◾◽◽     | right        | chat     | Switch to next buffer | /buffer +1
+| ◾◽◽     | left (long)  | chat     | Switch to first buffer | /buffer 1
+| ◾◽◽     | right (long) | chat     | Switch to last buffer | /input jump_last_buffer
+| wheel ⇑ | -            | chat     | Scroll up a few lines in buffer history | /window scroll_up
+| wheel ⇓ | -            | chat     | Scroll down a few lines in buffer history | /window scroll_down
+| ◾◽◽     | up           | nicklist | Scroll up one page in nicklist | /bar scroll nicklist * -100%
+| ◾◽◽     | down         | nicklist | Scroll down one page in nicklist | /bar scroll nicklist * +100%
+| ◾◽◽     | up (long)    | nicklist | Go to the beginning of nicklist | /bar scroll nicklist * b
+| ◾◽◽     | down (long)  | nicklist | Go to the end of nicklist | /bar scroll nicklist * e
+| ◾◽◽     | -            | nicklist | Open query with nick | /query ${nick}
+| ◽◽◾     | -            | nicklist | Do a whois on nick | /whois ${nick}
+| ◾◽◽     | left         | nicklist | Kick nick | /kick ${nick}
+| ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /kickban ${nick}
+| ◽◽◾     | left         | nicklist | Ban nick | /ban ${nick}
+| wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} * -10%
+| wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} * +10%
+| ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
 
 [[command_line]]

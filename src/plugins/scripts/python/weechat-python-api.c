@@ -3656,15 +3656,15 @@ weechat_python_api_hook_print (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_print (weechat_python_plugin,
-                                                   python_current_script,
-                                                   script_str2ptr (buffer),
-                                                   tags,
-                                                   message,
-                                                   strip_colors,
-                                                   &weechat_python_api_hook_print_cb,
-                                                   function,
-                                                   data));
+    result = script_ptr2str (script_api_hook_print (weechat_python_plugin,
+                                                    python_current_script,
+                                                    script_str2ptr (buffer),
+                                                    tags,
+                                                    message,
+                                                    strip_colors,
+                                                    &weechat_python_api_hook_print_cb,
+                                                    function,
+                                                    data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4012,12 +4012,12 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_config (weechat_python_plugin,
-                                                    python_current_script,
-                                                    option,
-                                                    &weechat_python_api_hook_config_cb,
-                                                    function,
-                                                    data));
+    result = script_ptr2str (script_api_hook_config (weechat_python_plugin,
+                                                     python_current_script,
+                                                     option,
+                                                     &weechat_python_api_hook_config_cb,
+                                                     function,
+                                                     data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4099,13 +4099,13 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_completion (weechat_python_plugin,
-                                                        python_current_script,
-                                                        completion,
-                                                        description,
-                                                        &weechat_python_api_hook_completion_cb,
-                                                        function,
-                                                        data));
+    result = script_ptr2str (script_api_hook_completion (weechat_python_plugin,
+                                                         python_current_script,
+                                                         completion,
+                                                         description,
+                                                         &weechat_python_api_hook_completion_cb,
+                                                         function,
+                                                         data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4208,12 +4208,12 @@ weechat_python_api_hook_modifier (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_modifier (weechat_python_plugin,
-                                                      python_current_script,
-                                                      modifier,
-                                                      &weechat_python_api_hook_modifier_cb,
-                                                      function,
-                                                      data));
+    result = script_ptr2str (script_api_hook_modifier (weechat_python_plugin,
+                                                       python_current_script,
+                                                       modifier,
+                                                       &weechat_python_api_hook_modifier_cb,
+                                                       function,
+                                                       data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4313,14 +4313,14 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_info (weechat_python_plugin,
-                                                  python_current_script,
-                                                  info_name,
-                                                  description,
-                                                  args_description,
-                                                  &weechat_python_api_hook_info_cb,
-                                                  function,
-                                                  data));
+    result = script_ptr2str (script_api_hook_info (weechat_python_plugin,
+                                                   python_current_script,
+                                                   info_name,
+                                                   description,
+                                                   args_description,
+                                                   &weechat_python_api_hook_info_cb,
+                                                   function,
+                                                   data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4397,15 +4397,15 @@ weechat_python_api_hook_info_hashtable (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_info_hashtable (weechat_python_plugin,
-                                                            python_current_script,
-                                                            info_name,
-                                                            description,
-                                                            args_description,
-                                                            output_description,
-                                                            &weechat_python_api_hook_info_hashtable_cb,
-                                                            function,
-                                                            data));
+    result = script_ptr2str (script_api_hook_info_hashtable (weechat_python_plugin,
+                                                             python_current_script,
+                                                             info_name,
+                                                             description,
+                                                             args_description,
+                                                             output_description,
+                                                             &weechat_python_api_hook_info_hashtable_cb,
+                                                             function,
+                                                             data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -4481,15 +4481,82 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str(script_api_hook_infolist (weechat_python_plugin,
-                                                      python_current_script,
-                                                      infolist_name,
-                                                      description,
-                                                      pointer_description,
-                                                      args_description,
-                                                      &weechat_python_api_hook_infolist_cb,
-                                                      function,
-                                                      data));
+    result = script_ptr2str (script_api_hook_infolist (weechat_python_plugin,
+                                                       python_current_script,
+                                                       infolist_name,
+                                                       description,
+                                                       pointer_description,
+                                                       args_description,
+                                                       &weechat_python_api_hook_infolist_cb,
+                                                       function,
+                                                       data));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_focus_cb: callback for focus hooked
+ */
+
+struct t_hashtable *
+weechat_python_api_hook_focus_cb (void *data,
+                                  struct t_hashtable *info)
+{
+    struct t_script_callback *script_callback;
+    void *python_argv[2];
+    char empty_arg[1] = { '\0' };
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback && script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+        python_argv[1] = info;
+        
+        return (struct t_hashtable *)weechat_python_exec (script_callback->script,
+                                                          WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                                          script_callback->function,
+                                                          "sh", python_argv);
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_python_api_hook_focus: hook a focus
+ */
+
+static PyObject *
+weechat_python_api_hook_focus (PyObject *self, PyObject *args)
+{
+    char *area, *function, *data, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "hook_focus");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    area = NULL;
+    function = NULL;
+    data = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &area, &function, &data))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "hook_focus");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_focus (weechat_python_plugin,
+                                                    python_current_script,
+                                                    area,
+                                                    &weechat_python_api_hook_focus_cb,
+                                                    function,
+                                                    data));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -7555,6 +7622,7 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_info", &weechat_python_api_hook_info, METH_VARARGS, "" },
     { "hook_info_hashtable", &weechat_python_api_hook_info_hashtable, METH_VARARGS, "" },
     { "hook_infolist", &weechat_python_api_hook_infolist, METH_VARARGS, "" },
+    { "hook_focus", &weechat_python_api_hook_focus, METH_VARARGS, "" },
     { "unhook", &weechat_python_api_unhook, METH_VARARGS, "" },
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },

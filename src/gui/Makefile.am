@@ -33,6 +33,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-chat.h \
                                    gui-color.c \
                                    gui-color.h \
+                                   gui-cursor.c \
+                                   gui-cursor.h \
                                    gui-completion.c \
                                    gui-completion.h \
                                    gui-filter.c \
@@ -50,6 +52,8 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-line.c \
                                    gui-line.h \
                                    gui-main.h \
+                                   gui-mouse.c \
+                                   gui-mouse.h \
                                    gui-nicklist.c \
                                    gui-nicklist.h \
                                    gui-window.c \

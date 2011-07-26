@@ -78,6 +78,8 @@
 
 | weechat | config_options | Konfigurationsoptionen
 
+| weechat | cursor_areas | areas ("chat" or bar name) for free cursor movement
+
 | weechat | filename | Dateinamen
 
 | weechat | filters_names | Liste der Filter
@@ -90,7 +92,7 @@
 
 | weechat | keys_codes_for_reset | Tastenbelegungen die zurückgesetzt werden können (hinzugefügte/verändert/gelöschte Tastenbelegungen)
 
-| weechat | keys_contexts | key contexts
+| weechat | keys_contexts | Tastaturkontext
 
 | weechat | nicks | Nicks in Nickliste des aktuellen Buffers
 

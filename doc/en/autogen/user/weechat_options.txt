@@ -473,6 +473,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* *weechat.look.mouse*
+** description: `enable mouse support at startup (to enable it now, see /help mouse)`
+** type: boolean
+** values: on, off (default value: `off`)
+
 * *weechat.look.nickmode*
 ** description: `display nick mode ((half)op/voice) before each nick`
 ** type: boolean

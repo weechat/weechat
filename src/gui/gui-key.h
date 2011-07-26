@@ -22,10 +22,14 @@
 
 #define GUI_KEY_BUFFER_BLOCK_SIZE 256
 
+#define GUI_KEY_GRAB_DELAY_DEFAULT 500
+
 enum t_gui_key_context
 {
     GUI_KEY_CONTEXT_DEFAULT = 0,
     GUI_KEY_CONTEXT_SEARCH,
+    GUI_KEY_CONTEXT_CURSOR,
+    GUI_KEY_CONTEXT_MOUSE,
     /* number of key contexts */
     GUI_KEY_NUM_CONTEXTS,
 };
@@ -62,8 +66,7 @@ extern time_t gui_key_last_activity_time;
 
 extern void gui_key_init ();
 extern int gui_key_search_context (const char *context);
-extern void gui_key_grab_init (int grab_command);
-extern void gui_key_grab_end ();
+extern void gui_key_grab_init (int grab_command, const char *delay);
 extern char *gui_key_get_internal_code (const char *key);
 extern char *gui_key_get_expanded_name (const char *key);
 extern struct t_gui_key *gui_key_new (struct t_gui_buffer *buffer,

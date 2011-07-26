@@ -1,8 +1,8 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
 |========================================
-| Plugin | Nome | Descrizione | Variables | Lists
+| Plugin | Nome | Descrizione | Variabili | Liste
 
-| irc | irc_channel | irc channel |
+| irc | irc_channel | canale irc |
   'type' (integer) +
   'name' (string) +
   'topic' (string) +
@@ -30,14 +30,14 @@
   'next_channel' (pointer, hdata: 'irc_channel') |
   -
 
-| irc | irc_channel_speaking | irc channel_speaking |
+| irc | irc_channel_speaking | channel_speaking irc |
   'nick' (string) +
   'time_last_message' (time) +
   'prev_nick' (pointer, hdata: 'irc_channel_speaking') +
   'next_nick' (pointer, hdata: 'irc_channel_speaking') |
   -
 
-| irc | irc_ignore | irc ignore |
+| irc | irc_ignore | ignore irc |
   'number' (integer) +
   'mask' (string) +
   'regex_mask' (pointer) +
@@ -48,7 +48,7 @@
   'irc_ignore_list' +
   'last_irc_ignore'
 
-| irc | irc_nick | irc nick |
+| irc | irc_nick | nick irc |
   'name' (string) +
   'host' (string) +
   'prefixes' (string) +
@@ -59,7 +59,7 @@
   'next_nick' (pointer, hdata: 'irc_nick') |
   -
 
-| irc | irc_notify | irc notify |
+| irc | irc_notify | notify irc |
   'server' (pointer, hdata: 'irc_server') +
   'nick' (string) +
   'check_away' (integer) +
@@ -70,7 +70,7 @@
   'next_notify' (pointer, hdata: 'irc_notify') |
   -
 
-| irc | irc_redirect | irc redirect |
+| irc | irc_redirect | redirezione irc |
   'server' (pointer, hdata: 'irc_server') +
   'pattern' (string) +
   'signal' (string) +
@@ -92,7 +92,7 @@
   'next_redirect' (pointer, hdata: 'irc_redirect') |
   -
 
-| irc | irc_redirect_pattern | pattern for irc redirect |
+| irc | irc_redirect_pattern | schema per la redirezione irc |
   'name' (string) +
   'temp_pattern' (integer) +
   'timeout' (integer) +
@@ -104,7 +104,7 @@
   'irc_redirect_patterns' +
   'last_irc_redirect_pattern'
 
-| irc | irc_server | irc server |
+| irc | irc_server | server irc |
   'name' (string) +
   'options' (pointer) +
   'temp_server' (integer) +
@@ -167,7 +167,7 @@
   'irc_servers' +
   'last_irc_server'
 
-| weechat | bar | bar |
+| weechat | bar | barra |
   'name' (string) +
   'options' (pointer) +
   'conditions_count' (integer) +
@@ -175,14 +175,17 @@
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +
-  'bar_window' (pointer) +
+  'items_prefix' (pointer) +
+  'items_name' (pointer) +
+  'items_suffix' (pointer) +
+  'bar_window' (pointer, hdata: 'bar_window') +
   'bar_refresh_needed' (integer) +
   'prev_bar' (pointer, hdata: 'bar') +
   'next_bar' (pointer, hdata: 'bar') |
   'gui_bars' +
   'last_gui_bar'
 
-| weechat | bar_item | bar item |
+| weechat | bar_item | elemento barra |
   'plugin' (pointer, hdata: 'plugin') +
   'name' (string) +
   'build_callback' (pointer) +
@@ -191,6 +194,30 @@
   'next_item' (pointer, hdata: 'bar_item') |
   'gui_bar_items' +
   'last_gui_bar_item'
+
+| weechat | bar_window | bar window |
+  'bar' (pointer, hdata: 'bar') +
+  'x' (integer) +
+  'y' (integer) +
+  'width' (integer) +
+  'height' (integer) +
+  'scroll_x' (integer) +
+  'scroll_y' (integer) +
+  'cursor_x' (integer) +
+  'cursor_y' (integer) +
+  'current_size' (integer) +
+  'items_count' (integer) +
+  'items_subcount' (pointer) +
+  'items_content' (pointer) +
+  'items_num_lines' (pointer) +
+  'items_refresh_needed' (pointer) +
+  'screen_col_size' (integer) +
+  'coords_count' (integer) +
+  'coords' (pointer) +
+  'gui_objects' (pointer) +
+  'prev_bar_window' (pointer, hdata: 'bar_window') +
+  'next_bar_window' (pointer, hdata: 'bar_window') |
+  -
 
 | weechat | buffer | buffer |
   'plugin' (pointer, hdata: 'plugin') +
@@ -260,7 +287,7 @@
   'gui_buffers' +
   'last_gui_buffer'
 
-| weechat | completion | structure with completion |
+| weechat | completion | struttura con completamento |
   'buffer' (pointer, hdata: 'buffer') +
   'context' (integer) +
   'base_command' (string) +
@@ -282,14 +309,14 @@
   'last_partial_completion' (pointer, hdata: 'completion_partial') |
   -
 
-| weechat | completion_partial | structure with partial completion |
+| weechat | completion_partial | struttura con completamento parziale |
   'word' (string) +
   'count' (integer) +
   'prev_item' (pointer, hdata: 'completion_partial') +
   'next_item' (pointer, hdata: 'completion_partial') |
   -
 
-| weechat | config_file | config file |
+| weechat | config_file | file di configurazione |
   'plugin' (pointer, hdata: 'plugin') +
   'name' (string) +
   'filename' (string) +
@@ -303,7 +330,7 @@
   'config_files' +
   'last_config_file'
 
-| weechat | config_option | config option |
+| weechat | config_option | opzione di configurazione |
   'config_file' (pointer, hdata: 'config_file') +
   'section' (pointer, hdata: 'config_section') +
   'name' (string) +
@@ -326,7 +353,7 @@
   'next_option' (pointer, hdata: 'config_option') |
   -
 
-| weechat | config_section | config section |
+| weechat | config_section | sezione di configurazione |
   'config_file' (pointer, hdata: 'config_file') +
   'name' (string) +
   'user_can_add_options' (integer) +
@@ -347,7 +374,7 @@
   'next_section' (pointer, hdata: 'config_section') |
   -
 
-| weechat | filter | filter |
+| weechat | filter | filtro |
   'enabled' (integer) +
   'name' (string) +
   'buffer_name' (string) +
@@ -364,30 +391,42 @@
   'gui_filters' +
   'last_gui_filter'
 
-| weechat | history | history of commands in buffer |
+| weechat | history | cronologia dei comandi nel buffer |
   'text' (string) +
   'next_history' (pointer, hdata: 'history') +
   'prev_history' (pointer, hdata: 'history') |
   -
 
-| weechat | input_undo | structure with undo for input line |
+| weechat | input_undo | struttura con "undo"per la riga di input |
   'data' (string) +
   'pos' (integer) +
   'prev_undo' (pointer, hdata: 'input_undo') +
   'next_undo' (pointer, hdata: 'input_undo') |
   -
 
-| weechat | key | a key (keyboard shortcut) |
+| weechat | key | un tasto (scorciatoia da tastiera) |
   'key' (string) +
   'command' (string) +
   'prev_key' (pointer, hdata: 'key') +
   'next_key' (pointer, hdata: 'key') |
   'gui_default_keys' +
+  'gui_default_keys_cursor' +
+  'gui_default_keys_mouse' +
+  'gui_default_keys_search' +
   'gui_keys' +
+  'gui_keys_cursor' +
+  'gui_keys_mouse' +
+  'gui_keys_search' +
   'last_gui_default_key' +
-  'last_gui_key'
+  'last_gui_default_key_cursor' +
+  'last_gui_default_key_mouse' +
+  'last_gui_default_key_search' +
+  'last_gui_key' +
+  'last_gui_key_cursor' +
+  'last_gui_key_mouse' +
+  'last_gui_key_search'
 
-| weechat | line | structure with one line |
+| weechat | line | struttura con una sola riga |
   'data' (pointer, hdata: 'line_data') +
   'prev_line' (pointer, hdata: 'line') +
   'next_line' (pointer, hdata: 'line') |
@@ -409,7 +448,7 @@
   'message' (string) |
   -
 
-| weechat | lines | structure with lines |
+| weechat | lines | struttura con più righe |
   'first_line' (pointer, hdata: 'line') +
   'last_line' (pointer, hdata: 'line') +
   'last_read_line' (pointer, hdata: 'line') +
@@ -420,7 +459,7 @@
   'prefix_max_length' (integer) |
   -
 
-| weechat | nick | nick in nicklist |
+| weechat | nick | nick nella lista nick |
   'group' (pointer, hdata: 'nick_group') +
   'name' (string) +
   'color' (string) +
@@ -431,7 +470,7 @@
   'next_nick' (pointer, hdata: 'nick') |
   -
 
-| weechat | nick_group | group in nicklist |
+| weechat | nick_group | gruppo nella lista nick |
   'name' (string) +
   'color' (string) +
   'visible' (integer) +
@@ -460,7 +499,7 @@
   'last_weechat_plugin' +
   'weechat_plugins'
 
-| weechat | window | window |
+| weechat | window | finestra |
   'win_x' (integer) +
   'win_y' (integer) +
   'win_width' (integer) +
@@ -473,8 +512,8 @@
   'win_chat_height' (integer) +
   'win_chat_cursor_x' (integer) +
   'win_chat_cursor_y' (integer) +
-  'bar_windows' (pointer) +
-  'last_bar_window' (pointer) +
+  'bar_windows' (pointer, hdata: 'bar_window') +
+  'last_bar_window' (pointer, hdata: 'bar_window') +
   'refresh_needed' (integer) +
   'gui_objects' (pointer) +
   'buffer' (pointer, hdata: 'buffer') +
@@ -488,7 +527,7 @@
   'gui_windows' +
   'last_gui_window'
 
-| weechat | window_scroll | scroll info in window |
+| weechat | window_scroll | scorrimento delle info nella finestra |
   'buffer' (pointer, hdata: 'buffer') +
   'first_line_displayed' (integer) +
   'start_line' (pointer, hdata: 'line') +
@@ -501,7 +540,7 @@
   'next_scroll' (pointer, hdata: 'window_scroll') |
   -
 
-| weechat | window_tree | tree of windows |
+| weechat | window_tree | albero delle finestre |
   'parent_node' (pointer, hdata: 'window_tree') +
   'split_pct' (integer) +
   'split_horizontal' (integer) +

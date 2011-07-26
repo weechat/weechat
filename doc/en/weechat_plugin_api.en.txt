@@ -6042,7 +6042,7 @@ weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----------------------------------------
 
 Following hook types allow priority: command, command_run, signal, hsignal,
-config, completion, modifier, info, info_hashtable, infolist, hdata.
+config, completion, modifier, info, info_hashtable, infolist, hdata, focus.
 
 weechat_hook_command
 ^^^^^^^^^^^^^^^^^^^^
@@ -8228,6 +8228,86 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 
 [NOTE]
 This function is not available in scripting API.
+
+weechat_hook_focus
+^^^^^^^^^^^^^^^^^^
+
+Hook a focus: mouse event or key pressed in cursor mode (free movement of
+cursor).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_focus (const char *area,
+                                   struct t_hashtable *(*callback)(void *data,
+                                                                   struct t_hashtable *info),
+                                   void *callback_data);
+----------------------------------------
+
+Arguments:
+
+* 'area': "chat" for chat area, or name of bar item
+  (priority allowed, see note about <<hook_priority,priority>>)
+* 'callback': function called when focus is made, arguments and return
+  value:
+** 'void *data': pointer
+** 'struct t_hashtable *info': hashtable with info on focus and strings returned
+   by other calls to focus callbacks (with higher priority); keys and values
+   are of type "string"; info on focus (filled by WeeChat) are:
+*** '_x': column of focus on screen (first column on the left is "0")
+*** '_y': line of focus on screen (first line on top is "0")
+*** '_window': pointer of window with focus ("0x0" for a bar of type "root"
+    or for unknown area)
+*** '_bar_name': name of bar with focus (NULL for chat area or for unknown
+    area)
+*** '_bar_item_name': name of bar item with focus (NULL if focus is not in a
+    bar or if focus is after the end of last bar item)
+*** '_item_line': line with focus in bar item (first line of bar item is "0")
+*** '_item_col': column with focus in bar item (first column of bar item is "0")
+** return value: either "info" pointer (hashtable completed), or pointer to a
+   new hashtable (created by callback, with keys and values of type "string"),
+   this new hashtable content will be added to 'info' for other calls to focus
+   callbacks
+* 'callback_data': pointer given to callback when it is called by WeeChat
+
+Return value:
+
+* pointer to new hook, NULL if error occured
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *
+my_focus_nicklist_cb (void *data, struct t_hashtable *info)
+{
+    /* add strings in hashtable */
+    /* ... */
+    
+    return info;
+}
+
+/* add focus on nicklist */
+struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
+                                              &my_focus_nicklist_cb, NULL);
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+hook = weechat.hook_focus(area, callback, callback_data)
+
+# example
+def my_focus_nicklist_cb(data, info):
+    # build dict
+    # ...
+    return my_dict
+
+hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
+----------------------------------------
 
 weechat_unhook
 ^^^^^^^^^^^^^^

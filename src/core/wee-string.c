@@ -54,6 +54,7 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
 
@@ -1601,4 +1602,90 @@ string_input_for_buffer (const char *string)
     
     /* string is a command */
     return NULL;
+}
+
+/*
+ * string_replace_with_hashtable: replace ${codes} with value from hashtable
+ *                                "errors" is set with number of keys not found
+ *                                in hashtable
+ */
+
+char *
+string_replace_with_hashtable (const char *string,
+                               struct t_hashtable *hashtable,
+                               int *errors)
+{
+    int length, length_value, index_string, index_result;
+    char *result, *key;
+    const char *pos_end_name, *ptr_value;
+    
+    *errors = 0;
+    
+    if (!string)
+        return NULL;
+    
+    if (!hashtable)
+        return strdup (string);
+    
+    length = strlen (string) + 1;
+    result = malloc (length);
+    if (result)
+    {
+        index_string = 0;
+        index_result = 0;
+        while (string[index_string])
+        {
+            if ((string[index_string] == '\\')
+                && (string[index_string + 1] == '$'))
+            {
+                index_string++;
+                result[index_result++] = string[index_string++];
+            }
+            else if ((string[index_string] == '$')
+                     && (string[index_string + 1] == '{'))
+            {
+                pos_end_name = strchr (string + index_string + 2, '}');
+                if (pos_end_name)
+                {
+                    key = string_strndup (string + index_string + 2,
+                                          pos_end_name - (string + index_string + 2));
+                    if (key)
+                    {
+                        ptr_value = (const char *)hashtable_get (hashtable, key);
+                        if (ptr_value)
+                        {
+                            length_value = strlen (ptr_value);
+                            length += length_value;
+                            result = realloc (result, length);
+                            if (!result)
+                            {
+                                free (key);
+                                return NULL;
+                            }
+                            strcpy (result + index_result, ptr_value);
+                            index_result += length_value;
+                            index_string += pos_end_name - string -
+                                index_string + 1;
+                        }
+                        else
+                        {
+                            result[index_result++] = string[index_string++];
+                            (*errors)++;
+                        }
+                        
+                        free (key);
+                    }
+                    else
+                        result[index_result++] = string[index_string++];
+                }
+                else
+                    result[index_result++] = string[index_string++];
+            }
+            else
+                result[index_result++] = string[index_string++];
+        }
+        result[index_result] = '\0';
+    }
+    
+    return result;
 }

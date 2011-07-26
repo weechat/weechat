@@ -27,10 +27,12 @@
 #define GUI_WINDOW_CHAT_MIN_HEIGHT    2
 
 struct t_infolist;
+struct t_gui_bar_window;
 
 extern int gui_init_ok;
 extern int gui_ok;
 extern int gui_window_refresh_needed;
+extern int gui_window_cursor_x, gui_window_cursor_y;
 
 /* window structures */
 
@@ -116,6 +118,8 @@ extern struct t_gui_window *gui_current_window;
 extern struct t_gui_window_tree *gui_windows_tree;
 
 /* window functions */
+
+extern struct t_gui_window *gui_window_search_by_xy (int x, int y);
 extern void gui_window_ask_refresh (int refresh);
 extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
@@ -200,6 +204,7 @@ extern int gui_window_balance (struct t_gui_window_tree *tree);
 extern void gui_window_swap (struct t_gui_window *window, int direction);
 extern void gui_window_refresh_screen (int full_refresh);
 extern void gui_window_set_title (const char *title);
+extern void gui_window_move_cursor ();
 extern void gui_window_term_display_infos ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);
 

@@ -16,44 +16,44 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
       hide|show|toggle <nome>
       scroll <nome> <buffer> <scroll_value>
 
-         list: elenca tutte le barre
-     listfull: elenca tutte le barre (dettagliato)
-    listitems: elenca tutti gli elementi della barra
-          add: aggiunge una nuova barra
-         nome: nome della barra (deve essere unico)
-         tipo:   root: al di fuori delle finestre,
-               window: all'interno delle finestre, con opzioni condizionali (a seguire)
-    cond1,...: condizione(i) per visualizzare la barra (solo per il tipo "window"):
-                 active: sulla finestra attiva
-               inactive: sulle finestre inattive
-               nicklist: sulle finestre con la lista nick
-               senza condizione, viene sempre mostrata
-    posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
-   dimensione: dimensione della barra (in caratteri)
-   separatore: 1 per utilizzarlo (riga), 0 o nulla equivale a nessun separatore
-    item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
-      default: crea una barra predefinita (saranno tutte predefinite se non viene dato un nome per la barra)
-          del: elimina una barra (o tutte le barre con -all)
-          set: imposta un valore per la proprietà di una barra
-      opzione: opzione da cambiare (per una lista di opzioni, consultare /set weechat.bar.<barname>.*)
-       valore: nuovo valore per l'opzione
-         hide: nasconde una barra
-         show: mostra una barra nascosta
-       toggle: nascone/mostra una barra
-       scroll: scorre una barra
-       buffer: nome del buffer da scorrere ('*' indica il buffer corrente, si dovrebbe utilizzare '*' per le barre root)
- scroll_value: valore per lo scorrimento: 'x' o 'y', seguite da '+', '-', 'b' (inizio) or 'e' (fine), valore (per +/-), e %% opzionale (per scorrere di %% di larghezza/altezza, altrimenti il valore è il numero di caratteri)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+    cond1,...: condition(s) for displaying bar (only for type "window"):
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               without condition, bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-Esempi:
-  crea una barra con l'ora, numero del buffer + nome, e completamento:
-    /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  nasconde una barra:
-    /bar hide miabarra
-  scorre la lista nick di 10 righe in basso sul buffer corrente:
+Examples:
+  create a bar with time, buffer number + name, and completion:
+    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  hide a bar:
+    /bar hide mybar
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  scorre la lista nick di una pagina in alto sul buffer #weechat:
+  scroll nicklist one page up on #weechat buffer:
     /bar scroll nicklist #weechat y-100%
-  scorre fino alla fine della lista nick sul buffer corrente:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ........................................
 
@@ -140,12 +140,33 @@ Esempi:
 comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trovata all'inizio del comando)
 ........................................
 
+[command]*`cursor`* free movement of cursor on screen to execute actions on specific areas of screen::
+........................................
+/cursor  go chat|<bar>|<x>,<y>
+         move up|down|left|right|area_up|area_down|area_left|area_right
+         stop
+
+  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
+move: move cursor with direction
+stop: stop cursor mode
+
+Without argument, this command toggles cursor mode.
+
+When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
+
+Examples:
+  go to nicklist:
+    /cursor go nicklist
+  go to coordinates x=10, y=5:
+    /cursor go 10,5
+........................................
+
 [command]*`debug`* attiva debug per core/plugin::
 ........................................
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|cursor|infolists|memory|mouse|tags|term|windows
         hdata [free]
 
      list: list plugins with debug levels
@@ -155,9 +176,11 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
      dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
    buffer: dump buffer content with hexadecimal values in log file
     color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
     hdata: display infos about hdata (with free: remove all hdata in memory)
 infolists: display infos about infolists
    memory: display infos about memory usage
+    mouse: toggle debug for mouse
      tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
@@ -170,52 +193,52 @@ infolists: display infos about infolists
          add <nome> <buffer>[,<buffer>...] <tag> <regex>]
          del <nome>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
+         list: elenca tutti i filtri
+       enable: abilita filtri (i filtri sono abilitati di default)
+      disable: disabilita filtri
+       toggle: abilita/disabilita filtri
+         nome: nome del filtro
+          add: aggiunge un filtro
+          del: elimina un filtro
+         -all: elimina tutti i filtri
+       buffer: elenco separato da virgole di buffer in cui il filtro è attivo:
+               - nome completo che include il plugin (esempio: "irc.freenode.#weechat)
+               - "*" indica tutti i buffer
+               - un nome preceduto da '!' viene escluso
+               - un nome può iniziare o terminare con '*' per includere più buffer
+          tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+        regex: espressione regolare da cercare nella riga
+               - usare '\t' per separare il prefisso dal messaggio, caratteri speciali come "|" vanno preceduti dal carattere escape: '\|')
+               - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
 
-The default key alt+'=' toggles filtering on/off.
+               -vengono create due espressioni regolari: una per il prefisso e l'altra per il messaggio
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Il tasto predefinito alt+'=' abilita/disabilita il filtro.
+
+Tag utilizzati di frequente:
+  no_filter, no_highlight, no_log, log0..log9 (livello di log),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message),
-  irc_xxx (xxx is command name or number, see /server raw),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+  nick_xxx (xxx è il nick nel messaggio),
+  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+Per mostrare i tag per le righe nei buffer: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
-    /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
-    /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
-    /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+Esempi:
+  usa il filtro intelligente IRC per tutti i buffer:
+     /filter add irc_smart * irc_smart_filter *
+  usa il filtro intelligente IRC su tutti i buffer tranne quelli che contengono "#weechat" nel nome:
+     /filter add irc_smart *,!*weechat* irc_smart_filter
+  filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+     /filter add joinquit * irc_join,irc_part,irc_quit *
+  filtra i nick visualizzati all'ingresso in un canale o con /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat * toto\t
-  keep only nick "titi" on IRC channel #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filter lines containing word "spam":
+  filtra il nick "tizio" sul canale IRC #weechat
+    /filter add tizio irc.freenode.#esempio * tizio\t
+  filtra solo il nick "caio" sul canale IRC #test:
+    /filter add caio irc.freenode.#test * !caio\t
+  filtra le righe contententi la parola "spam":
     /filter add filterspam * * spam
-  filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+  filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
+    /filter add schifo irc.freenode.#weechat * weechat fa schifo
 ........................................
 
 [command]*`help`* visualizza l'aiuto su comandi e opzioni::
@@ -279,8 +302,8 @@ list of actions:
   jump_previously_visited_buffer: jump to previously visited buffer
   jump_next_visited_buffer: jump to next visited buffer
   hotlist_clear: clear hotlist
-  grab_key: grab a key
-  grab_key_command: grab a key with its associated command
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
   scroll_unread: scroll to unread marker
   set_unread: set unread marker for all buffers
   set_unread_current_buffer: set unread marker for current buffer
@@ -293,15 +316,15 @@ This command is used by key bindings or plugins.
 
 [command]*`key`* associa/disassocia tasti::
 ........................................
-/key  list|listdefault|listdiff [<context>]
-      bind <key> [<command> [<args>]]
-      bindctxt <context> <key> [<command> [<args>]]
-      unbind <key>
-      unbindctxt <context> <key>
-      reset <key>
-      resetctxt <context> <key>
-      resetall -yes [<context>]
-      missing [<context>]
+/key  list|listdefault|listdiff [<contesto>]
+      bind <tasto> [<comando> [<arg>]]
+      bindctxt <contesto> <tasto> [<comando> <arg>]]
+      unbind <tasto>
+      unbindctxt <contesto> <chiave>
+      reset <tasto>
+      resetctxt <contesto> <tasto>
+      resetall -yes [<contesto>]
+      missing [<contesto>]
 
        list: list all current keys (without argument, this list is displayed)
 listdefault: list default keys
@@ -318,6 +341,14 @@ listdefault: list default keys
 
 When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" where area can be:
+  *: any area on screen
+  chat: chat area
+  bar(*): any bar
+  bar(xxx): bar "xxx"
+  item(*): any bar item
+  item(xxx): bar item "xxx"
+
 Examples:
   key alt-x to toggle nicklist bar:
     /key bind meta-x /bar toggle nicklist
@@ -327,6 +358,8 @@ Examples:
     /key reset meta-r
   key "tab" to stop search in buffer:
     /key bindctxt search ctrl-I /input search_stop
+  middle button of mouse on a nick to retrieve info on nick:
+    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
 [command]*`layout`* salva/applica/ripristina il layout per i buffer e le finestre::
@@ -342,6 +375,25 @@ buffers: salva/applica modifiche solo ai buffer (ordine dei buffer)
 windows: salva/applica modifiche solo alle finestre (buffer visualizzato da ogni finestra)
 
 Senza argomenti, il comando visualizza il layout salvato.
+........................................
+
+[command]*`mouse`* mouse control::
+........................................
+/mouse  enable|disable|toggle [<delay>]
+
+ enable: enable mouse
+disable: disable mouse
+ toggle: toggle mouse
+  delay: delay (in seconds) after which initial mouse state is restored (useful to temporarily disable mouse)
+
+To enable/disable mouse at startup, use:
+  /set weechat.look.mouse on/off
+
+Examples:
+  enable mouse:
+    /mouse enable
+  toggle mouse for 5 seconds:
+    /mouse toggle 5
 ........................................
 
 [command]*`mute`* esegue un comando in silenzio::
@@ -372,16 +424,16 @@ Esempi:
          autoload
          reload|unload [<nome>]
 
-    list: list loaded plugins
-listfull: list loaded plugins (verbose)
-    load: load a plugin
-autoload: autoload plugins in system or user directory
-  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-  unload: unload a plugin (if no name given, unload all plugins)
-filename: plugin (file) to load
-    name: a plugin name
+    list: elenca i plugin attivati
+listfull: elenca i plugin attivati (dettagliato)
+    load: attiva un plugin
+autoload: attiva automaticamente un plugin nella cartella di sistema o utente
+  reload: riattiva un plugin (se non specificato, disattiva e poi riattiva tutti i plugin)
+  unload: disattiva un plugin (se non specificato, disattiva tutti i plugin
+nomefile: plugin (file) da attivare
+    nome: nome di un plugin
 
-Without argument, this command lists loaded plugins.
+Senza argomento, questo comando elenca i plugin attivati.
 ........................................
 
 [command]*`proxy`* gestione proxy::
@@ -539,54 +591,54 @@ Esempi:
 /window  list
          -1|+1|b#|up|down|left|right
          splith|splitv [<pct>]
-         resize [+/-]<pct>
+         resize [+/-] <pct>
          balance
          merge [all]
          page_up|page_down
          refresh
-         scroll [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [+/-]<value>[%]
+         scroll|[+/-]<valore>[s|m|h|d|M|y]
+         scroll_horiz [+/-]<valore>[%]
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
          swap [up|down|left|right]
          zoom
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
+         list: elenca le finestre aperte (senza argomento, questa lista viene visualizzata)
+           -1: salta alla finestra precedente
+           +1: salta alla finestra successiva
+           b#: salta alla finestra successiva che visualizza il buffer numero #
+           up: passa alla finestra superiore a quella corrente
+         down: passa alla finestra inferiore a quella attiva
+         left: passa alla finestra a sinistra
+        right: passa alla finestra a destra
+       splith: divide la finestra attiva orizzontalmente
+       splitv: divide la finestra attiva verticalmente
+       resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
+      balance: bilancia le dimensioni tutte le finestre
+        merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
+      page_up: scorre di una pagina in alto
+    page_down: scorre di una pagina in basso
+      refresh: aggiorna lo schermo
+       scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
+ scroll_horiz: scorre orizzontalmente un numero di colonne (+/-N) una percentuale della dimensione della finestra (questo scorrimento è possibile solo sui buffer con contenuto libero)
+    scroll_up: scorre di alcune righe in alto
+  scroll_down: scorre di alcune righe in basso
+   scroll_top: scorre fino all'inizio del buffer
+scroll_bottom: scorre fino alla fine del buffer buffer
+scroll_previous_highlight: passa all'evento precedente
+    scroll_next_highlight: passa all'evento successivo
+         swap: scambia i buffer di due finestra (con direzione opzionale per la finestra di destinazione)
+         zoom: ingrandimento sulla finestra
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
 
-Examples:
-  jump to window displaying buffer #1:
+Esempi:
+  salta alla finestra che visualizza il buffer #1:
     /window b1
-  scroll 2 lines up:
+  scorre di due righe in alto:
     /window scroll -2
-  scroll 2 days up:
+  scorre all'indietro di due giorni:
     /window scroll -2d
-  scroll to beginning of current day:
-    /window scroll -d
+  scorre all'inizio del giorno attuale:
+     /window scroll -d
 ........................................
 

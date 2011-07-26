@@ -4,7 +4,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *logger.file.flush_delay*
-** descrizione: `number of seconds between flush of log files (0 = write in log files immediately for each line printed)`
+** descrizione: `numero di secondi tra il flush (scrittura) dei file di log (0 = scrive sui file di log immediatamente per ogni riga stampata)`
 ** tipo: intero
 ** valori: 0 .. 3600 (valore predefinito: `120`)
 

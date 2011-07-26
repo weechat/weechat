@@ -1,12 +1,24 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-18
+v0.3.6-dev, 2011-07-26
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add support of mouse: new command /mouse, new option weechat.look.mouse
+  and new key context "mouse" (task #5435)
+* core: add command /cursor (free movement of cursor on screen), with key
+  context "search"
+* core: automatic scroll direction in /bar scroll (x/y is now optional)
+* core: add optional delay for key grab (commands /input grab_key and
+  /input grab_key_command, default is 500 milliseconds)
+* core: fix bugs with key "^" (bug #32072, bug #21381)
+* core: allow plugin name in command /buffer name
+* core: fix bugs with bar windows: do not create bar windows for hidden bars
+* core: fix completion bug when two words for completion are equal but with
+  different case
 * core: fix completion for command arguments when same command exists in many
   plugins (bug #33753)
 * core: add context "search" for keys (to define keys used during search in
@@ -22,11 +34,12 @@ Version 0.3.6 (under dev!)
 * core: add options "infolists", "hdata" and "tags" for command /debug
 * core: add horizontal scrolling for buffers with free content (command
   /window scroll_horiz) (task #11112)
-* api: add new functions hdata_new, hdata_new_var, hdata_new_list, hdata_get,
-  hdata_get_var_offset, hdata_get_var_type, hdata_get_var_type_string,
-  hdata_get_var_hdata, hdata_get_var, hdata_get_var_at_offset, hdata_get_list,
-  hdata_move, hdata_integer, hdata_string, hdata_pointer, hdata_time,
-  hdata_get_string
+* api: add info "cursor_mode"
+* api: add new functions hook_focus, hdata_new, hdata_new_var, hdata_new_list,
+  hdata_get, hdata_get_var_offset, hdata_get_var_type,
+  hdata_get_var_type_string, hdata_get_var_hdata, hdata_get_var,
+  hdata_get_var_at_offset, hdata_get_list, hdata_move, hdata_integer,
+  hdata_string, hdata_pointer, hdata_time, hdata_get_string
 * api: fix bug with function config_set_desc_plugin (use immediately
   description for option when function is called)
 * irc: fix crash when malformed IRC message 352 (WHO) is received (bug #33790)

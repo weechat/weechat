@@ -49,9 +49,13 @@
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-bar.h"
+#include "../gui/gui-bar-window.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
+#include "../gui/gui-cursor.h"
 #include "../gui/gui-line.h"
+#include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
 
@@ -2744,6 +2748,150 @@ hook_hdata_get (struct t_weechat_plugin *plugin, const char *hdata_name)
 }
 
 /*
+ * hook_focus: hook a focus
+ */
+
+struct t_hook *
+hook_focus (struct t_weechat_plugin *plugin, const char *area,
+            t_hook_callback_focus *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_focus *new_hook_focus;
+    int priority;
+    const char *ptr_area;
+    
+    if (!area || !area[0] || !callback)
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_focus = malloc (sizeof (*new_hook_focus));
+    if (!new_hook_focus)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_get_priority_and_name (area, &priority, &ptr_area);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_FOCUS, priority,
+                    callback_data);
+    
+    new_hook->hook_data = new_hook_focus;
+    new_hook_focus->callback = callback;
+    new_hook_focus->area = strdup ((ptr_area) ? ptr_area : area);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_focus_hashtable_map_cb: add keys of a hashtable into another
+ */
+
+void
+hook_focus_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
+                             const void *key, const void *value)
+{
+    struct t_hashtable *hashtable1;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hashtable1 = (struct t_hashtable *)data;
+
+    if (hashtable1 && key && value)
+        hashtable_set (hashtable1, (const char *)key, (const char *)value);
+}
+
+/*
+ * hook_focus_get_data: get data for focus on (x,y) on screen
+ */
+
+struct t_hashtable *
+hook_focus_get_data (struct t_gui_cursor_info *cursor_info)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    struct t_hashtable *hash_info, *hash_info2;
+    char str_value[64];
+    
+    hook_exec_start ();
+    
+    hash_info = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    if (!hash_info)
+        return NULL;
+
+    /* fill hash_info with values from cursor_info */
+    snprintf (str_value, sizeof (str_value), "%d", cursor_info->x);
+    hashtable_set (hash_info, "_x", str_value);
+    snprintf (str_value, sizeof (str_value), "%d", cursor_info->y);
+    hashtable_set (hash_info, "_y", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx", (long unsigned int)cursor_info->window);
+    hashtable_set (hash_info, "_window", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx",
+              (cursor_info->window) ?
+              (long unsigned int)((cursor_info->window)->buffer) : 0);
+    hashtable_set (hash_info, "_buffer", str_value);
+    hashtable_set (hash_info, "_bar_name",
+                   (cursor_info->bar_window) ?
+                   ((cursor_info->bar_window)->bar)->name : NULL);
+    hashtable_set (hash_info, "_bar_item_name",
+                   cursor_info->bar_item);
+    snprintf (str_value, sizeof (str_value),
+              "%d", cursor_info->item_line);
+    hashtable_set (hash_info, "_item_line", str_value);
+    snprintf (str_value, sizeof (str_value),
+              "%d", cursor_info->item_col);
+    hashtable_set (hash_info, "_item_col", str_value);
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_FOCUS];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && ((cursor_info->chat
+                 && (strcmp (HOOK_FOCUS(ptr_hook, area), "chat") == 0))
+                || (cursor_info->bar_item
+                    && (strcmp (HOOK_FOCUS(ptr_hook, area), cursor_info->bar_item) == 0))))
+        {
+            ptr_hook->running = 1;
+            hash_info2 = (HOOK_FOCUS(ptr_hook, callback))
+                (ptr_hook->callback_data, hash_info);
+            ptr_hook->running = 0;
+            
+            if (hash_info2)
+            {
+                if (hash_info2 != hash_info)
+                {
+                    /*
+                     * add keys of hashtable2 into hashtable and destroy
+                     * hashtable2
+                     */
+                    hashtable_map (hash_info2, &hook_focus_hashtable_map_cb,
+                                   hash_info);
+                    hashtable_free (hash_info2);
+                }
+            }
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    hook_exec_end ();
+    
+    return hash_info;
+}
+
+/*
  * unhook: unhook something
  */
 
@@ -2932,6 +3080,10 @@ unhook (struct t_hook *hook)
                     free (HOOK_HDATA(hook, hdata_name));
                 if (HOOK_HDATA(hook, description))
                     free (HOOK_HDATA(hook, description));
+                break;
+            case HOOK_TYPE_FOCUS:
+                if (HOOK_FOCUS(hook, area))
+                    free (HOOK_FOCUS(hook, area));
                 break;
             case HOOK_NUM_TYPES:
                 /*
@@ -3372,6 +3524,15 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                         return 0;
                 }
                 break;
+            case HOOK_TYPE_FOCUS:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_FOCUS(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "area", HOOK_FOCUS(ptr_hook, area)))
+                        return 0;
+                }
+                break;
             case HOOK_NUM_TYPES:
                 /*
                  * this constant is used to count types only,
@@ -3669,6 +3830,14 @@ hook_print_log ()
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_HDATA(ptr_hook, callback));
                         log_printf ("    hdata_name. . . . . . : '%s'",  HOOK_HDATA(ptr_hook, hdata_name));
                         log_printf ("    description . . . . . : '%s'",  HOOK_HDATA(ptr_hook, description));
+                    }
+                    break;
+                case HOOK_TYPE_FOCUS:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  focus data:");
+                        log_printf ("    callback. . . . . . . : 0x%lx", HOOK_FOCUS(ptr_hook, callback));
+                        log_printf ("    area. . . . . . . . . : '%s'",  HOOK_FOCUS(ptr_hook, area));
                     }
                     break;
                 case HOOK_NUM_TYPES:

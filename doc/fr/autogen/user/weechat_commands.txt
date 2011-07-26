@@ -42,7 +42,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
        toggle: cacher/montrer une barre
        scroll: faire défiler la barre
        tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
-valeur_scroll: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
+valeur_scroll: valeur pour le défilement: 'x' ou 'y' (optionnel), suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un % optionnel (pour faire défiler par % de la largeur/hauteur, sinon la valeur est un nombre de caractères)
 
 Exemples:
   créer une barre avec l'heure, numéro + nom de tampon, et la complétion:
@@ -140,12 +140,33 @@ extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
  commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ........................................
 
+[command]*`cursor`* mouvement libre du curseur sur l'écran pour exécuter des actions sur des zones spécifiques de l'écran::
+........................................
+/cursor  go chat|<barre>|<x>,<y>
+         move up|down|left|right|area_up|area_down|area_left|area_right
+         stop
+
+  go: déplacer le curseur vers la zone de discussion ("chat"), une barre (en utilisant son nom) ou les coordonnées "x,y"
+move: déplacer le curseur dans une direction
+stop: arrêter le mode curseur
+
+Sans paramètre, cette commande active/désactive le mode curseur.
+
+Lorsque la souris est activée (voir /help mouse), par défaut un clic du milieu démarre le mode curseur à ce point.
+
+Exemples:
+  aller dans la liste des pseudos:
+    /cursor go nicklist
+  aller aux coordonnées x=10, y=5:
+    /cursor go 10,5
+........................................
+
 [command]*`debug`* contrôle du debug pour le coeur/les extensions::
 ........................................
 /debug  list
         set <extension> <niveau>
         dump [<extension>]
-        buffer|color|infolists|memory|tags|term|windows
+        buffer|color|cursor|infolists|memory|mouse|tags|term|windows
         hdata [free]
 
      list: lister les extensions avec leur niveau de debug
@@ -155,9 +176,11 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
      dump: afficher les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
    buffer: afficher le contenu du tampon en valeurs hexadécimales dans le fichier log
     color: afficher des infos sur les paires de couleur courantes
+   cursor: activer/désactiver le debug pour le mode curseur
     hdata: afficher des infos sur les hdata (avec free: supprimer tous les hdata en mémoire)
 infolists: afficher des infos sur les infolists
    memory: afficher des infos sur l'utilisation de la mémoire
+    mouse: activer/désactiver le debug pour la souris
      tags: afficher les étiquettes pour les lignes
      term: afficher des infos sur le terminal
   windows: afficher l'arbre des fenêtres
@@ -279,8 +302,8 @@ list des actions:
   jump_previously_visited_buffer: sauter au tampon visité précédemment
   jump_next_visited_buffer: sauter au tampon visité après
   hotlist_clear: effacer la hotlist
-  grab_key: capturer une touche
-  grab_key_command: capturer une touche avec sa commande associée
+  grab_key: capturer une touche (paramètre facultatif: délai pour la fin de la capture, par défaut 500 millisecondes)
+  grab_key_command: capturer une touche avec sa commande associée (paramètre facultatif: délai pour la fin de la capture, par défaut 500 millisecondes)
   scroll_unread: faire défiler jusqu'au marqueur de données non lues
   set_unread: définir le marqueur de données non lues pour tous les tampons
   set_unread_current_buffer: définir le marqueur de données non lues pour le tampon courant
@@ -318,6 +341,14 @@ listdefault: afficher les touches par défaut
 
 Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
 
+Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a le format: "@aire:key" où aire peut être :
+  *: n'importe quelle zone à l'écran
+  chat: la zone de discussion
+  bar(*): n'importe quelle barre
+  bar(xxx): la barre "xxx"
+  item(*): n'importe quel objet de barre
+  item(xxx): l'objet de barre "xxx"
+
 Exemples:
   touche alt-x pour activer/désactiver la liste des pseudos:
     /key bind meta-x /bar toggle nicklist
@@ -327,6 +358,8 @@ Exemples:
     /key reset meta-r
   touche "tab" pour arrêter la recherche dans le tampon:
     /key bindctxt search ctrl-I /input search_stop
+  bouton du milieu de la souris sur un pseudo pour récupérer les infos sur le pseudo:
+    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
 [command]*`layout`* sauver/appliquer/réinitialiser la disposition des tampons et fenêtres::
@@ -342,6 +375,25 @@ buffers: sauver/appliquer seulement pour les tampons (ordre des tampons)
 windows: sauver/appliquer seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
 
 Sans paramètre, cette commande affiche la disposition sauvegardée.
+........................................
+
+[command]*`mouse`* contrôle de la souris::
+........................................
+/mouse  enable|disable|toggle [<délai>]
+
+ enable: activer la souris
+disable: désactiver la souris
+ toggle: activer/désactiver la souris
+  délai: délai (en secondes) après lequel l'état initial de la souris est restauré (pratique pour désactiver temporairement la souris)
+
+Pour activer/désactiver la souris au démarrage, faites :
+  /set weechat.look.mouse on/off
+
+Exemples:
+  activer la souris:
+    /mouse enable
+  activer/désactiver la souris pendant 5 secondes:
+    /mouse toggle 5
 ........................................
 
 [command]*`mute`* exécuter une commande silencieusement::

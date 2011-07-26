@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-10 23:03+0200\n"
+"POT-Creation-Date: 2011-07-26 14:08+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -392,12 +392,14 @@ msgstr "показать историю буфера команд"
 msgid "default command:"
 msgstr "Внутренние команды %s:\n"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings added or redefined (%d) for context \"%s\":"
+msgid "%d key bindings added or redefined for context \"%s\":"
 msgstr "Комбинации клавиш:\n"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings deleted (%d) for context \"%s\":"
+msgid "%d key bindings deleted for context \"%s\":"
 msgstr "Комбинации клавиш:\n"
 
 #, fuzzy, c-format
@@ -428,16 +430,18 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "No key binding defined for context \"%s\""
 msgstr "Сокращения не заданы.\n"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Key bindings (%d) for context \"%s\":"
+msgid "%d key bindings for context \"%s\":"
 msgstr "Комбинации клавиш:\n"
 
 #, fuzzy, c-format
 msgid "No default key binding for context \"%s\""
 msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
+#. TRANSLATORS: first "%d" is number of keys
 #, fuzzy, c-format
-msgid "Default key bindings (%d) for context \"%s\":"
+msgid "%d default key bindings for context \"%s\":"
 msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy
@@ -893,9 +897,9 @@ msgid ""
 "       scroll: scroll bar\n"
 "       buffer: name of buffer to scroll ('*' means current buffer, you "
 "should use '*' for root bars)\n"
-" scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', "
-"'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
-"%% of width/height, otherwise value is number of chars)\n"
+" scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', "
+"'-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to "
+"scroll by % of width/height, otherwise value is number of chars)\n"
 "\n"
 "Examples:\n"
 "  create a bar with time, buffer number + name, and completion:\n"
@@ -1034,13 +1038,41 @@ msgstr ""
 "команда: исполняемая команда ('/' автоматически добавляется в начало "
 "команды)\n"
 
+msgid ""
+"free movement of cursor on screen to execute actions on specific areas of "
+"screen"
+msgstr ""
+
+msgid ""
+"go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|area_left|"
+"area_right || stop"
+msgstr ""
+
+msgid ""
+"  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
+"\"\n"
+"move: move cursor with direction\n"
+"stop: stop cursor mode\n"
+"\n"
+"Without argument, this command toggles cursor mode.\n"
+"\n"
+"When mouse is enabled (see /help mouse), by default a middle click will "
+"start cursor mode at this point.\n"
+"\n"
+"Examples:\n"
+"  go to nicklist:\n"
+"    /cursor go nicklist\n"
+"  go to coordinates x=10, y=5:\n"
+"    /cursor go 10,5"
+msgstr ""
+
 msgid "control debug for core/plugins"
 msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
-"memory|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
+"infolists|memory|mouse|tags|term|windows || hdata [free]"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -1053,10 +1085,12 @@ msgid ""
 "WeeChat crashes)\n"
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
+"   cursor: toggle debug for cursor mode\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
 "infolists: display infos about infolists\n"
 "   memory: display infos about memory usage\n"
+"    mouse: toggle debug for mouse\n"
 "     tags: display tags for lines\n"
 "     term: display infos about terminal\n"
 "  windows: display windows tree"
@@ -1206,8 +1240,10 @@ msgid ""
 "  jump_previously_visited_buffer: jump to previously visited buffer\n"
 "  jump_next_visited_buffer: jump to next visited buffer\n"
 "  hotlist_clear: clear hotlist\n"
-"  grab_key: grab a key\n"
-"  grab_key_command: grab a key with its associated command\n"
+"  grab_key: grab a key (optional argument: delay for end of grab, default is "
+"500 milliseconds)\n"
+"  grab_key_command: grab a key with its associated command (optional "
+"argument: delay for end of grab, default is 500 milliseconds)\n"
 "  scroll_unread: scroll to unread marker\n"
 "  set_unread: set unread marker for all buffers\n"
 "  set_unread_current_buffer: set unread marker for current buffer\n"
@@ -1256,6 +1292,15 @@ msgid ""
 "then k), and then press the key to bind: this will insert key code in "
 "command line.\n"
 "\n"
+"For context \"mouse\" (possible in context \"cursor\" too), key has format: "
+"\"@area:key\" where area can be:\n"
+"  *: any area on screen\n"
+"  chat: chat area\n"
+"  bar(*): any bar\n"
+"  bar(xxx): bar \"xxx\"\n"
+"  item(*): any bar item\n"
+"  item(xxx): bar item \"xxx\"\n"
+"\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
 "    /key bind meta-x /bar toggle nicklist\n"
@@ -1264,7 +1309,10 @@ msgid ""
 "  restore default binding for key alt-r:\n"
 "    /key reset meta-r\n"
 "  key \"tab\" to stop search in buffer:\n"
-"    /key bindctxt search ctrl-I /input search_stop"
+"    /key bindctxt search ctrl-I /input search_stop\n"
+"  middle button of mouse on a nick to retrieve info on nick:\n"
+"    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
+"${nick}"
 msgstr ""
 "  клавиша: отобразить или назначить этой клавише функцию или команду "
 "(начинающуюся на \"/\")\n"
@@ -1289,6 +1337,29 @@ msgid ""
 "windows: save/apply only windows (buffer displayed by each window)\n"
 "\n"
 "Without argument, this command displays saved layout."
+msgstr ""
+
+msgid "mouse control"
+msgstr ""
+
+msgid "enable|disable|toggle [<delay>]"
+msgstr ""
+
+msgid ""
+" enable: enable mouse\n"
+"disable: disable mouse\n"
+" toggle: toggle mouse\n"
+"  delay: delay (in seconds) after which initial mouse state is restored "
+"(useful to temporarily disable mouse)\n"
+"\n"
+"To enable/disable mouse at startup, use:\n"
+"  /set weechat.look.mouse on/off\n"
+"\n"
+"Examples:\n"
+"  enable mouse:\n"
+"    /mouse enable\n"
+"  toggle mouse for 5 seconds:\n"
+"    /mouse toggle 5"
 msgstr ""
 
 #, fuzzy
@@ -1733,6 +1804,9 @@ msgstr ""
 msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr "Комбинации клавиш:\n"
 
+msgid "areas (\"chat\" or bar name) for free cursor movement"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -1942,6 +2016,9 @@ msgstr ""
 msgid ""
 "jump to previously visited buffer when closing a buffer (if disabled, then "
 "jump to buffer number - 1)"
+msgstr ""
+
+msgid "enable mouse support at startup (to enable it now, see /help mouse)"
 msgstr ""
 
 msgid "display nick mode ((half)op/voice) before each nick"
@@ -2663,6 +2740,14 @@ msgstr ""
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s не могу сохранить конфигурационный файл\n"
 
+#, fuzzy
+msgid "Mouse is enabled"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "Mouse is disabled"
+msgstr "Сокращения не заданы.\n"
+
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
@@ -2772,12 +2857,18 @@ msgstr ""
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 
+msgid "Debug enabled for cursor mode"
+msgstr ""
+
+msgid "Debug disabled for cursor mode"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
 
 #, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s"
+msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Новая комбинация клавиш:  %s"
 
 #, fuzzy, c-format
@@ -2791,6 +2882,12 @@ msgstr "%s недостаточно памяти для установки кл�
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Недостаточно памяти для новой строчки\n"
+
+msgid "Debug enabled for mouse"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -6124,6 +6221,10 @@ msgid "1 if filters are enabled"
 msgstr "команда users отключена"
 
 #, fuzzy
+msgid "1 if cursor mode is enabled"
+msgstr "команда users отключена"
+
+#, fuzzy
 msgid "list of bars"
 msgstr "Список сокращений:\n"
 
@@ -6242,6 +6343,10 @@ msgstr ""
 #, fuzzy
 msgid "bar item"
 msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "bar window"
+msgstr "управление окнами"
 
 #, fuzzy
 msgid "buffer"
@@ -7377,6 +7482,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Key bindings (%d) for context \"%s\":"
+#~ msgstr "Комбинации клавиш:\n"
+
+#, fuzzy
+#~ msgid "Default key bindings (%d) for context \"%s\":"
+#~ msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy
 #~ msgid "hook of type \"command\""

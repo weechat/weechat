@@ -194,12 +194,12 @@
 ** Werte: current, server (Standardwert: `current`)
 
 * *irc.look.new_channel_position*
-** Beschreibung: `Ein öffentlicher Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte die letzte Position sein), next = aktueller Buffer + 1, near_server = nach letztem Channel/privaten Buffer des Servers)`
+** Beschreibung: `Ein neu geöffneter Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * *irc.look.new_pv_position*
-** Beschreibung: `Ein privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte die letzte Position sein), next = aktueller Buffer + 1, near_server = nach letztem Channel/privaten Buffer des Servers)`
+** Beschreibung: `Ein neuer privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 

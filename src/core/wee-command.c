@@ -55,6 +55,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-cursor.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
@@ -62,6 +63,7 @@
 #include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
+#include "../gui/gui-mouse.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
@@ -499,7 +501,7 @@ COMMAND_CALLBACK(buffer)
 {
     struct t_gui_buffer *ptr_buffer, *weechat_buffer;
     long number, number1, number2;
-    char *error, *value, *pos, *str_number1, *pos_number2;
+    char *error, *value, *pos, *str_number1, *pos_number2, *plugin_name;
     int i, target_buffer;
     
     /* make C compiler happy */
@@ -897,7 +899,19 @@ COMMAND_CALLBACK(buffer)
     else
     {
         ptr_buffer = NULL;
-        ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
+        pos = strchr (argv_eol[1], '.');
+        if (pos)
+        {
+            plugin_name = string_strndup (argv_eol[1], pos - argv_eol[1]);
+            if (plugin_name)
+            {
+                ptr_buffer = gui_buffer_search_by_partial_name (plugin_name,
+                                                                pos + 1);
+                free (plugin_name);
+            }
+        }
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
         if (ptr_buffer)
         {
             gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
@@ -1099,6 +1113,89 @@ COMMAND_CALLBACK(command)
 }
 
 /*
+ * command_cursor: free movement of cursor on screen
+ */
+
+COMMAND_CALLBACK(cursor)
+{
+    char *pos, *str_x, *error;
+    int x, y;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+    
+    if (argc == 1)
+    {
+        gui_cursor_mode_toggle ();
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "go") == 0)
+    {
+        if (argc > 2)
+        {
+            pos = strchr (argv[2], ',');
+            if (pos)
+            {
+                str_x = string_strndup (argv[2], pos - argv[2]);
+                pos++;
+                if (str_x)
+                {
+                    error = NULL;
+                    x = (int) strtol (str_x, &error, 10);
+                    if (error && !error[0])
+                    {
+                        error = NULL;
+                        y = (int) strtol (pos, &error, 10);
+                        if (error && !error[0])
+                        {
+                            gui_cursor_move_xy (x, y);
+                        }
+                    }
+                }
+            }
+            else
+                gui_cursor_move_area (argv[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "move") == 0)
+    {
+        if (argc > 2)
+        {
+            if (string_strcasecmp (argv[2], "up") == 0)
+                gui_cursor_move_add_xy (0, -1);
+            else if (string_strcasecmp (argv[2], "down") == 0)
+                gui_cursor_move_add_xy (0, 1);
+            else if (string_strcasecmp (argv[2], "left") == 0)
+                gui_cursor_move_add_xy (-1, 0);
+            else if (string_strcasecmp (argv[2], "right") == 0)
+                gui_cursor_move_add_xy (1, 0);
+            else if (string_strcasecmp (argv[2], "area_up") == 0)
+                gui_cursor_move_area_add_xy (0, -1);
+            else if (string_strcasecmp (argv[2], "area_down") == 0)
+                gui_cursor_move_area_add_xy (0, 1);
+            else if (string_strcasecmp (argv[2], "area_left") == 0)
+                gui_cursor_move_area_add_xy (-1, 0);
+            else if (string_strcasecmp (argv[2], "area_right") == 0)
+                gui_cursor_move_area_add_xy (1, 0);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "stop") == 0)
+    {
+        gui_cursor_mode_toggle ();
+        return WEECHAT_RC_OK;
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_debug: control debug for core/plugins
  */
 
@@ -1153,6 +1250,10 @@ COMMAND_CALLBACK(debug)
     {
         gui_color_dump (buffer);
     }
+    else if (string_strcasecmp (argv[1], "cursor") == 0)
+    {
+        gui_cursor_debug_toggle ();
+    }
     else if (string_strcasecmp (argv[1], "hdata") == 0)
     {
         if ((argc > 2) && (string_strcasecmp (argv[2], "free") == 0))
@@ -1167,6 +1268,10 @@ COMMAND_CALLBACK(debug)
     else if (string_strcasecmp (argv[1], "memory") == 0)
     {
         debug_memory ();
+    }
+    else if (string_strcasecmp (argv[1], "mouse") == 0)
+    {
+        gui_mouse_debug_toggle ();
     }
     else if (string_strcasecmp (argv[1], "tags") == 0)
     {
@@ -2178,9 +2283,9 @@ COMMAND_CALLBACK(input)
         else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
             gui_input_hotlist_clear (buffer);
         else if (string_strcasecmp (argv[1], "grab_key") == 0)
-            gui_input_grab_key (buffer);
+            gui_input_grab_key (buffer, (argc > 2) ? argv[2] : NULL);
         else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
-            gui_input_grab_key_command (buffer);
+            gui_input_grab_key_command (buffer, (argc > 2) ? argv[2] : NULL);
         else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
             gui_input_scroll_unread (buffer);
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
@@ -2213,25 +2318,12 @@ void
 command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 {
     char *expanded_name;
-    char str_spaces[20 + 1];
-    int length_screen, num_spaces;
     
     expanded_name = gui_key_get_expanded_name (key->key);
     
-    str_spaces[0] = '\0';
-    length_screen = utf8_strlen_screen ((expanded_name) ?
-                                        expanded_name : key->key);
-    num_spaces = 20 - length_screen;
-    if (num_spaces > 0)
-    {
-        memset (str_spaces, ' ', num_spaces);
-        str_spaces[num_spaces] = '\0';
-    }
-    
     if (default_key)
     {
-        gui_chat_printf (NULL, "  %s%s%s => %s%s  %s(%s%s %s%s)",
-                         str_spaces,
+        gui_chat_printf (NULL, "  %s%s => %s%s  %s(%s%s %s%s)",
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
@@ -2244,8 +2336,7 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
     }
     else
     {
-        gui_chat_printf (NULL, "  %s%s%s => %s%s",
-                         str_spaces,
+        gui_chat_printf (NULL, "  %s%s => %s%s",
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
@@ -2311,7 +2402,8 @@ command_key_display_listdiff (int context)
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
-                         _("Key bindings added or redefined (%d) for "
+                         /* TRANSLATORS: first "%d" is number of keys */
+                         _("%d key bindings added or redefined for "
                            "context \"%s\":"),
                          count_added,
                          _(gui_key_context_string[context]));
@@ -2340,7 +2432,8 @@ command_key_display_listdiff (int context)
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
-                         _("Key bindings deleted (%d) for context \"%s\":"),
+                         /* TRANSLATORS: first "%d" is number of keys */
+                         _("%d key bindings deleted for context \"%s\":"),
                          count_deleted,
                          _(gui_key_context_string[context]));
         for (ptr_default_key = gui_default_keys[context]; ptr_default_key;
@@ -2357,6 +2450,7 @@ command_key_display_listdiff (int context)
     /* display a message if all key bindings are default bindings */
     if ((count_added == 0) && (count_deleted == 0))
     {
+        gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
                          _("No key binding added, redefined or removed "
                            "for context \"%s\""),
@@ -2480,8 +2574,9 @@ COMMAND_CALLBACK(key)
             {
                 command_key_display_list (_("No key binding defined for "
                                             "context \"%s\""),
-                                          _("Key bindings (%d) for "
-                                            "context \"%s\":"),
+                                          /* TRANSLATORS: first "%d" is number of keys */
+                                          _("%d key bindings for context "
+                                            "\"%s\":"),
                                           i, gui_keys[i], gui_keys_count[i]);
             }
         }
@@ -2512,7 +2607,8 @@ COMMAND_CALLBACK(key)
             {
                 command_key_display_list (_("No default key binding for "
                                             "context \"%s\""),
-                                          _("Default key bindings (%d) for "
+                                          /* TRANSLATORS: first "%d" is number of keys */
+                                          _("%d default key bindings for "
                                             "context \"%s\":"),
                                           i,
                                           gui_default_keys[i],
@@ -2933,6 +3029,96 @@ COMMAND_CALLBACK(layout)
                              _("Layout reset for windows"));
         }
         
+        return WEECHAT_RC_OK;
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_mouse_timer_cb: callback for mouse timer
+ */
+
+int
+command_mouse_timer_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+
+    if (gui_mouse_enabled)
+        gui_mouse_disable ();
+    else
+        gui_mouse_enable ();
+    
+    return WEECHAT_RC_OK;
+}
+
+/* 
+ * command_mouse_timer: timer for toggling mouse
+ */
+
+void
+command_mouse_timer (const char *delay)
+{
+    long seconds;
+    char *error;
+    
+    error = NULL;
+    seconds = strtol (delay, &error, 10);
+    if (error && !error[0] && (seconds > 0))
+    {
+        hook_timer (NULL, seconds * 1000, 0, 1, &command_mouse_timer_cb, NULL);
+    }
+}
+
+/*
+ * command_mouse: mouse control
+ */
+
+COMMAND_CALLBACK(mouse)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+    
+    if (argc == 1)
+    {
+        gui_mouse_display_state ();
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "enable") == 0)
+    {
+        gui_mouse_enable ();
+        if (argc > 2)
+            command_mouse_timer (argv[2]);
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "disable") == 0)
+    {
+        gui_mouse_disable ();
+        if (argc > 2)
+            command_mouse_timer (argv[2]);
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "toggle") == 0)
+    {
+        if (gui_mouse_enabled)
+            gui_mouse_disable ();
+        else
+            gui_mouse_enable ();
+        if (argc > 2)
+            command_mouse_timer (argv[2]);
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "grab") == 0)
+    {
+        gui_mouse_grab_init ();
         return WEECHAT_RC_OK;
     }
     
@@ -4900,10 +5086,10 @@ command_init ()
                      "       scroll: scroll bar\n"
                      "       buffer: name of buffer to scroll ('*' "
                      "means current buffer, you should use '*' for root bars)\n"
-                     " scroll_value: value for scroll: 'x' or 'y', followed by "
-                     "'+', '-', 'b' (beginning) or 'e' (end), value (for +/-), "
-                     "and optional %% (to scroll by %% of width/height, "
-                     "otherwise value is number of chars)\n\n"
+                     " scroll_value: value for scroll: 'x' or 'y' (optional), "
+                     "followed by '+', '-', 'b' (beginning) or 'e' (end), "
+                     "value (for +/-), and optional % (to scroll by % of "
+                     "width/height, otherwise value is number of chars)\n\n"
                      "Examples:\n"
                      "  create a bar with time, buffer number + name, and completion:\n"
                      "    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion\n"
@@ -5035,12 +5221,37 @@ command_init ()
                      "added if not found at beginning of command)"),
                   "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
                   &command_command, NULL);
+    hook_command (NULL, "cursor",
+                  N_("free movement of cursor on screen to execute actions on "
+                     "specific areas of screen"),
+                  N_("go chat|<bar>|<x>,<y>"
+                     " || move up|down|left|right|area_up|area_down|area_left|"
+                     "area_right"
+                     " || stop"),
+                  N_("  go: move cursor to chat area, a bar (using bar name) "
+                     "or coordinates \"x,y\"\n"
+                     "move: move cursor with direction\n"
+                     "stop: stop cursor mode\n\n"
+                     "Without argument, this command toggles cursor mode.\n\n"
+                     "When mouse is enabled (see /help mouse), by default a "
+                     "middle click will start cursor mode at this point.\n\n"
+                     "Examples:\n"
+                     "  go to nicklist:\n"
+                     "    /cursor go nicklist\n"
+                     "  go to coordinates x=10, y=5:\n"
+                     "    /cursor go 10,5"),
+                  "go %(cursor_areas)"
+                  " || move up|down|left|right|area_up|area_down|area_left|"
+                  "area_right"
+                  " || stop",
+                  &command_cursor, NULL);
     hook_command (NULL, "debug",
                   N_("control debug for core/plugins"),
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|infolists|memory|tags|term|windows"
+                     " || buffer|color|cursor|infolists|memory|mouse|tags|"
+                     "term|windows"
                      " || hdata [free]"),
                   N_("     list: list plugins with debug levels\n"
                      "      set: set debug level for plugin\n"
@@ -5051,10 +5262,12 @@ command_init ()
                      "   buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
                      "    color: display infos about current color pairs\n"
+                     "   cursor: toggle debug for cursor mode\n"
                      "    hdata: display infos about hdata (with free: remove "
                      "all hdata in memory)\n"
                      "infolists: display infos about infolists\n"
                      "   memory: display infos about memory usage\n"
+                     "    mouse: toggle debug for mouse\n"
                      "     tags: display tags for lines\n"
                      "     term: display infos about terminal\n"
                      "  windows: display windows tree"),
@@ -5063,9 +5276,11 @@ command_init ()
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || color"
+                  " || cursor"
                   " || hdata free"
                   " || infolists"
                   " || memory"
+                  " || mouse"
                   " || tags"
                   " || term"
                   " || windows",
@@ -5208,9 +5423,11 @@ command_init ()
                      "visited buffer\n"
                      "  jump_next_visited_buffer: jump to next visited buffer\n"
                      "  hotlist_clear: clear hotlist\n"
-                     "  grab_key: grab a key\n"
+                     "  grab_key: grab a key (optional argument: delay for end "
+                     "of grab, default is 500 milliseconds)\n"
                      "  grab_key_command: grab a key with its associated "
-                     "command\n"
+                     "command (optional argument: delay for end of grab, "
+                     "default is 500 milliseconds)\n"
                      "  scroll_unread: scroll to unread marker\n"
                      "  set_unread: set unread marker for all buffers\n"
                      "  set_unread_current_buffer: set unread marker for "
@@ -5272,6 +5489,14 @@ command_init ()
                      "When binding a command to a key, it is recommended to "
                      "use key alt+k (or Esc then k), and then press the key "
                      "to bind: this will insert key code in command line.\n\n"
+                     "For context \"mouse\" (possible in context \"cursor\" "
+                     "too), key has format: \"@area:key\" where area can be:\n"
+                     "  *: any area on screen\n"
+                     "  chat: chat area\n"
+                     "  bar(*): any bar\n"
+                     "  bar(xxx): bar \"xxx\"\n"
+                     "  item(*): any bar item\n"
+                     "  item(xxx): bar item \"xxx\"\n\n"
                      "Examples:\n"
                      "  key alt-x to toggle nicklist bar:\n"
                      "    /key bind meta-x /bar toggle nicklist\n"
@@ -5280,7 +5505,11 @@ command_init ()
                      "  restore default binding for key alt-r:\n"
                      "    /key reset meta-r\n"
                      "  key \"tab\" to stop search in buffer:\n"
-                     "    /key bindctxt search ctrl-I /input search_stop"),
+                     "    /key bindctxt search ctrl-I /input search_stop\n"
+                     "  middle button of mouse on a nick to retrieve info on "
+                     "nick:\n"
+                     "    /key bindctxt mouse @item(buffer_nicklist):button3 "
+                     "/msg nickserv info ${nick}"),
                   "list %(keys_contexts)"
                   " || listdefault %(keys_contexts)"
                   " || listdiff %(keys_contexts)"
@@ -5290,7 +5519,7 @@ command_init ()
                   " || unbindctxt %(keys_contexts) %(keys_codes)"
                   " || reset %(keys_codes_for_reset)"
                   " || resetctxt %(keys_contexts) %(keys_codes_for_reset)"
-                  " || resetall"
+                  " || resetall %- %(keys_contexts)"
                   " || missing %(keys_contexts)",
                   &command_key, NULL);
     hook_command (NULL, "layout",
@@ -5307,6 +5536,25 @@ command_init ()
                      "Without argument, this command displays saved layout."),
                   "save|apply|reset buffers|windows",
                   &command_layout, NULL);
+    hook_command (NULL, "mouse",
+                  N_("mouse control"),
+                  N_("enable|disable|toggle [<delay>]"),
+                  N_(" enable: enable mouse\n"
+                     "disable: disable mouse\n"
+                     " toggle: toggle mouse\n"
+                     "  delay: delay (in seconds) after which initial mouse "
+                     "state is restored (useful to temporarily disable mouse)\n\n"
+                     "To enable/disable mouse at startup, use:\n"
+                     "  /set weechat.look.mouse on/off\n\n"
+                     "Examples:\n"
+                     "  enable mouse:\n"
+                     "    /mouse enable\n"
+                     "  toggle mouse for 5 seconds:\n"
+                     "    /mouse toggle 5"),
+                  "enable"
+                  " || disable"
+                  " || toggle",
+                  &command_mouse, NULL);
     hook_command (NULL, "mute",
                   N_("execute a command silently"),
                   N_("[-current | -buffer <name> | -all] command"),

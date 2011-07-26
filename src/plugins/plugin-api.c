@@ -50,6 +50,7 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-cursor.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
@@ -363,6 +364,11 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     else if (string_strcasecmp (info_name, "filters_enabled") == 0)
     {
         snprintf (value, sizeof (value), "%d", gui_filters_enabled);
+        return value;
+    }
+    else if (string_strcasecmp (info_name, "cursor_mode") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", gui_cursor_mode);
         return value;
     }
     
@@ -997,6 +1003,8 @@ plugin_api_init ()
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"), NULL,
                &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "cursor_mode", N_("1 if cursor mode is enabled"), NULL,
+               &plugin_api_info_get_internal, NULL);
     
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar", N_("list of bars"),
@@ -1064,6 +1072,8 @@ plugin_api_init ()
                 &gui_bar_hdata_bar_cb, NULL);
     hook_hdata (NULL, "bar_item", N_("bar item"),
                 &gui_bar_item_hdata_bar_item_cb, NULL);
+    hook_hdata (NULL, "bar_window", N_("bar window"),
+                &gui_bar_window_hdata_bar_window_cb, NULL);
     hook_hdata (NULL, "buffer", N_("buffer"),
                 &gui_buffer_hdata_buffer_cb, NULL);
     hook_hdata (NULL, "completion", N_("structure with completion"),

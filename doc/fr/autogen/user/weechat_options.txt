@@ -473,6 +473,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* *weechat.look.mouse*
+** description: `activer le support de la souris au démarrage (pour l'activer maintenant, voir /help mouse)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * *weechat.look.nickmode*
 ** description: `afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur`
 ** type: booléen

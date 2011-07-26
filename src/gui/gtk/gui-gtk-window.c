@@ -849,6 +849,16 @@ gui_window_set_title (const char *title)
 }
 
 /*
+ * gui_window_move_cursor: move cursor on screen (for cursor mode)
+ */
+
+void
+gui_window_move_cursor ()
+{
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_window_term_display_infos: display some infos about terminal and colors
  */
 

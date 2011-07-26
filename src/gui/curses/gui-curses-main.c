@@ -48,10 +48,12 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
+#include "../gui-cursor.h"
 #include "../gui-filter.h"
 #include "../gui-input.h"
 #include "../gui-layout.h"
 #include "../gui-history.h"
+#include "../gui-mouse.h"
 #include "../gui-nicklist.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
@@ -149,7 +151,7 @@ gui_main_init ()
         
         /*
          * create bar windows for root bars (they were read from config,
-         * but no window was created (GUI was not initialized)
+         * but no window was created, GUI was not initialized)
          */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
@@ -166,6 +168,11 @@ gui_main_init ()
             gui_bar_window_create_win (ptr_bar_win);
         }
     }
+    
+    if (CONFIG_BOOLEAN(config_look_mouse))
+        gui_mouse_enable ();
+    else
+        gui_mouse_disable ();
 }
 
 /*
@@ -277,7 +284,6 @@ gui_main_refreshs ()
     }
     
     /* refresh bars if needed */
-    
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (ptr_bar->bar_refresh_needed)
@@ -285,6 +291,10 @@ gui_main_refreshs ()
             gui_bar_draw (ptr_bar);
         }
     }
+    
+    /* move cursor (for cursor mode) */
+    if (gui_cursor_mode)
+        gui_window_move_cursor ();
 }
 
 /*
@@ -386,6 +396,9 @@ gui_main_end (int clean_exit)
             if (gui_window_refresh_needed)
                 gui_main_refreshs ();
         }
+        
+        /* disable mouse */
+        gui_mouse_disable ();
         
         /* remove bar items and bars */
         gui_bar_item_end ();

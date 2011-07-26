@@ -46,6 +46,7 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
+#include "../gui-cursor.h"
 #include "../gui-hotlist.h"
 #include "../gui-input.h"
 #include "../gui-key.h"
@@ -1514,7 +1515,8 @@ gui_window_refresh_windows ()
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+        if ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+            && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
             gui_bar_window_calculate_pos_size (ptr_bar->bar_window, NULL);
             gui_bar_window_create_win (ptr_bar->bar_window);
@@ -2193,6 +2195,20 @@ gui_window_set_title (const char *title)
             }
         }
         fflush (stdout);
+    }
+}
+
+/*
+ * gui_window_move_cursor: move cursor on screen (for cursor mode)
+ */
+
+void
+gui_window_move_cursor ()
+{
+    if (gui_cursor_mode)
+    {
+        move (gui_cursor_y, gui_cursor_x);
+        refresh ();
     }
 }
 

@@ -28,6 +28,8 @@
 
 | weechat | charset_terminal | set caratteri terminale | -
 
+| weechat | cursor_mode | 1 if cursor mode is enabled | -
+
 | weechat | date | data di compilazione di WeeChat | -
 
 | weechat | dir_separator | separatore cartella | -

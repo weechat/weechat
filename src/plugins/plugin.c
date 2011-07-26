@@ -607,6 +607,7 @@ plugin_load (const char *filename)
         new_plugin->hook_info_hashtable = &hook_info_hashtable;
         new_plugin->hook_infolist = &hook_infolist;
         new_plugin->hook_hdata = &hook_hdata;
+        new_plugin->hook_focus = &hook_focus;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
         

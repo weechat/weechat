@@ -411,20 +411,20 @@ Standard Tastenbelegung
 Tastenbefehle für die Befehlszeile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Taste               | Beschreibung | Befehl
-| @k(←)               .2+| setzt den Cursor eine Position nach links .2+| /input move_previous_char
+| @k(←)            .2+| setzt den Cursor eine Position nach links .2+| /input move_previous_char
 | @k(C-)@k(b)
-| @k(→)               .2+| setzt den Cursor eine Position nach rechts .2+| /input move_next_char
+| @k(→)            .2+| setzt den Cursor eine Position nach rechts .2+| /input move_next_char
 | @k(C-)@k(f)
-| @k(C-)@k(←)         .2+| springt in der Befehlszeile zum Anfang des vorherigen Wortes .2+| /input move_previous_word
+| @k(C-)@k(←)      .2+| springt in der Befehlszeile zum Anfang des vorherigen Wortes .2+| /input move_previous_word
 | @k(A-)@k(b)
-| @k(C-)@k(→)         .2+| springt in der Befehlszeile zum Anfang des nächsten Wortes .2+| /input move_next_word
+| @k(C-)@k(→)      .2+| springt in der Befehlszeile zum Anfang des nächsten Wortes .2+| /input move_next_word
 | @k(A-)@k(f)
-| @k(Home)            .2+| springt zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
+| @k(Home)         .2+| springt zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
 | @k(C-)@k(a)
-| @k(End)             .2+| springt ans Ende der Befehlszeile .2+| /input move_end_of_line
+| @k(End)          .2+| springt ans Ende der Befehlszeile .2+| /input move_end_of_line
 | @k(C-)@k(e)
 | @k(C-)@k(c) , @k(b) | fügt Steuerzeichen für fett geschrieben Text ein | /input insert \x02
 | @k(C-)@k(c) , @k(c) | fügt Steuerzeichen für Textfarbe ein | /input insert \x03
@@ -432,9 +432,9 @@ Tastenbefehle für die Befehlszeile
 | @k(C-)@k(c) , @k(o) | fügt Steuerzeichen für Standardfarbe ein | /input insert \x0F
 | @k(C-)@k(c) , @k(r) | fügt Steuerzeichen für Hintergrundfarbe ein | /input insert \x12
 | @k(C-)@k(c) , @k(u) | fügt Steuerzeichen für unterstrichenen Text ein | /input insert \x15
-| @k(Del)             .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| /input delete_next_char
+| @k(Del)          .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| /input delete_next_char
 | @k(C-)@k(d)
-| @k(Backsp.)         .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
+| @k(Backsp.)      .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
 | @k(C-)@k(h)
 | @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
 | @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | /input search_text
@@ -446,7 +446,7 @@ Tastenbefehle für die Befehlszeile
 | @k(A-)@k(_)         | Wiederherstellen der letzten Aktion, in der Befehlszeile | /input redo
 | @k(Tab)             | Vervollständigung von Befehlen oder Nicks (nochmaliges @k(Tab): findet nächste Vervollständigung) | /input complete_next
 | @k(S-)@k(Tab)       | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt | /input complete_previous
-| @k(Enter)           .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| /input return
+| @k(Enter)        .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| /input return
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 | @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen) | /input history_previous
@@ -462,7 +462,7 @@ Tastenbefehle für die Befehlszeile
 Tastenbefehle für Buffer / Fenster
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Taste                     | Beschreibung | Befehl
 | @k(C-)@k(l)               | Fenster wird neu gezeichnet | /window refresh
@@ -474,23 +474,24 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(PgDn)            | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down
 | @k(A-)@k(Home)            | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffers| /window scroll_top
 | @k(A-)@k(End)             | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers | /window scroll_bottom
-| @k(A-)@k(←)               .4+| zum vorherigen Buffer springen .4+| /buffer -1
+| @k(A-)@k(←)            .4+| zum vorherigen Buffer springen .4+| /buffer -1
 | @k(A-)@k(↑)
 | @k(C-)@k(p)
 | @k(F5)
-| @k(A-)@k(→)               .4+| zum nächsten Buffer springen .4+| /buffer +1
+| @k(A-)@k(→)            .4+| zum nächsten Buffer springen .4+| /buffer +1
 | @k(A-)@k(↓)
 | @k(C-)@k(n)
 | @k(F6)
 | @k(F7)                    | zum vorherigen Fenster wechseln | /window -1
 | @k(F8)                    | zum nächsten Fenster wechseln | /window +1
-| @k(F9)                    | Titel des Buffers nach links verschieben | /bar scroll title * x-50%
-| @k(F10)                   | Titel des Buffers nach rechts verschieben | /bar scroll title * x+50%
-| @k(F11)                   | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist * y-100%
-| @k(F12)                   | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist * y+100%
-| @k(A-)@k(F11)             | springt zum Anfang der Nickliste | /bar scroll nicklist * yb
-| @k(A-)@k(F12)             | springt zum Ende der Nickliste | /bar scroll nicklist * ye
+| @k(F9)                    | Titel des Buffers nach links verschieben | /bar scroll title * -30%
+| @k(F10)                   | Titel des Buffers nach rechts verschieben | /bar scroll title * +30%
+| @k(F11)                   | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist * -100%
+| @k(F12)                   | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist * +100%
+| @k(A-)@k(F11)             | springt zum Anfang der Nickliste | /bar scroll nicklist * b
+| @k(A-)@k(F12)             | springt zum Ende der Nickliste | /bar scroll nicklist * e
 | @k(A-)@k(a)               | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | /input jump_smart
+| @k(A-)@k(h)               | löscht Hotliste (Aktivitätsanzeige für die Buffer) | /input hotlist_clear
 | @k(A-)@k(j) , @k(A-)@k(l) | wechselt zum letzten Buffer | /input jump_last_buffer
 | @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC RAW Buffer | /server raw
 | @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | /server jump
@@ -508,6 +509,7 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
 | @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
+| @k(A-)@k(=)               | schaltet Filterfunktion an/aus | /filter toggle
 |========================================
 
 [[key_bindings_search_context]]
@@ -517,26 +519,73 @@ Tasten für "Suchen"-Kontext
 Diese Tasten werden im Kontext "search" verwendet (wenn @k(C-)@k(r) genutzt wird um
 in einem Buffer nach einem Text zu suchen).
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
-| Taste       | Beschreibung | Befehl
-| @k(C-)@k(r) | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
-| @k(↑)       | sucht vorheriger Zeile  | /input search_previous
-| @k(↓)       | sucht nächste Zeile  | /input search_next
-| @k(Enter)   .3+| Suche abbrechen .3+| /input search_stop
+| Taste        | Beschreibung | Befehl
+| @k(C-)@k(r)  | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
+| @k(↑)        | sucht vorheriger Zeile | /input search_previous
+| @k(↓)        | sucht nächste Zeile  | /input search_next
+| @k(Enter) .3+| Suche abbrechen .3+| /input search_stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
 
-[[key_bindings_other]]
-andere Tastenbefehle
-^^^^^^^^^^^^^^^^^^^^
+// TRANSLATION MISSING
+[[key_bindings_cursor_context]]
+Keys for "cursor" context
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5m",options="header"]
+These keys are used in context "cursor" (free movement of cursor on screen).
+
+[width="100%",cols="^.^3,^.^3,.^10,.^5l",options="header"]
 |========================================
-| Taste       | Beschreibung | Befehl
-| @k(A-)@k(h) | löscht Hotliste (Aktivitätsanzeige für die Buffer) | /input hotlist_clear
-| @k(A-)@k(=) | schaltet Filterfunktion an/aus | /filter toggle
+| Key          | Area     | Description | Command
+| @k(↑)        | -        | Move cursor one line up | /cursor move up
+| @k(↓)        | -        | Move cursor one line down | /cursor move down
+| @k(←)        | -        | Move cursor one column left | /cursor move left
+| @k(→)        | -        | Move cursor one column right | /cursor move right
+| @k(A-)@k(↑)  | -        | Move cursor one area up | /cursor move area_up
+| @k(A-)@k(↓)  | -        | Move cursor one area down | /cursor move area_down
+| @k(A-)@k(←)  | -        | Move cursor one area left | /cursor move area_left
+| @k(A-)@k(→)  | -        | Move cursor one area right | /cursor move area_right
+| @k(b)        | nicklist | Ban nick | /ban ${nick}
+| @k(k)        | nicklist | Kick nick | /kick ${nick}
+| @k(K)        | nicklist | Kick and ban nick | /kickban ${nick}
+| @k(q)        | nicklist | Open query with nick | /query ${nick};/cursor stop
+| @k(w)        | nicklist | Do a whois on nick | /whois ${nick}
+| @k(Enter) .3+| -     .3+| Stop cursor mode .3+| /cursor stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+|========================================
+
+// TRANSLATION MISSING
+[[key_bindings_mouse_context]]
+Keys for "mouse" context
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+These keys are used in context "mouse", namely when a mouse event occurs.
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^5l",options="header"]
+|========================================
+| Button  | Gesture      | Area     | Description | Command
+| ◾◽◽     | left         | chat     | zum vorherigen Buffer springen | /buffer +1
+| ◾◽◽     | right        | chat     | zum nächsten Buffer springen | /buffer +1
+| ◾◽◽     | left (long)  | chat     | Switch to first buffer | /buffer 1
+| ◾◽◽     | right (long) | chat     | wechselt zum letzten Buffer | /input jump_last_buffer
+| wheel ⇑ | -            | chat     | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up
+| wheel ⇓ | -            | chat     | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down
+| ◾◽◽     | up           | nicklist | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist * -100%
+| ◾◽◽     | down         | nicklist | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist * +100%
+| ◾◽◽     | up (long)    | nicklist | springt zum Anfang der Nickliste | /bar scroll nicklist * b
+| ◾◽◽     | down (long)  | nicklist | springt zum Ende der Nickliste | /bar scroll nicklist * e
+| ◾◽◽     | -            | nicklist | Open query with nick | /query ${nick}
+| ◽◽◾     | -            | nicklist | Do a whois on nick | /whois ${nick}
+| ◾◽◽     | left         | nicklist | Kick nick | /kick ${nick}
+| ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /kickban ${nick}
+| ◽◽◾     | left         | nicklist | Ban nick | /ban ${nick}
+| wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} * -10%
+| wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} * +10%
+| ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
 
 [[command_line]]

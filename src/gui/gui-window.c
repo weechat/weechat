@@ -70,7 +70,34 @@ struct t_gui_layout_window *gui_window_layout_before_zoom = NULL;
                                        /* layout before zooming on a window */
 int gui_window_layout_id_current_window = -1;
                                        /* current window id before zoom     */
+int gui_window_cursor_x = 0;           /* cursor pos on screen              */
+int gui_window_cursor_y = 0;           /* cursor pos on screen              */
 
+
+/*
+ * gui_window_search_by_xy: get pointer of window displayed at (x,y)
+ *                          return NULL if no window is found
+ */
+
+struct t_gui_window *
+gui_window_search_by_xy (int x, int y)
+{
+    struct t_gui_window *ptr_window;
+    
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if ((x >= ptr_window->win_x) && (y >= ptr_window->win_y)
+            && (x <= ptr_window->win_x + ptr_window->win_width - 1)
+            && (y <= ptr_window->win_y + ptr_window->win_height - 1))
+        {
+            return ptr_window;
+        }
+    }
+    
+    /* no window at this location */
+    return NULL;
+}
 
 /*
  * gui_window_ask_refresh: set "gui_window_refresh_needed" flag
@@ -1293,8 +1320,8 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_window, win_chat_height, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, win_chat_cursor_x, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, win_chat_cursor_y, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_window, bar_windows, POINTER, NULL);
-        HDATA_VAR(struct t_gui_window, last_bar_window, POINTER, NULL);
+        HDATA_VAR(struct t_gui_window, bar_windows, POINTER, "bar_window");
+        HDATA_VAR(struct t_gui_window, last_bar_window, POINTER, "bar_window");
         HDATA_VAR(struct t_gui_window, refresh_needed, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, gui_objects, POINTER, NULL);
         HDATA_VAR(struct t_gui_window, buffer, POINTER, "buffer");

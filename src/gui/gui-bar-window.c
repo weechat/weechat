@@ -26,14 +26,17 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <limits.h>
 #include <string.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
+#include "../plugins/plugin.h"
 #include "gui-bar-window.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
@@ -102,6 +105,149 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_window_search_by_xy: get bar_window pointer displayed at (x,y)
+ *                              if window is not NULL, search is done in
+ *                                bar windows of window
+ *                              if window is NULL, search is done in root
+ *                                bar windows
+ */
+
+void
+gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
+                             struct t_gui_bar_window **bar_window,
+                             char **bar_item, int *item_line, int *item_col)
+{
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_bar_window *ptr_bar_window;
+    int filling, num_cols, column, lines, lines_old, i, j, coord_x, coord_y;
+    int item, subitem;
+    
+    *bar_window = NULL;
+    *bar_item = NULL;
+    *item_line = -1;
+    *item_col = -1;
+    
+    if (window)
+    {
+        for (ptr_bar_window = window->bar_windows; ptr_bar_window;
+             ptr_bar_window = ptr_bar_window->next_bar_window)
+        {
+            if ((x >= ptr_bar_window->x) && (y >= ptr_bar_window->y)
+                && (x <= ptr_bar_window->x + ptr_bar_window->width - 1)
+                && (y <= ptr_bar_window->y + ptr_bar_window->height - 1))
+            {
+                *bar_window = ptr_bar_window;
+                break;
+            }
+        }
+    }
+    else
+    {
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->bar_window
+                && (x >= ptr_bar->bar_window->x)
+                && (y >= ptr_bar->bar_window->y)
+                && (x <= ptr_bar->bar_window->x + ptr_bar->bar_window->width - 1)
+                && (y <= ptr_bar->bar_window->y + ptr_bar->bar_window->height - 1))
+            {
+                *bar_window = ptr_bar->bar_window;
+                break;
+            }
+        }
+    }
+    
+    if (*bar_window)
+    {
+        filling = gui_bar_get_filling ((*bar_window)->bar);
+        
+        *item_line = y - (*bar_window)->y + (*bar_window)->scroll_y;
+        *item_col = x - (*bar_window)->x + (*bar_window)->scroll_x;
+        
+        if ((filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
+            && ((*bar_window)->screen_col_size > 0))
+        {
+            num_cols = (*bar_window)->width / (*bar_window)->screen_col_size;
+            column = *item_col / (*bar_window)->screen_col_size;
+            *item_line = (*item_line * num_cols) + column;
+            *item_col = *item_col - (column * ((*bar_window)->screen_col_size));
+        }
+        
+        if ((filling == GUI_BAR_FILLING_COLUMNS_VERTICAL)
+            && ((*bar_window)->screen_col_size > 0))
+        {
+            column = *item_col / (*bar_window)->screen_col_size;
+            *item_line = (column * ((*bar_window)->height)) + *item_line;
+            *item_col = *item_col % ((*bar_window)->screen_col_size);
+        }
+        
+        if (filling == GUI_BAR_FILLING_HORIZONTAL)
+        {
+            i = 0;
+            while (i < (*bar_window)->coords_count)
+            {
+                coord_x = (*bar_window)->coords[i]->x;
+                coord_y = (*bar_window)->coords[i]->y;
+                while ((i < (*bar_window)->coords_count - 1)
+                       && (coord_x == (*bar_window)->coords[i + 1]->x)
+                       && (coord_y == (*bar_window)->coords[i + 1]->y))
+                {
+                    i++;
+                }
+                if (i == (*bar_window)->coords_count - 1)
+                {
+                    item = (*bar_window)->coords[i]->item;
+                    subitem = (*bar_window)->coords[i]->subitem;
+                    if ((item >= 0) && (subitem >= 0))
+                    {
+                        *bar_item = (*bar_window)->bar->items_name[item][subitem];
+                        *item_line = (*bar_window)->coords[i]->line;
+                        *item_col = x - (*bar_window)->coords[i]->x;
+                    }
+                    break;
+                }
+                coord_x = (*bar_window)->coords[i + 1]->x;
+                coord_y = (*bar_window)->coords[i + 1]->y;
+                if ((y < coord_y) || ((y == coord_y) && (x < coord_x)))
+                {
+                    item = (*bar_window)->coords[i]->item;
+                    subitem = (*bar_window)->coords[i]->subitem;
+                    *bar_item = (*bar_window)->bar->items_name[item][subitem];
+                    *item_line = (*bar_window)->coords[i]->line;
+                    *item_col = x - (*bar_window)->coords[i]->x;
+                    break;
+                }
+                i++;
+            }
+        }
+        else
+        {
+            i = 0;
+            j = 0;
+            lines = 0;
+            lines_old = 0;
+            while (i < (*bar_window)->items_count)
+            {
+                lines_old = lines;
+                lines += (*bar_window)->items_num_lines[i][j];
+                if (*item_line < lines)
+                {
+                    *bar_item = (*bar_window)->bar->items_name[i][j];
+                    break;
+                }
+                j++;
+                if (j >= (*bar_window)->items_subcount[i])
+                {
+                    j = 0;
+                    i++;
+                }
+            }
+            *item_line -= lines_old;
+        }
+    }
+}
+
+/*
  * gui_bar_window_get_size: get total bar size (window bars) for a position
  *                          bar is optional, if not NULL, size is computed
  *                          from bar 1 to bar # - 1
@@ -158,6 +304,9 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
 {
     int x1, y1, x2, y2;
     int add_bottom, add_top, add_left, add_right;
+    
+    if (CONFIG_BOOLEAN(bar_window->bar->options[GUI_BAR_OPTION_HIDDEN]))
+        return;
     
     if (window)
     {
@@ -247,7 +396,9 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     bar_window->items_count = bar_window->bar->items_count;
     bar_window->items_subcount = NULL;
     bar_window->items_content = NULL;
+    bar_window->items_num_lines = NULL;
     bar_window->items_refresh_needed = NULL;
+    bar_window->screen_col_size = 0;
     bar_window->items_subcount = malloc (bar_window->items_count *
                                          sizeof (*bar_window->items_subcount));
     if (!bar_window->items_subcount)
@@ -255,6 +406,10 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     bar_window->items_content = malloc ((bar_window->items_count) *
                                         sizeof (*bar_window->items_content));
     if (!bar_window->items_content)
+        goto error;
+    bar_window->items_num_lines = malloc ((bar_window->items_count) *
+                                          sizeof (*bar_window->items_num_lines));
+    if (!bar_window->items_num_lines)
         goto error;
     bar_window->items_refresh_needed = malloc (bar_window->items_count *
                                                sizeof (*bar_window->items_refresh_needed));
@@ -264,6 +419,7 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     for (i = 0; i < bar_window->items_count; i++)
     {
         bar_window->items_content[i] = NULL;
+        bar_window->items_num_lines[i] = NULL;
         bar_window->items_refresh_needed[i] = NULL;
     }
     
@@ -274,6 +430,10 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
                                                sizeof (**bar_window->items_content));
         if (!bar_window->items_content[i])
             goto error;
+        bar_window->items_num_lines[i] = malloc (bar_window->items_subcount[i] *
+                                                 sizeof (**bar_window->items_num_lines));
+        if (!bar_window->items_num_lines[i])
+            goto error;
         bar_window->items_refresh_needed[i] = malloc (bar_window->items_subcount[i] *
                                                       sizeof (**bar_window->items_refresh_needed));
         if (!bar_window->items_refresh_needed[i])
@@ -282,6 +442,8 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
         {
             if (bar_window->items_content[i])
                 bar_window->items_content[i][j] = NULL;
+            if (bar_window->items_num_lines[i])
+                bar_window->items_num_lines[i][j] = 0;
             if (bar_window->items_refresh_needed[i])
                 bar_window->items_refresh_needed[i][j] = 1;
         }
@@ -303,6 +465,16 @@ error:
         }
         free (bar_window->items_content);
         bar_window->items_content = NULL;
+    }
+    if (bar_window->items_num_lines)
+    {
+        for (i = 0; i < bar_window->items_count; i++)
+        {
+            if (bar_window->items_num_lines[i])
+                free (bar_window->items_num_lines[i]);
+        }
+        free (bar_window->items_num_lines);
+        bar_window->items_num_lines = NULL;
     }
     if (bar_window->items_refresh_needed)
     {
@@ -338,12 +510,15 @@ gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
                 }
             }
             free (bar_window->items_content[i]);
+            free (bar_window->items_num_lines[i]);
             free (bar_window->items_refresh_needed[i]);
         }
         free (bar_window->items_subcount);
         bar_window->items_subcount = NULL;
         free (bar_window->items_content);
         bar_window->items_content = NULL;
+        free (bar_window->items_num_lines);
+        bar_window->items_num_lines = NULL;
         free (bar_window->items_refresh_needed);
         bar_window->items_refresh_needed = NULL;
     }
@@ -368,14 +543,17 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
             free (bar_window->items_content[index_item][index_subitem]);
             bar_window->items_content[index_item][index_subitem] = NULL;
         }
+        bar_window->items_num_lines[index_item][index_subitem] = 0;
         
         /* build item, but only if there's a buffer in window */
         if ((window && window->buffer)
             || (gui_current_window && gui_current_window->buffer))
         {
             bar_window->items_content[index_item][index_subitem] =
-                gui_bar_item_get_value (bar_window->bar->items_array[index_item][index_subitem],
-                                        bar_window->bar, window);
+                gui_bar_item_get_value (bar_window->bar, window,
+                                        index_item, index_subitem);
+            bar_window->items_num_lines[index_item][index_subitem] =
+                gui_bar_item_count_lines (bar_window->items_content[index_item][index_subitem]);
             bar_window->items_refresh_needed[index_item][index_subitem] = 0;
         }
     }
@@ -437,28 +615,50 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                          struct t_gui_window *window)
 {
     enum t_gui_bar_filling filling;
-    char *ptr_content, *content, reinit_color[32], reinit_color_space[32];
+    char *ptr_content, *content, str_reinit_color[32];
+    char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
+    char str_start_item[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
-    int index_content, content_length, i, first_sub_item, sub, j, k, index;
-    int length_reinit_color_space, length, max_length, max_length_screen;
+    int index_content, content_length, i, j, k, sub, index;
+    int at_least_one_item, first_sub_item;
+    int length_reinit_color_space, length_start_item, length;
+    int max_length, max_length_screen;
     int total_items, columns, lines;
     
     if (!bar_window->items_subcount || !bar_window->items_content
-        || !bar_window->items_refresh_needed)
+        || !bar_window->items_num_lines || !bar_window->items_refresh_needed)
         return NULL;
     
-    snprintf (reinit_color, sizeof (reinit_color),
+    snprintf (str_reinit_color, sizeof (str_reinit_color),
               "%c",
               GUI_COLOR_RESET_CHAR);
     
-    snprintf (reinit_color_space, sizeof (reinit_color_space),
+    snprintf (str_reinit_color_space, sizeof (str_reinit_color_space),
               "%c ",
               GUI_COLOR_RESET_CHAR);
-    length_reinit_color_space = strlen (reinit_color_space);
+    length_reinit_color_space = strlen (str_reinit_color_space);
+
+    snprintf (str_reinit_color_space_start_line,
+              sizeof (str_reinit_color_space_start_line),
+              "%c %c%c%c",
+              GUI_COLOR_RESET_CHAR,
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_START_LINE_ITEM);
     
-    content = NULL;
+    snprintf (str_start_item, sizeof (str_start_item),
+              "%c%c%c",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_BAR_CHAR,
+              GUI_COLOR_BAR_START_ITEM);
+    length_start_item = strlen (str_start_item);
+    
     content_length = 1;
+    content = malloc (content_length);
+    if (content)
+        content[0] = '\0';
     filling = gui_bar_get_filling (bar_window->bar);
+    at_least_one_item = 0;
     switch (filling)
     {
         case GUI_BAR_FILLING_HORIZONTAL: /* items separated by space */
@@ -472,10 +672,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                                               i, sub);
                     if (ptr_content && ptr_content[0])
                     {
-                        if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
+                        if (filling == GUI_BAR_FILLING_HORIZONTAL)
                         {
                             item_value = string_replace (ptr_content, "\n",
-                                                         reinit_color_space);
+                                                         str_reinit_color_space_start_line);
                             if (item_value)
                             {
                                 item_value2 = string_replace (item_value,
@@ -489,43 +689,55 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         }
                         else
                             item_value = NULL;
-                        if (!content)
+                        
+                        content_length += ((filling == GUI_BAR_FILLING_HORIZONTAL) ? length_start_item : 0) +
+                            length_reinit_color_space +
+                            strlen ((item_value) ? item_value : ptr_content);
+                        content = realloc (content, content_length);
+                        if (at_least_one_item && first_sub_item)
                         {
-                            content_length += strlen ((item_value) ?
-                                                      item_value : ptr_content);
-                            content = strdup ((item_value) ? item_value : ptr_content);
-                            first_sub_item = 0;
+                            /* first sub item: insert space after last item */
+                            if (filling == GUI_BAR_FILLING_HORIZONTAL)
+                                strcat (content, str_reinit_color_space);
+                            else
+                                strcat (content, "\n");
                         }
                         else
                         {
-                            content_length += length_reinit_color_space +
-                                strlen ((item_value) ? item_value : ptr_content);
-                            content = realloc (content, content_length);
-                            if (first_sub_item)
-                            {
-                                /* first sub item: insert space after last item */
-                                if (gui_bar_get_filling (bar_window->bar) == GUI_BAR_FILLING_HORIZONTAL)
-                                    strcat (content, reinit_color_space);
-                                else
-                                    strcat (content, "\n");
-                            }
-                            else
-                            {
-                                strcat (content, reinit_color);
-                            }
-                            strcat (content,
-                                    (item_value) ? item_value : ptr_content);
-                            first_sub_item = 0;
+                            strcat (content, str_reinit_color);
                         }
+                        if (filling == GUI_BAR_FILLING_HORIZONTAL)
+                            strcat (content, str_start_item);
+                        strcat (content,
+                                (item_value) ? item_value : ptr_content);
+                        first_sub_item = 0;
+                        
                         if (item_value)
                             free (item_value);
+                        at_least_one_item = 1;
+                    }
+                    else
+                    {
+                        if (filling == GUI_BAR_FILLING_HORIZONTAL)
+                        {
+                            content_length += length_start_item;
+                            content = realloc (content, content_length);
+                            if (content)
+                                strcat (content, str_start_item);
+                        }
                     }
                 }
+            }
+            if (filling == GUI_BAR_FILLING_HORIZONTAL)
+            {
+                content_length += length_start_item;
+                content = realloc (content, content_length);
+                if (content)
+                    strcat (content, str_start_item);
             }
             break;
         case GUI_BAR_FILLING_COLUMNS_HORIZONTAL: /* items in columns, with horizontal filling */
         case GUI_BAR_FILLING_COLUMNS_VERTICAL:   /* items in columns, with vertical filling */
-            content = NULL;
             total_items = 0;
             max_length = 1;
             max_length_screen = 1;
@@ -580,6 +792,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                     columns++;
                 lines = bar_window->height;
             }
+            bar_window->screen_col_size = max_length_screen + 1;
             
             /* build array with pointers to split items */
             
@@ -605,9 +818,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 }
                 
                 /* build content with lines and columns */
-                content = malloc (1 + (lines *
-                                       ((columns *
-                                         (max_length + max_length_screen + length_reinit_color_space)) + 1)));
+                content_length = 1 + (lines *
+                                      ((columns *
+                                        (max_length + max_length_screen + length_reinit_color_space)) + 1));
+                content = realloc (content, content_length);
                 if (content)
                 {
                     content[0] = '\0';
@@ -641,7 +855,8 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             }
                             if (j < columns - 1)
                             {
-                                strcpy (content + index_content, reinit_color_space);
+                                strcpy (content + index_content,
+                                        str_reinit_color_space);
                                 index_content += length_reinit_color_space;
                             }
                         }
@@ -671,7 +886,105 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             break;
     }
     
+    if (content_length == 1)
+    {
+        free (content);
+        content = NULL;
+    }
+    
     return content;
+}
+
+/*
+ * gui_bar_window_coords_add: add coordinates (item index/subindex and x,y)
+ */
+
+void
+gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
+                           int index_item, int index_subitem, int index_line,
+                           int x, int y)
+{
+    if (!bar_window->coords)
+    {
+        bar_window->coords_count = 1;
+        bar_window->coords = malloc (sizeof (*(bar_window->coords)));
+    }
+    else
+    {
+        bar_window->coords_count++;
+        bar_window->coords = realloc (bar_window->coords,
+                                      bar_window->coords_count * sizeof (*(bar_window->coords)));
+    }
+    bar_window->coords[bar_window->coords_count - 1] = malloc (sizeof (*(bar_window->coords[bar_window->coords_count - 1])));
+    bar_window->coords[bar_window->coords_count - 1]->item = index_item;
+    bar_window->coords[bar_window->coords_count - 1]->subitem = index_subitem;
+    bar_window->coords[bar_window->coords_count - 1]->line = index_line;
+    bar_window->coords[bar_window->coords_count - 1]->x = x;
+    bar_window->coords[bar_window->coords_count - 1]->y = y;
+}
+
+/*
+ * gui_bar_window_coords_free: free coords of a bar window
+ */
+
+void
+gui_bar_window_coords_free (struct t_gui_bar_window *bar_window)
+{
+    int i;
+    
+    if (bar_window->coords)
+    {
+        for (i = 0; i < bar_window->coords_count; i++)
+        {
+            free (bar_window->coords[i]);
+        }
+        free (bar_window->coords);
+        bar_window->coords = NULL;
+    }
+    bar_window->coords_count = 0;
+}
+
+/*
+ * gui_bar_window_insert: insert bar window in list of bar windows (at good
+ *                        position, according to priority)
+ */
+
+void
+gui_bar_window_insert (struct t_gui_bar_window *bar_window,
+                       struct t_gui_window *window)
+{
+    struct t_gui_bar_window *pos_bar_window;
+    
+    if (window->bar_windows)
+    {
+        pos_bar_window = gui_bar_window_find_pos (bar_window->bar, window);
+        if (pos_bar_window)
+        {
+            /* insert before bar window found */
+            bar_window->prev_bar_window = pos_bar_window->prev_bar_window;
+            bar_window->next_bar_window = pos_bar_window;
+            if (pos_bar_window->prev_bar_window)
+                (pos_bar_window->prev_bar_window)->next_bar_window = bar_window;
+            else
+                window->bar_windows = bar_window;
+            pos_bar_window->prev_bar_window = bar_window;
+        }
+        else
+        {
+            /* add to end of list for window */
+            bar_window->prev_bar_window = window->last_bar_window;
+            bar_window->next_bar_window = NULL;
+            (window->last_bar_window)->next_bar_window = bar_window;
+            window->last_bar_window = bar_window;
+        }
+    }
+    else
+    {
+        bar_window->prev_bar_window = NULL;
+        bar_window->next_bar_window = NULL;
+        window->bar_windows = bar_window;
+        window->last_bar_window = bar_window;
+    }
 }
 
 /*
@@ -680,16 +993,19 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
  *                     return 1 if ok, 0 if error
  */
 
-int
+void
 gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 {
-    struct t_gui_bar_window *new_bar_window, *pos_bar_window;
+    struct t_gui_bar_window *new_bar_window;
+    
+    if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
+        return;
     
     if (window)
     {
         if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_WINDOW)
             && (!gui_bar_check_conditions_for_window (bar, window)))
-            return 1;
+            return;
     }
     
     new_bar_window =  malloc (sizeof (*new_bar_window));
@@ -699,36 +1015,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         if (window)
         {
             bar->bar_window = NULL;
-            if (window->bar_windows)
-            {
-                pos_bar_window = gui_bar_window_find_pos (bar, window);
-                if (pos_bar_window)
-                {
-                    /* insert before bar window found */
-                    new_bar_window->prev_bar_window = pos_bar_window->prev_bar_window;
-                    new_bar_window->next_bar_window = pos_bar_window;
-                    if (pos_bar_window->prev_bar_window)
-                        (pos_bar_window->prev_bar_window)->next_bar_window = new_bar_window;
-                    else
-                        window->bar_windows = new_bar_window;
-                    pos_bar_window->prev_bar_window = new_bar_window;
-                }
-                else
-                {
-                    /* add to end of list for window */
-                    new_bar_window->prev_bar_window = window->last_bar_window;
-                    new_bar_window->next_bar_window = NULL;
-                    (window->last_bar_window)->next_bar_window = new_bar_window;
-                    window->last_bar_window = new_bar_window;
-                }
-            }
-            else
-            {
-                new_bar_window->prev_bar_window = NULL;
-                new_bar_window->next_bar_window = NULL;
-                window->bar_windows = new_bar_window;
-                window->last_bar_window = new_bar_window;
-            }
+            gui_bar_window_insert (new_bar_window, window);
         }
         else
         {
@@ -750,7 +1037,11 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->items_count = 0;
         new_bar_window->items_subcount = NULL;
         new_bar_window->items_content = NULL;
+        new_bar_window->items_num_lines = NULL;
         new_bar_window->items_refresh_needed = NULL;
+        new_bar_window->screen_col_size = 0;
+        new_bar_window->coords_count = 0;
+        new_bar_window->coords = NULL;
         gui_bar_window_objects_init (new_bar_window);
         gui_bar_window_content_alloc (new_bar_window);
         
@@ -760,12 +1051,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
             gui_bar_window_create_win (new_bar_window);
             gui_window_ask_refresh (1);
         }
-        
-        return 1;
     }
-    
-    /* failed to create bar window */
-    return 0;
 }
 
 /*
@@ -916,6 +1202,7 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
     
     /* free data */
     gui_bar_window_content_free (bar_window);
+    gui_bar_window_coords_free (bar_window);
     gui_bar_window_objects_free (bar_window);
     free (bar_window->gui_objects);
     
@@ -1060,6 +1347,46 @@ gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * gui_bar_window_hdata_bar_window_cb: return hdata for bar window
+ */
+
+struct t_hdata *
+gui_bar_window_hdata_bar_window_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    hdata = hdata_new (NULL, hdata_name, "prev_bar_window", "next_bar_window");
+    if (hdata)
+    {
+        HDATA_VAR(struct t_gui_bar_window, bar, POINTER, "bar");
+        HDATA_VAR(struct t_gui_bar_window, x, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, y, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, width, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, height, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, scroll_x, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, scroll_y, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, cursor_x, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, cursor_y, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, current_size, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, items_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, items_subcount, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, items_content, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, items_num_lines, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, items_refresh_needed, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, screen_col_size, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, coords_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, coords, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, gui_objects, POINTER, NULL);
+        HDATA_VAR(struct t_gui_bar_window, prev_bar_window, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_bar_window, next_bar_window, POINTER, hdata_name);
+    }
+    return hdata;
+}
+
+/*
  * gui_bar_window_add_to_infolist: add a bar window in an infolist
  *                                 return 1 if ok, 0 if error
  */
@@ -1110,8 +1437,15 @@ gui_bar_window_add_to_infolist (struct t_infolist *infolist,
             if (!infolist_new_var_string (ptr_item, option_name,
                                           bar_window->items_content[i][j]))
                 return 0;
+            snprintf (option_name, sizeof (option_name),
+                      "items_num_lines_%05d_%05d", i + 1, j + 1);
+            if (!infolist_new_var_integer (ptr_item, option_name,
+                                           bar_window->items_num_lines[i][j]))
+                return 0;
         }
     }
+    if (!infolist_new_var_integer (ptr_item, "screen_col_size", bar_window->screen_col_size))
+        return 0;
     if (!infolist_new_var_pointer (ptr_item, "gui_objects", bar_window->gui_objects))
         return 0;
     
@@ -1151,17 +1485,32 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
         {
             for (j = 0; j < bar_window->items_subcount[i]; j++)
             {
-                log_printf ("    items_content[%03d][%03d]: '%s' (item: '%s')",
+                log_printf ("    items_content[%03d][%03d]: '%s' "
+                            "(item: '%s', num_lines: %d)",
                             i, j,
                             bar_window->items_content[i][j],
                             (bar_window->items_count >= i + 1) ?
-                            bar_window->bar->items_array[i][j] : "?");
+                            bar_window->bar->items_array[i][j] : "?",
+                            bar_window->items_num_lines[i][j]);
             }
         }
         else
         {
             log_printf ("    items_content. . . . . . : 0x%lx", bar_window->items_content);
         }
+    }
+    log_printf ("    screen_col_size. . . . : %d",    bar_window->screen_col_size);
+    log_printf ("    coords_count . . . . . : %d",    bar_window->coords_count);
+    for (i = 0; i < bar_window->coords_count; i++)
+    {
+        log_printf ("    coords[%03d]. . . . . . : item=%d, subitem=%d, "
+                    "line=%d, x=%d, y=%d",
+                    i,
+                    bar_window->coords[i]->item,
+                    bar_window->coords[i]->subitem,
+                    bar_window->coords[i]->line,
+                    bar_window->coords[i]->x,
+                    bar_window->coords[i]->y);
     }
     log_printf ("    gui_objects. . . . . . : 0x%lx", bar_window->gui_objects);
     gui_bar_window_objects_print_log (bar_window);

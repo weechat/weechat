@@ -141,22 +141,22 @@ server: nome del server da cui disconnettersi
          add [re:]<nick> [<server> [<canale>]]
          del <numero>|-all
 
-     list: list all ignores
-      add: add an ignore
-     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
-      del: delete an ignore
-   number: number of ignore to delete (look at list to find it)
-     -all: delete all ignores
-   server: internal server name where ignore is working
-  channel: channel name where ignore is working
+     list: elenca tutti gli ignore
+      add: aggiungi un ignore
+     nick: nick oppure hostname (può essere un'espressione regolare se forinito il parametro "-re:")
+      del: elimina un ignore
+   numero: numero di ignore da eliminare (nella lista)
+     -all: elimina tutti gli ignore
+   server: nome interno del server dove l'ignore è attivo
+   canale: nome del canale dove l'ignore è attivo
 
-Examples:
-  ignore nick "toto" everywhere:
-    /ignore add toto
-  ignore host "toto@domain.com" on freenode server:
-    /ignore add toto@domain.com freenode
-  ignore host "toto*@*.domain.com" on freenode/#weechat:
-    /ignore add toto*@*.domain.com freenode #weechat
+Esempi:
+  ignora nick "tizio" su tutti gli host/canali:
+    /ignore add tizio
+  ignora l'host "tizio@dominio.com" sul server freenode:
+    /ignore add tizio@dominio.com freenode
+  ignora l'host "tizio*@*.dominio.com" su freenode/#weechat:
+    /ignore add tizio*@*.dominio.com freenode #weechat
 ........................................
 
 [command]*`info`* ottieni informazioni sul server::

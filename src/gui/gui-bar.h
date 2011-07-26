@@ -20,6 +20,7 @@
 #ifndef __WEECHAT_GUI_BAR_H
 #define __WEECHAT_GUI_BAR_H 1
 
+struct t_infolist;
 struct t_weechat_plugin;
 struct t_gui_window;
 struct t_gui_buffer;
@@ -89,6 +90,9 @@ struct t_gui_bar
     int items_count;                    /* number of bar items              */
     int *items_subcount;                /* number of sub items              */
     char ***items_array;                /* bar items (after split)          */
+    char ***items_prefix;               /* prefix for each (sub)item        */
+    char ***items_name;                 /* name for each (sub)item          */
+    char ***items_suffix;               /* suffix for each (sub)item        */
     struct t_gui_bar_window *bar_window; /* pointer to bar window           */
                                         /* (for type root only)             */
     int bar_refresh_needed;             /* refresh for bar is needed?       */

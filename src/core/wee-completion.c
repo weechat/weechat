@@ -45,11 +45,13 @@
 #include "../plugins/plugin.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
+#include "../gui/gui-bar-window.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
+#include "../gui/gui-window.h"
 
 
 /*
@@ -1226,6 +1228,47 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
 }
 
 /*
+ * completion_list_add_cursor_areas_cb: add areas for free cursor movement
+ *                                      ("chat" and bar names)
+ */
+
+int
+completion_list_add_cursor_areas_cb (void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    struct t_gui_bar_window *ptr_bar_win;
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    /* add "chat" for chat area */
+    gui_completion_list_add (completion, "chat", 0, WEECHAT_LIST_POS_SORT);
+    
+    /* add bar windows (of current window) */
+    for (ptr_bar_win = gui_current_window->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        gui_completion_list_add (completion, ptr_bar_win->bar->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->bar_window)
+        {
+            gui_completion_list_add (completion, ptr_bar->name,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * completion_init: add hooks for completions done by WeeChat core
  */
 
@@ -1311,4 +1354,7 @@ completion_init ()
                      N_("key codes that can be reset (keys added, redefined "
                         "or removed)"),
                      &completion_list_add_keys_codes_for_reset_cb, NULL);
+    hook_completion (NULL, "cursor_areas",
+                     N_("areas (\"chat\" or bar name) for free cursor movement"),
+                     &completion_list_add_cursor_areas_cb, NULL);
 }
