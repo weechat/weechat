@@ -4723,7 +4723,9 @@ irc_command_init ()
                           N_("ban nicks or hosts"),
                           N_("[<channel>] [<nick> [<nick>...]]"),
                           N_("channel: channel for ban\n"
-                             "   nick: user or host to ban"),
+                             "   nick: user or host to ban\n\n"
+                             "Without argument, this command display ban list "
+                             "for current channel."),
                           "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command ("connect",
                           N_("connect to IRC server(s)"),

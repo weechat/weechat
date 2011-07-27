@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-26 14:08+0200\n"
+"POT-Creation-Date: 2011-07-27 09:31+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3622,10 +3622,12 @@ msgstr "[канал] [ник [ник ...]]"
 #, fuzzy
 msgid ""
 "channel: channel for ban\n"
-"   nick: user or host to ban"
+"   nick: user or host to ban\n"
+"\n"
+"Without argument, this command display ban list for current channel."
 msgstr ""
-"канал: канал для бана\n"
-"  ник: ник для бана"
+"канал: канал для снятия бана\n"
+"  ник: ник или хост для снятия бана"
 
 #, fuzzy
 msgid "connect to IRC server(s)"
@@ -7482,6 +7484,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "channel: channel for ban\n"
+#~ "   nick: user or host to ban"
+#~ msgstr ""
+#~ "канал: канал для бана\n"
+#~ "  ник: ник для бана"
 
 #, fuzzy
 #~ msgid "Key bindings (%d) for context \"%s\":"

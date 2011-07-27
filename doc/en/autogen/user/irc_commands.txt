@@ -44,6 +44,8 @@ Examples:
 
 channel: channel for ban
    nick: user or host to ban
+
+Without argument, this command display ban list for current channel.
 ........................................
 
 [command]*`connect`* connect to IRC server(s)::

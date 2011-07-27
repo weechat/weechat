@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-07-26 14:08+0200\n"
+"POT-Creation-Date: 2011-07-27 09:31+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3602,10 +3602,12 @@ msgstr "[szoba] [név [név ...]]"
 #, fuzzy
 msgid ""
 "channel: channel for ban\n"
-"   nick: user or host to ban"
+"   nick: user or host to ban\n"
+"\n"
+"Without argument, this command display ban list for current channel."
 msgstr ""
-"szoba: letiltandó szoba\n"
-"  név: letiltandó felhasználó vagy gép"
+"szoba: szoba ahol a parancsot végrehajtjuk\n"
+"  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
 
 #, fuzzy
 msgid "connect to IRC server(s)"
@@ -7473,6 +7475,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "channel: channel for ban\n"
+#~ "   nick: user or host to ban"
+#~ msgstr ""
+#~ "szoba: letiltandó szoba\n"
+#~ "  név: letiltandó felhasználó vagy gép"
 
 #, fuzzy
 #~ msgid "Key bindings (%d) for context \"%s\":"

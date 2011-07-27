@@ -42,8 +42,10 @@ Exemples:
 ........................................
 /ban  [<canal>] [<pseudo> [<pseudo>...]]
 
- canal: nom du canal pour le bannissement
-pseudo: pseudo ou hôte pour le bannissement
+ canal: nom du canal pour supprimer le bannissement
+pseudo: pseudo ou hôte pour supprimer le bannissement
+
+Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
 ........................................
 
 [command]*`connect`* se connecter à un/plusieurs serveur(s) IRC::

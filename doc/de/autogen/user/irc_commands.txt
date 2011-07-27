@@ -42,8 +42,10 @@ Beispiele:
 ........................................
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: Channel für die Sperre
-   nick: zu sperrender User oder Host
+channel: channel for ban
+   nick: user or host to ban
+
+Without argument, this command display ban list for current channel.
 ........................................
 
 [command]*`connect`* Mit IRC-Server(n) verbinden::
