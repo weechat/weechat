@@ -501,7 +501,7 @@ COMMAND_CALLBACK(buffer)
 {
     struct t_gui_buffer *ptr_buffer, *weechat_buffer;
     long number, number1, number2;
-    char *error, *value, *pos, *str_number1, *pos_number2, *plugin_name;
+    char *error, *value, *pos, *str_number1, *pos_number2;
     int i, target_buffer;
     
     /* make C compiler happy */
@@ -680,66 +680,75 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            number1 = -1;
-            number2 = -1;
-            pos = strchr (argv_eol[2], '-');
-            if (pos)
+            if (isdigit (argv_eol[2][0]))
             {
-                str_number1 = string_strndup (argv_eol[2],
-                                              pos - argv_eol[2]);
-                pos_number2 = pos + 1;
-            }
-            else
-            {
-                str_number1 = strdup (argv_eol[2]);
-                pos_number2 = NULL;
-            }
-            if (str_number1)
-            {
-                error = NULL;
-                number1 = strtol (str_number1, &error, 10);
-                if (error && !error[0])
+                number1 = -1;
+                number2 = -1;
+                pos = strchr (argv_eol[2], '-');
+                if (pos)
                 {
-                    if (pos_number2)
-                    {
-                        error = NULL;
-                        number2 = strtol (pos_number2, &error, 10);
-                        if (!error || error[0])
-                            return WEECHAT_RC_ERROR;
-                    }
-                    else
-                        number2 = number1;
+                    str_number1 = string_strndup (argv_eol[2],
+                                                  pos - argv_eol[2]);
+                    pos_number2 = pos + 1;
                 }
                 else
                 {
-                    number1 = -1;
-                    number2 = -1;
+                    str_number1 = strdup (argv_eol[2]);
+                    pos_number2 = NULL;
                 }
-                free (str_number1);
-            }
-            if ((number1 < 0) || (number2 < 0) || (number2 < number1))
-                return WEECHAT_RC_ERROR;
-            
-            for (i = number2; i >= number1; i--)
-            {
-                for (ptr_buffer = last_gui_buffer; ptr_buffer;
-                     ptr_buffer = ptr_buffer->prev_buffer)
+                if (str_number1)
                 {
-                    if (ptr_buffer->number == i)
+                    error = NULL;
+                    number1 = strtol (str_number1, &error, 10);
+                    if (error && !error[0])
                     {
-                        if (ptr_buffer == weechat_buffer)
+                        if (pos_number2)
                         {
-                            gui_chat_printf (NULL,
-                                             _("%sError: WeeChat main buffer "
-                                               "can't be closed"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                            error = NULL;
+                            number2 = strtol (pos_number2, &error, 10);
+                            if (!error || error[0])
+                                return WEECHAT_RC_ERROR;
                         }
                         else
+                            number2 = number1;
+                    }
+                    else
+                    {
+                        number1 = -1;
+                        number2 = -1;
+                    }
+                    free (str_number1);
+                }
+                if ((number1 >= 1) && (number2 >= 1) && (number2 >= number1))
+                {
+                    for (i = number2; i >= number1; i--)
+                    {
+                        for (ptr_buffer = last_gui_buffer; ptr_buffer;
+                             ptr_buffer = ptr_buffer->prev_buffer)
                         {
-                            gui_buffer_close (ptr_buffer);
+                            if (ptr_buffer->number == i)
+                            {
+                                if (ptr_buffer == weechat_buffer)
+                                {
+                                    gui_chat_printf (NULL,
+                                                     _("%sError: WeeChat main "
+                                                       "buffer can't be closed"),
+                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                }
+                                else
+                                {
+                                    gui_buffer_close (ptr_buffer);
+                                }
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                ptr_buffer = gui_buffer_search_by_full_name (argv_eol[2]);
+                if (ptr_buffer)
+                    gui_buffer_close (ptr_buffer);
             }
         }
         
@@ -898,24 +907,11 @@ COMMAND_CALLBACK(buffer)
     }
     else
     {
-        ptr_buffer = NULL;
-        pos = strchr (argv_eol[1], '.');
-        if (pos)
-        {
-            plugin_name = string_strndup (argv_eol[1], pos - argv_eol[1]);
-            if (plugin_name)
-            {
-                ptr_buffer = gui_buffer_search_by_partial_name (plugin_name,
-                                                                pos + 1);
-                free (plugin_name);
-            }
-        }
+        ptr_buffer = gui_buffer_search_by_full_name (argv_eol[1]);
         if (!ptr_buffer)
             ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
         if (ptr_buffer)
-        {
             gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
-        }
     }
     
     return WEECHAT_RC_OK;
@@ -5119,7 +5115,7 @@ command_init ()
                      " || clear [<number>|-merged|-all]"
                      " || move|merge <number>"
                      " || unmerge [<number>]"
-                     " || close [<n1>[-<n2>]]"
+                     " || close [<n1>[-<n2>]|<name>]"
                      " || notify <level>"
                      " || localvar"
                      " || set <property> <value>"
@@ -5138,7 +5134,7 @@ command_init ()
                      "buffers)\n"
                      " unmerge: unmerge buffer from other buffers which have "
                      "same number\n"
-                     "   close: close buffer (number/range is optional)\n"
+                     "   close: close buffer (number/range or name is optional)\n"
                      "  notify: set notify level for current buffer: this "
                      "level determines whether buffer will be added to "
                      "hotlist or not:\n"
@@ -5177,16 +5173,14 @@ command_init ()
                   " || move %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
                   " || unmerge %(buffers_numbers)"
-                  " || close"
+                  " || close %(buffers_plugins_names)"
                   " || list"
                   " || notify reset|none|highlight|message|all"
                   " || localvar"
                   " || set %(buffer_properties_set)"
                   " || get %(buffer_properties_get)"
-                  " || %(buffers_names)"
-                  " || %(irc_channels)"
-                  " || %(irc_privates)"
-                  " || %(buffers_numbers)",
+                  " || %(buffers_plugins_names)|%(buffers_names)|"
+                  "%(irc_channels)|%(irc_privates)|%(buffers_numbers)",
                   &command_buffer, NULL);
     hook_command (NULL, "color",
                   N_("define color aliases and display palette of colors"),

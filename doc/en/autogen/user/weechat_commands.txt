@@ -63,7 +63,7 @@ Examples:
          clear [<number>|-merged|-all]
          move|merge <number>
          unmerge [<number>]
-         close [<n1>[-<n2>]]
+         close [<n1>[-<n2>]|<name>]
          notify <level>
          localvar
          set <property> <value>
@@ -76,7 +76,7 @@ Examples:
    merge: merge current buffer to another buffer (chat area will be mix of both buffers)
           (by default ctrl-x switches between merged buffers)
  unmerge: unmerge buffer from other buffers which have same number
-   close: close buffer (number/range is optional)
+   close: close buffer (number/range or name is optional)
   notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
                none: never
           highlight: for highlights only

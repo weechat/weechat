@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-26
+v0.3.6-dev, 2011-07-27
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: allow buffer name in /buffer close
 * core: add support of mouse: new command /mouse, new option weechat.look.mouse
   and new key context "mouse" (task #5435)
 * core: add command /cursor (free movement of cursor on screen), with key

@@ -63,7 +63,7 @@ Exemples:
          clear [<nombre>|-merged|-all]
          move|merge <nombre>
          unmerge [<nombre>]
-         close [<n1>[-<n2>]]
+         close [<n1>[-<n2>]|<nom>]
          notify <niveau>
          localvar
          set <propriété> <valeur>
@@ -76,7 +76,7 @@ Exemples:
    merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
           (par défaut ctrl-x bascule entre les tampons mélangés)
  unmerge: détacher le tampon courant des autres tampons portant le même numéro
-   close: fermer le tampon (nombre/intervalle optionnel)
+   close: fermer le tampon (nombre/intervalle ou nom optionnel)
   notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
                none: jamais
           highlight: pour les highlights seulement
