@@ -771,7 +771,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_win;
-    struct t_gui_bar_window *ptr_bar_win;
+    struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
     int bar_window_exists;
     
     /* make C compiler happy */
@@ -797,9 +797,11 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
             for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
             {
                 bar_window_exists = 0;
-                for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
-                     ptr_bar_win = ptr_bar_win->next_bar_window)
+                ptr_bar_win = ptr_win->bar_windows;
+                while (ptr_bar_win)
                 {
+                    next_bar_win = ptr_bar_win->next_bar_window;
+                    
                     if (ptr_bar_win->bar == ptr_bar)
                     {
                         if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
@@ -807,6 +809,8 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
                         else
                             bar_window_exists = 1;
                     }
+                    
+                    ptr_bar_win = next_bar_win;
                 }
                 if (!bar_window_exists
                     && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
