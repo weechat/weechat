@@ -434,7 +434,7 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
         
         if (gui_key_verbose)
         {
-            gui_chat_printf (gui_current_window->buffer,
+            gui_chat_printf (NULL,
                              _("New key binding (context \"%s\"): "
                                "%s%s => %s%s"),
                              gui_key_context_string[context],
