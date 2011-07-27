@@ -505,6 +505,8 @@ Tasti per buffer / finestre
 | @k(A-)@k(j) , @k(A-)@k(s) | Passa al buffer server IRC | /server jump
 | @k(A-)@k(0...9)           | Passa al buffer numero (0 = 10) | /buffer *N
 | @k(A-)@k(j) , @k(01...99) | Passa al buffer numero | /buffer NN
+// TRANSLATION MISSING
+| @k(A-)@k(m)               | Toggle mouse | /mouse toggle
 | @k(A-)@k(n)               | Scorre fino all'evento successivo | /window scroll_next_highlight
 | @k(A-)@k(p)               | Scorre fino all'evento precedente | /window scroll_previous_highlight
 | @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /input scroll_unread

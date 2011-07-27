@@ -498,6 +498,7 @@ Keys for buffers / windows
 | @k(A-)@k(j) , @k(A-)@k(s) | Switch to IRC server buffer | /server jump
 | @k(A-)@k(0...9)           | Switch to buffer by number (0 = 10) | /buffer *N
 | @k(A-)@k(j) , @k(01...99) | Switch to buffer by number | /buffer NN
+| @k(A-)@k(m)               | Toggle mouse | /mouse toggle
 | @k(A-)@k(n)               | Scroll to next highlight | /window scroll_next_highlight
 | @k(A-)@k(p)               | Scroll to previous highlight | /window scroll_previous_highlight
 | @k(A-)@k(u)               | Scroll to first unread line in buffer | /input scroll_unread

@@ -497,6 +497,8 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | /server jump
 | @k(A-)@k(0...9)           | wechselt zum Buffer mit der Nummer (0 = 10) | /buffer *N
 | @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der angegeben Nummer | /buffer NN
+// TRANSLATION MISSING
+| @k(A-)@k(m)               | Toggle mouse | /mouse toggle
 | @k(A-)@k(n)               | springt zur nächsten Highlight Nachricht | /window scroll_next_highlight
 | @k(A-)@k(p)               | springt zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
 | @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | /input scroll_unread

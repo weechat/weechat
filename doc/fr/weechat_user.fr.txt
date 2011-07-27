@@ -506,6 +506,7 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(j) , @k(A-)@k(s) | Sauter au tampon IRC du serveur | /server jump
 | @k(A-)@k(0...9)           | Sauter au tampon qui porte ce numéro (0 = 10) | /buffer *N
 | @k(A-)@k(j) , @k(01...99) | Sauter au tampon qui porte ce numéro | /buffer NN
+| @k(A-)@k(m)               | Activer/désactiver la souris | /mouse toggle
 | @k(A-)@k(n)               | Se positionner sur le highlight suivant | /window scroll_next_highlight
 | @k(A-)@k(p)               | Se positionner sur le highlight précédent | /window scroll_previous_highlight
 | @k(A-)@k(u)               | Se positionner sur la première ligne non lue du tampon | /input scroll_unread
