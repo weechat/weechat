@@ -81,6 +81,7 @@ extern struct t_gui_key *gui_key_bind (struct t_gui_buffer *buffer,
                                        const char *command);
 extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
                            const char *key, int send_signal);
+extern int gui_key_focus (const char *key, int context);
 extern int gui_key_pressed (const char *key_str);
 extern void gui_key_free (struct t_gui_key **keys,
                           struct t_gui_key **last_key,
@@ -104,5 +105,6 @@ extern void gui_key_print_log (struct t_gui_buffer *buffer);
 /* key functions (GUI dependent) */
 
 extern void gui_key_default_bindings ();
+extern void gui_key_flush ();
 
 #endif /* __WEECHAT_GUI_KEY_H */

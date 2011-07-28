@@ -478,6 +478,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* *weechat.look.mouse_timer_delay*
+** descrizione: `delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay before processing event`
+** tipo: intero
+** valori: 1 .. 10000 (valore predefinito: `100`)
+
 * *weechat.look.nickmode*
 ** descrizione: `mostra modalità nick ((half)op/voice) prima di ogni nick`
 ** tipo: bool

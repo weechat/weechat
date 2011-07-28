@@ -478,6 +478,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* *weechat.look.mouse_timer_delay*
+** description: `délai (en millisecondes) pour capturer un évènement de la souris: WeeChat attendra ce délai avant de traiter l'évènement`
+** type: entier
+** valeurs: 1 .. 10000 (valeur par défaut: `100`)
+
 * *weechat.look.nickmode*
 ** description: `afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur`
 ** type: booléen

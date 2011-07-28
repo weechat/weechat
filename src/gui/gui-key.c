@@ -66,7 +66,7 @@ char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
 
 int gui_key_verbose = 0;            /* 1 to see some messages               */
 
-char gui_key_combo_buffer[256];     /* buffer used for combos               */
+char gui_key_combo_buffer[1024];    /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
 int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
 int gui_key_grab_command = 0;       /* grab command bound to key?           */
@@ -187,7 +187,7 @@ gui_key_grab_init (int grab_command, const char *delay)
 int
 gui_key_grab_end_timer_cb (void *data, int remaining_calls)
 {
-    char *expanded_key;
+    char *expanded_key, *expanded_key2;
     struct t_gui_key *ptr_key;
     
     /* make C compiler happy */
@@ -196,14 +196,35 @@ gui_key_grab_end_timer_cb (void *data, int remaining_calls)
     
     /* get expanded name (for example: \x01+U => ctrl-u) */
     expanded_key = gui_key_get_expanded_name (gui_key_combo_buffer);
-    
     if (expanded_key)
     {
+        /*
+         * the expanded_key should be valid UTF-8 at this point,
+         * but some mouse codes can return ISO chars (for coordinates),
+         * then we will convert them to UTF-8 string
+         */
+        if (!utf8_is_valid (expanded_key, NULL))
+        {
+            expanded_key2 = string_iconv_to_internal ("iso-8859-1",
+                                                      expanded_key);
+            if (expanded_key2)
+            {
+                free (expanded_key);
+                expanded_key = expanded_key2;
+            }
+            else
+            {
+                /* conversion failed, then just replace invalid chars by '?' */
+                utf8_normalize (expanded_key, '?');
+            }
+        }
+        /* add expanded key to input buffer */
         if (gui_current_window->buffer->input)
         {
             gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
             if (gui_key_grab_command)
             {
+                /* add command bound to key (if found) */
                 ptr_key = gui_key_search (gui_keys[GUI_KEY_CONTEXT_DEFAULT],
                                           gui_key_combo_buffer);
                 if (ptr_key)
@@ -734,7 +755,7 @@ gui_key_focus_command (const char *key, int context,
 }
 
 /*
- * gui_key_focus: treat key pressed in cursor or mouse mode,
+ * gui_key_focus: process key pressed in cursor or mouse mode,
  *                looking for keys: "{area}key" in context "cursor" or "mouse"
  *                return 1 if a command was executed, otherwise 0
  */
@@ -748,6 +769,13 @@ gui_key_focus (const char *key, int context)
     {
         gui_cursor_get_info (gui_mouse_event_x[0], gui_mouse_event_y[0],
                              &cursor_info);
+        if (gui_mouse_debug)
+        {
+            gui_chat_printf (NULL, "Mouse: %s, (%d,%d) -> (%d,%d)",
+                             key,
+                             gui_mouse_event_x[0], gui_mouse_event_y[0],
+                             gui_mouse_event_x[1], gui_mouse_event_y[1]);
+        }
     }
     else
     {
@@ -761,7 +789,7 @@ gui_key_focus (const char *key, int context)
 }
 
 /*
- * gui_key_pressed: treat new key pressed
+ * gui_key_pressed: process new key pressed
  *                  return: 1 if key should be added to input buffer
  *                          0 otherwise
  */
@@ -771,8 +799,7 @@ gui_key_pressed (const char *key_str)
 {
     int i, first_key, context, length, length_key;
     struct t_gui_key *ptr_key;
-    char **commands;
-    const char *mouse_key;
+    char **commands, *pos;
     
     /* add key to buffer */
     first_key = (gui_key_combo_buffer[0] == '\0');
@@ -796,20 +823,20 @@ gui_key_pressed (const char *key_str)
     /* mode "mouse grab" (mouse event pending) */
     if (gui_mouse_grab)
     {
-        mouse_key = gui_mouse_grab_code2key (gui_key_combo_buffer);
-        if (mouse_key)
+        pos = strstr (gui_key_combo_buffer, "\x1B[M");
+        if (pos)
         {
-            gui_key_combo_buffer[0] = '\0';
-            strcat (gui_key_combo_buffer, mouse_key);
+            pos[0] = '\0';
             gui_mouse_grab_end ();
-            if (gui_key_combo_buffer[0])
-            {
-                (void) gui_key_focus (gui_key_combo_buffer,
-                                      GUI_KEY_CONTEXT_MOUSE);
-                gui_key_combo_buffer[0] = '\0';
-                gui_mouse_reset_event ();
-            }
+            gui_mouse_grab_init ();
         }
+        return 0;
+    }
+    
+    if (strcmp (gui_key_combo_buffer, "\x01[[M") == 0)
+    {
+        gui_key_combo_buffer[0] = '\0';
+        gui_mouse_grab_init ();
         return 0;
     }
     

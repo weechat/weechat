@@ -110,6 +110,7 @@ struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_mouse;
+struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_nickmode;
 struct t_config_option *config_look_nickmode_empty;
 struct t_config_option *config_look_paste_max_lines;
@@ -1801,6 +1802,12 @@ config_weechat_init_options ()
         "mouse", "boolean",
         N_("enable mouse support at startup (to enable it now, see /help mouse)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_mouse_timer_delay = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "mouse_timer_delay", "integer",
+        N_("delay (in milliseconds) to grab a mouse event: WeeChat will "
+           "wait this delay before processing event"),
+        NULL, 1, 10000, "100", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nickmode = config_file_new_option (
         weechat_config_file, ptr_section,
         "nickmode", "boolean",

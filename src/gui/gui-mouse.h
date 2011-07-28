@@ -25,6 +25,7 @@
 extern int gui_mouse_enabled;
 extern int gui_mouse_debug;
 extern int gui_mouse_grab;
+extern struct t_hook *gui_mouse_event_timer;
 extern int gui_mouse_event_index;
 extern int gui_mouse_event_x[2];
 extern int gui_mouse_event_y[2];
@@ -41,7 +42,6 @@ extern void gui_mouse_enable ();
 extern void gui_mouse_disable ();
 extern void gui_mouse_display_state ();
 extern void gui_mouse_grab_init ();
-extern const char *gui_mouse_grab_code2key (const char *code);
 extern void gui_mouse_grab_end ();
 
 #endif /* __WEECHAT_GUI_MOUSE_H */

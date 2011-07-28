@@ -478,6 +478,11 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
+* *weechat.look.mouse_timer_delay*
+** description: `delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay before processing event`
+** type: integer
+** values: 1 .. 10000 (default value: `100`)
+
 * *weechat.look.nickmode*
 ** description: `display nick mode ((half)op/voice) before each nick`
 ** type: boolean

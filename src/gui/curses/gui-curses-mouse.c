@@ -31,7 +31,11 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
+#include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
 #include "../gui-chat.h"
+#include "../gui-key.h"
 #include "../gui-mouse.h"
 
 
@@ -70,6 +74,22 @@ gui_mouse_display_state ()
 }
 
 /*
+ * gui_mouse_grab_timer_cb: timer for grabbing mouse code
+ */
+
+int
+gui_mouse_grab_timer_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+    
+    gui_mouse_grab_end ();
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * gui_mouse_grab_init: init "grab mouse" mode
  */
 
@@ -77,37 +97,72 @@ void
 gui_mouse_grab_init ()
 {
     gui_mouse_grab = 1;
+    
+    if (gui_mouse_event_timer)
+        unhook (gui_mouse_event_timer);
+    
+    gui_mouse_event_timer = hook_timer (NULL,
+                                        CONFIG_INTEGER(config_look_mouse_timer_delay),
+                                        0, 1,
+                                        &gui_mouse_grab_timer_cb, NULL);
 }
 
 /*
  * gui_mouse_grab_code2key: get key name with a mouse code
+ *                          *extra_chars is set with first char following the
+ *                          end of mouse code (this can point to the '\0' or
+ *                          other chars)
  */
 
 const char *
-gui_mouse_grab_code2key (const char *code)
+gui_mouse_grab_code2key (const char *code, char **extra_chars)
 {
-    int x, y;
+    int x, y, code_utf8, length;
     double diff_x, diff_y, distance, angle, pi4;
     static char key[128];
-    char button[2];
+    char button[2], *ptr_code;
     
-    /* mouse code must have at least 3 chars */
-    if (strlen (code) < 3)
-        return NULL;
+    *extra_chars = NULL;
     
     key[0] = '\0';
     
-    /* ignore code '#' (button released) if it's received as first event */
-    if ((gui_mouse_event_index == 0) && (code[0] == '#'))
-        return key;
+    /*
+     * mouse code must have at least:
+     *   one code (for event) + X + Y == 3 bytes or 3 UTF-8 chars
+     */
+    code_utf8 = utf8_is_valid (code, NULL);
+    length = (code_utf8) ? utf8_strlen (code) : (int)strlen (code);
+    if (length < 3)
+        return NULL;
     
     /* get coordinates and button */
-    x = ((unsigned char)code[1]) - 33;
+    if (code_utf8)
+    {
+        /* get coordinates using UTF-8 chars in code */
+        x = utf8_char_int (code + 1) - 33;
+        ptr_code = utf8_next_char (code + 1);
+        if (!ptr_code)
+            return NULL;
+        y = utf8_char_int (ptr_code) - 33;
+        *extra_chars = utf8_next_char (ptr_code);
+    }
+    else
+    {
+        /* get coordinates using ISO chars in code */
+        x = ((unsigned char)code[1]) - 33;
+        y = ((unsigned char)code[2]) - 33;
+        *extra_chars = (char *)code + 3;
+    }
     if (x < 0)
         x = 0;
-    y = ((unsigned char)code[2]) - 33;
     if (y < 0)
         y = 0;
+    
+    /* ignore code '#' (button released) if it's received as first event */
+    if ((gui_mouse_event_index == 0) && (code[0] == '#'))
+        return NULL;
+    
+    /* set data in "gui_mouse_event_xxx" */
     gui_mouse_event_x[gui_mouse_event_index] = x;
     gui_mouse_event_y[gui_mouse_event_index] = y;
     if (gui_mouse_event_index == 0)
@@ -129,7 +184,7 @@ gui_mouse_grab_code2key (const char *code)
     }
     
     if (code[0] != '#')
-        return key;
+        return NULL;
     
     /* add button/wheel */
     switch (gui_mouse_event_button)
@@ -239,5 +294,40 @@ gui_mouse_grab_code2key (const char *code)
 void
 gui_mouse_grab_end ()
 {
+    const char *mouse_key;
+    char *extra_chars;
+    int i;
+    
     gui_mouse_grab = 0;
+    
+    /* end mouse event timer */
+    if (gui_mouse_event_timer)
+    {
+        unhook (gui_mouse_event_timer);
+        gui_mouse_event_timer = NULL;
+    }
+    
+    /* get key from mouse code and execute command (if found) */
+    mouse_key = gui_mouse_grab_code2key (gui_key_combo_buffer, &extra_chars);
+    if (mouse_key && mouse_key[0])
+    {
+        (void) gui_key_focus (mouse_key,
+                              GUI_KEY_CONTEXT_MOUSE);
+        gui_mouse_reset_event ();
+    }
+    
+    gui_key_combo_buffer[0] = '\0';
+    
+    /*
+     * if extra chars, use them as new input (this can happen if used typed
+     * something and that mouse timer was not reached yet
+     */
+    if (extra_chars && extra_chars[0])
+    {
+        for (i = 0; extra_chars[i]; i++)
+        {
+            gui_key_buffer_add ((unsigned char)extra_chars[i]);
+        }
+        gui_key_flush ();
+    }
 }

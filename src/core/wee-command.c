@@ -3112,12 +3112,6 @@ COMMAND_CALLBACK(mouse)
         return WEECHAT_RC_OK;
     }
     
-    if (string_strcasecmp (argv[1], "grab") == 0)
-    {
-        gui_mouse_grab_init ();
-        return WEECHAT_RC_OK;
-    }
-    
     return WEECHAT_RC_OK;
 }
 
