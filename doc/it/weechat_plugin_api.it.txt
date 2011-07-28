@@ -6271,8 +6271,8 @@ Prototipo:
 [source,C]
 ----------------------------------------
 struct t_hook *weechat_hook_timer (long interval,
-                                   const char *align_second,
-                                   const char *max_calls,
+                                   int align_second,
+                                   int max_calls,
                                    int (*callback)(void *data,
                                                    int remaining_calls),
                                    void *callback_data);
