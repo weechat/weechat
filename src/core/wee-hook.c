@@ -51,6 +51,7 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-window.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-cursor.h"
@@ -2839,6 +2840,19 @@ hook_focus_get_data (struct t_gui_cursor_info *cursor_info)
               (cursor_info->window) ?
               (long unsigned int)((cursor_info->window)->buffer) : 0);
     hashtable_set (hash_info, "_buffer", str_value);
+    if (cursor_info->window)
+    {
+        snprintf (str_value, sizeof (str_value), "%d",
+                  (cursor_info->window)->number);
+        hashtable_set (hash_info, "_window_number", str_value);
+        snprintf (str_value, sizeof (str_value), "%d",
+                  ((cursor_info->window)->buffer)->number);
+        hashtable_set (hash_info, "_buffer_number", str_value);
+        hashtable_set (hash_info, "_buffer_plugin",
+                       plugin_get_name (((cursor_info->window)->buffer)->plugin));
+        hashtable_set (hash_info, "_buffer_name",
+                       ((cursor_info->window)->buffer)->name);
+    }
     hashtable_set (hash_info, "_bar_name",
                    (cursor_info->bar_window) ?
                    ((cursor_info->bar_window)->bar)->name : NULL);

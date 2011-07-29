@@ -108,6 +108,8 @@
 
 | weechat | weechat_commands | comandi di weechat
 
+| weechat | windows_numbers | numbers of windows
+
 | xfer | nick | nick della chat DCC
 
 |========================================

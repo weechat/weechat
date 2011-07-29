@@ -500,6 +500,7 @@
   'weechat_plugins'
 
 | weechat | window | Fenster |
+  'number' (integer) +
   'win_x' (integer) +
   'win_y' (integer) +
   'win_width' (integer) +

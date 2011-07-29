@@ -2022,15 +2022,14 @@ gui_bar_update (const char *name)
 }
 
 /*
- * gui_bar_scroll: scroll a bar for a buffer
+ * gui_bar_scroll: scroll a bar
  *                 return 1 if scroll is ok, 0 if error
  */
 
 int
-gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
+gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
                 const char *scroll)
 {
-    struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
     long number;
     char *str, *error;
@@ -2118,22 +2117,16 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
                                add_x, scroll_beginning, scroll_end,
                                add, percent, number);
     }
-    else
+    else if (window)
     {
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        for (ptr_bar_win = window->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
         {
-            if (ptr_win->buffer == buffer)
+            if (ptr_bar_win->bar == bar)
             {
-                for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
-                     ptr_bar_win = ptr_bar_win->next_bar_window)
-                {
-                    if (ptr_bar_win->bar == bar)
-                    {
-                        gui_bar_window_scroll (ptr_bar_win, ptr_win,
-                                               add_x, scroll_beginning, scroll_end,
-                                               add, percent, number);
-                    }
-                }
+                gui_bar_window_scroll (ptr_bar_win, window,
+                                       add_x, scroll_beginning, scroll_end,
+                                       add, percent, number);
             }
         }
     }

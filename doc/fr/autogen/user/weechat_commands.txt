@@ -14,7 +14,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
       del <nom>|-all
       set <nom> <option> <valeur>
       hide|show|toggle <nom>
-      scroll <nom> <tampon> <valeur_scroll>
+      scroll <nom> <fenêtre> <valeur_scroll>
 
          list: lister toutes les barres
      listfull: lister toutes les barres (verbeux)
@@ -41,7 +41,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
          show: montrer une barre cachée
        toggle: cacher/montrer une barre
        scroll: faire défiler la barre
-       tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
+      fenêtre: numéro de fenêtre (utilisez '*' pour la fenêtre courante ou une barre de type root)
 valeur_scroll: valeur pour le défilement: 'x' ou 'y' (optionnel), suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un % optionnel (pour faire défiler par % de la largeur/hauteur, sinon la valeur est un nombre de caractères)
 
 Exemples:
@@ -589,18 +589,19 @@ Exemples:
 [command]*`window`* gestion des fenêtres::
 ........................................
 /window  list
-         -1|+1|b#|up|down|left|right
-         splith|splitv [<pct>]
-         resize [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <numéro>]
+         <numéro>
+         splith|splitv [-window <numéro>] [<pct>]
+         resize [-window <numéro>] [+/-]<pct>
          balance
-         merge [all]
-         page_up|page_down
+         merge [-window <numéro>] [all]
+         page_up|page_down [-window <numéro>]
          refresh
-         scroll [+/-]<valeur>[s|m|h|d|M|y]
-         scroll_horiz [+/-]<valeur>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
-         swap [up|down|left|right]
-         zoom
+         scroll [-window <numéro>] [+/-]<valeur>[s|m|h|d|M|y]
+         scroll_horiz [-window <numéro>] [+/-]<valeur>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <numéro>]
+         swap [-window <numéro>] [up|down|left|right]
+         zoom [-window <numéro>]
 
          list: lister les fenêtres ouvertes (sans paramètre, cette liste est affichée)
            -1: sauter à la fenêtre précédente
@@ -610,6 +611,7 @@ Exemples:
          down: sauter à la fenêtre au dessous
          left: sauter à la fenêtre à gauche
         right: sauter à la fenêtre à droite
+       numéro: numéro de fenêtre (voir /window list)
        splith: éclater la fenêtre en deux horizontalement
        splitv: éclater la fenêtre en deux verticalement
        resize: redimensionner une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
@@ -640,5 +642,7 @@ Exemples:
     /window scroll -2d
   défilement jusqu'au début du jour courant:
     /window scroll -d
+  zoom sur la fenêtre numéro 2:
+    /window zoom -window 2
 ........................................
 

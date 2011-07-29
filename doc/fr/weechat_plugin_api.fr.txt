@@ -8391,7 +8391,17 @@ Paramètres :
 *** '_x' : colonne du focus sur l'écran (la première colonne sur la gauche
     est "0")
 *** '_y' : ligne du focus sur l'écran (la première ligne en haut est "0")
-*** '_window' : pointeur de la fenêtre avec le focus (NULL pour une barre de
+*** '_window' : pointeur de la fenêtre avec le focus ("0x0" pour une barre de
+    type "root" ou pour une zone inconnue)
+*** '_window_number' : numéro de la fenêtre avec le focus (non défini pour une
+    barre de type "root" ou pour une zone inconnue)
+*** '_buffer' : pointeur du tampon avec le focus ("0x0" pour une barre de type
+    "root" ou pour une zone inconnue)
+*** '_buffer_number' : numéro du tampon avec le focus (non défini pour une barre
+    de type "root" ou pour une zone inconnue)
+*** '_buffer_plugin' : nom d'extension du tampon avec le focus (non défini pour
+    une barre de type "root" ou pour une zone inconnue)
+*** '_buffer_name' : nom du tampon avec le focus (non défini pour une barre de
     type "root" ou pour une zone inconnue)
 *** '_bar_name' : nom de la barre avec le focus (NULL pour la zone de discussion
     ("chat") ou pour une zone inconnue)
@@ -9483,6 +9493,7 @@ Paramètres :
 
 * 'window' : pointeur vers la fenêtre
 * 'property' : nom de la propriété :
+** 'number' : numéro de la fenêtre (commence à 1)
 ** 'win_x' : position X de la fenêtre dans le terminal (la première colonne est
    0)
 ** 'win_y' : position Y de la fenêtre dans le terminal (la première ligne est

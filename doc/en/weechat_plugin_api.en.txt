@@ -8259,6 +8259,16 @@ Arguments:
 *** '_y': line of focus on screen (first line on top is "0")
 *** '_window': pointer of window with focus ("0x0" for a bar of type "root"
     or for unknown area)
+*** '_window_number': number of window with focus (not set for a bar of type
+    "root" or for unknown area)
+*** '_buffer': pointer of buffer with focus ("0x0" for a bar of type "root"
+    or for unknown area)
+*** '_buffer_number': number of buffer with focus (not set for a bar of type
+    "root" or for unknown area)
+*** '_buffer_plugin': plugin name of buffer with focus (not set for a bar of
+    type "root" or for unknown area)
+*** '_buffer_name': name of buffer with focus (not set for a bar of type "root"
+    or for unknown area)
 *** '_bar_name': name of bar with focus (NULL for chat area or for unknown
     area)
 *** '_bar_item_name': name of bar item with focus (NULL if focus is not in a
@@ -8756,7 +8766,7 @@ Arguments:
 
 * 'buffer': buffer pointer
 * 'property': property name:
-** 'number': number of buffer (starts with 1)
+** 'number': number of buffer (starts to 1)
 ** 'layout_number': number of buffer saved in layout
 ** 'type': buffer type (0: formatted, 1: free content)
 ** 'notify': notify level for buffer
@@ -9325,6 +9335,7 @@ Arguments:
 
 * 'window': window pointer
 * 'property': property name:
+** 'number': number of window (starts to 1)
 ** 'win_x': X position of window in terminal (first column is 0)
 ** 'win_y': Y position of window in terminal (first line is 0)
 ** 'win_width': width of window, in chars

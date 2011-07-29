@@ -75,6 +75,25 @@ int gui_window_cursor_y = 0;           /* cursor pos on screen              */
 
 
 /*
+ * gui_window_search_by_number: search a window by number
+ */
+
+struct t_gui_window *
+gui_window_search_by_number (int number)
+{
+    struct t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->number == number)
+            return ptr_win;
+    }
+    
+    /* window not found */
+    return NULL;
+}
+
+/*
  * gui_window_search_by_xy: get pointer of window displayed at (x,y)
  *                          return NULL if no window is found
  */
@@ -432,6 +451,9 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             return NULL;
         }
         
+        /* number */
+        new_window->number = (last_gui_window) ? last_gui_window->number + 1 : 1;
+        
         /* position & size */
         new_window->win_x = x;
         new_window->win_y = y;
@@ -555,6 +577,8 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
 {
     if (window && property)
     {
+        if (string_strcasecmp (property, "number") == 0)
+            return window->number;
         if (string_strcasecmp (property, "win_x") == 0)
             return window->win_x;
         if (string_strcasecmp (property, "win_y") == 0)
@@ -665,6 +689,11 @@ gui_window_set_layout_buffer_name (struct t_gui_window *window,
 void
 gui_window_free (struct t_gui_window *window)
 {
+    struct t_gui_window *ptr_win;
+    int i;
+    
+    hook_signal_send ("window_closing", WEECHAT_HOOK_SIGNAL_POINTER, window);
+    
     if (window->buffer)
         gui_buffer_add_value_num_displayed (window->buffer, -1);
     
@@ -703,6 +732,15 @@ gui_window_free (struct t_gui_window *window)
     if (gui_current_window == window)
         gui_current_window = gui_windows;
     
+    i = 1;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_win->number = i;
+        i++;
+    }
+    
+    hook_signal_send ("window_closed", WEECHAT_HOOK_SIGNAL_POINTER, window);
+    
     free (window);
 }
 
@@ -732,6 +770,23 @@ gui_window_switch_next (struct t_gui_window *window)
     
     gui_window_switch ((window->next_window) ?
                        window->next_window : gui_windows);
+}
+
+/*
+ * gui_window_switch_by_number: switch to window by number
+ */
+
+void
+gui_window_switch_by_number (int number)
+{
+    struct t_gui_window *ptr_win;
+    
+    if (!gui_ok)
+        return;
+    
+    ptr_win = gui_window_search_by_number (number);
+    if (ptr_win)
+        gui_window_switch (ptr_win);
 }
 
 /*
@@ -1308,6 +1363,7 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window");
     if (hdata)
     {
+        HDATA_VAR(struct t_gui_window, number, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, win_x, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, win_y, INTEGER, NULL);
         HDATA_VAR(struct t_gui_window, win_width, INTEGER, NULL);
@@ -1413,6 +1469,8 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
     
     if (!infolist_new_var_pointer (ptr_item, "pointer", window))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "number", window->number))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "x", window->win_x))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "y", window->win_y))
@@ -1466,6 +1524,7 @@ gui_window_print_log ()
     {
         log_printf ("");
         log_printf ("[window (addr:0x%lx)]", ptr_window);
+        log_printf ("  number. . . . . . . : %d",    ptr_window->number);
         log_printf ("  win_x . . . . . . . : %d",    ptr_window->win_x);
         log_printf ("  win_y . . . . . . . : %d",    ptr_window->win_y);
         log_printf ("  win_width . . . . . : %d",    ptr_window->win_width);

@@ -79,7 +79,7 @@ struct t_gui_buffer
      */
     struct t_gui_buffer *merge_for_upgrade;
     
-    int number;                        /* buffer number (for jump/switch)   */
+    int number;                        /* buffer number (first is 1)        */
     int layout_number;                 /* the number of buffer saved in     */
                                        /* layout                            */
     int layout_applied;                /* used when applying layout, to     */

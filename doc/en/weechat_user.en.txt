@@ -538,7 +538,7 @@ Keys for "cursor" context
 
 These keys are used in context "cursor" (free movement of cursor on screen).
 
-[width="100%",cols="^.^3,^.^3,.^10,.^5l",options="header"]
+[width="100%",cols="^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | Key          | Area     | Description | Command
 | @k(↑)        | -        | Move cursor one line up | /cursor move up
@@ -549,11 +549,11 @@ These keys are used in context "cursor" (free movement of cursor on screen).
 | @k(A-)@k(↓)  | -        | Move cursor one area down | /cursor move area_down
 | @k(A-)@k(←)  | -        | Move cursor one area left | /cursor move area_left
 | @k(A-)@k(→)  | -        | Move cursor one area right | /cursor move area_right
-| @k(b)        | nicklist | Ban nick | /ban ${nick}
-| @k(k)        | nicklist | Kick nick | /kick ${nick}
-| @k(K)        | nicklist | Kick and ban nick | /kickban ${nick}
-| @k(q)        | nicklist | Open query with nick | /query ${nick};/cursor stop
-| @k(w)        | nicklist | Do a whois on nick | /whois ${nick}
+| @k(b)        | nicklist | Ban nick | /window ${_window_number};/ban ${nick}
+| @k(k)        | nicklist | Kick nick | /window ${_window_number};/kick ${nick}
+| @k(K)        | nicklist | Kick and ban nick | /window ${_window_number};/kickban ${nick}
+| @k(q)        | nicklist | Open query with nick | /window ${_window_number};/query ${nick};/cursor stop
+| @k(w)        | nicklist | Do a whois on nick | /window ${_window_number};/whois ${nick}
 | @k(Enter) .3+| -     .3+| Stop cursor mode .3+| /cursor stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
@@ -565,26 +565,27 @@ Keys for "mouse" context
 
 These keys are used in context "mouse", namely when a mouse event occurs.
 
-[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^5l",options="header"]
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | Button  | Gesture      | Area     | Description | Command
-| ◾◽◽     | left         | chat     | Switch to previous buffer | /buffer +1
-| ◾◽◽     | right        | chat     | Switch to next buffer | /buffer +1
-| ◾◽◽     | left (long)  | chat     | Switch to first buffer | /buffer 1
-| ◾◽◽     | right (long) | chat     | Switch to last buffer | /input jump_last_buffer
-| wheel ⇑ | -            | chat     | Scroll up a few lines in buffer history | /window scroll_up
-| wheel ⇓ | -            | chat     | Scroll down a few lines in buffer history | /window scroll_down
-| ◾◽◽     | up           | nicklist | Scroll up one page in nicklist | /bar scroll nicklist * -100%
-| ◾◽◽     | down         | nicklist | Scroll down one page in nicklist | /bar scroll nicklist * +100%
-| ◾◽◽     | up (long)    | nicklist | Go to the beginning of nicklist | /bar scroll nicklist * b
-| ◾◽◽     | down (long)  | nicklist | Go to the end of nicklist | /bar scroll nicklist * e
-| ◾◽◽     | -            | nicklist | Open query with nick | /query ${nick}
-| ◽◽◾     | -            | nicklist | Do a whois on nick | /whois ${nick}
-| ◾◽◽     | left         | nicklist | Kick nick | /kick ${nick}
-| ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /kickban ${nick}
-| ◽◽◾     | left         | nicklist | Ban nick | /ban ${nick}
-| wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} * -10%
-| wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} * +10%
+| ◾◽◽     | -            | chat     | Switch to window | /window ${_window_number}
+| ◾◽◽     | left         | chat     | Switch to previous buffer | /window ${_window_number};/buffer +1
+| ◾◽◽     | right        | chat     | Switch to next buffer | /window ${_window_number};/buffer +1
+| ◾◽◽     | left (long)  | chat     | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽     | right (long) | chat     | Switch to last buffer | /window ${_window_number};/input jump_last_buffer
+| wheel ⇑ | -            | chat     | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
+| wheel ⇓ | -            | chat     | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
+| ◾◽◽     | up           | nicklist | Scroll up one page in nicklist | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽     | down         | nicklist | Scroll down one page in nicklist | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽     | up (long)    | nicklist | Go to the beginning of nicklist | /bar scroll nicklist ${_window_number} b
+| ◾◽◽     | down (long)  | nicklist | Go to the end of nicklist | /bar scroll nicklist ${_window_number} e
+| ◾◽◽     | -            | nicklist | Open query with nick | /window ${_window_number};/query ${nick}
+| ◽◽◾     | -            | nicklist | Do a whois on nick | /window ${_window_number};/whois ${nick}
+| ◾◽◽     | left         | nicklist | Kick nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾     | left         | nicklist | Ban nick | /window ${_window_number};/ban ${nick}
+| wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -10%
+| wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +10%
 | ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
 

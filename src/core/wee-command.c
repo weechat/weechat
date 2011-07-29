@@ -155,14 +155,15 @@ command_bar_list (int full)
 
 COMMAND_CALLBACK(bar)
 {
-    int i, type, position;
+    int i, type, position, number;
     char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_window *ptr_window;
     
     /* make C compiler happy */
     (void) data;
+    (void) buffer;
     
     /* list of bars */
     if ((argc == 1)
@@ -432,17 +433,23 @@ COMMAND_CALLBACK(bar)
         if (ptr_bar)
         {
             if (strcmp (argv[3], "*") == 0)
-                ptr_buffer = buffer;
+                ptr_window = gui_current_window;
             else
-                ptr_buffer = gui_buffer_search_by_full_name (argv[3]);
-            if (!ptr_buffer)
+            {
+                ptr_window = NULL;
+                error = NULL;
+                number = (int)strtol (argv[3], &error, 10);
+                if (error && !error[0])
+                    ptr_window = gui_window_search_by_number (number);
+            }
+            if (!ptr_window)
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: buffer not found for \"%s\" command"),
+                                 _("%sError: window not found for \"%s\" command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
                 return WEECHAT_RC_OK;
             }
-            if (!gui_bar_scroll (ptr_bar, ptr_buffer, argv_eol[4]))
+            if (!gui_bar_scroll (ptr_bar, ptr_window, argv_eol[4]))
             {
                 gui_chat_printf (NULL,
                                  _("%sError: unable to scroll bar \"%s\""),
@@ -4695,9 +4702,9 @@ COMMAND_CALLBACK(wait)
 COMMAND_CALLBACK(window)
 {
     struct t_gui_window *ptr_win;
-    int i;
     char *error;
     long number;
+    int win_args;
     
     /* make C compiler happy */
     (void) data;
@@ -4711,13 +4718,12 @@ COMMAND_CALLBACK(window)
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Windows list:"));
         
-        i = 1;
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
             gui_chat_printf (NULL, "%s[%s%d%s] (%s%d:%d%s;%s%dx%d%s) ",
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             i,
+                             ptr_win->number,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_win->win_x,
@@ -4727,84 +4733,8 @@ COMMAND_CALLBACK(window)
                              ptr_win->win_width,
                              ptr_win->win_height,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            i++;
         }
-
-        return WEECHAT_RC_OK;
-    }
-    
-    /* page up in current window */
-    if (string_strcasecmp (argv[1], "page_up") == 0)
-    {
-        gui_window_page_up (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* page down in current window */
-    if (string_strcasecmp (argv[1], "page_down") == 0)
-    {
-        gui_window_page_down (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* vertical scroll in window */
-    if (string_strcasecmp (argv[1], "scroll") == 0)
-    {
-        if (argc > 2)
-            gui_window_scroll (gui_current_window, argv[2]);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* horizontal scroll in window (for buffers with free content) */
-    if (string_strcasecmp (argv[1], "scroll_horiz") == 0)
-    {
-        if ((argc > 2)
-            && (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FREE))
-        {
-            gui_window_scroll_horiz (gui_current_window, argv[2]);
-        }
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll up current window */
-    if (string_strcasecmp (argv[1], "scroll_up") == 0)
-    {
-        gui_window_scroll_up (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll down current window */
-    if (string_strcasecmp (argv[1], "scroll_down") == 0)
-    {
-        gui_window_scroll_down (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll to top of current window */
-    if (string_strcasecmp (argv[1], "scroll_top") == 0)
-    {
-        gui_window_scroll_top (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll to bottom of current window */
-    if (string_strcasecmp (argv[1], "scroll_bottom") == 0)
-    {
-        gui_window_scroll_bottom (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll to previous highlight of current window */
-    if (string_strcasecmp (argv[1], "scroll_previous_highlight") == 0)
-    {
-        gui_window_scroll_previous_highlight (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll to next highlight of current window */
-    if (string_strcasecmp (argv[1], "scroll_next_highlight") == 0)
-    {
-        gui_window_scroll_next_highlight (gui_current_window);
+        
         return WEECHAT_RC_OK;
     }
     
@@ -4812,70 +4742,6 @@ COMMAND_CALLBACK(window)
     if (string_strcasecmp (argv[1], "refresh") == 0)
     {
         gui_window_ask_refresh (2);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* split window horizontally */
-    if (string_strcasecmp (argv[1], "splith") == 0)
-    {
-        if (argc > 2)
-        {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0]
-                && (number > 0) && (number < 100))
-                gui_window_split_horizontal (gui_current_window, number);
-        }
-        else
-            gui_window_split_horizontal (gui_current_window, 50);
-
-        return WEECHAT_RC_OK;
-    }
-    
-    /* split window vertically */
-    if (string_strcasecmp (argv[1], "splitv") == 0)
-    {
-        if (argc > 2)
-        {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0]
-                && (number > 0) && (number < 100))
-                gui_window_split_vertical (gui_current_window, number);
-        }
-        else
-            gui_window_split_vertical (gui_current_window, 50);
-
-        return WEECHAT_RC_OK;
-    }
-    
-    /* resize window */
-    if (string_strcasecmp (argv[1], "resize") == 0)
-    {
-        if (argc > 2)
-        {
-            if ((argv[2][0] == '+') || (argv[2][0] == '-'))
-            {
-                error = NULL;
-                number = strtol (argv[2] + 1, &error, 10);
-                if (error && !error[0])
-                {
-                    if (argv[2][0] == '-')
-                        number *= -1;
-                    gui_window_resize_delta (gui_current_window, number);
-                }
-            }
-            else
-            {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && !error[0]
-                    && (number > 0) && (number < 100))
-                {
-                    gui_window_resize (gui_current_window, number);
-                }
-            }
-        }
         return WEECHAT_RC_OK;
     }
     
@@ -4887,13 +4753,181 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
     
+    /*
+     * search window, for actions related to a given window
+     * (default is current window if no number is given)
+     */
+    ptr_win = gui_current_window;
+    win_args = 2;
+    if ((argc > 3) && (string_strcasecmp (argv[2], "-window") == 0))
+    {
+        error = NULL;
+        number = strtol (argv[3], &error, 10);
+        if (error && !error[0])
+            ptr_win = gui_window_search_by_number (number);
+        else
+            ptr_win = NULL;
+        win_args = 4;
+    }
+    if (!ptr_win)
+    {
+        /* invalid number */
+        gui_chat_printf (NULL,
+                         _("%sError: incorrect window number"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* page up */
+    if (string_strcasecmp (argv[1], "page_up") == 0)
+    {
+        gui_window_page_up (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* page down */
+    if (string_strcasecmp (argv[1], "page_down") == 0)
+    {
+        gui_window_page_down (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* vertical scroll */
+    if (string_strcasecmp (argv[1], "scroll") == 0)
+    {
+        if (argc > win_args)
+            gui_window_scroll (ptr_win, argv[win_args]);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* horizontal scroll in window (for buffers with free content) */
+    if (string_strcasecmp (argv[1], "scroll_horiz") == 0)
+    {
+        if ((argc > win_args)
+            && (ptr_win->buffer->type == GUI_BUFFER_TYPE_FREE))
+        {
+            gui_window_scroll_horiz (ptr_win, argv[win_args]);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll up */
+    if (string_strcasecmp (argv[1], "scroll_up") == 0)
+    {
+        gui_window_scroll_up (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll down */
+    if (string_strcasecmp (argv[1], "scroll_down") == 0)
+    {
+        gui_window_scroll_down (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to top of window */
+    if (string_strcasecmp (argv[1], "scroll_top") == 0)
+    {
+        gui_window_scroll_top (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to bottom of window */
+    if (string_strcasecmp (argv[1], "scroll_bottom") == 0)
+    {
+        gui_window_scroll_bottom (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to previous highlight */
+    if (string_strcasecmp (argv[1], "scroll_previous_highlight") == 0)
+    {
+        gui_window_scroll_previous_highlight (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to next highlight */
+    if (string_strcasecmp (argv[1], "scroll_next_highlight") == 0)
+    {
+        gui_window_scroll_next_highlight (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* split window horizontally */
+    if (string_strcasecmp (argv[1], "splith") == 0)
+    {
+        if (argc > win_args)
+        {
+            error = NULL;
+            number = strtol (argv[win_args], &error, 10);
+            if (error && !error[0]
+                && (number > 0) && (number < 100))
+            {
+                gui_window_split_horizontal (ptr_win, number);
+            }
+        }
+        else
+            gui_window_split_horizontal (ptr_win, 50);
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* split window vertically */
+    if (string_strcasecmp (argv[1], "splitv") == 0)
+    {
+        if (argc > win_args)
+        {
+            error = NULL;
+            number = strtol (argv[win_args], &error, 10);
+            if (error && !error[0]
+                && (number > 0) && (number < 100))
+            {
+                gui_window_split_vertical (ptr_win, number);
+            }
+        }
+        else
+            gui_window_split_vertical (ptr_win, 50);
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* resize window */
+    if (string_strcasecmp (argv[1], "resize") == 0)
+    {
+        if (argc > win_args)
+        {
+            if ((argv[win_args][0] == '+') || (argv[win_args][0] == '-'))
+            {
+                error = NULL;
+                number = strtol (argv[win_args] + 1, &error, 10);
+                if (error && !error[0])
+                {
+                    if (argv[win_args][0] == '-')
+                        number *= -1;
+                    gui_window_resize_delta (ptr_win, number);
+                }
+            }
+            else
+            {
+                error = NULL;
+                number = strtol (argv[win_args], &error, 10);
+                if (error && !error[0]
+                    && (number > 0) && (number < 100))
+                {
+                    gui_window_resize (ptr_win, number);
+                }
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+    
     /* merge windows */
     if (string_strcasecmp (argv[1], "merge") == 0)
     {
-        if (argc > 2)
+        if (argc > win_args)
         {
-            if (string_strcasecmp (argv[2], "all") == 0)
-                gui_window_merge_all (gui_current_window);
+            if (string_strcasecmp (argv[win_args], "all") == 0)
+                gui_window_merge_all (ptr_win);
             else
             {
                 gui_chat_printf (NULL,
@@ -4906,7 +4940,7 @@ COMMAND_CALLBACK(window)
         }
         else
         {
-            if (!gui_window_merge (gui_current_window))
+            if (!gui_window_merge (ptr_win))
             {
                 gui_chat_printf (NULL,
                                  _("%sError: can not merge windows, "
@@ -4922,58 +4956,58 @@ COMMAND_CALLBACK(window)
     /* switch to previous window */
     if (string_strcasecmp (argv[1], "-1") == 0)
     {
-        gui_window_switch_previous (gui_current_window);
+        gui_window_switch_previous (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* switch to next window */
     if (string_strcasecmp (argv[1], "+1") == 0)
     {
-        gui_window_switch_next (gui_current_window);
+        gui_window_switch_next (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* switch to window above */
     if (string_strcasecmp (argv[1], "up") == 0)
     {
-        gui_window_switch_up (gui_current_window);
+        gui_window_switch_up (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* switch to window below */
     if (string_strcasecmp (argv[1], "down") == 0)
     {
-        gui_window_switch_down (gui_current_window);
+        gui_window_switch_down (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* switch to window on the left */
     if (string_strcasecmp (argv[1], "left") == 0)
     {
-        gui_window_switch_left (gui_current_window);
+        gui_window_switch_left (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* switch to window on the right */
     if (string_strcasecmp (argv[1], "right") == 0)
     {
-        gui_window_switch_right (gui_current_window);
+        gui_window_switch_right (ptr_win);
         return WEECHAT_RC_OK;
     }
     
     /* swap windows */
     if (string_strcasecmp (argv[1], "swap") == 0)
     {
-        if (argc > 2)
+        if (argc > win_args)
         {
-            if (string_strcasecmp (argv[2], "up") == 0)
-                gui_window_swap (gui_current_window, 1);
-            else if (string_strcasecmp (argv[2], "down") == 0)
-                gui_window_swap (gui_current_window, 3);
-            else if (string_strcasecmp (argv[2], "left") == 0)
-                gui_window_swap (gui_current_window, 4);
-            else if (string_strcasecmp (argv[2], "right") == 0)
-                gui_window_swap (gui_current_window, 2);
+            if (string_strcasecmp (argv[win_args], "up") == 0)
+                gui_window_swap (ptr_win, 1);
+            else if (string_strcasecmp (argv[win_args], "down") == 0)
+                gui_window_swap (ptr_win, 3);
+            else if (string_strcasecmp (argv[win_args], "left") == 0)
+                gui_window_swap (ptr_win, 4);
+            else if (string_strcasecmp (argv[win_args], "right") == 0)
+                gui_window_swap (ptr_win, 2);
             else
             {
                 gui_chat_printf (NULL,
@@ -4986,7 +5020,7 @@ COMMAND_CALLBACK(window)
         }
         else
         {
-            gui_window_swap (gui_current_window, 0);
+            gui_window_swap (ptr_win, 0);
         }
         return WEECHAT_RC_OK;
     }
@@ -4994,7 +5028,7 @@ COMMAND_CALLBACK(window)
     /* zoom window */
     if (string_strcasecmp (argv[1], "zoom") == 0)
     {
-        gui_window_zoom (gui_current_window);
+        gui_window_zoom (ptr_win);
         return WEECHAT_RC_OK;
     }
     
@@ -5005,9 +5039,18 @@ COMMAND_CALLBACK(window)
         number = strtol (argv[1] + 1, &error, 10);
         if (error && !error[0])
         {
-            gui_window_switch_by_buffer (gui_current_window, number);
+            gui_window_switch_by_buffer (ptr_win, number);
             return WEECHAT_RC_OK;
         }
+    }
+    
+    /* jump to window by number */
+    error = NULL;
+    number = strtol (argv[1], &error, 10);
+    if (error && !error[0])
+    {
+        gui_window_switch_by_number (number);
+        return WEECHAT_RC_OK;
     }
     
     gui_chat_printf (NULL,
@@ -5042,7 +5085,7 @@ command_init ()
                      " || del <name>|-all"
                      " || set <name> <option> <value>"
                      " || hide|show|toggle <name>"
-                     " || scroll <name> <buffer> <scroll_value>"),
+                     " || scroll <name> <window> <scroll_value>"),
                   N_("         list: list all bars\n"
                      "     listfull: list all bars (verbose)\n"
                      "    listitems: list all bar items\n"
@@ -5074,8 +5117,8 @@ command_init ()
                      "         show: show an hidden bar\n"
                      "       toggle: hide/show a bar\n"
                      "       scroll: scroll bar\n"
-                     "       buffer: name of buffer to scroll ('*' "
-                     "means current buffer, you should use '*' for root bars)\n"
+                     "       window: window number (use '*' for current window "
+                     "or for root bars)\n"
                      " scroll_value: value for scroll: 'x' or 'y' (optional), "
                      "followed by '+', '-', 'b' (beginning) or 'e' (end), "
                      "value (for +/-), and optional % (to scroll by % of "
@@ -5101,7 +5144,7 @@ command_init ()
                   " || hide %(bars_names)"
                   " || show %(bars_names)"
                   " || toggle %(bars_names)"
-                  " || scroll %(bars_names) %(buffers_plugins_names)|*",
+                  " || scroll %(bars_names) %(windows_numbers)|*",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
@@ -5749,20 +5792,21 @@ command_init ()
     hook_command (NULL, "window",
                   N_("manage windows"),
                   N_("list"
-                     " || -1|+1|b#|up|down|left|right"
-                     " || splith|splitv [<pct>]"
-                     " || resize [+/-]<pct>"
+                     " || -1|+1|b#|up|down|left|right [-window <number>]"
+                     " || <number>"
+                     " || splith|splitv [-window <number>] [<pct>]"
+                     " || resize [-window <number>] [+/-]<pct>"
                      " || balance"
-                     " || merge [all]"
-                     " || page_up|page_down"
+                     " || merge [-window <number>] [all]"
+                     " || page_up|page_down [-window <number>]"
                      " || refresh"
-                     " || scroll [+/-]<value>[s|m|h|d|M|y]"
-                     " || scroll_horiz [+/-]<value>[%]"
+                     " || scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]"
+                     " || scroll_horiz [-window <number>] [+/-]<value>[%]"
                      " || scroll_up|scroll_down|scroll_top|"
                      "scroll_bottom|scroll_previous_highlight|"
-                     "scroll_next_highlight"
-                     " || swap [up|down|left|right]"
-                     " || zoom"),
+                     "scroll_next_highlight [-window <number>]"
+                     " || swap [-window <number>] [up|down|left|right]"
+                     " || zoom[-window <number>]"),
                   N_("         list: list opened windows (without argument, "
                      "this list is displayed)\n"
                      "           -1: jump to previous window\n"
@@ -5772,6 +5816,7 @@ command_init ()
                      "         down: switch to window below current one\n"
                      "         left: switch to window on the left\n"
                      "        right: switch to window on the right\n"
+                     "       number: window number (see /window list)\n"
                      "       splith: split current window horizontally\n"
                      "       splitv: split current window vertically\n"
                      "       resize: resize window size, new size is <pct> "
@@ -5808,13 +5853,34 @@ command_init ()
                      "  scroll 2 days up:\n"
                      "    /window scroll -2d\n"
                      "  scroll to beginning of current day:\n"
-                     "    /window scroll -d"),
-                  "list || -1 || +1 || up || down || left || right"
-                  " || splith || splitv || resize || balance || page_up"
-                  " || page_down || refresh || scroll || scroll_horiz"
-                  " || scroll_up || scroll_down || scroll_top || scroll_bottom"
-                  " || scroll_previous_highlight || scroll_next_highlight"
-                  " || swap up|down|left|right || zoom || merge all",
+                     "    /window scroll -d\n"
+                     "  zoom on window #2:\n"
+                     "    /window zoom -window 2"),
+                  "list"
+                  " || -1 -window %(windows_numbers)"
+                  " || +1 -window %(windows_numbers)"
+                  " || up -window %(windows_numbers)"
+                  " || down -window %(windows_numbers)"
+                  " || left -window %(windows_numbers)"
+                  " || right -window %(windows_numbers)"
+                  " || splith -window %(windows_numbers)"
+                  " || splitv -window %(windows_numbers)"
+                  " || resize -window %(windows_numbers)"
+                  " || balance"
+                  " || page_up -window %(windows_numbers)"
+                  " || page_down -window %(windows_numbers)"
+                  " || refresh"
+                  " || scroll -window"
+                  " || scroll_horiz -window %(windows_numbers)"
+                  " || scroll_up -window %(windows_numbers)"
+                  " || scroll_down -window %(windows_numbers)"
+                  " || scroll_top -window %(windows_numbers)"
+                  " || scroll_bottom -window %(windows_numbers)"
+                  " || scroll_previous_highlight -window %(windows_numbers)"
+                  " || scroll_next_highlight -window %(windows_numbers)"
+                  " || swap up|down|left|right|-window %(windows_numbers)"
+                  " || zoom -window %(windows_numbers)"
+                  " || merge all|-window %(windows_numbers)",
                   &command_window, NULL);
 }
 

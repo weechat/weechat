@@ -23,7 +23,6 @@
 struct t_infolist;
 struct t_weechat_plugin;
 struct t_gui_window;
-struct t_gui_buffer;
 
 #define GUI_BAR_DEFAULT_NAME_INPUT    "input"
 #define GUI_BAR_DEFAULT_NAME_TITLE    "title"
@@ -151,7 +150,7 @@ extern void gui_bar_create_default_status ();
 extern void gui_bar_create_default_nicklist ();
 extern void gui_bar_create_default ();
 extern void gui_bar_update (const char *name);
-extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
+extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
                            const char *scroll);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();

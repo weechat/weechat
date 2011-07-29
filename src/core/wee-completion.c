@@ -263,6 +263,34 @@ completion_list_add_buffer_properties_get_cb (void *data,
 }
 
 /*
+ * completion_list_add_windows_numbers_cb: add windows numbers to completion list
+ */
+
+int
+completion_list_add_windows_numbers_cb (void *data,
+                                        const char *completion_item,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_gui_completion *completion)
+{
+    struct t_gui_window *ptr_win;
+    char str_number[32];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        snprintf (str_number, sizeof (str_number), "%d", ptr_win->number);
+        gui_completion_list_add (completion, str_number,
+                                 0, WEECHAT_LIST_POS_END);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * completion_list_map_add_palette_color_cb: add palette color in completion
  */
 
@@ -1290,6 +1318,9 @@ completion_init ()
     hook_completion (NULL, "buffer_properties_get",
                      N_("properties that can be read on a buffer"),
                      &completion_list_add_buffer_properties_get_cb, NULL);
+    hook_completion (NULL, "windows_numbers",
+                     N_("numbers of windows"),
+                     &completion_list_add_windows_numbers_cb, NULL);
     hook_completion (NULL, "palette_colors",
                      N_("palette colors"),
                      &completion_list_add_palette_colors_cb, NULL);

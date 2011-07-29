@@ -237,34 +237,35 @@ gui_key_default_bindings (int context)
         BIND(/* m-left  */ "meta2-1;3D",               "/cursor move area_left");
         BIND(/* m-right */ "meta-meta2-C",             "/cursor move area_right");
         BIND(/* m-right */ "meta2-1;3C",               "/cursor move area_right");
-        BIND(/* b       */ "@item(buffer_nicklist):b", "/ban ${nick}");
-        BIND(/* k       */ "@item(buffer_nicklist):k", "/kick ${nick}");
-        BIND(/* K       */ "@item(buffer_nicklist):K", "/kickban ${nick}");
-        BIND(/* q       */ "@item(buffer_nicklist):q", "/query ${nick};/cursor stop");
-        BIND(/* w       */ "@item(buffer_nicklist):w", "/whois ${nick}");
+        BIND(/* b       */ "@item(buffer_nicklist):b", "/window ${_window_number};/ban ${nick}");
+        BIND(/* k       */ "@item(buffer_nicklist):k", "/window ${_window_number};/kick ${nick}");
+        BIND(/* K       */ "@item(buffer_nicklist):K", "/window ${_window_number};/kickban ${nick}");
+        BIND(/* q       */ "@item(buffer_nicklist):q", "/window ${_window_number};/query ${nick};/cursor stop");
+        BIND(/* w       */ "@item(buffer_nicklist):w", "/window ${_window_number};/whois ${nick}");
     }
     else if (context == GUI_KEY_CONTEXT_MOUSE)
     {
         /* mouse events on chat area */
-        BIND("@chat:button1-gesture-left",       "/buffer -1");
-        BIND("@chat:button1-gesture-right",      "/buffer +1");
-        BIND("@chat:button1-gesture-left-long",  "/buffer 1");
-        BIND("@chat:button1-gesture-right-long", "/input jump_last_buffer");
-        BIND("@chat:wheelup",                    "/window scroll_up");
-        BIND("@chat:wheeldown",                  "/window scroll_down");
+        BIND("@chat:button1",                    "/window ${_window_number}");
+        BIND("@chat:button1-gesture-left",       "/window ${_window_number};/buffer -1");
+        BIND("@chat:button1-gesture-right",      "/window ${_window_number};/buffer +1");
+        BIND("@chat:button1-gesture-left-long",  "/window ${_window_number};/buffer 1");
+        BIND("@chat:button1-gesture-right-long", "/window ${_window_number};/input jump_last_buffer");
+        BIND("@chat:wheelup",                    "/window scroll_up -window ${_window_number}");
+        BIND("@chat:wheeldown",                  "/window scroll_down -window ${_window_number}");
         /* mouse events on nicklist */
-        BIND("@bar(nicklist):button1-gesture-up",                "/bar scroll nicklist * -100%");
-        BIND("@bar(nicklist):button1-gesture-down",              "/bar scroll nicklist * +100%");
-        BIND("@bar(nicklist):button1-gesture-up-long",           "/bar scroll nicklist * b");
-        BIND("@bar(nicklist):button1-gesture-down-long",         "/bar scroll nicklist * e");
-        BIND("@item(buffer_nicklist):button1",                   "/query ${nick}");
-        BIND("@item(buffer_nicklist):button2",                   "/whois ${nick}");
-        BIND("@item(buffer_nicklist):button1-gesture-left",      "/kick ${nick}");
-        BIND("@item(buffer_nicklist):button1-gesture-left-long", "/kickban ${nick}");
-        BIND("@item(buffer_nicklist):button2-gesture-left",      "/ban ${nick}");
+        BIND("@bar(nicklist):button1-gesture-up",                "/bar scroll nicklist ${_window_number} -100%");
+        BIND("@bar(nicklist):button1-gesture-down",              "/bar scroll nicklist ${_window_number} +100%");
+        BIND("@bar(nicklist):button1-gesture-up-long",           "/bar scroll nicklist ${_window_number} b");
+        BIND("@bar(nicklist):button1-gesture-down-long",         "/bar scroll nicklist ${_window_number} e");
+        BIND("@item(buffer_nicklist):button1",                   "/window ${_window_number};/query ${nick}");
+        BIND("@item(buffer_nicklist):button2",                   "/window ${_window_number};/whois ${nick}");
+        BIND("@item(buffer_nicklist):button1-gesture-left",      "/window ${_window_number};/kick ${nick}");
+        BIND("@item(buffer_nicklist):button1-gesture-left-long", "/window ${_window_number};/kickban ${nick}");
+        BIND("@item(buffer_nicklist):button2-gesture-left",      "/window ${_window_number};/ban ${nick}");
         /* mouse wheel on any bar */
-        BIND("@bar(*):wheelup",   "/bar scroll ${_bar_name} * -10%");
-        BIND("@bar(*):wheeldown", "/bar scroll ${_bar_name} * +10%");
+        BIND("@bar(*):wheelup",   "/bar scroll ${_bar_name} ${_window_number} -10%");
+        BIND("@bar(*):wheeldown", "/bar scroll ${_bar_name} ${_window_number} +10%");
         /* middle click to enable cursor mode at position */
         BIND("@*:button3", "/cursor go ${_x},${_y}");
     }

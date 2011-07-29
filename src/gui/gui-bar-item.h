@@ -38,6 +38,7 @@ enum t_gui_bar_item_weechat
     GUI_BAR_ITEM_COMPLETION,
     GUI_BAR_ITEM_BUFFER_TITLE,
     GUI_BAR_ITEM_BUFFER_NICKLIST,
+    GUI_BAR_ITEM_WINDOW_NUMBER,
     /* number of bar items */
     GUI_BAR_NUM_ITEMS,
 };

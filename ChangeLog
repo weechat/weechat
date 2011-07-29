@@ -1,12 +1,15 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-28
+v0.3.6-dev, 2011-07-29
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add number in windows (add optional argument "-window" so some actions
+  for command /window)
+* core: replace buffer name by window number in /bar scroll
 * core: allow buffer name in /buffer close
 * core: add support of mouse: new command /mouse, new key context "mouse",
   new options weechat.look.mouse and weechat.look.mouse_timer_delay (task #5435)

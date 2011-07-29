@@ -38,6 +38,8 @@ extern int gui_window_cursor_x, gui_window_cursor_y;
 
 struct t_gui_window
 {
+    int number;                        /* window number (first is 1)        */
+    
     /* global position & size */
     int win_x, win_y;                  /* position of window                */
     int win_width, win_height;         /* window geometry                   */
@@ -119,6 +121,7 @@ extern struct t_gui_window_tree *gui_windows_tree;
 
 /* window functions */
 
+extern struct t_gui_window *gui_window_search_by_number (int number);
 extern struct t_gui_window *gui_window_search_by_xy (int x, int y);
 extern void gui_window_ask_refresh (int refresh);
 extern int gui_window_tree_init (struct t_gui_window *window);
@@ -148,6 +151,7 @@ extern void gui_window_set_layout_buffer_name (struct t_gui_window *window,
 extern void gui_window_free (struct t_gui_window *window);
 extern void gui_window_switch_previous (struct t_gui_window *window);
 extern void gui_window_switch_next (struct t_gui_window *window);
+extern void gui_window_switch_by_number (int number);
 extern void gui_window_switch_by_buffer (struct t_gui_window *window,
                                          int buffer_number);
 extern void gui_window_scroll (struct t_gui_window *window, char *scroll);

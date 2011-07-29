@@ -8314,6 +8314,16 @@ Argomenti:
 *** '_y': line of focus on screen (first line on top is "0")
 *** '_window': pointer of window with focus ("0x0" for a bar of type "root"
     or for unknown area)
+*** '_window_number': number of window with focus (not set for a bar of type
+    "root" or for unknown area)
+*** '_buffer': pointer of buffer with focus ("0x0" for a bar of type "root"
+    or for unknown area)
+*** '_buffer_number': number of buffer with focus (not set for a bar of type
+    "root" or for unknown area)
+*** '_buffer_plugin': plugin name of buffer with focus (not set for a bar of
+    type "root" or for unknown area)
+*** '_buffer_name': name of buffer with focus (not set for a bar of type "root"
+    or for unknown area)
 *** '_bar_name': name of bar with focus (NULL for chat area or for unknown
     area)
 *** '_bar_item_name': name of bar item with focus (NULL if focus is not in a
@@ -9399,6 +9409,8 @@ Argomenti:
 
 * 'window': puntatore alla finestra
 * 'property': nome della proprietà:
+// TRANSLATION MISSING
+** 'number': number of window (starts to 1)
 ** 'win_x': posizione X della finestra nel terminale (la prima colonna è 0)
 ** 'win_y': posizione Y della finestra nel terminale (la prima riga è 0)
 ** 'win_width': larghezza della finestra, in caratteri

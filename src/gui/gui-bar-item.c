@@ -62,7 +62,7 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
   "buffer_count", "buffer_plugin", "buffer_number", "buffer_name",
   "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist"
+  "buffer_title", "buffer_nicklist", "window_number"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -1422,6 +1422,28 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_window_number: default item for number of window
+ */
+
+char *
+gui_bar_item_default_window_number (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window)
+{
+    char buf[64];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    snprintf (buf, sizeof (buf), "%d", window->number);
+    
+    return strdup (buf);
+}
+
+/*
  * gui_bar_item_focus_buffer_nicklist: focus on nicklist
  */
 
@@ -1717,6 +1739,13 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     hook_focus (NULL, gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
                 &gui_bar_item_focus_buffer_nicklist, NULL);
+    
+    /* window number */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER],
+                      &gui_bar_item_default_window_number, NULL);
+    gui_bar_item_hook_signal ("window_closed",
+                              gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
 }
 
 /*

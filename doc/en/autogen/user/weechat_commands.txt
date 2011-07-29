@@ -14,7 +14,7 @@ message: message for away (if no message is given, away status is removed)
       del <name>|-all
       set <name> <option> <value>
       hide|show|toggle <name>
-      scroll <name> <buffer> <scroll_value>
+      scroll <name> <window> <scroll_value>
 
          list: list all bars
      listfull: list all bars (verbose)
@@ -41,7 +41,7 @@ message: message for away (if no message is given, away status is removed)
          show: show an hidden bar
        toggle: hide/show a bar
        scroll: scroll bar
-       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
+       window: window number (use '*' for current window or for root bars)
  scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
 Examples:
@@ -589,18 +589,19 @@ Examples:
 [command]*`window`* manage windows::
 ........................................
 /window  list
-         -1|+1|b#|up|down|left|right
-         splith|splitv [<pct>]
-         resize [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <number>]
+         <number>
+         splith|splitv [-window <number>] [<pct>]
+         resize [-window <number>] [+/-]<pct>
          balance
-         merge [all]
-         page_up|page_down
+         merge [-window <number>] [all]
+         page_up|page_down [-window <number>]
          refresh
-         scroll [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight
-         swap [up|down|left|right]
-         zoom
+         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <number>]
+         swap [-window <number>] [up|down|left|right]
+         zoom[-window <number>]
 
          list: list opened windows (without argument, this list is displayed)
            -1: jump to previous window
@@ -610,6 +611,7 @@ Examples:
          down: switch to window below current one
          left: switch to window on the left
         right: switch to window on the right
+       number: window number (see /window list)
        splith: split current window horizontally
        splitv: split current window vertically
        resize: resize window size, new size is <pct> percentage of parent window
@@ -640,5 +642,7 @@ Examples:
     /window scroll -2d
   scroll to beginning of current day:
     /window scroll -d
+  zoom on window #2:
+    /window zoom -window 2
 ........................................
 
