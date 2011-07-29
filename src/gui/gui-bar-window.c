@@ -1486,12 +1486,13 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
             for (j = 0; j < bar_window->items_subcount[i]; j++)
             {
                 log_printf ("    items_content[%03d][%03d]: '%s' "
-                            "(item: '%s', num_lines: %d)",
+                            "(item: '%s', num_lines: %d, refresh_needed: %d)",
                             i, j,
                             bar_window->items_content[i][j],
                             (bar_window->items_count >= i + 1) ?
                             bar_window->bar->items_array[i][j] : "?",
-                            bar_window->items_num_lines[i][j]);
+                            bar_window->items_num_lines[i][j],
+                            bar_window->items_refresh_needed[i][j]);
             }
         }
         else
