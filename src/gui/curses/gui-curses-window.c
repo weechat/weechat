@@ -1505,6 +1505,7 @@ void
 gui_window_refresh_windows ()
 {
     struct t_gui_window *ptr_win, *old_current_window;
+    struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_bar *ptr_bar;
     int add_bottom, add_top, add_left, add_right;
     
@@ -1539,6 +1540,12 @@ gui_window_refresh_windows ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
+        gui_window_calculate_pos_size (ptr_win);
+        for (ptr_bar_win = ptr_win->bar_windows; ptr_bar_win;
+             ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            gui_bar_window_create_win (ptr_bar_win);
+        }
         ptr_win->refresh_needed = 1;
     }
     

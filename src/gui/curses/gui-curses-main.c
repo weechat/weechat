@@ -252,6 +252,15 @@ gui_main_refreshs ()
         gui_window_refresh_needed = 0;
     }
     
+    /* refresh bars if needed */
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->bar_refresh_needed)
+        {
+            gui_bar_draw (ptr_bar);
+        }
+    }
+    
     /* refresh windows if needed */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
