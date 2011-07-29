@@ -2422,6 +2422,7 @@ gui_bar_print_log ()
             }
         }
         log_printf ("  bar_window . . . . . . : 0x%lx", ptr_bar->bar_window);
+        log_printf ("  bar_refresh_needed . . : %d",    ptr_bar->bar_refresh_needed);
         log_printf ("  prev_bar . . . . . . . : 0x%lx", ptr_bar->prev_bar);
         log_printf ("  next_bar . . . . . . . : 0x%lx", ptr_bar->next_bar);
         
