@@ -990,7 +990,6 @@ gui_bar_window_insert (struct t_gui_bar_window *bar_window,
 /*
  * gui_bar_window_new: create a new "window bar" for a bar, in screen or a window
  *                     if window is not NULL, bar window will be in this window
- *                     return 1 if ok, 0 if error
  */
 
 void
