@@ -554,7 +554,7 @@ hashtable_compute_length_values_cb (void *data,
     }
     else
     {
-        *length += strlen ("(null)");
+        *length += strlen ("(null)") + 1;
     }
 }
 
