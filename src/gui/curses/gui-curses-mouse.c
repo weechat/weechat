@@ -34,9 +34,16 @@
 #include "../../core/wee-hook.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
+#include "../gui-bar.h"
+#include "../gui-bar-window.h"
+#include "../gui-buffer.h"
 #include "../gui-chat.h"
+#include "../gui-completion.h"
+#include "../gui-cursor.h"
+#include "../gui-input.h"
 #include "../gui-key.h"
 #include "../gui-mouse.h"
+#include "../gui-window.h"
 
 
 /*
@@ -74,29 +81,116 @@ gui_mouse_display_state ()
 }
 
 /*
- * gui_mouse_grab_timer_cb: timer for grabbing mouse code
+ * gui_mouse_grab_init: init "grab mode"
+ */
+
+void
+gui_mouse_grab_init (int area)
+{
+    gui_mouse_grab = (area) ? 2 : 1;
+}
+
+/*
+ * gui_mouse_grab_event2input: get area for input, according to (x,y) of mouse
+ *                             event
+ *                             for example: @item(buffer_nicklist)
+ *                                          @bar(title)
+ *                                          @chat
+ *                                          @*
+ */
+
+char *
+gui_mouse_grab_event2input ()
+{
+    struct t_gui_cursor_info cursor_info;
+    static char area[256];
+    
+    gui_cursor_get_info (gui_mouse_event_x[0],
+                         gui_mouse_event_y[0],
+                         &cursor_info);
+    
+    if (cursor_info.bar_item)
+    {
+        snprintf (area, sizeof (area),
+                  "@item(%s)", cursor_info.bar_item);
+    }
+    else if (cursor_info.bar_window)
+    {
+        snprintf (area, sizeof (area),
+                  "@bar(%s)", ((cursor_info.bar_window)->bar)->name);
+    }
+    else if (cursor_info.chat)
+    {
+        snprintf (area, sizeof (area), "@chat");
+    }
+    else
+    {
+        snprintf (area, sizeof (area), "@*");
+    }
+    
+    return area;
+}
+
+/*
+ * gui_mouse_grab_end: end "grab mode"
+ */
+
+void
+gui_mouse_grab_end (const char *mouse_key)
+{
+    char mouse_key_input[256];
+    
+    /* insert mouse key in input */
+    if (gui_current_window->buffer->input)
+    {
+        if (gui_mouse_grab == 2)
+        {
+            /* mouse key with area */
+            snprintf (mouse_key_input, sizeof (mouse_key_input),
+                      "%s:%s",
+                      gui_mouse_grab_event2input (),
+                      mouse_key);
+        }
+        else
+        {
+            /* mouse key without area */
+            snprintf (mouse_key_input, sizeof (mouse_key_input),
+                      "%s", mouse_key);
+        }
+        gui_input_insert_string (gui_current_window->buffer,
+                                 mouse_key_input, -1);
+        if (gui_current_window->buffer->completion)
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
+    }
+    
+    gui_mouse_grab = 0;
+}
+
+/*
+ * gui_mouse_event_timer_cb: timer for grabbing mouse code
  */
 
 int
-gui_mouse_grab_timer_cb (void *data, int remaining_calls)
+gui_mouse_event_timer_cb (void *data, int remaining_calls)
 {
     /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
     
-    gui_mouse_grab_end ();
+    gui_mouse_event_end ();
     
     return WEECHAT_RC_OK;
 }
 
 /*
- * gui_mouse_grab_init: init "grab mouse" mode
+ * gui_mouse_event_init: init mouse event
  */
 
 void
-gui_mouse_grab_init ()
+gui_mouse_event_init ()
 {
-    gui_mouse_grab = 1;
+    gui_mouse_event_pending = 1;
     
     if (gui_mouse_event_timer)
         unhook (gui_mouse_event_timer);
@@ -104,18 +198,18 @@ gui_mouse_grab_init ()
     gui_mouse_event_timer = hook_timer (NULL,
                                         CONFIG_INTEGER(config_look_mouse_timer_delay),
                                         0, 1,
-                                        &gui_mouse_grab_timer_cb, NULL);
+                                        &gui_mouse_event_timer_cb, NULL);
 }
 
 /*
- * gui_mouse_grab_code2key: get key name with a mouse code
- *                          *extra_chars is set with first char following the
- *                          end of mouse code (this can point to the '\0' or
- *                          other chars)
+ * gui_mouse_event_code2key: get key name with a mouse code
+ *                           *extra_chars is set with first char following the
+ *                           end of mouse code (this can point to the '\0' or
+ *                           other chars)
  */
 
 const char *
-gui_mouse_grab_code2key (const char *code, char **extra_chars)
+gui_mouse_event_code2key (const char *code, char **extra_chars)
 {
     int x, y, code_utf8, length;
     double diff_x, diff_y, distance, angle, pi4;
@@ -288,17 +382,17 @@ gui_mouse_grab_code2key (const char *code, char **extra_chars)
 }
 
 /*
- * gui_mouse_grab_end: end "grab mouse" mode
+ * gui_mouse_event_end: end mouse event
  */
 
 void
-gui_mouse_grab_end ()
+gui_mouse_event_end ()
 {
     const char *mouse_key;
     char *extra_chars;
     int i;
     
-    gui_mouse_grab = 0;
+    gui_mouse_event_pending = 0;
     
     /* end mouse event timer */
     if (gui_mouse_event_timer)
@@ -307,13 +401,21 @@ gui_mouse_grab_end ()
         gui_mouse_event_timer = NULL;
     }
     
-    /* get key from mouse code and execute command (if found) */
-    mouse_key = gui_mouse_grab_code2key (gui_key_combo_buffer, &extra_chars);
+    /* get key from mouse code */
+    mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer, &extra_chars);
     if (mouse_key && mouse_key[0])
     {
-        (void) gui_key_focus (mouse_key,
-                              GUI_KEY_CONTEXT_MOUSE);
-        gui_mouse_reset_event ();
+        if (gui_mouse_grab)
+        {
+            gui_mouse_grab_end (mouse_key);
+        }
+        else
+        {
+            /* execute command (if found) */
+            (void) gui_key_focus (mouse_key,
+                                  GUI_KEY_CONTEXT_MOUSE);
+        }
+        gui_mouse_event_reset ();
     }
     
     gui_key_combo_buffer[0] = '\0';

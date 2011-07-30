@@ -2287,9 +2287,13 @@ COMMAND_CALLBACK(input)
         else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
             gui_input_hotlist_clear (buffer);
         else if (string_strcasecmp (argv[1], "grab_key") == 0)
-            gui_input_grab_key (buffer, (argc > 2) ? argv[2] : NULL);
+            gui_input_grab_key (buffer, 0, (argc > 2) ? argv[2] : NULL);
         else if (string_strcasecmp (argv[1], "grab_key_command") == 0)
-            gui_input_grab_key_command (buffer, (argc > 2) ? argv[2] : NULL);
+            gui_input_grab_key (buffer, 1, (argc > 2) ? argv[2] : NULL);
+        else if (string_strcasecmp (argv[1], "grab_mouse") == 0)
+            gui_input_grab_mouse (buffer, 0);
+        else if (string_strcasecmp (argv[1], "grab_mouse_area") == 0)
+            gui_input_grab_mouse (buffer, 1);
         else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
             gui_input_scroll_unread (buffer);
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
@@ -3093,6 +3097,7 @@ COMMAND_CALLBACK(mouse)
         return WEECHAT_RC_OK;
     }
     
+    /* enable mouse */
     if (string_strcasecmp (argv[1], "enable") == 0)
     {
         gui_mouse_enable ();
@@ -3101,6 +3106,7 @@ COMMAND_CALLBACK(mouse)
         return WEECHAT_RC_OK;
     }
     
+    /* disable mouse */
     if (string_strcasecmp (argv[1], "disable") == 0)
     {
         gui_mouse_disable ();
@@ -3109,6 +3115,7 @@ COMMAND_CALLBACK(mouse)
         return WEECHAT_RC_OK;
     }
     
+    /* toggle mouse */
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
         if (gui_mouse_enabled)
@@ -5460,6 +5467,8 @@ command_init ()
                      "  grab_key_command: grab a key with its associated "
                      "command (optional argument: delay for end of grab, "
                      "default is 500 milliseconds)\n"
+                     "  grab_mouse: grab mouse event code\n"
+                     "  grab_mouse_area: grab mouse event code with area\n"
                      "  scroll_unread: scroll to unread marker\n"
                      "  set_unread: set unread marker for all buffers\n"
                      "  set_unread_current_buffer: set unread marker for "
@@ -5481,8 +5490,8 @@ command_init ()
                   "history_global_previous|history_global_next|"
                   "jump_smart|jump_last_buffer|jump_previously_visited_buffer|"
                   "jump_next_visited_buffer|hotlist_clear|grab_key|"
-                  "grab_key_command|scroll_unread|set_unread|"
-                  "set_unread_current_buffer|switch_active_buffer|"
+                  "grab_key_command|grab_mouse|grab_mouse_area|scroll_unread|"
+                  "set_unread|set_unread_current_buffer|switch_active_buffer|"
                   "switch_active_buffer_previous|insert",
                   &command_input, NULL);
     hook_command (NULL, "key",

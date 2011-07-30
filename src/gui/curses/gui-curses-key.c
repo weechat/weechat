@@ -263,6 +263,8 @@ gui_key_default_bindings (int context)
         BIND("@item(buffer_nicklist):button1-gesture-left",      "/window ${_window_number};/kick ${nick}");
         BIND("@item(buffer_nicklist):button1-gesture-left-long", "/window ${_window_number};/kickban ${nick}");
         BIND("@item(buffer_nicklist):button2-gesture-left",      "/window ${_window_number};/ban ${nick}");
+        /* mouse events on input */
+        BIND("@bar(input):button2", "/input grab_mouse_area");
         /* mouse wheel on any bar */
         BIND("@bar(*):wheelup",   "/bar scroll ${_bar_name} ${_window_number} -10%");
         BIND("@bar(*):wheeldown", "/bar scroll ${_bar_name} ${_window_number} +10%");
@@ -296,7 +298,7 @@ gui_key_flush ()
             
             insert_ok = 1;
             
-            if (gui_mouse_grab)
+            if (gui_mouse_event_pending)
             {
                 insert_ok = 0;
                 key_str[0] = (char) key;

@@ -60,21 +60,33 @@ gui_mouse_display_state ()
 }
 
 /*
- * gui_mouse_grab_init: init "grab mouse" mode
+ * gui_mouse_grab_init: init "grab mode"
  */
 
 void
-gui_mouse_grab_init ()
+gui_mouse_grab_init (int area)
+{
+    (void) area;
+    
+    /* This function does nothing in Gtk GUI */
+}
+
+/*
+ * gui_mouse_event_init: init mouse event
+ */
+
+void
+gui_mouse_event_init ()
 {
     /* This function does nothing in Gtk GUI */
 }
 
 /*
- * gui_mouse_grab_code2key: get key name with a mouse code
+ * gui_mouse_event_code2key: get key name with a mouse code
  */
 
 const char *
-gui_mouse_grab_code2key (const char *code)
+gui_mouse_event_code2key (const char *code)
 {
     (void) code;
     
@@ -84,11 +96,11 @@ gui_mouse_grab_code2key (const char *code)
 }
 
 /*
- * gui_mouse_grab_end: end "grab mouse" mode
+ * gui_mouse_event_end: end mouse event
  */
 
 void
-gui_mouse_grab_end ()
+gui_mouse_event_end ()
 {
     /* This function does nothing in Gtk GUI */
 }

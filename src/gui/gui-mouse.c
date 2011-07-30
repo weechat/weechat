@@ -34,7 +34,10 @@
 
 int gui_mouse_enabled = 0;             /* 1 if mouse support is enabled     */
 int gui_mouse_debug = 0;               /* debug mode for mouse              */
-int gui_mouse_grab = 0;                /* 1 if grab mouse code enabled      */
+int gui_mouse_grab = 0;                /* 1 if grab mode enabled            */
+
+/* mouse event */
+int gui_mouse_event_pending = 0;       /* 1 if mouse event has started      */
 struct t_hook *gui_mouse_event_timer = NULL;  /* timer to detect entire     */
                                               /* mouse event                */
 int gui_mouse_event_index = 0;         /* index for x/y in array (0 or 1)   */
@@ -61,11 +64,11 @@ gui_mouse_debug_toggle ()
 }
 
 /*
- * gui_mouse_reset_event: reset event values
+ * gui_mouse_event_reset: reset event values
  */
 
 void
-gui_mouse_reset_event ()
+gui_mouse_event_reset ()
 {
     gui_mouse_event_index = 0;
     gui_mouse_event_x[0] = 0;

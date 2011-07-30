@@ -304,6 +304,8 @@ list of actions:
   hotlist_clear: clear hotlist
   grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
   grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
   scroll_unread: scroll to unread marker
   set_unread: set unread marker for all buffers
   set_unread_current_buffer: set unread marker for current buffer

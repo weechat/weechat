@@ -43,6 +43,7 @@
 #include "gui-hotlist.h"
 #include "gui-key.h"
 #include "gui-line.h"
+#include "gui-mouse.h"
 #include "gui-window.h"
 
 
@@ -1343,22 +1344,23 @@ gui_input_hotlist_clear (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_grab_key (struct t_gui_buffer *buffer, const char *delay)
+gui_input_grab_key (struct t_gui_buffer *buffer, int command, const char *delay)
 {
     if (buffer->input)
-        gui_key_grab_init (0, delay);
+        gui_key_grab_init (command, delay);
 }
 
 /*
- * gui_input_grab_key_command: init "grab key mode" (next key and command
- *                             bound will be inserted into input buffer)
+ * gui_input_grab_mouse: init "grab mouse mode" (next mouse event will be
+ *                       inserted into input buffer) (default key: button2 of
+ *                       mouse in input bar)
  */
 
 void
-gui_input_grab_key_command (struct t_gui_buffer *buffer, const char *delay)
+gui_input_grab_mouse (struct t_gui_buffer *buffer, int area)
 {
     if (buffer->input)
-        gui_key_grab_init (1, delay);
+        gui_mouse_grab_init (area);
 }
 
 /*

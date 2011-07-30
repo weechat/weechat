@@ -820,15 +820,15 @@ gui_key_pressed (const char *key_str)
         return 0;
     }
     
-    /* mode "mouse grab" (mouse event pending) */
-    if (gui_mouse_grab)
+    /* mouse event pending */
+    if (gui_mouse_event_pending)
     {
         pos = strstr (gui_key_combo_buffer, "\x1B[M");
         if (pos)
         {
             pos[0] = '\0';
-            gui_mouse_grab_end ();
-            gui_mouse_grab_init ();
+            gui_mouse_event_end ();
+            gui_mouse_event_init ();
         }
         return 0;
     }
@@ -836,7 +836,7 @@ gui_key_pressed (const char *key_str)
     if (strcmp (gui_key_combo_buffer, "\x01[[M") == 0)
     {
         gui_key_combo_buffer[0] = '\0';
-        gui_mouse_grab_init ();
+        gui_mouse_event_init ();
         return 0;
     }
     

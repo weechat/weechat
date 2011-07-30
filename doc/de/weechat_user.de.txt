@@ -586,6 +586,7 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 | ◾◽◽     | left         | nicklist | Kick nick | /window ${_window_number};/kick ${nick}
 | ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /window ${_window_number};/kickban ${nick}
 | ◽◽◾     | left         | nicklist | Ban nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾     | -            | input    | Grab a mouse event and insert its code in command line | /input grab_mouse_area
 | wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -10%
 | wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +10%
 | ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}

@@ -594,6 +594,7 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 | ◾◽◽        | left         | liste des pseudos | Retirer par la force le pseudo | /window ${_window_number};/kick ${nick}
 | ◾◽◽        | left (long)  | liste des pseudos | Retirer par la force et bannir le pseudo | /window ${_window_number};/kickban ${nick}
 | ◽◽◾        | left         | liste des pseudos | Bannir le pseudo | /window ${_window_number};/ban ${nick}
+| ◽◽◾        | -            | ligne de commande | Capturer un évènement de la souris et insérer son code sur la ligne de commande | /input grab_mouse_area
 | roulette ⇑ | -            | toute barre       | Faire défiler la barre de -10% | /bar scroll ${_bar_name} ${_window_number} -10%
 | roulette ⇓ | -            | toute barre       | Faire défiler la barre de +10% | /bar scroll ${_bar_name} ${_window_number} +10%
 | ◽◾◽        | -            | n'importe où      | Démarrer le mode curseur ("cursor") à ce point | /cursor go ${_x},${_y}
