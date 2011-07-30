@@ -478,7 +478,10 @@ hook_command_build_completion (struct t_hook_command *hook_command)
         while (ptr_template && ptr_template[0])
         {
             if (ptr_template[0] == ' ')
+            {
                 last_space = ptr_template;
+                break;
+            }
             else if ((ptr_template[0] == '%') || (ptr_template[0] == '|'))
                 break;
             ptr_template = utf8_next_char (ptr_template);
