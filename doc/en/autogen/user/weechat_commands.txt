@@ -342,11 +342,11 @@ listdefault: list default keys
 When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
 For context "mouse" (possible in context "cursor" too), key has format: "@area:key" where area can be:
-  *: any area on screen
-  chat: chat area
-  bar(*): any bar
-  bar(xxx): bar "xxx"
-  item(*): any bar item
+          *: any area on screen
+       chat: chat area
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
   item(xxx): bar item "xxx"
 
 Examples:

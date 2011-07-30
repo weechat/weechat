@@ -341,12 +341,12 @@ listdefault: afficher les touches par défaut
 
 Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
 
-Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a le format: "@aire:key" où aire peut être :
-  *: n'importe quelle zone à l'écran
-  chat: la zone de discussion
-  bar(*): n'importe quelle barre
-  bar(xxx): la barre "xxx"
-  item(*): n'importe quel objet de barre
+Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a le format: "@zone:touche" où la zone peut être :
+          *: n'importe quelle zone à l'écran
+       chat: la zone de discussion
+     bar(*): n'importe quelle barre
+   bar(xxx): la barre "xxx"
+    item(*): n'importe quel objet de barre
   item(xxx): l'objet de barre "xxx"
 
 Exemples:
