@@ -5870,7 +5870,7 @@ command_init ()
                   " || page_up -window %(windows_numbers)"
                   " || page_down -window %(windows_numbers)"
                   " || refresh"
-                  " || scroll -window"
+                  " || scroll -window %(windows_numbers)"
                   " || scroll_horiz -window %(windows_numbers)"
                   " || scroll_up -window %(windows_numbers)"
                   " || scroll_down -window %(windows_numbers)"
