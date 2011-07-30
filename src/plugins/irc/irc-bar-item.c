@@ -518,7 +518,7 @@ irc_bar_item_focus_buffer_nicklist (void *data,
     /* make C compiler happy */
     (void) data;
     
-    if (ptr_channel)
+    if (ptr_server && ptr_channel)
     {
         nick = weechat_hashtable_get (info, "nick");
         if (nick)
@@ -527,9 +527,11 @@ irc_bar_item_focus_buffer_nicklist (void *data,
             if (ptr_nick && ptr_nick->host)
             {
                 weechat_hashtable_set (info, "host", ptr_nick->host);
-                return info;
             }
         }
+        weechat_hashtable_set (info, "server", ptr_server->name);
+        weechat_hashtable_set (info, "channel", ptr_channel->name);
+        return info;
     }
     
     return NULL;
