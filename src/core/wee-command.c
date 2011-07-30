@@ -1157,6 +1157,7 @@ COMMAND_CALLBACK(cursor)
                             gui_cursor_move_xy (x, y);
                         }
                     }
+                    free (str_x);
                 }
             }
             else
