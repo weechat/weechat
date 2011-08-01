@@ -252,14 +252,15 @@ Elenco di funzioni nelle API per gli script:
   plugin_get_name
 | stringhe               |
   charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
-  string_match, string_has_highlight, string_mask_to_regex,
-  string_remove_color, string_is_command_char, string_input_for_buffer
+  string_match, string_has_highlight, string_has_highlight_regex,
+  string_mask_to_regex, string_remove_color, string_is_command_char,
+  string_input_for_buffer
 | cartelle               |
   mkdir_home, mkdir, mkdir_parents
 | liste ordinate         |
-  list_new, list_add, list_search, list_casesearch, list_get, list_set,
-  list_next, list_prev, list_string, list_size, list_remove, list_remove_all,
-  list_free
+  list_new, list_add, list_search, list_search_pos, list_casesearch,
+  list_casesearch_pos, list_get, list_set, list_next, list_prev, list_string,
+  list_size, list_remove, list_remove_all, list_free
 | file di configurazione |
   config_new, config_new_section, config_search_section, config_new_option,
   config_search_option, +
@@ -273,7 +274,7 @@ Elenco di funzioni nelle API per gli script:
   config_option_free, config_section_free_options, config_section_free,
   config_free, +
   config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
-  config_unset_plugin
+  config_set_desc_plugin, config_unset_plugin
 | visualizzazione        |
   prefix, color, print (for python: prnt), print_date_tags (for python:
   prnt_date_tags), print_y (for python: prnt_y), log_print
@@ -282,15 +283,15 @@ Elenco di funzioni nelle API per gli script:
   hook_connect, hook_print, hook_signal, hook_signal_send, hook_hsignal,
   hook_hsignal_send, hook_config, hook_completion, hook_completion_list_add,
   hook_modifier, hook_modifier_exec, hook_info, hook_info_hashtable,
-  hook_infolist, unhook, unhook_all
+  hook_infolist, hook_focus, unhook, unhook_all
 | buffer                 |
   buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
   buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
   buffer_get_string, buffer_get_pointer, buffer_set,
-  buffer_string_replace_local_var
+  buffer_string_replace_local_var, buffer_match_list
 | finestre               |
-  current_window, window_get_integer, window_get_string, window_get_pointer,
-  window_set_title
+  current_window, window_search_with_buffer, window_get_integer,
+  window_get_string, window_get_pointer, window_set_title
 | lista nick             |
   nicklist_add_group, nicklist_search_group, nicklist_add_nick,
   nicklist_search_nick, nicklist_remove_group, nicklist_remove_nick,
@@ -310,6 +311,10 @@ Elenco di funzioni nelle API per gli script:
   infolist_get, infolist_next, infolist_prev, infolist_reset_item_cursor, +
   infolist_fields, infolist_integer, infolist_string, infolist_pointer, +
   infolist_time, infolist_free
+| hdata               |
+  hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
+  hdata_get_var_hdata, hdata_get_list, hdata_move, hdata_integer, hdata_long,
+  hdata_string, hdata_pointer, hdata_time, hdata_get_string
 | aggiornamento          |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================
