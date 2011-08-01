@@ -39,7 +39,7 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-completion.h"
-#include "../gui-cursor.h"
+#include "../gui-focus.h"
 #include "../gui-input.h"
 #include "../gui-key.h"
 #include "../gui-mouse.h"
@@ -102,24 +102,24 @@ gui_mouse_grab_init (int area)
 char *
 gui_mouse_grab_event2input ()
 {
-    struct t_gui_cursor_info cursor_info;
+    struct t_gui_focus_info focus_info;
     static char area[256];
     
-    gui_cursor_get_info (gui_mouse_event_x[0],
-                         gui_mouse_event_y[0],
-                         &cursor_info);
+    gui_focus_get_info (gui_mouse_event_x[0],
+                        gui_mouse_event_y[0],
+                        &focus_info);
     
-    if (cursor_info.bar_item)
+    if (focus_info.bar_item)
     {
         snprintf (area, sizeof (area),
-                  "@item(%s)", cursor_info.bar_item);
+                  "@item(%s)", focus_info.bar_item);
     }
-    else if (cursor_info.bar_window)
+    else if (focus_info.bar_window)
     {
         snprintf (area, sizeof (area),
-                  "@bar(%s)", ((cursor_info.bar_window)->bar)->name);
+                  "@bar(%s)", ((focus_info.bar_window)->bar)->name);
     }
-    else if (cursor_info.chat)
+    else if (focus_info.chat)
     {
         snprintf (area, sizeof (area), "@chat");
     }
@@ -267,12 +267,16 @@ gui_mouse_event_code2key (const char *code, char **extra_chars)
     
     if (code[0] == '`')
     {
+        gui_mouse_event_x[1] = gui_mouse_event_x[0];
+        gui_mouse_event_y[1] = gui_mouse_event_y[0];
         strcat (key, "wheelup");
         return key;
     }
     
     if (code[0] == 'a')
     {
+        gui_mouse_event_x[1] = gui_mouse_event_x[0];
+        gui_mouse_event_y[1] = gui_mouse_event_y[0];
         strcat (key, "wheeldown");
         return key;
     }

@@ -48,7 +48,7 @@
 
 | weechat | hotlist | Liste der Buffer in Hotlist | - | -
 
-| weechat | key | Auflistung der Tastenzuweisungen | - | Kontext ("default" oder "search") (optional)
+| weechat | key | Auflistung der Tastenzuweisungen | - | context ("default", "search", "cursor" or "mouse") (optional)
 
 | weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 

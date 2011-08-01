@@ -54,7 +54,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
-#include "../gui/gui-cursor.h"
+#include "../gui/gui-focus.h"
 #include "../gui/gui-line.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -2810,63 +2810,55 @@ hook_focus_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
+ * hook_focus_hashtable_map2_cb: add keys of a hashtable into another
+ *                               (adding suffix "2" to keys)
+ */
+
+void
+hook_focus_hashtable_map2_cb (void *data, struct t_hashtable *hashtable,
+                              const void *key, const void *value)
+{
+    struct t_hashtable *hashtable1;
+    int length;
+    char *key2;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hashtable1 = (struct t_hashtable *)data;
+
+    length = strlen ((const char *)key) + 1 + 1;
+    key2 = malloc (length);
+    if (key2)
+    {
+        snprintf (key2, length, "%s2", (const char *)key);
+        if (hashtable1 && key && value)
+            hashtable_set (hashtable1, key2, (const char *)value);
+        free (key2);
+    }
+}
+
+/*
  * hook_focus_get_data: get data for focus on (x,y) on screen
+ *                      focus_info2 is not NULL only for a mouse gesture (it's
+ *                      for point where mouse button is released)
  */
 
 struct t_hashtable *
-hook_focus_get_data (struct t_gui_cursor_info *cursor_info)
+hook_focus_get_data (struct t_gui_focus_info *focus_info1,
+                     struct t_gui_focus_info *focus_info2,
+                     const char *key)
 {
     struct t_hook *ptr_hook, *next_hook;
-    struct t_hashtable *hash_info, *hash_info2;
-    char str_value[64];
+    struct t_hashtable *hash_info1, *hash_info2, *hash_info_ret;
+    const char *keys;
+    char **list_keys, *new_key;
+    int num_keys, i, length;
     
     hook_exec_start ();
     
-    hash_info = hashtable_new (8,
-                               WEECHAT_HASHTABLE_STRING,
-                               WEECHAT_HASHTABLE_STRING,
-                               NULL,
-                               NULL);
-    if (!hash_info)
-        return NULL;
-
-    /* fill hash_info with values from cursor_info */
-    snprintf (str_value, sizeof (str_value), "%d", cursor_info->x);
-    hashtable_set (hash_info, "_x", str_value);
-    snprintf (str_value, sizeof (str_value), "%d", cursor_info->y);
-    hashtable_set (hash_info, "_y", str_value);
-    snprintf (str_value, sizeof (str_value),
-              "0x%lx", (long unsigned int)cursor_info->window);
-    hashtable_set (hash_info, "_window", str_value);
-    snprintf (str_value, sizeof (str_value),
-              "0x%lx",
-              (cursor_info->window) ?
-              (long unsigned int)((cursor_info->window)->buffer) : 0);
-    hashtable_set (hash_info, "_buffer", str_value);
-    if (cursor_info->window)
-    {
-        snprintf (str_value, sizeof (str_value), "%d",
-                  (cursor_info->window)->number);
-        hashtable_set (hash_info, "_window_number", str_value);
-        snprintf (str_value, sizeof (str_value), "%d",
-                  ((cursor_info->window)->buffer)->number);
-        hashtable_set (hash_info, "_buffer_number", str_value);
-        hashtable_set (hash_info, "_buffer_plugin",
-                       plugin_get_name (((cursor_info->window)->buffer)->plugin));
-        hashtable_set (hash_info, "_buffer_name",
-                       ((cursor_info->window)->buffer)->name);
-    }
-    hashtable_set (hash_info, "_bar_name",
-                   (cursor_info->bar_window) ?
-                   ((cursor_info->bar_window)->bar)->name : NULL);
-    hashtable_set (hash_info, "_bar_item_name",
-                   cursor_info->bar_item);
-    snprintf (str_value, sizeof (str_value),
-              "%d", cursor_info->item_line);
-    hashtable_set (hash_info, "_item_line", str_value);
-    snprintf (str_value, sizeof (str_value),
-              "%d", cursor_info->item_col);
-    hashtable_set (hash_info, "_item_col", str_value);
+    hash_info1 = gui_focus_to_hashtable (focus_info1, key);
+    hash_info2 = (focus_info2) ? gui_focus_to_hashtable (focus_info2, key) : NULL;
     
     ptr_hook = weechat_hooks[HOOK_TYPE_FOCUS];
     while (ptr_hook)
@@ -2875,27 +2867,51 @@ hook_focus_get_data (struct t_gui_cursor_info *cursor_info)
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && ((cursor_info->chat
+            && ((focus_info1->chat
                  && (strcmp (HOOK_FOCUS(ptr_hook, area), "chat") == 0))
-                || (cursor_info->bar_item
-                    && (strcmp (HOOK_FOCUS(ptr_hook, area), cursor_info->bar_item) == 0))))
+                || (focus_info1->bar_item
+                    && (strcmp (HOOK_FOCUS(ptr_hook, area), focus_info1->bar_item) == 0))))
         {
+            /* run callback for focus_info1 */
             ptr_hook->running = 1;
-            hash_info2 = (HOOK_FOCUS(ptr_hook, callback))
-                (ptr_hook->callback_data, hash_info);
+            hash_info_ret = (HOOK_FOCUS(ptr_hook, callback))
+                (ptr_hook->callback_data, hash_info1);
             ptr_hook->running = 0;
-            
-            if (hash_info2)
+            if (hash_info_ret)
             {
-                if (hash_info2 != hash_info)
+                if (hash_info_ret != hash_info1)
                 {
                     /*
-                     * add keys of hashtable2 into hashtable and destroy
-                     * hashtable2
+                     * add keys of hash_info_ret into hash_info and destroy
+                     * hash_info_ret
                      */
-                    hashtable_map (hash_info2, &hook_focus_hashtable_map_cb,
-                                   hash_info);
-                    hashtable_free (hash_info2);
+                    hashtable_map (hash_info_ret,
+                                   &hook_focus_hashtable_map_cb,
+                                   hash_info1);
+                    hashtable_free (hash_info_ret);
+                }
+            }
+            
+            /* run callback for focus_info2 */
+            if (hash_info2)
+            {
+                ptr_hook->running = 1;
+                hash_info_ret = (HOOK_FOCUS(ptr_hook, callback))
+                    (ptr_hook->callback_data, hash_info2);
+                ptr_hook->running = 0;
+                if (hash_info_ret)
+                {
+                    if (hash_info_ret != hash_info2)
+                    {
+                        /*
+                         * add keys of hash_info_ret into hash_info and destroy
+                         * hash_info_ret
+                         */
+                        hashtable_map (hash_info_ret,
+                                       &hook_focus_hashtable_map_cb,
+                                       hash_info2);
+                        hashtable_free (hash_info_ret);
+                    }
                 }
             }
         }
@@ -2903,9 +2919,39 @@ hook_focus_get_data (struct t_gui_cursor_info *cursor_info)
         ptr_hook = next_hook;
     }
     
+    if (hash_info2)
+    {
+        hashtable_map (hash_info2, &hook_focus_hashtable_map2_cb, hash_info1);
+        hashtable_free (hash_info2);
+    }
+    else
+    {
+        keys = hashtable_get_string (hash_info1, "keys");
+        if (keys)
+        {
+            list_keys = string_split (keys, ",", 0, 0, &num_keys);
+            if (list_keys)
+            {
+                for (i = 0; i < num_keys; i++)
+                {
+                    length = strlen (list_keys[i]) + 1 + 1;
+                    new_key = malloc (length);
+                    if (new_key)
+                    {
+                        snprintf (new_key, length, "%s2", list_keys[i]);
+                        hashtable_set (hash_info1, new_key,
+                                       hashtable_get (hash_info1, list_keys[i]));
+                        free (new_key);
+                    }
+                }
+                string_free_split (list_keys);
+            }
+        }
+    }
+    
     hook_exec_end ();
     
-    return hash_info;
+    return hash_info1;
 }
 
 /*

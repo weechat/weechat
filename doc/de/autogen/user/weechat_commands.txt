@@ -350,6 +350,7 @@ For context "mouse" (possible in context "cursor" too), key has format: "@area:k
    bar(xxx): bar "xxx"
     item(*): any bar item
   item(xxx): bar item "xxx"
+The key can start or end with '*' to match many mouse events.
 
 Examples:
   key alt-x to toggle nicklist bar:

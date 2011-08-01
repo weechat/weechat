@@ -350,6 +350,7 @@ Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a
    bar(xxx): la barre "xxx"
     item(*): n'importe quel objet de barre
   item(xxx): l'objet de barre "xxx"
+La touche peut commencer ou se terminer par '*' pour plusieurs évènements de la souris.
 
 Exemples:
   touche alt-x pour activer/désactiver la liste des pseudos:

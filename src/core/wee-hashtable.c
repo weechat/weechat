@@ -32,6 +32,7 @@
 #include "weechat.h"
 #include "wee-hashtable.h"
 #include "wee-infolist.h"
+#include "wee-list.h"
 #include "wee-log.h"
 #include "wee-string.h"
 #include "../plugins/plugin.h"
@@ -454,6 +455,64 @@ hashtable_map (struct t_hashtable *hashtable,
 }
 
 /*
+ * hashtable_get_list_keys_map_cb: function called for each variable in hdata
+ *                                 to build sorted list of keys
+ */
+
+void
+hashtable_get_list_keys_map_cb (void *data,
+                                struct t_hashtable *hashtable,
+                                const void *key, const void *value)
+{
+    struct t_weelist *list;
+    char str_key[128];
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+    
+    list = (struct t_weelist *)data;
+    
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_key, sizeof (str_key), "%d", *((int *)key));
+            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
+            break;
+        case HASHTABLE_STRING:
+            weelist_add (list, (const char *)key, WEECHAT_LIST_POS_SORT, NULL);
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+            snprintf (str_key, sizeof (str_key), "0x%lx", (long unsigned int)key);
+            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
+            break;
+        case HASHTABLE_TIME:
+            snprintf (str_key, sizeof (str_key), "%ld", (long)(*((time_t *)key)));
+            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
+            break;
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * hashtable_get_list_keys: get list with sorted keys of hashtable
+ *                          Note: list must be freed after use
+ */
+
+struct t_weelist *
+hashtable_get_list_keys (struct t_hashtable *hashtable)
+{
+    struct t_weelist *weelist;
+    
+    weelist = weelist_new ();
+    if (weelist)
+        hashtable_map (hashtable, &hashtable_get_list_keys_map_cb, weelist);
+    return weelist;
+}
+
+/*
  * hashtable_get_integer: get a hashtable property as integer
  */
 
@@ -741,14 +800,15 @@ hashtable_build_string_keys_values_cb (void *data,
  *                              keys only:     "key1,key2,key3"
  *                              values only:   "value1,value2,value3"
  *                              keys + values: "key1:value1,key2:value2,key3:value3"
- *                            Note: this works only if keys have type "integer",
- *                                  or "string"
  */
 
 const char *
-hashtable_get_keys_values (struct t_hashtable *hashtable, int keys, int values)
+hashtable_get_keys_values (struct t_hashtable *hashtable,
+                           int keys, int sort_keys, int values)
 {
     int length;
+    struct t_weelist *list_keys;
+    struct t_weelist_item *ptr_item;
     
     if (hashtable->keys_values)
     {
@@ -771,11 +831,41 @@ hashtable_get_keys_values (struct t_hashtable *hashtable, int keys, int values)
     if (!hashtable->keys_values)
         return NULL;
     hashtable->keys_values[0] = '\0';
-    hashtable_map (hashtable,
-                   (keys && values) ? &hashtable_build_string_keys_values_cb :
-                   ((keys) ? &hashtable_build_string_keys_cb :
-                    &hashtable_build_string_values_cb),
-                   hashtable->keys_values);
+    if (keys && sort_keys)
+    {
+        list_keys = hashtable_get_list_keys (hashtable);
+        if (list_keys)
+        {
+            for (ptr_item = list_keys->items; ptr_item;
+                 ptr_item = ptr_item->next_item)
+            {
+                if (values)
+                {
+                    hashtable_build_string_keys_values_cb (hashtable->keys_values,
+                                                           hashtable,
+                                                           ptr_item->data,
+                                                           hashtable_get (hashtable,
+                                                                          ptr_item->data));
+                }
+                else
+                {
+                    hashtable_build_string_keys_cb (hashtable->keys_values,
+                                                    hashtable,
+                                                    ptr_item->data,
+                                                    NULL);
+                }
+            }
+            weelist_free (list_keys);
+        }
+    }
+    else
+    {
+        hashtable_map (hashtable,
+                       (keys && values) ? &hashtable_build_string_keys_values_cb :
+                       ((keys) ? &hashtable_build_string_keys_cb :
+                        &hashtable_build_string_values_cb),
+                       hashtable->keys_values);
+    }
     
     return hashtable->keys_values;
 }
@@ -794,11 +884,15 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
         else if (string_strcasecmp (property, "type_values") == 0)
             return hashtable_type_string[hashtable->type_values];
         else if (string_strcasecmp (property, "keys") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 0);
+            return hashtable_get_keys_values (hashtable, 1, 0, 0);
+        else if (string_strcasecmp (property, "keys_sorted") == 0)
+            return hashtable_get_keys_values (hashtable, 1, 1, 0);
         else if (string_strcasecmp (property, "values") == 0)
-            return hashtable_get_keys_values (hashtable, 0, 1);
+            return hashtable_get_keys_values (hashtable, 0, 0, 1);
         else if (string_strcasecmp (property, "keys_values") == 0)
-            return hashtable_get_keys_values (hashtable, 1, 1);
+            return hashtable_get_keys_values (hashtable, 1, 0, 1);
+        else if (string_strcasecmp (property, "keys_values_sorted") == 0)
+            return hashtable_get_keys_values (hashtable, 1, 1, 1);
     }
     
     return NULL;

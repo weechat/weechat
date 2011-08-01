@@ -3257,9 +3257,14 @@ Argomenti:
 *** 'buffer': buffer
 *** 'time': tempo
 ** 'keys': stringa con la lista di chiavi (formato: "chiave1,chiave2,chiave3")
+// TRANSLATION MISSING
+** 'keys_sorted': string with list of sorted keys (format: "chiave1,chiave2,chiave3")
 ** 'values': stringa  con la lista di valori (formato: "valore1,valore2,valore3")
 ** 'keys_values': stringa con la lista di valori e chiavi
    (formato: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
+// TRANSLATION MISSING
+** 'keys_values_sorted': string with list of keys and values (sorted by keys)
+   (format: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
 
 Valore restituito:
 
@@ -8308,33 +8313,64 @@ Argomenti:
   value:
 ** 'void *data': pointer
 ** 'struct t_hashtable *info': hashtable with info on focus and strings returned
-   by other calls to focus callbacks (with higher priority); keys and values
-   are of type "string"; info on focus (filled by WeeChat) are:
-*** '_x': column of focus on screen (first column on the left is "0")
-*** '_y': line of focus on screen (first line on top is "0")
-*** '_window': pointer of window with focus ("0x0" for a bar of type "root"
-    or for unknown area)
-*** '_window_number': number of window with focus (not set for a bar of type
-    "root" or for unknown area)
-*** '_buffer': pointer of buffer with focus ("0x0" for a bar of type "root"
-    or for unknown area)
-*** '_buffer_number': number of buffer with focus (not set for a bar of type
-    "root" or for unknown area)
-*** '_buffer_plugin': plugin name of buffer with focus (not set for a bar of
-    type "root" or for unknown area)
-*** '_buffer_name': name of buffer with focus (not set for a bar of type "root"
-    or for unknown area)
-*** '_bar_name': name of bar with focus (NULL for chat area or for unknown
-    area)
-*** '_bar_item_name': name of bar item with focus (NULL if focus is not in a
-    bar or if focus is after the end of last bar item)
-*** '_item_line': line with focus in bar item (first line of bar item is "0")
-*** '_item_col': column with focus in bar item (first column of bar item is "0")
+   by other calls to focus callbacks (with higher priority) (see table below)
 ** return value: either "info" pointer (hashtable completed), or pointer to a
    new hashtable (created by callback, with keys and values of type "string"),
    this new hashtable content will be added to 'info' for other calls to focus
    callbacks
 * 'callback_data': pointer given to callback when it is called by WeeChat
+
+[IMPORTANT]
+For a mouse gesture, your callback will be called two times: first time when
+button is pressed (here the area always matches your area), second time when
+button is released, and then the area may not match your area: so you must
+*always* test in your callback if area is matching before using info in
+hashtable.
+
+Content of hashtable sent to callback (keys and values are of type "string"):
+
+[width="100%",cols="4m,6,8,8",options="header"]
+|========================================
+| Key ^(1)^      | Description             | Value                                  | Value if N/A
+| _x             | column on screen      2+| "0" ... "n"
+| _y             | line on screen        2+| "0" ... "n"
+| _window        | pointer of window       | "0x12345678"                           | "0x0"
+| _window_number | number of window        | "1" ... "n"                            | "*"
+| _chat          | chat area indicator     | "0" or "1"                             | "0"
+| _buffer        | pointer of buffer       | "0x12345678"                           | "0x0"
+| _buffer_number | number of buffer        | "1" ... "n"                            | ""
+| _buffer_plugin | plugin name of buffer   | "core", "irc", ...                     | ""
+| _buffer_name   | name of buffer          | "weechat", "freenode.#weechat", ...    | ""
+| _bar_name      | name of bar             | "title", "nicklist", ...               | ""
+| _bar_filling   | filling of bar          | "horizontal", "vertical", ...          | ""
+| _bar_item_name | name of bar item        | "buffer_nicklist", ...                 | ""
+| _item_line     | line in bar item        | "0" ... "n"                            | "-1"
+| _item_col      | column in bar item      | "0" ... "n"                            | "-1"
+| _key           | key or mouse event    2+| "button1", "button2-gesture-left", ...
+|========================================
+
+[NOTE]
+^(1)^ There are same keys suffixed with "2" (ie: "_x2", "_y2", "_window2", ...)
+with info on second point (useful only for mouse gestures, to know where mouse
+button has been released).
+
+Extra info for bar item "buffer_nicklist":
+
+[width="70%",cols="3m,3,8",options="header"]
+|========================================
+| Key            | Plugin | Description
+| nick           | core   | nick name
+| prefix         | core   | prefix for nick
+| group          | core   | group name
+| host           | irc    | host for nick (if known)
+| server         | irc    | internal name of server
+| channel        | irc    | channel name
+|========================================
+
+[NOTE]
+^(1)^ The name of plugin which defines a hook_focus to return info for this bar
+item (so for example if plugin is "irc", such info will be available only on
+irc buffers).
 
 Valore restituito:
 

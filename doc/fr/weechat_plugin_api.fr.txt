@@ -3299,9 +3299,13 @@ Paramètres :
 *** 'buffer' : buffer
 *** 'time' : heure
 ** 'keys' : chaîne avec la liste des clés (format : "clé1,clé2,clé3")
+** 'keys_sorted' : chaîne avec la liste triée des clés (format :
+   "clé1,clé2,clé3")
 ** 'values' : chaîne avec la liste des valeurs (format : "valeur1,valeur2,valeur3")
 ** 'keys_values' : chaîne avec la liste des clés et valeurs
    (format : "clé1:valeur1,clé2:valeur2,clé3:valeur3")
+** 'keys_values_sorted' : chaîne avec la liste des clés et valeurs (triée sur
+   les clés) (format : "clé1:valeur1,clé2:valeur2,clé3:valeur3")
 
 Valeur en retour :
 
@@ -8381,36 +8385,12 @@ Paramètres :
 
 * 'area' : "chat" pour la zone de discussion, ou un nom d'objet de barre
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
-* 'callback' : fonction appelée quand le focus est fait paramètres et valeur de
+* 'callback' : fonction appelée quand le focus est fait, paramètres et valeur de
   retour :
 ** 'void *data' : pointeur
 ** 'struct t_hashtable *info' : hashtable avec les informations sur le focus et
    les chaînes retournées par les autres appels aux "callbacks" de focus (avec
-   plus haute priorité); les clés et valeurs sont de type "string"; les
-   informations sur le focus (remplies par WeeChat) sont :
-*** '_x' : colonne du focus sur l'écran (la première colonne sur la gauche
-    est "0")
-*** '_y' : ligne du focus sur l'écran (la première ligne en haut est "0")
-*** '_window' : pointeur de la fenêtre avec le focus ("0x0" pour une barre de
-    type "root" ou pour une zone inconnue)
-*** '_window_number' : numéro de la fenêtre avec le focus (non défini pour une
-    barre de type "root" ou pour une zone inconnue)
-*** '_buffer' : pointeur du tampon avec le focus ("0x0" pour une barre de type
-    "root" ou pour une zone inconnue)
-*** '_buffer_number' : numéro du tampon avec le focus (non défini pour une barre
-    de type "root" ou pour une zone inconnue)
-*** '_buffer_plugin' : nom d'extension du tampon avec le focus (non défini pour
-    une barre de type "root" ou pour une zone inconnue)
-*** '_buffer_name' : nom du tampon avec le focus (non défini pour une barre de
-    type "root" ou pour une zone inconnue)
-*** '_bar_name' : nom de la barre avec le focus (NULL pour la zone de discussion
-    ("chat") ou pour une zone inconnue)
-*** '_bar_item_name' : nom de l'objet de barre avec le focus (NULL si le focus
-    n'est pas dans une barre ou si le focus est après le dernier objet de barre)
-*** '_item_line' : ligne avec le focus dans l'objet de barre (la première ligne
-    de l'objet de barre est "0")
-*** '_item_col' : colonne avec le focus dans l'objet de barre (la première
-    colonne de l'objet de barre est "0")
+   plus haute priorité) (voir le tableau ci-dessous)
 ** valeur de retour : soit le pointeur vers la hashtable "info" (avec la
    hashtable complétée), ou un pointeur vers une nouvelle hashtable (créée par
    le "callback", avec clés et valeurs de type "string"), le contenu de cette
@@ -8418,6 +8398,60 @@ Paramètres :
    "callbacks" focus
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
    WeeChat
+
+[IMPORTANT]
+Pour un geste de souris, votre "callback" sera appelé deux fois : la première
+lorsque le bouton est pressé (ici la zone correspond à vôtre zone), la seconde
+fois lorsque le bouton est relâché, et la zone peut ne pas correspondre à la
+vôtre : donc vous devez *toujours* tester dans le "callback" si la zone
+correspond avant d'utiliser les informations de la hashtable.
+
+Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de type
+"string) :
+
+[width="100%",cols="4m,6,8,8",options="header"]
+|========================================
+| Clé ^(1)^      | Description                     | Valeur                                 | Valeur si non applicable
+| _x             | colonne sur l'écran           2+| "0" ... "n"
+| _y             | ligne sur l'écran             2+| "0" ... "n"
+| _window        | pointeur de la fenêtre          | "0x12345678"                           | "0x0"
+| _window_number | numéro de la fenêtre            | "1" ... "n"                            | "*"
+| _chat          | indicateur zone "chat"          | "0" ou "1"                             | "0"
+| _buffer        | pointeur du tampon              | "0x12345678"                           | "0x0"
+| _buffer_number | numéro du tampon                | "1" ... "n"                            | ""
+| _buffer_plugin | nom d'extension du tampon       | "core", "irc", ...                     | ""
+| _buffer_name   | nom du tampon                   | "weechat", "freenode.#weechat", ...    | ""
+| _bar_name      | nom de la barre                 | "title", "nicklist", ...               | ""
+| _bar_filling   | remplissage de la barre         | "horizontal", "vertical", ...          | ""
+| _bar_item_name | nom de l'objet de barre         | "buffer_nicklist", ...                 | ""
+| _item_line     | ligne dans l'objet de barre     | "0" ... "n"                            | "-1"
+| _item_col      | colonne dans l'objet de barre   | "0" ... "n"                            | "-1"
+| _key           | touche ou évènement souris    2+| "button1", "button2-gesture-left", ...
+|========================================
+
+[NOTE]
+^(1)^ Il y a les mêmes clés suffixées par "2" (c'est-à-dire : "_x2", "_y2",
+"_window2", ...) avec l'information sur le second point (pratique seulement
+pour les gestes de souris, pour savoir où le bouton de la souris a été
+relâché).
+
+Informations additionnelles pour l'objet de barre "buffer_nicklist":
+
+[width="70%",cols="3m,3,8",options="header"]
+|========================================
+| Clé            | Extension ^(1)^ | Description
+| nick           | core            | pseudonyme
+| prefix         | core            | préfixe du pseudonyme
+| group          | core            | nom du groupe
+| host           | irc             | nom d'hôte pour le pseudonyme (si connu)
+| server         | irc             | nom interne du serveur
+| channel        | irc             | nom du canal
+|========================================
+
+[NOTE]
+^(1)^ Le nom de l'extension qui définit un hook_focus pour retourner des infos
+pour cet objet de barre (donc par exemple si l'extension est "irc", ces infos
+ne seront disponibles que sur les tampons irc).
 
 Valeur de retour :
 

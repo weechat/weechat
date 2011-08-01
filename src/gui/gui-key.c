@@ -49,6 +49,7 @@
 #include "gui-color.h"
 #include "gui-completion.h"
 #include "gui-cursor.h"
+#include "gui-focus.h"
 #include "gui-input.h"
 #include "gui-mouse.h"
 #include "gui-window.h"
@@ -502,7 +503,7 @@ gui_key_cmp (const char *key, const char *search, int context)
     int diff;
     
     if (context == GUI_KEY_CONTEXT_MOUSE)
-        return strcmp (key, search);
+        return (string_match (key, search, 1)) ? 0 : 1;
     
     while (search[0])
     {
@@ -621,7 +622,7 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
 
 int
 gui_key_focus_matching (const char *key,
-                        struct t_gui_cursor_info *cursor_info)
+                        struct t_gui_focus_info *focus_info)
 {
     int match, area_chat;
     char *area_bar, *area_item, *pos;
@@ -649,19 +650,19 @@ gui_key_focus_matching (const char *key,
         }
         if (area_chat || area_bar || area_item)
         {
-            if (area_chat && cursor_info->chat)
+            if (area_chat && focus_info->chat)
             {
                 match = 1;
             }
-            else if (area_bar && cursor_info->bar_window
+            else if (area_bar && focus_info->bar_window
                      && ((strcmp (area_bar, "*") == 0)
-                         || (strcmp (area_bar, (cursor_info->bar_window)->bar->name) == 0)))
+                         || (strcmp (area_bar, (focus_info->bar_window)->bar->name) == 0)))
             {
                 match = 1;
             }
-            else if (area_item && cursor_info->bar_item
+            else if (area_item && focus_info->bar_item
                      && ((strcmp (area_item, "*") == 0)
-                         || (strcmp (area_item, cursor_info->bar_item) == 0)))
+                         || (strcmp (area_item, focus_info->bar_item) == 0)))
             {
                 match = 1;
             }
@@ -684,7 +685,8 @@ gui_key_focus_matching (const char *key,
 int
 gui_key_focus_command (const char *key, int context,
                        int focus_specific, int focus_any,
-                       struct t_gui_cursor_info *cursor_info)
+                       struct t_gui_focus_info *focus_info1,
+                       struct t_gui_focus_info *focus_info2)
 {
     struct t_gui_key *ptr_key;
     int i, errors;
@@ -706,16 +708,18 @@ gui_key_focus_command (const char *key, int context,
                     continue;
                 
                 pos++;
-                if (gui_key_cmp (pos, key, context) == 0)
+                if (gui_key_cmp (key, pos, context) == 0)
                 {
-                    if (gui_key_focus_matching (ptr_key->key, cursor_info))
+                    if (gui_key_focus_matching (ptr_key->key, focus_info1))
                     {
-                        hashtable = hook_focus_get_data (cursor_info);
-                        if (gui_mouse_debug)
+                        hashtable = hook_focus_get_data (focus_info1,
+                                                         focus_info2,
+                                                         key);
+                        if (gui_cursor_debug || gui_mouse_debug)
                         {
                             gui_chat_printf (NULL, "Hashtable focus: %s",
                                              hashtable_get_string (hashtable,
-                                                                   "keys_values"));
+                                                                   "keys_values_sorted"));
                         }
                         command = string_replace_with_hashtable (ptr_key->command,
                                                                  hashtable,
@@ -724,6 +728,13 @@ gui_key_focus_command (const char *key, int context,
                         {
                             if (errors == 0)
                             {
+                                if (gui_cursor_debug || gui_mouse_debug)
+                                {
+                                    gui_chat_printf (NULL,
+                                                     "Command executed: %s  (%s)",
+                                                     command,
+                                                     ptr_key->command);
+                                }
                                 if ((context == GUI_KEY_CONTEXT_CURSOR)
                                     && gui_cursor_debug)
                                 {
@@ -738,6 +749,15 @@ gui_key_focus_command (const char *key, int context,
                                         input_data (gui_current_window->buffer, commands[i]);
                                     }
                                     string_free_split_command (commands);
+                                }
+                            }
+                            else
+                            {
+                                if (gui_cursor_debug || gui_mouse_debug)
+                                {
+                                    gui_chat_printf (NULL,
+                                                     "Command NOT executed (%s)",
+                                                     ptr_key->command);
                                 }
                             }
                             free (command);
@@ -763,12 +783,12 @@ gui_key_focus_command (const char *key, int context,
 int
 gui_key_focus (const char *key, int context)
 {
-    struct t_gui_cursor_info cursor_info;
+    struct t_gui_focus_info focus_info1, focus_info2, *ptr_focus_info2;
+    
+    ptr_focus_info2 = NULL;
     
     if (context == GUI_KEY_CONTEXT_MOUSE)
     {
-        gui_cursor_get_info (gui_mouse_event_x[0], gui_mouse_event_y[0],
-                             &cursor_info);
         if (gui_mouse_debug)
         {
             gui_chat_printf (NULL, "Mouse: %s, (%d,%d) -> (%d,%d)",
@@ -776,16 +796,29 @@ gui_key_focus (const char *key, int context)
                              gui_mouse_event_x[0], gui_mouse_event_y[0],
                              gui_mouse_event_x[1], gui_mouse_event_y[1]);
         }
+        gui_focus_get_info (gui_mouse_event_x[0], gui_mouse_event_y[0],
+                            &focus_info1);
+        if ((gui_mouse_event_x[0] != gui_mouse_event_x[1])
+            || (gui_mouse_event_y[0] != gui_mouse_event_y[1]))
+        {
+            gui_focus_get_info (gui_mouse_event_x[1], gui_mouse_event_y[1],
+                                &focus_info2);
+            ptr_focus_info2 = &focus_info2;
+        }
     }
     else
     {
-        gui_cursor_get_info (gui_cursor_x, gui_cursor_y, &cursor_info);
+        gui_focus_get_info (gui_cursor_x, gui_cursor_y, &focus_info1);
     }
     
-    if (gui_key_focus_command (key, context, 1, 0, &cursor_info))
+    if (gui_key_focus_command (key, context, 1, 0,
+                               &focus_info1, ptr_focus_info2))
+    {
         return 1;
+    }
     
-    return gui_key_focus_command (key, context, 0, 1, &cursor_info);
+    return gui_key_focus_command (key, context, 0, 1, &focus_info1,
+                                  ptr_focus_info2);
 }
 
 /*

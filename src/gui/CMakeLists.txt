@@ -24,9 +24,10 @@ gui-bar-window.c gui-bar-window.h
 gui-buffer.c gui-buffer.h
 gui-chat.c gui-chat.h
 gui-color.c gui-color.h
+gui-completion.c gui-completion.h
 gui-cursor.c gui-cursor.h
 gui-filter.c gui-filter.h
-gui-completion.c gui-completion.h
+gui-focus.c gui-focus.h
 gui-history.c gui-history.h
 gui-hotlist.c gui-hotlist.h
 gui-input.c gui-input.h

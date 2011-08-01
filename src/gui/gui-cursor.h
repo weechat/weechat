@@ -20,19 +20,6 @@
 #ifndef __WEECHAT_GUI_CURSOR_H
 #define __WEECHAT_GUI_CURSOR_H 1
 
-/* cursor structures */
-
-struct t_gui_cursor_info
-{
-    int x, y;                          /* (x,y) on screen                   */
-    struct t_gui_window *window;       /* window found                      */
-    int chat;                          /* 1 for chat area, otherwise 0      */
-    struct t_gui_bar_window *bar_window; /* bar window found                */
-    char *bar_item;                    /* bar item found                    */
-    int item_line;                     /* line in bar item                  */
-    int item_col;                      /* column in bar item                */
-};
-
 /* cursor variables */
 
 extern int gui_cursor_mode;
@@ -44,8 +31,6 @@ extern int gui_cursor_y;
 
 extern void gui_cursor_mode_toggle ();
 extern void gui_cursor_debug_toggle ();
-extern void gui_cursor_get_info (int x, int y,
-                                 struct t_gui_cursor_info *cursor_info);
 extern void gui_cursor_move_xy (int x, int y);
 extern void gui_cursor_move_add_xy (int add_x, int add_y);
 extern void gui_cursor_move_area_add_xy (int add_x, int add_y);

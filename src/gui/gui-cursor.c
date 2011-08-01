@@ -26,6 +26,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../core/weechat.h"
@@ -35,6 +36,7 @@
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
+#include "gui-focus.h"
 #include "gui-input.h"
 #include "gui-window.h"
 
@@ -88,66 +90,33 @@ gui_cursor_debug_toggle ()
 }
 
 /*
- * gui_cursor_get_info: get info about what is pointed by cursor at (x,y)
- */
-
-void
-gui_cursor_get_info (int x, int y, struct t_gui_cursor_info *cursor_info)
-{
-    cursor_info->x = x;
-    cursor_info->y = y;
-    
-    /* search window */
-    cursor_info->window = gui_window_search_by_xy (x, y);
-    
-    /* chat area in this window? */
-    if (cursor_info->window
-        && (x >= (cursor_info->window)->win_chat_x)
-        && (y >= (cursor_info->window)->win_chat_y)
-        && (x <= (cursor_info->window)->win_chat_x + (cursor_info->window)->win_chat_width - 1)
-        && (y <= (cursor_info->window)->win_chat_y + (cursor_info->window)->win_chat_height - 1))
-    {
-        cursor_info->chat = 1;
-    }
-    else
-        cursor_info->chat = 0;
-    
-    /* search bar window, item, and line/col in item */
-    gui_bar_window_search_by_xy (cursor_info->window, x, y,
-                                 &cursor_info->bar_window,
-                                 &cursor_info->bar_item,
-                                 &cursor_info->item_line,
-                                 &cursor_info->item_col);
-}
-
-/*
  * gui_cursor_display_debug_info: display debug info about (x,y) in input
  */
 
 void
 gui_cursor_display_debug_info ()
 {
-    struct t_gui_cursor_info cursor_info;
+    struct t_gui_focus_info focus_info;
     char str_info[1024];
     
     if (!gui_cursor_debug)
         return;
     
-    gui_cursor_get_info (gui_cursor_x, gui_cursor_y, &cursor_info);
+    gui_focus_get_info (gui_cursor_x, gui_cursor_y, &focus_info);
     
     snprintf (str_info, sizeof (str_info),
               "%s(%d,%d) window:0x%lx (buffer: %s), chat: %d, "
               "bar_window:0x%lx (bar: %s, item: %s, line: %d, col: %d)",
               gui_color_get_custom ("yellow,red"),
-              cursor_info.x, cursor_info.y,
-              (long unsigned int)cursor_info.window,
-              (cursor_info.window) ? (cursor_info.window)->buffer->name : "-",
-              cursor_info.chat,
-              (long unsigned int)cursor_info.bar_window,
-              (cursor_info.bar_window) ? (cursor_info.bar_window)->bar->name : "-",
-              (cursor_info.bar_item) ? cursor_info.bar_item : "-",
-              cursor_info.item_line,
-              cursor_info.item_col);
+              focus_info.x, focus_info.y,
+              (long unsigned int)focus_info.window,
+              (focus_info.window) ? (focus_info.window)->buffer->name : "-",
+              focus_info.chat,
+              (long unsigned int)focus_info.bar_window,
+              (focus_info.bar_window) ? (focus_info.bar_window)->bar->name : "-",
+              (focus_info.bar_item) ? focus_info.bar_item : "-",
+              focus_info.item_line,
+              focus_info.item_col);
     gui_input_delete_line (gui_current_window->buffer);
     gui_input_insert_string (gui_current_window->buffer, str_info, -1);
 }
@@ -215,7 +184,7 @@ void
 gui_cursor_move_area_add_xy (int add_x, int add_y)
 {
     int x, y, width, height, area_found;
-    struct t_gui_cursor_info cursor_info_old, cursor_info_new;
+    struct t_gui_focus_info focus_info_old, focus_info_new;
     
     if (!gui_cursor_mode)
         gui_cursor_mode_toggle ();
@@ -227,7 +196,7 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     width = gui_window_get_width ();
     height = gui_window_get_height ();
     
-    gui_cursor_get_info (x, y, &cursor_info_old);
+    gui_focus_get_info (x, y, &focus_info_old);
     
     if (add_x != 0)
         x += add_x;
@@ -236,11 +205,11 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     
     while ((x >= 0) && (x < width) && (y >= 0) && (y < height))
     {
-        gui_cursor_get_info (x, y, &cursor_info_new);
-        if (((cursor_info_new.window && cursor_info_new.chat)
-             || cursor_info_new.bar_window)
-            && ((cursor_info_old.window != cursor_info_new.window)
-                || (cursor_info_old.bar_window != cursor_info_new.bar_window)))
+        gui_focus_get_info (x, y, &focus_info_new);
+        if (((focus_info_new.window && focus_info_new.chat)
+             || focus_info_new.bar_window)
+            && ((focus_info_old.window != focus_info_new.window)
+                || (focus_info_old.bar_window != focus_info_new.bar_window)))
         {
             area_found = 1;
             break;
@@ -254,15 +223,15 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     
     if (area_found)
     {
-        if (cursor_info_new.window && cursor_info_new.chat)
+        if (focus_info_new.window && focus_info_new.chat)
         {
-            x = (cursor_info_new.window)->win_chat_x;
-            y = (cursor_info_new.window)->win_chat_y;
+            x = (focus_info_new.window)->win_chat_x;
+            y = (focus_info_new.window)->win_chat_y;
         }
-        else if (cursor_info_new.bar_window)
+        else if (focus_info_new.bar_window)
         {
-            x = (cursor_info_new.bar_window)->x;
-            y = (cursor_info_new.bar_window)->y;
+            x = (focus_info_new.bar_window)->x;
+            y = (focus_info_new.bar_window)->y;
         }
         else
             area_found = 0;

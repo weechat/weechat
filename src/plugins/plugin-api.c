@@ -1047,7 +1047,8 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "key", N_("list of key bindings"),
                    NULL,
-                   N_("context (\"default\" or \"search\") (optional)"),
+                   N_("context (\"default\", \"search\", \"cursor\" or "
+                      "\"mouse\") (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
                    N_("buffer pointer"),

@@ -71,6 +71,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-completion.h
 ./src/gui/gui-filter.c
 ./src/gui/gui-filter.h
+./src/gui/gui-focus.c
+./src/gui/gui-focus.h
 ./src/gui/gui-history.c
 ./src/gui/gui-history.h
 ./src/gui/gui-hotlist.c
