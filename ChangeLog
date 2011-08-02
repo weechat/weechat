@@ -7,6 +7,8 @@ v0.3.6-dev, 2011-08-02
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix crash when invalid UTF-8 chars are inserted in command line
+  (bug #33471)
 * core: stop horizontal bar scroll at the end of content (for bars with
   horizontal filling) (bug #27908)
 * core: fix crash when building hashtable string with keys and values

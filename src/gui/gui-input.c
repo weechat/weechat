@@ -81,21 +81,30 @@ void
 gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
 {
     int size, length;
+    char *input_utf8;
     
-    size = strlen (new_input);
-    length = utf8_strlen (new_input);
-    
-    /* compute new buffer size */
-    buffer->input_buffer_size = size;
-    buffer->input_buffer_length = length;
-    gui_input_optimize_size (buffer);
-    
-    /* copy new string to input */
-    strcpy (buffer->input_buffer, new_input);
-    
-    /* move cursor to the end of new input if it is now after the end */
-    if (buffer->input_buffer_pos > buffer->input_buffer_length)
-        buffer->input_buffer_pos = buffer->input_buffer_length;
+    input_utf8 = strdup (new_input);
+    if (input_utf8)
+    {
+        utf8_normalize (input_utf8, '?');
+        
+        size = strlen (input_utf8);
+        length = utf8_strlen (input_utf8);
+        
+        /* compute new buffer size */
+        buffer->input_buffer_size = size;
+        buffer->input_buffer_length = length;
+        gui_input_optimize_size (buffer);
+        
+        /* copy new string to input */
+        strcpy (buffer->input_buffer, input_utf8);
+        
+        /* move cursor to the end of new input if it is now after the end */
+        if (buffer->input_buffer_pos > buffer->input_buffer_length)
+            buffer->input_buffer_pos = buffer->input_buffer_length;
+        
+        free (input_utf8);
+    }
 }
 
 /*
@@ -196,15 +205,21 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
                          int pos)
 {
     int size, length;
-    char *ptr_start;
+    char *string_utf8, *ptr_start;
     
     if (buffer->input)
     {
+        string_utf8 = strdup (string);
+        if (!string_utf8)
+            return 0;
+        
         if (pos == -1)
             pos = buffer->input_buffer_pos;
         
-        size = strlen (string);
-        length = utf8_strlen (string);
+        utf8_normalize (string_utf8, '?');
+        
+        size = strlen (string_utf8);
+        length = utf8_strlen (string_utf8);
         
         /* increase buffer size */
         buffer->input_buffer_size += size;
@@ -218,9 +233,11 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         
         /* insert new string */
         ptr_start = utf8_add_offset (buffer->input_buffer, pos);
-        strncpy (ptr_start, string, size);
+        strncpy (ptr_start, string_utf8, size);
         
         buffer->input_buffer_pos += length;
+        
+        free (string_utf8);
         
         return length;
     }
