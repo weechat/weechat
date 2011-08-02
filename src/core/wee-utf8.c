@@ -134,7 +134,7 @@ utf8_is_valid (const char *string, char **error)
  */
 
 void
-utf8_normalize (const char *string, char replacement)
+utf8_normalize (char *string, char replacement)
 {
     char *error;
     

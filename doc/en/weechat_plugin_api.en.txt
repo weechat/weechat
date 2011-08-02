@@ -1552,7 +1552,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-void weechat_utf8_normalize (const char *string, char replacement);
+void weechat_utf8_normalize (char *string, char replacement);
 ----------------------------------------
 
 Arguments:

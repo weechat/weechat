@@ -35,7 +35,7 @@ extern int local_utf8;
 extern void utf8_init ();
 extern int utf8_has_8bits (const char *string);
 extern int utf8_is_valid (const char *string, char **error);
-extern void utf8_normalize (const char *string, char replacement);
+extern void utf8_normalize (char *string, char replacement);
 extern char *utf8_prev_char (const char *string_start, const char *string);
 extern char *utf8_next_char (const char *string);
 extern int utf8_char_int (const char *string);

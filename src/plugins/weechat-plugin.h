@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20110726-01"
+#define WEECHAT_PLUGIN_API_VERSION "20110802-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -212,7 +212,7 @@ struct t_weechat_plugin
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
     int (*utf8_is_valid) (const char *string, char **error);
-    void (*utf8_normalize) (const char *string, char replacement);
+    void (*utf8_normalize) (char *string, char replacement);
     char *(*utf8_prev_char) (const char *string_start, const char *string);
     char *(*utf8_next_char) (const char *string);
     int (*utf8_char_int) (const char *string);
