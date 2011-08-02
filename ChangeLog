@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-07-30
+v0.3.6-dev, 2011-08-02
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: stop horizontal bar scroll at the end of content (for bars with
+  horizontal filling) (bug #27908)
 * core: fix crash when building hashtable string with keys and values
 * core: add number in windows (add optional argument "-window" so some actions
   for command /window)

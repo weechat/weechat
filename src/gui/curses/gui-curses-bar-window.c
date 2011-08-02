@@ -435,6 +435,18 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     content = gui_bar_window_content_get_with_filling (bar_window, window);
     if (content)
     {
+        if ((filling == GUI_BAR_FILLING_HORIZONTAL)
+            && (bar_window->scroll_x > 0))
+        {
+            length_on_screen = gui_chat_strlen_screen (content);
+            if (bar_window->scroll_x > length_on_screen - bar_window->width)
+            {
+                bar_window->scroll_x = length_on_screen - bar_window->width;
+                if (bar_window->scroll_x < 0)
+                    bar_window->scroll_x = 0;
+            }
+        }
+        
         items = string_split (content, "\n", 0, 0, &items_count);
         if (items_count == 0)
         {
