@@ -442,6 +442,52 @@ Pour trouver le code de la touche appuyez sur @k(A-)@k(k) puis la touche (haut
 ou bas).
 
 
+[[mouse]]
+Souris
+------
+
+
+[[mouse_not_working]]
+La souris ne fonctionne pas du tout, que puis-je faire ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Premièrement essayez d'activer la souris :
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+Si la souris ne fonctionne toujours pas, vérifiez la variable TERM dans votre
+shell (regardez la sortie de `echo $TERM` dans votre terminal).
+Selon le terminfo utilisé, la souris peut ne pas être supportée.
+
+Vous pouvez tester le support de la souris dans le terminal :
+
+----------------------------------------
+$ printf '\033[?1002h'
+----------------------------------------
+
+Et cliquez sur le premier caractère du terminal (en haut à gauche). Vous devriez
+voir " !!#!!".
+
+Pour désactiver la souris dans le terminal :
+
+----------------------------------------
+$ printf '\033[?1002l'
+----------------------------------------
+
+
+[[mouse_coords]]
+La souris ne fait rien pour un X ou Y supérieur à 94, pourquoi ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Certains terminaux envoient seulement des caractères ISO pour les coordonnées
+de la souris, donc cela ne fonctionne pas avec un X/Y supérieur à 94.
+
+Vous devriez utiliser un terminal qui supporte les coordonnées UTF-8 pour la
+souris, comme rxvt-unicode.
+
+
 [[irc]]
 IRC
 ---

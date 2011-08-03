@@ -438,6 +438,54 @@ I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
 Per trovare il codice tasto digitare @k(A-)@k(k) poi il tast (su o giù).
 
 
+// TRANSLATION MISSING
+[[mouse]]
+Mouse
+-----
+
+
+// TRANSLATION MISSING
+[[mouse_not_working]]
+Mouse is not working at all, what can I do?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First try to enable mouse:
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+If mouse is still not working, check the TERM variable in your shell (look at
+output of `echo $TERM` in your terminal).
+According to terminfo used, mouse may not be supported.
+
+You can test mouse support in terminal:
+
+----------------------------------------
+$ printf '\033[?1002h'
+----------------------------------------
+
+And then click on first char of terminal (upper left). You should see " !!#!!".
+
+To disable mouse in terminal:
+
+----------------------------------------
+$ printf '\033[?1002l'
+----------------------------------------
+
+
+// TRANSLATION MISSING
+[[mouse_coords]]
+Mouse does nothing for X or Y greater than 94, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some terminals are sending only ISO chars for mouse coordinates, so it does not
+work for X/Y greater than 94.
+
+You should use a terminal that supports UTF-8 coordinates for mouse, like
+rxvt-unicode.
+
+
 [[irc]]
 IRC
 ---

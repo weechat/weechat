@@ -425,6 +425,51 @@ Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
 code press @k(A-)@k(k) then key (up or down).
 
 
+[[mouse]]
+Mouse
+-----
+
+
+[[mouse_not_working]]
+Mouse is not working at all, what can I do?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First try to enable mouse:
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+If mouse is still not working, check the TERM variable in your shell (look at
+output of `echo $TERM` in your terminal).
+According to terminfo used, mouse may not be supported.
+
+You can test mouse support in terminal:
+
+----------------------------------------
+$ printf '\033[?1002h'
+----------------------------------------
+
+And then click on first char of terminal (upper left). You should see " !!#!!".
+
+To disable mouse in terminal:
+
+----------------------------------------
+$ printf '\033[?1002l'
+----------------------------------------
+
+
+[[mouse_coords]]
+Mouse does nothing for X or Y greater than 94, why?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some terminals are sending only ISO chars for mouse coordinates, so it does not
+work for X/Y greater than 94.
+
+You should use a terminal that supports UTF-8 coordinates for mouse, like
+rxvt-unicode.
+
+
 [[irc]]
 IRC
 ---
