@@ -1,3 +1,4 @@
+[[command_perl_perl]]
 [command]*`perl`* elenca/attiva/disattiva script::
 ........................................
 /perl  list|listfull [<nome>]

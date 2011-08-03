@@ -1,3 +1,4 @@
+[[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* alter modifier strings with regular expressions::
 ........................................
 /rmodifier  list|listdefault

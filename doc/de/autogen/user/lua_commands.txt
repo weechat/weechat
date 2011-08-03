@@ -1,3 +1,4 @@
+[[command_lua_lua]]
 [command]*`lua`* auflisten/installieren/deinstallieren von Skripten::
 ........................................
 /lua  list|listfull [<name>]

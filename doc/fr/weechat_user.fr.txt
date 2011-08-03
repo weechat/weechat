@@ -600,6 +600,88 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 | ◽◾◽        | -            | n'importe où      | Démarrer le mode curseur ("cursor") à ce point | /cursor go ${_x},${_y}
 |========================================
 
+// TRANSLATION MISSING
+[[mouse]]
+Mouse support
+~~~~~~~~~~~~~
+
+WeeChat supporte les clics et mouvements avec la souris. Cela fonctionne avec un
+terminal local, et à distance via une connexion ssh, avec ou sans screen/tmux.
+
+[[mouse_enable]]
+Activer la souris
+^^^^^^^^^^^^^^^^^
+
+Pour activer la souris au démarrage :
+
+----------------------------------------
+/set weechat.look.mouse on
+----------------------------------------
+
+Pour activer la souris maintenant, appuyez sur @k(A-)@k(m) ou lancez la commande
+suivante :
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+Il est possible de désactiver temporairement la souris, et associer ça à une
+touche. Par exemple la touche @k(A-)@k(x) pour désactiver la souris pendant 10
+secondes :
+
+----------------------------------------
+/key bind meta-x /mouse toggle 10
+----------------------------------------
+
+Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
+"shift" pour sélectionner ou cliquer dans le terminal, comme si la souris était
+désactivée (sous certains terminaux comme iTerm, vous devez utiliser "alt" au
+lieu de "shift").
+
+[NOTE]
+Pour tout problème avec la souris, merci de consulter la 'FAQ WeeChat'.
+
+[[mouse_bind_events]]
+Associer des évènements souris à des commandes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+De nombreux évènements souris sont déjà définis par WeeChat (voir
+<<key_bindings_mouse_context,les touches pour le contexte "mouse">>).
+
+Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
+utilisant le contexte "mouse" (pour la syntaxe voir
+<<command_weechat_key,la commande /key>>).
+
+Liste des évènements supportés :
+
+[width="80%",cols="3m,4",options="header"]
+|========================================
+| Evènement                        | Description
+| button1                          | clic sur le bouton gauche
+| button2                          | clic sur le bouton droit
+| button3                          | clic sur le bouton du milieu (souvent clic sur la roulette)
+| button4 ... button9              | clic sur un bouton additionnel
+| wheelup                          | roulette (haut)
+| wheeldown                        | roulette (bas)
+| buttonX-gesture-up ^(1)^         | geste avec distance entre 3 et 19
+| buttonX-gesture-up-long ^(1)^    | geste avec distance >= 20
+| buttonX-gesture-down ^(1)^       | geste avec distance entre 3 et 19
+| buttonX-gesture-down-long ^(1)^  | geste avec distance >= 20
+| buttonX-gesture-left ^(1)^       | geste avec distance entre 3 et 39
+| buttonX-gesture-left-long ^(1)^  | geste avec distance >= 40
+| buttonX-gesture-right ^(1)^      | geste avec distance entre 3 et 39
+| buttonX-gesture-right-long ^(1)^ | geste avec distance >= 40
+|========================================
+
+[NOTE]
+^(1)^ "X" est le numéro du bouton utilisé pour le geste (1 à 9).
+
+[TIP]
+Lors de l'association d'une touche dans le contexte "mouse", il est possible
+d'adresser plusieurs évènements en utilisant `*` au début ou la fin du nom,
+par exemple `button1-gesture-*` qui correspond à n'importe quel geste effectué
+avec le bouton gauche.
+
 [[command_line]]
 Ligne de commande
 ~~~~~~~~~~~~~~~~~
@@ -692,18 +774,6 @@ gras, et "tout le monde" en rouge clair souligné :
 ----------------------------------------
 ^Cc12^Cbbonjour ^Cb^Cc04^Cutout le monde^Cu^Cc !
 ----------------------------------------
-
-[[weechat_options]]
-Options WeeChat (weechat.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-include::autogen/user/weechat_options.txt[]
-
-[[weechat_commands]]
-Commandes WeeChat
-~~~~~~~~~~~~~~~~~
-
-include::autogen/user/weechat_commands.txt[]
 
 [[colors]]
 Couleurs
@@ -832,9 +902,9 @@ Attributs
 Il est possible d'utiliser des attributs pour les couleurs. Un ou plusieurs
 attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
 
-* "*" : texte gras
-* "!" : mode vidéo inverse
-* "_" : texte souligné
+* `*` : texte gras
+* `!` : mode vidéo inverse
+* `_` : texte souligné
 
 Par exemple si vous voulez votre pseudo en blanc souligné, faites :
 
@@ -857,6 +927,18 @@ Exemple de gras avec la couleur de texte du terminal :
 ----------------------------------------
 /set weechat.color.status_time *99999
 ----------------------------------------
+
+[[weechat_options]]
+Options WeeChat (weechat.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_options.txt[]
+
+[[weechat_commands]]
+Commandes WeeChat
+~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_commands.txt[]
 
 
 [[plugins]]
@@ -1772,7 +1854,7 @@ des expressions régulières.
 
 L'utilisation typique est pour cacher les mots de passe lorsque vous les tapez,
 ou lorsque WeeChat les sauvegarde dans l'historique des commandes. Il est
-possible par exemple de remplacer chaque lettre de ces mots de passe par "*".
+possible par exemple de remplacer chaque lettre de ces mots de passe par `*`.
 
 [[rmodifier_options]]
 Options (rmodifier.conf)
@@ -1804,7 +1886,7 @@ Pour chaque groupe capturé, les actions suivantes sont possibles :
 
 * garder le groupe tel quel (en utilisant son numéro)
 * remplacer tous les caractères du groupe pour cacher le contenu
-  (numéro du groupe + "*")
+  (numéro du groupe + `*`)
 * supprimer le groupe (si le groupe n'est pas utilisé dans la chaîne)
 
 Exemple du rmodifier par défaut pour la commande `/oper` :

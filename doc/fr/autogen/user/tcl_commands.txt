@@ -1,3 +1,4 @@
+[[command_tcl_tcl]]
 [command]*`tcl`* lister/charger/décharger des scripts::
 ........................................
 /tcl  list|listfull [<nom>]

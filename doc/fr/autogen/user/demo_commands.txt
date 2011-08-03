@@ -1,8 +1,10 @@
+[[command_demo_demo_buffer]]
 [command]*`demo_buffer`* ouvrir un nouveau tampon::
 ........................................
 /demo_buffer  <nom>
 ........................................
 
+[[command_demo_demo_info]]
 [command]*`demo_info`* lire et afficher une info::
 ........................................
 /demo_info  <info> [<paramètres>]
@@ -13,6 +15,7 @@ paramètres: paramètres optionnels pour l'info
 Sans paramètre, cette commande affiche la liste des infos disponibles
 ........................................
 
+[[command_demo_demo_infolist]]
 [command]*`demo_infolist`* lire et afficher une infolist::
 ........................................
 /demo_infolist  <infolist> [<paramètres>]
@@ -23,6 +26,7 @@ paramètres: paramètres optionnels pour l'infolist
 Sans paramètre, cette commande affiche la liste des infolists disponibles
 ........................................
 
+[[command_demo_demo_printf]]
 [command]*`demo_printf`* afficher des messages sur le tampon courant::
 ........................................
 /demo_printf  <texte>

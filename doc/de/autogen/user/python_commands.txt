@@ -1,3 +1,4 @@
+[[command_python_python]]
 [command]*`python`* auflisten/installieren/deinstallieren von Skripten::
 ........................................
 /python  list|listfull [<name>]

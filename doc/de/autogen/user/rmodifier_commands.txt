@@ -1,3 +1,4 @@
+[[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Sichtbarkeit von Texten in WeeChat)::
 ........................................
 /rmodifier  list|listdefault

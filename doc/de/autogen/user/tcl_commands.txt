@@ -1,3 +1,4 @@
+[[command_tcl_tcl]]
 [command]*`tcl`* auflisten/installieren/deinstallieren von Skripten::
 ........................................
 /tcl  list|listfull [<name>]

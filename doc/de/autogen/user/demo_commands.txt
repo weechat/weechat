@@ -1,8 +1,10 @@
+[[command_demo_demo_buffer]]
 [command]*`demo_buffer`* Öffne einen neuen Buffer::
 ........................................
 /demo_buffer  <name>
 ........................................
 
+[[command_demo_demo_info]]
 [command]*`demo_info`* Hole eine Info und zeige sie an::
 ........................................
 /demo_info  <info> [<arguments>]
@@ -13,6 +15,7 @@ Argumente: optionale Argumente für Info
 Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen angezeigt
 ........................................
 
+[[command_demo_demo_infolist]]
 [command]*`demo_infolist`* Hole eine Infolist und zeige sie an::
 ........................................
 /demo_infolist  <infolist> [<arguments>]
@@ -23,6 +26,7 @@ Argumente: optionale Argumente für Infoliste
 Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen der Infoliste angezeigt
 ........................................
 
+[[command_demo_demo_printf]]
 [command]*`demo_printf`* Gibt ein paar Nachrichten im aktuellen Buffer aus::
 ........................................
 /demo_printf  <text>

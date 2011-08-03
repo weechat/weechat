@@ -1,3 +1,4 @@
+[[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* sostituisce le stringhe del modificatore con le espressioni regolari::
 ........................................
 /rmodifier  list|listdefault

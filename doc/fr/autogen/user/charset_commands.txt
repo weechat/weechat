@@ -1,3 +1,4 @@
+[[command_charset_charset]]
 [command]*`charset`* changer le charset pour le tampon courant::
 ........................................
 /charset  decode|encode <charset>

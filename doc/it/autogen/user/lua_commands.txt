@@ -1,3 +1,4 @@
+[[command_lua_lua]]
 [command]*`lua`* elenca/attiva/disattiva script::
 ........................................
 /lua  list|listfull [<nome>]

@@ -1,3 +1,4 @@
+[[command_perl_perl]]
 [command]*`perl`* list/load/unload scripts::
 ........................................
 /perl  list|listfull [<name>]

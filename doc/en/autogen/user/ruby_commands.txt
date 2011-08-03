@@ -1,3 +1,4 @@
+[[command_ruby_ruby]]
 [command]*`ruby`* list/load/unload scripts::
 ........................................
 /ruby  list|listfull [<name>]

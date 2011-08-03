@@ -1,3 +1,4 @@
+[[command_alias_alias]]
 [command]*`alias`* créer un alias pour une commande::
 ........................................
 /alias  [-completion <complétion>] alias [<commande> [<paramètres>]]

@@ -1,3 +1,4 @@
+[[command_logger_logger]]
 [command]*`logger`* configuration de l'extension logger::
 ........................................
 /logger  list

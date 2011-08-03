@@ -1,3 +1,4 @@
+[[command_alias_alias]]
 [command]*`alias`* Einem Befehl wird ein Alias zugewiesen::
 ........................................
 /alias  [-completion <completion>] <alias> [<command> [<arguments>]]

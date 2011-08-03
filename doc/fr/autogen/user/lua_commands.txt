@@ -1,3 +1,4 @@
+[[command_lua_lua]]
 [command]*`lua`* lister/charger/décharger des scripts::
 ........................................
 /lua  list|listfull [<nom>]

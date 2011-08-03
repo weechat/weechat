@@ -1,3 +1,4 @@
+[[command_alias_alias]]
 [command]*`alias`* crea un alias per un comando::
 ........................................
 /alias  [-completion <completamento>] <alias> [<comando> [<argomenti>]]

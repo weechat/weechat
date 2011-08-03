@@ -1,3 +1,4 @@
+[[command_tcl_tcl]]
 [command]*`tcl`* list/load/unload scripts::
 ........................................
 /tcl  list|listfull [<name>]

@@ -1,3 +1,4 @@
+[[command_ruby_ruby]]
 [command]*`ruby`* elenca/attiva/disattiva script::
 ........................................
 /ruby  list|listfull [<nome>]

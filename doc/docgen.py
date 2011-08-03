@@ -315,6 +315,7 @@ def docgen_cmd_cb(data, buffer, args):
                 args_formats = args.split(' || ')
                 description = translate(commands[plugin][command]['description'])
                 args_description = translate(commands[plugin][command]['args_description'])
+                f.write('[[command_%s_%s]]\n' % (plugin, command))
                 f.write('[command]*`%s`* %s::\n' % (command, description))
                 f.write('........................................\n')
                 prefix = '/%s  ' % command

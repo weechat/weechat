@@ -1,3 +1,4 @@
+[[command_aspell_aspell]]
 [command]*`aspell`* Konfiguration für Aspell-Erweiterung::
 ........................................
 /aspell  dictlist

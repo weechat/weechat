@@ -1,3 +1,4 @@
+[[command_python_python]]
 [command]*`python`* lister/charger/décharger des scripts::
 ........................................
 /python  list|listfull [<nom>]

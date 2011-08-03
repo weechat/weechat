@@ -1,3 +1,4 @@
+[[command_weechat_away]]
 [command]*`away`* Abwesenheitsstatus ein-/ausschalten::
 ........................................
 /away  [-all] [<message>]
@@ -6,6 +7,7 @@
 message: Abwesenheitsnachricht (ohne eine Nachricht wird der Abwesenheitszustand deaktivieren)
 ........................................
 
+[[command_weechat_bar]]
 [command]*`bar`* Infobars verwalten::
 ........................................
 /bar  list|listfull|listitems
@@ -57,6 +59,7 @@ Examples:
     /bar scroll nicklist * ye
 ........................................
 
+[[command_weechat_buffer]]
 [command]*`buffer`* Buffer verwalten::
 ........................................
 /buffer  list
@@ -111,6 +114,7 @@ Examples:
     /buffer +1
 ........................................
 
+[[command_weechat_color]]
 [command]*`color`* definiert Farbaliase und stellt eine Palette der möglichen Farben dar::
 ........................................
 /color  alias <color> <name>
@@ -132,6 +136,7 @@ Beispiele:
     /color unalias 214
 ........................................
 
+[[command_weechat_command]]
 [command]*`command`* führe explizit einen WeeChat Befehl oder eine Erweiterung aus::
 ........................................
 /command  <plugin> <command>
@@ -140,6 +145,7 @@ Erweiterung: Name der Erweiterung ('weechat' für interne WeeChat Befehle)
     Befehl: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
 ........................................
 
+[[command_weechat_cursor]]
 [command]*`cursor`* free movement of cursor on screen to execute actions on specific areas of screen::
 ........................................
 /cursor  go chat|<bar>|<x>,<y>
@@ -161,6 +167,7 @@ Examples:
     /cursor go 10,5
 ........................................
 
+[[command_weechat_debug]]
 [command]*`debug`* Debug-Kontrolle für Hauptprogramm und/oder Erweiterung::
 ........................................
 /debug  list
@@ -186,6 +193,7 @@ infolists: display infos about infolists
   windows: display windows tree
 ........................................
 
+[[command_weechat_filter]]
 [command]*`filter`* Filterfunktion um Nachrichten in Buffern zu aus- oder einzublenden, dazu können Tags oder regulären Ausdrücken verwendet werden::
 ........................................
 /filter  list
@@ -241,6 +249,7 @@ Beispiele:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
+[[command_weechat_help]]
 [command]*`help`* Zeigt einen Hilfstext für Befehle und Optionen an::
 ........................................
 /help  -list|-listfull [<plugin> [<plugin>...]]
@@ -254,6 +263,7 @@ Beispiele:
    option: Name einer Option (nutze /set um Optionen anzeigen zu lassen)
 ........................................
 
+[[command_weechat_history]]
 [command]*`history`* Zeigt den Befehlsverlauf des Buffers::
 ........................................
 /history  clear
@@ -263,6 +273,7 @@ clear: löscht den Befehlsverlauf
 value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ........................................
 
+[[command_weechat_input]]
 [command]*`input`* Funktionen für die Befehlszeile::
 ........................................
 /input  <action> [<arguments>]
@@ -316,6 +327,7 @@ list of actions:
 This command is used by key bindings or plugins.
 ........................................
 
+[[command_weechat_key]]
 [command]*`key`* Einer Taste einen Befehl zuordnen oder entfernen::
 ........................................
 /key  list|listdefault|listdiff [<context>]
@@ -365,6 +377,7 @@ Examples:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
+[[command_weechat_layout]]
 [command]*`layout`* Layout für Buffer und Fenster speichern, anwenden oder zurücksetzen::
 ........................................
 /layout  save [buffers|windows]
@@ -380,6 +393,7 @@ windows: speichert/verwendet nur Fenster (Buffer welche im jeweiligen Fenster da
 Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout dargestellt.
 ........................................
 
+[[command_weechat_mouse]]
 [command]*`mouse`* mouse control::
 ........................................
 /mouse  enable|disable|toggle [<delay>]
@@ -399,6 +413,7 @@ Examples:
     /mouse toggle 5
 ........................................
 
+[[command_weechat_mute]]
 [command]*`mute`* Führt einen Befehl ohne Textausgabe aus::
 ........................................
 /mute  [-current | -buffer <name> | -all] command
@@ -420,6 +435,7 @@ Beispiele:
   /mute -buffer irc.freenode.#weechat msg #weechat hi!
 ........................................
 
+[[command_weechat_plugin]]
 [command]*`plugin`* Erweiterungen verwalten (auflisten/installieren/deinstallieren)::
 ........................................
 /plugin  list|listfull [<name>]
@@ -439,6 +455,7 @@ filename: Erweiterung (Datei) welche installiert werden soll
 Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ........................................
 
+[[command_weechat_proxy]]
 [command]*`proxy`* Proxies verwalten::
 ........................................
 /proxy  list
@@ -471,6 +488,7 @@ Beispiele:
     /proxy del myproxy
 ........................................
 
+[[command_weechat_quit]]
 [command]*`quit`* WeeChat beenden::
 ........................................
 /quit  [-yes] [<arguments>]
@@ -480,6 +498,7 @@ arguments: Text der beim Signal "quit" verschickt wird
            (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-Nachricht an den Server)
 ........................................
 
+[[command_weechat_reload]]
 [command]*`reload`* Konfiguration neu laden::
 ........................................
 /reload  [<file> [<file>...]]
@@ -489,6 +508,7 @@ file: Konfigurationsdatei die erneut geladen werden soll (ohne Dateinamenserweit
 Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und Erweiterungen) neu geladen.
 ........................................
 
+[[command_weechat_save]]
 [command]*`save`* Konfiguration abspeichern::
 ........................................
 /save  [<file> [<file>...]]
@@ -498,6 +518,7 @@ file: Konfigurationsdatei die gesichert werden soll (ohne Dateinamenserweiterung
 Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweiterungen) gesichert.
 ........................................
 
+[[command_weechat_set]]
 [command]*`set`* Konfigurationsparameter setzen::
 ........................................
 /set  [<option> [<value>]]
@@ -520,6 +541,7 @@ Beispiele:
     /set weechat.look.highlight "word"
 ........................................
 
+[[command_weechat_unset]]
 [command]*`unset`* Konfigurationsparameter freigeben/zurücksetzen::
 ........................................
 /unset  <option>
@@ -535,6 +557,7 @@ Beispiele:
     /unset weechat.color.*
 ........................................
 
+[[command_weechat_upgrade]]
 [command]*`upgrade`* Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen::
 ........................................
 /upgrade  [<path_to_binary>]
@@ -550,6 +573,7 @@ Der Upgrade Vorgang besteht aus vier Schritten:
   4. ausführen einer neuen WeeChat Session.
 ........................................
 
+[[command_weechat_uptime]]
 [command]*`uptime`* Zeigt die Uptime von Weechat an::
 ........................................
 /uptime  [-o | -ol]
@@ -558,6 +582,7 @@ Der Upgrade Vorgang besteht aus vier Schritten:
 -ol: sendet die WeeChat Laufzeit in den aktuellen Buffer (in der voreingestellten Landessprache)
 ........................................
 
+[[command_weechat_version]]
 [command]*`version`* Zeigt die WeeChat-Version und das Datum der Kompilierung an::
 ........................................
 /version  [-o | -ol]
@@ -566,6 +591,7 @@ Der Upgrade Vorgang besteht aus vier Schritten:
 -ol: sendet die WeeChat Version in den aktuellen Buffer (in der Voreingestellten Landessprache)
 ........................................
 
+[[command_weechat_wait]]
 [command]*`wait`* Terminiere einen Befehl der ausgeführt werden soll::
 ........................................
 /wait  <number>[<unit>] <command>
@@ -589,6 +615,7 @@ Beispiele:
   /wait 2m Hallo
 ........................................
 
+[[command_weechat_window]]
 [command]*`window`* Fenster verwalten::
 ........................................
 /window  list

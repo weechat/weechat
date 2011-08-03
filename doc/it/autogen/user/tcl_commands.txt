@@ -1,3 +1,4 @@
+[[command_tcl_tcl]]
 [command]*`tcl`* elenca/attiva/disattiva script::
 ........................................
 /tcl  list|listfull [<nome>]

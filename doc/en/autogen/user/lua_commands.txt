@@ -1,3 +1,4 @@
+[[command_lua_lua]]
 [command]*`lua`* list/load/unload scripts::
 ........................................
 /lua  list|listfull [<name>]

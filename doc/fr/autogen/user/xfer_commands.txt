@@ -1,3 +1,4 @@
+[[command_xfer_me]]
 [command]*`me`* envoyer une action CTCP à l'hôte distant::
 ........................................
 /me  <message>
@@ -5,6 +6,7 @@
 message: message à envoyer
 ........................................
 
+[[command_xfer_xfer]]
 [command]*`xfer`* contrôle xfer::
 ........................................
 /xfer  [list|listfull]

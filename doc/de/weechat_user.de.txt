@@ -592,6 +592,83 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 | ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
 
+// TRANSLATION MISSING
+[[mouse]]
+Mouse support
+~~~~~~~~~~~~~
+
+WeeChat supports mouse clicks and gestures. It is working with local terminal,
+and remotely via ssh connection with or without screen/tmux.
+
+[[mouse_enable]]
+Enable mouse
+^^^^^^^^^^^^
+
+To enable mouse at startup:
+
+----------------------------------------
+/set weechat.look.mouse on
+----------------------------------------
+
+To enable mouse now, press @k(A-)@k(m) or do following command:
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+It is possible to temporarily disable mouse, and bind that on a key. For example
+key @k(A-)@k(x) to disable mouse for 10 seconds:
+
+----------------------------------------
+/key bind meta-x /mouse toggle 10
+----------------------------------------
+
+When mouse is enabled in WeeChat, you can use "shift" modifier to select or
+click in terminal, as if the mouse was disabled (on some terminals like iTerm,
+you have to use "alt" instead of "shift").
+
+[NOTE]
+For any problem with mouse, please look at 'WeeChat FAQ'.
+
+[[mouse_bind_events]]
+Bind mouse events to commands
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Many default mouse events are already defined by WeeChat (see
+<<key_bindings_mouse_context,keys for "mouse" context>>).
+
+You can change or add bindings with the command `/key` using context "mouse"
+(for syntax, see <<command_weechat_key,command /key>>).
+
+List of events supported:
+
+[width="80%",cols="3m,4",options="header"]
+|========================================
+| Event                            | Description
+| button1                          | click on left button
+| button2                          | click on right button
+| button3                          | click on middle button (often click on wheel)
+| button4 ... button9              | click on extra buttons
+| wheelup                          | wheel (up)
+| wheeldown                        | wheel (down)
+| buttonX-gesture-up ^(1)^         | gesture with distance between 3 and 19
+| buttonX-gesture-up-long ^(1)^    | gesture with distance >= 20
+| buttonX-gesture-down ^(1)^       | gesture with distance between 3 and 19
+| buttonX-gesture-down-long ^(1)^  | gesture with distance >= 20
+| buttonX-gesture-left ^(1)^       | gesture with distance between 3 and 39
+| buttonX-gesture-left-long ^(1)^  | gesture with distance >= 40
+| buttonX-gesture-right ^(1)^      | gesture with distance between 3 and 39
+| buttonX-gesture-right-long ^(1)^ | gesture with distance >= 40
+|========================================
+
+[NOTE]
+^(1)^ "X" is number of button used in gesture (1 to 9).
+
+[TIP]
+When binding a key in context "mouse", it's possible to match many events using
+`*` at beginning or end of name, for example `button1-gesture-*` will match any
+gesture made using left button.
+
 [[command_line]]
 Befehlszeile
 ~~~~~~~~~~~~
@@ -683,18 +760,6 @@ und "an alle" rot und unterstrichen dargestellt.
 ----------------------------------------
 ^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
 ----------------------------------------
-
-[[weechat_options]]
-WeeChat Optionen (weechat.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-include::autogen/user/weechat_options.txt[]
-
-[[weechat_commands]]
-WeeChat Befehle
-~~~~~~~~~~~~~~~
-
-include::autogen/user/weechat_commands.txt[]
 
 [[colors]]
 Farben
@@ -825,9 +890,9 @@ Attribute
 Er ist möglich einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
 Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
-* "*": fett
-* "!": invertierte Darstellung
-* "_": unterstrichen
+* `*`: fett
+* `!`: invertierte Darstellung
+* `_`: unterstrichen
 
 Um zum Beispiel dem eigenen Nick die Farbe weiß und unterstrichen
 zuzuordnen:
@@ -852,6 +917,18 @@ Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 ----------------------------------------
 /set weechat.color.status_time *99999
 ----------------------------------------
+
+[[weechat_options]]
+WeeChat Optionen (weechat.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_options.txt[]
+
+[[weechat_commands]]
+WeeChat Befehle
+~~~~~~~~~~~~~~~
+
+include::autogen/user/weechat_commands.txt[]
 
 
 [[plugins]]
@@ -1756,7 +1833,7 @@ Mittels der Rmodifer Erweiterung kann man Schlüsselwörter mittels regulären A
 wandeln. Ein typischer Anwendungsfall ist das Passwörter bei der Eingabe verborgen werden,
 oder das WeeChat diese verbirgt wenn sie im Befehlsverlauf gesichert werden.
 Ein einfaches Anwendungsbeispiel. Es ist möglich jedes einzelne Zeichen eines Passwortes
-durch das Zeichen "*" zu ersetzen.
+durch das Zeichen `*` zu ersetzen.
 
 [[rmodifier_options]]
 Optionen (rmodifier.conf)
@@ -1786,7 +1863,7 @@ Erweiterung genutzt werden siehe ''WeeChat Plugin API Reference', Funktion 'weec
 Für jede erkannte Gruppe sind folgende Aktionen möglich:
 
 * Gruppe wird in der vorliegenden Form beibehalten (wenn man die Gruppennummer nutzt)
-* alle Zeichen der Gruppe werden ersetzt um deren Inhalt zu verbergen (Gruppennummer + "*")
+* alle Zeichen der Gruppe werden ersetzt um deren Inhalt zu verbergen (Gruppennummer + `*`)
 * Gruppe wird entfernt (falls Gruppe nicht in Zeichenkette genutzt wird)
 
 Beispiel der rmodifier-Standardeinstellung für den Befehl `/oper`:

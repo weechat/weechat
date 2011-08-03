@@ -1,3 +1,4 @@
+[[command_relay_relay]]
 [command]*`relay`* Relay-Kontrolle::
 ........................................
 /relay  list|listfull|listrelay

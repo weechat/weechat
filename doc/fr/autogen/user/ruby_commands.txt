@@ -1,3 +1,4 @@
+[[command_ruby_ruby]]
 [command]*`ruby`* lister/charger/décharger des scripts::
 ........................................
 /ruby  list|listfull [<nom>]
