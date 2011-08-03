@@ -203,20 +203,15 @@ gui_mouse_event_init ()
 
 /*
  * gui_mouse_event_code2key: get key name with a mouse code
- *                           *extra_chars is set with first char following the
- *                           end of mouse code (this can point to the '\0' or
- *                           other chars)
  */
 
 const char *
-gui_mouse_event_code2key (const char *code, char **extra_chars)
+gui_mouse_event_code2key (const char *code)
 {
     int x, y, code_utf8, length;
     double diff_x, diff_y, distance, angle, pi4;
     static char key[128];
     char button[2], *ptr_code;
-    
-    *extra_chars = NULL;
     
     key[0] = '\0';
     
@@ -238,14 +233,12 @@ gui_mouse_event_code2key (const char *code, char **extra_chars)
         if (!ptr_code)
             return NULL;
         y = utf8_char_int (ptr_code) - 33;
-        *extra_chars = utf8_next_char (ptr_code);
     }
     else
     {
         /* get coordinates using ISO chars in code */
         x = ((unsigned char)code[1]) - 33;
         y = ((unsigned char)code[2]) - 33;
-        *extra_chars = (char *)code + 3;
     }
     if (x < 0)
         x = 0;
@@ -393,8 +386,6 @@ void
 gui_mouse_event_end ()
 {
     const char *mouse_key;
-    char *extra_chars;
-    int i;
     
     gui_mouse_event_pending = 0;
     
@@ -406,7 +397,7 @@ gui_mouse_event_end ()
     }
     
     /* get key from mouse code */
-    mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer, &extra_chars);
+    mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer);
     if (mouse_key && mouse_key[0])
     {
         if (gui_mouse_grab)
@@ -423,17 +414,4 @@ gui_mouse_event_end ()
     }
     
     gui_key_combo_buffer[0] = '\0';
-    
-    /*
-     * if extra chars, use them as new input (this can happen if used typed
-     * something and that mouse timer was not reached yet
-     */
-    if (extra_chars && extra_chars[0])
-    {
-        for (i = 0; extra_chars[i]; i++)
-        {
-            gui_key_buffer_add ((unsigned char)extra_chars[i]);
-        }
-        gui_key_flush ();
-    }
 }
