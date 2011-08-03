@@ -1241,6 +1241,31 @@ $ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
 
 Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/NickServ/CertFP
 
+// TRANSLATION MISSING
+[[irc_sasl_authentication]]
+SASL authentication
+^^^^^^^^^^^^^^^^^^^
+
+WeeChat supports SASL authentication, using two mechanisms: "plain" (default)
+or "dh-blowfish" (crypted password).
+
+Options in servers are:
+
+* 'sasl_mechanism': mechanism to use ("plain" or "dh-blowfish")
+* 'sasl_timeout': timeout (in seconds) for authentication
+* 'sasl_username': username
+* 'sasl_password': password
+
+If you want to use "dh-blowfish" by default for all servers:
+
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+----------------------------------------
+
+[NOTE]
+The "gcrypt" library required when compiling WeeChat in order to use
+"dh-blowfish" mechanism (see <<dependencies,dependencies>>).
+
 [[irc_tor_freenode]]
 Verbindung zu Freenode mittels TOR/SASL herstellen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1251,7 +1276,7 @@ Dies dient dazu die eigene Privatsphäre und Sicherheit im Internet zu erhöhen.
 
 Zuerst sollte man sicher gehen, dass WeeChat mit <<dependencies,libgcrypt11-dev>> kompiliert
 wurde (sofern WeeChat aus den Quellen erstellt wurde); es ist nicht verpflichtend, allerdings
-bietet DH-BLOWFISH eine größere Sicherheit als eine PLAIN Authentifikation mittels SASL.
+bietet "dh-blowfish" eine größere Sicherheit als eine "plain" Authentifikation mittels SASL.
 
 Im ersten Schritt muss TOR installiert werden. Für Debian (und Derivate):
 
