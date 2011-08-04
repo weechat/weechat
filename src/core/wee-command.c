@@ -651,15 +651,22 @@ COMMAND_CALLBACK(buffer)
         number = -1;
         if (argc >= 3)
         {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (!error || error[0])
+            if (string_strcasecmp (argv[2], "-all") == 0)
             {
-                /* invalid number */
-                gui_chat_printf (NULL,
-                                 _("%sError: incorrect buffer number"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_OK;
+                gui_buffer_unmerge_all ();
+            }
+            else
+            {
+                error = NULL;
+                number = strtol (argv[2], &error, 10);
+                if (!error || error[0])
+                {
+                    /* invalid number */
+                    gui_chat_printf (NULL,
+                                     _("%sError: incorrect buffer number"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_OK;
+                }
             }
         }
         gui_buffer_unmerge (buffer, (int) number);
@@ -5159,7 +5166,7 @@ command_init ()
                   N_("list"
                      " || clear [<number>|-merged|-all]"
                      " || move|merge <number>"
-                     " || unmerge [<number>]"
+                     " || unmerge [<number>|-all]"
                      " || close [<n1>[-<n2>]|<name>]"
                      " || notify <level>"
                      " || localvar"
@@ -5217,7 +5224,7 @@ command_init ()
                   "clear -merged|-all|%(buffers_numbers)"
                   " || move %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
-                  " || unmerge %(buffers_numbers)"
+                  " || unmerge %(buffers_numbers)|-all"
                   " || close %(buffers_plugins_names)"
                   " || list"
                   " || notify reset|none|highlight|message|all"

@@ -65,7 +65,7 @@ Examples:
 /buffer  list
          clear [<number>|-merged|-all]
          move|merge <number>
-         unmerge [<number>]
+         unmerge [<number>|-all]
          close [<n1>[-<n2>]|<name>]
          notify <level>
          localvar

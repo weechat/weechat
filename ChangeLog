@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-02
+v0.3.6-dev, 2011-08-04
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add option -all for command /buffer unmerge
 * core: fix crash when invalid UTF-8 chars are inserted in command line
   (bug #33471)
 * core: stop horizontal bar scroll at the end of content (for bars with

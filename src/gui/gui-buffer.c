@@ -2581,6 +2581,33 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 }
 
 /*
+ * gui_buffer_unmerge_all: unmerge all merged buffers
+ */
+
+void
+gui_buffer_unmerge_all ()
+{
+    int number, count_merged, i;
+    struct t_gui_buffer *ptr_buffer;
+    
+    number = 1;
+    while (number <= last_gui_buffer->number)
+    {
+        count_merged = gui_buffer_count_merged_buffers (number);
+        if (count_merged > 1)
+        {
+            for (i = 0; i < count_merged - 1; i++)
+            {
+                ptr_buffer = gui_buffer_search_by_number (number);
+                if (ptr_buffer)
+                    gui_buffer_unmerge (ptr_buffer, -1);
+            }
+        }
+        number++;
+    }
+}
+
+/*
  * gui_buffer_undo_snap: do a "snapshot" of buffer input (save content and
  *                       position)
  */
