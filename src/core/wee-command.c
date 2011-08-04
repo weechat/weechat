@@ -654,6 +654,7 @@ COMMAND_CALLBACK(buffer)
             if (string_strcasecmp (argv[2], "-all") == 0)
             {
                 gui_buffer_unmerge_all ();
+                return WEECHAT_RC_OK;
             }
             else
             {
