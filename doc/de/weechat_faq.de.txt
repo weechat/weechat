@@ -328,7 +328,8 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 Wie kann ich 256 Farben in WeeChat nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Seit der Version 0.3.4 unterstützt WeeChat 256 Farben.
+// TRANSLATION MISSING
+256 colors are supported with WeeChat ≥ 0.3.4.
 
 Zuerst sollte überprüft werden ob die 'TERM'-Umgebungsvariable korrekt hinterlegt
 ist. Folgende Werte sind zu empfehlen:
@@ -456,6 +457,8 @@ Mouse
 [[mouse_not_working]]
 Mouse is not working at all, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mouse is supported with WeeChat ≥ 0.3.6.
 
 First try to enable mouse:
 

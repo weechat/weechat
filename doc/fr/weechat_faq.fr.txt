@@ -323,7 +323,7 @@ utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
 Comment puis-je utiliser 256 couleurs sous WeeChat ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Les 256 couleurs sont supportées avec WeeChat 0.3.4 ou plus récent.
+Les 256 couleurs sont supportées avec WeeChat ≥ 0.3.4.
 
 Premièrement vérifiez que votre variable d'environnement 'TERM' est correcte,
 les valeurs recommandées sont :
@@ -450,6 +450,8 @@ Souris
 [[mouse_not_working]]
 La souris ne fonctionne pas du tout, que puis-je faire ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La souris est supportée avec WeeChat ≥ 0.3.6.
 
 Premièrement essayez d'activer la souris :
 

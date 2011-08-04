@@ -314,7 +314,7 @@ can issue: `/shell setenv LANG=en_US`.
 How can I use 256 colors in WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-256 colors are supported with WeeChat 0.3.4 or newer.
+256 colors are supported with WeeChat ≥ 0.3.4.
 
 First check that your 'TERM' environment variable is correct, recommended values
 are:
@@ -433,6 +433,8 @@ Mouse
 [[mouse_not_working]]
 Mouse is not working at all, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mouse is supported with WeeChat ≥ 0.3.6.
 
 First try to enable mouse:
 

@@ -320,7 +320,8 @@ utenti ISO, digitare: `/shell setenv LANG=en_US`.
 Come posso usare 256 colori in WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-256 colori sono supportati da WeeChat 0.3.4 o successivi.
+// TRANSLATION MISSING
+256 colors are supported with WeeChat ≥ 0.3.4.
 
 Per prima cosa verificare che la variabile di ambiente 'TERM' sia corretta, i
 valori raccomandati sono:
@@ -448,6 +449,8 @@ Mouse
 [[mouse_not_working]]
 Mouse is not working at all, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mouse is supported with WeeChat ≥ 0.3.6.
 
 First try to enable mouse:
 
