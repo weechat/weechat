@@ -63,7 +63,7 @@ Kern (Core) vs Erweiterungen
 Der Kern (core) von WeeChat ist ausschließlich dazu da Daten auf dem Bildschirm
 darzustellen um mit dem Benutzer zu interagieren. Dies bedeutet, WeeChat an sich
 -also nur WeeChat core- ohne jegliche Erweiterung ist unbrauchbar.
-(an die treuen User: IRC war ein Teil des Kerns bei Versionen <= 0.2.6)
+(an die treuen User: IRC war ein Teil des Kerns bei Versionen ≤ 0.2.6)
 
 Alle Netzwerkprotokolle, z.B. IRC, werden als separate Erweiterung bereit gestellt.
 

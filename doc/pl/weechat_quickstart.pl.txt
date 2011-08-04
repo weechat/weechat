@@ -57,7 +57,7 @@ Rdzeń vs wtyczki
 
 "Rdzeń" WeeChat jest używany tylko do wyświetlania danych na ekranie oraz
 interakcji z użytkownikiem, oznacza to, że rdzeń weechat bez wtyczek jest
-bezużyteczny (wierni użytkownicy: IRC był częścią rdzenia dla wersji < = 0.2.6).
+bezużyteczny (wierni użytkownicy: IRC był częścią rdzenia dla wersji ≤ 0.2.6).
 
 Wszystkie protokoły sieciowe jak IRC są dostarczane w oddzielnych pluginach.
 

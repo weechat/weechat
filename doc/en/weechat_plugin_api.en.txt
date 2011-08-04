@@ -1586,7 +1586,7 @@ Arguments:
 
 * 'string_start': start of string (function will not return a char before this
   pointer)
-* 'string': pointer to string (must be > = 'string_start')
+* 'string': pointer to string (must be ≥ 'string_start')
 
 Return value:
 

@@ -90,20 +90,20 @@ compiler WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Paquet ^(1)^             | Requis | Fonctionnalité
-| cmake                    | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^(2)^   | *oui*  | interface ncurses
-| gettext                  | non    | internationalisation (traduction des messages; la langue de base est l'anglais)
-| libgcrypt11-dev          | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
-| libgnutls-dev (>= 2.2.0) | non    | connexion SSL au serveur IRC
-| libaspell-dev            | non    | extension aspell
-| libperl-dev              | non    | extension perl
-| python-dev               | non    | extension python
-| ruby1.8-dev              | non    | extension ruby
-| liblua5.1-0-dev          | non    | extension lua
-| tcl-dev (>= 8.5)         | non    | extension tcl
-| asciidoc (>= 8.5.0)      | non    | construction de la documentation (fichiers HTML)
-| source-highlight         | non    | coloration des sources dans la documentation HTML
+| Paquet ^(1)^            | Requis | Fonctionnalité
+| cmake                   | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^  | *oui*  | interface ncurses
+| gettext                 | non    | internationalisation (traduction des messages; la langue de base est l'anglais)
+| libgcrypt11-dev         | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
+| libgnutls-dev (≥ 2.2.0) | non    | connexion SSL au serveur IRC
+| libaspell-dev           | non    | extension aspell
+| libperl-dev             | non    | extension perl
+| python-dev              | non    | extension python
+| ruby1.8-dev             | non    | extension ruby
+| liblua5.1-0-dev         | non    | extension lua
+| tcl-dev (≥ 8.5)         | non    | extension tcl
+| asciidoc (≥ 8.5.0)      | non    | construction de la documentation (fichiers HTML)
+| source-highlight        | non    | coloration des sources dans la documentation HTML
 |========================================
 
 [NOTE]
@@ -664,13 +664,13 @@ Liste des évènements supportés :
 | wheelup                          | roulette (haut)
 | wheeldown                        | roulette (bas)
 | buttonX-gesture-up ^(1)^         | geste avec distance entre 3 et 19
-| buttonX-gesture-up-long ^(1)^    | geste avec distance >= 20
+| buttonX-gesture-up-long ^(1)^    | geste avec distance supérieure ou égale à 20
 | buttonX-gesture-down ^(1)^       | geste avec distance entre 3 et 19
-| buttonX-gesture-down-long ^(1)^  | geste avec distance >= 20
+| buttonX-gesture-down-long ^(1)^  | geste avec distance supérieure ou égale à 20
 | buttonX-gesture-left ^(1)^       | geste avec distance entre 3 et 39
-| buttonX-gesture-left-long ^(1)^  | geste avec distance >= 40
+| buttonX-gesture-left-long ^(1)^  | geste avec distance supérieure ou égale à 40
 | buttonX-gesture-right ^(1)^      | geste avec distance entre 3 et 39
-| buttonX-gesture-right-long ^(1)^ | geste avec distance >= 40
+| buttonX-gesture-right-long ^(1)^ | geste avec distance supérieure ou égale à 40
 |========================================
 
 [NOTE]

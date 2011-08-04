@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-01 13:42+0200\n"
+"POT-Creation-Date: 2011-08-04 16:12+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1052,10 +1052,12 @@ msgstr "alias <cor> <apelido> || unalias <cor> || reset"
 
 # Translate orange? Is it a internal name?
 # TODO: revisit here when color names were specified as translatable or not
+#, fuzzy
 msgid ""
 "  alias: add an alias for a color\n"
 "unalias: delete an alias\n"
-"  color: color number (>= 0, max depends on terminal, commonly 63 or 255)\n"
+"  color: color number (greater than or equal to 0, max depends on terminal, "
+"commonly 63 or 255)\n"
 "   name: alias name for color (for example: \"orange\")\n"
 "  reset: reset all color pairs (required when no more color pairs are "
 "available if automatic reset is disabled, see option weechat.look."

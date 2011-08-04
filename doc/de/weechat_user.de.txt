@@ -88,21 +88,21 @@ welche Pakete optional genutzt werden können.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Paket ^(1)^              | benötigt | Funktion
-| cmake                    | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-| libncursesw5-dev ^(2)^   | *ja*     | ncurses Oberfläche
+| Paket ^(1)^             | benötigt | Funktion
+| cmake                   | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+| libncursesw5-dev ^(2)^  | *ja*     | ncurses Oberfläche
 // TRANSLATION MISSING
-| gettext                  | nein     | internationalization (translation of messages; base language is english)
-| libgcrypt11-dev          | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
-| libgnutls-dev (>= 2.2.0) | nein     | SSL Verbindung zu einem IRC Server
-| libaspell-dev            | nein     | aspell Erweiterung
-| libperl-dev              | nein     | perl Erweiterung
-| python-dev               | nein     | python Erweiterung
-| ruby1.8-dev              | nein     | ruby Erweiterung
-| liblua5.1-0-dev          | nein     | lua Erweiterung
-| tcl-dev (>= 8.5)         | nein     | tcl Erweiterung
-| asciidoc (>= 8.5.0)      | nein     | erstellt Dokumentation (HTML Dateien)
-| source-highlight         | nein     | Syntax highlight für Quelltext in HTML Dokumentation
+| gettext                 | nein     | internationalization (translation of messages; base language is english)
+| libgcrypt11-dev         | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
+| libgnutls-dev (≥ 2.2.0) | nein     | SSL Verbindung zu einem IRC Server
+| libaspell-dev           | nein     | aspell Erweiterung
+| libperl-dev             | nein     | perl Erweiterung
+| python-dev              | nein     | python Erweiterung
+| ruby1.8-dev             | nein     | ruby Erweiterung
+| liblua5.1-0-dev         | nein     | lua Erweiterung
+| tcl-dev (≥ 8.5)         | nein     | tcl Erweiterung
+| asciidoc (≥ 8.5.0)      | nein     | erstellt Dokumentation (HTML Dateien)
+| source-highlight        | nein     | Syntax highlight für Quelltext in HTML Dokumentation
 |========================================
 
 [NOTE]
@@ -652,13 +652,13 @@ List of events supported:
 | wheelup                          | wheel (up)
 | wheeldown                        | wheel (down)
 | buttonX-gesture-up ^(1)^         | gesture with distance between 3 and 19
-| buttonX-gesture-up-long ^(1)^    | gesture with distance >= 20
+| buttonX-gesture-up-long ^(1)^    | gesture with distance greater than or equal to 20
 | buttonX-gesture-down ^(1)^       | gesture with distance between 3 and 19
-| buttonX-gesture-down-long ^(1)^  | gesture with distance >= 20
+| buttonX-gesture-down-long ^(1)^  | gesture with distance greater than or equal to 20
 | buttonX-gesture-left ^(1)^       | gesture with distance between 3 and 39
-| buttonX-gesture-left-long ^(1)^  | gesture with distance >= 40
+| buttonX-gesture-left-long ^(1)^  | gesture with distance greater than or equal to 40
 | buttonX-gesture-right ^(1)^      | gesture with distance between 3 and 39
-| buttonX-gesture-right-long ^(1)^ | gesture with distance >= 40
+| buttonX-gesture-right-long ^(1)^ | gesture with distance greater than or equal to 40
 |========================================
 
 [NOTE]

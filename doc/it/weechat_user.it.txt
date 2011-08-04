@@ -92,20 +92,20 @@ compilare WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Pacchetto ^(1)^          | Richiesto | Caratteristica
-| cmake                    | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
-| libncursesw5-dev ^(2)^   | *sì*      | interfaccia ncurses
-| gettext                  | no        | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| libgcrypt11-dev          | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
-| libgnutls-dev (>= 2.2.0) | no        | connessione SSL al server IRC
-| libaspell-dev            | no        | plugin aspell
-| libperl-dev              | no        | plugin perl
-| python-dev               | no        | plugin python
-| ruby1.8-dev              | no        | plugin ruby
-| liblua5.1-0-dev          | no        | plugin lua
-| tcl-dev (>= 8.5)         | no        | plugin tcl
-| asciidoc (>= 8.5.0)      | no        | compilazione della documentazione (file HTML)
-| source-highlight         | no        | evidenziazione della sintassi per i sorgenti nella documentazione HTML
+| Pacchetto ^(1)^         | Richiesto | Caratteristica
+| cmake                   | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| libncursesw5-dev ^(2)^  | *sì*      | interfaccia ncurses
+| gettext                 | no        | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
+| libgcrypt11-dev         | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
+| libgnutls-dev (≥ 2.2.0) | no        | connessione SSL al server IRC
+| libaspell-dev           | no        | plugin aspell
+| libperl-dev             | no        | plugin perl
+| python-dev              | no        | plugin python
+| ruby1.8-dev             | no        | plugin ruby
+| liblua5.1-0-dev         | no        | plugin lua
+| tcl-dev (≥ 8.5)         | no        | plugin tcl
+| asciidoc (≥ 8.5.0)      | no        | compilazione della documentazione (file HTML)
+| source-highlight        | no        | evidenziazione della sintassi per i sorgenti nella documentazione HTML
 |========================================
 
 [NOTE]
@@ -660,13 +660,13 @@ List of events supported:
 | wheelup                          | wheel (up)
 | wheeldown                        | wheel (down)
 | buttonX-gesture-up ^(1)^         | gesture with distance between 3 and 19
-| buttonX-gesture-up-long ^(1)^    | gesture with distance >= 20
+| buttonX-gesture-up-long ^(1)^    | gesture with distance greater than or equal to 20
 | buttonX-gesture-down ^(1)^       | gesture with distance between 3 and 19
-| buttonX-gesture-down-long ^(1)^  | gesture with distance >= 20
+| buttonX-gesture-down-long ^(1)^  | gesture with distance greater than or equal to 20
 | buttonX-gesture-left ^(1)^       | gesture with distance between 3 and 39
-| buttonX-gesture-left-long ^(1)^  | gesture with distance >= 40
+| buttonX-gesture-left-long ^(1)^  | gesture with distance greater than or equal to 40
 | buttonX-gesture-right ^(1)^      | gesture with distance between 3 and 39
-| buttonX-gesture-right-long ^(1)^ | gesture with distance >= 40
+| buttonX-gesture-right-long ^(1)^ | gesture with distance greater than or equal to 40
 |========================================
 
 [NOTE]

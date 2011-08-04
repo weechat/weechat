@@ -4,7 +4,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 
 [NOTE]
-Questo documento è valido per le versioni di WeeChat > = 0.3.0.
+Questo documento è valido per le versioni di WeeChat ≥ 0.3.0.
 
 
 [[general]]
@@ -28,7 +28,7 @@ Perché scegliere WeeChat? X-Chat ed Irssi vanno così bene...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Perché WeeChat è molto leggero ed ha nuove funzionalità.
-Alcune caratteristiche (versione > = 0.3.x):
+Alcune caratteristiche (versione ≥ 0.3.x):
 
 * supporto multi-protocollo via plugin (IRC, Jabber)
 * diverse interfacce remote in aggiunta a Curses (presto in arrivo)
@@ -272,7 +272,7 @@ l'allineamento sul nick:
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-Con WeeChat > = 0.3.6, si può abilitare l'opzione "eat_newline_glitch", in
+Con WeeChat ≥ 0.3.6, si può abilitare l'opzione "eat_newline_glitch", in
 modo che non venga aggiunto il carattere di nuova riga all'inizio di ogni riga
 visualizzata (non interferisce con la selezione delle url):
 
@@ -349,7 +349,7 @@ niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell
 
 Per la versione 0.3.4, bisogna usare il comando `/color` per aggiungere nuovi colori.
 
-Per le versioni > = 0.3.5, è possibile usare qualsiasi numero di colore nelle
+Per le versioni ≥ 0.3.5, è possibile usare qualsiasi numero di colore nelle
 opzioni (opzionale: si possono aggiungere gli alias ai colori con il comando `/color`).
 
 Per favore consultare la guida per l'utente per maggiori informazioni sulla gestione
@@ -606,7 +606,7 @@ massimo 25 nick:
 ----------------------------------------
 
 [NOTE]
-Per WeeChat < = 0.3.3, le opzioni sono 'irc.network.away_check' e
+Per WeeChat ≤ 0.3.3, le opzioni sono 'irc.network.away_check' e
 'irc.network.away_check_max_nicks'.
 
 
@@ -707,7 +707,7 @@ Note:
 
 * gli script in '~/.weechat/<linguaggio>/autoload/' sono caricati automaticamente
   all'avvio di WeeChat.
-* è disponibile un plugin 'tcl' con la versione > = 0.3.0.
+* è disponibile un plugin 'tcl' con la versione ≥ 0.3.0.
 
 
 [[settings]]

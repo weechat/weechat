@@ -60,7 +60,7 @@ Core vs plugin
 Il "core" di WeeChat è utilizzato solo per visualizzare i dati sullo schermo
 e interagire con l'utente; ciò vuol dire che il core di weechat senza i
 plugin è inutile (utenti più fedeli: IRC faceva parte del core per le
-versioni < = 0.2.6).
+versioni ≤ 0.2.6).
 
 Tutti i protocolli di rete come IRC sono forniti in plugin separati.
 

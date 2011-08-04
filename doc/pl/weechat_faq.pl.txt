@@ -5,7 +5,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 // TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions > = 0.3.0.
+This document is written for WeeChat versions ≥ 0.3.0.
 
 
 [[general]]
@@ -30,7 +30,7 @@ Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ponieważ WeeChat jest lekki i posiada wiele nowych możliwości.
-Niektóre cechy (wersja > = 0.3.x):
+Niektóre cechy (wersja ≥ 0.3.x):
 
 * wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
 * wiele zdalnych GUI w dodatku do Courses (już niedługo)
@@ -273,7 +273,7 @@ remove alignment on nick:
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-With WeeChat > = 0.3.6, you can enable option "eat_newline_glitch", so that
+With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
 new line char is not added at the end of each line displayed (it will not break
 url selection):
 
@@ -349,7 +349,7 @@ nie należy panikować! Można to zmienić bez konieczności restartu, za pomoc�
 
 Dla wersji 0.3.4, musisz użyć komendy `/color` w celu dodania nowych kolorów.
 
-Dla wersji > = 0.3.5, można używać dowolnego numeru koloru w opcjach (opcjonalnie:
+Dla wersji ≥ 0.3.5, można używać dowolnego numeru koloru w opcjach (opcjonalnie:
 można stworzyć alias dla koloru za pomocą komendy `/color`).
 
 Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku użytkownika.
@@ -600,7 +600,7 @@ osobami:
 ----------------------------------------
 
 [NOTE]
-Dla WeeChat < = 0.3.3, opcje te to 'irc.network.away_check' oraz
+Dla WeeChat ≤ 0.3.3, opcje te to 'irc.network.away_check' oraz
 'irc.network.away_check_max_nicks'.
 
 
@@ -703,7 +703,7 @@ Uwagi:
 
 * skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy
   uruchomieniu WeeChat.
-* wtyczka 'tcl' jest dostępna dla wersji > = 0.3.0.
+* wtyczka 'tcl' jest dostępna dla wersji ≥ 0.3.0.
 
 
 [[settings]]

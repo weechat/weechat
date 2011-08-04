@@ -5234,8 +5234,8 @@ command_init ()
                      " || reset"),
                   N_("  alias: add an alias for a color\n"
                      "unalias: delete an alias\n"
-                     "  color: color number (>= 0, max depends on terminal, "
-                     "commonly 63 or 255)\n"
+                     "  color: color number (greater than or equal to 0, max "
+                     "depends on terminal, commonly 63 or 255)\n"
                      "   name: alias name for color (for example: \"orange\")\n"
                      "  reset: reset all color pairs (required when no more "
                      "color pairs are available if automatic reset is disabled, "

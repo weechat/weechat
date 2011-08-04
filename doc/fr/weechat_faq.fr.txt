@@ -4,7 +4,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 
 [NOTE]
-Ce document est écrit pour les versions de WeeChat > = 0.3.0.
+Ce document est écrit pour les versions de WeeChat ≥ 0.3.0.
 
 
 Général
@@ -27,7 +27,7 @@ Pourquoi choisir WeeChat ? X-Chat et Irssi sont si bien...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
-Quelques fonctionnalités (version > = 0.3.x) :
+Quelques fonctionnalités (version ≥ 0.3.x) :
 
 * support multi-protocoles via extensions (IRC, Jabber)
 * plusieurs interfaces déportées en plus de Curses (à venir bientôt)
@@ -274,7 +274,7 @@ supprimer l'alignement sur les pseudos :
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-Avec WeeChat > = 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour
+Avec WeeChat ≥ 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour
 éviter qu'un caractère de nouvelle ligne soit affiché après chaque ligne (donc
 cela ne cassera pas la sélection d'une URL) :
 
@@ -353,7 +353,7 @@ ne paniquez pas ! Vous pouvez la changer sans redémarrer, grâce au script
 Pour la version 0.3.4, vous devez utiliser la commande `/color` pour ajouter
 des nouvelles couleurs.
 
-Pour les versions > = 0.3.5, vous pouvez utiliser un numéro de couleur dans les
+Pour les versions ≥ 0.3.5, vous pouvez utiliser un numéro de couleur dans les
 options (facultatif : vous pouvez ajouter des alias de couleurs avec la commande
 `/color`).
 
@@ -609,7 +609,7 @@ canaux avec maximum 25 pseudos :
 ----------------------------------------
 
 [NOTE]
-Pour WeeChat < = 0.3.3, les options sont 'irc.network.away_check' et
+Pour WeeChat ≤ 0.3.3, les options sont 'irc.network.away_check' et
 'irc.network.away_check_max_nicks'.
 
 

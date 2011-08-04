@@ -773,7 +773,7 @@ else:
 ----------------------------------------
 
 [NOTE]
-Les versions < = 0.3.1.1 retournent une chaîne vide pour
+Les versions ≤ 0.3.1.1 retournent une chaîne vide pour
 'info_get("version_number")', donc vous devez vérifier que la valeur de retour
 n'est *pas* vide.
 

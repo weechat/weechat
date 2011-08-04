@@ -1605,7 +1605,7 @@ Paramètres :
 
 * 'string_start' : début de la chaîne (la fonction ne retournera pas un
   caractère situé avant ce pointeur)
-* 'string' : pointeur vers la chaîne (doit être >= 'string_start')
+* 'string' : pointeur vers la chaîne (doit être ≥ 'string_start')
 
 Valeur de retour :
 

@@ -1565,7 +1565,7 @@ Argomenti:
 
 * 'string_start': inizio della stringa (la funzione non restituirà un carattere prima
   di questo puntatore)
-* 'string': puntatore alla stringa (deve essere > = 'string_start')
+* 'string': puntatore alla stringa (deve essere ≥ 'string_start')
 
 Valore restituito:
 

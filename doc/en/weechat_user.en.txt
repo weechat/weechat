@@ -88,20 +88,20 @@ compile WeeChat.
 
 [width="80%",cols="4,^2,13",options="header"]
 |========================================
-| Package ^(1)^            | Required | Feature
-| cmake                    | *yes*    | build (autotools still possible, but cmake is recommended)
-| libncursesw5-dev ^(2)^   | *yes*    | ncurses interface
-| gettext                  | no       | internationalization (translation of messages; base language is english)
-| libgcrypt11-dev          | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
-| libgnutls-dev (>= 2.2.0) | no       | SSL connection to IRC server
-| libaspell-dev            | no       | aspell plugin
-| libperl-dev              | no       | perl plugin
-| python-dev               | no       | python plugin
-| ruby1.8-dev              | no       | ruby plugin
-| liblua5.1-0-dev          | no       | lua plugin
-| tcl-dev (>= 8.5)         | no       | tcl plugin
-| asciidoc (>= 8.5.0)      | no       | build documentation (HTML files)
-| source-highlight         | no       | syntax highlight for sources in HTML documentation
+| Package ^(1)^           | Required | Feature
+| cmake                   | *yes*    | build (autotools still possible, but cmake is recommended)
+| libncursesw5-dev ^(2)^  | *yes*    | ncurses interface
+| gettext                 | no       | internationalization (translation of messages; base language is english)
+| libgcrypt11-dev         | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
+| libgnutls-dev (≥ 2.2.0) | no       | SSL connection to IRC server
+| libaspell-dev           | no       | aspell plugin
+| libperl-dev             | no       | perl plugin
+| python-dev              | no       | python plugin
+| ruby1.8-dev             | no       | ruby plugin
+| liblua5.1-0-dev         | no       | lua plugin
+| tcl-dev (≥ 8.5)         | no       | tcl plugin
+| asciidoc (≥ 8.5.0)      | no       | build documentation (HTML files)
+| source-highlight        | no       | syntax highlight for sources in HTML documentation
 |========================================
 
 [NOTE]
@@ -649,13 +649,13 @@ List of events supported:
 | wheelup                          | wheel (up)
 | wheeldown                        | wheel (down)
 | buttonX-gesture-up ^(1)^         | gesture with distance between 3 and 19
-| buttonX-gesture-up-long ^(1)^    | gesture with distance >= 20
+| buttonX-gesture-up-long ^(1)^    | gesture with distance greater than or equal to 20
 | buttonX-gesture-down ^(1)^       | gesture with distance between 3 and 19
-| buttonX-gesture-down-long ^(1)^  | gesture with distance >= 20
+| buttonX-gesture-down-long ^(1)^  | gesture with distance greater than or equal to 20
 | buttonX-gesture-left ^(1)^       | gesture with distance between 3 and 39
-| buttonX-gesture-left-long ^(1)^  | gesture with distance >= 40
+| buttonX-gesture-left-long ^(1)^  | gesture with distance greater than or equal to 40
 | buttonX-gesture-right ^(1)^      | gesture with distance between 3 and 39
-| buttonX-gesture-right-long ^(1)^ | gesture with distance >= 40
+| buttonX-gesture-right-long ^(1)^ | gesture with distance greater than or equal to 40
 |========================================
 
 [NOTE]

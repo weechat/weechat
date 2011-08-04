@@ -771,7 +771,7 @@ else:
 ----------------------------------------
 
 [NOTE]
-Le versioni < = 0.3.1.1 restituiscono una stringa vuota per
+Le versioni ≤ 0.3.1.1 restituiscono una stringa vuota per
 'info_get("version_number")', per cui bisogna verificare che
 il valore restituito *non* sia vuoto.
 

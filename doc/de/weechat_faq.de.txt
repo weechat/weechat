@@ -4,7 +4,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 
 [NOTE]
-Diese Dokumentation beschreibt ausschließlich WeeChat Versionen > = 0.3.0.
+Diese Dokumentation beschreibt ausschließlich WeeChat Versionen ≥ 0.3.0.
 
 
 [[general]]
@@ -28,7 +28,7 @@ Weshalb sollte man WeeChat nutzen? - X-Chat und Irssi sind doch auch sehr gut...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Weil WeeChat schlank ist und neue Funktionen besitzt.
-Einige Funktionen (Version > = 0.3.x):
+Einige Funktionen (Version ≥ 0.3.x):
 
 * Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
 * mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
@@ -279,7 +279,7 @@ remove alignment on nick:
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-With WeeChat > = 0.3.6, you can enable option "eat_newline_glitch", so that
+With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
 new line char is not added at the end of each line displayed (it will not break
 url selection):
 
@@ -358,7 +358,7 @@ Umgebungsvariable durchgeführt werden, ohne das WeeChat neu gestartet werden mu
 
 Mit Version 0.3.4 muss der Befehl `/color` genutzt werden um neue Farben zu erstellen.
 
-Ab Version > = 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entsprechende
+Ab Version ≥ 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entsprechende
 Zahl der Farbe eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
 eine Farbe definieren).
 
@@ -619,7 +619,7 @@ Teilnehmer haben:
 ----------------------------------------
 
 [NOTE]
-Für Weechat < = 0.3.3, lauten die Optionen 'irc.network.away_check' und
+Für Weechat ≤ 0.3.3, lauten die Optionen 'irc.network.away_check' und
 'irc.network.away_check_max_nicks'.
 
 
@@ -727,7 +727,7 @@ Anmerkung:
 * Voreingestellter Pfad der Skripten: '~/.weechat/<Skriptsprache>/'
 * Skripten die sich im Verzeichnis '~/.weechat/<Skriptsprache>/autoload/' befinden werden
   beim Start von WeeChat automatisch geladen.
-* Eine 'tcl' Erweiterung ist ab Version > = 0.3.0 verfügbar.
+* Eine 'tcl' Erweiterung ist ab Version ≥ 0.3.0 verfügbar.
 
 
 [[settings]]

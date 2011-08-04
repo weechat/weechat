@@ -768,7 +768,7 @@ else:
 ----------------------------------------
 
 [NOTE]
-Versionen < = 0.3.1.1 geben einen leeren String zurück wenn man 'info_get("version_number")'
+Versionen ≤ 0.3.1.1 geben einen leeren String zurück wenn man 'info_get("version_number")'
 aufruft. Deshalb müssen Sie prüfen ob der Rückgabe wert *nicht* leer ist.
 
 Um die Version als String zu erhalten:

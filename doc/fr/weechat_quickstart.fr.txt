@@ -61,7 +61,7 @@ Coeur vs extensions
 Le coeur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
 interagir avec l'utilisateur, cela signifie que le coeur sans extension
 n'a pas grand intérêt (utilisateurs fidèles: IRC faisait partie du coeur
-dans les versions < = 0.2.6).
+dans les versions ≤ 0.2.6).
 
 Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.
 

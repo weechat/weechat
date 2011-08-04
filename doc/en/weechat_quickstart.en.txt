@@ -57,7 +57,7 @@ Core vs plugins
 
 WeeChat "core" is only used to display data on screen and interact with
 the user, that means weechat core without plugins is useless
-(faithful users: IRC was part of core for versions < = 0.2.6).
+(faithful users: IRC was part of core for versions ≤ 0.2.6).
 
 All network protocols like IRC are provided in separate plugins.
 
