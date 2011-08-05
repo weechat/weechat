@@ -182,24 +182,27 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             free (new_channel);
             return NULL;
         }
-        buffer_position = (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
-            weechat_config_integer (irc_config_look_new_channel_position) :
-            weechat_config_integer (irc_config_look_new_pv_position);
-        switch (buffer_position)
+        if (weechat_buffer_get_integer (new_buffer, "layout_number") < 1)
         {
-            case IRC_CONFIG_LOOK_BUFFER_POSITION_NONE:
-                /* do nothing */
-                break;
-            case IRC_CONFIG_LOOK_BUFFER_POSITION_NEXT:
-                /* move buffer to current number + 1 */
-                snprintf (str_number, sizeof (str_number),
-                          "%d", current_buffer_number + 1);
-                weechat_buffer_set (new_buffer, "number", str_number);
-                break;
-            case IRC_CONFIG_LOOK_BUFFER_POSITION_NEAR_SERVER:
-                /* move buffer after last channel/pv of server */
-                irc_channel_move_near_server (server, channel_type, new_buffer);
-                break;
+            buffer_position = (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
+                weechat_config_integer (irc_config_look_new_channel_position) :
+                weechat_config_integer (irc_config_look_new_pv_position);
+            switch (buffer_position)
+            {
+                case IRC_CONFIG_LOOK_BUFFER_POSITION_NONE:
+                    /* do nothing */
+                    break;
+                case IRC_CONFIG_LOOK_BUFFER_POSITION_NEXT:
+                    /* move buffer to current number + 1 */
+                    snprintf (str_number, sizeof (str_number),
+                              "%d", current_buffer_number + 1);
+                    weechat_buffer_set (new_buffer, "number", str_number);
+                    break;
+                case IRC_CONFIG_LOOK_BUFFER_POSITION_NEAR_SERVER:
+                    /* move buffer after last channel/pv of server */
+                    irc_channel_move_near_server (server, channel_type, new_buffer);
+                    break;
+            }
         }
         buffer_created = 1;
     }

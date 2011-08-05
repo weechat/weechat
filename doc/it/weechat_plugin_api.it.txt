@@ -8863,6 +8863,8 @@ Argomenti:
 * 'property': nome della proprietà:
 ** 'number': numero del buffer (inizia da 1)
 ** 'layout_number': numero del buffer salvato nel layout
+// TRANSLATION MISSING
+** 'layout_number_merge_order': order in merge for layout
 ** 'type': tipo dibuffer (0: formattato, 1: contenuto libero)
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer

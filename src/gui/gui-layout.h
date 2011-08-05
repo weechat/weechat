@@ -67,9 +67,11 @@ extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout_bu
                                                           int number);
 extern void gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
                                     struct t_gui_layout_buffer **last_layout_buffer);
-extern int gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
-                                         const char *plugin_name,
-                                         const char *buffer_name);
+extern void gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
+                                          const char *plugin_name,
+                                          const char *buffer_name,
+                                          int *layout_number,
+                                          int *layout_number_merge_order);
 extern void gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers);
 
 extern void gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows);

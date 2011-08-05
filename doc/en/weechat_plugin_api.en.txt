@@ -8802,6 +8802,7 @@ Arguments:
 * 'property': property name:
 ** 'number': number of buffer (starts to 1)
 ** 'layout_number': number of buffer saved in layout
+** 'layout_number_merge_order': order in merge for layout
 ** 'type': buffer type (0: formatted, 1: free content)
 ** 'notify': notify level for buffer
 ** 'num_displayed': number of windows displaying buffer

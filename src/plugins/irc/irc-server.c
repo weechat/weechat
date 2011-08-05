@@ -2865,9 +2865,16 @@ irc_server_create_buffer (struct t_irc_server *server)
     
     irc_server_set_buffer_title (server);
     
-    /* merge buffer if needed */
-    if (ptr_buffer_for_merge)
+    /*
+     * merge buffer if needed: if merge with(out) core set, and if no layout
+     * number is assigned for this buffer (if layout number is assigned, then
+     * buffer was already moved/merged by WeeChat core)
+     */
+    if (ptr_buffer_for_merge
+        && (weechat_buffer_get_integer (server->buffer, "layout_number") < 1))
+    {
         weechat_buffer_merge (server->buffer, ptr_buffer_for_merge);
+    }
     
     return server->buffer;
 }

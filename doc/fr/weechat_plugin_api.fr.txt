@@ -8943,6 +8943,7 @@ Paramètres :
 * 'property' : nom de la propriété :
 ** 'number' : numéro du tampon (commence à 1)
 ** 'layout_number' : numéro du tampon sauvegardé dans le "layout"
+** 'layout_number_merge_order' : ordre du tampon mélangé pour le "layout"
 ** 'type' : type de tampon (0 : formaté, 1 : contenu libre)
 ** 'notify' : niveau de notification du tampon
 ** 'num_displayed' : nombre de fenêtres affichant ce tampon

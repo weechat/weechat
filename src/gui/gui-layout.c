@@ -178,24 +178,40 @@ gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
  *                               return 0 if not found
  */
 
-int
+void
 gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
-                              const char *plugin_name, const char *buffer_name)
+                              const char *plugin_name, const char *buffer_name,
+                              int *layout_number,
+                              int *layout_number_merge_order)
 {
     struct t_gui_layout_buffer *ptr_layout_buffer;
+    int old_number, merge_order;
+    
+    *layout_number = 0;
+    *layout_number_merge_order = 0;
+    
+    old_number = -1;
+    merge_order = 0;
     
     for (ptr_layout_buffer = layout_buffers; ptr_layout_buffer;
          ptr_layout_buffer = ptr_layout_buffer->next_layout)
     {
+        if (ptr_layout_buffer->number != old_number)
+        {
+            old_number = ptr_layout_buffer->number;
+            merge_order = 0;
+        }
+        else
+            merge_order++;
+        
         if ((string_strcasecmp (ptr_layout_buffer->plugin_name, plugin_name) == 0)
             && (string_strcasecmp (ptr_layout_buffer->buffer_name, buffer_name) == 0))
         {
-            return ptr_layout_buffer->number;
+            *layout_number = ptr_layout_buffer->number;
+            *layout_number_merge_order = merge_order;
+            return;
         }
     }
-    
-    /* plugin/buffer not found */
-    return 0;
 }
 
 /*
@@ -205,58 +221,54 @@ gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
 void
 gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
 {
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
     const char *plugin_name;
-    int layout_applied_on_a_buffer;
+    int number, count_merged;
     
-    if (layout_buffers)
+    /* compute layout number for all buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        /* reset flag "layout_applied" on all buffers */
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            ptr_buffer->layout_applied = 0;
-        }
+        plugin_name = plugin_get_name (ptr_buffer->plugin);
+        gui_layout_buffer_get_number (layout_buffers,
+                                      plugin_name,
+                                      ptr_buffer->name,
+                                      &(ptr_buffer->layout_number),
+                                      &(ptr_buffer->layout_number_merge_order));
+    }
+    
+    /* unmerge all buffers */
+    gui_buffer_unmerge_all ();
+    
+    /* sort buffers by layout number (without merge) */
+    gui_buffer_sort_by_layout_number ();
+    
+    /* merge buffers */
+    ptr_buffer = gui_buffers->next_buffer;
+    while (ptr_buffer)
+    {
+        ptr_next_buffer = ptr_buffer->next_buffer;
         
-        /*
-         * apply layout on all buffers: we start from first buffer each time,
-         * until layout has been applied on all buffers
-         */
-        while (1)
+        if (ptr_buffer->layout_number == (ptr_buffer->prev_buffer)->layout_number)
+            gui_buffer_merge (ptr_buffer, ptr_buffer->prev_buffer);
+
+        ptr_buffer = ptr_next_buffer;
+    }
+    
+    /* set appropriate active buffers */
+    number = 1;
+    while (number <= last_gui_buffer->number)
+    {
+        count_merged = gui_buffer_count_merged_buffers (number);
+        if (count_merged > 1)
         {
-            layout_applied_on_a_buffer = 0;
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
+            ptr_buffer = gui_buffer_search_by_layout_number (number, 0);
+            if (ptr_buffer && !ptr_buffer->active)
             {
-                /* if layout has not been applied on buffer yet */
-                if (!ptr_buffer->layout_applied)
-                {
-                    ptr_buffer->layout_applied = 1;
-                    layout_applied_on_a_buffer = 1;
-                    plugin_name = plugin_get_name (ptr_buffer->plugin);
-                    ptr_buffer->layout_number = gui_layout_buffer_get_number (layout_buffers,
-                                                                              plugin_name,
-                                                                              ptr_buffer->name);
-                    if ((ptr_buffer->layout_number > 0)
-                        && (ptr_buffer->layout_number != ptr_buffer->number))
-                    {
-                        gui_buffer_move_to_number (ptr_buffer,
-                                                   ptr_buffer->layout_number);
-                    }
-                    /*
-                     * exit loop when layout has been applied on buffer, we
-                     * will apply for next buffers in another loop
-                     */
-                    break;
-                }
+                gui_buffer_set_active_buffer (ptr_buffer);
             }
-            /*
-             * no layout applied: that means layout has been applied on all
-             * buffers, so we exit from loop
-             */
-            if (!layout_applied_on_a_buffer)
-                break;
         }
+        number++;
     }
 }
 

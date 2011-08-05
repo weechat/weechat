@@ -107,30 +107,6 @@ char *gui_buffer_properties_set[] =
 
 
 /*
- * gui_buffer_find_pos: find position for buffer in list
- */
-
-struct t_gui_buffer *
-gui_buffer_find_pos (struct t_gui_buffer *buffer)
-{
-    struct t_gui_buffer *ptr_buffer;
-    
-    /* if no number is asked by layout, then add to the end by default */
-    if (buffer->layout_number < 1)
-        return NULL;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (buffer->layout_number <= ptr_buffer->number)
-            return ptr_buffer;
-    }
-    
-    /* position not found, add to the end */
-    return NULL;
-}
-
-/*
  * gui_buffer_local_var_add: add a new local variable to a buffer
  */
 
@@ -287,11 +263,40 @@ gui_buffer_notify_set_all ()
 }
 
 /*
+ * gui_buffer_find_pos: find position for buffer in list
+ */
+
+struct t_gui_buffer *
+gui_buffer_find_pos (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* if no number is asked by layout, then add to the end by default */
+    if (buffer->layout_number < 1)
+        return NULL;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if ((ptr_buffer->layout_number < 1)
+            || (buffer->layout_number < ptr_buffer->layout_number)
+            || ((buffer->layout_number == ptr_buffer->layout_number)
+                && (buffer->layout_number_merge_order <= ptr_buffer->layout_number_merge_order)))
+        {
+            return ptr_buffer;
+        }
+    }
+    
+    /* position not found, add to the end */
+    return NULL;
+}
+
+/*
  * gui_buffer_insert: insert buffer in good position in list of buffers
  */
 
 void
-gui_buffer_insert (struct t_gui_buffer *buffer)
+gui_buffer_insert (struct t_gui_buffer *buffer, int automatic_merge)
 {
     struct t_gui_buffer *pos, *ptr_buffer;
     
@@ -324,6 +329,21 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
         else
             gui_buffers = buffer;
         last_gui_buffer = buffer;
+    }
+    
+    /* merge buffer with previous or next, if they have layout number */
+    if (automatic_merge)
+    {
+        if (buffer->prev_buffer
+            && (buffer->layout_number == (buffer->prev_buffer)->layout_number))
+        {
+            gui_buffer_merge (buffer, buffer->prev_buffer);
+        }
+        else if ((buffer->next_buffer)
+                 && (buffer->layout_number == (buffer->next_buffer)->layout_number))
+        {
+            gui_buffer_merge (buffer, buffer->next_buffer);
+        }
     }
 }
 
@@ -386,10 +406,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->merge_for_upgrade = NULL;
         
         /* number will be set later (when inserting buffer in list) */
-        new_buffer->layout_number = gui_layout_buffer_get_number (gui_layout_buffers,
-                                                                  plugin_get_name (plugin),
-                                                                  name);
-        new_buffer->layout_applied = 0;
+        gui_layout_buffer_get_number (gui_layout_buffers,
+                                      plugin_get_name (plugin),
+                                      name,
+                                      &(new_buffer->layout_number),
+                                      &(new_buffer->layout_number_merge_order));
         new_buffer->name = strdup (name);
         new_buffer->short_name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
@@ -491,7 +512,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         
         /* add buffer to buffers list */
         first_buffer_creation = (gui_buffers == NULL);
-        gui_buffer_insert (new_buffer);
+        gui_buffer_insert (new_buffer, 1);
         
         /* set notify level */
         new_buffer->notify = gui_buffer_notify_get (new_buffer);
@@ -753,6 +774,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->number;
         else if (string_strcasecmp (property, "layout_number") == 0)
             return buffer->layout_number;
+        else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
+            return buffer->layout_number_merge_order;
         else if (string_strcasecmp (property, "type") == 0)
             return buffer->type;
         else if (string_strcasecmp (property, "notify") == 0)
@@ -1891,6 +1914,30 @@ gui_buffer_search_by_number (int number)
 }
 
 /*
+ * gui_buffer_search_by_layout_number: search a buffer by layout number
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_layout_number (int layout_number,
+                                    int layout_number_merge_order)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if ((ptr_buffer->layout_number == layout_number)
+            && (ptr_buffer->layout_number_merge_order == layout_number_merge_order))
+        {
+            return ptr_buffer;
+        }
+    }
+    
+    /* buffer not found */
+    return NULL;
+}
+
+/*
  * gui_buffer_count_merged_buffers: return number of merged buffers (buffers
  *                                  with same number)
  */
@@ -2608,6 +2655,28 @@ gui_buffer_unmerge_all ()
 }
 
 /*
+ * gui_buffer_sort_by_layout_number: sort buffers by layout number
+ */
+
+void
+gui_buffer_sort_by_layout_number ()
+{
+    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
+    
+    ptr_buffer = gui_buffers;
+    
+    gui_buffers = NULL;
+    last_gui_buffer = NULL;
+    
+    while (ptr_buffer)
+    {
+        ptr_next_buffer = ptr_buffer->next_buffer;
+        gui_buffer_insert (ptr_buffer, 0);
+        ptr_buffer = ptr_next_buffer;
+    }
+}
+
+/*
  * gui_buffer_undo_snap: do a "snapshot" of buffer input (save content and
  *                       position)
  */
@@ -2985,7 +3054,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, merge_for_upgrade, POINTER, NULL);
         HDATA_VAR(struct t_gui_buffer, number, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_buffer, layout_applied, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, layout_number_merge_order, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, name, STRING, NULL);
         HDATA_VAR(struct t_gui_buffer, short_name, STRING, NULL);
         HDATA_VAR(struct t_gui_buffer, type, INTEGER, NULL);
@@ -3129,6 +3198,10 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                   plugin_get_name (buffer->plugin)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "layout_number", buffer->layout_number))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "layout_number_merge_order", buffer->layout_number_merge_order))
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
         return 0;
@@ -3312,7 +3385,7 @@ gui_buffer_print_log ()
         log_printf ("  plugin_name_for_upgrade : '%s'",  ptr_buffer->plugin_name_for_upgrade);
         log_printf ("  number. . . . . . . . . : %d",    ptr_buffer->number);
         log_printf ("  layout_number . . . . . : %d",    ptr_buffer->layout_number);
-        log_printf ("  layout_applied. . . . . : %d",    ptr_buffer->layout_applied);
+        log_printf ("  layout_number_merge_order: %d",    ptr_buffer->layout_number_merge_order);
         log_printf ("  name. . . . . . . . . . : '%s'",  ptr_buffer->name);
         log_printf ("  short_name. . . . . . . : '%s'",  ptr_buffer->short_name);
         log_printf ("  type. . . . . . . . . . : %d",    ptr_buffer->type);

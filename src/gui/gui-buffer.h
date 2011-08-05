@@ -80,10 +80,8 @@ struct t_gui_buffer
     struct t_gui_buffer *merge_for_upgrade;
     
     int number;                        /* buffer number (first is 1)        */
-    int layout_number;                 /* the number of buffer saved in     */
-                                       /* layout                            */
-    int layout_applied;                /* used when applying layout, to     */
-                                       /* know if layout has been applied   */
+    int layout_number;                 /* number of buffer saved in layout  */
+    int layout_number_merge_order;     /* order in merge for layout         */
     char *name;                        /* buffer name                       */
     char *short_name;                  /* short buffer name                 */
     enum t_gui_buffer_type type;       /* buffer type (formatted, free, ..) */
@@ -264,6 +262,8 @@ extern struct t_gui_buffer *gui_buffer_search_by_full_name (const char *full_nam
 extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
+extern struct t_gui_buffer *gui_buffer_search_by_layout_number (int layout_number,
+                                                                int layout_number_merge_order);
 extern int gui_buffer_count_merged_buffers (int number);
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
@@ -279,6 +279,7 @@ extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_unmerge_all ();
+extern void gui_buffer_sort_by_layout_number ();
 extern void gui_buffer_undo_snap (struct t_gui_buffer *buffer);
 extern void gui_buffer_undo_snap_free (struct t_gui_buffer *buffer);
 extern void gui_buffer_undo_add (struct t_gui_buffer *buffer);
