@@ -140,18 +140,22 @@ wynik `echo $TERM` w terminalu).
 W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
 
 * jeśli WeeChat jest uruchomiony lokalnie lub na zdalnej maszynie bez screena,
-  zależy od używanego terminala: 'xterm', 'rxvt', ..
-* jeśli WeeChat działa pod screenem, powinieneś mieć 'screen'.
+  zależy od używanego terminala: 'xterm', 'xterm-256color', 'rxvt-unicode',
+  'rxvt-256color', ...
+// TRANSLATION MISSING
+* if WeeChat runs under screen, you should have 'screen' or 'screen-256color'.
 
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 
+// TRANSLATION MISSING
 [[screen_weird_chars]]
-Kiedy używam weechat pod screenem, dostaje dziwne losowe znaki, jak to naprawić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When I'm using weechat under screen/tmux, I have weird random chars, how do I fix that?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Może to być spowodowane przez złą wartość zmiennej środowiskowej TERM (spójrz na
-wynik `echo $TERM` w terminalu).
+// TRANSLATION MISSING
+This may be caused by bad value of the TERM variable in your shell (look at
+output of `echo $TERM` in your terminal, *outside screen/tmux*).
 
 Na przykład, 'xterm-color' może wyświetlać takie dziwne znaki, możesz użyc 'xterm',
 który działa dobrze (jak wiele innych wartości).

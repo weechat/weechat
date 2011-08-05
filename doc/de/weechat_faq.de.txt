@@ -147,18 +147,20 @@ werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
 Abhängig davon von wo WeeChat gestartet wird, solltest Du folgenden Wert haben:
 
 * falls WeeChat lokal oder auf einem entfernten Rechner läuft, je nach benutztem
-  Terminal: 'xterm', 'rxvt', ...
-* falls WeeChat unter screen läuft, sollte der Wert 'screen' sein.
+  Terminal: 'xterm', 'xterm-256color', 'rxvt-unicode', 'rxvt-256color', ...
+// TRANSLATION MISSING
+* if WeeChat runs under screen, you should have 'screen' or 'screen-256color'.
 
 Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 
 [[screen_weird_chars]]
-Wenn ich Weechat mit screen nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wenn ich Weechat mit screen/tmux nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell verursacht
-werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
+// TRANSLATION MISSING
+This may be caused by bad value of the TERM variable in your shell (look at
+output of `echo $TERM` in your terminal, *outside screen/tmux*).
 
 Als Beispiel, 'xterm-color' könnte solche merkwürdigen Zeichen produzieren.
 Nutzte stattdessen lieber 'xterm'.
