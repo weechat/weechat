@@ -1469,6 +1469,9 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
     
     if (!infolist_new_var_pointer (ptr_item, "pointer", window))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "current_window",
+                                   (gui_current_window == window) ? 1 : 0))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "number", window->number))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "x", window->win_x))

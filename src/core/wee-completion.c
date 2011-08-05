@@ -185,7 +185,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
          ptr_buffer = ptr_buffer->next_buffer)
     {
         snprintf (name, sizeof (name), "%s.%s",
-                  plugin_get_name (ptr_buffer->plugin),
+                  gui_buffer_get_plugin_name (ptr_buffer),
                   ptr_buffer->name);
         gui_completion_list_add (completion, name,
                                  0, WEECHAT_LIST_POS_SORT);

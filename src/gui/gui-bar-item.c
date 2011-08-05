@@ -867,7 +867,7 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    plugin_name = plugin_get_name (window->buffer->plugin);
+    plugin_name = gui_buffer_get_plugin_name (window->buffer);
     return (plugin_name) ? strdup (plugin_name) : strdup ("");
 }
 

@@ -971,7 +971,6 @@ gui_window_draw_separator (struct t_gui_window *window)
         mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator, 0, 0,
                   separator_vertical, window->win_height);
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator);
-        refresh ();
     }
 }
 

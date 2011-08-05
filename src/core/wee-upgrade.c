@@ -42,6 +42,7 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -50,8 +51,11 @@
 
 struct t_gui_buffer *upgrade_current_buffer = NULL;
 struct t_gui_buffer *upgrade_set_current_buffer = NULL;
-int upgrade_last_buffer_number = 1;
+int upgrade_set_current_window = 0;
 int hotlist_reset = 0;
+struct t_gui_layout_buffer *upgrade_layout_buffers = NULL;
+struct t_gui_layout_buffer *last_upgrade_layout_buffer = NULL;
+struct t_gui_layout_window *upgrade_layout_windows = NULL;
 
 
 /*
@@ -190,11 +194,11 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * upgrade_weechat_save_uptime: save uptime info to upgrade file
+ * upgrade_weechat_save_misc: save miscellaneous info to upgrade file
  */
 
 int
-upgrade_weechat_save_uptime (struct t_upgrade_file *upgrade_file)
+upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
 {
     struct t_infolist *ptr_infolist;
     struct t_infolist_item *ptr_item;
@@ -220,9 +224,14 @@ upgrade_weechat_save_uptime (struct t_upgrade_file *upgrade_file)
         infolist_free (ptr_infolist);
         return 0;
     }
+    if (!infolist_new_var_integer (ptr_item, "current_window_number", gui_current_window->number))
+    {
+        infolist_free (ptr_infolist);
+        return 0;
+    }
     
     rc = upgrade_file_write_object (upgrade_file,
-                                    UPGRADE_WEECHAT_TYPE_UPTIME,
+                                    UPGRADE_WEECHAT_TYPE_MISC,
                                     ptr_infolist);
     infolist_free (ptr_infolist);
     
@@ -263,6 +272,75 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
 }
 
 /*
+ * upgrade_weechat_save_layout_window_tree: save tree with layout for windows
+ *                                          to upgrade file
+ */
+
+int
+upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
+                                         struct t_gui_layout_window *layout_window)
+{
+    struct t_infolist *ptr_infolist;
+    int rc;
+    
+    ptr_infolist = infolist_new ();
+    if (!ptr_infolist)
+        return 0;
+    
+    if (!gui_layout_window_add_to_infolist (ptr_infolist, layout_window))
+    {
+        infolist_free (ptr_infolist);
+        return 0;
+    }
+    
+    rc = upgrade_file_write_object (upgrade_file,
+                                    UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW,
+                                    ptr_infolist);
+    
+    infolist_free (ptr_infolist);
+    if (!rc)
+        return 0;
+    
+    if (layout_window->child1)
+    {
+        if (!upgrade_weechat_save_layout_window_tree (upgrade_file,
+                                                      layout_window->child1))
+            return 0;
+    }
+    
+    if (layout_window->child2)
+    {
+        if (!upgrade_weechat_save_layout_window_tree (upgrade_file,
+                                                      layout_window->child2))
+            return 0;
+    }
+    
+    return 1;
+}
+
+/*
+ * upgrade_weechat_save_layout_window: save layout for windows to upgrade file
+ */
+
+int
+upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
+{
+    struct t_gui_layout_window *layout_windows;
+    int rc;
+    
+    /* get current layout for windows */
+    layout_windows = NULL;
+    gui_layout_window_save (&layout_windows);
+
+    /* save tree with layout of windows */
+    rc = upgrade_weechat_save_layout_window_tree (upgrade_file, layout_windows);
+    
+    gui_layout_window_remove_all (&layout_windows);
+    
+    return rc;
+}
+
+/*
  * upgrade_weechat_save: save upgrade file
  *                       return 1 if ok, 0 if error
  */
@@ -280,8 +358,9 @@ upgrade_weechat_save ()
     rc = 1;
     rc &= upgrade_weechat_save_history (upgrade_file, last_history_global);
     rc &= upgrade_weechat_save_buffers (upgrade_file);
-    rc &= upgrade_weechat_save_uptime (upgrade_file);
+    rc &= upgrade_weechat_save_misc (upgrade_file);
     rc &= upgrade_weechat_save_hotlist (upgrade_file);
+    rc &= upgrade_weechat_save_layout_window (upgrade_file);
     
     upgrade_file_close (upgrade_file);
     
@@ -302,7 +381,7 @@ upgrade_weechat_read_cb (void *data,
     const char *buffer_name;
     char option_name[64], *option_key, *option_var;
     struct t_gui_nick_group *ptr_group;
-    struct t_gui_buffer *ptr_buffer, *ptr_buffer_for_merge;
+    struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *new_line;
     struct t_gui_hotlist *new_hotlist;
     struct timeval creation_time;
@@ -332,6 +411,10 @@ upgrade_weechat_read_cb (void *data,
             case UPGRADE_WEECHAT_TYPE_BUFFER:
                 plugin_name = infolist_string (infolist, "plugin_name");
                 name = infolist_string (infolist, "name");
+                gui_layout_buffer_add (&upgrade_layout_buffers,
+                                       &last_upgrade_layout_buffer,
+                                       plugin_name, name,
+                                       infolist_integer (infolist, "number"));
                 if (gui_buffer_is_main (plugin_name, name))
                 {
                     /* use WeeChat main buffer */
@@ -343,7 +426,6 @@ upgrade_weechat_read_cb (void *data,
                      * create buffer if it was created by a plugin (ie not
                      * WeeChat main buffer)
                      */
-                    ptr_buffer_for_merge = last_gui_buffer;
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,
                         infolist_string (infolist, "name"),
@@ -355,10 +437,6 @@ upgrade_weechat_read_cb (void *data,
                             upgrade_set_current_buffer = upgrade_current_buffer;
                         upgrade_current_buffer->plugin_name_for_upgrade =
                             strdup (infolist_string (infolist, "plugin_name"));
-                        upgrade_current_buffer->merge_for_upgrade = NULL;
-                        if (infolist_integer (infolist, "number") == upgrade_last_buffer_number)
-                            upgrade_current_buffer->merge_for_upgrade = ptr_buffer_for_merge;
-                        upgrade_last_buffer_number = infolist_integer (infolist, "number");
                         upgrade_current_buffer->short_name =
                             (infolist_string (infolist, "short_name")) ?
                             strdup (infolist_string (infolist, "short_name")) :
@@ -544,9 +622,10 @@ upgrade_weechat_read_cb (void *data,
                     }
                 }
                 break;
-            case UPGRADE_WEECHAT_TYPE_UPTIME:
+            case UPGRADE_WEECHAT_TYPE_MISC:
                 weechat_first_start_time = infolist_time (infolist, "start_time");
                 weechat_upgrade_count = infolist_integer (infolist, "upgrade_count");
+                upgrade_set_current_window = infolist_integer (infolist, "current_window_number");
                 break;
             case UPGRADE_WEECHAT_TYPE_HOTLIST:
                 if (!hotlist_reset)
@@ -583,6 +662,16 @@ upgrade_weechat_read_cb (void *data,
                     }
                 }
                 break;
+            case UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW:
+                gui_layout_window_add (&upgrade_layout_windows,
+                                       infolist_integer (infolist, "internal_id"),
+                                       gui_layout_window_search_by_id (upgrade_layout_windows,
+                                                                       infolist_integer (infolist, "parent_id")),
+                                       infolist_integer (infolist, "split_pct"),
+                                       infolist_integer (infolist, "split_horiz"),
+                                       infolist_string (infolist, "plugin_name"),
+                                       infolist_string (infolist, "buffer_name"));
+                break;
         }
     }
     
@@ -599,21 +688,31 @@ upgrade_weechat_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    struct t_gui_buffer *ptr_buffer;
     
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
     
     if (!hotlist_reset)
         gui_hotlist_clear ();
-
-    /* merge buffers */
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
+    
+    gui_color_buffer_assign ();
+    gui_color_buffer_display ();
+    
+    if (upgrade_layout_buffers)
     {
-        if (ptr_buffer->merge_for_upgrade)
-            gui_buffer_merge (ptr_buffer, ptr_buffer->merge_for_upgrade);
+        gui_layout_buffer_apply (upgrade_layout_buffers);
+        gui_layout_buffer_remove_all (&upgrade_layout_buffers,
+                                      &last_upgrade_layout_buffer);
     }
+    
+    if (upgrade_layout_windows)
+    {
+        gui_layout_window_apply (upgrade_layout_windows, -1);
+        gui_layout_window_remove_all (&upgrade_layout_windows);
+    }
+    
+    if (upgrade_set_current_window > 0)
+        gui_window_switch_by_number (upgrade_set_current_window);
     
     if (upgrade_set_current_buffer)
     {
@@ -621,8 +720,7 @@ upgrade_weechat_load ()
                                      upgrade_set_current_buffer, 0);
     }
     
-    gui_color_buffer_assign ();
-    gui_color_buffer_display ();
+    gui_layout_buffer_get_number_all (gui_layout_buffers);
     
     return rc;
 }

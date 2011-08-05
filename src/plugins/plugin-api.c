@@ -563,7 +563,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                 {
                     snprintf (buffer_full_name, sizeof (buffer_full_name),
                               "%s.%s",
-                              plugin_get_name (ptr_buffer->plugin),
+                              gui_buffer_get_plugin_name (ptr_buffer),
                               ptr_buffer->name);
                     if (!arguments || !arguments[0]
                         || string_match (buffer_full_name, arguments, 0))

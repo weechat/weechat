@@ -141,8 +141,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
-              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              gui_buffer_get_plugin_name (buffer),
               buffer->name);
     
     for (ptr_line = buffer->lines->first_line; ptr_line;

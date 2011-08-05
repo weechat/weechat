@@ -1340,7 +1340,7 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
     if ((value < 0) && (strcmp (notify, "reset") != 0))
         return 0;
     
-    plugin_name = plugin_get_name (buffer->plugin);
+    plugin_name = gui_buffer_get_plugin_name (buffer);
     length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
     option_name = malloc (length);
     if (option_name)

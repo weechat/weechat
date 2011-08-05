@@ -72,12 +72,6 @@ struct t_gui_buffer
      * loaded
      */
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
-    /*
-     * when upgrading, we use this pointer to remember that this buffer
-     * must merge with another buffer (it's done when all buffers are
-     * restored)
-     */
-    struct t_gui_buffer *merge_for_upgrade;
     
     int number;                        /* buffer number (first is 1)        */
     int layout_number;                 /* number of buffer saved in layout  */
@@ -208,6 +202,7 @@ extern char *gui_buffer_properties_set[];
 
 /* buffer functions */
 
+extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_notify_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,

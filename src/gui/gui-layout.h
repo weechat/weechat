@@ -72,6 +72,7 @@ extern void gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buf
                                           const char *buffer_name,
                                           int *layout_number,
                                           int *layout_number_merge_order);
+extern void gui_layout_buffer_get_number_all (struct t_gui_layout_buffer *layout_buffers);
 extern void gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers);
 
 extern void gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows);
@@ -89,9 +90,11 @@ extern int gui_layout_window_save (struct t_gui_layout_window **layout_windows);
 extern void gui_layout_window_apply (struct t_gui_layout_window *layout_windows,
                                      int internal_id_current_window);
 extern void gui_layout_window_check_buffer (struct t_gui_buffer *buffer);
-
 extern void gui_layout_save_on_exit ();
-
+extern int gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
+                                              struct t_gui_layout_buffer *layout_buffer);
+extern int gui_layout_window_add_to_infolist (struct t_infolist *infolist,
+                                              struct t_gui_layout_window *layout_window);
 extern void gui_layout_print_log ();
 
 #endif /* __WEECHAT_GUI_LAYOUT_H */

@@ -7,6 +7,7 @@ v0.3.6-dev, 2011-08-05
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: save and restore layout for buffers and windows on /upgrade
 * core: fix bugs with automatic layout (bug #26110), add support of merged
   buffers in layout (task #10893)
 * core: add option -all for command /buffer unmerge

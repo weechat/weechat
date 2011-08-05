@@ -107,6 +107,22 @@ char *gui_buffer_properties_set[] =
 
 
 /*
+ * gui_buffer_get_plugin_name: get plugin name of buffer
+ *                             Note: during upgrade process (at startup after
+ *                             /upgrade), the name of plugin is retrieved
+ *                             in temporary variable "plugin_name_for_upgrade"
+ */
+
+const char *
+gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
+{
+    if (buffer->plugin_name_for_upgrade)
+        return buffer->plugin_name_for_upgrade;
+    
+    return plugin_get_name (buffer->plugin);
+}
+
+/*
  * gui_buffer_local_var_add: add a new local variable to a buffer
  */
 
@@ -176,7 +192,7 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
     int length;
     struct t_config_option *ptr_option;
     
-    plugin_name = plugin_get_name (buffer->plugin);
+    plugin_name = gui_buffer_get_plugin_name (buffer);
     length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
     option_name = malloc (length);
     if (option_name)
@@ -234,7 +250,7 @@ gui_buffer_notify_set (struct t_gui_buffer *buffer)
         gui_chat_printf (NULL,
                          _("Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         plugin_get_name (buffer->plugin),
+                         gui_buffer_get_plugin_name (buffer),
                          buffer->name,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_VALUE),
@@ -283,7 +299,12 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
             || ((buffer->layout_number == ptr_buffer->layout_number)
                 && (buffer->layout_number_merge_order <= ptr_buffer->layout_number_merge_order)))
         {
-            return ptr_buffer;
+            /* not possible to insert a buffer between 2 merged buffers */
+            if (!ptr_buffer->prev_buffer
+                || ((ptr_buffer->prev_buffer)->number != ptr_buffer->number))
+            {
+                return ptr_buffer;
+            }
         }
     }
     
@@ -330,7 +351,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer, int automatic_merge)
             gui_buffers = buffer;
         last_gui_buffer = buffer;
     }
-    
+
     /* merge buffer with previous or next, if they have layout number */
     if (automatic_merge && (buffer->layout_number >= 1))
     {
@@ -403,7 +424,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* init buffer */
         new_buffer->plugin = plugin;
         new_buffer->plugin_name_for_upgrade = NULL;
-        new_buffer->merge_for_upgrade = NULL;
         
         /* number will be set later (when inserting buffer in list) */
         gui_layout_buffer_get_number (gui_layout_buffers,
@@ -703,8 +723,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     if (buffers)
     {
         snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-                  (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
-                  buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+                  gui_buffer_get_plugin_name (buffer),
                   buffer->name);
         match = gui_buffer_full_name_match_list (buffer_full_name,
                                                  num_buffers, buffers);
@@ -839,7 +858,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     if (buffer && property)
     {
         if (string_strcasecmp (property, "plugin") == 0)
-            return plugin_get_name (buffer->plugin);
+            return gui_buffer_get_plugin_name (buffer);
         else if (string_strcasecmp (property, "name") == 0)
             return buffer->name;
         else if (string_strcasecmp (property, "short_name") == 0)
@@ -1735,24 +1754,8 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
             plugin_match = 1;
             if (plugin && plugin[0])
             {
-                if (ptr_buffer->plugin_name_for_upgrade)
-                {
-                    if (strcmp (plugin, ptr_buffer->plugin_name_for_upgrade) != 0)
-                        plugin_match = 0;
-                }
-                else
-                {
-                    if (ptr_buffer->plugin)
-                    {
-                        if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
-                            plugin_match = 0;
-                    }
-                    else
-                    {
-                        if (strcmp (plugin, PLUGIN_CORE) != 0)
-                            plugin_match = 0;
-                    }
-                }
+                if (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)
+                    plugin_match = 0;
             }
             if (plugin_match && (strcmp (ptr_buffer->name, name) == 0))
             {
@@ -1826,16 +1829,8 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             plugin_match = 1;
             if (plugin && plugin[0])
             {
-                if (ptr_buffer->plugin)
-                {
-                    if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
-                        plugin_match = 0;
-                }
-                else
-                {
-                    if (strcmp (plugin, PLUGIN_CORE) != 0)
-                        plugin_match = 0;
-                }
+                if (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)
+                    plugin_match = 0;
             }
             if (plugin_match)
             {
@@ -2634,21 +2629,19 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 void
 gui_buffer_unmerge_all ()
 {
-    int number, count_merged, i;
+    int number;
     struct t_gui_buffer *ptr_buffer;
     
     number = 1;
     while (number <= last_gui_buffer->number)
     {
-        count_merged = gui_buffer_count_merged_buffers (number);
-        if (count_merged > 1)
+        while (gui_buffer_count_merged_buffers (number) > 1)
         {
-            for (i = 0; i < count_merged - 1; i++)
-            {
-                ptr_buffer = gui_buffer_search_by_number (number);
-                if (ptr_buffer)
-                    gui_buffer_unmerge (ptr_buffer, -1);
-            }
+            ptr_buffer = gui_buffer_search_by_number (number);
+            if (ptr_buffer)
+                gui_buffer_unmerge (ptr_buffer, -1);
+            else
+                break;
         }
         number++;
     }
@@ -3051,7 +3044,6 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
     {
         HDATA_VAR(struct t_gui_buffer, plugin, POINTER, "plugin");
         HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING, NULL);
-        HDATA_VAR(struct t_gui_buffer, merge_for_upgrade, POINTER, NULL);
         HDATA_VAR(struct t_gui_buffer, number, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number_merge_order, INTEGER, NULL);
@@ -3195,7 +3187,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_pointer (ptr_item, "plugin", buffer->plugin))
         return 0;
     if (!infolist_new_var_string (ptr_item, "plugin_name",
-                                  plugin_get_name (buffer->plugin)))
+                                  gui_buffer_get_plugin_name (buffer)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
         return 0;
@@ -3381,7 +3373,7 @@ gui_buffer_print_log ()
         log_printf ("");
         log_printf ("[buffer (addr:0x%lx)]", ptr_buffer);
         log_printf ("  plugin. . . . . . . . . : 0x%lx ('%s')",
-                    ptr_buffer->plugin, plugin_get_name (ptr_buffer->plugin));
+                    ptr_buffer->plugin, gui_buffer_get_plugin_name (ptr_buffer));
         log_printf ("  plugin_name_for_upgrade : '%s'",  ptr_buffer->plugin_name_for_upgrade);
         log_printf ("  number. . . . . . . . . : %d",    ptr_buffer->number);
         log_printf ("  layout_number . . . . . : %d",    ptr_buffer->layout_number);

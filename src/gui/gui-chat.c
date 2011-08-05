@@ -589,13 +589,13 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         new_msg = NULL;
         if (buffer)
         {
-            length = strlen (plugin_get_name (buffer->plugin)) + 1 +
+            length = strlen (gui_buffer_get_plugin_name (buffer)) + 1 +
                 strlen (buffer->name) + 1 + ((tags) ? strlen (tags) : 0) + 1;
             modifier_data = malloc (length);
             if (modifier_data)
             {
                 snprintf (modifier_data, length, "%s;%s;%s",
-                          plugin_get_name (buffer->plugin),
+                          gui_buffer_get_plugin_name (buffer),
                           buffer->name,
                           (tags) ? tags : "");
                 new_msg = hook_modifier_exec (NULL,

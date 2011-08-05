@@ -847,8 +847,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     
     /* check if line is filtered or not */
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
-              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              gui_buffer_get_plugin_name (buffer),
               buffer->name);
     new_line->data->displayed = gui_filter_check_line (new_line,
                                                        buffer_full_name);
@@ -1009,8 +1008,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     
     /* check if line is filtered or not */
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              (!buffer->plugin && buffer->plugin_name_for_upgrade) ?
-              buffer->plugin_name_for_upgrade : plugin_get_name (buffer->plugin),
+              gui_buffer_get_plugin_name (buffer),
               buffer->name);
     ptr_line->data->displayed = gui_filter_check_line (ptr_line,
                                                        buffer_full_name);

@@ -531,7 +531,7 @@ COMMAND_CALLBACK(buffer)
                              ptr_buffer->number,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             plugin_get_name (ptr_buffer->plugin),
+                             gui_buffer_get_plugin_name (ptr_buffer),
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
@@ -819,7 +819,7 @@ COMMAND_CALLBACK(buffer)
         {
             gui_chat_printf (NULL, "%s%s.%s%s: (int) %s = %d",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             plugin_get_name (buffer->plugin),
+                             gui_buffer_get_plugin_name (buffer),
                              buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
@@ -830,7 +830,7 @@ COMMAND_CALLBACK(buffer)
         {
             gui_chat_printf (NULL, "%s%s.%s%s: (str) %s = %s",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             plugin_get_name (buffer->plugin),
+                             gui_buffer_get_plugin_name (buffer),
                              buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
@@ -841,7 +841,7 @@ COMMAND_CALLBACK(buffer)
         {
             gui_chat_printf (NULL, "%s%s.%s%s: (ptr) %s = 0x%lx",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             plugin_get_name (buffer->plugin),
+                             gui_buffer_get_plugin_name (buffer),
                              buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
@@ -4693,7 +4693,7 @@ COMMAND_CALLBACK(wait)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_OK;
                 }
-                timer_args[0] = strdup (plugin_get_name (buffer->plugin));
+                timer_args[0] = strdup (gui_buffer_get_plugin_name (buffer));
                 timer_args[1] = strdup (buffer->name);
                 timer_args[2] = strdup (argv_eol[2]);
                 

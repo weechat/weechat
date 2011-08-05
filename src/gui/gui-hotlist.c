@@ -515,7 +515,7 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "buffer_number", hotlist->buffer->number))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "plugin_name", plugin_get_name (hotlist->buffer->plugin)))
+    if (!infolist_new_var_string (ptr_item, "plugin_name", gui_buffer_get_plugin_name (hotlist->buffer)))
         return 0;
     if (!infolist_new_var_string (ptr_item, "buffer_name", hotlist->buffer->name))
         return 0;

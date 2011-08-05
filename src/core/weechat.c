@@ -444,7 +444,8 @@ main (int argc, char *argv[])
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);
     command_startup (1);                /* command executed after plugins   */
-    gui_layout_window_apply (gui_layout_windows, -1); /* apply saved layout */
+    if (!weechat_upgrading)
+        gui_layout_window_apply (gui_layout_windows, -1); /* apply win layout */
     if (weechat_upgrading)
         upgrade_weechat_end ();         /* remove .upgrade files + signal   */
     
