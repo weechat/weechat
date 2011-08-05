@@ -602,8 +602,8 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 
 // TRANSLATION MISSING
 [[mouse]]
-Mouse support
-~~~~~~~~~~~~~
+Support souris
+~~~~~~~~~~~~~~
 
 WeeChat supporte les clics et mouvements avec la souris. Cela fonctionne avec un
 terminal local, et à distance via une connexion ssh, avec ou sans screen/tmux.
