@@ -332,7 +332,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer, int automatic_merge)
     }
     
     /* merge buffer with previous or next, if they have layout number */
-    if (automatic_merge)
+    if (automatic_merge && (buffer->layout_number >= 1))
     {
         if (buffer->prev_buffer
             && (buffer->layout_number == (buffer->prev_buffer)->layout_number))
