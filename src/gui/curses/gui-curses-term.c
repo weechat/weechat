@@ -25,7 +25,11 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_NCURSESW_CURSES_H
+#include <ncursesw/term.h>
+#else
 #include <term.h>
+#endif
 
 
 /*
