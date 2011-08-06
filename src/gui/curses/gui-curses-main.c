@@ -167,6 +167,27 @@ gui_main_init ()
             gui_bar_window_calculate_pos_size (ptr_bar_win, gui_windows);
             gui_bar_window_create_win (ptr_bar_win);
         }
+        
+        /*
+         * display a warning if locale is UTF-8 and if ncurses has no
+         * wide-char/UTF-8 support
+         */
+#ifndef NCURSES_WACS
+        if (local_utf8)
+        {
+            gui_chat_printf (NULL,
+                             "***************************************************************");
+            gui_chat_printf (NULL,
+                             "%sWARNING: the locale is UTF-8 but ncurses "
+                             "has no wide-char/UTF-8 support: either install "
+                             "libncursesw and compile WeeChat with it or "
+                             "check that ncurses was compiled with option "
+                             "\"--enable-widec\"",
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            gui_chat_printf (NULL,
+                             "***************************************************************");
+        }
+#endif
     }
     
     if (CONFIG_BOOLEAN(config_look_mouse))
