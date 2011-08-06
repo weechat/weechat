@@ -222,7 +222,6 @@
 | weechat | buffer | buffer |
   'plugin' (pointer, hdata: 'plugin') +
   'plugin_name_for_upgrade' (string) +
-  'merge_for_upgrade' (pointer) +
   'number' (integer) +
   'layout_number' (integer) +
   'layout_number_merge_order' (integer) +
