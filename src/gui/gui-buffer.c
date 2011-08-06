@@ -75,13 +75,13 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
 char *gui_buffer_properties_get_integer[] =
-{ "number", "layout_number", "type", "notify", "num_displayed", "active",
-  "print_hooks_enabled", "lines_hidden", "prefix_max_length",
-  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
-  "nicklist_max_length", "nicklist_display_groups", "nicklist_visible_count",
-  "input", "input_get_unknown_commands", "input_size", "input_length",
-  "input_pos", "input_1st_display", "num_history", "text_search",
-  "text_search_exact", "text_search_found",
+{ "number", "layout_number", "layout_number_merge_order", "type", "notify",
+  "num_displayed", "active", "print_hooks_enabled", "lines_hidden",
+  "prefix_max_length", "time_for_each_line", "nicklist",
+  "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
+  "nicklist_visible_count", "input", "input_get_unknown_commands",
+  "input_size", "input_length", "input_pos", "input_1st_display",
+  "num_history", "text_search", "text_search_exact", "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
