@@ -562,15 +562,17 @@ Esempi:
 ........................................
 /upgrade  [<percorso_del_binario>]
 
-percorso_del_binario: percorso del binario di WeeChat (quello corrente è il predefinito)
+path_to_binary: path to WeeChat binary (default is current binary)
 
-Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
+This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
-Il processo di aggiornamento è diviso in 4 fasi:
-  1. salvataggio della sessione in file per il core e i plugin (buffer, cronologia, ..)
-  2. disattivazione di tutti i plugin (salvataggio delle configurazioni .conf)
-  3. salvataggio della configurazione di WeeChat (weechat.conf)
-  4. esecuzione del nuovo binario di WeeChat.
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade).
+
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
 ........................................
 
 [[command_weechat_uptime]]

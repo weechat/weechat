@@ -566,6 +566,8 @@ path_to_binary: path to WeeChat binary (default is current binary)
 
 This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade).
+
 Upgrade process has 4 steps:
   1. save session into files for core and plugins (buffers, history, ..)
   2. unload all plugins (configuration files (*.conf) are written on disk)

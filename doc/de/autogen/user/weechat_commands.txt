@@ -562,15 +562,17 @@ Beispiele:
 ........................................
 /upgrade  [<path_to_binary>]
 
-path_to_binary: Pfad zu einer ausführbaren WeeChat Version (Standardeinstellung ist die aktuell ausführbare Datei)
+path_to_binary: path to WeeChat binary (default is current binary)
 
-Dieser Befehl startet eine weitere WeeChat-Binärdatei. Aus diesem Grund muss diese kompiliert oder mit einem Paketmanager installiert sein bevor der Befehl ausgeführt wird.
+This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
-Der Upgrade Vorgang besteht aus vier Schritten:
-  1. Speicherung der Session in Dateien für Core und Erweiterungen (buffers, history, ..)
-  2. alle Erweiterungen werden ausgeschaltet (Konfigurationen *.conf werden gesichert)
-  3. Speicherung der WeeChat Konfiguration (weechat.conf)
-  4. ausführen einer neuen WeeChat Session.
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade).
+
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
 ........................................
 
 [[command_weechat_uptime]]

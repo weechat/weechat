@@ -566,6 +566,8 @@ chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire cour
 
 Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 
+Note: les connexions SSL sont perdues durant la mise à jour, car le rechargement de session SSL n'est pas possible actuellement avec GnuTLS. Il y a une reconnexion automatique après la mise à jour.
+
 Le processus de mise à jour comporte 4 étapes :
   1. sauvegarder la session pour le coeur et les extensions (tampons, historique, ...)
   2. décharger toutes les extensions (les fichiers de configuration (*.conf) sont écrits sur disque)
