@@ -262,9 +262,12 @@ gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
     {
         ptr_next_buffer = ptr_buffer->next_buffer;
         
-        if (ptr_buffer->layout_number == (ptr_buffer->prev_buffer)->layout_number)
+        if ((ptr_buffer->layout_number >= 1)
+            && (ptr_buffer->layout_number == (ptr_buffer->prev_buffer)->layout_number))
+        {
             gui_buffer_merge (ptr_buffer, ptr_buffer->prev_buffer);
-
+        }
+        
         ptr_buffer = ptr_next_buffer;
     }
     
