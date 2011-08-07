@@ -5761,7 +5761,7 @@ command_init ()
                      "Note: SSL connections are lost during upgrade, because "
                      "reload of SSL sessions is currently not possible with "
                      "GnuTLS. There is automatic reconnection after "
-                     "upgrade).\n\n"
+                     "upgrade.\n\n"
                      "Upgrade process has 4 steps:\n"
                      "  1. save session into files for core and plugins "
                      "(buffers, history, ..)\n"
