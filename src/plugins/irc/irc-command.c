@@ -2519,7 +2519,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                             (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[arg_text],
                             weechat_config_boolean (irc_config_network_colors_receive));
                         weechat_printf (ptr_server->buffer,
-                                        "%s%s-%s%s%s- %s%s",
+                                        "%sMSG%s(%s%s%s)%s: %s",
                                         weechat_prefix ("network"),
                                         IRC_COLOR_CHAT_DELIMITERS,
                                         IRC_COLOR_CHAT_NICK,
