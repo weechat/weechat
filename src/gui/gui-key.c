@@ -65,6 +65,9 @@ int gui_default_keys_count[GUI_KEY_NUM_CONTEXTS];    /* default keys number */
 char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
 { "default", "search", "cursor", "mouse" };
 
+char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
+{ "*", "chat", "bar", "item" };
+
 int gui_key_verbose = 0;            /* 1 to see some messages               */
 
 char gui_key_combo_buffer[1024];    /* buffer used for combos               */
@@ -621,60 +624,107 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
  */
 
 int
-gui_key_focus_matching (const char *key,
+gui_key_focus_matching (int area_type, const char *area_name,
+                        int focus_specific, int focus_any,
                         struct t_gui_focus_info *focus_info)
 {
-    int match, area_chat;
-    char *area_bar, *area_item, *pos;
+    int match, match_any;
+    char buffer_full_name[512];
     
-    if (key[1] == '*')
+    match_any = (strcmp (area_name, "*") == 0) ? 1 : 0;
+    
+    if (!focus_specific && !match_any)
+        return 0;
+    
+    if (!focus_any && match_any)
+        return 0;
+    
+    if (area_type == GUI_KEY_FOCUS_ANY)
         return 1;
     
     match = 0;
-    
-    pos = strchr (key, ':');
-    if (pos)
+
+    switch (area_type)
     {
-        area_chat = 0;
-        area_bar = NULL;
-        area_item = NULL;
-        if (strncmp (key + 1, "chat:", 5) == 0)
-            area_chat = 1;
-        else if (strncmp (key + 1, "bar(", 4) == 0)
-        {
-            area_bar = string_strndup (key + 5, pos - key - 6);
-        }
-        else if (strncmp (key + 1, "item(", 5) == 0)
-        {
-            area_item = string_strndup (key + 6, pos - key - 7);
-        }
-        if (area_chat || area_bar || area_item)
-        {
-            if (area_chat && focus_info->chat)
+        case GUI_KEY_FOCUS_ANY:
+            match = 1;
+            break;
+        case GUI_KEY_FOCUS_CHAT:
+            if (focus_info->chat && focus_info->window)
+            {
+                snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
+                          gui_buffer_get_plugin_name ((focus_info->window)->buffer),
+                          ((focus_info->window)->buffer)->name);
+                if (string_match (buffer_full_name, area_name, 0))
+                {
+                    match = 1;
+                }
+            }
+            break;
+        case GUI_KEY_FOCUS_BAR:
+            if (focus_info->bar_window
+                && (string_match ((focus_info->bar_window)->bar->name, area_name, 0)))
             {
                 match = 1;
             }
-            else if (area_bar && focus_info->bar_window
-                     && ((strcmp (area_bar, "*") == 0)
-                         || (strcmp (area_bar, (focus_info->bar_window)->bar->name) == 0)))
+            break;
+        case GUI_KEY_FOCUS_ITEM:
+            if (focus_info->bar_item
+                && (string_match (focus_info->bar_item, area_name, 0)))
             {
                 match = 1;
             }
-            else if (area_item && focus_info->bar_item
-                     && ((strcmp (area_item, "*") == 0)
-                         || (strcmp (area_item, focus_info->bar_item) == 0)))
-            {
-                match = 1;
-            }
-        }
-        
-        if (area_bar)
-            free (area_bar);
-        if (area_item)
-            free (area_item);
+            break;
+        case GUI_KEY_NUM_FOCUS:
+            break;
     }
     
     return match;
+}
+
+/*
+ * gui_key_focus_get_area: get area focus (any, chat, bar or item) and name
+ */
+
+void
+gui_key_focus_get_area (const char *key, int *area_type, char **area_name)
+{
+    int i, length;
+    char *pos_end;
+    
+    *area_type = GUI_KEY_FOCUS_ANY;
+    *area_name = NULL;
+    
+    for (i = 0; i < GUI_KEY_NUM_FOCUS; i++)
+    {
+        length = strlen (gui_key_focus_string[i]);
+        if (strncmp (key + 1, gui_key_focus_string[i], length) == 0)
+        {
+            if (i == GUI_KEY_FOCUS_ANY)
+            {
+                *area_type = i;
+                *area_name = strdup ("*");
+                return;
+            }
+            if (key[1 + length] == ':')
+            {
+                *area_type = i;
+                *area_name = strdup ("*");
+                return;
+            }
+            if ((key[1 + length] == '(') && key[1 + length + 1])
+            {
+                pos_end = strchr (key + 1 + length, ')');
+                if (pos_end)
+                {
+                    *area_type = i;
+                    *area_name = string_strndup (key + 1 + length + 1,
+                                                 pos_end - key - length - 2);
+                    return;
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -689,86 +739,85 @@ gui_key_focus_command (const char *key, int context,
                        struct t_gui_focus_info *focus_info2)
 {
     struct t_gui_key *ptr_key;
-    int i, errors;
-    char *pos, *pos_joker, *command, **commands;
+    int i, errors, matching, area_type;
+    char *pos, *command, **commands, *area_name;
     struct t_hashtable *hashtable;
     
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        if (ptr_key->key && (ptr_key->key[0] == '@'))
+        if (ptr_key->key && (ptr_key->key[0] != '@'))
+            continue;
+        
+        pos = strchr (ptr_key->key, ':');
+        if (!pos)
+            continue;
+        
+        if (gui_key_cmp (key, pos + 1, context) != 0)
+            continue;
+        
+        gui_key_focus_get_area (ptr_key->key, &area_type, &area_name);
+        if (!area_name)
+            continue;
+        
+        matching = gui_key_focus_matching (area_type, area_name,
+                                           focus_specific, focus_any,
+                                           focus_info1);
+        free (area_name);
+        
+        if (!matching)
+            continue;
+        
+        hashtable = hook_focus_get_data (focus_info1,
+                                         focus_info2,
+                                         key);
+        if (gui_cursor_debug || gui_mouse_debug)
         {
-            pos = strchr (ptr_key->key, ':');
-            if (pos)
+            gui_chat_printf (NULL, "Hashtable focus: %s",
+                             hashtable_get_string (hashtable,
+                                                   "keys_values_sorted"));
+        }
+        command = string_replace_with_hashtable (ptr_key->command,
+                                                 hashtable,
+                                                 &errors);
+        if (command)
+        {
+            if (errors == 0)
             {
-                pos_joker = strchr (ptr_key->key, '*');
-                if (!focus_specific && (!pos_joker || (pos_joker > pos)))
-                    continue;
-                if (!focus_any && pos_joker && (pos_joker < pos))
-                    continue;
-                
-                pos++;
-                if (gui_key_cmp (key, pos, context) == 0)
+                if (gui_cursor_debug || gui_mouse_debug)
                 {
-                    if (gui_key_focus_matching (ptr_key->key, focus_info1))
+                    gui_chat_printf (NULL,
+                                     "Command executed: %s  (%s)",
+                                     command, ptr_key->command);
+                }
+                if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
+                {
+                    gui_input_delete_line (gui_current_window->buffer);
+                }
+                commands = string_split_command (command, ';');
+                if (commands)
+                {
+                    for (i = 0; commands[i]; i++)
                     {
-                        hashtable = hook_focus_get_data (focus_info1,
-                                                         focus_info2,
-                                                         key);
-                        if (gui_cursor_debug || gui_mouse_debug)
-                        {
-                            gui_chat_printf (NULL, "Hashtable focus: %s",
-                                             hashtable_get_string (hashtable,
-                                                                   "keys_values_sorted"));
-                        }
-                        command = string_replace_with_hashtable (ptr_key->command,
-                                                                 hashtable,
-                                                                 &errors);
-                        if (command)
-                        {
-                            if (errors == 0)
-                            {
-                                if (gui_cursor_debug || gui_mouse_debug)
-                                {
-                                    gui_chat_printf (NULL,
-                                                     "Command executed: %s  (%s)",
-                                                     command,
-                                                     ptr_key->command);
-                                }
-                                if ((context == GUI_KEY_CONTEXT_CURSOR)
-                                    && gui_cursor_debug)
-                                {
-                                    gui_input_delete_line (gui_current_window->buffer);
-                                }
-                                commands = string_split_command (command,
-                                                                 ';');
-                                if (commands)
-                                {
-                                    for (i = 0; commands[i]; i++)
-                                    {
-                                        input_data (gui_current_window->buffer, commands[i]);
-                                    }
-                                    string_free_split_command (commands);
-                                }
-                            }
-                            else
-                            {
-                                if (gui_cursor_debug || gui_mouse_debug)
-                                {
-                                    gui_chat_printf (NULL,
-                                                     "Command NOT executed (%s)",
-                                                     ptr_key->command);
-                                }
-                            }
-                            free (command);
-                        }
-                        if (hashtable)
-                            hashtable_free (hashtable);
-                        return 1;
+                        input_data (gui_current_window->buffer, commands[i]);
                     }
+                    string_free_split_command (commands);
                 }
             }
+            else
+            {
+                if (gui_cursor_debug || gui_mouse_debug)
+                {
+                    gui_chat_printf (NULL,
+                                     "Command NOT executed (%s)",
+                                     ptr_key->command);
+                }
+            }
+            free (command);
         }
+        if (hashtable)
+            hashtable_free (hashtable);
+        return 1;
     }
     
     return 0;

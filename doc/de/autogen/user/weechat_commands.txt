@@ -357,7 +357,8 @@ When binding a command to a key, it is recommended to use key alt+k (or Esc then
 
 For context "mouse" (possible in context "cursor" too), key has format: "@area:key" where area can be:
           *: any area on screen
-       chat: chat area
+       chat: chat area (any buffer)
+  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
      bar(*): any bar
    bar(xxx): bar "xxx"
     item(*): any bar item

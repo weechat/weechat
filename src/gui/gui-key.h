@@ -34,6 +34,16 @@ enum t_gui_key_context
     GUI_KEY_NUM_CONTEXTS,
 };
 
+enum t_gui_key_focus
+{
+    GUI_KEY_FOCUS_ANY = 0,
+    GUI_KEY_FOCUS_CHAT,
+    GUI_KEY_FOCUS_BAR,
+    GUI_KEY_FOCUS_ITEM,
+    /* number of key focus */
+    GUI_KEY_NUM_FOCUS,
+};
+
 /* key structures */
 
 struct t_gui_key
