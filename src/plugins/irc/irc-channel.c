@@ -410,7 +410,7 @@ void
 irc_channel_check_away (struct t_irc_server *server,
                         struct t_irc_channel *channel)
 {
-    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+    if ((channel->type == IRC_CHANNEL_TYPE_CHANNEL) && channel->nicks)
     {
         if ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
             && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
