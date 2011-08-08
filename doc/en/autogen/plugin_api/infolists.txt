@@ -56,7 +56,7 @@
 
 | weechat | plugin | list of plugins | plugin pointer (optional) | plugin name (can start or end with "*" as wildcard) (optional)
 
-| weechat | window | list of windows | window pointer (optional) | window name (can start or end with "*" as wildcard) (optional)
+| weechat | window | list of windows | window pointer (optional) | "current" for current window or a window number (optional)
 
 | xfer | xfer | list of xfer | xfer pointer (optional) | -
 

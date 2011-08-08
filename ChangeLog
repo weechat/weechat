@@ -47,6 +47,7 @@ Version 0.3.6 (under dev!)
 * core: add options "infolists", "hdata" and "tags" for command /debug
 * core: add horizontal scrolling for buffers with free content (command
   /window scroll_horiz) (task #11112)
+* api: use arguments for infolist "window" to return only one window by number
 * api: add info "cursor_mode"
 * api: add new functions hook_focus, hdata_new, hdata_new_var, hdata_new_list,
   hdata_get, hdata_get_var_offset, hdata_get_var_type,

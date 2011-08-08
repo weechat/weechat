@@ -400,7 +400,8 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_key *ptr_key;
     struct t_weechat_plugin *ptr_plugin;
     char buffer_full_name[1024];
-    int context;
+    int context, number;
+    char *error;
     
     /* make C compiler happy */
     (void) data;
@@ -796,16 +797,36 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             {
                 if (arguments && arguments[0])
                 {
-                    if ((string_strcasecmp (arguments, "current") == 0)
-                        && gui_current_window)
+                    if ((string_strcasecmp (arguments, "current") == 0))
                     {
-                        if (!gui_window_add_to_infolist (ptr_infolist,
-                                                         gui_current_window))
+                        if (gui_current_window)
                         {
-                            infolist_free (ptr_infolist);
-                            return NULL;
+                            if (!gui_window_add_to_infolist (ptr_infolist,
+                                                             gui_current_window))
+                            {
+                                infolist_free (ptr_infolist);
+                                return NULL;
+                            }
+                            return ptr_infolist;
                         }
-                        return ptr_infolist;
+                        return NULL;
+                    }
+                    /* check if argument is a window number */
+                    error = NULL;
+                    number = (int)strtol (arguments, &error, 10);
+                    if (error && !error[0])
+                    {
+                        ptr_window = gui_window_search_by_number (number);
+                        if (ptr_window)
+                        {
+                            if (!gui_window_add_to_infolist (ptr_infolist,
+                                                             ptr_window))
+                            {
+                                infolist_free (ptr_infolist);
+                                return NULL;
+                            }
+                            return ptr_infolist;
+                        }
                     }
                     return NULL;
                 }
@@ -1065,7 +1086,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "window", N_("list of windows"),
                    N_("window pointer (optional)"),
-                   N_("window name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("\"current\" for current window or a window number (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     
     /* WeeChat core hdata */

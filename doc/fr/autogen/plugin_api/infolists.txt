@@ -56,7 +56,7 @@
 
 | weechat | plugin | liste des extensions | pointeur vers l'extension (optionnel) | nom d'extension (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
-| weechat | window | liste des fenêtres | pointeur vers la fenêtre (optionnel) | nom de fenêtre (peut démarrer ou se terminer par "*" comme joker) (optionnel)
+| weechat | window | liste des fenêtres | pointeur vers la fenêtre (optionnel) | "current" pour la fenêtre courante ou un numéro de fenêtre (optionnel)
 
 | xfer | xfer | liste des xfer | pointeur vers le xfer (optionnel) | -
 
