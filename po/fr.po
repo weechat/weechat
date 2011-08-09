@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
-"PO-Revision-Date: 2011-08-08 11:28+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
+"PO-Revision-Date: 2011-08-08 16:53+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -660,6 +660,10 @@ msgstr "%sErreur: impossible de recharger les options depuis %s"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Fichier de configuration inconnu \"%s\""
+
+#, c-format
+msgid "%sError: incorrect number"
+msgstr "%sErreur: nombre incorrect"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1807,6 +1811,33 @@ msgstr ""
 "fichier: fichier de configuration à recharger (sans l'extension \".conf\")\n"
 "\n"
 "Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés."
+
+msgid "execute a command several times"
+msgstr "exécuter une commande plusieurs fois"
+
+msgid "[-interval <delay>] <count> <command>"
+msgstr "[-interval <délai>] <nombre> <commande>"
+
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+"   délai: délai entre l'exécution des commandes (en millisecondes)\n"
+"  nombre: nombre de fois que la commande sera exécutée\n"
+"commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
+"pas trouvé au début de la commande)\n"
+"\n"
+"Exemple:\n"
+"  faire défiler de 2 pages vers le haut:\n"
+"    /repeat 2 /window page_up"
 
 msgid "save configuration files to disk"
 msgstr "sauvegarder les fichiers de configuration sur disque"
@@ -8176,6 +8207,12 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
+
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sErreur: intervalle incorrect"
+
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sErreur: numéro incorrect"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

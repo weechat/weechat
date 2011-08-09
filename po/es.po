@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -655,6 +655,10 @@ msgstr "%sError: no se pudo recargar las opciones desde %s"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Archivo de configuración \"%s\" desconocido"
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%sError: número del buffer incorrecto"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1740,6 +1744,32 @@ msgstr ""
 "\n"
 "Sin ningún argumento, todos los archivos (de WeeChat y plugins) son "
 "recargados."
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "ejecuta un comando silenciosamente"
+
+#, fuzzy
+msgid "[-interval <delay>] <count> <command>"
+msgstr "<número>[<unidad>] <comando>"
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+" plugin: nombre del plugin ('weechat' para los comandos internos de "
+"WeeChat)\n"
+"comando: comando a ejecutar (se añade una '/' automáticamente si no se "
+"encuentra al principio del comando)"
 
 msgid "save configuration files to disk"
 msgstr "guardar archivos de configuración al disco"
@@ -8078,6 +8108,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sError: número del buffer incorrecto"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sError: número del buffer incorrecto"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

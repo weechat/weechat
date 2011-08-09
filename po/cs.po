@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -654,6 +654,10 @@ msgstr "%sChyba: selhalo znovunačtení voleb z %s"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Neznámý konfigurační soubor \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%sChyba: nekorektní číslo bufferu"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1724,6 +1728,31 @@ msgstr ""
 "soubor: konfigurační soubor pro znovunačtení (bez přípony \".conf\")\n"
 "\n"
 "Bez argumentu jsou načteny všechny soubory (WeeChat a pluginů)."
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "vykonat příkaz v tichosti"
+
+#, fuzzy
+msgid "[-interval <delay>] <count> <command>"
+msgstr "<číslo>[<jednotka>] <příkaz>"
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+" plugin: jméno pluginu ('weechat' pro WeeChat vnitřní příkaz)\n"
+" příkaz: příkaz, který spustit ('/' je automaticky dodáno, pokud není "
+"nalezeno na začátku příkazu)"
 
 msgid "save configuration files to disk"
 msgstr "uložit soubory s nastavením na disk"
@@ -7949,6 +7978,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sChyba: nekorektní číslo bufferu"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sChyba: nekorektní číslo bufferu"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

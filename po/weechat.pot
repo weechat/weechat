@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -607,6 +607,10 @@ msgstr ""
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect number"
 msgstr ""
 
 #, c-format
@@ -1315,6 +1319,25 @@ msgid ""
 "file: configuration file to reload (without extension \".conf\")\n"
 "\n"
 "Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
+msgid "execute a command several times"
+msgstr ""
+
+msgid "[-interval <delay>] <count> <command>"
+msgstr ""
+
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
 msgstr ""
 
 msgid "save configuration files to disk"

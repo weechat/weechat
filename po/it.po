@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-07-16 11:32+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -654,6 +654,10 @@ msgstr "%sErrore: impossibile ricaricare le opzioni da %s"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "File di configurazione \"%s\" sconosciuto"
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%sErrore: nome buffer non corretto"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1754,6 +1758,31 @@ msgstr ""
 "file: file di configurazione da ricaricare (senza estensione \".conf\")\n"
 "\n"
 "Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin)."
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "esegue un comando in silenzio"
+
+#, fuzzy
+msgid "[-interval <delay>] <count> <command>"
+msgstr "<numero>[<unità>] <comando>"
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+" plugin: nome plugin ('weechat' per il comando interno di WeeChat)\n"
+"comando: comando da eseguire (una '/' viene aggiunta automaticamente se non "
+"trovata all'inizio del comando)"
 
 msgid "save configuration files to disk"
 msgstr "salva i file di configurazione su disco"
@@ -8063,6 +8092,14 @@ msgstr "Variabili"
 
 msgid "Lists"
 msgstr "Liste"
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sErrore: nome buffer non corretto"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sErrore: nome buffer non corretto"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

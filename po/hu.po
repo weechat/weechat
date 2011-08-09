@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -693,6 +693,10 @@ msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 #, fuzzy, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%s helytelen pufferszám\n"
 
 #, fuzzy, c-format
 msgid "Options saved to %s"
@@ -1488,6 +1492,29 @@ msgid ""
 "\n"
 "Without argument, all files (WeeChat and plugins) are reloaded."
 msgstr ""
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "%s belső parancsok:\n"
+
+msgid "[-interval <delay>] <count> <command>"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+"parancs: futtatandó parancs (egy '/' autómatikusan hozzáadódik, ha nincs "
+"megadva a parancs elején)\n"
 
 #, fuzzy
 msgid "save configuration files to disk"
@@ -7503,6 +7530,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%s helytelen pufferszám\n"
 
 #, fuzzy
 #~ msgid ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -664,6 +664,10 @@ msgstr "%sErro: falhou ao recarregar as opções de %s"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Arquivo de configuração desconhecido \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%sErro: número do buffer incorreto"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1739,6 +1743,31 @@ msgstr ""
 "arquivo: arquivo de configuração a ser recarregado\n"
 "\n"
 "Sem argumentos, todos os arquivos (WeeChat e plugins) são recarregados."
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "executa um comando silenciosamente"
+
+#, fuzzy
+msgid "[-interval <delay>] <count> <command>"
+msgstr "número[unidade] comando"
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+" plugin: nome do plugin ('weechat' para comandos internos do weechat)\n"
+"command: comando a ser executado (um '/' é automaticamente adicionado se não "
+"for encontrado no começo de um comando)"
 
 msgid "save configuration files to disk"
 msgstr "salva configurações dos arquivos no disco"
@@ -7223,6 +7252,14 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sErro: número do buffer incorreto"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sErro: número do buffer incorreto"
 
 #, fuzzy
 #~ msgid "Key bindings (%d) for context \"%s\":"

@@ -509,6 +509,22 @@ file: file di configurazione da ricaricare (senza estensione ".conf")
 Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 ........................................
 
+[[command_weechat_repeat]]
+[command]*`repeat`* execute a command several times::
+........................................
+/repeat  [-interval <delay>] <count> <command>
+
+  delay: delay between execution of commands (in milliseconds)
+  count: number of times to execute command
+command: command to execute (a '/' is automatically added if not found at beginning of command)
+
+All commands are executed on buffer where this command was issued.
+
+Example:
+  scroll 2 pages up:
+    /repeat 2 /window page_up
+........................................
+
 [[command_weechat_save]]
 [command]*`save`* salva i file di configurazione su disco::
 ........................................

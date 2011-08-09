@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-08 11:27+0200\n"
+"POT-Creation-Date: 2011-08-08 16:53+0200\n"
 "PO-Revision-Date: 2011-07-14 20:53+0100\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -669,6 +669,10 @@ msgstr "%sFehler: Optionen von %s konnten nicht neu geladen werden"
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Unbekannte Konfigurationsdatei \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: incorrect number"
+msgstr "%sFehler: falsche Buffer-Nummer"
 
 #, c-format
 msgid "Options saved to %s"
@@ -1803,6 +1807,31 @@ msgstr ""
 "\n"
 "Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und "
 "Erweiterungen) neu geladen."
+
+#, fuzzy
+msgid "execute a command several times"
+msgstr "Führt einen Befehl ohne Textausgabe aus"
+
+#, fuzzy
+msgid "[-interval <delay>] <count> <command>"
+msgstr "<number>[<unit>] <command>"
+
+#, fuzzy
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+"Erweiterung: Name der Erweiterung ('weechat' für interne WeeChat Befehle)\n"
+"    Befehl: auszuführender Befehl (es wird automatisch ein '/' "
+"vorangestellt, falls dieser nicht angegeben wurde)"
 
 msgid "save configuration files to disk"
 msgstr "Konfiguration abspeichern"
@@ -8277,6 +8306,14 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
+
+#, fuzzy
+#~ msgid "%sError: incorrect interval"
+#~ msgstr "%sFehler: falsche Buffer-Nummer"
+
+#, fuzzy
+#~ msgid "%sError: incorrect count"
+#~ msgstr "%sFehler: falsche Buffer-Nummer"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

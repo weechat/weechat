@@ -3864,6 +3864,134 @@ COMMAND_CALLBACK(reload)
 }
 
 /*
+ * command_repeat_timer_cb: callback for repeat timer
+ */
+
+int
+command_repeat_timer_cb (void *data, int remaining_calls)
+{
+    char **repeat_args;
+    int i;
+    struct t_gui_buffer *ptr_buffer;
+    
+    repeat_args = (char **)data;
+    
+    if (!repeat_args)
+        return WEECHAT_RC_ERROR;
+    
+    if (repeat_args[0] && repeat_args[1] && repeat_args[2])
+    {
+        /* search buffer, fallback to core buffer if not found */
+        ptr_buffer = gui_buffer_search_by_name (repeat_args[0], repeat_args[1]);
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_main ();
+        
+        /* execute command */
+        if (ptr_buffer)
+            input_exec_command (ptr_buffer, 1, NULL, repeat_args[2]);
+    }
+    
+    if (remaining_calls == 0)
+    {
+        for (i = 0; i < 3; i++)
+        {
+            if (repeat_args[i])
+                free (repeat_args[i]);
+        }
+        free (repeat_args);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_repeat: execute a command several times
+ */
+
+COMMAND_CALLBACK(repeat)
+{
+    int arg_count, count, interval, length, i;
+    char *error, *command, **repeat_args;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc < 3)
+        return WEECHAT_RC_OK;
+    
+    arg_count = 1;
+    interval = 0;
+    
+    if ((argc >= 5) && (string_strcasecmp (argv[1], "-interval") == 0))
+    {
+        error = NULL;
+        interval = (int)strtol (argv[2], &error, 10);
+        if (!error || error[0] || (interval < 1))
+            interval = 0;
+        arg_count = 3;
+    }
+    
+    error = NULL;
+    count = (int)strtol (argv[arg_count], &error, 10);
+    if (!error || error[0] || (count < 1))
+    {
+        /* invalid count */
+        gui_chat_printf (NULL,
+                         _("%sError: incorrect number"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_is_command_char (argv_eol[arg_count + 1]))
+        command = strdup (argv_eol[arg_count + 1]);
+    else
+    {
+        length = strlen (argv_eol[arg_count + 1]) + 2;
+        command = malloc (length);
+        if (command)
+            snprintf (command, length, "/%s", argv_eol[arg_count + 1]);
+    }
+    
+    if (command)
+    {
+        input_exec_command (buffer, 1, NULL, command);
+        if (count > 1)
+        {
+            if (interval == 0)
+            {
+                for (i = 0; i < count - 1; i++)
+                {
+                    input_exec_command (buffer, 1, NULL, command);
+                }
+                free (command);
+            }
+            else
+            {
+                repeat_args = malloc (3 * sizeof (*repeat_args));
+                if (!repeat_args)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sNot enough memory"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_OK;
+                }
+                repeat_args[0] = strdup (gui_buffer_get_plugin_name (buffer));
+                repeat_args[1] = strdup (buffer->name);
+                repeat_args[2] = command;
+                hook_timer (NULL, interval, 0, count - 1,
+                            &command_repeat_timer_cb, repeat_args);
+            }
+        }
+        else
+        {
+            free (command);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_save_file: save a configuration file to disk
  */
 
@@ -5708,6 +5836,21 @@ command_init ()
                      "reloaded."),
                   "%(config_files)|%*",
                   &command_reload, NULL);
+    hook_command (NULL, "repeat",
+                  N_("execute a command several times"),
+                  N_("[-interval <delay>] <count> <command>"),
+                  N_("  delay: delay between execution of commands (in "
+                     "milliseconds)\n"
+                     "  count: number of times to execute command\n"
+                     "command: command to execute (a '/' is automatically "
+                     "added if not found at beginning of command)\n\n"
+                     "All commands are executed on buffer where this command "
+                     "was issued.\n\n"
+                     "Example:\n"
+                     "  scroll 2 pages up:\n"
+                     "    /repeat 2 /window page_up"),
+                  "%- %(commands)",
+                  &command_repeat, NULL);
     hook_command (NULL, "save",
                   N_("save configuration files to disk"),
                   N_("[<file> [<file>...]]"),

@@ -509,6 +509,20 @@ fichier: fichier de configuration à recharger (sans l'extension ".conf")
 Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
 ........................................
 
+[[command_weechat_repeat]]
+[command]*`repeat`* exécuter une commande plusieurs fois::
+........................................
+/repeat  [-interval <délai>] <nombre> <commande>
+
+   délai: délai entre l'exécution des commandes (en millisecondes)
+  nombre: nombre de fois que la commande sera exécutée
+commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+
+Exemple:
+  faire défiler de 2 pages vers le haut:
+    /repeat 2 /window page_up
+........................................
+
 [[command_weechat_save]]
 [command]*`save`* sauvegarder les fichiers de configuration sur disque::
 ........................................
