@@ -739,9 +739,12 @@ gui_key_focus_command (const char *key, int context,
                        struct t_gui_focus_info *focus_info2)
 {
     struct t_gui_key *ptr_key;
-    int i, errors, matching, area_type;
+    int i, errors, matching, area_type, debug;
     char *pos, *command, **commands, *area_name;
     struct t_hashtable *hashtable;
+    
+    debug = ((gui_cursor_debug && (context == GUI_KEY_CONTEXT_CURSOR))
+             || (gui_mouse_debug && (context == GUI_KEY_CONTEXT_MOUSE)));
     
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
@@ -771,49 +774,64 @@ gui_key_focus_command (const char *key, int context,
         hashtable = hook_focus_get_data (focus_info1,
                                          focus_info2,
                                          key);
-        if (gui_cursor_debug || gui_mouse_debug)
+        if (debug)
         {
             gui_chat_printf (NULL, "Hashtable focus: %s",
                              hashtable_get_string (hashtable,
                                                    "keys_values_sorted"));
         }
-        command = string_replace_with_hashtable (ptr_key->command,
-                                                 hashtable,
-                                                 &errors);
-        if (command)
+        if (string_strncasecmp (ptr_key->command, "hsignal:", 8) == 0)
         {
-            if (errors == 0)
+            if (ptr_key->command[8])
             {
-                if (gui_cursor_debug || gui_mouse_debug)
+                if (debug)
                 {
-                    gui_chat_printf (NULL,
-                                     "Command executed: %s  (%s)",
-                                     command, ptr_key->command);
+                    gui_chat_printf (NULL, "Sending hsignal \"%s\"",
+                                     ptr_key->command + 8);
                 }
-                if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
+                hook_hsignal_send (ptr_key->command + 8, hashtable);
+            }
+        }
+        else
+        {
+            command = string_replace_with_hashtable (ptr_key->command,
+                                                     hashtable,
+                                                     &errors);
+            if (command)
+            {
+                if (errors == 0)
                 {
-                    gui_input_delete_line (gui_current_window->buffer);
-                }
-                commands = string_split_command (command, ';');
-                if (commands)
-                {
-                    for (i = 0; commands[i]; i++)
+                    if (debug)
                     {
-                        input_data (gui_current_window->buffer, commands[i]);
+                        gui_chat_printf (NULL,
+                                         "Executing command: %s  (%s)",
+                                         command, ptr_key->command);
                     }
-                    string_free_split_command (commands);
+                    if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
+                    {
+                        gui_input_delete_line (gui_current_window->buffer);
+                    }
+                    commands = string_split_command (command, ';');
+                    if (commands)
+                    {
+                        for (i = 0; commands[i]; i++)
+                        {
+                            input_data (gui_current_window->buffer, commands[i]);
+                        }
+                        string_free_split_command (commands);
+                    }
                 }
-            }
-            else
-            {
-                if (gui_cursor_debug || gui_mouse_debug)
+                else
                 {
-                    gui_chat_printf (NULL,
-                                     "Command NOT executed (%s)",
-                                     ptr_key->command);
+                    if (debug)
+                    {
+                        gui_chat_printf (NULL,
+                                         "Command NOT executed (%s)",
+                                         ptr_key->command);
+                    }
                 }
+                free (command);
             }
-            free (command);
         }
         if (hashtable)
             hashtable_free (hashtable);
