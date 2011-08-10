@@ -664,7 +664,17 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-In WeeChat, impostare la porta del server, SSL, dhkey_size, e infine connettersi:
+// TRANSLATION MISSING
+To force WeeChat to reload file with the certificate authorities, change value
+of option and reset it to default value:
+
+----------------------------------------
+/set weechat.network.gnutls_ca_file ""
+/unset weechat.network.gnutls_ca_file
+----------------------------------------
+
+// TRANSLATION MISSING
+Setup server port, SSL, dhkey_size, then connect:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
