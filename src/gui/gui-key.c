@@ -771,67 +771,62 @@ gui_key_focus_command (const char *key, int context,
         if (!matching)
             continue;
         
+        if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
+        {
+            gui_input_delete_line (gui_current_window->buffer);
+        }
+        
         hashtable = hook_focus_get_data (focus_info1,
                                          focus_info2,
                                          key);
         if (debug)
         {
-            gui_chat_printf (NULL, "Hashtable focus: %s",
+            gui_chat_printf (NULL, _("Hashtable focus: %s"),
                              hashtable_get_string (hashtable,
                                                    "keys_values_sorted"));
+            gui_chat_printf (NULL, _("Command for key: \"%s\""),
+                             ptr_key->command);
         }
-        if (string_strncasecmp (ptr_key->command, "hsignal:", 8) == 0)
+        commands = string_split_command (ptr_key->command, ';');
+        if (commands)
         {
-            if (ptr_key->command[8])
+            for (i = 0; commands[i]; i++)
             {
-                if (debug)
+                if (string_strncasecmp (commands[i], "hsignal:", 8) == 0)
                 {
-                    gui_chat_printf (NULL, "Sending hsignal \"%s\"",
-                                     ptr_key->command + 8);
-                }
-                hook_hsignal_send (ptr_key->command + 8, hashtable);
-            }
-        }
-        else
-        {
-            command = string_replace_with_hashtable (ptr_key->command,
-                                                     hashtable,
-                                                     &errors);
-            if (command)
-            {
-                if (errors == 0)
-                {
-                    if (debug)
+                    if (commands[i][8])
                     {
-                        gui_chat_printf (NULL,
-                                         "Executing command: %s  (%s)",
-                                         command, ptr_key->command);
-                    }
-                    if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
-                    {
-                        gui_input_delete_line (gui_current_window->buffer);
-                    }
-                    commands = string_split_command (command, ';');
-                    if (commands)
-                    {
-                        for (i = 0; commands[i]; i++)
+                        if (debug)
                         {
-                            input_data (gui_current_window->buffer, commands[i]);
+                            gui_chat_printf (NULL,
+                                             _("Sending hsignal: \"%s\""),
+                                             commands[i] + 8);
                         }
-                        string_free_split_command (commands);
+                        hook_hsignal_send (commands[i] + 8, hashtable);
                     }
                 }
                 else
                 {
-                    if (debug)
+                    command = string_replace_with_hashtable (commands[i],
+                                                             hashtable,
+                                                             &errors);
+                    if (command)
                     {
-                        gui_chat_printf (NULL,
-                                         "Command NOT executed (%s)",
-                                         ptr_key->command);
+                        if (errors == 0)
+                        {
+                            if (debug)
+                            {
+                                gui_chat_printf (NULL,
+                                                 _("Executing command: \"%s\""),
+                                                 command);
+                            }
+                            input_data (gui_current_window->buffer, command);
+                        }
+                        free (command);
                     }
                 }
-                free (command);
             }
+            string_free_split_command (commands);
         }
         if (hashtable)
             hashtable_free (hashtable);

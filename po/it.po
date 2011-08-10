@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-09 12:39+0200\n"
+"POT-Creation-Date: 2011-08-10 12:16+0200\n"
 "PO-Revision-Date: 2011-07-16 11:32+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3315,6 +3315,22 @@ msgstr "Errore: impossibile associare il testo \"%s\""
 
 msgid "Error: not enough memory for key binding"
 msgstr "Errore: memoria non sufficiente per l'associazione tasti"
+
+#, fuzzy, c-format
+msgid "Hashtable focus: %s"
+msgstr "Tabella hash (output)"
+
+#, c-format
+msgid "Command for key: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Sending hsignal: \"%s\""
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Executing command: \"%s\""
+msgstr "comando predefinito:"
 
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
