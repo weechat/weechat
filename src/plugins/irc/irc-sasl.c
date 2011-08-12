@@ -63,7 +63,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
         string[length_username] = '\0';
         string[(length_username * 2) + 1] = '\0';
         
-        answer_base64 = malloc (length * 2);
+        answer_base64 = malloc (length * 4);
         if (answer_base64)
             weechat_string_encode_base64 (string, length - 1, answer_base64);
         
@@ -208,7 +208,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     memcpy (ptr_answer, password_crypted, length_password);
     
     /* encode answer to base64 */
-    answer_base64 = malloc (length_answer * 2);
+    answer_base64 = malloc (length_answer * 4);
     if (answer_base64)
         weechat_string_encode_base64 (answer, length_answer, answer_base64);
     
