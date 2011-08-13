@@ -455,8 +455,53 @@ hashtable_map (struct t_hashtable *hashtable,
 }
 
 /*
- * hashtable_get_list_keys_map_cb: function called for each variable in hdata
- *                                 to build sorted list of keys
+ * hashtable_duplicate_map_cb: function called for each variable in hashtable
+ *                             to duplicate all keys
+ */
+
+void
+hashtable_duplicate_map_cb (void *data,
+                            struct t_hashtable *hashtable,
+                            const void *key, const void *value)
+{
+    struct t_hashtable *hashtable2;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hashtable2 = (struct t_hashtable *)data;
+    if (hashtable2)
+        hashtable_set (hashtable2, key, value);
+}
+
+/*
+ * hashtable_dup: duplicate hashtable
+ */
+
+struct t_hashtable *
+hashtable_dup (struct t_hashtable *hashtable)
+{
+    struct t_hashtable *new_hashtable;
+    
+    new_hashtable = hashtable_new (hashtable->size,
+                                   hashtable_type_string[hashtable->type_keys],
+                                   hashtable_type_string[hashtable->type_values],
+                                   hashtable->callback_hash_key,
+                                   hashtable->callback_keycmp);
+    if (new_hashtable)
+    {
+        new_hashtable->callback_free_value = hashtable->callback_free_value;
+        hashtable_map (hashtable,
+                       &hashtable_duplicate_map_cb,
+                       new_hashtable);
+    }
+    
+    return new_hashtable;
+}
+
+/*
+ * hashtable_get_list_keys_map_cb: function called for each variable in
+ *                                 hashtable to build sorted list of keys
  */
 
 void

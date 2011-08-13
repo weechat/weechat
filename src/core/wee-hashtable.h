@@ -121,6 +121,8 @@ extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,
                            t_hashtable_map *callback_map,
                            void *callback_map_data);
+extern struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+struct t_weelist *hashtable_get_list_keys (struct t_hashtable *hashtable);
 extern int hashtable_get_integer (struct t_hashtable *hashtable,
                                   const char *property);
 extern const char *hashtable_get_string (struct t_hashtable *hashtable,
