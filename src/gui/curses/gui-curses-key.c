@@ -88,8 +88,8 @@ gui_key_default_bindings (int context)
         BIND(/* tab         */ "ctrl-I",             "/input complete_next");
         BIND(/* s-tab       */ "meta2-Z",            "/input complete_previous");
         BIND(/* ^R          */ "ctrl-R",             "/input search_text");
-        BIND(/* basckpace   */ "ctrl-H",             "/input delete_previous_char");
-        BIND(/* basckpace   */ "ctrl-?",             "/input delete_previous_char");
+        BIND(/* backspace   */ "ctrl-H",             "/input delete_previous_char");
+        BIND(/* backspace   */ "ctrl-?",             "/input delete_previous_char");
         BIND(/* ^_          */ "ctrl-_",             "/input undo");
         BIND(/* m-_         */ "meta-_",             "/input redo");
         BIND(/* del         */ "meta2-3~",           "/input delete_next_char");
