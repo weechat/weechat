@@ -8335,9 +8335,9 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _x                      | column on screen          2+| "0" ... "n"
 | _y                      | line on screen            2+| "0" ... "n"
 | _key                    | key or mouse event        2+| "button1", "button2-gesture-left", ...
-| _window                 | pointer to window           | "0x12345678"                                     | "0x0"
+| _window                 | pointer to window           | "0x12345678"                                     | ""
 | _window_number          | number of window            | "1" ... "n"                                      | "*"
-| _buffer                 | pointer to buffer           | "0x12345678"                                     | "0x0"
+| _buffer                 | pointer to buffer           | "0x12345678"                                     | ""
 | _buffer_number          | number of buffer            | "1" ... "n"                                      | "-1"
 | _buffer_plugin          | plugin name of buffer       | "core", "irc", ...                               | ""
 | _buffer_name            | name of buffer              | "weechat", "freenode.#weechat", ...              | ""

@@ -1475,7 +1475,7 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     
     window = (struct t_gui_window *)value;
     if (!window)
-        window = gui_current_window;
+        return NULL;
     
     error = NULL;
     bar_item_line = (int) strtol (str_bar_item_line, &error, 10);

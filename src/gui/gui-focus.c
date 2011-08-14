@@ -52,9 +52,16 @@
     snprintf (str_value, sizeof (str_value), "%ld", __time);            \
     hashtable_set (hashtable, __name, str_value);
 #define FOCUS_PTR(__name, __pointer)                                    \
-    snprintf (str_value, sizeof (str_value),                            \
-              "0x%lx", (long unsigned int)__pointer);                   \
-    hashtable_set (hashtable, __name, str_value);
+    if (__pointer)                                                      \
+    {                                                                   \
+        snprintf (str_value, sizeof (str_value),                        \
+                  "0x%lx", (long unsigned int)__pointer);               \
+        hashtable_set (hashtable, __name, str_value);                   \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        hashtable_set (hashtable, __name, "");                          \
+    }
 
 
 /*

@@ -8415,9 +8415,9 @@ Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de typ
 | _x                      | colonne sur l'écran           2+| "0" ... "n"
 | _y                      | ligne sur l'écran             2+| "0" ... "n"
 | _key                    | touche ou évènement souris    2+| "button1", "button2-gesture-left", ...
-| _window                 | pointeur vers la fenêtre        | "0x12345678"                                     | "0x0"
+| _window                 | pointeur vers la fenêtre        | "0x12345678"                                     | ""
 | _window_number          | numéro de la fenêtre            | "1" ... "n"                                      | "*"
-| _buffer                 | pointeur vers le tampon         | "0x12345678"                                     | "0x0"
+| _buffer                 | pointeur vers le tampon         | "0x12345678"                                     | ""
 | _buffer_number          | numéro du tampon                | "1" ... "n"                                      | "-1"
 | _buffer_plugin          | nom d'extension du tampon       | "core", "irc", ...                               | ""
 | _buffer_name            | nom du tampon                   | "weechat", "freenode.#weechat", ...              | ""
