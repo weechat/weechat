@@ -515,7 +515,7 @@ IRC_PROTOCOL_CALLBACK(join)
                                                  || !weechat_config_boolean (irc_config_look_smart_filter_join)
                                                  || ptr_nick_speaking) ?
                                                 NULL : "irc_smart_filter",
-                                                NULL),
+                                                nick),
                              _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
                              weechat_prefix ("join"),
                              IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
@@ -1197,7 +1197,7 @@ IRC_PROTOCOL_CALLBACK(part)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter",
-                                                            NULL),
+                                                            nick),
                                          _("%s%s%s%s%s%s%s%s%s%s has left %s%s%s "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
@@ -1230,7 +1230,7 @@ IRC_PROTOCOL_CALLBACK(part)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter",
-                                                            NULL),
+                                                            nick),
                                          _("%s%s%s%s%s%s%s%s%s%s has left "
                                            "%s%s%s"),
                                          weechat_prefix ("quit"),
@@ -1532,7 +1532,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter",
-                                                            NULL),
+                                                            nick),
                                          _("%s%s%s%s%s%s%s%s%s%s has quit "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
@@ -1563,7 +1563,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                                                              || !weechat_config_boolean (irc_config_look_smart_filter_quit)
                                                              || ptr_nick_speaking) ?
                                                             NULL : "irc_smart_filter",
-                                                            NULL),
+                                                            nick),
                                          _("%s%s%s%s%s%s%s%s%s%s has quit"),
                                          weechat_prefix ("quit"),
                                          (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
@@ -1809,7 +1809,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
     weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, nick,
                                                           command, NULL,
                                                           NULL),
-                         irc_protocol_tags (command, NULL, NULL),
+                         irc_protocol_tags (command, NULL, nick),
                          _("%sWallops from %s%s %s(%s%s%s)%s: %s"),
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
