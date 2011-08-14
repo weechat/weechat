@@ -550,6 +550,9 @@ These keys are used in context "cursor" (free movement of cursor on screen).
 | @k(A-)@k(↓)  | -        | Move cursor one area down | /cursor move area_down
 | @k(A-)@k(←)  | -        | Move cursor one area left | /cursor move area_left
 | @k(A-)@k(→)  | -        | Move cursor one area right | /cursor move area_right
+| @k(m)        | chat     | Quote message | hsignal:chat_quote_message;/cursor stop
+| @k(q)        | chat     | Quote prefix + message | hsignal:chat_quote_prefix_message;/cursor stop
+| @k(Q)        | chat     | Quote time + prefix + message | hsignal:chat_quote_time_prefix_message;/cursor stop
 | @k(b)        | nicklist | Ban nick | /window ${_window_number};/ban ${nick}
 | @k(k)        | nicklist | Kick nick | /window ${_window_number};/kick ${nick}
 | @k(K)        | nicklist | Kick and ban nick | /window ${_window_number};/kickban ${nick}

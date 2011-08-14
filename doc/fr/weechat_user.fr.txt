@@ -558,6 +558,9 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 | @k(A-)@k(↓)  | -                 | Déplacer le curseur vers la zone en dessous | /cursor move area_down
 | @k(A-)@k(←)  | -                 | Déplacer le curseur vers la zone sur la gauche | /cursor move area_left
 | @k(A-)@k(→)  | -                 | Déplacer le curseur vers la zone sur la droite | /cursor move area_right
+| @k(m)        | chat              | Citer le message | hsignal:chat_quote_message;/cursor stop
+| @k(q)        | chat              | Citer le préfixe + le message | hsignal:chat_quote_prefix_message;/cursor stop
+| @k(Q)        | chat              | Citer l'heure + le préfixe + le message | hsignal:chat_quote_time_prefix_message;/cursor stop
 | @k(b)        | liste des pseudos | Bannir le pseudo | /window ${_window_number};/ban ${nick}
 | @k(k)        | liste des pseudos | Retirer par la force le pseudo | /window ${_window_number};/kick ${nick}
 | @k(K)        | liste des pseudos | Retirer par la force et bannir le pseudo | /window ${_window_number};/kickban ${nick}
