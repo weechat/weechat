@@ -1147,6 +1147,8 @@ gui_color_buffer_open ()
                                            &gui_color_buffer_close_cb, NULL);
         if (gui_color_buffer)
         {
+            if (!gui_color_buffer->short_name)
+                gui_color_buffer->short_name = strdup ("color");
             gui_buffer_set (gui_color_buffer, "type", "free");
             gui_buffer_set (gui_color_buffer, "localvar_set_no_log", "1");
             gui_buffer_set (gui_color_buffer, "key_bind_meta-c", "/color switch");

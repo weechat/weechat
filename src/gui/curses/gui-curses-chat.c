@@ -320,11 +320,11 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
 void
 gui_chat_display_word (struct t_gui_window *window,
                        struct t_gui_line *line,
-                       char *data, char *end_offset,
+                       const char *word, const char *word_end,
                        int prefix, int num_lines, int count,
                        int *lines_displayed, int simulate)
 {
-    char *end_line, saved_char_end, saved_char, str_space[] = " ";
+    char *data, *ptr_data, *end_line, saved_char, str_space[] = " ";
     int pos_saved_char, chars_to_display, num_displayed;
     int length_align;
     attr_t attrs;
@@ -332,27 +332,26 @@ gui_chat_display_word (struct t_gui_window *window,
     short pair;
     short *ptr_pair;
     
-    if (!data ||
+    if (!word ||
         ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
     
     if (!simulate)
         window->coords[window->win_chat_cursor_y].line = line;
     
-    end_line = data + strlen (data);
-        
-    if (end_offset && end_offset[0])
-    {
-        saved_char_end = end_offset[0];
-        end_offset[0] = '\0';
-    }
-    else
-    {
-        end_offset = NULL;
-        saved_char_end = '\0';
-    }
+    data = strdup (word);
+    if (!data)
+        return;
     
-    while (data && data[0])
+    end_line = data + strlen (data);
+    
+    if (word_end && word_end[0])
+        data[word_end - word] = '\0';
+    else
+        word_end = NULL;
+    
+    ptr_data = data;
+    while (ptr_data && ptr_data[0])
     {
         /* insert spaces for aligning text under time/nick */
         length_align = gui_line_get_align (window->buffer, line, 0, 0);
@@ -393,27 +392,27 @@ gui_chat_display_word (struct t_gui_window *window,
                 if (!simulate)
                     wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
             }
-            window->coords[window->win_chat_cursor_y].data = data;
+            window->coords[window->win_chat_cursor_y].data = ptr_data;
         }
         
-        chars_to_display = gui_chat_strlen_screen (data);
+        chars_to_display = gui_chat_strlen_screen (ptr_data);
 
         /* too long for current line */
         if (window->win_chat_cursor_x + chars_to_display > gui_chat_get_real_width (window))
         {
             num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
-            pos_saved_char = gui_chat_string_real_pos (data, num_displayed);
+            pos_saved_char = gui_chat_string_real_pos (ptr_data, num_displayed);
             if (!simulate)
             {
-                saved_char = data[pos_saved_char];
-                data[pos_saved_char] = '\0';
+                saved_char = ptr_data[pos_saved_char];
+                ptr_data[pos_saved_char] = '\0';
                 if ((count == 0) || (*lines_displayed >= num_lines - count))
-                    gui_chat_display_word_raw (window, data, 0, 1);
+                    gui_chat_display_word_raw (window, ptr_data, 0, 1);
                 else
-                    gui_chat_display_word_raw (window, data, 0, 0);
-                data[pos_saved_char] = saved_char;
+                    gui_chat_display_word_raw (window, ptr_data, 0, 0);
+                ptr_data[pos_saved_char] = saved_char;
             }
-            data += pos_saved_char;
+            ptr_data += pos_saved_char;
         }
         else
         {
@@ -421,30 +420,29 @@ gui_chat_display_word (struct t_gui_window *window,
             if (!simulate)
             {
                 if ((count == 0) || (*lines_displayed >= num_lines - count))
-                    gui_chat_display_word_raw (window, data, 0, 1);
+                    gui_chat_display_word_raw (window, ptr_data, 0, 1);
                 else
-                    gui_chat_display_word_raw (window, data, 0, 0);
+                    gui_chat_display_word_raw (window, ptr_data, 0, 0);
             }
-            data += strlen (data);
+            ptr_data += strlen (ptr_data);
         }
         
         window->win_chat_cursor_x += num_displayed;
         
         /* display new line? */
-        if ((!prefix && (data >= end_line)) ||
+        if ((!prefix && (ptr_data >= end_line)) ||
             (((simulate) ||
               (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
              (window->win_chat_cursor_x > (gui_chat_get_real_width (window) - 1))))
             gui_chat_display_new_line (window, num_lines, count,
                                        lines_displayed, simulate);
         
-        if ((!prefix && (data >= end_line)) ||
+        if ((!prefix && (ptr_data >= end_line)) ||
             ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
-            data = NULL;
+            ptr_data = NULL;
     }
     
-    if (end_offset)
-        end_offset[0] = saved_char_end;
+    free (data);
 }
 
 /*
@@ -460,6 +458,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int simulate)
 {
     char str_space[] = " ", str_plus[] = "+", *prefix_highlighted;
+    const char *short_name;
     int i, length, length_allowed, num_spaces;
     struct t_gui_lines *mixed_lines;
     
@@ -499,8 +498,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         }
         else
             length_allowed = mixed_lines->buffer_max_length;
-        
-        length = gui_chat_strlen_screen (line->data->buffer->short_name);
+
+        short_name = gui_buffer_get_short_name (line->data->buffer);
+        length = gui_chat_strlen_screen (short_name);
         num_spaces = length_allowed - length;
         
         if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
@@ -531,9 +531,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             && (num_spaces < 0))
         {
             gui_chat_display_word (window, line,
-                                   line->data->buffer->short_name,
-                                   line->data->buffer->short_name +
-                                   gui_chat_string_real_pos (line->data->buffer->short_name,
+                                   short_name,
+                                   short_name +
+                                   gui_chat_string_real_pos (short_name,
                                                              length_allowed),
                                    1, num_lines, count, lines_displayed,
                                    simulate);
@@ -541,9 +541,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         else
         {
             gui_chat_display_word (window, line,
-                                   line->data->buffer->short_name,
-                                   NULL, 1, num_lines, count, lines_displayed,
-                                   simulate);
+                                   short_name, NULL, 1, num_lines, count,
+                                   lines_displayed, simulate);
         }
         
         window->coords[window->win_chat_cursor_y].buffer_x2 = window->win_chat_cursor_x - 1;

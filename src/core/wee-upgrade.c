@@ -439,8 +439,7 @@ upgrade_weechat_read_cb (void *data,
                             strdup (infolist_string (infolist, "plugin_name"));
                         upgrade_current_buffer->short_name =
                             (infolist_string (infolist, "short_name")) ?
-                            strdup (infolist_string (infolist, "short_name")) :
-                            strdup (infolist_string (infolist, "name"));
+                            strdup (infolist_string (infolist, "short_name")) : NULL;
                         upgrade_current_buffer->type =
                             infolist_integer (infolist, "type");
                         upgrade_current_buffer->notify =

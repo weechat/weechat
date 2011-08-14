@@ -190,7 +190,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
         else if ((win_x >= window->coords[win_y].buffer_x1)
                  && (win_x <= window->coords[win_y].buffer_x2))
         {
-            *word = gui_color_decode ((*line)->data->buffer->short_name, NULL);
+            *word = gui_color_decode (gui_buffer_get_short_name ((*line)->data->buffer), NULL);
         }
         else if ((win_x >= window->coords[win_y].prefix_x1)
                  && (win_x <= window->coords[win_y].prefix_x2))

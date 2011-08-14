@@ -1115,7 +1115,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               CONFIG_INTEGER(config_look_hotlist_names_length));
                 sprintf (buf + strlen (buf), format,
                          (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
-                         ptr_hotlist->buffer->short_name : ptr_hotlist->buffer->name);
+                         gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name);
             }
             else
             {

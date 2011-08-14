@@ -123,6 +123,18 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_get_short_name: get short name of buffer (of name if short_name
+ *                            is NULL)
+ *                            Note: this function never returns NULL
+ */
+
+const char *
+gui_buffer_get_short_name (struct t_gui_buffer *buffer)
+{
+    return (buffer->short_name) ? buffer->short_name : buffer->name;
+}
+
+/*
  * gui_buffer_local_var_add: add a new local variable to a buffer
  */
 
@@ -404,7 +416,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     struct t_gui_completion *new_completion;
     int first_buffer_creation;
     
-    if (!name)
+    if (!name || !name[0])
         return NULL;
     
     if (gui_buffer_search_by_name (plugin_get_name (plugin), name))
@@ -432,7 +444,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                       &(new_buffer->layout_number),
                                       &(new_buffer->layout_number_merge_order));
         new_buffer->name = strdup (name);
-        new_buffer->short_name = strdup (name);
+        new_buffer->short_name = NULL;
         new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
         new_buffer->num_displayed = 0;
@@ -945,18 +957,20 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 void
 gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 {
-    if (short_name && short_name[0])
+    if (buffer->short_name)
     {
-        if (buffer->short_name)
-            free (buffer->short_name);
-        buffer->short_name = strdup (short_name);
-        if (buffer->mixed_lines)
-            gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
-        gui_buffer_ask_chat_refresh (buffer, 1);
-        
-        hook_signal_send ("buffer_renamed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        free (buffer->short_name);
+        buffer->short_name = NULL;
     }
+    buffer->short_name = (short_name && short_name[0]) ?
+        strdup (short_name) : NULL;
+    
+    if (buffer->mixed_lines)
+        gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
+    gui_buffer_ask_chat_refresh (buffer, 1);
+    
+    hook_signal_send ("buffer_renamed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

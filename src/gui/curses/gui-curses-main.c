@@ -134,6 +134,10 @@ gui_main_init ()
         
         ptr_buffer->num_displayed = 1;
         
+        /* set short name */
+        if (!ptr_buffer->short_name)
+            ptr_buffer->short_name = strdup (GUI_BUFFER_MAIN);
+        
         /* set title for core buffer */
         gui_buffer_set_title (ptr_buffer,
                               "WeeChat " PACKAGE_VERSION " "
