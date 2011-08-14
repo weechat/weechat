@@ -85,7 +85,7 @@ irc_raw_open (int switch_to_buffer)
             weechat_buffer_set (irc_raw_buffer,
                                 "title", _("IRC raw messages"));
             
-            if (!weechat_buffer_get_string (irc_raw_buffer, "short_name"))
+            if (!weechat_buffer_get_integer (irc_raw_buffer, "short_name_is_set"))
             {
                 weechat_buffer_set (irc_raw_buffer, "short_name",
                                     IRC_RAW_BUFFER_NAME);

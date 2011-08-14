@@ -333,7 +333,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         if (buffer_created)
         {
             weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
-            if (!weechat_buffer_get_string (xfer->buffer, "short_name"))
+            if (!weechat_buffer_get_integer (xfer->buffer, "short_name_is_set"))
             {
                 weechat_buffer_set (xfer->buffer, "short_name",
                                     xfer->remote_nick);

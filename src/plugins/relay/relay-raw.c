@@ -84,7 +84,7 @@ relay_raw_open (int switch_to_buffer)
             weechat_buffer_set (relay_raw_buffer,
                                 "title", _("Relay raw messages"));
 
-            if (!weechat_buffer_get_string (relay_raw_buffer, "short_name"))
+            if (!weechat_buffer_get_integer (relay_raw_buffer, "short_name_is_set"))
             {
                 weechat_buffer_set (relay_raw_buffer, "short_name",
                                     RELAY_RAW_BUFFER_NAME);

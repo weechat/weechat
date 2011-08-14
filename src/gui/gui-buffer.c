@@ -807,6 +807,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->layout_number;
         else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
             return buffer->layout_number_merge_order;
+        else if (string_strcasecmp (property, "short_name_is_set") == 0)
+            return (buffer->short_name) ? 1 : 0;
         else if (string_strcasecmp (property, "type") == 0)
             return buffer->type;
         else if (string_strcasecmp (property, "notify") == 0)
@@ -874,7 +876,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
         else if (string_strcasecmp (property, "name") == 0)
             return buffer->name;
         else if (string_strcasecmp (property, "short_name") == 0)
-            return buffer->short_name;
+            return gui_buffer_get_short_name (buffer);
         else if (string_strcasecmp (property, "title") == 0)
             return buffer->title;
         else if (string_strcasecmp (property, "input") == 0)
@@ -3211,7 +3213,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "short_name", buffer->short_name))
+    if (!infolist_new_var_string (ptr_item, "short_name", gui_buffer_get_short_name (buffer)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;

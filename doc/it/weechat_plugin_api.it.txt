@@ -8879,6 +8879,8 @@ Argomenti:
 ** 'layout_number': numero del buffer salvato nel layout
 // TRANSLATION MISSING
 ** 'layout_number_merge_order': order in merge for layout
+// TRANSLATION MISSING
+** 'short_name_is_set': 1 if short name is set, 0 if not set
 ** 'type': tipo dibuffer (0: formattato, 1: contenuto libero)
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer
