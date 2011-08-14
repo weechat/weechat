@@ -221,7 +221,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
             {
                 last_space = NULL;
                 word_start = (*line)->data->message;
-                while (word_start < ptr_data)
+                while (word_start && (word_start < ptr_data))
                 {
                     word_start = (char *)gui_chat_string_next_char (NULL,
                                                                     (unsigned char *)word_start,
