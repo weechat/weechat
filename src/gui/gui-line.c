@@ -574,11 +574,11 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
-    int update_prefix_max_length;
+    int i, update_prefix_max_length;
     
-    /* reset scroll for any window scroll starting with this line */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
+        /* reset scroll for any window scroll starting with this line */
         for (ptr_scroll = ptr_win->scroll; ptr_scroll;
              ptr_scroll = ptr_scroll->next_scroll)
         {
@@ -587,6 +587,15 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                 ptr_scroll->start_line = ptr_scroll->start_line->next_line;
                 ptr_scroll->start_line_pos = 0;
                 gui_buffer_ask_chat_refresh (buffer, 2);
+            }
+        }
+        /* remove line from coords */
+        if (ptr_win->coords)
+        {
+            for (i = 0; i < ptr_win->coords_size; i++)
+            {
+                if (ptr_win->coords[i].line == line)
+                    gui_window_coords_init_line (ptr_win, i);
             }
         }
     }
@@ -803,7 +812,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     
     /* fill data in new line */
     new_line->data->buffer = buffer;
-    new_line->data->y = 0;
+    new_line->data->y = -1;
     new_line->data->date = date;
     new_line->data->date_printed = date_printed;
     new_line->data->str_time = (date == 0) ?

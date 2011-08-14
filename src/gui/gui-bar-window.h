@@ -66,8 +66,8 @@ extern void gui_bar_window_search_by_xy (struct t_gui_window *window,
                                          int x, int y,
                                          struct t_gui_bar_window **bar_window,
                                          char **bar_item,
-                                         int *item_line,
-                                         int *item_col);
+                                         int *bar_item_line,
+                                         int *bar_item_col);
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
 extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,

@@ -173,7 +173,8 @@ Examples:
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
-        buffer|color|cursor|infolists|memory|mouse|tags|term|windows
+        buffer|color|infolists|memory|tags|term|windows
+        mouse|cursor [verbose]
         hdata [free]
 
      list: list plugins with debug levels

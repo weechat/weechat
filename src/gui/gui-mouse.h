@@ -34,7 +34,7 @@ extern char gui_mouse_event_button;
 
 /* mouse functions */
 
-extern void gui_mouse_debug_toggle ();
+extern void gui_mouse_debug_set (int debug);
 extern void gui_mouse_event_reset ();
 
 /* mouse functions (GUI dependent) */

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -939,8 +939,8 @@ msgid "control debug for core/plugins"
 msgstr ""
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
 
 msgid ""
@@ -2534,8 +2534,17 @@ msgstr ""
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 
-msgid "Debug enabled for cursor mode"
+#, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr ""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Debug disabled for cursor mode"
 msgstr ""
@@ -2554,8 +2563,7 @@ msgstr ""
 msgid "Error: not enough memory for key binding"
 msgstr ""
 
-#, c-format
-msgid "Hashtable focus: %s"
+msgid "Hashtable focus:"
 msgstr ""
 
 #, c-format
@@ -2573,7 +2581,8 @@ msgstr ""
 msgid "Not enough memory for new line"
 msgstr ""
 
-msgid "Debug enabled for mouse"
+#, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr ""
 
 msgid "Debug disabled for mouse"
@@ -4957,11 +4966,6 @@ msgstr[1] ""
 
 msgid "voice"
 msgid_plural "voices"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "normal"
-msgid_plural "normals"
 msgstr[0] ""
 msgstr[1] ""
 

@@ -2205,6 +2205,28 @@ gui_window_set_title (const char *title)
 }
 
 /*
+ * gui_window_send_clipboard: copy text to clipboard (sent to terminal)
+ */
+
+void
+gui_window_send_clipboard (const char *storage_unit, const char *text)
+{
+    char *text_base64;
+    int length;
+
+    length = strlen (text);
+    text_base64 = malloc ((length * 4) + 1);
+    if (text_base64)
+    {
+        string_encode_base64 (text, length, text_base64);
+        fprintf (stderr, "\033]52;%s;%s\a",
+                 (storage_unit) ? storage_unit : "",
+                 text_base64);
+        free (text_base64);
+    }
+}
+
+/*
  * gui_window_move_cursor: move cursor on screen (for cursor mode)
  */
 

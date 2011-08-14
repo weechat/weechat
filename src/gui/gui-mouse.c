@@ -33,7 +33,7 @@
 
 
 int gui_mouse_enabled = 0;             /* 1 if mouse support is enabled     */
-int gui_mouse_debug = 0;               /* debug mode for mouse              */
+int gui_mouse_debug = 0;               /* debug mode for mouse (0-2)        */
 int gui_mouse_grab = 0;                /* 1 if grab mode enabled            */
 
 /* mouse event */
@@ -49,16 +49,19 @@ char gui_mouse_event_button = '#';     /* button pressed (or wheel)         */
 
 
 /*
- * gui_mouse_debug_toggle: toggle debug for mouse events
+ * gui_mouse_debug_set: set debug for mouse events
  */
 
 void
-gui_mouse_debug_toggle ()
+gui_mouse_debug_set (int debug)
 {
-    gui_mouse_debug ^= 1;
+    gui_mouse_debug = debug;
 
     if (gui_mouse_debug)
-        gui_chat_printf (NULL, _("Debug enabled for mouse"));
+    {
+        gui_chat_printf (NULL, _("Debug enabled for mouse (%s)"),
+                         (debug > 1) ? _("verbose") : _("normal"));
+    }
     else
         gui_chat_printf (NULL, _("Debug disabled for mouse"));
 }

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: 2011-07-14 20:53+0100\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1146,8 +1146,8 @@ msgstr "Debug-Kontrolle für Hauptprogramm und/oder Erweiterung"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || hdata [free]"
@@ -3385,9 +3385,17 @@ msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sFehler: Es ist nur möglich Buffer mit formatiertem Inhalt zusammenzufügen"
 
-#, fuzzy
-msgid "Debug enabled for cursor mode"
+#, fuzzy, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr "Debug deaktiviert für \"%s\""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] "normal"
+msgstr[1] "normale"
 
 #, fuzzy
 msgid "Debug disabled for cursor mode"
@@ -3408,8 +3416,8 @@ msgstr "Fehler: kann die Taste \"%s\" nicht zuordnen"
 msgid "Error: not enough memory for key binding"
 msgstr "Fehler: nicht genügend Speicher für Tastenzuordnung"
 
-#, fuzzy, c-format
-msgid "Hashtable focus: %s"
+#, fuzzy
+msgid "Hashtable focus:"
 msgstr "Hashtable (Ausgabe)"
 
 #, c-format
@@ -3427,8 +3435,8 @@ msgstr "Standardbefehl:"
 msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für eine neue Zeile"
 
-#, fuzzy
-msgid "Debug enabled for mouse"
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr "Debug deaktiviert für \"%s\""
 
 #, fuzzy
@@ -6406,11 +6414,6 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "ge-voice-ter"
 msgstr[1] "ge-voice-te"
-
-msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normal"
-msgstr[1] "normale"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

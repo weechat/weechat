@@ -30,7 +30,7 @@ extern int gui_cursor_y;
 /* cursor functions */
 
 extern void gui_cursor_mode_toggle ();
-extern void gui_cursor_debug_toggle ();
+extern void gui_cursor_debug_set (int debug);
 extern void gui_cursor_move_xy (int x, int y);
 extern void gui_cursor_move_add_xy (int add_x, int add_y);
 extern void gui_cursor_move_area_add_xy (int add_x, int add_y);

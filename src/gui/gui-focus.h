@@ -27,16 +27,20 @@ struct t_gui_focus_info
     int x, y;                          /* (x,y) on screen                   */
     struct t_gui_window *window;       /* window found                      */
     int chat;                          /* 1 for chat area, otherwise 0      */
+    struct t_gui_line *chat_line;      /* line in chat area                 */
+    char *chat_word;                   /* word at (x,y)                     */
+    char *chat_bol;                    /* beginnong of line until (x,y)     */
+    char *chat_eol;                    /* (x,y) until end of line           */
     struct t_gui_bar_window *bar_window; /* bar window found                */
     char *bar_item;                    /* bar item found                    */
-    int item_line;                     /* line in bar item                  */
-    int item_col;                      /* column in bar item                */
+    int bar_item_line;                 /* line in bar item                  */
+    int bar_item_col;                  /* column in bar item                */
 };
 
 /* focus functions */
 
-extern void gui_focus_get_info (int x, int y,
-                                struct t_gui_focus_info *focus_info);
+extern struct t_gui_focus_info *gui_focus_get_info (int x, int y);
+extern void gui_focus_free_info (struct t_gui_focus_info *focus_info);
 extern struct t_hashtable *gui_focus_to_hashtable (struct t_gui_focus_info *focus_info,
                                                    const char *key);
 

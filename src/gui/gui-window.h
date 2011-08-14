@@ -36,6 +36,15 @@ extern int gui_window_cursor_x, gui_window_cursor_y;
 
 /* window structures */
 
+struct t_gui_window_coords
+{
+    struct t_gui_line *line;           /* pointer to line                   */
+    char *data;                        /* pointer to data                   */
+    int time_x1, time_x2;              /* start/end of time on screen       */
+    int buffer_x1, buffer_x2;          /* start/end of buffer name on screen*/
+    int prefix_x1, prefix_x2;          /* start/end of prefix on screen     */
+};
+
 struct t_gui_window
 {
     int number;                        /* window number (first is 1)        */
@@ -73,7 +82,12 @@ struct t_gui_window
     /* scroll */
     struct t_gui_window_scroll *scroll; /* scroll infos for each buffer     */
                                         /* scrolled in this window          */
-
+    
+    /* coordinates (for focus) */
+    int coords_size;                   /* size of coords (number of lines)  */
+    struct t_gui_window_coords *coords;/* coords for window                 */
+    int coords_x_message;              /* start X for messages              */
+    
     /* tree */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
     
@@ -123,6 +137,13 @@ extern struct t_gui_window_tree *gui_windows_tree;
 
 extern struct t_gui_window *gui_window_search_by_number (int number);
 extern struct t_gui_window *gui_window_search_by_xy (int x, int y);
+extern void gui_window_get_context_at_xy (struct t_gui_window *window,
+                                          int x, int y,
+                                          int *chat,
+                                          struct t_gui_line **line,
+                                          char **word,
+                                          char **beginning,
+                                          char **end);
 extern void gui_window_ask_refresh (int refresh);
 extern int gui_window_tree_init (struct t_gui_window *window);
 extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
@@ -148,6 +169,8 @@ extern void gui_window_set_layout_plugin_name (struct t_gui_window *window,
                                                const char *plugin_name);
 extern void gui_window_set_layout_buffer_name (struct t_gui_window *window,
                                                const char *buffer_name);
+extern void gui_window_coords_init_line (struct t_gui_window *window, int line);
+extern void gui_window_coords_alloc (struct t_gui_window *window);
 extern void gui_window_free (struct t_gui_window *window);
 extern void gui_window_switch_previous (struct t_gui_window *window);
 extern void gui_window_switch_next (struct t_gui_window *window);
@@ -208,6 +231,8 @@ extern int gui_window_balance (struct t_gui_window_tree *tree);
 extern void gui_window_swap (struct t_gui_window *window, int direction);
 extern void gui_window_refresh_screen (int full_refresh);
 extern void gui_window_set_title (const char *title);
+extern void gui_window_send_clipboard (const char *storage_unit,
+                                       const char *text);
 extern void gui_window_move_cursor ();
 extern void gui_window_term_display_infos ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);

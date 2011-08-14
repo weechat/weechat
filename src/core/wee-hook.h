@@ -28,7 +28,6 @@ struct t_gui_bar;
 struct t_gui_buffer;
 struct t_gui_line;
 struct t_gui_completion;
-struct t_gui_focus_info;
 struct t_gui_window;
 struct t_weelist;
 struct t_hashtable;
@@ -541,9 +540,8 @@ extern struct t_hook *hook_focus (struct t_weechat_plugin *plugin,
                                   const char *area,
                                   t_hook_callback_focus *callback,
                                   void *callback_data);
-extern struct t_hashtable *hook_focus_get_data (struct t_gui_focus_info *focus_info1,
-                                                struct t_gui_focus_info *focus_info2,
-                                                const char *key);
+extern struct t_hashtable *hook_focus_get_data (struct t_hashtable *hashtable_focus1,
+                                                struct t_hashtable *hashtable_focus2);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();

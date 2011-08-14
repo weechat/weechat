@@ -2840,25 +2840,33 @@ hook_focus_hashtable_map2_cb (void *data, struct t_hashtable *hashtable,
 
 /*
  * hook_focus_get_data: get data for focus on (x,y) on screen
- *                      focus_info2 is not NULL only for a mouse gesture (it's
- *                      for point where mouse button is released)
+ *                      hashtable_focus2 is not NULL only for a mouse gesture
+ *                      (it's for point where mouse button has been released)
  */
 
 struct t_hashtable *
-hook_focus_get_data (struct t_gui_focus_info *focus_info1,
-                     struct t_gui_focus_info *focus_info2,
-                     const char *key)
+hook_focus_get_data (struct t_hashtable *hashtable_focus1,
+                     struct t_hashtable *hashtable_focus2)
 {
     struct t_hook *ptr_hook, *next_hook;
-    struct t_hashtable *hash_info1, *hash_info2, *hash_info_ret;
-    const char *keys;
+    struct t_hashtable *hashtable1, *hashtable2, *hashtable_ret;
+    const char *focus1_chat, *focus1_bar_item_name, *keys;
     char **list_keys, *new_key;
-    int num_keys, i, length;
+    int num_keys, i, length, focus1_is_chat;
+    
+    if (!hashtable_focus1)
+        return NULL;
+    
+    focus1_chat = hashtable_get (hashtable_focus1, "_chat");
+    focus1_is_chat = (focus1_chat && (strcmp (focus1_chat, "1") == 0));
+    focus1_bar_item_name = hashtable_get (hashtable_focus1, "_bar_item_name");
+    
+    hashtable1 = hashtable_dup (hashtable_focus1);
+    if (!hashtable1)
+        return NULL;
+    hashtable2 = (hashtable_focus2) ? hashtable_dup (hashtable_focus2) : NULL;
     
     hook_exec_start ();
-    
-    hash_info1 = gui_focus_to_hashtable (focus_info1, key);
-    hash_info2 = (focus_info2) ? gui_focus_to_hashtable (focus_info2, key) : NULL;
     
     ptr_hook = weechat_hooks[HOOK_TYPE_FOCUS];
     while (ptr_hook)
@@ -2867,50 +2875,50 @@ hook_focus_get_data (struct t_gui_focus_info *focus_info1,
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && ((focus_info1->chat
+            && ((focus1_is_chat
                  && (strcmp (HOOK_FOCUS(ptr_hook, area), "chat") == 0))
-                || (focus_info1->bar_item
-                    && (strcmp (HOOK_FOCUS(ptr_hook, area), focus_info1->bar_item) == 0))))
+                || (focus1_bar_item_name && focus1_bar_item_name[0]
+                    && (strcmp (HOOK_FOCUS(ptr_hook, area), focus1_bar_item_name) == 0))))
         {
-            /* run callback for focus_info1 */
+            /* run callback for focus #1 */
             ptr_hook->running = 1;
-            hash_info_ret = (HOOK_FOCUS(ptr_hook, callback))
-                (ptr_hook->callback_data, hash_info1);
+            hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
+                (ptr_hook->callback_data, hashtable1);
             ptr_hook->running = 0;
-            if (hash_info_ret)
+            if (hashtable_ret)
             {
-                if (hash_info_ret != hash_info1)
+                if (hashtable_ret != hashtable1)
                 {
                     /*
-                     * add keys of hash_info_ret into hash_info and destroy
-                     * hash_info_ret
+                     * add keys of hashtable_ret into hashtable1
+                     * and destroy it
                      */
-                    hashtable_map (hash_info_ret,
+                    hashtable_map (hashtable_ret,
                                    &hook_focus_hashtable_map_cb,
-                                   hash_info1);
-                    hashtable_free (hash_info_ret);
+                                   hashtable1);
+                    hashtable_free (hashtable_ret);
                 }
             }
             
-            /* run callback for focus_info2 */
-            if (hash_info2)
+            /* run callback for focus #2 */
+            if (hashtable2)
             {
                 ptr_hook->running = 1;
-                hash_info_ret = (HOOK_FOCUS(ptr_hook, callback))
-                    (ptr_hook->callback_data, hash_info2);
+                hashtable_ret = (HOOK_FOCUS(ptr_hook, callback))
+                    (ptr_hook->callback_data, hashtable2);
                 ptr_hook->running = 0;
-                if (hash_info_ret)
+                if (hashtable_ret)
                 {
-                    if (hash_info_ret != hash_info2)
+                    if (hashtable_ret != hashtable2)
                     {
                         /*
-                         * add keys of hash_info_ret into hash_info and destroy
-                         * hash_info_ret
+                         * add keys of hashtable_ret into hashtable2
+                         * and destroy it
                          */
-                        hashtable_map (hash_info_ret,
+                        hashtable_map (hashtable_ret,
                                        &hook_focus_hashtable_map_cb,
-                                       hash_info2);
-                        hashtable_free (hash_info_ret);
+                                       hashtable2);
+                        hashtable_free (hashtable_ret);
                     }
                 }
             }
@@ -2919,14 +2927,14 @@ hook_focus_get_data (struct t_gui_focus_info *focus_info1,
         ptr_hook = next_hook;
     }
     
-    if (hash_info2)
+    if (hashtable2)
     {
-        hashtable_map (hash_info2, &hook_focus_hashtable_map2_cb, hash_info1);
-        hashtable_free (hash_info2);
+        hashtable_map (hashtable2, &hook_focus_hashtable_map2_cb, hashtable1);
+        hashtable_free (hashtable2);
     }
     else
     {
-        keys = hashtable_get_string (hash_info1, "keys");
+        keys = hashtable_get_string (hashtable1, "keys");
         if (keys)
         {
             list_keys = string_split (keys, ",", 0, 0, &num_keys);
@@ -2939,8 +2947,9 @@ hook_focus_get_data (struct t_gui_focus_info *focus_info1,
                     if (new_key)
                     {
                         snprintf (new_key, length, "%s2", list_keys[i]);
-                        hashtable_set (hash_info1, new_key,
-                                       hashtable_get (hash_info1, list_keys[i]));
+                        hashtable_set (hashtable1, new_key,
+                                       hashtable_get (hashtable1,
+                                                      list_keys[i]));
                         free (new_key);
                     }
                 }
@@ -2951,7 +2960,7 @@ hook_focus_get_data (struct t_gui_focus_info *focus_info1,
     
     hook_exec_end ();
     
-    return hash_info1;
+    return hashtable1;
 }
 
 /*

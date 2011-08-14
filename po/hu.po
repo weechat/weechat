@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1072,8 +1072,8 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr "dump | buffer | windows"
 
 #, fuzzy
@@ -2895,8 +2895,18 @@ msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 
-msgid "Debug enabled for cursor mode"
+#, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr ""
+
+msgid "verbose"
+msgstr ""
+
+#, fuzzy
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] "normál"
+msgstr[1] "normál"
 
 msgid "Debug disabled for cursor mode"
 msgstr ""
@@ -2917,8 +2927,7 @@ msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 msgid "Error: not enough memory for key binding"
 msgstr "%s nincs elég memória a billentyűhozzárendeléshez\n"
 
-#, c-format
-msgid "Hashtable focus: %s"
+msgid "Hashtable focus:"
 msgstr ""
 
 #, c-format
@@ -2937,7 +2946,8 @@ msgstr "%s belső parancsok:\n"
 msgid "Not enough memory for new line"
 msgstr "Nincs elég memória az új sorhoz\n"
 
-msgid "Debug enabled for mouse"
+#, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr ""
 
 msgid "Debug disabled for mouse"
@@ -5727,12 +5737,6 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "voice"
 msgstr[1] "voice"
-
-#, fuzzy
-msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normál"
-msgstr[1] "normál"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format

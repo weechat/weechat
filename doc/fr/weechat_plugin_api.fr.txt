@@ -8409,31 +8409,45 @@ correspond avant d'utiliser les informations de la hashtable.
 Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de type
 "string) :
 
-[width="100%",cols="4m,6,8,8",options="header"]
+[width="100%",cols="5m,5,8,3",options="header"]
 |========================================
-| Clé ^(1)^      | Description                     | Valeur                                 | Valeur si non applicable
-| _x             | colonne sur l'écran           2+| "0" ... "n"
-| _y             | ligne sur l'écran             2+| "0" ... "n"
-| _window        | pointeur de la fenêtre          | "0x12345678"                           | "0x0"
-| _window_number | numéro de la fenêtre            | "1" ... "n"                            | "*"
-| _chat          | indicateur zone "chat"          | "0" ou "1"                             | "0"
-| _buffer        | pointeur du tampon              | "0x12345678"                           | "0x0"
-| _buffer_number | numéro du tampon                | "1" ... "n"                            | ""
-| _buffer_plugin | nom d'extension du tampon       | "core", "irc", ...                     | ""
-| _buffer_name   | nom du tampon                   | "weechat", "freenode.#weechat", ...    | ""
-| _bar_name      | nom de la barre                 | "title", "nicklist", ...               | ""
-| _bar_filling   | remplissage de la barre         | "horizontal", "vertical", ...          | ""
-| _bar_item_name | nom de l'objet de barre         | "buffer_nicklist", ...                 | ""
-| _item_line     | ligne dans l'objet de barre     | "0" ... "n"                            | "-1"
-| _item_col      | colonne dans l'objet de barre   | "0" ... "n"                            | "-1"
-| _key           | touche ou évènement souris    2+| "button1", "button2-gesture-left", ...
+| Clé ^(1)^               | Description                     | Exemples de valeur                               | Valeur si non applicable
+| _x                      | colonne sur l'écran           2+| "0" ... "n"
+| _y                      | ligne sur l'écran             2+| "0" ... "n"
+| _key                    | touche ou évènement souris    2+| "button1", "button2-gesture-left", ...
+| _window                 | pointeur vers la fenêtre        | "0x12345678"                                     | "0x0"
+| _window_number          | numéro de la fenêtre            | "1" ... "n"                                      | "*"
+| _buffer                 | pointeur vers le tampon         | "0x12345678"                                     | "0x0"
+| _buffer_number          | numéro du tampon                | "1" ... "n"                                      | "-1"
+| _buffer_plugin          | nom d'extension du tampon       | "core", "irc", ...                               | ""
+| _buffer_name            | nom du tampon                   | "weechat", "freenode.#weechat", ...              | ""
+| _chat                   | indicateur zone "chat"          | "0" ou "1"                                       | "0"
+| _chat_line_y            | numéro de ligne ^(2)^           | "0" ... "n"                                      | "-1"
+| _chat_line_date         | date de la ligne                | "1313237175"                                     | "0"
+| _chat_line_date_printed | date de la ligne ^(3)^          | "1313237175"                                     | "0"
+| _chat_line_time         | heure affichée                  | "14:06:15"                                       | ""
+| _chat_line_tags         | étiquettes de la ligne          | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
+| _chat_line_prefix       | préfixe de la ligne             | "@FlashCode"                                     | ""
+| _chat_line_message      | message de la ligne             | "Hello world!"                                   | ""
+| _chat_word              | mot à la position (x,y)         | "Hello"                                          | ""
+| _chat_bol               | début de ligne ⇒ (x-1,y)        | "He"                                             | ""
+| _chat_eol               | (x,y) ⇒ fin de ligne            | "llo world!"                                     | ""
+| _bar_name               | nom de la barre                 | "title", "nicklist", ...                         | ""
+| _bar_filling            | remplissage de la barre         | "horizontal", "vertical", ...                    | ""
+| _bar_item_name          | nom de l'objet de barre         | "buffer_nicklist", "hotlist", ...                | ""
+| _bar_item_line          | ligne dans l'objet de barre     | "0" ... "n"                                      | "-1"
+| _bar_item_col           | colonne dans l'objet de barre   | "0" ... "n"                                      | "-1"
 |========================================
 
 [NOTE]
 ^(1)^ Il y a les mêmes clés suffixées par "2" (c'est-à-dire : "_x2", "_y2",
 "_window2", ...) avec l'information sur le second point (pratique seulement
 pour les gestes de souris, pour savoir où le bouton de la souris a été
-relâché).
+relâché). +
+^(2)^ Le numéro de ligne n'est renseigné que pour les tampons avec contenu
+libre. +
+^(3)^ Il s'agit de la date lorsque WeeChat ajoute la ligne dans le tampon
+(supérieure ou égale à "chat_line_date").
 
 Informations additionnelles pour l'objet de barre "buffer_nicklist":
 

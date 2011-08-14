@@ -48,6 +48,8 @@
 #include "gui-bar.h"
 #include "gui-bar-window.h"
 #include "gui-buffer.h"
+#include "gui-chat.h"
+#include "gui-color.h"
 #include "gui-filter.h"
 #include "gui-input.h"
 #include "gui-hotlist.h"
@@ -116,6 +118,147 @@ gui_window_search_by_xy (int x, int y)
     
     /* no window at this location */
     return NULL;
+}
+
+/*
+ * gui_window_get_context_at_xy: return following info:
+ *                               - chat (0/1)
+ *                               - line
+ *                               - word at (x,y)
+ *                               - beginning of line until (x,y)
+ *                               - (x,y) until end of line
+ */
+
+void
+gui_window_get_context_at_xy (struct t_gui_window *window,
+                              int x, int y,
+                              int *chat,
+                              struct t_gui_line **line,
+                              char **word,
+                              char **beginning,
+                              char **end)
+{
+    int win_x, win_y;
+    char *ptr_data, *data_next_line, *str_temp;
+    char *word_start, *word_end, *last_space;
+    
+    *chat = 0;
+    *line = NULL;
+    *word = NULL;
+    *beginning = NULL;
+    *end = NULL;
+    
+    /* not in a window? */
+    if (!window)
+        return;
+    
+    /* in window, but not in chat area? */
+    win_x = x - window->win_chat_x;
+    win_y = y - window->win_chat_y;
+    if ((win_x < 0)
+        || (win_y < 0)
+        || (win_x > window->win_chat_width - 1)
+        || (win_y > window->win_chat_height - 1))
+    {
+        return;
+    }
+    
+    /* add horizontal scroll (buffers with free content) */
+    if (window->scroll->start_col > 0)
+        win_x += window->scroll->start_col;
+    
+    /* we are in chat area */
+    *chat = 1;
+    
+    /* get line */
+    *line = window->coords[win_y].line;
+    if (!*line)
+        return;
+    
+    /* no data for line? */
+    if (!window->coords[win_y].data)
+        return;
+    
+    if (win_x < window->coords_x_message)
+    {
+        /* X is before message (time/buffer/prefix) */
+        if ((win_x >= window->coords[win_y].time_x1)
+            && (win_x <= window->coords[win_y].time_x2))
+        {
+            *word = gui_color_decode ((*line)->data->str_time, NULL);
+        }
+        else if ((win_x >= window->coords[win_y].buffer_x1)
+                 && (win_x <= window->coords[win_y].buffer_x2))
+        {
+            *word = gui_color_decode ((*line)->data->buffer->short_name, NULL);
+        }
+        else if ((win_x >= window->coords[win_y].prefix_x1)
+                 && (win_x <= window->coords[win_y].prefix_x2))
+        {
+            *word = gui_color_decode ((*line)->data->prefix, NULL);
+        }
+    }
+    else
+    {
+        /* X is in message (or after) */
+        data_next_line = ((win_y < window->win_chat_height - 1)
+                          && (window->coords[win_y + 1].line == *line)) ?
+            window->coords[win_y + 1].data : NULL;
+        ptr_data = gui_chat_string_add_offset_screen (window->coords[win_y].data,
+                                                      win_x - window->coords_x_message);
+        if (ptr_data && ptr_data[0]
+            && (!data_next_line || (ptr_data < data_next_line)))
+        {
+            str_temp = string_strndup ((*line)->data->message,
+                                       ptr_data - (*line)->data->message);
+            if (str_temp)
+            {
+                *beginning = gui_color_decode (str_temp, NULL);
+                free (str_temp);
+            }
+            *end = gui_color_decode (ptr_data, NULL);
+            if (ptr_data[0] != ' ')
+            {
+                last_space = NULL;
+                word_start = (*line)->data->message;
+                while (word_start < ptr_data)
+                {
+                    word_start = (char *)gui_chat_string_next_char (NULL,
+                                                                    (unsigned char *)word_start,
+                                                                    0);
+                    if (word_start)
+                    {
+                        if (word_start[0] == ' ')
+                            last_space = word_start;
+                        word_start = utf8_next_char (word_start);
+                    }
+                }
+                word_start = (last_space) ? last_space + 1 : (*line)->data->message;
+                word_end = ptr_data;
+                while (word_end && word_end[0])
+                {
+                    word_end = (char *)gui_chat_string_next_char (NULL,
+                                                                  (unsigned char *)word_end,
+                                                                  0);
+                    if (word_end)
+                    {
+                        if (word_end[0] == ' ')
+                            break;
+                        word_end = utf8_next_char (word_end);
+                    }
+                }
+                if (word_start && word_end)
+                {
+                    str_temp = string_strndup (word_start, word_end - word_start);
+                    if (str_temp)
+                    {
+                        *word = gui_color_decode (str_temp, NULL);
+                        free (str_temp);
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -485,6 +628,11 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         /* scroll */
         gui_window_scroll_init (new_window->scroll, buffer);
         
+        /* coordinates */
+        new_window->coords_size = 0;
+        new_window->coords = NULL;
+        new_window->coords_x_message = 0;
+        
         /* tree */
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
@@ -680,6 +828,53 @@ gui_window_set_layout_buffer_name (struct t_gui_window *window,
     
     if (buffer_name)
         window->layout_buffer_name = strdup (buffer_name);
+}
+
+/*
+ * gui_window_coords_init_line: initialize a line in window coordinates
+ */
+
+void
+gui_window_coords_init_line (struct t_gui_window *window, int line)
+{
+    if (!window->coords || (line < 0) || (line >= window->coords_size))
+        return;
+    
+    window->coords[line].line = NULL;
+    window->coords[line].data = NULL;
+    window->coords[line].time_x1 = -1;
+    window->coords[line].time_x2 = -1;
+    window->coords[line].buffer_x1 = -1;
+    window->coords[line].buffer_x2 = -1;
+    window->coords[line].prefix_x1 = -1;
+    window->coords[line].prefix_x2 = -1;
+}
+
+/*
+ * gui_window_coords_alloc: allocate and initialize coordinates for window
+ */
+
+void
+gui_window_coords_alloc (struct t_gui_window *window)
+{
+    int i;
+    
+    if (window->coords && (window->coords_size != window->win_chat_height))
+    {
+        free (window->coords);
+        window->coords = NULL;
+    }
+    window->coords_size = window->win_chat_height;
+    if (!window->coords)
+        window->coords = malloc (window->coords_size * sizeof (window->coords[0]));
+    if (window->coords)
+    {
+        for (i = 0; i < window->win_chat_height; i++)
+        {
+            gui_window_coords_init_line (window, i);
+        }
+    }
+    window->coords_x_message = 0;
 }
 
 /*
@@ -1547,6 +1742,9 @@ gui_window_print_log ()
         log_printf ("  layout_plugin_name. : '%s'",  ptr_window->layout_plugin_name);
         log_printf ("  layout_buffer_name. : '%s'",  ptr_window->layout_buffer_name);
         log_printf ("  scroll. . . . . . . : 0x%lx", ptr_window->scroll);
+        log_printf ("  coords_size . . . . : %d",    ptr_window->coords_size);
+        log_printf ("  coords. . . . . . . : 0x%lx", ptr_window->coords);
+        log_printf ("  coords_x_message. . : %d",    ptr_window->coords_x_message);
         log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);

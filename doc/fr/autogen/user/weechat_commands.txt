@@ -173,7 +173,8 @@ Exemples:
 /debug  list
         set <extension> <niveau>
         dump [<extension>]
-        buffer|color|cursor|infolists|memory|mouse|tags|term|windows
+        buffer|color|infolists|memory|tags|term|windows
+        cursor|mouse [verbose]
         hdata [free]
 
      list: lister les extensions avec leur niveau de debug

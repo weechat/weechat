@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: 2011-07-16 11:32+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1124,8 +1124,8 @@ msgstr "attiva debug per core/plugin"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || hdata [free]"
@@ -3294,9 +3294,17 @@ msgstr "%sErrore: un buffer con lo stesso nome (%s) esiste già"
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr "%sErrore: è possibile solo unire i buffer con il contenuto formattato"
 
-#, fuzzy
-msgid "Debug enabled for cursor mode"
+#, fuzzy, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr "Debug disabilitato per \"%s\""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] "normale"
+msgstr[1] "normali"
 
 #, fuzzy
 msgid "Debug disabled for cursor mode"
@@ -3316,8 +3324,8 @@ msgstr "Errore: impossibile associare il testo \"%s\""
 msgid "Error: not enough memory for key binding"
 msgstr "Errore: memoria non sufficiente per l'associazione tasti"
 
-#, fuzzy, c-format
-msgid "Hashtable focus: %s"
+#, fuzzy
+msgid "Hashtable focus:"
 msgstr "Tabella hash (output)"
 
 #, c-format
@@ -3335,8 +3343,8 @@ msgstr "comando predefinito:"
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
 
-#, fuzzy
-msgid "Debug enabled for mouse"
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr "Debug disabilitato per \"%s\""
 
 #, fuzzy
@@ -6233,11 +6241,6 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "voce"
 msgstr[1] "voci"
-
-msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normale"
-msgstr[1] "normali"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

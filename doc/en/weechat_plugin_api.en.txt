@@ -8272,30 +8272,43 @@ hashtable.
 
 Content of hashtable sent to callback (keys and values are of type "string"):
 
-[width="100%",cols="4m,6,8,8",options="header"]
+[width="100%",cols="5m,5,8,3",options="header"]
 |========================================
-| Key ^(1)^      | Description             | Value                                  | Value if N/A
-| _x             | column on screen      2+| "0" ... "n"
-| _y             | line on screen        2+| "0" ... "n"
-| _window        | pointer of window       | "0x12345678"                           | "0x0"
-| _window_number | number of window        | "1" ... "n"                            | "*"
-| _chat          | chat area indicator     | "0" or "1"                             | "0"
-| _buffer        | pointer of buffer       | "0x12345678"                           | "0x0"
-| _buffer_number | number of buffer        | "1" ... "n"                            | ""
-| _buffer_plugin | plugin name of buffer   | "core", "irc", ...                     | ""
-| _buffer_name   | name of buffer          | "weechat", "freenode.#weechat", ...    | ""
-| _bar_name      | name of bar             | "title", "nicklist", ...               | ""
-| _bar_filling   | filling of bar          | "horizontal", "vertical", ...          | ""
-| _bar_item_name | name of bar item        | "buffer_nicklist", ...                 | ""
-| _item_line     | line in bar item        | "0" ... "n"                            | "-1"
-| _item_col      | column in bar item      | "0" ... "n"                            | "-1"
-| _key           | key or mouse event    2+| "button1", "button2-gesture-left", ...
+| Key ^(1)^               | Description                 | Value examples                                   | Value if N/A
+| _x                      | column on screen          2+| "0" ... "n"
+| _y                      | line on screen            2+| "0" ... "n"
+| _key                    | key or mouse event        2+| "button1", "button2-gesture-left", ...
+| _window                 | pointer to window           | "0x12345678"                                     | "0x0"
+| _window_number          | number of window            | "1" ... "n"                                      | "*"
+| _buffer                 | pointer to buffer           | "0x12345678"                                     | "0x0"
+| _buffer_number          | number of buffer            | "1" ... "n"                                      | "-1"
+| _buffer_plugin          | plugin name of buffer       | "core", "irc", ...                               | ""
+| _buffer_name            | name of buffer              | "weechat", "freenode.#weechat", ...              | ""
+| _chat                   | chat area indicator         | "0" or "1"                                       | "0"
+| _chat_line_y            | line number ^(2)^           | "0" ... "n"                                      | "-1"
+| _chat_line_date         | line date                   | "1313237175"                                     | "0"
+| _chat_line_date_printed | line date ^(3)^             | "1313237175"                                     | "0"
+| _chat_line_time         | time displayed              | "14:06:15"                                       | ""
+| _chat_line_tags         | tags of line                | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
+| _chat_line_prefix       | prefix of line              | "@FlashCode"                                     | ""
+| _chat_line_message      | message of line             | "Hello world!"                                   | ""
+| _chat_word              | word at (x,y)               | "Hello"                                          | ""
+| _chat_bol               | beginning of line ⇒ (x-1,y) | "He"                                             | ""
+| _chat_eol               | (x,y) ⇒ end of line         | "llo world!"                                     | ""
+| _bar_name               | name of bar                 | "title", "nicklist", ...                         | ""
+| _bar_filling            | filling of bar              | "horizontal", "vertical", ...                    | ""
+| _bar_item_name          | name of bar item            | "buffer_nicklist", "hotlist", ...                | ""
+| _bar_item_line          | line in bar item            | "0" ... "n"                                      | "-1"
+| _bar_item_col           | column in bar item          | "0" ... "n"                                      | "-1"
 |========================================
 
 [NOTE]
 ^(1)^ There are same keys suffixed with "2" (ie: "_x2", "_y2", "_window2", ...)
 with info on second point (useful only for mouse gestures, to know where mouse
-button has been released).
+button has been released). +
+^(2)^ Line number is set only for buffers with free content. +
+^(3)^ It is date when WeeChat adds line in buffer (greater or equal to
+"chat_line_date").
 
 Extra info for bar item "buffer_nicklist":
 

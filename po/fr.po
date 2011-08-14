@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
-"PO-Revision-Date: 2011-08-10 12:17+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
+"PO-Revision-Date: 2011-08-12 10:25+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -1146,11 +1146,11 @@ msgid "control debug for core/plugins"
 msgstr "contrôle du debug pour le coeur/les extensions"
 
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
 "list || set <extension> <niveau> || dump [<extension>] || buffer|color|"
-"cursor|infolists|memory|mouse|tags|term|windows || hdata [free]"
+"infolists|memory|tags|term|windows || cursor|mouse [verbose] || hdata [free]"
 
 msgid ""
 "     list: list plugins with debug levels\n"
@@ -3381,8 +3381,17 @@ msgstr ""
 "%sErreur: il est possible de mélanger seulement des tampons avec du contenu "
 "formaté"
 
-msgid "Debug enabled for cursor mode"
-msgstr "Debug activé pour le mode curseur"
+#, c-format
+msgid "Debug enabled for cursor mode (%s)"
+msgstr "Debug activé pour le mode curseur (%s)"
+
+msgid "verbose"
+msgstr "verbeux"
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] "normal"
+msgstr[1] "normaux"
 
 msgid "Debug disabled for cursor mode"
 msgstr "Debug désactivé pour le mode curseur"
@@ -3401,9 +3410,8 @@ msgstr "Erreur: impossible de créer la touche \"%s\""
 msgid "Error: not enough memory for key binding"
 msgstr "Erreur: pas assez de mémoire pour la touche"
 
-#, c-format
-msgid "Hashtable focus: %s"
-msgstr "Hashtable focus: %s"
+msgid "Hashtable focus:"
+msgstr "Hashtable focus:"
 
 #, c-format
 msgid "Command for key: \"%s\""
@@ -3420,8 +3428,9 @@ msgstr "Lancement de la commande: \"%s\""
 msgid "Not enough memory for new line"
 msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
-msgid "Debug enabled for mouse"
-msgstr "Debug activé pour la souris"
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug activé pour la souris (%s)"
 
 msgid "Debug disabled for mouse"
 msgstr "Debug désactivé pour la souris"
@@ -6331,11 +6340,6 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "voice"
 msgstr[1] "voices"
-
-msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normal"
-msgstr[1] "normaux"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

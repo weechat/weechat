@@ -34,6 +34,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -42,6 +43,7 @@
 #include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-filter.h"
+#include "gui-input.h"
 #include "gui-line.h"
 #include "gui-main.h"
 #include "gui-window.h"
@@ -69,6 +71,14 @@ gui_chat_init ()
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = strdup (gui_chat_prefix_empty);
+    
+    /* some hsignals */
+    hook_hsignal (NULL, "chat_quote_time_prefix_message",
+                  &gui_chat_hsignal_quote_line_cb, NULL);
+    hook_hsignal (NULL, "chat_quote_prefix_message",
+                  &gui_chat_hsignal_quote_line_cb, NULL);
+    hook_hsignal (NULL, "chat_quote_message",
+                  &gui_chat_hsignal_quote_line_cb, NULL);
 }
 
 /*
@@ -181,6 +191,32 @@ gui_chat_string_add_offset (const char *string, int offset)
         {
             string = utf8_next_char (string);
             offset--;
+        }
+    }
+    return (char *)string;
+}
+
+/*
+ * gui_chat_string_add_offset_screen: move forward N chars (using size on screen)
+ *                                    in a string, skipping all formatting chars
+ *                                    (like colors,..)
+ */
+
+char *
+gui_chat_string_add_offset_screen (const char *string, int offset_screen)
+{
+    int size_on_screen;
+    
+    while (string && string[0] && (offset_screen > 0))
+    {
+        string = gui_chat_string_next_char (NULL,
+                                            (unsigned char *)string,
+                                            0);
+        if (string)
+        {
+            size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
+            offset_screen -= size_on_screen;
+            string = utf8_next_char (string);
         }
     }
     return (char *)string;
@@ -764,6 +800,59 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
         else
             string_iconv_fprintf (stdout, "%s\n", strbuf);
     }
+}
+
+/*
+ * gui_chat_hsignal_chat_quote_line_cb: quote a line
+ */
+
+int
+gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
+                                struct t_hashtable *hashtable)
+{
+    const char *time, *prefix, *message;
+    int length_time, length_prefix, length_message, length;
+    char *str;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (!gui_current_window->buffer->input)
+        return WEECHAT_RC_OK;
+    
+    time = (strstr (signal, "time")) ?
+        hashtable_get (hashtable, "_chat_line_time") : NULL;
+    prefix = (strstr (signal, "prefix")) ?
+        hashtable_get (hashtable, "_chat_line_prefix") : NULL;
+    message = hashtable_get (hashtable, "_chat_line_message");
+    
+    if (!message)
+        return WEECHAT_RC_OK;
+    
+    length_time = (time) ? strlen (time) : 0;
+    length_prefix = (prefix) ? strlen (prefix) : 0;
+    length_message = strlen (message);
+    
+    length = length_time + 1 + length_prefix + 1 +
+        strlen (CONFIG_STRING(config_look_prefix_suffix)) + 1 +
+        length_message + 1 + 1;
+    str = malloc (length);
+    if (str)
+    {
+        snprintf (str, length, "%s%s%s%s%s%s%s ",
+                  (time) ? time : "",
+                  (time) ? " " : "",
+                  (prefix) ? prefix : "",
+                  (prefix) ? " " : "",
+                  (time || prefix) ? CONFIG_STRING(config_look_prefix_suffix) : "",
+                  (time || prefix) ? " " : "",
+                  message);
+        gui_input_insert_string (gui_current_window->buffer, str, -1);
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
+        free (str);
+    }
+    
+    return WEECHAT_RC_OK;
 }
 
 /*

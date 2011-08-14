@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1140,8 +1140,8 @@ msgstr "cotrolar depuração para core/plugins"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr "[list | set plugin level | dump [plugin] | buffer | windows | term]"
 
 # find a better translation to dump?
@@ -3149,9 +3149,17 @@ msgstr ""
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 
-#, fuzzy
-msgid "Debug enabled for cursor mode"
+#, fuzzy, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr "Debug desabilitado para \"%s\""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "Debug disabled for cursor mode"
@@ -3171,8 +3179,7 @@ msgstr ""
 msgid "Error: not enough memory for key binding"
 msgstr ""
 
-#, c-format
-msgid "Hashtable focus: %s"
+msgid "Hashtable focus:"
 msgstr ""
 
 #, c-format
@@ -3190,8 +3197,8 @@ msgstr "comando padrão:"
 msgid "Not enough memory for new line"
 msgstr ""
 
-#, fuzzy
-msgid "Debug enabled for mouse"
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr "Debug desabilitado para \"%s\""
 
 #, fuzzy
@@ -5588,11 +5595,6 @@ msgstr[1] ""
 
 msgid "voice"
 msgid_plural "voices"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "normal"
-msgid_plural "normals"
 msgstr[0] ""
 msgstr[1] ""
 

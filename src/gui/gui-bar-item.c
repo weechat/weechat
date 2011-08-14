@@ -1453,9 +1453,9 @@ gui_bar_item_focus_buffer_nicklist (void *data,
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    int i, rc, item_line;
+    int i, rc, bar_item_line;
     unsigned long int value;
-    const char *str_window;
+    const char *str_window, *str_bar_item_line;
     struct t_gui_window *window;
     char *error;
     
@@ -1463,6 +1463,12 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     (void) data;
     
     str_window = hashtable_get (info, "_window");
+    str_bar_item_line = hashtable_get (info, "_bar_item_line");
+    
+    if (!str_window || !str_window[0]
+        || !str_bar_item_line || !str_bar_item_line[0])
+        return NULL;
+    
     rc = sscanf (str_window, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return NULL;
@@ -1472,7 +1478,7 @@ gui_bar_item_focus_buffer_nicklist (void *data,
         window = gui_current_window;
     
     error = NULL;
-    item_line = (int) strtol (hashtable_get (info, "_item_line"), &error, 10);
+    bar_item_line = (int) strtol (str_bar_item_line, &error, 10);
     if (!error || error[0])
         return NULL;
     
@@ -1487,14 +1493,14 @@ gui_bar_item_focus_buffer_nicklist (void *data,
                 && window->buffer->nicklist_display_groups
                 && ptr_group->visible))
         {
-            if (i == item_line)
+            if (i == bar_item_line)
                 break;
             i++;
         }
         gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
     }
     
-    if (i != item_line)
+    if (i != bar_item_line)
         return NULL;
     
     if (ptr_nick)

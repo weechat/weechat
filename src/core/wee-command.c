@@ -1215,6 +1215,7 @@ COMMAND_CALLBACK(debug)
 {
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
+    int debug;
     
     /* make C compiler happy */
     (void) data;
@@ -1264,7 +1265,14 @@ COMMAND_CALLBACK(debug)
     }
     else if (string_strcasecmp (argv[1], "cursor") == 0)
     {
-        gui_cursor_debug_toggle ();
+        if (gui_cursor_debug)
+            gui_cursor_debug_set (0);
+        else
+        {
+            debug = ((argc > 2)
+                     && (string_strcasecmp (argv[2], "verbose") == 0)) ? 2 : 1;
+            gui_cursor_debug_set (debug);
+        }
     }
     else if (string_strcasecmp (argv[1], "hdata") == 0)
     {
@@ -1283,7 +1291,14 @@ COMMAND_CALLBACK(debug)
     }
     else if (string_strcasecmp (argv[1], "mouse") == 0)
     {
-        gui_mouse_debug_toggle ();
+        if (gui_mouse_debug)
+            gui_mouse_debug_set (0);
+        else
+        {
+            debug = ((argc > 2)
+                     && (string_strcasecmp (argv[2], "verbose") == 0)) ? 2 : 1;
+            gui_mouse_debug_set (debug);
+        }
     }
     else if (string_strcasecmp (argv[1], "tags") == 0)
     {
@@ -5425,8 +5440,8 @@ command_init ()
                   N_("list"
                      " || set <plugin> <level>"
                      " || dump [<plugin>]"
-                     " || buffer|color|cursor|infolists|memory|mouse|tags|"
-                     "term|windows"
+                     " || buffer|color|infolists|memory|tags|term|windows"
+                     " || mouse|cursor [verbose]"
                      " || hdata [free]"),
                   N_("     list: list plugins with debug levels\n"
                      "      set: set debug level for plugin\n"
@@ -5451,11 +5466,11 @@ command_init ()
                   " || dump %(plugins_names)|core"
                   " || buffer"
                   " || color"
-                  " || cursor"
+                  " || cursor verbose"
                   " || hdata free"
                   " || infolists"
                   " || memory"
-                  " || mouse"
+                  " || mouse verbose"
                   " || tags"
                   " || term"
                   " || windows",

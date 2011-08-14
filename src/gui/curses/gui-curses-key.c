@@ -223,6 +223,7 @@ gui_key_default_bindings (int context)
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
+        /* general & move */
         BIND(/* Enter   */ "ctrl-M",                   "/cursor stop");
         BIND(/* Enter   */ "ctrl-J",                   "/cursor stop");
         BIND(/* up      */ "meta2-A",                  "/cursor move up");
@@ -237,6 +238,11 @@ gui_key_default_bindings (int context)
         BIND(/* m-left  */ "meta2-1;3D",               "/cursor move area_left");
         BIND(/* m-right */ "meta-meta2-C",             "/cursor move area_right");
         BIND(/* m-right */ "meta2-1;3C",               "/cursor move area_right");
+        /* chat */
+        BIND(/* m       */ "@chat:m",                  "hsignal:chat_quote_message;/cursor stop");
+        BIND(/* q       */ "@chat:q",                  "hsignal:chat_quote_prefix_message;/cursor stop");
+        BIND(/* Q       */ "@chat:Q",                  "hsignal:chat_quote_time_prefix_message;/cursor stop");
+        /* nicklist */
         BIND(/* b       */ "@item(buffer_nicklist):b", "/window ${_window_number};/ban ${nick}");
         BIND(/* k       */ "@item(buffer_nicklist):k", "/window ${_window_number};/kick ${nick}");
         BIND(/* K       */ "@item(buffer_nicklist):K", "/window ${_window_number};/kickban ${nick}");
@@ -266,8 +272,8 @@ gui_key_default_bindings (int context)
         /* mouse events on input */
         BIND("@bar(input):button2", "/input grab_mouse_area");
         /* mouse wheel on any bar */
-        BIND("@bar(*):wheelup",   "/bar scroll ${_bar_name} ${_window_number} -10%");
-        BIND("@bar(*):wheeldown", "/bar scroll ${_bar_name} ${_window_number} +10%");
+        BIND("@bar:wheelup",   "/bar scroll ${_bar_name} ${_window_number} -20%");
+        BIND("@bar:wheeldown", "/bar scroll ${_bar_name} ${_window_number} +20%");
         /* middle click to enable cursor mode at position */
         BIND("@*:button3", "/cursor go ${_x},${_y}");
     }

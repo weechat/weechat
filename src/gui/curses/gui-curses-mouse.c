@@ -102,30 +102,34 @@ gui_mouse_grab_init (int area)
 char *
 gui_mouse_grab_event2input ()
 {
-    struct t_gui_focus_info focus_info;
+    struct t_gui_focus_info *focus_info;
     static char area[256];
     
-    gui_focus_get_info (gui_mouse_event_x[0],
-                        gui_mouse_event_y[0],
-                        &focus_info);
+    area[0] = '\0';
     
-    if (focus_info.bar_item)
+    focus_info = gui_focus_get_info (gui_mouse_event_x[0],
+                                     gui_mouse_event_y[0]);
+    if (focus_info)
     {
-        snprintf (area, sizeof (area),
-                  "@item(%s)", focus_info.bar_item);
-    }
-    else if (focus_info.bar_window)
-    {
-        snprintf (area, sizeof (area),
-                  "@bar(%s)", ((focus_info.bar_window)->bar)->name);
-    }
-    else if (focus_info.chat)
-    {
-        snprintf (area, sizeof (area), "@chat");
-    }
-    else
-    {
-        snprintf (area, sizeof (area), "@*");
+        if (focus_info->bar_item)
+        {
+            snprintf (area, sizeof (area),
+                      "@item(%s)", focus_info->bar_item);
+        }
+        else if (focus_info->bar_window)
+        {
+            snprintf (area, sizeof (area),
+                      "@bar(%s)", ((focus_info->bar_window)->bar)->name);
+        }
+        else if (focus_info->chat)
+        {
+            snprintf (area, sizeof (area), "@chat");
+        }
+        else
+        {
+            snprintf (area, sizeof (area), "@*");
+        }
+        gui_focus_free_info (focus_info);
     }
     
     return area;

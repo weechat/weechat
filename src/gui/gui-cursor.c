@@ -42,7 +42,7 @@
 
 
 int gui_cursor_mode = 0;               /* cursor mode? (free movement)      */
-int gui_cursor_debug = 0;              /* debug mode (show info in input)   */
+int gui_cursor_debug = 0;              /* debug mode (0-2)                  */
 int gui_cursor_x = 0;                  /* position of cursor in cursor mode */
 int gui_cursor_y = 0;                  /* position of cursor in cursor mode */
 
@@ -75,16 +75,19 @@ gui_cursor_mode_toggle ()
 }
 
 /*
- * gui_cursor_debug_toggle: toggle debug for cursor mode
+ * gui_cursor_debug_set: set debug for cursor mode
  */
 
 void
-gui_cursor_debug_toggle ()
+gui_cursor_debug_set (int debug)
 {
-    gui_cursor_debug ^= 1;
-
+    gui_cursor_debug = debug;
+    
     if (gui_cursor_debug)
-        gui_chat_printf (NULL, _("Debug enabled for cursor mode"));
+    {
+        gui_chat_printf (NULL, _("Debug enabled for cursor mode (%s)"),
+                         (debug > 1) ? _("verbose") : _("normal"));
+    }
     else
         gui_chat_printf (NULL, _("Debug disabled for cursor mode"));
 }
@@ -96,29 +99,34 @@ gui_cursor_debug_toggle ()
 void
 gui_cursor_display_debug_info ()
 {
-    struct t_gui_focus_info focus_info;
+    struct t_gui_focus_info *focus_info;
     char str_info[1024];
     
     if (!gui_cursor_debug)
         return;
     
-    gui_focus_get_info (gui_cursor_x, gui_cursor_y, &focus_info);
-    
-    snprintf (str_info, sizeof (str_info),
-              "%s(%d,%d) window:0x%lx (buffer: %s), chat: %d, "
-              "bar_window:0x%lx (bar: %s, item: %s, line: %d, col: %d)",
-              gui_color_get_custom ("yellow,red"),
-              focus_info.x, focus_info.y,
-              (long unsigned int)focus_info.window,
-              (focus_info.window) ? (focus_info.window)->buffer->name : "-",
-              focus_info.chat,
-              (long unsigned int)focus_info.bar_window,
-              (focus_info.bar_window) ? (focus_info.bar_window)->bar->name : "-",
-              (focus_info.bar_item) ? focus_info.bar_item : "-",
-              focus_info.item_line,
-              focus_info.item_col);
-    gui_input_delete_line (gui_current_window->buffer);
-    gui_input_insert_string (gui_current_window->buffer, str_info, -1);
+    focus_info = gui_focus_get_info (gui_cursor_x, gui_cursor_y);
+    if (focus_info)
+    {
+        snprintf (str_info, sizeof (str_info),
+                  "%s(%d,%d) window:0x%lx (buffer: %s), "
+                  "bar_window:0x%lx (bar: %s, item: %s, line: %d, col: %d), "
+                  "chat: %d, word: \"%s\"",
+                  gui_color_get_custom ("yellow,red"),
+                  focus_info->x, focus_info->y,
+                  (long unsigned int)focus_info->window,
+                  (focus_info->window) ? (focus_info->window)->buffer->name : "-",
+                  (long unsigned int)focus_info->bar_window,
+                  (focus_info->bar_window) ? ((focus_info->bar_window)->bar)->name : "-",
+                  (focus_info->bar_item) ? focus_info->bar_item : "-",
+                  focus_info->bar_item_line,
+                  focus_info->bar_item_col,
+                  focus_info->chat,
+                  focus_info->chat_word);
+        gui_input_delete_line (gui_current_window->buffer);
+        gui_input_insert_string (gui_current_window->buffer, str_info, -1);
+        gui_focus_free_info (focus_info);
+    }
 }
 
 /*
@@ -184,7 +192,7 @@ void
 gui_cursor_move_area_add_xy (int add_x, int add_y)
 {
     int x, y, width, height, area_found;
-    struct t_gui_focus_info focus_info_old, focus_info_new;
+    struct t_gui_focus_info *focus_info_old, *focus_info_new;
     
     if (!gui_cursor_mode)
         gui_cursor_mode_toggle ();
@@ -196,7 +204,10 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     width = gui_window_get_width ();
     height = gui_window_get_height ();
     
-    gui_focus_get_info (x, y, &focus_info_old);
+    focus_info_old = gui_focus_get_info (x, y);
+    if (!focus_info_old)
+        return;
+    focus_info_new = NULL;
     
     if (add_x != 0)
         x += add_x;
@@ -205,11 +216,16 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     
     while ((x >= 0) && (x < width) && (y >= 0) && (y < height))
     {
-        gui_focus_get_info (x, y, &focus_info_new);
-        if (((focus_info_new.window && focus_info_new.chat)
-             || focus_info_new.bar_window)
-            && ((focus_info_old.window != focus_info_new.window)
-                || (focus_info_old.bar_window != focus_info_new.bar_window)))
+        focus_info_new = gui_focus_get_info (x, y);
+        if (!focus_info_new)
+        {
+            gui_focus_free_info (focus_info_old);
+            return;
+        }
+        if (((focus_info_new->window && focus_info_new->chat)
+             || focus_info_new->bar_window)
+            && ((focus_info_old->window != focus_info_new->window)
+                || (focus_info_old->bar_window != focus_info_new->bar_window)))
         {
             area_found = 1;
             break;
@@ -223,15 +239,15 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     
     if (area_found)
     {
-        if (focus_info_new.window && focus_info_new.chat)
+        if (focus_info_new->window && focus_info_new->chat)
         {
-            x = (focus_info_new.window)->win_chat_x;
-            y = (focus_info_new.window)->win_chat_y;
+            x = (focus_info_new->window)->win_chat_x;
+            y = (focus_info_new->window)->win_chat_y;
         }
-        else if (focus_info_new.bar_window)
+        else if (focus_info_new->bar_window)
         {
-            x = (focus_info_new.bar_window)->x;
-            y = (focus_info_new.bar_window)->y;
+            x = (focus_info_new->bar_window)->x;
+            y = (focus_info_new->bar_window)->y;
         }
         else
             area_found = 0;
@@ -244,6 +260,10 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
         gui_cursor_display_debug_info ();
         gui_window_move_cursor ();
     }
+    
+    gui_focus_free_info (focus_info_old);
+    if (focus_info_new)
+        gui_focus_free_info (focus_info_new);
 }
 
 /*

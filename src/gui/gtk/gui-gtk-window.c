@@ -849,6 +849,19 @@ gui_window_set_title (const char *title)
 }
 
 /*
+ * gui_window_send_clipboard: copy text to clipboard (sent to terminal)
+ */
+
+void
+gui_window_send_clipboard (const char *storage_unit, const char *text)
+{
+    (void) storage_unit;
+    (void) text;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_window_move_cursor: move cursor on screen (for cursor mode)
  */
 

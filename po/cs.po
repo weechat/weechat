@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-10 12:16+0200\n"
+"POT-Creation-Date: 2011-08-14 10:57+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1124,8 +1124,8 @@ msgstr "spřáva ladění pro jádro/pluginy"
 
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -3212,9 +3212,18 @@ msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr "%sChyba: je možné spojovat pouze bufferz s formátovaným obsahem"
 
-#, fuzzy
-msgid "Debug enabled for cursor mode"
+#, fuzzy, c-format
+msgid "Debug enabled for cursor mode (%s)"
 msgstr "Ladění vypnuto pro \"%s\""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] "normálních"
+msgstr[1] "normální"
+msgstr[2] "normálních"
 
 #, fuzzy
 msgid "Debug disabled for cursor mode"
@@ -3234,8 +3243,8 @@ msgstr "Chyba: nemohu napojit kalávesu \"%s\""
 msgid "Error: not enough memory for key binding"
 msgstr "Chyba: nedostatek paměti pro klávesovou zkratku"
 
-#, fuzzy, c-format
-msgid "Hashtable focus: %s"
+#, fuzzy
+msgid "Hashtable focus:"
 msgstr "Hash tabulka (výstup)"
 
 #, c-format
@@ -3253,8 +3262,8 @@ msgstr "výchozí příkaz:"
 msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek"
 
-#, fuzzy
-msgid "Debug enabled for mouse"
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
 msgstr "Ladění vypnuto pro \"%s\""
 
 #, fuzzy
@@ -6124,12 +6133,6 @@ msgid_plural "voices"
 msgstr[0] "voiců"
 msgstr[1] "voice"
 msgstr[2] "voiců"
-
-msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normálních"
-msgstr[1] "normální"
-msgstr[2] "normálních"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format

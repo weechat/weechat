@@ -507,6 +507,9 @@ irc_bar_item_focus_buffer_nicklist (void *data,
     const char *str_buffer, *nick;
     
     str_buffer = weechat_hashtable_get (info, "_buffer");
+    if (!str_buffer || !str_buffer[0])
+        return NULL;
+    
     rc = sscanf (str_buffer, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return NULL;

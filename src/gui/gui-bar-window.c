@@ -115,7 +115,8 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 void
 gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                              struct t_gui_bar_window **bar_window,
-                             char **bar_item, int *item_line, int *item_col)
+                             char **bar_item,
+                             int *bar_item_line, int *bar_item_col)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_window;
@@ -124,8 +125,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
     
     *bar_window = NULL;
     *bar_item = NULL;
-    *item_line = -1;
-    *item_col = -1;
+    *bar_item_line = -1;
+    *bar_item_col = -1;
     
     if (window)
     {
@@ -161,24 +162,24 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
     {
         filling = gui_bar_get_filling ((*bar_window)->bar);
         
-        *item_line = y - (*bar_window)->y + (*bar_window)->scroll_y;
-        *item_col = x - (*bar_window)->x + (*bar_window)->scroll_x;
+        *bar_item_line = y - (*bar_window)->y + (*bar_window)->scroll_y;
+        *bar_item_col = x - (*bar_window)->x + (*bar_window)->scroll_x;
         
         if ((filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
             && ((*bar_window)->screen_col_size > 0))
         {
             num_cols = (*bar_window)->width / (*bar_window)->screen_col_size;
-            column = *item_col / (*bar_window)->screen_col_size;
-            *item_line = (*item_line * num_cols) + column;
-            *item_col = *item_col - (column * ((*bar_window)->screen_col_size));
+            column = *bar_item_col / (*bar_window)->screen_col_size;
+            *bar_item_line = (*bar_item_line * num_cols) + column;
+            *bar_item_col = *bar_item_col - (column * ((*bar_window)->screen_col_size));
         }
         
         if ((filling == GUI_BAR_FILLING_COLUMNS_VERTICAL)
             && ((*bar_window)->screen_col_size > 0))
         {
-            column = *item_col / (*bar_window)->screen_col_size;
-            *item_line = (column * ((*bar_window)->height)) + *item_line;
-            *item_col = *item_col % ((*bar_window)->screen_col_size);
+            column = *bar_item_col / (*bar_window)->screen_col_size;
+            *bar_item_line = (column * ((*bar_window)->height)) + *bar_item_line;
+            *bar_item_col = *bar_item_col % ((*bar_window)->screen_col_size);
         }
         
         if (filling == GUI_BAR_FILLING_HORIZONTAL)
@@ -201,8 +202,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     if ((item >= 0) && (subitem >= 0))
                     {
                         *bar_item = (*bar_window)->bar->items_name[item][subitem];
-                        *item_line = (*bar_window)->coords[i]->line;
-                        *item_col = x - (*bar_window)->coords[i]->x;
+                        *bar_item_line = (*bar_window)->coords[i]->line;
+                        *bar_item_col = x - (*bar_window)->coords[i]->x;
                     }
                     break;
                 }
@@ -213,8 +214,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     item = (*bar_window)->coords[i]->item;
                     subitem = (*bar_window)->coords[i]->subitem;
                     *bar_item = (*bar_window)->bar->items_name[item][subitem];
-                    *item_line = (*bar_window)->coords[i]->line;
-                    *item_col = x - (*bar_window)->coords[i]->x;
+                    *bar_item_line = (*bar_window)->coords[i]->line;
+                    *bar_item_col = x - (*bar_window)->coords[i]->x;
                     break;
                 }
                 i++;
@@ -230,7 +231,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
             {
                 lines_old = lines;
                 lines += (*bar_window)->items_num_lines[i][j];
-                if (*item_line < lines)
+                if (*bar_item_line < lines)
                 {
                     *bar_item = (*bar_window)->bar->items_name[i][j];
                     break;
@@ -242,7 +243,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     i++;
                 }
             }
-            *item_line -= lines_old;
+            *bar_item_line -= lines_old;
         }
     }
 }

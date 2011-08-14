@@ -37,6 +37,7 @@
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
+#include "../core/wee-list.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -342,6 +343,88 @@ gui_key_get_expanded_name (const char *key)
 }
 
 /*
+ * gui_key_get_area: get area (any, chat, bar or item) and name
+ */
+
+void
+gui_key_get_area (const char *key, int *area_type, char **area_name)
+{
+    int i, length;
+    char *pos_end;
+    
+    *area_type = GUI_KEY_FOCUS_ANY;
+    *area_name = NULL;
+    
+    for (i = 0; i < GUI_KEY_NUM_FOCUS; i++)
+    {
+        length = strlen (gui_key_focus_string[i]);
+        if (strncmp (key + 1, gui_key_focus_string[i], length) == 0)
+        {
+            if (i == GUI_KEY_FOCUS_ANY)
+            {
+                *area_type = i;
+                *area_name = strdup ("*");
+                return;
+            }
+            if (key[1 + length] == ':')
+            {
+                *area_type = i;
+                *area_name = strdup ("*");
+                return;
+            }
+            if ((key[1 + length] == '(') && key[1 + length + 1])
+            {
+                pos_end = strchr (key + 1 + length, ')');
+                if (pos_end)
+                {
+                    *area_type = i;
+                    *area_name = string_strndup (key + 1 + length + 1,
+                                                 pos_end - key - length - 2);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * gui_key_score: compute a score key for sorting keys
+ *                (high score == at the end of list)
+ */
+
+int
+gui_key_score (const char *key)
+{
+    int score, bonus, area_type;
+    char *area_name;
+    
+    score = 0;
+    bonus = 8;
+    
+    if (key[0] != '@')
+        return score;
+    
+    /* basic score for key with area */
+    score |= 1 << bonus--;
+    
+    gui_key_get_area (key, &area_type, &area_name);
+    if (!area_name)
+        return score;
+    
+    /* bonus if area type is "any" */
+    if (area_type == GUI_KEY_FOCUS_ANY)
+        score |= 1 << bonus--;
+    
+    /* bonus if area name is "*" */
+    if (strcmp (area_name, "*") == 0)
+        score |= 1 << bonus--;
+    
+    free (area_name);
+    
+    return score;
+}
+
+/*
  * gui_key_find_pos: find position for a key (for sorting keys list)
  */
 
@@ -349,11 +432,17 @@ struct t_gui_key *
 gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
 {
     struct t_gui_key *ptr_key;
+    int score1, score2;
     
+    score1 = gui_key_score (key->key);
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (strcmp (key->key, ptr_key->key) < 0)
+        score2 = gui_key_score (ptr_key->key);
+        if ((score1 < score2)
+            || ((score1 == score2) && (strcmp (key->key, ptr_key->key) < 0)))
+        {
             return ptr_key;
+        }
     }
     return NULL;
 }
@@ -625,52 +714,44 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
 
 int
 gui_key_focus_matching (int area_type, const char *area_name,
-                        int focus_specific, int focus_any,
-                        struct t_gui_focus_info *focus_info)
+                        struct t_hashtable *hashtable_focus)
 {
-    int match, match_any;
+    int match;
     char buffer_full_name[512];
-    
-    match_any = (strcmp (area_name, "*") == 0) ? 1 : 0;
-    
-    if (!focus_specific && !match_any)
-        return 0;
-    
-    if (!focus_any && match_any)
-        return 0;
-    
-    if (area_type == GUI_KEY_FOCUS_ANY)
-        return 1;
+    const char *chat, *buffer_plugin, *buffer_name, *bar_name, *bar_item_name;
     
     match = 0;
-
     switch (area_type)
     {
         case GUI_KEY_FOCUS_ANY:
             match = 1;
             break;
         case GUI_KEY_FOCUS_CHAT:
-            if (focus_info->chat && focus_info->window)
+            chat = hashtable_get (hashtable_focus, "_chat");
+            buffer_plugin = hashtable_get (hashtable_focus, "_buffer_plugin");
+            buffer_name = hashtable_get (hashtable_focus, "_buffer_name");
+            if (chat && (strcmp (chat, "1") == 0)
+                && buffer_plugin && buffer_plugin[0]
+                && buffer_name && buffer_name[0])
             {
-                snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-                          gui_buffer_get_plugin_name ((focus_info->window)->buffer),
-                          ((focus_info->window)->buffer)->name);
+                snprintf (buffer_full_name, sizeof (buffer_full_name),
+                          "%s.%s", buffer_plugin, buffer_name);
                 if (string_match (buffer_full_name, area_name, 0))
-                {
                     match = 1;
-                }
             }
             break;
         case GUI_KEY_FOCUS_BAR:
-            if (focus_info->bar_window
-                && (string_match ((focus_info->bar_window)->bar->name, area_name, 0)))
+            bar_name = hashtable_get (hashtable_focus, "_bar_name");
+            if (bar_name && bar_name[0]
+                && (string_match (bar_name, area_name, 0)))
             {
                 match = 1;
             }
             break;
         case GUI_KEY_FOCUS_ITEM:
-            if (focus_info->bar_item
-                && (string_match (focus_info->bar_item, area_name, 0)))
+            bar_item_name = hashtable_get (hashtable_focus, "_bar_item_name");
+            if (bar_item_name && bar_item_name[0]
+                && (string_match (bar_item_name, area_name, 0)))
             {
                 match = 1;
             }
@@ -683,68 +764,27 @@ gui_key_focus_matching (int area_type, const char *area_name,
 }
 
 /*
- * gui_key_focus_get_area: get area focus (any, chat, bar or item) and name
- */
-
-void
-gui_key_focus_get_area (const char *key, int *area_type, char **area_name)
-{
-    int i, length;
-    char *pos_end;
-    
-    *area_type = GUI_KEY_FOCUS_ANY;
-    *area_name = NULL;
-    
-    for (i = 0; i < GUI_KEY_NUM_FOCUS; i++)
-    {
-        length = strlen (gui_key_focus_string[i]);
-        if (strncmp (key + 1, gui_key_focus_string[i], length) == 0)
-        {
-            if (i == GUI_KEY_FOCUS_ANY)
-            {
-                *area_type = i;
-                *area_name = strdup ("*");
-                return;
-            }
-            if (key[1 + length] == ':')
-            {
-                *area_type = i;
-                *area_name = strdup ("*");
-                return;
-            }
-            if ((key[1 + length] == '(') && key[1 + length + 1])
-            {
-                pos_end = strchr (key + 1 + length, ')');
-                if (pos_end)
-                {
-                    *area_type = i;
-                    *area_name = string_strndup (key + 1 + length + 1,
-                                                 pos_end - key - length - 2);
-                    return;
-                }
-            }
-        }
-    }
-}
-
-/*
  * gui_key_focus_command: run command according to focus
  *                        return 1 if a command was executed, otherwise 0
  */
 
 int
 gui_key_focus_command (const char *key, int context,
-                       int focus_specific, int focus_any,
-                       struct t_gui_focus_info *focus_info1,
-                       struct t_gui_focus_info *focus_info2)
+                       struct t_hashtable *hashtable_focus1,
+                       struct t_hashtable *hashtable_focus2)
 {
     struct t_gui_key *ptr_key;
     int i, errors, matching, area_type, debug;
     char *pos, *command, **commands, *area_name;
     struct t_hashtable *hashtable;
+    struct t_weelist *list_keys;
+    struct t_weelist_item *ptr_item;
     
-    debug = ((gui_cursor_debug && (context == GUI_KEY_CONTEXT_CURSOR))
-             || (gui_mouse_debug && (context == GUI_KEY_CONTEXT_MOUSE)));
+    debug = 0;
+    if (gui_cursor_debug && (context == GUI_KEY_CONTEXT_CURSOR))
+        debug = gui_cursor_debug;
+    else if (gui_mouse_debug && (context == GUI_KEY_CONTEXT_MOUSE))
+        debug = gui_mouse_debug;
     
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
@@ -759,16 +799,19 @@ gui_key_focus_command (const char *key, int context,
         if (gui_key_cmp (key, pos + 1, context) != 0)
             continue;
         
-        gui_key_focus_get_area (ptr_key->key, &area_type, &area_name);
+        gui_key_get_area (ptr_key->key, &area_type, &area_name);
         if (!area_name)
             continue;
         
         matching = gui_key_focus_matching (area_type, area_name,
-                                           focus_specific, focus_any,
-                                           focus_info1);
+                                           hashtable_focus1);
         free (area_name);
         
         if (!matching)
+            continue;
+        
+        hashtable = hook_focus_get_data (hashtable_focus1, hashtable_focus2);
+        if (!hashtable)
             continue;
         
         if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
@@ -776,14 +819,20 @@ gui_key_focus_command (const char *key, int context,
             gui_input_delete_line (gui_current_window->buffer);
         }
         
-        hashtable = hook_focus_get_data (focus_info1,
-                                         focus_info2,
-                                         key);
+        if (debug > 1)
+        {
+            gui_chat_printf (NULL, _("Hashtable focus:"));
+            list_keys = hashtable_get_list_keys (hashtable);
+            for (ptr_item = list_keys->items; ptr_item;
+                 ptr_item = ptr_item->next_item)
+            {
+                gui_chat_printf (NULL, "  %s: \"%s\"",
+                                 ptr_item->data,
+                                 hashtable_get (hashtable, ptr_item->data));
+            }
+        }
         if (debug)
         {
-            gui_chat_printf (NULL, _("Hashtable focus: %s"),
-                             hashtable_get_string (hashtable,
-                                                   "keys_values_sorted"));
             gui_chat_printf (NULL, _("Command for key: \"%s\""),
                              ptr_key->command);
         }
@@ -828,8 +877,7 @@ gui_key_focus_command (const char *key, int context,
             }
             string_free_split_command (commands);
         }
-        if (hashtable)
-            hashtable_free (hashtable);
+        hashtable_free (hashtable);
         return 1;
     }
     
@@ -845,12 +893,36 @@ gui_key_focus_command (const char *key, int context,
 int
 gui_key_focus (const char *key, int context)
 {
-    struct t_gui_focus_info focus_info1, focus_info2, *ptr_focus_info2;
+    struct t_gui_focus_info *focus_info1, *focus_info2;
+    struct t_hashtable *hashtable_focus1, *hashtable_focus2;
+    int rc;
     
-    ptr_focus_info2 = NULL;
+    rc = 0;
+    focus_info1 = NULL;
+    focus_info2 = NULL;
+    hashtable_focus1 = NULL;
+    hashtable_focus2 = NULL;
     
     if (context == GUI_KEY_CONTEXT_MOUSE)
     {
+        focus_info1 = gui_focus_get_info (gui_mouse_event_x[0],
+                                          gui_mouse_event_y[0]);
+        if (!focus_info1)
+            goto end;
+        hashtable_focus1 = gui_focus_to_hashtable (focus_info1, key);
+        if (!hashtable_focus1)
+            goto end;
+        if ((gui_mouse_event_x[0] != gui_mouse_event_x[1])
+            || (gui_mouse_event_y[0] != gui_mouse_event_y[1]))
+        {
+            focus_info2 = gui_focus_get_info (gui_mouse_event_x[1],
+                                              gui_mouse_event_y[1]);
+            if (!focus_info2)
+                goto end;
+            hashtable_focus2 = gui_focus_to_hashtable (focus_info2, key);
+            if (!hashtable_focus2)
+                goto end;
+        }
         if (gui_mouse_debug)
         {
             gui_chat_printf (NULL, "Mouse: %s, (%d,%d) -> (%d,%d)",
@@ -858,29 +930,31 @@ gui_key_focus (const char *key, int context)
                              gui_mouse_event_x[0], gui_mouse_event_y[0],
                              gui_mouse_event_x[1], gui_mouse_event_y[1]);
         }
-        gui_focus_get_info (gui_mouse_event_x[0], gui_mouse_event_y[0],
-                            &focus_info1);
-        if ((gui_mouse_event_x[0] != gui_mouse_event_x[1])
-            || (gui_mouse_event_y[0] != gui_mouse_event_y[1]))
-        {
-            gui_focus_get_info (gui_mouse_event_x[1], gui_mouse_event_y[1],
-                                &focus_info2);
-            ptr_focus_info2 = &focus_info2;
-        }
     }
     else
     {
-        gui_focus_get_info (gui_cursor_x, gui_cursor_y, &focus_info1);
+        focus_info1 = gui_focus_get_info (gui_cursor_x, gui_cursor_y);
+        if (!focus_info1)
+            goto end;
+        hashtable_focus1 = gui_focus_to_hashtable (focus_info1, key);
+        if (!hashtable_focus1)
+            goto end;
     }
     
-    if (gui_key_focus_command (key, context, 1, 0,
-                               &focus_info1, ptr_focus_info2))
-    {
-        return 1;
-    }
+    rc = gui_key_focus_command (key, context,
+                                hashtable_focus1, hashtable_focus2);
     
-    return gui_key_focus_command (key, context, 0, 1, &focus_info1,
-                                  ptr_focus_info2);
+end:
+    if (focus_info1)
+        gui_focus_free_info (focus_info1);
+    if (focus_info2)
+        gui_focus_free_info (focus_info2);
+    if (hashtable_focus1)
+        hashtable_free (hashtable_focus1);
+    if (hashtable_focus2)
+        hashtable_free (hashtable_focus2);
+    
+    return rc;
 }
 
 /*
