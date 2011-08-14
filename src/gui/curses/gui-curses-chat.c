@@ -336,7 +336,7 @@ gui_chat_display_word (struct t_gui_window *window,
         ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
     
-    if (!simulate)
+    if (!simulate && (window->win_chat_cursor_y < window->coords_size))
         window->coords[window->win_chat_cursor_y].line = line;
     
     data = strdup (word);
@@ -392,7 +392,8 @@ gui_chat_display_word (struct t_gui_window *window,
                 if (!simulate)
                     wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
             }
-            window->coords[window->win_chat_cursor_y].data = ptr_data;
+            if (window->win_chat_cursor_y < window->coords_size)
+                window->coords[window->win_chat_cursor_y].data = (char *)word + (ptr_data - data);
         }
         
         chars_to_display = gui_chat_strlen_screen (ptr_data);
@@ -464,7 +465,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     
     if (!simulate)
     {
-        window->coords[window->win_chat_cursor_y].line = line;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].line = line;
         gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
     }
     
@@ -472,11 +474,13 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     if (window->buffer->time_for_each_line
         && (line->data->str_time && line->data->str_time[0]))
     {
-        window->coords[window->win_chat_cursor_y].time_x1 = window->win_chat_cursor_x;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].time_x1 = window->win_chat_cursor_x;
         gui_chat_display_word (window, line, line->data->str_time,
                                NULL, 1, num_lines, count, lines_displayed,
                                simulate);
-        window->coords[window->win_chat_cursor_y].time_x2 = window->win_chat_cursor_x - 1;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].time_x2 = window->win_chat_cursor_x - 1;
         
         if (!simulate)
             gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat, GUI_COLOR_CHAT);
@@ -524,7 +528,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                           GUI_COLOR_CHAT_PREFIX_BUFFER);
         }
         
-        window->coords[window->win_chat_cursor_y].buffer_x1 = window->win_chat_cursor_x;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].buffer_x1 = window->win_chat_cursor_x;
         
         /* not enough space to display full buffer name? => truncate it! */
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
@@ -545,7 +550,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    lines_displayed, simulate);
         }
         
-        window->coords[window->win_chat_cursor_y].buffer_x2 = window->win_chat_cursor_x - 1;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].buffer_x2 = window->win_chat_cursor_x - 1;
         
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
             && (num_spaces < 0))
@@ -631,7 +637,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
         }
         
-        window->coords[window->win_chat_cursor_y].prefix_x1 = window->win_chat_cursor_x;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].prefix_x1 = window->win_chat_cursor_x;
         
         /* not enough space to display full prefix? => truncate it! */
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
@@ -655,7 +662,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    simulate);
         }
         
-        window->coords[window->win_chat_cursor_y].prefix_x2 = window->win_chat_cursor_x - 1;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].prefix_x2 = window->win_chat_cursor_x - 1;
         
         if (prefix_highlighted)
             free (prefix_highlighted);
@@ -775,7 +783,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                      &lines_displayed, simulate);
     if (!simulate && !gui_chat_display_tags)
     {
-        window->coords[window->win_chat_cursor_y].data = line->data->message;
+        if (window->win_chat_cursor_y < window->coords_size)
+            window->coords[window->win_chat_cursor_y].data = line->data->message;
         window->coords_x_message = window->win_chat_cursor_x;
     }
     
@@ -934,8 +943,11 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
     
-    window->coords[y].line = line;
-    window->coords[y].data = line->data->message;
+    if (y < window->coords_size)
+    {
+        window->coords[y].line = line;
+        window->coords[y].data = line->data->message;
+    }
     
     wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
            window->win_chat_cursor_y,
