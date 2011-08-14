@@ -943,12 +943,6 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
     
-    if (y < window->coords_size)
-    {
-        window->coords[y].line = line;
-        window->coords[y].data = line->data->message;
-    }
-    
     wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
            window->win_chat_cursor_y,
            window->win_chat_cursor_x);
@@ -1072,7 +1066,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_line *ptr_line;
     char format_empty[32];
     int i, line_pos, count, old_scrolling, old_lines_after;
-    int y_start, y_end;
+    int y_start, y_end, y;
     
     if (!gui_ok)
         return;
@@ -1216,10 +1210,16 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                             y_end = y_start + ptr_win->win_chat_height - 1;
                             while (ptr_line && (ptr_line->data->y <= y_end))
                             {
+                                y = ptr_line->data->y - y_start;
+                                if (y < ptr_win->coords_size)
+                                {
+                                    ptr_win->coords[y].line = ptr_line;
+                                    ptr_win->coords[y].data = ptr_line->data->message;
+                                }
                                 if (ptr_line->data->refresh_needed || erase)
                                 {
                                     gui_chat_display_line_y (ptr_win, ptr_line,
-                                                             ptr_line->data->y - y_start);
+                                                             y);
                                 }
                                 ptr_line = gui_line_get_next_displayed (ptr_line);
                             }
