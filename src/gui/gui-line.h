@@ -82,6 +82,7 @@ extern int gui_line_match_regex (struct t_gui_line *line,
                                  regex_t *regex_message);
 extern int gui_line_match_tags (struct t_gui_line *line, int tags_count,
                                 char **tags_array);
+extern const char *gui_line_get_nick_tag (struct t_gui_line *line);
 extern int gui_line_has_highlight (struct t_gui_line *line);
 extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
                                                 struct t_gui_lines *lines);

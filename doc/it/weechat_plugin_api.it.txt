@@ -8347,6 +8347,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat_line_date_printed | line date ^(3)^             | "1313237175"                                     | "0"
 | _chat_line_time         | time displayed              | "14:06:15"                                       | ""
 | _chat_line_tags         | tags of line                | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
+| _chat_line_nick         | nick of line                | "FlashCode"                                      | ""
 | _chat_line_prefix       | prefix of line              | "@FlashCode"                                     | ""
 | _chat_line_message      | message of line             | "Hello world!"                                   | ""
 | _chat_word              | word at (x,y)               | "Hello"                                          | ""

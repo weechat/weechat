@@ -122,6 +122,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
 {
     struct t_hashtable *hashtable;
     char str_value[128], *str_time, *str_prefix, *str_tags, *str_message;
+    const char *nick;
     
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
@@ -167,11 +168,13 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         str_prefix = gui_color_decode (((focus_info->chat_line)->data)->prefix, NULL);
         str_tags = string_build_with_split_string ((const char **)((focus_info->chat_line)->data)->tags_array, ",");
         str_message = gui_color_decode (((focus_info->chat_line)->data)->message, NULL);
+        nick = gui_line_get_nick_tag (focus_info->chat_line);
         FOCUS_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
         FOCUS_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
         FOCUS_TIME("_chat_line_date_printed", ((focus_info->chat_line)->data)->date_printed);
         FOCUS_STR_VAR("_chat_line_time", str_time);
         FOCUS_STR_VAR("_chat_line_tags", str_tags);
+        FOCUS_STR_VAR("_chat_line_nick", nick);
         FOCUS_STR_VAR("_chat_line_prefix", str_prefix);
         FOCUS_STR_VAR("_chat_line_message", str_message);
         if (str_time)
@@ -190,6 +193,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         FOCUS_STR("_chat_line_date_printed", "-1");
         FOCUS_STR("_chat_line_time", "");
         FOCUS_STR("_chat_line_tags", "");
+        FOCUS_STR("_chat_line_nick", "");
         FOCUS_STR("_chat_line_prefix", "");
         FOCUS_STR("_chat_line_message", "");
     }
