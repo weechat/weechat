@@ -209,7 +209,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     
     if (buffer_created)
     {
-        weechat_buffer_set (new_buffer, "short_name", channel_name);
+        if (!weechat_buffer_get_string (new_buffer, "short_name"))
+            weechat_buffer_set (new_buffer, "short_name", channel_name);
         weechat_buffer_set (new_buffer, "localvar_set_type",
                             (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
         weechat_buffer_set (new_buffer, "localvar_set_nick", server->nick);
@@ -917,6 +918,7 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     struct t_irc_channel_speaking *ptr_nick;
     char option_name[64];
     int i, index;
+    const char *name, *short_name;
     
     if (!infolist || !channel)
         return 0;
@@ -927,14 +929,24 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     
     if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", channel->buffer))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "buffer_name",
-                                          (channel->buffer) ?
-                                          weechat_buffer_get_string (channel->buffer, "name") : ""))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name",
-                                          (channel->buffer) ?
-                                          weechat_buffer_get_string (channel->buffer, "short_name") : ""))
-        return 0;
+    if (channel->buffer)
+    {
+        name = weechat_buffer_get_string (channel->buffer, "name");
+        short_name = weechat_buffer_get_string (channel->buffer, "short_name");
+        if (!short_name)
+            short_name = name;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_name", name))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name", short_name))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_name", ""))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name", ""))
+            return 0;
+    }
     if (!weechat_infolist_new_var_integer (ptr_item, "type", channel->type))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "name", channel->name))

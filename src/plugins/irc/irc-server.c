@@ -1299,7 +1299,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     {
         buffer_name = irc_buffer_build_name (server->name, NULL);
         weechat_buffer_set (server->buffer, "name", buffer_name);
-        weechat_buffer_set (server->buffer, "short_name", server->name);
+        if (!weechat_buffer_get_string (server->buffer, "short_name"))
+            weechat_buffer_set (server->buffer, "short_name", server->name);
         weechat_buffer_set (server->buffer, "localvar_set_server",
                             server->name);
         weechat_buffer_set (server->buffer, "localvar_set_channel",
@@ -2838,8 +2839,9 @@ irc_server_create_buffer (struct t_irc_server *server)
                                          &irc_buffer_close_cb, NULL);
     if (!server->buffer)
         return NULL;
-    
-    weechat_buffer_set (server->buffer, "short_name", server->name);
+
+    if (!weechat_buffer_get_string (server->buffer, "short_name"))
+        weechat_buffer_set (server->buffer, "short_name", server->name);
     weechat_buffer_set (server->buffer, "localvar_set_type", "server");
     weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
     weechat_buffer_set (server->buffer, "localvar_set_channel", server->name);
@@ -4038,6 +4040,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                             struct t_irc_server *server)
 {
     struct t_infolist_item *ptr_item;
+    const char *name, *short_name;
     
     if (!infolist || !server)
         return 0;
@@ -4050,14 +4053,24 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", server->buffer))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "buffer_name",
-                                          (server->buffer) ?
-                                          weechat_buffer_get_string (server->buffer, "name") : ""))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name",
-                                          (server->buffer) ?
-                                          weechat_buffer_get_string (server->buffer, "short_name") : ""))
-        return 0;
+    if (server->buffer)
+    {
+        name = weechat_buffer_get_string (server->buffer, "name");
+        short_name = weechat_buffer_get_string (server->buffer, "short_name");
+        if (!short_name)
+            short_name = name;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_name", name))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name", short_name))
+            return 0;
+    }
+    else
+    {
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_name", ""))
+            return 0;
+        if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name", ""))
+            return 0;
+    }
     if (!weechat_infolist_new_var_string (ptr_item, "addresses",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_ADDRESSES)))
         return 0;
