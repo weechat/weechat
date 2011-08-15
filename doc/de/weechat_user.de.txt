@@ -538,27 +538,24 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Taste        | Bereich  | Beschreibung| Befehl
-| @k(↑)        | -        | bewegt Cursor eine Zeile nach oben | /cursor move up
-| @k(↓)        | -        | bewegt Cursor eine Zeile nach unten | /cursor move down
-| @k(←)        | -        | bewegt Cursor eine Spalte nach links | /cursor move left
-| @k(→)        | -        | bewegt Cursor eine Spalte nach rechts | /cursor move right
-| @k(A-)@k(↑)  | -        | bewegt Cursor einen Bereich nach oben | /cursor move area_up
-| @k(A-)@k(↓)  | -        | bewegt Cursor einen Bereich nach unten | /cursor move area_down
-| @k(A-)@k(←)  | -        | bewegt Cursor einen Bereich nach links | /cursor move area_left
-| @k(A-)@k(→)  | -        | bewegt Cursor einen Bereich nach rechts | /cursor move area_right
-// TRANSLATION MISSING
-| @k(m)        | chat     | Quote message | hsignal:chat_quote_message;/cursor stop
-// TRANSLATION MISSING
-| @k(q)        | chat     | Quote prefix + message | hsignal:chat_quote_prefix_message;/cursor stop
-// TRANSLATION MISSING
-| @k(Q)        | chat     | Quote time + prefix + message | hsignal:chat_quote_time_prefix_message;/cursor stop
-| @k(b)        | nicklist | verbannt nick (Ban) | /window ${_window_number};/ban ${nick}
-| @k(k)        | nicklist | kickt nick | /window ${_window_number};/kick ${nick}
-| @k(K)        | nicklist | kickt und verbannt nick | /window ${_window_number};/kickban ${nick}
-| @k(q)        | nicklist | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick};/cursor stop
-| @k(w)        | nicklist | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
-| @k(Enter) .3+| -     .3+| beendet den Cursor-Modus .3+| /cursor stop
+| Taste        | Bereich   | Beschreibung | Befehl
+| @k(↑)        | -         | bewegt Cursor eine Zeile nach oben | /cursor move up
+| @k(↓)        | -         | bewegt Cursor eine Zeile nach unten | /cursor move down
+| @k(←)        | -         | bewegt Cursor eine Spalte nach links | /cursor move left
+| @k(→)        | -         | bewegt Cursor eine Spalte nach rechts | /cursor move right
+| @k(A-)@k(↑)  | -         | bewegt Cursor einen Bereich nach oben | /cursor move area_up
+| @k(A-)@k(↓)  | -         | bewegt Cursor einen Bereich nach unten | /cursor move area_down
+| @k(A-)@k(←)  | -         | bewegt Cursor einen Bereich nach links | /cursor move area_left
+| @k(A-)@k(→)  | -         | bewegt Cursor einen Bereich nach rechts | /cursor move area_right
+| @k(m)        | Chat      | quotet Nachricht | hsignal:chat_quote_message;/cursor stop
+| @k(q)        | Chat      | quotet prefix + Nachricht | hsignal:chat_quote_prefix_message;/cursor stop
+| @k(Q)        | Chat      | quotet Uhrzeit + prefix + Nachricht | hsignal:chat_quote_time_prefix_message;/cursor stop
+| @k(b)        | Nickliste | verbannt nick (Ban) | /window ${_window_number};/ban ${nick}
+| @k(k)        | Nickliste | kickt nick | /window ${_window_number};/kick ${nick}
+| @k(K)        | Nickliste | kickt und verbannt nick | /window ${_window_number};/kickban ${nick}
+| @k(q)        | Nickliste | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick};/cursor stop
+| @k(w)        | Nickliste | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
+| @k(Enter) .3+| -      .3+| beendet den Cursor-Modus .3+| /cursor stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -571,27 +568,27 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Maustaste| Mausgeste    | Bereich  | Beschreibung | Befehl
-| ◾◽◽      | -            | chat     | wechselt zum Fenster | /window ${_window_number}
-| ◾◽◽      | links        | chat     | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽      | rechts       | chat     | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽      | links(lang)  | chat     | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽      | rechts(lang) | chat     | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
-| Mausrad⇑ | -            | chat     | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
-| Mausrad⇓ | -            | chat     | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
-| ◾◽◽      | hoch         | nicklist | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽      | runter       | nicklist | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽      | hoch(lang)   | nicklist | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
-| ◾◽◽      | runter(lang) | nicklist | springt zum Ende der Nickliste | /bar scroll nicklist ${_window_number} e
-| ◾◽◽      | -            | nicklist | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick}
-| ◽◽◾      | -            | nicklist | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
-| ◾◽◽      | links        | nicklist | kickt Nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽      | links(lang)  | nicklist | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾      | links        | nicklist | verbannt Nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾      | -            | input    | fängt ein Mausereignis und fügt diesen in die Befehlszeile ein | /input grab_mouse_area
-| Mausrad⇑ | -            | any bar  | blättert Bar um 10% nach oben | /bar scroll ${_bar_name} ${_window_number} -10%
-| Mausrad⇓ | -            | any bar  | blättert Bar um 10% nach unten | /bar scroll ${_bar_name} ${_window_number} +10%
-| ◽◾◽      | -            | anywhere | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
+| Maustaste | Mausgeste    | Bereich   | Beschreibung | Befehl
+| ◾◽◽       | -            | Chat      | wechselt zum Fenster | /window ${_window_number}
+| ◾◽◽       | links        | Chat      | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
+| ◾◽◽       | rechts       | Chat      | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
+| ◾◽◽       | links(lang)  | Chat      | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽       | rechts(lang) | Chat      | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
+| Mausrad ⇑ | -            | Chat      | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
+| Mausrad ⇓ | -            | Chat      | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
+| ◾◽◽       | hoch         | Nickliste | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽       | runter       | Nickliste | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽       | hoch(lang)   | Nickliste | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
+| ◾◽◽       | runter(lang) | Nickliste | springt zum Ende der Nickliste | /bar scroll nicklist ${_window_number} e
+| ◾◽◽       | -            | Nickliste | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick}
+| ◽◽◾       | -            | Nickliste | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
+| ◾◽◽       | links        | Nickliste | kickt Nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽       | links(lang)  | Nickliste | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾       | links        | Nickliste | verbannt Nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾       | -            | Input     | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | /input grab_mouse_area
+| Mausrad ⇑ | -            | jede Bar  | blättert Bar um 10% nach oben | /bar scroll ${_bar_name} ${_window_number} -10%
+| Mausrad ⇓ | -            | jede Bar  | blättert Bar um 10% nach unten | /bar scroll ${_bar_name} ${_window_number} +10%
+| ◽◾◽       | -            | überall   | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -975,22 +972,22 @@ Standarderweiterungen:
 
 [width="50%",cols="^1,5",options="header"]
 |========================================
-| Erweit.   | Beschreibung
-| alias     | definiert Alias für Befehle
-| aspell    | Rechtschreibprüfung für Befehlszeile
-| charset   | Zeichensatz (de)-kodierung in Buffern
-| demo      | Demo Erweiterung (nicht standardmäßig kompiliert)
-| fifo      | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
-| irc       | IRC Chat-Protokoll
-| logger    | erstellt Protokolldateien von Buffern
-| relay     | Daten via Netzwerk übermitteln (IRC Proxy)
-| rmodifier | wandelt Schlüsselwörter mit regulären Ausdrücken
-| perl      | Perl-Skript API
-| python    | Python-Skript API
-| ruby      | Ruby-Skript API
-| lua       | Lua-Skript API
-| tcl       | Tcl-Skript API
-| xfer      | Datentransfer und Direktchat
+| Erweiterung | Beschreibung
+| alias       | definiert Alias für Befehle
+| aspell      | Rechtschreibprüfung für Befehlszeile
+| charset     | Zeichensatz (de)-kodierung in Buffern
+| demo        | Demo Erweiterung (nicht standardmäßig kompiliert)
+| fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
+| irc         | IRC Chat-Protokoll
+| logger      | erstellt Protokolldateien von Buffern
+| relay       | Daten via Netzwerk übermitteln (IRC Proxy)
+| rmodifier   | wandelt Schlüsselwörter mit regulären Ausdrücken
+| perl        | Perl-Skript API
+| python      | Python-Skript API
+| ruby        | Ruby-Skript API
+| lua         | Lua-Skript API
+| tcl         | Tcl-Skript API
+| xfer        | Datentransfer und Direktchat
 |========================================
 
 [[alias_plugin]]
@@ -1538,7 +1535,7 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 
 [width="60%",cols="^1m,^3m,8",options="header"]
 |========================================
-| Nachricht | alias         | Beschreibung
+| Nachricht | Alias         | Beschreibung
 | error     |               | Fehler
 | invite    |               | Einladung in einen Channel
 | join      |               | join
