@@ -343,83 +343,48 @@ gui_key_get_expanded_name (const char *key)
 }
 
 /*
- * gui_key_get_area: get area (any, chat, bar or item) and name
- */
-
-void
-gui_key_get_area (const char *key, int *area_type, char **area_name)
-{
-    int i, length;
-    char *pos_end;
-    
-    *area_type = GUI_KEY_FOCUS_ANY;
-    *area_name = NULL;
-    
-    for (i = 0; i < GUI_KEY_NUM_FOCUS; i++)
-    {
-        length = strlen (gui_key_focus_string[i]);
-        if (strncmp (key + 1, gui_key_focus_string[i], length) == 0)
-        {
-            if (i == GUI_KEY_FOCUS_ANY)
-            {
-                *area_type = i;
-                *area_name = strdup ("*");
-                return;
-            }
-            if (key[1 + length] == ':')
-            {
-                *area_type = i;
-                *area_name = strdup ("*");
-                return;
-            }
-            if ((key[1 + length] == '(') && key[1 + length + 1])
-            {
-                pos_end = strchr (key + 1 + length, ')');
-                if (pos_end)
-                {
-                    *area_type = i;
-                    *area_name = string_strndup (key + 1 + length + 1,
-                                                 pos_end - key - length - 2);
-                    return;
-                }
-            }
-        }
-    }
-}
-
-/*
  * gui_key_score: compute a score key for sorting keys
  *                (high score == at the end of list)
  */
 
 int
-gui_key_score (const char *key)
+gui_key_score (struct t_gui_key *key)
 {
-    int score, bonus, area_type;
-    char *area_name;
+    int score, bonus, area;
     
     score = 0;
     bonus = 8;
     
-    if (key[0] != '@')
+    if (key->key[0] != '@')
         return score;
     
     /* basic score for key with area */
-    score |= 1 << bonus--;
+    score |= 1 << bonus;
+    bonus--;
     
-    gui_key_get_area (key, &area_type, &area_name);
-    if (!area_name)
-        return score;
+    /* add score for each area type */
+    for (area = 0; area < 2; area++)
+    {
+        /* bonus if area type is "any" */
+        if (key->area_name[area]
+            && (key->area_type[area] == GUI_KEY_FOCUS_ANY))
+        {
+            score |= 1 << bonus;
+        }
+        bonus--;
+    }
     
-    /* bonus if area type is "any" */
-    if (area_type == GUI_KEY_FOCUS_ANY)
-        score |= 1 << bonus--;
-    
-    /* bonus if area name is "*" */
-    if (strcmp (area_name, "*") == 0)
-        score |= 1 << bonus--;
-    
-    free (area_name);
+    /* add score for each area name */
+    for (area = 0; area < 2; area++)
+    {
+        /* bonus if area name is "*" */
+        if (key->area_name[area]
+            && (strcmp (key->area_name[area], "*") == 0))
+        {
+            score |= 1 << bonus;
+        }
+        bonus--;
+    }
     
     return score;
 }
@@ -434,10 +399,10 @@ gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
     struct t_gui_key *ptr_key;
     int score1, score2;
     
-    score1 = gui_key_score (key->key);
+    score1 = gui_key_score (key);
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        score2 = gui_key_score (ptr_key->key);
+        score2 = gui_key_score (ptr_key);
         if ((score1 < score2)
             || ((score1 == score2) && (strcmp (key->key, ptr_key->key) < 0)))
         {
@@ -496,6 +461,89 @@ gui_key_insert_sorted (struct t_gui_key **keys,
 }
 
 /*
+ * gui_key_set_areas: set areas types (any, chat, bar or item) and names for a
+ *                    key
+ */
+
+void
+gui_key_set_areas (struct t_gui_key *key)
+{
+    int area, focus, length;
+    char *pos_colon, *pos_area2, *pos_end, *areas[2];
+
+    for (area = 0; area < 2; area++)
+    {
+        key->area_type[area] = GUI_KEY_FOCUS_ANY;
+        key->area_name[area] = NULL;
+    }
+    key->area_key = NULL;
+    
+    areas[0] = NULL;
+    areas[1] = NULL;
+    
+    pos_colon = strchr (key->key + 1, ':');
+    if (!pos_colon)
+        return;
+    pos_area2 = strchr (key->key + 1, '>');
+    
+    key->area_key = strdup (pos_colon + 1);
+    
+    if (!pos_area2 || (pos_area2 > pos_colon))
+        areas[0] = string_strndup (key->key + 1, pos_colon - key->key - 1);
+    else
+    {
+        if (pos_area2 > key->key + 1)
+            areas[0] = string_strndup (key->key + 1, pos_area2 - key->key - 1);
+        areas[1] = string_strndup (pos_area2 + 1, pos_colon - pos_area2 - 1);
+    }
+    
+    for (area = 0; area < 2; area++)
+    {
+        if (!areas[area])
+        {
+            key->area_name[area] = strdup ("*");
+            continue;
+        }
+        
+        for (focus = 0; focus < GUI_KEY_NUM_FOCUS; focus++)
+        {
+            length = strlen (gui_key_focus_string[focus]);
+            if (strncmp (areas[area], gui_key_focus_string[focus], length) == 0)
+            {
+                if (focus == GUI_KEY_FOCUS_ANY)
+                {
+                    key->area_type[area] = focus;
+                    key->area_name[area] = strdup ("*");
+                    break;
+                }
+                if (!areas[area][length])
+                {
+                    key->area_type[area] = focus;
+                    key->area_name[area] = strdup ("*");
+                    break;
+                }
+                if ((areas[area][length] == '(') && areas[area][length + 1])
+                {
+                    pos_end = strchr (areas[area] + length, ')');
+                    if (pos_end)
+                    {
+                        key->area_type[area] = focus;
+                        key->area_name[area] = string_strndup (areas[area] + length + 1,
+                                                               pos_end - areas[area] - length - 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    if (areas[0])
+        free (areas[0]);
+    if (areas[1])
+        free (areas[1]);
+}
+
+/*
  * gui_key_new: add a new key in keys list
  *              if buffer is not null, then key is specific to buffer
  *              otherwise it's general key (for most keys)
@@ -528,6 +576,7 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
             free (new_key);
             return NULL;
         }
+        gui_key_set_areas (new_key);
         
         if (buffer)
         {
@@ -713,54 +762,60 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
  */
 
 int
-gui_key_focus_matching (int area_type, const char *area_name,
-                        struct t_hashtable *hashtable_focus)
+gui_key_focus_matching (struct t_gui_key *key,
+                        struct t_hashtable **hashtable_focus)
 {
-    int match;
+    int match[2], area;
     char buffer_full_name[512];
     const char *chat, *buffer_plugin, *buffer_name, *bar_name, *bar_item_name;
     
-    match = 0;
-    switch (area_type)
+    for (area = 0; area < 2; area++)
     {
-        case GUI_KEY_FOCUS_ANY:
-            match = 1;
-            break;
-        case GUI_KEY_FOCUS_CHAT:
-            chat = hashtable_get (hashtable_focus, "_chat");
-            buffer_plugin = hashtable_get (hashtable_focus, "_buffer_plugin");
-            buffer_name = hashtable_get (hashtable_focus, "_buffer_name");
-            if (chat && (strcmp (chat, "1") == 0)
-                && buffer_plugin && buffer_plugin[0]
-                && buffer_name && buffer_name[0])
-            {
-                snprintf (buffer_full_name, sizeof (buffer_full_name),
-                          "%s.%s", buffer_plugin, buffer_name);
-                if (string_match (buffer_full_name, area_name, 0))
-                    match = 1;
-            }
-            break;
-        case GUI_KEY_FOCUS_BAR:
-            bar_name = hashtable_get (hashtable_focus, "_bar_name");
-            if (bar_name && bar_name[0]
-                && (string_match (bar_name, area_name, 0)))
-            {
-                match = 1;
-            }
-            break;
-        case GUI_KEY_FOCUS_ITEM:
-            bar_item_name = hashtable_get (hashtable_focus, "_bar_item_name");
-            if (bar_item_name && bar_item_name[0]
-                && (string_match (bar_item_name, area_name, 0)))
-            {
-                match = 1;
-            }
-            break;
-        case GUI_KEY_NUM_FOCUS:
-            break;
+        match[area] = 0;
+        switch (key->area_type[area])
+        {
+            case GUI_KEY_FOCUS_ANY:
+                match[area] = 1;
+                break;
+            case GUI_KEY_FOCUS_CHAT:
+                chat = hashtable_get (hashtable_focus[area], "_chat");
+                buffer_plugin = hashtable_get (hashtable_focus[area],
+                                               "_buffer_plugin");
+                buffer_name = hashtable_get (hashtable_focus[area],
+                                             "_buffer_name");
+                if (chat && (strcmp (chat, "1") == 0)
+                    && buffer_plugin && buffer_plugin[0]
+                    && buffer_name && buffer_name[0])
+                {
+                    snprintf (buffer_full_name, sizeof (buffer_full_name),
+                              "%s.%s", buffer_plugin, buffer_name);
+                    if (string_match (buffer_full_name, key->area_name[area], 0))
+                        match[area] = 1;
+                }
+                break;
+            case GUI_KEY_FOCUS_BAR:
+                bar_name = hashtable_get (hashtable_focus[area], "_bar_name");
+                if (bar_name && bar_name[0]
+                    && (string_match (bar_name, key->area_name[area], 0)))
+                {
+                    match[area] = 1;
+                }
+                break;
+            case GUI_KEY_FOCUS_ITEM:
+                bar_item_name = hashtable_get (hashtable_focus[area],
+                                               "_bar_item_name");
+                if (bar_item_name && bar_item_name[0]
+                    && (string_match (bar_item_name, key->area_name[area], 0)))
+                {
+                    match[area] = 1;
+                }
+                break;
+            case GUI_KEY_NUM_FOCUS:
+                break;
+        }
     }
     
-    return match;
+    return match[0] && match[1];
 }
 
 /*
@@ -770,12 +825,11 @@ gui_key_focus_matching (int area_type, const char *area_name,
 
 int
 gui_key_focus_command (const char *key, int context,
-                       struct t_hashtable *hashtable_focus1,
-                       struct t_hashtable *hashtable_focus2)
+                       struct t_hashtable **hashtable_focus)
 {
     struct t_gui_key *ptr_key;
-    int i, errors, matching, area_type, debug;
-    char *pos, *command, **commands, *area_name;
+    int i, errors, matching, debug;
+    char *command, **commands;
     struct t_hashtable *hashtable;
     struct t_weelist *list_keys;
     struct t_weelist_item *ptr_item;
@@ -789,28 +843,18 @@ gui_key_focus_command (const char *key, int context,
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
-        if (ptr_key->key && (ptr_key->key[0] != '@'))
+        if (!ptr_key->area_name[0] || !ptr_key->area_key)
             continue;
         
-        pos = strchr (ptr_key->key, ':');
-        if (!pos)
+        if (gui_key_cmp (key, ptr_key->area_key, context) != 0)
             continue;
         
-        if (gui_key_cmp (key, pos + 1, context) != 0)
-            continue;
-        
-        gui_key_get_area (ptr_key->key, &area_type, &area_name);
-        if (!area_name)
-            continue;
-        
-        matching = gui_key_focus_matching (area_type, area_name,
-                                           hashtable_focus1);
-        free (area_name);
-        
+        matching = gui_key_focus_matching (ptr_key, hashtable_focus);
         if (!matching)
             continue;
         
-        hashtable = hook_focus_get_data (hashtable_focus1, hashtable_focus2);
+        hashtable = hook_focus_get_data (hashtable_focus[0],
+                                         hashtable_focus[1]);
         if (!hashtable)
             continue;
         
@@ -894,14 +938,14 @@ int
 gui_key_focus (const char *key, int context)
 {
     struct t_gui_focus_info *focus_info1, *focus_info2;
-    struct t_hashtable *hashtable_focus1, *hashtable_focus2;
+    struct t_hashtable *hashtable_focus[2];
     int rc;
     
     rc = 0;
     focus_info1 = NULL;
     focus_info2 = NULL;
-    hashtable_focus1 = NULL;
-    hashtable_focus2 = NULL;
+    hashtable_focus[0] = NULL;
+    hashtable_focus[1] = NULL;
     
     if (context == GUI_KEY_CONTEXT_MOUSE)
     {
@@ -909,8 +953,8 @@ gui_key_focus (const char *key, int context)
                                           gui_mouse_event_y[0]);
         if (!focus_info1)
             goto end;
-        hashtable_focus1 = gui_focus_to_hashtable (focus_info1, key);
-        if (!hashtable_focus1)
+        hashtable_focus[0] = gui_focus_to_hashtable (focus_info1, key);
+        if (!hashtable_focus[0])
             goto end;
         if ((gui_mouse_event_x[0] != gui_mouse_event_x[1])
             || (gui_mouse_event_y[0] != gui_mouse_event_y[1]))
@@ -919,8 +963,8 @@ gui_key_focus (const char *key, int context)
                                               gui_mouse_event_y[1]);
             if (!focus_info2)
                 goto end;
-            hashtable_focus2 = gui_focus_to_hashtable (focus_info2, key);
-            if (!hashtable_focus2)
+            hashtable_focus[1] = gui_focus_to_hashtable (focus_info2, key);
+            if (!hashtable_focus[1])
                 goto end;
         }
         if (gui_mouse_debug)
@@ -936,23 +980,22 @@ gui_key_focus (const char *key, int context)
         focus_info1 = gui_focus_get_info (gui_cursor_x, gui_cursor_y);
         if (!focus_info1)
             goto end;
-        hashtable_focus1 = gui_focus_to_hashtable (focus_info1, key);
-        if (!hashtable_focus1)
+        hashtable_focus[0] = gui_focus_to_hashtable (focus_info1, key);
+        if (!hashtable_focus[0])
             goto end;
     }
     
-    rc = gui_key_focus_command (key, context,
-                                hashtable_focus1, hashtable_focus2);
+    rc = gui_key_focus_command (key, context, hashtable_focus);
     
 end:
     if (focus_info1)
         gui_focus_free_info (focus_info1);
     if (focus_info2)
         gui_focus_free_info (focus_info2);
-    if (hashtable_focus1)
-        hashtable_free (hashtable_focus1);
-    if (hashtable_focus2)
-        hashtable_free (hashtable_focus2);
+    if (hashtable_focus[0])
+        hashtable_free (hashtable_focus[0]);
+    if (hashtable_focus[1])
+        hashtable_free (hashtable_focus[1]);
     
     return rc;
 }
@@ -1091,9 +1134,18 @@ void
 gui_key_free (struct t_gui_key **keys, struct t_gui_key **last_key,
               int *keys_count, struct t_gui_key *key)
 {
+    int i;
+    
     /* free memory */
     if (key->key)
         free (key->key);
+    for (i = 0; i < 2; i++)
+    {
+        if (key->area_name[i])
+            free (key->area_name[i]);
+    }
+    if (key->area_key)
+        free (key->area_key);
     if (key->command)
         free (key->command);
     
@@ -1344,6 +1396,31 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
 }
 
 /*
+ * gui_key_print_log: print a key info in log (usually for crash dump)
+ */
+
+void
+gui_key_print_log_key (struct t_gui_key *key, const char *prefix)
+{
+    int area;
+    
+    log_printf ("%s[key (addr:0x%lx)]", prefix, key);
+    log_printf ("%s  key. . . . . . . . : '%s'", prefix, key->key);
+    for (area = 0; area < 2; area++)
+    {
+        log_printf ("%s  area_type[%d] . . . : %d ('%s')",
+                    prefix, area, key->area_type[area],
+                    gui_key_focus_string[key->area_type[area]]);
+        log_printf ("%s  area_name[%d] . . . : '%s'",
+                    prefix, area, key->area_name[area]);
+    }
+    log_printf ("%s  area_key . . . . . : '%s'",  prefix, key->area_key);
+    log_printf ("%s  command. . . . . . : '%s'",  prefix, key->command);
+    log_printf ("%s  prev_key . . . . . : 0x%lx", prefix, key->prev_key);
+    log_printf ("%s  next_key . . . . . : 0x%lx", prefix, key->next_key);
+}
+
+/*
  * gui_key_print_log: print key infos in log (usually for crash dump)
  */
 
@@ -1361,11 +1438,7 @@ gui_key_print_log (struct t_gui_buffer *buffer)
         for (ptr_key = buffer->keys; ptr_key; ptr_key = ptr_key->next_key)
         {
             log_printf ("");
-            log_printf ("    [key (addr:0x%lx)]", ptr_key);
-            log_printf ("      key. . . . . . . . : '%s'",  ptr_key->key);
-            log_printf ("      command. . . . . . : '%s'",  ptr_key->command);
-            log_printf ("      prev_key . . . . . : 0x%lx", ptr_key->prev_key);
-            log_printf ("      next_key . . . . . : 0x%lx", ptr_key->next_key);
+            gui_key_print_log_key (ptr_key, "    ");
         }
     }
     else
@@ -1381,11 +1454,7 @@ gui_key_print_log (struct t_gui_buffer *buffer)
             for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
             {
                 log_printf ("");
-                log_printf ("[key (addr:0x%lx)]", ptr_key);
-                log_printf ("  key. . . . . . . . : '%s'",  ptr_key->key);
-                log_printf ("  command. . . . . . : '%s'",  ptr_key->command);
-                log_printf ("  prev_key . . . . . : 0x%lx", ptr_key->prev_key);
-                log_printf ("  next_key . . . . . : 0x%lx", ptr_key->next_key);
+                gui_key_print_log_key (ptr_key, "");
             }
         }
     }

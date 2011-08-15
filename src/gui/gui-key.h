@@ -49,6 +49,9 @@ enum t_gui_key_focus
 struct t_gui_key
 {
     char *key;                      /* key combo (ex: a, ^W, ^W^C, meta-a)  */
+    int area_type[2];               /* type of areas (for cursor/mouse)     */
+    char *area_name[2];             /* name of areas (for cursor/mouse)     */
+    char *area_key;                 /* key after area (after ":")           */
     char *command;                  /* associated command (may be NULL)     */
     struct t_gui_key *prev_key;     /* link to previous key                 */
     struct t_gui_key *next_key;     /* link to next key                     */
