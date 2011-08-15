@@ -141,6 +141,7 @@ extern void gui_window_get_context_at_xy (struct t_gui_window *window,
                                           int x, int y,
                                           int *chat,
                                           struct t_gui_line **line,
+                                          int *line_x,
                                           char **word,
                                           char **beginning,
                                           char **end);

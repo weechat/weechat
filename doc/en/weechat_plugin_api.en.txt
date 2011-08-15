@@ -8285,6 +8285,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _buffer_plugin          | plugin name of buffer       | "core", "irc", ...                               | ""
 | _buffer_name            | name of buffer              | "weechat", "freenode.#weechat", ...              | ""
 | _chat                   | chat area indicator         | "0" or "1"                                       | "0"
+| _chat_line_x            | column in line ^(2)^        | "0" ... "n"                                      | "-1"
 | _chat_line_y            | line number ^(2)^           | "0" ... "n"                                      | "-1"
 | _chat_line_date         | line date                   | "1313237175"                                     | "0"
 | _chat_line_date_printed | line date ^(3)^             | "1313237175"                                     | "0"
@@ -8307,7 +8308,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 ^(1)^ There are same keys suffixed with "2" (ie: "_x2", "_y2", "_window2", ...)
 with info on second point (useful only for mouse gestures, to know where mouse
 button has been released). +
-^(2)^ Line number is set only for buffers with free content. +
+^(2)^ It is set only for buffers with free content. +
 ^(3)^ It is date when WeeChat adds line in buffer (greater or equal to
 "chat_line_date").
 

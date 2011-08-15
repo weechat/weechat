@@ -28,6 +28,7 @@ struct t_gui_focus_info
     struct t_gui_window *window;       /* window found                      */
     int chat;                          /* 1 for chat area, otherwise 0      */
     struct t_gui_line *chat_line;      /* line in chat area                 */
+    int chat_line_x;                   /* x in line                         */
     char *chat_word;                   /* word at (x,y)                     */
     char *chat_bol;                    /* beginnong of line until (x,y)     */
     char *chat_eol;                    /* (x,y) until end of line           */

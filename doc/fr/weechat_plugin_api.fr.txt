@@ -8422,6 +8422,7 @@ Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de typ
 | _buffer_plugin          | nom d'extension du tampon       | "core", "irc", ...                               | ""
 | _buffer_name            | nom du tampon                   | "weechat", "freenode.#weechat", ...              | ""
 | _chat                   | indicateur zone "chat"          | "0" ou "1"                                       | "0"
+| _chat_line_x            | colonne de la ligne ^(2)^       | "0" ... "n"                                      | "-1"
 | _chat_line_y            | numéro de ligne ^(2)^           | "0" ... "n"                                      | "-1"
 | _chat_line_date         | date de la ligne                | "1313237175"                                     | "0"
 | _chat_line_date_printed | date de la ligne ^(3)^          | "1313237175"                                     | "0"
@@ -8445,8 +8446,7 @@ Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de typ
 "_window2", ...) avec l'information sur le second point (pratique seulement
 pour les gestes de souris, pour savoir où le bouton de la souris a été
 relâché). +
-^(2)^ Le numéro de ligne n'est renseigné que pour les tampons avec contenu
-libre. +
+^(2)^ Renseigné seulement pour les tampons avec contenu libre. +
 ^(3)^ Il s'agit de la date lorsque WeeChat ajoute la ligne dans le tampon
 (supérieure ou égale à "chat_line_date").
 

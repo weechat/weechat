@@ -124,6 +124,7 @@ gui_window_search_by_xy (int x, int y)
  * gui_window_get_context_at_xy: return following info:
  *                               - chat (0/1)
  *                               - line
+ *                               - x in line
  *                               - word at (x,y)
  *                               - beginning of line until (x,y)
  *                               - (x,y) until end of line
@@ -134,6 +135,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                               int x, int y,
                               int *chat,
                               struct t_gui_line **line,
+                              int *line_x,
                               char **word,
                               char **beginning,
                               char **end)
@@ -144,6 +146,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     
     *chat = 0;
     *line = NULL;
+    *line_x = -1;
     *word = NULL;
     *beginning = NULL;
     *end = NULL;
@@ -166,6 +169,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     /* add horizontal scroll (buffers with free content) */
     if (window->scroll->start_col > 0)
         win_x += window->scroll->start_col;
+    
+    *line_x = win_x;
     
     /* we are in chat area */
     *chat = 1;
