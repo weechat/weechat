@@ -48,7 +48,7 @@
 
 | weechat | hotlist | Liste der Buffer in Hotlist | - | -
 
-| weechat | key | Auflistung der Tastenzuweisungen | - | context ("default", "search", "cursor" or "mouse") (optional)
+| weechat | key | Auflistung der Tastenzuweisungen | - | Kontext ("default", "search", "cursor" oder "mouse") (optional)
 
 | weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 
@@ -56,7 +56,7 @@
 
 | weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| weechat | window | Auflistung der Windows | Fenster Pointer (optional) | "current" for current window or a window number (optional)
+| weechat | window | Auflistung der Windows | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
 
 | xfer | xfer | Transfer-Liste | Transfer-Pointer (optional) | -
 

@@ -474,12 +474,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.mouse*
-** Beschreibung: `enable mouse support at startup (to enable it now, see /help mouse)`
+** Beschreibung: `Mausunterstützung beim Start aktivieren (um die Funktion direkt zu aktivieren, siehe /help mouse)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.mouse_timer_delay*
-** Beschreibung: `delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay before processing event`
+** Beschreibung: `Verzögerung (in Millisekunden) um ein Mauskommado zu fangen: WeeChat wartet zuerst diese Verzögerung ab bevor das Kommando verarbeitet wird`
 ** Typ: integer
 ** Werte: 1 .. 10000 (Standardwert: `100`)
 

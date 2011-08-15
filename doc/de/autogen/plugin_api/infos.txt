@@ -28,7 +28,7 @@
 
 | weechat | charset_terminal | Terminal Zeichensatz | -
 
-| weechat | cursor_mode | 1 if cursor mode is enabled | -
+| weechat | cursor_mode | 1, falls Cursor-Modus aktiviert ist | -
 
 | weechat | date | Datum der WeeChat Kompilierung | -
 

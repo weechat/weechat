@@ -78,7 +78,7 @@
 
 | weechat | config_options | Konfigurationsoptionen
 
-| weechat | cursor_areas | areas ("chat" or bar name) for free cursor movement
+| weechat | cursor_areas | Bereiche  ("chat" oder Name einer Bar) in denen der Cursor frei bewegt werden kann
 
 | weechat | filename | Dateinamen
 
@@ -108,7 +108,7 @@
 
 | weechat | weechat_commands | WeeChat Befehle
 
-| weechat | windows_numbers | numbers of windows
+| weechat | windows_numbers | Nummern der Fenster
 
 | xfer | nick | Nicks vom DCC Chat
 

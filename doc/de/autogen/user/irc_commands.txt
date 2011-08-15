@@ -46,10 +46,10 @@ Beispiele:
 ........................................
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for ban
-   nick: user or host to ban
+channel: Channel in dem der Bann ausgeführt werden soll
+   nick: User oder Host für den der Bann gelten soll
 
-Without argument, this command display ban list for current channel.
+Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezeigt.
 ........................................
 
 [[command_irc_connect]]

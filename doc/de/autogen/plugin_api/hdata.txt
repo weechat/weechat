@@ -195,7 +195,7 @@
   'gui_bar_items' +
   'last_gui_bar_item'
 
-| weechat | bar_window | bar window |
+| weechat | bar_window | Bar-Fenster |
   'bar' (pointer, hdata: 'bar') +
   'x' (integer) +
   'y' (integer) +

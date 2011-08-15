@@ -138,8 +138,8 @@ oder andere locale, bitte vergewissere Dich, dass *alle* Deine Einstellungen
 
 
 [[bars_background]]
-Bars, z.B. Titel und Status haben keine Hintergrundfarbe bzw. diese endet direkt nach dem Text, warum?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Weshalb haben Bars, z.B. Titel und Status, keine Hintergrundfarbe bzw. diese endet direkt nach dem Text?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dies kann durch einen falschen Wert in der Variablen TERM Deiner Shell verursacht
 werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal.
@@ -148,8 +148,7 @@ Abhängig davon von wo WeeChat gestartet wird, solltest Du folgenden Wert haben:
 
 * falls WeeChat lokal oder auf einem entfernten Rechner läuft, je nach benutztem
   Terminal: 'xterm', 'xterm-256color', 'rxvt-unicode', 'rxvt-256color', ...
-// TRANSLATION MISSING
-* if WeeChat runs under screen, you should have 'screen' or 'screen-256color'.
+* falls WeeChat unter screen läuft, sollte der Wert 'screen' oder 'screen-256color' lauten.
 
 Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
@@ -158,14 +157,13 @@ Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 Wenn ich Weechat mit screen/tmux nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-This may be caused by bad value of the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal, *outside screen/tmux*).
+Dies kann durch einen falschen Wert in der TERM-Variable Deiner Shell hervorgerufen
+werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal (*außerhalb von screen/tmux*).
 
 Als Beispiel, 'xterm-color' könnte solche merkwürdigen Zeichen produzieren.
 Nutzte stattdessen lieber 'xterm'.
 
-Falls nötig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
+Falls notwendig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
 
 [[osx_display_broken]]
@@ -271,29 +269,29 @@ Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu ve
 Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-By default, WeeChat displays time and prefix for each line and optional bars
-around chat area. To make easier url click, you can move nicklist to top and
-remove alignment on nick:
+WeeChat stellt standardmäßig die Uhrzeit als auch einen Präfix in jeder
+Zeile dar. Optional können zusätzlich auch Bars im Chatfenster dargestellt
+werden. Man kann die Nickliste z.B. am oberen Rand darstellen lassen und
+die Ausrichtung der Nicknamen entfernen:
 
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
-new line char is not added at the end of each line displayed (it will not break
-url selection):
+Ab der WeeChat Version ≥ 0.3.6, kann die Option "eat_newline_glitch" aktiviert
+werden. Damit wird das Zeichen für einen Zeilenumbruch nicht an die dargestellten
+Zeilen angefügt (dies führt dazu, dass URLs beim Markieren korrekt erkannt werden):
 
 ----------------------------------------
 /set weechat.look.eat_newline_glitch on
 ----------------------------------------
 
 [IMPORTANT]
-This option may cause display bugs. If you experience such problem, you must
-turn off this option.
+Bei der Nutzung dieser Option kann es zu Darstellungsfehlern kommen. Sollte dies
+auftreten, sollte diese Option wieder deaktiviert werden.
 
-Other solution is to use one of following scripts:
+Eine weitere Möglichkeit ist, eines der folgenden Skripten zu nutzen:
 
 urlbar.py::
     stellt die URL in einer Bar dar.
@@ -330,8 +328,7 @@ Benutzer von ISO-Kodierungen können folgendes eingeben:
 Wie kann ich 256 Farben in WeeChat nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-256 colors are supported with WeeChat ≥ 0.3.4.
+256 Farben werden ab der WeeChat Version ≥ 0.3.4 unterstützt.
 
 Zuerst sollte überprüft werden ob die 'TERM'-Umgebungsvariable korrekt hinterlegt
 ist. Folgende Werte sind zu empfehlen:
@@ -359,7 +356,7 @@ Umgebungsvariable durchgeführt werden, ohne das WeeChat neu gestartet werden mu
 /upgrade
 ----------------------------------------
 
-Mit Version 0.3.4 muss der Befehl `/color` genutzt werden um neue Farben zu erstellen.
+Mit der WeeChat Version 0.3.4 muss der Befehl `/color` genutzt werden, um neue Farben zu erstellen.
 
 Ab Version ≥ 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entsprechende
 Zahl der Farbe eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
@@ -449,54 +446,53 @@ Die Tasten "meta2-A" und "meta2-B" können nach dem jeweils genutzten Terminal v
 korrekten Tasten zu finden sollte man @k(A-)@k(k) und dann (Up- oder die Down-Taste) drücken.
 
 
-// TRANSLATION MISSING
 [[mouse]]
-Mouse
------
+Mausunterstützung
+-----------------
 
 
-// TRANSLATION MISSING
 [[mouse_not_working]]
-Mouse is not working at all, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Die Mausunterstützung funktioniert nicht, was kann ich tun?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Mouse is supported with WeeChat ≥ 0.3.6.
+Eine Unterstützung von Mausfunktionen ist seit WeeChat ≥ 0.3.6 verfügbar.
 
-First try to enable mouse:
+Als erstes sollte man die Mausunterstützung einschalten:
 
 ----------------------------------------
 /mouse enable
 ----------------------------------------
 
-If mouse is still not working, check the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal).
-According to terminfo used, mouse may not be supported.
+Falls die Maus von WeeChat nicht erkannt werden sollte muss die TERM Variable
+der Konsole überprüft werden (die geschieht im Terminal mittels `echo $TERM`).
+Entsprechend der ausgegebenen Information, wird ggf. eine Maus nicht unterstützt.
 
-You can test mouse support in terminal:
+Um zu testen ob eine Mausunterstützung vom Terminal bereitgestellt wird, sollte
+man folgende Zeile im Terminal eingeben:
 
 ----------------------------------------
 $ printf '\033[?1002h'
 ----------------------------------------
 
-And then click on first char of terminal (upper left). You should see " !!#!!".
+Und nun klickt man mit der Maus auf das erste Zeichen im Terminal (linke obere
+Ecke). Als Ergebnis sollte man folgende Zeichenkette erhalten: " !!#!!".
 
-To disable mouse in terminal:
+Um die Mausunterstützung im Terminal zu beenden:
 
 ----------------------------------------
 $ printf '\033[?1002l'
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[mouse_coords]]
-Mouse does nothing for X or Y greater than 94, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Mausunterstützung funktioniert nicht falls x/y Koordinaten größer 94 Pixel sind, weshalb?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some terminals are sending only ISO chars for mouse coordinates, so it does not
-work for X/Y greater than 94.
+Einige Terminals senden ausschließlich ISO Zeichen für die Mauskoordinaten. Deshalb ist eine
+Nutzung über 94 Pixel hinausgehend, sowohl in den x- wie auch den y-Koordinaten, nicht gegeben.
 
-You should use a terminal that supports UTF-8 coordinates for mouse, like
-rxvt-unicode.
+Dann muss man einen Terminl nutzen der eine Unterstützung von UTF-8 Koordinaten für die Maus
+bietet, zum Beispiel rxvt-unicode.
 
 
 [[irc]]
@@ -592,9 +588,9 @@ set away_devoice false
 Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 <<color_away_nicks,abwesende Nicks>>.
 
-// TRANSLATION MISSING
-If you really want to filter voice messages, you can use this command, but this
-is not perfect (will work only if first mode changed is voice):
+Wenn man wirklich Voice-Nachrichten filtern möchte kann folgender Befehl angewandt
+werden. Allerdings ist diese Lösung nicht perfekt, da bei mehren Modi als erstes
+der Voice Modus aufgeführt sein muss):
 
 ----------------------------------------
 /filter add hidevoices * irc_mode \(\+\|\-\)v
@@ -679,17 +675,16 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-// TRANSLATION MISSING
-To force WeeChat to reload file with the certificate authorities, change value
-of option and reset it to default value:
+Um zu erzwingen das WeeChat die Zertifikatdatei erneut lädt, muss die Option gelöscht
+und auf den Vorgabewert zurückgestellt werden:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file ""
 /unset weechat.network.gnutls_ca_file
 ----------------------------------------
 
-// TRANSLATION MISSING
-Setup server port, SSL, dhkey_size, then connect:
+Konfiguration des Servers, Port, SSL, dhkey_size und dann einen
+Connect durchführen:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
@@ -699,10 +694,9 @@ Setup server port, SSL, dhkey_size, then connect:
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_target_buffer]]
-How can I change target buffer for commands on merged buffers (like buffer with servers)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Die Standardtastenkombination lautet @k(C-)@k(x) (der dazugehörige Befehl: `/input switch_active_buffer`).
 
