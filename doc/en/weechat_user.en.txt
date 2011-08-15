@@ -1322,7 +1322,7 @@ If you want to use "dh-blowfish" by default for all servers:
 ----------------------------------------
 
 [NOTE]
-The "gcrypt" library required when compiling WeeChat in order to use
+The "gcrypt" library is required when compiling WeeChat in order to use
 "dh-blowfish" mechanism (see <<dependencies,dependencies>>).
 
 [[irc_tor_freenode]]
