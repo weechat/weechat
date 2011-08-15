@@ -141,8 +141,7 @@ A seconda di dove viene eseguito WeeChat, si dovrebbe avere:
 * se WeeChat viene eseguito localmente o su una macchina remota senza
   screen, dipende dal terminale utilizzato: 'xterm', 'xterm-256color',
   'rxvt-unicode', 'rxvt-256color', ...
-// TRANSLATION MISSING
-* if WeeChat runs under screen, you should have 'screen' or 'screen-256color'.
+* se WeeChat viene eseguito in screen, dovrebbe essere 'screen' o 'screen-256color'.
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
@@ -151,9 +150,9 @@ Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 Quando uso weechat con screen/tmux, appaiono dei caratteri strani, come posso risolvere il problema?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-This may be caused by bad value of the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal, *outside screen/tmux*).
+Potrebbe essere causato da un valore errato della variabile TERM nella propria
+shell (consultare l'output di `echo $TERM` nel terminale *al di fuori di
+screen/tmux*).
 
 Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani,
 è meglio utilizzare 'xterm' che funziona (come molti altri valori).
@@ -323,8 +322,7 @@ utenti ISO, digitare: `/shell setenv LANG=en_US`.
 Come posso usare 256 colori in WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-256 colors are supported with WeeChat ≥ 0.3.4.
+I 256 colori sono supportati nelle versioni di WeeChat ≥ 0.3.4.
 
 Per prima cosa verificare che la variabile di ambiente 'TERM' sia corretta, i
 valori raccomandati sono:
@@ -442,54 +440,52 @@ I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
 Per trovare il codice tasto digitare @k(A-)@k(k) poi il tast (su o giù).
 
 
-// TRANSLATION MISSING
 [[mouse]]
 Mouse
 -----
 
 
-// TRANSLATION MISSING
 [[mouse_not_working]]
-Mouse is not working at all, what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Il mouse non funziona affatto, cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Mouse is supported with WeeChat ≥ 0.3.6.
+Il mouse è supportato con le versioni di WeeChat ≥ 0.3.6.
 
-First try to enable mouse:
+Per prima cosa provare ad abilitare il mouse:
 
 ----------------------------------------
 /mouse enable
 ----------------------------------------
 
-If mouse is still not working, check the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal).
-According to terminfo used, mouse may not be supported.
+Se il mouse ancora non funziona, verificare la variabile TERM nella propria
+shell (consultare l'output di `echo $TERM` nel terminale).
+In base al terminale usato, il mouse potrebbe non essere supportato.
 
-You can test mouse support in terminal:
+E' possibile testare il supporto al mouse nel terminale:
 
 ----------------------------------------
 $ printf '\033[?1002h'
 ----------------------------------------
 
-And then click on first char of terminal (upper left). You should see " !!#!!".
+E poi cliccare sul primo carattere del terminale (in alto a sinistra. Dovrebbe
+essere possibile vedere  !!#!!".
 
-To disable mouse in terminal:
+Per disabilitare il mouse nel terminale:
 
 ----------------------------------------
 $ printf '\033[?1002l'
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[mouse_coords]]
-Mouse does nothing for X or Y greater than 94, why?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Il mouse non fa nulla per X o Y maggiori di 94, perché?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some terminals are sending only ISO chars for mouse coordinates, so it does not
-work for X/Y greater than 94.
+Alcuni terminale inviano solo caratteri ISO per le coordinate del mouse, per cui
+non funziona per X/Y maggiori di 94.
 
-You should use a terminal that supports UTF-8 coordinates for mouse, like
-rxvt-unicode.
+Bisogna utilizzare un terminale che supporti le coordinate UTF-8 per il mouse,
+come rxvt-unicode.
 
 
 [[irc]]
@@ -664,17 +660,15 @@ $ mkdir ~/.weechat/ssl
 $ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
 ----------------------------------------
 
-// TRANSLATION MISSING
-To force WeeChat to reload file with the certificate authorities, change value
-of option and reset it to default value:
+Per forzare WeeChat a ricaricare il file con le autorità del certificato,
+modificare il valore dell'opzione e ripristinarlo al valore predefinito:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file ""
 /unset weechat.network.gnutls_ca_file
 ----------------------------------------
 
-// TRANSLATION MISSING
-Setup server port, SSL, dhkey_size, then connect:
+Impostare la porta del server, SSL, dhkey_size, poi riconnettersi:
 
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"

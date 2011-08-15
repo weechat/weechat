@@ -78,7 +78,7 @@
 
 | weechat | config_options | opzioni di configurazione
 
-| weechat | cursor_areas | areas ("chat" or bar name) for free cursor movement
+| weechat | cursor_areas | aree ("chat" o nome barra) per il movimento libero del cursore
 
 | weechat | filename | nome file
 
@@ -92,7 +92,7 @@
 
 | weechat | keys_codes_for_reset | codici tasti che possono essere ripristinati (tasti aggiunti, ridefiniti o rimossi)
 
-| weechat | keys_contexts | key contexts
+| weechat | keys_contexts | contesti del tasto
 
 | weechat | nicks | nick nella lista nick del buffer corrente
 
@@ -108,7 +108,7 @@
 
 | weechat | weechat_commands | comandi di weechat
 
-| weechat | windows_numbers | numbers of windows
+| weechat | windows_numbers | numeri delle finestre
 
 | xfer | nick | nick della chat DCC
 

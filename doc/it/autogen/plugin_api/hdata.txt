@@ -195,7 +195,7 @@
   'gui_bar_items' +
   'last_gui_bar_item'
 
-| weechat | bar_window | bar window |
+| weechat | bar_window | finestra della barra |
   'bar' (pointer, hdata: 'bar') +
   'x' (integer) +
   'y' (integer) +
@@ -431,7 +431,7 @@
   'next_line' (pointer, hdata: 'line') |
   -
 
-| weechat | line_data | structure with one line data |
+| weechat | line_data | struttura con una riga di dati |
   'buffer' (pointer, hdata: 'buffer') +
   'y' (integer) +
   'date' (time) +

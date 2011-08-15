@@ -11,51 +11,51 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 [command]*`bar`* gestione barre::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      add <nome> <tipo>[,<cond1>[,<cond2>...]] <posizione> <dimensione> <separatore> <item1>[,<item2>...]
       default [input|title|status|nicklist]
-      del <name>|-all
-      set <name> <option> <value>
-      hide|show|toggle <name>
-      scroll <name> <window> <scroll_value>
+      del <nome>|-all
+      set <nome> <opzione> <valore>
+      hide|show|toggle <nome>
+      scroll <nome> <finestra> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-    cond1,...: condition(s) for displaying bar (only for type "window"):
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               without condition, bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       window: window number (use '*' for current window or for root bars)
- scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
+         list: elenca tutte le barre
+     listfull: elenca tutte le barre (dettagliato)
+    listitems: elenca tutti gli elementi della barra
+          add: aggiunge una nuova barra
+         nome: nome della barra (deve essere unico)
+         tipo:   root: al di fuori delle finestre,
+               window: all'interno delle finestre, con opzioni condizionali (a seguire)
+    cond1,...: condizione(i) per visualizzare la barra (solo per il tipo "window"):
+                 active: sulla finestra attiva
+               inactive: sulle finestre inattive
+               nicklist: sulle finestre con la lista nick
+               senza condizione, viene sempre mostrata
+    posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
+   dimensione: dimensione della barra (in caratteri)
+   separatore: 1 per utilizzarlo (riga), 0 o nulla equivale a nessun separatore
+    item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
+      default: crea una barra predefinita (saranno tutte predefinite se non viene dato un nome per la barra)
+          del: elimina una barra (o tutte le barre con -all)
+          set: imposta un valore per la proprietà di una barra
+      opzione: opzione da cambiare (per una lista di opzioni, consultare /set weechat.bar.<barname>.*)
+       valore: nuovo valore per l'opzione
+         hide: nasconde una barra
+         show: mostra una barra nascosta
+       toggle: nasconde/mostra una barra
+       scroll: scorre una barra
+     finestra: numero della finestra (usare '*' per la finestra corrente o le barre root)
+ scroll_value: valore per lo scorrimento: 'x' o 'y', seguite da '+', '-', 'b' (inizio) or 'e' (fine), valore (per +/-), e %% opzionale (per scorrere di %% di larghezza/altezza, altrimenti il valore è il numero di caratteri)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
-    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
-    /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+Esempi:
+  crea una barra con l'ora, numero del buffer + nome, e completamento:
+    /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  nasconde una barra:
+    /bar hide miabarra
+  scorre la lista nick di 10 righe in basso sul buffer corrente:
     /bar scroll nicklist * y+10
-  scroll nicklist one page up on #weechat buffer:
+  scorre la lista nick di una pagina in alto sul buffer #weechat:
     /bar scroll nicklist #weechat y-100%
-  scroll to end of nicklist on current buffer:
+  scorre fino alla fine della lista nick sul buffer corrente:
     /bar scroll nicklist * ye
 ........................................
 
@@ -63,54 +63,54 @@ Examples:
 [command]*`buffer`* gestione buffer::
 ........................................
 /buffer  list
-         clear [<number>|-merged|-all]
-         move|merge <number>
-         unmerge [<number>|-all]
-         close [<n1>[-<n2>]|<name>]
-         notify <level>
+         clear [<numero>|-merged|-all]
+         move|merge <numero>
+         unmerge [<numero>|-all]
+         close [<n1>[-<n2>]|<nome>]
+         notify <livello>
          localvar
-         set <property> <value>
-         get <property>
-         <number>|<name>
+         set <proprietà> <valore>
+         get <proprietà>
+         <numero>|<nome>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-    name: jump to buffer by (partial) name
+    list: elenca i buffer (senza argomento viene mostrata questa lista)
+   clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer incollati, -all per tutti i buffer o nessun parametro per quello corrente)
+    move: sposta il buffer nella lista (può essere relativo, ad esempio -1)
+   merge: unisce il buffer corrente ad un altro (l'area di chat risulterà un mix di entrambi)
+          (la combinazione predefinita ctrl-x alterna tra i buffer incollati)
+ unmerge: stacca il buffer dagli altri che hanno lo stesso numero
+   close: chiude buffer (numero/serie oppure nome sono opzionali)
+  notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer deve essere aggiunto alla hotlist oppure no:
+               none: mai
+          highlight: solo per gli eventi
+            message: messaggi dagli utenti + eventi
+                all: tutti i messaggi
+              reset: ripristina al valore predefinito (tutto)
+localvar: visualizza le variabili locali per il buffer corrente
+     set: imposta una proprietà per il buffer corrente
+     get: mostra una proprietà del buffer corrente
+  numero: passa al buffer per numero, prefisso possibile:
+          '+': passaggio relativo, aggiunge un numero a quello corrente
+          '-': passaggio relativo, sottrae un numero a quello corrente
+          '*': passa al numero, usando l'opzione "weechat.look.jump_current_to_previous_buffer"
+    nome: passa al buffer tramite nome (parziale)
 
 Examples:
-  clear current buffer:
+  pulisce il buffer corrente:
     /buffer clear
-  move buffer to number 5:
+  sposta il buffer al numero 5:
     /buffer move 5
-  merge with core buffer:
+  unisce con il buffer core:
     /buffer merge 1
-  unmerge buffer:
+  stacca il buffer:
     /buffer unmerge
-  close current buffer:
+  chiude il buffer corrente:
     /buffer close
-  close buffers 5 to 7:
+  chiude i buffer da 5 a 7:
     /buffer close 5-7
-  jump to #weechat:
+  passa a #weechat:
     /buffer #weechat
-  jump to next buffer:
+  passa al buffer successivo:
     /buffer +1
 ........................................
 
@@ -121,18 +121,18 @@ Examples:
         unalias <colore>
         reset
 
-  alias: add an alias for a color
-unalias: delete an alias
-  color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-   name: alias name for color (for example: "orange")
-  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+  alias: aggiunge un alias per un colore
+unalias: elimina un alias
+ colore: numero colore (maggiore o ugale a 0, il massimo dipende dal terminale, di solito 63 o 255)
+   nome: nome alias per il colore (ad esempio: "arancione")
+  reset: ripristina tutte le coppie di colore (richiesto quando non ci sono più coppie disponibili se il ripristino automatico è disabilitato, consultare l'opzione weechat.look.color_pairs_auto_reset)
 
-Without argument, this command displays colors in a new buffer.
+Senza argomento, il comando mostra i colori in un nuovo buffer.
 
-Examples:
-  add alias "orange" for color 214:
-    /color alias 214 orange
-  delete color 214:
+Esempi:
+  aggiunge alias "arancione" per il colore 214:
+    /color alias 214 arancione
+  elimina il colore 214:
     /color unalias 214
 ........................................
 
@@ -146,24 +146,24 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
 ........................................
 
 [[command_weechat_cursor]]
-[command]*`cursor`* free movement of cursor on screen to execute actions on specific areas of screen::
+[command]*`cursor`* movimento libero del cursore sullo schermo per eseguire azioni su aree specifiche dello schermo::
 ........................................
-/cursor  go chat|<bar>|<x>,<y>
+/cursor  go chat|<barra>|<x>,<y>
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
 
-  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
-move: move cursor with direction
-stop: stop cursor mode
+  go: sposta il cursore su un'area di chat, una barra (usando il nome della barra) o le coordinate "x.y"
+move: sposta il cursore con direzione
+stop: ferma la modalità cursore
 
-Without argument, this command toggles cursor mode.
+Senza argomenti, il comando abilita/disabilita la modalità cursore
 
-When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
+Quando il mouse è abilitato (consultare /help mouse), per default il click con il tasto centrale avvia la modalità cursore in questa posizione.
 
-Examples:
-  go to nicklist:
+Esempi:
+  vai alla lista nick:
     /cursor go nicklist
-  go to coordinates x=10, y=5:
+  vai alle coordinate x=10, y=5:
     /cursor go 10,5
 ........................................
 
@@ -177,21 +177,21 @@ Examples:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-infolists: display infos about infolists
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: elenca i plugin con i livelli di debug
+      set: imposta il livello di debug per il plugin
+   plugin: nome del plugin ("core" per il core di WeeChat)
+  livello: livello di debug per il plugin (0 = disattiva debug)
+     dump: salva un dump della memoria nel file di log di WeeChat (lo stesso dump viene salvato in caso di crash di WeeChat)
+   buffer: esegue un dump del contenuto del buffer con valori esadecimali nel file di log
+    color: mostra informazioni sulle coppie di colore correnti
+   cursor: abilita/disabilita debug per la modalità cursore
+    hdata: mostra informazioni su hdata (con free: rimuove tutti gli hdata in memoria)
+infolists: mostra informazioni sulle liste info
+   memory: mostra informazioni sull'uso della memoria
+    mouse: abilita/disabilita debug per il mouse
+     tags: mostra tag per le righe
+     term: mostra informazioni sul terminale
+  windows: mostra l'albero delle finestre
 ........................................
 
 [[command_weechat_filter]]
@@ -279,53 +279,53 @@ valore: numero delle voci nella cronologia da mostrare
 ........................................
 /input  <azioni> [<argomenti>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  scroll_unread: scroll to unread marker
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  insert: insert text in command line
+elenco di azioni:
+  return: simula il tasto "invio"
+  complete_next: completa la parola con il completamento successivo
+  complete_previous: completa la parola con il completamento precedente
+  search_text: cerca testo nel buffer
+  search_switch_case: passa alla ricerca esatta
+  search_previous: cerca la riga precedente
+  search_next: cerca la riga successiva
+  search_stop: ferma la ricerca
+  delete_previous_char: elimina carattere precedente
+  delete_next_char: elimina carattere successivo
+  delete_previous_word: elimina parola precedente
+  delete_next_word: elimina parola successiva
+  delete_beginning_of_line: elimina da inizio riga fino al cursore
+  delete_end_of_line: elimina dal cursore fino a fine riga
+  delete_line: elimina intera riga
+  clipboard_paste: incolla dagli appunti
+  transpose_chars: inverti l'ordine di due caratteri
+  undo: annulla l'ultima azione nella riga di comando
+  redo: rifai l'ultima azione nella riga di comando
+  move_beginning_of_line: sposta il cursore ad inizio riga
+  move_end_of_line: sposta il cursore a fine riga
+  move_previous_char: sposta cursore al carattere precedente
+  move_next_char: sposta cursore al carattere successivo
+  move_previous_word: sposta cursore alla parola precedente
+  move_next_word: sposta cursore alla parola successiva
+  history_previous: richiama il comando precedente nella cronologia del buffer corrente
+  history_next: richiama il comando successivo nella cronologia del buffer corrente
+  history_global_previous: richiama il comando precedente nella cronologia globale
+  history_global_next: richiama il comando successivo nella cronologia globale
+  jump_smart: passa al buffer successivo con attività
+  jump_last_buffer: passa all'ultimo buffer
+  jump_previously_visited_buffer: passa al precedente buffer visualizzato
+  jump_next_visited_buffer: passa al successivo buffer visualizzato
+  hotlist_clear: elimina hotlist
+  grab_key: ottiene un tasto
+  grab_key_command: ottiene un tasto con il suo comando associato
+  grab_mouse: cattura il codice dell'evento del mouse
+  grab_mouse_area: cattura il codice dell'evento del mouse con l'area
+  scroll_unread: scorri fino al segnalibro non letto
+  set_unread: imposta il segnalibro non letto per tutti i buffer
+  set_unread_current_buffer: imposta il segnalibro non letto per il buffer corrente
+  switch_active_buffer: passa al successivo buffer incollato
+  switch_active_buffer_previous: passa al precedente buffer incollato
+  insert: inserisci testo nella riga di comando
 
-This command is used by key bindings or plugins.
+Questo comando viene usato dall'associazione tasti o dai plugin.
 ........................................
 
 [[command_weechat_key]]
@@ -341,42 +341,42 @@ This command is used by key bindings or plugins.
       resetall -yes [<contesto>]
       missing [<contesto>]
 
-       list: list all current keys (without argument, this list is displayed)
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: elenca tutti i tasti correnti (senza argomento, viene visualizzata questa lista)
+listdefault: elenca i tasti predefiniti
+   listdiff: elenca le differenze tra tasti attuali e predefiniti (tasti aggiunti, ridefiniti o eliminati)
+   contesto: nome del contesto ("default" oppure "search")
+       bind: associa un comando ad un tasto o visualizza il comando associato al tasto (per il contesto "default")
+   bindctxt: associa un comando ad un tasto o mostra il comando associato al tasto, per il contesto fornito
+     unbind: rimuove una associazione di tasti (per il contesto "default")
+ unbindctxt: rimuove l'associazione tasti per il contesto fornito
+      reset: ripristina un tasto all'assegnazione predefinita
+  resetctxt: ripristina un tasto all'associazione predefinita per il contesto fornito
+   resetall: ripristina le associazioni ai valori predefiniti ed elimina TUTTE le associazioni personalizzate (usare con cautela!)
+    missing: aggiunge tasti mancanti (utilizzando le associazioni predefinite), utile dopo l'installazione di una nuova versione di WeeChat
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+Al momento di associare un comando ad un tasto si raccomanda di utilizzare il tasto alt+k (oppure Esc e k), e digitare il tasto da associare: il codice tasto verrà inserito nella riga di comando.
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-The key can start or end with '*' to match many mouse events.
-A special value for command wit format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Per il contesto "mouse" (possibile anche nel contesto "cursor"), il formato del tasto è: "@area:tasto" dove area può essere:
+          *: qualunque area sullo schermo
+       chat: area di chat (qualunque buffer)
+  chat(xxx): area di chat per il buffer con il nome "xxx" (nome completo includendo il plugin)
+     bar(*): qualunque barra
+   bar(xxx): barra "xxx"
+    item(*): qualunque elemento barra
+  item(xxx): elemento barra "xxx"
+Il tasto può iniziare o terminare con '*' per corrispondere a più eventi del mouse.
+Un valore speciale per questo comando con il formato "hsignal:nome" può essere usato per il contesto del mouse, e invierà hsignal "nome" con la tabella hash di focuse come argomento.
 
-Examples:
-  key alt-x to toggle nicklist bar:
+Esempi:
+  il tasto alt-x per alternare la barra della nicklist:
     /key bind meta-x /bar toggle nicklist
-  key alt-r to jump to #weechat IRC channel:
+  il tasto alt-r per passare al canale IRC #weechat:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  ripristinare l'associazione predefinita per il tasto alt-r:
     /key reset meta-r
-  key "tab" to stop search in buffer:
+  il tasto "tab" per fermare la ricerca nel buffer:
     /key bindctxt search ctrl-I /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  il tasto centrale del mouse su un nick per ottenere le informazioni:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
@@ -397,22 +397,22 @@ Senza argomenti, il comando visualizza il layout salvato.
 ........................................
 
 [[command_weechat_mouse]]
-[command]*`mouse`* mouse control::
+[command]*`mouse`* controllo mouse::
 ........................................
-/mouse  enable|disable|toggle [<delay>]
+/mouse  enable|disable|toggle [<ritardo>]
 
- enable: enable mouse
-disable: disable mouse
- toggle: toggle mouse
-  delay: delay (in seconds) after which initial mouse state is restored (useful to temporarily disable mouse)
+ enable: abilita mouse
+disable: disabilita mouse
+ toggle: abilita/disabilita mouse
+ritardo: ritardo (in secondi) dopo il quale viene ripristinato lo stato iniziale del mouse (utile per disattivarlo temporaneamente)
 
-To enable/disable mouse at startup, use:
+Per abilitare/disabilitare il mouse all'avvio, usare:
   /set weechat.look.mouse on/off
 
-Examples:
-  enable mouse:
+Esempi:
+  abilita mouse:
     /mouse enable
-  toggle mouse for 5 seconds:
+  abilita/disabilita mouse per 5 secondi:
     /mouse toggle 5
 ........................................
 
@@ -512,18 +512,18 @@ Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 ........................................
 
 [[command_weechat_repeat]]
-[command]*`repeat`* execute a command several times::
+[command]*`repeat`* esegue un comando più volte::
 ........................................
-/repeat  [-interval <delay>] <count> <command>
+/repeat  [-interval <ritardo>] <numero> <comando>
 
-  delay: delay between execution of commands (in milliseconds)
-  count: number of times to execute command
-command: command to execute (a '/' is automatically added if not found at beginning of command)
+ritardo: ritardo tra l'esecuzione dei comandi (in millisecondi)
+ numero: numero di volte in cui eseguire il comando
+comando: comando da eseguire (una '/' viene aggiunta automaticamente se non viene trovata all'inizio del comando)
 
-All commands are executed on buffer where this command was issued.
+Tutti i comandi sono eseguiti sul buffer su cui viene dato il comando.
 
-Example:
-  scroll 2 pages up:
+Esempio:
+  scorre due pagine in alto:
     /repeat 2 /window page_up
 ........................................
 
@@ -581,17 +581,17 @@ Esempi:
 ........................................
 /upgrade  [<percorso_del_binario>]
 
-path_to_binary: path to WeeChat binary (default is current binary)
+percorso_del_binario: percorso del binario di WeeChat (di default è il corrente)
 
-This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+Questo comando esegue nuovamente un binario WeeChat, perciò deve essere stato compilato o installato con un gestore di pacchetti prima di eseguire questo comando.
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+Nota: le connessioni SSL vengono perdute durante l'aggiornamento, poiché il nuovo caricamento delle sessioni SSL non è ancora possibile con GnuTLS. La riconnessione automatica avviene dopo l'aggiornamento.
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+Il processo di aggiornamento è diviso in 4 fasi:
+  1. salvataggio della sessione in file per il core e i plugin (buffer, cronologia, ..)
+  2. disattivazione di tutti i plugin (salvataggio delle configurazioni .conf)
+  3. salvataggio della configurazione di WeeChat (weechat.conf)
+  4. esecuzione del nuovo binario di WeeChat e caricamento della sessione.
 ........................................
 
 [[command_weechat_uptime]]
@@ -640,60 +640,60 @@ Esempi:
 [command]*`window`* gestione finestre::
 ........................................
 /window  list
-         -1|+1|b#|up|down|left|right [-window <number>]
-         <number>
-         splith|splitv [-window <number>] [<pct>]
-         resize [-window <number>] [+/-]<pct>
+         -1|+1|b#|up|down|left|right [-window <numero>]
+         <numero>
+         splith|splitv [-window <numero>] [<pct>]
+         resize [-window <numero>] [+/-]<pct>
          balance
-         merge [-window <number>] [all]
-         page_up|page_down [-window <number>]
+         merge [-window <numero>] [all]
+         page_up|page_down [-window <numero>]
          refresh
-         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
-         scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <number>]
-         swap [-window <number>] [up|down|left|right]
-         zoom[-window <number>]
+         scroll [-window <numero>] [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <numero>] [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <numero>]
+         swap [-window <numero>] [up|down|left|right]
+         zoom[-window <numero>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
+         list: elenca le finestre aperte (senza argomento, questa lista viene visualizzata)
+           -1: salta alla finestra precedente
+           +1: salta alla finestra successiva
+           b#: salta alla finestra successiva che visualizza il buffer numero #
+           up: passa alla finestra superiore a quella corrente
+         down: passa alla finestra inferiore a quella attiva
+         left: passa alla finestra a sinistra
+        right: passa alla finestra a destra
+       numero: numero della finestra (consultare /window list)
+       splith: divide la finestra attiva orizzontalmente
+       splitv: divide la finestra attiva verticalmente
+       resize: ridimensiona finestra, la nuova dimensione è <pct> percentuale della finestra genitore
+      balance: bilancia le dimensioni tutte le finestre
+        merge: unisce la finestra con un'altra (all = mantiente una sola finestra)
+      page_up: scorre di una pagina in alto
+    page_down: scorre di una pagina in basso
+      refresh: aggiorna lo schermo
+       scroll: scorre di un numero di righe (+/-N) o in base al tempo: s=secondi, m=minuti, h=ore, d=giorni, M=mesi, y=anni
+ scroll_horiz: scorre orizzontalmente un numero di colonne (+/-N) una percentuale della dimensione della finestra (questo scorrimento è possibile solo sui buffer con contenuto libero)
+    scroll_up: scorre di alcune righe in alto
+  scroll_down: scorre di alcune righe in basso
+   scroll_top: scorre fino all'inizio del buffer
+scroll_bottom: scorre fino alla fine del buffer buffer
+scroll_previous_highlight: passa all'evento precedente
+    scroll_next_highlight: passa all'evento successivo
+         swap: scambia i buffer di due finestra (con direzione opzionale per la finestra di destinazione)
+         zoom: ingrandimento sulla finestra
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Per splith e splitv, pct è una percentuale che rappresenta la dimensione della nuova finestra, calcolata con la finestra attiva come riferimento per la dimensione. Per esempio 25 vuol dire creare una finestra di dimensione = dimensione_attuale / 4
 
-Examples:
-  jump to window displaying buffer #1:
+Esempi:
+  salta alla finestra che visualizza il buffer #1:
     /window b1
-  scroll 2 lines up:
+  scorre di due righe in alto:
     /window scroll -2
-  scroll 2 days up:
+  scorre all'indietro di due giorni:
     /window scroll -2d
-  scroll to beginning of current day:
-    /window scroll -d
-  zoom on window #2:
+  scorre all'inizio del giorno attuale:
+     /window scroll -d
+  zoom sulla finestra #2:
     /window zoom -window 2
 ........................................
 
