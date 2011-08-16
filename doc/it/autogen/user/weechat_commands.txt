@@ -63,15 +63,15 @@ Esempi:
 [command]*`buffer`* gestione buffer::
 ........................................
 /buffer  list
-         clear [<numero>|-merged|-all]
-         move|merge <numero>
-         unmerge [<numero>|-all]
-         close [<n1>[-<n2>]|<nome>]
-         notify <livello>
+         clear [<number>|<name>|-merged|-all]
+         move|merge <number>
+         unmerge [<number>|-all]
+         close [<n1>[-<n2>]|<name>]
+         notify <level>
          localvar
-         set <proprietà> <valore>
-         get <proprietà>
-         <numero>|<nome>
+         set <property> <value>
+         get <property>
+         <number>|<name>
 
     list: elenca i buffer (senza argomento viene mostrata questa lista)
    clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer incollati, -all per tutti i buffer o nessun parametro per quello corrente)

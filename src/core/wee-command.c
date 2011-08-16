@@ -578,6 +578,12 @@ COMMAND_CALLBACK(buffer)
                             }
                         }
                     }
+                    else
+                    {
+                        ptr_buffer = gui_buffer_search_by_full_name (argv[i]);
+                        if (ptr_buffer)
+                            gui_buffer_clear (ptr_buffer);
+                    }
                 }
             }
         }
@@ -5308,7 +5314,7 @@ command_init ()
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
                   N_("list"
-                     " || clear [<number>|-merged|-all]"
+                     " || clear [<number>|<name>|-merged|-all]"
                      " || move|merge <number>"
                      " || unmerge [<number>|-all]"
                      " || close [<n1>[-<n2>]|<name>]"
@@ -5365,7 +5371,7 @@ command_init ()
                      "    /buffer #weechat\n"
                      "  jump to next buffer:\n"
                      "    /buffer +1"),
-                  "clear -merged|-all|%(buffers_numbers)"
+                  "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names)"
                   " || move %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
                   " || unmerge %(buffers_numbers)|-all"

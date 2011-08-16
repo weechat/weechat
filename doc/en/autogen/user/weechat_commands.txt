@@ -63,7 +63,7 @@ Examples:
 [command]*`buffer`* manage buffers::
 ........................................
 /buffer  list
-         clear [<number>|-merged|-all]
+         clear [<number>|<name>|-merged|-all]
          move|merge <number>
          unmerge [<number>|-all]
          close [<n1>[-<n2>]|<name>]

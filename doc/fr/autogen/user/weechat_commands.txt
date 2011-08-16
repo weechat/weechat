@@ -63,7 +63,7 @@ Exemples:
 [command]*`buffer`* gestion des tampons::
 ........................................
 /buffer  list
-         clear [<nombre>|-merged|-all]
+         clear [<nombre>|<nom>|-merged|-all]
          move|merge <nombre>
          unmerge [<nombre>|-all]
          close [<n1>[-<n2>]|<nom>]
