@@ -600,8 +600,8 @@ evento del mouse.
 | ◾◽◽        | left (long)  | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
 | ◽◽◾        | left         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
 | ◽◽◾        | -            | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
-| rotella ⇑  | -            | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -10%
-| rotella ⇓  | -            | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +10%
+| rotella ⇑  | -            | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| rotella ⇓  | -            | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
 | ◽◾◽        | -            | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
 |========================================
 
