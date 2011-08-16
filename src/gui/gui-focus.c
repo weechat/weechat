@@ -122,6 +122,30 @@ gui_focus_free_info (struct t_gui_focus_info *focus_info)
 }
 
 /*
+ * gui_focus_buffer_localvar_map_cb: add local variables of buffer in hashtable
+ */
+
+void
+gui_focus_buffer_localvar_map_cb (void *data, struct t_hashtable *hashtable,
+                                  const void *key, const void *value)
+{
+    struct t_hashtable *hashtable_focus;
+    char hash_key[512];
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    hashtable_focus = (struct t_hashtable *)data;
+    
+    if (hashtable_focus && key && value)
+    {
+        snprintf (hash_key, sizeof (hash_key),
+                  "_buffer_localvar_%s", (const char *)key);
+        hashtable_set (hashtable_focus, hash_key, (const char *)value);
+    }
+}
+
+/*
  * gui_focus_to_hashtable: add two focus info into hashtable
  */
 
@@ -156,6 +180,8 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         FOCUS_INT("_buffer_number", ((focus_info->window)->buffer)->number);
         FOCUS_STR("_buffer_plugin", plugin_get_name (((focus_info->window)->buffer)->plugin));
         FOCUS_STR("_buffer_name", ((focus_info->window)->buffer)->name);
+        hashtable_map (focus_info->window->buffer->local_variables,
+                       &gui_focus_buffer_localvar_map_cb, hashtable);
     }
     else
     {

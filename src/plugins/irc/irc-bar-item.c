@@ -530,11 +530,9 @@ irc_bar_item_focus_buffer_nicklist (void *data,
             if (ptr_nick && ptr_nick->host)
             {
                 weechat_hashtable_set (info, "irc_host", ptr_nick->host);
+                return info;
             }
         }
-        weechat_hashtable_set (info, "irc_server", ptr_server->name);
-        weechat_hashtable_set (info, "irc_channel", ptr_channel->name);
-        return info;
     }
     
     return NULL;
