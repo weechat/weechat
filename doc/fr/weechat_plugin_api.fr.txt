@@ -8458,9 +8458,9 @@ Informations additionnelles pour l'objet de barre "buffer_nicklist":
 | nick           | core            | pseudonyme
 | prefix         | core            | préfixe du pseudonyme
 | group          | core            | nom du groupe
-| host           | irc             | nom d'hôte pour le pseudonyme (si connu)
-| server         | irc             | nom interne du serveur
-| channel        | irc             | nom du canal
+| irc_host       | irc             | nom d'hôte pour le pseudonyme (si connu)
+| irc_server     | irc             | nom interne du serveur
+| irc_channel    | irc             | nom du canal
 |========================================
 
 [NOTE]

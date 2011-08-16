@@ -8377,9 +8377,9 @@ Extra info for bar item "buffer_nicklist":
 | nick           | core   | nick name
 | prefix         | core   | prefix for nick
 | group          | core   | group name
-| host           | irc    | host for nick (if known)
-| server         | irc    | internal name of server
-| channel        | irc    | channel name
+| irc_host       | irc    | host for nick (if known)
+| irc_server     | irc    | internal name of server
+| irc_channel    | irc    | channel name
 |========================================
 
 [NOTE]
