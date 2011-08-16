@@ -1600,6 +1600,8 @@ gui_bar_item_hook_signal (const char *signal, const char *item)
 void
 gui_bar_item_init ()
 {
+    char name[128];
+    
     /* input paste */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
@@ -1743,8 +1745,9 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
-    hook_focus (NULL, gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
-                &gui_bar_item_focus_buffer_nicklist, NULL);
+    snprintf (name, sizeof (name), "2000|%s",
+              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
+    hook_focus (NULL, name, &gui_bar_item_focus_buffer_nicklist, NULL);
     
     /* window number */
     gui_bar_item_new (NULL,

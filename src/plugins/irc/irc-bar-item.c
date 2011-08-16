@@ -554,6 +554,6 @@ irc_bar_item_init ()
     weechat_bar_item_new ("irc_channel", &irc_bar_item_channel, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
-    weechat_hook_focus ("500|buffer_nicklist",
+    weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL);
 }
