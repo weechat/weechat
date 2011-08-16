@@ -3637,7 +3637,7 @@ hook_add_to_infolist (struct t_infolist *infolist, const char *arguments)
     type = NULL;
     pos_arguments = NULL;
     
-    if (arguments)
+    if (arguments && arguments[0])
     {
         pos_arguments = strchr (arguments, ',');
         if (pos_arguments)
