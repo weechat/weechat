@@ -1658,6 +1658,8 @@ gui_bar_item_init ()
                       &gui_bar_item_default_buffer_plugin, NULL);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
+    gui_bar_item_hook_signal ("buffer_renamed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     
     /* buffer number */
     gui_bar_item_new (NULL,
