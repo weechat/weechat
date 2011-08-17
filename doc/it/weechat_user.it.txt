@@ -548,7 +548,7 @@ sullo schermo.
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Key          | Area       | Descrizione | Comando
+| Tasto        | Zona       | Descrizione | Comando
 | @k(↑)        | -          | Sposta il cursore di una riga in alto | /cursor move up
 | @k(↓)        | -          | Sposta il cursore di una riga in basso | /cursor move down
 | @k(←)        | -          | Sposta il cursore di una colonna a sinistra | /cursor move left
@@ -557,12 +557,9 @@ sullo schermo.
 | @k(A-)@k(↓)  | -          | Sposta il cursore nell'area in basso | /cursor move area_down
 | @k(A-)@k(←)  | -          | Sposta il cursore nell'area a sinistra | /cursor move area_left
 | @k(A-)@k(→)  | -          | Sposta il cursore nell'area a destra | /cursor move area_right
-// TRANSLATION MISSING
-| @k(m)        | chat       | Quote message | hsignal:chat_quote_message;/cursor stop
-// TRANSLATION MISSING
-| @k(q)        | chat       | Quote prefix + message | hsignal:chat_quote_prefix_message;/cursor stop
-// TRANSLATION MISSING
-| @k(Q)        | chat       | Quote time + prefix + message | hsignal:chat_quote_time_prefix_message;/cursor stop
+| @k(m)        | chat       | Cita messaggio | hsignal:chat_quote_message;/cursor stop
+| @k(q)        | chat       | Cita prefisso + messaggio | hsignal:chat_quote_prefix_message;/cursor stop
+| @k(Q)        | chat       | Cita ora + prefisso + messaggio | hsignal:chat_quote_time_prefix_message;/cursor stop
 | @k(b)        | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
 | @k(k)        | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
 | @k(K)        | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
@@ -582,27 +579,27 @@ evento del mouse.
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Pulsante   | Azione       | Area       | Descrizione | Comando
-| ◾◽◽        | -            | chat       | Passa alla finestra | /window ${_window_number}
-| ◾◽◽        | left         | chat       | Passa al buffer precedente | /window ${_window_number};/buffer +1
-| ◾◽◽        | right        | chat       | Passa al buffer successivo | /window ${_window_number};/buffer +1
-| ◾◽◽        | left (long)  | chat       | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽        | right (long) | chat       | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
-| rotella ⇑  | -            | chat       | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
-| rotella ⇓  | -            | chat       | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
-| ◾◽◽        | up           | lista nick | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽        | down         | lista nick | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽        | up (long)    | lista nick | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
-| ◾◽◽        | down (long)  | lista nick | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
-| ◾◽◽        | -            | lista nick | Apre una query con un nick | /window ${_window_number};/query ${nick}
-| ◽◽◾        | -            | lista nick | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
-| ◾◽◽        | left         | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽        | left (long)  | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾        | left         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾        | -            | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
-| rotella ⇑  | -            | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| rotella ⇓  | -            | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽        | -            | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
+| Tasto      | Azione           | Zona       | Descrizione | Comando
+| ◾◽◽        | -                | chat       | Passa alla finestra | /window ${_window_number}
+| ◾◽◽        | sinistra         | chat       | Passa al buffer precedente | /window ${_window_number};/buffer +1
+| ◾◽◽        | destra           | chat       | Passa al buffer successivo | /window ${_window_number};/buffer +1
+| ◾◽◽        | sinistra (lungo) | chat       | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽        | destra (lungo)   | chat       | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
+| rotella ⇑  | -                | chat       | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
+| rotella ⇓  | -                | chat       | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
+| ◾◽◽        | su               | lista nick | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽        | giù              | lista nick | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽        | up (lungo)       | lista nick | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
+| ◾◽◽        | giù (lungo)      | lista nick | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
+| ◾◽◽        | -                | lista nick | Apre una query con un nick | /window ${_window_number};/query ${nick}
+| ◽◽◾        | -                | lista nick | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
+| ◾◽◽        | sinistra         | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽        | sinistra (lungo) | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾        | sinistra         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾        | -                | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
+| rotella ⇑  | -                | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| rotella ⇓  | -                | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽        | -                | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]

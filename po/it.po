@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-16 22:19+0200\n"
-"PO-Revision-Date: 2011-08-15 16:57+0200\n"
+"POT-Creation-Date: 2011-08-17 15:07+0200\n"
+"PO-Revision-Date: 2011-08-16 17:48+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -1136,13 +1136,12 @@ msgstr ""
 msgid "control debug for core/plugins"
 msgstr "attiva debug per core/plugin"
 
-#, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
-"list || set <plugin> <livello> || dump [<plugin>] || buffer|color|cursor|"
-"infolists|memory|mouse|tags|term|windows || hdata [free]"
+"list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
 msgid ""
 "     list: list plugins with debug levels\n"
@@ -1465,7 +1464,6 @@ msgstr ""
 "unbindctxt <contesto> <chiave> || reset <tasto> || resetctxt <contesto> "
 "<tasto> || resetall -yes [<contesto>] || missing [<contesto>]"
 
-#, fuzzy
 msgid ""
 "       list: list all current keys (without argument, this list is "
 "displayed)\n"
@@ -1544,7 +1542,8 @@ msgstr ""
 "tasto verrà inserito nella riga di comando.\n"
 "\n"
 "Per il contesto \"mouse\" (possibile anche nel contesto \"cursor\"), il "
-"formato del tasto è: \"@area:tasto\" dove area può essere:\n"
+"formato del tasto è: \"@area:tasto\" oppure \"@area1>area2:tasto\" dove area "
+"può essere:\n"
 "          *: qualunque area sullo schermo\n"
 "       chat: area di chat (qualunque buffer)\n"
 "  chat(xxx): area di chat per il buffer con il nome \"xxx\" (nome completo "
@@ -3353,12 +3352,12 @@ msgstr "%sErrore: un buffer con lo stesso nome (%s) esiste già"
 msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr "%sErrore: è possibile solo unire i buffer con il contenuto formattato"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Debug enabled for cursor mode (%s)"
-msgstr "Debug abilitato per la modalità cursore"
+msgstr "Debug abilitato per la modalità cursore (%s)"
 
 msgid "verbose"
-msgstr ""
+msgstr "dettagliato"
 
 msgid "normal"
 msgid_plural "normals"
@@ -3382,9 +3381,8 @@ msgstr "Errore: impossibile associare il testo \"%s\""
 msgid "Error: not enough memory for key binding"
 msgstr "Errore: memoria non sufficiente per l'associazione tasti"
 
-#, fuzzy
 msgid "Hashtable focus:"
-msgstr "Focus su tabella hash: %s"
+msgstr "Tabella hash del focus:"
 
 #, c-format
 msgid "Command for key: \"%s\""
@@ -3401,9 +3399,9 @@ msgstr "Esecuzione comando: \"%s\""
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Debug enabled for mouse (%s)"
-msgstr "Debug abilitato per il mouse"
+msgstr "Debug abilitato per il mouse (%s)"
 
 msgid "Debug disabled for mouse"
 msgstr "Debug disabilitato per il mouse"
@@ -8177,7 +8175,7 @@ msgstr "Liste"
 
 #, fuzzy
 #~ msgid "%sError: incorrect count"
-#~ msgstr "%sErrore: nome buffer non corretto"
+#~ msgstr "%sErrore: numero non corretto"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""
