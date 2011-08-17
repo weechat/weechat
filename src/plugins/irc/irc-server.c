@@ -1299,8 +1299,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     {
         buffer_name = irc_buffer_build_name (server->name, NULL);
         weechat_buffer_set (server->buffer, "name", buffer_name);
-        if (!weechat_buffer_get_integer (server->buffer, "short_name_is_set"))
-            weechat_buffer_set (server->buffer, "short_name", server->name);
+        weechat_buffer_set (server->buffer, "short_name", server->name);
         weechat_buffer_set (server->buffer, "localvar_set_server",
                             server->name);
         weechat_buffer_set (server->buffer, "localvar_set_channel",
