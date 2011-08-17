@@ -347,6 +347,16 @@ weechat_lua_load (const char *filename)
     
     lua_current_script->interpreter = (lua_State *) lua_current_interpreter;
     
+    /*
+     * set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade)
+     */
+    script_set_buffer_callbacks (weechat_lua_plugin,
+                                 lua_scripts,
+                                 lua_current_script,
+                                 &weechat_lua_api_buffer_input_data_cb,
+                                 &weechat_lua_api_buffer_close_cb);
+    
     return 1;
 }
 
@@ -724,16 +734,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_lua_plugin,
                  argc,
                  argv,
-                 &lua_scripts,
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
                  &weechat_lua_infolist_cb,
                  &weechat_lua_signal_debug_dump_cb,
                  &weechat_lua_signal_buffer_closed_cb,
                  &weechat_lua_signal_script_action_cb,
-                 &weechat_lua_load_cb,
-                 &weechat_lua_api_buffer_input_data_cb,
-                 &weechat_lua_api_buffer_close_cb);
+                 &weechat_lua_load_cb);
     lua_quiet = 0;
     
     script_display_short_list (weechat_lua_plugin,

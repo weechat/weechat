@@ -333,6 +333,16 @@ weechat_tcl_load (const char *filename)
     }
     tcl_current_script = tcl_registered_script;
     
+    /*
+     * set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade)
+     */
+    script_set_buffer_callbacks (weechat_tcl_plugin,
+                                 tcl_scripts,
+                                 tcl_current_script,
+                                 &weechat_tcl_api_buffer_input_data_cb,
+                                 &weechat_tcl_api_buffer_close_cb);
+    
     return 1;
 }
 
@@ -710,16 +720,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_tcl_plugin,
                  argc,
                  argv,
-                 &tcl_scripts,
                  &weechat_tcl_command_cb,
                  &weechat_tcl_completion_cb,
                  &weechat_tcl_infolist_cb,
                  &weechat_tcl_signal_debug_dump_cb,
                  &weechat_tcl_signal_buffer_closed_cb,
                  &weechat_tcl_signal_script_action_cb,
-                 &weechat_tcl_load_cb,
-                 &weechat_tcl_api_buffer_input_data_cb,
-                 &weechat_tcl_api_buffer_close_cb);
+                 &weechat_tcl_load_cb);
     tcl_quiet = 0;
     
     script_display_short_list (weechat_tcl_plugin,

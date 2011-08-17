@@ -71,7 +71,6 @@ struct t_plugin_script
 extern void script_init (struct t_weechat_plugin *weechat_plugin,
                          int argc,
                          char *argv[],
-                         struct t_plugin_script **scripts,
                          int (*callback_command)(void *data,
                                                  struct t_gui_buffer *buffer,
                                                  int argc, char **argv,
@@ -96,12 +95,7 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                                                               const char *signal,
                                                               const char *type_data,
                                                               void *signal_data),
-                         void (*callback_load_file)(void *data, const char *filename),
-                         int (*callback_buffer_input) (void *data,
-                                                       struct t_gui_buffer *buffer,
-                                                       const char *input_data),
-                         int (*callback_buffer_close) (void *data,
-                                                       struct t_gui_buffer *buffer));
+                         void (*callback_load_file)(void *data, const char *filename));
 extern int script_valid (struct t_plugin_script *scripts,
                          struct t_plugin_script *script);
 extern char *script_ptr2str (void *pointer);
@@ -120,6 +114,14 @@ extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plug
                                            const char *author, const char *version,
                                            const char *license, const char *description,
                                            const char *shutdown_func, const char *charset);
+extern void script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
+                                         struct t_plugin_script *scripts,
+                                         struct t_plugin_script *script,
+                                         int (*callback_buffer_input) (void *data,
+                                                                       struct t_gui_buffer *buffer,
+                                                                       const char *input_data),
+                                         int (*callback_buffer_close) (void *data,
+                                                                       struct t_gui_buffer *buffer));
 extern void script_remove_buffer_callbacks (struct t_plugin_script *scripts,
                                             struct t_gui_buffer *buffer);
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,

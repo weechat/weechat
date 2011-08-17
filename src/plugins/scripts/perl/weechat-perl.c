@@ -521,7 +521,17 @@ weechat_perl_load (const char *filename)
 #else
     perl_current_script->interpreter = strdup (pkgname);
 #endif
-
+    
+    /*
+     * set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade)
+     */
+    script_set_buffer_callbacks (weechat_perl_plugin,
+                                 perl_scripts,
+                                 perl_current_script,
+                                 &weechat_perl_api_buffer_input_data_cb,
+                                 &weechat_perl_api_buffer_close_cb);
+    
     return 1;
 }
 
@@ -966,16 +976,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_perl_plugin,
                  argc,
                  argv,
-                 &perl_scripts,
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
                  &weechat_perl_infolist_cb,
                  &weechat_perl_signal_debug_dump_cb,
                  &weechat_perl_signal_buffer_closed_cb,
                  &weechat_perl_signal_script_action_cb,
-                 &weechat_perl_load_cb,
-                 &weechat_perl_api_buffer_input_data_cb,
-                 &weechat_perl_api_buffer_close_cb);
+                 &weechat_perl_load_cb);
     perl_quiet = 0;
     
     script_display_short_list (weechat_perl_plugin,

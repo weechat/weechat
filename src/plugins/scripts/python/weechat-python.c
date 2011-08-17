@@ -609,6 +609,16 @@ weechat_python_load (const char *filename)
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
     
+    /*
+     * set input/close callbacks for buffers created by this script
+     * (to restore callbacks after upgrade)
+     */
+    script_set_buffer_callbacks (weechat_python_plugin,
+                                 python_scripts,
+                                 python_current_script,
+                                 &weechat_python_api_buffer_input_data_cb,
+                                 &weechat_python_api_buffer_close_cb);
+    
     return 1;
 }
 
@@ -1052,16 +1062,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_init (weechat_python_plugin,
                  argc,
                  argv,
-                 &python_scripts,
                  &weechat_python_command_cb,
                  &weechat_python_completion_cb,
                  &weechat_python_infolist_cb,
                  &weechat_python_signal_debug_dump_cb,
                  &weechat_python_signal_buffer_closed_cb,
                  &weechat_python_signal_script_action_cb,
-                 &weechat_python_load_cb,
-                 &weechat_python_api_buffer_input_data_cb,
-                 &weechat_python_api_buffer_close_cb);
+                 &weechat_python_load_cb);
     python_quiet = 0;
     
     script_display_short_list (weechat_python_plugin,

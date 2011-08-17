@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-16
+v0.3.6-dev, 2011-08-17
 
 
 Version 0.3.6 (under dev!)
@@ -58,6 +58,8 @@ Version 0.3.6 (under dev!)
   hdata_string, hdata_pointer, hdata_time, hdata_get_string
 * api: fix bug with function config_set_desc_plugin (use immediately
   description for option when function is called)
+* scripts: fix crash with scripts not auto-loaded having a buffer opened after
+  /upgrade (input/close callbacks for buffer not set properly)
 * irc: send WHO command to check away nicks only if channel was not parted
 * irc: fix crash when malformed IRC message 352 (WHO) is received (bug #33790)
 * irc: fix crash when command "/buffer close" is used in a server command to
