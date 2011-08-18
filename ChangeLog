@@ -79,6 +79,7 @@ Version 0.3.6 (under dev!)
 * relay: fix memory leak (free some parsed messages) (bug #33387)
 * relay: fix memory leak on plugin load (free raw messages)
 * logger: add option logger.file.flush_delay (task #11118)
+* perl: replace calls to SvPV by SvPV_nolen (patch #7436)
 
 Version 0.3.5 (2011-05-15)
 --------------------------

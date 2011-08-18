@@ -94,13 +94,13 @@ XS (XS_weechat_api_register)
         PERL_RETURN_ERROR;
     }
     
-    name = SvPV (ST (0), PL_na);
-    author = SvPV (ST (1), PL_na);
-    version = SvPV (ST (2), PL_na);
-    license = SvPV (ST (3), PL_na);
-    description = SvPV (ST (4), PL_na);
-    shutdown_func = SvPV (ST (5), PL_na);
-    charset = SvPV (ST (6), PL_na);
+    name = SvPV_nolen (ST (0));
+    author = SvPV_nolen (ST (1));
+    version = SvPV_nolen (ST (2));
+    license = SvPV_nolen (ST (3));
+    description = SvPV_nolen (ST (4));
+    shutdown_func = SvPV_nolen (ST (5));
+    charset = SvPV_nolen (ST (6));
     
     if (script_search (weechat_perl_plugin, perl_scripts, name))
     {
@@ -163,7 +163,7 @@ XS (XS_weechat_api_plugin_get_name)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_plugin_get_name (script_str2ptr (SvPV (ST (0), PL_na))); /* plugin */
+    result = weechat_plugin_get_name (script_str2ptr (SvPV_nolen (ST (0)))); /* plugin */
     
     PERL_RETURN_STRING(result);
 }
@@ -192,7 +192,7 @@ XS (XS_weechat_api_charset_set)
     }
     
     script_api_charset_set (perl_current_script,
-                            SvPV (ST (0), PL_na)); /* charset */
+                            SvPV_nolen (ST (0))); /* charset */
     
     PERL_RETURN_OK;
 }
@@ -221,8 +221,8 @@ XS (XS_weechat_api_iconv_to_internal)
         PERL_RETURN_EMPTY;
     }
     
-    charset = SvPV (ST (0), PL_na);
-    string = SvPV (ST (1), PL_na);
+    charset = SvPV_nolen (ST (0));
+    string = SvPV_nolen (ST (1));
     
     result = weechat_iconv_to_internal (charset, string);
     
@@ -254,8 +254,8 @@ XS (XS_weechat_api_iconv_from_internal)
         PERL_RETURN_EMPTY;
     }
     
-    charset = SvPV (ST (0), PL_na);
-    string = SvPV (ST (1), PL_na);
+    charset = SvPV_nolen (ST (0));
+    string = SvPV_nolen (ST (1));
     
     result = weechat_iconv_from_internal (charset, string);
     
@@ -286,7 +286,7 @@ XS (XS_weechat_api_gettext)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_gettext (SvPV (ST (0), PL_na)); /* string */
+    result = weechat_gettext (SvPV_nolen (ST (0))); /* string */
     
     PERL_RETURN_STRING(result);
 }
@@ -316,8 +316,8 @@ XS (XS_weechat_api_ngettext)
         PERL_RETURN_EMPTY;
     }
     
-    single = SvPV (ST (0), PL_na);
-    plural = SvPV (ST (1), PL_na);
+    single = SvPV_nolen (ST (0));
+    plural = SvPV_nolen (ST (1));
     
     result = weechat_ngettext (single, plural,
                                SvIV (ST (2))); /* count */
@@ -351,8 +351,8 @@ XS (XS_weechat_api_string_match)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_string_match (SvPV (ST (0), PL_na), /* string */
-                                  SvPV (ST (1), PL_na), /* mask */
+    value = weechat_string_match (SvPV_nolen (ST (0)), /* string */
+                                  SvPV_nolen (ST (1)), /* mask */
                                   SvIV (ST (2))); /* case_sensitive */
     
     PERL_RETURN_INT(value);
@@ -384,8 +384,8 @@ XS (XS_weechat_api_string_has_highlight)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_string_has_highlight (SvPV (ST (0), PL_na), /* string */
-                                          SvPV (ST (1), PL_na)); /* highlight_words */
+    value = weechat_string_has_highlight (SvPV_nolen (ST (0)), /* string */
+                                          SvPV_nolen (ST (1))); /* highlight_words */
     
     PERL_RETURN_INT(value);
 }
@@ -417,8 +417,8 @@ XS (XS_weechat_api_string_has_highlight_regex)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_string_has_highlight_regex (SvPV (ST (0), PL_na), /* string */
-                                                SvPV (ST (1), PL_na)); /* regex */
+    value = weechat_string_has_highlight_regex (SvPV_nolen (ST (0)), /* string */
+                                                SvPV_nolen (ST (1))); /* regex */
     
     PERL_RETURN_INT(value);
 }
@@ -449,7 +449,7 @@ XS (XS_weechat_api_string_mask_to_regex)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_string_mask_to_regex (SvPV (ST (0), PL_na)); /* mask */
+    result = weechat_string_mask_to_regex (SvPV_nolen (ST (0))); /* mask */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -478,8 +478,8 @@ XS (XS_weechat_api_string_remove_color)
         PERL_RETURN_EMPTY;
     }
     
-    string = SvPV (ST (0), PL_na);
-    replacement = SvPV (ST (1), PL_na);
+    string = SvPV_nolen (ST (0));
+    replacement = SvPV_nolen (ST (1));
     
     result = weechat_string_remove_color (string, replacement);
     
@@ -511,7 +511,7 @@ XS (XS_weechat_api_string_is_command_char)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_string_is_command_char (SvPV (ST (0), PL_na)); /* string */
+    value = weechat_string_is_command_char (SvPV_nolen (ST (0))); /* string */
     
     PERL_RETURN_INT(value);
 }
@@ -541,7 +541,7 @@ XS (XS_weechat_api_string_input_for_buffer)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_string_input_for_buffer (SvPV (ST (0), PL_na)); /* string */
+    result = weechat_string_input_for_buffer (SvPV_nolen (ST (0))); /* string */
     
     PERL_RETURN_STRING(result);
 }
@@ -569,7 +569,7 @@ XS (XS_weechat_api_mkdir_home)
         PERL_RETURN_ERROR;
     }
     
-    if (weechat_mkdir_home (SvPV (ST (0), PL_na), /* directory */
+    if (weechat_mkdir_home (SvPV_nolen (ST (0)), /* directory */
                             SvIV (ST (1)))) /* mode */
         PERL_RETURN_OK;
     
@@ -599,7 +599,7 @@ XS (XS_weechat_api_mkdir)
         PERL_RETURN_ERROR;
     }
     
-    if (weechat_mkdir (SvPV (ST (0), PL_na), /* directory */
+    if (weechat_mkdir (SvPV_nolen (ST (0)), /* directory */
                        SvIV (ST (1)))) /* mode */
         PERL_RETURN_OK;
     
@@ -630,7 +630,7 @@ XS (XS_weechat_api_mkdir_parents)
         PERL_RETURN_ERROR;
     }
     
-    if (weechat_mkdir_parents (SvPV (ST (0), PL_na), /* directory */
+    if (weechat_mkdir_parents (SvPV_nolen (ST (0)), /* directory */
                                SvIV (ST (1)))) /* mode */
         PERL_RETURN_OK;
     
@@ -685,10 +685,10 @@ XS (XS_weechat_api_list_add)
         PERL_RETURN_EMPTY;
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    data = SvPV (ST (1), PL_na);
-    where = SvPV (ST (2), PL_na);
-    user_data = SvPV (ST (3), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
+    where = SvPV_nolen (ST (2));
+    user_data = SvPV_nolen (ST (3));
     
     result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
                                                data,
@@ -722,8 +722,8 @@ XS (XS_weechat_api_list_search)
         PERL_RETURN_EMPTY;
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    data = SvPV (ST (1), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_list_search (script_str2ptr (weelist),
                                                   data));
@@ -756,8 +756,8 @@ XS (XS_weechat_api_list_search_pos)
         PERL_RETURN_INT(-1);
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    data = SvPV (ST (1), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
     
     pos = weechat_list_search_pos (script_str2ptr (weelist), data);
     
@@ -788,8 +788,8 @@ XS (XS_weechat_api_list_casesearch)
         PERL_RETURN_EMPTY;
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    data = SvPV (ST (1), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_list_casesearch (script_str2ptr (weelist),
                                                       data));
@@ -823,8 +823,8 @@ XS (XS_weechat_api_list_casesearch_pos)
         PERL_RETURN_INT(-1);
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    data = SvPV (ST (1), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
     
     pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
     
@@ -855,7 +855,7 @@ XS (XS_weechat_api_list_get)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_list_get (script_str2ptr (SvPV (ST (0), PL_na)), /* weelist */
+    result = script_ptr2str (weechat_list_get (script_str2ptr (SvPV_nolen (ST (0))), /* weelist */
                                                SvIV (ST (1)))); /* position */
     
     PERL_RETURN_STRING_FREE(result);
@@ -885,8 +885,8 @@ XS (XS_weechat_api_list_set)
         PERL_RETURN_ERROR;
     }
     
-    item = SvPV (ST (0), PL_na);
-    new_value = SvPV (ST (1), PL_na);
+    item = SvPV_nolen (ST (0));
+    new_value = SvPV_nolen (ST (1));
     
     weechat_list_set (script_str2ptr (item), new_value);
     
@@ -917,7 +917,7 @@ XS (XS_weechat_api_list_next)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_list_next (script_str2ptr (SvPV (ST (0), PL_na)))); /* item */
+    result = script_ptr2str (weechat_list_next (script_str2ptr (SvPV_nolen (ST (0))))); /* item */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -946,7 +946,7 @@ XS (XS_weechat_api_list_prev)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_list_prev (script_str2ptr (SvPV (ST (0), PL_na)))); /* item */
+    result = script_ptr2str (weechat_list_prev (script_str2ptr (SvPV_nolen (ST (0))))); /* item */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -975,7 +975,7 @@ XS (XS_weechat_api_list_string)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_list_string (script_str2ptr (SvPV (ST (0), PL_na))); /* item */
+    result = weechat_list_string (script_str2ptr (SvPV_nolen (ST (0)))); /* item */
     
     PERL_RETURN_STRING(result);
 }
@@ -1004,7 +1004,7 @@ XS (XS_weechat_api_list_size)
         PERL_RETURN_INT(0);
     }
     
-    size = weechat_list_size (script_str2ptr (SvPV (ST (0), PL_na))); /* weelist */
+    size = weechat_list_size (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
     
     PERL_RETURN_INT(size);
 }
@@ -1033,8 +1033,8 @@ XS (XS_weechat_api_list_remove)
         PERL_RETURN_ERROR;
     }
     
-    weelist = SvPV (ST (0), PL_na);
-    item = SvPV (ST (1), PL_na);
+    weelist = SvPV_nolen (ST (0));
+    item = SvPV_nolen (ST (1));
     
     weechat_list_remove (script_str2ptr (weelist), script_str2ptr (item));
     
@@ -1064,7 +1064,7 @@ XS (XS_weechat_api_list_remove_all)
         PERL_RETURN_ERROR;
     }
     
-    weechat_list_remove_all (script_str2ptr (SvPV (ST (0), PL_na))); /* weelist */
+    weechat_list_remove_all (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
     
     PERL_RETURN_OK;
 }
@@ -1092,7 +1092,7 @@ XS (XS_weechat_api_list_free)
         PERL_RETURN_ERROR;
     }
     
-    weechat_list_free (script_str2ptr (SvPV (ST (0), PL_na))); /* weelist */
+    weechat_list_free (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
     
     PERL_RETURN_OK;
 }
@@ -1162,9 +1162,9 @@ XS (XS_weechat_api_config_new)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    name = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_config_new (weechat_perl_plugin,
                                                     perl_current_script,
@@ -1438,18 +1438,18 @@ XS (XS_weechat_api_config_new_section)
         PERL_RETURN_EMPTY;
     }
     
-    cfg_file = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
-    function_read = SvPV (ST (4), PL_na);
-    data_read = SvPV (ST (5), PL_na);
-    function_write = SvPV (ST (6), PL_na);
-    data_write = SvPV (ST (7), PL_na);
-    function_write_default = SvPV (ST (8), PL_na);
-    data_write_default = SvPV (ST (9), PL_na);
-    function_create_option = SvPV (ST (10), PL_na);
-    data_create_option = SvPV (ST (11), PL_na);
-    function_delete_option = SvPV (ST (12), PL_na);
-    data_delete_option = SvPV (ST (13), PL_na);
+    cfg_file = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
+    function_read = SvPV_nolen (ST (4));
+    data_read = SvPV_nolen (ST (5));
+    function_write = SvPV_nolen (ST (6));
+    data_write = SvPV_nolen (ST (7));
+    function_write_default = SvPV_nolen (ST (8));
+    data_write_default = SvPV_nolen (ST (9));
+    function_create_option = SvPV_nolen (ST (10));
+    data_create_option = SvPV_nolen (ST (11));
+    function_delete_option = SvPV_nolen (ST (12));
+    data_delete_option = SvPV_nolen (ST (13));
     
     result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
                                                             perl_current_script,
@@ -1500,8 +1500,8 @@ XS (XS_weechat_api_config_search_section)
         PERL_RETURN_EMPTY;
     }
     
-    config_file = SvPV (ST (0), PL_na);
-    section_name = SvPV (ST (1), PL_na);
+    config_file = SvPV_nolen (ST (0));
+    section_name = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_config_search_section (script_str2ptr (config_file),
                                                             section_name));
@@ -1646,20 +1646,20 @@ XS (XS_weechat_api_config_new_option)
         PERL_RETURN_EMPTY;
     }
     
-    config_file = SvPV (ST (0), PL_na);
-    section = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
-    type = SvPV (ST (3), PL_na);
-    description = SvPV (ST (4), PL_na);
-    string_values = SvPV (ST (5), PL_na);
-    default_value = SvPV (ST (8), PL_na);
-    value = SvPV (ST (9), PL_na);
-    function_check_value = SvPV (ST (11), PL_na);
-    data_check_value = SvPV (ST (12), PL_na);
-    function_change = SvPV (ST (13), PL_na);
-    data_change = SvPV (ST (14), PL_na);
-    function_delete = SvPV (ST (15), PL_na);
-    data_delete = SvPV (ST (16), PL_na);
+    config_file = SvPV_nolen (ST (0));
+    section = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+    type = SvPV_nolen (ST (3));
+    description = SvPV_nolen (ST (4));
+    string_values = SvPV_nolen (ST (5));
+    default_value = SvPV_nolen (ST (8));
+    value = SvPV_nolen (ST (9));
+    function_check_value = SvPV_nolen (ST (11));
+    data_check_value = SvPV_nolen (ST (12));
+    function_change = SvPV_nolen (ST (13));
+    data_change = SvPV_nolen (ST (14));
+    function_delete = SvPV_nolen (ST (15));
+    data_delete = SvPV_nolen (ST (16));
     
     result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
                                                            perl_current_script,
@@ -1711,9 +1711,9 @@ XS (XS_weechat_api_config_search_option)
         PERL_RETURN_EMPTY;
     }
     
-    config_file = SvPV (ST (0), PL_na);
-    section = SvPV (ST (1), PL_na);
-    option_name = SvPV (ST (2), PL_na);
+    config_file = SvPV_nolen (ST (0));
+    section = SvPV_nolen (ST (1));
+    option_name = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_config_search_option (script_str2ptr (config_file),
                                                            script_str2ptr (section),
@@ -1746,7 +1746,7 @@ XS (XS_weechat_api_config_string_to_boolean)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_string_to_boolean (SvPV (ST (0), PL_na)); /* text */
+    value = weechat_config_string_to_boolean (SvPV_nolen (ST (0))); /* text */
     
     PERL_RETURN_INT(value);
 }
@@ -1776,7 +1776,7 @@ XS (XS_weechat_api_config_option_reset)
         PERL_RETURN_INT(0);
     }
     
-    option = SvPV (ST (0), PL_na);
+    option = SvPV_nolen (ST (0));
     
     rc = weechat_config_option_reset (script_str2ptr (option),
                                       SvIV (ST (1))); /* run_callback */
@@ -1809,8 +1809,8 @@ XS (XS_weechat_api_config_option_set)
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
-    option = SvPV (ST (0), PL_na);
-    new_value = SvPV (ST (1), PL_na);
+    option = SvPV_nolen (ST (0));
+    new_value = SvPV_nolen (ST (1));
     
     rc = weechat_config_option_set (script_str2ptr (option),
                                     new_value,
@@ -1844,7 +1844,7 @@ XS (XS_weechat_api_config_option_set_null)
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
-    option = SvPV (ST (0), PL_na);
+    option = SvPV_nolen (ST (0));
     
     rc = weechat_config_option_set_null (script_str2ptr (option),
                                          SvIV (ST (1))); /* run_callback */
@@ -1877,7 +1877,7 @@ XS (XS_weechat_api_config_option_unset)
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
-    option = SvPV (ST (0), PL_na);
+    option = SvPV_nolen (ST (0));
     
     rc = weechat_config_option_unset (script_str2ptr (option));
     
@@ -1908,8 +1908,8 @@ XS (XS_weechat_api_config_option_rename)
         PERL_RETURN_ERROR;
     }
     
-    option = SvPV (ST (0), PL_na);
-    new_name = SvPV (ST (1), PL_na);
+    option = SvPV_nolen (ST (0));
+    new_name = SvPV_nolen (ST (1));
     
     weechat_config_option_rename (script_str2ptr (option),
                                   new_name);
@@ -1941,7 +1941,7 @@ XS (XS_weechat_api_config_option_is_null)
         PERL_RETURN_INT(1);
     }
     
-    value = weechat_config_option_is_null (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_option_is_null (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -1971,7 +1971,7 @@ XS (XS_weechat_api_config_option_default_is_null)
         PERL_RETURN_INT(1);
     }
     
-    value = weechat_config_option_default_is_null (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_option_default_is_null (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -2000,7 +2000,7 @@ XS (XS_weechat_api_config_boolean)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_boolean (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_boolean (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -2029,7 +2029,7 @@ XS (XS_weechat_api_config_boolean_default)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_boolean_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_boolean_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -2058,7 +2058,7 @@ XS (XS_weechat_api_config_integer)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_integer (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_integer (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -2087,7 +2087,7 @@ XS (XS_weechat_api_config_integer_default)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_config_integer_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    value = weechat_config_integer_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_INT(value);
 }
@@ -2116,7 +2116,7 @@ XS (XS_weechat_api_config_string)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_config_string (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_string (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_STRING(result);
 }
@@ -2145,7 +2145,7 @@ XS (XS_weechat_api_config_string_default)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_config_string_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_string_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_STRING(result);
 }
@@ -2174,7 +2174,7 @@ XS (XS_weechat_api_config_color)
         PERL_RETURN_INT(0);
     }
     
-    result = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_color (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_STRING(result);
 }
@@ -2203,7 +2203,7 @@ XS (XS_weechat_api_config_color_default)
         PERL_RETURN_INT(0);
     }
     
-    result = weechat_config_color_default (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_color_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_STRING(result);
 }
@@ -2232,8 +2232,8 @@ XS (XS_weechat_api_config_write_option)
         PERL_RETURN_ERROR;
     }
     
-    config_file = SvPV (ST (0), PL_na);
-    option = SvPV (ST (1), PL_na);
+    config_file = SvPV_nolen (ST (0));
+    option = SvPV_nolen (ST (1));
     
     weechat_config_write_option (script_str2ptr (config_file),
                                  script_str2ptr (option));
@@ -2265,9 +2265,9 @@ XS (XS_weechat_api_config_write_line)
         PERL_RETURN_ERROR;
     }
     
-    config_file = SvPV (ST (0), PL_na);
-    option_name = SvPV (ST (1), PL_na);
-    value = SvPV (ST (2), PL_na);
+    config_file = SvPV_nolen (ST (0));
+    option_name = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
     
     weechat_config_write_line (script_str2ptr (config_file), option_name,
                                "%s", value);
@@ -2299,7 +2299,7 @@ XS (XS_weechat_api_config_write)
         PERL_RETURN_INT(-1);
     }
     
-    rc = weechat_config_write (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    rc = weechat_config_write (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
     
     PERL_RETURN_INT(rc);
 }
@@ -2328,7 +2328,7 @@ XS (XS_weechat_api_config_read)
         PERL_RETURN_INT(-1);
     }
     
-    rc = weechat_config_read (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    rc = weechat_config_read (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
     
     PERL_RETURN_INT(rc);
 }
@@ -2357,7 +2357,7 @@ XS (XS_weechat_api_config_reload)
         PERL_RETURN_INT(-1);
     }
     
-    rc = weechat_config_reload (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    rc = weechat_config_reload (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
     
     PERL_RETURN_INT(rc);
 }
@@ -2387,7 +2387,7 @@ XS (XS_weechat_api_config_option_free)
     
     script_api_config_option_free (weechat_perl_plugin,
                                    perl_current_script,
-                                   script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+                                   script_str2ptr (SvPV_nolen (ST (0)))); /* option */
     
     PERL_RETURN_OK;
 }
@@ -2418,7 +2418,7 @@ XS (XS_weechat_api_config_section_free_options)
     
     script_api_config_section_free_options (weechat_perl_plugin,
                                             perl_current_script,
-                                            script_str2ptr (SvPV (ST (0), PL_na))); /* section */
+                                            script_str2ptr (SvPV_nolen (ST (0)))); /* section */
     
     PERL_RETURN_OK;
 }
@@ -2448,7 +2448,7 @@ XS (XS_weechat_api_config_section_free)
     
     script_api_config_section_free (weechat_perl_plugin,
                                     perl_current_script,
-                                    script_str2ptr (SvPV (ST (0), PL_na))); /* section */
+                                    script_str2ptr (SvPV_nolen (ST (0)))); /* section */
     
     PERL_RETURN_OK;
 }
@@ -2478,7 +2478,7 @@ XS (XS_weechat_api_config_free)
     
     script_api_config_free (weechat_perl_plugin,
                             perl_current_script,
-                            script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+                            script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
     
     PERL_RETURN_OK;
 }
@@ -2507,7 +2507,7 @@ XS (XS_weechat_api_config_get)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_config_get (SvPV (ST (0), PL_na)));
+    result = script_ptr2str (weechat_config_get (SvPV_nolen (ST (0))));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -2538,7 +2538,7 @@ XS (XS_weechat_api_config_get_plugin)
     
     result = script_api_config_get_plugin (weechat_perl_plugin,
                                            perl_current_script,
-                                           SvPV (ST (0), PL_na));
+                                           SvPV_nolen (ST (0)));
     
     PERL_RETURN_STRING(result);
 }
@@ -2568,7 +2568,7 @@ XS (XS_weechat_api_config_is_set_plugin)
         PERL_RETURN_INT(0);
     }
     
-    option = SvPV (ST (0), PL_na);
+    option = SvPV_nolen (ST (0));
     
     rc = script_api_config_is_set_plugin (weechat_perl_plugin,
                                           perl_current_script,
@@ -2602,8 +2602,8 @@ XS (XS_weechat_api_config_set_plugin)
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR);
     }
     
-    option = SvPV (ST (0), PL_na);
-    value = SvPV (ST (1), PL_na);
+    option = SvPV_nolen (ST (0));
+    value = SvPV_nolen (ST (1));
     
     rc = script_api_config_set_plugin (weechat_perl_plugin,
                                        perl_current_script,
@@ -2637,8 +2637,8 @@ XS (XS_weechat_api_config_set_desc_plugin)
         PERL_RETURN_ERROR;
     }
     
-    option = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
+    option = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
     
     script_api_config_set_desc_plugin (weechat_perl_plugin,
                                        perl_current_script,
@@ -2673,7 +2673,7 @@ XS (XS_weechat_api_config_unset_plugin)
         PERL_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR);
     }
     
-    option = SvPV (ST (0), PL_na);
+    option = SvPV_nolen (ST (0));
     
     rc = script_api_config_unset_plugin (weechat_perl_plugin,
                                          perl_current_script,
@@ -2700,7 +2700,7 @@ XS (XS_weechat_api_prefix)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_prefix (SvPV (ST (0), PL_na)); /* prefix */
+    result = weechat_prefix (SvPV_nolen (ST (0))); /* prefix */
     
     PERL_RETURN_STRING(result);
 }
@@ -2723,7 +2723,7 @@ XS (XS_weechat_api_color)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_color (SvPV (ST (0), PL_na)); /* color */
+    result = weechat_color (SvPV_nolen (ST (0))); /* color */
     
     PERL_RETURN_STRING(result);
 }
@@ -2746,8 +2746,8 @@ XS (XS_weechat_api_print)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    message = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    message = SvPV_nolen (ST (1));
     
     script_api_printf (weechat_perl_plugin,
                        perl_current_script,
@@ -2782,9 +2782,9 @@ XS (XS_weechat_api_print_date_tags)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    tags = SvPV (ST (2), PL_na);
-    message = SvPV (ST (3), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    tags = SvPV_nolen (ST (2));
+    message = SvPV_nolen (ST (3));
     
     script_api_printf_date_tags (weechat_perl_plugin,
                                  perl_current_script,
@@ -2820,8 +2820,8 @@ XS (XS_weechat_api_print_y)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    message = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    message = SvPV_nolen (ST (2));
     
     script_api_printf_y (weechat_perl_plugin,
                          perl_current_script,
@@ -2857,7 +2857,7 @@ XS (XS_weechat_api_log_print)
     
     script_api_log_printf (weechat_perl_plugin,
                            perl_current_script,
-                           "%s", SvPV (ST (0), PL_na)); /* message */
+                           "%s", SvPV_nolen (ST (0))); /* message */
     
     PERL_RETURN_OK;
 }
@@ -2932,13 +2932,13 @@ XS (XS_weechat_api_hook_command)
         PERL_RETURN_EMPTY;
     }
     
-    command = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
-    args = SvPV (ST (2), PL_na);
-    args_description = SvPV (ST (3), PL_na);
-    completion = SvPV (ST (4), PL_na);
-    function = SvPV (ST (5), PL_na);
-    data = SvPV (ST (6), PL_na);
+    command = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    args = SvPV_nolen (ST (2));
+    args_description = SvPV_nolen (ST (3));
+    completion = SvPV_nolen (ST (4));
+    function = SvPV_nolen (ST (5));
+    data = SvPV_nolen (ST (6));
     
     result = script_ptr2str (script_api_hook_command (weechat_perl_plugin,
                                                       perl_current_script,
@@ -3020,9 +3020,9 @@ XS (XS_weechat_api_hook_command_run)
         PERL_RETURN_EMPTY;
     }
     
-    command = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    command = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_command_run (weechat_perl_plugin,
                                                           perl_current_script,
@@ -3105,8 +3105,8 @@ XS (XS_weechat_api_hook_timer)
                                                     SvIV (ST (1)), /* align_second */
                                                     SvIV (ST (2)), /* max_calls */
                                                     &weechat_perl_api_hook_timer_cb,
-                                                    SvPV (ST (3), PL_na), /* perl function */
-                                                    SvPV (ST (4), PL_na))); /* data */
+                                                    SvPV_nolen (ST (3)), /* perl function */
+                                                    SvPV_nolen (ST (4)))); /* data */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -3182,8 +3182,8 @@ XS (XS_weechat_api_hook_fd)
                                                  SvIV (ST (2)), /* write */
                                                  SvIV (ST (3)), /* exception */
                                                  &weechat_perl_api_hook_fd_cb,
-                                                 SvPV (ST (4), PL_na), /* perl function */
-                                                 SvPV (ST (5), PL_na))); /* data */
+                                                 SvPV_nolen (ST (4)), /* perl function */
+                                                 SvPV_nolen (ST (5)))); /* data */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -3257,9 +3257,9 @@ XS (XS_weechat_api_hook_process)
         PERL_RETURN_EMPTY;
     }
     
-    command = SvPV (ST (0), PL_na);
-    function = SvPV (ST (2), PL_na);
-    data = SvPV (ST (3), PL_na);
+    command = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (2));
+    data = SvPV_nolen (ST (3));
     
     result = script_ptr2str (script_api_hook_process (weechat_perl_plugin,
                                                       perl_current_script,
@@ -3342,11 +3342,11 @@ XS (XS_weechat_api_hook_connect)
         PERL_RETURN_EMPTY;
     }
     
-    proxy = SvPV (ST (0), PL_na);
-    address = SvPV (ST (1), PL_na);
-    local_hostname = SvPV (ST (5), PL_na);
-    function = SvPV (ST (6), PL_na);
-    data = SvPV (ST (7), PL_na);
+    proxy = SvPV_nolen (ST (0));
+    address = SvPV_nolen (ST (1));
+    local_hostname = SvPV_nolen (ST (5));
+    function = SvPV_nolen (ST (6));
+    data = SvPV_nolen (ST (7));
     
     result = script_ptr2str (script_api_hook_connect (weechat_perl_plugin,
                                                       perl_current_script,
@@ -3455,11 +3455,11 @@ XS (XS_weechat_api_hook_print)
         PERL_RETURN_EMPTY;
     }
  
-    buffer = SvPV (ST (0), PL_na);
-    tags = SvPV (ST (1), PL_na);
-    message = SvPV (ST (2), PL_na);
-    function = SvPV (ST (4), PL_na);
-    data = SvPV (ST (5), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    tags = SvPV_nolen (ST (1));
+    message = SvPV_nolen (ST (2));
+    function = SvPV_nolen (ST (4));
+    data = SvPV_nolen (ST (5));
     
     result = script_ptr2str (script_api_hook_print (weechat_perl_plugin,
                                                     perl_current_script,
@@ -3558,9 +3558,9 @@ XS (XS_weechat_api_hook_signal)
         PERL_RETURN_EMPTY;
     }
     
-    signal = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    signal = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_signal (weechat_perl_plugin,
                                                      perl_current_script,
@@ -3597,13 +3597,13 @@ XS (XS_weechat_api_hook_signal_send)
         PERL_RETURN_ERROR;
     }
     
-    signal = SvPV (ST (0), PL_na);
-    type_data = SvPV (ST (1), PL_na);
+    signal = SvPV_nolen (ST (0));
+    type_data = SvPV_nolen (ST (1));
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         weechat_hook_signal_send (signal,
                                   type_data,
-                                  SvPV (ST (2), PL_na)); /* signal_data */
+                                  SvPV_nolen (ST (2))); /* signal_data */
         PERL_RETURN_OK;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
@@ -3618,7 +3618,7 @@ XS (XS_weechat_api_hook_signal_send)
     {
         weechat_hook_signal_send (signal,
                                   type_data,
-                                  script_str2ptr (SvPV (ST (2), PL_na))); /* signal_data */
+                                  script_str2ptr (SvPV_nolen (ST (2)))); /* signal_data */
         PERL_RETURN_OK;
     }
     
@@ -3689,9 +3689,9 @@ XS (XS_weechat_api_hook_hsignal)
         PERL_RETURN_EMPTY;
     }
     
-    signal = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    signal = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_hsignal (weechat_perl_plugin,
                                                       perl_current_script,
@@ -3728,7 +3728,7 @@ XS (XS_weechat_api_hook_hsignal_send)
         PERL_RETURN_ERROR;
     }
     
-    signal = SvPV (ST (0), PL_na);
+    signal = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
     
@@ -3803,9 +3803,9 @@ XS (XS_weechat_api_hook_config)
         PERL_RETURN_EMPTY;
     }
     
-    option = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    option = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_config (weechat_perl_plugin,
                                                      perl_current_script,
@@ -3887,10 +3887,10 @@ XS (XS_weechat_api_hook_completion)
         PERL_RETURN_EMPTY;
     }
     
-    completion = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
-    function = SvPV (ST (2), PL_na);
-    data = SvPV (ST (3), PL_na);
+    completion = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    function = SvPV_nolen (ST (2));
+    data = SvPV_nolen (ST (3));
     
     result = script_ptr2str (script_api_hook_completion (weechat_perl_plugin,
                                                          perl_current_script,
@@ -3927,9 +3927,9 @@ XS (XS_weechat_api_hook_completion_list_add)
         PERL_RETURN_ERROR;
     }
     
-    completion = SvPV (ST (0), PL_na);
-    word = SvPV (ST (1), PL_na);
-    where = SvPV (ST (3), PL_na);
+    completion = SvPV_nolen (ST (0));
+    word = SvPV_nolen (ST (1));
+    where = SvPV_nolen (ST (3));
     
     weechat_hook_completion_list_add (script_str2ptr (completion),
                                       word,
@@ -3993,9 +3993,9 @@ XS (XS_weechat_api_hook_modifier)
         PERL_RETURN_EMPTY;
     }
     
-    modifier = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    modifier = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_modifier (weechat_perl_plugin,
                                                        perl_current_script,
@@ -4031,9 +4031,9 @@ XS (XS_weechat_api_hook_modifier_exec)
         PERL_RETURN_EMPTY;
     }
     
-    modifier = SvPV (ST (0), PL_na);
-    modifier_data = SvPV (ST (1), PL_na);
-    string = SvPV (ST (2), PL_na);
+    modifier = SvPV_nolen (ST (0));
+    modifier_data = SvPV_nolen (ST (1));
+    string = SvPV_nolen (ST (2));
     
     result = weechat_hook_modifier_exec (modifier, modifier_data, string);
     
@@ -4093,11 +4093,11 @@ XS (XS_weechat_api_hook_info)
         PERL_RETURN_EMPTY;
     }
     
-    info_name = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
-    args_description = SvPV (ST (2), PL_na);
-    function = SvPV (ST (3), PL_na);
-    data = SvPV (ST (4), PL_na);
+    info_name = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    args_description = SvPV_nolen (ST (2));
+    function = SvPV_nolen (ST (3));
+    data = SvPV_nolen (ST (4));
     
     result = script_ptr2str (script_api_hook_info (weechat_perl_plugin,
                                                    perl_current_script,
@@ -4165,12 +4165,12 @@ XS (XS_weechat_api_hook_info_hashtable)
         PERL_RETURN_EMPTY;
     }
     
-    info_name = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
-    args_description = SvPV (ST (2), PL_na);
-    output_description = SvPV (ST (3), PL_na);
-    function = SvPV (ST (4), PL_na);
-    data = SvPV (ST (5), PL_na);
+    info_name = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    args_description = SvPV_nolen (ST (2));
+    output_description = SvPV_nolen (ST (3));
+    function = SvPV_nolen (ST (4));
+    data = SvPV_nolen (ST (5));
     
     result = script_ptr2str (script_api_hook_info_hashtable (weechat_perl_plugin,
                                                              perl_current_script,
@@ -4246,12 +4246,12 @@ XS (XS_weechat_api_hook_infolist)
         PERL_RETURN_EMPTY;
     }
     
-    infolist_name = SvPV (ST (0), PL_na);
-    description = SvPV (ST (1), PL_na);
-    pointer_description = SvPV (ST (2), PL_na);
-    args_description = SvPV (ST (3), PL_na);
-    function = SvPV (ST (4), PL_na);
-    data = SvPV (ST (5), PL_na);
+    infolist_name = SvPV_nolen (ST (0));
+    description = SvPV_nolen (ST (1));
+    pointer_description = SvPV_nolen (ST (2));
+    args_description = SvPV_nolen (ST (3));
+    function = SvPV_nolen (ST (4));
+    data = SvPV_nolen (ST (5));
     
     result = script_ptr2str (script_api_hook_infolist (weechat_perl_plugin,
                                                        perl_current_script,
@@ -4318,9 +4318,9 @@ XS (XS_weechat_api_hook_focus)
         PERL_RETURN_EMPTY;
     }
     
-    area = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    area = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_hook_focus (weechat_perl_plugin,
                                                     perl_current_script,
@@ -4357,7 +4357,7 @@ XS (XS_weechat_api_unhook)
     
     script_api_unhook (weechat_perl_plugin,
                        perl_current_script,
-                       script_str2ptr (SvPV (ST (0), PL_na))); /* hook */
+                       script_str2ptr (SvPV_nolen (ST (0)))); /* hook */
     
     PERL_RETURN_OK;
 }
@@ -4490,11 +4490,11 @@ XS (XS_weechat_api_buffer_new)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
-    function_input = SvPV (ST (1), PL_na);
-    data_input = SvPV (ST (2), PL_na);
-    function_close = SvPV (ST (3), PL_na);
-    data_close = SvPV (ST (4), PL_na);
+    name = SvPV_nolen (ST (0));
+    function_input = SvPV_nolen (ST (1));
+    data_input = SvPV_nolen (ST (2));
+    function_close = SvPV_nolen (ST (3));
+    data_close = SvPV_nolen (ST (4));
     
     result = script_ptr2str (script_api_buffer_new (weechat_perl_plugin,
                                                     perl_current_script,
@@ -4533,8 +4533,8 @@ XS (XS_weechat_api_buffer_search)
         PERL_RETURN_EMPTY;
     }
     
-    plugin = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    plugin = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_buffer_search (plugin, name));
     
@@ -4612,7 +4612,7 @@ XS (XS_weechat_api_buffer_clear)
         PERL_RETURN_ERROR;
     }
     
-    weechat_buffer_clear (script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
+    weechat_buffer_clear (script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
     
     PERL_RETURN_OK;
 }
@@ -4642,7 +4642,7 @@ XS (XS_weechat_api_buffer_close)
     
     script_api_buffer_close (weechat_perl_plugin,
                              perl_current_script,
-                             script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
+                             script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
     
     PERL_RETURN_OK;
 }
@@ -4670,8 +4670,8 @@ XS (XS_weechat_api_buffer_merge)
         PERL_RETURN_ERROR;
     }
     
-    weechat_buffer_merge (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
-                          script_str2ptr (SvPV (ST (1), PL_na))); /* target_buffer */
+    weechat_buffer_merge (script_str2ptr (SvPV_nolen (ST (0))), /* buffer */
+                          script_str2ptr (SvPV_nolen (ST (1)))); /* target_buffer */
     
     PERL_RETURN_OK;
 }
@@ -4699,7 +4699,7 @@ XS (XS_weechat_api_buffer_unmerge)
         PERL_RETURN_ERROR;
     }
     
-    weechat_buffer_unmerge (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
+    weechat_buffer_unmerge (script_str2ptr (SvPV_nolen (ST (0))), /* buffer */
                             SvIV (ST (1))); /* number */
     
     PERL_RETURN_OK;
@@ -4730,8 +4730,8 @@ XS (XS_weechat_api_buffer_get_integer)
         PERL_RETURN_INT(-1);
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     value = weechat_buffer_get_integer (script_str2ptr (buffer), property);
     
@@ -4763,8 +4763,8 @@ XS (XS_weechat_api_buffer_get_string)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     result = weechat_buffer_get_string (script_str2ptr (buffer), property);
     
@@ -4795,8 +4795,8 @@ XS (XS_weechat_api_buffer_get_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
                                                          property));
@@ -4828,9 +4828,9 @@ XS (XS_weechat_api_buffer_set)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
-    value = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
     
     weechat_buffer_set (script_str2ptr (buffer), property, value);
     
@@ -4862,8 +4862,8 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    string = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    string = SvPV_nolen (ST (1));
     
     result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
     
@@ -4895,8 +4895,8 @@ XS (XS_weechat_api_buffer_match_list)
         PERL_RETURN_INT(0);
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    string = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    string = SvPV_nolen (ST (1));
     
     value = weechat_buffer_match_list (script_str2ptr (buffer), string);
     
@@ -4951,7 +4951,7 @@ XS (XS_weechat_api_window_search_with_buffer)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (SvPV (ST (0), PL_na))));
+    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (SvPV_nolen (ST (0)))));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -4982,8 +4982,8 @@ XS (XS_weechat_api_window_get_integer)
         PERL_RETURN_INT(-1);
     }
     
-    window = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    window = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     value = weechat_window_get_integer (script_str2ptr (window), property);
     
@@ -5015,8 +5015,8 @@ XS (XS_weechat_api_window_get_string)
         PERL_RETURN_EMPTY;
     }
     
-    window = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    window = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     result = weechat_window_get_string (script_str2ptr (window), property);
     
@@ -5047,8 +5047,8 @@ XS (XS_weechat_api_window_get_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    window = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    window = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
                                                          property));
@@ -5079,7 +5079,7 @@ XS (XS_weechat_api_window_set_title)
         PERL_RETURN_ERROR;
     }
     
-    weechat_window_set_title (SvPV (ST (0), PL_na)); /* title */
+    weechat_window_set_title (SvPV_nolen (ST (0))); /* title */
     
     PERL_RETURN_OK;
 }
@@ -5108,10 +5108,10 @@ XS (XS_weechat_api_nicklist_add_group)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    parent_group = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
-    color = SvPV (ST (3), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    parent_group = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+    color = SvPV_nolen (ST (3));
     
     result = script_ptr2str (weechat_nicklist_add_group (script_str2ptr (buffer),
                                                          script_str2ptr (parent_group),
@@ -5146,9 +5146,9 @@ XS (XS_weechat_api_nicklist_search_group)
         PERL_RETURN_EMPTY;
     }
 
-    buffer = SvPV (ST (0), PL_na);
-    from_group = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    from_group = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_nicklist_search_group (script_str2ptr (buffer),
                                                             script_str2ptr (from_group),
@@ -5181,12 +5181,12 @@ XS (XS_weechat_api_nicklist_add_nick)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
-    color = SvPV (ST (3), PL_na);
-    prefix = SvPV(ST (4), PL_na);
-    prefix_color = SvPV (ST (5), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+    color = SvPV_nolen (ST (3));
+    prefix = SvPV_nolen (ST (4));
+    prefix_color = SvPV_nolen (ST (5));
     
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
                                                         script_str2ptr (group),
@@ -5223,9 +5223,9 @@ XS (XS_weechat_api_nicklist_search_nick)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    from_group = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    from_group = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_nicklist_search_nick (script_str2ptr (buffer),
                                                            script_str2ptr (from_group),
@@ -5258,8 +5258,8 @@ XS (XS_weechat_api_nicklist_remove_group)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
     
     weechat_nicklist_remove_group (script_str2ptr (buffer),
                                    script_str2ptr (group));
@@ -5291,8 +5291,8 @@ XS (XS_weechat_api_nicklist_remove_nick)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    nick = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    nick = SvPV_nolen (ST (1));
     
     weechat_nicklist_remove_nick (script_str2ptr (buffer),
                                   script_str2ptr (nick));
@@ -5323,7 +5323,7 @@ XS (XS_weechat_api_nicklist_remove_all)
         PERL_RETURN_ERROR;
     }
     
-    weechat_nicklist_remove_all (script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
+    weechat_nicklist_remove_all (script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
     
     PERL_RETURN_OK;
 }
@@ -5353,9 +5353,9 @@ XS (XS_weechat_api_nicklist_group_get_integer)
         PERL_RETURN_INT(-1);
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     value = weechat_nicklist_group_get_integer (script_str2ptr (buffer),
                                                 script_str2ptr (group),
@@ -5389,9 +5389,9 @@ XS (XS_weechat_api_nicklist_group_get_string)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     result = weechat_nicklist_group_get_string (script_str2ptr (buffer),
                                                 script_str2ptr (group),
@@ -5424,9 +5424,9 @@ XS (XS_weechat_api_nicklist_group_get_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (buffer),
                                                                  script_str2ptr (group),
@@ -5459,10 +5459,10 @@ XS (XS_weechat_api_nicklist_group_set)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    group = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
-    value = SvPV (ST (3), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    group = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
+    value = SvPV_nolen (ST (3));
     
     weechat_nicklist_group_set (script_str2ptr (buffer),
                                 script_str2ptr (group),
@@ -5497,9 +5497,9 @@ XS (XS_weechat_api_nicklist_nick_get_integer)
         PERL_RETURN_INT(-1);
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    nick = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    nick = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     value = weechat_nicklist_nick_get_integer (script_str2ptr (buffer),
                                                script_str2ptr (nick),
@@ -5533,9 +5533,9 @@ XS (XS_weechat_api_nicklist_nick_get_string)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    nick = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    nick = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     result = weechat_nicklist_nick_get_string (script_str2ptr (buffer),
                                                script_str2ptr (nick),
@@ -5568,9 +5568,9 @@ XS (XS_weechat_api_nicklist_nick_get_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    nick = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    nick = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (buffer),
                                                                 script_str2ptr (nick),
@@ -5603,10 +5603,10 @@ XS (XS_weechat_api_nicklist_nick_set)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    nick = SvPV (ST (1), PL_na);
-    property = SvPV (ST (2), PL_na);
-    value = SvPV (ST (3), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    nick = SvPV_nolen (ST (1));
+    property = SvPV_nolen (ST (2));
+    value = SvPV_nolen (ST (3));
     
     weechat_nicklist_nick_set (script_str2ptr (buffer),
                                script_str2ptr (nick),
@@ -5640,7 +5640,7 @@ XS (XS_weechat_api_bar_item_search)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_bar_item_search (SvPV (ST (0), PL_na))); /* name */
+    result = script_ptr2str (weechat_bar_item_search (SvPV_nolen (ST (0)))); /* name */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -5705,9 +5705,9 @@ XS (XS_weechat_api_bar_item_new)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    name = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     result = script_ptr2str (script_api_bar_item_new (weechat_perl_plugin,
                                                       perl_current_script,
@@ -5742,7 +5742,7 @@ XS (XS_weechat_api_bar_item_update)
         PERL_RETURN_ERROR;
     }
     
-    weechat_bar_item_update (SvPV (ST (0), PL_na)); /* name */
+    weechat_bar_item_update (SvPV_nolen (ST (0))); /* name */
     
     PERL_RETURN_OK;
 }
@@ -5772,7 +5772,7 @@ XS (XS_weechat_api_bar_item_remove)
     
     script_api_bar_item_remove (weechat_perl_plugin,
                                 perl_current_script,
-                                script_str2ptr (SvPV (ST (0), PL_na))); /* item */
+                                script_str2ptr (SvPV_nolen (ST (0)))); /* item */
     
     PERL_RETURN_OK;
 }
@@ -5801,7 +5801,7 @@ XS (XS_weechat_api_bar_search)
         PERL_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_bar_search (SvPV (ST (0), PL_na))); /* name */
+    result = script_ptr2str (weechat_bar_search (SvPV_nolen (ST (0)))); /* name */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -5832,21 +5832,21 @@ XS (XS_weechat_api_bar_new)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
-    hidden = SvPV (ST (1), PL_na);
-    priority = SvPV (ST (2), PL_na);
-    type = SvPV (ST (3), PL_na);
-    conditions = SvPV (ST (4), PL_na);
-    position = SvPV (ST (5), PL_na);
-    filling_top_bottom = SvPV (ST (6), PL_na);
-    filling_left_right = SvPV (ST (7), PL_na);
-    size = SvPV (ST (8), PL_na);
-    size_max = SvPV (ST (9), PL_na);
-    color_fg = SvPV (ST (10), PL_na);
-    color_delim = SvPV (ST (11), PL_na);
-    color_bg = SvPV (ST (12), PL_na);
-    separator = SvPV (ST (13), PL_na);
-    bar_items = SvPV (ST (14), PL_na);
+    name = SvPV_nolen (ST (0));
+    hidden = SvPV_nolen (ST (1));
+    priority = SvPV_nolen (ST (2));
+    type = SvPV_nolen (ST (3));
+    conditions = SvPV_nolen (ST (4));
+    position = SvPV_nolen (ST (5));
+    filling_top_bottom = SvPV_nolen (ST (6));
+    filling_left_right = SvPV_nolen (ST (7));
+    size = SvPV_nolen (ST (8));
+    size_max = SvPV_nolen (ST (9));
+    color_fg = SvPV_nolen (ST (10));
+    color_delim = SvPV_nolen (ST (11));
+    color_bg = SvPV_nolen (ST (12));
+    separator = SvPV_nolen (ST (13));
+    bar_items = SvPV_nolen (ST (14));
     
     result = script_ptr2str (weechat_bar_new (name,
                                               hidden,
@@ -5891,9 +5891,9 @@ XS (XS_weechat_api_bar_set)
         PERL_RETURN_ERROR;
     }
     
-    bar = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
-    value = SvPV (ST (2), PL_na);
+    bar = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
     
     weechat_bar_set (script_str2ptr (bar), property, value);
     
@@ -5923,7 +5923,7 @@ XS (XS_weechat_api_bar_update)
         PERL_RETURN_ERROR;
     }
     
-    weechat_bar_update (SvPV (ST (0), PL_na)); /* name */
+    weechat_bar_update (SvPV_nolen (ST (0))); /* name */
     
     PERL_RETURN_OK;
 }
@@ -5951,7 +5951,7 @@ XS (XS_weechat_api_bar_remove)
         PERL_RETURN_ERROR;
     }
     
-    weechat_bar_remove (script_str2ptr (SvPV (ST (0), PL_na))); /* bar */
+    weechat_bar_remove (script_str2ptr (SvPV_nolen (ST (0)))); /* bar */
     
     PERL_RETURN_OK;
 }
@@ -5980,8 +5980,8 @@ XS (XS_weechat_api_command)
         PERL_RETURN_ERROR;
     }
     
-    buffer = SvPV (ST (0), PL_na);
-    command = SvPV (ST (1), PL_na);
+    buffer = SvPV_nolen (ST (0));
+    command = SvPV_nolen (ST (1));
     
     script_api_command (weechat_perl_plugin,
                         perl_current_script,
@@ -6016,8 +6016,8 @@ XS (XS_weechat_api_info_get)
         PERL_RETURN_EMPTY;
     }
     
-    info_name = SvPV (ST (0), PL_na);
-    arguments = SvPV (ST (1), PL_na);
+    info_name = SvPV_nolen (ST (0));
+    arguments = SvPV_nolen (ST (1));
     
     result = weechat_info_get (info_name, arguments);
     
@@ -6050,7 +6050,7 @@ XS (XS_weechat_api_info_get_hashtable)
         PERL_RETURN_EMPTY;
     }
     
-    info_name = SvPV (ST (0), PL_na);
+    info_name = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
     
@@ -6113,7 +6113,7 @@ XS (XS_weechat_api_infolist_new_item)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
+    infolist = SvPV_nolen (ST (0));
     
     result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (infolist)));
     
@@ -6144,8 +6144,8 @@ XS (XS_weechat_api_infolist_new_var_integer)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_infolist_new_var_integer (script_str2ptr (infolist),
                                                                name,
@@ -6178,9 +6178,9 @@ XS (XS_weechat_api_infolist_new_var_string)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
-    value = SvPV (ST (2), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (infolist),
                                                               name,
@@ -6213,9 +6213,9 @@ XS (XS_weechat_api_infolist_new_var_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
-    value = SvPV (ST (2), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (infolist),
                                                                name,
@@ -6248,8 +6248,8 @@ XS (XS_weechat_api_infolist_new_var_time)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_infolist_new_var_time (script_str2ptr (infolist),
                                                             name,
@@ -6282,9 +6282,9 @@ XS (XS_weechat_api_infolist_get)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    arguments = SvPV (ST (2), PL_na);
+    name = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    arguments = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_infolist_get (name,
                                                    script_str2ptr (pointer),
@@ -6317,7 +6317,7 @@ XS (XS_weechat_api_infolist_next)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_infolist_next (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    value = weechat_infolist_next (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
     
     PERL_RETURN_INT(value);
 }
@@ -6346,7 +6346,7 @@ XS (XS_weechat_api_infolist_prev)
         PERL_RETURN_INT(0);
     }
     
-    value = weechat_infolist_prev (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    value = weechat_infolist_prev (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
     
     PERL_RETURN_INT(value);
 }
@@ -6375,7 +6375,7 @@ XS (XS_weechat_api_infolist_reset_item_cursor)
         PERL_RETURN_ERROR;
     }
     
-    weechat_infolist_reset_item_cursor (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    weechat_infolist_reset_item_cursor (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
     
     PERL_RETURN_OK;
 }
@@ -6404,7 +6404,7 @@ XS (XS_weechat_api_infolist_fields)
         PERL_RETURN_EMPTY;
     }
     
-    result = weechat_infolist_fields (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    result = weechat_infolist_fields (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
     
     PERL_RETURN_STRING(result);
 }
@@ -6434,8 +6434,8 @@ XS (XS_weechat_api_infolist_integer)
         PERL_RETURN_INT(0);
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    variable = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    variable = SvPV_nolen (ST (1));
     
     value = weechat_infolist_integer (script_str2ptr (infolist), variable);
     
@@ -6467,8 +6467,8 @@ XS (XS_weechat_api_infolist_string)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    variable = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    variable = SvPV_nolen (ST (1));
     
     result = weechat_infolist_string (script_str2ptr (infolist), variable);
     
@@ -6500,8 +6500,8 @@ XS (XS_weechat_api_infolist_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    variable = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    variable = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_infolist_pointer (script_str2ptr (infolist), variable));
     
@@ -6533,8 +6533,8 @@ XS (XS_weechat_api_infolist_time)
         PERL_RETURN_EMPTY;
     }
     
-    infolist = SvPV (ST (0), PL_na);
-    variable = SvPV (ST (1), PL_na);
+    infolist = SvPV_nolen (ST (0));
+    variable = SvPV_nolen (ST (1));
     time = weechat_infolist_time (script_str2ptr (infolist), variable);
     strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
     result = strdup (timebuffer);
@@ -6565,7 +6565,7 @@ XS (XS_weechat_api_infolist_free)
         PERL_RETURN_ERROR;
     }
     
-    weechat_infolist_free (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    weechat_infolist_free (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
     
     PERL_RETURN_OK;
 }
@@ -6594,7 +6594,7 @@ XS (XS_weechat_api_hdata_get)
         PERL_RETURN_EMPTY;
     }
     
-    name = SvPV (ST (0), PL_na);
+    name = SvPV_nolen (ST (0));
     
     result = script_ptr2str (weechat_hdata_get (name));
     
@@ -6626,8 +6626,8 @@ XS (XS_weechat_api_hdata_get_var_offset)
         PERL_RETURN_INT(0);
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     value = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
     
@@ -6659,8 +6659,8 @@ XS (XS_weechat_api_hdata_get_var_type_string)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
     
@@ -6692,8 +6692,8 @@ XS (XS_weechat_api_hdata_get_var_hdata)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
     
@@ -6725,8 +6725,8 @@ XS (XS_weechat_api_hdata_get_list)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    name = SvPV_nolen (ST (1));
     
     result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
                                                      name));
@@ -6759,8 +6759,8 @@ XS (XS_weechat_api_hdata_move)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
     count = SvIV(ST (2));
     
     result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
@@ -6796,9 +6796,9 @@ XS (XS_weechat_api_hdata_integer)
         PERL_RETURN_INT(0);
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     value = weechat_hdata_integer (script_str2ptr (hdata),
                                    script_str2ptr (pointer),
@@ -6832,9 +6832,9 @@ XS (XS_weechat_api_hdata_long)
         PERL_RETURN_LONG(0);
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     value = weechat_hdata_long (script_str2ptr (hdata),
                                 script_str2ptr (pointer),
@@ -6869,9 +6869,9 @@ XS (XS_weechat_api_hdata_string)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     result = weechat_hdata_string (script_str2ptr (hdata),
                                    script_str2ptr (pointer),
@@ -6906,9 +6906,9 @@ XS (XS_weechat_api_hdata_pointer)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
                                                     script_str2ptr (pointer),
@@ -6942,9 +6942,9 @@ XS (XS_weechat_api_hdata_time)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    pointer = SvPV (ST (1), PL_na);
-    name = SvPV (ST (2), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
     
     time = weechat_hdata_time (script_str2ptr (hdata),
                                script_str2ptr (pointer),
@@ -6980,8 +6980,8 @@ XS (XS_weechat_api_hdata_get_string)
         PERL_RETURN_EMPTY;
     }
     
-    hdata = SvPV (ST (0), PL_na);
-    property = SvPV (ST (1), PL_na);
+    hdata = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
     
     result = weechat_hdata_get_string (script_str2ptr (hdata), property);
     
@@ -7012,7 +7012,7 @@ XS (XS_weechat_api_upgrade_new)
         PERL_RETURN_EMPTY;
     }
     
-    filename = SvPV (ST (0), PL_na);
+    filename = SvPV_nolen (ST (0));
     
     result = script_ptr2str (weechat_upgrade_new (filename,
                                                   SvIV (ST (1)))); /* write */
@@ -7045,8 +7045,8 @@ XS (XS_weechat_api_upgrade_write_object)
         PERL_RETURN_INT(0);
     }
 
-    upgrade_file = SvPV (ST (0), PL_na);
-    infolist = SvPV (ST (2), PL_na);
+    upgrade_file = SvPV_nolen (ST (0));
+    infolist = SvPV_nolen (ST (2));
     
     rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
                                        SvIV (ST (1)), /* object_id */
@@ -7129,9 +7129,9 @@ XS (XS_weechat_api_upgrade_read)
         PERL_RETURN_INT(0);
     }
     
-    upgrade_file = SvPV (ST (0), PL_na);
-    function = SvPV (ST (1), PL_na);
-    data = SvPV (ST (2), PL_na);
+    upgrade_file = SvPV_nolen (ST (0));
+    function = SvPV_nolen (ST (1));
+    data = SvPV_nolen (ST (2));
     
     rc = script_api_upgrade_read (weechat_perl_plugin,
                                   perl_current_script,
@@ -7167,7 +7167,7 @@ XS (XS_weechat_api_upgrade_close)
         PERL_RETURN_ERROR;
     }
     
-    upgrade_file = SvPV (ST (0), PL_na);
+    upgrade_file = SvPV_nolen (ST (0));
     
     weechat_upgrade_close (script_str2ptr (upgrade_file));
     
