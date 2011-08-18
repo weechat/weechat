@@ -49,7 +49,7 @@
     snprintf (str_value, sizeof (str_value), "%d", __int);              \
     hashtable_set (hashtable, __name, str_value);
 #define FOCUS_TIME(__name, __time)                                      \
-    snprintf (str_value, sizeof (str_value), "%ld", __time);            \
+    snprintf (str_value, sizeof (str_value), "%ld", (long)__time);      \
     hashtable_set (hashtable, __name, str_value);
 #define FOCUS_PTR(__name, __pointer)                                    \
     if (__pointer)                                                      \
