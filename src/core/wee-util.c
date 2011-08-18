@@ -422,7 +422,7 @@ util_version_number (const char *version)
             {
                 if (ptr_item[0] == '-')
                     break;
-                if (isdigit (ptr_item[0]))
+                if (isdigit ((unsigned char)ptr_item[0]))
                 {
                     buf[index_buf] = ptr_item[0];
                     index_buf++;

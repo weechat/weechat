@@ -541,8 +541,8 @@ string_convert_hex_chars (const char *string)
                         break;
                     case 'x':
                     case 'X':
-                        if (isxdigit (string[1])
-                            && isxdigit (string[2]))
+                        if (isxdigit ((unsigned char)string[1])
+                            && isxdigit ((unsigned char)string[2]))
                         {
                             snprintf (hex_str, sizeof (hex_str),
                                       "0x%c%c", string[1], string[2]);

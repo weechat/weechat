@@ -1048,7 +1048,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         
         /* search number and letter */
         pos = scroll;
-        while (pos && pos[0] && isdigit (pos[0]))
+        while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
         {
             pos++;
         }
@@ -1275,7 +1275,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
         
         /* search number and percentage */
         pos = scroll;
-        while (pos && pos[0] && isdigit (pos[0]))
+        while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
         {
             pos++;
         }

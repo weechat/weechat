@@ -701,7 +701,7 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            if (isdigit (argv_eol[2][0]))
+            if (isdigit ((unsigned char)argv_eol[2][0]))
             {
                 number1 = -1;
                 number2 = -1;
@@ -4799,7 +4799,7 @@ COMMAND_CALLBACK(wait)
     if (argc > 2)
     {
         pos = argv[1];
-        while (pos[0] && isdigit (pos[0]))
+        while (pos[0] && isdigit ((unsigned char)pos[0]))
         {
             pos++;
         }

@@ -355,7 +355,7 @@ gui_chat_get_time_string (time_t date)
     i = 0;
     while (text_time[i])
     {
-        if (isdigit (text_time[i]))
+        if (isdigit ((unsigned char)text_time[i]))
         {
             if (time_first_digit == -1)
                 time_first_digit = i;
@@ -393,7 +393,7 @@ gui_chat_get_time_string (time_t date)
             }
             else
             {
-                if (isdigit (text_time[i]))
+                if (isdigit ((unsigned char)text_time[i]))
                 {
                     if (last_color != GUI_COLOR_CHAT_TIME)
                     {

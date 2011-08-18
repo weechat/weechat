@@ -164,7 +164,7 @@ relay_server_sock_cb (void *data, int fd)
 {
     struct t_relay_server *server;
     struct sockaddr_in client_addr;
-    unsigned int client_length;
+    socklen_t client_length;
     int client_fd;
     char ipv4_address[INET_ADDRSTRLEN + 1], *ptr_address;
     

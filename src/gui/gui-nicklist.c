@@ -615,7 +615,7 @@ gui_nicklist_get_group_start (const char *name)
     const char *ptr_name;
     
     ptr_name = name;
-    while (isdigit (ptr_name[0]))
+    while (isdigit ((unsigned char)ptr_name[0]))
     {
         if (ptr_name[0] == '|')
             break;

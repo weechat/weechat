@@ -1148,7 +1148,7 @@ logger_line_log_level (int tags_count, const char **tags)
         /* log level for line? return it */
         if (strncmp (tags[i], "log", 3) == 0)
         {
-            if (isdigit (tags[i][3]))
+            if (isdigit ((unsigned char)tags[i][3]))
             {
                 return (tags[i][3] - '0');
             }

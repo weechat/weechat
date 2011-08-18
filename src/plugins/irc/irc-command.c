@@ -866,7 +866,7 @@ int
 irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char *pos, *irc_cmd, str_time[512];
+    char *irc_cmd, str_time[512];
     struct timeval tv;
     
     IRC_BUFFER_GET_SERVER(buffer);
@@ -881,12 +881,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
         if (!irc_cmd)
             return WEECHAT_RC_ERROR;
         
-        pos = irc_cmd;
-        while (pos[0])
-        {
-            pos[0] = toupper (pos[0]);
-            pos++;
-        }
+        weechat_string_toupper (irc_cmd);
         
         if ((weechat_strcasecmp (argv[2], "ping") == 0) && !argv_eol[3])
         {
