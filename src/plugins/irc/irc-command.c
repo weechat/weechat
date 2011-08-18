@@ -887,7 +887,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
         {
             gettimeofday (&tv, NULL);
             snprintf (str_time, sizeof (str_time), "%ld %ld",
-                      tv.tv_sec, tv.tv_usec);
+                      (long)tv.tv_sec, (long)tv.tv_usec);
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "PRIVMSG %s :\01PING %s\01",
                               argv[1], str_time);
