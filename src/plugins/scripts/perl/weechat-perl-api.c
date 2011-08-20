@@ -2683,6 +2683,77 @@ XS (XS_weechat_api_config_unset_plugin)
 }
 
 /*
+ * weechat::key_bind: bind key(s)
+ */
+
+XS (XS_weechat_api_key_bind)
+{
+    char *context;
+    struct t_hashtable *hashtable;
+    int num_keys;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "key_bind");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "key_bind");
+        PERL_RETURN_INT(0);
+    }
+    
+    context = SvPV_nolen (ST (0));
+    hashtable = weechat_perl_hash_to_hashtable (ST (1),
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    num_keys = weechat_key_bind (context, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    PERL_RETURN_INT(num_keys);
+}
+
+/*
+ * weechat::key_unbind: unbind key(s)
+ */
+
+XS (XS_weechat_api_key_unbind)
+{
+    char *context, *key;
+    int num_keys;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script || !perl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PERL_CURRENT_SCRIPT_NAME, "key_unbind");
+        PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PERL_CURRENT_SCRIPT_NAME, "key_unbind");
+        PERL_RETURN_INT(0);
+    }
+    
+    context = SvPV_nolen (ST (0));
+    key = SvPV_nolen (ST (1));
+    
+    num_keys = weechat_key_unbind (context, key);
+    
+    PERL_RETURN_INT(num_keys);
+}
+
+/*
  * weechat::prefix: get a prefix, used for display
  */
 
@@ -7254,6 +7325,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_set_plugin", XS_weechat_api_config_set_plugin, "weechat");
     newXS ("weechat::config_set_desc_plugin", XS_weechat_api_config_set_desc_plugin, "weechat");
     newXS ("weechat::config_unset_plugin", XS_weechat_api_config_unset_plugin, "weechat");
+    newXS ("weechat::key_bind", XS_weechat_api_key_bind, "weechat");
+    newXS ("weechat::key_unbind", XS_weechat_api_key_unbind, "weechat");
     newXS ("weechat::prefix", XS_weechat_api_prefix, "weechat");
     newXS ("weechat::color", XS_weechat_api_color, "weechat");
     newXS ("weechat::print", XS_weechat_api_print, "weechat");

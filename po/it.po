@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-17 15:07+0200\n"
+"POT-Creation-Date: 2011-08-20 08:17+0200\n"
 "PO-Revision-Date: 2011-08-16 17:48+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -396,10 +396,6 @@ msgstr "%sErrore: impossibile associare il tasto \"%s\""
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Il tasto \"%s\" ha già un valore predefinito"
-
-#, c-format
-msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Tasto \"%s\" non associato (contesto: \"%s\")"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -1464,6 +1460,7 @@ msgstr ""
 "unbindctxt <contesto> <chiave> || reset <tasto> || resetctxt <contesto> "
 "<tasto> || resetall -yes [<contesto>] || missing [<contesto>]"
 
+#, fuzzy
 msgid ""
 "       list: list all current keys (without argument, this list is "
 "displayed)\n"
@@ -1502,6 +1499,8 @@ msgid ""
 "A special value for command wit format \"hsignal:name\" can be used for "
 "context mouse, this will send the hsignal \"name\" with the focus hashtable "
 "as argument.\n"
+"Another special value \"-\" can be used to disable key (it will be ignored "
+"when looking for keys).\n"
 "\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
@@ -3375,11 +3374,8 @@ msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Nuova associazione tasti (contesto \"%s\"): %s%s => %s%s"
 
 #, c-format
-msgid "Error: unable to bind key \"%s\""
-msgstr "Errore: impossibile associare il testo \"%s\""
-
-msgid "Error: not enough memory for key binding"
-msgstr "Errore: memoria non sufficiente per l'associazione tasti"
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr "Tasto \"%s\" non associato (contesto: \"%s\")"
 
 msgid "Hashtable focus:"
 msgstr "Tabella hash del focus:"
@@ -8168,6 +8164,12 @@ msgstr "Variabili"
 
 msgid "Lists"
 msgstr "Liste"
+
+#~ msgid "Error: unable to bind key \"%s\""
+#~ msgstr "Errore: impossibile associare il testo \"%s\""
+
+#~ msgid "Error: not enough memory for key binding"
+#~ msgstr "Errore: memoria non sufficiente per l'associazione tasti"
 
 #, fuzzy
 #~ msgid "%sError: incorrect interval"

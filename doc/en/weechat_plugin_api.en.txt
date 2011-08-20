@@ -5679,6 +5679,127 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----------------------------------------
 
+[[key_bindings]]
+Key bindings
+~~~~~~~~~~~~
+
+Functions for key bindings.
+
+weechat_key_bind
+^^^^^^^^^^^^^^^^
+
+Add new key bindings.
+
+[NOTE]
+Unlike command `/key bind`, this function will never change an existing key
+binding, only new keys are created. To remove a key binding, use
+<<_weechat_key_unbind,weechat_key_unbind>>.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_key_bind (const char *context, struct t_hashtable *keys);
+----------------------------------------
+
+Arguments:
+
+* 'context': context for keys:
+** 'default': default context (common actions)
+** 'search': search context (when searching text in buffer)
+** 'cursor': free movement of cursor on screen
+** 'mouse': keys for mouse events
+* 'keys': hashtable with key bindings
+
+Return value:
+
+* number of key bindings added
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_hashtable *keys = weechat_hashtable_new (8,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  NULL,
+                                                  NULL);
+if (keys)
+{
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):button1", "hsignal:test_mouse");
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):wheelup", "/mycommand up");
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):wheeldown", "/mycommand down");
+    weechat_key_bind ("mouse", keys);
+    weechat_hashtable_free (keys);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+num_keys = weechat.key_bind(context, keys)
+
+# example
+keys = { "@chat(python.test):button1": "hsignal:test_mouse",
+         "@chat(python.test):wheelup": "/mycommand up",
+         "@chat(python.test):wheeldown": "/mycommand down" }
+weechat.key_bind("mouse", keys)
+----------------------------------------
+
+weechat_key_unbind
+^^^^^^^^^^^^^^^^^^
+
+Remove key binding(s).
+
+[WARNING]
+When calling this function, ensure that you will not remove a user key binding.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_key_unbind (const char *context, const char *key);
+----------------------------------------
+
+Arguments:
+
+* 'context': context for keys (see <<_weechat_key_bind,weechat_key_bind>>)
+* 'key': key to remove or a special value "area:XXX" to remove all keys having
+  'XXX' as first or second area
+
+Return value:
+
+* number of key bindings removed
+
+C examples:
+
+[source,C]
+----------------------------------------
+/* remove a single key */
+weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
+
+/* remove all keys with area "chat(plugin.buffer)" */
+weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+num_keys = weechat.key_unbind(context, key)
+
+# examples
+
+# remove a single key
+weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
+
+# remove all keys with area "chat(python.test)"
+weechat.key_unbind("mouse", "area:chat(python.test)")
+----------------------------------------
+
 [[display]]
 Display
 ~~~~~~~

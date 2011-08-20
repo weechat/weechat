@@ -2504,6 +2504,7 @@ command_key_reset (int context, const char *key)
 {
     char *internal_code;
     struct t_gui_key *ptr_key, *ptr_default_key, *ptr_new_key;
+    int rc;
     
     internal_code = gui_key_get_internal_code (key);
     if (!internal_code)
@@ -2545,14 +2546,10 @@ command_key_reset (int context, const char *key)
         else if (ptr_key)
         {
             /* no default key, so just unbind key */
-            if (gui_key_unbind (NULL, context, key, 1))
-            {
-                gui_chat_printf (NULL,
-                                 _("Key \"%s\" unbound (context: \"%s\")"),
-                                 key,
-                                 gui_key_context_string[context]);
-            }
-            else
+            gui_key_verbose = 1;
+            rc = gui_key_unbind (NULL, context, key);
+            gui_key_verbose = 0;
+            if (!rc)
             {
                 gui_chat_printf (NULL,
                                  _("%sError: unable to unbind key \"%s\""),
@@ -2595,7 +2592,7 @@ COMMAND_CALLBACK(key)
 {
     char *internal_code;
     struct t_gui_key *ptr_new_key;
-    int old_keys_count, keys_added, i, context;
+    int old_keys_count, keys_added, i, context, rc;
     
     /* make C compiler happy */
     (void) data;
@@ -2760,15 +2757,11 @@ COMMAND_CALLBACK(key)
     if (string_strcasecmp (argv[1], "unbind") == 0)
     {
         COMMAND_MIN_ARGS(3, "key unbind");
-        
-        if (gui_key_unbind (NULL, GUI_KEY_CONTEXT_DEFAULT, argv[2], 1))
-        {
-            gui_chat_printf (NULL,
-                             _("Key \"%s\" unbound (context: \"%s\")"),
-                             argv[2],
-                             gui_key_context_string[GUI_KEY_CONTEXT_DEFAULT]);
-        }
-        else
+
+        gui_key_verbose = 1;
+        rc = gui_key_unbind (NULL, GUI_KEY_CONTEXT_DEFAULT, argv[2]);
+        gui_key_verbose = 0;
+        if (!rc)
         {
             gui_chat_printf (NULL,
                              _("%sError: unable to unbind key \"%s\""),
@@ -2794,15 +2787,11 @@ COMMAND_CALLBACK(key)
                              argv[2]);
             return WEECHAT_RC_OK;
         }
-        
-        if (gui_key_unbind (NULL, context, argv[3], 1))
-        {
-            gui_chat_printf (NULL,
-                             _("Key \"%s\" unbound (context: \"%s\")"),
-                             argv[3],
-                             gui_key_context_string[context]);
-        }
-        else
+
+        gui_key_verbose = 1;
+        rc = gui_key_unbind (NULL, context, argv[3]);
+        gui_key_verbose = 0;
+        if (!rc)
         {
             gui_chat_printf (NULL,
                              _("%sError: unable to unbind key \"%s\""),
@@ -5702,7 +5691,9 @@ command_init ()
                      "events.\n"
                      "A special value for command wit format \"hsignal:name\" "
                      "can be used for context mouse, this will send the hsignal "
-                     "\"name\" with the focus hashtable as argument.\n\n"
+                     "\"name\" with the focus hashtable as argument.\n"
+                     "Another special value \"-\" can be used to disable key "
+                     "(it will be ignored when looking for keys).\n\n"
                      "Examples:\n"
                      "  key alt-x to toggle nicklist bar:\n"
                      "    /key bind meta-x /bar toggle nicklist\n"

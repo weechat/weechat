@@ -55,6 +55,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
@@ -579,6 +580,9 @@ plugin_load (const char *filename)
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
         new_plugin->config_set_desc_plugin = &plugin_api_config_set_desc_plugin;
         new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
+        
+        new_plugin->key_bind = &gui_key_bind_plugin;
+        new_plugin->key_unbind = &gui_key_unbind_plugin;
         
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;

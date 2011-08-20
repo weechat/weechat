@@ -3074,6 +3074,81 @@ weechat_tcl_api_config_unset_plugin (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_key_bind: bind key(s)
+ */
+
+static int
+weechat_tcl_api_key_bind (ClientData clientData, Tcl_Interp *interp,
+                          int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *context;
+    struct t_hashtable *hashtable;
+    int i, num_keys;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "key_bind");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "key_bind");
+        TCL_RETURN_INT(0);
+    }
+    
+    context = Tcl_GetStringFromObj (objv[1], &i);
+    hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    num_keys = weechat_key_bind (context, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    TCL_RETURN_INT(num_keys);
+}
+
+/*
+ * weechat_tcl_api_key_unbind: unbind key(s)
+ */
+
+static int
+weechat_tcl_api_key_unbind (ClientData clientData, Tcl_Interp *interp,
+                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *context, *key;
+    int i, num_keys;
+    
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script || !tcl_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(TCL_CURRENT_SCRIPT_NAME, "key_unbind");
+        TCL_RETURN_INT(0);
+    }
+    
+    if (objc < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(TCL_CURRENT_SCRIPT_NAME, "key_unbind");
+        TCL_RETURN_INT(0);
+    }
+    
+    context = Tcl_GetStringFromObj (objv[1], &i);
+    key = Tcl_GetStringFromObj (objv[2], &i);
+    
+    num_keys = weechat_key_unbind (context, key);
+    
+    TCL_RETURN_INT(num_keys);
+}
+
+/*
  * weechat_tcl_api_prefix: get a prefix, used for display
  */
 
@@ -8224,6 +8299,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_config_set_desc_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::config_unset_plugin",
                           weechat_tcl_api_config_unset_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::key_bind",
+                          weechat_tcl_api_key_bind, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::key_unbind",
+                          weechat_tcl_api_key_unbind, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::prefix",
                           weechat_tcl_api_prefix, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::color",

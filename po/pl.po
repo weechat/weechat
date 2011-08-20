@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-16 22:19+0200\n"
+"POT-Creation-Date: 2011-08-20 08:17+0200\n"
 "PO-Revision-Date: 2011-07-05 15:38+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -397,10 +397,6 @@ msgstr "%sBłąd: nie można przypisać klawisza \"%s\""
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Klawisz \"%s\" juz ma domyślną wartość"
-
-#, fuzzy, c-format
-msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Klawisz \"%s\" nieprzypisany"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -1486,6 +1482,8 @@ msgid ""
 "A special value for command wit format \"hsignal:name\" can be used for "
 "context mouse, this will send the hsignal \"name\" with the focus hashtable "
 "as argument.\n"
+"Another special value \"-\" can be used to disable key (it will be ignored "
+"when looking for keys).\n"
 "\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
@@ -3274,12 +3272,9 @@ msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Nowy skrót klawiszowy %s%s => %s%s"
 
-#, c-format
-msgid "Error: unable to bind key \"%s\""
-msgstr "Błąd: nie można przypisać klawisza \"%s\""
-
-msgid "Error: not enough memory for key binding"
-msgstr "Błąd: za mało pamięci do przypisania klawisza"
+#, fuzzy, c-format
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr "Klawisz \"%s\" nieprzypisany"
 
 #, fuzzy
 msgid "Hashtable focus:"
@@ -8035,6 +8030,12 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#~ msgid "Error: unable to bind key \"%s\""
+#~ msgstr "Błąd: nie można przypisać klawisza \"%s\""
+
+#~ msgid "Error: not enough memory for key binding"
+#~ msgstr "Błąd: za mało pamięci do przypisania klawisza"
 
 #, fuzzy
 #~ msgid "%sError: incorrect interval"

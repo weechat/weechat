@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-18
+v0.3.6-dev, 2011-08-20
 
 
 Version 0.3.6 (under dev!)
@@ -52,11 +52,11 @@ Version 0.3.6 (under dev!)
   /window scroll_horiz) (task #11112)
 * api: use arguments for infolist "window" to return only one window by number
 * api: add info "cursor_mode"
-* api: add new functions hook_focus, hdata_new, hdata_new_var, hdata_new_list,
-  hdata_get, hdata_get_var_offset, hdata_get_var_type,
-  hdata_get_var_type_string, hdata_get_var_hdata, hdata_get_var,
-  hdata_get_var_at_offset, hdata_get_list, hdata_move, hdata_integer,
-  hdata_string, hdata_pointer, hdata_time, hdata_get_string
+* api: add new functions key_bind, key_unbind, hook_focus, hdata_new,
+  hdata_new_var, hdata_new_list, hdata_get, hdata_get_var_offset,
+  hdata_get_var_type, hdata_get_var_type_string, hdata_get_var_hdata,
+  hdata_get_var, hdata_get_var_at_offset, hdata_get_list, hdata_move,
+  hdata_integer, hdata_string, hdata_pointer, hdata_time, hdata_get_string
 * api: fix bug with function config_set_desc_plugin (use immediately
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after

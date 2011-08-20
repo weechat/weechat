@@ -366,6 +366,7 @@ For context "mouse" (possible in context "cursor" too), key has format: "@area:k
   item(xxx): bar item "xxx"
 The key can start or end with '*' to match many mouse events.
 A special value for command wit format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
 Examples:
   key alt-x to toggle nicklist bar:

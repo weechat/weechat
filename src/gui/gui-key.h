@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_KEY_H
 #define __WEECHAT_GUI_KEY_H 1
 
+struct t_hashtable;
+
 #define GUI_KEY_BUFFER_BLOCK_SIZE 256
 
 #define GUI_KEY_GRAB_DELAY_DEFAULT 500
@@ -92,8 +94,10 @@ extern struct t_gui_key *gui_key_bind (struct t_gui_buffer *buffer,
                                        int context,
                                        const char *key,
                                        const char *command);
+extern int gui_key_bind_plugin (const char *context, struct t_hashtable *keys);
 extern int gui_key_unbind (struct t_gui_buffer *buffer, int context,
-                           const char *key, int send_signal);
+                           const char *key);
+extern int gui_key_unbind_plugin (const char *context, const char *key);
 extern int gui_key_focus (const char *key, int context);
 extern int gui_key_pressed (const char *key_str);
 extern void gui_key_free (struct t_gui_key **keys,

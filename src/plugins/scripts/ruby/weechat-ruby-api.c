@@ -3070,6 +3070,83 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
 }
 
 /*
+ * weechat_ruby_api_key_bind: bind key(s)
+ */
+
+static VALUE
+weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
+{
+    char *c_context;
+    struct t_hashtable *c_keys;
+    int num_keys;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "key_bind");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (context) || NIL_P (keys))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "key_bind");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (context, T_STRING);
+    Check_Type (keys, T_HASH);
+    
+    c_context = StringValuePtr (context);
+    c_keys = weechat_ruby_hash_to_hashtable (keys,
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    num_keys = weechat_key_bind (c_context, c_keys);
+    
+    if (c_keys)
+        weechat_hashtable_free (c_keys);
+    
+    RUBY_RETURN_INT(num_keys);
+}
+
+/*
+ * weechat_ruby_api_key_unbind: unbind key(s)
+ */
+
+static VALUE
+weechat_ruby_api_key_unbind (VALUE class, VALUE context, VALUE key)
+{
+    char *c_context, *c_key;
+    int num_keys;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script || !ruby_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(RUBY_CURRENT_SCRIPT_NAME, "key_unbind");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (context) || NIL_P (key))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(RUBY_CURRENT_SCRIPT_NAME, "key_unbind");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (context, T_STRING);
+    Check_Type (key, T_STRING);
+    
+    c_context = StringValuePtr (context);
+    c_key = StringValuePtr (key);
+    
+    num_keys = weechat_key_unbind (c_context, c_key);
+    
+    RUBY_RETURN_INT(num_keys);
+}
+
+/*
  * weechat_ruby_api_prefix: get a prefix, used for display
  */
 
@@ -8326,6 +8403,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "config_set_plugin", &weechat_ruby_api_config_set_plugin, 2);
     rb_define_module_function (ruby_mWeechat, "config_set_desc_plugin", &weechat_ruby_api_config_set_desc_plugin, 2);
     rb_define_module_function (ruby_mWeechat, "config_unset_plugin", &weechat_ruby_api_config_unset_plugin, 1);
+    rb_define_module_function (ruby_mWeechat, "key_bind", &weechat_ruby_api_key_bind, 2);
+    rb_define_module_function (ruby_mWeechat, "key_unbind", &weechat_ruby_api_key_unbind, 2);
     rb_define_module_function (ruby_mWeechat, "prefix", &weechat_ruby_api_prefix, 1);
     rb_define_module_function (ruby_mWeechat, "color", &weechat_ruby_api_color, 1);
     rb_define_module_function (ruby_mWeechat, "print", &weechat_ruby_api_print, 2);

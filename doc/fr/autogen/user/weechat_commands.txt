@@ -366,6 +366,7 @@ Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a
   item(xxx): l'objet de barre "xxx"
 La touche peut commencer ou se terminer par '*' pour plusieurs évènements de la souris.
 Une valeur spéciale pour la commande avec le format "hsignal:nom" peut être utilisée dans le contexte "mouse", cela enverra le signal "nom" avec la hashtable du focus comme paramètre.
+Une autre valeur spéciale "-" peut être utilisée pour désactiver la touche (elle sera ignorée lors de la recherche de touches).
 
 Exemples:
   touche alt-x pour activer/désactiver la liste des pseudos:

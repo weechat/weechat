@@ -1600,7 +1600,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                               &buffer->keys_count);
         }
         else
-            gui_key_unbind (buffer, 0, property + 11, 1);
+            gui_key_unbind (buffer, 0, property + 11);
     }
     else if (string_strcasecmp (property, "input") == 0)
     {

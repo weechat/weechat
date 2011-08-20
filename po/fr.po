@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-16 22:19+0200\n"
-"PO-Revision-Date: 2011-08-16 22:19+0200\n"
+"POT-Creation-Date: 2011-08-20 08:17+0200\n"
+"PO-Revision-Date: 2011-08-20 08:18+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -401,10 +401,6 @@ msgstr "%sErreur: impossible de créer la touche \"%s\""
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "La touche \"%s\" a déjà la valeur par défaut"
-
-#, c-format
-msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Touche \"%s\" supprimée (contexte: \"%s\")"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -1513,6 +1509,8 @@ msgid ""
 "A special value for command wit format \"hsignal:name\" can be used for "
 "context mouse, this will send the hsignal \"name\" with the focus hashtable "
 "as argument.\n"
+"Another special value \"-\" can be used to disable key (it will be ignored "
+"when looking for keys).\n"
 "\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
@@ -1567,6 +1565,8 @@ msgstr ""
 "Une valeur spéciale pour la commande avec le format \"hsignal:nom\" peut "
 "être utilisée dans le contexte \"mouse\", cela enverra le signal \"nom\" "
 "avec la hashtable du focus comme paramètre.\n"
+"Une autre valeur spéciale \"-\" peut être utilisée pour désactiver la touche "
+"(elle sera ignorée lors de la recherche de touches).\n"
 "\n"
 "Exemples:\n"
 "  touche alt-x pour activer/désactiver la liste des pseudos:\n"
@@ -3405,11 +3405,8 @@ msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Nouvelle touche (contexte \"%s\"): %s%s => %s%s"
 
 #, c-format
-msgid "Error: unable to bind key \"%s\""
-msgstr "Erreur: impossible de créer la touche \"%s\""
-
-msgid "Error: not enough memory for key binding"
-msgstr "Erreur: pas assez de mémoire pour la touche"
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr "Touche \"%s\" supprimée (contexte: \"%s\")"
 
 msgid "Hashtable focus:"
 msgstr "Hashtable focus:"
@@ -8234,6 +8231,12 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
+
+#~ msgid "Error: unable to bind key \"%s\""
+#~ msgstr "Erreur: impossible de créer la touche \"%s\""
+
+#~ msgid "Error: not enough memory for key binding"
+#~ msgstr "Erreur: pas assez de mémoire pour la touche"
 
 #~ msgid "%sError: incorrect interval"
 #~ msgstr "%sErreur: intervalle incorrect"

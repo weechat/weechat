@@ -2989,6 +2989,81 @@ weechat_lua_api_config_unset_plugin (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_key_bind: bind key(s)
+ */
+
+static int
+weechat_lua_api_key_bind (lua_State *L)
+{
+    const char *context;
+    struct t_hashtable *hashtable;
+    int n, num_keys;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "key_bind");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "key_bind");
+        LUA_RETURN_INT(0);
+    }
+    
+    context = lua_tostring (lua_current_interpreter, -2);
+    hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    num_keys = weechat_key_bind (context, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    LUA_RETURN_INT(num_keys);
+}
+
+/*
+ * weechat_lua_api_key_unbind: unbind key(s)
+ */
+
+static int
+weechat_lua_api_key_unbind (lua_State *L)
+{
+    const char *context, *key;
+    int n, num_keys;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script || !lua_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(LUA_CURRENT_SCRIPT_NAME, "key_unbind");
+        LUA_RETURN_INT(0);
+    }
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, "key_unbind");
+        LUA_RETURN_INT(0);
+    }
+    
+    context = lua_tostring (lua_current_interpreter, -2);
+    key = lua_tostring (lua_current_interpreter, -1);
+    
+    num_keys = weechat_key_unbind (context, key);
+    
+    LUA_RETURN_INT(num_keys);
+}
+
+/*
  * weechat_lua_api_prefix: get a prefix, used for display
  */
 
@@ -8367,6 +8442,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_set_plugin", &weechat_lua_api_config_set_plugin },
     { "config_set_desc_plugin", &weechat_lua_api_config_set_desc_plugin },
     { "config_unset_plugin", &weechat_lua_api_config_unset_plugin },
+    { "key_bind", &weechat_lua_api_key_bind },
+    { "key_unbind", &weechat_lua_api_key_unbind },
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },
     { "print", &weechat_lua_api_print },

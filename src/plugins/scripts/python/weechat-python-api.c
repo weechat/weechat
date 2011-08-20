@@ -2831,6 +2831,79 @@ weechat_python_api_config_unset_plugin (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_key_bind: bind key(s)
+ */
+
+static PyObject *
+weechat_python_api_key_bind (PyObject *self, PyObject *args)
+{
+    char *context;
+    struct t_hashtable *hashtable;
+    PyObject *dict;
+    int num_keys;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "key_bind");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    context = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sO", &context, &dict))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "key_bind");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    hashtable = weechat_python_dict_to_hashtable (dict,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    
+    num_keys = weechat_key_bind (context, hashtable);
+    
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+    
+    PYTHON_RETURN_INT(num_keys);
+}
+
+/*
+ * weechat_python_api_key_unbind: unbind key(s)
+ */
+
+static PyObject *
+weechat_python_api_key_unbind (PyObject *self, PyObject *args)
+{
+    char *context, *key;
+    int num_keys;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script || !python_current_script->name)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INIT(PYTHON_CURRENT_SCRIPT_NAME, "key_unbind");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    context = NULL;
+    key = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &context, &key))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGS(PYTHON_CURRENT_SCRIPT_NAME, "key_unbind");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    num_keys = weechat_key_unbind (context, key);
+    
+    PYTHON_RETURN_INT(num_keys);
+}
+
+/*
  * weechat_python_api_prefix: get a prefix, used for display
  */
 
@@ -6316,6 +6389,7 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
     }
     
     info_name = NULL;
+    arguments = NULL;
     
     if (!PyArg_ParseTuple (args, "ss", &info_name, &arguments))
     {
@@ -7597,6 +7671,8 @@ PyMethodDef weechat_python_funcs[] =
     { "config_set_plugin", &weechat_python_api_config_set_plugin, METH_VARARGS, "" },
     { "config_set_desc_plugin", &weechat_python_api_config_set_desc_plugin, METH_VARARGS, "" },
     { "config_unset_plugin", &weechat_python_api_config_unset_plugin, METH_VARARGS, "" },
+    { "key_bind", &weechat_python_api_key_bind, METH_VARARGS, "" },
+    { "key_unbind", &weechat_python_api_key_unbind, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },

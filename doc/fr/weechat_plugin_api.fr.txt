@@ -5739,6 +5739,130 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----------------------------------------
 
+[[key_bindings]]
+Associations de touches
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Fonctions pour les associations de touches.
+
+weechat_key_bind
+^^^^^^^^^^^^^^^^
+
+Ajouter de nouvelles associations de touches.
+
+[NOTE]
+Contrairement à la commande `/key bind`, cette fonction ne changera jamais
+une association de touche existante, seulement des nouvelles touches seront
+créées. Pour supprimer une association de touche, utilisez
+<<_weechat_key_unbind,weechat_key_unbind>>.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_key_bind (const char *context, struct t_hashtable *keys);
+----------------------------------------
+
+Paramètres :
+
+* 'context' : contexte pour les touches :
+** 'default' : contexte par défaut (actions courantes)
+** 'search' : contexte de recherche (lors de la recherche de texte dans le
+   tampon)
+** 'cursor' : mouvement libre du curseur à l'écran
+** 'mouse' : touches pour les évènements de souris
+* 'keys' : hashtable avec les associations de touches
+
+Valeur de retour :
+
+* nombre d'associations de touches ajoutées
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *keys = weechat_hashtable_new (8,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  NULL,
+                                                  NULL);
+if (keys)
+{
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):button1", "hsignal:test_mouse");
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):wheelup", "/mycommand up");
+    weechat_hashtable_set (keys, "@chat(plugin.buffer):wheeldown", "/mycommand down");
+    weechat_key_bind ("mouse", keys);
+    weechat_hashtable_free (keys);
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+num_keys = weechat.key_bind(context, keys)
+
+# exemple
+keys = { "@chat(python.test):button1": "hsignal:test_mouse",
+         "@chat(python.test):wheelup": "/mycommand up",
+         "@chat(python.test):wheeldown": "/mycommand down" }
+weechat.key_bind("mouse", keys)
+----------------------------------------
+
+weechat_key_unbind
+^^^^^^^^^^^^^^^^^^
+
+Supprimer une/des association(s) de touche(s).
+
+[WARNING]
+When calling this function, ensure that you will not remove a user key binding.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_key_unbind (const char *context, const char *key);
+----------------------------------------
+
+Paramètres :
+
+* 'context' : contexte pour les touches (voir
+   <<_weechat_key_bind,weechat_key_bind>>)
+* 'key' : touche à supprimer ou la valeur spéciale "area:XXX" pour supprimer
+  toutes les touches ayant 'XXX' comme première ou deuxième zone
+
+Valeur de retour :
+
+* nombre d'associations de touches supprimées
+
+Exemples en C :
+
+[source,C]
+----------------------------------------
+/* supprimer une seule touche */
+weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
+
+/* supprimer toutes les touches avec la zone "chat(plugin.buffer)" */
+weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+num_keys = weechat.key_unbind(context, key)
+
+# exemples
+
+# supprimer une seule touche
+weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
+
+# supprimer toutes les touches avec la zone "chat(python.test)"
+weechat.key_unbind("mouse", "area:chat(python.test)")
+----------------------------------------
+
 [[display]]
 Affichage
 ~~~~~~~~~

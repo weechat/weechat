@@ -256,13 +256,17 @@ gui_key_grab_end_timer_cb (void *data, int remaining_calls)
 
 /*
  * gui_key_get_internal_code: get internal code from user key name
- *                            for example: return "\x01+R" for "ctrl-R"
+ *                            for example: return '\x01'+'R' for "ctrl-R"
+ *                            Note: returned value has to be free() after use
  */
 
 char *
 gui_key_get_internal_code (const char *key)
 {
     char *result;
+    
+    if ((key[0] == '@') && strchr (key, ':'))
+        return strdup (key);
     
     if ((result = malloc (strlen (key) + 1)))
     {
@@ -461,6 +465,53 @@ gui_key_insert_sorted (struct t_gui_key **keys,
 }
 
 /*
+ * gui_key_set_area_type_name: set area type and name
+ *                             for example: "bar(nicklist)" will return:
+ *                                          type: 2 (bar)
+ *                                          name: "nicklist"
+ *                             Warning: if no area is found, values are NOT set
+ */
+
+void
+gui_key_set_area_type_name (const char *area,
+                            int *area_type, char **area_name)
+{
+    int focus, length;
+    char *pos_end;
+    
+    for (focus = 0; focus < GUI_KEY_NUM_FOCUS; focus++)
+    {
+        length = strlen (gui_key_focus_string[focus]);
+        if (strncmp (area, gui_key_focus_string[focus], length) == 0)
+        {
+            if (focus == GUI_KEY_FOCUS_ANY)
+            {
+                *area_type = focus;
+                *area_name = strdup ("*");
+                break;
+            }
+            if (!area[length])
+            {
+                *area_type = focus;
+                *area_name = strdup ("*");
+                break;
+            }
+            if ((area[length] == '(') && area[length + 1])
+            {
+                pos_end = strchr (area + length, ')');
+                if (pos_end)
+                {
+                    *area_type = focus;
+                    *area_name = string_strndup (area + length + 1,
+                                                 pos_end - area - length - 1);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/*
  * gui_key_set_areas: set areas types (any, chat, bar or item) and names for a
  *                    key
  */
@@ -468,8 +519,8 @@ gui_key_insert_sorted (struct t_gui_key **keys,
 void
 gui_key_set_areas (struct t_gui_key *key)
 {
-    int area, focus, length;
-    char *pos_colon, *pos_area2, *pos_end, *areas[2];
+    int area;
+    char *pos_colon, *pos_area2, *areas[2];
 
     for (area = 0; area < 2; area++)
     {
@@ -477,6 +528,9 @@ gui_key_set_areas (struct t_gui_key *key)
         key->area_name[area] = NULL;
     }
     key->area_key = NULL;
+    
+    if (key->key[0] != '@')
+        return;
     
     areas[0] = NULL;
     areas[1] = NULL;
@@ -504,37 +558,9 @@ gui_key_set_areas (struct t_gui_key *key)
             key->area_name[area] = strdup ("*");
             continue;
         }
-        
-        for (focus = 0; focus < GUI_KEY_NUM_FOCUS; focus++)
-        {
-            length = strlen (gui_key_focus_string[focus]);
-            if (strncmp (areas[area], gui_key_focus_string[focus], length) == 0)
-            {
-                if (focus == GUI_KEY_FOCUS_ANY)
-                {
-                    key->area_type[area] = focus;
-                    key->area_name[area] = strdup ("*");
-                    break;
-                }
-                if (!areas[area][length])
-                {
-                    key->area_type[area] = focus;
-                    key->area_name[area] = strdup ("*");
-                    break;
-                }
-                if ((areas[area][length] == '(') && areas[area][length + 1])
-                {
-                    pos_end = strchr (areas[area] + length, ')');
-                    if (pos_end)
-                    {
-                        key->area_type[area] = focus;
-                        key->area_name[area] = string_strndup (areas[area] + length + 1,
-                                                               pos_end - areas[area] - length - 1);
-                        break;
-                    }
-                }
-            }
-        }
+        gui_key_set_area_type_name (areas[area],
+                                    &(key->area_type[area]),
+                                    &(key->area_name[area]));
     }
     
     if (areas[0])
@@ -689,47 +715,99 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
  * gui_key_bind: bind a key to a function (command or special function)
  *               if buffer is not null, then key is specific to buffer
  *               otherwise it's general key (for most keys)
+ *               Note: if key already exists, it is removed then added again
+ *               with new value
  */
 
 struct t_gui_key *
 gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
               const char *command)
 {
-    struct t_gui_key *new_key;
-    
     if (!key || !command)
-    {
-        log_printf (_("Error: unable to bind key \"%s\""), key);
         return NULL;
-    }
     
-    gui_key_unbind (buffer, context, key, 0);
+    gui_key_unbind (buffer, context, key);
     
-    new_key = gui_key_new (buffer, context, key, command);
-    if (!new_key)
-    {
-        log_printf (_("Error: not enough memory for key binding"));
-        return NULL;
-    }
-    
-    return new_key;
+    return gui_key_new (buffer, context, key, command);
 }
 
 /*
- * gui_key_unbind: remove a key binding
+ * gui_key_bind_plugin_hashtable_map_cb: bind keys in hashtable
+ */
+
+void
+gui_key_bind_plugin_hashtable_map_cb (void *data,
+                                      struct t_hashtable *hashtable,
+                                      const void *key, const void *value)
+{
+    int *user_data;
+    struct t_gui_key *ptr_key;
+    char *internal_code;
+    
+    /* make C compiler happy */
+    (void) hashtable;
+    
+    user_data = (int *)data;
+    
+    if (user_data && key && value)
+    {
+        internal_code = gui_key_get_internal_code (key);
+        if (internal_code)
+        {
+            ptr_key = gui_key_search (gui_keys[user_data[0]], internal_code);
+            if (!ptr_key)
+            {
+                if (gui_key_new (NULL, user_data[0], key, value))
+                    user_data[1]++;
+            }
+            free (internal_code);
+        }
+    }
+}
+
+/*
+ * gui_key_bind_plugin: create many keys using a hashtable
+ *                      (used by plugins only)
+ *                      return: number of keys added
+ *                      note: if key already exists, it is NOT changed (plugins
+ *                      should never overwrite user keys)
  */
 
 int
-gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
-                int send_signal)
+gui_key_bind_plugin (const char *context, struct t_hashtable *keys)
+{
+    int data[2];
+    
+    data[0] = gui_key_search_context (context);
+    if (data[0] < 0)
+        return 0;
+    
+    gui_key_verbose = 1;
+    data[1] = 0;
+    hashtable_map (keys, &gui_key_bind_plugin_hashtable_map_cb, data);
+    gui_key_verbose = 0;
+    
+    return data[1];
+}
+
+/*
+ * gui_key_unbind: remove one key binding
+ *                 return: 1 if key removed, 0 if not removed
+ */
+
+int
+gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 {
     struct t_gui_key *ptr_key;
     char *internal_code;
     
     internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return 0;
     
     ptr_key = gui_key_search ((buffer) ? buffer->keys : gui_keys[context],
                               (internal_code) ? internal_code : key);
+    free (internal_code);
     if (ptr_key)
     {
         if (buffer)
@@ -739,21 +817,74 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key,
         }
         else
         {
+            if (gui_key_verbose)
+            {
+                gui_chat_printf (NULL,
+                                 _("Key \"%s\" unbound (context: \"%s\")"),
+                                 key,
+                                 gui_key_context_string[context]);
+            }
             gui_key_free (&gui_keys[context], &last_gui_key[context],
                           &gui_keys_count[context], ptr_key);
         }
-    }
-    
-    if (internal_code)
-        free (internal_code);
-    
-    if (send_signal)
-    {
         hook_signal_send ("key_unbind",
                           WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
+        return 1;
     }
     
-    return (ptr_key != NULL);
+    return 0;
+}
+
+/*
+ * gui_key_unbind_plugin: remove one or more key binding(s)
+ *                        (used by plugins only)
+ *                        return: number of keys removed
+ */
+
+int
+gui_key_unbind_plugin (const char *context, const char *key)
+{
+    int ctxt, num_keys, area_type;
+    char *area_name;
+    struct t_gui_key *ptr_key;
+    
+    ctxt = gui_key_search_context (context);
+    if (ctxt < 0)
+        return 0;
+    
+    if (strncmp (key, "area:", 5) == 0)
+    {
+        num_keys = 0;
+        area_type = -1;
+        area_name = NULL;
+        gui_key_set_area_type_name (key + 5, &area_type, &area_name);
+        if (area_name)
+        {
+            for (ptr_key = gui_keys[ctxt]; ptr_key; ptr_key = ptr_key->next_key)
+            {
+                if (((ptr_key->area_type[0] == area_type)
+                     && ptr_key->area_name[0]
+                     && (strcmp (ptr_key->area_name[0], area_name) == 0))
+                    || ((ptr_key->area_type[1] == area_type)
+                        && ptr_key->area_name[1]
+                        && (strcmp (ptr_key->area_name[1], area_name) == 0)))
+                {
+                    gui_key_verbose = 1;
+                    num_keys += gui_key_unbind (NULL, ctxt, ptr_key->key);
+                    gui_key_verbose = 0;
+                }
+            }
+            free (area_name);
+        }
+    }
+    else
+    {
+        gui_key_verbose = 1;
+        num_keys = gui_key_unbind (NULL, ctxt, key);
+        gui_key_verbose = 0;
+    }
+    
+    return num_keys;
 }
 
 /*
@@ -843,12 +974,19 @@ gui_key_focus_command (const char *key, int context,
     for (ptr_key = gui_keys[context]; ptr_key;
          ptr_key = ptr_key->next_key)
     {
+        /* ignore key if it has not area name or key for area */
         if (!ptr_key->area_name[0] || !ptr_key->area_key)
             continue;
         
+        /* the special command "-" is used to ignore key */
+        if (strcmp (ptr_key->command, "-") == 0)
+            continue;
+        
+        /* ignore key if key for area is not matching */
         if (gui_key_cmp (key, ptr_key->area_key, context) != 0)
             continue;
         
+        /* check if focus is matching with key */
         matching = gui_key_focus_matching (ptr_key, hashtable_focus);
         if (!matching)
             continue;
@@ -1332,6 +1470,9 @@ gui_key_hdata_key_cb (void *data, const char *hdata_name)
     if (hdata)
     {
         HDATA_VAR(struct t_gui_key, key, STRING, NULL);
+        HDATA_VAR(struct t_gui_key, area_type, POINTER, NULL);
+        HDATA_VAR(struct t_gui_key, area_name, POINTER, NULL);
+        HDATA_VAR(struct t_gui_key, area_key, STRING, NULL);
         HDATA_VAR(struct t_gui_key, command, STRING, NULL);
         HDATA_VAR(struct t_gui_key, prev_key, POINTER, hdata_name);
         HDATA_VAR(struct t_gui_key, next_key, POINTER, hdata_name);
@@ -1389,6 +1530,16 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
             return 0;
         free (expanded_key);
     }
+    if (!infolist_new_var_integer (ptr_item, "area_type1", key->area_type[0]))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "area_name1", key->area_name[0]))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "area_type2", key->area_type[1]))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "area_name2", key->area_name[1]))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "area_key", key->area_key))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "command", key->command))
         return 0;
     

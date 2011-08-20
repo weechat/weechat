@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-16 22:19+0200\n"
+"POT-Creation-Date: 2011-08-20 08:17+0200\n"
 "PO-Revision-Date: 2011-08-15 10:10+0100\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -411,10 +411,6 @@ msgstr "%sFehler: kann die Taste \"%s\" nicht zuordnen"
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Die Taste \"%s\" ist schon mit einem Standardbefehl belegt"
-
-#, c-format
-msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Tastenbelegung \"%s\" entfernt (Kontext: \"%s\")"
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -1543,6 +1539,8 @@ msgid ""
 "A special value for command wit format \"hsignal:name\" can be used for "
 "context mouse, this will send the hsignal \"name\" with the focus hashtable "
 "as argument.\n"
+"Another special value \"-\" can be used to disable key (it will be ignored "
+"when looking for keys).\n"
 "\n"
 "Examples:\n"
 "  key alt-x to toggle nicklist bar:\n"
@@ -3481,11 +3479,8 @@ msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Neue Tastenbelegung (Kontext \"%s\"): %s%s => %s%s"
 
 #, c-format
-msgid "Error: unable to bind key \"%s\""
-msgstr "Fehler: kann die Taste \"%s\" nicht zuordnen"
-
-msgid "Error: not enough memory for key binding"
-msgstr "Fehler: nicht genügend Speicher für Tastenzuordnung"
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr "Tastenbelegung \"%s\" entfernt (Kontext: \"%s\")"
 
 msgid "Hashtable focus:"
 msgstr "Hashtable Fokus:"
@@ -8398,6 +8393,12 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
+
+#~ msgid "Error: unable to bind key \"%s\""
+#~ msgstr "Fehler: kann die Taste \"%s\" nicht zuordnen"
+
+#~ msgid "Error: not enough memory for key binding"
+#~ msgstr "Fehler: nicht genügend Speicher für Tastenzuordnung"
 
 #~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
 #~ msgstr ""

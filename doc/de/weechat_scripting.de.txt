@@ -273,6 +273,9 @@ Liste der Skript API Funktionen:
   config_free, +
   config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
   config_set_desc_plugin, config_unset_plugin
+// TRANSLATION MISSING
+| key bindings        |
+  key_bind, key_unbind
 | Ausgabe             |
   prefix, color, print (für Python: prnt), print_date_tags (für Python:
   prnt_date_tags), print_y (für Python: prnt_y), log_print

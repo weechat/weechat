@@ -405,6 +405,9 @@
 
 | weechat | key | un tasto (scorciatoia da tastiera) |
   'key' (string) +
+  'area_type' (pointer) +
+  'area_name' (pointer) +
+  'area_key' (string) +
   'command' (string) +
   'prev_key' (pointer, hdata: 'key') +
   'next_key' (pointer, hdata: 'key') |

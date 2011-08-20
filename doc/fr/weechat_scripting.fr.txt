@@ -275,6 +275,8 @@ Liste des fonctions de l'API script :
   config_free, +
   config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
   config_set_desc_plugin, config_unset_plugin
+| associations de touches   |
+  key_bind, key_unbind
 | affichage                 |
   prefix, color, print (for python: prnt), print_date_tags (for python:
   prnt_date_tags), print_y (for python: prnt_y), log_print
