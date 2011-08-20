@@ -5688,6 +5688,8 @@ Functions for key bindings.
 weechat_key_bind
 ^^^^^^^^^^^^^^^^
 
+_New in version 0.3.6._
+
 Add new key bindings.
 
 [NOTE]
@@ -5750,6 +5752,8 @@ weechat.key_bind("mouse", keys)
 
 weechat_key_unbind
 ^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.6._
 
 Remove key binding(s).
 

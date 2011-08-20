@@ -5748,6 +5748,8 @@ Fonctions pour les associations de touches.
 weechat_key_bind
 ^^^^^^^^^^^^^^^^
 
+_Nouveau dans la version 0.3.6._
+
 Ajouter de nouvelles associations de touches.
 
 [NOTE]
@@ -5812,6 +5814,8 @@ weechat.key_bind("mouse", keys)
 
 weechat_key_unbind
 ^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.6._
 
 Supprimer une/des association(s) de touche(s).
 
