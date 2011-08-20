@@ -36,23 +36,23 @@ all-local: weechat_user.de.html \
 
 # user's guide
 weechat_user.de.html: weechat_user.de.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.de.html weechat_user.de.txt
+	$(ASCIIDOC) -a lang=de -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.de.html weechat_user.de.txt
 
 # scripting guide
 weechat_scripting.de.html: weechat_scripting.de.txt
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.de.html weechat_scripting.de.txt
+	$(ASCIIDOC) -a lang=de -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.de.html weechat_scripting.de.txt
 
 # FAQ
 weechat_faq.de.html: weechat_faq.de.txt
-	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.de.html weechat_faq.de.txt
+	$(ASCIIDOC) -a lang=de -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.de.html weechat_faq.de.txt
 
 # quickstart
 weechat_quickstart.de.html: weechat_quickstart.de.txt
-	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.de.html weechat_quickstart.de.txt
+	$(ASCIIDOC) -a lang=de -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.de.html weechat_quickstart.de.txt
 
 # tester's guide
 weechat_tester.de.html: weechat_tester.de.txt
-	$(ASCIIDOC) -a toc -a toc-title='Inhaltsverzeichnis' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.de.html weechat_tester.de.txt
+	$(ASCIIDOC) -a lang=de -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.de.html weechat_tester.de.txt
 
 # install docs
 

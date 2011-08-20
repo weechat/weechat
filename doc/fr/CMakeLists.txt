@@ -20,7 +20,7 @@
 # user's guide
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=4 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.txt
@@ -32,7 +32,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.fr.html DESTINATION ${SHA
 # plugin API reference
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=4 -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_plugin_api.fr.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/autogen/plugin_api/*.txt
@@ -44,7 +44,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.fr.html DESTINATION
 # scripting guide
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.fr.txt
   COMMENT "Building weechat_scripting.fr.html"
@@ -55,7 +55,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.fr.html DESTINATION 
 # FAQ
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.fr.txt
   COMMENT "Building weechat_faq.fr.html"
@@ -66,7 +66,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.fr.html DESTINATION ${SHAR
 # quickstart
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.fr.txt
   COMMENT "Building weechat_quickstart.fr.html"
@@ -77,7 +77,7 @@ INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.fr.html DESTINATION
 # tester's guide
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Table des matières' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.txt
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=fr -a toc -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.fr.txt
   COMMENT "Building weechat_tester.fr.html"

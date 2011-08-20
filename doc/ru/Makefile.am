@@ -26,7 +26,7 @@ all-local: weechat_quickstart.ru.html
 
 # quickstart
 weechat_quickstart.ru.html: weechat_quickstart.ru.txt
-	$(ASCIIDOC) -a toc -a toc-title='Содержание' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ru.html weechat_quickstart.ru.txt
+	$(ASCIIDOC) -a lang=ru -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ru.html weechat_quickstart.ru.txt
 
 # install docs
 
