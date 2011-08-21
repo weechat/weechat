@@ -169,7 +169,7 @@ irc_nick_find_color (const char *nickname)
 {
     int color;
     char *nickname2;
-    const char *forced_color;
+    const char *forced_color, *str_color;
     
     if (!irc_config_nick_colors)
         irc_config_set_nick_colors ();
@@ -199,7 +199,8 @@ irc_nick_find_color (const char *nickname)
         free (nickname2);
     
     /* return color */
-    return weechat_color (irc_config_nick_colors[color]);
+    str_color = weechat_color (irc_config_nick_colors[color]);
+    return (str_color[0]) ? str_color : weechat_color("default");
 }
 
 /*

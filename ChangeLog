@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-20
+v0.3.6-dev, 2011-08-21
 
 
 Version 0.3.6 (under dev!)
@@ -61,6 +61,8 @@ Version 0.3.6 (under dev!)
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after
   /upgrade (input/close callbacks for buffer not set properly)
+* irc: use color "default" for any invalid color in option
+  weechat.color.chat_nick_colors
 * irc: send WHO command to check away nicks only if channel was not parted
 * irc: fix crash when malformed IRC message 352 (WHO) is received (bug #33790)
 * irc: fix crash when command "/buffer close" is used in a server command to
