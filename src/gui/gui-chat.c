@@ -845,7 +845,8 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
                   (prefix) ? prefix : "",
                   (prefix) ? " " : "",
                   (time || prefix) ? CONFIG_STRING(config_look_prefix_suffix) : "",
-                  (time || prefix) ? " " : "",
+                  ((time || prefix) && CONFIG_STRING(config_look_prefix_suffix)
+                   && CONFIG_STRING(config_look_prefix_suffix)[0]) ? " " : "",
                   message);
         gui_input_insert_string (gui_current_window->buffer, str, -1);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
