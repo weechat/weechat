@@ -851,12 +851,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                     }
                     buffer_name = irc_buffer_build_name (server->name, ptr_channel->name);
                     weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
-                    if (!weechat_buffer_get_string (ptr_channel->buffer,
-                                                    "short_name"))
-                    {
-                        weechat_buffer_set (ptr_channel->buffer, "short_name",
-                                            ptr_channel->name);
-                    }
+                    weechat_buffer_set (ptr_channel->buffer, "short_name",
+                                        ptr_channel->name);
                     weechat_buffer_set (ptr_channel->buffer,
                                         "localvar_set_channel", ptr_channel->name);
                 }
