@@ -149,27 +149,6 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator)
 }
 
 /*
- * gui_window_wprintw: decode then display string with wprintw
- */
-
-void
-gui_window_wprintw (WINDOW *window, const char *data, ...)
-{
-    va_list argptr;
-    static char buf[4096];
-    char *buf2;
-    
-    va_start (argptr, data);
-    vsnprintf (buf, sizeof (buf) - 1, data, argptr);
-    va_end (argptr);
-    
-    buf2 = string_iconv_from_internal (NULL, buf);
-    wprintw (window, "%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
  * gui_window_clear_weechat: clear a Curses window with a weechat color
  */
 
