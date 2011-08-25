@@ -309,7 +309,12 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
             item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
                                                      ptr_item, window);
         }
-        if (!item_value || !item_value[0])
+        if (item_value && !item_value[0])
+        {
+            free (item_value);
+            item_value = NULL;
+        }
+        if (!item_value)
             return NULL;
     }
     
