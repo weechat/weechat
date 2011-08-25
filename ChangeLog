@@ -7,6 +7,7 @@ v0.3.6-dev, 2011-08-25
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix memory leak in unhook of hook_connect
 * core: fix memory leak in display of empty bar items
 * core: fix input of wide UTF-8 chars under Cygwin (bug #34061)
 * core: allow name of buffer for command /buffer clear (task #11269)

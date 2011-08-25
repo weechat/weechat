@@ -3073,6 +3073,10 @@ unhook (struct t_hook *hook)
                     free (HOOK_CONNECT(hook, proxy));
                 if (HOOK_CONNECT(hook, address))
                     free (HOOK_CONNECT(hook, address));
+#ifdef HAVE_GNUTLS
+                if (HOOK_CONNECT(hook, gnutls_priorities))
+                    free (HOOK_CONNECT(hook, gnutls_priorities));
+#endif
                 if (HOOK_CONNECT(hook, local_hostname))
                     free (HOOK_CONNECT(hook, local_hostname));
                 if (HOOK_CONNECT(hook, hook_fd))
