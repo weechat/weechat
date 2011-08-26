@@ -7,6 +7,7 @@ v0.3.6-dev, 2011-08-26
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add new options weechat.look.bar_more_left/right/up/down
 * core: add new option weechat.look.item_buffer_filter
 * core: change default value of option weechat.network.gnutls_ca_file to
   "/etc/ssl/certs/ca-certificates.crt"

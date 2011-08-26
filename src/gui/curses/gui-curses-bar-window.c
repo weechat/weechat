@@ -385,7 +385,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     static char str_start_input_hidden[16] = { '\0' };
     static char str_cursor[16] = { '\0' };
     char *pos_start_input, *pos_after_start_input, *pos_cursor, *buf;
-    char *new_start_input;
+    char *new_start_input, *ptr_string;
     static int length_start_input, length_start_input_hidden;
     int length_on_screen;
     int chars_available, index, size;
@@ -646,28 +646,46 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
                 && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
             {
-                x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
-                if (x < 0)
+                if (filling == GUI_BAR_FILLING_HORIZONTAL)
+                {
+                    ptr_string = CONFIG_STRING(config_look_bar_more_left);
                     x = 0;
+                }
+                else
+                {
+                    ptr_string = CONFIG_STRING(config_look_bar_more_up);
+                    x = bar_window->width - utf8_strlen_screen (ptr_string);
+                    if (x < 0)
+                        x = 0;
+                }
                 y = 0;
-                gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                   CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                           y, x, "--");
+                if (ptr_string && ptr_string[0])
+                {
+                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       CONFIG_COLOR(config_color_bar_more),
+                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                               y, x, ptr_string);
+                }
             }
             if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
                 && (some_data_not_displayed || (line < items_count)))
             {
-                x = bar_window->width - 2;
+                ptr_string = (filling == GUI_BAR_FILLING_HORIZONTAL) ?
+                    CONFIG_STRING(config_look_bar_more_right) :
+                    CONFIG_STRING(config_look_bar_more_down);
+                x = bar_window->width - utf8_strlen_screen (ptr_string);
                 if (x < 0)
                     x = 0;
                 y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
-                gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                                                   CONFIG_COLOR(config_color_bar_more),
-                                                   CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
-                           y, x, "++");
+                if (ptr_string && ptr_string[0])
+                {
+                    gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                       CONFIG_COLOR(config_color_bar_more),
+                                                       CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                               y, x, ptr_string);
+                }
             }
         }
         if (items)

@@ -323,6 +323,26 @@
 ** tipo: intero
 ** valori: time, buffer, prefix, suffix, message (valore predefinito: `message`)
 
+* *weechat.look.bar_more_down*
+** descrizione: `string displayed when bar can be scrolled down (for bars with filling different from "horizontal")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"++"`)
+
+* *weechat.look.bar_more_left*
+** descrizione: `string displayed when bar can be scrolled to the left (for bars with filling "horizontal")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"<<"`)
+
+* *weechat.look.bar_more_right*
+** descrizione: `string displayed when bar can be scrolled to the right (for bars with filling "horizontal")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `">>"`)
+
+* *weechat.look.bar_more_up*
+** descrizione: `string displayed when bar can be scrolled up (for bars with filling different from "horizontal")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"--"`)
+
 * *weechat.look.buffer_notify_default*
 ** descrizione: `livello predefinito di notifica per i buffer (utilizzato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), message=messaggi+eventi, highlight=solo eventi, none=non viene mai visualizzato nella hotlist`
 ** tipo: intero
@@ -459,7 +479,7 @@
 ** valori: 0 .. 65535 (valore predefinito: `32`)
 
 * *weechat.look.item_buffer_filter*
-** descrizione: `string used to show that some lines are filtered in current buffer (bar item "buffer_filter"`
+** descrizione: `string used to show that some lines are filtered in current buffer (bar item "buffer_filter")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"*"`)
 

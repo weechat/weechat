@@ -323,6 +323,26 @@
 ** type: entier
 ** valeurs: time, buffer, prefix, suffix, message (valeur par défaut: `message`)
 
+* *weechat.look.bar_more_down*
+** description: `chaîne affichée quand la barre peut être défilée vers le bas (pour les barres avec un remplissage différent de "horizontal")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"++"`)
+
+* *weechat.look.bar_more_left*
+** description: `chaîne affichée quand la barre peut être défilée vers la gauche (pour les barres avec un remplissage "horizontal")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"<<"`)
+
+* *weechat.look.bar_more_right*
+** description: `chaîne affichée quand la barre peut être défilée vers la droite (pour les barres avec un remplissage "horizontal")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `">>"`)
+
+* *weechat.look.bar_more_up*
+** description: `chaîne affichée quand la barre peut être défilée vers le haut (pour les barres avec un remplissage différent de "horizontal")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"--"`)
+
 * *weechat.look.buffer_notify_default*
 ** description: `niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jemais afficher dans la hotlist`
 ** type: entier

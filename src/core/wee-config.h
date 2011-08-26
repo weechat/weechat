@@ -104,6 +104,10 @@ extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;
 
 extern struct t_config_option *config_look_align_end_of_lines;
+extern struct t_config_option *config_look_bar_more_left;
+extern struct t_config_option *config_look_bar_more_right;
+extern struct t_config_option *config_look_bar_more_up;
+extern struct t_config_option *config_look_bar_more_down;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_command_chars;

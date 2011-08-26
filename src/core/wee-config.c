@@ -79,6 +79,10 @@ struct t_config_option *config_startup_display_version;
 /* config, look & feel section */
 
 struct t_config_option *config_look_align_end_of_lines;
+struct t_config_option *config_look_bar_more_left;
+struct t_config_option *config_look_bar_more_right;
+struct t_config_option *config_look_bar_more_up;
+struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_pairs_auto_reset;
@@ -1598,6 +1602,30 @@ config_weechat_init_options ()
            "are starting under this data (time, buffer, prefix, suffix, "
            "message (default))"),
         "time|buffer|prefix|suffix|message", 0, 0, "message", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_bar_more_left = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bar_more_left", "string",
+        N_("string displayed when bar can be scrolled to the left "
+           "(for bars with filling \"horizontal\")"),
+        NULL, 0, 0, "<<", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_bar_more_right = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bar_more_right", "string",
+        N_("string displayed when bar can be scrolled to the right "
+           "(for bars with filling \"horizontal\")"),
+        NULL, 0, 0, ">>", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_bar_more_up = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bar_more_up", "string",
+        N_("string displayed when bar can be scrolled up "
+           "(for bars with filling different from \"horizontal\")"),
+        NULL, 0, 0, "--", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_bar_more_down = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bar_more_down", "string",
+        N_("string displayed when bar can be scrolled down "
+           "(for bars with filling different from \"horizontal\")"),
+        NULL, 0, 0, "++", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_notify_default", "integer",
@@ -1789,7 +1817,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "item_buffer_filter", "string",
         N_("string used to show that some lines are filtered in current buffer "
-           "(bar item \"buffer_filter\""),
+           "(bar item \"buffer_filter\")"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
