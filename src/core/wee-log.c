@@ -43,6 +43,7 @@
 #include "wee-log.h"
 #include "wee-debug.h"
 #include "wee-string.h"
+#include "../plugins/plugin.h"
 
 
 char *weechat_log_filename = NULL; /* log name (~/.weechat/weechat.log)     */
@@ -125,48 +126,48 @@ log_init ()
 void
 log_printf (const char *message, ...)
 {
-    static char buffer[4096];
     char *ptr_buffer;
-    va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
     
     if (!weechat_log_file)
         return;
     
-    va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
-    va_end (argptr);
-    
-    /* keep only valid chars */
-    ptr_buffer = buffer;
-    while (ptr_buffer[0])
+    weechat_va_format (message);
+    if (vbuffer)
     {
-        if ((ptr_buffer[0] != '\n')
-            && (ptr_buffer[0] != '\r')
-            && ((unsigned char)(ptr_buffer[0]) < 32))
-            ptr_buffer[0] = '.';
-        ptr_buffer++;
-    }
-
-    if (!weechat_log_use_time)
-        string_iconv_fprintf (weechat_log_file, "%s\n", buffer);
-    else
-    {
-        seconds = time (NULL);
-        date_tmp = localtime (&seconds);
-        if (date_tmp)
-            string_iconv_fprintf (weechat_log_file,
-                                  "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
-                                  date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
-                                  date_tmp->tm_mday, date_tmp->tm_hour,
-                                  date_tmp->tm_min, date_tmp->tm_sec,
-                                  buffer);
+        /* keep only valid chars */
+        ptr_buffer = vbuffer;
+        while (ptr_buffer[0])
+        {
+            if ((ptr_buffer[0] != '\n')
+                && (ptr_buffer[0] != '\r')
+                && ((unsigned char)(ptr_buffer[0]) < 32))
+                ptr_buffer[0] = '.';
+            ptr_buffer++;
+        }
+        
+        if (!weechat_log_use_time)
+            string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
         else
-            string_iconv_fprintf (weechat_log_file, "%s\n", buffer);
+        {
+            seconds = time (NULL);
+            date_tmp = localtime (&seconds);
+            if (date_tmp)
+                string_iconv_fprintf (weechat_log_file,
+                                      "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
+                                      date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
+                                      date_tmp->tm_mday, date_tmp->tm_hour,
+                                      date_tmp->tm_min, date_tmp->tm_sec,
+                                      vbuffer);
+            else
+                string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
+        }
+        
+        fflush (weechat_log_file);
+        
+        free (vbuffer);
     }
-    
-    fflush (weechat_log_file);
 }
 
 /*

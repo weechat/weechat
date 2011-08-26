@@ -567,10 +567,9 @@ void
 gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            const char *tags, const char *message, ...)
 {
-    va_list argptr;
     time_t date_printed;
     int display_time, length, at_least_one_message_printed;
-    char strbuf[8192], *pos, *pos_prefix, *pos_tab, *pos_end;
+    char *pos, *pos_prefix, *pos_tab, *pos_end;
     char *modifier_data, *new_msg, *ptr_msg;
     struct t_gui_line *ptr_line;
     
@@ -601,11 +600,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             && (gui_chat_mute_buffer == buffer)))
         return;
     
-    va_start (argptr, message);
-    vsnprintf (strbuf, sizeof (strbuf) - 1, message, argptr);
-    va_end (argptr);
+    weechat_va_format (message);
+    if (!vbuffer)
+        return;
     
-    utf8_normalize (strbuf, '?');
+    utf8_normalize (vbuffer, '?');
     
     date_printed = time (NULL);
     if (date <= 0)
@@ -613,7 +612,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     
     at_least_one_message_printed = 0;
     
-    pos = strbuf;
+    pos = vbuffer;
     while (pos)
     {
         /* display until next end of line */
@@ -648,7 +647,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                          * print anything
                          */
                         free (new_msg);
-                        return;
+                        goto end;
                     }
                     if (strcmp (message, new_msg) == 0)
                     {
@@ -718,6 +717,9 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     
     if (gui_init_ok && at_least_one_message_printed)
         gui_buffer_ask_chat_refresh (buffer, 1);
+    
+end:
+    free (vbuffer);
 }
 
 /*
@@ -729,9 +731,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 void
 gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 {
-    va_list argptr;
     struct t_gui_line *ptr_line;
-    char strbuf[8192];
     int i, num_lines_to_add;
     
     if (gui_init_ok)
@@ -746,14 +746,14 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             return;
     }
     
-    va_start (argptr, message);
-    vsnprintf (strbuf, sizeof (strbuf) - 1, message, argptr);
-    va_end (argptr);
+    weechat_va_format (message);
+    if (!vbuffer)
+        return;
     
-    utf8_normalize (strbuf, '?');
+    utf8_normalize (vbuffer, '?');
     
     /* no message: delete line */
-    if (!strbuf[0])
+    if (!vbuffer[0])
     {
         if (gui_init_ok)
         {
@@ -794,12 +794,14 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
                     gui_line_add_y (buffer, i, "");
                 }
             }
-            gui_line_add_y (buffer, y, strbuf);
+            gui_line_add_y (buffer, y, vbuffer);
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else
-            string_iconv_fprintf (stdout, "%s\n", strbuf);
+            string_iconv_fprintf (stdout, "%s\n", vbuffer);
     }
+    
+    free (vbuffer);
 }
 
 /*

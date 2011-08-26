@@ -57,6 +57,7 @@
 #include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
+#include "../plugins/plugin.h"
 
 
 /*
@@ -1325,26 +1326,20 @@ string_iconv_from_internal (const char *charset, const char *string)
 int
 string_iconv_fprintf (FILE *file, const char *data, ...)
 {
-    va_list argptr;
-    char *buf, *buf2;
+    char *buf2;
     int rc, num_written;
     
-    buf = malloc (128 * 1024);
-    if (!buf)
-        return 0;
-    
-    va_start (argptr, data);
-    vsnprintf (buf, 128 * 1024, data, argptr);
-    va_end (argptr);
-    
-    buf2 = string_iconv_from_internal (NULL, buf);
-    num_written = fprintf (file, "%s", (buf2) ? buf2 : buf);
-    
-    rc = (num_written == (int)strlen ((buf2) ? buf2 : buf)) ? 1 : 0;
-    
-    free (buf);
-    if (buf2)
-        free (buf2);
+    rc = 0;
+    weechat_va_format (data);
+    if (vbuffer)
+    {
+        buf2 = string_iconv_from_internal (NULL, vbuffer);
+        num_written = fprintf (file, "%s", (buf2) ? buf2 : vbuffer);
+        rc = (num_written == (int)strlen ((buf2) ? buf2 : vbuffer)) ? 1 : 0;
+        if (buf2)
+            free (buf2);
+        free (vbuffer);
+    }
     
     return rc;
 }

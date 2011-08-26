@@ -43,25 +43,30 @@ int
 relay_client_weechat_sendf (struct t_relay_client *client,
                             const char *format, ...)
 {
-    va_list args;
-    static char buffer[4096];
     char str_length[8];
-    int length, num_sent;
+    int length_vbuffer, num_sent, total_sent;
     
     if (!client)
         return 0;
     
-    va_start (args, format);
-    vsnprintf (buffer + 7, sizeof (buffer) - 7 - 1, format, args);
-    va_end (args);
+    weechat_va_format (format);
+    if (!vbuffer)
+        return 0;
+    length_vbuffer = strlen (vbuffer);
     
-    length = strlen (buffer + 7);
-    snprintf (str_length, sizeof (str_length), "%07d", length);
-    memcpy (buffer, str_length, 7);
+    total_sent = 0;
     
-    num_sent = send (client->sock, buffer, length + 7, 0);
+    snprintf (str_length, sizeof (str_length), "%07d", length_vbuffer);
     
-    client->bytes_sent += length + 7;
+    num_sent = send (client->sock, str_length, 7, 0);
+    client->bytes_sent += 7;
+    total_sent += num_sent;
+    if (num_sent >= 0)
+    {
+        num_sent = send (client->sock, vbuffer, length_vbuffer, 0);
+        client->bytes_sent += length_vbuffer;
+        total_sent += num_sent;
+    }
     
     if (num_sent < 0)
     {
@@ -71,7 +76,7 @@ relay_client_weechat_sendf (struct t_relay_client *client,
                         strerror (errno));
     }
     
-    return num_sent;
+    return total_sent;
 }
 
 /*

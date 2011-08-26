@@ -54,7 +54,6 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
 struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
-char *logger_buf_write = NULL;         /* buffer for writing a line         */
 
 
 /*
@@ -514,17 +513,11 @@ void
 logger_write_line (struct t_logger_buffer *logger_buffer,
                    const char *format, ...)
 {
-    va_list argptr;
-    char *message, buf_time[256];
+    char *message, buf_time[256], buf_beginning[1024];
     const char *charset;
     time_t seconds;
     struct tm *date_tmp;
     int log_level;
-    
-    if (!logger_buf_write)
-        logger_buf_write = malloc (LOGGER_BUF_WRITE_SIZE);
-    if (!logger_buf_write)
-        return;
     
     charset = weechat_info_get ("charset_terminal", "");
     
@@ -580,13 +573,13 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                           weechat_config_string (logger_config_file_time_format),
                           date_tmp);
             }
-            snprintf (logger_buf_write, LOGGER_BUF_WRITE_SIZE,
+            snprintf (buf_beginning, sizeof (buf_beginning),
                       _("%s\t****  Beginning of log  ****"),
                       buf_time);
             message = (charset) ?
-                weechat_iconv_from_internal (charset, logger_buf_write) : NULL;
+                weechat_iconv_from_internal (charset, buf_beginning) : NULL;
             fprintf (logger_buffer->log_file,
-                     "%s\n", (message) ? message : logger_buf_write);
+                     "%s\n", (message) ? message : buf_beginning);
             if (message)
                 free (message);
             logger_buffer->flush_needed = 1;
@@ -594,23 +587,22 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         logger_buffer->write_start_info_line = 0;
     }
     
-    va_start (argptr, format);
-    vsnprintf (logger_buf_write, LOGGER_BUF_WRITE_SIZE, format, argptr);
-    va_end (argptr);
-    
-    message = (charset) ?
-        weechat_iconv_from_internal (charset, logger_buf_write) : NULL;
-    
-    fprintf (logger_buffer->log_file,
-             "%s\n", (message) ? message : logger_buf_write);
-    if (message)
-        free (message);
-    logger_buffer->flush_needed = 1;
-    
-    if (!logger_timer)
+    weechat_va_format (format);
+    if (vbuffer)
     {
-        fflush (logger_buffer->log_file);
-        logger_buffer->flush_needed = 0;
+        message = (charset) ?
+            weechat_iconv_from_internal (charset, vbuffer) : NULL;
+        fprintf (logger_buffer->log_file,
+                 "%s\n", (message) ? message : vbuffer);
+        if (message)
+            free (message);
+        logger_buffer->flush_needed = 1;
+        if (!logger_timer)
+        {
+            fflush (logger_buffer->log_file);
+            logger_buffer->flush_needed = 0;
+        }
+        free (vbuffer);
     }
 }
 
@@ -1338,9 +1330,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     logger_stop_all (1);
     
     logger_config_free ();
-    
-    if (logger_buf_write)
-        free (logger_buf_write);
     
     return WEECHAT_RC_OK;
 }

@@ -44,6 +44,7 @@
 #include "wee-backtrace.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "../plugins/plugin.h"
 
 
 /*
@@ -54,15 +55,13 @@
 void
 weechat_backtrace_printf (const char *message, ...)
 {
-    static char buffer[4096];
-    va_list argptr;
-    
-    va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
-    va_end (argptr);
-
-    string_iconv_fprintf (stderr, "%s\n", buffer);
-    log_printf ("%s", buffer);
+    weechat_va_format (message);
+    if (vbuffer)
+    {
+        string_iconv_fprintf (stderr, "%s\n", vbuffer);
+        log_printf ("%s", vbuffer);
+        free (vbuffer);
+    }
 }
 
 /*

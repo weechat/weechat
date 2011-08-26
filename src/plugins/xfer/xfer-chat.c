@@ -54,27 +54,21 @@ xfer_chat_send (struct t_xfer *xfer, const char *buffer, int size_buf)
 void
 xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
 {
-    va_list args;
-    static char buffer[4096];
-    int size_buf;
     char *ptr_msg, *msg_encoded;
     
     if (!xfer || (xfer->sock < 0))
         return;
     
-    va_start (args, format);
-    size_buf = vsnprintf (buffer, sizeof (buffer) - 1, format, args);
-    va_end (args);
-    if (size_buf == 0)
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
-    buffer[sizeof (buffer) - 1] = '\0';
     
     msg_encoded = (xfer->charset_modifier) ?
         weechat_hook_modifier_exec ("charset_encode",
                                     xfer->charset_modifier,
-                                    buffer) : NULL;
+                                    vbuffer) : NULL;
     
-    ptr_msg = (msg_encoded) ? msg_encoded : buffer;
+    ptr_msg = (msg_encoded) ? msg_encoded : vbuffer;
     
     if (xfer_chat_send (xfer, ptr_msg, strlen (ptr_msg)) <= 0)
     {
@@ -87,6 +81,8 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
     
     if (msg_encoded)
         free (msg_encoded);
+    
+    free (vbuffer);
 }
 
 /*

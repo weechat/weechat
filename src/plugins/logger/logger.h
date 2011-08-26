@@ -23,8 +23,7 @@
 #define weechat_plugin weechat_logger_plugin
 #define LOGGER_PLUGIN_NAME "logger"
 
-#define LOGGER_BUF_WRITE_SIZE  (16*1024)
-#define LOGGER_LEVEL_DEFAULT   9
+#define LOGGER_LEVEL_DEFAULT 9
 
 extern struct t_weechat_plugin *weechat_logger_plugin;
 

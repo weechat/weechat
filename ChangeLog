@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-25
+v0.3.6-dev, 2011-08-26
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: use dynamic buffer size for calls to vsnprintf
 * core: fix memory leak in unhook of hook_connect
 * core: fix memory leak in display of empty bar items
 * core: fix input of wide UTF-8 chars under Cygwin (bug #34061)

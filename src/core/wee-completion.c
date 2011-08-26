@@ -42,7 +42,6 @@
 #include "wee-list.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
-#include "../plugins/plugin.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-window.h"
@@ -52,6 +51,7 @@
 #include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
+#include "../plugins/plugin.h"
 
 
 /*

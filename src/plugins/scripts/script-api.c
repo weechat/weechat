@@ -609,24 +609,19 @@ script_api_printf (struct t_weechat_plugin *weechat_plugin,
                    struct t_plugin_script *script,
                    struct t_gui_buffer *buffer, const char *format, ...)
 {
-    va_list argptr;
-    char *buf, *buf2;
+    char *buf2;
     
-    buf = malloc (128 * 1024);
-    if (!buf)
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
     
-    va_start (argptr, format);
-    vsnprintf (buf, 128 * 1024, format, argptr);
-    va_end (argptr);
-    
     buf2 = (script && script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_printf (buffer, "%s", (buf2) ? buf2 : buf);
-    
-    free (buf);
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf (buffer, "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
+    
+    free (vbuffer);
 }
 
 /*
@@ -640,25 +635,20 @@ script_api_printf_date_tags (struct t_weechat_plugin *weechat_plugin,
                              time_t date, const char *tags,
                              const char *format, ...)
 {
-    va_list argptr;
-    char *buf, *buf2;
-
-    buf = malloc (128 * 1024);
-    if (!buf)
+    char *buf2;
+    
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
     
-    va_start (argptr, format);
-    vsnprintf (buf, 128 * 1024, format, argptr);
-    va_end (argptr);
-    
     buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
     weechat_printf_date_tags (buffer, date, tags,
-                              "%s", (buf2) ? buf2 : buf);
-    
-    free (buf);
+                              "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
+    
+    free (vbuffer);
 }
 
 /*
@@ -671,24 +661,19 @@ script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
                      struct t_gui_buffer *buffer, int y,
                      const char *format, ...)
 {
-    va_list argptr;
-    char *buf, *buf2;
-
-    buf = malloc (128 * 1024);
-    if (!buf)
+    char *buf2;
+    
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
     
-    va_start (argptr, format);
-    vsnprintf (buf, 128 * 1024, format, argptr);
-    va_end (argptr);
-    
     buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_printf_y (buffer, y, "%s", (buf2) ? buf2 : buf);
-    
-    free (buf);
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_printf_y (buffer, y, "%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
+    
+    free (vbuffer);
 }
 
 /*
@@ -700,22 +685,19 @@ script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        const char *format, ...)
 {
-    va_list argptr;
-    char *buf, *buf2;
-
-    buf = malloc (128 * 1024);
+    char *buf2;
     
-    va_start (argptr, format);
-    vsnprintf (buf, 128 * 1024, format, argptr);
-    va_end (argptr);
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
     
     buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_log_printf ("%s", (buf2) ? buf2 : buf);
-    
-    free (buf);
+        weechat_iconv_to_internal (script->charset, vbuffer) : NULL;
+    weechat_log_printf ("%s", (buf2) ? buf2 : vbuffer);
     if (buf2)
         free (buf2);
+    
+    free (vbuffer);
 }
 
 /*

@@ -1872,22 +1872,24 @@ int
 config_file_write_line (struct t_config_file *config_file,
                         const char *option_name, const char *value, ...)
 {
-    char buf[4096];
-    va_list argptr;
+    int rc;
     
     if (!config_file || !option_name)
         return 0;
     
     if (value && value[0])
     {
-        va_start (argptr, value);
-        vsnprintf (buf, sizeof (buf) - 1, value, argptr);
-        va_end (argptr);
-        
-        if (buf[0])
+        weechat_va_format (value);
+        if (vbuffer)
         {
-            return (string_iconv_fprintf (config_file->file, "%s = %s\n",
-                                          option_name, buf));
+            if (vbuffer[0])
+            {
+                rc = string_iconv_fprintf (config_file->file, "%s = %s\n",
+                                           option_name, vbuffer);
+                free (vbuffer);
+                return rc;
+            }
+            free (vbuffer);
         }
     }
     
