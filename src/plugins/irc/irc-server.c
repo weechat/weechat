@@ -1749,7 +1749,7 @@ struct t_hashtable *
 irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
-    char **items, hash_key[32];
+    char **items, hash_key[32], value[32];
     const char *str_message, *str_args;
     int i, items_count, number, ret_number, rc;
     struct t_hashtable *hashtable, *ret_hashtable;
@@ -1806,6 +1806,11 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                     ret_number++;
                 }
                 number++;
+            }
+            if (ret_hashtable)
+            {
+                snprintf (value, sizeof (value), "%d", ret_number - 1);
+                weechat_hashtable_set (ret_hashtable, "count", value);
             }
             weechat_hashtable_free (hashtable);
             if (!rc)
