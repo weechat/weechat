@@ -2948,11 +2948,20 @@ int
 irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             const gnutls_datum_t *req_ca, int nreq,
                             const gnutls_pk_algorithm_t *pk_algos,
-                            int pk_algos_len, gnutls_retr_st *answer,
+                            int pk_algos_len,
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+                            gnutls_retr2_st *answer,
+#else
+                            gnutls_retr_st *answer,
+#endif
                             int action)
 {
     struct t_irc_server *server;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+    gnutls_retr2_st tls_struct;
+#else
     gnutls_retr_st tls_struct;
+#endif
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
@@ -3145,7 +3154,12 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                     }
                     else
                     {
+
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+                        tls_struct.cert_type = GNUTLS_CRT_X509;
+#else
                         tls_struct.type = GNUTLS_CRT_X509;
+#endif
                         tls_struct.ncerts = 1;
                         tls_struct.deinit_all = 0;
                         tls_struct.cert.x509 = &server->tls_cert;
@@ -3170,7 +3184,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                             gnutls_free (cinfo.data);
                         }
 #endif
-                        memcpy (answer, &tls_struct, sizeof (gnutls_retr_st));
+                        memcpy (answer, &tls_struct, sizeof (tls_struct));
                         free (cert_str);
                     }
                 }

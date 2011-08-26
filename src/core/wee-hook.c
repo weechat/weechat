@@ -1776,7 +1776,11 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                       const gnutls_datum_t *req_ca, int nreq,
                                       const gnutls_pk_algorithm_t *pk_algos,
                                       int pk_algos_len,
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+                                      gnutls_retr2_st *answer)
+#else
                                       gnutls_retr_st *answer)
+#endif
 {
     struct t_hook *ptr_hook;
     int rc;

@@ -100,11 +100,19 @@ network_init ()
     
     network_set_gnutls_ca_file ();
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a
+    /* for gnutls >= 2.9.10 */
     gnutls_certificate_set_verify_function (gnutls_xcred,
                                             &hook_connect_gnutls_verify_certificates);
 #endif
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
+    /* for gnutls >= 2.11.0 */
+    gnutls_certificate_set_retrieve_function (gnutls_xcred,
+                                              &hook_connect_gnutls_set_certificates);
+#else
+    /* for gnutls < 2.11.0 */
     gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
                                                      &hook_connect_gnutls_set_certificates);
+#endif
 #endif
 #ifdef HAVE_GCRYPT
     gcry_check_version (GCRYPT_VERSION);
