@@ -7,9 +7,11 @@ v0.3.6-dev, 2011-08-26
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: change default value of option weechat.network.gnutls_ca_file to
+  "/etc/ssl/certs/ca-certificates.crt"
 * core: replace deprecated gnutls function
-  "gnutls_certificate_client_set_retrieve_function" by new function
-  "gnutls_certificate_set_retrieve_function" (gnutls >= 2.11.0)
+  gnutls_certificate_client_set_retrieve_function by new function
+  gnutls_certificate_set_retrieve_function (gnutls >= 2.11.0)
 * core: use dynamic buffer size for calls to vsnprintf
 * core: fix memory leak in unhook of hook_connect
 * core: fix memory leak in display of empty bar items

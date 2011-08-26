@@ -626,7 +626,7 @@
 * *weechat.network.gnutls_ca_file*
 ** Beschreibung: `Datei beinhaltet die digitalen Zertifikate ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/CAs.pem"`)
+** Werte: beliebige Zeichenkette (Standardwert: `"/etc/ssl/certs/ca-certificates.crt"`)
 
 * *weechat.network.gnutls_handshake_timeout*
 ** Beschreibung: `Zeitüberschreitung (in Sekunden) für gnutls handshake`

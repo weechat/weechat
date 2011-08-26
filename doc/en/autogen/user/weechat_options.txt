@@ -626,7 +626,7 @@
 * *weechat.network.gnutls_ca_file*
 ** description: `file containing the certificate authorities ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** type: string
-** values: any string (default value: `"%h/ssl/CAs.pem"`)
+** values: any string (default value: `"/etc/ssl/certs/ca-certificates.crt"`)
 
 * *weechat.network.gnutls_handshake_timeout*
 ** description: `timeout (in seconds) for gnutls handshake`

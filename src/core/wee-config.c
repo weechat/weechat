@@ -2437,7 +2437,7 @@ config_weechat_init_options ()
         "gnutls_ca_file", "string",
         N_("file containing the certificate authorities (\"%h\" will be "
            "replaced by WeeChat home, \"~/.weechat\" by default)"),
-        NULL, 0, 0, "%h/ssl/CAs.pem", NULL, 0, NULL, NULL,
+        NULL, 0, 0, "/etc/ssl/certs/ca-certificates.crt", NULL, 0, NULL, NULL,
         &config_change_network_gnutls_ca_file, NULL, NULL, NULL);
     config_network_gnutls_handshake_timeout = config_file_new_option (
         weechat_config_file, ptr_section,
