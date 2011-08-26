@@ -4,6 +4,6 @@
 
 | irc | irc_message_parse | analyse un message IRC | "message": message IRC | "nick": pseudo, "host": nom d'hôte, "command": commande, "channel": canal, "arguments": paramètres (inclut le canal)
 
-| irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets) | "message": message IRC, "server": nom du serveur (optionnel) | "msg1" ... "msgN": messages à envoyer (sans le "\r\n" final), "args1" ... "argsN": paramètres des messages
+| irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets) | "message": message IRC, "server": nom du serveur (optionnel) | "msg1" ... "msgN": messages à envoyer (sans le "\r\n" final), "args1" ... "argsN": paramètres des messages, "count": nombre de messages
 
 |========================================

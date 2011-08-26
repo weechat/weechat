@@ -347,8 +347,8 @@ void
 irc_message_split_add (struct t_hashtable *hashtable, int number,
                        const char *message, const char *arguments)
 {
-    char key[32];
-
+    char key[32], value[32];
+    
     if (message)
     {
         snprintf (key, sizeof (key), "msg%d", number);
@@ -372,6 +372,8 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
                             key, arguments);
         }
     }
+    snprintf (value, sizeof (value), "%d", number);
+    weechat_hashtable_set (hashtable, "count", value);
 }
 
 /*

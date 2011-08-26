@@ -618,7 +618,9 @@ irc_info_init ()
                                  /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
                                  N_("\"msg1\" ... \"msgN\": messages to send "
                                     "(without final \"\\r\\n\"), "
-                                    "\"args1\" ... \"argsN\": arguments of messages"),
+                                    "\"args1\" ... \"argsN\": arguments of "
+                                    "messages, "
+                                    "\"count\": number of messages"),
                                  &irc_info_get_info_hashtable_cb, NULL);
     
     /* infolist hooks */
