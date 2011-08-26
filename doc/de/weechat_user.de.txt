@@ -94,6 +94,8 @@ welche Pakete optional genutzt werden können.
 | gettext                 | nein     | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | libgcrypt11-dev         | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
 | libgnutls-dev (≥ 2.2.0) | nein     | SSL Verbindung zu einem IRC Server
+// TRANSLATION MISSING
+| ca-certificates         | nein     | certificates for SSL connections
 | libaspell-dev           | nein     | aspell Erweiterung
 | libperl-dev             | nein     | perl Erweiterung
 | python-dev              | nein     | python Erweiterung

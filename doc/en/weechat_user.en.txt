@@ -94,6 +94,7 @@ compile WeeChat.
 | gettext                 | no       | internationalization (translation of messages; base language is english)
 | libgcrypt11-dev         | no       | SASL authentication with IRC server using DH-BLOWFISH mechanism
 | libgnutls-dev (≥ 2.2.0) | no       | SSL connection to IRC server
+| ca-certificates         | no       | certificates for SSL connections
 | libaspell-dev           | no       | aspell plugin
 | libperl-dev             | no       | perl plugin
 | python-dev              | no       | python plugin
