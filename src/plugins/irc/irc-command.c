@@ -334,20 +334,16 @@ irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_me_channel: send a ctcp action to a channel
+ * irc_command_me_channel_display: display a ctcp action on channel
  */
 
 void
-irc_command_me_channel (struct t_irc_server *server,
-                        struct t_irc_channel *channel,
-                        const char *arguments)
+irc_command_me_channel_display (struct t_irc_server *server,
+                                struct t_irc_channel *channel,
+                                const char *arguments)
 {
     char *string;
     
-    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                      "PRIVMSG %s :\01ACTION %s\01",
-                      channel->name,
-                      (arguments && arguments[0]) ? arguments : "");
     string = (arguments && arguments[0]) ?
         irc_color_decode (arguments,
                           weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
@@ -363,6 +359,42 @@ irc_command_me_channel (struct t_irc_server *server,
                          (string) ? string : "");
     if (string)
         free (string);
+}
+
+/*
+ * irc_command_me_channel: send a ctcp action to a channel
+ */
+
+void
+irc_command_me_channel (struct t_irc_server *server,
+                        struct t_irc_channel *channel,
+                        const char *arguments)
+{
+    struct t_hashtable *hashtable;
+    int number;
+    char hash_key[32];
+    const char *str_args;
+    
+    hashtable = irc_server_sendf (server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_HASHTABLE,
+                                  NULL,
+                                  "PRIVMSG %s :\01ACTION %s\01",
+                                  channel->name,
+                                  (arguments && arguments[0]) ? arguments : "");
+    if (hashtable)
+    {
+        number = 1;
+        while (1)
+        {
+            snprintf (hash_key, sizeof (hash_key), "args%d", number);
+            str_args = weechat_hashtable_get (hashtable, hash_key);
+            if (!str_args)
+                break;
+            irc_command_me_channel_display (server, channel, str_args);
+            number++;
+        }
+        weechat_hashtable_free (hashtable);
+    }
 }
 
 /*
@@ -1737,7 +1769,7 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
     if (argc > 1)
     {
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "ISON %s", argv_eol[1]);
+                          "ISON :%s", argv_eol[1]);
     }
     else
     {
@@ -2682,9 +2714,10 @@ int
 irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    char *string;
-    int arg_nick, arg_text;
+    char *string, hash_key[32], *str_args;
+    int arg_nick, arg_text, number;
     struct t_irc_channel *ptr_channel;
+    struct t_hashtable *hashtable;
     
     IRC_BUFFER_GET_SERVER(buffer);
     
@@ -2703,28 +2736,42 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         }
         
         IRC_COMMAND_CHECK_SERVER("notice", 1);
-        
-        string = irc_color_decode (argv_eol[arg_text],
-                                   weechat_config_boolean (irc_config_network_colors_receive));
         ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
-        weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
-                             "notify_none,no_highlight",
-                             "%s%s%s%s -> %s%s%s: %s",
-                             weechat_prefix ("network"),
-                             IRC_COLOR_NOTICE,
-                             /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
-                             _("Notice"),
-                             IRC_COLOR_CHAT,
-                             (irc_channel_is_channel (argv[arg_nick])) ?
-                             IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
-                             argv[arg_nick],
-                             IRC_COLOR_CHAT,
-                             (string) ? string : argv_eol[arg_text]);
-        if (string)
-            free (string);
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "NOTICE %s :%s",
-                          argv[arg_nick], argv_eol[arg_text]);
+        hashtable = irc_server_sendf (ptr_server,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_HASHTABLE,
+                                      NULL,
+                                      "NOTICE %s :%s",
+                                      argv[arg_nick], argv_eol[arg_text]);
+        if (hashtable)
+        {
+            number = 1;
+            while (1)
+            {
+                snprintf (hash_key, sizeof (hash_key), "args%d", number);
+                str_args = weechat_hashtable_get (hashtable, hash_key);
+                if (!str_args)
+                    break;
+                string = irc_color_decode (str_args,
+                                           weechat_config_boolean (irc_config_network_colors_receive));
+                weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
+                                     "notify_none,no_highlight",
+                                     "%s%s%s%s -> %s%s%s: %s",
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_NOTICE,
+                                     /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                                     _("Notice"),
+                                     IRC_COLOR_CHAT,
+                                     (irc_channel_is_channel (argv[arg_nick])) ?
+                                     IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
+                                     argv[arg_nick],
+                                     IRC_COLOR_CHAT,
+                                     (string) ? string : str_args);
+                if (string)
+                    free (string);
+                number++;
+            }
+            weechat_hashtable_free (hashtable);
+        }
     }
     else
     {

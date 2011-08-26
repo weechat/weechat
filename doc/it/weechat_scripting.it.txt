@@ -732,18 +732,18 @@ weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 A malformed message could crash WeeChat or cause severe problems!
 Un messaggio errato può mandare in crash WeeChat o causare seri problemi!
 
-[[irc_parse_message]]
+[[irc_message_parse]]
 Verifica messaggio
 ^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.4._
 
 È possibile verificare un messaggio irc con una info_hashtable chiamata
-"irc_parse_message".
+"irc_message_parse".
 
 [source,python]
 ----------------------------------------
-dict = weechat.info_get_hashtable("irc_parse_message",
+dict = weechat.info_get_hashtable("irc_message_parse",
                                   { "message": ":nick!user@host PRIVMSG #weechat :message here" })
 weechat.prnt("", "dict: %s" % dict)
 

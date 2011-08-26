@@ -240,23 +240,34 @@ struct t_hashtable *
 irc_info_get_info_hashtable_cb (void *data, const char *info_name,
                                 struct t_hashtable *hashtable)
 {
-    const char *message;
+    const char *server, *message;
+    struct t_irc_server *ptr_server;
     struct t_hashtable *value;
     
     /* make C compiler happy */
     (void) data;
     
-    if (weechat_strcasecmp (info_name, "irc_parse_message") == 0)
+    if (!hashtable)
+        return NULL;
+    
+    if (weechat_strcasecmp (info_name, "irc_message_parse") == 0)
     {
-        if (hashtable)
+        message = weechat_hashtable_get (hashtable, "message");
+        if (message)
         {
-            message = (const char *)weechat_hashtable_get (hashtable,
-                                                           "message");
-            if (message)
-            {
-                value = irc_message_parse_to_hashtable (message);
-                return value;
-            }
+            value = irc_message_parse_to_hashtable (message);
+            return value;
+        }
+    }
+    else if (weechat_strcasecmp (info_name, "irc_message_split") == 0)
+    {
+        server = weechat_hashtable_get (hashtable, "server");
+        ptr_server = (server) ? irc_server_search (server) : NULL;
+        message = weechat_hashtable_get (hashtable, "message");
+        if (message)
+        {
+            value = irc_message_split (ptr_server, message);
+            return value;
         }
     }
     
@@ -592,13 +603,22 @@ irc_info_init ()
                        &irc_info_get_info_cb, NULL);
     
     /* info_hashtable hooks */
-    weechat_hook_info_hashtable ("irc_parse_message",
+    weechat_hook_info_hashtable ("irc_message_parse",
                                  N_("parse an IRC message"),
                                  N_("\"message\": IRC message"),
                                  /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
                                  N_("\"nick\": nick, \"host\": host, "
                                     "\"command\": command, \"channel\": channel, "
                                     "\"arguments\": arguments (includes channel)"),
+                                 &irc_info_get_info_hashtable_cb, NULL);
+    weechat_hook_info_hashtable ("irc_message_split",
+                                 N_("split an IRC message (to fit in 512 bytes)"),
+                                 N_("\"message\": IRC message, \"server\": server "
+                                    "name (optional)"),
+                                 /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+                                 N_("\"msg1\" ... \"msgN\": messages to send "
+                                    "(without final \"\\r\\n\"), "
+                                    "\"args1\" ... \"argsN\": arguments of messages"),
                                  &irc_info_get_info_hashtable_cb, NULL);
     
     /* infolist hooks */

@@ -98,8 +98,9 @@ enum t_irc_server_option
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
 
 /* flags for irc_server_sendf() */
-#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH 1
-#define IRC_SERVER_SEND_OUTQ_PRIO_LOW  2
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH   1
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW    2
+#define IRC_SERVER_SEND_RETURN_HASHTABLE 4
 
 /* output queue of messages to server (for sending slowly to server) */
 
@@ -154,6 +155,7 @@ struct t_irc_server
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "aohv") */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "&@%+") */
+    int nick_max_length;            /* max lenth of nick (from msg 005)      */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -240,8 +242,10 @@ extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *full_message,
                                     const char *tags);
 extern void irc_server_set_send_default_tags (const char *tags);
-extern void irc_server_sendf (struct t_irc_server *server, int flags,
-                              const char *tags, const char *format, ...);
+extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
+                                             int flags,
+                                             const char *tags,
+                                             const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);

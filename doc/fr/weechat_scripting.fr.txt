@@ -732,18 +732,18 @@ weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 Un message mal formé peut provoquer un plantage de WeeChat ou de sérieux
 problèmes !
 
-[[irc_parse_message]]
+[[irc_message_parse]]
 Analyser un message
 ^^^^^^^^^^^^^^^^^^^
 
 _Nouveau dans la version 0.3.4._
 
 Vous pouvez analyser un message IRC avec l'info_hashtable appelée
-"irc_parse_message".
+"irc_message_parse".
 
 [source,python]
 ----------------------------------------
-dict = weechat.info_get_hashtable("irc_parse_message",
+dict = weechat.info_get_hashtable("irc_message_parse",
                                   { "message": ":nick!user@host PRIVMSG #weechat :message ici" })
 weechat.prnt("", "dict: %s" % dict)
 

@@ -91,11 +91,11 @@ relay_client_irc_command_ignored (const char *irc_command)
 }
 
 /*
- * relay_client_irc_parse_message: parse IRC message
+ * relay_client_irc_message_parse: parse IRC message
  */
 
 struct t_hashtable *
-relay_client_irc_parse_message (const char *message)
+relay_client_irc_message_parse (const char *message)
 {
     struct t_hashtable *hash_msg, *hash_parsed;
     
@@ -115,7 +115,7 @@ relay_client_irc_parse_message (const char *message)
         goto end;
     }
     weechat_hashtable_set (hash_msg, "message", message);
-    hash_parsed = weechat_info_get_hashtable ("irc_parse_message",
+    hash_parsed = weechat_info_get_hashtable ("irc_message_parse",
                                               hash_msg);
     if (!hash_parsed)
     {
@@ -139,55 +139,77 @@ end:
 int
 relay_client_irc_sendf (struct t_relay_client *client, const char *format, ...)
 {
-    va_list args;
-    static char buffer[4096];
-    int length, num_sent;
-    char *pos;
+    int length, num_sent, total_sent, number;
+    char *pos, hash_key[32], *message;
+    const char *str_message;
+    struct t_hashtable *hashtable_in, *hashtable_out;
     
     if (!client)
         return 0;
     
-    va_start (args, format);
-    vsnprintf (buffer, sizeof (buffer) - 3, format, args);
-    va_end (args);
+    weechat_va_format (format);
+    if (!vbuffer)
+        return 0;
     
-    if (weechat_relay_plugin->debug >= 2)
-    {
-        weechat_printf (NULL, "%s: send: %s",
-                        RELAY_PLUGIN_NAME, buffer);
-    }
+    total_sent = 0;
     
-    length = strlen (buffer);
-    
-    pos = strchr (buffer, '\r');
+    pos = strchr (vbuffer, '\r');
+    if (pos)
+        pos[0] = '\0';
+    pos = strchr (vbuffer, '\n');
     if (pos)
         pos[0] = '\0';
     
-    relay_raw_print (client, 1, buffer);
-    
-    if (pos)
-        pos[0] = '\r';
-    else
+    hashtable_in = weechat_hashtable_new (8,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          NULL,
+                                          NULL);
+    if (hashtable_in)
     {
-        buffer[length] = '\r';
-        buffer[length + 1] = '\n';
-        buffer[length + 2] = '\0';
-        length += 2;
+        weechat_hashtable_set (hashtable_in, "server", client->protocol_args);
+        weechat_hashtable_set (hashtable_in, "message", vbuffer);
+        hashtable_out = weechat_info_get_hashtable ("irc_message_split",
+                                                    hashtable_in);
+        if (hashtable_out)
+        {
+            number = 1;
+            while (1)
+            {
+                snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+                str_message = weechat_hashtable_get (hashtable_out, hash_key);
+                if (!str_message)
+                    break;
+                relay_raw_print (client, 1, str_message);
+                length = strlen (str_message) + 16 + 1;
+                message = malloc (length);
+                if (message)
+                {
+                    snprintf (message, length, "%s\r\n", str_message);
+                    num_sent = send (client->sock, message, strlen (message), 0);
+                    if (num_sent >= 0)
+                        total_sent += num_sent;
+                    else
+                    {
+                        weechat_printf (NULL,
+                                        _("%s%s: error sending data to client: %s"),
+                                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                        strerror (errno));
+                    }
+                    free (message);
+                }
+                number++;
+            }
+            weechat_hashtable_free (hashtable_out);
+        }
+        weechat_hashtable_free (hashtable_in);
     }
     
-    num_sent = send (client->sock, buffer, length, 0);
+    client->bytes_sent += total_sent;
     
-    if (num_sent >= 0)
-        client->bytes_sent += num_sent;
-    else
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error sending data to client: %s"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        strerror (errno));
-    }
+    free (vbuffer);
     
-    return num_sent;
+    return total_sent;
 }
 
 /*
@@ -220,7 +242,7 @@ relay_client_irc_signal_irc_in2_cb (void *data, const char *signal,
                         ptr_msg);
     }
     
-    hash_parsed = relay_client_irc_parse_message (ptr_msg);
+    hash_parsed = relay_client_irc_message_parse (ptr_msg);
     if (hash_parsed)
     {
         irc_nick = weechat_hashtable_get (hash_parsed, "nick");
@@ -360,7 +382,7 @@ relay_client_irc_signal_irc_outtags_cb (void *data, const char *signal,
     if (relay_client_irc_tag_relay_client_id (tags) == client->id)
         goto end;
     
-    hash_parsed = relay_client_irc_parse_message (ptr_message);
+    hash_parsed = relay_client_irc_message_parse (ptr_message);
     if (hash_parsed)
     {
         irc_command = weechat_hashtable_get (hash_parsed, "command");
@@ -588,33 +610,41 @@ relay_client_irc_input_send (struct t_relay_client *client,
                              int flags,
                              const char *format, ...)
 {
-    va_list args;
-    static char buffer[4096];
-    int length;
+    char buf_beginning[1024], *buf;
+    int length_beginning, length_vbuffer;
     
-    snprintf (buffer, sizeof (buffer),
+    weechat_va_format (format);
+    if (!vbuffer)
+        return;
+    
+    snprintf (buf_beginning, sizeof (buf_beginning),
               "%s;%s;%d;relay_client_%d;",
               client->protocol_args,
               (irc_channel) ? irc_channel : "",
               flags,
               client->id);
-    
-    length = strlen (buffer);
-    
-    va_start (args, format);
-    vsnprintf (buffer + length, sizeof (buffer) - 1 - length, format, args);
-    va_end (args);
-    
-    if (weechat_relay_plugin->debug >= 2)
+
+    length_beginning = strlen (buf_beginning);
+    length_vbuffer = strlen (vbuffer);
+    buf = malloc (length_beginning + length_vbuffer + 1);
+    if (buf)
     {
-        weechat_printf (NULL,
-                        "%s: irc_input_send: \"%s\"",
-                        RELAY_PLUGIN_NAME, buffer);
+        memcpy (buf, buf_beginning, length_beginning);
+        memcpy (buf + length_beginning, vbuffer, length_vbuffer);
+        buf[length_beginning + length_vbuffer] = '\0';
+        if (weechat_relay_plugin->debug >= 2)
+        {
+            weechat_printf (NULL,
+                            "%s: irc_input_send: \"%s\"",
+                            RELAY_PLUGIN_NAME, buf);
+        }
+        
+        weechat_hook_signal_send ("irc_input_send",
+                                  WEECHAT_HOOK_SIGNAL_STRING,
+                                  buf);
+        free (buf);
     }
-    
-    weechat_hook_signal_send ("irc_input_send",
-                              WEECHAT_HOOK_SIGNAL_STRING,
-                              buffer);
+    free (vbuffer);
 }
 
 /*
@@ -690,7 +720,7 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
     relay_raw_print (client, 0, data);
     
     /* parse IRC message */
-    hash_parsed = relay_client_irc_parse_message (data);
+    hash_parsed = relay_client_irc_message_parse (data);
     if (!hash_parsed)
         goto end;
     irc_command = weechat_hashtable_get (hash_parsed, "command");
@@ -826,7 +856,6 @@ relay_client_irc_recv_one_msg (struct t_relay_client *client, char *data)
                         {
                             isupport++;
                         }
-                        /* TODO: split this message into many messages */
                         relay_client_irc_sendf (client,
                                                 ":%s 005 %s %s :are supported "
                                                 "by this server",

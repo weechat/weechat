@@ -1908,9 +1908,9 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2, *pos_start;
-    int length_isupport, length;
-
+    char *pos, *pos2, *pos_start, *error;
+    int length_isupport, length, nick_max_length;
+    
     /*
      * 005 message looks like:
      *   :server 005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10
@@ -1934,6 +1934,22 @@ IRC_PROTOCOL_CALLBACK(005)
         if (pos2)
             pos2[0] = '\0';
         irc_server_set_prefix_modes_chars (server, pos);
+        if (pos2)
+            pos2[0] = ' ';
+    }
+    
+    /* save max nick length */
+    pos = strstr (argv_eol[3], "NICKLEN=");
+    if (pos)
+    {
+        pos += 8;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        error = NULL;
+        nick_max_length = (int)strtol (pos, &error, 10);
+        if (error && !error[0] && (nick_max_length > 0))
+            server->nick_max_length = nick_max_length;
         if (pos2)
             pos2[0] = ' ';
     }

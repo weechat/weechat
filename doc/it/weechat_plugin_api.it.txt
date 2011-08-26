@@ -11188,7 +11188,7 @@ if (hashtable_in)
 {
     weechat_hashtable_set (hashtable_in, "message",
                            ":nick!user@host PRIVMSG #weechat :message here");
-    hashtable_out = weechat_info_get_hashtable ("irc_parse_message",
+    hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                 hashtable_in);
     /*
      * now hashtable_out has following keys/values:
@@ -11213,7 +11213,7 @@ dict = weechat.info_get_hashtable(info_name, dict_in)
 # esempio
 dict_in = { "message": ":nick!user@host PRIVMSG #weechat :message here" }
 weechat.prnt("", "message parsed: %s"
-             % weechat.info_get_hashtable("irc_parse_message", dict_in))
+             % weechat.info_get_hashtable("irc_message_parse", dict_in))
 ----------------------------------------
 
 [[infolists]]

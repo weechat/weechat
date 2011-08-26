@@ -64,6 +64,10 @@ Version 0.3.6 (under dev!)
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after
   /upgrade (input/close callbacks for buffer not set properly)
+* irc: add new info_hashtable "irc_message_split"
+* irc: improve split of privmsg message (keep ctcp), add split of ison, join,
+  notice, wallops, 005, 353 (bug #29879)
+* irc: rename info_hashtable "irc_parse_message" to "irc_message_parse"
 * irc: use color "default" for any invalid color in option
   weechat.color.chat_nick_colors
 * irc: send WHO command to check away nicks only if channel was not parted
@@ -269,6 +273,7 @@ Version 0.3.4 (2011-01-16)
 * irc: add signal "irc_input_send"
 * rmodifier: new plugin "rmodifier": alter modifier strings with regular
   expressions (bug #26964)
+* relay: split of messages sent to clients of irc proxy
 * relay: beta version of IRC proxy, now relay plugin is compiled by default
 * scripts: add missing function "infolist_reset_item_cursor" in API (bug #31057)
 * python: add info "python2_bin" (path to python 2.x interpreter)

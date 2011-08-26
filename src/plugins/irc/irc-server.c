@@ -633,6 +633,7 @@ irc_server_alloc (const char *name)
     new_server->isupport = NULL;
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
+    new_server->nick_max_length = 0;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -1738,32 +1739,85 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 /*
  * irc_server_sendf: send formatted data to IRC server
  *                   many messages may be sent, separated by '\n'
+ *                   if flags contains "IRC_SERVER_SEND_RETURN_HASHTABLE", then
+ *                   hashtable with split of message is returned
+ *                   (see function irc_message_split() in irc-message.c)
+ *                   note: hashtable must be freed after use
  */
 
-void
+struct t_hashtable *
 irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
-    va_list args;
-    static char buffer[4096];
-    char **items;
-    int i, items_count;
+    char **items, hash_key[32];
+    const char *str_message, *str_args;
+    int i, items_count, number, ret_number, rc;
+    struct t_hashtable *hashtable, *ret_hashtable;
     
     if (!server)
-        return;
+        return NULL;
     
-    va_start (args, format);
-    vsnprintf (buffer, sizeof (buffer) - 1, format, args);
-    va_end (args);
-
-    items = weechat_string_split (buffer, "\n", 0, 0, &items_count);
+    weechat_va_format (format);
+    if (!vbuffer)
+        return NULL;
+    
+    ret_hashtable = NULL;
+    ret_number = 1;
+    if (flags & IRC_SERVER_SEND_RETURN_HASHTABLE)
+    {
+        ret_hashtable = weechat_hashtable_new (8,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               NULL,
+                                               NULL);
+    }
+    
+    rc = 1;
+    items = weechat_string_split (vbuffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
-        if (!irc_server_send_one_msg (server, flags, items[i], tags))
-            break;
+        /* split message if needed (max is 512 bytes including final "\r\n") */
+        hashtable = irc_message_split (server, items[i]);
+        if (hashtable)
+        {
+            number = 1;
+            while (1)
+            {
+                snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+                str_message = weechat_hashtable_get (hashtable, hash_key);
+                if (!str_message)
+                    break;
+                snprintf (hash_key, sizeof (hash_key), "args%d", number);
+                str_args = weechat_hashtable_get (hashtable, hash_key);
+                
+                rc = irc_server_send_one_msg (server, flags, str_message, tags);
+                if (!rc)
+                    break;
+                
+                if (ret_hashtable)
+                {
+                    snprintf (hash_key, sizeof (hash_key), "msg%d", ret_number);
+                    weechat_hashtable_set (ret_hashtable, hash_key, str_message);
+                    if (str_args)
+                    {
+                        snprintf (hash_key, sizeof (hash_key), "args%d", ret_number);
+                        weechat_hashtable_set (ret_hashtable, hash_key, str_args);
+                    }
+                    ret_number++;
+                }
+                number++;
+            }
+            weechat_hashtable_free (hashtable);
+            if (!rc)
+                break;
+        }
     }
     if (items)
         weechat_string_free_split (items);
+    
+    free (vbuffer);
+    
+    return ret_hashtable;
 }
 
 /*
@@ -3550,14 +3604,14 @@ irc_server_autojoin_channels (struct t_irc_server *server)
                 if (ptr_channel->key)
                 {
                     irc_server_sendf (server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                       "JOIN %s %s",
                                       ptr_channel->name, ptr_channel->key);
                 }
                 else
                 {
                     irc_server_sendf (server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                       "JOIN %s",
                                       ptr_channel->name);
                 }
@@ -3995,6 +4049,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, isupport, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, nick_max_length, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, NULL);
@@ -4179,6 +4234,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "prefix_modes", server->prefix_modes))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix_chars", server->prefix_chars))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "nick_max_length", server->nick_max_length))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -4481,6 +4538,7 @@ irc_server_print_log ()
         weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
         weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);
+        weechat_log_printf ("  nick_max_length. . . : %d",    ptr_server->nick_max_length);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);

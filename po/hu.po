@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-20 08:17+0200\n"
+"POT-Creation-Date: 2011-08-26 10:17+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5344,6 +5344,18 @@ msgstr "üzenet: küldendő üzenet"
 msgid ""
 "\"nick\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
 "\"arguments\": arguments (includes channel)"
+msgstr ""
+
+msgid "split an IRC message (to fit in 512 bytes)"
+msgstr ""
+
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr ""
+
+#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+msgid ""
+"\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
+"\"args1\" ... \"argsN\": arguments of messages"
 msgstr ""
 
 #, fuzzy

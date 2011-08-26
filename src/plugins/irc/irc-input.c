@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -85,8 +86,9 @@ void
 irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                              const char *tags, char *message)
 {
-    int max_length;
-    char *pos, *pos_max, *last_space, *pos_next, *next, saved_char;
+    int number;
+    char hash_key[32], *str_args;
+    struct t_hashtable *hashtable;
     
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     
@@ -100,45 +102,24 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return;
     }
-    
-    next = NULL;
-    last_space = NULL;
-    saved_char = '\0';
-    
-    max_length = 512 - 16 - 65 - 10 - strlen (ptr_server->nick) -
-        strlen (ptr_channel->name);
-    
-    if (max_length > 0)
+    hashtable = irc_server_sendf (ptr_server,
+                                  flags | IRC_SERVER_SEND_RETURN_HASHTABLE,
+                                  tags,
+                                  "PRIVMSG %s :%s",
+                                  ptr_channel->name, message);
+    if (hashtable)
     {
-        if ((int)strlen (message) > max_length)
+        number = 1;
+        while (1)
         {
-            pos = message;
-            pos_max = message + max_length;
-            while (pos[0])
-            {
-                if (pos[0] == ' ')
-                    last_space = pos;
-                pos_next = weechat_utf8_next_char (pos);
-                if (pos_next > pos_max)
-                    break;
-                pos = pos_next;
-            }
-            if (last_space && (last_space < pos))
-                pos = last_space + 1;
-            saved_char = pos[0];
-            pos[0] = '\0';
-            next = pos;
+            snprintf (hash_key, sizeof (hash_key), "args%d", number);
+            str_args = weechat_hashtable_get (hashtable, hash_key);
+            if (!str_args)
+                break;
+            irc_input_user_message_display (buffer, str_args);
+            number++;
         }
-    }
-    
-    irc_server_sendf (ptr_server, flags, tags,
-                      "PRIVMSG %s :%s", ptr_channel->name, message);
-    irc_input_user_message_display (buffer, message);
-    
-    if (next)
-    {
-        next[0] = saved_char;
-        irc_input_send_user_message (buffer, flags, tags, next);
+        weechat_hashtable_free (hashtable);
     }
 }
 

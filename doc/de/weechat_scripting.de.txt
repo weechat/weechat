@@ -729,17 +729,17 @@ weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 [WARNING]
 Eine fehlerhafte Nachricht kann WeeChat zum Absturz bringen oder andere ernsthafte Probleme erzeugen!
 
-[[irc_parse_message]]
+[[irc_message_parse]]
 Nachrichten parsen
 ^^^^^^^^^^^^^^^^^^
 
 _Neu in Version 0.3.4._
 
-Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_parse_message" parsen.
+Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_message_parse" parsen.
 
 [source,python]
 ----------------------------------------
-dict = weechat.info_get_hashtable("irc_parse_message",
+dict = weechat.info_get_hashtable("irc_message_parse",
                                   { "message": ":nick!user@host PRIVMSG #weechat :message here" })
 weechat.prnt("", "dict: %s" % dict)
 

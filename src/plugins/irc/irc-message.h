@@ -32,5 +32,7 @@ extern const char *irc_message_get_address_from_host (const char *host);
 extern char *irc_message_replace_vars (struct t_irc_server *server,
                                        struct t_irc_channel *channel,
                                        const char *string);
+extern struct t_hashtable *irc_message_split (struct t_irc_server *server,
+                                              const char *message);
 
 #endif /* __WEECHAT_IRC_MESSAGE_H */
