@@ -458,6 +458,11 @@
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `32`)
 
+* *weechat.look.item_buffer_filter*
+** descrizione: `string used to show that some lines are filtered in current buffer (bar item "buffer_filter"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"*"`)
+
 * *weechat.look.item_time_format*
 ** descrizione: `formato dell'ora per l'elemento barra "time" (consultare man strftime per gli specificatori data/ora)`
 ** tipo: stringa

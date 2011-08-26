@@ -458,6 +458,11 @@
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: `32`)
 
+* *weechat.look.item_buffer_filter*
+** description: `chaîne utilisée pour montrer que des lignes sont filtrées dans le tampon courant (objet de barre "buffer_filter")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"*"`)
+
 * *weechat.look.item_time_format*
 ** description: `format de date/heure pour l'objet de barre \"time\" (voir man strftime pour le format de date/heure)`
 ** type: chaîne

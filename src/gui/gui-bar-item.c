@@ -932,7 +932,7 @@ char *
 gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window)
 {
-    char buf[256];
+    char buf[512];
     
     /* make C compiler happy */
     (void) data;
@@ -945,8 +945,9 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
         return NULL;
     
     snprintf (buf, sizeof (buf),
-              "%s*",
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_filter))));
+              "%s%s",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_filter))),
+              CONFIG_STRING(config_look_item_buffer_filter));
     
     return strdup (buf);
 }

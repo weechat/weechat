@@ -107,6 +107,7 @@ struct t_config_option *config_look_input_share;
 struct t_config_option *config_look_input_share_overwrite;
 struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
+struct t_config_option *config_look_item_buffer_filter;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_mouse;
@@ -1783,7 +1784,13 @@ config_weechat_init_options ()
         "item_time_format", "string",
         N_("time format for \"time\" bar item (see man strftime for date/time "
            "specifiers)"),
-        NULL, 0, 0, "%H:%M", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "%H:%M", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_item_buffer_filter = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_buffer_filter", "string",
+        N_("string used to show that some lines are filtered in current buffer "
+           "(bar item \"buffer_filter\""),
+        NULL, 0, 0, "*", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
         "jump_current_to_previous_buffer", "boolean",
