@@ -5689,7 +5689,7 @@ command_init ()
                      "  item(xxx): bar item \"xxx\"\n"
                      "The key can start or end with '*' to match many mouse "
                      "events.\n"
-                     "A special value for command wit format \"hsignal:name\" "
+                     "A special value for command with format \"hsignal:name\" "
                      "can be used for context mouse, this will send the hsignal "
                      "\"name\" with the focus hashtable as argument.\n"
                      "Another special value \"-\" can be used to disable key "
