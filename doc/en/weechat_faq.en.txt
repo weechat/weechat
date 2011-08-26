@@ -631,23 +631,15 @@ connection will be less secure by doing that):
 How can I connect to freenode server using SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must download certificate, convert it, then add it in WeeChat:
+If you are using WeeChat ≤ 0.3.5, you may have to change value of this option
 
 ----------------------------------------
-$ cd /tmp
-$ wget http://crt.gandi.net/GandiStandardSSLCA.crt
-$ openssl x509 -inform der -outform pem < GandiStandardSSLCA.crt > GandiStandardSSLCA.pem
-$ mkdir ~/.weechat/ssl
-$ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
+/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----------------------------------------
 
-To force WeeChat to reload file with the certificate authorities, change value
-of option and reset it to default value:
-
-----------------------------------------
-/set weechat.network.gnutls_ca_file ""
-/unset weechat.network.gnutls_ca_file
-----------------------------------------
+[NOTE]
+Check that you have this file on your system (commonly brought by package
+"ca-certificates").
 
 Setup server port, SSL, dhkey_size, then connect:
 

@@ -650,24 +650,17 @@ Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opjcę "s
 Jak mogę połączyć się z serwerem freenode używając SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Musisz pobrać certyfikat, skonwertowć go, następnie dodać go w WeeChat:
-
-----------------------------------------
-$ cd /tmp
-$ wget http://crt.gandi.net/GandiStandardSSLCA.crt
-$ openssl x509 -inform der -outform pem < GandiStandardSSLCA.crt > GandiStandardSSLCA.pem
-$ mkdir ~/.weechat/ssl
-$ cat GandiStandardSSLCA.pem >>~/.weechat/ssl/CAs.pem
-----------------------------------------
-
 // TRANSLATION MISSING
-To force WeeChat to reload file with the certificate authorities, change value
-of option and reset it to default value:
+If you are using WeeChat ≤ 0.3.5, you may have to change value of this option:
 
 ----------------------------------------
-/set weechat.network.gnutls_ca_file ""
-/unset weechat.network.gnutls_ca_file
+/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----------------------------------------
+
+[NOTE]
+// TRANSLATION MISSING
+Check that you have this file on your system (commonly brought by package
+"ca-certificates").
 
 // TRANSLATION MISSING
 Setup server port, SSL, dhkey_size, then connect:
