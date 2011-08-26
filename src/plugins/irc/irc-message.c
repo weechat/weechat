@@ -605,15 +605,16 @@ irc_message_split_join (struct t_hashtable *hashtable,
 }
 
 /*
- * irc_message_split_privmsg: split a PRIVMSG message, taking care of keeping
- *                            the '\01' char used in CTCP messages
- *                            return 1 if split ok, 0 if error
+ * irc_message_split_privmsg_notice: split a PRIVMSG or NOTICE message, taking
+ *                                   care of keeping the '\01' char used in
+ *                                   CTCP messages
+ *                                   return 1 if split ok, 0 if error
  */
 
 int
-irc_message_split_privmsg (struct t_hashtable *hashtable,
-                           char *host, char *command, char *target,
-                           char *arguments, int max_length_host)
+irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
+                                  char *host, char *command, char *target,
+                                  char *arguments, int max_length_host)
 {
     char prefix[512], suffix[2], *pos, saved_char;
     int length, rc;
@@ -626,7 +627,7 @@ irc_message_split_privmsg (struct t_hashtable *hashtable,
      *   :nick!user@host.com PRIVMSG #channel :hello world!
      */
     
-    /* for CTCP, target2 will be '\01xxxx' and suffix '\01' */
+    /* for CTCP, prefix will be ":\01xxxx " and suffix "\01" */
     prefix[0] = '\0';
     suffix[0] = '\0';
     length = strlen (arguments);
@@ -777,27 +778,18 @@ irc_message_split (struct t_irc_server *server, const char *message)
         if (strlen (message) > 510)
             split_ok = irc_message_split_join (hashtable, host, arguments);
     }
-    else if (weechat_strcasecmp (command, "notice") == 0)
+    else if ((weechat_strcasecmp (command, "privmsg") == 0)
+             || (weechat_strcasecmp (command, "notice") == 0))
     {
+        /* split privmsg/notice */
         if (index_args + 1 <= argc - 1)
         {
-            split_ok = irc_message_split_string (hashtable, host, command,
-                                                 argv[index_args], ":",
-                                                 (argv_eol[index_args + 1][0] == ':') ?
-                                                 argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
-                                                 NULL, ' ', max_length_host);
-        }
-    }
-    else if (weechat_strcasecmp (command, "privmsg") == 0)
-    {
-        /* split privmsg */
-        if (index_args + 1 <= argc - 1)
-        {
-            split_ok = irc_message_split_privmsg (hashtable, host, command,
-                                                  argv[index_args],
-                                                  (argv_eol[index_args + 1][0] == ':') ?
-                                                  argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
-                                                  max_length_host);
+            split_ok = irc_message_split_privmsg_notice (hashtable, host,
+                                                         command,
+                                                         argv[index_args],
+                                                         (argv_eol[index_args + 1][0] == ':') ?
+                                                         argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
+                                                         max_length_host);
         }
     }
     else if (weechat_strcasecmp (command, "005") == 0)

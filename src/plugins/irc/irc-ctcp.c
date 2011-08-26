@@ -253,29 +253,49 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                         const char *nick, const char *ctcp,
                         const char *arguments)
 {
-    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                      "NOTICE %s :\01%s%s%s\01",
-                      nick, ctcp,
-                      (arguments) ? " " : "",
-                      (arguments) ? arguments : "");
-
-    if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
+    struct t_hashtable *hashtable;
+    int number;
+    char hash_key[32];
+    const char *str_args;
+    
+    hashtable = irc_server_sendf (server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_HASHTABLE,
+                                  NULL,
+                                  "NOTICE %s :\01%s%s%s\01",
+                                  nick, ctcp,
+                                  (arguments) ? " " : "",
+                                  (arguments) ? arguments : "");
+    
+    if (hashtable)
     {
-        weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
-                             irc_protocol_tags (command,
-                                                "irc_ctcp,irc_ctcp_reply,"
-                                                "notify_none,no_highlight",
-                                                NULL),
-                             _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_NICK,
-                             nick,
-                             IRC_COLOR_CHAT,
-                             IRC_COLOR_CHAT_CHANNEL,
-                             ctcp,
-                             (arguments) ? IRC_COLOR_CHAT : "",
-                             (arguments) ? " " : "",
-                             (arguments) ? arguments : "");
+        if (weechat_config_boolean (irc_config_look_display_ctcp_reply))
+        {
+            number = 1;
+            while (1)
+            {
+                snprintf (hash_key, sizeof (hash_key), "args%d", number);
+                str_args = weechat_hashtable_get (hashtable, hash_key);
+                if (!str_args)
+                    break;
+                weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+                                     irc_protocol_tags (command,
+                                                        "irc_ctcp,irc_ctcp_reply,"
+                                                        "notify_none,no_highlight",
+                                                        NULL),
+                                     _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_CHAT_NICK,
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     ctcp,
+                                     (str_args[0]) ? IRC_COLOR_CHAT : "",
+                                     (str_args[0]) ? " " : "",
+                                     str_args);
+                number++;
+            }
+        }
+        weechat_hashtable_free (hashtable);
     }
 }
 
