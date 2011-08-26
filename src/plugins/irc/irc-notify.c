@@ -720,10 +720,12 @@ irc_notify_hsignal_cb (void *data, const char *signal,
 int
 irc_notify_timer_ison_cb (void *data, int remaining_calls)
 {
-    char ison_list[1024];
-    int total_length, length;
+    char *message, *message2, hash_key[32];
+    const char *str_message;
+    int total_length, length, nicks_added, number;
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify, *ptr_next_notify;
+    struct t_hashtable *hashtable;
     
     /* make C compiler happy */
     (void) data;
@@ -734,8 +736,13 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
     {
         if (ptr_server->is_connected && ptr_server->notify_list)
         {
-            ison_list[0] = '\0';
-            total_length = 0;
+            message = malloc (7);
+            if (!message)
+                continue;
+            
+            snprintf (message, 7, "ISON :");
+            total_length = 7;
+            nicks_added = 0;
             
             ptr_notify = ptr_server->notify_list;
             while (ptr_notify)
@@ -744,19 +751,48 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                 
                 length = strlen (ptr_notify->nick);
                 total_length += length + 1;
-                if (ison_list[0])
-                    strcat (ison_list, " ");
-                strcat (ison_list, ptr_notify->nick);
+                message2 = realloc (message, total_length);
+                if (!message2)
+                {
+                    free (message);
+                    message = NULL;
+                    break;
+                }
+                message = message2;
+                if (nicks_added > 0)
+                    strcat (message, " ");
+                strcat (message, ptr_notify->nick);
+                nicks_added++;
                 
                 ptr_notify = ptr_next_notify;
             }
-            if (ison_list[0])
+            
+            if (message && (nicks_added > 0))
             {
-                irc_redirect_new (ptr_server, "ison", "notify", 1,
-                                  NULL, 0, NULL);
-                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
-                                  NULL, "ISON :%s", ison_list);
+                hashtable = irc_message_split (ptr_server, message);
+                if (hashtable)
+                {
+                    number = 1;
+                    while (1)
+                    {
+                        snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+                        str_message = weechat_hashtable_get (hashtable,
+                                                             hash_key);
+                        if (!str_message)
+                            break;
+                        irc_redirect_new (ptr_server, "ison", "notify", 1,
+                                          NULL, 0, NULL);
+                        irc_server_sendf (ptr_server,
+                                          IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                                          NULL, str_message);
+                        number++;
+                    }
+                    weechat_hashtable_free (hashtable);
+                }
             }
+            
+            if (message)
+                free (message);
         }
     }
     
