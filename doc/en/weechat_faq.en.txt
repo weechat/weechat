@@ -631,7 +631,7 @@ connection will be less secure by doing that):
 How can I connect to freenode server using SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are using WeeChat ≤ 0.3.5, you may have to change value of this option
+If you are using WeeChat ≤ 0.3.5, you may have to change value of this option:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
