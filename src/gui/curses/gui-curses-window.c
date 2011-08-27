@@ -50,8 +50,9 @@
 #include "../gui-hotlist.h"
 #include "../gui-input.h"
 #include "../gui-key.h"
-#include "../gui-main.h"
+#include "../gui-layout.h"
 #include "../gui-line.h"
+#include "../gui-main.h"
 #include "../gui-nicklist.h"
 #include "gui-curses.h"
 
@@ -1513,7 +1514,13 @@ gui_window_refresh_windows ()
                                 gui_window_get_height () - add_top - add_bottom,
                                 0) < 0)
     {
-        gui_window_merge_all (gui_current_window);
+        if (gui_window_layout_before_zoom)
+        {
+            /* remove zoom saved, to force a new zoom */
+            gui_layout_window_remove_all (&gui_window_layout_before_zoom);
+            gui_window_layout_id_current_window = -1;
+        }
+        gui_window_zoom (gui_current_window);
     }
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)

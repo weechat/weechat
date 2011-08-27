@@ -34,6 +34,9 @@ extern int gui_ok;
 extern int gui_window_refresh_needed;
 extern int gui_window_cursor_x, gui_window_cursor_y;
 
+extern struct t_gui_layout_window *gui_window_layout_before_zoom;
+extern int gui_window_layout_id_current_window;
+
 /* window structures */
 
 struct t_gui_window_coords

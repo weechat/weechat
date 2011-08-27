@@ -7,6 +7,8 @@ v0.3.6-dev, 2011-08-27
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: do automatic zoom on current window when terminal becomes too small
+  for windows
 * core: add new options weechat.look.bar_more_left/right/up/down
 * core: add new option weechat.look.item_buffer_filter
 * core: change default value of option weechat.network.gnutls_ca_file to
