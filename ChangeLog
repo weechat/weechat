@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-26
+v0.3.6-dev, 2011-08-27
 
 
 Version 0.3.6 (under dev!)
@@ -71,6 +71,7 @@ Version 0.3.6 (under dev!)
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after
   /upgrade (input/close callbacks for buffer not set properly)
+* irc: allow server name for commands /die and /restart
 * irc: add new info_hashtable "irc_message_split"
 * irc: improve split of privmsg message (keep ctcp), add split of ison, join,
   notice, wallops, 005, 353 (bug #29879)

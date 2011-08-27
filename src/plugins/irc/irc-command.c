@@ -1311,11 +1311,18 @@ irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
     
     /* make C compiler happy */
     (void) data;
-    (void) argc;
     (void) argv;
-    (void) argv_eol;
     
-    irc_server_sendf (ptr_server, 0, NULL, "DIE");
+    if (argc > 1)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "DIE %s", argv_eol[1]);
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "DIE");
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -3468,12 +3475,18 @@ irc_command_restart (void *data, struct t_gui_buffer *buffer, int argc,
     
     /* make C compiler happy */
     (void) data;
-    (void) argc;
     (void) argv;
-    (void) argv_eol;
     
-    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                      "RESTART");
+    if (argc > 1)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "RESTART %s", argv_eol[1]);
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "RESTART");
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -4851,8 +4864,8 @@ irc_command_init ()
                           "%(nicks)|%*", &irc_command_devoice, NULL);
     weechat_hook_command ("die",
                           N_("shutdown the server"),
-                          "",
-                          "",
+                          N_("[<target>]"),
+                          N_("target: server name"),
                           NULL, &irc_command_die, NULL);
     weechat_hook_command ("disconnect",
                           N_("disconnect from IRC server(s)"),
@@ -5164,8 +5177,8 @@ irc_command_init ()
                           NULL, &irc_command_rehash, NULL);
     weechat_hook_command ("restart",
                           N_("tell the server to restart itself"),
-                          "",
-                          "",
+                          N_("[<target>]"),
+                          N_("target: server name"),
                           NULL, &irc_command_restart, NULL);
     weechat_hook_command ("sajoin",
                           N_("force a user to join channel(s)"),
