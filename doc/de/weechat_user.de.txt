@@ -270,6 +270,24 @@ Diese Fehlermeldung senden Sie bitte an den Entwickler und beschreiben was den F
 
 Danke für Ihre Mithilfe!
 
+// TRANSLATION MISSING
+[[debug_running_weechat]]
+Debug a running WeeChat
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To debug a running WeeChat (for example if WeeChat seems blocked), you can use
+gdb with process id (replace '12345' with PID of weechat-curses process):
+
+----------------------------------------
+gdb /usr/bin/weechat-curses 12345
+----------------------------------------
+
+Then like for a crash, use command `bt full`:
+
+----------------------------------------
+(gdb) bt full
+----------------------------------------
+
 
 [[usage]]
 Nutzung

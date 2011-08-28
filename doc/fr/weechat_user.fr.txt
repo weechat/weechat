@@ -277,6 +277,24 @@ a été la cause de ce plantage.
 
 Merci pour votre aide !
 
+[[debug_running_weechat]]
+Debug de WeeChat qui tourne
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pour débugger WeeChat qui tourne (par exemple si WeeChat semble bloqué), vous
+pouvez utiliser gdb avec l'identifiant du processus (remplacez '12345' par le
+PID du processus weechat-curses) :
+
+----------------------------------------
+gdb /usr/bin/weechat-curses 12345
+----------------------------------------
+
+Ensuite comme pour un crash, utilisez la commande `bt full` :
+
+----------------------------------------
+(gdb) bt full
+----------------------------------------
+
 
 [[usage]]
 Utilisation
