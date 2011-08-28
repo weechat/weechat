@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-05-15 10:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3830,17 +3830,21 @@ msgstr "elveszi a voice jogot a felhasználó(k)tól"
 msgid "shutdown the server"
 msgstr "szerver leállítása"
 
+msgid "target: server name"
+msgstr "cél: szerver neve"
+
 #, fuzzy
-msgid "disconnect from IRC server(s)"
+msgid "disconnect from one or all IRC servers"
 msgstr "kilépés a szerver(ek)ről"
 
 #, fuzzy
-msgid "<server> [<server>...] || -all"
-msgstr "szerver1 [szerver2]"
+msgid "[<server>|-all [<reason>]]"
+msgstr "[[szerver] szerver_maszk]"
 
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 
 #, fuzzy
@@ -3875,9 +3879,6 @@ msgstr ""
 
 msgid "get information describing the server"
 msgstr "szerverleíró információ lekérdezése"
-
-msgid "target: server name"
-msgstr "cél: szerver neve"
 
 msgid "invite a nick on a channel"
 msgstr "felhasználó meghívása szobából"
@@ -7584,6 +7585,10 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<server> [<server>...] || -all"
+#~ msgstr "szerver1 [szerver2]"
 
 #, fuzzy
 #~ msgid "Error: unable to bind key \"%s\""

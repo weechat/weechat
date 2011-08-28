@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3850,17 +3850,21 @@ msgstr "снимает право голоса с ника(-ов)"
 msgid "shutdown the server"
 msgstr "выключить сервер"
 
+msgid "target: server name"
+msgstr "цель: название сервера"
+
 #, fuzzy
-msgid "disconnect from IRC server(s)"
+msgid "disconnect from one or all IRC servers"
 msgstr "отключиться от сервера(-ов)"
 
 #, fuzzy
-msgid "<server> [<server>...] || -all"
-msgstr "сервер1 [сервер2]"
+msgid "[<server>|-all [<reason>]]"
+msgstr "[[сервер] маска_сервера]"
 
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 
 #, fuzzy
@@ -3895,9 +3899,6 @@ msgstr ""
 
 msgid "get information describing the server"
 msgstr "получить описание сервера"
-
-msgid "target: server name"
-msgstr "цель: название сервера"
 
 msgid "invite a nick on a channel"
 msgstr "пригласить ник на канал"
@@ -7593,6 +7594,10 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<server> [<server>...] || -all"
+#~ msgstr "сервер1 [сервер2]"
 
 #, fuzzy
 #~ msgid "Error: unable to bind key \"%s\""

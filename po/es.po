@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4279,15 +4279,22 @@ msgstr "remueve voz de el/los apodo(s)"
 msgid "shutdown the server"
 msgstr "cerrar el servidor"
 
-msgid "disconnect from IRC server(s)"
+msgid "target: server name"
+msgstr "objetivo: nombre del servidor"
+
+#, fuzzy
+msgid "disconnect from one or all IRC servers"
 msgstr "desconectarse del servidor IRC"
 
-msgid "<server> [<server>...] || -all"
-msgstr "<servidor> [<servidor>...] || -all"
+#, fuzzy
+msgid "[<server>|-all [<reason>]]"
+msgstr "[[<servidor>] <máscara>]"
 
+#, fuzzy
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 "servidor: nombre del servidor a desconectar\n"
 "    -all: desconectar de todos los servidores"
@@ -4344,9 +4351,6 @@ msgstr ""
 
 msgid "get information describing the server"
 msgstr "obtener información describiendo al servidor"
-
-msgid "target: server name"
-msgstr "objetivo: nombre del servidor"
 
 msgid "invite a nick on a channel"
 msgstr "invitar a un apodo a un canal"
@@ -8162,6 +8166,9 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#~ msgid "<server> [<server>...] || -all"
+#~ msgstr "<servidor> [<servidor>...] || -all"
 
 #~ msgid "Error: unable to bind key \"%s\""
 #~ msgstr "Error: no es posible crear el atajo \"%s\""

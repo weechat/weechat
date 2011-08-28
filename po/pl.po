@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-07-05 15:38+0200\n"
 "Last-Translator: Krzysztof Koroscik <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4250,15 +4250,22 @@ msgstr "usuwa flage voice"
 msgid "shutdown the server"
 msgstr "wyłącza serwer"
 
-msgid "disconnect from IRC server(s)"
+msgid "target: server name"
+msgstr "cel: nazwa srwera"
+
+#, fuzzy
+msgid "disconnect from one or all IRC servers"
 msgstr "rozłącza się z serwerem(ami) IRC"
 
-msgid "<server> [<server>...] || -all"
-msgstr "<serwer> [<serwer>...] || -all"
+#, fuzzy
+msgid "[<server>|-all [<reason>]]"
+msgstr "[[<serwer>] <maska_serwera>]"
 
+#, fuzzy
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 "serwer: nazwa serwera do rozłączenia\n"
 "  -all: rozłącza się ze wszystkimi serwerami"
@@ -4315,9 +4322,6 @@ msgstr ""
 
 msgid "get information describing the server"
 msgstr "pobiera informacje opisujące serwer"
-
-msgid "target: server name"
-msgstr "cel: nazwa srwera"
 
 msgid "invite a nick on a channel"
 msgstr "zaprasza użytkownika na kanał"
@@ -8067,6 +8071,9 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#~ msgid "<server> [<server>...] || -all"
+#~ msgstr "<serwer> [<serwer>...] || -all"
 
 #~ msgid "Error: unable to bind key \"%s\""
 #~ msgstr "Błąd: nie można przypisać klawisza \"%s\""

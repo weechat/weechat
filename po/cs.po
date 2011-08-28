@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-07-05 15:37+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4205,15 +4205,22 @@ msgstr "odebrat hlas z přezdívky (přezdívek)"
 msgid "shutdown the server"
 msgstr "vypnout server"
 
-msgid "disconnect from IRC server(s)"
+msgid "target: server name"
+msgstr "cíl: server jméno"
+
+#, fuzzy
+msgid "disconnect from one or all IRC servers"
 msgstr "odpojit z IRC serveru/serverů"
 
-msgid "<server> [<server>...] || -all"
-msgstr "<server> [<server>...] || -all"
+#, fuzzy
+msgid "[<server>|-all [<reason>]]"
+msgstr "[[<server>] <maska_serveru>]"
 
+#, fuzzy
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 "server: jméno serveru pro odpojení\n"
 "  -all: odpojit se od všech serverů"
@@ -4269,9 +4276,6 @@ msgstr ""
 
 msgid "get information describing the server"
 msgstr "získat informace popisující server"
-
-msgid "target: server name"
-msgstr "cíl: server jméno"
 
 msgid "invite a nick on a channel"
 msgstr "pozvat přezdívku na kanál"
@@ -8032,6 +8036,9 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#~ msgid "<server> [<server>...] || -all"
+#~ msgstr "<server> [<server>...] || -all"
 
 #~ msgid "Error: unable to bind key \"%s\""
 #~ msgstr "Chyba: nemohu napojit kalávesu \"%s\""

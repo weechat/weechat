@@ -133,16 +133,19 @@ Beispiel:
 [[command_irc_die]]
 [command]*`die`* Server herunterfahren::
 ........................................
+/die  [<target>]
+
+Ziel: Servername
 ........................................
 
 [[command_irc_disconnect]]
-[command]*`disconnect`* Verbindung, zu einem oder mehreren IRC-Server(n), trennen::
+[command]*`disconnect`* disconnect from one or all IRC servers::
 ........................................
-/disconnect  <server> [<server>...]
-             -all
+/disconnect  [<server>|-all [<reason>]]
 
 server: server name to disconnect
   -all: disconnect from all servers
+reason: reason for quit
 ........................................
 
 [[command_irc_halfop]]
@@ -489,6 +492,9 @@ option: zusätzliche Option, die von manchen Servern berücksichtigt wird.
 [[command_irc_restart]]
 [command]*`restart`* Den Server dazu bringen sich selbst neu zu starten::
 ........................................
+/restart  [<target>]
+
+Ziel: Servername
 ........................................
 
 [[command_irc_sajoin]]

@@ -1368,7 +1368,8 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
  */
 
 int
-irc_command_disconnect_one_server (struct t_irc_server *server)
+irc_command_disconnect_one_server (struct t_irc_server *server,
+                                   const char *reason)
 {
     if (!server)
         return 0;
@@ -1388,7 +1389,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
                         _("%s: auto-reconnection is cancelled"),
                         IRC_PLUGIN_NAME);
     }
-    irc_command_quit_server (server, NULL);
+    irc_command_quit_server (server, reason);
     irc_server_disconnect (server, 0, 0);
     
     /* disconnect ok */
@@ -1403,16 +1404,18 @@ int
 irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
                         char **argv, char **argv_eol)
 {
-    int i, disconnect_ok;
+    int disconnect_ok;
+    const char *reason;
     
     IRC_BUFFER_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
-    (void) argv_eol;
+    
+    reason = (argc > 2) ? argv_eol[2] : NULL;
     
     if (argc < 2)
-        disconnect_ok = irc_command_disconnect_one_server (ptr_server);
+        disconnect_ok = irc_command_disconnect_one_server (ptr_server, reason);
     else
     {
         disconnect_ok = 1;
@@ -1426,29 +1429,26 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
                     || (ptr_server->hook_fd)
                     || (ptr_server->reconnect_start != 0))
                 {
-                    if (!irc_command_disconnect_one_server (ptr_server))
+                    if (!irc_command_disconnect_one_server (ptr_server, reason))
                         disconnect_ok = 0;
                 }
             }
         }
         else
         {
-            for (i = 1; i < argc; i++)
+            ptr_server = irc_server_search (argv[1]);
+            if (ptr_server)
             {
-                ptr_server = irc_server_search (argv[i]);
-                if (ptr_server)
-                {
-                    if (!irc_command_disconnect_one_server (ptr_server))
-                        disconnect_ok = 0;
-                }
-                else
-                {
-                    weechat_printf (NULL,
-                                    _("%s%s: server \"%s\" not found"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                    argv[i]);
+                if (!irc_command_disconnect_one_server (ptr_server, reason))
                     disconnect_ok = 0;
-                }
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: server \"%s\" not found"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                argv[1]);
+                disconnect_ok = 0;
             }
         }
     }
@@ -4868,13 +4868,12 @@ irc_command_init ()
                           N_("target: server name"),
                           NULL, &irc_command_die, NULL);
     weechat_hook_command ("disconnect",
-                          N_("disconnect from IRC server(s)"),
-                          N_("<server> [<server>...]"
-                             " || -all"),
+                          N_("disconnect from one or all IRC servers"),
+                          N_("[<server>|-all [<reason>]]"),
                           N_("server: server name to disconnect\n"
-                             "  -all: disconnect from all servers"),
-                          "-all"
-                          " || %(irc_servers)|%*",
+                             "  -all: disconnect from all servers\n"
+                             "reason: reason for quit"),
+                          "%(irc_servers)|-all",
                           &irc_command_disconnect, NULL);
     weechat_hook_command ("halfop",
                           N_("give channel half-operator status to "

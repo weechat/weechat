@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-08-26 23:34+0200\n"
+"POT-Creation-Date: 2011-08-28 16:21+0200\n"
 "PO-Revision-Date: 2011-05-15 10:52+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4013,15 +4013,19 @@ msgstr ""
 msgid "shutdown the server"
 msgstr ""
 
-msgid "disconnect from IRC server(s)"
+msgid "target: server name"
 msgstr ""
 
-msgid "<server> [<server>...] || -all"
+msgid "disconnect from one or all IRC servers"
+msgstr ""
+
+msgid "[<server>|-all [<reason>]]"
 msgstr ""
 
 msgid ""
 "server: server name to disconnect\n"
-"  -all: disconnect from all servers"
+"  -all: disconnect from all servers\n"
+"reason: reason for quit"
 msgstr ""
 
 msgid "give channel half-operator status to nick(s)"
@@ -4054,9 +4058,6 @@ msgid ""
 msgstr ""
 
 msgid "get information describing the server"
-msgstr ""
-
-msgid "target: server name"
 msgstr ""
 
 msgid "invite a nick on a channel"
