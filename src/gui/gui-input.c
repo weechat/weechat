@@ -59,6 +59,7 @@ void
 gui_input_optimize_size (struct t_gui_buffer *buffer)
 {
     int optimal_size;
+    char *input_buffer2;
     
     if (buffer->input)
     {
@@ -67,7 +68,17 @@ gui_input_optimize_size (struct t_gui_buffer *buffer)
         if (buffer->input_buffer_alloc != optimal_size)
         {
             buffer->input_buffer_alloc = optimal_size;
-            buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
+            input_buffer2 = realloc (buffer->input_buffer, optimal_size);
+            if (!input_buffer2)
+            {
+                if (buffer->input_buffer)
+                {
+                    free (buffer->input_buffer);
+                    buffer->input_buffer = NULL;
+                }
+                return;
+            }
+            buffer->input_buffer = input_buffer2;
         }
     }
 }

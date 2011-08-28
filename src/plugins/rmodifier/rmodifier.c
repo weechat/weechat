@@ -130,7 +130,7 @@ char *
 rmodifier_replace_groups (const char *string, regmatch_t regex_match[],
                           const char *groups)
 {
-    char *result, *str_group, *string_to_add;
+    char *result, *result2, *str_group, *string_to_add;
     const char *ptr_groups;
     int length, num_group;
     
@@ -161,9 +161,14 @@ rmodifier_replace_groups (const char *string, regmatch_t regex_match[],
                     if (string_to_add)
                     {
                         length += strlen (string_to_add);
-                        result = realloc (result, length);
-                        if (!result)
+                        result2 = realloc (result, length);
+                        if (!result2)
+                        {
+                            if (result)
+                                free (result);
                             return NULL;
+                        }
+                        result = result2;
                         strcat (result, string_to_add);
                         free (string_to_add);
                     }

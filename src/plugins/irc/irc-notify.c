@@ -118,7 +118,7 @@ irc_notify_search (struct t_irc_server *server, const char *nick)
 void
 irc_notify_set_server_option (struct t_irc_server *server)
 {
-    char *str;
+    char *str, *str2;
     struct t_irc_notify *ptr_notify;
     int total_length, length;
     
@@ -143,7 +143,14 @@ irc_notify_set_server_option (struct t_irc_server *server)
             else
             {
                 total_length += length;
-                str = realloc (str, total_length);
+                str2 = realloc (str, total_length);
+                if (!str2)
+                {
+                    if (str)
+                        free (str);
+                    return;
+                }
+                str = str2;
             }
             if (str)
             {
@@ -754,7 +761,8 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                 message2 = realloc (message, total_length);
                 if (!message2)
                 {
-                    free (message);
+                    if (message)
+                        free (message);
                     message = NULL;
                     break;
                 }

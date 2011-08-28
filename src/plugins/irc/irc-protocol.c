@@ -1908,7 +1908,7 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2, *pos_start, *error;
+    char *pos, *pos2, *pos_start, *error, *isupport2;
     int length_isupport, length, nick_max_length;
     
     /*
@@ -1961,11 +1961,14 @@ IRC_PROTOCOL_CALLBACK(005)
     if (server->isupport)
     {
         length_isupport = strlen (server->isupport);
-        server->isupport = realloc (server->isupport,
-                                    length_isupport + /* existing */
-                                    1 + length + 1); /* new */
-        if (server->isupport)
+        isupport2 = realloc (server->isupport,
+                             length_isupport + /* existing */
+                             1 + length + 1); /* new */
+        if (isupport2)
+        {
+            server->isupport = isupport2;
             pos_start = server->isupport + length_isupport;
+        }
     }
     else
     {

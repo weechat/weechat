@@ -817,7 +817,8 @@ void
 script_action_add (char **action_list, const char *name)
 {
     int length;
-
+    char *action_list2;
+    
     length = strlen (name);
     
     if (!(*action_list))
@@ -828,13 +829,17 @@ script_action_add (char **action_list, const char *name)
     }
     else
     {
-        *action_list = realloc (*action_list,
+        action_list2 = realloc (*action_list,
                                 strlen (*action_list) + 1 + length + 1);
-        if (*action_list)
+        if (!action_list2)
         {
-            strcat (*action_list, ",");
-            strcat (*action_list, name);
+            free (*action_list);
+            *action_list = NULL;
+            return;
         }
+        *action_list = action_list2;
+        strcat (*action_list, ",");
+        strcat (*action_list, name);
     }
 }
 

@@ -576,7 +576,7 @@ char *
 gui_color_string_replace_colors (const char *string)
 {
     int length, length_color, index_string, index_result;
-    char *result, *color_name;
+    char *result, *result2, *color_name;
     const char *pos_end_name, *ptr_color;
     
     if (!string)
@@ -611,12 +611,15 @@ gui_color_string_replace_colors (const char *string)
                         {
                             length_color = strlen (ptr_color);
                             length += length_color;
-                            result = realloc (result, length);
-                            if (!result)
+                            result2 = realloc (result, length);
+                            if (!result2)
                             {
+                                if (result)
+                                    free (result);
                                 free (color_name);
                                 return NULL;
                             }
+                            result = result2;
                             strcpy (result + index_result, ptr_color);
                             index_result += length_color;
                             index_string += pos_end_name - string -

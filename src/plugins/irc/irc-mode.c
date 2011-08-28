@@ -176,7 +176,7 @@ irc_mode_channel_set (struct t_irc_server *server,
 void
 irc_mode_user_add (struct t_irc_server *server, char mode)
 {
-    char str_mode[2];
+    char str_mode[2], *nick_modes2;
 
     str_mode[0] = mode;
     str_mode[1] = '\0';
@@ -185,8 +185,18 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
     {
         if (!strchr (server->nick_modes, mode))
         {
-            server->nick_modes = realloc (server->nick_modes,
-                                          strlen (server->nick_modes) + 1 + 1);
+            nick_modes2 = realloc (server->nick_modes,
+                                   strlen (server->nick_modes) + 1 + 1);
+            if (!nick_modes2)
+            {
+                if (server->nick_modes)
+                {
+                    free (server->nick_modes);
+                    server->nick_modes = NULL;
+                }
+                return;
+            }
+            server->nick_modes = nick_modes2;
             strcat (server->nick_modes, str_mode);
             weechat_bar_item_update ("input_prompt");
         }
@@ -206,7 +216,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
 void
 irc_mode_user_remove (struct t_irc_server *server, char mode)
 {
-    char *pos;
+    char *pos, *nick_modes2;
     int new_size;
     
     if (server->nick_modes)
@@ -216,7 +226,9 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
         {
             new_size = strlen (server->nick_modes);
             memmove (pos, pos + 1, strlen (pos + 1) + 1);
-            server->nick_modes = realloc (server->nick_modes, new_size);
+            nick_modes2 = realloc (server->nick_modes, new_size);
+            if (nick_modes2)
+                server->nick_modes = nick_modes2;
             weechat_bar_item_update ("input_prompt");
         }
     }

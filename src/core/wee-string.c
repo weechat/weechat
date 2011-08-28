@@ -1039,7 +1039,7 @@ char **
 string_split_command (const char *command, char separator)
 {
     int nb_substr, arr_idx, str_idx, type;
-    char **array;
+    char **array, **array2;
     char *buffer, *p;
     const char *ptr;
 
@@ -1105,12 +1105,18 @@ string_split_command (const char *command, char separator)
         array[arr_idx++] = strdup (p);
     
     array[arr_idx] = NULL;
-
+    
     free (buffer);
-
-    array = realloc (array, (arr_idx + 1) * sizeof(array[0]));
-
-    return array;
+    
+    array2 = realloc (array, (arr_idx + 1) * sizeof(array[0]));
+    if (!array2)
+    {
+        if (array)
+            free (array);
+        return NULL;
+    }
+    
+    return array2;
 }
 
 /*
@@ -1611,7 +1617,7 @@ string_replace_with_hashtable (const char *string,
                                int *errors)
 {
     int length, length_value, index_string, index_result;
-    char *result, *key;
+    char *result, *result2, *key;
     const char *pos_end_name, *ptr_value;
     
     *errors = 0;
@@ -1651,12 +1657,15 @@ string_replace_with_hashtable (const char *string,
                         {
                             length_value = strlen (ptr_value);
                             length += length_value;
-                            result = realloc (result, length);
-                            if (!result)
+                            result2 = realloc (result, length);
+                            if (!result2)
                             {
+                                if (result)
+                                    free (result);
                                 free (key);
                                 return NULL;
                             }
+                            result = result2;
                             strcpy (result + index_result, ptr_value);
                             index_result += length_value;
                             index_string += pos_end_name - string -

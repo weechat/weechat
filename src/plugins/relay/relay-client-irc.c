@@ -469,7 +469,7 @@ void
 relay_client_irc_send_join (struct t_relay_client *client,
                             const char *channel)
 {
-    char *infolist_name, *nicks;
+    char *infolist_name, *nicks, *nicks2;
     const char *nick, *prefix, *topic;
     char *host;
     int length, length_nicks;
@@ -540,7 +540,14 @@ relay_client_irc_send_join (struct t_relay_client *client,
                     length_nicks += strlen (nick) + 1 + 1;
                     if (nicks)
                     {
-                        nicks = realloc (nicks, length_nicks);
+                        nicks2 = realloc (nicks, length_nicks);
+                        if (!nicks2)
+                        {
+                            if (nicks)
+                                free (nicks);
+                            return;
+                        }
+                        nicks = nicks2;
                         strcat (nicks, " ");
                     }
                     else

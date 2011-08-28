@@ -616,7 +616,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                          struct t_gui_window *window)
 {
     enum t_gui_bar_filling filling;
-    char *ptr_content, *content, str_reinit_color[32];
+    char *ptr_content, *content, *content2, str_reinit_color[32];
     char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
     char str_start_item[32];
     char *item_value, *item_value2, ****split_items, **linear_items;
@@ -694,7 +694,14 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         content_length += ((filling == GUI_BAR_FILLING_HORIZONTAL) ? length_start_item : 0) +
                             length_reinit_color_space +
                             strlen ((item_value) ? item_value : ptr_content);
-                        content = realloc (content, content_length);
+                        content2 = realloc (content, content_length);
+                        if (!content2)
+                        {
+                            if (content)
+                                free (content);
+                            return NULL;
+                        }
+                        content = content2;
                         if (at_least_one_item && first_sub_item)
                         {
                             /* first sub item: insert space after last item */
@@ -722,9 +729,15 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         if (filling == GUI_BAR_FILLING_HORIZONTAL)
                         {
                             content_length += length_start_item;
-                            content = realloc (content, content_length);
-                            if (content)
-                                strcat (content, str_start_item);
+                            content2 = realloc (content, content_length);
+                            if (!content2)
+                            {
+                                if (content)
+                                    free (content);
+                                return NULL;
+                            }
+                            content = content2;
+                            strcat (content, str_start_item);
                         }
                     }
                 }
@@ -732,9 +745,15 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             if (filling == GUI_BAR_FILLING_HORIZONTAL)
             {
                 content_length += length_start_item;
-                content = realloc (content, content_length);
-                if (content)
-                    strcat (content, str_start_item);
+                content2 = realloc (content, content_length);
+                if (!content2)
+                {
+                    if (content)
+                        free (content);
+                    return NULL;
+                }
+                content = content2;
+                strcat (content, str_start_item);
             }
             break;
         case GUI_BAR_FILLING_COLUMNS_HORIZONTAL: /* items in columns, with horizontal filling */
@@ -822,49 +841,53 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 content_length = 1 + (lines *
                                       ((columns *
                                         (max_length + max_length_screen + length_reinit_color_space)) + 1));
-                content = realloc (content, content_length);
-                if (content)
+                content2 = realloc (content, content_length);
+                if (!content2)
                 {
-                    content[0] = '\0';
-                    index_content = 0;
-                    for (i = 0; i < lines; i++)
+                    if (content)
+                        free (content);
+                    return NULL;
+                }
+                content = content2;
+                content[0] = '\0';
+                index_content = 0;
+                for (i = 0; i < lines; i++)
+                {
+                    for (j = 0; j < columns; j++)
                     {
-                        for (j = 0; j < columns; j++)
+                        if (filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
+                            index = (i * columns) + j;
+                        else
+                            index = (j * lines) + i;
+                        
+                        if (index >= total_items)
                         {
-                            if (filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
-                                index = (i * columns) + j;
-                            else
-                                index = (j * lines) + i;
-                            
-                            if (index >= total_items)
+                            for (k = 0; k < max_length_screen; k++)
                             {
-                                for (k = 0; k < max_length_screen; k++)
-                                {
-                                    content[index_content++] = ' ';
-                                }
-                            }
-                            else
-                            {
-                                strcpy (content + index_content, linear_items[index]);
-                                index_content += strlen (linear_items[index]);
-                                length = max_length_screen -
-                                    gui_chat_strlen_screen (linear_items[index]);
-                                for (k = 0; k < length; k++)
-                                {
-                                    content[index_content++] = ' ';
-                                }
-                            }
-                            if (j < columns - 1)
-                            {
-                                strcpy (content + index_content,
-                                        str_reinit_color_space);
-                                index_content += length_reinit_color_space;
+                                content[index_content++] = ' ';
                             }
                         }
-                        content[index_content++] = '\n';
+                        else
+                        {
+                            strcpy (content + index_content, linear_items[index]);
+                            index_content += strlen (linear_items[index]);
+                            length = max_length_screen -
+                                gui_chat_strlen_screen (linear_items[index]);
+                            for (k = 0; k < length; k++)
+                            {
+                                content[index_content++] = ' ';
+                            }
+                        }
+                        if (j < columns - 1)
+                        {
+                            strcpy (content + index_content,
+                                    str_reinit_color_space);
+                            index_content += length_reinit_color_space;
+                        }
                     }
-                    content[index_content] = '\0';
+                    content[index_content++] = '\n';
                 }
+                content[index_content] = '\0';
                 
                 free (linear_items);
             }
@@ -905,6 +928,8 @@ gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
                            int index_item, int index_subitem, int index_line,
                            int x, int y)
 {
+    struct t_gui_bar_window_coords **coords2;
+    
     if (!bar_window->coords)
     {
         bar_window->coords_count = 1;
@@ -913,8 +938,19 @@ gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
     else
     {
         bar_window->coords_count++;
-        bar_window->coords = realloc (bar_window->coords,
-                                      bar_window->coords_count * sizeof (*(bar_window->coords)));
+        coords2 = realloc (bar_window->coords,
+                           bar_window->coords_count * sizeof (*(bar_window->coords)));
+        if (!coords2)
+        {
+            if (bar_window->coords)
+            {
+                free (bar_window->coords);
+                bar_window->coords = NULL;
+            }
+            bar_window->coords_count = 0;
+            return;
+        }
+        bar_window->coords = coords2;
     }
     bar_window->coords[bar_window->coords_count - 1] = malloc (sizeof (*(bar_window->coords[bar_window->coords_count - 1])));
     bar_window->coords[bar_window->coords_count - 1]->item = index_item;

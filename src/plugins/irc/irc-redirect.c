@@ -647,6 +647,8 @@ void
 irc_redirect_message_add (struct t_irc_redirect *redirect, const char *message,
                           const char *command)
 {
+    char *output2;
+    
     /*
      * if command is not for output, then don't add message
      * (it is silently ignored)
@@ -659,9 +661,16 @@ irc_redirect_message_add (struct t_irc_redirect *redirect, const char *message,
     if (redirect->output)
     {
         redirect->output_size += strlen("\n") + strlen (message);
-        redirect->output = realloc (redirect->output, redirect->output_size);
-        if (redirect->output)
-            strcat (redirect->output, "\n");
+        output2 = realloc (redirect->output, redirect->output_size);
+        if (!output2)
+        {
+            free (redirect->output);
+            redirect->output = NULL;
+            redirect->output_size = 0;
+            return;
+        }
+        redirect->output = output2;
+        strcat (redirect->output, "\n");
     }
     else
     {

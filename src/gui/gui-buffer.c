@@ -607,7 +607,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                      const char *string)
 {
     int length, length_var, index_string, index_result;
-    char *result, *local_var;
+    char *result, *result2, *local_var;
     const char *pos_end_name, *ptr_value;
     
     if (!string)
@@ -646,12 +646,15 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                         {
                             length_var = strlen (ptr_value);
                             length += length_var;
-                            result = realloc (result, length);
-                            if (!result)
+                            result2 = realloc (result, length);
+                            if (!result2)
                             {
+                                if (result)
+                                    free (result);
                                 free (local_var);
                                 return NULL;
                             }
+                            result = result2;
                             strcpy (result + index_result, ptr_value);
                             index_result += length_var;
                             index_string += strlen (local_var) + 1;

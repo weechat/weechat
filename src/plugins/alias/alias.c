@@ -97,7 +97,8 @@ void
 alias_string_add_word (char **alias, int *length, const char *word)
 {
     int length_word;
-
+    char *alias2;
+    
     if (!word)
         return;
     
@@ -112,7 +113,17 @@ alias_string_add_word (char **alias, int *length, const char *word)
     }
     else
     {
-        *alias = realloc (*alias, strlen (*alias) + length_word + 1);
+        alias2 = realloc (*alias, strlen (*alias) + length_word + 1);
+        if (!alias2)
+        {
+            if (*alias)
+            {
+                free (*alias);
+                *alias = NULL;
+            }
+            return;
+        }
+        *alias = alias2;
         strcat (*alias, word);
     }
     *length += length_word;

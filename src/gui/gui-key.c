@@ -1323,7 +1323,7 @@ gui_key_free_all (struct t_gui_key **keys, struct t_gui_key **last_key,
 void
 gui_key_buffer_optimize ()
 {
-    int optimal_size;
+    int optimal_size, *gui_key_buffer2;
     
     optimal_size = (((gui_key_buffer_size * sizeof (int)) /
                      GUI_KEY_BUFFER_BLOCK_SIZE) *
@@ -1333,7 +1333,17 @@ gui_key_buffer_optimize ()
     if (gui_key_buffer_alloc != optimal_size)
     {
         gui_key_buffer_alloc = optimal_size;
-        gui_key_buffer = realloc (gui_key_buffer, optimal_size);
+        gui_key_buffer2 = realloc (gui_key_buffer, optimal_size);
+        if (!gui_key_buffer2)
+        {
+            if (gui_key_buffer)
+            {
+                free (gui_key_buffer);
+                gui_key_buffer = NULL;
+            }
+            return;
+        }
+        gui_key_buffer = gui_key_buffer2;
     }
 }
 

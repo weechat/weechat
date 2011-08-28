@@ -369,25 +369,41 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
 char *
 util_file_get_content (const char *filename)
 {
-    char *buffer;
+    char *buffer, *buffer2;
     FILE *f;
     size_t count, fp;
-
+    
     buffer = NULL;
     fp = 0;
-
-    f = fopen(filename, "r");
-    if (f) {
-        while(!feof(f)) {
-            buffer = (char *) realloc(buffer, (fp + 1024*sizeof(char)));
-            count = fread(&buffer[fp], sizeof(char), 1024, f);
+    
+    f = fopen (filename, "r");
+    if (f)
+    {
+        while (!feof (f))
+        {
+            buffer2 = (char *) realloc (buffer, (fp + (1024 * sizeof (char))));
+            if (!buffer2)
+            {
+                if (buffer)
+                    free (buffer);
+                return NULL;
+            }
+            buffer = buffer2;
+            count = fread (&buffer[fp], sizeof(char), 1024, f);
             fp += count;
         }
-        buffer = (char *) realloc(buffer, fp + sizeof(char));
+        buffer2 = (char *) realloc (buffer, fp + sizeof (char));
+        if (!buffer2)
+        {
+            if (buffer)
+                free (buffer);
+            return NULL;
+        }
+        buffer = buffer2;
         buffer[fp] = '\0';
-        fclose(f);
+        fclose (f);
     }
-
+    
     return buffer;
 }
 
