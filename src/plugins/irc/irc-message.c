@@ -719,6 +719,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
     command = NULL;
     arguments = NULL;
     index_args = 0;
+    argv = NULL;
+    argv_eol = NULL;
     
     /* debug message */
     if (weechat_irc_plugin->debug >= 2)
@@ -847,8 +849,10 @@ end:
         irc_message_split_add (hashtable, 1, message, arguments);
     }
     
-    weechat_string_free_split (argv);
-    weechat_string_free_split (argv_eol);
+    if (argv)
+        weechat_string_free_split (argv);
+    if (argv_eol)
+        weechat_string_free_split (argv_eol);
     
     return hashtable;
 }
