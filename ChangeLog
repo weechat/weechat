@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-08-28
+v0.3.6-dev, 2011-09-07
 
 
 Version 0.3.6 (under dev!)
@@ -77,7 +77,7 @@ Version 0.3.6 (under dev!)
 * irc: allow server name for commands /die and /restart
 * irc: add new info_hashtable "irc_message_split"
 * irc: improve split of privmsg message (keep ctcp), add split of ison, join,
-  notice, wallops, 005, 353 (bug #29879)
+  notice, wallops, 005, 353 (bug #29879, bug #33448, bug #33592)
 * irc: rename info_hashtable "irc_parse_message" to "irc_message_parse"
 * irc: use color "default" for any invalid color in option
   weechat.color.chat_nick_colors
