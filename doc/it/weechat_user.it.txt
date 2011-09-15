@@ -1255,7 +1255,7 @@ Opzioni a riga di comando
 È possibile fornire un URL per uno o più server IRC, come segue:
 
 ----------------------------------------
-[irc][6][s]://[nick[:password]@]irc.esempio.org[/porta][//#canale1][,#canale2[...]]
+irc[6][s]://[nick[:password]@]irc.esempio.org[:porta][/#canale][,#canale[...]]
 ----------------------------------------
 
 Esempio per entrare in '#weechat' e '#tizio' sul server 'irc.freenode.net',

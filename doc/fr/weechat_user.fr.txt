@@ -1269,7 +1269,7 @@ Options de ligne de commande
 Il est possible de passer une URL pour un ou plusieurs serveurs, comme suit :
 
 ----------------------------------------
-irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]
+irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/canal][,canal[...]]
 ----------------------------------------
 
 Exemple pour rejoindre '#weechat' et '#toto' sur le serveur 'irc.freenode.net',

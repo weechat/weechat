@@ -1230,7 +1230,7 @@ Command line options
 It is possible to give URL for one or many IRC servers, as follow:
 
 ----------------------------------------
-irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]
+irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----------------------------------------
 
 Example to join '#weechat' and '#toto' on server 'irc.freenode.net' server,

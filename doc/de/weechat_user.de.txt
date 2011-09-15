@@ -1246,7 +1246,7 @@ Kommandozeilen Befehle
 Es ist möglich eine oder mehrere URL von IRC Servern zu übergeben:
 
 ----------------------------------------
-irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]
+irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 ----------------------------------------
 
 Beispiel: Anmelden beim Server 'irc.freenode.net' mit dem Nick 'nono' und betreten
