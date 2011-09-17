@@ -98,8 +98,7 @@ compilare WeeChat.
 | gettext                 | no        | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | libgcrypt11-dev         | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
 | libgnutls-dev (≥ 2.2.0) | no        | connessione SSL al server IRC
-// TRANSLATION MISSING
-| ca-certificates         | no        | certificates for SSL connections
+| ca-certificates         | no        | certificati per le connessioni SSL
 | libaspell-dev           | no        | plugin aspell
 | libperl-dev             | no        | plugin perl
 | python-dev              | no        | plugin python
@@ -279,19 +278,19 @@ l'errore.
 
 Grazie per il vostro aiuto!
 
-// TRANSLATION MISSING
 [[debug_running_weechat]]
-Debug a running WeeChat
-^^^^^^^^^^^^^^^^^^^^^^^
+Debug di WeeChat durante l'esecuzione
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To debug a running WeeChat (for example if WeeChat seems blocked), you can use
-gdb with process id (replace '12345' with PID of weechat-curses process):
+Per eseguire il debug di un'istanza di WeeChat in esecuzione (ad esempio se
+WeeChat sembra sia bloccato), è possibile usare gdb con l'id del processo
+(sostituire '12345' con il PID del processo weechat-curses):
 
 ----------------------------------------
 gdb /usr/bin/weechat-curses 12345
 ----------------------------------------
 
-Then like for a crash, use command `bt full`:
+Poi, come per un crash, usare il comando `bt full`:
 
 ----------------------------------------
 (gdb) bt full

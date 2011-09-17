@@ -139,13 +139,13 @@ destinazione: nome server
 ........................................
 
 [[command_irc_disconnect]]
-[command]*`disconnect`* disconnect from one or all IRC servers::
+[command]*`disconnect`* disconnette da uno o tutti i server IRC::
 ........................................
-/disconnect  [<server>|-all [<reason>]]
+/disconnect  [<server>|-all [<motivo>]]
 
-server: server name to disconnect
-  -all: disconnect from all servers
-reason: reason for quit
+server: nome del server da cui disconnettersi
+  -all: disconnette da tutti i server
+motivo: motivo per la disconnessione
 ........................................
 
 [[command_irc_halfop]]

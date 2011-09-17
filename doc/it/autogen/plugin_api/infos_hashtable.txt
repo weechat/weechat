@@ -4,6 +4,6 @@
 
 | irc | irc_message_parse | controlla un messaggio IRC | "messaggio": messaggio IRC | "nick": nick, "host": nome host, "command": comando, "channel": canale, "arguments": argomenti (include il canale)
 
-| irc | irc_message_split | split an IRC message (to fit in 512 bytes) | "message": IRC message, "server": server name (optional) | "msg1" ... "msgN": messages to send (without final "\r\n"), "args1" ... "argsN": arguments of messages, "count": number of messages
+| irc | irc_message_split | divide un messaggio IRC (per adattarlo in 512 byte) | "message": messaggio IRC, "server": nome server (opzionale) | "msg1" ... "msgN": messaggio da inviare (senza "\r\n" finale), "args1" ... "argsN": argomenti dei messaggi, "count": numero di messaggi
 
 |========================================
