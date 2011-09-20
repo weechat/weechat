@@ -973,6 +973,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
         buffer->own_lines->lines_count++;
         
         /* fill data in new line */
+        new_line->data->buffer = buffer;
         new_line->data->y = y;
         new_line->data->date = 0;
         new_line->data->date_printed = 0;
