@@ -570,7 +570,15 @@ Zapewne chcesz to zrobić, ponieważ Bitlbee używa voice do wskazania nieobecny
 użytkowników, oraz jesteś zasypywany takimi wiadomościami. Możesz to zmienić oraz
 pozwolić WeeChat używać specjalnego koloru dla nieobecnych nicków.
 
-Na kanale '&bitlbee', wykonaj:
+// TRANSLATION MISSING
+For Bitlbee ≥ 3, do that on channel '&bitlbee':
+
+----------------------------------------
+channel set show_users online,away
+----------------------------------------
+
+// TRANSLATION MISSING
+For older version of Bitlbee, do that on channel '&bitlbee':
 
 ----------------------------------------
 set away_devoice false

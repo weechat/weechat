@@ -553,7 +553,13 @@ If you want to do that, it's probably because Bitlbee is using voice to show
 away users, and you are flooded with voice messages. Therefore, you can change
 that and let WeeChat use a special color for away nicks in nicklist.
 
-On channel '&bitlbee', do:
+For Bitlbee ≥ 3, do that on channel '&bitlbee':
+
+----------------------------------------
+channel set show_users online,away
+----------------------------------------
+
+For older version of Bitlbee, do that on channel '&bitlbee':
 
 ----------------------------------------
 set away_devoice false

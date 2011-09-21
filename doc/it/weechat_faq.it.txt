@@ -571,7 +571,15 @@ utenti assenti, e si viene tempestati di messaggi voice. Perciò, è possibile
 modificare questo comportamento e consentire a WeeChat di utilizzare un
 colore speciale per i nick assenti nella lista nick.
 
-Sul canale '&bitlbee':
+// TRANSLATION MISSING
+For Bitlbee ≥ 3, do that on channel '&bitlbee':
+
+----------------------------------------
+channel set show_users online,away
+----------------------------------------
+
+// TRANSLATION MISSING
+For older version of Bitlbee, do that on channel '&bitlbee':
 
 ----------------------------------------
 set away_devoice false

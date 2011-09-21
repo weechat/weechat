@@ -575,7 +575,13 @@ voice pour montrer les utilisateurs absents, et vous recevez plein de messages
 voice. Par conséquent, vous pouvez changer cela et laisser WeeChat utiliser une
 couleur spéciale pour les pseudos absents dans la liste des pseudos.
 
-Sur le canal '&bitlbee', faites :
+Pour Bitlbee ≥ 3, faites ceci sur le canal '&bitlbee' :
+
+----------------------------------------
+channel set show_users online,away
+----------------------------------------
+
+Pour une version plus ancienne de Bitlbee, faites ceci sur le canal '&bitlbee':
 
 ----------------------------------------
 set away_devoice false
