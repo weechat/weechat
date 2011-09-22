@@ -156,6 +156,7 @@ command_bar_list (int full)
 COMMAND_CALLBACK(bar)
 {
     int i, type, position, number;
+    long value;
     char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
@@ -254,7 +255,8 @@ COMMAND_CALLBACK(bar)
             return WEECHAT_RC_OK;
         }
         error = NULL;
-        (void) strtol (argv[5], &error, 10);
+        value = strtol (argv[5], &error, 10);
+        (void) value;
         if (error && !error[0])
         {
             /* create bar */
@@ -3621,6 +3623,7 @@ command_proxy_list ()
 COMMAND_CALLBACK(proxy)
 {
     int type;
+    long value;
     char *error;
     struct t_proxy *ptr_proxy;
     
@@ -3658,7 +3661,8 @@ COMMAND_CALLBACK(proxy)
             return WEECHAT_RC_OK;
         }
         error = NULL;
-        (void) strtol (argv[5], &error, 10);
+        value = strtol (argv[5], &error, 10);
+        (void) value;
         if (error && !error[0])
         {
             /* create proxy */

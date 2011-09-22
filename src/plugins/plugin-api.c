@@ -314,7 +314,8 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     {
         if (!weechat_dir_absolute_path[0])
         {
-            realpath (weechat_home, weechat_dir_absolute_path);
+            if (!realpath (weechat_home, weechat_dir_absolute_path))
+                return NULL;
         }
         return (weechat_dir_absolute_path[0]) ?
             weechat_dir_absolute_path : weechat_home;

@@ -913,7 +913,7 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
     char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
     char *symlink_path;
     const char *dir_home, *dir_separator;
-    int argc, i, length;
+    int argc, i, length, rc;
     struct t_plugin_script *ptr_script;
     
     if (*list)
@@ -968,7 +968,8 @@ script_action_install (struct t_weechat_plugin *weechat_plugin,
                                     {
                                         snprintf (symlink_path, length, "..%s%s",
                                                   dir_separator, base_name);
-                                        symlink (symlink_path, autoload_path);
+                                        rc = symlink (symlink_path, autoload_path);
+                                        (void) rc;
                                         free (symlink_path);
                                     }
                                     free (autoload_path);

@@ -76,10 +76,12 @@ void
 xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
 {
     char buffer[1 + 1 + 32 + 1];   /* status + error + pos + \0 */
+    int num_written;
     
     snprintf (buffer, sizeof (buffer), "%c%c%032llu",
               status + '0', error + '0', xfer->pos);
-    write (xfer->child_write, buffer, sizeof (buffer));
+    num_written = write (xfer->child_write, buffer, sizeof (buffer));
+    (void) num_written;
 }
 
 /*

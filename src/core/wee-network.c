@@ -519,7 +519,7 @@ network_connect_child (struct t_hook *hook_connect)
     char status_str[2], *ptr_address, *status_ok_with_address;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
     char status_ok_without_address[1 + 5 + 1];
-    int rc, length;
+    int rc, length, num_written;
     
     res = NULL;
     res_local = NULL;
@@ -535,7 +535,9 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* proxy not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             return;
         }
     }
@@ -551,14 +553,18 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* address not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             return;
         }
         if (!res)
         {
             /* adddress not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             return;
         }
         if ((CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]) && (res->ai_family != AF_INET6))
@@ -566,7 +572,9 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* IP address not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             freeaddrinfo (res);
             return;
         }
@@ -582,7 +590,9 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* connection refused */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             freeaddrinfo (res);
             return;
         }
@@ -594,7 +604,9 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* proxy fails to connect to peer */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             freeaddrinfo (res);
             return;
         }
@@ -620,7 +632,9 @@ network_connect_child (struct t_hook *hook_connect)
             {
                 /* fails to set local hostname/IP */
                 status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
-                write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_str, 1);
+                (void) num_written;
                 if (res_local)
                     freeaddrinfo (res_local);
                 return;
@@ -630,7 +644,9 @@ network_connect_child (struct t_hook *hook_connect)
             {
                 /* fails to set local hostname/IP */
                 status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
-                write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_str, 1);
+                (void) num_written;
                 if (res_local)
                     freeaddrinfo (res_local);
                 return;
@@ -647,7 +663,9 @@ network_connect_child (struct t_hook *hook_connect)
         {
             /* address not found */
             status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_str, 1);
+            (void) num_written;
             if (res)
                 freeaddrinfo (res);
             if (res_local)
@@ -721,21 +739,25 @@ network_connect_child (struct t_hook *hook_connect)
         
         if (status_ok_with_address)
         {
-            write (HOOK_CONNECT(hook_connect, child_write),
-                   status_ok_with_address, strlen (status_ok_with_address));
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_ok_with_address, strlen (status_ok_with_address));
+            (void) num_written;
             free (status_ok_with_address);
         }
         else
         {
             snprintf (status_ok_without_address, sizeof (status_ok_without_address),
                       "%s%05d", status_str, 0);
-            write (HOOK_CONNECT(hook_connect, child_write),
-                   status_ok_without_address, strlen (status_ok_without_address));
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_ok_without_address, strlen (status_ok_without_address));
+            (void) num_written;
         }
     }
     else
     {
-        write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             status_str, 1);
+        (void) num_written;
     }
     
     if (res)
