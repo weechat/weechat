@@ -283,10 +283,20 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
             case GUI_COLOR_RESET_CHAR:
                 string++;
                 if (apply_style)
-                    gui_chat_reset_style (window, line,
-                                          GUI_COLOR_CHAT_INACTIVE_WINDOW,
-                                          GUI_COLOR_CHAT_INACTIVE_BUFFER,
-                                          GUI_COLOR_CHAT);
+                {
+                    if (apply_style_inactive)
+                    {
+                        gui_chat_reset_style (window, line,
+                                              GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                              GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                              GUI_COLOR_CHAT);
+                    }
+                    else
+                    {
+                        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                                GUI_COLOR_CHAT);
+                    }
+                }
                 break;
             default:
                 return (char *)string;
@@ -922,10 +932,20 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     /* reset color & style for a new line */
     if (!simulate)
     {
-        gui_chat_reset_style (window, line,
-                              GUI_COLOR_CHAT_INACTIVE_WINDOW,
-                              GUI_COLOR_CHAT_INACTIVE_BUFFER,
-                              GUI_COLOR_CHAT);
+        if (CONFIG_BOOLEAN(config_look_color_inactive_message))
+        {
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                  GUI_COLOR_CHAT);
+        }
+        else
+        {
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT,
+                                  GUI_COLOR_CHAT,
+                                  GUI_COLOR_CHAT);
+        }
     }
     
     if (!line->data->message || !line->data->message[0])
