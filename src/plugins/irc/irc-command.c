@@ -75,7 +75,7 @@ irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
             strcat (command, " ");
             strcat (command, argv[i]);
         }
-        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "%s", command);
         free (command);
     }
@@ -2365,13 +2365,13 @@ irc_command_mode_server (struct t_irc_server *server,
     {
         if (channel && arguments)
         {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "MODE %s %s",
                               channel->name, arguments);
         }
         else
         {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "MODE %s",
                               (channel) ? channel->name : arguments);
         }
@@ -4586,7 +4586,7 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
                     && (strcmp (ptr_nick->name, ptr_server->nick) != 0))
                 {
                     irc_server_sendf (ptr_server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                       "NOTICE %s :%s",
                                       ptr_nick->name, argv_eol[pos_args]);
                 }

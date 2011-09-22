@@ -79,6 +79,7 @@ Version 0.3.6 (under dev!)
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after
   /upgrade (input/close callbacks for buffer not set properly)
+* irc: use high priority queue for sending modes and wallchops messages
 * irc: allow reason for command /disconnect
 * irc: allow server name for commands /die and /restart
 * irc: add new info_hashtable "irc_message_split"
