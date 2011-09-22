@@ -2797,7 +2797,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             irc_channel_search (server, argv[3]) : NULL;
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
-                                                              command, NULL,
+                                                              command, "whois",
                                                               ptr_buffer),
                              irc_protocol_tags (command, "irc_numeric", NULL),
                              "%s%s[%s%s%s] %s%s",
@@ -3185,7 +3185,7 @@ IRC_PROTOCOL_CALLBACK(346)
     else
     {
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                              command, NULL,
+                                                              command, "invitelist",
                                                               ptr_buffer),
                              irc_protocol_tags (command, "irc_numeric", NULL),
                              _("%s%s[%s%s%s] %s%s%s invited by "
