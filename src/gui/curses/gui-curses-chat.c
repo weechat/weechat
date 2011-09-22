@@ -588,7 +588,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         if (!simulate)
         {
             gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                          ((gui_current_window == window) && (line->data->buffer->active)) ?
+                                          ((!CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer))
+                                           || ((gui_current_window == window) && (line->data->buffer->active))) ?
                                           GUI_COLOR_CHAT_PREFIX_BUFFER :
                                           GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_LINE);
         }
