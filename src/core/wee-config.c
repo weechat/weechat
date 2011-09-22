@@ -1656,26 +1656,26 @@ config_weechat_init_options ()
         "color_inactive_time", "boolean",
         N_("use a different color for inactive time (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_inactive_prefix_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_prefix_buffer", "boolean",
         N_("use a different color for inactive buffer name in prefix (when "
            "window is not current window, or if line is from a merged buffer "
            "not selected)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_inactive_prefix = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_prefix", "boolean",
         N_("use a different color for inactive prefix (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_inactive_message = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_message", "boolean",
         N_("use a different color for inactive message (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_pairs_auto_reset = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_pairs_auto_reset", "integer",
