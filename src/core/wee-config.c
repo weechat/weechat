@@ -152,11 +152,11 @@ struct t_config_option *config_color_bar_more;
 struct t_config_option *config_color_chat;
 struct t_config_option *config_color_chat_bg;
 struct t_config_option *config_color_chat_inactive_window;
-struct t_config_option *config_color_chat_inactive_line;
+struct t_config_option *config_color_chat_inactive_buffer;
 struct t_config_option *config_color_chat_time;
 struct t_config_option *config_color_chat_time_delimiters;
 struct t_config_option *config_color_chat_prefix_buffer;
-struct t_config_option *config_color_chat_prefix_buffer_inactive_line;
+struct t_config_option *config_color_chat_prefix_buffer_inactive_buffer;
 struct t_config_option *config_color_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_color_chat_prefix_more;
 struct t_config_option *config_color_chat_prefix_suffix;
@@ -2090,12 +2090,12 @@ config_weechat_init_options ()
            "window)"),
         NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "darkgray", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_inactive_line = config_file_new_option (
+    config_color_chat_inactive_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_inactive_line", "color",
+        "chat_inactive_buffer", "color",
         N_("text color for chat when line is inactive (buffer is merged with "
            "other buffers and is not selected)"),
-        NULL, GUI_COLOR_CHAT_INACTIVE_LINE, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_INACTIVE_BUFFER, 0, "darkgray", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_time = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2116,13 +2116,13 @@ config_weechat_init_options ()
            "merged with same number)"),
         NULL, GUI_COLOR_CHAT_PREFIX_BUFFER, 0, "brown", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_chat_prefix_buffer_inactive_line = config_file_new_option (
+    config_color_chat_prefix_buffer_inactive_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_prefix_buffer_inactive_line", "color",
+        "chat_prefix_buffer_inactive_buffer", "color",
         N_("text color for inactive buffer name (before prefix, when many "
            "buffers are merged with same number and if buffer is not "
             "selected)"),
-        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_LINE, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER, 0, "darkgray", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,

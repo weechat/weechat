@@ -120,7 +120,7 @@ gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line)
             if (line && !(line->data->buffer->active))
             {
                 gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                        GUI_COLOR_CHAT_INACTIVE_LINE);
+                                        GUI_COLOR_CHAT_INACTIVE_BUFFER);
             }
             else
             {
@@ -591,7 +591,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                           ((!CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer))
                                            || ((gui_current_window == window) && (line->data->buffer->active))) ?
                                           GUI_COLOR_CHAT_PREFIX_BUFFER :
-                                          GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_LINE);
+                                          GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER);
         }
         
         if (window->win_chat_cursor_y < window->coords_size)

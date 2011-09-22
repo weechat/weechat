@@ -1383,8 +1383,8 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_CHAT_PREFIX_BUFFER, CONFIG_COLOR(config_color_chat_prefix_buffer), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_TAGS, CONFIG_COLOR(config_color_chat_tags), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_INACTIVE_WINDOW, CONFIG_COLOR(config_color_chat_inactive_window), CONFIG_COLOR(config_color_chat_bg));
-    gui_color_build (GUI_COLOR_CHAT_INACTIVE_LINE, CONFIG_COLOR(config_color_chat_inactive_line), CONFIG_COLOR(config_color_chat_bg));
-    gui_color_build (GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_LINE, CONFIG_COLOR(config_color_chat_prefix_buffer_inactive_line), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_INACTIVE_BUFFER, CONFIG_COLOR(config_color_chat_inactive_buffer), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER, CONFIG_COLOR(config_color_chat_prefix_buffer_inactive_buffer), CONFIG_COLOR(config_color_chat_bg));
     
     /*
      * define old nick colors for compatibility on /upgrade with previous
