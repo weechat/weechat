@@ -85,6 +85,10 @@ struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_color_inactive_time;
+struct t_config_option *config_look_color_inactive_prefix_buffer;
+struct t_config_option *config_look_color_inactive_prefix;
+struct t_config_option *config_look_color_inactive_message;
 struct t_config_option *config_look_color_pairs_auto_reset;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
@@ -147,9 +151,12 @@ struct t_config_option *config_color_separator;
 struct t_config_option *config_color_bar_more;
 struct t_config_option *config_color_chat;
 struct t_config_option *config_color_chat_bg;
+struct t_config_option *config_color_chat_inactive_window;
+struct t_config_option *config_color_chat_inactive_line;
 struct t_config_option *config_color_chat_time;
 struct t_config_option *config_color_chat_time_delimiters;
 struct t_config_option *config_color_chat_prefix_buffer;
+struct t_config_option *config_color_chat_prefix_buffer_inactive_line;
 struct t_config_option *config_color_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_color_chat_prefix_more;
 struct t_config_option *config_color_chat_prefix_suffix;
@@ -1644,6 +1651,31 @@ config_weechat_init_options ()
            "\"${color}\", for example french time: "
            "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
+    config_look_color_inactive_time = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_time", "boolean",
+        N_("use a different color for inactive time (when window is not "
+           "current window, or if line is from a merged buffer not selected)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_color_inactive_prefix_buffer = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_prefix_buffer", "boolean",
+        N_("use a different color for inactive buffer name in prefix (when "
+           "window is not current window, or if line is from a merged buffer "
+           "not selected)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_color_inactive_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_prefix", "boolean",
+        N_("use a different color for inactive prefix (when window is not "
+           "current window, or if line is from a merged buffer not selected)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_color_inactive_message = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_message", "boolean",
+        N_("use a different color for inactive message (when window is not "
+           "current window, or if line is from a merged buffer not selected)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_color_pairs_auto_reset = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_pairs_auto_reset", "integer",
@@ -2051,6 +2083,20 @@ config_weechat_init_options ()
         N_("background color for chat"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_inactive_window = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_inactive_window", "color",
+        N_("text color for chat when window is inactive (not current selected "
+           "window)"),
+        NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "darkgray", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_inactive_line = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_inactive_line", "color",
+        N_("text color for chat when line is inactive (buffer is merged with "
+           "other buffers and is not selected)"),
+        NULL, GUI_COLOR_CHAT_INACTIVE_LINE, 0, "darkgray", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_time = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_time", "color",
@@ -2069,6 +2115,14 @@ config_weechat_init_options ()
         N_("text color for buffer name (before prefix, when many buffers are "
            "merged with same number)"),
         NULL, GUI_COLOR_CHAT_PREFIX_BUFFER, 0, "brown", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_prefix_buffer_inactive_line = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_prefix_buffer_inactive_line", "color",
+        N_("text color for inactive buffer name (before prefix, when many "
+           "buffers are merged with same number and if buffer is not "
+            "selected)"),
+        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_LINE, 0, "darkgray", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,

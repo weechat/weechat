@@ -881,13 +881,13 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
         {
             prefix[0] = (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty"))) ?
                 ' ' : '\0';
-            str_prefix_color = IRC_COLOR_CHAT;
+            str_prefix_color = IRC_COLOR_RESET;
         }
     }
     else
     {
         prefix[0] = '\0';
-        str_prefix_color = IRC_COLOR_CHAT;
+        str_prefix_color = IRC_COLOR_RESET;
     }
     
     snprintf (result, sizeof (result), "%s%s%s%s%s%s%s%s\t",

@@ -338,10 +338,10 @@ irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
                         "  %s%s%s @ %s%s%s: %s%s",
                         IRC_COLOR_CHAT_NICK,
                         notify->nick,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         IRC_COLOR_CHAT_SERVER,
                         notify->server->name,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         IRC_COLOR_MESSAGE_QUIT,
                         _("offline"));
     }
@@ -351,13 +351,13 @@ irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
                         "  %s%s%s @ %s%s%s: %s%s %s%s%s%s%s%s",
                         IRC_COLOR_CHAT_NICK,
                         notify->nick,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         IRC_COLOR_CHAT_SERVER,
                         notify->server->name,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         IRC_COLOR_MESSAGE_JOIN,
                         _("online"),
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         (notify->away_message) ? " (" : "",
                         (notify->away_message) ? _("away") : "",
                         (notify->away_message) ? ": \"" : "",
@@ -387,7 +387,7 @@ irc_notify_display_list (struct t_irc_server *server)
                             _("Notify list for %s%s%s:"),
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
-                            IRC_COLOR_CHAT);
+                            IRC_COLOR_RESET);
             for (ptr_notify = server->notify_list; ptr_notify;
                  ptr_notify = ptr_notify->next_notify)
             {
@@ -504,7 +504,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_NICK,
                              notify->nick,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              away_message);
     }
     else if (notify->away_message && !away_message)
@@ -515,7 +515,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_NICK,
                              notify->nick,
-                             IRC_COLOR_CHAT);
+                             IRC_COLOR_RESET);
     }
     else if (notify->away_message && away_message)
     {
@@ -525,7 +525,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_NICK,
                              notify->nick,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              away_message);
     }
     

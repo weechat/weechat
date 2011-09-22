@@ -60,7 +60,7 @@
 #define IRC_COLOR_BAR_FG weechat_color("bar_fg")
 #define IRC_COLOR_BAR_BG weechat_color("bar_bg")
 #define IRC_COLOR_BAR_DELIM weechat_color("bar_delim")
-#define IRC_COLOR_CHAT weechat_color("chat")
+#define IRC_COLOR_RESET weechat_color("reset")
 #define IRC_COLOR_CHAT_CHANNEL weechat_color("chat_channel")
 #define IRC_COLOR_CHAT_DELIMITERS weechat_color("chat_delimiters")
 #define IRC_COLOR_CHAT_HOST weechat_color("chat_host")

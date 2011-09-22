@@ -1,12 +1,18 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-09-07
+v0.3.6-dev, 2011-09-22
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add "inactive" colors for inactive windows and lines in merged buffers,
+  new options: weechat.look.color_inactive_message,
+  weechat.look.color_inactive_prefix, weechat.look.color_inactive_prefix_buffer,
+  weechat.look.color_inactive_time, weechat.color.chat_inactive_line,
+  weechat.color.chat_inactive_window,
+  weechat.color.chat_prefix_buffer_inactive_line
 * core: do automatic zoom on current window when terminal becomes too small
   for windows
 * core: add new options weechat.look.bar_more_left/right/up/down

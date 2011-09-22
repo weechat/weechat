@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-17 08:43+0200\n"
+"POT-Creation-Date: 2011-09-21 21:29+0200\n"
 "PO-Revision-Date: 2011-09-02 14:16+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2348,6 +2348,29 @@ msgstr ""
 "${white}%M{lightred}%S\""
 
 msgid ""
+"use a different color for inactive time (when window is not current window, "
+"or if line is from a merged buffer not selected)"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"use a different color for inactive buffer name in prefix (when window is not "
+"current window, or if line is from a merged buffer not selected)"
+msgstr ""
+"colore del testo per il nome del buffer (prima del prefisso, quando più "
+"buffer sono uniti con lo stesso nome)"
+
+msgid ""
+"use a different color for inactive prefix (when window is not current "
+"window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive message (when window is not current "
+"window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
 "automatically reset table of color pairs when number of available pairs is "
 "lower or equal to this number (-1 = disable automatic reset, and then a "
 "manual \"/color reset\" is needed when table is full)"
@@ -2700,6 +2723,15 @@ msgstr "colore del testo per la chat"
 msgid "background color for chat"
 msgstr "colore di sfondo per la chat"
 
+msgid ""
+"text color for chat when window is inactive (not current selected window)"
+msgstr ""
+
+msgid ""
+"text color for chat when line is inactive (buffer is merged with other "
+"buffers and is not selected)"
+msgstr ""
+
 msgid "text color for time in chat window"
 msgstr "colore del testo per l'orario nella finestra di chat"
 
@@ -2709,6 +2741,14 @@ msgstr "colore del testo per i delimitator dell'orario"
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
 "same number)"
+msgstr ""
+"colore del testo per il nome del buffer (prima del prefisso, quando più "
+"buffer sono uniti con lo stesso nome)"
+
+#, fuzzy
+msgid ""
+"text color for inactive buffer name (before prefix, when many buffers are "
+"merged with same number and if buffer is not selected)"
 msgstr ""
 "colore del testo per il nome del buffer (prima del prefisso, quando più "
 "buffer sono uniti con lo stesso nome)"
@@ -5864,8 +5904,8 @@ msgstr "%s%s: tipo di DCC CHAT sconosciuto ricevuto da %s%s%s: \"%s\""
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sCTCP sconosciuto richiesto da %s%s%s: %s%s%s%s%s"
 
-#, c-format
-msgid "%sServer: %s%s %s[%s%s%s]%s%s"
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
 msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"

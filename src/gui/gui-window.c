@@ -228,9 +228,9 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                 word_start = (*line)->data->message;
                 while (word_start && (word_start < ptr_data))
                 {
-                    word_start = (char *)gui_chat_string_next_char (NULL,
+                    word_start = (char *)gui_chat_string_next_char (NULL, NULL,
                                                                     (unsigned char *)word_start,
-                                                                    0);
+                                                                    0, 0);
                     if (word_start)
                     {
                         if (word_start[0] == ' ')
@@ -242,9 +242,9 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
                 word_end = ptr_data;
                 while (word_end && word_end[0])
                 {
-                    word_end = (char *)gui_chat_string_next_char (NULL,
+                    word_end = (char *)gui_chat_string_next_char (NULL, NULL,
                                                                   (unsigned char *)word_end,
-                                                                  0);
+                                                                  0, 0);
                     if (word_end)
                     {
                         if (word_end[0] == ' ')

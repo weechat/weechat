@@ -87,8 +87,10 @@ extern void gui_chat_end ();
 /* chat functions (GUI dependent) */
 
 extern char *gui_chat_string_next_char (struct t_gui_window *window,
+                                        struct t_gui_line *line,
                                         const unsigned char *string,
-                                        int apply_style);
+                                        int apply_style,
+                                        int apply_style_inactive);
 extern void gui_chat_draw (struct t_gui_buffer *buffer, int erase);
 extern void gui_chat_draw_line (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);

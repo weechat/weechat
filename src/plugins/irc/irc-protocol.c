@@ -396,7 +396,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
                           && (strcmp (chan_nick, ptr_channel->name) == 0)) ?
                          IRC_COLOR_CHAT_CHANNEL : "",
                          (chan_nick) ? chan_nick : "",
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (chan_nick) ? ": " : "",
                          args);
     
@@ -428,10 +428,10 @@ IRC_PROTOCOL_CALLBACK(invite)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              (argv[3][0] == ':') ? argv[3] + 1 : argv[3],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              nick,
-                             IRC_COLOR_CHAT);
+                             IRC_COLOR_RESET);
     }
     return WEECHAT_RC_OK;
 }
@@ -584,7 +584,7 @@ IRC_PROTOCOL_CALLBACK(kick)
                                  argv[3],
                                  IRC_COLOR_MESSAGE_QUIT,
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  pos_comment,
                                  IRC_COLOR_CHAT_DELIMITERS);
         }
@@ -685,7 +685,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                                      nick,
                                      IRC_COLOR_MESSAGE_QUIT,
                                      IRC_COLOR_CHAT_DELIMITERS,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      pos_comment,
                                      IRC_COLOR_CHAT_DELIMITERS);
             }
@@ -771,10 +771,10 @@ IRC_PROTOCOL_CALLBACK(mode)
                                  IRC_COLOR_CHAT_CHANNEL,
                                  (ptr_channel) ? ptr_channel->name : argv[2],
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  pos_modes,
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  nick);
         }
@@ -790,10 +790,10 @@ IRC_PROTOCOL_CALLBACK(mode)
                                  _("%sUser mode %s[%s%s%s]%s by %s%s"),
                                  weechat_prefix ("network"),
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  pos_modes,
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  IRC_COLOR_CHAT_NICK,
                                  nick);
         }
@@ -879,7 +879,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                              weechat_prefix ("network"),
                                              IRC_COLOR_CHAT_NICK_SELF,
                                              new_nick,
-                                             IRC_COLOR_CHAT);
+                                             IRC_COLOR_RESET);
                     }
                     else
                     {
@@ -902,10 +902,10 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                  weechat_config_boolean(irc_config_look_color_nicks_in_server_messages) ?
                                                  old_color : IRC_COLOR_CHAT_NICK,
                                                  nick,
-                                                 IRC_COLOR_CHAT,
+                                                 IRC_COLOR_RESET,
                                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                                  new_nick,
-                                                 IRC_COLOR_CHAT);
+                                                 IRC_COLOR_RESET);
                         }
                         irc_channel_nick_speaking_rename (ptr_channel,
                                                           nick, new_nick);
@@ -999,7 +999,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  (nick && nick[0]) ? nick : "?",
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  pos_args);
         }
         else
@@ -1048,7 +1048,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                      weechat_prefix ("network"),
                                      IRC_COLOR_CHAT_NICK,
                                      nick,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      pos_args);
                 if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
                     && ptr_channel->has_quit_server)
@@ -1076,10 +1076,10 @@ IRC_PROTOCOL_CALLBACK(notice)
                                          IRC_COLOR_NOTICE,
                                          /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                                          _("Notice"),
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_RESET,
                                          IRC_COLOR_CHAT_NICK,
                                          pos_target,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_RESET,
                                          pos_args);
                 }
                 else
@@ -1098,7 +1098,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                              IRC_COLOR_CHAT_HOST,
                                              address,
                                              IRC_COLOR_CHAT_DELIMITERS,
-                                             IRC_COLOR_CHAT,
+                                             IRC_COLOR_RESET,
                                              pos_args);
                     }
                     else
@@ -1113,7 +1113,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                                  weechat_prefix ("network"),
                                                  IRC_COLOR_CHAT_NICK,
                                                  nick,
-                                                 IRC_COLOR_CHAT,
+                                                 IRC_COLOR_RESET,
                                                  pos_args);
                         }
                         else
@@ -1701,16 +1701,16 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_TOPIC_OLD,
                                      (old_topic_color) ? old_topic_color : ptr_channel->topic,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_TOPIC_NEW,
                                      (topic_color) ? topic_color : pos_topic,
-                                     IRC_COLOR_CHAT);
+                                     IRC_COLOR_RESET);
                 if (old_topic_color)
                     free (old_topic_color);
             }
@@ -1725,13 +1725,13 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_TOPIC_NEW,
                                      (topic_color) ? topic_color : pos_topic,
-                                     IRC_COLOR_CHAT);
+                                     IRC_COLOR_RESET);
             }
             if (topic_color)
                 free (topic_color);
@@ -1752,13 +1752,13 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_TOPIC_OLD,
                                      (old_topic_color) ? old_topic_color : ptr_channel->topic,
-                                     IRC_COLOR_CHAT);
+                                     IRC_COLOR_RESET);
                 if (old_topic_color)
                     free (old_topic_color);
             }
@@ -1772,10 +1772,10 @@ IRC_PROTOCOL_CALLBACK(topic)
                                      weechat_prefix ("network"),
                                      IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                      nick,
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      argv[2],
-                                     IRC_COLOR_CHAT);
+                                     IRC_COLOR_RESET);
             }
         }
     }
@@ -1814,7 +1814,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
                          IRC_COLOR_CHAT_HOST,
                          address,
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
     
     return WEECHAT_RC_OK;
@@ -2007,9 +2007,9 @@ IRC_PROTOCOL_CALLBACK(221)
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
                          argv[2],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
                          IRC_COLOR_CHAT_DELIMITERS);
     
@@ -2061,7 +2061,7 @@ IRC_PROTOCOL_CALLBACK(301)
                                  IRC_COLOR_CHAT_NICK,
                                  argv[3],
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  pos_away_msg);
             if (ptr_channel)
             {
@@ -2186,7 +2186,7 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
                          IRC_COLOR_CHAT_NICK,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     
     return WEECHAT_RC_OK;
@@ -2215,7 +2215,7 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
                          IRC_COLOR_CHAT_NICK,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     
     return WEECHAT_RC_OK;
@@ -2248,7 +2248,7 @@ IRC_PROTOCOL_CALLBACK(311)
                          argv[4],
                          argv[5],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[7][0] == ':') ? argv_eol[7] + 1 : argv_eol[7]);
     
     return WEECHAT_RC_OK;
@@ -2277,10 +2277,10 @@ IRC_PROTOCOL_CALLBACK(312)
                          IRC_COLOR_CHAT_NICK,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          argv[4],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
                          IRC_COLOR_CHAT_DELIMITERS);
     
@@ -2314,7 +2314,7 @@ IRC_PROTOCOL_CALLBACK(314)
                          argv[4],
                          argv[5],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[7][0] == ':') ? argv_eol[7] + 1 : argv_eol[7]);
     
     return WEECHAT_RC_OK;
@@ -2352,7 +2352,7 @@ IRC_PROTOCOL_CALLBACK(315)
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
     
@@ -2399,22 +2399,22 @@ IRC_PROTOCOL_CALLBACK(317)
                              IRC_COLOR_CHAT_NICK,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_CHANNEL,
                              day,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("day", "days", day),
                              IRC_COLOR_CHAT_CHANNEL,
                              hour,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("hour", "hours", hour),
                              IRC_COLOR_CHAT_CHANNEL,
                              min,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("minute", "minutes", min),
                              IRC_COLOR_CHAT_CHANNEL,
                              sec,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("second", "seconds", sec),
                              IRC_COLOR_CHAT_CHANNEL,
                              weechat_util_get_time_string (&datetime));
@@ -2431,18 +2431,18 @@ IRC_PROTOCOL_CALLBACK(317)
                              IRC_COLOR_CHAT_NICK,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_CHANNEL,
                              hour,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("hour", "hours", hour),
                              IRC_COLOR_CHAT_CHANNEL,
                              min,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("minute", "minutes", min),
                              IRC_COLOR_CHAT_CHANNEL,
                              sec,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("second", "seconds", sec),
                              IRC_COLOR_CHAT_CHANNEL,
                              weechat_util_get_time_string (&datetime));
@@ -2512,10 +2512,10 @@ IRC_PROTOCOL_CALLBACK(322)
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              argv[4],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (pos_topic && pos_topic[0]) ? ": " : "",
                              (pos_topic && pos_topic[0]) ? pos_topic : "");
     }
@@ -2598,7 +2598,7 @@ IRC_PROTOCOL_CALLBACK(324)
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argc > 4) ?
                              ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
                              IRC_COLOR_CHAT_DELIMITERS);
@@ -2643,7 +2643,7 @@ IRC_PROTOCOL_CALLBACK(327)
                              argv[4],
                              argv[5],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              pos_realname,
                              IRC_COLOR_CHAT_DELIMITERS);
     }
@@ -2691,7 +2691,7 @@ IRC_PROTOCOL_CALLBACK(328)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv_eol[4][0] == ':') ?
                              argv_eol[4] + 1 : argv_eol[4]);
     }
@@ -2746,7 +2746,7 @@ IRC_PROTOCOL_CALLBACK(329)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              weechat_util_get_time_string (&datetime));
     }
     
@@ -2786,7 +2786,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
                              IRC_COLOR_CHAT_NICK,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
                              IRC_COLOR_CHAT_NICK,
                              argv[4]);
@@ -2806,7 +2806,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
                              IRC_COLOR_CHAT_NICK,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
     
@@ -2896,9 +2896,9 @@ IRC_PROTOCOL_CALLBACK(332)
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (topic_color) ? topic_color : ((pos_topic) ? pos_topic : ""),
-                         IRC_COLOR_CHAT);
+                         IRC_COLOR_RESET);
     if (topic_color)
         free (topic_color);
     
@@ -2959,7 +2959,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  (topic_address) ? topic_address : "",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  (topic_address && topic_address[0]) ? ")" : "",
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  weechat_util_get_time_string (&datetime));
         }
         else
@@ -2987,7 +2987,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  weechat_prefix ("network"),
                                  IRC_COLOR_CHAT_CHANNEL,
                                  argv[3],
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
                                  topic_nick,
                                  IRC_COLOR_CHAT_DELIMITERS,
@@ -2996,7 +2996,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  (topic_address) ? topic_address : "",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  (topic_address && topic_address[0]) ? ")" : "",
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  weechat_util_get_time_string (&datetime));
         }
         else
@@ -3010,7 +3010,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  weechat_prefix ("network"),
                                  IRC_COLOR_CHAT_CHANNEL,
                                  argv[3],
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  weechat_util_get_time_string (&datetime));
         }
     }
@@ -3041,7 +3041,7 @@ IRC_PROTOCOL_CALLBACK(338)
                          IRC_COLOR_CHAT_NICK,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
                          IRC_COLOR_CHAT_HOST,
                          argv[4]);
@@ -3069,13 +3069,13 @@ IRC_PROTOCOL_CALLBACK(341)
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
                          argv[2],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          IRC_COLOR_CHAT_NICK,
                          argv[3],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[4],
-                         IRC_COLOR_CHAT);
+                         IRC_COLOR_RESET);
     
     return WEECHAT_RC_OK;
 }
@@ -3101,7 +3101,7 @@ IRC_PROTOCOL_CALLBACK(344)
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          IRC_COLOR_CHAT_HOST,
                          (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     
@@ -3129,7 +3129,7 @@ IRC_PROTOCOL_CALLBACK(345)
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     
     return WEECHAT_RC_OK;
@@ -3172,14 +3172,14 @@ IRC_PROTOCOL_CALLBACK(346)
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              weechat_util_get_time_string (&datetime));
     }
     else
@@ -3197,7 +3197,7 @@ IRC_PROTOCOL_CALLBACK(346)
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
@@ -3242,7 +3242,7 @@ IRC_PROTOCOL_CALLBACK(347)
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (pos_args) ? " " : "",
                          (pos_args) ? pos_args : "");
     
@@ -3285,17 +3285,17 @@ IRC_PROTOCOL_CALLBACK(348)
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              weechat_util_get_time_string (&datetime));
     }
     else
@@ -3310,7 +3310,7 @@ IRC_PROTOCOL_CALLBACK(348)
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_HOST,
                              argv[4]);
     }
@@ -3351,7 +3351,7 @@ IRC_PROTOCOL_CALLBACK(349)
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (pos_args) ? " " : "",
                          (pos_args) ? pos_args : "");
     
@@ -3476,7 +3476,7 @@ IRC_PROTOCOL_CALLBACK(352)
                              argv[4],
                              argv[5],
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (pos_attr) ? pos_attr : "",
                              (pos_attr) ? " " : "",
                              (pos_hopcount) ? pos_hopcount : "",
@@ -3575,9 +3575,9 @@ IRC_PROTOCOL_CALLBACK(353)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              pos_channel,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv_eol[args][0] == ':') ?
                              argv_eol[args] + 1 : argv_eol[args],
                              IRC_COLOR_CHAT_DELIMITERS);
@@ -3673,7 +3673,7 @@ IRC_PROTOCOL_CALLBACK(366)
                                     strcat (string, irc_nick_find_color (nickname));
                             }
                             else
-                                strcat (string, IRC_COLOR_CHAT);
+                                strcat (string, IRC_COLOR_RESET);
                             strcat (string, nickname);
                             i++;
                         }
@@ -3686,7 +3686,7 @@ IRC_PROTOCOL_CALLBACK(366)
                                          weechat_prefix ("network"),
                                          IRC_COLOR_CHAT_CHANNEL,
                                          ptr_channel->name,
-                                         IRC_COLOR_CHAT,
+                                         IRC_COLOR_RESET,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          string,
                                          IRC_COLOR_CHAT_DELIMITERS);
@@ -3708,27 +3708,27 @@ IRC_PROTOCOL_CALLBACK(366)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              ptr_channel->name,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_CHANNEL,
                              num_nicks,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("nick", "nicks", num_nicks),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_CHANNEL,
                              num_op,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("op", "ops", num_op),
                              IRC_COLOR_CHAT_CHANNEL,
                              num_halfop,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("halfop", "halfops", num_halfop),
                              IRC_COLOR_CHAT_CHANNEL,
                              num_voice,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("voice", "voices", num_voice),
                              IRC_COLOR_CHAT_CHANNEL,
                              num_normal,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              NG_("normal", "normals", num_normal),
                              IRC_COLOR_CHAT_DELIMITERS);
         
@@ -3745,7 +3745,7 @@ IRC_PROTOCOL_CALLBACK(366)
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_CHANNEL,
                              argv[3],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              (argv[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
     
@@ -3789,14 +3789,14 @@ IRC_PROTOCOL_CALLBACK(367)
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              irc_message_get_address_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              weechat_util_get_time_string (&datetime));
     }
     else
@@ -3814,7 +3814,7 @@ IRC_PROTOCOL_CALLBACK(367)
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_CHAT,
+                             IRC_COLOR_RESET,
                              IRC_COLOR_CHAT_NICK,
                              irc_message_get_nick_from_host (argv[5]),
                              IRC_COLOR_CHAT_DELIMITERS,
@@ -3859,7 +3859,7 @@ IRC_PROTOCOL_CALLBACK(368)
                          IRC_COLOR_CHAT_CHANNEL,
                          argv[3],
                          IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (pos_args) ? " " : "",
                          (pos_args) ? pos_args : "");
     

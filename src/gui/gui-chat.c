@@ -162,7 +162,8 @@ gui_chat_strlen_screen (const char *string)
     length = 0;
     while (string && string[0])
     {
-        string = gui_chat_string_next_char (NULL, (unsigned char *)string, 0);
+        string = gui_chat_string_next_char (NULL, NULL,
+                                            (unsigned char *)string, 0, 0);
         if (string)
         {
             size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
@@ -184,9 +185,9 @@ gui_chat_string_add_offset (const char *string, int offset)
 {
     while (string && string[0] && (offset > 0))
     {
-        string = gui_chat_string_next_char (NULL,
+        string = gui_chat_string_next_char (NULL, NULL,
                                             (unsigned char *)string,
-                                            0);
+                                            0, 0);
         if (string)
         {
             string = utf8_next_char (string);
@@ -209,9 +210,9 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
     
     while (string && string[0] && (offset_screen > 0))
     {
-        string = gui_chat_string_next_char (NULL,
+        string = gui_chat_string_next_char (NULL, NULL,
                                             (unsigned char *)string,
-                                            0);
+                                            0, 0);
         if (string)
         {
             size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
@@ -240,9 +241,9 @@ gui_chat_string_real_pos (const char *string, int pos)
     ptr_string = string;
     while (ptr_string && ptr_string[0] && (pos > 0))
     {
-        ptr_string = gui_chat_string_next_char (NULL,
+        ptr_string = gui_chat_string_next_char (NULL, NULL,
                                                 (unsigned char *)ptr_string,
-                                                0);
+                                                0, 0);
         if (ptr_string)
         {
             size_on_screen = (((unsigned char)ptr_string[0]) < 32) ? 1 : utf8_char_size_screen (ptr_string);
@@ -279,8 +280,8 @@ gui_chat_get_word_info (struct t_gui_window *window,
     leading_spaces = 1;
     while (data && data[0])
     {
-        next_char = gui_chat_string_next_char (window, (unsigned char *)data,
-                                               0);
+        next_char = gui_chat_string_next_char (window, NULL,
+                                               (unsigned char *)data, 0, 0);
         if (next_char)
         {
             next_char2 = utf8_next_char (next_char);

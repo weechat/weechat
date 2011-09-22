@@ -1119,6 +1119,8 @@ gui_window_switch (struct t_gui_window *window)
     gui_window_switch_to_buffer (gui_current_window,
                                  gui_current_window->buffer, 1);
     
+    old_window->refresh_needed = 1;
+    
     gui_input_move_to_buffer (old_window->buffer, window->buffer);
 }
 

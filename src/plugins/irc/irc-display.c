@@ -144,7 +144,7 @@ irc_display_away (struct t_irc_server *server, const char *string1,
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_CHAT_NICK,
                                  server->nick,
-                                 IRC_COLOR_CHAT,
+                                 IRC_COLOR_RESET,
                                  string1,
                                  string2,
                                  IRC_COLOR_CHAT_DELIMITERS);
@@ -165,16 +165,15 @@ irc_display_server (struct t_irc_server *server, int with_detail)
     if (with_detail)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("%sServer: %s%s %s[%s%s%s]%s%s"),
-                        IRC_COLOR_CHAT,
+        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s"),
                         IRC_COLOR_CHAT_SERVER,
                         server->name,
                         IRC_COLOR_CHAT_DELIMITERS,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         (server->is_connected) ?
                         _("connected") : _("not connected"),
                         IRC_COLOR_CHAT_DELIMITERS,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         (server->temp_server) ? _(" (temporary)") : "");
         /* addresses */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ADDRESSES]))
@@ -476,11 +475,11 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
                             IRC_COLOR_CHAT_DELIMITERS,
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             (server->is_connected) ?
                             _("connected") : _("not connected"),
                             IRC_COLOR_CHAT_DELIMITERS,
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             (server->temp_server) ? _(" (temporary)") : "",
                             num_channels,
                             NG_("channel", "channels", num_channels),
@@ -491,7 +490,7 @@ irc_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "   %s%s%s%s",
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             (server->temp_server) ? _(" (temporary)") : "");
         }
     }

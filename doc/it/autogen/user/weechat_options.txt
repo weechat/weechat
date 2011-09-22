@@ -43,6 +43,16 @@
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
+* *weechat.color.chat_inactive_line*
+** descrizione: `text color for chat when line is inactive (buffer is merged with other buffers and is not selected)`
+** tipo: colore
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
+
+* *weechat.color.chat_inactive_window*
+** descrizione: `text color for chat when window is inactive (not current selected window)`
+** tipo: colore
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
+
 * *weechat.color.chat_nick*
 ** descrizione: `colore del testo per i nick nella finestra di chat`
 ** tipo: colore
@@ -72,6 +82,11 @@
 ** descrizione: `colore del testo per il nome del buffer (prima del prefisso, quando più buffer sono uniti con lo stesso nome)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
+
+* *weechat.color.chat_prefix_buffer_inactive_line*
+** descrizione: `text color for inactive buffer name (before prefix, when many buffers are merged with same number and if buffer is not selected)`
+** tipo: colore
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
 * *weechat.color.chat_prefix_error*
 ** descrizione: `colore del testo per il prefisso di errore`
@@ -352,6 +367,26 @@
 ** descrizione: `formato dell'ora per ogni riga visualizzata nei buffer (consultare man strftime per gli specificatori data/ora), i colori sono consentiti nel formato "${colore}", nell'orario italiano ad esempio: "${lightblue}%H${white}%M{lightred}%S"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
+
+* *weechat.look.color_inactive_message*
+** descrizione: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* *weechat.look.color_inactive_prefix*
+** descrizione: `use a different color for inactive prefix (when window is not current window, or if line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* *weechat.look.color_inactive_prefix_buffer*
+** descrizione: `use a different color for inactive buffer name in prefix (when window is not current window, or if line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* *weechat.look.color_inactive_time*
+** descrizione: `use a different color for inactive time (when window is not current window, or if line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
 
 * *weechat.look.color_pairs_auto_reset*
 ** descrizione: `ripristina automaticamente la tabella delle coppie colore quando il numero di coppie disponibili è minore o uguale a questo numero (-1 = disabilita il ripristino automatico, dunque è necessario "/color reset" quando la tabella è al completo)`

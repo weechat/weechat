@@ -355,7 +355,7 @@ irc_command_me_channel_display (struct t_irc_server *server,
                          weechat_prefix ("action"),
                          IRC_COLOR_CHAT_NICK_SELF,
                          server->nick,
-                         IRC_COLOR_CHAT,
+                         IRC_COLOR_RESET,
                          (string) ? string : "");
     if (string)
         free (string);
@@ -854,7 +854,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                         IRC_PLUGIN_NAME,
                                         IRC_COLOR_CHAT_SERVER,
                                         ptr_server->name,
-                                        IRC_COLOR_CHAT);
+                                        IRC_COLOR_RESET);
                         irc_server_apply_command_line_options (ptr_server,
                                                                argc, argv);
                         if (!irc_command_connect_one_server (ptr_server, 0, 0))
@@ -928,10 +928,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                             weechat_prefix ("network"),
                             IRC_COLOR_CHAT_NICK,
                             argv[1],
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             IRC_COLOR_CHAT_CHANNEL,
                             irc_cmd,
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             " ",
                             str_time);
         }
@@ -948,10 +948,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                             weechat_prefix ("network"),
                             IRC_COLOR_CHAT_NICK,
                             argv[1],
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             IRC_COLOR_CHAT_CHANNEL,
                             irc_cmd,
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             (argv_eol[3]) ? " " : "",
                             (argv_eol[3]) ? argv_eol[3] : "");
         }
@@ -1514,10 +1514,10 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
     weechat_printf (NULL,
                     _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
                     IRC_COLOR_CHAT_DELIMITERS,
-                    IRC_COLOR_CHAT,
+                    IRC_COLOR_RESET,
                     ignore->number,
                     IRC_COLOR_CHAT_DELIMITERS,
-                    IRC_COLOR_CHAT,
+                    IRC_COLOR_RESET,
                     (mask) ? mask : ignore->mask,
                     (ignore->server) ? ignore->server : "*",
                     (ignore->channel) ? ignore->channel : "*");
@@ -2559,7 +2559,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                         IRC_COLOR_CHAT_NICK,
                                         targets[i],
                                         IRC_COLOR_CHAT_DELIMITERS,
-                                        IRC_COLOR_CHAT,
+                                        IRC_COLOR_RESET,
                                         (string) ?
                                         string : ((msg_pwd_hidden) ?
                                                   msg_pwd_hidden : argv_eol[arg_text]));
@@ -2591,7 +2591,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                                  IRC_COLOR_CHAT_NICK,
                                                  targets[i],
                                                  IRC_COLOR_CHAT_DELIMITERS,
-                                                 IRC_COLOR_CHAT,
+                                                 IRC_COLOR_RESET,
                                                  (string) ? string : argv_eol[arg_text]);
                         }
                         if (string)
@@ -2767,11 +2767,11 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                                      IRC_COLOR_NOTICE,
                                      /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                                      _("Notice"),
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      (irc_channel_is_channel (argv[arg_nick])) ?
                                      IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
                                      argv[arg_nick],
-                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_RESET,
                                      (string) ? string : str_args);
                 if (string)
                     free (string);
@@ -3748,7 +3748,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,
                         new_server->name,
-                        IRC_COLOR_CHAT);
+                        IRC_COLOR_RESET);
         
         /* do not connect to server after creating it */
         /*
@@ -3799,10 +3799,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_PLUGIN_NAME,
                             IRC_COLOR_CHAT_SERVER,
                             argv[2],
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             IRC_COLOR_CHAT_SERVER,
                             argv[3],
-                            IRC_COLOR_CHAT);
+                            IRC_COLOR_RESET);
             return WEECHAT_RC_OK;
         }
         
@@ -3848,10 +3848,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_PLUGIN_NAME,
                             IRC_COLOR_CHAT_SERVER,
                             argv[2],
-                            IRC_COLOR_CHAT,
+                            IRC_COLOR_RESET,
                             IRC_COLOR_CHAT_SERVER,
                             argv[3],
-                            IRC_COLOR_CHAT);
+                            IRC_COLOR_RESET);
             return WEECHAT_RC_OK;
         }
         
@@ -3895,7 +3895,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,
                         argv[2],
-                        IRC_COLOR_CHAT);
+                        IRC_COLOR_RESET);
         
         return WEECHAT_RC_OK;
     }
@@ -3936,7 +3936,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,
                         (server_name) ? server_name : "???",
-                        IRC_COLOR_CHAT);
+                        IRC_COLOR_RESET);
         if (server_name)
             free (server_name);
         
@@ -4552,10 +4552,10 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_COLOR_NOTICE,
                         /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                         _("Notice"),
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         IRC_COLOR_CHAT_CHANNEL,
                         ptr_channel->name,
-                        IRC_COLOR_CHAT,
+                        IRC_COLOR_RESET,
                         argv_eol[pos_args]);
         
         support_wallchops = irc_server_get_isupport_value (ptr_server,
