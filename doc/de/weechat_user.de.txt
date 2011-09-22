@@ -1598,6 +1598,8 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 335       | whois         | whois (ist ein Bot auf)
 | 338       | whois         | whois (Host)
 | 341       |               | inviting
+// TRANSLATION MISSING
+| 343       | whois         | whois (is opered as)
 | 344       | reop          | channel reop
 | 345       | reop          | channel reop (Ende)
 | 346       | invitelist    | Einladung list

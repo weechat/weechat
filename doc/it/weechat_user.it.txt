@@ -1612,6 +1612,8 @@ personalizzare:
 | 335       | whois         | whois (è un bot su)
 | 338       | whois         | whois (host)
 | 341       |               | invito
+// TRANSLATION MISSING
+| 343       | whois         | whois (is opered as)
 | 344       | reop          | reop sul canale
 | 345       | reop          | reop sul canale (fine)
 | 346       | invitelist    | lista di inviti

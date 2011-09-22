@@ -1576,6 +1576,7 @@ Non-comprehensive list of IRC messages or alias that you can customize:
 | 335     | whois         | whois (is a bot on)
 | 338     | whois         | whois (host)
 | 341     |               | inviting
+| 343     | whois         | whois (is opered as)
 | 344     | reop          | channel reop
 | 345     | reop          | channel reop (end)
 | 346     | invitelist    | invite list

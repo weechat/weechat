@@ -1623,6 +1623,7 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | 335     | whois         | whois (est un robot sur)
 | 338     | whois         | whois (machine)
 | 341     |               | invitation
+| 343     | whois         | whois (est opéré comme)
 | 344     | reop          | reop canal
 | 345     | reop          | reop canal (fin)
 | 346     | invitelist    | liste des invitations
