@@ -594,10 +594,7 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     
-    if (!window)
-        return NULL;
-    
-    if (window != gui_current_window)
+    if (window && (window != gui_current_window))
         return NULL;
     
     if (!gui_key_paste_pending)

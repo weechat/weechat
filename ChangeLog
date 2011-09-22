@@ -7,6 +7,8 @@ v0.3.6-dev, 2011-09-22
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix display of paste multi-line prompt with a root input bar
+  (bug #34305)
 * core: add "inactive" colors for inactive windows and lines in merged buffers,
   new options: weechat.look.color_inactive_message,
   weechat.look.color_inactive_prefix, weechat.look.color_inactive_prefix_buffer,
