@@ -112,6 +112,8 @@ extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_command_chars;
 extern struct t_config_option *config_look_confirm_quit;
+extern struct t_config_option *config_look_color_inactive_window;
+extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_time;
 extern struct t_config_option *config_look_color_inactive_prefix_buffer;
 extern struct t_config_option *config_look_color_inactive_prefix;

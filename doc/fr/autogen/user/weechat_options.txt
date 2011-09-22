@@ -43,7 +43,7 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
 
-* *weechat.color.chat_inactive_line*
+* *weechat.color.chat_inactive_buffer*
 ** description: `couleur du texte pour la discussion lorsque la ligne est inactive (tampon mélangé avec d'autres tampons et non sélectionné)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `darkgray`)
@@ -83,7 +83,7 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `brown`)
 
-* *weechat.color.chat_prefix_buffer_inactive_line*
+* *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** description: `couleur du texte pour le nom du tampon inactif (avant le préfixe, quand plusieurs tampons sont mélangés avec le même numéro et si le tampon n'est pas sélectionné)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `darkgray`)
@@ -368,6 +368,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 
+* *weechat.look.color_inactive_buffer*
+** description: `utiliser une couleur différente pour les lignes dans un tampon inactif (si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * *weechat.look.color_inactive_message*
 ** description: `utiliser une couleur différente pour un message inactif (quand la fenêtre n'est pas la fenêtre courante, ou si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
 ** type: booléen
@@ -385,6 +390,11 @@
 
 * *weechat.look.color_inactive_time*
 ** description: `utiliser une couleur différente pour l'heure inactive (quand la fenêtre n'est pas la fenêtre courante, ou si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
+* *weechat.look.color_inactive_window*
+** description: `utiliser une couleur différente pour les lignes dans une fenêtre inactive (quand la fenêtre n'est pas la fenêtre courante)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 

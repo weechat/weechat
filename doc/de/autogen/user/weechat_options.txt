@@ -43,7 +43,7 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
-* *weechat.color.chat_inactive_line*
+* *weechat.color.chat_inactive_buffer*
 ** Beschreibung: `text color for chat when line is inactive (buffer is merged with other buffers and is not selected)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
@@ -83,7 +83,7 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
-* *weechat.color.chat_prefix_buffer_inactive_line*
+* *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** Beschreibung: `text color for inactive buffer name (before prefix, when many buffers are merged with same number and if buffer is not selected)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
@@ -368,6 +368,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
+* *weechat.look.color_inactive_buffer*
+** Beschreibung: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * *weechat.look.color_inactive_message*
 ** Beschreibung: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
 ** Typ: boolesch
@@ -385,6 +390,11 @@
 
 * *weechat.look.color_inactive_time*
 ** Beschreibung: `use a different color for inactive time (when window is not current window, or if line is from a merged buffer not selected)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
+* *weechat.look.color_inactive_window*
+** Beschreibung: `use a different color for lines in inactive window (when window is not current window)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

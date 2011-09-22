@@ -43,7 +43,7 @@
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
-* *weechat.color.chat_inactive_line*
+* *weechat.color.chat_inactive_buffer*
 ** descrizione: `text color for chat when line is inactive (buffer is merged with other buffers and is not selected)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
@@ -83,7 +83,7 @@
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
-* *weechat.color.chat_prefix_buffer_inactive_line*
+* *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** descrizione: `text color for inactive buffer name (before prefix, when many buffers are merged with same number and if buffer is not selected)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
@@ -368,6 +368,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
 
+* *weechat.look.color_inactive_buffer*
+** descrizione: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * *weechat.look.color_inactive_message*
 ** descrizione: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
 ** tipo: bool
@@ -385,6 +390,11 @@
 
 * *weechat.look.color_inactive_time*
 ** descrizione: `use a different color for inactive time (when window is not current window, or if line is from a merged buffer not selected)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
+* *weechat.look.color_inactive_window*
+** descrizione: `use a different color for lines in inactive window (when window is not current window)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 

@@ -106,34 +106,30 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
  */
 
 void
-gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line)
+gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line,
+                      int color_inactive_window, int color_inactive_buffer,
+                      int color_default)
 {
-    if (CONFIG_BOOLEAN(config_look_color_inactive_message))
+    if (window != gui_current_window)
     {
-        if (window != gui_current_window)
+        if (CONFIG_BOOLEAN(config_look_color_inactive_window))
         {
             gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                    GUI_COLOR_CHAT_INACTIVE_WINDOW);
-        }
-        else
-        {
-            if (line && !(line->data->buffer->active))
-            {
-                gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                        GUI_COLOR_CHAT_INACTIVE_BUFFER);
-            }
-            else
-            {
-                gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                        GUI_COLOR_CHAT);
-            }
+                                    color_inactive_window);
+            return;
         }
     }
-    else
+    else if (line && !(line->data->buffer->active))
     {
-        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                GUI_COLOR_CHAT);
+        if (CONFIG_BOOLEAN(config_look_color_inactive_buffer))
+        {
+            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                    color_inactive_buffer);
+            return;
+        }
     }
+    gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                            color_default);
 }
 
 /*
@@ -210,11 +206,18 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                            const unsigned char *string, int apply_style,
                            int apply_style_inactive)
 {
-    if (apply_style && apply_style_inactive
-        && ((window != gui_current_window)
-            || (line && !(line->data->buffer->active))))
+    if (apply_style && apply_style_inactive)
     {
-        apply_style = 0;
+        if (window != gui_current_window)
+        {
+            if (CONFIG_BOOLEAN(config_look_color_inactive_window))
+                apply_style = 0;
+        }
+        else if (line && !(line->data->buffer->active))
+        {
+            if (CONFIG_BOOLEAN(config_look_color_inactive_buffer))
+                apply_style = 0;
+        }
     }
     
     while (string[0])
@@ -280,7 +283,10 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
             case GUI_COLOR_RESET_CHAR:
                 string++;
                 if (apply_style)
-                    gui_chat_reset_style (window, line);
+                    gui_chat_reset_style (window, line,
+                                          GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                          GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                          GUI_COLOR_CHAT);
                 break;
             default:
                 return (char *)string;
@@ -530,7 +536,10 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     {
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].line = line;
-        gui_chat_reset_style (window, line);
+        gui_chat_reset_style (window, line,
+                              GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                              GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                              GUI_COLOR_CHAT);
     }
     
     /* display time */
@@ -547,7 +556,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             window->coords[window->win_chat_cursor_y].time_x2 = window->win_chat_cursor_x - 1;
         
         if (!simulate)
-            gui_chat_reset_style (window, line);
+        {
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                  GUI_COLOR_CHAT);
+        }
         gui_chat_display_word (window, line, str_space,
                                NULL, 1, num_lines, count, lines_displayed,
                                simulate,
@@ -575,7 +589,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         if (CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_RIGHT)
         {
             if (!simulate)
-                gui_chat_reset_style (window, line);
+            {
+                gui_chat_reset_style (window, line,
+                                      GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                      GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                      GUI_COLOR_CHAT);
+            }
             for (i = 0; i < num_spaces; i++)
             {
                 gui_chat_display_word (window, line, str_space,
@@ -587,11 +606,15 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         
         if (!simulate)
         {
-            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                          ((!CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer))
-                                           || ((gui_current_window == window) && (line->data->buffer->active))) ?
-                                          GUI_COLOR_CHAT_PREFIX_BUFFER :
-                                          GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER);
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
+                                   && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
+                                   && (gui_current_window == window)
+                                   && (!line->data->buffer->active)) ?
+                                  GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER :
+                                  GUI_COLOR_CHAT_PREFIX_BUFFER,
+                                  GUI_COLOR_CHAT_PREFIX_BUFFER);
         }
         
         if (window->win_chat_cursor_y < window->coords_size)
@@ -639,7 +662,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         else
         {
             if (!simulate)
-                gui_chat_reset_style (window, line);
+            {
+                gui_chat_reset_style (window, line,
+                                      GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                      GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                      GUI_COLOR_CHAT);
+            }
             if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_LEFT)
                 || ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
@@ -668,7 +696,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
     {
         if (!simulate)
-            gui_chat_reset_style (window, line);
+        {
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                  GUI_COLOR_CHAT);
+        }
         
         if (CONFIG_INTEGER(config_look_prefix_align_max) > 0)
         {
@@ -698,8 +731,30 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             prefix_highlighted = gui_color_decode (line->data->prefix, NULL);
             if (!simulate)
             {
-                gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                              GUI_COLOR_CHAT_HIGHLIGHT);
+                gui_chat_reset_style (window, line,
+                                      GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                      (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
+                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
+                                       && (gui_current_window == window)
+                                       && (!line->data->buffer->active)) ?
+                                      GUI_COLOR_CHAT_INACTIVE_BUFFER :
+                                      GUI_COLOR_CHAT_HIGHLIGHT,
+                                      GUI_COLOR_CHAT_HIGHLIGHT);
+            }
+        }
+        else
+        {
+            if (!simulate)
+            {
+                gui_chat_reset_style (window, line,
+                                      GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                      (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
+                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
+                                       && (gui_current_window == window)
+                                       && (!line->data->buffer->active)) ?
+                                      GUI_COLOR_CHAT_INACTIVE_BUFFER :
+                                      GUI_COLOR_CHAT,
+                                      GUI_COLOR_CHAT);
             }
         }
         
@@ -737,7 +792,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             free (prefix_highlighted);
         
         if (!simulate)
-            gui_chat_reset_style (window, line);
+        {
+            gui_chat_reset_style (window, line,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                  GUI_COLOR_CHAT);
+        }
         
         if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
         {
@@ -861,7 +921,12 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     
     /* reset color & style for a new line */
     if (!simulate)
-        gui_chat_reset_style (window, line);
+    {
+        gui_chat_reset_style (window, line,
+                              GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                              GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                              GUI_COLOR_CHAT);
+    }
     
     if (!line->data->message || !line->data->message[0])
     {
@@ -1012,7 +1077,10 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
     /* reset color & style for a new line */
-    gui_chat_reset_style (window, line);
+    gui_chat_reset_style (window, line,
+                          GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                          GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                          GUI_COLOR_CHAT);
     
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
@@ -1152,7 +1220,10 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
         {
             gui_window_coords_alloc (ptr_win);
             
-            gui_chat_reset_style (ptr_win, NULL);
+            gui_chat_reset_style (ptr_win, NULL,
+                                  GUI_COLOR_CHAT_INACTIVE_WINDOW,
+                                  GUI_COLOR_CHAT_INACTIVE_BUFFER,
+                                  GUI_COLOR_CHAT);
             
             if (erase)
             {

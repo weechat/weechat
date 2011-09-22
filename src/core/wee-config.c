@@ -85,6 +85,8 @@ struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_color_inactive_window;
+struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_time;
 struct t_config_option *config_look_color_inactive_prefix_buffer;
 struct t_config_option *config_look_color_inactive_prefix;
@@ -1651,6 +1653,18 @@ config_weechat_init_options ()
            "\"${color}\", for example french time: "
            "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
+    config_look_color_inactive_window = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_window", "boolean",
+        N_("use a different color for lines in inactive window (when window "
+           "is not current window)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_color_inactive_buffer = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_inactive_buffer", "boolean",
+        N_("use a different color for lines in inactive buffer (when line is "
+           "from a merged buffer not selected)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_inactive_time = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_time", "boolean",

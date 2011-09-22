@@ -43,7 +43,7 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `cyan`)
 
-* *weechat.color.chat_inactive_line*
+* *weechat.color.chat_inactive_buffer*
 ** description: `text color for chat when line is inactive (buffer is merged with other buffers and is not selected)`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
@@ -83,7 +83,7 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `brown`)
 
-* *weechat.color.chat_prefix_buffer_inactive_line*
+* *weechat.color.chat_prefix_buffer_inactive_buffer*
 ** description: `text color for inactive buffer name (before prefix, when many buffers are merged with same number and if buffer is not selected)`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
@@ -368,6 +368,11 @@
 ** type: string
 ** values: any string (default value: `"%H:%M:%S"`)
 
+* *weechat.look.color_inactive_buffer*
+** description: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * *weechat.look.color_inactive_message*
 ** description: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
 ** type: boolean
@@ -385,6 +390,11 @@
 
 * *weechat.look.color_inactive_time*
 ** description: `use a different color for inactive time (when window is not current window, or if line is from a merged buffer not selected)`
+** type: boolean
+** values: on, off (default value: `off`)
+
+* *weechat.look.color_inactive_window*
+** description: `use a different color for lines in inactive window (when window is not current window)`
 ** type: boolean
 ** values: on, off (default value: `off`)
 
