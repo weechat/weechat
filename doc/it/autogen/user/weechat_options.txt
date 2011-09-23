@@ -371,7 +371,7 @@
 * *weechat.look.color_inactive_buffer*
 ** descrizione: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
 ** tipo: bool
-** valori: on, off (valore predefinito: `on`)
+** valori: on, off (valore predefinito: `off`)
 
 * *weechat.look.color_inactive_message*
 ** descrizione: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`

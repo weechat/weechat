@@ -1664,7 +1664,7 @@ config_weechat_init_options ()
         "color_inactive_buffer", "boolean",
         N_("use a different color for lines in inactive buffer (when line is "
            "from a merged buffer not selected)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_inactive_time = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_time", "boolean",

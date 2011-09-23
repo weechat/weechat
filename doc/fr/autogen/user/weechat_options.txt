@@ -371,7 +371,7 @@
 * *weechat.look.color_inactive_buffer*
 ** description: `utiliser une couleur différente pour les lignes dans un tampon inactif (si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
+** valeurs: on, off (valeur par défaut: `off`)
 
 * *weechat.look.color_inactive_message*
 ** description: `utiliser une couleur différente pour un message inactif (quand la fenêtre n'est pas la fenêtre courante, ou si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
