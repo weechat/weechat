@@ -1262,9 +1262,12 @@ irc_config_server_new_option (struct t_config_file *config_file,
                               const char *default_value,
                               const char *value,
                               int null_value_allowed,
-                              void *callback_check_value,
+                              int (*callback_check_value)(void *data,
+                                                          struct t_config_option *option,
+                                                          const char *value),
                               void *callback_check_value_data,
-                              void *callback_change,
+                              void (*callback_change)(void *data,
+                                                      struct t_config_option *option),
                               void *callback_change_data)
 {
     struct t_config_option *new_option;
