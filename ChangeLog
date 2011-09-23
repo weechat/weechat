@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-09-22
+v0.3.6-dev, 2011-09-23
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add default key "meta2-[E" (F5) for linux console
 * core: fix display of paste multi-line prompt with a root input bar
   (bug #34305)
 * core: add "inactive" colors for inactive windows and lines in merged buffers,

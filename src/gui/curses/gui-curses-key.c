@@ -155,6 +155,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-up        */ "meta-meta2-A",       "/buffer -1");
         BIND(/* m-up        */ "meta2-1;3A",         "/buffer -1");
         BIND(/* F5          */ "meta2-15~",          "/buffer -1");
+        BIND(/* F5          */ "meta2-[E",           "/buffer -1");
         BIND(/* ^P          */ "ctrl-P",             "/buffer -1");
         BIND(/* pgup        */ "meta2-5~",           "/window page_up");
         BIND(/* pgup        */ "meta2-I",            "/window page_up");
