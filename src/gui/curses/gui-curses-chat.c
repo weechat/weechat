@@ -110,23 +110,19 @@ gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line,
                       int color_inactive_window, int color_inactive_buffer,
                       int color_default)
 {
-    if (window != gui_current_window)
+    if ((window != gui_current_window) &&
+        CONFIG_BOOLEAN(config_look_color_inactive_window))
     {
-        if (CONFIG_BOOLEAN(config_look_color_inactive_window))
-        {
-            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                    color_inactive_window);
-            return;
-        }
+        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                color_inactive_window);
+        return;
     }
-    else if (line && !(line->data->buffer->active))
+    if (line && !(line->data->buffer->active)
+        && CONFIG_BOOLEAN(config_look_color_inactive_buffer))
     {
-        if (CONFIG_BOOLEAN(config_look_color_inactive_buffer))
-        {
-            gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                    color_inactive_buffer);
-            return;
-        }
+        gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                color_inactive_buffer);
+        return;
     }
     gui_window_reset_style (GUI_WINDOW_OBJECTS(window)->win_chat,
                             color_default);
@@ -208,10 +204,10 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
 {
     if (apply_style && apply_style_inactive)
     {
-        if (window != gui_current_window)
+        if ((window != gui_current_window)
+            && CONFIG_BOOLEAN(config_look_color_inactive_window))
         {
-            if (CONFIG_BOOLEAN(config_look_color_inactive_window))
-                apply_style = 0;
+            apply_style = 0;
         }
         else if (line && !(line->data->buffer->active))
         {
@@ -620,7 +616,6 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                   GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                   (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
                                    && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
-                                   && (gui_current_window == window)
                                    && (!line->data->buffer->active)) ?
                                   GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER :
                                   GUI_COLOR_CHAT_PREFIX_BUFFER,
@@ -745,7 +740,6 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                       GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                       (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
                                        && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
-                                       && (gui_current_window == window)
                                        && (!line->data->buffer->active)) ?
                                       GUI_COLOR_CHAT_INACTIVE_BUFFER :
                                       GUI_COLOR_CHAT_HIGHLIGHT,
@@ -760,7 +754,6 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                       GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                       (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
                                        && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
-                                       && (gui_current_window == window)
                                        && (!line->data->buffer->active)) ?
                                       GUI_COLOR_CHAT_INACTIVE_BUFFER :
                                       GUI_COLOR_CHAT,
