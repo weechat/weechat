@@ -1658,8 +1658,8 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "color_basic_force_bold", "boolean",
         N_("force \"bold\" attribute for light colors and \"darkgray\" in "
-           "basic colors; off by default: \"bold\" is used only if terminal "
-           "has less than 16 colors"),
+           "basic colors (this option is disabled by default: bold is used "
+           "only if terminal has less than 16 colors)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_look_color_inactive_window = config_file_new_option (
         weechat_config_file, ptr_section,

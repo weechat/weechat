@@ -369,7 +369,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 
 * *weechat.look.color_basic_force_bold*
-** description: `forcer l'attribut "bold" (gras) pour les couleurs claires et "darkgray" dans les couleurs de base; désactivé par défaut: le "bold" est utilisé seulement si le terminal a moins de 16 couleurs`
+** description: `forcer l'attribut "bold" (gras) pour les couleurs claires et "darkgray" dans les couleurs de base (cette option est désactivée par défaut: le gras est utilisé seulement si le terminal a moins de 16 couleurs)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
