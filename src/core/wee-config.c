@@ -85,6 +85,7 @@ struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_window;
 struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_time;
@@ -1653,6 +1654,13 @@ config_weechat_init_options ()
            "\"${color}\", for example french time: "
            "\"${lightblue}%H${white}%M${lightred}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
+    config_look_color_basic_force_bold = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_basic_force_bold", "boolean",
+        N_("force \"bold\" attribute for light colors and \"darkgray\" in "
+           "basic colors; off by default: \"bold\" is used only if terminal "
+           "has less than 16 colors"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_look_color_inactive_window = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_inactive_window", "boolean",

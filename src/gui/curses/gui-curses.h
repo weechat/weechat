@@ -58,7 +58,7 @@ struct t_gui_bar_window_curses_objects
 };
 
 extern int gui_term_cols, gui_term_lines;
-extern struct t_gui_color gui_weechat_colors[];
+extern struct t_gui_color *gui_weechat_colors;
 extern int gui_color_term_colors;
 extern int gui_color_num_pairs;
 extern int gui_color_pairs_auto_reset;

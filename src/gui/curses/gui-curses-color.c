@@ -47,26 +47,47 @@
 
 #define GUI_COLOR_TIMER_TERM_COLORS 10
 
-struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,            -1,                0,      "default"      },
-  { COLOR_BLACK,   COLOR_BLACK,       0,      "black"        },
-  { COLOR_BLACK,   COLOR_BLACK + 8,   A_BOLD, "darkgray"     },
-  { COLOR_RED,     COLOR_RED,         0,      "red"          },
-  { COLOR_RED,     COLOR_RED + 8,     A_BOLD, "lightred"     },
-  { COLOR_GREEN,   COLOR_GREEN,       0,      "green"        },
-  { COLOR_GREEN,   COLOR_GREEN + 8,   A_BOLD, "lightgreen"   },
-  { COLOR_YELLOW,  COLOR_YELLOW,      0,      "brown"        },
-  { COLOR_YELLOW,  COLOR_YELLOW + 8,  A_BOLD, "yellow"       },
-  { COLOR_BLUE,    COLOR_BLUE,        0,      "blue"         },
-  { COLOR_BLUE,    COLOR_BLUE + 8,    A_BOLD, "lightblue"    },
-  { COLOR_MAGENTA, COLOR_MAGENTA,     0,      "magenta"      },
-  { COLOR_MAGENTA, COLOR_MAGENTA + 8, A_BOLD, "lightmagenta" },
-  { COLOR_CYAN,    COLOR_CYAN,        0,      "cyan"         },
-  { COLOR_CYAN,    COLOR_CYAN + 8,    A_BOLD, "lightcyan"    },
-  { COLOR_WHITE,   COLOR_WHITE,       0,      "gray"         },
-  { COLOR_WHITE,   COLOR_WHITE + 8,   A_BOLD, "white"        },
-  { 0,             0,                 0,      NULL           }
+struct t_gui_color gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
+{ { -1,                -1,                0,      "default"      },
+  { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
+  { COLOR_BLACK,       COLOR_BLACK + 8,   A_BOLD, "darkgray"     },
+  { COLOR_RED,         COLOR_RED,         0,      "red"          },
+  { COLOR_RED,         COLOR_RED + 8,     A_BOLD, "lightred"     },
+  { COLOR_GREEN,       COLOR_GREEN,       0,      "green"        },
+  { COLOR_GREEN,       COLOR_GREEN + 8,   A_BOLD, "lightgreen"   },
+  { COLOR_YELLOW,      COLOR_YELLOW,      0,      "brown"        },
+  { COLOR_YELLOW,      COLOR_YELLOW + 8,  A_BOLD, "yellow"       },
+  { COLOR_BLUE,        COLOR_BLUE,        0,      "blue"         },
+  { COLOR_BLUE,        COLOR_BLUE + 8,    A_BOLD, "lightblue"    },
+  { COLOR_MAGENTA,     COLOR_MAGENTA,     0,      "magenta"      },
+  { COLOR_MAGENTA,     COLOR_MAGENTA + 8, A_BOLD, "lightmagenta" },
+  { COLOR_CYAN,        COLOR_CYAN,        0,      "cyan"         },
+  { COLOR_CYAN,        COLOR_CYAN + 8,    A_BOLD, "lightcyan"    },
+  { COLOR_WHITE,       COLOR_WHITE,       0,      "gray"         },
+  { COLOR_WHITE,       COLOR_WHITE + 8,   A_BOLD, "white"        },
+  { 0,                 0,                 0,      NULL           }
 };
+struct t_gui_color gui_weechat_colors_no_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
+{ { -1,                -1,                0,      "default"      },
+  { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
+  { COLOR_BLACK + 8,   COLOR_BLACK + 8,   0,      "darkgray"     },
+  { COLOR_RED,         COLOR_RED,         0,      "red"          },
+  { COLOR_RED + 8,     COLOR_RED + 8,     0,      "lightred"     },
+  { COLOR_GREEN,       COLOR_GREEN,       0,      "green"        },
+  { COLOR_GREEN + 8,   COLOR_GREEN + 8,   0,      "lightgreen"   },
+  { COLOR_YELLOW,      COLOR_YELLOW,      0,      "brown"        },
+  { COLOR_YELLOW + 8,  COLOR_YELLOW + 8,  0,      "yellow"       },
+  { COLOR_BLUE,        COLOR_BLUE,        0,      "blue"         },
+  { COLOR_BLUE + 8,    COLOR_BLUE + 8,    0,      "lightblue"    },
+  { COLOR_MAGENTA,     COLOR_MAGENTA,     0,      "magenta"      },
+  { COLOR_MAGENTA + 8, COLOR_MAGENTA + 8, 0,      "lightmagenta" },
+  { COLOR_CYAN,        COLOR_CYAN,        0,      "cyan"         },
+  { COLOR_CYAN + 8,    COLOR_CYAN + 8,    0,      "lightcyan"    },
+  { COLOR_WHITE,       COLOR_WHITE,       0,      "gray"         },
+  { COLOR_WHITE + 8,   COLOR_WHITE + 8,   0,      "white"        },
+  { 0,                 0,                 0,      NULL           }
+};
+struct t_gui_color *gui_weechat_colors = gui_weechat_colors_bold;
 
 /* terminal colors */
 int gui_color_term_has_colors = 0;       /* terminal supports colors?       */
@@ -1356,6 +1377,16 @@ gui_color_palette_free (struct t_gui_color_palette *color_palette)
 void
 gui_color_init_weechat ()
 {
+    if (CONFIG_BOOLEAN(config_look_color_basic_force_bold)
+        || (gui_color_term_colors < 16))
+    {
+        gui_weechat_colors = gui_weechat_colors_bold;
+    }
+    else
+    {
+        gui_weechat_colors = gui_weechat_colors_no_bold;
+    }
+    
     gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
     
     gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));

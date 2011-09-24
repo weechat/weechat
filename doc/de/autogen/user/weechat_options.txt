@@ -368,6 +368,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
+* *weechat.look.color_basic_force_bold*
+** Beschreibung: `force "bold" attribute for light colors and "darkgray" in basic colors; off by default: "bold" is used only if terminal has less than 16 colors`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * *weechat.look.color_inactive_buffer*
 ** Beschreibung: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
 ** Typ: boolesch

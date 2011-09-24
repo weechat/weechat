@@ -368,6 +368,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 
+* *weechat.look.color_basic_force_bold*
+** description: `forcer l'attribut "bold" (gras) pour les couleurs claires et "darkgray" dans les couleurs de base; désactivé par défaut: le "bold" est utilisé seulement si le terminal a moins de 16 couleurs`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * *weechat.look.color_inactive_buffer*
 ** description: `utiliser une couleur différente pour les lignes dans un tampon inactif (si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
 ** type: booléen

@@ -368,6 +368,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%H:%M:%S"`)
 
+* *weechat.look.color_basic_force_bold*
+** descrizione: `force "bold" attribute for light colors and "darkgray" in basic colors; off by default: "bold" is used only if terminal has less than 16 colors`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * *weechat.look.color_inactive_buffer*
 ** descrizione: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
 ** tipo: bool
