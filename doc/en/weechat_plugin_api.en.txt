@@ -4299,7 +4299,7 @@ Arguments:
 
 * 'option': option pointer
 * 'value': new value for option
-* 'run_callback': 1 for calling chang callback if value of option is changed,
+* 'run_callback': 1 for calling change callback if value of option is changed,
   otherwise 0
 
 Return value:
@@ -4359,7 +4359,7 @@ int weechat_config_option_set_null (struct t_config_option *option,
 Arguments:
 
 * 'option': option pointer
-* 'run_callback': 1 for calling chang callback if value of option is changed
+* 'run_callback': 1 for calling change callback if value of option is changed
   (if it was not null), otherwise 0
 
 [NOTE]
