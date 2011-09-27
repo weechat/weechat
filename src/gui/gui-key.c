@@ -1386,10 +1386,13 @@ gui_key_buffer_add (unsigned char key)
     if (gui_key_buffer)
     {
         gui_key_buffer[gui_key_buffer_size - 1] = key;
-        if ((key == 13)
+        if (((key == '\r') || (key == '\n'))
             && (gui_key_buffer_size > 1)
-            && (gui_key_buffer[gui_key_buffer_size - 2] != 13))
+            && (gui_key_buffer[gui_key_buffer_size - 2] != '\r')
+            && (gui_key_buffer[gui_key_buffer_size - 2] != '\n'))
+        {
             gui_key_paste_lines++;
+        }
     }
     else
     {
@@ -1409,8 +1412,11 @@ int
 gui_key_get_paste_lines ()
 {
     if ((gui_key_buffer_size > 0)
-        && (gui_key_buffer[gui_key_buffer_size - 1] != 13))
+        && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
+        && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
+    {
         return gui_key_paste_lines + 1;
+    }
     
     return gui_key_paste_lines;
 }

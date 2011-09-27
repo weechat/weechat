@@ -509,7 +509,13 @@ gui_key_read_cb (void *data, int fd)
         
         for (i = 0; i < ret; i++)
         {
-            gui_key_buffer_add (buffer[i]);
+            /* add all chars (ignore a '\n' after a '\r') */
+            if ((i == 0)
+                || (buffer[i] != '\n')
+                || (buffer[i - 1] != '\r'))
+            {
+                gui_key_buffer_add (buffer[i]);
+            }
         }
         
         text_added_to_buffer = 1;
