@@ -533,7 +533,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int *lines_displayed,
                                  int simulate)
 {
-    char str_space[] = " ", str_plus[] = "+", *prefix_highlighted;
+    char str_space[] = " ", str_plus[] = "+";
+    char *prefix_no_color, *prefix_highlighted;
     const char *short_name;
     int i, length, length_allowed, num_spaces;
     struct t_gui_lines *mixed_lines;
@@ -733,13 +734,25 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         prefix_highlighted = NULL;
         if (line->data->highlight)
         {
-            prefix_highlighted = gui_color_decode (line->data->prefix, NULL);
+            prefix_no_color = gui_color_decode (line->data->prefix, NULL);
+            if (prefix_no_color)
+            {
+                length = strlen (prefix_no_color) + 32;
+                prefix_highlighted = malloc (length);
+                if (prefix_highlighted)
+                {
+                    snprintf (prefix_highlighted, length, "%s%s",
+                              GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
+                              prefix_no_color);
+                }
+                free (prefix_no_color);
+            }
             if (!simulate)
             {
                 gui_chat_reset_style (window, line,
                                       GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                       (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
-                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
+                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix)
                                        && (!line->data->buffer->active)) ?
                                       GUI_COLOR_CHAT_INACTIVE_BUFFER :
                                       GUI_COLOR_CHAT_HIGHLIGHT,
@@ -753,7 +766,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                 gui_chat_reset_style (window, line,
                                       GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                       (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
-                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer)
+                                       && CONFIG_BOOLEAN(config_look_color_inactive_prefix)
                                        && (!line->data->buffer->active)) ?
                                       GUI_COLOR_CHAT_INACTIVE_BUFFER :
                                       GUI_COLOR_CHAT,
