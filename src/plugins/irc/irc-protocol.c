@@ -1389,6 +1389,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             /* other message */
             ptr_nick = irc_nick_search (ptr_channel, nick);
             
+            if (ptr_nick && !ptr_nick->host)
+                ptr_nick->host = strdup (address);
+            
             weechat_printf_tags (ptr_channel->buffer,
                                  irc_protocol_tags (command,
                                                     "notify_message",

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-09-27
+v0.3.6-dev, 2011-09-29
 
 
 Version 0.3.6 (under dev!)
@@ -105,6 +105,7 @@ Version 0.3.6 (under dev!)
   followed by a digit (bug #33662)
 * irc: add prefix "#" for all channels on join (if no prefix given)
 * irc: switch to buffer on /join #channel if channel buffer already exists
+* irc: set host for nick on each channel message (if not already set)
 * irc: update host of nicks on manual /who
 * irc: fix memory leak on plugin unload (free ignores)
 * irc: fix memory leak in message parser (when called from other plugins like
