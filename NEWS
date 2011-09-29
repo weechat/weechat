@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-06-29
+v0.3.6-dev, 2011-09-29
 
 
 Version 0.3.6 (under dev!)
@@ -9,6 +9,9 @@ Version 0.3.6 (under dev!)
 
 Important release notes:
 
+* bold is not used any more for basic colors (used only if terminal has less
+  than 16 colors), a new option has been added to force bold if needed:
+  'weechat.look.color_basic_force_bold'
 * option 'weechat.look.hline_char' has been renamed to
   'weechat.look.separator_horizontal'
 
