@@ -661,8 +661,8 @@ Si vous voyez des erreurs à propos du certificat, vous pouvez désactiver
 Comment puis-je me connecter à freenode avec SSL ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Si vous utilisez WeeChat ≤ 0.3.5, vous devrez peut-être changer la valeur de
-cette option :
+Positionnez l'option 'weechat.network.gnutls_ca_file' avec le fichier des
+certificats :
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"

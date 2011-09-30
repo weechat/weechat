@@ -659,7 +659,7 @@ Jak mogę połączyć się z serwerem freenode używając SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // TRANSLATION MISSING
-If you are using WeeChat ≤ 0.3.5, you may have to change value of this option:
+Set option 'weechat.network.gnutls_ca_file' to file with certificates:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"

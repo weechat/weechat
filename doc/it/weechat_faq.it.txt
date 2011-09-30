@@ -658,8 +658,8 @@ Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify
 Come ci si può connettere al server freenode via SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Se si sta usando WeeChat ≤ 0.3.5, potrebbe essere necessario cambiare il valore
-di questa opzione:
+// TRANSLATION MISSING
+Set option 'weechat.network.gnutls_ca_file' to file with certificates:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
