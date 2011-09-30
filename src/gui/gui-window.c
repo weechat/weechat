@@ -919,6 +919,10 @@ gui_window_free (struct t_gui_window *window)
     /* remove scroll list */
     gui_window_scroll_free_all (window);
     
+    /* free coords */
+    if (window->coords)
+        free (window->coords);
+    
     /* remove window from windows list */
     if (window->prev_window)
         (window->prev_window)->next_window = window->next_window;
