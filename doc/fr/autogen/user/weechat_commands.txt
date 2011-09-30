@@ -582,7 +582,7 @@ Exemples:
 
 chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
 
-Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nouveau binaire WeeChat doit avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 
 Note: les connexions SSL sont perdues durant la mise à jour, car le rechargement de session SSL n'est pas possible actuellement avec GnuTLS. Il y a une reconnexion automatique après la mise à jour.
 

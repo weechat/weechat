@@ -5920,9 +5920,10 @@ command_init ()
                   N_("[<path_to_binary>]"),
                   N_("path_to_binary: path to WeeChat binary (default is "
                      "current binary)\n\n"
-                     "This command run again a WeeChat binary, so it should "
-                     "have been compiled or installed with a package manager "
-                     "before running this command.\n\n"
+                     "This command upgrades and reloads a running WeeChat "
+                     "session. The new WeeChat binary must have been compiled "
+                     "or installed with a package manager before running this "
+                     "command.\n\n"
                      "Note: SSL connections are lost during upgrade, because "
                      "reload of SSL sessions is currently not possible with "
                      "GnuTLS. There is automatic reconnection after "
