@@ -63,7 +63,7 @@
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "command_run", "timer", "fd", "process", "connect", "print",
   "signal", "hsignal", "config", "completion", "modifier",
-  "info", "info_hashtable", "infolist", "hdata" };
+  "info", "info_hashtable", "infolist", "hdata", "focus" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
 int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
