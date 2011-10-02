@@ -579,21 +579,19 @@ werden um den Abwesenheitsstatus anderer User anzuzeigen (und man nicht von dies
 Mitteilungen überflutet werden möchte), kann man WeeChat anweisen abwesende Nicks
 in einer anderen Farbe darzustellen.
 
-// TRANSLATION MISSING
-For Bitlbee ≥ 3, do that on channel '&bitlbee':
+Nutzt man Bitlbee ≥ 3, sollte man im '&bitlbee' Channel folgendes eingeben:
 
 ----------------------------------------
 channel set show_users online,away
 ----------------------------------------
 
-// TRANSLATION MISSING
-For older version of Bitlbee, do that on channel '&bitlbee':
+für ältere Versionen von Bitlbee gibt man im '&bitlbee' Channel ein:
 
 ----------------------------------------
 set away_devoice false
 ----------------------------------------
 
-Um in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
+Um sich in WeeChat anzeigen zu lassen welche Nicks abwesend sind siehe:
 <<color_away_nicks,abwesende Nicks>>.
 
 Wenn man wirklich Voice-Nachrichten filtern möchte kann folgender Befehl angewandt
@@ -672,17 +670,15 @@ Fall weniger sicher):
 Wie kann ich eine SSL gesicherte Verbindung zum freenode Server herstellen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Set option 'weechat.network.gnutls_ca_file' to file with certificates:
+Die Option 'weechat.network.gnutls_ca_file' sollte auf die Zertifikationsdatei zeigen:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-Check that you have this file on your system (commonly brought by package
-"ca-certificates").
+Überprüfe, ob die Zertifikationsdatei auf Deinem System installiert wurde (üblicherweise wird
+diese Datei durch das Paket "ca-certificates" bereitgestellt)
 
 Konfiguration des Servers, Port, SSL, dhkey_size und dann einen
 Connect durchführen:

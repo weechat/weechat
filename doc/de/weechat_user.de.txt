@@ -94,8 +94,7 @@ welche Pakete optional genutzt werden können.
 | gettext                 | nein     | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | libgcrypt11-dev         | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
 | libgnutls-dev (≥ 2.2.0) | nein     | SSL Verbindung zu einem IRC Server
-// TRANSLATION MISSING
-| ca-certificates         | nein     | certificates for SSL connections
+| ca-certificates         | nein     | Zertifikate für SSL Verbindungen
 | libaspell-dev           | nein     | aspell Erweiterung
 | libperl-dev             | nein     | perl Erweiterung
 | python-dev              | nein     | python Erweiterung
@@ -270,19 +269,19 @@ Diese Fehlermeldung senden Sie bitte an den Entwickler und beschreiben was den F
 
 Danke für Ihre Mithilfe!
 
-// TRANSLATION MISSING
 [[debug_running_weechat]]
-Debug a running WeeChat
-^^^^^^^^^^^^^^^^^^^^^^^
+Eine laufende Session von WeeChat debuggen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To debug a running WeeChat (for example if WeeChat seems blocked), you can use
-gdb with process id (replace '12345' with PID of weechat-curses process):
+Um eine laufende Session von WeeChat zu debuggen (zum Beispiel wenn WeeChat nicht
+mehr reagieren sollte) sollte man gdb mit der Prozess-ID starten ('12345' muss durch
+die PID des laufenden weechat-curses Prozesses ersetzt werden):
 
 ----------------------------------------
 gdb /usr/bin/weechat-curses 12345
 ----------------------------------------
 
-Then like for a crash, use command `bt full`:
+Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 
 ----------------------------------------
 (gdb) bt full
@@ -1598,8 +1597,7 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 335       | whois         | whois (ist ein Bot auf)
 | 338       | whois         | whois (Host)
 | 341       |               | inviting
-// TRANSLATION MISSING
-| 343       | whois         | whois (is opered as)
+| 343       | whois         | whois (ist opered als)
 | 344       | reop          | channel reop
 | 345       | reop          | channel reop (Ende)
 | 346       | invitelist    | Einladung list

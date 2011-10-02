@@ -44,12 +44,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * *weechat.color.chat_inactive_buffer*
-** Beschreibung: `text color for chat when line is inactive (buffer is merged with other buffers and is not selected)`
+** Beschreibung: `Textfarbe für inaktive Zeilen im Chatfenster (Buffer wurde mit anderen Buffern zusammengefügt und der Buffer ist nicht aktiv)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
 * *weechat.color.chat_inactive_window*
-** Beschreibung: `text color for chat when window is inactive (not current selected window)`
+** Beschreibung: `Textfarbe für Chat wenn das Fenster inaktiv ist (betrifft nicht das aktuell ausgewählte Fenster)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
@@ -84,7 +84,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * *weechat.color.chat_prefix_buffer_inactive_buffer*
-** Beschreibung: `text color for inactive buffer name (before prefix, when many buffers are merged with same number and if buffer is not selected)`
+** Beschreibung: `Textfarbe für den inaktiven Namen des Buffer (vor dem Präfix, falls mehrere Buffer zu einem zusammengefügt worden sind und der Buffer nicht ausgewählt ist)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
@@ -164,7 +164,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * *weechat.color.input_actions*
-** Beschreibung: `Textfarbe in der Eingabezeile bei Aktivität`
+** Beschreibung: `Textfarbe in der Eingabezeile bei Aktivität (z.B. beim Einfügen von Zeilen)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightgreen`)
 
@@ -339,22 +339,22 @@
 ** Werte: time, buffer, prefix, suffix, message (Standardwert: `message`)
 
 * *weechat.look.bar_more_down*
-** Beschreibung: `string displayed when bar can be scrolled down (for bars with filling different from "horizontal")`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"++"`)
 
 * *weechat.look.bar_more_left*
-** Beschreibung: `string displayed when bar can be scrolled to the left (for bars with filling "horizontal")`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<<"`)
 
 * *weechat.look.bar_more_right*
-** Beschreibung: `string displayed when bar can be scrolled to the right (for bars with filling "horizontal")`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `">>"`)
 
 * *weechat.look.bar_more_up*
-** Beschreibung: `string displayed when bar can be scrolled up (for bars with filling different from "horizontal")`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach oben gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
@@ -369,37 +369,37 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
 * *weechat.look.color_basic_force_bold*
-** Beschreibung: `force "bold" attribute for light colors and "darkgray" in basic colors (this option is disabled by default: bold is used only if terminal has less than 16 colors)`
+** Beschreibung: `erzwingt das Textattribut "fett" für helle Farben und "darkgray" um diese Farben stärker hervorzuheben (diese Option ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.color_inactive_buffer*
-** Beschreibung: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
+** Beschreibung: `Textfarbe der Zeilen in einem inaktiven Buffer (betrifft Zeilen in einem zusammengefügt Buffer, welcher nicht aktiv ist)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.color_inactive_message*
-** Beschreibung: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
+** Beschreibung: `nutzt eine andere Farbe um die inaktiven Nachrichten darzustellen (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.color_inactive_prefix*
-** Beschreibung: `use a different color for inactive prefix (when window is not current window, or if line is from a merged buffer not selected)`
+** Beschreibung: `nutzt eine andere Farbe um den inaktiven Prefix darzustellen (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.color_inactive_prefix_buffer*
-** Beschreibung: `use a different color for inactive buffer name in prefix (when window is not current window, or if line is from a merged buffer not selected)`
+** Beschreibung: `nutzt eine andere Farbe um den inaktiven BUffernamen im Prefix (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * *weechat.look.color_inactive_time*
-** Beschreibung: `use a different color for inactive time (when window is not current window, or if line is from a merged buffer not selected)`
+** Beschreibung: `nutzt eine andere Farbe um die inaktive Zeitangabe darzustellen (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * *weechat.look.color_inactive_window*
-** Beschreibung: `use a different color for lines in inactive window (when window is not current window)`
+** Beschreibung: `Textfarbe der Zeilen in einem inaktiven Fenster (betrifft das Fenster, welches nicht aktiv ist)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -529,7 +529,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `32`)
 
 * *weechat.look.item_buffer_filter*
-** Beschreibung: `string used to show that some lines are filtered in current buffer (bar item "buffer_filter")`
+** Beschreibung: `Zeichen mit welchem in der Bar-Item ("buffer_filter") signalisiert wird ob im aktuellen Buffer die Filterfunktion eingeschaltet ist.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 

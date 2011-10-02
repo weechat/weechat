@@ -139,13 +139,13 @@ Ziel: Servername
 ........................................
 
 [[command_irc_disconnect]]
-[command]*`disconnect`* disconnect from one or all IRC servers::
+[command]*`disconnect`* Verbindung zu einem oder mehreren IRC-Server(n) trennen::
 ........................................
 /disconnect  [<server>|-all [<reason>]]
 
-server: server name to disconnect
-  -all: disconnect from all servers
-reason: reason for quit
+server: Name des Servers zu dem die Verbindung getrennt werden soll
+  -all: Verbindung zu allen Servern trennen
+reason: Begründung der Trennung
 ........................................
 
 [[command_irc_halfop]]
