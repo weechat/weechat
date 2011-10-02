@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-dev, 2011-09-30
+v0.3.6-dev, 2011-10-02
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix display of background color in chat area after line feed
 * core: fix paste detection (problem with end of lines)
 * core: add new option weechat.look.color_basic_force_bold, off by default: bold
   is used only if terminal has less than 16 colors (patch #7621)

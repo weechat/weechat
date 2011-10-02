@@ -439,6 +439,7 @@ gui_chat_display_word (struct t_gui_window *window,
                     ptr_pair = &pair;
                     wattr_get (GUI_WINDOW_OBJECTS(window)->win_chat,
                                ptr_attrs, ptr_pair, NULL);
+                    gui_window_save_style ();
                     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
                     gui_chat_display_word_raw (window, line,
@@ -453,7 +454,10 @@ gui_chat_display_word (struct t_gui_window *window,
                 }
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 if (!simulate)
+                {
                     wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
+                    gui_window_restore_style ();
+                }
             }
             if (window->win_chat_cursor_y < window->coords_size)
                 window->coords[window->win_chat_cursor_y].data = (char *)word + (ptr_data - data);

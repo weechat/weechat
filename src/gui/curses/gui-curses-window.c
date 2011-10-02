@@ -57,10 +57,11 @@
 #include "gui-curses.h"
 
 
-int window_current_style_fg;           /* current foreground color          */
-int window_current_style_bg;           /* current background color          */
-int window_current_style_attr;         /* current attributes (bold, ..)     */
-int window_current_color_attr;         /* attr sum of last color(s) used    */
+int gui_window_current_style_fg;       /* current foreground color          */
+int gui_window_current_style_bg;       /* current background color          */
+int gui_window_current_style_attr;     /* current attributes (bold, ..)     */
+int gui_window_current_color_attr;     /* attr sum of last color(s) used    */
+int gui_window_saved_style[4];         /* current style saved               */
 
 
 /*
@@ -197,9 +198,35 @@ void
 gui_window_clrtoeol (WINDOW *window)
 {
     wbkgdset (window,
-              ' ' | COLOR_PAIR (gui_color_get_pair (window_current_style_fg,
-                                                    window_current_style_bg)));
+              ' ' | COLOR_PAIR (gui_color_get_pair (gui_window_current_style_fg,
+                                                    gui_window_current_style_bg)));
     wclrtoeol (window);
+}
+
+/*
+ * gui_window_save_style: save current style
+ */
+
+void
+gui_window_save_style ()
+{
+    gui_window_saved_style[0] = gui_window_current_style_fg;
+    gui_window_saved_style[1] = gui_window_current_style_bg;
+    gui_window_saved_style[2] = gui_window_current_style_attr;
+    gui_window_saved_style[3] = gui_window_current_color_attr;
+}
+
+/*
+ * gui_window_restore_style: restore style values
+ */
+
+void
+gui_window_restore_style ()
+{
+    gui_window_current_style_fg = gui_window_saved_style[0];
+    gui_window_current_style_bg = gui_window_saved_style[1];
+    gui_window_current_style_attr = gui_window_saved_style[2];
+    gui_window_current_color_attr = gui_window_saved_style[3];
 }
 
 /*
@@ -210,10 +237,10 @@ gui_window_clrtoeol (WINDOW *window)
 void
 gui_window_reset_style (WINDOW *window, int weechat_color)
 {
-    window_current_style_fg = -1;
-    window_current_style_bg = -1;
-    window_current_style_attr = 0;
-    window_current_color_attr = 0;
+    gui_window_current_style_fg = -1;
+    gui_window_current_style_bg = -1;
+    gui_window_current_style_attr = 0;
+    gui_window_current_color_attr = 0;
     
     wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
     wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
@@ -227,7 +254,7 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 void
 gui_window_set_color_style (WINDOW *window, int style)
 {
-    window_current_color_attr |= style;
+    gui_window_current_color_attr |= style;
     wattron (window, style);
 }
 
@@ -238,7 +265,7 @@ gui_window_set_color_style (WINDOW *window, int style)
 void
 gui_window_remove_color_style (WINDOW *window, int style)
 {
-    window_current_color_attr &= !style;
+    gui_window_current_color_attr &= !style;
     wattroff (window, style);
 }
 
@@ -249,8 +276,8 @@ gui_window_remove_color_style (WINDOW *window, int style)
 void
 gui_window_set_color (WINDOW *window, int fg, int bg)
 {
-    window_current_style_fg = fg;
-    window_current_style_bg = bg;
+    gui_window_current_style_fg = fg;
+    gui_window_current_style_bg = bg;
     
     wattron (window, COLOR_PAIR(gui_color_get_pair (fg, bg)));
 }
@@ -300,7 +327,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
     
     if (fg >= 0)
     {
-        current_bg = window_current_style_bg;
+        current_bg = gui_window_current_style_bg;
         
         if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         {
@@ -362,8 +389,8 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
     
     if (bg >= 0)
     {
-        current_attr = window_current_style_attr;
-        current_fg = window_current_style_fg;
+        current_attr = gui_window_current_style_attr;
+        current_fg = gui_window_current_style_fg;
         
         if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
         {
