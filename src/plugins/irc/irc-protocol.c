@@ -961,6 +961,8 @@ IRC_PROTOCOL_CALLBACK(notice)
     
     if (argv[0][0] == ':')
     {
+        if (argc < 4)
+            return WEECHAT_RC_ERROR;
         pos_target = argv[2];
         if ((pos_target[0] == '@') && (irc_channel_is_channel (pos_target + 1)))
         {
