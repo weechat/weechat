@@ -1109,6 +1109,12 @@ gui_input_history_next (struct t_gui_window *window,
     
     if (*ptr_history)
     {
+        /* replace text in history with current input */
+        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        if ((*ptr_history)->text)
+            free ((*ptr_history)->text);
+        (*ptr_history)->text = strdup (window->buffer->input_buffer);
+        
         *ptr_history = (*ptr_history)->prev_history;
         if (*ptr_history)
         {
