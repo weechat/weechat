@@ -6001,12 +6001,21 @@ Paramètres :
   tampon WeeChat
 * 'message' : message à afficher
 
+[NOTE]
+La première tabulation dans le message ("\t") est utilisée pour séparer le
+préfixe du message. +
+Si votre message contient des tabulations et si vous ne voulez pas de préfixe,
+utilisez un espace, une tabulation, puis le message : cela désactivera le
+préfixe (l'espace avant la tabulation ne sera pas affiché).
+
 Exemple en C :
 
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "Bonjour sur le tampon WeeChat");
 weechat_printf (buffer, "Bonjour sur ce tampon");
+weechat_printf (buffer, "%sCeci est une erreur !", weechat_prefix ("error"));
+weechat_printf (buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations");
 ----------------------------------------
 
 Script (Python) :
@@ -6019,6 +6028,8 @@ weechat.prnt(buffer, message)
 # exemple
 weechat.prnt("", "Bonjour sur le tampon WeeChat")
 weechat.prnt(buffer, "Bonjour sur ce tampon")
+weechat.prnt(buffer, "%sCeci est une erreur !" % weechat.prefix("error"))
+weechat.prnt(buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations")
 ----------------------------------------
 
 [NOTE]

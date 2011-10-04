@@ -5936,12 +5936,20 @@ Arguments:
 * 'buffer': buffer pointer, if NULL, message is displayed on WeeChat buffer
 * 'message': message to display
 
+[NOTE]
+The first tabulation in message ("\t") is used to separate prefix from message. +
+If your message has some tabs and if you don't want prefix, then use a space,
+a tab, then message (see example below): this will disable prefix (the space
+before tab will not be displayed).
+
 C example:
 
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "Hello on WeeChat buffer");
 weechat_printf (buffer, "Hello on this buffer");
+weechat_printf (buffer, "%sThis is an error!", weechat_prefix ("error"));
+weechat_printf (buffer, " \tMessage without prefix but with \t some \t tabs");
 ----------------------------------------
 
 Script (Python):
@@ -5954,6 +5962,8 @@ weechat.prnt(buffer, message)
 # example
 weechat.prnt("", "Hello on WeeChat buffer")
 weechat.prnt(buffer, "Hello on this buffer")
+weechat.prnt(buffer, "%sThis is an error!" % weechat.prefix("error"))
+weechat.prnt(buffer, " \tMessage without prefix but with \t some \t tabs")
 ----------------------------------------
 
 [NOTE]
