@@ -54,6 +54,9 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
     
     buf = NULL;
     
+    if (!window)
+        window = weechat_current_window ();
+    
     buffer = weechat_window_get_pointer (window, "buffer");
     
     if (buffer)
@@ -387,6 +390,9 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     
+    if (!window)
+        window = weechat_current_window ();
+    
     buffer = weechat_window_get_pointer (window, "buffer");
     
     if (buffer)
@@ -539,6 +545,31 @@ irc_bar_item_focus_buffer_nicklist (void *data,
 }
 
 /*
+ * irc_bar_item_buffer_switch: called on "buffer_switch" signal: refresh irc
+ *                             bar items (for root bars)
+ */
+
+int
+irc_bar_item_buffer_switch (void *data, const char *signal,
+                            const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    weechat_bar_item_update ("away");
+    weechat_bar_item_update ("buffer_title");
+    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("irc_channel");
+    weechat_bar_item_update ("lag");
+    weechat_bar_item_update ("input_prompt");
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_bar_item_init: initialize IRC bar items
  */
 
@@ -554,4 +585,6 @@ irc_bar_item_init ()
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL);
+    weechat_hook_signal ("buffer_switch",
+                         &irc_bar_item_buffer_switch, NULL);
 }

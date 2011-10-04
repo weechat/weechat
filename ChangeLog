@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-rc1, 2011-10-03
+v0.3.6-rc1, 2011-10-04
 
 
 Version 0.3.6 (under dev!)
@@ -87,6 +87,8 @@ Version 0.3.6 (under dev!)
   description for option when function is called)
 * scripts: fix crash with scripts not auto-loaded having a buffer opened after
   /upgrade (input/close callbacks for buffer not set properly)
+* irc: fix display of items "away" and "lag" in root bars, refresh all irc bar
+  items on signal "buffer_switch" (bug #34466)
 * irc: fix crash on malformed irc notice received (without message after target)
 * irc: add missing messages for whois: 223, 264, 343
 * irc: use high priority queue for sending modes and wallchops messages
