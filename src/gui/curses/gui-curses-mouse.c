@@ -249,8 +249,11 @@ gui_mouse_event_code2key (const char *code)
     if (y < 0)
         y = 0;
     
-    /* ignore code '#' (button released) if it's received as first event */
-    if ((gui_mouse_event_index == 0) && (code[0] == '#'))
+    /*
+     * ignore code '#' (button released) or '@' (coordinates) if it's received
+     * as first event
+     */
+    if ((gui_mouse_event_index == 0) && ((code[0] == '#') || (code[0] == '@')))
         return NULL;
     
     /* set data in "gui_mouse_event_xxx" */
