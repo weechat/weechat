@@ -1356,7 +1356,7 @@ Le opzioni nel server sono:
 
 * 'sasl_mechanism': meccanismo da usare ("plain" o "dh-blowfish")
 * 'sasl_timeout': timeout (in secondi) per l'autenticazione
-* 'sasl_username': nome utente
+* 'sasl_username': nome utente (nick)
 * 'sasl_password': password
 
 Se si desidera usare "dh-blowfish" in tutti i server:

@@ -1348,7 +1348,7 @@ Optionen für Server sind:
 
 * 'sasl_mechanism': Mechanismus welcher genutzt werden soll ("plain" oder "dh-blowfish")
 * 'sasl_timeout': Zeitüberschreitung (in Sekunden) für Authentifizierung
-* 'sasl_username': Username
+* 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
 
 Soll "dh-blowfish" standardmäßig auf allen Servern genutzt werden:

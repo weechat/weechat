@@ -1373,7 +1373,7 @@ Les options dans le serveur sont :
 
 * 'sasl_mechanism' : mécanisme à utiliser ("plain" ou "dh-blowfish")
 * 'sasl_timeout' : délai d'attente maximum (en secondes) pour l'authentification
-* 'sasl_username' : nom d'utilisateur
+* 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe
 
 Si vous voulez utiliser "dh-blowfish" par défaut pour tous les serveurs :
