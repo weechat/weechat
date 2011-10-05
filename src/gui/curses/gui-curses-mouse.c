@@ -46,6 +46,41 @@
 #include "../gui-window.h"
 
 
+#define MOUSE_CODE_BUTTON(code) ((code >= 32) && (code < 64))
+#define MOUSE_CODE_MOTION(code) ((code >= 64) && (code < 96))
+#define MOUSE_CODE_END(code)    ((code == '#') || (code == '3')         \
+                                 || (code == '+') || (code == ';'))
+
+char *gui_mouse_wheel_codes[][2] =
+{ { "`",  "wheelup"            },
+  { "p",  "ctrl-wheelup"       },
+  { "h",  "alt-wheelup"        },
+  { "x",  "ctrl-alt-wheelup"   },
+  { "a",  "wheeldown"          },
+  { "q",  "ctrl-wheeldown"     },
+  { "i",  "alt-wheeldown"      },
+  { "y",  "ctrl-alt-wheeldown" },
+  { NULL, NULL                 } };
+char *gui_mouse_button_codes[][2] =
+{ { " ",  "button1"            },
+  { "\"", "button2"            },
+  { "!",  "button3"            },
+  { "b",  "button4"            },
+  { "c",  "button5"            },
+  { "d",  "button6"            },
+  { "e",  "button7"            },
+  { "f",  "button8"            },
+  { "g",  "button9"            },
+  { "0",  "ctrl-button1"       },
+  { "2",  "ctrl-button2"       },
+  { "1",  "ctrl-button3"       },
+  { "(",  "alt-button1"        },
+  { "*",  "alt-button2"        },
+  { ")",  "alt-button3"        },
+  { "8",  "ctrl-alt-button1"   },
+  { NULL, NULL                 } };
+
+
 /*
  * gui_mouse_enable: enable mouse
  */
@@ -212,10 +247,10 @@ gui_mouse_event_init ()
 const char *
 gui_mouse_event_code2key (const char *code)
 {
-    int x, y, code_utf8, length;
+    int i, x, y, code_utf8, length;
     double diff_x, diff_y, distance, angle, pi4;
     static char key[128];
-    char button[2], *ptr_code;
+    char *ptr_code;
     
     key[0] = '\0';
     
@@ -249,12 +284,12 @@ gui_mouse_event_code2key (const char *code)
     if (y < 0)
         y = 0;
     
-    /*
-     * ignore code '#' (button released) or '@' (coordinates) if it's received
-     * as first event
-     */
-    if ((gui_mouse_event_index == 0) && ((code[0] == '#') || (code[0] == '@')))
+    /* ignore code if it's motion/end code received as first event */
+    if ((gui_mouse_event_index == 0)
+        && (MOUSE_CODE_MOTION(code[0]) || MOUSE_CODE_END(code[0])))
+    {
         return NULL;
+    }
     
     /* set data in "gui_mouse_event_xxx" */
     gui_mouse_event_x[gui_mouse_event_index] = x;
@@ -265,47 +300,31 @@ gui_mouse_event_code2key (const char *code)
     if (gui_mouse_event_index == 0)
         gui_mouse_event_index = 1;
     
-    if (code[0] == '`')
+    /*
+     * browse wheel codes, if one code is found, return event name immediately
+     */
+    for (i = 0; gui_mouse_wheel_codes[i][0]; i++)
     {
-        gui_mouse_event_x[1] = gui_mouse_event_x[0];
-        gui_mouse_event_y[1] = gui_mouse_event_y[0];
-        strcat (key, "wheelup");
-        return key;
+        if (code[0] == gui_mouse_wheel_codes[i][0][0])
+        {
+            strcat (key, gui_mouse_wheel_codes[i][1]);
+            gui_mouse_event_x[1] = gui_mouse_event_x[0];
+            gui_mouse_event_y[1] = gui_mouse_event_y[0];
+            return key;
+        }
     }
     
-    if (code[0] == 'a')
-    {
-        gui_mouse_event_x[1] = gui_mouse_event_x[0];
-        gui_mouse_event_y[1] = gui_mouse_event_y[0];
-        strcat (key, "wheeldown");
-        return key;
-    }
-    
-    if (code[0] != '#')
+    if (!MOUSE_CODE_END(code[0]))
         return NULL;
     
-    /* add button/wheel */
-    switch (gui_mouse_event_button)
+    /* add name of button event */
+    for (i = 0; gui_mouse_button_codes[i][0]; i++)
     {
-        case ' ': /* left button pressed */
-            strcat (key, "button1");
+        if (gui_mouse_event_button == gui_mouse_button_codes[i][0][0])
+        {
+            strcat (key, gui_mouse_button_codes[i][1]);
             break;
-        case '"': /* right button pressed */
-            strcat (key, "button2");
-            break;
-        case '!': /* middle button pressed */
-            strcat (key, "button3");
-            break;
-        default: /* extra buttons: button4..button9 */
-            if ((gui_mouse_event_button >= 'b')
-                && (gui_mouse_event_button <= 'g'))
-            {
-                button[0] = gui_mouse_event_button - ('b' - '4');
-                button[1] = '\0';
-                strcat (key, "button");
-                strcat (key, button);
-            }
-            break;
+        }
     }
     
     /*

@@ -659,34 +659,70 @@ WeeChat definiert sind (siehe <<key_bindings_mouse_context,Tasten für "mouse"-K
 Man kann mit dem Befehl `/key` im Kontext "mouse" aber auch eigene Befehle zuweisen
 und löschen (für die Syntax, siehe <<command_weechat_key,/key Befehl>>).
 
-Auflistung von Events die unterstützt werden:
+// TRANSLATION MISSING
+Event name consists of a modifier (optional), a button/wheel name and a gesture
+(optional). Different elements are separated by "-".
 
-[width="80%",cols="3m,4",options="header"]
+// TRANSLATION MISSING
+List of modifiers:
+
+[width="50%",cols="3m,4",options="header"]
 |========================================
-| Event                            | Beschreibung
-| button1                          | linker Mausknopf wird gedrückt
-| button2                          | rechter Mausknopf wird gedrückt
-| button3                          | mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
-| button4 ... button9              | ein zusätzlicher Mausknopf wird gedrückt
-| wheelup                          | Mausrad wird nach oben gescrollt
-| wheeldown                        | Mausrad wird nach unten gescrollt
-| buttonX-gesture-up ^(1)^         | Mausgeste mit einer Länge von 3 bis 19 Zeichen
-| buttonX-gesture-up-long ^(1)^    | Mausgeste mit einer Länge von 20 und mehr Zeichen
-| buttonX-gesture-down ^(1)^       | Mausgeste mit einer Länge von 3 bis 19 Zeichen
-| buttonX-gesture-down-long ^(1)^  | Mausgeste mit einer Länge von 20 und mehr Zeichen
-| buttonX-gesture-left ^(1)^       | Mausgeste mit einer Länge von 3 bis 39 Zeichen
-| buttonX-gesture-left-long ^(1)^  | Mausgeste mit einer Länge von 40 und mehr Zeichen
-| buttonX-gesture-right ^(1)^      | Mausgeste mit einer Länge von 3 bis 39 Zeichen
-| buttonX-gesture-right-long ^(1)^ | Mausgeste mit einer Länge von 40 und mehr Zeichen
+| Modifier | Description
+| ctrl     | key @k(-C-)
+| alt      | key @k(-A-)
+| ctrl-alt | keys @k(-C-) and @k(-A-)
 |========================================
 
-[NOTE]
-^(1)^ "X" muss durch die Nummer des Mausknopfes ersetzt werden (1 bis 9) die für die Mausgeste genutzt werden soll.
+// TRANSLATION MISSING
+List of buttons/wheel:
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Button/wheel        | Description
+| button1             | linker Mausknopf wird gedrückt
+| button2             | rechter Mausknopf wird gedrückt
+| button3             | mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
+| button4 ... button9 | ein zusätzlicher Mausknopf wird gedrückt
+| wheelup             | Mausrad wird nach oben gescrollt
+| wheeldown           | Mausrad wird nach unten gescrollt
+|========================================
+
+// TRANSLATION MISSING
+List of gestures (only for buttons, not wheel):
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Gesture            | Distance
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|========================================
+
+// TRANSLATION MISSING
+Example of events:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
 
 [TIP]
 Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich mehrere Events mittels
 `*` abzufangen. Zum Beispiel: `button1-gesture-*` fängt alle Mausgesten ab, die mit
 der linken Maustaste eingeleitet werden.
+
+// TRANSLATION MISSING
+[TIP]
+You can find an event name with command `/input grab_mouse` then doing event
+with mouse. This will insert event name on command line.
 
 [[command_line]]
 Befehlszeile

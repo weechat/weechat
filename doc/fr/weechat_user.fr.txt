@@ -674,35 +674,67 @@ Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
 utilisant le contexte "mouse" (pour la syntaxe voir
 <<command_weechat_key,la commande /key>>).
 
-Liste des évènements supportés :
+Un nom d'évènement consiste en un modifieur (facultatif), un bouton/roulette et
+un geste (facultatif). Les différents éléments sont séparés par "-".
 
-[width="80%",cols="3m,4",options="header"]
+Liste des modifieurs :
+
+[width="50%",cols="3m,4",options="header"]
 |========================================
-| Evènement                        | Description
-| button1                          | clic sur le bouton gauche
-| button2                          | clic sur le bouton droit
-| button3                          | clic sur le bouton du milieu (souvent clic sur la roulette)
-| button4 ... button9              | clic sur un bouton additionnel
-| wheelup                          | roulette (haut)
-| wheeldown                        | roulette (bas)
-| buttonX-gesture-up ^(1)^         | geste avec distance entre 3 et 19
-| buttonX-gesture-up-long ^(1)^    | geste avec distance supérieure ou égale à 20
-| buttonX-gesture-down ^(1)^       | geste avec distance entre 3 et 19
-| buttonX-gesture-down-long ^(1)^  | geste avec distance supérieure ou égale à 20
-| buttonX-gesture-left ^(1)^       | geste avec distance entre 3 et 39
-| buttonX-gesture-left-long ^(1)^  | geste avec distance supérieure ou égale à 40
-| buttonX-gesture-right ^(1)^      | geste avec distance entre 3 et 39
-| buttonX-gesture-right-long ^(1)^ | geste avec distance supérieure ou égale à 40
+| Modifieur | Description
+| ctrl      | touche @k(-C-)
+| alt       | touche @k(-A-)
+| ctrl-alt  | touches @k(-C-) et @k(-A-)
 |========================================
 
-[NOTE]
-^(1)^ "X" est le numéro du bouton utilisé pour le geste (1 à 9).
+Liste des boutons/roulette :
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Bouton/roulette     | Description
+| button1             | clic sur le bouton gauche
+| button2             | clic sur le bouton droit
+| button3             | clic sur le bouton du milieu (souvent clic sur la roulette)
+| button4 ... button9 | clic sur un bouton additionnel
+| wheelup             | roulette (haut)
+| wheeldown           | roulette (bas)
+|========================================
+
+Liste des gestes (seulement pour les boutons, pas la roulette) :
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Geste              | Distance
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|========================================
+
+Exemple d'évènements :
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
 
 [TIP]
 Lors de l'association d'une touche dans le contexte "mouse", il est possible
 d'adresser plusieurs évènements en utilisant `*` au début ou la fin du nom,
 par exemple `button1-gesture-*` qui correspond à n'importe quel geste effectué
 avec le bouton gauche.
+
+[TIP]
+Vous pouvez trouver le nom de l'évènement avec la commande `/input grab_mouse`
+puis en faisant l'action avec la souris. Cela insèrera le nom de l'évènement
+sur la ligne de commande.
 
 [[command_line]]
 Ligne de commande

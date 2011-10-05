@@ -658,34 +658,65 @@ Many default mouse events are already defined by WeeChat (see
 You can change or add bindings with the command `/key` using context "mouse"
 (for syntax, see <<command_weechat_key,command /key>>).
 
-List of events supported:
+Event name consists of a modifier (optional), a button/wheel name and a gesture
+(optional). Different elements are separated by "-".
 
-[width="80%",cols="3m,4",options="header"]
+List of modifiers:
+
+[width="50%",cols="3m,4",options="header"]
 |========================================
-| Event                            | Description
-| button1                          | click on left button
-| button2                          | click on right button
-| button3                          | click on middle button (often click on wheel)
-| button4 ... button9              | click on extra buttons
-| wheelup                          | wheel (up)
-| wheeldown                        | wheel (down)
-| buttonX-gesture-up ^(1)^         | gesture with distance between 3 and 19
-| buttonX-gesture-up-long ^(1)^    | gesture with distance greater than or equal to 20
-| buttonX-gesture-down ^(1)^       | gesture with distance between 3 and 19
-| buttonX-gesture-down-long ^(1)^  | gesture with distance greater than or equal to 20
-| buttonX-gesture-left ^(1)^       | gesture with distance between 3 and 39
-| buttonX-gesture-left-long ^(1)^  | gesture with distance greater than or equal to 40
-| buttonX-gesture-right ^(1)^      | gesture with distance between 3 and 39
-| buttonX-gesture-right-long ^(1)^ | gesture with distance greater than or equal to 40
+| Modifier | Description
+| ctrl     | key @k(-C-)
+| alt      | key @k(-A-)
+| ctrl-alt | keys @k(-C-) and @k(-A-)
 |========================================
 
-[NOTE]
-^(1)^ "X" is number of button used in gesture (1 to 9).
+List of buttons/wheel:
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Button/wheel        | Description
+| button1             | click on left button
+| button2             | click on right button
+| button3             | click on middle button (often click on wheel)
+| button4 ... button9 | click on extra buttons
+| wheelup             | wheel (up)
+| wheeldown           | wheel (down)
+|========================================
+
+List of gestures (only for buttons, not wheel):
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Gesture            | Distance
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|========================================
+
+Example of events:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
 
 [TIP]
 When binding a key in context "mouse", it's possible to match many events using
 `*` at beginning or end of name, for example `button1-gesture-*` will match any
 gesture made using left button.
+
+[TIP]
+You can find an event name with command `/input grab_mouse` then doing event
+with mouse. This will insert event name on command line.
 
 [[command_line]]
 Command line
