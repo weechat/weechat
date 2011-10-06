@@ -363,6 +363,8 @@ Come posso cercare testo nel buffer (come /lastlog con irssi)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il tasto predefinito è @k(C-)@k(r) (il comando è: `/input search-text`).
+// TRANSLATION MISSING
+And jump to highlights: @k(A-)@k(p)/@k(n).
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).

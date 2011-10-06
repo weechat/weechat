@@ -370,6 +370,8 @@ Wie kann ich in einem Buffer nach einem Text suchen (ähnlich /lastlog in irssi)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Die Standardtastenbelegung lautet @k(C-)@k(r) (der dazugehörige Befehl: `/input search_text`).
+// TRANSLATION MISSING
+And jump to highlights: @k(A-)@k(p)/@k(n).
 
 Siehe die Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
 

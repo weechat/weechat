@@ -354,6 +354,7 @@ How can I search text in buffer (like /lastlog in irssi)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default key is @k(C-)@k(r) (command is: `/input search_text`).
+And jump to highlights: @k(A-)@k(p)/@k(n).
 
 See user's guide for more info about this feature (default key bindings).
 
