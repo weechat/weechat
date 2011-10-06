@@ -2146,7 +2146,7 @@ Argomenti:
 
 * 'directory': cartella in cui cercare i file
 * 'hidden_files': 1 per includere i file nascosti, altrimenti 0
-* 'data': puntatore fornito al callback quando chiamato da WeeChat
+* 'data': puntatore fornito alla callback quando chiamata da WeeChat
 * 'callback': funzione chiamata per ogni file trovato, argomenti:
 ** 'void *data': puntatore
 ** 'const char *filename': nome file trovato
@@ -3257,14 +3257,12 @@ Argomenti:
 *** 'buffer': buffer
 *** 'time': tempo
 ** 'keys': stringa con la lista di chiavi (formato: "chiave1,chiave2,chiave3")
-// TRANSLATION MISSING
-** 'keys_sorted': string with list of sorted keys (format: "chiave1,chiave2,chiave3")
+** 'keys_sorted': stringa con l'elenco di chiavi ordinate (formato: "chiave1,chiave2,chiave3")
 ** 'values': stringa  con la lista di valori (formato: "valore1,valore2,valore3")
 ** 'keys_values': stringa con la lista di valori e chiavi
    (formato: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
-// TRANSLATION MISSING
-** 'keys_values_sorted': string with list of keys and values (sorted by keys)
-   (format: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
+** 'keys_values_sorted': stringa con la lista di chiavi e valori (ordinata per chiavi)
+   (formato: "chiave1:valore1,chiave2:valore2,chiave3:valore3")
 
 Valore restituito:
 
@@ -3592,7 +3590,7 @@ Argomenti:
 *** 'WEECHAT_CONFIG_READ_OK'
 *** 'WEECHAT_CONFIG_READ_MEMORY_ERROR'
 *** 'WEECHAT_CONFIG_READ_FILE_NOT_FOUND'
-* 'callback_read_data': puntatore fornito al callback quando chiamato da WeeChat
+* 'callback_read_data': puntatore fornito alla callback quando chiamata da WeeChat
 * 'callback_write': funzione chiamata quando la sezione è scritta nel file (dovrebbe
   essere NULL in molti casi, tranne se la sezione necessita di una funzione
   personalizzata), argomenti e valore restituito:
@@ -3604,7 +3602,7 @@ Argomenti:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* callback_write_data: puntatore fornito al callback quando chiamato da WeeChat
+* callback_write_data: puntatore fornito alla callback quando chiamata da WeeChat
 * callback_write_default: funzione chiamata quando i valori predefiniti per la sezione
   devono essere scritti in un file, argomenti e valore restituito:
 ** 'void *data': puntatore
@@ -3614,7 +3612,7 @@ Argomenti:
 *** 'WEECHAT_CONFIG_WRITE_OK'
 *** 'WEECHAT_CONFIG_WRITE_ERROR'
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
-* 'callback_write_default_data': puntatore fornito al callback quando chiamato da
+* 'callback_write_default_data': puntatore fornito alla callback quando chiamata da
   WeeChat
 * 'callback_create_option': funzione chiamata quando viene creata una nuova
   opzione nella sezione (NULL se la sezione non consente di creare nuove
@@ -3629,7 +3627,7 @@ Argomenti:
 *** 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE'
 *** 'WEECHAT_CONFIG_OPTION_SET_ERROR'
 *** 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND'
-* 'callback_create_option_data': puntatore fornito al callback quando chiamato
+* 'callback_create_option_data': puntatore fornito alla callback quando chiamata
   da WeeChat
 * 'callback_delete_option': funzione chiamata quando un'opzione viene eliminata
   nella sezione (NULL se la sezione non consente di eliminare delle opzioni),
@@ -3643,7 +3641,7 @@ Argomenti:
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED'
 *** 'WEECHAT_CONFIG_OPTION_UNSET_ERROR'
-* 'callback_delete_option_data': puntatore fornito al callback quando chiamato
+* 'callback_delete_option_data': puntatore fornito alla callback quando chiamata
   da WeeChat
 
 Valore restituito:
@@ -3876,7 +3874,7 @@ Argomenti:
 *** 1 se il valore è corretto
 *** 0 se il valore non è valido
 * 'callback_check_value_data': puntatore fornito alla callback check_value
-  quando chiamato da WeeChat
+  quando chiamata da WeeChat
 * 'callback_change': funzione chiamata quando il valore dell'opzione è stata
   cambiata (opzionale), argomenti:
 ** 'void *data': puntatore
@@ -5685,47 +5683,45 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[key_bindings]]
-Key bindings
-~~~~~~~~~~~~
+Combinazione tasti
+~~~~~~~~~~~~~~~~~~
 
-Functions for key bindings.
+Funzioni per le combinazioni dei tasti.
 
-// TRANSLATION MISSING
 weechat_key_bind
 ^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Add new key bindings.
+Aggiunge una nuova combinazione tasto.
 
 [NOTE]
-Unlike command `/key bind`, this function will never change an existing key
-binding, only new keys are created. To remove a key binding, use
-<<_weechat_key_unbind,weechat_key_unbind>>.
+A differenza del comando `/key bind`, questa funzione non cambia mai una
+combinazione tasti esistente, ma ne vengono create di nuove. Per rimuovere
+una combinazione tasti, usare <<_weechat_key_unbind,weechat_key_unbind>>.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 int weechat_key_bind (const char *context, struct t_hashtable *keys);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'context': context for keys:
-** 'default': default context (common actions)
-** 'search': search context (when searching text in buffer)
-** 'cursor': free movement of cursor on screen
-** 'mouse': keys for mouse events
-* 'keys': hashtable with key bindings
+* 'context': contesto per i tasti:
+** 'default': contesto default (azioni comuni)
+** 'search': contesto search (quando si cerca testo nel buffer)
+** 'cursor': movimento libero del cursore sullo schermo
+** 'mouse': tasti per gli eventi del mouse
+* 'keys': tabella hash con le combinazioni dei tasti
 
-Return value:
+Valore restituito:
 
-* number of key bindings added
+* numero delle combinazioni tasti aggiunte
 
-C example:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
@@ -5748,52 +5744,52 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 num_keys = weechat.key_bind(context, keys)
 
-# example
+# esempio
 keys = { "@chat(python.test):button1": "hsignal:test_mouse",
          "@chat(python.test):wheelup": "/mycommand up",
          "@chat(python.test):wheeldown": "/mycommand down" }
 weechat.key_bind("mouse", keys)
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_key_unbind
 ^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Remove key binding(s).
+Rimuove una o più associazioni tasti.
 
 [WARNING]
-When calling this function, ensure that you will not remove a user key binding.
+Alla chiamata di questa funzione, assicurarsi che non venga rimossa una
+combinazione tasti definita dall'utente.
 
-Prototype:
+Prototipo:
 
 [source,C]
 ----------------------------------------
 int weechat_key_unbind (const char *context, const char *key);
 ----------------------------------------
 
-Arguments:
+Argomenti:
 
-* 'context': context for keys (see <<_weechat_key_bind,weechat_key_bind>>)
-* 'key': key to remove or a special value "area:XXX" to remove all keys having
-  'XXX' as first or second area
+* 'context': contesto per i tasti (consultare <<_weechat_key_bind,weechat_key_bind>>)
+* 'key': tasto da rimuovere o un valore speciale "area:XXX" per rimuovere tutti
+  i tasti che hanno 'XXX' come prima o seconda area
 
-Return value:
+Valore restituito:
 
-* number of key bindings removed
+* numero di combinazioni tasti rimosse
 
-C examples:
+Esempio in C:
 
 [source,C]
 ----------------------------------------
-/* remove a single key */
+/* rimuove un singolo tasto */
 weechat_key_unbind ("mouse", "@chat(plugin.buffer):button1");
 
-/* remove all keys with area "chat(plugin.buffer)" */
+/* rimuove tutti i tasti con la zona "chat(plugin.buffer)" */
 weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 ----------------------------------------
 
@@ -5801,15 +5797,15 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 num_keys = weechat.key_unbind(context, key)
 
-# examples
+# esempi
 
-# remove a single key
+# rimuove un singolo tasto
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
 
-# remove all keys with area "chat(python.test)"
+# rimuove tutti i tasti con la zona "chat(python.test)"
 weechat.key_unbind("mouse", "area:chat(python.test)")
 ----------------------------------------
 
@@ -5945,12 +5941,12 @@ Argomenti:
 * 'buffer': puntatore al buffer, se NULL il messaggio viene visualizzato sul buffer di WeeChat
 * 'message': messaggio da visualizzare
 
-// TRANSLATION MISSING
 [NOTE]
-The first tabulation in message ("\t") is used to separate prefix from message. +
-If your message has some tabs and if you don't want prefix, then use a space,
-a tab, then message (see example below): this will disable prefix (the space
-before tab will not be displayed).
+La prima tabulazione nel messaggio ("\t") è usata per separare il prefisso dal messaggio. +
+Se il proprio messaggio ha alcune tabulazioni e non si vuole il prefisso, allora
+bisogna utilizzare uno spazio, una tabulazione, poi il messaggio (consultare
+l'esempio successivo): ciò disabilita il prefisso (lo spazio prima della
+tabulazione non verrà mostrato).
 
 Esempio in C:
 
@@ -5958,8 +5954,8 @@ Esempio in C:
 ----------------------------------------
 weechat_printf (NULL, "Benvenuto sul buffer di WeeChat");
 weechat_printf (buffer, "Benvenuto su questo buffer");
-weechat_printf (buffer, "%sThis is an error!", weechat_prefix ("error"));
-weechat_printf (buffer, " \tMessage without prefix but with \t some \t tabs");
+weechat_printf (buffer, "%sQuesto è un errore!", weechat_prefix ("error"));
+weechat_printf (buffer, " \tMessaggio senza prefisso ma con \t alcune \t tabulazioni");
 ----------------------------------------
 
 Script (Python):
@@ -5972,8 +5968,8 @@ weechat.prnt(buffer, message)
 # esempio
 weechat.prnt("", "Benvenuto sul buffer di WeeChat")
 weechat.prnt(buffer, "Benvenuto su questo buffer")
-weechat.prnt(buffer, "%sThis is an error!" % weechat.prefix("error"))
-weechat.prnt(buffer, " \tMessage without prefix but with \t some \t tabs")
+weechat.prnt(buffer, "%sQuesto è un errore!" % weechat.prefix("error"))
+weechat.prnt(buffer, " \tMessaggio senza prefisso ma con \t alcune \t tabulazioni")
 ----------------------------------------
 
 [NOTE]
@@ -6583,7 +6579,7 @@ Argomenti:
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando fornita da WeeChat
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
 
@@ -6702,11 +6698,11 @@ Argomenti:
 * 'gnutls_cb' callback GnuTLS (opzionale)
 * 'gnutls_dhkey_size': dimensione della chiave utilizzata nello Scambio
   Chiavi Diffie-Hellman (GnuTLS)
-// TRANSLATION MISSING
-* 'gnutls_priorities': priorities for gnutls (for syntax, see documentation of
-  function 'gnutls_priority_init' in gnutls manual), basic values are:
+* 'gnutls_priorities': priorità per gnutls (per la sintassi, consultare la
+  documentazione della funzione 'gnutls_priority_init' nel manuale di gnutls), i
+  valori di base sono:
 ** 'PERFORMANCE'
-** 'NORMAL' (default)
+** 'NORMAL' (predefinito)
 ** 'SECURE128'
 ** 'SECURE256'
 ** 'EXPORT'
@@ -8370,11 +8366,10 @@ hook = weechat.hook_infolist("my_infolist", "Infolist with some data",
                              "my_infolist_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hook_hdata
 ^^^^^^^^^^^^^^^^^^
 
-Hook a hdata: callback will return pointer to hdata asked.
+Hook di un hdata: la callback restituisce il puntatore all'hdata richiesto.
 
 Prototipo:
 
@@ -8389,19 +8384,18 @@ struct t_hook *weechat_hook_hdata (const char *hdata_name,
 
 Argomenti:
 
-* 'hdata_name': name of hdata
-  (priority allowed, see note about <<hook_priority,priority>>)
-* 'description': description
-* 'callback': function called when hdata is asked, arguments and return
-  value:
-** 'void *data': pointer
-** 'const char *hdata_name': name of hdata
-** return value: hdata asked
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'hdata_name': nome dell'hdata
+  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>)
+* 'description': descrizione
+* 'callback': funzione chiamata alla richiesta di hdata, argomenti e valore restituito:
+** 'void *data': puntatore
+** 'const char *hdata_name': nome dell'hdata
+** return value: hdata richiesto
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 Valore restituito:
 
-* pointer to new hook, NULL if error occured
+* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -8427,12 +8421,11 @@ struct t_hook *my_hdata = weechat_hook_hdata ("my_hdata",
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hook_focus
 ^^^^^^^^^^^^^^^^^^
 
-Hook a focus: mouse event or key pressed in cursor mode (free movement of
-cursor).
+Hook sul foucus: evento del mouse o tasto premuto nella modalità cursore
+(movimento libero del cursore).
 
 Prototipo:
 
@@ -8446,89 +8439,90 @@ struct t_hook *weechat_hook_focus (const char *area,
 
 Argomenti:
 
-* 'area': "chat" for chat area, or name of bar item
-  (priority allowed, see note about <<hook_priority,priority>>)
-* 'callback': function called when focus is made, arguments and return
-  value:
-** 'void *data': pointer
-** 'struct t_hashtable *info': hashtable with info on focus and strings returned
-   by other calls to focus callbacks (with higher priority) (see table below)
-** return value: either "info" pointer (hashtable completed), or pointer to a
-   new hashtable (created by callback, with keys and values of type "string"),
-   this new hashtable content will be added to 'info' for other calls to focus
-   callbacks
-* 'callback_data': pointer given to callback when it is called by WeeChat
+* 'area': "chat" per la zona di chat, o il nome di un elemento barra
+  (priorità consentita, consultare la nota a riguardo di <<hook_priority,priority>>)
+* 'callback': funzione chiamata al momento del focus, argomenti e valore restituito:
+** 'void *data': puntatore
+** 'struct t_hashtable *info': tabella hash con informazioni sul focus e
+   stringhe restituite da altre chiamate alle callback sul focus (con la
+   priorità più alta) (consultare la tabella in basso)
+** valore restituito: sia il puntatore "info" tabella hash completa), o il
+   puntatore ad una nuova tabella hash (creata dalla callback, con chiavi e
+   valori di tipo "string), questa nuovo contenuto della tabella hash verrà
+   aggiunto ad 'info' per le altre chiamate alle callback del focus
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
 [IMPORTANT]
-For a mouse gesture, your callback will be called two times: first time when
-button is pressed (here the area always matches your area), second time when
-button is released, and then the area may not match your area: so you must
-*always* test in your callback if area is matching before using info in
-hashtable.
+Per l'azione di un mouse, la callback verrà chiamata due volte: la prima quando
+il pulsante viene premuto (qui la zona corrisponde sempre alla propria area), la
+seconda quando il pulsante viene rilasciato, e allora la zona potrà non
+corrispondere con la propria: per cui bisogna *sempre* verificare nella propria
+callback se l'area corrisponde prima di usare le informazioni nella tabella hash.
 
-Content of hashtable sent to callback (keys and values are of type "string"):
+Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
+"string"):
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |========================================
-| Key ^(1)^                  | Description                 | Value examples                                   | Value if N/A
-| _x                         | column on screen          2+| "0" ... "n"
-| _y                         | line on screen            2+| "0" ... "n"
-| _key                       | key or mouse event        2+| "button1", "button2-gesture-left", ...
-| _window                    | pointer to window           | "0x12345678"                                     | ""
-| _window_number             | number of window            | "1" ... "n"                                      | "*"
-| _buffer                    | pointer to buffer           | "0x12345678"                                     | ""
-| _buffer_number             | number of buffer            | "1" ... "n"                                      | "-1"
-| _buffer_plugin             | plugin name of buffer       | "core", "irc", ...                               | ""
-| _buffer_name               | name of buffer              | "weechat", "freenode.#weechat", ...              | ""
-| _buffer_localvar_XXX ^(2)^ | local variables of buffer   | any value                                        | not set
-| _chat                      | chat area indicator         | "0" or "1"                                       | "0"
-| _chat_line_x               | column in line ^(3)^        | "0" ... "n"                                      | "-1"
-| _chat_line_y               | line number ^(3)^           | "0" ... "n"                                      | "-1"
-| _chat_line_date            | line date/time              | "1313237175"                                     | "0"
-| _chat_line_date_printed    | line date/time ^(4)^        | "1313237175"                                     | "0"
-| _chat_line_time            | time displayed              | "14:06:15"                                       | ""
-| _chat_line_tags            | tags of line                | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
-| _chat_line_nick            | nick of line                | "FlashCode"                                      | ""
-| _chat_line_prefix          | prefix of line              | "@FlashCode"                                     | ""
-| _chat_line_message         | message of line             | "Hello world!"                                   | ""
-| _chat_word                 | word at (x,y)               | "Hello"                                          | ""
-| _chat_bol                  | beginning of line ⇒ (x-1,y) | "He"                                             | ""
-| _chat_eol                  | (x,y) ⇒ end of line         | "llo world!"                                     | ""
-| _bar_name                  | name of bar                 | "title", "nicklist", ...                         | ""
-| _bar_filling               | filling of bar              | "horizontal", "vertical", ...                    | ""
-| _bar_item_name             | name of bar item            | "buffer_nicklist", "hotlist", ...                | ""
-| _bar_item_line             | line in bar item            | "0" ... "n"                                      | "-1"
-| _bar_item_col              | column in bar item          | "0" ... "n"                                      | "-1"
+| Key ^(1)^                  | Descrizione                 | Valori di esempio                                | Valore se N/D
+| _x                         | colonna sullo schermo     2+| "0" ... "n"
+| _y                         | riga sullo schermo        2+| "0" ... "n"
+| _key                       | evento tasto o mouse      2+| "button1", "button2-gesture-left", ...
+| _window                    | puntatore alla finestra     | "0x12345678"                                     | ""
+| _window_number             | numero della finestra       | "1" ... "n"                                      | "*"
+| _buffer                    | puntatore al buffer         | "0x12345678"                                     | ""
+| _buffer_number             | numero del buffer           | "1" ... "n"                                      | "-1"
+| _buffer_plugin             | nome plugin del buffer      | "core", "irc", ...                               | ""
+| _buffer_name               | nome del buffer             | "weechat", "freenode.#weechat", ...              | ""
+| _buffer_localvar_XXX ^(2)^ | variabili locali del buffer | qualsiasi valore                                 | non impostato
+| _chat                      | indicatore area di chat     | "0" o  "1"                                       | "0"
+| _chat_line_x               | colonna nella riga ^(3)^    | "0" ... "n"                                      | "-1"
+| _chat_line_y               | numero della riga ^(3)^     | "0" ... "n"                                      | "-1"
+| _chat_line_date            | riga con data/ora           | "1313237175"                                     | "0"
+| _chat_line_date_printed    | riga con data/ora ^(4)^     | "1313237175"                                     | "0"
+| _chat_line_time            | ora visualizzata            | "14:06:15"                                       | ""
+| _chat_line_tags            | tag della riga              | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
+| _chat_line_nick            | nick della riga             | "FlashCode"                                      | ""
+| _chat_line_prefix          | prefisso della riga         | "@FlashCode"                                     | ""
+| _chat_line_message         | messaggio della riga        | "Hello world!"                                   | ""
+| _chat_word                 | parola a (x,y)              | "Hello"                                          | ""
+| _chat_bol                  | inizio della riga ⇒ (x-1,y) | "He"                                             | ""
+| _chat_eol                  | (x,y) ⇒ fine della riga     | "llo world!"                                     | ""
+| _bar_name                  | nome della barra            | "title", "nicklist", ...                         | ""
+| _bar_filling               | riempimento della barra     | "horizontal", "vertical", ...                    | ""
+| _bar_item_name             | nome dell'elemento barra    | "buffer_nicklist", "hotlist", ...                | ""
+| _bar_item_line             | riga nell'elemento barra    | "0" ... "n"                                      | "-1"
+| _bar_item_col              | colonna nell'elemento barra | "0" ... "n"                                      | "-1"
 |========================================
 
 [NOTE]
-^(1)^ There are same keys suffixed with "2" (ie: "_x2", "_y2", "_window2", ...)
-with info on second point (useful only for mouse gestures, to know where mouse
-button has been released). +
-^(2)^ `XXX` is name of local variable in buffer. +
-^(3)^ It is set only for buffers with free content. +
-^(4)^ It is date when WeeChat adds line in buffer (greater or equal to
-"_chat_line_date").
+^(1)^ Ci sono alcune chiavi con il suffisso "2" (es: "_x2", "_y2", "_window2",
+...) con informazioni sul secondo punto (utile solo per le azioni del mouse,
+per sapere dove il pulsante del mouse è stato rilasciato). +
+^(2)^ `XXX` è il nome della variabile locale nel buffer. +
+^(3)^ E' impostato solo per l buffer con contenuto libero. +
+^(4)^ Data/ora in cui WeeChat aggiunge una riga nel buffer (maggiore o uguale a
+"chat_line_date").
 
-Extra info for bar item "buffer_nicklist":
+Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 
 [width="70%",cols="3m,3,8",options="header"]
 |========================================
-| Key            | Plugin | Description
-| nick           | core   | nick name
-| prefix         | core   | prefix for nick
-| group          | core   | group name
-| irc_host       | irc    | host for nick (if known)
+| Chiave         | Plugin | Descrizione
+| nick           | core   | nick
+| prefix         | core   | prefisso per il nick
+| group          | core   | nome gruppo
+| irc_host       | irc    | host per il nick (se conosciuto)
 |========================================
 
 [NOTE]
-^(1)^ The name of plugin which defines a hook_focus to return info for this bar
-item (so for example if plugin is "irc", such info will be available only on
-irc buffers).
+^(1)^ Il nome del plugin che definisce un hook_focus per restituire
+informazioni su questo elemento della barra (ad esempio se il plugin è "irc",
+tale informazione sarà disponibile solo sui buffer irc).
 
 Valore restituito:
 
-* pointer to new hook, NULL if error occured
+* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -8552,10 +8546,10 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# prototype
+# prototipo
 hook = weechat.hook_focus(area, callback, callback_data)
 
-# example
+# esempio
 def my_focus_nicklist_cb(data, info):
     # build dict
     # ...
@@ -9017,10 +9011,8 @@ Argomenti:
 * 'property': nome della proprietà:
 ** 'number': numero del buffer (inizia da 1)
 ** 'layout_number': numero del buffer salvato nel layout
-// TRANSLATION MISSING
-** 'layout_number_merge_order': order in merge for layout
-// TRANSLATION MISSING
-** 'short_name_is_set': 1 if short name is set, 0 if not set
+** 'layout_number_merge_order': ordine di unione per i layout
+** 'short_name_is_set': 1 se il nome breve è impostato, 0 in caso contrario
 ** 'type': tipo dibuffer (0: formattato, 1: contenuto libero)
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer
@@ -9099,8 +9091,7 @@ Argomenti:
 ** 'input': testo in ingresso
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
-// TRANSLATION MISSING
-** 'highlight_regex': regular expression for highlight
+** 'highlight_regex': espressione regolare per l'evento
 ** 'highlight_tags': elenco di tag da evidenziare
 ** 'hotlist_max_level_nicks': livello massimo della hotlist per alcuni nick
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
@@ -9151,8 +9142,7 @@ Argomenti:
 * 'property': nome proprietà:
 ** 'plugin': puntatore al plugin che ha creato questo buffer (NULL
    per il buffer principale di WeeChat)
-// TRANSLATION MISSING
-** 'highlight_regex_compiled': regular expression 'highlight_regex' compiled
+** 'highlight_regex_compiled': espressione regolare 'highlight_regex' compilata
 
 Valore restituito:
 
@@ -9267,9 +9257,8 @@ Argomenti:
   elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer
 
-// TRANSLATION MISSING
 | highlight_regex | qualsiasi stringa |
-  regular expression for highlight
+  espressione regolare per l'evento
 
 | highlight_tags | elenco separato da virgole di tag |
   elenco separato da virgole di tag da evidenziare in questo buffer
@@ -9603,8 +9592,7 @@ Argomenti:
 
 * 'window': puntatore alla finestra
 * 'property': nome della proprietà:
-// TRANSLATION MISSING
-** 'number': number of window (starts to 1)
+** 'number': numero della finestra (inizia da 1)
 ** 'win_x': posizione X della finestra nel terminale (la prima colonna è 0)
 ** 'win_y': posizione Y della finestra nel terminale (la prima riga è 0)
 ** 'win_width': larghezza della finestra, in caratteri
@@ -11544,12 +11532,12 @@ weechat_infolist_get
 Restituisce una lista info da WeeChat o da un plugin.
 
 [IMPORTANT]
-// TRANSLATION MISSING
-Content of infolist is a duplication of actual data. So if you are asking
-infolist with lot of data (like "buffer_lines"), WeeChat will allocate memory
-to duplicate all data, and this can take some time. +
-Instead of using big infolist, it is preferable to use hdata (but infolist may
-have more info than hdata, which is raw data), see <<hdata,hdata>>.
+Il contenuto della lista info è un duplicato dei dati attuali. Se si sta
+richiedendo una lista info con molti dati (come "buffer_lines"), WeeChat
+allocherà memoria per duplicare tutti i dati, e potrebbe essere necessario un
+po' di tempo. +
+Invece di usare liste info più grandi, è preferibilie usare hdata (ma le liste
+info potrebbero avere più info di hdata, che sono dati raw), consultare <<hdata,hdata>>.
 
 Prototipo:
 
@@ -12015,30 +12003,30 @@ weechat.infolist_free(infolist)
 Hdata
 ~~~~~
 
-// TRANSLATION MISSING
-Functions for hdata (raw access to WeeChat or plugins data).
+Funzioni per hdata (accesso raw a WeeChat o ai dati dei plugin).
 
 [IMPORTANT]
-Hdata provides read-only access to data. It is *STRICTLY FORBIDDEN* to write
-something in memory pointed by hdata variables.
+Hdata fornisce un accesso in sola lettura ai dati. E' *SEVERAMENTE VIETATO*
+scrivere qualcosa in memoria puntato dalle variabili in hdata.
 
-// TRANSLATION MISSING
 weechat_hdata_new
 ^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Create a new hdata.
+Crea un nuovo hdata.
 
 [NOTE]
 .hdata vs infolist
 ========================================
-Hdata is a fast way to read WeeChat or plugins data. It is similar to
-infolist, but there are some differences:
+Hdata è un metodo veloce per leggere i dati di WeeChat o dei plugin. E' simile
+alle liste info, ma ci sono alcune differenze:
 
-* it is faster and uses less memory: direct read of data without duplication
-* it may have different info than infolist: it contains only raw data in
-  structures (infolist may add some extra data for convenience)
+* è più veloce ed usa meno memoria: lettura diretta dei dati senza duplicazione
+* può contenere informazioni differenti rispetto alle liste info: esso contiene
+  solo dati raw in strutture (le liste info possono aggiungere alcuni dati extra
+  per convenienza)
+
 ========================================
 
 Prototipo:
@@ -12050,15 +12038,15 @@ struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev,
 
 Argomenti:
 
-* 'hdata_name': name of hdata
-* 'var_prev': name of variable in structure which is a pointer to previous
-  element in list (may be NULL if no such variable is available)
-* 'var_next': name of variable in structure which is a pointer to next
-  element in list (may be NULL if no such variable is available)
+* 'hdata_name': nome di un hdata
+* 'var_prev': nome della variabile nella struttura che è puntatore all'elemento
+  precedente nella lista (può essere NULL se non è disponibile tale variabile)
+* 'var_next': nome della variabile nella struttura che è puntatore all'elemento
+  successivo nella lista (può essere NULL se non è disponibile tale variabile)
 
 Valore restituito:
 
-* pointer to new hdata
+* puntatore al nuovo hdata
 
 Esempio in C:
 
@@ -12068,15 +12056,14 @@ struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_new_var
 ^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Create a new variable in hdata.
+Crea una nuova variabile in hdata.
 
 Prototipo:
 
@@ -12088,17 +12075,17 @@ void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
-* 'offset': offset of variable in structure
-* 'type': variable type, one of:
+* 'hdata': puntatore ad hdata
+* 'name': nome della variabile
+* 'offset': offset della variabile nella struttura
+* 'type': tipo variabile, una di:
 ** WEECHAT_HDATA_INTEGER
 ** WEECHAT_HDATA_LONG
 ** WEECHAT_HDATA_STRING
 ** WEECHAT_HDATA_POINTER
 ** WEECHAT_HDATA_TIME
 ** WEECHAT_HDATA_OTHER
-* 'hdata_name': name of a hdata (if it's a pointer to a structure with hdata)
+* 'hdata_name': nome di un hdata (se è un puntatore ad una struttura con dati)
 
 Esempio in C:
 
@@ -12123,7 +12110,7 @@ weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), W
 weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, "myplugin_list");
 ----------------------------------------
 
-The macro "WEECHAT_HDATA_VAR" can be used to shorten code:
+La macro "WEECHAT_HDATA_VAR" può essere usata per accorciare il codice:
 
 [source,C]
 ----------------------------------------
@@ -12135,15 +12122,14 @@ WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, "myplugin_list");
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_new_list
 ^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Create a new list pointer in hdata.
+Crea una nuovo puntatore alla lista in hdata.
 
 Prototipo:
 
@@ -12154,9 +12140,9 @@ void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *poin
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
-* 'pointer': list pointer
+* 'hdata': puntatore hdata
+* 'name': nome delal variabile
+* 'pointer': puntatore alla lista
 
 Esempio in C:
 
@@ -12186,7 +12172,7 @@ weechat_hdata_new_list (hdata, "buffers", &buffers);
 weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
 ----------------------------------------
 
-The macro "WEECHAT_HDATA_LIST" can be used to shorten code:
+La macro "WEECHAT_HDATA_LIST" può essere usata per accorciare il codice:
 
 [source,C]
 ----------------------------------------
@@ -12195,20 +12181,19 @@ WEECHAT_HDATA_LIST(last_buffer);
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_get
 ^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return hdata for a WeeChat or plugin structure.
+Restituisce hdata per una struttura di WeeChat o di un plugin.
 
 [NOTE]
-Hdata does not contain data, it's only a hashtable with position of variables
-in structure. That means you will need this hdata and a pointer to a
-WeeChat/plugin object to read some data.
+Hdata non contiene dati, è una tabella hash con la posizione delle variabili
+nella struttura. Ciò vuol dire che è necessario questo hdata ed un puntatore ad
+un oggetto di WeeChat/plugin per leggere dei dati.
 
 Prototipo:
 
@@ -12219,12 +12204,12 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Argomenti:
 
-* 'hdata_name': name of hdata:
+* 'hdata_name': nome di un hdata:
 include::autogen/plugin_api/hdata.txt[]
 
 Valore restituito:
 
-* pointer to hdata, NULL if an error occured
+* puntatore ad un hdata, NULL in caso di errore
 
 Esempio in C:
 
@@ -12244,13 +12229,13 @@ hdata = weechat.hdata_get(hdata_name)
 hdata = weechat.hdata_get("irc_server")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_get_var_offset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
 Return offset of variable in hdata.
+Restituisce l'offset della variabile in hdata.
 
 Prototipo:
 
@@ -12261,12 +12246,12 @@ int weechat_hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
+* 'hdata': puntatore hdata
+* 'name': nome della variabile
 
 Valore restituito:
 
-* variable offset, 0 if an error occured
+* offset della variabile, 0 in caso di errore
 
 Esempio in C:
 
@@ -12276,15 +12261,14 @@ int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_get_var_type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return type of variable in hdata (as integer).
+Restituisce il tipo di variabile in hdata (come intero).
 
 Prototipo:
 
@@ -12295,12 +12279,12 @@ int weechat_hdata_get_var_type (struct t_hdata *hdata, const char *name);
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
+* 'hdata': puntatore hdata
+* 'name': nome della variabile
 
 Valore restituito:
 
-* variable type, -1 if an error occured
+* tipo della variabile, -1 in caso di errore
 
 Esempio in C:
 
@@ -12334,15 +12318,14 @@ switch (type)
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_get_var_type_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return type of variable in hdata (as string).
+Restituisce il tipo di variabile in hdata (come stringa).
 
 Prototipo:
 
@@ -12353,12 +12336,12 @@ const char *weechat_hdata_get_var_type_string (struct t_hdata *hdata, const char
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
+* 'hdata': puntatore hdata
+* 'name': nome della variabile
 
 Valore restituito:
 
-* variable type, NULL if an error occured
+* tipo della variabile, NULL in caso di errore
 
 Esempio in C:
 
@@ -12379,13 +12362,12 @@ type = weechat.hdata_get_var_type_string(hdata, name)
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_get_var_hdata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return hdata for variable in hdata.
+Restituisce hdata per la variabile in hdata.
 
 Prototipo:
 
@@ -12396,12 +12378,12 @@ const char *weechat_hdata_get_var_hdata (struct t_hdata *hdata, const char *name
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': variable name
+* 'hdata': puntatore hdata
+* 'name': nome della variabile
 
 Valore restituito:
 
-* hdata for variable, NULL if no hdata or if an error occured
+* hdata per la variabile, NULL in caso di nessun hdata presente o di errore
 
 Esempio in C:
 
@@ -12421,13 +12403,12 @@ hdata_name = weechat.hdata_get_var_hdata(hdata, name)
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_get_var
 ^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return pointer to content of variable in hdata.
+Restituisce il puntatore al contenuto della variabile in hdata.
 
 Prototipo:
 
@@ -12438,13 +12419,13 @@ void *weechat_hdata_get_var (struct t_hdata *hdata, void *pointer, const char *n
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name
+* 'hdata': puntatore hdata
+* 'pointer': puntarore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile
 
 Valore restituito:
 
-* pointer to content of variable, NULL if an error occured
+* puntatore al contenuto della variabile, NULL in caso di errore
 
 Esempio in C:
 
@@ -12456,15 +12437,14 @@ void *pointer = weechat_hdata_get_var (hdata, buffer, "name");
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_get_var_at_offset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return pointer to content of variable in hdata, using offset.
+Restituisce il puntatore al contenuto della variabile in hdata, usando un offset.
 
 Prototipo:
 
@@ -12475,13 +12455,13 @@ void *weechat_hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'offset': offset of variable
+* 'hdata': puntatore hdata
+* 'pointer': puntatore ad un oggetto di WeeChat/plugin
+* 'offset': offset della variabile
 
 Valore restituito:
 
-* pointer to content of variable, NULL if an error occured
+* puntatore al contenuto della variabile, NULL in caso di errore
 
 Esempio in C:
 
@@ -12494,15 +12474,14 @@ void *pointer = weechat_hdata_get_var_at_offset (hdata, buffer, offset);
 ----------------------------------------
 
 [NOTE]
-This function is not available in scripting API.
+Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_hdata_get_list
 ^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return list pointer from hdata.
+Restituisce il puntatore alla lista da hdata.
 
 Prototipo:
 
@@ -12513,12 +12492,12 @@ void *weechat_hdata_get_list (struct t_hdata *hdata, const char *name);
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'name': list name
+* 'hdata': puntatore hdata
+* 'name': nome della lista
 
 Valore restituito:
 
-* list pointer, NULL if an error occured
+* puntatore alla lista, NULL in caso di errore
 
 Esempio in C:
 
@@ -12540,13 +12519,12 @@ hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_move
 ^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Move pointer to another element in list.
+Sposta il puntatore ad un altro elemento nella lista.
 
 Prototipo:
 
@@ -12557,14 +12535,14 @@ void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to a WeeChat/plugin object
-* 'count': number of jump(s) to execute (negative or positive integer, different
-  from 0)
+* 'hdata': puntatore hdata
+* 'pointer': puntatore ad un oggetto di WeeChat/plugin
+* 'count': numero di salto(i) da eseguire (intero positivo o negativo, diverso
+  da 0)
 
 Valore restituito:
 
-* pointer to element reached, NULL if an error occured
+* puntatore all'elemento raggiunto, NULL in caso di errore
 
 Esempio in C:
 
@@ -12573,10 +12551,10 @@ Esempio in C:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 
-/* move to next buffer, 2 times */
+/* passa al buffer successivo, 2 volte */
 buffer = weechat_hdata_move (hdata, buffer, 2);
 
-/* move to previous buffer */
+/* passa al buffer precedente */
 if (buffer)
     buffer = weechat_hdata_move (hdata, buffer, -1);
 ----------------------------------------
@@ -12592,21 +12570,20 @@ pointer = weechat.hdata_move(hdata, pointer, count)
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
-# move to next buffer, 2 times
+# passa al buffer successivo, 2 volte
 buffer = weechat.hdata_move(hdata, buffer, 2)
 
-# move to previous buffer
+# passa al buffer precedente
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_integer
 ^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return value of integer variable in structure using hdata.
+Restituisce il valore di una variabile integer in una struttura dati usando hdata.
 
 Prototipo:
 
@@ -12617,13 +12594,13 @@ int weechat_hdata_integer (struct t_hdata *hdata, void *pointer, const char *nam
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name (must be type "integer")
+* 'hdata': puntatore hdata
+* 'pointer': puntatore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "integer")
 
 Valore restituito:
 
-* integer value of variable
+* valore intero della variabile
 
 Esempio in C:
 
@@ -12647,13 +12624,12 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_long
 ^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return value of long variable in structure using hdata.
+Restituisce il valore della variabile long della struttura usando hdata.
 
 Prototipo:
 
@@ -12664,13 +12640,13 @@ long weechat_hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name (must be type "long")
+* 'hdata': puntatore hdata
+* 'pointer': puntatore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "long")
 
 Valore restituito:
 
-* long value of variable
+* valore long della variabile
 
 Esempio in C:
 
@@ -12690,13 +12666,12 @@ value = weechat.hdata_long(hdata, pointer, name)
 weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_string
 ^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return value of string variable in structure using hdata.
+Restituisce il valore della variabile string nella struttura usando hdata.
 
 Prototipo:
 
@@ -12707,13 +12682,13 @@ const char *weechat_hdata_string (struct t_hdata *hdata, void *pointer, const ch
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name (must be type "string")
+* 'hdata': puntatore hdata
+* 'pointer': puntatore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "string")
 
 Valore restituito:
 
-* string value of variable
+* valore stringa della variabile
 
 Esempio in C:
 
@@ -12737,13 +12712,12 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_pointer
 ^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return value of pointer variable in structure using hdata.
+Restituisce il valore della variabile puntatore nella struttura usando hdata.
 
 Prototipo:
 
@@ -12754,13 +12728,13 @@ void *weechat_hdata_pointer (struct t_hdata *hdata, void *pointer, const char *n
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name (must be type "pointer")
+* 'hdata': hdata hdata
+* 'pointer': pointer all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "pointer")
 
 Valore restituito:
 
-* pointer value of variable
+* valore puntatore della variabile
 
 Esempio in C:
 
@@ -12784,13 +12758,12 @@ buffer = weechat.buffer_search_main()
 weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_time
 ^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return value of time variable in structure using hdata.
+Restituisce il valore della variabile time nella struttura usando hdata.
 
 Prototipo:
 
@@ -12801,13 +12774,13 @@ time_t weechat_hdata_time (struct t_hdata *hdata, void *pointer, const char *nam
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'pointer': pointer to WeeChat/plugin object
-* 'name': variable name (must be type "time")
+* 'hdata': puntatore hdata
+* 'pointer': puntatore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "time")
 
 Valore restituito:
 
-* time value of variable
+* valore time della variabile
 
 Esempio in C:
 
@@ -12856,13 +12829,12 @@ if ptr:
             weechat.prnt("", "time of last line displayed = %s" % weechat.hdata_time(hdata, ptr, "date"))
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_hdata_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.6._
 
-Return string value of a hdata property.
+Restituisce il valore stringa di una proprietà di hdata.
 
 Prototipo:
 
@@ -12873,28 +12845,28 @@ const char *weechat_hdata_get_string (struct t_hdata *hdata, const char *propert
 
 Argomenti:
 
-* 'hdata': hdata pointer
-* 'property': property name:
-** 'var_keys': string with list of keys for variables in hdata
-   (format: "key1,key2,key3")
-** 'var_values': string with list of values for variables in hdata
-   (format: "value1,value2,value3")
-** 'var_keys_values': string with list of keys and values for variables in hdata
-   (format: "key1:value1,key2:value2,key3:value3")
-** 'var_prev': name of variable in structure which is a pointer to previous
-   element in list
-** 'var_next': name of variable in structure which is a pointer to next
-   element in list
-** 'list_keys': string with list of keys for lists in hdata
-   (format: "key1,key2,key3")
-** 'list_values': string with list of values for lists in hdata
-   (format: "value1,value2,value3")
-** 'list_keys_values': string with list of keys and values for lists in hdata
-   (format: "key1:value1,key2:value2,key3:value3")
+* 'hdata': puntatore hdata
+* 'property': nome della proprietà:
+** 'var_keys': stringa con la lista di chiavi per le variabili in hdata
+   (formato: "key1,key2,key3")
+** 'var_values': stringa con la lista di valori per le variabili in hdata
+   (formato: "value1,value2,value3")
+** 'var_keys_values': stringa cona la lista di chiavi e valori per le variabili in hdata
+   (formato: "key1:value1,key2:value2,key3:value3")
+** 'var_prev': nome della variabile nella struttura che fa da puntatore al
+   precedente elemento nella lista
+** 'var_next': nome della variabile nella struttura che fa da puntatore al
+   successivo elemento nella lista
+** 'list_keys': stringa con la lista di chiavi per le liste in hdata
+   (formato: "key1,key2,key3")
+** 'list_values': stringa con la lista di valori per le liste in hdata
+   (formato: "value1,value2,value3")
+** 'list_keys_values': stringa con la lista di chiavi e valori per le liste in hdata
+   (formato: "key1:value1,key2:value2,key3:value3")
 
 Valore restituito:
 
-* string value of property
+* valore stringa della proprietà
 
 Esempio in C:
 
@@ -13043,7 +13015,7 @@ Argomenti:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
 * 'callback_read_data': puntatore assegnato per la lettura della chiamata
-  quando chiamato da WeeChat
+  quando chiamata da WeeChat
 
 Valore restituito:
 

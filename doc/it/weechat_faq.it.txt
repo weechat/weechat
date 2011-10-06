@@ -363,8 +363,7 @@ Come posso cercare testo nel buffer (come /lastlog con irssi)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il tasto predefinito è @k(C-)@k(r) (il comando è: `/input search-text`).
-// TRANSLATION MISSING
-And jump to highlights: @k(A-)@k(p)/@k(n).
+E per passare agli eventi: @k(A-)@k(p)/@k(n).
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).
@@ -573,15 +572,13 @@ utenti assenti, e si viene tempestati di messaggi voice. Perciò, è possibile
 modificare questo comportamento e consentire a WeeChat di utilizzare un
 colore speciale per i nick assenti nella lista nick.
 
-// TRANSLATION MISSING
-For Bitlbee ≥ 3, do that on channel '&bitlbee':
+Per versioni di Bitlbee ≥ 3, sul canale '&bitlbee' digitare:
 
 ----------------------------------------
 channel set show_users online,away
 ----------------------------------------
 
-// TRANSLATION MISSING
-For older version of Bitlbee, do that on channel '&bitlbee':
+Per versioni precedenti di Bitlbee, sul canale '&bitlbee' digitare:
 
 ----------------------------------------
 set away_devoice false
@@ -660,8 +657,7 @@ Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify
 Come ci si può connettere al server freenode via SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Set option 'weechat.network.gnutls_ca_file' to file with certificates:
+Impostare l'opzione 'weechat.network.gnutls_ca_file' con il file dei certificati:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"

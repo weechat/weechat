@@ -669,27 +669,24 @@ Molti eventi del mouse predefiniti sono già definiti da WeeChat (consultare
 È possibile cambiare o aggiungere combinazioni con il comando `/key` usando il
 contesto "mouse" (per la sintassi, consultare <<command_weechat_key,comando /key>>).
 
-// TRANSLATION MISSING
-Event name consists of a modifier (optional), a button/wheel name and a gesture
-(optional). Different elements are separated by "-".
+Il nome dell'evento consiste di un modificatore (opzionale), il nome di un
+pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da "-".
 
-// TRANSLATION MISSING
-List of modifiers:
+Elenco di modificatori
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Modifier | Description
-| ctrl     | key @k(-C-)
-| alt      | key @k(-A-)
-| ctrl-alt | keys @k(-C-) and @k(-A-)
+| Modificatore | Descrizione
+| ctrl         | tasto @k(-C-)
+| alt          | tasto @k(-A-)
+| ctrl-alt     | tasto @k(-C-) e @k(-A-)
 |========================================
 
-// TRANSLATION MISSING
-List of buttons/wheel:
+Elenco di pulsanti/rotellina:
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Button/wheel        | Description
+| Pulsante/rotellina  | Descrizione
 | button1             | click sul tasto sinistro
 | button2             | click sul tasto destro
 | button3             | click sul tasto centrale (spesso click sulla rotellina)
@@ -698,12 +695,11 @@ List of buttons/wheel:
 | wheeldown           | rotellina (giù)
 |========================================
 
-// TRANSLATION MISSING
-List of gestures (only for buttons, not wheel):
+Elenco di azioni (solo per i pulsanti, non la rotellina):
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Gesture            | Distance
+| Azione             | Distanza
 | gesture-up         | 3 ... 19
 | gesture-up-long    | ≥ 20
 | gesture-down       | 3 ... 19
@@ -714,8 +710,7 @@ List of gestures (only for buttons, not wheel):
 | gesture-right-long | ≥ 40
 |========================================
 
-// TRANSLATION MISSING
-Example of events:
+Esempio di eventi:
 
 * `button1`
 * `ctrl-button1`
@@ -730,10 +725,10 @@ Quando si associa un tasto nel contesto "mouse", è possibile far corrispondere
 più eventi usando '*' all'inizio o alla fine del nome, ad esempio
 `button1-gesture-*` corrisponderà ad ogni azione compiuta col tasto sinistro.
 
-// TRANSLATION MISSING
 [TIP]
-You can find an event name with command `/input grab_mouse` then doing event
-with mouse. This will insert event name on command line.
+È possibile trovare il nome di un evento con il comando `/input grab_mouse`
+poi eseguire l'evento col mouse. Il comando inserisce il nome dell'evento
+nella riga di comando.
 
 [[command_line]]
 Riga di comando
@@ -1649,8 +1644,7 @@ personalizzare:
 | 335       | whois         | whois (è un bot su)
 | 338       | whois         | whois (host)
 | 341       |               | invito
-// TRANSLATION MISSING
-| 343       | whois         | whois (is opered as)
+| 343       | whois         | whois (è opered come)
 | 344       | reop          | reop sul canale
 | 345       | reop          | reop sul canale (fine)
 | 346       | invitelist    | lista di inviti
