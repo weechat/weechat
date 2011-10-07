@@ -440,6 +440,7 @@ main (int argc, char *argv[])
         weechat_upgrade_count++;        /* increase /upgrade count          */
     }
     weechat_welcome_message ();         /* display WeeChat welcome message  */
+    gui_chat_print_lines_waiting_buffer (); /* print lines waiting for buf. */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);

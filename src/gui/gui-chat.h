@@ -80,6 +80,7 @@ extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        const char *message, ...);
 extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
                                const char *message, ...);
+extern void gui_chat_print_lines_waiting_buffer ();
 extern int gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
                                            struct t_hashtable *hashtable);
 extern void gui_chat_end ();

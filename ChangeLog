@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-rc1, 2011-10-04
+v0.3.6-rc1, 2011-10-07
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: bufferize lines displayed before core buffer is created, to display them
+  in buffer when it is created
 * core: fix display of background color in chat area after line feed
 * core: fix paste detection (problem with end of lines)
 * core: add new option weechat.look.color_basic_force_bold, off by default: bold

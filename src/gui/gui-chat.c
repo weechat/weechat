@@ -55,6 +55,8 @@ int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 int gui_chat_mute = GUI_CHAT_MUTE_DISABLED;     /* mute mode                */
 struct t_gui_buffer *gui_chat_mute_buffer = NULL; /* mute buffer            */
 int gui_chat_display_tags = 0;                  /* display tags?            */
+char *gui_chat_lines_waiting_buffer = NULL;     /* lines waiting for core   */
+                                                /* buffer                   */
 
 
 /*
@@ -570,8 +572,8 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 {
     time_t date_printed;
     int display_time, length, at_least_one_message_printed;
-    char *pos, *pos_prefix, *pos_tab, *pos_end;
-    char *modifier_data, *new_msg, *ptr_msg;
+    char *pos, *pos_prefix, *pos_tab, *pos_end, *pos_lines;
+    char *modifier_data, *new_msg, *ptr_msg, *lines_waiting;
     struct t_gui_line *ptr_line;
     
     if (!gui_buffer_valid (buffer))
@@ -705,9 +707,46 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         }
         else
         {
-            if (pos_prefix)
-                string_iconv_fprintf (stdout, "%s ", pos_prefix);
-            string_iconv_fprintf (stdout, "%s\n", ptr_msg);
+            length = ((pos_prefix) ? strlen (pos_prefix) + 1 : 0) +
+                strlen (ptr_msg) + 1;
+            if (gui_chat_lines_waiting_buffer)
+            {
+                length += strlen (gui_chat_lines_waiting_buffer) + 1;
+                lines_waiting = realloc (gui_chat_lines_waiting_buffer, length);
+                if (lines_waiting)
+                {
+                    gui_chat_lines_waiting_buffer = lines_waiting;
+                }
+                else
+                {
+                    free (gui_chat_lines_waiting_buffer);
+                    gui_chat_lines_waiting_buffer = NULL;
+                }
+            }
+            else
+            {
+                gui_chat_lines_waiting_buffer = malloc (length);
+                if (gui_chat_lines_waiting_buffer)
+                    gui_chat_lines_waiting_buffer[0] = '\0';
+            }
+            if (gui_chat_lines_waiting_buffer)
+            {
+                pos_lines = gui_chat_lines_waiting_buffer +
+                    strlen (gui_chat_lines_waiting_buffer);
+                if (pos_lines > gui_chat_lines_waiting_buffer)
+                {
+                    pos_lines[0] = '\n';
+                    pos_lines++;
+                }
+                if (pos_prefix)
+                {
+                    memcpy (pos_lines, pos_prefix, strlen (pos_prefix));
+                    pos_lines += strlen (pos_prefix);
+                    pos_lines[0] = '\t';
+                    pos_lines++;
+                }
+                memcpy (pos_lines, ptr_msg, strlen (ptr_msg) + 1);
+            }
         }
         
         if (new_msg)
@@ -806,6 +845,40 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 }
 
 /*
+ * gui_chat_print_lines_waiting_buffer: print lines waiting for buffer
+ */
+
+void
+gui_chat_print_lines_waiting_buffer ()
+{
+    char **lines;
+    int num_lines, i;
+    
+    if (gui_chat_lines_waiting_buffer)
+    {
+        lines = string_split (gui_chat_lines_waiting_buffer, "\n", 0, 0,
+                              &num_lines);
+        if (lines)
+        {
+            for (i = 0; i < num_lines; i++)
+            {
+                gui_chat_printf (NULL, lines[i]);
+            }
+            string_free_split (lines);
+        }
+        /*
+         * gui_chat_lines_waiting_buffer may be NULL after call to
+         * gui_chat_printf (if not enough memory)
+         */
+    }
+    if (gui_chat_lines_waiting_buffer)
+    {
+        free (gui_chat_lines_waiting_buffer);
+        gui_chat_lines_waiting_buffer = NULL;
+    }
+}
+
+/*
  * gui_chat_hsignal_chat_quote_line_cb: quote a line
  */
 
@@ -876,5 +949,12 @@ gui_chat_end ()
             free (gui_chat_prefix[i]);
             gui_chat_prefix[i] = NULL;
         }
+    }
+    
+    /* free lines waiting for buffer (should always be NULL here) */
+    if (gui_chat_lines_waiting_buffer)
+    {
+        free (gui_chat_lines_waiting_buffer);
+        gui_chat_lines_waiting_buffer = NULL;
     }
 }
