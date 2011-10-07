@@ -650,8 +650,8 @@ einigen Terminals muss die "Alt"-Taste anstelle der "Shift"-Taste gedrückt werd
 Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die 'WeeChat FAQ' gelesen werden.
 
 [[mouse_bind_events]]
-Maus-Events Befehle zuweisen
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Einem Maus-Event, Befehle zuweisen
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Es gibt eine Anzahl von Maus-Events die schon standardmäßig durch
 WeeChat definiert sind (siehe <<key_bindings_mouse_context,Tasten für "mouse"-Kontext>>).
@@ -659,27 +659,24 @@ WeeChat definiert sind (siehe <<key_bindings_mouse_context,Tasten für "mouse"-K
 Man kann mit dem Befehl `/key` im Kontext "mouse" aber auch eigene Befehle zuweisen
 und löschen (für die Syntax, siehe <<command_weechat_key,/key Befehl>>).
 
-// TRANSLATION MISSING
-Event name consists of a modifier (optional), a button/wheel name and a gesture
-(optional). Different elements are separated by "-".
+Der Name eines Events besteht aus einem Modifier (optional), einer Maustaste/Mausrad
+und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein "-" getrennt.
 
-// TRANSLATION MISSING
-List of modifiers:
+Liste der Modifiers:
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Modifier | Description
-| ctrl     | key @k(-C-)
-| alt      | key @k(-A-)
-| ctrl-alt | keys @k(-C-) and @k(-A-)
+| Modifier | Beschreibung
+| ctrl     | Taste @k(-C-)
+| alt      | Taste @k(-A-)
+| ctrl-alt | Taste @k(-C-) und @k(-A-)
 |========================================
 
-// TRANSLATION MISSING
-List of buttons/wheel:
+Liste der Maustasten/Mausrad:
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Button/wheel        | Description
+| Maustaste/-rad      | Beschreibung
 | button1             | linker Mausknopf wird gedrückt
 | button2             | rechter Mausknopf wird gedrückt
 | button3             | mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
@@ -688,24 +685,22 @@ List of buttons/wheel:
 | wheeldown           | Mausrad wird nach unten gescrollt
 |========================================
 
-// TRANSLATION MISSING
-List of gestures (only for buttons, not wheel):
+Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Gesture            | Distance
-| gesture-up         | 3 ... 19
-| gesture-up-long    | ≥ 20
-| gesture-down       | 3 ... 19
-| gesture-down-long  | ≥ 20
-| gesture-left       | 3 ... 39
-| gesture-left-long  | ≥ 40
-| gesture-right      | 3 ... 39
-| gesture-right-long | ≥ 40
+| Mausgeste              | Distanz
+| Bewegung hoch          | 3 ... 19
+| Bewegung hoch (lang)   | ≥ 20
+| Bewegung runter        | 3 ... 19
+| Bewegung runter (lang) | ≥ 20
+| Bewegung links         | 3 ... 39
+| Bewegung links (lang)  | ≥ 40
+| Bewegung rechts        | 3 ... 39
+| Bewegung rechts (lang) | ≥ 40
 |========================================
 
-// TRANSLATION MISSING
-Example of events:
+Bespiele von Ereignissen:
 
 * `button1`
 * `ctrl-button1`
@@ -715,14 +710,14 @@ Example of events:
 * `ctrl-alt-wheeldown`
 
 [TIP]
-Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich mehrere Events mittels
-`*` abzufangen. Zum Beispiel: `button1-gesture-*` fängt alle Mausgesten ab, die mit
-der linken Maustaste eingeleitet werden.
+Wird eine Funktion im "mouse"-Kontext hinzufügt ist es möglich mehrere Mausereignisse
+mittels `*` abzufangen. Zum Beispiel fängt `button1-gesture-*` alle Mausgesten ab, die
+mit der linken Maustaste eingeleitet werden.
 
-// TRANSLATION MISSING
 [TIP]
-You can find an event name with command `/input grab_mouse` then doing event
-with mouse. This will insert event name on command line.
+Den Namen eines Mausereignisses kann man mittels des Befehls `/input grab_mouse` erfragen.
+Man führt den Befehl in der Eingabezeile aus und startet das Ereignis. Als Ergebnis erhält
+man in der Eingabezeile den Namen des ausgeführten Mausereignisses.
 
 [[command_line]]
 Befehlszeile

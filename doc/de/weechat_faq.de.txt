@@ -366,14 +366,13 @@ Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranle
 
 
 [[search_text]]
-Wie kann ich in einem Buffer nach einem Text suchen (ähnlich /lastlog in irssi)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Die Standardtastenbelegung lautet @k(C-)@k(r) (der dazugehörige Befehl: `/input search_text`).
-// TRANSLATION MISSING
-And jump to highlights: @k(A-)@k(p)/@k(n).
+und um zu Highlight-Nachrichten zu springen: @k(A-)@k(p)/@k(n).
 
-Siehe die Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
+Siehe Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
 
 
 [[key_bindings]]
