@@ -1532,10 +1532,13 @@ hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
     if (remaining_calls == 0)
     {
         hook_process_send_buffers (hook_process, WEECHAT_HOOK_PROCESS_ERROR);
-        gui_chat_printf (NULL,
-                         _("End of command '%s', timeout reached (%.1fs)"),
-                         HOOK_PROCESS(hook_process, command),
-                         ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
+        if (weechat_debug_core >= 1)
+        {
+            gui_chat_printf (NULL,
+                             _("End of command '%s', timeout reached (%.1fs)"),
+                             HOOK_PROCESS(hook_process, command),
+                             ((float)HOOK_PROCESS(hook_process, timeout)) / 1000);
+        }
         kill (HOOK_PROCESS(hook_process, child_pid), SIGKILL);
         usleep (1000);
         unhook (hook_process);
