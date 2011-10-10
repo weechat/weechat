@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-rc1, 2011-10-09
+v0.3.6-rc1, 2011-10-10
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix compilation error (INSTALLPREFIX undeclared) on OS X and when
+  compiling with included gettext (bug #26690)
 * core: display timeout for hook_process command only if debug for core is
   enabled (task #11401)
 * core: bufferize lines displayed before core buffer is created, to display them
