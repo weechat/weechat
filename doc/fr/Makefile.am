@@ -39,33 +39,39 @@ all-local: weechat_user.fr.html \
 
 # user's guide
 weechat_user.fr.html: weechat_user.fr.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.fr.html weechat_user.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.fr.html $(abs_top_srcdir)/doc/fr/weechat_user.fr.txt
 
 # plugin API reference
 weechat_plugin_api.fr.html: weechat_plugin_api.fr.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_plugin_api.fr.html weechat_plugin_api.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_plugin_api.fr.html $(abs_top_srcdir)/doc/fr/weechat_plugin_api.fr.txt
 
 # scripting guide
 weechat_scripting.fr.html: weechat_scripting.fr.txt
-	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.fr.html weechat_scripting.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.fr.html $(abs_top_srcdir)/doc/fr/weechat_scripting.fr.txt
 
 # FAQ
 weechat_faq.fr.html: weechat_faq.fr.txt
-	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.fr.html weechat_faq.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.fr.html $(abs_top_srcdir)/doc/fr/weechat_faq.fr.txt
 
 # quickstart
 weechat_quickstart.fr.html: weechat_quickstart.fr.txt
-	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.fr.html weechat_quickstart.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.fr.html $(abs_top_srcdir)/doc/fr/weechat_quickstart.fr.txt
 
 # tester's guide
 weechat_tester.fr.html: weechat_tester.fr.txt
-	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.fr.html weechat_tester.fr.txt
+	$(ASCIIDOC) -a lang=fr -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.fr.html $(abs_top_srcdir)/doc/fr/weechat_tester.fr.txt
 
 # install docs
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
+
+# uninstall docs
+
+uninstall-hook:
+	$(RM) $(DESTDIR)$(docdir)/*.fr.html
+	-rmdir $(DESTDIR)$(docdir)
 
 # clean
 

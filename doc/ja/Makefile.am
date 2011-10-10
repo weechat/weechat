@@ -26,13 +26,19 @@ all-local: weechat_quickstart.ja.html
 
 # quickstart
 weechat_quickstart.ja.html: weechat_quickstart.ja.txt
-	$(ASCIIDOC) -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ja.html weechat_quickstart.ja.txt
+	$(ASCIIDOC) -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ja.html $(abs_top_srcdir)/doc/ja/weechat_quickstart.ja.txt
 
 # install docs
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
+
+# uninstall docs
+
+uninstall-hook:
+	$(RM) $(DESTDIR)$(docdir)/*.ja.html
+	-rmdir $(DESTDIR)$(docdir)
 
 # clean
 

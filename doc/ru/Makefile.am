@@ -26,13 +26,19 @@ all-local: weechat_quickstart.ru.html
 
 # quickstart
 weechat_quickstart.ru.html: weechat_quickstart.ru.txt
-	$(ASCIIDOC) -a lang=ru -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ru.html weechat_quickstart.ru.txt
+	$(ASCIIDOC) -a lang=ru -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.txt
 
 # install docs
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
+
+# uninstall docs
+
+uninstall-hook:
+	$(RM) $(DESTDIR)$(docdir)/*.ru.html
+	-rmdir $(DESTDIR)$(docdir)
 
 # clean
 

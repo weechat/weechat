@@ -23,3 +23,6 @@ SUBDIRS = . en fr pl de ru ja it
 man_MANS = weechat-curses.1
 
 EXTRA_DIST = $(man_MANS) docgen.py CMakeLists.txt asciidoc.conf asciidoc.css
+
+uninstall-hook:
+	-rmdir $(DESTDIR)$(datadir)/doc/$(PACKAGE)
