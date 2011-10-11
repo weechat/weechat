@@ -7520,6 +7520,10 @@ Argument is a hashtable with following entries (keys and values are string):
 Immediately after sending this hsignal, you must send command to irc server,
 and redirection will be used for this command.
 
+When complete answer to your command has been be received, a hsignal will be
+send. This hsignal has name 'irc_redirection_xxx_yyy' where 'xxx' is the
+'signal' and 'yyy' the 'pattern' used.
+
 C example:
 
 [source,C]

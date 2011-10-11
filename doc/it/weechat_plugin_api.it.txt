@@ -7558,6 +7558,11 @@ sono stringhe):
 Subito dopo aver inviato questo hsignal, è necessario inviare il comando al
 server irc, e la redirezione verrà usata per questo comando.
 
+// TRANSLATION MISSING
+When complete answer to your command has been be received, a hsignal will be
+send. This hsignal has name 'irc_redirection_xxx_yyy' where 'xxx' is the
+'signal' and 'yyy' the 'pattern' used.
+
 Esempio in C:
 
 [source,C]

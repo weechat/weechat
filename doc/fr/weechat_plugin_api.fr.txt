@@ -7630,6 +7630,10 @@ sont des chaînes) :
 Immédiatement après l'envoi de ce hsignal, vous devez envoyer la commande au
 serveur irc, et la redirection sera utilisée pour cette commande.
 
+Lorsque la réponse complète à votre commande a été reçue, un hsignal est envoyé.
+Ce hsignal a le nom 'irc_redirection_xxx_yyy' où 'xxx' est le 'signal' et 'yyy'
+le 'pattern' utilisé.
+
 Exemple en C :
 
 [source,C]
