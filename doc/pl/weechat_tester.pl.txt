@@ -12,17 +12,17 @@ Najłatwiejszym (a zarazem najtrudniejszym) sposobem jest testowanie!
 
 Testowanie jest bardzo ważną częścią rozwoju oprogramowania i nie powinno być
 niedoceniane. Kiedy nowe funkcje są implementowane, powinny zostać przetestowane,
-ale dla wielu z nich jest za dużo możliwości użycia lub nie są łątwe do
-zasymulowania dlatego programiści nie są wstanie sprawdzić ich wszystkich.
+ale dla wielu z nich jest za dużo możliwości użycia lub nie są łatwe do
+za symulowania dlatego programiści nie są wstanie sprawdzić ich wszystkich.
 
 Na przykład: Powszechnie znana wtyczka od kodowania została wprowadzona w
 WeeChat 0.2.2: żaden z nas (programistów, współpracowników, testerów) nie
 używał kanałów ze znakami narodowymi w nazwach, kiedy wersja 0.2.2 została
 wypuszczona zostaliśmy zalani użytkownikami z Rosji obwiniającymi nas.
-Gdy będziemy mieli więcej testrów taka sytuacja nie powinna się już zdarzyć
+Gdy będziemy mieli więcej testerów taka sytuacja nie powinna się już zdarzyć
 w przyszłości.
 
-Testowanie stabilenj wersji WeeChat jest bezcelowe, ponieważ programiści są
+Testowanie stabilnej wersji WeeChat jest bezcelowe, ponieważ programiści są
 zajęci cały czas implementowaniem nowych rzeczy (oraz poprawianiem błędów).
 
 
@@ -30,9 +30,9 @@ zajęci cały czas implementowaniem nowych rzeczy (oraz poprawianiem błędów).
 Przygotuj swój system
 ---------------------
 
-Bardzo nam pomoże, jeśli włączysz linuksowe pliki 'core': jeśli WeeChat zawiesi,
-się Linuks zapisze plik zwany 'core'. Plik ten zawiera uzyteczne informacje
-pozwalające dokładnie zlokalizować bład w WeeChat.
+Bardzo nam pomoże, jeśli włączysz linuksowe pliki 'core': jeśli WeeChat zawiesi
+się Linux zapisze plik zwany 'core'. Plik ten zawiera użyteczne informacje
+pozwalające dokładnie zlokalizować błąd w WeeChat.
 
 Jeśli korzystasz z powłoki 'bash', dodaj następującą linijkę do `~/.bashrc`:
 
@@ -43,11 +43,11 @@ Jeśli korzystasz z powłoki 'bash', dodaj następującą linijkę do `~/.bashrc
 Pobieranie wersji rozwojowej
 ----------------------------
 
-Świerzy kod (z najnowszymi błędami i funkcjami) przechowywany jest w repozytorium GIT.
+Świeży kod (z najnowszymi błędami i funkcjami) przechowywany jest w repozytorium GIT.
 
 Możesz się zdecydować na własnoręczne zbudowanie (zalecana metoda):
 
-* wersja z GIT może być zbudowana i zainstalowana równolegle z wersją stabulną,
+* wersja z GIT może być zbudowana i zainstalowana równolegle z wersją stabilną,
 * nie potrzebujesz uprawnień administratora, oraz nie musisz poświęcać stabilnej
   wersji WeeChat.
 
@@ -62,7 +62,7 @@ $ mkdir ~/weechat-git
 $ cd ~/weechat-git
 ---------------------
 
-Jeśli masz zainstalowanego gita, po prostu zklonuj repozytorium (zalecana
+Jeśli masz zainstalowanego gita, po prostu sklonuj repozytorium (zalecana
 metoda):
 
 --------------------------------------------
@@ -73,7 +73,7 @@ $ cd weechat
 UWAGA: Później możesz wykonać w tym katalogu "`git pull`", aby pobrać najnowsze
 poprawki.
 
-Oczywiście możesz pobrać paczke oznaczoną jako 'devel':
+Oczywiście możesz pobrać paczkę oznaczoną jako 'devel':
 
 -----------------------------------------------------------------
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
@@ -116,7 +116,7 @@ W zależności od dystrybucji Linuksa:
 Uruchomienie WeeChat
 --------------------
 
-Zalca się uruchomianie WeeChat z innym katalogiem (różnym od wersji stabilnej),
+Zaleca się uruchomianie WeeChat z innym katalogiem (różnym od wersji stabilnej),
 za pomocą opcji `--dir`.
 
 Komenda to:
@@ -126,8 +126,8 @@ Komenda to:
 Jeśli nadal nie śpisz powinieneś ujrzeć znajomy interfejs i chwalić się
 z posiadania najnowszej możliwej wersji WeeChat. ;)
 
-Teraz jeśli zaobserwujesz dziwne zachowanie (może sprawiać problemy, ulec awari
-lub zagotować Twoje piwo) nie wachaj się wejść na kanał `#weechat` na serwerze
+Teraz jeśli zaobserwujesz dziwne zachowanie (może sprawiać problemy, ulec awarii
+lub zagotować Twoje piwo) nie wahaj się wejść na kanał `#weechat` na serwerze
 `irc.freenode.net` i nam o tym opowiedzieć.
 
 Jeśli wszystko będzie w porządku - też nam o tym powiedz, potrzebujemy Twojej opinii!

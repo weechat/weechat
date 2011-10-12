@@ -1,0 +1,806 @@
+Poradnik pisania skryptów WeeChat
+=================================
+Sébastien Helleu <flashcode@flashtux.org>
+
+
+Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
+
+Najnowsza wersja tego dokumentu znajduje się na tej stronie:
+http://www.weechat.org/doc
+
+
+[[introduction]]
+Wprowadzenie
+------------
+
+WeeChat (Wee Enhanced Environment for Chat) jest darmowym klientem rozmów, szybkim
+i lekkim, zaprojektowanym dla wielu systemów operacyjnych.
+
+Ten podręcznik dokumentuje sposób pisania skryptów dla WeeChat, używając jednego
+z pięciu wspieranych języków skryptowych: perl, python, ruby, lua lub tcl.
+
+[NOTE]
+Prawie wszystkie przykłady umieszczone w tym dokumencie są napisane w Pythonie,
+ale API jest takie same dla wszystkich języków.
+
+[[scripts_in_weechat]]
+Skrypty w WeeChat
+------------------
+
+[[languages_specifities]]
+Specyfika języków
+~~~~~~~~~~~~~~~~~
+
+Niektóre rzeczy są specyficzne dla danego języka:
+
+* perl:
+** funkcje są wywoływane za pomocą `weechat::xxx(arg1, arg2, ...);`
+* python:
+** należy wykonać `import weechat`
+** funkcje `print*` są nazwane `prnt*` w pythonie (ponieważ 'print' jest zastrzeżonym
+   słowem kluczowym)
+** funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...)`
+* ruby:
+** trzeba zdefiniować 'weechat_init' i wywołać 'register' wewnątrz
+** funkcje są wywoływane za pomocą `Weechat.xxx(arg1, arg2, ...)`
+* tcl:
+** funkcje są wywoływane za pomocą `weechat::xxx arg1 arg2 ...`
+
+[[register_function]]
+Funkcja rejestrująca
+~~~~~~~~~~~~~~~~~~~~
+
+Wszystkie skrypty WeeChat muszą się "zarejestrować" w WeeChat, musi to być pierwsza
+z funkcji WeeChat wywołana w skrypcie.
+
+Prototyp:
+
+[source,python]
+----------------------------------------
+weechat.register(nazwa, autor, wersja, licencja, opis, funkcja_wyłączająca, kodowanie)
+----------------------------------------
+
+Argumenty:
+
+* 'nazwa': string, wewnętrzna nazwa skryptu
+* 'autor': string, autor skryptu
+* 'wersja': string, wersja
+* 'licencja': string, licencja
+* 'opis': string, krótki opis skryptu
+* 'funkcja_wyłączająca': string, nazwa funkcji wywoływanej podczas wyładowania skryptu
+* 'kodowanie': string, kodowane skryptu (opcjonalne, jeśli skrypt jest napisany 
+  w UTF-8 można nie podawać tej wartości - UTF-8 to domyślne kodowanie)
+
+Przykład dla skryptu w każdym z języków:
+
+* perl:
+
+[source,perl]
+----------------------------------------
+weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "");
+weechat::print("", "Witaj, z perlowego skryptu!");
+----------------------------------------
+
+* python:
+
+[source,python]
+----------------------------------------
+import weechat
+
+weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
+weechat.prnt("", "Witaj, z pythonowego skryptu!")
+----------------------------------------
+
+* ruby:
+
+[source,ruby]
+----------------------------------------
+def weechat_init
+  Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
+  Weechat.print("", "Witaj, ze skryptu ruby!")
+  return Weechat::WEECHAT_RC_OK
+end
+----------------------------------------
+
+* lua:
+
+[source,lua]
+----------------------------------------
+weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
+weechat.print("", "Witaj, ze skryptu lua!")
+----------------------------------------
+
+* tcl:
+
+// [source,tcl]
+----------------------------------------
+weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Skrypt testowy" "" ""
+weechat::print "" "Witaj, ze skryptu tcl!"
+----------------------------------------
+
+[[load_script]]
+Ładowanie skryptu
+~~~~~~~~~~~~~~~~~
+
+Musisz użyć komendy dla danego języka:
+
+----------------------------------------
+/perl load perl/skrypt.pl
+/python load python/skrypt.py
+/ruby load ruby/skrypt.rb
+/lua load lua/skrypt.lua
+/tcl load tcl/skrypt.tcl
+----------------------------------------
+
+Możesz zrobić dowiązanie w katalogu 'język/autoload' jeśli chcesz automatycznie
+ładować skrypt po uruchomieniu WeeChat.
+
+Na przykład dla Pythona:
+
+----------------------------------------
+$ cd ~/.weechat/python/autoload
+$ ln -s ../skrypt.py
+----------------------------------------
+
+[[differences_with_c_api]]
+Różnice pomiędzy API dla C
+--------------------------
+
+API skryptów jest prawie takie same jak API dla wtyczek pisanych w C.
+Możesz zajrzeć do 'Opisu API wtyczek WeeChat' po więcej informacji na temat
+każdej z funkcji API: prototyp, argumenty, zwracane wartości, przykłady.
+
+Ważne jest rozróżnienie 'wtyczki' od 'skryptu': 'wtyczka' jest plikiem binarnym
+skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast 'skrypt' jest 
+plikiem tekstowym załadowanym przez wtyczkę jak 'python' za pomocą komendy
+`/python`.
+
+W momencie, kiedy Twój skrypt 'test.py' wywołuje funkcję z API Weechat, wygląda to tak:
+
+........................................
+       (API skryptów)                          (C API)
+            \/                                    \/
+test.py  ------->  wtyczka python (python.so)  ------->  rdzeń WeeChat
+........................................
+
+Kiedy WeeChat odwołuje się do Twojego skryptu 'test.py' wygląda to tak:
+
+........................................
+              (C API)                             (API skryptów)
+                 \/                                     \/
+rdzeń WeeChat  ------->  wtyczka python (python.so)  ------->  test.py
+........................................
+
+[[pointers]]
+Wskaźniki
+~~~~~~~~~
+
+Jak już zapewne wiecie nie ma prawdziwych "wskaźników" w skryptach. Dlatego kiedy
+funkcja API zwraca wskaźnik, jest on konwertowany na ciąg dla skryptu.
+
+Na przykład, jeśli funkcja zwraca wskaźnik 0x1234ab56 skrypt otrzyma ciąg
+"0x1234ab56".
+
+W sytuacji, kiedy funkcja API spodziewa się wskaźnika jako argumentu skrypt musi
+przekazać go jako ciąg. Wtyczki napisane w C przekonwertują go na prawdziwy
+wskaźnik, zanim wywołają funkcję z API C.
+
+Dozwolone są puste ciągi lub "0x0", oznaczają NULL w C.
+Na przykład, aby wyświetlić dane w rdzennym buforze (główny bufor WeeChat):
+
+[source,python]
+----------------------------------------
+weechat.prnt("", "hi!")
+----------------------------------------
+
+[WARNING]
+W wielu funkcjach, z powodów wydajności, WeeChat nie sprawdza poprawności wskaźników.
+Do ciebie należy sprawdzenie poprawności przekazywanych wskaźników, w innym
+wypadku możesz zobaczyć ładny raport o błędzie ;)
+
+[[callbacks]]
+Callbacki
+~~~~~~~~~
+
+Prawie wszystkie callbacki muszą zwrócić WEECHAT_RC_OK lub WEECHAT_RC_ERROR
+(wyjątkiem jest callback modyfikujący, który zwraca ciąg).
+
+Callbacki C używają argumentu "data", który jest wskaźnikiem. W API skryptów,
+"data" jest ciągiem o dowolnej wartości (nie jest wskaźnikiem).
+
+Na przykład:
+
+[source,python]
+----------------------------------------
+weechat.hook_timer(1000, 0, 1, "my_timer_cb", "moje dane")
+
+def my_timer_cb(data, remaining_calls):
+    # wyświetli to: "moje dane"
+    weechat.prnt("", data)
+    return weechat.WEECHAT_RC_OK
+----------------------------------------
+
+[[script_api]]
+API skryptów
+------------
+
+Więcej informacji o funkcjach w API, znajdziesz w 'Opisie API wtyczek WeeChat'.
+
+[[script_api_functions]]
+Fukcje
+~~~~~~
+
+Lista funkcji w API skryptów:
+
+[width="100%",cols="^1,10",options="header"]
+|========================================
+| Kategoria           | Funkcje
+| ogólne              |
+  register
+| wtyczki             |
+  plugin_get_name
+| ciągi               |
+  charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
+  string_match, string_has_highlight, string_has_highlight_regex,
+  string_mask_to_regex, string_remove_color, string_is_command_char,
+  string_input_for_buffer
+| katalogi            |
+  mkdir_home, mkdir, mkdir_parents
+| przechowywane listy |
+  list_new, list_add, list_search, list_search_pos, list_casesearch,
+  list_casesearch_pos, list_get, list_set, list_next, list_prev, list_string,
+  list_size, list_remove, list_remove_all, list_free
+| pliki konfiguracyjne|
+  config_new, config_new_section, config_search_section, config_new_option,
+  config_search_option, +
+  config_string_to_boolean, config_option_reset, config_option_set,
+  config_option_set_null, config_option_unset, config_option_rename,
+  config_option_is_null, config_option_default_is_null, +
+  config_boolean, config_boolean_default, config_integer, config_integer_default,
+  config_string, config_string_default, config_color, config_color_default, +
+  config_write_option, config_write_line, config_write, config_read,
+  config_reload, +
+  config_option_free, config_section_free_options, config_section_free,
+  config_free, +
+  config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
+  config_set_desc_plugin, config_unset_plugin
+| przypisania klawiszy|
+  key_bind, key_unbind
+| wyświetlanie        |
+  prefix, color, print (for python: prnt), print_date_tags (for python:
+  prnt_date_tags), print_y (for python: prnt_y), log_print
+| hooks               |
+  hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
+  hook_connect, hook_print, hook_signal, hook_signal_send, hook_hsignal,
+  hook_hsignal_send, hook_config, hook_completion, hook_completion_list_add,
+  hook_modifier, hook_modifier_exec, hook_info, hook_info_hashtable,
+  hook_infolist, hook_focus, unhook, unhook_all
+| bufory              |
+  buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
+  buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
+  buffer_get_string, buffer_get_pointer, buffer_set,
+  buffer_string_replace_local_var, buffer_match_list
+| okna                |
+  current_window, window_search_with_buffer, window_get_integer,
+  window_get_string, window_get_pointer, window_set_title
+| lista nicków        |
+  nicklist_add_group, nicklist_search_group, nicklist_add_nick,
+  nicklist_search_nick, nicklist_remove_group, nicklist_remove_nick,
+  nicklist_remove_all, nicklist_group_get_integer, nicklist_group_get_string,
+  nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer,
+  nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
+| paski               |
+  bar_item_search, bar_item_new, bar_item_update, bar_item_remove, bar_search,
+  bar_new, bar_set, bar_update, bar_remove
+| komendy             |
+  command
+| informacje          |
+  info_get, info_get_hashtable
+| infolisty           |
+  infolist_new, infolist_new_item, infolist_new_var_integer,
+  infolist_new_var_string, infolist_new_var_pointer, infolist_new_var_time, +
+  infolist_get, infolist_next, infolist_prev, infolist_reset_item_cursor, +
+  infolist_fields, infolist_integer, infolist_string, infolist_pointer, +
+  infolist_time, infolist_free
+| hdata               |
+  hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
+  hdata_get_var_hdata, hdata_get_list, hdata_move, hdata_integer, hdata_long,
+  hdata_string, hdata_pointer, hdata_time, hdata_get_string
+| uaktualnienie       |
+  upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
+|========================================
+
+[[script_api_constants]]
+Stałe
+~~~~~
+
+Lista stałych w API skryptów:
+
+[width="100%",cols="^1,10",options="header"]
+|========================================
+| Kategoria           | Stałe
+| zwracane kofy       |
+  WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR
+| pliki konfiguracyjne|
+  WEECHAT_CONFIG_READ_OK, WEECHAT_CONFIG_READ_MEMORY_ERROR,
+  WEECHAT_CONFIG_READ_FILE_NOT_FOUND, WEECHAT_CONFIG_WRITE_OK,
+  WEECHAT_CONFIG_WRITE_ERROR, WEECHAT_CONFIG_WRITE_MEMORY_ERROR, +
+  WEECHAT_CONFIG_OPTION_SET_OK_CHANGED, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE,
+  WEECHAT_CONFIG_OPTION_SET_ERROR, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND,
+  WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET,
+  WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED, WEECHAT_CONFIG_OPTION_UNSET_ERROR
+| posortowane listy   |
+  WEECHAT_LIST_POS_SORT, WEECHAT_LIST_POS_BEGINNING, WEECHAT_LIST_POS_END
+| hotlisty            |
+  WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE, WEECHAT_HOTLIST_PRIVATE,
+  WEECHAT_HOTLIST_HIGHLIGHT
+| hook process        |
+  WEECHAT_HOOK_PROCESS_RUNNING, WEECHAT_HOOK_PROCESS_ERROR
+| hook connect        |
+  WEECHAT_HOOK_CONNECT_OK, WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+  WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND, WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED,
+  WEECHAT_HOOK_CONNECT_PROXY_ERROR, WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
+  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+  WEECHAT_HOOK_CONNECT_MEMORY_ERROR
+| hook signal         |
+  WEECHAT_HOOK_SIGNAL_STRING, WEECHAT_HOOK_SIGNAL_INT, WEECHAT_HOOK_SIGNAL_POINTER
+|========================================
+
+[[common_tasks]]
+Częste zadania
+--------------
+
+Ten rozdział przedstawia część częstych zadań z przykładami.
+Użyto tu tylko część rzeczy dostępnych w API, dokładne informacje można znaleźć
+w Opisie API wtyczek WeeChat'.
+
+[[buffers]]
+Bufory
+~~~~~~
+
+[[buffers_display_messages]]
+Wyświetlanie wiadomości
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Pusty ciąg jest często używany podczas pracy z głównym buforem WeeChat. Dla
+pozostałych buforów należy podać wskaźnik (jako ciąg, zobacz <<pointers,pointers>>).
+
+Przykłady:
+
+[source,python]
+----------------------------------------
+# wyświetl "witaj" w głównym buforze
+weechat.prnt("", "witaj")
+
+# wyświetl "witaj" w głównym buforze, ale nie zapisuj tego do pliku z logiem
+# (tylko wersje >= 0.3.3)
+weechat.prnt_date_tags("", 0, "no_log", "witaj")
+
+# wyświetl "==>" przed wiadomością "witaj" w obecnym buforze
+# (przedrostek i wiadomość muszą być oddzielone znakiem tabulacji)
+weechat.prnt(weechat.current_buffer(), "==>\twitaj")
+
+# wyświetla wiadomość o błędzie w głównym buforze (z przedrostiem błąd)
+weechat.prnt("", "%szłe argumenty" % weechat.prefix("błąd"))
+
+# wyświetl wiadomość z kolorem w głównym buforze
+weechat.prnt("", "text %sżółty na niebieskim" % weechat.color("yellow,blue"))
+
+# przeszuka bufor i wyświetli wiadomość
+# (pełna nazwa bufora to wtyczka.nazwa, na przykład: "irc.freenode.#weechat")
+buffer = weechat.buffer_search("irc", "freenode.#weechat")
+weechat.prnt(buffer, "wiadomość na kanale #weechat")
+
+# inne rozwiązanie na znalezienie bufora IRC (lepsze)
+# (zauważ, że serwer i kanał są oddzielone przecinkiem)
+buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+weechat.prnt(buffer, "wiadomość na kanale #weechat")
+----------------------------------------
+
+[NOTE]
+Funkcja drukująca nazywa się `print` w Perl/Ruby/Lua/Tcl i `prnt` w Pythonie.
+
+[[buffers_send_text]]
+Wysyłanie tekstu do bufora
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Możesz wysłać tekst lub komendę do bufora. Dokładnie tak jakby wpisać tekst
+w linii poleceń i wcisnąć [Enter]
+You can send text or command to a buffer. This is exactly like if you type text
+on command line and press [Enter].
+
+Przykłady:
+
+[source,python]
+----------------------------------------
+# wykona komendę "/help" w głównym buforze
+weechat.command("", "/help")
+
+# wyśle "witaj" na kanał #weechat (użytkownicy na kanale zobaczą wiadomość)
+buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
+weechat.command(buffer, "witaj")
+----------------------------------------
+
+[[buffers_new]]
+Tworzenie nowego buforu
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Możesz stworzyć nowy bufor w skrypcie, następnie użyć go do wyświetlania wiadomości.
+
+Dwa callbacki mogą zostać wywołane (są opcjonalne): jeden dla danych wejściowych
+(kiedy wpiszesz tekst i naciśniesz [Enter] w buforze), drugi jest wywoływany
+podczas zamykania bufora (na przykład przez `/buffer close`).
+
+Przykłady:
+
+[source,python]
+----------------------------------------
+# callback dla danych otrzymanych na wejściu
+def buffer_input_cb(data, buffer, input_data):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# callback wywoływany przy zamknięciu bufora
+def buffer_close_cb(data, buffer):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# tworzenie bufora
+buffer = weechat.buffer_new("mybuffer", "buffer_input_cb", "", "buffer_close_cb", "")
+
+# ustawianie tytułu
+weechat.buffer_set(buffer, "title", "To jest tytuł mojego buforu.")
+
+# wyłącza logowanie, przez ustawienie zmiennej lokalnej "no_log" na "1"
+weechat.buffer_set(buffer, "localvar_set_no_log", "1")
+----------------------------------------
+
+[[buffers_properties]]
+Właściwości buforów
+^^^^^^^^^^^^^^^^^^^
+
+Możesz odczytać właściwości buforów jako ciąg, liczbę lub wskaźnik.
+
+Przykłady:
+
+[source,python]
+----------------------------------------
+buffer = weechat.current_buffer()
+
+number     = weechat.buffer_get_integer(buffer, "number")
+name       = weechat.buffer_get_string(buffer, "name")
+short_name = weechat.buffer_get_string(buffer, "short_name")
+----------------------------------------
+
+Możliwe jest dodanie, odczytanie lub kasowanie lokalnych zmiennych dla buforów:
+
+[source,python]
+----------------------------------------
+# dodanie zmiennej lokalnej
+weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
+
+# odczyt zmiennej lokalnej
+myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
+
+# kasowanie zmiennej loaklnej
+weechat.buffer_set(buffer, "localvar_del_myvar", "")
+----------------------------------------
+
+Aby zobaczyć lokalne zmienne danego bufora, należy wykonać tą komendę w WeeChat:
+
+----------------------------------------
+/buffer localvar
+----------------------------------------
+
+[[hooks]]
+Hooks
+~~~~~
+
+[[hook_command]]
+Dodanie nowej komendy
+^^^^^^^^^^^^^^^^^^^^^
+
+Aby dodać nową komendę należy użyć `hook_command`. Można użyć własnego szablonu
+dopełnień dla uzupełniania argumentów własnej komendy.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+def my_command_cb(data, buffer, args):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_command("myfilter", "opis myfilter",
+    "[list] | [enable|disable|toggle [name]] | [add name plugin.buffer tags regex] | [del name|-all]",
+    "description of arguments...",
+    "list"
+    " || enable %(filters_names)"
+    " || disable %(filters_names)"
+    " || toggle %(filters_names)"
+    " || add %(filters_names) %(buffers_plugins_names)|*"
+    " || del %(filters_names)|-all",
+    "my_command_cb", "")
+----------------------------------------
+
+Następnie w WeeChat:
+
+----------------------------------------
+/help myfilter
+
+/myfilter argumenty...
+----------------------------------------
+
+[[hook_timer]]
+Dodanie timera
+^^^^^^^^^^^^^^
+
+Do dodania timera służy `hook_timer`.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+def timer_cb(data, remaining_calls):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# timer wywoływany co minutę, kiedy liczba sekund wynosi 00
+weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
+----------------------------------------
+
+[[hook_process]]
+Wykonuje proces w tle
+^^^^^^^^^^^^^^^^^^^^^
+
+Do wykonywania procesów w tle służy `hook_process`. Twoje callbacki zostaną 
+wywołane, kiedy dane będą gotowe. Może zostać wywołane wiele razy.
+
+Dla ostatniego wykonania Twojego callbacku 'rc' jest ustawiane na 0, lub wartość
+dodatnią, jest to kod zwracany przez komendę.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+# Wyświetla wersje Linuksowych kerneli.
+kernel_txt = ""
+
+def kernel_process_cb(data, command, rc, stdout, stderr):
+    """ Callback reading command output. """
+    global kernel_txt
+    if stdout != "":
+        kernel_txt += stdout
+    if int(rc) >= 0:
+        weechat.prnt("", kernel_txt)
+    return weechat.WEECHAT_RC_OK
+
+weechat.hook_process("python -c \"import urllib; "
+                     "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
+                     10 * 1000, "kernel_process_cb", "")
+----------------------------------------
+
+[[config_options]]
+Konfiguracja / opcje
+~~~~~~~~~~~~~~~~~~~~
+
+[[config_options_set_script]]
+Ustawianie opcji dla skryptu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Funkcja `config_is_set_plugin` używana jest do sprawdzenia czy opcja jest ustawiona,
+`config_set_plugin` ustawia opcję.
+
+Example:
+
+[source,python]
+----------------------------------------
+script_options = {
+    "opcja1" : "wartość1",
+    "opcja2" : "wartość2",
+    "opcja3" : "wartość3",
+}
+for option, default_value in script_options.iteritems():
+    if not weechat.config_is_set_plugin(option):
+        weechat.config_set_plugin(option, default_value)
+----------------------------------------
+
+[[config_options_detect_changes]]
+Wykrywanie zmian
+^^^^^^^^^^^^^^^^
+
+Do wykrywania zmian opcji skryptu służy `hook_config`.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+SCRIPT_NAME = "myscript"
+
+# ...
+
+def config_cb(data, option, value):
+    """ Callback called when a script option is changed. """
+    # na przykład, odczyt wszystkich opcji skryptu...
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+# ...
+
+weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
+# dla innych języków, zmień "python" na swój język ("perl", "ruby", "lua" or "tcl")
+----------------------------------------
+
+[[config_options_weechat]]
+Odczyt opcji WeeChat
+^^^^^^^^^^^^^^^^^^^^
+
+Funkcja `config_get` zwraca wskaźnik do opcji. Następnie, w zależności od typu opcji,
+należy wywołać `config_string`, `config_boolean`, `config_integer` lub
+`config_color`.
+
+[source,python]
+----------------------------------------
+# string
+weechat.prnt("", "wartość opcji weechat.look.item_time_format to: %s"
+                 % (weechat.config_string(weechat.config_get("weechat.look.item_time_format"))))
+
+# boolean
+weechat.prnt("", "wartość opcji weechat.look.day_change to: %d"
+                 % (weechat.config_boolean(weechat.config_get("weechat.look.day_change"))))
+
+# integer
+weechat.prnt("", "wartość opcji weechat.look.scroll_page_percent to: %d"
+                 % (weechat.config_integer(weechat.config_get("weechat.look.scroll_page_percent"))))
+
+# color
+weechat.prnt("", "wartość opcji weechat.color.chat_delimiters to: %s"
+                 % (weechat.config_color(weechat.config_get("weechat.color.chat_delimiters"))))
+----------------------------------------
+
+[[irc]]
+IRC
+~~~
+
+[[irc_catch_messages]]
+Przechwytywanie wiadomości
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wtyczka IRC wysyła dwa sygnały dla otrzymanej wiadomości (`xxx` jest wewnętrzną
+ nazwą serwera IRC, `yyy` to komenda IRC jak JOIN, QUIT, PRIVMSG, 301, ..):
+
+xxxx,irc_in_yyy::
+    sygnał wysłany przed przetworzeniem wiadomości
+
+xxx,irc_in2_yyy::
+    sygnał wysłany po przetworzeniu wiadomości
+
+[source,python]
+----------------------------------------
+def join_cb(data, sygnał, signal_data):
+    # sygnał to na przykład: "freenode,irc_in2_join"
+    # signal_data to wiadomość IRC, na przykład: ":nick!user@host JOIN :#channel"
+    nick = weechat.info_get("irc_nick_from_host", signal_data)
+    server = signal.split(",")[0]
+    channel = signal_data.split(":")[-1]
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    if buffer:
+        weechat.prnt(buffer, "Eheh, %s has joined this channel!" % nick)
+    return weechat.WEECHAT_RC_OK
+
+# przydatne jest użycie "*" jako serwera, aby złapać wiadomość JOIN na wszystkich
+# serwerach IRC
+weechat.hook_signal("*,irc_in2_join", "join_cb", "")
+----------------------------------------
+
+[[irc_modify_messages]]
+Modyfikowanie wiadomości
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wtyczka IRC wysyła "modyfikator" nazwany "irc_in_xxx" ("xxx" to komenda IRC) dla
+otrzymanej wiadomości, żeby można było ją zmodyfikować.
+
+[source,python]
+----------------------------------------
+def modifier_cb(data, modifier, modifier_data, string):
+    # dodaje nazwę serwera do wszystkich otrzymanych wiadomości
+    # (nie jest to może bardzo przydatne, ale to tylko przykład!)
+    return "%s %s" % (string, modifier_data)
+
+weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
+----------------------------------------
+
+[WARNING]
+Zniekształcone wiadomości mogą uszkodzić WeeChat, lub spowodować wiele problemów!
+
+[[irc_message_parse]]
+Przetwarzanie wiadomości
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nowe w wersji 0.3.4._
+
+Można przetwarzać wiadomości IRC za pomocą info_hashtable zwanej "irc_message_parse".
+
+[source,python]
+----------------------------------------
+dict = weechat.info_get_hashtable("irc_message_parse",
+                                  { "message": ":nick!user@host PRIVMSG #weechat :message here" })
+weechat.prnt("", "dict: %s" % dict)
+
+# wyjście:
+#   dict: {'nick': 'nick', 'host': 'nick!user@host', 'command': 'PRIVMSG', 'arguments': '#weechat :message here', 'channel': '#weechat'}
+----------------------------------------
+
+[[infos]]
+Informacje
+~~~~~~~~~~
+
+[[infos_weechat_version]]
+Wersja WeeChat
+^^^^^^^^^^^^^^^
+
+Najprostszym sposobem na sprawdzenie wersji to pozyskanie "version_number" 
+i wykonanie porównania między liczbą całkowitą a heksadecymalnym numerem wersji.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+version = weechat.info_get("version_number", "") or 0
+if int(version) >= 0x00030200:
+    weechat.prnt("", "This is WeeChat 0.3.2 or newer")
+else:
+    weechat.prnt("", "This is WeeChat 0.3.1 or older")
+----------------------------------------
+
+[NOTE]
+Wersje ≤ 0.3.1.1 zwracają pusty ciąg dla 'info_get("version_number")' należy
+sprawdzić, czy zwracana wartość *nie* jest pusta.
+
+Aby otrzymać ciąg z numerem wersji:
+
+[source,python]
+----------------------------------------
+# wyświetli to na przykład "Version 0.3.2"
+weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
+----------------------------------------
+
+[[infos_other]]
+Inne informacje
+^^^^^^^^^^^^^^^
+
+[source,python]
+----------------------------------------
+# katalog domowy WeeChat, na przykład: "/home/xxxx/.weechat"
+weechat.prnt("", "Katalog domowy WeeChat: %s" % weechat.info_get("weechat_dir", ""))
+
+# nieaktywność klawiatury
+weechat.prnt("", "Nieaktywny od %s sekund" % weechat.info_get("inactivity", ""))
+----------------------------------------
+
+[[infolists]]
+Infolisty
+~~~~~~~~~
+
+[[infolists_read]]
+Odczytanie infolisty
+^^^^^^^^^^^^^^^^^^^^
+
+Można odczytać infolisty wbudowane w WeeChat lub inne wtyczki.
+
+Przykład:
+
+[source,python]
+----------------------------------------
+# odczyta infolistę "buffer", aby otrzymać listę buforów
+infolist = weechat.infolist_get("buffer", "", "")
+if infolist:
+    while weechat.infolist_next(infolist):
+        name = weechat.infolist_string(infolist, "name")
+        weechat.prnt("", "buffer: %s" % name)
+    weechat.infolist_free(infolist)
+----------------------------------------
+
+[IMPORTANT]
+Nie zapomnij wywołać `infolist_free`, aby zwolnić pamięć użyta przez infolistę,
+ponieważ WeeChat nie zwolni automatycznie tej pamięci.

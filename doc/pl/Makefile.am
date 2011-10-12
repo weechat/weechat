@@ -21,13 +21,19 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             weechat_scripting.pl.txt \
              weechat_faq.pl.txt \
              weechat_quickstart.pl.txt \
              weechat_tester.pl.txt
 
-all-local: weechat_faq.pl.html \
+all-local: weechat_scripting.pl.html \
+		weechat_faq.pl.html \
 		weechat_quickstart.pl.html \
 		weechat_tester.pl.html
+
+# scripting guide
+weechat_scripting.pl.html: weechat_scripting.pl.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.pl.html $(abs_top_srcdir)/doc/pl/weechat_scripting.pl.txt
 
 # FAQ
 weechat_faq.pl.html: weechat_faq.pl.txt
