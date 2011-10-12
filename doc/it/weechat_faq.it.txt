@@ -462,7 +462,7 @@ Se il mouse ancora non funziona, verificare la variabile TERM nella propria
 shell (consultare l'output di `echo $TERM` nel terminale).
 In base al terminale usato, il mouse potrebbe non essere supportato.
 
-E' possibile testare il supporto al mouse nel terminale:
+È possibile testare il supporto al mouse nel terminale:
 
 ----------------------------------------
 $ printf '\033[?1002h'
@@ -623,7 +623,7 @@ Per WeeChat ≤ 0.3.3, le opzioni sono 'irc.network.away_check' e
 Come posso essere avvisato quando qualcuno mi cerca in un canale?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-E' possibile usare script come 'beep.pl" o 'launcher.pl'.
+È possibile usare script come 'beep.pl" o 'launcher.pl'.
 
 Per 'launcher.pl', bisogna impostare il comando:
 
