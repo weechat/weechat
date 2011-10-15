@@ -3162,6 +3162,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 
 #if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
                         tls_struct.cert_type = GNUTLS_CRT_X509;
+                        tls_struct.key_type = GNUTLS_PRIVKEY_X509;
 #else
                         tls_struct.type = GNUTLS_CRT_X509;
 #endif
