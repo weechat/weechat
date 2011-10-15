@@ -88,6 +88,7 @@ extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_clear (WINDOW *window, int fg, int bg);
 extern void gui_window_clrtoeol (WINDOW *window);
 extern void gui_window_reset_style (WINDOW *window, int num_color);
+extern void gui_window_reset_color (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);
 extern void gui_window_remove_color_style (WINDOW *window, int style);
 extern void gui_window_set_color (WINDOW *window, int fg, int bg);

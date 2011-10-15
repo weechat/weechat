@@ -722,7 +722,7 @@ Esempio di eventi:
 
 [TIP]
 Quando si associa un tasto nel contesto "mouse", è possibile far corrispondere
-più eventi usando '*' all'inizio o alla fine del nome, ad esempio
+più eventi usando `*` all'inizio o alla fine del nome, ad esempio
 `button1-gesture-*` corrisponderà ad ogni azione compiuta col tasto sinistro.
 
 [TIP]
@@ -948,9 +948,12 @@ Attributi
 Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
 del nome o del numero del colore:
 
-* `*`: testo in grassetto
-* `!`: video inverso
-* `_`: testo sottolineato
+* `*` : testo in grassetto
+* `!` : video inverso
+* `_` : testo sottolineato
+// TRANSLATION MISSING
+* `|` : keep attributes: do not reset bold/reverse/underlined when changing
+  color
 
 Ad esempio se si vuole il proprio nick bianco e sottolineato:
 

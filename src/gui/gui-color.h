@@ -98,6 +98,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_REVERSE_CHAR       '!'
 #define GUI_COLOR_EXTENDED_ITALIC_CHAR        '/'
 #define GUI_COLOR_EXTENDED_UNDERLINE_CHAR     '_'
+#define GUI_COLOR_EXTENDED_KEEPATTR_CHAR      '|'
 
 /* color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
@@ -115,6 +116,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_REVERSE_FLAG       0x0400000
 #define GUI_COLOR_EXTENDED_ITALIC_FLAG        0x0800000
 #define GUI_COLOR_EXTENDED_UNDERLINE_FLAG     0x1000000
+#define GUI_COLOR_EXTENDED_KEEPATTR_FLAG      0x2000000
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 

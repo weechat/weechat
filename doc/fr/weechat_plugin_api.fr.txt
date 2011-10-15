@@ -5941,7 +5941,7 @@ Paramètres :
 
 * 'color_name' : nom de la couleur, parmi :
 ** une option WeeChat (de weechat.color.xxx), par exemple 'chat_delimiters'
-** une couleur avec un fond optionnel, par exemple 'yellow' ou 'yellow,red'
+** une couleur avec des attributs/fond optionnels (voir ci-dessous)
 ** un attribut :
 *** 'bold' : activer le gras
 *** '-bold' : désactiver le gras
@@ -5955,6 +5955,27 @@ Paramètres :
 *** 'bar_fg' : couleur de texte pour la barre
 *** 'bar_delim' : couleur des délimiteurs pour la barre
 *** 'bar_bg' : couleur de fond pour la barre
+** réinitialisation :
+*** 'reset' : réinitialiser la couleur et les attributs
+*** 'resetcolor' : réinitialiser la couleur (garder les attributs)
+    (_nouveau dans la version 0.3.6_)
+
+Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
+(optionnel). Les attributs possibles sont :
+
+* `*` : texte gras
+* `!` : mode vidéo inverse
+* `_` : texte souligné
+* `|` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
+  du changement de couleur (_nouveau dans la version 0.3.6_)
+
+Exemples :
+
+* `yellow` : jaune
+* `_green` : vert souligné
+* `*214` : orange gras
+* `yellow,red` : jaune sur rouge
+* `|cyan` : cyan (et garder tout attribut définit précédemment)
 
 Valeur de retour :
 

@@ -932,9 +932,11 @@ Attributes
 It is possible to use some attributes for colors. One or more attributes can be
 added before color name or number:
 
-* `*`: bold text
-* `!`: reverse video
-* `_`: underlined text
+* `*` : bold text
+* `!` : reverse video
+* `_` : underlined text
+* `|` : keep attributes: do not reset bold/reverse/underlined when changing
+  color
 
 For example if you want self nick as white underlined, do:
 

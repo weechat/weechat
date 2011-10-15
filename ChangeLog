@@ -1,12 +1,15 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-rc2, 2011-10-10
+v0.3.6-rc2, 2011-10-15
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: add color attribute "|" (keep attributes) and value "resetcolor" for
+  function weechat_color in plugin API (used by irc plugin to keep
+  bold/reverse/underlined in message when changing color) (bug #34550)
 * core: fix compilation error (INSTALLPREFIX undeclared) on OS X and when
   compiling with included gettext (bug #26690)
 * core: display timeout for hook_process command only if debug for core is

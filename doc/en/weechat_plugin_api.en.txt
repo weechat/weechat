@@ -5878,7 +5878,7 @@ Arguments:
 
 * 'color_name': name of color, one of:
 ** WeeChat option name (from weechat.color.xxx), for example 'chat_delimiters'
-** color with optional background, for example 'yellow' or 'yellow,red'
+** color with optional attributes/background (see below)
 ** attribute:
 *** 'bold': set bold
 *** '-bold': remove bold
@@ -5892,6 +5892,26 @@ Arguments:
 *** 'bar_fg': foreground color for bar
 *** 'bar_delim': delimiters color for bar
 *** 'bar_bg': background color for bar
+** reset:
+*** 'reset': reset color and attributes
+*** 'resetcolor': reset color (keep attributes) (_new in version 0.3.6_)
+
+Format of color is: attributes (optional) + color name + ",background"
+(optional). Possible attributes are:
+
+* `*` : bold text
+* `!` : reverse video
+* `_` : underlined text
+* `|` : keep attributes: do not reset bold/reverse/underlined when changing
+  color (_new in version 0.3.6_)
+
+Examples:
+
+* `yellow` : yellow
+* `_green` : underlined green
+* `*214` : bold orange
+* `yellow,red` : yellow on red
+* `|cyan` : cyan (and keep any attribute which was set previously)
 
 Return value:
 

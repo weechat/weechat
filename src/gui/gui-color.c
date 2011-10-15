@@ -104,6 +104,9 @@ gui_color_attr_get_flag (char c)
     if (c == GUI_COLOR_EXTENDED_UNDERLINE_CHAR)
         return GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
     
+    if (c == GUI_COLOR_EXTENDED_KEEPATTR_CHAR)
+        return GUI_COLOR_EXTENDED_KEEPATTR_FLAG;
+    
     return 0;
 }
 
@@ -128,6 +131,8 @@ gui_color_attr_build_string (int color, char *str_attr)
         str_attr[i++] = GUI_COLOR_EXTENDED_ITALIC_CHAR;
     if (color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
         str_attr[i++] = GUI_COLOR_EXTENDED_UNDERLINE_CHAR;
+    if (color & GUI_COLOR_EXTENDED_KEEPATTR_FLAG)
+        str_attr[i++] = GUI_COLOR_EXTENDED_KEEPATTR_CHAR;
     
     str_attr[i] = '\0';
 }
@@ -157,6 +162,13 @@ gui_color_get_custom (const char *color_name)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%c",
+                  GUI_COLOR_RESET_CHAR);
+    }
+    else if (string_strcasecmp (color_name, "resetcolor") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_RESET_CHAR);
     }
     else if (string_strcasecmp (color_name, "bold") == 0)
@@ -520,6 +532,9 @@ gui_color_decode (const char *string, const char *replacement)
                                 ptr_string++;
                                 break;
                         }
+                        break;
+                    case GUI_COLOR_RESET_CHAR:
+                        ptr_string++;
                         break;
                     default:
                         if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))

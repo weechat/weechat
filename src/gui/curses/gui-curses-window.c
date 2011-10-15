@@ -248,6 +248,17 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 }
 
 /*
+ * gui_window_reset_color: reset color with a weechat color for a window
+ */
+
+void
+gui_window_reset_color (WINDOW *window, int weechat_color)
+{
+    wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
+             gui_color[weechat_color]->attributes);
+}
+
+/*
  * gui_window_set_color_style: set style for color
  */
 
@@ -333,15 +344,15 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         {
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_BOLD);
             if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
                 gui_window_set_color_style (window, A_REVERSE);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_REVERSE);
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 gui_window_set_color_style (window, A_UNDERLINE);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_UNDERLINE);
             gui_window_set_color (window,
                                   fg & GUI_COLOR_EXTENDED_MASK,
@@ -349,8 +360,11 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         }
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            gui_window_remove_color_style (window,
-                                           A_BOLD | A_REVERSE | A_UNDERLINE);
+            if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+            {
+                gui_window_remove_color_style (window,
+                                               A_BOLD | A_REVERSE | A_UNDERLINE);
+            }
             attributes = 0;
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 attributes |= A_BOLD;
@@ -425,22 +439,25 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
         {
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 gui_window_set_color_style (window, A_BOLD);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_BOLD);
             if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
                 gui_window_set_color_style (window, A_REVERSE);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_REVERSE);
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 gui_window_set_color_style (window, A_UNDERLINE);
-            else
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_UNDERLINE);
             fg &= GUI_COLOR_EXTENDED_MASK;
         }
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            gui_window_remove_color_style (window,
-                                           A_BOLD | A_REVERSE | A_UNDERLINE);
+            if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+            {
+                gui_window_remove_color_style (window,
+                                               A_BOLD | A_REVERSE | A_UNDERLINE);
+            }
             attributes = 0;
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 attributes |= A_BOLD;

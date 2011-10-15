@@ -176,14 +176,14 @@ irc_color_decode (const char *string, int keep_colors)
                             }
                         }
                         snprintf (str_color, sizeof (str_color),
-                                  "%s%s%s",
+                                  "|%s%s%s",
                                   (fg >= 0) ? irc_color_to_weechat[fg] : "",
                                   (bg >= 0) ? "," : "",
                                   (bg >= 0) ? irc_color_to_weechat[bg] : "");
                         strcat ((char *)out, weechat_color(str_color));
                     }
                     else
-                        strcat ((char *)out, weechat_color("reset"));
+                        strcat ((char *)out, weechat_color("resetcolor"));
                 }
                 break;
             default:

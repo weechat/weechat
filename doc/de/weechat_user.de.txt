@@ -940,9 +940,12 @@ Attribute
 Er ist möglich einer Farbe ein Attribut hinzuzufügen. Dazu wird dem
 Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
-* `*`: fett
-* `!`: invertierte Darstellung
-* `_`: unterstrichen
+* `*` : fett
+* `!` : invertierte Darstellung
+* `_` : unterstrichen
+// TRANSLATION MISSING
+* `|` : keep attributes: do not reset bold/reverse/underlined when changing
+  color
 
 Um zum Beispiel dem eigenen Nick die Farbe weiß und unterstrichen
 zuzuordnen:

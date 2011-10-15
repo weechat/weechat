@@ -283,6 +283,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                 break;
                         }
                         break;
+                    case GUI_COLOR_RESET_CHAR: /* reset color (keep attributes) */
+                        string++;
+                        gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_FG]),
+                                                           CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
+                        break;
                     default:
                         gui_window_string_apply_color_weechat ((unsigned char **)&string,
                                                                GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);

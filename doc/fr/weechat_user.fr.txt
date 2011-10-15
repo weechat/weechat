@@ -959,6 +959,8 @@ attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
 * `*` : texte gras
 * `!` : mode vidéo inverse
 * `_` : texte souligné
+* `|` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
+  du changement de couleur
 
 Par exemple si vous voulez votre pseudo en blanc souligné, faites :
 
