@@ -738,7 +738,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
         goto end;
     
     argv = weechat_string_split (message, " ", 0, 0, &argc);
-    argv_eol = weechat_string_split (message, " ", 1, 0, NULL);
+    argv_eol = weechat_string_split (message, " ", 2, 0, NULL);
     
     if (argc < 2)
         goto end;
