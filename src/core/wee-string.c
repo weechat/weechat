@@ -860,7 +860,7 @@ string_split (const char *string, const char *separators, int keep_eol,
     if (!string || !string[0] || !separators || !separators[0])
         return NULL;
     
-    string2 = string_strip (string, 1, 1, separators);
+    string2 = string_strip (string, 1, (keep_eol == 2) ? 0 : 1, separators);
     if (!string2 || !string2[0])
         return NULL;
     

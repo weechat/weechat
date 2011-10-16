@@ -1016,8 +1016,14 @@ Argomenti:
 
 * 'string': stringa da dividere
 * 'separators': delimitatori usati per dividere
-* 'keep_eol': se diversa da 0, allora ogni argomento conterrà tutte le stringhe
-  fino a fine riga (consultare l'esempio in basso)
+* 'keep_eol':
+// TRANSLATION MISSING
+** 0: each string will contain one word
+// TRANSLATION MISSING
+** 1: each string will contain all string until end of line (see example below)
+// TRANSLATION MISSING
+** 2: same as 1, but do not remove separators at end of string before split
+   (_new in version 0.3.6_)
 * 'num_items_max': maximum number of items created (0 = no limit)
 * 'num_items': pointer to int which will contain number of items created
 

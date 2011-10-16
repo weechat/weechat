@@ -1051,6 +1051,11 @@ Paramètres :
 * 'separators' : délimiteurs utilisés pour le découpage
 * 'keep_eol' : si différent de 0, alors chaque paramètre contiendra toutes les
   chaînes jusqu'à la fin de la ligne (voir exemple ci-dessous)
+** 0: chaque chaîne contiendra un mot
+** 1: chaque chaîne contiendra toute la chaîne jusqu'à la fin de la ligne (voir
+   exemple ci-dessous)
+** 2: comme 1, mais ne supprime pas les séparateurs en fin de chaîne avant le
+   découpage (_nouveau dans la version 0.3.6_)
 * 'num_items_max' : nombre maximum de chaînes à créer (0 = pas de limite)
 * 'num_items' : pointeur vers un entier qui contiendra le nombre de chaînes
   créées
