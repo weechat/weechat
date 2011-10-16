@@ -111,7 +111,7 @@ void
 gui_mouse_display_state ()
 {
     gui_chat_printf (NULL,
-                     (CONFIG_BOOLEAN(config_look_mouse)) ?
+                     gui_mouse_enabled ?
                      _("Mouse is enabled") : _("Mouse is disabled"));
 }
 
