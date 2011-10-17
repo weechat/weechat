@@ -951,9 +951,8 @@ del nome o del numero del colore:
 * `*` : testo in grassetto
 * `!` : video inverso
 * `_` : testo sottolineato
-// TRANSLATION MISSING
-* `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color
+* `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
+  al cambio di colore
 
 Ad esempio se si vuole il proprio nick bianco e sottolineato:
 

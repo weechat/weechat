@@ -1017,15 +1017,13 @@ Argomenti:
 * 'string': stringa da dividere
 * 'separators': delimitatori usati per dividere
 * 'keep_eol':
-// TRANSLATION MISSING
-** 0: each string will contain one word
-// TRANSLATION MISSING
-** 1: each string will contain all string until end of line (see example below)
-// TRANSLATION MISSING
-** 2: same as 1, but do not remove separators at end of string before split
-   (_new in version 0.3.6_)
-* 'num_items_max': maximum number of items created (0 = no limit)
-* 'num_items': pointer to int which will contain number of items created
+** 0: ogni stringa conterrà una parola
+** 1: ogni stringa conterrà tutte le stringhe fino a fine riga
+   (consultare il seguente esempio)
+** 2: come il punto 1, ma non rimuove i delimitatori alla fine della stringa
+   prima della divisione (_novità nella versione 0.3.6_)
+* 'num_items_max': numero massimo di elementi creati (0 = nessun limite)
+* 'num_items': puntatore ad int che conterrà il numero di elementi creati
 
 Valore restituito:
 
@@ -5889,8 +5887,7 @@ Argomenti:
 
 * 'color_name': nome del colore, uno di:
 ** nome opzione di WeeChat (da weechat.color.xxx), ad esempio 'chat_delimiters'
-// TRANSLATION MISSING
-** color with optional attributes/background (see below)
+** colore con attributi/sfondo opzionali (vedi sotto)
 ** attributo:
 *** 'bold': imposta grassetto
 *** '-bold': rimuove grassetto
@@ -5904,29 +5901,27 @@ Argomenti:
 *** 'bar_fg': colore di primo piano della barra
 *** 'bar_delim': colore dei delimitatori della barra
 *** 'bar_bg': colore di sfondo della barra
-// TRANSLATION MISSING
 ** reset:
-*** 'reset': reset color and attributes
-*** 'resetcolor': reset color (keep attributes) (_new in version 0.3.6_)
+*** 'reset': ripristina colore ed attributi
+*** 'resetcolor': ripristina colore (mantiene attributi)
+    (_novità nella versione 0.3.6_)
 
-// TRANSLATION MISSING
-Format of color is: attributes (optional) + color name + ",background"
-(optional). Possible attributes are:
+Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
+(opzionale). Gli attributi possibili sono:
 
-* `*` : bold text
-* `!` : reverse video
-* `_` : underlined text
-* `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color (_new in version 0.3.6_)
+* `*` : testo in grassetto
+* `!` : video inverso
+* `_` : testo sottolineato
+* `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
+  al cambio di colore (_novità nella versione 0.3.6_)
 
-// TRANSLATION MISSING
-Examples:
+Esempi:
 
-* `yellow` : yellow
-* `_green` : underlined green
-* `*214` : bold orange
-* `yellow,red` : yellow on red
-* `|cyan` : cyan (and keep any attribute which was set previously)
+* `yellow` : giallo
+* `_green` : verde sottolineato
+* `*214` : arancione grassetto
+* `yellow,red` : giallo su rosso
+* `|cyan` : ciano (e mantiene qualsiasi attributo impostato in precedenza)
 
 Valore restituito:
 
