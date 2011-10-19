@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.6-rc2, 2011-10-15
+v0.3.6-rc2, 2011-10-19
 
 
 Version 0.3.6 (under dev!)
 --------------------------
 
+* core: fix freeze when calling function util_file_get_content with a directory
+  instead of a filename
 * core: add color attribute "|" (keep attributes) and value "resetcolor" for
   function weechat_color in plugin API (used by irc plugin to keep
   bold/reverse/underlined in message when changing color) (bug #34550)

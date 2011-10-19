@@ -390,6 +390,11 @@ util_file_get_content (const char *filename)
             }
             buffer = buffer2;
             count = fread (&buffer[fp], sizeof(char), 1024, f);
+            if (count <= 0)
+            {
+                free (buffer);
+                return NULL;
+            }
             fp += count;
         }
         buffer2 = (char *) realloc (buffer, fp + sizeof (char));
