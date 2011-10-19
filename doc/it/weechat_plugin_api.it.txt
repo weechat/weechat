@@ -739,6 +739,8 @@ Argomenti:
 * 'string': stringa
 * 'mask': mask, può iniziare o terminare con "`*`" (nessun altro "`*`"
   consentito all'interno della mask)
+* 'case_sensitive': 1 per il confronto con caso esatto (maiuscole/minuscole),
+  altrimenti 0
 
 Valore restituito:
 

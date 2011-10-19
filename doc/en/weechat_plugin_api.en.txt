@@ -719,6 +719,7 @@ Arguments:
 * 'string': string
 * 'mask': mask, can begin or end with "`*`" (no other "`*`" are allowed inside
   mask)
+* 'case_sensitive': 1 for case sensitive comparison, otherwise 0
 
 Return value:
 

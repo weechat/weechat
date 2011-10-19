@@ -727,6 +727,7 @@ Paramètres :
 * 'string' : chaîne
 * 'mask' : masque, peut commencer ou se terminer par "`*`" (aucune autre "`*`"
   n'est autorisée dans le masque)
+* 'case_sensitive' : 1 pour une comparaison tenant compte de la casse, sinon 0
 
 Valeur de retour :
 
