@@ -63,7 +63,7 @@ Version 0.3.6 (under dev!)
 * core: add support of mouse: new command /mouse, new key context "mouse",
   new options weechat.look.mouse and weechat.look.mouse_timer_delay (task #5435)
 * core: add command /cursor (free movement of cursor on screen), with key
-  context "search"
+  context "cursor"
 * core: automatic scroll direction in /bar scroll (x/y is now optional)
 * core: add optional delay for key grab (commands /input grab_key and
   /input grab_key_command, default is 500 milliseconds)
