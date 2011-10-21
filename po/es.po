@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.6-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-07-05 15:37+0200\n"
+"POT-Creation-Date: 2011-10-19 16:21+0200\n"
+"PO-Revision-Date: 2011-10-21 07:59+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -81,9 +81,9 @@ msgstr ""
 "                    sobre posibles opciones)\n"
 
 #. TRANSLATORS: first "%s" is "weechat"
-#, fuzzy, c-format
+#, c-format
 msgid "%s default keys (context: \"%s\"):\n"
-msgstr "teclas por defecto de %s:\n"
+msgstr "teclas por defecto de %s (contexto: \"%s\"):\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -188,9 +188,9 @@ msgstr "Barra eliminada"
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
 msgstr "%sError: no se pudo configurar la opción \"%s\" en la barra \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: window not found for \"%s\" command"
-msgstr "%sError: no se encontró el buffer para el comando \"%s\""
+msgstr "%sError: no se encontró una ventana para el comando \"%s\""
 
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
@@ -378,18 +378,18 @@ msgid "default command:"
 msgstr "comando predeterminado:"
 
 #. TRANSLATORS: first "%d" is number of keys
-#, fuzzy, c-format
+#, c-format
 msgid "%d key bindings added or redefined for context \"%s\":"
-msgstr "Atajos agregados o redefinidos (%d):"
+msgstr "%d atajos agregados o redefinidos en el contexto \"%s\":"
 
 #. TRANSLATORS: first "%d" is number of keys
-#, fuzzy, c-format
+#, c-format
 msgid "%d key bindings deleted for context \"%s\":"
-msgstr "Atajos borrados (%d):"
+msgstr "%d atajos borrados en el contexto \"%s\":"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No key binding added, redefined or removed for context \"%s\""
-msgstr "Ningún atajo agregado, redefinido o borrado"
+msgstr "Ningún atajo agregado, redefinido o borrado en el contexto \"%s\""
 
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
@@ -407,23 +407,23 @@ msgstr "%sError: no se pudo deshacer el atajo \"%s\""
 msgid "%sKey \"%s\" not found"
 msgstr "%sTecla \"%s\" no encontrada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No key binding defined for context \"%s\""
-msgstr "Ningún atajo definido"
+msgstr "Ningún atajo definido en el contexto \"%s\""
 
 #. TRANSLATORS: first "%d" is number of keys
-#, fuzzy, c-format
+#, c-format
 msgid "%d key bindings for context \"%s\":"
-msgstr "Atajos borrados (%d):"
+msgstr "%d atajos en el contexto \"%s\":"
 
-#, fuzzy, c-format
+#, c-format
 msgid "No default key binding for context \"%s\""
-msgstr "Ningún atajo predefinido"
+msgstr "Ningún atajo predefinido en el contexto \"%s\""
 
 #. TRANSLATORS: first "%d" is number of keys
-#, fuzzy, c-format
+#, c-format
 msgid "%d default key bindings for context \"%s\":"
-msgstr "Ningún atajo predefinido"
+msgstr "%d atajos predefinido en el contexto \"%s\":"
 
 msgid "Key:"
 msgstr "Tecla:"
@@ -431,13 +431,13 @@ msgstr "Tecla:"
 msgid "No key found"
 msgstr "Ninguna tecla encontrada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: context \"%s\" not found"
-msgstr "%sError: filtro \"%s\" no encontrado"
+msgstr "%sError: contexto \"%s\" no encontrado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Default key bindings restored for context \"%s\""
-msgstr "Atajos predefinidos restaurados"
+msgstr "Atajos predefinidos en el contexto \"%s\" restaurados"
 
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
@@ -445,11 +445,11 @@ msgstr ""
 "%sError: por seguridad, se requiere el argumento \"-yes\" para restaurar los "
 "atajos"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d nuevo atajo agregado"
-msgstr[1] "%d nuevos atajos agregados"
+msgstr[1] "%d nuevos atajos agregados (contexto: \"%s\")"
 
 #, c-format
 msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
@@ -652,9 +652,9 @@ msgstr "%sError: no se pudo recargar las opciones desde %s"
 msgid "Unknown configuration file \"%s\""
 msgstr "Archivo de configuración \"%s\" desconocido"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: incorrect number"
-msgstr "%sError: número del buffer incorrecto"
+msgstr "%sError: número incorrecto"
 
 #, c-format
 msgid "Options saved to %s"
@@ -786,9 +786,9 @@ msgstr[1] "veces"
 msgid "Windows list:"
 msgstr "Lista de ventanas:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: incorrect window number"
-msgstr "%sError: número del buffer incorrecto"
+msgstr "%sError: número de ventana incorrecto"
 
 #, c-format
 msgid ""
@@ -816,7 +816,6 @@ msgstr ""
 msgid "manage bars"
 msgstr "gestionar las barras"
 
-#, fuzzy
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<cond1>[,<cond2>...]] "
 "<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
@@ -826,10 +825,9 @@ msgstr ""
 "list|listfull|listitems || add <nombre> <tipo>[,<cond1>[,<cond2>...]] "
 "<posición> <tamaño> <separador> <elemento1>[,<elemento2>...] || default "
 "[input|title|status|nicklist] || del <nombre>|-all || set <nombre> <opción> "
-"<valor> || hide|show|toggle <nombre> || scroll <nombre> <buffer> "
+"<valor> || hide|show|toggle <nombre> || scroll <nombre> <ventana> "
 "<desplazamiento>"
 
-#, fuzzy
 msgid ""
 "         list: list all bars\n"
 "     listfull: list all bars (verbose)\n"
@@ -910,12 +908,12 @@ msgstr ""
 "         show: muestra una barra oculta\n"
 "       toggle: oculta/muestra una barra\n"
 "       scroll: desplaza una barra arriba/abajo\n"
-"       buffer: nombre del buffer a desplazar ('*' significa buffer actual, "
-"para barras \"root\" usa '*')\n"
-"desplazamiento: valor a desplazar: 'x' o 'y', seguido por '+', '-', "
-"'b' (comienzo) o 'e' (fin), valor (para +/-), y opcionalmente %% (para "
-"desplazarse un porcentaje del ancho/altura, de lo contrario valor es número "
-"de caracteres)\n"
+"      ventana: número de ventana (usa '*' para la ventana actual o barras "
+"\"root\")\n"
+"desplazamiento: valor a desplazar: 'x' o 'y' (opcional), seguido por '+', "
+"'-', 'b' (comienzo) o 'e' (fin), un valor (para +/-), y opcionalmente % "
+"(para desplazarse un porcentaje del ancho/altura, de lo contrario valor es "
+"número de caracteres)\n"
 "\n"
 "Ejemplos:\n"
 "  crear una barra con la hora, número del buffer + nombre y "
@@ -934,17 +932,15 @@ msgstr ""
 msgid "manage buffers"
 msgstr "gestionar los buffers"
 
-#, fuzzy
 msgid ""
 "list || clear [<number>|<name>|-merged|-all] || move|merge <number> || "
 "unmerge [<number>|-all] || close [<n1>[-<n2>]|<name>] || notify <level> || "
 "localvar || set <property> <value> || get <property> || <number>|<name>"
 msgstr ""
-"list || clear [<número>|-merged|-all] || move|merge <número> || unmerge "
-"[<número>] || close [<n1>[-<n2>]] || notify <nivel> || localvar || set "
-"<propiedad> <valor> || get <propiedad> || <número>|<nombre>"
+"list || clear [<número>|<nombre>|-merged|-all] || move|merge <número> || "
+"unmerge [<número>|-all] || close [<n1>[-<n2>]|<name>] || notify <nivel> || "
+"localvar || set <propiedad> <valor> || get <propiedad> || <número>|<nombre>"
 
-#, fuzzy
 msgid ""
 "    list: list buffers (without argument, this list is displayed)\n"
 "   clear: clear buffer content (number for a buffer, -merged for merged "
@@ -999,7 +995,7 @@ msgstr ""
 "entre ambos buffers)\n"
 "          (por defecto con ctrl-x se cambia entre buffer unidos)\n"
 " unmerge: despega el buffer de otros buffers unidos\n"
-"   close: cierra el buffer (número/rango es opcional)\n"
+"   close: cierra el buffer (número/rango o nombre es opcional)\n"
 "  notify: configura el nivel de notificación del buffer actual: este nivel "
 "determina si el buffer es agregado a la lista de actividad o no:\n"
 "               none: nunca\n"
@@ -1041,7 +1037,6 @@ msgstr "define alias de colores y muestra la paleta de colores"
 msgid "alias <color> <name> || unalias <color> || reset"
 msgstr "alias <color> <nombre> || unalias <color> || reset"
 
-#, fuzzy
 msgid ""
 "  alias: add an alias for a color\n"
 "unalias: delete an alias\n"
@@ -1062,8 +1057,8 @@ msgid ""
 msgstr ""
 "  alias: agrega un alias para un color\n"
 "unalias: borra un alias\n"
-"  color: número del color (>= 0, el máximo depende de la terminal, "
-"comúnmente 63 o 255)\n"
+"  color: número del color (mayor o igual a 0, el máximo depende de la "
+"terminal, comúnmente 63 o 255)\n"
 " nombre: alias para el color (por ejemplo: \"naranja\")\n"
 "  reset: reinicia todos los pares de colores (necesario cuando no hay "
 "disponibles más pares si el reset automático está desactivado, mira la "
@@ -1097,11 +1092,15 @@ msgid ""
 "free movement of cursor on screen to execute actions on specific areas of "
 "screen"
 msgstr ""
+"movimiento libre del cursor en la pantalla para ejecutar acciones en áreas "
+"específicas"
 
 msgid ""
 "go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|area_left|"
 "area_right || stop"
 msgstr ""
+"go chat|<barra>|<x>,<y> || move up|down|left|right|area_up|area_down|"
+"area_left|area_right || stop"
 
 msgid ""
 "  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
@@ -1120,19 +1119,32 @@ msgid ""
 "  go to coordinates x=10, y=5:\n"
 "    /cursor go 10,5"
 msgstr ""
+"  go: mueve el cursor al área de chat, una barra (usando el nombre) o "
+"coordenadas \"x,y\"\n"
+"move: mueve el cursor en una dirección\n"
+"stop: detiene el modo cursor\n"
+"\n"
+"Sin argumentos, este comando alterna el estado del modo cursor.\n"
+"\n"
+"Cuando el ratón está activado (ver /help mouse), por defecto el botón del "
+"medio iniciará el modo cursor en el punto elegido.\n"
+"\n"
+"Ejemplo:\n"
+"  ir a la lista de apodos:\n"
+"    /cursor go nicklist\n"
+"  ir a las coordenadas x=10, y=5:\n"
+"    /cursor go 10,5"
 
 msgid "control debug for core/plugins"
 msgstr "controla los mensajes de depuración para el núcleo/plugins"
 
-#, fuzzy
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 msgstr ""
-"list || set <plugin> <nivel> || dump [<plugin>] || buffer|color|memory|term|"
-"windows"
+"list || set <plugin> <nivel> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
-#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1152,18 +1164,24 @@ msgid ""
 "     term: display infos about terminal\n"
 "  windows: display windows tree"
 msgstr ""
-"   list: listar plugins con niveles de depuración.\n"
-"    set: configura el nivel de depuración para plugin.\n"
-" plugin: nombre del plugin (\"core\" para el núcleo de WeeChat)\n"
-"  nivel: nivel de depuración (0 = deshabilita depurado)\n"
-"   dump: guardar el volcado de memoria en el archivo de registro de WeeChat "
-"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
-" buffer: guarda el contenido del buffer con valores hexadecimales en el "
+"     list: listar plugins con niveles de depuración.\n"
+"      set: configura el nivel de depuración para plugin.\n"
+"   plugin: nombre del plugin (\"core\" para el núcleo de WeeChat)\n"
+"    nivel: nivel de depuración (0 = deshabilita depurado)\n"
+"     dump: guardar el volcado de memoria en el archivo de registro de "
+"WeeChat (el mismo volcado se escribe cuando Weechat se cuelga)\n"
+"   buffer: guarda el contenido del buffer con valores hexadecimales en el "
 "archivo de registro.\n"
-"  color: muestra información sobre los pares de colores actuales.\n"
-" memory: muestra información sobre el uso de memoria.\n"
-"   term: muestra información sobre la terminal.\n"
-"windows: muestra el árbol de ventanas."
+"    color: muestra información sobre los pares de colores actuales.\n"
+"   cursor: activa/desactiva mensajes de depurado del cursor\n"
+"    hdata: muestra información sobre hdata (con \"free\": remueve cualquier "
+"hdata en memoria)\n"
+"infolists: muestra información sobre infolists\n"
+"   memory: muestra información sobre el uso de memoria.\n"
+"    mouse: activa/desactiva mensajes de depurado del ratón\n"
+"     tags: muestra las etiquetas de línea.\n"
+"     term: muestra información sobre la terminal.\n"
+"  windows: muestra el árbol de ventanas."
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -1178,7 +1196,6 @@ msgstr ""
 "list || enable|disable|toggle [<nombre>] || add <nombre> <buffer>[,"
 "<buffer>...] <etiquetas> <regex> || del <nombre>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1247,7 +1264,7 @@ msgstr ""
 "               - esto es el nombre completo incluyendo el plugin (ejemplo: "
 "\"irc.freenode.#weechat\")\n"
 "               - \"*\" significa todos los buffers\n"
-"\t\t\t\t- un nombre empezando con '!' es excluido\n"
+"               - un nombre empezando con '!' es excluido\n"
 "               - el nombre puede empezar o terminar con '*' para coincidir "
 "varios buffers\n"
 "    etiquetas: lista de etiquetas separadas por comas, ejemplo: \"irc_join,"
@@ -1269,6 +1286,7 @@ msgstr ""
 "  irc_xxx (xxx es el nombre del comando o un número, ver /server raw),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
+"Para ver las etiquetas de cada línea en los buffers: /debug tags\n"
 "\n"
 "Ejemplos:\n"
 "  usar el filtro IRC inteligente en todos los buffers:\n"
@@ -1329,7 +1347,6 @@ msgstr "funciones para la línea de comandos"
 msgid "<action> [<arguments>]"
 msgstr "<acción> [<argumentos>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1386,6 +1403,10 @@ msgstr ""
 "  complete_next: completar palabra con la alternativa siguiente\n"
 "  complete_previous: completar palabra con la alternativa anterior\n"
 "  search_text: buscar texto en el buffer\n"
+"  search_switch_case: cambiar a búsqueda sensible a las mayúsculas\n"
+"  search_previous: buscar la línea previa\n"
+"  search_next: buscar la línea siguiente\n"
+"  search_stop: detener la búsqueda\n"
 "  delete_previous_char: borrar el carácter previo\n"
 "  delete_next_char: borrar el carácter siguiente\n"
 "  delete_previous_word: borrar la palabra previa\n"
@@ -1416,6 +1437,8 @@ msgstr ""
 "  grab_key: obtener el código de un atajo de teclado\n"
 "  grab_key_command: obtener el código de un atajo de teclado y su comando "
 "asociado\n"
+"  grab_mouse: obtener el código de evento del ratón\n"
+"  grab_mouse_area: obtener el código de evento del ratón con área\n"
 "  scroll_unread: desplazarse al marcador de lectura\n"
 "  set_unread: poner el marcador de lectura en todos los buffers\n"
 "  set_unread_current_buffer: poner el marcador de lectura en el buffer "
@@ -1429,17 +1452,18 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "crear/deshacer atajos"
 
-#, fuzzy
 msgid ""
 "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
 "bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
 "<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
 "[<context>] || missing [<context>]"
 msgstr ""
-"list|listdefault|listdiff || bind <tecla> [<comando> [<argumentos>]] || "
-"unbind <tecla> || reset <tecla> || resetall -yes || missing"
+"list|listdefault|listdiff [<contexto>] || bind <tecla> [<comando> "
+"[<argumentos>]] || bindctxt <contexto> <tecla> [<comando> [<argumentos>]] || "
+"unbind <tecla> || unbindctxt <contexto> <tecla> || reset <tecla> || "
+"resetctxt <contexto> <tecla> || resetall -yes [<contexto>] || missing "
+"[<contexto>]"
 
-#, fuzzy
 msgid ""
 "       list: list all current keys (without argument, this list is "
 "displayed)\n"
@@ -1499,17 +1523,44 @@ msgstr ""
 "listdefault: lista los atajos por defecto\n"
 "   listdiff: lista las diferencias entre los atajos actuales y los "
 "predeterminados (atajos agregados, redefinidos o borrados)\n"
-"       bind: crea el atajo al comando o muestra el comando asociado con el "
-"atajo\n"
-"     unbind: deshace un atajo de teclado\n"
-"      reset: restaura un atajo al valor por defecto\n"
-"   resetall: restaura los atajos a los valores por defecto y borra los TODOS "
-"los atajos personales(¡usar con cuidado!)\n"
-"    missing: agrega atajos faltantes (usando los valores predeterminados)\n"
+"   contexto: nombre del contexto (\"default\" o \"search\")\n"
+"       bind: crea un atajo al comando o muestra el comando asociado con el "
+"atajo (para el contexto \"default\")\n"
+"   bindctxt: crea un atajo al comando o muestra el comando asociado con el "
+"atajo, para algún contexto dado\n"
+"     unbind: deshace un atajo de teclado (para el contexto \"default\")\n"
+" unbindctxt: deshace un atajo de teclado para un contexto dado\n"
+"      reset: restaura un atajo a su valor por defecto (para el contexto "
+"\"default\")\n"
+"  resetctxt: restaura un atajo a su valor por defecto, para un contexto "
+"dado\n"
+"   resetall: restaura los atajos sus valores por defecto y borra los TODOS "
+"los atajos personales (¡usar con cuidado!)\n"
+"    missing: agrega atajos faltantes (usando los valores predeterminados), "
+"útil después de instalar una versión nueva de WeeChat\n"
 "\n"
 "Cuando crees un atajo de teclas, es recomendado que uses la combinación alt"
 "+k (o Escape y luego k), y luego presionas las teclas que quieras usar: esto "
 "insertará el código de la combinación en la línea de comando.\n"
+"\n"
+"Para el contexto \"mouse\" (posiblemente en el contexto \"cursor\" también), "
+"el atajo tiene el formato: \"@área:tecla\" o \"@área1>área2:tecla\" donde "
+"área puede ser:\n"
+"          *: cualquier parte de la pantalla\n"
+"       chat: área de chat (cualquier buffer)\n"
+"  chat(xxx): área del chat del buffer con nombre \"xxx\" (nombre completo "
+"incluyendo plugin)\n"
+"     bar(*): cualquier barra\n"
+"   bar(xxx): barra con nombre \"xxx\"\n"
+"    item(*): cualquier elemento de barra\n"
+"  item(xxx): elemento de barra con nombre \"xxx\"\n"
+"La tecla puede empezar o terminal con '*' para capturar varios eventos de "
+"ratón.\n"
+"Un valor especial para el comando con el formato \"hsignal:nombre\" puede "
+"ser usado en el contexto \"mouse\", esto enviaría la señal-h \"nombre\" con "
+"la tabla hash foco como argumento.\n"
+"Otro valor especial es \"-\", puede ser usado para deshabilitar una tecla "
+"(será ignorado cuando se busque teclas).\n"
 "\n"
 "Ejemplos:\n"
 "  atajo alt-x para conmutar la barra de la lista de apodos:\n"
@@ -1517,7 +1568,12 @@ msgstr ""
 "  atajo alt-r para ir al canal #weechat:\n"
 "    /key bind meta-r /buffer #weechat\n"
 "  restaurar el atajo predeterminado de alt-r:\n"
-"    /key reset meta-r"
+"    /key reset meta-r\n"
+"  tecla \"tab\" para detener la búsqueda en el buffer:\n"
+"    /key bindctxt search ctrl-I /input search_stop\n"
+"  botón central del ratón en un apodo para obtener información de un apodo:\n"
+"    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
+"${nick}"
 
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "guardar/aplicar/reiniciar el esquema de las ventanas y buffers"
@@ -1546,12 +1602,11 @@ msgstr ""
 "\n"
 "Sin ningún argumento, este comando muestra el esquema guardado."
 
-#, fuzzy
 msgid "mouse control"
-msgstr "control de transferencias"
+msgstr "control del ratón"
 
 msgid "enable|disable|toggle [<delay>]"
-msgstr ""
+msgstr "enable|disable|toggle [<retraso>]"
 
 msgid ""
 " enable: enable mouse\n"
@@ -1569,6 +1624,20 @@ msgid ""
 "  toggle mouse for 5 seconds:\n"
 "    /mouse toggle 5"
 msgstr ""
+" enable: activa el ratón\n"
+"disable: desactiva el ratón\n"
+" toggle: alterna el estado el ratón\n"
+"retraso: retraso (en segundos) antes de restaurar el estado inicial del "
+"ratón (útil para desactivar el ratón temporalmente)\n"
+"\n"
+"Para activar/desactivar el ratón al inicio del programa, use:\n"
+"  /set weechat.look.mouse on/off\n"
+"\n"
+"Ejemplos:\n"
+"  activar ratón:\n"
+"    /mouse enable\n"
+"  desactivar (o activar) el ratón por 5 segundos:\n"
+"    /mouse toggle 5"
 
 msgid "execute a command silently"
 msgstr "ejecuta un comando silenciosamente"
@@ -1625,8 +1694,6 @@ msgstr ""
 "list|listfull [<nombre>] || load <archivo> || autoload || reload|unload "
 "[<nombre>]"
 
-# XXX <filename> and <name> not explained
-#, fuzzy
 msgid ""
 "    list: list loaded plugins\n"
 "listfull: list loaded plugins (verbose)\n"
@@ -1649,6 +1716,8 @@ msgstr ""
 "plugins)\n"
 "  unload: descarga un plugin (si ningún nombre es dado, descargar todos los "
 "plugins)\n"
+" archivo: plugin (el archivo) a cargar\n"
+"  nombre: nombre del plugin\n"
 "\n"
 "Sin argumentos, este comando lista los plugins cargados."
 
@@ -1746,15 +1815,12 @@ msgstr ""
 "Sin ningún argumento, todos los archivos (de WeeChat y plugins) son "
 "recargados."
 
-#, fuzzy
 msgid "execute a command several times"
-msgstr "ejecuta un comando silenciosamente"
+msgstr "ejecuta un comando varias veces"
 
-#, fuzzy
 msgid "[-interval <delay>] <count> <command>"
-msgstr "<número>[<unidad>] <comando>"
+msgstr "[-interval <retraso>] <cantidad> <omando>"
 
-#, fuzzy
 msgid ""
 "  delay: delay between execution of commands (in milliseconds)\n"
 "  count: number of times to execute command\n"
@@ -1767,10 +1833,17 @@ msgid ""
 "  scroll 2 pages up:\n"
 "    /repeat 2 /window page_up"
 msgstr ""
-" plugin: nombre del plugin ('weechat' para los comandos internos de "
-"WeeChat)\n"
-"comando: comando a ejecutar (se añade una '/' automáticamente si no se "
-"encuentra al principio del comando)"
+"  retraso: retraso entre la ejecución de comandos (en milisegundos)\n"
+" cantidad: número de veces a ejecutar el comando\n"
+"  comando: comando a ejecutar (se añade una '/' automáticamente si no se "
+"encuentra al principio del comando)\n"
+"\n"
+"Todos los comandos se ejecutan en el buffer donde este comando fue "
+"ejecutado.\n"
+"\n"
+"Ejemplo:\n"
+"  desplazarse 2 páginas arriba:\n"
+"    /repeat 2 /window page_up"
 
 msgid "save configuration files to disk"
 msgstr "guardar archivos de configuración al disco"
@@ -1866,7 +1939,6 @@ msgstr "actualizar WeeChat sin desconectarse de los servidores"
 msgid "[<path_to_binary>]"
 msgstr "[<ruta_al_ejecutable>]"
 
-#, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "\n"
@@ -1890,6 +1962,10 @@ msgstr ""
 "Este comando inicia nuevamente el ejecutable de WeeChat, así que este "
 "debería haber sido compilado o instalado con un gestor de paquetes antes de "
 "ejecutarse.\n"
+"\n"
+"Nota: las conexiones SSL son desconectadas durante la actualización, porque "
+"recargar  la sesión SSL no es posible actualmente con GnUTLS. Hay una "
+"reconexión automática después de la actualización.\n"
 "\n"
 "El proceso de actualización tiene 4 pasos:\n"
 "  1. Guarda al disco la sesión del núcleo y los plugins (buffers, "
@@ -1972,7 +2048,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "gestión de ventanas"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -1983,12 +2058,15 @@ msgid ""
 "window <number>] || swap [-window <number>] [up|down|left|right] || zoom[-"
 "window <number>]"
 msgstr ""
-"list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize [+/-]"
-"<pct> || balance || merge [all] || page_up|page_down || refresh || scroll|"
-"scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
-"scroll_next_highlight || swap [up|down|left|right] || zoom"
+"list || -1|+1|b#|up|down|left|right [-window <número>] || <número> || splith|"
+"splitv [-window <número>] [<pct>] || resize [-window <número>] [+/-]<pct> || "
+"balance || merge [-window <número>] [all] || page_up|page_down [-window "
+"<número>] || refresh || scroll [-window <número>] [+/-]<valor>[s|m|h|d|M|y] "
+"|| scroll_horiz [-window <número>] [+/-]<valor>[%] || scroll_up|scroll_down|"
+"scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-"
+"window <número>] || swap [-window <número>] [up|down|left|right] || zoom[-"
+"window <número>]"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -2049,6 +2127,7 @@ msgstr ""
 "         down: cambiar a la ventana por debajo de la actual\n"
 "         left: cambiar a la ventana de la izquierda\n"
 "        right: cambiar a la ventana de la derecha\n"
+"       número: número de ventana (ver en /window list)\n"
 "       splith: divide la ventana actual horizontalmente\n"
 "       splitv: divide la ventana actual verticalmente\n"
 "       resize: redimensiona el tamaño de la ventana, el nuevo tamaño es "
@@ -2061,14 +2140,17 @@ msgstr ""
 "      refresh: refrescar la pantalla\n"
 "       scroll: desplazar un número de líneas (+/-N) o con tiempo: "
 "s=segundos, m=minutos, h=horas, d=días, M=meses, y=años\n"
+" scroll_horiz: desplazar un número de columnas horizontalmente (+/-N) o "
+"porcentaje del tamaño de la ventana (este desplazamiento es solamente "
+"posible en buffers de contenido libre)\n"
 "    scroll_up: desplazar algunas líneas arriba\n"
 "  scroll_down: desplazar algunas líneas abajo\n"
 "   scroll_top: desplazar al principio del buffer\n"
 "scroll_bottom: desplazar al final del buffer\n"
 "scroll_previous_highlight: desplazar hasta el realce anterior\n"
 "scroll_next_highlight: desplazar hasta el siguiente realce\n"
-"\t\t  swap: intercambia los buffers entre 2 ventanas (con dirección opcional "
-"para la ventana destino)\n"
+"         swap: intercambia los buffers entre 2 ventanas (con dirección "
+"opcional para la ventana destino)\n"
 "         zoom: aumenta la ventana\n"
 "\n"
 "Para splith y splitv, <pct> es un porcentaje que representa el tamaño de la "
@@ -2083,7 +2165,9 @@ msgstr ""
 "  desplazar a 2 días atrás:\n"
 "    /window scroll -2d\n"
 "  desplazar al principio del día actual:\n"
-"    /window scroll -d"
+"    /window scroll -d\n"
+"  aumentar la ventana #2:\n"
+"    /window zoom -window 2"
 
 #, c-format
 msgid "%sError: missing arguments for \"%s\" command"
@@ -2104,9 +2188,8 @@ msgstr "propiedades del buffer que pueden configurarse"
 msgid "properties that can be read on a buffer"
 msgstr "propiedades del buffer que pueden leerse"
 
-#, fuzzy
 msgid "numbers of windows"
-msgstr "lista de ventanas"
+msgstr "números de ventanas"
 
 msgid "palette colors"
 msgstr "paleta de colores"
@@ -2160,9 +2243,8 @@ msgid "options for bars"
 msgstr "opciones para barras"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
-#, fuzzy
 msgid "key contexts"
-msgstr "códigos de tecla"
+msgstr "contextos de atajo de teclado"
 
 #. TRANSLATORS: "key" means "key on the keyboard"
 msgid "key codes"
@@ -2174,7 +2256,7 @@ msgstr ""
 "Atajos que se pueden restaurar (atajos agregados, redefinidos o borrados)"
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
-msgstr ""
+msgstr "áreas (\"chat\" o nombre de barra) para movimiento libre del cursor"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -2225,21 +2307,29 @@ msgid ""
 "string displayed when bar can be scrolled to the left (for bars with filling "
 "\"horizontal\")"
 msgstr ""
+"cadena mostrada cuando la barra puede ser desplazada a la izquierda (para "
+"barras con llenado \"horizontal\")"
 
 msgid ""
 "string displayed when bar can be scrolled to the right (for bars with "
 "filling \"horizontal\")"
 msgstr ""
+"cadena mostrada cuando la barra puede ser desplazada a la derecha (para "
+"barras con llenado \"horizontal\")"
 
 msgid ""
 "string displayed when bar can be scrolled up (for bars with filling "
 "different from \"horizontal\")"
 msgstr ""
+"cadena mostrada cuando la barra puede ser desplazada hacia arriba (para "
+"barras con un llenado distinto al \"horizontal\")"
 
 msgid ""
 "string displayed when bar can be scrolled down (for bars with filling "
 "different from \"horizontal\")"
 msgstr ""
+"cadena mostrada cuando la barra puede ser desplazada hacia abajo (para "
+"barras con un llenado distinto al \"horizontal\")"
 
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
@@ -2268,45 +2358,52 @@ msgid ""
 "(this option is disabled by default: bold is used only if terminal has less "
 "than 16 colors)"
 msgstr ""
+"fuerza el atributo \"bold\" (negrita) para colores \"light*\" y \"darkgray\" "
+"in basic colors (this option is disabled by default: bold is used only if "
+"terminal has less than 16 colors)"
 
-#, fuzzy
 msgid ""
 "use a different color for lines in inactive window (when window is not "
 "current window)"
 msgstr ""
-"color del texto para el nombre del buffer (antes del prefijo, cuando varios "
-"buffers está fusionados con el mismo número)"
+"usar un diferente color para líneas en ventanas inactivas (cuando la ventana "
+"no es la ventana actual)"
 
-#, fuzzy
 msgid ""
 "use a different color for lines in inactive buffer (when line is from a "
 "merged buffer not selected)"
 msgstr ""
-"color del texto para el nombre del buffer (antes del prefijo, cuando varios "
-"buffers está fusionados con el mismo número)"
+"usar un diferente color para líneas en buffers inactivos (cuando un buffer "
+"fusionado no está seleccionado)"
 
 msgid ""
 "use a different color for inactive time (when window is not current window, "
 "or if line is from a merged buffer not selected)"
 msgstr ""
+"usar un diferente color para hora inactiva (cuando la ventana no es la "
+"ventana actual, o si la línea de un buffer fusionado no está seleccionado)"
 
-#, fuzzy
 msgid ""
 "use a different color for inactive buffer name in prefix (when window is not "
 "current window, or if line is from a merged buffer not selected)"
 msgstr ""
-"color del texto para el nombre del buffer (antes del prefijo, cuando varios "
-"buffers está fusionados con el mismo número)"
+"usar un diferente color para el nombre de buffer inactivo en el prefijo "
+"(cuando la ventana no es la ventana actual, o si la línea de un buffer "
+"fusionado no está seleccionado)"
 
 msgid ""
 "use a different color for inactive prefix (when window is not current "
 "window, or if line is from a merged buffer not selected)"
 msgstr ""
+"usar un diferente color para el prefijo inactivo (cuando la ventana no es la "
+"ventana actual, o si la línea de un buffer fusionado no está seleccionado)"
 
 msgid ""
 "use a different color for inactive message (when window is not current "
 "window, or if line is from a merged buffer not selected)"
 msgstr ""
+"usar un diferente color para mensajes inactivos (cuando la ventana no es la "
+"ventana actual, o si la línea de un buffer fusionado no está seleccionado)"
 
 msgid ""
 "automatically reset table of color pairs when number of available pairs is "
@@ -2356,6 +2453,11 @@ msgid ""
 "text from WeeChat to another application (this option is disabled by default "
 "because it can cause serious display bugs)"
 msgstr ""
+"si es verdadero, el eat_newline_glitch será desactivado; esto se usa para no "
+"agregar un nuevo caracter de retorno al final de cada línea, y no cortar "
+"texto cuando uno copia y pega texto desde WeeChat a otra aplicación (esta "
+"opción está desactivada por defecto porque puede causar serios errores de "
+"visualización)"
 
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
@@ -2488,6 +2590,8 @@ msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
+"cadena a usar para indicar que algunas líneas están filtradas en el buffer "
+"actual (elemento de barra \"buffer_filter\")"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -2507,11 +2611,15 @@ msgstr ""
 
 msgid "enable mouse support at startup (to enable it now, see /help mouse)"
 msgstr ""
+"activar el soporte para ratón al inicio del programa (para activarlo ahora, "
+"ver /help mouse)"
 
 msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
+"retraso (en milisegundos) para tomar un evento del ratón: WeeChat esperará "
+"este retraso antes de procesar un evento"
 
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "mostrar modo del usuario ((semi-)op/voz) antes de cada usuario"
@@ -2623,14 +2731,12 @@ msgstr ""
 "con la selección de URLs en algunas terminales), caracteres unicode NO están "
 "permitidos"
 
-#, fuzzy
 msgid ""
 "char used to draw vertical separators around bars (empty value will draw a "
 "real line with ncurses), wide chars are NOT allowed here"
 msgstr ""
 "carácter usado para dibujar separadores horizontales entre barras (un valor "
-"vacío dibujará una línea verdadera con ncurses, pero puede causar errores "
-"con la selección de URLs en algunas terminales), caracteres unicode NO están "
+"vacío dibujará una línea verdadera con ncurses), caracteres unicode NO están "
 "permitidos"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
@@ -2656,11 +2762,15 @@ msgstr "color de fondo para el área de conversación"
 msgid ""
 "text color for chat when window is inactive (not current selected window)"
 msgstr ""
+"color para la charla cuando la ventana está inactiva (no es la ventana "
+"seleccionada)"
 
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
 msgstr ""
+"color para la charla cuando la línea es inactiva (cuando el buffer está "
+"fusionado con otros buffers y no está seleccionado)"
 
 msgid "text color for time in chat window"
 msgstr "color para la hora en la ventana de conversación"
@@ -2675,13 +2785,13 @@ msgstr ""
 "color del texto para el nombre del buffer (antes del prefijo, cuando varios "
 "buffers está fusionados con el mismo número)"
 
-#, fuzzy
 msgid ""
 "text color for inactive buffer name (before prefix, when many buffers are "
 "merged with same number and if buffer is not selected)"
 msgstr ""
-"color del texto para el nombre del buffer (antes del prefijo, cuando varios "
-"buffers está fusionados con el mismo número)"
+"color del texto para el nombre del buffer inactivo (antes del prefijo, "
+"cuando varios buffers está fusionados con el mismo número y si el buffer no "
+"está seleccionado)"
 
 msgid "text color for error prefix"
 msgstr "color para el prefijo de error"
@@ -2748,11 +2858,9 @@ msgstr "color para el marcador de datos sin leer"
 msgid "background color for unread data marker"
 msgstr "color de fondo para el marcador de datos sin leer"
 
-#, fuzzy
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""
-"color para el contador de otros mensajes en la lista de actividad (barra de "
-"estado)"
+"color para las etiquetas de mensaje (mostrados con el comando /debug tags)"
 
 msgid "text color for marker on lines where text sought is found"
 msgstr ""
@@ -3022,7 +3130,7 @@ msgstr ""
 
 #, c-format
 msgid "%sError: bad file descriptor (%d) used in hook_fd"
-msgstr ""
+msgstr "%sError: mal descriptor de archivo (%d) usado en hook_fd"
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
@@ -3240,13 +3348,11 @@ msgstr "Señal %s recibida, cerrando WeeChat..."
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Señal SIGHUP recibida, recargando archivos de configuración"
 
-#, fuzzy
 msgid "Mouse is enabled"
-msgstr "1 si los filtros están habilitados"
+msgstr "Ratón activado"
 
-#, fuzzy
 msgid "Mouse is disabled"
-msgstr "Filtro de mensajes desactivado"
+msgstr "Ratón desactivado"
 
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
@@ -3357,61 +3463,58 @@ msgid "%sError: it is only possible to merge buffers with formatted content"
 msgstr ""
 "%sError: solamente es posible fusionar buffers con contenido formateado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Debug enabled for cursor mode (%s)"
-msgstr "Depurado de \"%s\" desactivado"
+msgstr "Depurado para modo cursor activado (%s)"
 
 msgid "verbose"
-msgstr ""
+msgstr "detallado"
 
 msgid "normal"
 msgid_plural "normals"
 msgstr[0] "normal"
 msgstr[1] "normales"
 
-#, fuzzy
 msgid "Debug disabled for cursor mode"
-msgstr "Depurado de \"%s\" desactivado"
+msgstr "Depurado para el modo cursor desactivado"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 "Error: no hay suficiente memoria para agregar el buffer a la lista de "
 "actividad"
 
-#, fuzzy, c-format
+#, c-format
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
-msgstr "Nuevo atajo:  %s%s => %s%s"
+msgstr "Nuevo atajo (contexto \"%s\"):  %s%s => %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
-msgstr "Atajo \"%s\" deshecho"
+msgstr "Atajo \"%s\" deshecho (contexto: \"%s\")"
 
-#, fuzzy
 msgid "Hashtable focus:"
-msgstr "Tabla hash (salida)"
+msgstr "Foco de la tabla hash:"
 
 #, c-format
 msgid "Command for key: \"%s\""
-msgstr ""
+msgstr "Comando para el atajo: \"%s\""
 
 #, c-format
 msgid "Sending hsignal: \"%s\""
-msgstr ""
+msgstr "Enviando señal-h: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Executing command: \"%s\""
-msgstr "comando predeterminado:"
+msgstr "Ejecutando el comando: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "No hay suficiente memoria para una línea nueva"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Debug enabled for mouse (%s)"
-msgstr "Depurado de \"%s\" desactivado"
+msgstr "Depurado para el modo cursor activado (%s)"
 
-#, fuzzy
 msgid "Debug disabled for mouse"
-msgstr "Depurado de \"%s\" desactivado"
+msgstr "Depurado para el ratón desactivado"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -4209,15 +4312,16 @@ msgstr "veta apodos o hosts"
 msgid "[<channel>] [<nick> [<nick>...]]"
 msgstr "[<canal>] [<apodo> [<apodo>...]]"
 
-#, fuzzy
 msgid ""
 "channel: channel for ban\n"
 "   nick: user or host to ban\n"
 "\n"
 "Without argument, this command display ban list for current channel."
 msgstr ""
-"canal: canal donde remover el veto\n"
-"apodo: apodo o host con el veto"
+"canal: canal para el veto\n"
+"apodo: apodo o host a vetar\n"
+"\n"
+"Sin argumentos, este comando muestra la lista de vetos del canal actual."
 
 msgid "connect to IRC server(s)"
 msgstr "conectar a un servidor IRC"
@@ -4345,22 +4449,20 @@ msgstr "cerrar el servidor"
 msgid "target: server name"
 msgstr "objetivo: nombre del servidor"
 
-#, fuzzy
 msgid "disconnect from one or all IRC servers"
-msgstr "desconectarse del servidor IRC"
+msgstr "desconectarse de un o todos los servidores IRC"
 
-#, fuzzy
 msgid "[<server>|-all [<reason>]]"
-msgstr "[[<servidor>] <máscara>]"
+msgstr "[<servidor>|-all [<razón>]]"
 
-#, fuzzy
 msgid ""
 "server: server name to disconnect\n"
 "  -all: disconnect from all servers\n"
 "reason: reason for quit"
 msgstr ""
 "servidor: nombre del servidor a desconectar\n"
-"    -all: desconectar de todos los servidores"
+"    -all: desconectar de todos los servidores\n"
+"   razón: razón de la salida"
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "dar el estado de semi-operador del canal a el/los apodo(s)"
@@ -4371,8 +4473,6 @@ msgstr "ignorar apodos/hosts en servidores o canales"
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<apodo> [<servidor> [<canal>]] || del <número>|-all"
 
-# XXX nick is explained twice
-#, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
@@ -4394,13 +4494,11 @@ msgid ""
 msgstr ""
 "      list: lista todos los ignorados\n"
 "       add: agrega un ignorado\n"
-"\t  apodo: apodo o hostname (puede ser una expresión regular si se indica "
-"con \"re:\")\n"
+"     apodo: apodo o hostname (puede ser una expresión regular si se indica "
+"con \"re:\" o una máscara con \"*\" para reemplazar caracteres)\n"
 "       del: borra un ignorado\n"
 "    número: número del ignorado a borrar (ver en la lista)\n"
 "      -all: borra todos los ignorados\n"
-"apodo/host: apodo o host a ignorar: la sintaxis es \"re:regex\" o \"máscara"
-"\" (una máscara es una cadena con algún \"*\" como comodín)\n"
 "  servidor: nombre interno del servidor donde se efectúa el ignore\n"
 "     canal: canal donde se efectúa el ignore\n"
 "\n"
@@ -5841,9 +5939,9 @@ msgstr "%s%s: tipo de DCC CHAT desconocido recibido de %s%s%s: \"%s\""
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sCTCP desconocido solicitado por %s%s%s: %s%s%s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "%sServidor: %s%s %s[%s%s%s]%s%s"
+msgstr "Servidor: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"
 msgstr "conectado"
@@ -5933,16 +6031,19 @@ msgstr ""
 "\"arguments\": argumentos (incluye el canal)"
 
 msgid "split an IRC message (to fit in 512 bytes)"
-msgstr ""
+msgstr "separar un mensaje IRC (para coincidir en 512 bytes)"
 
 msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr ""
+msgstr "\"message\": mensaje IRC, \"server\": nombre del servidor (opcional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
 "\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
 "\"args1\" ... \"argsN\": arguments of messages, \"count\": number of messages"
 msgstr ""
+"\"msg1\" ... \"msgN\": mensajes a enviar (sin el \"\\r\\n\" final), "
+"\"args1\" ... \"argsN\": argumentos de los mensajes, \"count\": número de "
+"mensajes"
 
 msgid "list of IRC servers"
 msgstr "lista de servidores IRC"
@@ -5985,33 +6086,29 @@ msgstr "lista de notificaciones"
 msgid "notify pointer (optional)"
 msgstr "puntero de la notificación (opcional)"
 
-#, fuzzy
 msgid "irc nick"
-msgstr "apodo: apodo"
+msgstr "apodo irc"
 
-#, fuzzy
 msgid "irc channel"
-msgstr "canal"
+msgstr "canal irc"
 
 msgid "irc channel_speaking"
-msgstr ""
+msgstr "channel_speaking irc"
 
 msgid "irc ignore"
-msgstr ""
+msgstr "ignorado irc"
 
-#, fuzzy
 msgid "irc notify"
-msgstr "lista de notificaciones"
+msgstr "notificación irc"
 
 msgid "pattern for irc redirect"
-msgstr ""
+msgstr "patrón para la redirección irc"
 
 msgid "irc redirect"
-msgstr ""
+msgstr "redirección irc"
 
-#, fuzzy
 msgid "irc server"
-msgstr "servidor"
+msgstr "servidor irc"
 
 #, c-format
 msgid "%s%s: you are not connected to server"
@@ -6839,6 +6936,8 @@ msgid ""
 "number of seconds between flush of log files (0 = write in log files "
 "immediately for each line printed)"
 msgstr ""
+"número de segundos entre escritura de los archivos de registro (0 = escribir "
+"los archivos immediatamente por cada línea)"
 
 msgid "use only lower case for log filenames"
 msgstr "usar solamente minúsculas para el nombre de los archivos"
@@ -6932,9 +7031,8 @@ msgstr "inactividad del teclado (segundos)"
 msgid "1 if filters are enabled"
 msgstr "1 si los filtros están habilitados"
 
-#, fuzzy
 msgid "1 if cursor mode is enabled"
-msgstr "1 si los filtros están habilitados"
+msgstr "1 si el modo cursor está activado"
 
 msgid "list of bars"
 msgstr "lista de barras"
@@ -7014,7 +7112,7 @@ msgid "list of key bindings"
 msgstr "lista de atajos de teclas"
 
 msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
-msgstr ""
+msgstr "contexto (\"default\", \"search\", \"cursor\" o \"mouse\") (opcional)"
 
 msgid "nicks in nicklist for a buffer"
 msgstr "apodos en la lista de apodos de un buffer"
@@ -7048,88 +7146,73 @@ msgid "window pointer (optional)"
 msgstr "puntero de la ventana (opcional)"
 
 msgid "\"current\" for current window or a window number (optional)"
-msgstr ""
+msgstr "\"current\" para ventana actual o un número de ventana (opcional)"
 
 msgid "bar"
-msgstr ""
+msgstr "barra"
 
-#, fuzzy
 msgid "bar item"
-msgstr "lista de elementos de barra"
+msgstr "elemento de barra"
 
-#, fuzzy
 msgid "bar window"
-msgstr "gestión de ventanas"
+msgstr "barra de ventana"
 
-#, fuzzy
 msgid "buffer"
-msgstr "gestionar los buffers"
+msgstr "buffer"
 
-#, fuzzy
 msgid "structure with completion"
-msgstr "funciones para la línea de comandos"
+msgstr "estructura con auto-completador"
 
-#, fuzzy
 msgid "structure with partial completion"
-msgstr "alertar al usuario cuando ocurre un completado parcial"
+msgstr "estructura con auto-completador parcial"
 
-#, fuzzy
 msgid "config file"
-msgstr "archivos de configuración"
+msgstr "archivo de configuración"
 
-#, fuzzy
 msgid "config section"
-msgstr "establecer opciones de configuración"
+msgstr "sección de configuración"
 
-#, fuzzy
 msgid "config option"
-msgstr "establecer opciones de configuración"
+msgstr "opción de configuración"
 
 msgid "filter"
-msgstr ""
+msgstr "filtro"
 
-#, fuzzy
 msgid "history of commands in buffer"
-msgstr "historial de comandos"
+msgstr "historial de comandos en el buffer"
 
-#, fuzzy
 msgid "structure with undo for input line"
-msgstr "funciones para la línea de comandos"
+msgstr "estructura con deshacer para la línea de entrada"
 
 msgid "a key (keyboard shortcut)"
-msgstr ""
+msgstr "una tecla (atajo de teclado)"
 
 msgid "structure with lines"
-msgstr ""
+msgstr "estructura con líneas"
 
 msgid "structure with one line"
-msgstr ""
+msgstr "estructura con una línea"
 
 msgid "structure with one line data"
-msgstr ""
+msgstr "estructura con datos de una línea"
 
-#, fuzzy
 msgid "group in nicklist"
-msgstr "color para grupos en la lista de apodos"
+msgstr "grupo en la lista de apodos"
 
-#, fuzzy
 msgid "nick in nicklist"
-msgstr "apodos en la lista de notificación"
+msgstr "apodos en la lista de apodos"
 
-#, fuzzy
 msgid "plugin"
-msgstr "Plugin"
+msgstr "plugin"
 
-#, fuzzy
 msgid "window"
-msgstr "gestión de ventanas"
+msgstr "ventana"
 
 msgid "scroll info in window"
-msgstr ""
+msgstr "información de desplazamiento en ventada"
 
-#, fuzzy
 msgid "tree of windows"
-msgstr "lista de ventanas"
+msgstr "árbol de ventanas"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -7345,8 +7428,8 @@ msgstr ""
 "      add: agregar un repetidor para un protocolo + nombre\n"
 "      del: remover un repetidor para un protocolo + nombre\n"
 "protocolo.nombre: protocolo y nombre a retransmitir\n"
-"\t\t\t\t   actualmente, solo el protocolo \"irc\" es soportado\n"
-"                  por ejemplo: irc.freenode\n"
+"           actualmente, solo el protocolo \"irc\" es soportado\n"
+"           por ejemplo: irc.freenode\n"
 "   puerto: puerto a usar por el repetidor\n"
 "      raw: abrir buffer con datos en bruto del repetidor\n"
 "\n"
@@ -8225,10 +8308,10 @@ msgid "Pointer"
 msgstr "Puntero"
 
 msgid "Variables"
-msgstr ""
+msgstr "Variables"
 
 msgid "Lists"
-msgstr ""
+msgstr "Listas"
 
 #~ msgid "<server> [<server>...] || -all"
 #~ msgstr "<servidor> [<servidor>...] || -all"
