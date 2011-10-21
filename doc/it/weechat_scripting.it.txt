@@ -70,7 +70,7 @@ Argomenti:
 * 'license': stringa, licenza dello script
 * 'description': stringa, breve descrizione dello script
 * 'shutdown_function': stringa, nome della funzione chiamata quando lo script
-  viene disattivato
+  viene scaricato
 * 'charset': stringa, set caratteri dello script (opzionale, se il proprio script è in UTF-8,
   è possibile utilizzare un valore nullo qui, dato che UTF-8 è il set caratteri predefinito)
 
@@ -135,7 +135,7 @@ Il comando da utilizzare, in base al linguaggio:
 /tcl load tcl/script.tcl
 ----------------------------------------
 
-È possibile creare un link nella cartella 'linguaggio/autoload' per attivare
+È possibile creare un link nella cartella 'linguaggio/autoload' per caricare
 automaticamente gli script all'avvio di WeeChat.
 
 Ad esempio con Python:
@@ -154,7 +154,7 @@ Le API per gli script sono quasi identiche di quelle per i plugin C.
 prototipo, argomenti, valori restituiti, esempi.
 
 È importante fare la differenza tra un 'plugin' ed uno 'script':
-un plugin è un file binario compilato ed attivato con il comando
+un plugin è un file binario compilato e caricato con il comando
 `plugin`, mentre uno 'script' è un file di testo caricato tramite
 un plugin come 'python' con il comando `python`.
 

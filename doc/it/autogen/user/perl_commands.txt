@@ -1,20 +1,20 @@
 [[command_perl_perl]]
-[command]*`perl`* elenca/attiva/disattiva script::
+[command]*`perl`* elenca/carica/scarica script::
 ........................................
 /perl  list|listfull [<nome>]
        load <nomefile>
        autoload
        reload|unload [<nome>]
 
-     list: elenca i plugin attivi
- listfull: elenca i plugin attivi (dettagliato)
+     list: elenca i plugin caricati
+ listfull: elenca i plugin caricati (dettagliato)
      load: carica un plugin
- autoload: attiva automaticamente i plugin nella cartella utente o di sistema
-   reload: riattiva un plugin (se non specificato, disattiva i plugin e li riattiva automaticamente)
-   unload: disattiva uno o tutti i plugin
-nome_file: (file) script da attivare
+ autoload: carica automaticamente i plugin nella cartella utente o di sistema
+   reload: ricarica un plugin (se non specificato, scarica i plugin e li ricarica automaticamente)
+   unload: scarica uno o tutti i plugin
+nome_file: (file) script da caricare
      nome: il nome di uno script (usato nella chiamata alla funzione "register")
 
-Senza argomento, questo comando elenca tutti i plugin attivati.
+Senza argomento, questo comando elenca tutti i plugin caricati.
 ........................................
 

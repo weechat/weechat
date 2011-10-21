@@ -97,7 +97,7 @@ weechat_plugin_end
 ^^^^^^^^^^^^^^^^^^
 
 Questa funzione viene chiamata quando il plugin viene
-disattivato da WeeChat.
+scaricato da WeeChat.
 
 Prototipo:
 
@@ -7300,11 +7300,11 @@ del linguaggio:
 
 La callback compirà le seguenti azioni alla ricezione del segnale:
 
-. disattiva e rimuove lo script installato
+. scarica e rimuove lo script installato
 . sposta il nuovo script nella cartella '~/.weechat/xxx/' (dove 'xxx' è il
   linguaggio)
 . crea un link al nuovo script nella cartella '~/.weechat/xxx/autoload/'
-. attiva il nuovo script
+. carica il nuovo script
 
 Questi segnali vengono usati dallo script 'weeget.py' per installare gli
 script.
@@ -7340,7 +7340,7 @@ seconda del linguaggio:
 * 'lua_script_remove'
 * 'tcl_script_remove'
 
-Per ogni script nella lista, la callback disattiverà e rimuoverà lo script.
+Per ogni script nella lista, la callback scaricherà e rimuoverà lo script.
 
 Questi segnali vengono utilizzati dallo script 'weeget.py' per rimuovere gli
 script.
@@ -7352,7 +7352,7 @@ Esempio in C:
 
 [source,C]
 ----------------------------------------
-/* disattiva e rimuove gli script test.py e script.py */
+/* scarica e rimuove gli script test.py e script.py */
 weechat_hook_signal_send ("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                           "test.py,script.py");
 ----------------------------------------
@@ -7361,7 +7361,7 @@ Script (Python):
 
 [source,python]
 ----------------------------------------
-# disattiva e rimuove gli script test.py e script.py
+# scarica e rimuove gli script test.py e script.py
 weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
                          "test.py,script.py")
 ----------------------------------------

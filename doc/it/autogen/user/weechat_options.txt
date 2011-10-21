@@ -359,7 +359,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"--"`)
 
 * *weechat.look.buffer_notify_default*
-** descrizione: `livello predefinito di notifica per i buffer (utilizzato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), message=messaggi+eventi, highlight=solo eventi, none=non viene mai visualizzato nella hotlist`
+** descrizione: `livello predefinito di notifica per i buffer (usato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), message=messaggi+eventi, highlight=solo eventi, none=non viene mai visualizzato nella hotlist`
 ** tipo: intero
 ** valori: none, highlight, message, all (valore predefinito: `all`)
 
@@ -409,7 +409,7 @@
 ** valori: -1 .. 256 (valore predefinito: `5`)
 
 * *weechat.look.color_real_white*
-** descrizione: `se impostato, utilizza il colore bianco reale, disabilitato sui terminali con lo sfondo bianco (se non utilizzato, l'opzione dovrebbe essere attivata per visualizzare il bianco reale invece del colore di primo piano predefinito del terminale)`
+** descrizione: `se impostato, usa il colore bianco reale, disabilitato sui terminali con lo sfondo bianco (se non usato, l'opzione dovrebbe essere attivata per visualizzare il bianco reale invece del colore di primo piano predefinito del terminale)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -714,7 +714,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"*"`)
 
 * *weechat.plugin.debug*
-** descrizione: `abilita come predefinito il debug per tutti i plugin (opzione disabilita di predefinito, caldamente raccomandato)`
+** descrizione: `abilita come predefinito il debug per tutti i plugin (opzione disabilita di default, caldamente raccomandato)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -729,7 +729,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%h/plugins"`)
 
 * *weechat.plugin.save_config_on_unload*
-** descrizione: `salva i file di configurazione alla disattivazione dei plugin`
+** descrizione: `salva i file di configurazione allo scaricamento dei plugin`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -744,12 +744,12 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *weechat.startup.display_logo*
-** descrizione: `visualizza il logo di WeeChat all'avvio`
+** descrizione: `mostra il logo di WeeChat all'avvio`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * *weechat.startup.display_version*
-** descrizione: `visualizza la versione di WeeChat all'avvio`
+** descrizione: `mostra la versione di WeeChat all'avvio`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 

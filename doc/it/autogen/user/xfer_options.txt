@@ -104,12 +104,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *xfer.network.own_ip*
-** descrizione: `Indirizzo IP o DNS per l'invio di file/chat (se vuoto, verrà utilizzata l'interfaccia IP locale)`
+** descrizione: `Indirizzo IP o DNS per l'invio di file/chat (se vuoto, verrà usata l'interfaccia IP locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *xfer.network.port_range*
-** descrizione: `forza i file in uscita/chat ad utilizzare solo le porte in una data serie (utile per il NAT) (sintassi: una singola porta, es. 5000 o un range di porte, es. 5000-5015. Un valore nullo significa qualsiasi porta, consigliato utilizzare porte maggiori di 1024, perché l'uso di porte inferiori possibile solo per root)`
+** descrizione: `forza i file in uscita/chat ad usare solo le porte in una data serie (utile per il NAT) (sintassi: una singola porta, es. 5000 o un range di porte, es. 5000-5015. Un valore nullo significa qualsiasi porta, consigliato usare porte maggiori di 1024, perché l'uso di porte inferiori è possibile solo per root)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

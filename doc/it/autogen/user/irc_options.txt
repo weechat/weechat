@@ -89,7 +89,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * *irc.look.color_nicks_in_server_messages*
-** descrizione: `utilizza i colori dei nick nei messaggi dal server`
+** descrizione: `usa i colori dei nick nei messaggi dal server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -229,7 +229,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.look.notice_as_pv*
-** descrizione: `visualizza notifiche come messaggi privati (se automatico, utilizza il buffer privato se viene trovato)`
+** descrizione: `visualizza notifiche come messaggi privati (se automatico, usa il buffer privato se viene trovato)`
 ** tipo: intero
 ** valori: auto, never, always (valore predefinito: `auto`)
 
@@ -399,7 +399,7 @@
 ** valori: 0 .. 1000000 (valore predefinito: `25`)
 
 * *irc.server_default.command*
-** descrizione: `comando(i) da eseguire quando si è connessi al server (più comandi vanno separati da ":", utilizzare ";" per un punto e virgola, le variabili speciali $nick, $canale e $server vengono sostituite dai loro valori)`
+** descrizione: `comando(i) da eseguire quando si è connessi al server (più comandi vanno separati da ":", usare ";" per un punto e virgola, le variabili speciali $nick, $canale e $server vengono sostituite dai loro valori)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -424,17 +424,17 @@
 ** valori: qualsiasi stringa (valore predefinito: `"WeeChat %v"`)
 
 * *irc.server_default.ipv6*
-** descrizione: `utilizza il protocollo IPv6 per le comunicazioni col server`
+** descrizione: `usa il protocollo IPv6 per le comunicazioni col server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
 * *irc.server_default.local_hostname*
-** descrizione: `nome host/IP locale definito per il server (opzionale, se vuoto viene utilizzato il nome host locale)`
+** descrizione: `nome host/IP locale definito per il server (opzionale, se vuoto viene usato il nome host locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.nicks*
-** descrizione: `nick da utilizzare sul server (separati da virgole)`
+** descrizione: `nick da usare sul server (separati da virgole)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -449,12 +449,12 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.proxy*
-** descrizione: `proxy utilizzato per il server (opzionale)`
+** descrizione: `proxy usato per il server (opzionale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.realname*
-** descrizione: `nome reale da utilizzare sul server`
+** descrizione: `nome reale da usare sul server`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -479,7 +479,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.ssl*
-** descrizione: `utilizza SSL per le comunicazioni col server`
+** descrizione: `usa SSL per le comunicazioni col server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -489,7 +489,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * *irc.server_default.ssl_dhkey_size*
-** descrizione: `dimensione della chiave utilizzata durante lo Scambio Chiavi Diffie-Hellman`
+** descrizione: `dimensione della chiave usata durante lo Scambio Chiavi Diffie-Hellman`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2048`)
 
@@ -504,7 +504,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * *irc.server_default.username*
-** descrizione: `nome utente da utilizzare sul server`
+** descrizione: `nome utente da usare sul server`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

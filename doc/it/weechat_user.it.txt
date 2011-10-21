@@ -1007,19 +1007,19 @@ da WeeChat.
 In GNU/Linux, il file ha estensione ".so", ".dll" in Windows.
 
 I plugin trovati vengono caricati automaticamente all'avvio di WeeChat, ed
-è possibile attivare o disattivare i plugin durante l'esecuzione del programma.
+è possibile caricare o scaricare i plugin durante l'esecuzione del programma.
 
 È importante evidenziare la differenza tra un 'plugin' ed uno 'script': un
 'plugin' è un file binario compilato e caricato con il comando `/plugin`,
 mentre uno 'script' è un file di testo caricato con un plugin come 'perl'
 con il comando `/perl`.
 
-È possibile utilizzare il comando `/plugin` per attivare/disattivare un plugin,
-oppure elencare tutti i plugin attivi.
-Quando un plugin viene disattivato, tutti i buffer creati da questo plugin
+È possibile utilizzare il comando `/plugin` per caricare/scaricare un plugin,
+oppure elencare tutti i plugin caricati.
+Quando un plugin viene scaricato, tutti i buffer creati da questo plugin
 sono chiusi automaticamente.
 
-Esempi per attivare, disattivare oppure elencare i plugin:
+Esempi per caricare, scaricare oppure elencare i plugin:
 
 ----------------------------------------
 /plugin load irc
@@ -1111,7 +1111,7 @@ i set caratteri.
 Esiste un set caratteri predefinito per la codifica/decodifica, e set caratteri
 specifici per i buffer (o gruppi di buffer).
 
-Questo plugin è opzionale, ma raccomandato: se non attivato, WeeChat
+Questo plugin è opzionale, ma raccomandato: se non caricato, WeeChat
 può leggere/scrivere soltanto dati UTF-8.
 
 Il plugin Charset dovrebbe essere caricato automaticamente da WeeChat.
@@ -1244,7 +1244,7 @@ $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
 $ echo '*hello!' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
-* inviare due comandi per disattivare/caricare gli script Perl (è necessario
+* inviare due comandi per scaricare/caricare gli script Perl (è necessario
   separarli con "\n"):
 
 ----------------------------------------
@@ -1957,7 +1957,7 @@ Plugin per gli script
 ~~~~~~~~~~~~~~~~~~~~~
 
 WeeChat fornisce 5 plugin per lo scripting: Perl, Python, Ruby, Lua, Tcl.
-Questi plugin possono attivare, eseguire e disattivare gli script per questi
+Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat

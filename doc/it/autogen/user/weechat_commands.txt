@@ -32,7 +32,7 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
                senza condizione, viene sempre mostrata
     posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
    dimensione: dimensione della barra (in caratteri)
-   separatore: 1 per utilizzarlo (riga), 0 o nulla equivale a nessun separatore
+   separatore: 1 per usarlo (riga), 0 o nulla equivale a nessun separatore
     item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
       default: crea una barra predefinita (saranno tutte predefinite se non viene dato un nome per la barra)
           del: elimina una barra (o tutte le barre con -all)
@@ -224,7 +224,7 @@ infolists: mostra informazioni sulle liste info
 
 Il tasto predefinito alt+'=' abilita/disabilita il filtro.
 
-Tag utilizzati di frequente:
+Tag usati di frequente:
   no_filter, no_highlight, no_log, log0..log9 (livello di log),
   notify_none, notify_message, notify_private, notify_highlight,
   nick_xxx (xxx è il nick nel messaggio),
@@ -325,7 +325,7 @@ elenco di azioni:
   switch_active_buffer_previous: passa al precedente buffer incollato
   insert: inserisci testo nella riga di comando
 
-Questo comando viene usato dall'associazione tasti o dai plugin.
+Questo comando viene usato dalla combinazioni tasti o dai plugin.
 ........................................
 
 [[command_weechat_key]]
@@ -347,14 +347,14 @@ listdefault: elenca i tasti predefiniti
    contesto: nome del contesto ("default" oppure "search")
        bind: associa un comando ad un tasto o visualizza il comando associato al tasto (per il contesto "default")
    bindctxt: associa un comando ad un tasto o mostra il comando associato al tasto, per il contesto fornito
-     unbind: rimuove una associazione di tasti (per il contesto "default")
- unbindctxt: rimuove l'associazione tasti per il contesto fornito
+     unbind: rimuove una combinazione di tasti (per il contesto "default")
+ unbindctxt: rimuove la combinazione tasti per il contesto fornito
       reset: ripristina un tasto all'assegnazione predefinita
-  resetctxt: ripristina un tasto all'associazione predefinita per il contesto fornito
-   resetall: ripristina le associazioni ai valori predefiniti ed elimina TUTTE le associazioni personalizzate (usare con cautela!)
-    missing: aggiunge tasti mancanti (utilizzando le associazioni predefinite), utile dopo l'installazione di una nuova versione di WeeChat
+  resetctxt: ripristina un tasto alla combinazione predefinita per il contesto fornito
+   resetall: ripristina le combinazioni ai valori predefiniti ed elimina TUTTE le combinazioni personalizzate (usare con cautela!)
+    missing: aggiunge tasti mancanti (usando le combinazioni predefinite), utile dopo l'installazione di una nuova versione di WeeChat
 
-Al momento di associare un comando ad un tasto si raccomanda di utilizzare il tasto alt+k (oppure Esc e k), e digitare il tasto da associare: il codice tasto verrà inserito nella riga di comando.
+Al momento di associare un comando ad un tasto si raccomanda di usare il tasto alt+k (oppure Esc e k), e digitare il tasto da associare: il codice tasto verrà inserito nella riga di comando.
 
 Per il contesto "mouse" (possibile anche nel contesto "cursor"), il formato del tasto è: "@area:tasto" oppure "@area1>area2:tasto" dove area può essere:
           *: qualunque area sullo schermo
@@ -373,7 +373,7 @@ Esempi:
     /key bind meta-x /bar toggle nicklist
   il tasto alt-r per passare al canale IRC #weechat:
     /key bind meta-r /buffer #weechat
-  ripristinare l'associazione predefinita per il tasto alt-r:
+  ripristinare la combinazione predefinita per il tasto alt-r:
     /key reset meta-r
   il tasto "tab" per fermare la ricerca nel buffer:
     /key bindctxt search ctrl-I /input search_stop
@@ -440,23 +440,23 @@ Esempi:
 ........................................
 
 [[command_weechat_plugin]]
-[command]*`plugin`* elenca/attiva/disattiva plugin::
+[command]*`plugin`* elenca/carica/scarica plugin::
 ........................................
 /plugin  list|listfull [<nome>]
          load <nomefile>
          autoload
          reload|unload [<nome>]
 
-    list: elenca i plugin attivati
-listfull: elenca i plugin attivati (dettagliato)
-    load: attiva un plugin
-autoload: attiva automaticamente un plugin nella cartella di sistema o utente
-  reload: riattiva un plugin (se non specificato, disattiva e poi riattiva tutti i plugin)
-  unload: disattiva un plugin (se non specificato, disattiva tutti i plugin
-nomefile: plugin (file) da attivare
+    list: elenca i plugin caricati
+listfull: elenca i plugin caricati (dettagliato)
+    load: carica un plugin
+autoload: carica automaticamente un plugin nella cartella di sistema o utente
+  reload: ricarica un plugin (se non specificato, scarica e poi ricarica tutti i plugin)
+  unload: scarica un plugin (se non specificato, scarica tutti i plugin
+nomefile: plugin (file) da caricare
     nome: nome di un plugin
 
-Senza argomento, questo comando elenca i plugin attivati.
+Senza argomento, questo comando elenca i plugin caricati.
 ........................................
 
 [[command_weechat_proxy]]
@@ -589,10 +589,10 @@ Questo comando aggiorna e ricarica una sessione di WeeChat in esecuzione. Il nuo
 Nota: le connessioni SSL vengono perdute durante l'aggiornamento, poiché il nuovo caricamento delle sessioni SSL non è ancora possibile con GnuTLS. La riconnessione automatica avviene dopo l'aggiornamento.
 
 Il processo di aggiornamento è diviso in 4 fasi:
-  1. salvataggio della sessione in file per il core e i plugin (buffer, cronologia, ..)
-  2. disattivazione di tutti i plugin (i file di configurazione (*.conf) vengono scritti su disco)
-  3. salvataggio della configurazione di WeeChat (weechat.conf)
-  4. esecuzione del nuovo binario di WeeChat e caricamento della sessione.
+  1. salva la sessione in file per il core e i plugin (buffer, cronologia, ..)
+  2. scarica tutti i plugin (i file di configurazione (*.conf) vengono scritti su disco)
+  3. salva la configurazione di WeeChat (weechat.conf)
+  4. esegui il nuovo binario di WeeChat e carica la sessione.
 ........................................
 
 [[command_weechat_uptime]]

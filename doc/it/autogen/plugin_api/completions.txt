@@ -68,7 +68,7 @@
 
 | weechat | buffers_numbers | numeri dei buffer
 
-| weechat | buffers_plugins_names | nomi dei buffer (inclusi i nomi plugin)
+| weechat | buffers_plugins_names | nomi dei buffer (inclusi i nomi dei plugin)
 
 | weechat | commands | comandi (weechat e plugin)
 

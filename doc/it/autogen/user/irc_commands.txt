@@ -270,7 +270,7 @@ mask_server: elenco dei server che devono corrispondere a questa mask
 
 canale: canale da elencare
 server: nome del server
-regex: espressione regolare utilizzata per filtrare i risultati
+regex: espressione regolare usata per filtrare i risultati
 
 Esempi:
   elenca tutti i canali sul server (può essere molto lento su grandi network):
@@ -585,7 +585,7 @@ Esempi:
 /service  <nick> <riservato> <distribuzione> <tipo> <riservato> <info>
 
 distrubuzione: visibilità del servizio
-         tipo: riservato per un utilizzo futuro
+         tipo: riservato per un uso futuro
 ........................................
 
 [[command_irc_servlist]]

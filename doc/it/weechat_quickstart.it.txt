@@ -233,7 +233,7 @@ Plugin/script
 Su alcune distribuzioni come Debian, i plugin sono disponibili tramite un
 pacchetto separato (come weechat-plugins).
 I plugin vengono caricati automaticamente quando trovati
-(per favore consultare la documentazione per attivare/disattivare plugin
+(per favore consultare la documentazione per caricare/scaricare plugin
 o script).
 
 Alcuni plugin consentono di usare gli script in WeeChat (in molti linguaggi

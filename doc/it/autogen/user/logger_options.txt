@@ -14,12 +14,12 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * *logger.file.mask*
-** descrizione: `mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è utilizzata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
+** descrizione: `mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è usata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$plugin.$name.weechatlog"`)
 
 * *logger.file.name_lower_case*
-** descrizione: `utilizzare solo lettere minuscole per i nomi dei file di log`
+** descrizione: `usare solo lettere minuscole per i nomi dei file di log`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -34,7 +34,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"_"`)
 
 * *logger.file.time_format*
-** descrizione: `data e ora utilizzati nei file di log (consultare man strftime per gli specificatori di data/ora)`
+** descrizione: `data e ora usati nei file di log (consultare man strftime per gli specificatori di data/ora)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%Y-%m-%d %H:%M:%S"`)
 

@@ -14,7 +14,7 @@
 protocollo.nome: protocollo e nome con cui effettuare il relay
                  al momento, è supportato solo il protocollo "irc"
                  ad esempio: irc.freenode
-          porta: porta utilizzata per il relay
+          porta: porta usata per il relay
             raw: apre il buffer con dati Relay
 
 Senza argomento, il comando apre i buffer con l'elenco dei client relay.
