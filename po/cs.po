@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-07-05 15:37+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:22+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -3315,6 +3315,14 @@ msgstr[2] "normálních"
 msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
 
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Ladění vypnuto pro \"%s\""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Chyba: nedostatek paměti pro přidáni bufferu do hotlistu"
 
@@ -3344,14 +3352,6 @@ msgstr "výchozí příkaz:"
 
 msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek"
-
-#, fuzzy, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Ladění vypnuto pro \"%s\""
-
-#, fuzzy
-msgid "Debug disabled for mouse"
-msgstr "Ladění vypnuto pro \"%s\""
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -8099,60 +8099,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "<server> [<server>...] || -all"
-
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "Chyba: nemohu napojit kalávesu \"%s\""
-
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "Chyba: nedostatek paměti pro klávesovou zkratku"
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%sChyba: nekorektní číslo bufferu"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%sChyba: nekorektní číslo bufferu"
-
-#~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-#~ msgstr ""
-#~ "jméno okna (může začínat nebo končit \"*\" jako zástupným znakem) "
-#~ "(volitelné)"
-
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "    kanál: kanál pro zakázání\n"
-#~ "přezdívka: uživatel nebo host, který bude zakázán"
-
-#, fuzzy
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Klávesové zkratky (%d):"
-
-#, fuzzy
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Výchozí klávesové zkratky (%d):"
-
-#, fuzzy
-#~ msgid "hook of type \"command\""
-#~ msgstr "historie příkazů"
-
-#, fuzzy
-#~ msgid "completion"
-#~ msgstr "kompilováno"
-
-#, fuzzy
-#~ msgid "lines"
-#~ msgstr "online"
-
-#, fuzzy
-#~ msgid "line"
-#~ msgstr "online"
-
-#, fuzzy
-#~ msgid "line data"
-#~ msgstr "online"

@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-19 16:21+0200\n"
-"PO-Revision-Date: 2011-09-02 14:16+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -3473,6 +3473,13 @@ msgstr[1] "normali"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug disabilitato per la modalità cursore"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug abilitato per il mouse (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug disabilitato per il mouse"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Errore: memoria non sufficiente per aggiungere un buffer alla hotlist"
 
@@ -3501,13 +3508,6 @@ msgstr "Esecuzione comando: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug abilitato per il mouse (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug disabilitato per il mouse"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -8283,85 +8283,3 @@ msgstr "Variabili"
 
 msgid "Lists"
 msgstr "Liste"
-
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "<server> [<server>...] || -all"
-
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "Errore: impossibile associare il testo \"%s\""
-
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "Errore: memoria non sufficiente per la combinazione tasti"
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%sErrore: intervallo non corretto"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%sErrore: numero non corretto"
-
-#~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-#~ msgstr ""
-#~ "nome finestra (può iniziare o terminare con \"*\" come carattere jolly) "
-#~ "(opzionale)"
-
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "canale: canale per il ban\n"
-#~ "  nick: utente o host da bannare"
-
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Combinazioni (%d) per il contesto \"%s\":"
-
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Associazione tasti predefinita (%d) per il contesto \"%s\":"
-
-#~ msgid "hook (variables common to all hook types)"
-#~ msgstr "hook (variabili comuni a tutti i tipi di hook)"
-
-#~ msgid "hook of type \"command\""
-#~ msgstr "hook di tipo \"comando\""
-
-#~ msgid "hook of type \"command_run\""
-#~ msgstr "hook di tipo \"command_run\""
-
-#~ msgid "hook of type \"timer\""
-#~ msgstr "hook di tipo \"timer\""
-
-#~ msgid "hook of type \"fd\""
-#~ msgstr "hook di tipo \"fd\""
-
-#~ msgid "hook of type \"process\""
-#~ msgstr "hook di tipo \"process\""
-
-#~ msgid "hook of type \"connect\""
-#~ msgstr "hook di tipo \"connect\""
-
-#~ msgid "hook of type \"print\""
-#~ msgstr "hook di tipo \"print\""
-
-#~ msgid "hook of type \"signal\""
-#~ msgstr "hook di tipo \"signal\""
-
-#~ msgid "hook of type \"hsignal\""
-#~ msgstr "hook di tipo \"hsignal\""
-
-#~ msgid "hook of type \"config\""
-#~ msgstr "hook di tipo \"config\""
-
-#~ msgid "hook of type \"completion\""
-#~ msgstr "hook di tipo \"completion\""
-
-#~ msgid "completion"
-#~ msgstr "completamento"
-
-#, fuzzy
-#~ msgid "lines"
-#~ msgstr "righe"
-
-#, fuzzy
-#~ msgid "line"
-#~ msgstr "riga"

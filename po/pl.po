@@ -19,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-10 18:42+0200\n"
-"PO-Revision-Date: 2011-10-10 18:51+0100\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -3463,6 +3463,13 @@ msgstr[2] "normalnych"
 msgid "Debug disabled for cursor mode"
 msgstr "Debugowanie wyłączone dla trybu kursora"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debugowanie włączone dla myszy (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debugowanie wyłączone dla myszy"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
 
@@ -3491,13 +3498,6 @@ msgstr "Wykonuję komendę: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Za mało pamięci na nowy wiersz"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debugowanie włączone dla myszy (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debugowanie wyłączone dla myszy"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -8221,58 +8221,3 @@ msgstr "Zmienne"
 
 msgid "Lists"
 msgstr "Listy"
-
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "<serwer> [<serwer>...] || -all"
-
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "Błąd: nie można przypisać klawisza \"%s\""
-
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "Błąd: za mało pamięci do przypisania klawisza"
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%sBłąd: nieprawidłowy numer buforu"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%sBłąd: nieprawidłowy numer buforu"
-
-#~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-#~ msgstr "nazwa okna (może się zaczynać lub kończyć \"*\") (opcjonalne)"
-
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "kanał: kanał do zbanowania\n"
-#~ "   nick: użytkownik lub host do zbanowania"
-
-#, fuzzy
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Powiązania klawiszy (%d):"
-
-#, fuzzy
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Domyślne skróty klawiszowe (%d):"
-
-#, fuzzy
-#~ msgid "hook of type \"command\""
-#~ msgstr "historia komend"
-
-#, fuzzy
-#~ msgid "completion"
-#~ msgstr "skompilowano"
-
-#, fuzzy
-#~ msgid "lines"
-#~ msgstr "online"
-
-#, fuzzy
-#~ msgid "line"
-#~ msgstr "online"
-
-#, fuzzy
-#~ msgid "line data"
-#~ msgstr "online"

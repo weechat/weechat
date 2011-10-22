@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-05-15 10:52+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -3006,6 +3006,13 @@ msgstr[2] "обычные"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
@@ -3036,13 +3043,6 @@ msgstr "Внутренние команды %s:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Недостаточно памяти для новой строчки\n"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -7645,47 +7645,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#, fuzzy
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "сервер1 [сервер2]"
-
-#, fuzzy
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "%s не могу установить клавишу \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "%s недостаточно памяти для установки клавиши\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "канал: канал для бана\n"
-#~ "  ник: ник для бана"
-
-#, fuzzy
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Комбинации клавиш:\n"
-
-#, fuzzy
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Комбинации клавиш по умолчанию восстановлены\n"
-
-#, fuzzy
-#~ msgid "hook of type \"command\""
-#~ msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-#~ msgid "completion"
-#~ msgstr "собран:"

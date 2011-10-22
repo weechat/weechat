@@ -19,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-09-30 16:35+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3509,6 +3509,13 @@ msgstr[1] "normaux"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug désactivé pour le mode curseur"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug activé pour la souris (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug désactivé pour la souris"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
 
@@ -3537,13 +3544,6 @@ msgstr "Lancement de la commande: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Pas assez de mémoire pour une nouvelle ligne"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug activé pour la souris (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug désactivé pour la souris"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -8360,30 +8360,3 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
-
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "<serveur> [<serveur>...] || -all"
-
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "Erreur: impossible de créer la touche \"%s\""
-
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "Erreur: pas assez de mémoire pour la touche"
-
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%sErreur: intervalle incorrect"
-
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%sErreur: numéro incorrect"
-
-#~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-#~ msgstr ""
-#~ "nom de fenêtre (peut démarrer ou se terminer par \"*\" comme joker) "
-#~ "(optionnel)"
-
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ " canal: nom du canal pour le bannissement\n"
-#~ "pseudo: pseudo ou hôte pour le bannissement"

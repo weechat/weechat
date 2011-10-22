@@ -20,10 +20,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-02 15:17+0200\n"
-"PO-Revision-Date: 2011-10-01 11:13+0100\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -3591,6 +3591,13 @@ msgstr[1] "normale"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug für Cursor Modus deaktiviert"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug-Modus (%s) für Maus aktiviert"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug für Maus deaktiviert"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 "Fehler: nicht genügend Speicher um den Buffer der Hotlist hinzu zu fügen"
@@ -3620,13 +3627,6 @@ msgstr "führe Befehl \"%s\" aus"
 
 msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für eine neue Zeile"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug-Modus (%s) für Maus aktiviert"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug für Maus deaktiviert"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -8533,93 +8533,3 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
-
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "<server> [<server>...] || -all"
-
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "Fehler: kann die Taste \"%s\" nicht zuordnen"
-
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "Fehler: nicht genügend Speicher für Tastenzuordnung"
-
-#~ msgid "window name (can start or end with \"*\" as wildcard) (optional)"
-#~ msgstr ""
-#~ "Fenstername (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
-#~ "(optional)"
-
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "channel: Channel für die Sperre\n"
-#~ "   nick: zu sperrender User oder Host"
-
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Standardtastenbelegungen (%d) für Kontext \"%s\" :"
-
-#~ msgid "hook (variables common to all hook types)"
-#~ msgstr "Hook (Variablen die für alle Hook-Typen geläufig sind)"
-
-#~ msgid "hook of type \"command\""
-#~ msgstr "Hook des Typs \"command\""
-
-#~ msgid "hook of type \"command_run\""
-#~ msgstr "Hook vom Typ \"command_run\""
-
-#~ msgid "hook of type \"timer\""
-#~ msgstr "Hook vom Typ \"timer\""
-
-#~ msgid "hook of type \"fd\""
-#~ msgstr "Hook vom Typ \"fd\""
-
-#~ msgid "hook of type \"process\""
-#~ msgstr "Hook vom Typ \"process\""
-
-#~ msgid "hook of type \"connect\""
-#~ msgstr "Hook vom Typ \"connect\""
-
-#~ msgid "hook of type \"print\""
-#~ msgstr "Hook vom Typ \"print\""
-
-#~ msgid "hook of type \"signal\""
-#~ msgstr "Hook vom Typ \"signal\""
-
-#~ msgid "hook of type \"hsignal\""
-#~ msgstr "Hook vom Typ \"\""
-
-#~ msgid "hook of type \"config\""
-#~ msgstr "Hook vom Typ \"config\""
-
-#~ msgid "hook of type \"completion\""
-#~ msgstr "Hook vom Typ \"completion\""
-
-#~ msgid "hook of type \"modifier\""
-#~ msgstr "Hook vom Typ \"modifier\""
-
-#~ msgid "hook of type \"info\""
-#~ msgstr "Hook vom Typ \"info\""
-
-#~ msgid "hook of type \"info_hashtable\""
-#~ msgstr "Hook vom Typ \"info_hashtable\""
-
-#~ msgid "hook of type \"infolist\""
-#~ msgstr "Hook vom Typ \"infolist\""
-
-#~ msgid "hook of type \"hdata\""
-#~ msgstr "Hook vom Typ \"hdata\""
-
-#~ msgid "completion"
-#~ msgstr "Vervollständigung"
-
-#~ msgid "key"
-#~ msgstr "Taste"
-
-#~ msgid "lines"
-#~ msgstr "Linien"
-
-#~ msgid "line"
-#~ msgstr "Linie"
-
-#~ msgid "line data"
-#~ msgstr "Zeilendaten"

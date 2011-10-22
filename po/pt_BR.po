@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-05-15 10:52+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Portuguese\n"
@@ -3239,6 +3239,14 @@ msgstr[1] ""
 msgid "Debug disabled for cursor mode"
 msgstr "Debug desabilitado para \"%s\""
 
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug desabilitado para \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Debug desabilitado para \"%s\""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
@@ -3267,14 +3275,6 @@ msgstr "comando padrão:"
 
 msgid "Not enough memory for new line"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug desabilitado para \"%s\""
-
-#, fuzzy
-msgid "Debug disabled for mouse"
-msgstr "Debug desabilitado para \"%s\""
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -7357,23 +7357,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%sErro: número do buffer incorreto"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%sErro: número do buffer incorreto"
-
-#, fuzzy
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Atalhos de teclado (%d):"
-
-#, fuzzy
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Atalhos de teclado padrão (%d):"
-
-#, fuzzy
-#~ msgid "completion"
-#~ msgstr "compilado em"

@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.6-dev\n"
+"Project-Id-Version: WeeChat 0.3.6\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-09-30 16:34+0200\n"
-"PO-Revision-Date: 2011-05-15 10:51+0200\n"
+"POT-Creation-Date: 2011-10-22 09:31+0200\n"
+"PO-Revision-Date: 2011-10-22 09:23+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -2985,6 +2985,13 @@ msgstr[1] "normál"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
@@ -3015,13 +3022,6 @@ msgstr "%s belső parancsok:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Nincs elég memória az új sorhoz\n"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -7636,47 +7636,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#, fuzzy
-#~ msgid "<server> [<server>...] || -all"
-#~ msgstr "szerver1 [szerver2]"
-
-#, fuzzy
-#~ msgid "Error: unable to bind key \"%s\""
-#~ msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
-
-#, fuzzy
-#~ msgid "Error: not enough memory for key binding"
-#~ msgstr "%s nincs elég memória a billentyűhozzárendeléshez\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect interval"
-#~ msgstr "%s helytelen pufferszám\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect count"
-#~ msgstr "%s helytelen pufferszám\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "channel: channel for ban\n"
-#~ "   nick: user or host to ban"
-#~ msgstr ""
-#~ "szoba: letiltandó szoba\n"
-#~ "  név: letiltandó felhasználó vagy gép"
-
-#, fuzzy
-#~ msgid "Key bindings (%d) for context \"%s\":"
-#~ msgstr "Billentyűparancsok:\n"
-
-#, fuzzy
-#~ msgid "Default key bindings (%d) for context \"%s\":"
-#~ msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
-
-#, fuzzy
-#~ msgid "hook of type \"command\""
-#~ msgstr "%s belső parancsok:\n"
-
-#, fuzzy
-#~ msgid "completion"
-#~ msgstr "lefordítva:"

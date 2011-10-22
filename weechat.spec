@@ -23,7 +23,7 @@
 #
 
 %define name weechat
-%define version 0.3.5
+%define version 0.3.6
 %define release 1
 
 Name:      %{name}
@@ -73,6 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/weechat-plugin.h
 
 %changelog
+* Sat Oct 22 2011 Sebastien Helleu <flashcode@flashtux.org> 0.3.6-1
+- Released version 0.3.6
 * Sun May 15 2011 Sebastien Helleu <flashcode@flashtux.org> 0.3.5-1
 - Released version 0.3.5
 * Sun Jan 16 2011 Sebastien Helleu <flashcode@flashtux.org> 0.3.4-1
