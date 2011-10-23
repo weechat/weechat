@@ -1030,9 +1030,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     int rc;
     const char *pos_error;
 #endif
-#ifndef __CYGWIN__
     pid_t pid;
-#endif
     
 #ifdef HAVE_GNUTLS
     /* initialize GnuTLS if SSL asked */
@@ -1080,15 +1078,6 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_read) = child_pipe[0];
     HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
     
-#ifdef __CYGWIN__
-    /*
-     * connection may block under Cygwin, there's no other known way
-     * to do better today, since connect() in child process seems not to work
-     * any suggestion is welcome to improve that!
-    */
-    network_connect_child (hook_connect);
-    network_connect_child_read_cb (hook_connect, 0);
-#else
     switch (pid = fork ())
     {
         /* fork failed */
@@ -1115,5 +1104,4 @@ network_connect_with_fork (struct t_hook *hook_connect)
                                                    1, 0, 0,
                                                    &network_connect_child_read_cb,
                                                    hook_connect);
-#endif
 }
