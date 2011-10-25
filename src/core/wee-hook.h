@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_HOOK_H
 #define __WEECHAT_HOOK_H 1
 
+#include <unistd.h>
+
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #endif

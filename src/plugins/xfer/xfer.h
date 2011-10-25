@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_XFER_H
 #define __WEECHAT_XFER_H 1
 
+#include <unistd.h>
+
 #define weechat_plugin weechat_xfer_plugin
 #define XFER_PLUGIN_NAME "xfer"
 
