@@ -295,7 +295,7 @@ gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
 void
 gui_layout_window_remove (struct t_gui_layout_window *layout_window)
 {
-    /* first free childs */
+    /* first free children */
     if (layout_window->child1)
         gui_layout_window_remove (layout_window->child1);
     if (layout_window->child2)

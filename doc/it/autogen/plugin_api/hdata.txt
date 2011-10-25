@@ -479,7 +479,7 @@
   'visible' (integer) +
   'level' (integer) +
   'parent' (pointer, hdata: 'nick_group') +
-  'childs' (pointer, hdata: 'nick_group') +
+  'children' (pointer, hdata: 'nick_group') +
   'last_child' (pointer, hdata: 'nick_group') +
   'nicks' (pointer, hdata: 'nick') +
   'last_nick' (pointer, hdata: 'nick') +

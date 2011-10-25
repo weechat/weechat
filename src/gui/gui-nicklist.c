@@ -167,10 +167,10 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
     if (!from_group)
         return NULL;
     
-    if (from_group->childs)
+    if (from_group->children)
     {
         ptr_group = gui_nicklist_search_group_internal (buffer,
-                                                        from_group->childs,
+                                                        from_group->children,
                                                         name,
                                                         skip_digits);
         if (ptr_group)
@@ -231,7 +231,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     new_group->visible = visible;
     new_group->parent = (parent_group) ? parent_group : buffer->nicklist_root;
     new_group->level = (new_group->parent) ? new_group->parent->level + 1 : 0;
-    new_group->childs = NULL;
+    new_group->children = NULL;
     new_group->last_child = NULL;
     new_group->nicks = NULL;
     new_group->last_nick = NULL;
@@ -240,7 +240,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     
     if (new_group->parent)
     {
-        gui_nicklist_insert_group_sorted (&(new_group->parent->childs),
+        gui_nicklist_insert_group_sorted (&(new_group->parent->children),
                                           &(new_group->parent->last_child),
                                           new_group);
     }
@@ -349,7 +349,7 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     }
 
     /* search nick in child groups */
-    for (ptr_group = (from_group) ? from_group->childs : buffer->nicklist_root->childs;
+    for (ptr_group = (from_group) ? from_group->children : buffer->nicklist_root->children;
          ptr_group; ptr_group = ptr_group->next_group)
     {
         ptr_nick = gui_nicklist_search_nick (buffer, ptr_group, name);
@@ -462,10 +462,10 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     
     group_removed = (group->name) ? strdup (group->name) : NULL;
     
-    /* remove childs first */
-    while (group->childs)
+    /* remove children first */
+    while (group->children)
     {
-        gui_nicklist_remove_group (buffer, group->childs);
+        gui_nicklist_remove_group (buffer, group->children);
     }
     
     /* remove nicks from group */
@@ -481,8 +481,8 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
             (group->prev_group)->next_group = group->next_group;
         if (group->next_group)
             (group->next_group)->prev_group = group->prev_group;
-        if ((group->parent)->childs == group)
-            (group->parent)->childs = group->next_group;
+        if ((group->parent)->children == group)
+            (group->parent)->children = group->next_group;
         if ((group->parent)->last_child == group)
             (group->parent)->last_child = group->prev_group;
     }
@@ -560,9 +560,9 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
     if (*group && !*nick)
     {
         /* first child */
-        if ((*group)->childs)
+        if ((*group)->children)
         {
-            *group = (*group)->childs;
+            *group = (*group)->children;
             return;
         }
         /* first nick of current group */
@@ -666,9 +666,9 @@ gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
                     max_length = length;
             }
         }
-        if (ptr_group->childs)
+        if (ptr_group->children)
         {
-            length = gui_nicklist_get_max_length (buffer, ptr_group->childs);
+            length = gui_nicklist_get_max_length (buffer, ptr_group->children);
             if (length > max_length)
                 max_length = length;
         }
@@ -691,8 +691,8 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
     if (!buffer || !group)
         return;
     
-    /* count for childs */
-    for (ptr_group = group->childs; ptr_group;
+    /* count for children */
+    for (ptr_group = group->children; ptr_group;
          ptr_group = ptr_group->next_group)
     {
         gui_nicklist_compute_visible_count (buffer, ptr_group);
@@ -961,7 +961,7 @@ gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_nick_group, visible, INTEGER, NULL);
         HDATA_VAR(struct t_gui_nick_group, level, INTEGER, NULL);
         HDATA_VAR(struct t_gui_nick_group, parent, POINTER, hdata_name);
-        HDATA_VAR(struct t_gui_nick_group, childs, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, children, POINTER, hdata_name);
         HDATA_VAR(struct t_gui_nick_group, last_child, POINTER, hdata_name);
         HDATA_VAR(struct t_gui_nick_group, nicks, POINTER, "nick");
         HDATA_VAR(struct t_gui_nick_group, last_nick, POINTER, "nick");
@@ -1156,9 +1156,9 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
               (indent * 2) + 6);
     log_printf (format, " ", group->parent);
     snprintf (format, sizeof (format),
-              "%%-%dschilds. . . : 0x%%lx",
+              "%%-%dschildren. . : 0x%%lx",
               (indent * 2) + 6);
-    log_printf (format, " ", group->childs);
+    log_printf (format, " ", group->children);
     snprintf (format, sizeof (format),
               "%%-%dslast_child. : 0x%%lx",
               (indent * 2) + 6);
@@ -1181,9 +1181,9 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
     log_printf (format, " ", group->next_group);
     
     /* display child groups first */
-    if (group->childs)
+    if (group->children)
     {
-        for (ptr_group = group->childs; ptr_group;
+        for (ptr_group = group->children; ptr_group;
              ptr_group = ptr_group->next_group)
         {
             gui_nicklist_print_log (ptr_group, indent + 1);

@@ -30,7 +30,7 @@ struct t_gui_nick_group
     int visible;                       /* 1 if group is displayed           */
     int level;                         /* group level (root is 0)           */
     struct t_gui_nick_group *parent;   /* parent                            */
-    struct t_gui_nick_group *childs;     /* childs                          */
+    struct t_gui_nick_group *children;   /* children                        */
     struct t_gui_nick_group *last_child; /* last child                      */
     struct t_gui_nick *nicks;          /* nicks for group                   */
     struct t_gui_nick *last_nick;      /* last nick for group               */
