@@ -982,7 +982,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             "      end\n"
             "    end\n"
             "    require 'rubygems'\n"
-            "    $LOAD_PATH.concat Gem.latest_load_paths\n"
             "  else\n"
             "    require 'rubygems'\n"
             "  end\n"
