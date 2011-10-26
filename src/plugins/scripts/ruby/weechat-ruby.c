@@ -1096,7 +1096,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
     ruby_quiet = 0;
 
-    ruby_cleanup (0);
+    /*
+     * Do not cleanup Ruby because this causes a crash when plugin is reloaded
+     * again. This causes a memory leak, but I don't know better solution to
+     * this problem :(
+     */
+    /*ruby_cleanup (0);*/
 
     return WEECHAT_RC_OK;
 }
