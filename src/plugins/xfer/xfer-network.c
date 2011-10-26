@@ -51,7 +51,7 @@ int
 xfer_network_create_pipe (struct t_xfer *xfer)
 {
     int child_pipe[2];
-    
+
     if (pipe (child_pipe) < 0)
     {
         weechat_printf (NULL,
@@ -61,10 +61,10 @@ xfer_network_create_pipe (struct t_xfer *xfer)
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         return 0;
     }
-    
+
     xfer->child_read = child_pipe[0];
     xfer->child_write = child_pipe[1];
-    
+
     return 1;
 }
 
@@ -77,7 +77,7 @@ xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
 {
     char buffer[1 + 1 + 32 + 1];   /* status + error + pos + \0 */
     int num_written;
-    
+
     snprintf (buffer, sizeof (buffer), "%c%c%032llu",
               status + '0', error + '0', xfer->pos);
     num_written = write (xfer->child_write, buffer, sizeof (buffer));
@@ -94,19 +94,19 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
     struct t_xfer *xfer;
     char bufpipe[1 + 1 + 32 + 1];
     int num_read;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     xfer = (struct t_xfer *)arg_xfer;
-    
+
     num_read = read (xfer->child_read, bufpipe, sizeof (bufpipe));
     if (num_read > 0)
     {
         sscanf (bufpipe + 2, "%llu", &xfer->pos);
         xfer->last_activity = time (NULL);
         xfer_file_calculate_speed (xfer, 0);
-        
+
         /* read error code */
         switch (bufpipe[1] - '0')
         {
@@ -143,7 +143,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
         }
-        
+
         /* read new DCC status */
         switch (bufpipe[0] - '0')
         {
@@ -169,7 +169,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
                 break;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -181,12 +181,12 @@ void
 xfer_network_send_file_fork (struct t_xfer *xfer)
 {
     pid_t pid;
-    
+
     if (!xfer_network_create_pipe (xfer))
         return;
-    
+
     xfer->file = open (xfer->local_filename, O_RDONLY | O_NONBLOCK, 0644);
-    
+
     switch (pid = fork ())
     {
         /* fork failed */
@@ -214,7 +214,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
             }
             _exit (EXIT_SUCCESS);
     }
-    
+
     /* parent process */
     xfer->child_pid = pid;
     close (xfer->child_write);
@@ -233,10 +233,10 @@ void
 xfer_network_recv_file_fork (struct t_xfer *xfer)
 {
     pid_t pid;
-    
+
     if (!xfer_network_create_pipe (xfer))
         return;
-    
+
     if (xfer->start_resume > 0)
         xfer->file = open (xfer->local_filename,
                            O_APPEND | O_WRONLY | O_NONBLOCK);
@@ -244,7 +244,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
         xfer->file = open (xfer->local_filename,
                            O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
                            0644);
-    
+
     switch (pid = fork ())
     {
         /* fork failed */
@@ -272,7 +272,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
             }
             _exit (EXIT_SUCCESS);
     }
-    
+
     /* parent process */
     xfer->child_pid = pid;
     close (xfer->child_write);
@@ -297,7 +297,7 @@ xfer_network_child_kill (struct t_xfer *xfer)
         waitpid (xfer->child_pid, NULL, 0);
         xfer->child_pid = 0;
     }
-    
+
     /* close pipe used with child */
     if (xfer->child_read != -1)
     {
@@ -322,12 +322,12 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
     int sock;
     struct sockaddr_in addr;
     socklen_t length;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     xfer = (struct t_xfer *)arg_xfer;
-    
+
     if (xfer->status == XFER_STATUS_CONNECTING)
     {
         if (xfer->type == XFER_TYPE_FILE_SEND)
@@ -368,7 +368,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer_network_send_file_fork (xfer);
         }
     }
-    
+
     if (xfer->status == XFER_STATUS_WAITING)
     {
         if (xfer->type == XFER_TYPE_CHAT_SEND)
@@ -410,7 +410,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             xfer_chat_open_buffer (xfer);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -423,12 +423,12 @@ int
 xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
 {
     struct t_xfer *xfer;
-    
+
     /* make C compiler happy */
     (void) remaining_calls;
-    
+
     xfer = (struct t_xfer *)arg_xfer;
-    
+
     if ((xfer->status == XFER_STATUS_WAITING)
         || (xfer->status == XFER_STATUS_CONNECTING))
     {
@@ -439,7 +439,7 @@ xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -454,14 +454,14 @@ xfer_network_connect (struct t_xfer *xfer)
         xfer->status = XFER_STATUS_WAITING;
     else
         xfer->status = XFER_STATUS_CONNECTING;
-    
+
     if (xfer->sock < 0)
     {
         xfer->sock = socket (AF_INET, SOCK_STREAM, 0);
         if (xfer->sock < 0)
             return 0;
     }
-    
+
     if (XFER_IS_SEND(xfer->type))
     {
         /* listen to socket */
@@ -476,7 +476,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                          1, 0, 0,
                                          &xfer_network_fd_cb,
                                          xfer);
-        
+
         /* add timeout */
         if (weechat_config_integer (xfer_config_network_timeout) > 0)
         {
@@ -486,7 +486,7 @@ xfer_network_connect (struct t_xfer *xfer)
                                                    xfer);
         }
     }
-    
+
     /* for chat receiving, connect to listening host */
     if (xfer->type == XFER_TYPE_CHAT_RECV)
     {
@@ -494,15 +494,15 @@ xfer_network_connect (struct t_xfer *xfer)
             return 0;
         weechat_network_connect_to (xfer->proxy, xfer->sock, xfer->address,
                                     xfer->port);
-        
+
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,
                                          &xfer_chat_recv_cb,
                                          xfer);
     }
-    
+
     /* for file receiving, connection is made in child process (blocking) */
-    
+
     return 1;
 }
 

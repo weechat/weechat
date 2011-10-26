@@ -82,16 +82,16 @@ int
 gui_bar_valid (struct t_gui_bar *bar)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     if (!bar)
         return 0;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (ptr_bar == bar)
             return 1;
     }
-    
+
     /* bar not found */
     return 0;
 }
@@ -106,16 +106,16 @@ int
 gui_bar_search_option (const char *option_name)
 {
     int i;
-    
+
     if (!option_name)
         return -1;
-    
+
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
         if (string_strcasecmp (gui_bar_option_string[i], option_name) == 0)
             return i;
     }
-    
+
     /* bar option not found */
     return -1;
 }
@@ -129,16 +129,16 @@ int
 gui_bar_search_type (const char *type)
 {
     int i;
-    
+
     if (!type)
         return -1;
-    
+
     for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
     {
         if (string_strcasecmp (gui_bar_type_string[i], type) == 0)
             return i;
     }
-    
+
     /* type not found */
     return -1;
 }
@@ -152,16 +152,16 @@ int
 gui_bar_search_position (const char *position)
 {
     int i;
-    
+
     if (!position)
         return -1;
-    
+
     for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
     {
         if (string_strcasecmp (gui_bar_position_string[i], position) == 0)
             return i;
     }
-    
+
     /* position not found */
     return -1;
 }
@@ -179,10 +179,10 @@ gui_bar_get_min_width (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
     int min_width;
-    
+
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         return bar->bar_window->width;
-    
+
     min_width = INT_MAX;
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -196,10 +196,10 @@ gui_bar_get_min_width (struct t_gui_bar *bar)
             }
         }
     }
-    
+
     if (min_width == INT_MAX)
         return 0;
-    
+
     return min_width;
 }
 
@@ -216,10 +216,10 @@ gui_bar_get_min_height (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
     int min_height;
-    
+
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         return bar->bar_window->height;
-    
+
     min_height = INT_MAX;
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -233,10 +233,10 @@ gui_bar_get_min_height (struct t_gui_bar *bar)
             }
         }
     }
-    
+
     if (min_height == INT_MAX)
         return 0;
-    
+
     return min_height;
 }
 
@@ -251,10 +251,10 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
 {
     struct t_gui_window *ptr_window;
     int sub_width, sub_height;
-    
+
     sub_width = 0;
     sub_height = 0;
-    
+
     switch (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]))
     {
         case GUI_BAR_POSITION_BOTTOM:
@@ -268,7 +268,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
         case GUI_BAR_NUM_POSITIONS:
             break;
     }
-    
+
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
@@ -280,7 +280,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
                 return 0;
         }
     }
-    
+
     /* new size ok */
     return 1;
 }
@@ -296,7 +296,7 @@ gui_bar_get_filling (struct t_gui_bar *bar)
     if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_BOTTOM)
         || (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_POSITION]) == GUI_BAR_POSITION_TOP))
         return CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM]);
-    
+
     return CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT]);
 }
 
@@ -309,13 +309,13 @@ struct t_gui_bar *
 gui_bar_find_pos (struct t_gui_bar *bar)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_PRIORITY]) >= CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]))
             return ptr_bar;
     }
-    
+
     /* bar not found, add to end of list */
     return NULL;
 }
@@ -329,7 +329,7 @@ void
 gui_bar_insert (struct t_gui_bar *bar)
 {
     struct t_gui_bar *pos_bar;
-    
+
     if (gui_bars)
     {
         pos_bar = gui_bar_find_pos (bar);
@@ -394,7 +394,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
                 return 0;
         }
     }
-    
+
     /*
      * call a modifier that will tell us if bar is displayed or not,
      * for example it can be used to display nicklist on some buffers
@@ -415,7 +415,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
         rc = 1;
     if (str_displayed)
         free (str_displayed);
-    
+
     return rc;
 }
 
@@ -428,7 +428,7 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
 {
     struct t_gui_bar *ptr_bar;
     int total_size;
-    
+
     total_size = 0;
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
@@ -457,16 +457,16 @@ struct t_gui_bar *
 gui_bar_search (const char *name)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     if (!name || !name[0])
         return NULL;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (strcmp (ptr_bar->name, name) == 0)
             return ptr_bar;
     }
-    
+
     /* bar not found */
     return NULL;
 }
@@ -481,9 +481,9 @@ gui_bar_search_with_option_name (const char *option_name)
 {
     char *bar_name, *pos_option;
     struct t_gui_bar *ptr_bar;
-    
+
     ptr_bar = NULL;
-    
+
     pos_option = strchr (option_name, '.');
     if (pos_option)
     {
@@ -498,7 +498,7 @@ gui_bar_search_with_option_name (const char *option_name)
             free (bar_name);
         }
     }
-    
+
     return ptr_bar;
 }
 
@@ -511,10 +511,10 @@ gui_bar_content_build_bar_windows (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_bar_window *ptr_bar_window;
-    
+
     if (!bar)
         return;
-    
+
     if (bar->bar_window)
     {
         gui_bar_window_content_build (bar->bar_window, NULL);
@@ -552,7 +552,7 @@ void
 gui_bar_refresh (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_win;
-    
+
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         gui_window_ask_refresh (1);
     else
@@ -574,7 +574,7 @@ gui_bar_draw (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
-    
+
     if (!CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
     {
         if (bar->bar_window)
@@ -610,7 +610,7 @@ gui_bar_apply_current_size (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
-    
+
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_set_current_size (bar->bar_window,
@@ -644,7 +644,7 @@ void
 gui_bar_free_items_arrays (struct t_gui_bar *bar)
 {
     int i, j;
-    
+
     for (i = 0; i < bar->items_count; i++)
     {
         if (bar->items_array[i])
@@ -702,9 +702,9 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
 {
     int i, j, count;
     char **tmp_array;
-    
+
     gui_bar_free_items_arrays (bar);
-    
+
     if (items && items[0])
     {
         tmp_array = string_split (items, ",", 0, 0, &count);
@@ -773,10 +773,10 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
     int bar_window_exists;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
@@ -801,7 +801,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
                 while (ptr_bar_win)
                 {
                     next_bar_win = ptr_bar_win->next_bar_window;
-                    
+
                     if (ptr_bar_win->bar == ptr_bar)
                     {
                         if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
@@ -809,7 +809,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
                         else
                             bar_window_exists = 1;
                     }
-                    
+
                     ptr_bar_win = next_bar_win;
                 }
                 if (!bar_window_exists
@@ -833,10 +833,10 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *bar_windows, *ptr_bar_win, *next_bar_win;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
@@ -855,9 +855,9 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
             (ptr_bar->prev_bar)->next_bar = ptr_bar->next_bar;
         if (ptr_bar->next_bar)
             (ptr_bar->next_bar)->prev_bar = ptr_bar->prev_bar;
-        
+
         gui_bar_insert (ptr_bar);
-        
+
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
             bar_windows = ptr_win->bar_windows;
@@ -873,7 +873,7 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
                 ptr_bar_win = next_bar_win;
             }
         }
-        
+
         gui_window_ask_refresh (1);
     }
 }
@@ -886,16 +886,16 @@ void
 gui_bar_config_change_conditions (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
         if (ptr_bar->conditions_array)
             string_free_split (ptr_bar->conditions_array);
-        
+
         if (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])
             && CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_CONDITIONS])[0])
         {
@@ -909,7 +909,7 @@ gui_bar_config_change_conditions (void *data, struct t_config_option *option)
             ptr_bar->conditions_array = NULL;
         }
     }
-    
+
     gui_window_ask_refresh (1);
 }
 
@@ -921,14 +921,14 @@ void
 gui_bar_config_change_position (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
-    
+
     gui_window_ask_refresh (1);
 }
 
@@ -940,14 +940,14 @@ void
 gui_bar_config_change_filling (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
-    
+
     gui_window_ask_refresh (1);
 }
 
@@ -963,10 +963,10 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
     long number;
     char *error;
     int new_value;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
@@ -1000,7 +1000,7 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
         }
         if (new_value < 0)
             return 0;
-        
+
         if ((new_value > 0) &&
             ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0)
              || (new_value > CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]))))
@@ -1010,10 +1010,10 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
                                             new_value - CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE])))
                 return 0;
         }
-        
+
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -1025,10 +1025,10 @@ void
 gui_bar_config_change_size (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
     {
@@ -1046,7 +1046,7 @@ gui_bar_config_change_size_max (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
     char value[32];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) option;
@@ -1074,10 +1074,10 @@ void
 gui_bar_config_change_color (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
@@ -1091,10 +1091,10 @@ void
 gui_bar_config_change_separator (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         gui_bar_refresh (ptr_bar);
@@ -1108,10 +1108,10 @@ void
 gui_bar_config_change_items (void *data, struct t_config_option *option)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
@@ -1131,10 +1131,10 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 {
     int length;
     char *option_name;
-    
+
     if (!name || !name[0])
         return;
-    
+
     length = strlen (name) + 64;
     option_name = malloc (length);
     if (option_name)
@@ -1167,11 +1167,11 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
         config_file_option_rename (bar->options[GUI_BAR_OPTION_SEPARATOR], option_name);
         snprintf (option_name, length, "%s.items", name);
         config_file_option_rename (bar->options[GUI_BAR_OPTION_ITEMS], option_name);
-        
+
         if (bar->name)
             free (bar->name);
         bar->name = strdup (name);
-        
+
         free (option_name);
     }
 }
@@ -1186,7 +1186,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 {
     if (!bar || !property || !value)
         return 0;
-    
+
     if (string_strcasecmp (property, "name") == 0)
     {
         gui_bar_set_name (bar, value);
@@ -1264,7 +1264,7 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_draw (bar);
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -1280,13 +1280,13 @@ gui_bar_default_items (const char *bar_name)
 {
     int i;
     static char empty_items[1] = { '\0' };
-    
+
     for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
     {
         if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
             return gui_bar_items_default_for_bars[i][1];
     }
-    
+
     /* no default items in bar */
     return empty_items;
 }
@@ -1301,9 +1301,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
     struct t_config_option *ptr_option;
     int length;
     char *option_name;
-    
+
     ptr_option = NULL;
-    
+
     length = strlen (bar_name) + 1 +
         strlen (gui_bar_option_string[index_option]) + 1;
     option_name = malloc (length);
@@ -1311,7 +1311,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
     {
         snprintf (option_name, length, "%s.%s",
                   bar_name, gui_bar_option_string[index_option]);
-        
+
         switch (index_option)
         {
             case GUI_BAR_OPTION_HIDDEN:
@@ -1449,7 +1449,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         }
         free (option_name);
     }
-    
+
     return ptr_option;
 }
 
@@ -1463,7 +1463,7 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
                             const char *value)
 {
     struct t_config_option *new_option;
-    
+
     new_option = gui_bar_create_option (temp_bar->name,
                                         index_option,
                                         value);
@@ -1526,7 +1526,7 @@ gui_bar_alloc (const char *name)
 {
     struct t_gui_bar *new_bar;
     int i;
-    
+
     new_bar = malloc (sizeof (*new_bar));
     if (new_bar)
     {
@@ -1547,7 +1547,7 @@ gui_bar_alloc (const char *name)
         new_bar->prev_bar = NULL;
         new_bar->next_bar = NULL;
     }
-    
+
     return new_bar;
 }
 
@@ -1574,7 +1574,7 @@ gui_bar_new_with_options (const char *name,
 {
     struct t_gui_bar *new_bar;
     struct t_gui_window *ptr_win;
-    
+
     /* create bar */
     new_bar = gui_bar_alloc (name);
     if (new_bar)
@@ -1613,10 +1613,10 @@ gui_bar_new_with_options (const char *name,
         gui_bar_set_items_array (new_bar, CONFIG_STRING(items));
         new_bar->bar_window = NULL;
         new_bar->bar_refresh_needed = 1;
-        
+
         /* add bar to bars list */
         gui_bar_insert (new_bar);
-        
+
         /* add window bar */
         if (CONFIG_INTEGER(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
         {
@@ -1634,7 +1634,7 @@ gui_bar_new_with_options (const char *name,
             }
         }
     }
-    
+
     return new_bar;
 }
 
@@ -1658,22 +1658,22 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
     struct t_config_option *option_color_bg, *option_separator;
     struct t_config_option *option_items;
     struct t_gui_bar *new_bar;
-    
+
     if (!name || !name[0])
         return NULL;
-    
+
     /* it's not possible to create 2 bars with same name */
     if (gui_bar_search (name))
         return NULL;
-    
+
     /* look for type */
     if (gui_bar_search_type (type) < 0)
         return NULL;
-    
+
     /* look for position */
     if (gui_bar_search_position (position) < 0)
         return NULL;
-    
+
     option_hidden = gui_bar_create_option (name, GUI_BAR_OPTION_HIDDEN,
                                            hidden);
     option_priority = gui_bar_create_option (name, GUI_BAR_OPTION_PRIORITY,
@@ -1743,7 +1743,7 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
         if (option_items)
             config_file_option_free (option_items);
     }
-    
+
     return new_bar;
 }
 
@@ -1756,7 +1756,7 @@ gui_bar_use_temp_bars ()
 {
     struct t_gui_bar *ptr_temp_bar, *next_temp_bar;
     int i, num_options_ok;
-    
+
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
@@ -1772,7 +1772,7 @@ gui_bar_use_temp_bars ()
             if (ptr_temp_bar->options[i])
                 num_options_ok++;
         }
-        
+
         if (num_options_ok == GUI_BAR_NUM_OPTIONS)
         {
             gui_bar_new_with_options (ptr_temp_bar->name,
@@ -1803,16 +1803,16 @@ gui_bar_use_temp_bars ()
             }
         }
     }
-    
+
     /* free all temp bars */
     while (gui_temp_bars)
     {
         next_temp_bar = gui_temp_bars->next_bar;
-        
+
         if (gui_temp_bars->name)
             free (gui_temp_bars->name);
         free (gui_temp_bars);
-        
+
         gui_temp_bars = next_temp_bar;
     }
     last_gui_temp_bar = NULL;
@@ -1828,7 +1828,7 @@ gui_bar_create_default_input ()
     struct t_gui_bar *ptr_bar;
     int length;
     char *buf;
-    
+
     /* search an input_text item */
     if (!gui_bar_item_used_in_a_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT], 1))
     {
@@ -1889,7 +1889,7 @@ void
 gui_bar_create_default_title ()
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* search title bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_TITLE);
     if (!ptr_bar)
@@ -1925,7 +1925,7 @@ void
 gui_bar_create_default_status ()
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* search status bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_STATUS);
     if (!ptr_bar)
@@ -1961,7 +1961,7 @@ void
 gui_bar_create_default_nicklist ()
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* search nicklist bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_NICKLIST);
     if (!ptr_bar)
@@ -2010,7 +2010,7 @@ void
 gui_bar_update (const char *name)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
@@ -2034,13 +2034,13 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
     long number;
     char *str, *error;
     int length, add_x, add, percent, scroll_beginning, scroll_end;
-    
+
     if (!bar)
         return 0;
-    
+
     if (CONFIG_BOOLEAN(bar->options[GUI_BAR_OPTION_HIDDEN]))
         return 1;
-    
+
     add_x = 0;
     str = NULL;
     number = 0;
@@ -2048,7 +2048,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
     percent = 0;
     scroll_beginning = 0;
     scroll_end = 0;
-    
+
     if ((scroll[0] == 'x') || (scroll[0] == 'X'))
     {
         add_x = 1;
@@ -2064,7 +2064,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
         if (gui_bar_get_filling (bar) == GUI_BAR_FILLING_HORIZONTAL)
             add_x = 1;
     }
-    
+
     if ((scroll[0] == 'b') || (scroll[0] == 'B'))
     {
         scroll_beginning = 1;
@@ -2086,11 +2086,11 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
         }
         else
             return 0;
-        
+
         length = strlen (scroll);
         if (length == 0)
             return 0;
-    
+
         if (scroll[length - 1] == '%')
         {
             str = string_strndup (scroll, length - 1);
@@ -2100,17 +2100,17 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
             str = strdup (scroll);
         if (!str)
             return 0;
-        
+
         error = NULL;
         number = strtol (str, &error, 10);
-        
+
         if (!error || error[0] || (number <= 0))
         {
             free (str);
             return 0;
         }
     }
-    
+
     if (CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_scroll (bar->bar_window, NULL,
@@ -2130,10 +2130,10 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
             }
         }
     }
-    
+
     if (str)
         free (str);
-    
+
     return 1;
 }
 
@@ -2145,10 +2145,10 @@ void
 gui_bar_free (struct t_gui_bar *bar)
 {
     int i;
-    
+
     if (!bar)
         return;
-    
+
     /* remove bar window(s) */
     if (bar->bar_window)
     {
@@ -2157,7 +2157,7 @@ gui_bar_free (struct t_gui_bar *bar)
     }
     else
         gui_bar_free_bar_windows (bar);
-    
+
     /* remove bar from bars list */
     if (bar->prev_bar)
         (bar->prev_bar)->next_bar = bar->next_bar;
@@ -2167,7 +2167,7 @@ gui_bar_free (struct t_gui_bar *bar)
         gui_bars = bar->next_bar;
     if (last_gui_bar == bar)
         last_gui_bar = bar->prev_bar;
-    
+
     /* free data */
     if (bar->name)
         free (bar->name);
@@ -2179,7 +2179,7 @@ gui_bar_free (struct t_gui_bar *bar)
     if (bar->conditions_array)
         string_free_split (bar->conditions_array);
     gui_bar_free_items_arrays (bar);
-    
+
     free (bar);
 }
 
@@ -2205,7 +2205,7 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
-    
+
     if (bar->bar_window)
     {
         gui_bar_window_free (bar->bar_window, NULL);
@@ -2219,10 +2219,10 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
             while (ptr_bar_win)
             {
                 next_bar_win = ptr_bar_win->next_bar_window;
-                
+
                 if (ptr_bar_win->bar == bar)
                     gui_bar_window_free (ptr_bar_win, ptr_win);
-                
+
                 ptr_bar_win = next_bar_win;
             }
         }
@@ -2237,10 +2237,10 @@ struct t_hdata *
 gui_bar_hdata_bar_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_bar", "next_bar");
     if (hdata)
     {
@@ -2276,10 +2276,10 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     int i, j;
     char option_name[64];
-    
+
     if (!infolist || !bar)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
@@ -2349,7 +2349,7 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
     }
     if (!infolist_new_var_pointer (ptr_item, "bar_window", bar->bar_window))
         return 0;
-    
+
     return 1;
 }
 
@@ -2362,7 +2362,7 @@ gui_bar_print_log ()
 {
     struct t_gui_bar *ptr_bar;
     int i, j;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         log_printf ("");
@@ -2418,7 +2418,7 @@ gui_bar_print_log ()
         log_printf ("  bar_refresh_needed . . : %d",    ptr_bar->bar_refresh_needed);
         log_printf ("  prev_bar . . . . . . . : 0x%lx", ptr_bar->prev_bar);
         log_printf ("  next_bar . . . . . . . : 0x%lx", ptr_bar->next_bar);
-        
+
         if (ptr_bar->bar_window)
             gui_bar_window_print_log (ptr_bar->bar_window);
     }

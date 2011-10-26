@@ -38,12 +38,12 @@ fifo_info_get_info_cb (void *data, const char *info_name,
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (weechat_strcasecmp (info_name, "fifo_filename") == 0)
     {
         return fifo_filename;
     }
-    
+
     return NULL;
 }
 

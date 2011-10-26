@@ -61,7 +61,7 @@ char *xfer_type_string[] =                 /* strings for types             */
 char *xfer_protocol_string[] =             /* strings for protocols         */
 { "none", "dcc"
 };
-    
+
 char *xfer_status_string[] =               /* strings for status            */
 { N_("waiting"), N_("connecting"),
   N_("active"), N_("done"), N_("failed"),
@@ -85,17 +85,17 @@ int
 xfer_valid (struct t_xfer *xfer)
 {
     struct t_xfer *ptr_xfer;
-    
+
     if (!xfer)
         return 0;
-    
+
     for (ptr_xfer = xfer_list; ptr_xfer;
          ptr_xfer = ptr_xfer->next_xfer)
     {
         if (ptr_xfer == xfer)
             return 1;
     }
-    
+
     /* xfer not found */
     return 0;
 }
@@ -113,9 +113,9 @@ xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     (void) signal;
     (void) type_data;
     (void) signal_data;
-    
+
     xfer_signal_upgrade_received = 1;
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -129,7 +129,7 @@ xfer_create_directories ()
 {
     const char *weechat_dir;
     char *dir1, *dir2;
-    
+
     /* create download directory */
     weechat_dir = weechat_info_get ("weechat_dir", "");
     if (weechat_dir)
@@ -154,13 +154,13 @@ int
 xfer_search_type (const char *type)
 {
     int i;
-    
+
     for (i = 0; i < XFER_NUM_TYPES; i++)
     {
         if (weechat_strcasecmp (xfer_type_string[i], type) == 0)
             return i;
     }
-    
+
     /* xfer type not found */
     return -1;
 }
@@ -174,13 +174,13 @@ int
 xfer_search_protocol (const char *protocol)
 {
     int i;
-    
+
     for (i = 0; i < XFER_NUM_PROTOCOLS; i++)
     {
         if (weechat_strcasecmp (xfer_protocol_string[i], protocol) == 0)
             return i;
     }
-    
+
     /* xfer protocol not found */
     return -1;
 }
@@ -194,7 +194,7 @@ xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type ty
              enum t_xfer_status status, int port)
 {
     struct t_xfer *ptr_xfer;
-    
+
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         if ((weechat_strcasecmp (ptr_xfer->plugin_name, plugin_name) == 0)
@@ -204,7 +204,7 @@ xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type ty
             && (ptr_xfer->port == port))
             return ptr_xfer;
     }
-    
+
     /* xfer not found */
     return NULL;
 }
@@ -218,7 +218,7 @@ xfer_search_by_number (int number)
 {
     struct t_xfer *ptr_xfer;
     int i;
-    
+
     i = 0;
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
@@ -226,7 +226,7 @@ xfer_search_by_number (int number)
             return ptr_xfer;
         i++;
     }
-    
+
     /* xfer not found */
     return NULL;
 }
@@ -239,16 +239,16 @@ struct t_xfer *
 xfer_search_by_buffer (struct t_gui_buffer *buffer)
 {
     struct t_xfer *ptr_xfer;
-    
+
     if (!buffer)
         return NULL;
-    
+
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         if (ptr_xfer->buffer == buffer)
             return ptr_xfer;
     }
-    
+
     /* xfer not found */
     return NULL;
 }
@@ -261,13 +261,13 @@ void
 xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
 {
     struct stat st;
-    
+
     xfer->status = status;
-    
+
     if (XFER_HAS_ENDED(xfer->status))
     {
         xfer_send_signal (xfer, "xfer_ended");
-        
+
         if (xfer->hook_fd)
         {
             weechat_unhook (xfer->hook_fd);
@@ -309,7 +309,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
                             xfer->address & 0xff);
         }
     }
-    
+
     /* remove empty file if received file failed and nothing was transfered */
     if (((xfer->status == XFER_STATUS_FAILED)
          || (xfer->status == XFER_STATUS_ABORTED))
@@ -325,10 +325,10 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
                 unlink (xfer->local_filename);
         }
     }
-    
+
     if (XFER_IS_FILE(xfer->type))
         xfer_file_calculate_speed (xfer, 1);
-    
+
     if (xfer->sock >= 0)
     {
         close (xfer->sock);
@@ -350,14 +350,14 @@ int
 xfer_port_in_use (int port)
 {
     struct t_xfer *ptr_xfer;
-    
+
     /* skip any currently used ports */
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         if ((ptr_xfer->port == port) && (!XFER_HAS_ENDED(ptr_xfer->status)))
             return 1;
     }
-    
+
     /* port not in use */
     return 0;
 }
@@ -372,7 +372,7 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     char str_long[128];
-    
+
     infolist = weechat_infolist_new ();
     if (infolist)
     {
@@ -406,7 +406,7 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
                                              str_long);
             weechat_infolist_new_var_integer (item, "port",
                                               xfer->port);
-            
+
             weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER,
                                       infolist);
         }
@@ -423,13 +423,13 @@ xfer_alloc ()
 {
     struct t_xfer *new_xfer;
     time_t time_now;
-    
+
     /* create new xfer struct */
     if ((new_xfer = malloc (sizeof (*new_xfer))) == NULL)
         return NULL;
 
     time_now = time (NULL);
-    
+
     /* default values */
     new_xfer->filename = NULL;
     new_xfer->size = 0;
@@ -438,7 +438,7 @@ xfer_alloc ()
     new_xfer->remote_nick = NULL;
     new_xfer->local_nick = NULL;
     new_xfer->charset_modifier = NULL;
-    
+
     new_xfer->type = 0;
     new_xfer->protocol = 0;
     new_xfer->status = 0;
@@ -466,7 +466,7 @@ xfer_alloc ()
     new_xfer->last_activity = 0;
     new_xfer->bytes_per_sec = 0;
     new_xfer->eta = 0;
-    
+
     new_xfer->prev_xfer = NULL;
     new_xfer->next_xfer = xfer_list;
     if (xfer_list)
@@ -474,9 +474,9 @@ xfer_alloc ()
     else
         last_xfer = new_xfer;
     xfer_list = new_xfer;
-    
+
     xfer_count++;
-    
+
     return new_xfer;
 }
 
@@ -494,7 +494,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
 {
     struct t_xfer *new_xfer;
     const char *ptr_color;
-    
+
     new_xfer = xfer_alloc ();
     if (!new_xfer)
     {
@@ -503,13 +503,13 @@ xfer_new (const char *plugin_name, const char *plugin_id,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME);
         return NULL;
     }
-    
+
     if (!xfer_buffer
         && weechat_config_boolean (xfer_config_look_auto_open_buffer))
     {
         xfer_buffer_open ();
     }
-    
+
     /* initialize new xfer */
     new_xfer->plugin_name = strdup (plugin_name);
     new_xfer->plugin_id = strdup (plugin_id);
@@ -528,14 +528,14 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->proxy = (proxy) ? strdup (proxy) : NULL;
     new_xfer->address = address;
     new_xfer->port = port;
-    
+
     new_xfer->status = XFER_STATUS_WAITING;
     new_xfer->sock = sock;
     if (local_filename)
         new_xfer->local_filename = strdup (local_filename);
     else
         xfer_file_find_filename (new_xfer);
-    
+
     /* write info message on server buffer */
     switch (type)
     {
@@ -588,14 +588,14 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_NUM_TYPES:
             break;
     }
-    
+
     if (XFER_IS_FILE(type) && (!new_xfer->local_filename))
     {
         xfer_close (new_xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         return NULL;
     }
-    
+
     if (XFER_IS_FILE(type) && (new_xfer->start_resume > 0))
     {
         weechat_printf (NULL,
@@ -607,7 +607,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
                         new_xfer->start_resume);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
-    
+
     /* connect if needed and display again xfer buffer */
     if (XFER_IS_SEND(type))
     {
@@ -618,7 +618,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
             return NULL;
         }
     }
-    
+
     if ( ( (type == XFER_TYPE_FILE_RECV)
                 && (weechat_config_boolean (xfer_config_file_auto_accept_files)) )
          || ( (type == XFER_TYPE_CHAT_RECV)
@@ -626,7 +626,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         xfer_network_accept (new_xfer);
     else
         xfer_buffer_refresh (WEECHAT_HOTLIST_PRIVATE);
-    
+
     return new_xfer;
 }
 
@@ -638,10 +638,10 @@ void
 xfer_free (struct t_xfer *xfer)
 {
     struct t_xfer *new_xfer_list;
-    
+
     if (!xfer)
         return;
-    
+
     /* remove xfer from list */
     if (last_xfer == xfer)
         last_xfer = xfer->prev_xfer;
@@ -654,7 +654,7 @@ xfer_free (struct t_xfer *xfer)
         new_xfer_list = xfer->next_xfer;
     if (xfer->next_xfer)
         (xfer->next_xfer)->prev_xfer = xfer->prev_xfer;
-    
+
     /* free data */
     if (xfer->plugin_id)
         free (xfer->plugin_id);
@@ -672,11 +672,11 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->unterminated_message);
     if (xfer->local_filename)
         free (xfer->local_filename);
-    
+
     free (xfer);
-    
+
     xfer_list = new_xfer_list;
-    
+
     xfer_count--;
     if (xfer_buffer_selected_line >= xfer_count)
         xfer_buffer_selected_line = (xfer_count == 0) ? 0 : xfer_count - 1;
@@ -704,12 +704,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     unsigned long local_addr;
     unsigned long long file_size;
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data)
     {
         weechat_printf (NULL,
@@ -717,9 +717,9 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         return WEECHAT_RC_ERROR;
     }
-    
+
     infolist = (struct t_infolist *)signal_data;
-    
+
     if (!weechat_infolist_next (infolist))
     {
         weechat_printf (NULL,
@@ -730,10 +730,10 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
 
     filename2 = NULL;
     short_filename = NULL;
-    
+
     sock = -1;
     port = 0;
-    
+
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
     str_type = weechat_infolist_string (infolist, "type");
@@ -744,7 +744,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     filename = weechat_infolist_string (infolist, "filename");
     proxy = weechat_infolist_string (infolist, "proxy");
     protocol = XFER_NO_PROTOCOL;
-    
+
     if (!plugin_name || !plugin_id || !str_type || !remote_nick || !local_nick)
     {
         weechat_printf (NULL,
@@ -761,7 +761,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, str_type);
         goto error;
     }
-    
+
     if (XFER_IS_FILE(type) && (!filename || !str_protocol))
     {
         weechat_printf (NULL,
@@ -769,7 +769,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         goto error;
     }
-    
+
     if (XFER_IS_FILE(type))
     {
         protocol = xfer_search_protocol (str_protocol);
@@ -782,17 +782,17 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             goto error;
         }
     }
-    
+
     filename2 = NULL;
     file_size = 0;
     port = 0;
-    
+
     if (type == XFER_TYPE_FILE_RECV)
     {
         filename2 = strdup (filename);
         sscanf (weechat_infolist_string (infolist, "size"), "%llu", &file_size);
     }
-    
+
     if (type == XFER_TYPE_FILE_SEND)
     {
         /* add home if filename not beginning with '/' or '~' (not for Win32) */
@@ -813,7 +813,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 goto error;
             }
-            
+
             weechat_dir = weechat_info_get ("weechat_dir", "");
             dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
             if (!dir2)
@@ -857,7 +857,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         }
         file_size = st.st_size;
     }
-    
+
     if (XFER_IS_RECV(type))
     {
         sscanf (weechat_infolist_string (infolist, "address"), "%lu", &local_addr);
@@ -867,11 +867,11 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     {
         /* get local IP address */
         sscanf (weechat_infolist_string (infolist, "address"), "%lu", &local_addr);
-        
+
         memset (&addr, 0, sizeof (struct sockaddr_in));
         addr.sin_family = AF_INET;
         addr.sin_addr.s_addr = htonl (local_addr);
-        
+
         /* look up the IP address from network_own_ip, if set */
         if (weechat_config_string(xfer_config_network_own_ip)
             && weechat_config_string(xfer_config_network_own_ip)[0])
@@ -900,7 +900,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                                 weechat_config_string (xfer_config_network_own_ip));
             }
         }
-        
+
         /* open socket for xfer */
         sock = socket (AF_INET, SOCK_STREAM, 0);
         if (sock < 0)
@@ -912,10 +912,10 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                 free (filename2);
             goto error;
         }
-        
+
         /* look for port */
         port = 0;
-        
+
         if (weechat_config_string (xfer_config_network_port_range)
             && weechat_config_string (xfer_config_network_port_range)[0])
         {
@@ -927,7 +927,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                 port = port_start;
                 if (args == 1)
                     port_end = port_start;
-                
+
                 /* loop through the entire allowed port range */
                 while (port <= port_end)
                 {
@@ -940,12 +940,12 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
                     }
                     port++;
                 }
-                
+
                 if (port > port_end)
                     port = -1;
             }
         }
-        
+
         if (port == 0)
         {
             /* find port automatically */
@@ -959,7 +959,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             else
                 port = -1;
         }
-        
+
         if (port == -1)
         {
             /* Could not find any port to bind */
@@ -972,7 +972,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             goto error;
         }
     }
-    
+
     if (XFER_IS_FILE(type))
     {
         /* extract short filename (without path) */
@@ -981,7 +981,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             short_filename = strdup (pos + 1);
         else
             short_filename = strdup (filename2);
-        
+
         /* convert spaces to underscore if asked and needed */
         pos = short_filename;
         while (pos[0])
@@ -1003,7 +1003,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             filename2 = NULL;
         }
     }
-    
+
     /* add xfer entry and listen to socket if type is file or chat "send" */
     if (XFER_IS_FILE(type))
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
@@ -1014,7 +1014,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
         ptr_xfer = xfer_new (plugin_name, plugin_id, type, protocol,
                              remote_nick, local_nick, charset_modifier, NULL,
                              0, proxy, local_addr, port, sock, NULL);
-    
+
     if (!ptr_xfer)
     {
         weechat_printf (NULL,
@@ -1027,19 +1027,19 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
             free (filename2);
         goto error;
     }
-    
+
     /* send signal if type is file or chat "send" */
     if (XFER_IS_SEND(ptr_xfer->type) && !XFER_HAS_ENDED(ptr_xfer->status))
         xfer_send_signal (ptr_xfer, "xfer_send_ready");
-    
+
     if (short_filename)
         free (short_filename);
     if (filename2)
         free (filename2);
-    
+
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
-    
+
 error:
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_ERROR;
@@ -1058,12 +1058,12 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
     unsigned long long start_resume;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data)
     {
         weechat_printf (NULL,
@@ -1072,9 +1072,9 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         "xfer_start_resume");
         return WEECHAT_RC_ERROR;
     }
-    
+
     infolist = (struct t_infolist *)signal_data;
-    
+
     if (!weechat_infolist_next (infolist))
     {
         weechat_printf (NULL,
@@ -1098,9 +1098,9 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         "xfer_start_resume");
         goto error;
     }
-    
+
     sscanf (str_start_resume, "%llu", &start_resume);
-    
+
     ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_RECV,
                             XFER_STATUS_CONNECTING, port);
     if (ptr_xfer)
@@ -1120,10 +1120,10 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
     }
-    
+
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
-    
+
 error:
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_ERROR;
@@ -1143,12 +1143,12 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     const char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
     unsigned long long start_resume;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data)
     {
         weechat_printf (NULL,
@@ -1157,9 +1157,9 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         "xfer_accept_resume");
         return WEECHAT_RC_ERROR;
     }
-    
+
     infolist = (struct t_infolist *)signal_data;
-    
+
     if (!weechat_infolist_next (infolist))
     {
         weechat_printf (NULL,
@@ -1183,9 +1183,9 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         "xfer_accept_resume");
         goto error;
     }
-    
+
     sscanf (str_start_resume, "%llu", &start_resume);
-    
+
     ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND,
                             XFER_STATUS_CONNECTING, port);
     if (ptr_xfer)
@@ -1195,7 +1195,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         ptr_xfer->start_resume = start_resume;
         ptr_xfer->last_check_pos = start_resume;
         xfer_send_signal (ptr_xfer, "xfer_send_accept_resume");
-        
+
         weechat_printf (NULL,
                         _("%s: file %s resumed at position %llu"),
                         XFER_PLUGIN_NAME,
@@ -1212,10 +1212,10 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
                         port, start_resume);
     }
-    
+
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK;
-    
+
 error:
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_ERROR;
@@ -1231,14 +1231,14 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
 {
     struct t_infolist_item *ptr_item;
     char value[128];
-    
+
     if (!infolist || !xfer)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!weechat_infolist_new_var_string (ptr_item, "plugin_name", xfer->plugin_name))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "plugin_id", xfer->plugin_id))
@@ -1328,7 +1328,7 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
     snprintf (value, sizeof (value), "%llu", xfer->eta);
     if (!weechat_infolist_new_var_string (ptr_item, "eta", value))
         return 0;
-    
+
     return 1;
 }
 
@@ -1340,7 +1340,7 @@ void
 xfer_print_log ()
 {
     struct t_xfer *ptr_xfer;
-    
+
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         weechat_log_printf ("");
@@ -1361,7 +1361,7 @@ xfer_print_log ()
         weechat_log_printf ("  proxy . . . . . . . : '%s'",  ptr_xfer->proxy);
         weechat_log_printf ("  address . . . . . . : %lu",   ptr_xfer->address);
         weechat_log_printf ("  port. . . . . . . . : %d",    ptr_xfer->port);
-        
+
         weechat_log_printf ("  status. . . . . . . : %d (%s)",
                             ptr_xfer->status,
                             xfer_status_string[ptr_xfer->status]);
@@ -1406,21 +1406,21 @@ xfer_debug_dump_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, XFER_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",
                             weechat_plugin->name);
-        
+
         xfer_print_log ();
-        
+
         weechat_log_printf ("");
         weechat_log_printf ("***** End of \"%s\" plugin dump *****",
                             weechat_plugin->name);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1432,29 +1432,29 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int i, upgrading;
-    
+
     weechat_plugin = plugin;
-    
+
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;
-    
+
     if (xfer_config_read () < 0)
         return WEECHAT_RC_ERROR;
-    
+
     xfer_create_directories ();
-    
+
     xfer_command_init ();
-    
+
     /* hook some signals */
     weechat_hook_signal ("upgrade", &xfer_signal_upgrade_cb, NULL);
     weechat_hook_signal ("xfer_add", &xfer_add_cb, NULL);
     weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
     weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);
     weechat_hook_signal ("debug_dump", &xfer_debug_dump_cb, NULL);
-    
+
     /* hook completions */
     xfer_completion_init ();
-    
+
     xfer_info_init ();
 
     /* look at arguments */
@@ -1464,10 +1464,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
             upgrading = 1;
     }
-    
+
     if (upgrading)
         xfer_upgrade_load ();
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1479,12 +1479,12 @@ int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) plugin;
-    
+
     xfer_config_write ();
-    
+
     if (xfer_signal_upgrade_received)
         xfer_upgrade_save ();
     else
@@ -1508,6 +1508,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }

@@ -66,17 +66,17 @@ irc_color_decode (const char *string, int keep_colors)
     int out_length, length, out_pos;
     char str_fg[3], str_bg[3], str_color[128];
     int fg, bg, bold, reverse, italic, underline, rc;
-    
+
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
-    
+
     bold = 0;
     reverse = 0;
     italic = 0;
     underline = 0;
-    
+
     ptr_string = (unsigned char *)string;
     out[0] = '\0';
     while (ptr_string && ptr_string[0])
@@ -197,7 +197,7 @@ irc_color_decode (const char *string, int keep_colors)
                 break;
         }
     }
-    
+
     return (char *)out;
 }
 
@@ -212,12 +212,12 @@ irc_color_decode_for_user_entry (const char *string)
 {
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;
-    
+
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
-    
+
     ptr_string = (unsigned char *)string;
     out_pos = 0;
     while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
@@ -261,9 +261,9 @@ irc_color_decode_for_user_entry (const char *string)
                 ptr_string += length;
         }
     }
-    
+
     out[out_pos] = '\0';
-    
+
     return (char *)out;
 }
 
@@ -280,12 +280,12 @@ irc_color_encode (const char *string, int keep_colors)
 {
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;
-    
+
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
-    
+
     ptr_string = (unsigned char *)string;
     out_pos = 0;
     while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
@@ -356,9 +356,9 @@ irc_color_encode (const char *string, int keep_colors)
                 ptr_string += length;
         }
     }
-    
+
     out[out_pos] = '\0';
-    
+
     return (char *)out;
 }
 
@@ -374,18 +374,18 @@ irc_color_modifier_cb (void *data, const char *modifier,
                        const char *modifier_data, const char *string)
 {
     int keep_colors;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     keep_colors = (modifier_data && (strcmp (modifier_data, "1") == 0)) ? 1 : 0;
-    
+
     if (strcmp (modifier, "irc_color_decode") == 0)
         return irc_color_decode (string, keep_colors);
-    
+
     if (strcmp (modifier, "irc_color_encode") == 0)
         return irc_color_encode (string, keep_colors);
-    
+
     /* unknown modifier */
     return NULL;
 }

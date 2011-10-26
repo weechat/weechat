@@ -59,14 +59,14 @@ gui_key_default_bind (int context, const char *key, const char *command)
 {
     struct t_gui_key *ptr_key;
     char *internal_code;
-    
+
     internal_code = gui_key_get_internal_code (key);
-    
+
     ptr_key = gui_key_search (gui_keys[context],
                               (internal_code) ? internal_code : key);
     if (!ptr_key)
         gui_key_new (NULL, context, key, command);
-    
+
     if (internal_code)
         free (internal_code);
 }
@@ -205,7 +205,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-<         */ "meta-<",             "/input jump_previously_visited_buffer");
         BIND(/* m->         */ "meta->",             "/input jump_next_visited_buffer");
         BIND(/* m-m         */ "meta-m",             "/mouse toggle");
-        
+
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
         for (i = 1; i < 100; i++)
         {
@@ -292,7 +292,7 @@ gui_key_flush ()
     static int length_key_str = 0;
     char key_temp[2], *key_utf, *input_old, *ptr_char, *next_char, *ptr_error;
     char utf_partial_char[16];
-    
+
     /*
      * if there's no paste pending, then we use buffer and do actions
      * according to keys
@@ -301,13 +301,13 @@ gui_key_flush ()
     {
         if (gui_key_buffer_size > 0)
             gui_key_last_activity_time = time (NULL);
-        
+
         for (i = 0; i < gui_key_buffer_size; i++)
         {
             key = gui_key_buffer[i];
             insert_ok = 1;
             utf_partial_char[0] = '\0';
-            
+
             if (gui_mouse_event_pending || (key < 32) || (key == 127))
             {
                 if (gui_mouse_event_pending)
@@ -340,7 +340,7 @@ gui_key_flush ()
                     key_str[length_key_str] = (char)key;
                     key_str[length_key_str + 1] = '\0';
                     length_key_str++;
-                    
+
                     /*
                      * replace invalid chars by "?", but NOT last char of
                      * string, if it is incomplete UTF-8 char (another char
@@ -385,13 +385,13 @@ gui_key_flush ()
             {
                 hook_signal_send ("key_pressed",
                                   WEECHAT_HOOK_SIGNAL_STRING, key_str);
-                
+
                 if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                     input_old = (gui_current_window->buffer->input_buffer) ?
                         strdup (gui_current_window->buffer->input_buffer) : strdup ("");
                 else
                     input_old = NULL;
-                
+
                 if ((gui_key_pressed (key_str) != 0) && (insert_ok)
                     && (!gui_cursor_mode))
                 {
@@ -402,7 +402,7 @@ gui_key_flush ()
                         gui_completion_stop (gui_current_window->buffer->completion, 0);
                     gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
                 }
-                
+
                 /* incremental text search in buffer */
                 if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                     && ((input_old == NULL)
@@ -436,11 +436,11 @@ gui_key_flush ()
                         gui_window_search_restart (gui_current_window);
                     }
                 }
-                
+
                 if (input_old)
                     free (input_old);
             }
-            
+
             /* prepare incomplete UTF-8 char for next iteration */
             if (utf_partial_char[0])
                 strcpy (key_str, utf_partial_char);
@@ -448,7 +448,7 @@ gui_key_flush ()
                 key_str[0] = '\0';
             length_key_str = strlen (key_str);
         }
-        
+
         gui_key_buffer_reset ();
     }
 }
@@ -462,11 +462,11 @@ gui_key_read_cb (void *data, int fd)
 {
     int ret, i, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
     unsigned char buffer[4096];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) fd;
-    
+
     accept_paste = 0;
     cancel_paste = 0;
     text_added_to_buffer = 0;
@@ -484,11 +484,11 @@ gui_key_read_cb (void *data, int fd)
         }
         if (ret <= 0)
             return WEECHAT_RC_OK;
-        
+
         /* ctrl-Y: accept paste */
         if (buffer[0] == 25)
             accept_paste = 1;
-        
+
         /* ctrl-N: cancel paste */
         if (buffer[0] == 14)
             cancel_paste = 1;
@@ -506,7 +506,7 @@ gui_key_read_cb (void *data, int fd)
         }
         if (ret < 0)
             return WEECHAT_RC_OK;
-        
+
         for (i = 0; i < ret; i++)
         {
             /* add all chars (ignore a '\n' after a '\r') */
@@ -517,10 +517,10 @@ gui_key_read_cb (void *data, int fd)
                 gui_key_buffer_add (buffer[i]);
             }
         }
-        
+
         text_added_to_buffer = 1;
     }
-    
+
     if (gui_key_paste_pending)
     {
         /* user is ok for pasting text, let's paste! */
@@ -548,8 +548,8 @@ gui_key_read_cb (void *data, int fd)
             }
         }
     }
-    
+
     gui_key_flush ();
-    
+
     return WEECHAT_RC_OK;
 }

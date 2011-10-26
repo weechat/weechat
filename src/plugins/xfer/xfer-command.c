@@ -41,12 +41,12 @@ xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) argc;
     (void) argv;
-    
+
     ptr_xfer = xfer_search_by_buffer (buffer);
 
     if (!ptr_xfer)
@@ -57,7 +57,7 @@ xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
                         weechat_buffer_get_string (buffer, "name"));
         return WEECHAT_RC_OK;
     }
-    
+
     if (!XFER_HAS_ENDED(ptr_xfer->status))
     {
         xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\n",
@@ -71,7 +71,7 @@ xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
                              weechat_color ("chat"),
                              (argv_eol[1]) ? argv_eol[1] : "");
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -87,7 +87,7 @@ xfer_command_xfer_list (int full)
     char date[128];
     unsigned long long pct_complete;
     struct tm *date_tmp;
-    
+
     if (xfer_list)
     {
         weechat_printf (NULL, "");
@@ -107,7 +107,7 @@ xfer_command_xfer_list (int full)
                 }
                 else
                     pct_complete = (unsigned long long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
-                
+
                 weechat_printf (NULL,
                                 _("%3d. %s (%s), file: \"%s\" (local: "
                                   "\"%s\"), %s %s, status: %s%s%s "
@@ -146,7 +146,7 @@ xfer_command_xfer_list (int full)
                                         xfer_config_color_status[ptr_xfer->status])),
                                 _(xfer_status_string[ptr_xfer->status]));
             }
-            
+
             if (full)
             {
                 /* second line of xfer info */
@@ -202,20 +202,20 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
         xfer_command_xfer_list (0);
         return WEECHAT_RC_OK;
     }
-    
+
     if ((argc > 1) && (weechat_strcasecmp (argv[1], "listfull") == 0))
     {
         xfer_command_xfer_list (1);
         return WEECHAT_RC_OK;
     }
-    
+
     if (!xfer_buffer)
         xfer_buffer_open ();
-    
+
     if (xfer_buffer)
     {
         weechat_buffer_set (xfer_buffer, "display", "1");
-        
+
         if (argc > 1)
         {
             if (strcmp (argv[1], "up") == 0)
@@ -230,9 +230,9 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
             }
         }
     }
-    
+
     xfer_buffer_refresh (NULL);
-    
+
     return WEECHAT_RC_OK;
 }
 

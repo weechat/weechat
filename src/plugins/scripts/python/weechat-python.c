@@ -83,12 +83,12 @@ weechat_python_set_python2_bin ()
     char *versions[] = { "2", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", NULL };
     int num_paths, i, j, rc;
     struct stat stat_buf;
-    
+
     python2_bin = NULL;
-    
+
     dir_separator = weechat_info_get ("dir_separator", "");
     path = getenv ("PATH");
-    
+
     if (dir_separator && path)
     {
         paths = weechat_string_split (path, ":", 0, 0, &num_paths);
@@ -114,7 +114,7 @@ weechat_python_set_python2_bin ()
             weechat_string_free_split (paths);
         }
     }
-    
+
     if (!python2_bin)
         python2_bin = strdup ("python");
 }
@@ -134,14 +134,14 @@ weechat_python_hashtable_map_cb (void *data,
 
     /* make C compiler happy */
     (void) hashtable;
-    
+
     dict = (PyObject *)data;
-    
+
     dict_key = Py_BuildValue ("s", (const char *)key);
     dict_value = Py_BuildValue ("s", (const char *)value);
-    
+
     PyDict_SetItem (dict, dict_key, dict_value);
-    
+
     Py_DECREF (dict_key);
     Py_DECREF (dict_value);
 }
@@ -155,18 +155,18 @@ PyObject *
 weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
 {
     PyObject *dict;
-    
+
     dict = PyDict_New ();
     if (!dict)
     {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    
+
     weechat_hashtable_map (hashtable,
                            &weechat_python_hashtable_map_cb,
                            dict);
-    
+
     return dict;
 }
 
@@ -186,7 +186,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
     PyObject *key, *value;
     Py_ssize_t pos;
     char *str_key, *str_value;
-    
+
     hashtable = weechat_hashtable_new (hashtable_size,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
@@ -194,7 +194,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
                                        NULL);
     if (!hashtable)
         return NULL;
-    
+
     pos = 0;
     while (PyDict_Next (dict, &pos, &key, &value))
     {
@@ -202,7 +202,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
         str_value = PyString_AsString (value);
         weechat_hashtable_set (hashtable, str_key, str_value);
     }
-    
+
     return hashtable;
 }
 
@@ -223,9 +223,9 @@ weechat_python_exec (struct t_plugin_script *script,
     PyObject *rc;
     void *argv2[16], *ret_value;
     int i, argc, *ret_int;
-    
+
     /* PyEval_AcquireLock (); */
-    
+
     old_python_current_script = python_current_script;
     old_interpreter = NULL;
     if (script->interpreter)
@@ -233,11 +233,11 @@ weechat_python_exec (struct t_plugin_script *script,
         old_interpreter = PyThreadState_Swap (NULL);
         PyThreadState_Swap (script->interpreter);
     }
-    
+
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
     evFunc = PyDict_GetItemString (evDict, function);
-    
+
     if ( !(evFunc && PyCallable_Check (evFunc)) )
     {
         weechat_printf (NULL,
@@ -248,7 +248,7 @@ weechat_python_exec (struct t_plugin_script *script,
             PyThreadState_Swap (old_interpreter);
         return NULL;
     }
-    
+
     python_current_script = script;
 
     if (argv && argv[0])
@@ -272,16 +272,16 @@ weechat_python_exec (struct t_plugin_script *script,
     {
         rc = PyObject_CallFunction (evFunc, NULL);
     }
-    
+
     ret_value = NULL;
-    
+
     /*
      * ugly hack : rc = NULL while 'return weechat.WEECHAT_RC_OK ....
      * because of '#define WEECHAT_RC_OK 0'
      */
     if (rc ==  NULL)
         rc = PyInt_FromLong (0);
-    
+
     if (PyErr_Occurred())
     {
         PyErr_Print ();
@@ -316,21 +316,21 @@ weechat_python_exec (struct t_plugin_script *script,
                                          "a valid value"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
     }
-    
+
     if (ret_value == NULL)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error in function \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
     }
-    
+
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
-    
+
     python_current_script = old_python_current_script;
-    
+
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
-    
+
     return ret_value;
 }
 
@@ -342,10 +342,10 @@ static PyObject *
 weechat_python_output (PyObject *self, PyObject *args)
 {
     char *msg, *m, *p;
-    
+
     /* make C compiler happy */
     (void) self;
-    
+
     msg = NULL;
 
     if (!PyArg_ParseTuple (args, "s", &msg))
@@ -385,7 +385,7 @@ weechat_python_output (PyObject *self, PyObject *args)
         else
             strcat (python_buffer_output, m);
     }
-    
+
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -415,7 +415,7 @@ weechat_python_load (const char *filename)
     const char *weechat_home;
     char *p_home;
     int len;
-    
+
     if ((fp = fopen (filename, "r")) == NULL)
     {
         weechat_printf (NULL,
@@ -423,21 +423,21 @@ weechat_python_load (const char *filename)
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
         return 0;
     }
-    
+
     if ((weechat_python_plugin->debug >= 1) || !python_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
                         PYTHON_PLUGIN_NAME, filename);
     }
-    
+
     python_current_script = NULL;
     python_registered_script = NULL;
-    
+
     /* PyEval_AcquireLock (); */
     python_current_interpreter = Py_NewInterpreter ();
     PySys_SetArgv(1, argv);
-    
+
     if (python_current_interpreter == NULL)
     {
         weechat_printf (NULL,
@@ -448,9 +448,9 @@ weechat_python_load (const char *filename)
         /* PyEval_ReleaseLock (); */
         return 0;
     }
-    
+
     PyThreadState_Swap (python_current_interpreter);
-    
+
     weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
 
     if ( weechat_module == NULL)
@@ -460,7 +460,7 @@ weechat_python_load (const char *filename)
                                          "module"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         fclose (fp);
-        
+
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
 
@@ -486,13 +486,13 @@ weechat_python_load (const char *filename)
             free (p_home);
         }
     }
-    
+
     /* define some constants */
     weechat_dict = PyModule_GetDict(weechat_module);
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK", PyInt_FromLong((long) WEECHAT_RC_OK));
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_EAT", PyInt_FromLong((long) WEECHAT_RC_OK_EAT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_ERROR", PyInt_FromLong((long) WEECHAT_RC_ERROR));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_READ_OK", PyInt_FromLong((long) WEECHAT_CONFIG_READ_OK));
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_READ_MEMORY_ERROR", PyInt_FromLong((long) WEECHAT_CONFIG_READ_MEMORY_ERROR));
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_READ_FILE_NOT_FOUND", PyInt_FromLong((long) WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
@@ -507,19 +507,19 @@ weechat_python_load (const char *filename)
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", PyInt_FromLong((long) WEECHAT_CONFIG_OPTION_UNSET_OK_RESET));
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", PyInt_FromLong((long) WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED));
     PyDict_SetItemString(weechat_dict, "WEECHAT_CONFIG_OPTION_UNSET_ERROR", PyInt_FromLong((long) WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_SORT", PyString_FromString(WEECHAT_LIST_POS_SORT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_BEGINNING", PyString_FromString(WEECHAT_LIST_POS_BEGINNING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_END", PyString_FromString(WEECHAT_LIST_POS_END));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_LOW", PyString_FromString(WEECHAT_HOTLIST_LOW));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_MESSAGE", PyString_FromString(WEECHAT_HOTLIST_MESSAGE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_PRIVATE", PyString_FromString(WEECHAT_HOTLIST_PRIVATE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_HIGHLIGHT", PyString_FromString(WEECHAT_HOTLIST_HIGHLIGHT));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_PROCESS_RUNNING", PyInt_FromLong((long) WEECHAT_HOOK_PROCESS_RUNNING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_PROCESS_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_PROCESS_ERROR));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_OK", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_OK));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
@@ -529,11 +529,11 @@ weechat_python_load (const char *filename)
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
-    
+
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_STRING", PyString_FromString(WEECHAT_HOOK_SIGNAL_STRING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyString_FromString(WEECHAT_HOOK_SIGNAL_INT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_POINTER", PyString_FromString(WEECHAT_HOOK_SIGNAL_POINTER));
-    
+
     weechat_outputs = Py_InitModule("weechatOutputs",
                                     weechat_python_output_funcs);
     if (weechat_outputs == NULL)
@@ -558,9 +558,9 @@ weechat_python_load (const char *filename)
                             weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         }
     }
-    
+
     python_current_script_filename = filename;
-    
+
     if (PyRun_SimpleFile (fp, filename) != 0)
     {
         weechat_printf (NULL,
@@ -570,7 +570,7 @@ weechat_python_load (const char *filename)
 
         if (PyErr_Occurred ())
             PyErr_Print ();
-        
+
         /* if script was registered, removing from list */
         if (python_current_script != NULL)
         {
@@ -578,10 +578,10 @@ weechat_python_load (const char *filename)
                            &python_scripts, &last_python_script,
                            python_current_script);
         }
-        
+
         Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
-        
+
         return 0;
     }
 
@@ -589,14 +589,14 @@ weechat_python_load (const char *filename)
         PyErr_Print ();
 
     fclose (fp);
-    
+
     if (!python_registered_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
-        
+
         if (PyErr_Occurred ())
             PyErr_Print ();
         Py_EndInterpreter (python_current_interpreter);
@@ -605,10 +605,10 @@ weechat_python_load (const char *filename)
         return 0;
     }
     python_current_script = python_registered_script;
-    
+
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
-    
+
     /*
      * set input/close callbacks for buffers created by this script
      * (to restore callbacks after upgrade)
@@ -618,7 +618,7 @@ weechat_python_load (const char *filename)
                                  python_current_script,
                                  &weechat_python_api_buffer_input_data_cb,
                                  &weechat_python_api_buffer_close_cb);
-    
+
     return 1;
 }
 
@@ -631,7 +631,7 @@ weechat_python_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     weechat_python_load (filename);
 }
 
@@ -645,14 +645,14 @@ weechat_python_unload (struct t_plugin_script *script)
     int *rc;
     void *interpreter;
     PyThreadState *old_interpreter;
-    
+
     if ((weechat_python_plugin->debug >= 1) || !python_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),
                         PYTHON_PLUGIN_NAME, script->name);
     }
-    
+
     if (script->shutdown_func && script->shutdown_func[0])
     {
         rc = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
@@ -660,20 +660,20 @@ weechat_python_unload (struct t_plugin_script *script)
         if (rc)
             free (rc);
     }
-    
+
     old_interpreter = PyThreadState_Swap (NULL);
     interpreter = script->interpreter;
-    
+
     if (python_current_script == script)
         python_current_script = (python_current_script->prev_script) ?
             python_current_script->prev_script : python_current_script->next_script;
-    
+
     script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
                    script);
-    
+
     PyThreadState_Swap (interpreter);
     Py_EndInterpreter (interpreter);
-    
+
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
 }
@@ -686,7 +686,7 @@ void
 weechat_python_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
-    
+
     ptr_script = script_search (weechat_python_plugin, python_scripts, name);
     if (ptr_script)
     {
@@ -725,7 +725,7 @@ weechat_python_reload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     char *filename;
-    
+
     ptr_script = script_search (weechat_python_plugin, python_scripts, name);
     if (ptr_script)
     {
@@ -757,7 +757,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
                            int argc, char **argv, char **argv_eol)
 {
     char *path_script;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
@@ -833,7 +833,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
                             "python");
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -850,9 +850,9 @@ weechat_python_completion_cb (void *data, const char *completion_item,
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     script_completion (weechat_python_plugin, completion, python_scripts);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -867,12 +867,12 @@ weechat_python_info_cb (void *data, const char *info_name,
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (weechat_strcasecmp (info_name, "python2_bin") == 0)
     {
         return python2_bin;
     }
-    
+
     return NULL;
 }
 
@@ -886,17 +886,17 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "python_script") == 0)
     {
         return script_infolist_list_scripts (weechat_python_plugin,
                                              python_scripts, pointer,
                                              arguments);
     }
-    
+
     return NULL;
 }
 
@@ -913,13 +913,13 @@ weechat_python_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, PYTHON_PLUGIN_NAME) == 0))
     {
         script_print_log (weechat_python_plugin, python_scripts);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -937,10 +937,10 @@ weechat_python_signal_buffer_closed_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (signal_data)
         script_remove_buffer_callbacks (python_scripts, signal_data);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -972,7 +972,7 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
                                   &python_action_remove_list);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -988,7 +988,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         if (strcmp (signal, "python_script_install") == 0)
@@ -1008,7 +1008,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
                                 &python_action_remove_list);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1020,7 +1020,7 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     weechat_python_plugin = plugin;
-    
+
     /*
      * hook info to get path to python 2.x interpreter
      * (some scripts using hook_process need that)
@@ -1030,10 +1030,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                        N_("path to python 2.x interpreter"),
                        NULL,
                        &weechat_python_info_cb, NULL);
-    
+
     /* init stdout/stderr buffer */
     python_buffer_output[0] = '\0';
-    
+
     Py_Initialize ();
     if (Py_IsInitialized () == 0)
     {
@@ -1043,7 +1043,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
-    
+
     PyEval_InitThreads();
     /* python_mainThreadState = PyThreadState_Swap(NULL); */
     python_mainThreadState = PyEval_SaveThread();
@@ -1070,10 +1070,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_python_signal_script_action_cb,
                  &weechat_python_load_cb);
     python_quiet = 0;
-    
+
     script_display_short_list (weechat_python_plugin,
                                python_scripts);
-    
+
     /* init ok */
     return WEECHAT_RC_OK;
 }
@@ -1089,7 +1089,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     python_quiet = 1;
     script_end (plugin, &python_scripts, &weechat_python_unload_all);
     python_quiet = 0;
-    
+
     /* free Python interpreter */
     if (python_mainThreadState != NULL)
     {
@@ -1098,7 +1098,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         /* PyEval_ReleaseLock (); */
         python_mainThreadState = NULL;
     }
-    
+
     Py_Finalize ();
     if (Py_IsInitialized () != 0)
     {
@@ -1106,7 +1106,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
                         weechat_gettext ("%s%s: unable to free interpreter"),
                         weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
     }
-    
+
     /* free some data */
     if (python2_bin)
         free (python2_bin);
@@ -1114,6 +1114,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (python_action_install_list);
     if (python_action_remove_list)
         free (python_action_remove_list);
-    
+
     return WEECHAT_RC_OK;
 }

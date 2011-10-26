@@ -38,7 +38,7 @@ struct t_script_callback *
 script_callback_alloc ()
 {
     struct t_script_callback *new_script_callback;
-    
+
     new_script_callback = malloc (sizeof (*new_script_callback));
     if (new_script_callback)
     {
@@ -54,7 +54,7 @@ script_callback_alloc ()
         new_script_callback->upgrade_file = NULL;
         return new_script_callback;
     }
-    
+
     return NULL;
 }
 
@@ -121,9 +121,9 @@ script_callback_remove (struct t_plugin_script *script,
             script_callback->prev_callback;
     if (script->callbacks == script_callback)
         script->callbacks = script_callback->next_callback;
-    
+
     script_callback_free_data (script_callback);
-    
+
     free (script_callback);
 }
 

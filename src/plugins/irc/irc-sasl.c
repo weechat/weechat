@@ -51,7 +51,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
 {
     char *string, *answer_base64;
     int length_username, length;
-    
+
     answer_base64 = NULL;
     length_username = strlen (sasl_username);
     length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
@@ -62,14 +62,14 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
                   sasl_username, sasl_username, sasl_password);
         string[length_username] = '\0';
         string[(length_username * 2) + 1] = '\0';
-        
+
         answer_base64 = malloc (length * 4);
         if (answer_base64)
             weechat_string_encode_base64 (string, length - 1, answer_base64);
-        
+
         free (string);
     }
-    
+
     return answer_base64;
 }
 
@@ -101,7 +101,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     gcry_mpi_t data_prime_number, data_generator_number, data_server_pub_key;
     gcry_mpi_t pub_key, priv_key, secret_mpi;
     gcry_cipher_hd_t gcrypt_handle;
-    
+
     data = NULL;
     secret_bin = NULL;
     public_bin = NULL;
@@ -109,12 +109,12 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     password_crypted = NULL;
     answer = NULL;
     answer_base64 = NULL;
-    
+
     /* decode data */
     data = malloc (strlen (data_base64) + 1);
     length_data = weechat_string_decode_base64 (data_base64, data);
     ptr_data = (unsigned char *)data;
-    
+
     /* extract prime number */
     size = ntohs ((((unsigned int)ptr_data[1]) << 8) | ptr_data[0]);
     ptr_data += 2;
@@ -126,7 +126,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     num_bits_prime_number = gcry_mpi_get_nbits (data_prime_number);
     ptr_data += size;
     length_data -= size;
-    
+
     /* extract generator number */
     size = ntohs ((((unsigned int)ptr_data[1]) << 8) | ptr_data[0]);
     ptr_data += 2;
@@ -137,7 +137,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     gcry_mpi_scan (&data_generator_number, GCRYMPI_FMT_USG, ptr_data, size, NULL);
     ptr_data += size;
     length_data -= size;
-    
+
     /* extract server-generated public key */
     size = ntohs ((((unsigned int)ptr_data[1]) << 8) | ptr_data[0]);
     ptr_data += 2;
@@ -146,14 +146,14 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
         goto end;
     data_server_pub_key = gcry_mpi_new (size * 8);
     gcry_mpi_scan (&data_server_pub_key, GCRYMPI_FMT_USG, ptr_data, size, NULL);
-    
+
     /* generate keys */
     pub_key = gcry_mpi_new (num_bits_prime_number);
     priv_key = gcry_mpi_new (num_bits_prime_number);
     gcry_mpi_randomize (priv_key, num_bits_prime_number, GCRY_STRONG_RANDOM);
     /* pub_key = (g ^ priv_key) % p */
     gcry_mpi_powm (pub_key, data_generator_number, priv_key, data_prime_number);
-    
+
     /* compute secret_bin */
     length_key = num_bits_prime_number / 8;
     secret_bin = malloc (length_key);
@@ -162,12 +162,12 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     gcry_mpi_powm (secret_mpi, data_server_pub_key, priv_key, data_prime_number);
     gcry_mpi_print (GCRYMPI_FMT_USG, secret_bin, length_key,
                     &num_written, secret_mpi);
-    
+
     /* create public_bin */
     public_bin = malloc (length_key);
     gcry_mpi_print (GCRYMPI_FMT_USG, public_bin, length_key,
                     &num_written, pub_key);
-    
+
     /* create password buffers (clear and crypted) */
     length_password = strlen (sasl_password) +
         ((8 - (strlen (sasl_password) % 8)) % 8);
@@ -176,7 +176,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     memset (password_clear, 0, length_password);
     memset (password_crypted, 0, length_password);
     memcpy (password_clear, sasl_password, strlen (sasl_password));
-    
+
     /* crypt password using blowfish */
     if (gcry_cipher_open (&gcrypt_handle, GCRY_CIPHER_BLOWFISH,
                           GCRY_CIPHER_MODE_ECB, 0) != 0)
@@ -187,7 +187,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                              password_crypted, length_password,
                              password_clear, length_password) != 0)
         goto end;
-    
+
     /*
      * build answer for server, it is concatenation of:
      *   1. key length (2 bytes)
@@ -206,12 +206,12 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     memcpy (ptr_answer, sasl_username, length_username + 1);
     ptr_answer += length_username + 1;
     memcpy (ptr_answer, password_crypted, length_password);
-    
+
     /* encode answer to base64 */
     answer_base64 = malloc (length_answer * 4);
     if (answer_base64)
         weechat_string_encode_base64 (answer, length_answer, answer_base64);
-    
+
 end:
     if (data)
         free (data);
@@ -225,14 +225,14 @@ end:
         free (password_crypted);
     if (answer)
         free (answer);
-    
+
     return answer_base64;
 #else
     /* make C compiler happy */
     (void) data_base64;
     (void) sasl_username;
     (void) sasl_password;
-    
+
     return NULL;
 #endif
 }

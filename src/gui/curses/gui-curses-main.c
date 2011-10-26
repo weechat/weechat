@@ -73,10 +73,10 @@ gui_main_pre_init (int *argc, char **argv[])
     /* make C compiler happy */
     (void) argc;
     (void) argv;
-    
+
     /* pre-init colors */
     gui_color_pre_init ();
-    
+
     /* init some variables for chat area */
     gui_chat_init ();
 }
@@ -91,68 +91,68 @@ gui_main_init ()
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_win;
-    
+
     initscr ();
-    
+
     if (CONFIG_BOOLEAN(config_look_eat_newline_glitch))
         gui_term_set_eat_newline_glitch (0);
-    
+
     curs_set (1);
     noecho ();
     nodelay (stdscr, TRUE);
     raw ();
-    
+
     gui_color_init ();
-    
+
     /* build prefixes according to config */
     gui_chat_prefix_build ();
-    
+
     refresh ();
-    
+
     gui_term_cols  = COLS;
     gui_term_lines = LINES;
-    
+
     gui_window_read_terminal_size ();
-    
+
     /* init clipboard buffer */
     gui_input_clipboard = NULL;
-    
+
     /* get time length */
     gui_chat_time_length = gui_chat_get_time_length ();
-    
+
     /* init bar items */
     gui_bar_item_init ();
-    
+
     gui_init_ok = 0;
-    
+
     /* create core buffer */
     ptr_buffer = gui_buffer_new (NULL, GUI_BUFFER_MAIN,
                                  NULL, NULL, NULL, NULL);
     if (ptr_buffer)
     {
         gui_init_ok = 1;
-        
+
         ptr_buffer->num_displayed = 1;
-        
+
         /* set short name */
         if (!ptr_buffer->short_name)
             ptr_buffer->short_name = strdup (GUI_BUFFER_MAIN);
-        
+
         /* set title for core buffer */
         gui_buffer_set_title (ptr_buffer,
                               "WeeChat " PACKAGE_VERSION " "
                               WEECHAT_COPYRIGHT_DATE " - " WEECHAT_WEBSITE);
-        
+
         /* create main window (using full space) */
         if (gui_window_new (NULL, ptr_buffer, 0, 0,
                             gui_term_cols, gui_term_lines, 100, 100))
         {
             gui_current_window = gui_windows;
-            
+
             if (CONFIG_BOOLEAN(config_look_set_title))
                 gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
         }
-        
+
         /*
          * create bar windows for root bars (they were read from config,
          * but no window was created, GUI was not initialized)
@@ -172,7 +172,7 @@ gui_main_init ()
             gui_bar_window_create_win (ptr_bar_win);
         }
     }
-    
+
     if (CONFIG_BOOLEAN(config_look_mouse))
         gui_mouse_enable ();
     else
@@ -241,21 +241,21 @@ gui_main_refreshs ()
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
-    
+
     /* refresh color buffer if needed */
     if (gui_color_buffer_refresh_needed)
     {
         gui_color_buffer_display ();
         gui_color_buffer_refresh_needed = 0;
     }
-    
+
     /* refresh window if needed */
     if (gui_window_refresh_needed)
     {
         gui_window_refresh_screen ((gui_window_refresh_needed > 1) ? 1 : 0);
         gui_window_refresh_needed = 0;
     }
-    
+
     /* refresh bars if needed */
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
@@ -264,7 +264,7 @@ gui_main_refreshs ()
             gui_bar_draw (ptr_bar);
         }
     }
-    
+
     /* refresh windows if needed */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -275,7 +275,7 @@ gui_main_refreshs ()
             ptr_win->refresh_needed = 0;
         }
     }
-    
+
     /* refresh chat buffers if needed */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -286,7 +286,7 @@ gui_main_refreshs ()
                            (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
         }
     }
-    
+
     /* refresh bars if needed */
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
@@ -295,7 +295,7 @@ gui_main_refreshs ()
             gui_bar_draw (ptr_bar);
         }
     }
-    
+
     /* move cursor (for cursor mode) */
     if (gui_cursor_mode)
         gui_window_move_cursor ();
@@ -313,25 +313,25 @@ gui_main_loop ()
     fd_set read_fds, write_fds, except_fds;
     int max_fd;
     int ready;
-    
+
     weechat_quit = 0;
-    
+
     /* catch SIGTERM signal: quit program */
     util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
     util_catch_signal (SIGQUIT, &gui_main_signal_sigquit);
-    
+
     /* catch SIGHUP signal: reload configuration */
     util_catch_signal (SIGHUP, &gui_main_signal_sighup);
-    
+
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
-    
+
     /* hook stdin (read keyboard) */
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
                                 &gui_key_read_cb, NULL);
-    
+
     gui_window_ask_refresh (1);
-    
+
     while (!weechat_quit)
     {
         /* reload config, if SIGHUP reveived */
@@ -342,7 +342,7 @@ gui_main_loop ()
                           "files"));
             command_reload (NULL, NULL, 0, NULL, NULL);
         }
-        
+
         /* execute hook timers */
         hook_timer_exec ();
 
@@ -354,13 +354,13 @@ gui_main_loop ()
             gui_color_pairs_auto_reset = 0;
             gui_color_pairs_auto_reset_pending = 1;
         }
-        
+
         gui_main_refreshs ();
         if (gui_window_refresh_needed)
             gui_main_refreshs ();
-        
+
         gui_color_pairs_auto_reset_pending = 0;
-        
+
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);
         FD_ZERO (&write_fds);
@@ -374,7 +374,7 @@ gui_main_loop ()
             hook_fd_exec (&read_fds, &write_fds, &except_fds);
         }
     }
-    
+
     /* remove keyboard hook */
     unhook (hook_fd_keyboard);
 }
@@ -400,55 +400,55 @@ gui_main_end (int clean_exit)
             if (gui_window_refresh_needed)
                 gui_main_refreshs ();
         }
-        
+
         /* disable mouse */
         gui_mouse_disable ();
-        
+
         /* remove bar items and bars */
         gui_bar_item_end ();
         gui_bar_free_all ();
-        
+
         /* remove filters */
         gui_filter_free_all ();
-        
+
         /* free clipboard buffer */
         if (gui_input_clipboard)
             free (gui_input_clipboard);
-        
+
         /* delete layout saved */
         gui_layout_window_remove_all (&gui_layout_windows);
         gui_layout_buffer_remove_all (&gui_layout_buffers, &last_gui_layout_buffer);
-        
+
         /* delete all windows */
         while (gui_windows)
         {
             gui_window_free (gui_windows);
         }
         gui_window_tree_free (&gui_windows_tree);
-        
+
         /* delete all buffers */
         while (gui_buffers)
         {
             gui_buffer_close (gui_buffers);
         }
-        
+
         gui_ok = 0;
         gui_init_ok = 0;
-        
+
         /* delete global history */
         gui_history_global_free ();
-        
+
         /* reset title */
         if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_set_title (NULL);
-        
+
         /* end color */
         gui_color_end ();
-        
+
         /* free some variables used for chat area */
         gui_chat_end ();
     }
-    
+
     /* end of Curses output */
     refresh ();
     endwin ();

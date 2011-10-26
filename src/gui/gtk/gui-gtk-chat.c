@@ -96,7 +96,7 @@ gui_chat_reset_style (struct t_gui_window *window)
     GUI_WINDOW_OBJECTS(window)->current_style_bg = -1;
     GUI_WINDOW_OBJECTS(window)->current_style_attr = 0;
     GUI_WINDOW_OBJECTS(window)->current_color_attr = 0;
-    
+
     /* TODO: change following function call */
     /*gui_window_set_weechat_color (window->win_chat, COLOR_WIN_CHAT);*/
     gui_chat_remove_style (window,
@@ -183,7 +183,7 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
     (void) line;
     (void) apply_style;
     (void) apply_style_inactive;
-    
+
     return (char *)string;
 }
 
@@ -196,7 +196,7 @@ void
 gui_chat_display_word_raw (struct t_gui_window *window, const char *string)
 {
     /*char *prev_char, *next_char, saved_char;*/
-    
+
     /* TODO: write this function for Gtk */
     (void) window;
     (void) string;
@@ -215,7 +215,7 @@ gui_chat_display_word (struct t_gui_window *window,
 {
     /*char *end_line, saved_char_end, saved_char;
       int pos_saved_char, chars_to_display, num_displayed;*/
-    
+
     /* TODO: write this function for Gtk */
     (void) window;
     (void) line;
@@ -258,12 +258,12 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
                               int *line_pos, int difference)
 {
     int backward, current_size;
-    
+
     if (!line || !line_pos)
         return;
-    
+
     backward = (difference < 0);
-    
+
     if (!(*line))
     {
         /* if looking backward, start at last line of buffer */
@@ -289,7 +289,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
     }
     else
         current_size = gui_chat_display_line (window, *line, 0, 1);
-    
+
     while ((*line) && (difference != 0))
     {
         /* looking backward */
@@ -329,7 +329,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **l
             difference--;
         }
     }
-    
+
     /* first or last line reached */
     if (!(*line))
     {
@@ -365,10 +365,10 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     int num_unit;
     char format[32], date[128], *buf;
     struct tm *date_tmp;*/
-    
+
     if (!gui_ok)
         return;
-    
+
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;

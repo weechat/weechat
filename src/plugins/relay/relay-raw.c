@@ -66,7 +66,7 @@ void
 relay_raw_open (int switch_to_buffer)
 {
     struct t_relay_raw_message *ptr_raw_message;
-    
+
     if (!relay_raw_buffer)
     {
         relay_raw_buffer = weechat_buffer_search (RELAY_PLUGIN_NAME,
@@ -76,11 +76,11 @@ relay_raw_open (int switch_to_buffer)
             relay_raw_buffer = weechat_buffer_new (RELAY_RAW_BUFFER_NAME,
                                                    &relay_buffer_input_cb, NULL,
                                                    &relay_buffer_close_cb, NULL);
-            
+
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)
                 return;
-            
+
             weechat_buffer_set (relay_raw_buffer,
                                 "title", _("Relay raw messages"));
 
@@ -93,10 +93,10 @@ relay_raw_open (int switch_to_buffer)
             weechat_buffer_set (relay_raw_buffer, "localvar_set_server", RELAY_RAW_BUFFER_NAME);
             weechat_buffer_set (relay_raw_buffer, "localvar_set_channel", RELAY_RAW_BUFFER_NAME);
             weechat_buffer_set (relay_raw_buffer, "localvar_set_no_log", "1");
-            
+
             /* disable all highlights on this buffer */
             weechat_buffer_set (relay_raw_buffer, "highlight_words", "-");
-            
+
             /* print messages in list */
             for (ptr_raw_message = relay_raw_messages; ptr_raw_message;
                  ptr_raw_message = ptr_raw_message->next_message)
@@ -105,7 +105,7 @@ relay_raw_open (int switch_to_buffer)
             }
         }
     }
-    
+
     if (relay_raw_buffer && switch_to_buffer)
         weechat_buffer_set (relay_raw_buffer, "display", "1");
 }
@@ -118,7 +118,7 @@ void
 relay_raw_message_free (struct t_relay_raw_message *raw_message)
 {
     struct t_relay_raw_message *new_raw_messages;
-    
+
     /* remove message from raw messages list */
     if (last_relay_raw_message == raw_message)
         last_relay_raw_message = raw_message->prev_message;
@@ -129,20 +129,20 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
     }
     else
         new_raw_messages = raw_message->next_message;
-    
+
     if (raw_message->next_message)
         (raw_message->next_message)->prev_message = raw_message->prev_message;
-    
+
     /* free data */
     if (raw_message->prefix)
         free (raw_message->prefix);
     if (raw_message->message)
         free (raw_message->message);
-    
+
     free (raw_message);
-    
+
     relay_raw_messages = new_raw_messages;
-    
+
     relay_raw_messages_count--;
 }
 
@@ -168,7 +168,7 @@ void
 relay_raw_message_remove_old ()
 {
     int max_messages;
-    
+
     max_messages = weechat_config_integer (relay_config_look_raw_messages);
     while (relay_raw_messages && (relay_raw_messages_count >= max_messages))
     {
@@ -185,19 +185,19 @@ relay_raw_message_add_to_list (time_t date, const char *prefix,
                                const char *message)
 {
     struct t_relay_raw_message *new_raw_message;
-    
+
     if (!prefix || !message)
         return NULL;
-    
+
     relay_raw_message_remove_old ();
-    
+
     new_raw_message = malloc (sizeof (*new_raw_message));
     if (new_raw_message)
     {
         new_raw_message->date = date;
         new_raw_message->prefix = strdup (prefix);
         new_raw_message->message = strdup (message);
-        
+
         /* add message to list */
         new_raw_message->prev_message = last_relay_raw_message;
         new_raw_message->next_message = NULL;
@@ -206,10 +206,10 @@ relay_raw_message_add_to_list (time_t date, const char *prefix,
         else
             relay_raw_messages = new_raw_message;
         last_relay_raw_message = new_raw_message;
-        
+
         relay_raw_messages_count++;
     }
-    
+
     return new_raw_message;
 }
 
@@ -226,7 +226,7 @@ relay_raw_message_add (struct t_relay_client *client, int send,
     const char *hexa = "0123456789ABCDEF";
     int pos_buf, pos_buf2, char_size, i;
     struct t_relay_raw_message *new_raw_message;
-    
+
     buf = weechat_iconv_to_internal (NULL, message);
     buf2 = malloc ((strlen (buf) * 3) + 1);
     if (buf2)
@@ -254,7 +254,7 @@ relay_raw_message_add (struct t_relay_client *client, int send,
         }
         buf2[pos_buf2] = '\0';
     }
-    
+
     if (client)
     {
         snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s %s%s",
@@ -277,16 +277,16 @@ relay_raw_message_add (struct t_relay_client *client, int send,
                   weechat_color ("chat_prefix_join"),
                   (send) ? RELAY_RAW_PREFIX_SEND : RELAY_RAW_PREFIX_RECV);
     }
-        
+
     new_raw_message = relay_raw_message_add_to_list (time (NULL),
                                                      prefix,
                                                      (buf2) ? buf2 : ((buf) ? buf : message));
-    
+
     if (buf)
         free (buf);
     if (buf2)
         free (buf2);
-    
+
     return new_raw_message;
 }
 
@@ -298,14 +298,14 @@ void
 relay_raw_print (struct t_relay_client *client, int send, const char *message)
 {
     struct t_relay_raw_message *new_raw_message;
-    
+
     if (!message)
         return;
-    
+
     /* auto-open Relay raw buffer if debug for irc plugin is >= 1 */
     if (!relay_raw_buffer && (weechat_relay_plugin->debug >= 1))
         relay_raw_open (0);
-    
+
     new_raw_message = relay_raw_message_add (client, send, message);
     if (new_raw_message)
     {
@@ -326,20 +326,20 @@ relay_raw_add_to_infolist (struct t_infolist *infolist,
                            struct t_relay_raw_message *raw_message)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !raw_message)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!weechat_infolist_new_var_time (ptr_item, "date", raw_message->date))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "prefix", raw_message->prefix))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "message", raw_message->message))
         return 0;
-    
+
     return 1;
 }

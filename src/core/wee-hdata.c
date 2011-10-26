@@ -51,10 +51,10 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
            const char *var_prev, const char *var_next)
 {
     struct t_hdata *new_hdata;
-    
+
     if (!hdata_name || !hdata_name[0])
         return NULL;
-    
+
     new_hdata = malloc (sizeof (*new_hdata));
     if (new_hdata)
     {
@@ -78,7 +78,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
                                               NULL);
         hashtable_set (weechat_hdata, hdata_name, new_hdata);
     }
-    
+
     return new_hdata;
 }
 
@@ -91,7 +91,7 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
                const char *hdata_name)
 {
     int value;
-    
+
     if (hdata && name)
     {
         value = (type << 16) | (offset & 0xFFFF);
@@ -120,14 +120,14 @@ int
 hdata_get_var_offset (struct t_hdata *hdata, const char *name)
 {
     int *ptr_value;
-    
+
     if (hdata && name)
     {
         ptr_value = hashtable_get (hdata->hash_var, name);
         if (ptr_value)
             return (*ptr_value) & 0xFFFF;
     }
-    
+
     return -1;
 }
 
@@ -139,14 +139,14 @@ int
 hdata_get_var_type (struct t_hdata *hdata, const char *name)
 {
     int *ptr_value;
-    
+
     if (hdata && name)
     {
         ptr_value = hashtable_get (hdata->hash_var, name);
         if (ptr_value)
             return (*ptr_value) >> 16;
     }
-    
+
     return -1;
 }
 
@@ -158,14 +158,14 @@ const char *
 hdata_get_var_type_string (struct t_hdata *hdata, const char *name)
 {
     int *ptr_value;
-    
+
     if (hdata && name)
     {
         ptr_value = hashtable_get (hdata->hash_var, name);
         if (ptr_value)
             return hdata_type_string[(*ptr_value) >> 16];
     }
-    
+
     return NULL;
 }
 
@@ -179,7 +179,7 @@ hdata_get_var_hdata (struct t_hdata *hdata, const char *name)
 {
     if (hdata && name)
         return (const char *)hashtable_get (hdata->hash_var_hdata, name);
-    
+
     return NULL;
 }
 
@@ -191,14 +191,14 @@ void *
 hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return pointer + offset;
     }
-    
+
     return NULL;
 }
 
@@ -212,7 +212,7 @@ hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset)
 {
     if (hdata && pointer)
         return pointer + offset;
-    
+
     return NULL;
 }
 
@@ -224,14 +224,14 @@ void *
 hdata_get_list (struct t_hdata *hdata, const char *name)
 {
     void *ptr_value;
-    
+
     if (hdata && name)
     {
         ptr_value = hashtable_get (hdata->hash_list, name);
         if (ptr_value)
             return *((void **)ptr_value);
     }
-    
+
     return NULL;
 }
 
@@ -244,12 +244,12 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
 {
     char *ptr_var;
     int i, abs_count;
-    
+
     if (hdata && pointer && (count != 0))
     {
         ptr_var = (count < 0) ? hdata->var_prev : hdata->var_next;
         abs_count = abs(count);
-        
+
         for (i = 0; i < abs_count; i++)
         {
             pointer = hdata_pointer (hdata, pointer, ptr_var);
@@ -257,7 +257,7 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
                 return pointer;
         }
     }
-    
+
     return NULL;
 }
 
@@ -269,14 +269,14 @@ int
 hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return *((int *)(pointer + offset));
     }
-    
+
     return 0;
 }
 
@@ -288,14 +288,14 @@ long
 hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return *((long *)(pointer + offset));
     }
-    
+
     return 0;
 }
 
@@ -307,14 +307,14 @@ const char *
 hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return *((char **)(pointer + offset));
     }
-    
+
     return NULL;
 }
 
@@ -326,14 +326,14 @@ void *
 hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return *((void **)(pointer + offset));
     }
-    
+
     return NULL;
 }
 
@@ -345,14 +345,14 @@ time_t
 hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
-    
+
     if (hdata && pointer)
     {
         offset = hdata_get_var_offset (hdata, name);
         if (offset >= 0)
             return *((time_t *)(pointer + offset));
     }
-    
+
     return 0;
 }
 
@@ -388,7 +388,7 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
         else if (string_strcasecmp (property, "list_keys_values") == 0)
             return hashtable_get_string (hdata->hash_list, "keys_values");
     }
-    
+
     return NULL;
 }
 
@@ -409,7 +409,7 @@ hdata_free (struct t_hdata *hdata)
         hashtable_free (hdata->hash_var_hdata);
     if (hdata->hash_list)
         hashtable_free (hdata->hash_list);
-    
+
     free (hdata);
 }
 
@@ -422,9 +422,9 @@ hdata_free_all_plugin_map_cb (void *data, struct t_hashtable *hashtable,
                               const void *key, const void *value)
 {
     struct t_hdata *ptr_hdata;
-    
+
     ptr_hdata = (struct t_hdata *)value;
-    
+
     if (ptr_hdata->plugin == (struct t_weechat_plugin *)data)
     {
         hdata_free (ptr_hdata);
@@ -451,12 +451,12 @@ hdata_free_all_map_cb (void *data, struct t_hashtable *hashtable,
                        const void *key, const void *value)
 {
     struct t_hdata *ptr_hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_hdata = (struct t_hdata *)value;
-    
+
     hdata_free (ptr_hdata);
     hashtable_remove (hashtable, key);
 }
@@ -480,13 +480,13 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
                         const void *key, const void *value)
 {
     struct t_hdata *ptr_hdata;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) hashtable;
-    
+
     ptr_hdata = (struct t_hdata *)value;
-    
+
     log_printf ("");
     log_printf ("[hdata (addr:0x%lx, name:'%s')]", ptr_hdata, (const char *)key);
     log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_hdata->plugin);

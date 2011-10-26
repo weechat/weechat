@@ -72,17 +72,17 @@ struct t_gui_focus_info *
 gui_focus_get_info (int x, int y)
 {
     struct t_gui_focus_info *focus_info;
-    
+
     focus_info = malloc (sizeof (*focus_info));
     if (!focus_info)
         return NULL;
-    
+
     focus_info->x = x;
     focus_info->y = y;
-    
+
     /* search window */
     focus_info->window = gui_window_search_by_xy (x, y);
-    
+
     /* fill info about chat area */
     gui_window_get_context_at_xy (focus_info->window,
                                   x, y,
@@ -92,7 +92,7 @@ gui_focus_get_info (int x, int y)
                                   &focus_info->chat_word,
                                   &focus_info->chat_bol,
                                   &focus_info->chat_eol);
-    
+
     /* search bar window, item, and line/col in item */
     gui_bar_window_search_by_xy (focus_info->window,
                                  x, y,
@@ -100,7 +100,7 @@ gui_focus_get_info (int x, int y)
                                  &focus_info->bar_item,
                                  &focus_info->bar_item_line,
                                  &focus_info->bar_item_col);
-    
+
     return focus_info;
 }
 
@@ -117,7 +117,7 @@ gui_focus_free_info (struct t_gui_focus_info *focus_info)
         free (focus_info->chat_bol);
     if (focus_info->chat_eol)
         free (focus_info->chat_eol);
-    
+
     free (focus_info);
 }
 
@@ -131,12 +131,12 @@ gui_focus_buffer_localvar_map_cb (void *data, struct t_hashtable *hashtable,
 {
     struct t_hashtable *hashtable_focus;
     char hash_key[512];
-    
+
     /* make C compiler happy */
     (void) hashtable;
-    
+
     hashtable_focus = (struct t_hashtable *)data;
-    
+
     if (hashtable_focus && key && value)
     {
         snprintf (hash_key, sizeof (hash_key),
@@ -155,7 +155,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     struct t_hashtable *hashtable;
     char str_value[128], *str_time, *str_prefix, *str_tags, *str_message;
     const char *nick;
-    
+
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_STRING,
@@ -163,14 +163,14 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
                                NULL);
     if (!hashtable)
         return NULL;
-    
+
     /* key (key from keyboard or mouse event) */
     FOCUS_STR("_key", key);
-    
+
     /* x,y */
     FOCUS_INT("_x", focus_info->x);
     FOCUS_INT("_y", focus_info->y);
-    
+
     /* window/buffer */
     FOCUS_PTR("_window", focus_info->window);
     if (focus_info->window)
@@ -191,7 +191,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         FOCUS_STR("_buffer_plugin", "");
         FOCUS_STR("_buffer_name", "");
     }
-    
+
     /* chat area */
     FOCUS_INT("_chat", focus_info->chat);
     str_time = NULL;
@@ -236,7 +236,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     FOCUS_STR_VAR("_chat_word", focus_info->chat_word);
     FOCUS_STR_VAR("_chat_bol", focus_info->chat_bol);
     FOCUS_STR_VAR("_chat_eol", focus_info->chat_eol);
-    
+
     /* bar/item */
     if (focus_info->bar_window)
     {
@@ -251,6 +251,6 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     FOCUS_STR_VAR("_bar_item_name", focus_info->bar_item);
     FOCUS_INT("_bar_item_line", focus_info->bar_item_line);
     FOCUS_INT("_bar_item_col", focus_info->bar_item_col);
-    
+
     return hashtable;
 }

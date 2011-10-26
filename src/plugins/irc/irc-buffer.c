@@ -49,15 +49,15 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
-    
+
     if (server)
         *server = NULL;
     if (channel)
         *channel = NULL;
-    
+
     if (!buffer)
         return;
-    
+
     /* look for a server or channel using this buffer */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -68,7 +68,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
                 *server = ptr_server;
             return;
         }
-        
+
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
@@ -82,7 +82,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
             }
         }
     }
-    
+
     /* no server or channel found */
 }
 
@@ -94,18 +94,18 @@ char *
 irc_buffer_build_name (const char *server, const char *channel)
 {
     static char buffer[128];
-    
+
     buffer[0] = '\0';
-    
+
     if (!server && !channel)
         return buffer;
-    
+
     if (server && channel)
         snprintf (buffer, sizeof (buffer), "%s.%s", server, channel);
     else
         snprintf (buffer, sizeof (buffer), "%s",
                   (server) ? server : channel);
-    
+
     return buffer;
 }
 
@@ -117,12 +117,12 @@ int
 irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_irc_channel *next_channel;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (buffer == irc_raw_buffer)
     {
         irc_raw_buffer = NULL;
@@ -156,7 +156,7 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -172,10 +172,10 @@ irc_buffer_search_first_for_all_servers ()
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_server *ptr_server;
     int number, number_found;
-    
+
     ptr_buffer = NULL;
     number_found = INT_MAX;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {

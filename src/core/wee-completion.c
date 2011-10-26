@@ -65,18 +65,18 @@ completion_list_add_bars_names_cb (void *data,
                                    struct t_gui_completion *completion)
 {
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         gui_completion_list_add (completion, ptr_bar->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -91,18 +91,18 @@ completion_list_add_bars_options_cb (void *data,
                                      struct t_gui_completion *completion)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
         gui_completion_list_add (completion, gui_bar_option_string[i],
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -117,19 +117,19 @@ completion_list_add_buffers_names_cb (void *data,
                                       struct t_gui_completion *completion)
 {
     struct t_gui_buffer *ptr_buffer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
         gui_completion_list_add (completion, ptr_buffer->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -145,12 +145,12 @@ completion_list_add_buffers_numbers_cb (void *data,
 {
     struct t_gui_buffer *ptr_buffer;
     char str_number[32];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -158,7 +158,7 @@ completion_list_add_buffers_numbers_cb (void *data,
         gui_completion_list_add (completion, str_number,
                                  0, WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -175,12 +175,12 @@ completion_list_add_buffers_plugins_names_cb (void *data,
 {
     struct t_gui_buffer *ptr_buffer;
     char name[512];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -190,7 +190,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
         gui_completion_list_add (completion, name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -206,19 +206,19 @@ completion_list_add_buffer_properties_set_cb (void *data,
                                               struct t_gui_completion *completion)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (i = 0; gui_buffer_properties_set[i]; i++)
     {
         gui_completion_list_add (completion,
                                  gui_buffer_properties_set[i],
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -234,12 +234,12 @@ completion_list_add_buffer_properties_get_cb (void *data,
                                               struct t_gui_completion *completion)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (i = 0; gui_buffer_properties_get_integer[i]; i++)
     {
         gui_completion_list_add (completion,
@@ -258,7 +258,7 @@ completion_list_add_buffer_properties_get_cb (void *data,
                                  gui_buffer_properties_get_pointer[i],
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -274,19 +274,19 @@ completion_list_add_windows_numbers_cb (void *data,
 {
     struct t_gui_window *ptr_win;
     char str_number[32];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         snprintf (str_number, sizeof (str_number), "%d", ptr_win->number);
         gui_completion_list_add (completion, str_number,
                                  0, WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -302,7 +302,7 @@ completion_list_map_add_palette_color_cb (void *data,
     /* make C compiler happy */
     (void) hashtable;
     (void) value;
-    
+
     gui_completion_list_add ((struct t_gui_completion *)data,
                              (char *)key,
                              0, WEECHAT_LIST_POS_SORT);
@@ -322,11 +322,11 @@ completion_list_add_palette_colors_cb (void *data,
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     hashtable_map (gui_color_hash_palette_color,
                    &completion_list_map_add_palette_color_cb,
                    completion);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -341,19 +341,19 @@ completion_list_add_config_files_cb (void *data,
                                      struct t_gui_completion *completion)
 {
     struct t_config_file *ptr_config_file;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_config_file = config_files; ptr_config_file;
          ptr_config_file = ptr_config_file->next_config)
     {
         gui_completion_list_add (completion, ptr_config_file->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -375,19 +375,19 @@ completion_list_add_filename_cb (void *data,
     struct dirent *entry;
     struct stat statbuf;
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     buf_len = PATH_MAX;
     buf = malloc (buf_len);
     if (!buf)
         return WEECHAT_RC_OK;
-    
+
     completion->add_space = 0;
-    
+
     if ((strncmp (completion->base_word, home, 2) == 0) && getenv("HOME"))
     {
         real_prefix = strdup (getenv("HOME"));
@@ -407,7 +407,7 @@ completion_list_add_filename_cb (void *data,
             prefix = strdup (DIR_SEPARATOR);
         }
     }
-    
+
     snprintf (buf, buf_len, "%s", completion->base_word + strlen (prefix));
     p = strrchr (buf, DIR_SEPARATOR_CHAR);
     if (p)
@@ -422,7 +422,7 @@ completion_list_add_filename_cb (void *data,
         path_d = strdup ("");
         path_b = strdup (buf);
     }
-    
+
     sprintf (buf, "%s%s%s", real_prefix, DIR_SEPARATOR, path_d);
     d_name = strdup (buf);
     dp = opendir (d_name);
@@ -434,12 +434,12 @@ completion_list_add_filename_cb (void *data,
             {
                 if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
                     continue;
-                
+
                 snprintf (buf, buf_len, "%s%s%s",
                           d_name, DIR_SEPARATOR, entry->d_name);
                 if (stat (buf, &statbuf) == -1)
                     continue;
-                
+
                 snprintf (buf, buf_len, "%s%s%s%s%s%s",
                           prefix,
                           ((strcmp(prefix, "") == 0)
@@ -448,21 +448,21 @@ completion_list_add_filename_cb (void *data,
                           strcmp(path_d, "") == 0 ? "" : DIR_SEPARATOR,
                           entry->d_name,
                           S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
-                
+
                 gui_completion_list_add (completion, buf,
                                          0, WEECHAT_LIST_POS_SORT);
             }
         }
         closedir (dp);
     }
-    
+
     free (d_name);
     free (prefix);
     free (real_prefix);
     free (path_d);
     free (path_b);
     free (buf);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -477,19 +477,19 @@ completion_list_add_filters_cb (void *data,
                                 struct t_gui_completion *completion)
 {
     struct t_gui_filter *ptr_filter;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
         gui_completion_list_add (completion, ptr_filter->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -504,12 +504,12 @@ completion_list_add_commands_cb (void *data,
                                  struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -520,7 +520,7 @@ completion_list_add_commands_cb (void *data,
                                      HOOK_COMMAND(ptr_hook, command),
                                      0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -535,12 +535,12 @@ completion_list_add_infos_cb (void *data,
                               struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_hook = weechat_hooks[HOOK_TYPE_INFO]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -551,7 +551,7 @@ completion_list_add_infos_cb (void *data,
                                      HOOK_INFO(ptr_hook, info_name),
                                      0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -566,12 +566,12 @@ completion_list_add_infolists_cb (void *data,
                                   struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_hook = weechat_hooks[HOOK_TYPE_INFOLIST]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -582,7 +582,7 @@ completion_list_add_infolists_cb (void *data,
                                      HOOK_INFOLIST(ptr_hook, infolist_name),
                                      0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -599,12 +599,12 @@ completion_list_add_nicks_cb (void *data,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     int count_before;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     count_before = weelist_size (completion->completion_list);
     hook_completion_exec (completion->buffer->plugin,
                           "nick",
@@ -630,7 +630,7 @@ completion_list_add_nicks_cb (void *data,
                                         &ptr_group, &ptr_nick);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -650,12 +650,12 @@ completion_list_add_config_options_cb (void *data,
     struct t_config_option *ptr_option;
     int length;
     char *option_full_name;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
@@ -682,7 +682,7 @@ completion_list_add_config_options_cb (void *data,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -697,19 +697,19 @@ completion_list_add_plugins_cb (void *data,
                                 struct t_gui_completion *completion)
 {
     struct t_weechat_plugin *ptr_plugin;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
         gui_completion_list_add (completion, ptr_plugin->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -728,12 +728,12 @@ completion_list_add_plugins_commands_cb (void *data,
     char *pos_space, *plugin_name;
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     if (completion->args)
     {
         pos_space = strchr (completion->args, ' ');
@@ -742,7 +742,7 @@ completion_list_add_plugins_commands_cb (void *data,
                                           pos_space - completion->args);
         else
             plugin_name = strdup (completion->args);
-        
+
         if (plugin_name)
         {
             ptr_plugin = NULL;
@@ -772,7 +772,7 @@ completion_list_add_plugins_commands_cb (void *data,
             free (plugin_name);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -788,7 +788,7 @@ completion_list_map_add_color_alias_cb (void *data,
     /* make C compiler happy */
     (void) hashtable;
     (void) value;
-    
+
     gui_completion_list_add ((struct t_gui_completion *)data,
                              (char *)key,
                              0, WEECHAT_LIST_POS_SORT);
@@ -813,12 +813,12 @@ completion_list_add_config_option_values_cb (void *data,
     struct t_config_section *ptr_section, *section_found;
     struct t_config_option *option_found;
     struct t_gui_color_palette *color_palette;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     if (completion->args)
     {
         pos_space = strchr (completion->args, ' ');
@@ -827,16 +827,16 @@ completion_list_add_config_option_values_cb (void *data,
                                                pos_space - completion->args);
         else
             option_full_name = strdup (completion->args);
-        
+
         if (option_full_name)
         {
             file = NULL;
             section = NULL;
             pos_option = NULL;
-            
+
             pos_section = strchr (option_full_name, '.');
             pos_option = (pos_section) ? strchr (pos_section + 1, '.') : NULL;
-            
+
             if (pos_section && pos_option)
             {
                 file = string_strndup (option_full_name,
@@ -1043,7 +1043,7 @@ completion_list_add_config_option_values_cb (void *data,
                 free (section);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1059,12 +1059,12 @@ completion_list_add_weechat_commands_cb (void *data,
                                          struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -1078,7 +1078,7 @@ completion_list_add_weechat_commands_cb (void *data,
                                      0, WEECHAT_LIST_POS_SORT);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1093,19 +1093,19 @@ completion_list_add_proxies_names_cb (void *data,
                                       struct t_gui_completion *completion)
 {
     struct t_proxy *ptr_proxy;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_proxy = weechat_proxies; ptr_proxy;
          ptr_proxy = ptr_proxy->next_proxy)
     {
         gui_completion_list_add (completion, ptr_proxy->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1120,18 +1120,18 @@ completion_list_add_proxies_options_cb (void *data,
                                         struct t_gui_completion *completion)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
         gui_completion_list_add (completion, proxy_option_string[i],
                                  0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1146,18 +1146,18 @@ completion_list_add_keys_contexts_cb (void *data,
                                       struct t_gui_completion *completion)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
     {
         gui_completion_list_add (completion, gui_key_context_string[i],
                                  0, WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1174,7 +1174,7 @@ completion_list_add_keys_codes_cb (void *data,
     int i;
     struct t_gui_key *ptr_key;
     char *expanded_name;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
@@ -1192,7 +1192,7 @@ completion_list_add_keys_codes_cb (void *data,
                 free (expanded_name);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1211,7 +1211,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
     int i;
     struct t_gui_key *ptr_key, *ptr_default_key;
     char *expanded_name;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
@@ -1234,7 +1234,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
                     free (expanded_name);
             }
         }
-        
+
         /* keys deleted */
         for (ptr_default_key = gui_default_keys[i]; ptr_default_key;
              ptr_default_key = ptr_default_key->next_key)
@@ -1251,7 +1251,7 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1268,15 +1268,15 @@ completion_list_add_cursor_areas_cb (void *data,
 {
     struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_bar *ptr_bar;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     /* add "chat" for chat area */
     gui_completion_list_add (completion, "chat", 0, WEECHAT_LIST_POS_SORT);
-    
+
     /* add bar windows (of current window) */
     for (ptr_bar_win = gui_current_window->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
@@ -1292,7 +1292,7 @@ completion_list_add_cursor_areas_cb (void *data,
                                      0, WEECHAT_LIST_POS_SORT);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 

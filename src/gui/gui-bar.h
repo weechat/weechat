@@ -82,7 +82,7 @@ struct t_gui_bar
     /* user choices */
     char *name;                         /* bar name                         */
     struct t_config_option *options[GUI_BAR_NUM_OPTIONS];
-    
+
     /* internal vars */
     int conditions_count;               /* number of conditions             */
     char **conditions_array;            /* bar conditions (after split)     */

@@ -47,10 +47,10 @@ int
 xfer_file_resume (struct t_xfer *xfer, const char *filename)
 {
     struct stat st;
-    
+
     if (!weechat_config_boolean (xfer_config_file_auto_resume))
         return 0;
-    
+
     if (access (filename, W_OK) == 0)
     {
         if (stat (filename, &st) != -1)
@@ -64,7 +64,7 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
             }
         }
     }
-    
+
     /* not resumable */
     return 0;
 }
@@ -80,14 +80,14 @@ xfer_file_find_filename (struct t_xfer *xfer)
 {
     const char *weechat_home, *dir_separator;
     char *dir1, *dir2, *filename2;
-    
+
     if (!XFER_IS_FILE(xfer->type))
         return;
-    
+
     dir1 = weechat_string_expand_home (weechat_config_string (xfer_config_file_download_path));
     if (!dir1)
         return;
-    
+
     weechat_home = weechat_info_get ("weechat_dir", "");
     if (!weechat_home)
     {
@@ -100,13 +100,13 @@ xfer_file_find_filename (struct t_xfer *xfer)
         free (dir1);
         return;
     }
-    
+
     xfer->local_filename = malloc (strlen (dir2) +
                                    strlen (xfer->remote_nick) +
                                    strlen (xfer->filename) + 4);
     if (!xfer->local_filename)
         return;
-    
+
     strcpy (xfer->local_filename, dir2);
     dir_separator = weechat_info_get("dir_separator", "");
     if (dir_separator
@@ -118,18 +118,18 @@ xfer_file_find_filename (struct t_xfer *xfer)
         strcat (xfer->local_filename, ".");
     }
     strcat (xfer->local_filename, xfer->filename);
-    
+
     if (dir1)
         free (dir1);
     if (dir2 )
         free (dir2);
-    
+
     /* file already exists? */
     if (access (xfer->local_filename, F_OK) == 0)
     {
         if (xfer_file_resume (xfer, xfer->local_filename))
             return;
-        
+
         /* if auto rename is not set, then abort xfer */
         if (!xfer_config_file_auto_rename)
         {
@@ -137,7 +137,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
         }
-        
+
         filename2 = malloc (strlen (xfer->local_filename) + 16);
         if (!filename2)
         {
@@ -161,7 +161,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
                 break;
         }
         while (1);
-        
+
         free (xfer->local_filename);
         xfer->local_filename = strdup (filename2);
         free (filename2);
@@ -177,7 +177,7 @@ xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
 {
     time_t local_time, elapsed;
     unsigned long long bytes_per_sec_total;
-    
+
     local_time = time (NULL);
     if (ended || local_time > xfer->last_check_time)
     {
@@ -200,7 +200,7 @@ xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
             if (bytes_per_sec_total == 0)
                 bytes_per_sec_total = 1;
             xfer->eta = (xfer->size - xfer->pos) / bytes_per_sec_total;
-            
+
             /* calculate bytes per second (since last check time) */
             elapsed = local_time - xfer->last_check_time;
             if (elapsed == 0)

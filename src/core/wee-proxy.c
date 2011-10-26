@@ -59,16 +59,16 @@ int
 proxy_search_option (const char *option_name)
 {
     int i;
-    
+
     if (!option_name)
         return -1;
-    
+
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
         if (string_strcasecmp (proxy_option_string[i], option_name) == 0)
             return i;
     }
-    
+
     /* proxy option not found */
     return -1;
 }
@@ -82,16 +82,16 @@ int
 proxy_search_type (const char *type)
 {
     int i;
-    
+
     if (!type)
         return -1;
-    
+
     for (i = 0; i < PROXY_NUM_TYPES; i++)
     {
         if (string_strcasecmp (proxy_type_string[i], type) == 0)
             return i;
     }
-    
+
     /* type not found */
     return -1;
 }
@@ -104,17 +104,17 @@ struct t_proxy *
 proxy_search (const char *name)
 {
     struct t_proxy *ptr_proxy;
-    
+
     if (!name || !name[0])
         return NULL;
-    
+
     for (ptr_proxy = weechat_proxies; ptr_proxy;
          ptr_proxy = ptr_proxy->next_proxy)
     {
         if (strcmp (ptr_proxy->name, name) == 0)
             return ptr_proxy;
     }
-    
+
     /* proxy not found */
     return NULL;
 }
@@ -129,9 +129,9 @@ proxy_search_with_option_name (const char *option_name)
 {
     char *proxy_name, *pos_option;
     struct t_proxy *ptr_proxy;
-    
+
     ptr_proxy = NULL;
-    
+
     pos_option = strchr (option_name, '.');
     if (pos_option)
     {
@@ -147,7 +147,7 @@ proxy_search_with_option_name (const char *option_name)
             free (proxy_name);
         }
     }
-    
+
     return ptr_proxy;
 }
 
@@ -160,10 +160,10 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
 {
     int length;
     char *option_name;
-    
+
     if (!name || !name[0])
         return;
-    
+
     length = strlen (name) + 64;
     option_name = malloc (length);
     if (option_name)
@@ -180,11 +180,11 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
         config_file_option_rename (proxy->options[PROXY_OPTION_USERNAME], option_name);
         snprintf (option_name, length, "%s.password", name);
         config_file_option_rename (proxy->options[PROXY_OPTION_PASSWORD], option_name);
-        
+
         if (proxy->name)
             free (proxy->name);
         proxy->name = strdup (name);
-        
+
         free (option_name);
     }
 }
@@ -199,7 +199,7 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
 {
     if (!proxy || !property || !value)
         return 0;
-    
+
     if (string_strcasecmp (property, "name") == 0)
     {
         proxy_set_name (proxy, value);
@@ -235,7 +235,7 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
         config_file_option_set (proxy->options[PROXY_OPTION_PASSWORD], value, 1);
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -250,9 +250,9 @@ proxy_create_option (const char *proxy_name, int index_option,
     struct t_config_option *ptr_option;
     int length;
     char *option_name;
-    
+
     ptr_option = NULL;
-    
+
     length = strlen (proxy_name) + 1 +
         strlen (proxy_option_string[index_option]) + 1;
     option_name = malloc (length);
@@ -260,7 +260,7 @@ proxy_create_option (const char *proxy_name, int index_option,
     {
         snprintf (option_name, length, "%s.%s",
                   proxy_name, proxy_option_string[index_option]);
-        
+
         switch (index_option)
         {
             case PROXY_OPTION_TYPE:
@@ -316,7 +316,7 @@ proxy_create_option (const char *proxy_name, int index_option,
         }
         free (option_name);
     }
-    
+
     return ptr_option;
 }
 
@@ -330,7 +330,7 @@ proxy_create_option_temp (struct t_proxy *temp_proxy, int index_option,
                           const char *value)
 {
     struct t_config_option *new_option;
-    
+
     new_option = proxy_create_option (temp_proxy->name,
                                       index_option,
                                       value);
@@ -347,7 +347,7 @@ proxy_alloc (const char *name)
 {
     struct t_proxy *new_proxy;
     int i;
-    
+
     new_proxy = malloc (sizeof (*new_proxy));
     if (new_proxy)
     {
@@ -359,7 +359,7 @@ proxy_alloc (const char *name)
         new_proxy->prev_proxy = NULL;
         new_proxy->next_proxy = NULL;
     }
-    
+
     return new_proxy;
 }
 
@@ -377,7 +377,7 @@ proxy_new_with_options (const char *name,
                         struct t_config_option *password)
 {
     struct t_proxy *new_proxy;
-    
+
     /* create proxy */
     new_proxy = proxy_alloc (name);
     if (new_proxy)
@@ -388,7 +388,7 @@ proxy_new_with_options (const char *name,
         new_proxy->options[PROXY_OPTION_PORT] = port;
         new_proxy->options[PROXY_OPTION_USERNAME] = username;
         new_proxy->options[PROXY_OPTION_PASSWORD] = password;
-        
+
         /* add proxy to proxies list */
         new_proxy->prev_proxy = last_weechat_proxy;
         if (weechat_proxies)
@@ -398,7 +398,7 @@ proxy_new_with_options (const char *name,
         last_weechat_proxy = new_proxy;
         new_proxy->next_proxy = NULL;
     }
-    
+
     return new_proxy;
 }
 
@@ -414,18 +414,18 @@ proxy_new (const char *name, const char *type, const char *ipv6,
     struct t_config_option *option_type, *option_ipv6, *option_address;
     struct t_config_option *option_port, *option_username, *option_password;
     struct t_proxy *new_proxy;
-    
+
     if (!name || !name[0])
         return NULL;
-    
+
     /* it's not possible to create 2 proxies with same name */
     if (proxy_search (name))
         return NULL;
-    
+
     /* look for type */
     if (proxy_search_type (type) < 0)
         return NULL;
-    
+
     option_type = proxy_create_option (name, PROXY_OPTION_TYPE,
                                        type);
     option_ipv6 = proxy_create_option (name, PROXY_OPTION_IPV6,
@@ -438,7 +438,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
                                            (username) ? username : "");
     option_password = proxy_create_option (name, PROXY_OPTION_PASSWORD,
                                            (password) ? password : "");
-    
+
     new_proxy = proxy_new_with_options (name, option_type, option_ipv6,
                                         option_address, option_port,
                                         option_username, option_password);
@@ -457,7 +457,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
         if (option_password)
             config_file_option_free (option_password);
     }
-    
+
     return new_proxy;
 }
 
@@ -470,7 +470,7 @@ proxy_use_temp_proxies ()
 {
     struct t_proxy *ptr_temp_proxy, *next_temp_proxy;
     int i, num_options_ok;
-    
+
     for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
          ptr_temp_proxy = ptr_temp_proxy->next_proxy)
     {
@@ -486,7 +486,7 @@ proxy_use_temp_proxies ()
             if (ptr_temp_proxy->options[i])
                 num_options_ok++;
         }
-        
+
         if (num_options_ok == PROXY_NUM_OPTIONS)
         {
             proxy_new_with_options (ptr_temp_proxy->name,
@@ -509,16 +509,16 @@ proxy_use_temp_proxies ()
             }
         }
     }
-    
+
     /* free all temp proxies */
     while (weechat_temp_proxies)
     {
         next_temp_proxy = weechat_temp_proxies->next_proxy;
-        
+
         if (weechat_temp_proxies->name)
             free (weechat_temp_proxies->name);
         free (weechat_temp_proxies);
-        
+
         weechat_temp_proxies = next_temp_proxy;
     }
     last_weechat_temp_proxy = NULL;
@@ -532,10 +532,10 @@ void
 proxy_free (struct t_proxy *proxy)
 {
     int i;
-    
+
     if (!proxy)
         return;
-    
+
     /* remove proxy from proxies list */
     if (proxy->prev_proxy)
         (proxy->prev_proxy)->next_proxy = proxy->next_proxy;
@@ -545,7 +545,7 @@ proxy_free (struct t_proxy *proxy)
         weechat_proxies = proxy->next_proxy;
     if (last_weechat_proxy == proxy)
         last_weechat_proxy = proxy->prev_proxy;
-    
+
     /* free data */
     if (proxy->name)
         free (proxy->name);
@@ -553,7 +553,7 @@ proxy_free (struct t_proxy *proxy)
     {
         config_file_option_free (proxy->options[i]);
     }
-    
+
     free (proxy);
 }
 
@@ -578,7 +578,7 @@ void
 proxy_print_log ()
 {
     struct t_proxy *ptr_proxy;
-    
+
     for (ptr_proxy = weechat_proxies; ptr_proxy;
          ptr_proxy = ptr_proxy->next_proxy)
     {

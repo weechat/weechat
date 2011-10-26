@@ -60,10 +60,10 @@ rmodifier_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     rmodifier_free_all ();
     weechat_config_section_free_options (rmodifier_config_section_modifier);
-    
+
     return weechat_config_reload (config_file);
 }
 
@@ -77,7 +77,7 @@ rmodifier_config_modifier_change_cb (void *data, struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     rmodifier_new_with_string (weechat_config_option_get_pointer (option, "name"),
                                weechat_config_option_get_pointer (option, "value"));
 }
@@ -91,10 +91,10 @@ void
 rmodifier_config_modifier_delete_cb (void *data, struct t_config_option *option)
 {
     struct t_rmodifier *ptr_rmodifier;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_rmodifier = rmodifier_search (weechat_config_option_get_pointer (option,
                                                                          "name"));
     if (ptr_rmodifier)
@@ -113,13 +113,13 @@ rmodifier_config_modifier_write_default_cb (void *data,
                                             const char *section_name)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!weechat_config_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
-    
+
     for (i = 0; rmodifier_config_default_list[i][0]; i++)
     {
         if (!weechat_config_write_line (config_file,
@@ -130,7 +130,7 @@ rmodifier_config_modifier_write_default_cb (void *data,
                                         rmodifier_config_default_list[i][3]))
             return WEECHAT_CONFIG_WRITE_ERROR;
     }
-    
+
     return WEECHAT_CONFIG_WRITE_OK;
 }
 
@@ -178,12 +178,12 @@ rmodifier_config_modifier_create_option_cb (void *data,
 {
     struct t_rmodifier *ptr_rmodifier;
     int rc;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) config_file;
     (void) section;
-    
+
     /* create rmodifier */
     ptr_rmodifier = rmodifier_search (option_name);
     if (ptr_rmodifier)
@@ -205,7 +205,7 @@ rmodifier_config_modifier_create_option_cb (void *data,
     }
     else
         rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-    
+
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
@@ -214,7 +214,7 @@ rmodifier_config_modifier_create_option_cb (void *data,
                         weechat_prefix ("error"), RMODIFIER_PLUGIN_NAME,
                         option_name, value);
     }
-    
+
     return rc;
 }
 
@@ -227,12 +227,12 @@ int
 rmodifier_config_init ()
 {
     struct t_config_section *ptr_section;
-    
+
     rmodifier_config_file = weechat_config_new (RMODIFIER_CONFIG_NAME,
                                                 &rmodifier_config_reload, NULL);
     if (!rmodifier_config_file)
         return 0;
-    
+
     /* look */
     ptr_section = weechat_config_new_section (rmodifier_config_file, "look",
                                               0, 0,
@@ -244,13 +244,13 @@ rmodifier_config_init ()
         weechat_config_free (rmodifier_config_file);
         return 0;
     }
-    
+
     rmodifier_config_look_hide_char = weechat_config_new_option (
         rmodifier_config_file, ptr_section,
         "hide_char", "string",
         N_("char used to hide part of a string"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     /* modifier */
     ptr_section = weechat_config_new_section (rmodifier_config_file, "modifier",
                                               0, 0,
@@ -265,7 +265,7 @@ rmodifier_config_init ()
         return 0;
     }
     rmodifier_config_section_modifier = ptr_section;
-    
+
     return 1;
 }
 

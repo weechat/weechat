@@ -48,17 +48,17 @@ int
 logger_buffer_valid (struct t_logger_buffer *logger_buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
-    
+
     if (!logger_buffer)
         return 0;
-    
+
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
         if (ptr_logger_buffer == logger_buffer)
             return 1;
     }
-    
+
     /* logger_buffer not found */
     return 0;
 }
@@ -71,10 +71,10 @@ struct t_logger_buffer *
 logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
 {
     struct t_logger_buffer *new_logger_buffer;
-    
+
     if (!buffer)
         return NULL;
-    
+
     if (weechat_logger_plugin->debug)
     {
         weechat_printf_tags (NULL,
@@ -83,7 +83,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
                              LOGGER_PLUGIN_NAME,
                              weechat_buffer_get_string (buffer, "name"));
     }
-    
+
     new_logger_buffer = malloc (sizeof (*new_logger_buffer));
     if (new_logger_buffer)
     {
@@ -94,7 +94,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
         new_logger_buffer->log_level = log_level;
         new_logger_buffer->write_start_info_line = 1;
         new_logger_buffer->flush_needed = 0;
-        
+
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
         if (logger_buffers)
@@ -103,7 +103,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
             logger_buffers = new_logger_buffer;
         last_logger_buffer = new_logger_buffer;
     }
-    
+
     return new_logger_buffer;
 }
 
@@ -115,14 +115,14 @@ struct t_logger_buffer *
 logger_buffer_search_buffer (struct t_gui_buffer *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
-    
+
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
         if (ptr_logger_buffer->buffer == buffer)
             return ptr_logger_buffer;
     }
-    
+
     /* logger buffer not found */
     return NULL;
 }
@@ -135,10 +135,10 @@ struct t_logger_buffer *
 logger_buffer_search_log_filename (const char *log_filename)
 {
     struct t_logger_buffer *ptr_logger_buffer;
-    
+
     if (!log_filename)
         return NULL;
-    
+
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
@@ -148,7 +148,7 @@ logger_buffer_search_log_filename (const char *log_filename)
                 return ptr_logger_buffer;
         }
     }
-    
+
     /* logger buffer not found */
     return NULL;
 }
@@ -162,9 +162,9 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 {
     struct t_logger_buffer *new_logger_buffers;
     struct t_gui_buffer *ptr_buffer;
-    
+
     ptr_buffer = logger_buffer->buffer;
-    
+
     /* remove logger buffer */
     if (last_logger_buffer == logger_buffer)
         last_logger_buffer = logger_buffer->prev_buffer;
@@ -175,20 +175,20 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
     }
     else
         new_logger_buffers = logger_buffer->next_buffer;
-    
+
     if (logger_buffer->next_buffer)
         (logger_buffer->next_buffer)->prev_buffer = logger_buffer->prev_buffer;
-    
+
     /* free data */
     if (logger_buffer->log_filename)
         free (logger_buffer->log_filename);
     if (logger_buffer->log_file)
         fclose (logger_buffer->log_file);
-    
+
     free (logger_buffer);
-    
+
     logger_buffers = new_logger_buffers;
-    
+
     if (weechat_logger_plugin->debug)
     {
         weechat_printf_tags (NULL,
@@ -209,14 +209,14 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
                                struct t_logger_buffer *logger_buffer)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !logger_buffer)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", logger_buffer->buffer))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "log_filename", logger_buffer->log_filename))
@@ -231,6 +231,6 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "flush_needed", logger_buffer->flush_needed))
         return 0;
-    
+
     return 1;
 }

@@ -288,12 +288,12 @@ def docgen_cmd_cb(data, buffer, args):
     infolists = get_infolists()
     hdata = get_hdata()
     completions = get_completions()
-    
+
     # get path and replace ~ by home if needed
     path = weechat.config_get_plugin('path')
     if path.startswith('~'):
         path = '%s%s' % (os.environ['HOME'], path[1:])
-    
+
     # write to doc files, by locale
     num_files = defaultdict(int)
     num_files_updated = defaultdict(int)

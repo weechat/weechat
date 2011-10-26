@@ -85,14 +85,14 @@ weechat_tcl_hashtable_map_cb (void *data,
     void **data_array;
     Tcl_Interp *interp;
     Tcl_Obj *dict;
-    
+
     /* make C compiler happy */
     (void) hashtable;
-    
+
     data_array = (void **)data;
     interp = data_array[0];
     dict = data_array[1];
-    
+
     Tcl_DictObjPut (interp, dict,
                     Tcl_NewStringObj ((char *)key, -1),
                     Tcl_NewStringObj ((char *)value, -1));
@@ -108,18 +108,18 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
 {
     Tcl_Obj *dict;
     void *data[2];
-    
+
     dict = Tcl_NewDictObj ();
     if (!dict)
         return NULL;
-    
+
     data[0] = interp;
     data[1] = dict;
-    
+
     weechat_hashtable_map (hashtable,
                            &weechat_tcl_hashtable_map_cb,
                            data);
-    
+
     return dict;
 }
 
@@ -139,7 +139,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
     Tcl_DictSearch search;
     Tcl_Obj *key, *value;
     int done;
-    
+
     hashtable = weechat_hashtable_new (hashtable_size,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
@@ -147,7 +147,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
                                        NULL);
     if (!hashtable)
         return NULL;
-    
+
     if (Tcl_DictObjFirst (interp, dict, &search, &key, &value, &done) == TCL_OK)
     {
         for (; !done ; Tcl_DictObjNext(&search, &key, &value, &done))
@@ -158,7 +158,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
         }
     }
     Tcl_DictObjDone(&search);
-    
+
     return hashtable;
 }
 
@@ -178,11 +178,11 @@ weechat_tcl_exec (struct t_plugin_script *script,
     Tcl_Obj *cmdlist;
     Tcl_Interp *interp;
     struct t_plugin_script *old_tcl_script;
-    
+
     old_tcl_script = tcl_current_script;
     tcl_current_script = script;
     interp = (Tcl_Interp*)script->interpreter;
-    
+
     if (function && function[0])
     {
         cmdlist = Tcl_NewListObj (0, NULL);
@@ -194,7 +194,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
         tcl_current_script = old_tcl_script;
         return NULL;
     }
-    
+
     if (format && format[0])
     {
         argc = strlen (format);
@@ -217,10 +217,10 @@ weechat_tcl_exec (struct t_plugin_script *script,
             }
         }
     }
-    
+
     if (Tcl_ListObjLength (interp, cmdlist, &llength) != TCL_OK)
         llength = 0;
-    
+
     if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
     {
         Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
@@ -248,18 +248,18 @@ weechat_tcl_exec (struct t_plugin_script *script,
                                                      Tcl_GetObjResult (interp),
                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
         }
-        
+
         tcl_current_script = old_tcl_script;
         if (ret_val)
             return ret_val;
-        
+
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"%s\" must return a "
                                          "valid value"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, function);
         return NULL;
     }
-    
+
     Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
     Tcl_DecrRefCount (cmdlist); /* -1 */
     weechat_printf (NULL,
@@ -267,7 +267,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
                     Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
     tcl_current_script = old_tcl_script;
-    
+
     return NULL;
 }
 
@@ -281,7 +281,7 @@ weechat_tcl_load (const char *filename)
     int i;
     Tcl_Interp *interp;
     struct stat buf;
-  
+
     if (stat (filename, &buf) != 0)
     {
         weechat_printf (NULL,
@@ -289,17 +289,17 @@ weechat_tcl_load (const char *filename)
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename);
         return 0;
     }
-    
+
     if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
                         TCL_PLUGIN_NAME, filename);
     }
-    
+
     tcl_current_script = NULL;
     tcl_registered_script = NULL;
-    
+
     if (!(interp = Tcl_CreateInterp ())) {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to create new "
@@ -308,7 +308,7 @@ weechat_tcl_load (const char *filename)
         return 0;
     }
     tcl_current_script_filename = filename;
-    
+
     weechat_tcl_api_init (interp);
 
     if (Tcl_EvalFile (interp, filename) != TCL_OK)
@@ -332,7 +332,7 @@ weechat_tcl_load (const char *filename)
         return 0;
     }
     tcl_current_script = tcl_registered_script;
-    
+
     /*
      * set input/close callbacks for buffers created by this script
      * (to restore callbacks after upgrade)
@@ -342,7 +342,7 @@ weechat_tcl_load (const char *filename)
                                  tcl_current_script,
                                  &weechat_tcl_api_buffer_input_data_cb,
                                  &weechat_tcl_api_buffer_close_cb);
-    
+
     return 1;
 }
 
@@ -355,7 +355,7 @@ weechat_tcl_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     weechat_tcl_load (filename);
 }
 
@@ -368,14 +368,14 @@ weechat_tcl_unload (struct t_plugin_script *script)
 {
     Tcl_Interp* interp;
     int *rc;
-    
+
     if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),
                         TCL_PLUGIN_NAME, script->name);
     }
-    
+
     if (script->shutdown_func && script->shutdown_func[0])
     {
         rc = (int *)weechat_tcl_exec (script,
@@ -385,27 +385,27 @@ weechat_tcl_unload (struct t_plugin_script *script)
         if (rc)
             free (rc);
     }
-    
+
     interp = (Tcl_Interp*)script->interpreter;
-    
+
     if (tcl_current_script == script)
         tcl_current_script = (tcl_current_script->prev_script) ?
             tcl_current_script->prev_script : tcl_current_script->next_script;
-    
+
     script_remove (weechat_tcl_plugin, &tcl_scripts, &last_tcl_script, script);
-    
+
     Tcl_DeleteInterp(interp);
 }
- 
+
 /*
  * weechat_tcl_unload_name: unload a Tcl script by name
  */
- 
+
 void
 weechat_tcl_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
-    
+
     ptr_script = script_search (weechat_tcl_plugin, tcl_scripts, name);
     if (ptr_script)
     {
@@ -444,7 +444,7 @@ weechat_tcl_reload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     char *filename;
-    
+
     ptr_script = script_search (weechat_tcl_plugin, tcl_scripts, name);
     if (ptr_script)
     {
@@ -476,11 +476,11 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
     char *path_script;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    
+
     if (argc == 1)
     {
         script_display_list (weechat_tcl_plugin, tcl_scripts,
@@ -551,7 +551,7 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
                             weechat_prefix ("error"), TCL_PLUGIN_NAME, "tcl");
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -568,9 +568,9 @@ weechat_tcl_completion_cb (void *data, const char *completion_item,
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     script_completion (weechat_tcl_plugin, completion, tcl_scripts);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -584,17 +584,17 @@ weechat_tcl_infolist_cb (void *data, const char *infolist_name,
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "tcl_script") == 0)
     {
         return script_infolist_list_scripts (weechat_tcl_plugin,
                                              tcl_scripts, pointer,
                                              arguments);
     }
-    
+
     return NULL;
 }
 
@@ -610,13 +610,13 @@ weechat_tcl_signal_debug_dump_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, TCL_PLUGIN_NAME) == 0))
     {
         script_print_log (weechat_tcl_plugin, tcl_scripts);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -632,10 +632,10 @@ weechat_tcl_signal_buffer_closed_cb (void *data, const char *signal,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (signal_data)
         script_remove_buffer_callbacks (tcl_scripts, signal_data);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -667,7 +667,7 @@ weechat_tcl_timer_action_cb (void *data, int remaining_calls)
                                   &tcl_action_remove_list);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -683,7 +683,7 @@ weechat_tcl_signal_script_action_cb (void *data, const char *signal,
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         if (strcmp (signal, "tcl_script_install") == 0)
@@ -703,7 +703,7 @@ weechat_tcl_signal_script_action_cb (void *data, const char *signal,
                                 &tcl_action_remove_list);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -715,7 +715,7 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     weechat_tcl_plugin = plugin;
-    
+
     tcl_quiet = 1;
     script_init (weechat_tcl_plugin,
                  argc,
@@ -728,10 +728,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                  &weechat_tcl_signal_script_action_cb,
                  &weechat_tcl_load_cb);
     tcl_quiet = 0;
-    
+
     script_display_short_list (weechat_tcl_plugin,
                                tcl_scripts);
-    
+
     /* init ok */
     return WEECHAT_RC_OK;
 }
@@ -747,6 +747,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     tcl_quiet = 1;
     script_end (plugin, &tcl_scripts, &weechat_tcl_unload_all);
     tcl_quiet = 0;
-    
+
     return WEECHAT_RC_OK;
 }

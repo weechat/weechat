@@ -61,17 +61,17 @@ int
 relay_client_valid (struct t_relay_client *client)
 {
     struct t_relay_client *ptr_client;
-    
+
     if (!client)
         return 0;
-    
+
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
     {
         if (ptr_client == client)
             return 1;
     }
-    
+
     /* client not found */
     return 0;
 }
@@ -85,7 +85,7 @@ relay_client_search_by_number (int number)
 {
     struct t_relay_client *ptr_client;
     int i;
-    
+
     i = 0;
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
@@ -94,7 +94,7 @@ relay_client_search_by_number (int number)
             return ptr_client;
         i++;
     }
-    
+
     /* client not found */
     return NULL;
 }
@@ -109,12 +109,12 @@ relay_client_recv_cb (void *arg_client, int fd)
     struct t_relay_client *client;
     static char buffer[4096 + 2];
     int num_read;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     client = (struct t_relay_client *)arg_client;
-    
+
     num_read = recv (client->sock, buffer, sizeof (buffer) - 1, 0);
     if (num_read > 0)
     {
@@ -137,7 +137,7 @@ relay_client_recv_cb (void *arg_client, int fd)
     {
         relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -149,7 +149,7 @@ struct t_relay_client *
 relay_client_new (int sock, char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
-    
+
     new_client = malloc (sizeof (*new_client));
     if (new_client)
     {
@@ -166,7 +166,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
         new_client->last_activity = new_client->start_time;
         new_client->bytes_recv = 0;
         new_client->bytes_sent = 0;
-        
+
         new_client->protocol_data = NULL;
         switch (new_client->protocol)
         {
@@ -179,7 +179,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
-        
+
         new_client->prev_client = NULL;
         new_client->next_client = relay_clients;
         if (relay_clients)
@@ -187,7 +187,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
         else
             last_relay_client = new_client;
         relay_clients = new_client;
-        
+
         weechat_printf (NULL,
                         _("%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"),
                         RELAY_PLUGIN_NAME,
@@ -198,12 +198,12 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
                         new_client->id,
                         relay_protocol_string[new_client->protocol],
                         new_client->protocol_args);
-        
+
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
                                                &relay_client_recv_cb,
                                                new_client);
-        
+
         relay_client_count++;
 
         if (!relay_buffer
@@ -211,7 +211,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
         {
             relay_buffer_open ();
         }
-        
+
         relay_buffer_refresh (WEECHAT_HOTLIST_PRIVATE);
     }
     else
@@ -220,7 +220,7 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
                         _("%s%s: not enough memory for new client"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
     }
-    
+
     return new_client;
 }
 
@@ -233,11 +233,11 @@ relay_client_set_status (struct t_relay_client *client,
                          enum t_relay_status status)
 {
     client->status = status;
-    
+
     if (RELAY_CLIENT_HAS_ENDED(client->status))
     {
         client->end_time = time (NULL);
-        
+
         if (client->hook_fd)
         {
             weechat_unhook (client->hook_fd);
@@ -279,14 +279,14 @@ relay_client_set_status (struct t_relay_client *client,
             default:
                 break;
         }
-        
+
         if (client->sock >= 0)
         {
             close (client->sock);
             client->sock = -1;
         }
     }
-    
+
     relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
 }
 
@@ -298,10 +298,10 @@ void
 relay_client_free (struct t_relay_client *client)
 {
     struct t_relay_client *new_relay_clients;
-    
+
     if (!client)
         return;
-    
+
     /* remove client from list */
     if (last_relay_client == client)
         last_relay_client = client->prev_client;
@@ -314,7 +314,7 @@ relay_client_free (struct t_relay_client *client)
         new_relay_clients = client->next_client;
     if (client->next_client)
         (client->next_client)->prev_client = client->prev_client;
-    
+
     /* free data */
     if (client->address)
         free (client->address);
@@ -336,11 +336,11 @@ relay_client_free (struct t_relay_client *client)
                 break;
         }
     }
-    
+
     free (client);
-    
+
     relay_clients = new_relay_clients;
-    
+
     relay_client_count--;
     if (relay_buffer_selected_line >= relay_client_count)
     {
@@ -383,7 +383,7 @@ void
 relay_client_disconnect_all ()
 {
     struct t_relay_client *ptr_client;
-    
+
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
     {
@@ -402,10 +402,10 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     char value[128];
-    
+
     if (!infolist || !client)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
@@ -442,7 +442,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     snprintf (value, sizeof (value), "%lu", client->bytes_sent);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_sent", value))
         return 0;
-    
+
     switch (client->protocol)
     {
         case RELAY_PROTOCOL_WEECHAT:
@@ -454,7 +454,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         case RELAY_NUM_PROTOCOLS:
             break;
     }
-    
+
     return 1;
 }
 
@@ -466,7 +466,7 @@ void
 relay_client_print_log ()
 {
     struct t_relay_client *ptr_client;
-    
+
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
     {

@@ -170,13 +170,13 @@ command_double_cb (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) buffer;
     (void) argv;
-    
+
     if (argc > 1)
     {
         weechat_command (NULL, argv_eol[1]);
         weechat_command (NULL, argv_eol[1]);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -185,7 +185,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
                      int argc, char *argv[])
 {
     weechat_plugin = plugin;
-    
+
     weechat_hook_command ("double",
                           "Display two times a message "
                           "or execute two times a command",
@@ -194,7 +194,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin,
                           "command: command to execute two times",
                           NULL,
                           &command_double_cb, NULL);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -203,7 +203,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
-    
+
     return WEECHAT_RC_OK;
 }
 ----------------------------------------
@@ -3517,7 +3517,7 @@ int
 my_config_reload_cb (void *data, struct t_config_file *config_file)
 {
     /* ... */
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -3670,7 +3670,7 @@ my_section_read_cb (void *data, struct t_config_file *config_file,
                     const char *value)
 {
     /* ... */
-    
+
     return WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
     /* return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE; */
     /* return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND; */
@@ -3682,7 +3682,7 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
                      const char *section_name)
 {
     /* ... */
-    
+
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
@@ -3692,7 +3692,7 @@ my_section_write_default_cb (void *data, struct t_config_file *config_file,
                              const char *section_name)
 {
     /* ... */
-    
+
     return WEECHAT_CONFIG_WRITE_OK;
     /* return WEECHAT_CONFIG_WRITE_ERROR; */
 }
@@ -3703,7 +3703,7 @@ my_section_create_option_cb (void *data, struct t_config_file *config_file,
                              const char *option_name, const char *value)
 {
     /* ... */
-    
+
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     /* return WEECHAT_CONFIG_OPTION_SET_ERROR; */
 }
@@ -3714,7 +3714,7 @@ my_section_delete_option_cb (void *data, struct t_config_file *config_file,
                              struct t_config_option *option)
 {
     /* ... */
-    
+
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
     /* return WEECHAT_CONFIG_OPTION_UNSET_ERROR; */
 }
@@ -4998,9 +4998,9 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
                      const char *section_name)
 {
     weechat_config_write_line (config_file, "my_section", NULL);
-    
+
     weechat_config_write_option (config_file, option);
-    
+
     return WEECHAT_RC_OK;
 }
 ----------------------------------------
@@ -5050,10 +5050,10 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
                      const char *section_name)
 {
     weechat_config_write_line (config_file, "my_section", NULL);
-    
+
     weechat_config_write_line (config_file, "option", "%s;%d",
                                "value", 123);
-                               
+
     return WEECHAT_RC_OK;
 }
 ----------------------------------------
@@ -6618,22 +6618,22 @@ my_process_cb (void *data, const char *command, int return_code,
         weechat_printf (NULL, "Error with command '%s'", command);
         return WEECHAT_RC_OK;
     }
-    
+
     if (return_code >= 0)
     {
         weechat_printf (NULL, "return_code = %d", return_code);
     }
-    
+
     if (out)
     {
         weechat_printf (NULL, "stdout: %s", out);
     }
-    
+
     if (err)
     {
         weechat_printf (NULL, "stderr: %s", err);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -7854,10 +7854,10 @@ my_completion_cb (void *data, const char *completion_item,
 {
     /* get arguments of command */
     const char *args = weechat_hook_completion_get_string (completion, "args");
-    
+
     /* completion depending on args */
     /* ... */
-    
+
     return WEECHAT_RC_OK;
 }
 ----------------------------------------
@@ -8034,10 +8034,10 @@ my_modifier_cb (void *data, const char *modifier,
 {
     char *result;
     int length;
-    
+
     if (!string)
         return NULL;
-    
+
     length = strlen (string) + 5;
     result = malloc (length);
     if (result)
@@ -8045,7 +8045,7 @@ my_modifier_cb (void *data, const char *modifier,
         /* add "xxx" to any message printed */
         snprintf (result, length, "%s xxx", string);
     }
-    
+
     return result;
 }
 
@@ -8305,10 +8305,10 @@ my_infolist_cb (void *data, const char *infolist_name, void *pointer,
                 const char *arguments)
 {
     struct t_infolist *my_infolist;
-    
+
     /* build infolist */
     /* ... */
-    
+
     return my_infolist;
 }
 
@@ -8379,10 +8379,10 @@ struct t_hdata *
 my_hdata_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *my_hdata;
-    
+
     /* build hdata */
     /* ... */
-    
+
     return my_hdata;
 }
 
@@ -8506,7 +8506,7 @@ my_focus_nicklist_cb (void *data, struct t_hashtable *info)
 {
     /* add strings in hashtable */
     /* ... */
-    
+
     return info;
 }
 

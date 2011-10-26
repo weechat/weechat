@@ -36,13 +36,13 @@ struct t_gui_layout_window
     int internal_id;                    /* used to save/read layout from    */
                                         /* config (to find parent)          */
     struct t_gui_layout_window *parent_node; /* pointer to parent node      */
-    
+
     /* node info */
     int split_pct;                      /* % of split size (child1)         */
     int split_horiz;                    /* 1 if horizontal, 0 if vertical   */
     struct t_gui_layout_window *child1; /* first child, NULL if a leaf      */
     struct t_gui_layout_window *child2; /* second child, NULL if leaf       */
-    
+
     /* leaf info */
     char *plugin_name;
     char *buffer_name;

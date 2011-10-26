@@ -58,13 +58,13 @@ int
 gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
 {
     int i;
-    
+
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (strcmp (line->data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
             return 1;
     }
-    
+
     /* tag not found, line may be filtered */
     return 0;
 }
@@ -79,14 +79,14 @@ gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
 {
     struct t_gui_filter *ptr_filter;
     int rc;
-    
+
     /* line is always displayed if filters are disabled */
     if (!gui_filters_enabled)
         return 1;
-    
+
     if (gui_filter_line_has_tag_no_filter (line))
         return 1;
-    
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
@@ -120,7 +120,7 @@ gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
             }
         }
     }
-    
+
     /* no tag or regex matching, then line is displayed */
     return 1;
 }
@@ -135,36 +135,36 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
     struct t_gui_line *ptr_line;
     int line_displayed, lines_hidden;
     char buffer_full_name[512];
-    
+
     lines_hidden = 0;
-    
+
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
-    
+
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
               gui_buffer_get_plugin_name (buffer),
               buffer->name);
-    
+
     for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
         line_displayed = gui_filter_check_line (ptr_line, buffer_full_name);
-        
+
         if (line_displayed
             && (ptr_line->data->prefix_length > buffer->lines->prefix_max_length))
         {
             buffer->lines->prefix_max_length = ptr_line->data->prefix_length;
         }
-        
+
         /* force chat refresh if at least one line changed */
         if (ptr_line->data->displayed != line_displayed)
             gui_buffer_ask_chat_refresh (buffer, 2);
-        
+
         ptr_line->data->displayed = line_displayed;
-        
+
         if (!line_displayed)
             lines_hidden = 1;
     }
-    
+
     if (buffer->lines->lines_hidden != lines_hidden)
     {
         buffer->lines->lines_hidden = lines_hidden;
@@ -181,7 +181,7 @@ void
 gui_filter_all_buffers ()
 {
     struct t_gui_buffer *ptr_buffer;
-    
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -257,14 +257,14 @@ struct t_gui_filter *
 gui_filter_search_by_name (const char *name)
 {
     struct t_gui_filter *ptr_filter;
-    
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
         if (strcmp (ptr_filter->name, name) == 0)
             return ptr_filter;
     }
-    
+
     /* filter not found */
     return NULL;
 }
@@ -281,20 +281,20 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
     regex_t *regex1, *regex2;
     char *pos_tab, *regex_prefix;
     const char *ptr_start_regex, *pos_regex_message;
-    
+
     if (!name || !buffer_name || !tags || !regex)
         return NULL;
-    
+
     if (gui_filter_search_by_name (name))
         return NULL;
-    
+
     ptr_start_regex = regex;
     if ((ptr_start_regex[0] == '!')
         || ((ptr_start_regex[0] == '\\') && (ptr_start_regex[1] == '!')))
     {
         ptr_start_regex++;
     }
-    
+
     regex1 = NULL;
     regex2 = NULL;
     if (strcmp (ptr_start_regex, "*") != 0)
@@ -311,7 +311,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             regex_prefix = NULL;
             pos_regex_message = ptr_start_regex;
         }
-        
+
         if (regex_prefix)
         {
             regex1 = malloc (sizeof (*regex1));
@@ -326,7 +326,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                 }
             }
         }
-        
+
         regex2 = malloc (sizeof (*regex2));
         if (regex2)
         {
@@ -341,11 +341,11 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                 return NULL;
             }
         }
-        
+
         if (regex_prefix)
             free (regex_prefix);
     }
-    
+
     /* create new filter */
     new_filter = malloc (sizeof (*new_filter));
     if (new_filter)
@@ -372,7 +372,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->regex = strdup (regex);
         new_filter->regex_prefix = regex1;
         new_filter->regex_message = regex2;
-        
+
         /* add filter to filters list */
         new_filter->prev_filter = last_gui_filter;
         if (gui_filters)
@@ -381,13 +381,13 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             gui_filters = new_filter;
         last_gui_filter = new_filter;
         new_filter->next_filter = NULL;
-        
+
         gui_filter_all_buffers ();
-        
+
         hook_signal_send ("filter_added",
                           WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
     }
-    
+
     return new_filter;
 }
 
@@ -400,13 +400,13 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 {
     if (!filter || !new_name)
         return 0;
-    
+
     if (gui_filter_search_by_name (new_name))
         return 0;
-    
+
     free (filter->name);
     filter->name = strdup (new_name);
-    
+
     return 1;
 }
 
@@ -419,7 +419,7 @@ gui_filter_free (struct t_gui_filter *filter)
 {
     hook_signal_send ("filter_removing",
                       WEECHAT_HOOK_SIGNAL_POINTER, filter);
-    
+
     /* free data */
     if (filter->name)
         free (filter->name);
@@ -443,7 +443,7 @@ gui_filter_free (struct t_gui_filter *filter)
         regfree (filter->regex_message);
         free (filter->regex_message);
     }
-    
+
     /* remove filter from filters list */
     if (filter->prev_filter)
         (filter->prev_filter)->next_filter = filter->next_filter;
@@ -453,11 +453,11 @@ gui_filter_free (struct t_gui_filter *filter)
         gui_filters = filter->next_filter;
     if (last_gui_filter == filter)
         last_gui_filter = filter->prev_filter;
-    
+
     free (filter);
-    
+
     gui_filter_all_buffers ();
-    
+
     hook_signal_send ("filter_removed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
@@ -482,10 +482,10 @@ struct t_hdata *
 gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_filter", "next_filter");
     if (hdata)
     {
@@ -520,14 +520,14 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     char option_name[64];
     int i;
-    
+
     if (!infolist || !filter)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_integer (ptr_item, "enabled", filter->enabled))
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", filter->name))
@@ -547,7 +547,7 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     }
     if (!infolist_new_var_string (ptr_item, "regex", filter->regex))
         return 0;
-    
+
     return 1;
 }
 
@@ -560,10 +560,10 @@ gui_filter_print_log ()
 {
     struct t_gui_filter *ptr_filter;
     int i;
-    
+
     log_printf ("");
     log_printf ("gui_filters_enabled = %d", gui_filters_enabled);
-    
+
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {

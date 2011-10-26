@@ -108,7 +108,7 @@ struct t_hook
     int running;                       /* 1 if hook is currently running    */
     int priority;                      /* priority (to sort hooks)          */
     void *callback_data;               /* data sent to callback             */
-    
+
     /* hook data (depends on hook type) */
     void *hook_data;                   /* hook specific data                */
     struct t_hook *prev_hook;          /* link to previous hook             */
@@ -128,17 +128,17 @@ struct t_hook_command
     char *args;                         /* (for /help) command arguments    */
     char *args_description;             /* (for /help) args long description*/
     char *completion;                   /* template for completion          */
-    
+
     /* templates */
     int cplt_num_templates;             /* number of templates for compl.   */
     char **cplt_templates;              /* completion templates             */
     char **cplt_templates_static;       /* static part of template (at      */
                                         /* beginning                        */
-    
+
     /* arguments for each template */
     int *cplt_template_num_args;        /* number of arguments for template */
     char ***cplt_template_args;         /* arguments for each template      */
-    
+
     /* concatenation of arg N for each template */
     int cplt_template_num_args_concat; /* number of concatened arguments    */
     char **cplt_template_args_concat;  /* concatened arguments              */

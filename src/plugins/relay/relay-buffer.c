@@ -51,7 +51,7 @@ relay_buffer_refresh (const char *hotlist)
     char *str_recv, *str_sent;
     int i, length, line;
     struct tm *date_tmp;
-    
+
     if (relay_buffer)
     {
         weechat_buffer_clear (relay_buffer);
@@ -83,7 +83,7 @@ relay_buffer_refresh (const char *hotlist)
                       weechat_config_string (relay_config_color_text_selected) :
                       weechat_config_string (relay_config_color_text),
                       weechat_config_string (relay_config_color_text_bg));
-            
+
             snprintf (status, sizeof (status),
                       "%s", _(relay_client_status_string[ptr_client->status]));
             length = weechat_utf8_strlen_screen (status);
@@ -94,7 +94,7 @@ relay_buffer_refresh (const char *hotlist)
                     strcat (status, " ");
                 }
             }
-            
+
             date_tmp = localtime (&(ptr_client->start_time));
             strftime (date_start, sizeof (date_start),
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
@@ -105,7 +105,7 @@ relay_buffer_refresh (const char *hotlist)
                 strftime (date_end, sizeof (date_end),
                           "%a, %d %b %Y %H:%M:%S", date_tmp);
             }
-            
+
             /* first line with status and start time */
             weechat_printf_y (relay_buffer, (line * 2) + 2,
                               _("%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"),
@@ -121,7 +121,7 @@ relay_buffer_refresh (const char *hotlist)
                               (ptr_client->end_time > 0) ? ", " : "",
                               (ptr_client->end_time > 0) ? _("ended on: ") : "",
                               (ptr_client->end_time > 0) ? date_end : "");
-            
+
             /* second line with protocol and bytes recv/sent */
             str_recv = weechat_string_format_size (ptr_client->bytes_recv);
             str_sent = weechat_string_format_size (ptr_client->bytes_sent);
@@ -137,7 +137,7 @@ relay_buffer_refresh (const char *hotlist)
                 free (str_recv);
             if (str_sent)
                 free (str_sent);
-            
+
             line++;
         }
         if (hotlist)
@@ -155,10 +155,10 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                        const char *input_data)
 {
     struct t_relay_client *client, *ptr_client, *next_client;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (buffer == relay_raw_buffer)
     {
         if (weechat_strcasecmp (input_data, "q") == 0)
@@ -167,7 +167,7 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     else if (buffer == relay_buffer)
     {
         client = relay_client_search_by_number (relay_buffer_selected_line);
-        
+
         /* disconnect client */
         if (weechat_strcasecmp (input_data, "d") == 0)
         {
@@ -205,7 +205,7 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -218,7 +218,7 @@ relay_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (buffer == relay_raw_buffer)
     {
         relay_raw_buffer = NULL;
@@ -227,7 +227,7 @@ relay_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     {
         relay_buffer = NULL;
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -243,11 +243,11 @@ relay_buffer_open ()
         relay_buffer = weechat_buffer_new (RELAY_BUFFER_NAME,
                                            &relay_buffer_input_cb, NULL,
                                            &relay_buffer_close_cb, NULL);
-        
+
         /* failed to create buffer ? then exit */
         if (!relay_buffer)
             return;
-        
+
         weechat_buffer_set (relay_buffer, "type", "free");
         weechat_buffer_set (relay_buffer, "title", _("List of clients for relay"));
         weechat_buffer_set (relay_buffer, "key_bind_meta2-A", "/relay up");

@@ -94,7 +94,7 @@ upgrade_file_write_integer (struct t_upgrade_file *upgrade_file, int value)
 {
     if (fwrite ((void *)(&value), sizeof (value), 1, upgrade_file->file) <= 0)
         return 0;
-    
+
     return 1;
 }
 
@@ -108,7 +108,7 @@ upgrade_file_write_time (struct t_upgrade_file *upgrade_file, time_t date)
 {
     if (fwrite ((void *)(&date), sizeof (date), 1, upgrade_file->file) <= 0)
         return 0;
-    
+
     return 1;
 }
 
@@ -122,7 +122,7 @@ upgrade_file_write_string (struct t_upgrade_file *upgrade_file,
                            const char *string)
 {
     int length;
-    
+
     if (string && string[0])
     {
         length = strlen (string);
@@ -136,7 +136,7 @@ upgrade_file_write_string (struct t_upgrade_file *upgrade_file,
         if (!upgrade_file_write_integer (upgrade_file, 0))
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -161,7 +161,7 @@ upgrade_file_write_buffer (struct t_upgrade_file *upgrade_file, void *pointer,
         if (!upgrade_file_write_integer (upgrade_file, 0))
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -176,10 +176,10 @@ upgrade_file_new (const char *filename, int write)
 {
     int length;
     struct t_upgrade_file *new_upgrade_file;
-    
+
     if (!filename)
         return NULL;
-    
+
     new_upgrade_file = malloc (sizeof (*new_upgrade_file));
     if (new_upgrade_file)
     {
@@ -193,33 +193,33 @@ upgrade_file_new (const char *filename, int write)
         }
         snprintf (new_upgrade_file->filename, length, "%s/%s.upgrade",
                   weechat_home, filename);
-        
+
         /* open file in read or write mode */
         if (write)
             new_upgrade_file->file = fopen (new_upgrade_file->filename, "wb");
         else
             new_upgrade_file->file = fopen (new_upgrade_file->filename, "rb");
-        
+
         if (!new_upgrade_file->file)
         {
             free (new_upgrade_file->filename);
             free (new_upgrade_file);
             return NULL;
         }
-        
+
         /* change permissions if write mode */
         if (write)
         {
             chmod (new_upgrade_file->filename, 0600);
-            
+
             /* write signature */
             upgrade_file_write_string (new_upgrade_file, UPGRADE_SIGNATURE);
         }
-        
+
         /* init positions */
         new_upgrade_file->last_read_pos = 0;
         new_upgrade_file->last_read_length = 0;
-        
+
         /* add upgrade file to list of upgrade files */
         new_upgrade_file->prev_upgrade = last_upgrade_file;
         new_upgrade_file->next_upgrade = NULL;
@@ -245,7 +245,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
     char **argv;
     const char *fields;
     void *buf;
-    
+
     /* write all infolist variables */
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
@@ -261,7 +261,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
             UPGRADE_ERROR(_("write - object id"), "");
             return 0;
         }
-        
+
         fields = infolist_fields (infolist);
         if (fields)
         {
@@ -376,12 +376,12 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
             if (argv)
                 string_free_split (argv);
         }
-        
+
         /* write object end */
         if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_END))
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -416,28 +416,28 @@ int
 upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
 {
     int length;
-    
+
     if (string && *string)
     {
         free (*string);
         *string = NULL;
     }
-    
+
     if (!upgrade_file_read_integer (upgrade_file, &length))
         return 0;
-    
+
     upgrade_file->last_read_pos = ftell (upgrade_file->file);
     upgrade_file->last_read_length = length;
-    
+
     if (string)
     {
         if (length == 0)
             return 1;
-        
+
         (*string) = malloc (length + 1);
         if (!(*string))
             return 0;
-        
+
         if (fread ((void *)(*string), length, 1, upgrade_file->file) <= 0)
         {
             free (*string);
@@ -464,10 +464,10 @@ upgrade_file_read_string_utf8 (struct t_upgrade_file *upgrade_file,
 {
     if (!upgrade_file_read_string (upgrade_file, string))
         return 0;
-    
+
     if (string && *string)
         utf8_normalize (*string, '?');
-    
+
     return 1;
 }
 
@@ -481,23 +481,23 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
 {
     if (!buffer)
         return 0;
-    
+
     if (*buffer)
     {
         free (*buffer);
         *buffer = NULL;
     }
-    
+
     if (!upgrade_file_read_integer (upgrade_file, size))
         return 0;
-    
+
     if (*size > 0)
     {
         upgrade_file->last_read_pos = ftell (upgrade_file->file);
         upgrade_file->last_read_length = *size;
-        
+
         *buffer = malloc (*size);
-        
+
         if (*buffer)
         {
             if (fread (*buffer, *size, 1, upgrade_file->file) <= 0)
@@ -509,7 +509,7 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
                 return 0;
         }
     }
-    
+
     return 1;
 }
 
@@ -522,7 +522,7 @@ upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
 {
     upgrade_file->last_read_pos = ftell (upgrade_file->file);
     upgrade_file->last_read_length = sizeof (*time);
-    
+
     if (time)
     {
         if (fread ((void *)time, sizeof (*time), 1, upgrade_file->file) <= 0)
@@ -533,7 +533,7 @@ upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
         if (fseek (upgrade_file->file, sizeof (*time), SEEK_CUR) < 0)
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -551,14 +551,14 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
     char *name, *value_str;
     void *buffer;
     time_t time;
-    
+
     rc = 0;
-    
+
     infolist = NULL;
     name = NULL;
     value_str = NULL;
     buffer = NULL;
-    
+
     if (!upgrade_file_read_integer (upgrade_file, &type))
     {
         if (feof (upgrade_file->file))
@@ -567,19 +567,19 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             UPGRADE_ERROR(_("read - object type"), "");
         goto end;
     }
-    
+
     if (type != UPGRADE_TYPE_OBJECT_START)
     {
         UPGRADE_ERROR(_("read - bad object type ('object start' expected)"), "");
         goto end;
     }
-    
+
     if (!upgrade_file_read_integer (upgrade_file, &object_id))
     {
         UPGRADE_ERROR(_("read - object id"), "");
         goto end;
     }
-    
+
     infolist = infolist_new ();
     if (!infolist)
     {
@@ -592,7 +592,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
         UPGRADE_ERROR(_("read - infolist item creation"), "");
         goto end;
     }
-    
+
     while (1)
     {
         if (!upgrade_file_read_integer (upgrade_file, &type))
@@ -600,10 +600,10 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             UPGRADE_ERROR(_("read - object type"), "");
             goto end;
         }
-        
+
         if (type == UPGRADE_TYPE_OBJECT_END)
             break;
-        
+
         if (type == UPGRADE_TYPE_OBJECT_VAR)
         {
             if (!upgrade_file_read_string (upgrade_file, &name))
@@ -621,7 +621,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 UPGRADE_ERROR(_("read - variable type"), "");
                 goto end;
             }
-            
+
             switch (type_var)
             {
                 case INFOLIST_INTEGER:
@@ -661,9 +661,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             }
         }
     }
-    
+
     rc = 1;
-    
+
     if (upgrade_file->callback_read)
     {
         if ((int)(upgrade_file->callback_read) (upgrade_file->callback_read_data,
@@ -672,7 +672,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                                                 infolist) == WEECHAT_RC_ERROR)
             rc = 0;
     }
-    
+
 end:
     if (infolist)
         infolist_free (infolist);
@@ -682,7 +682,7 @@ end:
         free (value_str);
     if (buffer)
         free (buffer);
-    
+
     return rc;
 }
 
@@ -700,35 +700,35 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
                    void *callback_read_data)
 {
     char *signature;
-    
+
     if (!upgrade_file)
         return 0;
-    
+
     upgrade_file->callback_read = callback_read;
     upgrade_file->callback_read_data = callback_read_data;
-    
+
     signature = NULL;
     if (!upgrade_file_read_string (upgrade_file, &signature))
     {
         UPGRADE_ERROR(_("read - signature not found"), "");
         return 0;
     }
-    
+
     if (!signature || (strcmp (signature, UPGRADE_SIGNATURE) != 0))
     {
         UPGRADE_ERROR(_("read - bad signature (upgrade file format may have "
                         "changed since last version)"), "");
         return 0;
     }
-    
+
     free (signature);
-    
+
     while (!feof (upgrade_file->file))
     {
         if (!upgrade_file_read_object (upgrade_file))
             return 0;
     }
-    
+
     return 1;
 }
 

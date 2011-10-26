@@ -52,7 +52,7 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
             return (char *)string_ptr;
         string_ptr--;
     }
-    
+
     /* no end-of-line found in string */
     return NULL;
 }
@@ -71,12 +71,12 @@ logger_tail_file (const char *filename, int n_lines)
     char buf[LOGGER_TAIL_BUFSIZE + 1];
     char *ptr_buf, *pos_eol, *part_of_line, *new_part_of_line;
     struct t_logger_line *ptr_line, *new_line;
-    
+
     /* open file */
     fd = open (filename, O_RDONLY);
     if (fd == -1)
         return NULL;
-    
+
     /* seek to the end of file */
     file_length = lseek (fd, (off_t)0, SEEK_END);
     if (file_length <= 0)
@@ -91,7 +91,7 @@ logger_tail_file (const char *filename, int n_lines)
     else
         to_read = LOGGER_TAIL_BUFSIZE;
     lseek (fd, file_pos, SEEK_SET);
-    
+
     /* loop until we have "n_lines" lines in list */
     part_of_line = NULL;
     ptr_line = NULL;
@@ -200,12 +200,12 @@ logger_tail_file (const char *filename, int n_lines)
         else
             to_read = LOGGER_TAIL_BUFSIZE;
     }
-    
+
     if (part_of_line)
         free (part_of_line);
-    
+
     close (fd);
-    
+
     return ptr_line;
 }
 
@@ -217,7 +217,7 @@ void
 logger_tail_free (struct t_logger_line *lines)
 {
     struct t_logger_line *ptr_line, *next_line;
-    
+
     if (!lines)
         return;
 
@@ -225,11 +225,11 @@ logger_tail_free (struct t_logger_line *lines)
     while (ptr_line)
     {
         next_line = ptr_line->next_line;
-        
+
         if (ptr_line->data)
             free (ptr_line->data);
         free (ptr_line);
-        
+
         ptr_line = next_line;
     }
 }

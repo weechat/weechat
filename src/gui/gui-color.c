@@ -62,7 +62,7 @@ const char *
 gui_color_search_config (const char *color_name)
 {
     struct t_config_option *ptr_option;
-    
+
     if (color_name)
     {
         for (ptr_option = weechat_config_section_color->options;
@@ -79,7 +79,7 @@ gui_color_search_config (const char *color_name)
             }
         }
     }
-    
+
     /* color not found */
     return NULL;
 }
@@ -94,19 +94,19 @@ gui_color_attr_get_flag (char c)
 {
     if (c == GUI_COLOR_EXTENDED_BOLD_CHAR)
         return GUI_COLOR_EXTENDED_BOLD_FLAG;
-    
+
     if (c == GUI_COLOR_EXTENDED_REVERSE_CHAR)
         return GUI_COLOR_EXTENDED_REVERSE_FLAG;
-    
+
     if (c == GUI_COLOR_EXTENDED_ITALIC_CHAR)
         return GUI_COLOR_EXTENDED_ITALIC_FLAG;
-    
+
     if (c == GUI_COLOR_EXTENDED_UNDERLINE_CHAR)
         return GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
-    
+
     if (c == GUI_COLOR_EXTENDED_KEEPATTR_CHAR)
         return GUI_COLOR_EXTENDED_KEEPATTR_FLAG;
-    
+
     return 0;
 }
 
@@ -120,9 +120,9 @@ void
 gui_color_attr_build_string (int color, char *str_attr)
 {
     int i;
-    
+
     i = 0;
-    
+
     if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
         str_attr[i++] = GUI_COLOR_EXTENDED_BOLD_CHAR;
     if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -133,7 +133,7 @@ gui_color_attr_build_string (int color, char *str_attr)
         str_attr[i++] = GUI_COLOR_EXTENDED_UNDERLINE_CHAR;
     if (color & GUI_COLOR_EXTENDED_KEEPATTR_FLAG)
         str_attr[i++] = GUI_COLOR_EXTENDED_KEEPATTR_CHAR;
-    
+
     str_attr[i] = '\0';
 }
 
@@ -150,14 +150,14 @@ gui_color_get_custom (const char *color_name)
     char color_fg[32], color_bg[32];
     char *pos_delim, *str_fg, *pos_bg, *error, *color_attr;
     const char *ptr_color_name;
-    
+
     /* attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 32;
     color[index_color][0] = '\0';
-    
+
     if (!color_name || !color_name[0])
         return color[index_color];
-    
+
     if (string_strcasecmp (color_name, "reset") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
@@ -261,7 +261,7 @@ gui_color_get_custom (const char *color_name)
         color_attr = NULL;
         color_fg[0] = '\0';
         color_bg[0] = '\0';
-        
+
         /* read extra attributes (bold, ..) */
         ptr_color_name = color_name;
         while (gui_color_attr_get_flag (ptr_color_name[0]) > 0)
@@ -273,7 +273,7 @@ gui_color_get_custom (const char *color_name)
             color_attr = string_strndup (color_name,
                                          ptr_color_name - color_name);
         }
-        
+
         pos_delim = strchr (ptr_color_name, ',');
         if (!pos_delim)
             pos_delim = strchr (ptr_color_name, ':');
@@ -291,7 +291,7 @@ gui_color_get_custom (const char *color_name)
             str_fg = strdup (ptr_color_name);
             pos_bg = NULL;
         }
-        
+
         if (str_fg)
         {
             fg_term = gui_color_palette_get_alias (str_fg);
@@ -330,7 +330,7 @@ gui_color_get_custom (const char *color_name)
                     bg = gui_color_search (pos_bg);
             }
         }
-        
+
         if (fg_term >= 0)
         {
             snprintf (color_fg, sizeof (color_fg), "%c%s%05d",
@@ -344,7 +344,7 @@ gui_color_get_custom (const char *color_name)
                       (color_attr) ? color_attr : "",
                       fg);
         }
-        
+
         if (bg_term >= 0)
         {
             snprintf (color_bg, sizeof (color_bg), "%c%05d",
@@ -382,13 +382,13 @@ gui_color_get_custom (const char *color_name)
                       GUI_COLOR_BG_CHAR,
                       color_bg);
         }
-        
+
         if (color_attr)
             free (color_attr);
         if (str_fg)
             free (str_fg);
     }
-    
+
     return color[index_color];
 }
 
@@ -408,15 +408,15 @@ gui_color_decode (const char *string, const char *replacement)
     const unsigned char *ptr_string;
     unsigned char *out;
     int out_length, out_pos, length;
-    
+
     if (!string)
         return NULL;
-    
+
     out_length = (strlen ((char *)string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
-    
+
     ptr_string = (unsigned char *)string;
     out_pos = 0;
     while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
@@ -577,7 +577,7 @@ gui_color_decode (const char *string, const char *replacement)
         }
     }
     out[out_pos] = '\0';
-    
+
     return (char *)out;
 }
 
@@ -593,10 +593,10 @@ gui_color_string_replace_colors (const char *string)
     int length, length_color, index_string, index_result;
     char *result, *result2, *color_name;
     const char *pos_end_name, *ptr_color;
-    
+
     if (!string)
         return NULL;
-    
+
     length = strlen (string) + 1;
     result = malloc (length);
     if (result)
@@ -642,7 +642,7 @@ gui_color_string_replace_colors (const char *string)
                         }
                         else
                             result[index_result++] = string[index_string++];
-                        
+
                         free (color_name);
                     }
                     else
@@ -656,7 +656,7 @@ gui_color_string_replace_colors (const char *string)
         }
         result[index_result] = '\0';
     }
-    
+
     return result;
 }
 
@@ -671,7 +671,7 @@ gui_color_free (struct t_gui_color *color)
     {
         if (color->string)
             free (color->string);
-        
+
         free (color);
     }
 }
@@ -686,13 +686,13 @@ gui_color_palette_free_value_cb (struct t_hashtable *hashtable,
                                  const void *key, void *value)
 {
     struct t_gui_color_palette *color_palette;
-    
+
     /* make C compiler happy */
     (void) hashtable;
     (void) key;
-    
+
     color_palette = (struct t_gui_color_palette *)value;
-    
+
     if (color_palette)
         gui_color_palette_free (color_palette);
 }
@@ -738,14 +738,14 @@ int
 gui_color_palette_get_alias (const char *alias)
 {
     int *ptr_number;
-    
+
     if (gui_color_hash_palette_alias)
     {
         ptr_number = hashtable_get (gui_color_hash_palette_alias, alias);
         if (ptr_number)
             return *ptr_number;
     }
-    
+
     /* alias not found */
     return -1;
 }
@@ -758,7 +758,7 @@ struct t_gui_color_palette *
 gui_color_palette_get (int number)
 {
     char str_number[64];
-    
+
     snprintf (str_number, sizeof (str_number), "%d", number);
     return hashtable_get (gui_color_hash_palette_color,
                           str_number);
@@ -773,18 +773,18 @@ gui_color_palette_add (int number, const char *value)
 {
     struct t_gui_color_palette *new_color_palette;
     char str_number[64];
-    
+
     gui_color_palette_alloc_structs ();
-    
+
     new_color_palette = gui_color_palette_new (number, value);
     if (!new_color_palette)
         return;
-    
+
     snprintf (str_number, sizeof (str_number), "%d", number);
     hashtable_set (gui_color_hash_palette_color,
                    str_number, new_color_palette);
     gui_color_palette_build_aliases ();
-    
+
     if (gui_init_ok)
         gui_color_buffer_display ();
 }
@@ -798,9 +798,9 @@ gui_color_palette_remove (int number)
 {
     struct t_gui_color_palette *ptr_color_palette;
     char str_number[64];
-    
+
     gui_color_palette_alloc_structs ();
-    
+
     snprintf (str_number, sizeof (str_number), "%d", number);
     ptr_color_palette = hashtable_get (gui_color_hash_palette_color,
                                        str_number);
@@ -808,7 +808,7 @@ gui_color_palette_remove (int number)
     {
         hashtable_remove (gui_color_hash_palette_color, str_number);
         gui_color_palette_build_aliases ();
-        
+
         if (gui_init_ok)
             gui_color_buffer_display ();
     }

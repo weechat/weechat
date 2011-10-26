@@ -45,7 +45,7 @@ struct t_proxy
 {
     char *name;                         /* proxy name                       */
     struct t_config_option *options[PROXY_NUM_OPTIONS];
-    
+
     struct t_proxy *prev_proxy;         /* link to previous bar             */
     struct t_proxy *next_proxy;         /* link to next bar                 */
 };

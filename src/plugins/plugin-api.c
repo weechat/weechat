@@ -75,7 +75,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
 
     if (plugin->charset)
         free (plugin->charset);
-    
+
     plugin->charset = (charset) ? strdup (charset) : NULL;
 }
 
@@ -99,7 +99,7 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
     /* make C compiler happy */
     (void) single;
     (void) count;
-    
+
     return NG_(single, plural, count);
 }
 
@@ -111,9 +111,9 @@ struct t_config_option *
 plugin_api_config_get (const char *option_name)
 {
     struct t_config_option *ptr_option;
-    
+
     config_file_search_with_string (option_name, NULL, NULL, &ptr_option, NULL);
-    
+
     return ptr_option;
 }
 
@@ -126,14 +126,14 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                               const char *option_name)
 {
     struct t_config_option *ptr_option;
-    
+
     if (!plugin || !option_name)
         return NULL;
-    
+
     ptr_option = plugin_config_search (plugin->name, option_name);
     if (ptr_option)
         return ptr_option->value;
-    
+
     /* option not found */
     return NULL;
 }
@@ -147,14 +147,14 @@ plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
                                  const char *option_name)
 {
     struct t_config_option *ptr_option;
-    
+
     if (!plugin || !option_name)
         return 0;
-    
+
     ptr_option = plugin_config_search (plugin->name, option_name);
     if (ptr_option)
         return 1;
-    
+
     return 0;
 }
 
@@ -168,7 +168,7 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
 {
     if (!plugin || !option_name)
         return WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
-    
+
     return plugin_config_set (plugin->name, option_name, value);
 }
 
@@ -194,14 +194,14 @@ plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
                                 const char *option_name)
 {
     struct t_config_option *ptr_option;
-    
+
     if (!plugin || !option_name)
         return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
-    
+
     ptr_option = plugin_config_search (plugin->name, option_name);
     if (!ptr_option)
         return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
-    
+
     return config_file_option_unset (ptr_option);
 }
 
@@ -214,7 +214,7 @@ plugin_api_prefix (const char *prefix)
 {
     if (!prefix)
         return gui_chat_prefix_empty;
-    
+
     if (string_strcasecmp (prefix, "error") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ERROR];
     if (string_strcasecmp (prefix, "network") == 0)
@@ -225,7 +225,7 @@ plugin_api_prefix (const char *prefix)
         return gui_chat_prefix[GUI_CHAT_PREFIX_JOIN];
     if (string_strcasecmp (prefix, "quit") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_QUIT];
-    
+
     return gui_chat_prefix_empty;
 }
 
@@ -237,15 +237,15 @@ const char *
 plugin_api_color (const char *color_name)
 {
     const char *str_color;
-    
+
     if (!color_name)
         return GUI_NO_COLOR;
-    
+
     /* name is a weechat color option ? => then return this color */
     str_color = gui_color_search_config (color_name);
     if (str_color)
         return str_color;
-    
+
     return gui_color_get_custom (color_name);
 }
 
@@ -258,10 +258,10 @@ plugin_api_command (struct t_weechat_plugin *plugin,
                     struct t_gui_buffer *buffer, const char *command)
 {
     char *command2;
-    
+
     if (!plugin || !command)
         return;
-    
+
     command2 = string_iconv_to_internal (plugin->charset, command);
     if (!buffer)
         buffer = gui_current_window->buffer;
@@ -281,14 +281,14 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     time_t inactivity;
     static char value[32], version_number[32] = { '\0' };
     static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
-    
+
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (!info_name)
         return NULL;
-    
+
     if (string_strcasecmp (info_name, "version") == 0)
     {
         return PACKAGE_VERSION;
@@ -372,7 +372,7 @@ plugin_api_info_get_internal (void *data, const char *info_name,
         snprintf (value, sizeof (value), "%d", gui_cursor_mode);
         return value;
     }
-    
+
     /* info not found */
     return NULL;
 }
@@ -403,10 +403,10 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     char buffer_full_name[1024];
     int context, number;
     char *error;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
 
@@ -415,7 +415,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid bar pointer ? */
         if (pointer && (!gui_bar_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -453,7 +453,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid bar item pointer ? */
         if (pointer && (!gui_bar_item_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -492,7 +492,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid bar window pointer ? */
         if (pointer && (!gui_bar_window_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -543,7 +543,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid buffer pointer ? */
         if (pointer && (!gui_buffer_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -591,7 +591,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             if (!gui_buffer_valid (pointer))
                 return NULL;
         }
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -635,7 +635,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid buffer pointer ? */
         if (pointer && (!gui_buffer_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -711,7 +711,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid buffer pointer ? */
         if (!pointer || (!gui_buffer_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -741,7 +741,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid plugin pointer ? */
         if (pointer && (!plugin_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -780,7 +780,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         /* invalid window pointer ? */
         if (pointer && (!gui_window_valid (pointer)))
             return NULL;
-        
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
@@ -849,7 +849,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
         }
     }
-    
+
     /* infolist not found */
     return NULL;
 }
@@ -865,7 +865,7 @@ plugin_api_infolist_next (struct t_infolist *infolist)
 {
     if (!infolist || !infolist_valid (infolist))
         return 0;
-    
+
     return (infolist_next (infolist)) ? 1 : 0;
 }
 
@@ -906,7 +906,7 @@ plugin_api_infolist_fields (struct t_infolist *infolist)
 {
     if (!infolist || !infolist_valid (infolist))
         return NULL;
-    
+
     return infolist_fields (infolist);
 }
 
@@ -919,7 +919,7 @@ plugin_api_infolist_integer (struct t_infolist *infolist, const char *var)
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
         return 0;
-    
+
     return infolist_integer (infolist, var);
 }
 
@@ -932,7 +932,7 @@ plugin_api_infolist_string (struct t_infolist *infolist, const char *var)
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
         return NULL;
-    
+
     return infolist_string (infolist, var);
 }
 
@@ -945,7 +945,7 @@ plugin_api_infolist_pointer (struct t_infolist *infolist, const char *var)
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
         return NULL;
-    
+
     return infolist_pointer (infolist, var);
 }
 
@@ -959,7 +959,7 @@ plugin_api_infolist_buffer (struct t_infolist *infolist, const char *var,
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
         return NULL;
-    
+
     return infolist_buffer (infolist, var, size);
 }
 
@@ -972,7 +972,7 @@ plugin_api_infolist_time (struct t_infolist *infolist, const char *var)
 {
     if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
         return 0;
-    
+
     return infolist_time (infolist, var);
 }
 
@@ -1027,7 +1027,7 @@ plugin_api_init ()
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "cursor_mode", N_("1 if cursor mode is enabled"), NULL,
                &plugin_api_info_get_internal, NULL);
-    
+
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar", N_("list of bars"),
                    N_("bar pointer (optional)"),
@@ -1089,7 +1089,7 @@ plugin_api_init ()
                    N_("window pointer (optional)"),
                    N_("\"current\" for current window or a window number (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
-    
+
     /* WeeChat core hdata */
     hook_hdata (NULL, "bar", N_("bar"),
                 &gui_bar_hdata_bar_cb, NULL);

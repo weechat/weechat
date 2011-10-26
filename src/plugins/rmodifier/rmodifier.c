@@ -60,17 +60,17 @@ int
 rmodifier_valid (struct t_rmodifier *rmodifier)
 {
     struct t_rmodifier *ptr_rmodifier;
-    
+
     if (!rmodifier)
         return 0;
-    
+
     for (ptr_rmodifier = rmodifier_list; ptr_rmodifier;
          ptr_rmodifier = ptr_rmodifier->next_rmodifier)
     {
         if (ptr_rmodifier == rmodifier)
             return 1;
     }
-    
+
     /* rmodifier not found */
     return 0;
 }
@@ -83,7 +83,7 @@ struct t_rmodifier *
 rmodifier_search (const char *name)
 {
     struct t_rmodifier *ptr_rmodifier;
-    
+
     for (ptr_rmodifier = rmodifier_list; ptr_rmodifier;
          ptr_rmodifier = ptr_rmodifier->next_rmodifier)
     {
@@ -103,21 +103,21 @@ rmodifier_hide_string (const char *string)
 {
     int length, i;
     char *result;
-    
+
     if (!string || !string[0])
         return NULL;
-    
+
     length = weechat_utf8_strlen (string);
     result = malloc ((length * strlen (weechat_config_string (rmodifier_config_look_hide_char))) + 1);
     if (!result)
         return NULL;
-    
+
     result[0] = '\0';
     for (i = 0; i < length; i++)
     {
         strcat (result, weechat_config_string (rmodifier_config_look_hide_char));
     }
-    
+
     return result;
 }
 
@@ -133,12 +133,12 @@ rmodifier_replace_groups (const char *string, regmatch_t regex_match[],
     char *result, *result2, *str_group, *string_to_add;
     const char *ptr_groups;
     int length, num_group;
-    
+
     length = 1;
     result = malloc (length);
     if (!result)
         return NULL;
-    
+
     result[0] = '\0';
     ptr_groups = groups;
     while (ptr_groups && ptr_groups[0])
@@ -157,7 +157,7 @@ rmodifier_replace_groups (const char *string, regmatch_t regex_match[],
                         string_to_add = rmodifier_hide_string (str_group);
                     else
                         string_to_add = strdup (str_group);
-                    
+
                     if (string_to_add)
                     {
                         length += strlen (string_to_add);
@@ -178,7 +178,7 @@ rmodifier_replace_groups (const char *string, regmatch_t regex_match[],
         }
         ptr_groups = weechat_utf8_next_char (ptr_groups);
     }
-    
+
     return result;
 }
 
@@ -193,26 +193,26 @@ rmodifier_modifier_cb (void *data, const char *modifier,
     struct t_rmodifier *rmodifier;
     regmatch_t regex_match[9];
     int i;
-    
+
     /* make C compiler happy */
     (void) modifier;
     (void) modifier_data;
-    
+
     rmodifier = (struct t_rmodifier *)data;
-    
+
     /* reset matching groups */
     for (i = 0; i < 9; i++)
     {
         regex_match[i].rm_so = -1;
     }
-    
+
     /* execute regex and return modified string if matching */
     if (regexec (rmodifier->regex, string, 9, regex_match, 0) == 0)
     {
         return rmodifier_replace_groups (string, regex_match,
                                          rmodifier->groups);
     }
-    
+
     /* regex not matching */
     return NULL;
 }
@@ -226,9 +226,9 @@ rmodifier_hook_modifiers (struct t_rmodifier *rmodifier)
 {
     char **argv, str_modifier[128];
     int argc, i;
-    
+
     argv = weechat_string_split (rmodifier->modifiers, ",", 0, 0, &argc);
-    
+
     if (argv)
     {
         rmodifier->hooks = malloc (sizeof (*rmodifier->hooks) * argc);
@@ -262,15 +262,15 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
 {
     struct t_rmodifier *new_rmodifier, *ptr_rmodifier;
     regex_t *regex;
-    
+
     if (!name || !name[0] || !modifiers || !modifiers[0]
         || !str_regex || !str_regex[0])
         return NULL;
-    
+
     regex = malloc (sizeof (*regex));
     if (!regex)
         return NULL;
-    
+
     if (regcomp (regex, str_regex,
                  REG_EXTENDED | REG_ICASE) != 0)
     {
@@ -281,11 +281,11 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
         free (regex);
         return NULL;
     }
-    
+
     ptr_rmodifier = rmodifier_search (name);
     if (ptr_rmodifier)
         rmodifier_free (ptr_rmodifier);
-    
+
     new_rmodifier = malloc (sizeof (*new_rmodifier));
     if (new_rmodifier)
     {
@@ -295,10 +295,10 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
         new_rmodifier->str_regex = strdup (str_regex);
         new_rmodifier->regex = regex;
         new_rmodifier->groups = strdup ((groups) ? groups : "");
-        
+
         /* create modifiers */
         rmodifier_hook_modifiers (new_rmodifier);
-        
+
         if (rmodifier_list)
         {
             /* add rmodifier to end of list */
@@ -314,10 +314,10 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
             rmodifier_list = new_rmodifier;
             last_rmodifier = new_rmodifier;
         }
-        
+
         rmodifier_count++;
     }
-    
+
     return new_rmodifier;
 }
 
@@ -331,9 +331,9 @@ rmodifier_new_with_string (const char *name, const char *value)
 {
     struct t_rmodifier *new_rmodifier;
     char *pos1, *pos2, *modifiers, *str_regex;
-    
+
     new_rmodifier = NULL;
-    
+
     pos1 = strchr (value, ';');
     pos2 = rindex (value, ';');
     if (pos1 && pos2 && (pos2 > pos1))
@@ -350,7 +350,7 @@ rmodifier_new_with_string (const char *name, const char *value)
         if (str_regex)
             free (str_regex);
     }
-    
+
     return new_rmodifier;
 }
 
@@ -362,7 +362,7 @@ void
 rmodifier_create_default ()
 {
     int i;
-    
+
     for (i = 0; rmodifier_config_default_list[i][0]; i++)
     {
         if (rmodifier_new (rmodifier_config_default_list[i][0],
@@ -387,7 +387,7 @@ rmodifier_free (struct t_rmodifier *rmodifier)
 {
     struct t_rmodifier *new_rmodifier_list;
     int i;
-    
+
     /* remove rmodifier from list */
     if (last_rmodifier == rmodifier)
         last_rmodifier = rmodifier->prev_rmodifier;
@@ -424,9 +424,9 @@ rmodifier_free (struct t_rmodifier *rmodifier)
     if (rmodifier->groups)
         free (rmodifier->groups);
     free (rmodifier);
-    
+
     rmodifier_count--;
-    
+
     rmodifier_list = new_rmodifier_list;
 }
 
@@ -455,10 +455,10 @@ rmodifier_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     char option_name[64];
     int i;
-    
+
     if (!infolist || !rmodifier)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
@@ -482,7 +482,7 @@ rmodifier_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "groups", rmodifier->groups))
         return 0;
-    
+
     return 1;
 }
 
@@ -495,7 +495,7 @@ rmodifier_print_log ()
 {
     struct t_rmodifier *ptr_rmodifier;
     int i;
-    
+
     for (ptr_rmodifier = rmodifier_list; ptr_rmodifier;
          ptr_rmodifier = ptr_rmodifier->next_rmodifier)
     {
@@ -526,13 +526,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* make C compiler happy */
     (void) argc;
     (void) argv;
-    
+
     weechat_plugin = plugin;
-    
+
     rmodifier_count = 0;
-    
+
     rmodifier_hook_list = weechat_list_new ();
-    
+
     if (!rmodifier_config_init ())
     {
         weechat_printf (NULL,
@@ -541,14 +541,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
     rmodifier_config_read ();
-    
+
     rmodifier_command_init ();
     rmodifier_completion_init ();
-    
+
     rmodifier_info_init ();
-    
+
     rmodifier_debug_init ();
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -561,11 +561,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
-    
+
     rmodifier_config_write ();
     rmodifier_free_all ();
     weechat_list_free (rmodifier_hook_list);
     weechat_config_free (rmodifier_config_file);
-    
+
     return WEECHAT_RC_OK;
 }

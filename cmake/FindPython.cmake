@@ -43,27 +43,27 @@ IF(PYTHON_EXECUTABLE)
     COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('CONFINCLUDEPY')"
     OUTPUT_VARIABLE PYTHON_INC_DIR
     )
-  
+
   EXECUTE_PROCESS(
     COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('LIBPL')"
     OUTPUT_VARIABLE PYTHON_POSSIBLE_LIB_PATH
     )
-  
+
   EXECUTE_PROCESS(
     COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('LINKFORSHARED')"
     OUTPUT_VARIABLE PYTHON_LFLAGS
     )
-  
+
   # remove the new lines from the output by replacing them with empty strings
   STRING(REPLACE "\n" "" PYTHON_INC_DIR "${PYTHON_INC_DIR}")
   STRING(REPLACE "\n" "" PYTHON_POSSIBLE_LIB_PATH "${PYTHON_POSSIBLE_LIB_PATH}")
   STRING(REPLACE "\n" "" PYTHON_LFLAGS "${PYTHON_LFLAGS}")
-  
+
   FIND_PATH(PYTHON_INCLUDE_PATH
     NAMES Python.h
     PATHS ${PYTHON_INC_DIR}
     )
-  
+
   FIND_LIBRARY(PYTHON_LIBRARY
     NAMES python python2.7 python2.6 python2.5 python2.4 python2.3 python2.2
     PATHS ${PYTHON_POSSIBLE_LIB_PATH}
@@ -72,12 +72,12 @@ IF(PYTHON_EXECUTABLE)
   IF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
     SET(PYTHON_FOUND TRUE)
   ENDIF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
-  
+
   MARK_AS_ADVANCED(
     PYTHON_EXECUTABLE
     PYTHON_INCLUDE_PATH
     PYTHON_LIBRARY
     PYTHON_LFLAGS
     )
-  
+
 ENDIF(PYTHON_EXECUTABLE)

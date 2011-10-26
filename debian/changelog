@@ -142,7 +142,7 @@ weechat (0.2.6.2-1) unstable; urgency=low
   * New upstream release
   * Add a patch which fix typos in aspell plugin.
   * Refresh patch multiple_ip_servers according to the new upstream release.
-  
+
  -- Emmanuel Bouthenot <kolter@openics.org>  Sun, 19 Apr 2009 10:23:26 +0000
 
 weechat (0.2.6.1-1) unstable; urgency=low
@@ -152,9 +152,9 @@ weechat (0.2.6.1-1) unstable; urgency=low
     (Closes: #519940).
   * Refresh patch multiple_ip_servers according to the new upstream release.
   * Update Standards-Version to 3.8.1.
-  
+
  -- Emmanuel Bouthenot <kolter@openics.org>  Mon, 16 Mar 2009 13:18:29 +0000
- 
+
 weechat (0.2.6-3) unstable; urgency=low
 
   * Add a patch to make weechat try to connect other server IPs
@@ -189,7 +189,7 @@ weechat (0.2.6-1) unstable; urgency=low
   * New Upstream Version
   * Switch to GPLv3 (update copyright)
   * Update menu entry
-  
+
  -- Emmanuel Bouthenot <kolter@openics.org>  Thu, 06 Sep 2007 20:10:26 +0200
 
 weechat (0.2.5-1) unstable; urgency=low
@@ -286,11 +286,11 @@ weechat (0.1.8-1) unstable; urgency=low
  -- Julien Louis <ptitlouis@sysif.net>  Sat, 18 Mar 2006 11:32:52 +0100
 
 weechat (0.1.7-2) unstable; urgency=low
- 
+
    * force linking against libpthread on GNU/Hurd (Closes: #350487)
- 
+
  -- Julien Louis <ptitlouis@sysif.net>  Sun,  5 Feb 2006 18:23:24 +0100
-  
+
 weechat (0.1.7-1) unstable; urgency=low
 
   * New upstream release
@@ -362,7 +362,7 @@ weechat (0.1.2-2) unstable; urgency=low
 weechat (0.1.2-1) unstable; urgency=low
 
   * WeeChat version 0.1.2, see ChangeLog for detail.
-  
+
  -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 21 May 2005 08:00:00 +0200
 
 weechat (0.1.1-2) unstable; urgency=low
@@ -376,65 +376,65 @@ weechat (0.1.1-2) unstable; urgency=low
 weechat (0.1.1-1) unstable; urgency=low
 
   * WeeChat version 0.1.1, see ChangeLog for detail (closes: #306492)
-  
+
  -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 20 Mar 2005 08:00:00 +0200
 
 weechat (0.1.0-1) unstable; urgency=low
 
   * WeeChat version 0.1.0, see ChangeLog for detail.
-  
+
  -- Sebastien Helleu <flashcode@flashtux.org>  Sat, 12 Feb 2005 12:00:00 +0200
 
 weechat (0.0.9-1) unstable; urgency=low
 
   * WeeChat version 0.0.9, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 01 Jan 2005 13:00:00 +0200
 
 weechat (0.0.8-1) unstable; urgency=low
 
   * WeeChat version 0.0.8, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
 
 weechat (0.0.7-1) unstable; urgency=low
 
   * WeeChat version 0.0.7, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 08 Aug 2004 21:00:00 +0200
 
 weechat (0.0.6-1) unstable; urgency=low
 
   * WeeChat version 0.0.6, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 05 Jun 2004 11:30:00 +0200
 
 weechat (0.0.5-1) unstable; urgency=low
 
   * WeeChat version 0.0.5, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 07 Feb 2004 20:30:00 +0200
 
 weechat (0.0.4-1) unstable; urgency=low
 
   * WeeChat version 0.0.4, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Thu, 01 Jan 2004 13:00:00 +0200
 
 weechat (0.0.3-1) unstable; urgency=low
 
   * WeeChat version 0.0.3, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Mon, 03 Nov 2003 23:15:00 +0200
 
 weechat (0.0.2-1) unstable; urgency=low
 
   * WeeChat version 0.0.2, see ChangeLog for detail.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sun, 05 Oct 2003 12:00:00 +0200
 
 weechat (0.0.1-1) unstable; urgency=low
 
   * First version.
-  
+
  -- FlashCode <flashcode@flashtux.org>  Sat, 27 Sep 2003 12:00:00 +0200

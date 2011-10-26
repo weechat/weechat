@@ -187,16 +187,16 @@ struct t_weechat_plugin
     int debug;                         /* debug level for plugin (0=off)    */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
-    
+
     /*
      * plugin functions (API)
      * WeeChat developers: if you add functions in API, update value of
      * constant WEECHAT_PLUGIN_API_VERSION
      */
-    
+
     /* plugins */
     const char *(*plugin_get_name) (struct t_weechat_plugin *plugin);
-    
+
     /* strings */
     void (*charset_set) (struct t_weechat_plugin *plugin, const char *charset);
     char *(*iconv_to_internal) (const char *charset, const char *string);
@@ -236,7 +236,7 @@ struct t_weechat_plugin
     int (*string_decode_base64) (const char *from, char *to);
     int (*string_is_command_char) (const char *string);
     const char *(*string_input_for_buffer) (const char *string);
-    
+
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
     int (*utf8_is_valid) (const char *string, char **error);
@@ -255,7 +255,7 @@ struct t_weechat_plugin
     int (*utf8_real_pos) (const char *string, int pos);
     int (*utf8_pos) (const char *string, int real_pos);
     char *(*utf8_strndup) (const char *string, int length);
-    
+
     /* directories/files */
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
@@ -263,13 +263,13 @@ struct t_weechat_plugin
     void (*exec_on_files) (const char *directory, int hidden_files, void *data,
                            void (*callback)(void *data, const char *filename));
     char *(*file_get_content) (const char *filename);
-    
+
     /* util */
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
     long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*util_timeval_add) (struct timeval *tv, long interval);
     char *(*util_get_time_string) (const time_t *date);
-    
+
     /* sorted lists */
     struct t_weelist *(*list_new) ();
     struct t_weelist_item *(*list_add) (struct t_weelist *weelist,
@@ -295,7 +295,7 @@ struct t_weechat_plugin
                          struct t_weelist_item *item);
     void (*list_remove_all) (struct t_weelist *weelist);
     void (*list_free) (struct t_weelist *weelist);
-    
+
     /* hash tables */
     struct t_hashtable *(*hashtable_new) (int size,
                                           const char *type_keys,
@@ -331,7 +331,7 @@ struct t_weechat_plugin
     void (*hashtable_remove) (struct t_hashtable *hashtable, const void *key);
     void (*hashtable_remove_all) (struct t_hashtable *hashtable);
     void (*hashtable_free) (struct t_hashtable *hashtable);
-    
+
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
                                          const char *name,
@@ -449,11 +449,11 @@ struct t_weechat_plugin
                                     const char *description);
     int (*config_unset_plugin) (struct t_weechat_plugin *plugin,
                                 const char *option_name);
-    
+
     /* key bindings */
     int (*key_bind) (const char *context, struct t_hashtable *keys);
     int (*key_unbind) (const char *context, const char *key);
-    
+
     /* display */
     const char *(*prefix) (const char *prefix);
     const char *(*color) (const char *color_name);
@@ -462,7 +462,7 @@ struct t_weechat_plugin
     void (*printf_y) (struct t_gui_buffer *buffer, int y,
                       const char *message, ...);
     void (*log_printf) (const char *message, ...);
-    
+
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *plugin,
                                     const char *command,
@@ -623,7 +623,7 @@ struct t_weechat_plugin
                                   void *callback_data);
     void (*unhook) (struct t_hook *hook);
     void (*unhook_all) (struct t_weechat_plugin *plugin);
-    
+
     /* buffers */
     struct t_gui_buffer *(*buffer_new) (struct t_weechat_plugin *plugin,
                                         const char *name,
@@ -654,7 +654,7 @@ struct t_weechat_plugin
     char *(*buffer_string_replace_local_var) (struct t_gui_buffer *buffer,
                                               const char *string);
     int (*buffer_match_list) (struct t_gui_buffer *buffer, const char *string);
-    
+
     /* windows */
     struct t_gui_window *(*window_search_with_buffer) (struct t_gui_buffer *buffer);
     int (*window_get_integer) (struct t_gui_window *window,
@@ -664,7 +664,7 @@ struct t_weechat_plugin
     void *(*window_get_pointer) (struct t_gui_window *window,
                                  const char *property);
     void (*window_set_title) (const char *title);
-    
+
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *parent_group,
@@ -713,7 +713,7 @@ struct t_weechat_plugin
     void (*nicklist_nick_set) (struct t_gui_buffer *buffer,
                                struct t_gui_nick *nick,
                                const char *property, const char *value);
-    
+
     /* bars */
     struct t_gui_bar_item *(*bar_item_search) (const char *name);
     struct t_gui_bar_item *(*bar_item_new) (struct t_weechat_plugin *plugin,
@@ -744,7 +744,7 @@ struct t_weechat_plugin
                     const char *value);
     void (*bar_update) (const char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
-    
+
     /* command */
     void (*command) (struct t_weechat_plugin *plugin,
                      struct t_gui_buffer *buffer, const char *command);
@@ -754,7 +754,7 @@ struct t_weechat_plugin
                                const char *address, int port);
     int (*network_connect_to) (const char *proxy, int sock,
                                unsigned long address, int port);
-    
+
     /* infos */
     const char *(*info_get) (struct t_weechat_plugin *plugin,
                              const char *info_name,
@@ -762,7 +762,7 @@ struct t_weechat_plugin
     struct t_hashtable *(*info_get_hashtable) (struct t_weechat_plugin *plugin,
                                                const char *info_name,
                                                struct t_hashtable *hashtable);
-    
+
     /* infolists */
     struct t_infolist *(*infolist_new) ();
     struct t_infolist_item *(*infolist_new_item) (struct t_infolist *infolist);
@@ -797,7 +797,7 @@ struct t_weechat_plugin
                               int *size);
     time_t (*infolist_time) (struct t_infolist *infolist, const char *var);
     void (*infolist_free) (struct t_infolist *infolist);
-    
+
     /* hdata */
     struct t_hdata *(*hdata_new) (struct t_weechat_plugin *plugin,
                                   const char *hdata_name, const char *var_prev,
@@ -832,7 +832,7 @@ struct t_weechat_plugin
                           const char *name);
     const char *(*hdata_get_string) (struct t_hdata *hdata,
                                      const char *property);
-    
+
     /* upgrade */
     struct t_upgrade_file *(*upgrade_new) (const char *filename,
                                            int write);

@@ -45,7 +45,7 @@ relay_command_client_list (int full)
     int i;
     char date_start[128], date_activity[128];
     struct tm *date_tmp;
-    
+
     if (relay_clients)
     {
         weechat_printf (NULL, "");
@@ -57,11 +57,11 @@ relay_command_client_list (int full)
             date_tmp = localtime (&(ptr_client->start_time));
             strftime (date_start, sizeof (date_start),
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
-            
+
             date_tmp = localtime (&(ptr_client->last_activity));
             strftime (date_activity, sizeof (date_activity),
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
-                
+
             if (full)
             {
                 weechat_printf (NULL,
@@ -112,7 +112,7 @@ relay_command_server_list ()
     int i;
     char date_start[128];
     struct tm *date_tmp;
-    
+
     if (relay_servers)
     {
         weechat_printf (NULL, "");
@@ -124,7 +124,7 @@ relay_command_server_list ()
             date_tmp = localtime (&(ptr_server->start_time));
             strftime (date_start, sizeof (date_start),
                       "%a, %d %b %Y %H:%M:%S", date_tmp);
-            
+
             weechat_printf (NULL,
                             _("  port %s%d%s, relay: %s%s.%s%s, started on: %s"),
                             RELAY_COLOR_CHAT_BUFFER,
@@ -153,11 +153,11 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_relay_server *ptr_server;
     struct t_config_option *ptr_option;
     int port;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    
+
     if (argc > 1)
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
@@ -165,13 +165,13 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             relay_command_client_list (0);
             return WEECHAT_RC_OK;
         }
-        
+
         if (weechat_strcasecmp (argv[1], "listfull") == 0)
         {
             relay_command_client_list (1);
             return WEECHAT_RC_OK;
         }
-        
+
         if (weechat_strcasecmp (argv[1], "listrelay") == 0)
         {
             relay_command_server_list ();
@@ -247,14 +247,14 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
     }
-    
+
     if (!relay_buffer)
         relay_buffer_open ();
-    
+
     if (relay_buffer)
     {
         weechat_buffer_set (relay_buffer, "display", "1");
-        
+
         if (argc > 1)
         {
             if (strcmp (argv[1], "up") == 0)
@@ -269,9 +269,9 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             }
         }
     }
-    
+
     relay_buffer_refresh (NULL);
-    
+
     return WEECHAT_RC_OK;
 }
 

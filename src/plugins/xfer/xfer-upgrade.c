@@ -52,15 +52,15 @@ xfer_upgrade_save ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
-    
+
     rc = xfer_upgrade_save_xfers (upgrade_file);
-    
+
     weechat_upgrade_close (upgrade_file);
-    
+
     return rc;
 }
 
@@ -74,7 +74,7 @@ xfer_upgrade_set_buffer_callbacks ()
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
-    
+
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
     {
@@ -111,7 +111,7 @@ xfer_upgrade_read_cb (void *data,
     (void) upgrade_file;
     (void) object_id;
     (void) infolist;
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -125,11 +125,11 @@ xfer_upgrade_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     xfer_upgrade_set_buffer_callbacks ();
-    
+
     upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME, 0);
     rc = weechat_upgrade_read (upgrade_file, &xfer_upgrade_read_cb, NULL);
-    
+
     return rc;
 }

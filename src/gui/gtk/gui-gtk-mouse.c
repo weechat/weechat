@@ -67,7 +67,7 @@ void
 gui_mouse_grab_init (int area)
 {
     (void) area;
-    
+
     /* This function does nothing in Gtk GUI */
 }
 
@@ -89,9 +89,9 @@ const char *
 gui_mouse_event_code2key (const char *code)
 {
     (void) code;
-    
+
     /* This function does nothing in Gtk GUI */
-    
+
     return NULL;
 }
 

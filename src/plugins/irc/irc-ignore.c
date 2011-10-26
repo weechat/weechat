@@ -46,17 +46,17 @@ int
 irc_ignore_valid (struct t_irc_ignore *ignore)
 {
     struct t_irc_ignore *ptr_ignore;
-    
+
     if (!ignore)
         return 0;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
         if (ptr_ignore == ignore)
             return 1;
     }
-    
+
     /* ignore not found */
     return 0;
 }
@@ -70,12 +70,12 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
 {
     struct t_irc_ignore *ptr_ignore;
     char any[2] = "*";
-    
+
     if (!server)
         server = any;
     if (!channel)
         channel = any;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
@@ -86,7 +86,7 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
             return ptr_ignore;
         }
     }
-    
+
     /* ignore not found */
     return NULL;
 }
@@ -99,14 +99,14 @@ struct t_irc_ignore *
 irc_ignore_search_by_number (int number)
 {
     struct t_irc_ignore *ptr_ignore;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
         if (ptr_ignore->number == number)
             return ptr_ignore;
     }
-    
+
     /* ignore not found */
     return NULL;
 }
@@ -121,14 +121,14 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
     struct t_irc_ignore *new_ignore;
     regex_t *regex;
     char *complete_mask;
-    
+
     if (!mask || !mask[0])
         return NULL;
-    
+
     complete_mask = malloc (1 + strlen (mask) + 1 + 1);
     if (!complete_mask)
         return NULL;
-    
+
     if (mask[0] == '^')
         strcpy (complete_mask, mask);
     else
@@ -145,14 +145,14 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         free (complete_mask);
         return NULL;
     }
-    
+
     if (regcomp (regex, complete_mask, REG_NOSUB | REG_ICASE) != 0)
     {
         free (regex);
         free (complete_mask);
         return NULL;
     }
-    
+
     new_ignore = malloc (sizeof (*new_ignore));
     if (new_ignore)
     {
@@ -161,7 +161,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         new_ignore->regex_mask = regex;
         new_ignore->server = (server) ? strdup (server) : strdup ("*");
         new_ignore->channel = (channel) ? strdup (channel) : strdup ("*");
-        
+
         /* add ignore to ignore list */
         new_ignore->prev_ignore = last_irc_ignore;
         if (irc_ignore_list)
@@ -171,9 +171,9 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         last_irc_ignore = new_ignore;
         new_ignore->next_ignore = NULL;
     }
-    
+
     free (complete_mask);
-    
+
     return new_ignore;
 }
 
@@ -190,29 +190,29 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
 {
     struct t_irc_ignore *ptr_ignore;
     int server_match, channel_match;
-    
+
     if (!server)
         return 0;
-    
+
     /*
      * if nick is the same as server, then we will not ignore
      * (it is possible when connected to an irc proxy)
      */
     if (nick && server->nick && (strcmp (server->nick, nick) == 0))
         return 0;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
         server_match = 0;
         channel_match = 0;
-        
+
         if (!server || (strcmp (ptr_ignore->server, "*") == 0))
             server_match = 1;
         else
             server_match = (weechat_strcasecmp (ptr_ignore->server,
                                                 server->name) == 0);
-        
+
         if (!channel || (strcmp (ptr_ignore->channel, "*") == 0))
             channel_match = 1;
         else
@@ -228,7 +228,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
                                                      nick) == 0);
             }
         }
-        
+
         if (server_match && channel_match)
         {
             if (nick && (regexec (ptr_ignore->regex_mask, nick, 0, NULL, 0) == 0))
@@ -237,7 +237,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
                 return 1;
         }
     }
-    
+
     return 0;
 }
 
@@ -249,17 +249,17 @@ void
 irc_ignore_free (struct t_irc_ignore *ignore)
 {
     struct t_irc_ignore *ptr_ignore;
-    
+
     weechat_hook_signal_send ("irc_ignore_removing",
                               WEECHAT_HOOK_SIGNAL_POINTER, ignore);
-    
+
     /* decrement number for all ignore after this one */
     for (ptr_ignore = ignore->next_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
         ptr_ignore->number--;
     }
-    
+
     /* free data */
     if (ignore->mask)
         free (ignore->mask);
@@ -272,7 +272,7 @@ irc_ignore_free (struct t_irc_ignore *ignore)
         free (ignore->server);
     if (ignore->channel)
         free (ignore->channel);
-    
+
     /* remove ignore from list */
     if (ignore->prev_ignore)
         (ignore->prev_ignore)->next_ignore = ignore->next_ignore;
@@ -282,9 +282,9 @@ irc_ignore_free (struct t_irc_ignore *ignore)
         irc_ignore_list = ignore->next_ignore;
     if (last_irc_ignore == ignore)
         last_irc_ignore = ignore->prev_ignore;
-    
+
     free (ignore);
-    
+
     weechat_hook_signal_send ("irc_ignore_removed",
                               WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
@@ -310,10 +310,10 @@ struct t_hdata *
 irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = weechat_hdata_new (hdata_name, "prev_ignore", "next_ignore");
     if (hdata)
     {
@@ -340,21 +340,21 @@ irc_ignore_add_to_infolist (struct t_infolist *infolist,
                             struct t_irc_ignore *ignore)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !ignore)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!weechat_infolist_new_var_string (ptr_item, "mask", ignore->mask))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "server", ignore->server))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "channel", ignore->channel))
         return 0;
-    
+
     return 1;
 }
 
@@ -366,7 +366,7 @@ void
 irc_ignore_print_log ()
 {
     struct t_irc_ignore *ptr_ignore;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {

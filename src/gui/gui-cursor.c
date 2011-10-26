@@ -55,7 +55,7 @@ void
 gui_cursor_mode_toggle ()
 {
     gui_cursor_mode ^= 1;
-    
+
     if (gui_cursor_mode)
     {
         if (gui_cursor_debug)
@@ -82,7 +82,7 @@ void
 gui_cursor_debug_set (int debug)
 {
     gui_cursor_debug = debug;
-    
+
     if (gui_cursor_debug)
     {
         gui_chat_printf (NULL, _("Debug enabled for cursor mode (%s)"),
@@ -101,10 +101,10 @@ gui_cursor_display_debug_info ()
 {
     struct t_gui_focus_info *focus_info;
     char str_info[1024];
-    
+
     if (!gui_cursor_debug)
         return;
-    
+
     focus_info = gui_focus_get_info (gui_cursor_x, gui_cursor_y);
     if (focus_info)
     {
@@ -138,20 +138,20 @@ gui_cursor_move_xy (int x, int y)
 {
     if (!gui_cursor_mode)
         gui_cursor_mode_toggle ();
-    
+
     gui_cursor_x = x;
     gui_cursor_y = y;
-    
+
     if (gui_cursor_x < 0)
         gui_cursor_x = 0;
     else if (gui_cursor_x > gui_window_get_width () - 1)
         gui_cursor_x = gui_window_get_width () - 1;
-    
+
     if (gui_cursor_y < 0)
         gui_cursor_y = 0;
     else if (gui_cursor_y > gui_window_get_height () - 1)
         gui_cursor_y = gui_window_get_height () - 1;
-    
+
     gui_cursor_display_debug_info ();
     gui_window_move_cursor ();
 }
@@ -165,20 +165,20 @@ gui_cursor_move_add_xy (int add_x, int add_y)
 {
     if (!gui_cursor_mode)
         gui_cursor_mode_toggle ();
-    
+
     gui_cursor_x += add_x;
     gui_cursor_y += add_y;
-    
+
     if (gui_cursor_x < 0)
         gui_cursor_x = gui_window_get_width () - 1;
     else if (gui_cursor_x > gui_window_get_width () - 1)
         gui_cursor_x = 0;
-    
+
     if (gui_cursor_y < 0)
         gui_cursor_y = gui_window_get_height () - 1;
     else if (gui_cursor_y > gui_window_get_height () - 1)
         gui_cursor_y = 0;
-    
+
     gui_cursor_display_debug_info ();
     gui_window_move_cursor ();
 }
@@ -193,27 +193,27 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
 {
     int x, y, width, height, area_found;
     struct t_gui_focus_info *focus_info_old, *focus_info_new;
-    
+
     if (!gui_cursor_mode)
         gui_cursor_mode_toggle ();
-    
+
     area_found = 0;
-    
+
     x = gui_cursor_x;
     y = gui_cursor_y;
     width = gui_window_get_width ();
     height = gui_window_get_height ();
-    
+
     focus_info_old = gui_focus_get_info (x, y);
     if (!focus_info_old)
         return;
     focus_info_new = NULL;
-    
+
     if (add_x != 0)
         x += add_x;
     else
         y += add_y;
-    
+
     while ((x >= 0) && (x < width) && (y >= 0) && (y < height))
     {
         focus_info_new = gui_focus_get_info (x, y);
@@ -230,13 +230,13 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
             area_found = 1;
             break;
         }
-        
+
         if (add_x != 0)
             x += add_x;
         else
             y += add_y;
     }
-    
+
     if (area_found)
     {
         if (focus_info_new->window && focus_info_new->chat)
@@ -252,7 +252,7 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
         else
             area_found = 0;
     }
-    
+
     if (area_found)
     {
         gui_cursor_x = x;
@@ -260,7 +260,7 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
         gui_cursor_display_debug_info ();
         gui_window_move_cursor ();
     }
-    
+
     gui_focus_free_info (focus_info_old);
     if (focus_info_new)
         gui_focus_free_info (focus_info_new);
@@ -276,11 +276,11 @@ gui_cursor_move_area (const char *area)
     int area_found, x, y;
     struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_bar *ptr_bar;
-    
+
     area_found = 0;
     x = 0;
     y = 0;
-    
+
     if (strcmp (area, "chat") == 0)
     {
         area_found = 1;
@@ -313,7 +313,7 @@ gui_cursor_move_area (const char *area)
             }
         }
     }
-    
+
     if (area_found)
     {
         if (!gui_cursor_mode)

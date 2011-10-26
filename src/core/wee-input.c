@@ -71,17 +71,17 @@ input_exec_command (struct t_gui_buffer *buffer,
 {
     int rc;
     char *command, *pos, *ptr_args;
-    
+
     if ((!string) || (!string[0]))
         return;
-    
+
     command = strdup (string);
     if (!command)
         return ;
-    
+
     /* look for end of command */
     ptr_args = NULL;
-    
+
     pos = &command[strlen (command) - 1];
     if (pos[0] == ' ')
     {
@@ -89,9 +89,9 @@ input_exec_command (struct t_gui_buffer *buffer,
             pos--;
         pos[1] = '\0';
     }
-    
+
     rc = hook_command_exec (buffer, any_plugin, plugin, command);
-    
+
     pos = strchr (command, ' ');
     if (pos)
     {
@@ -103,7 +103,7 @@ input_exec_command (struct t_gui_buffer *buffer,
         if (!ptr_args[0])
             ptr_args = NULL;
     }
-    
+
     switch (rc)
     {
         case 0: /* command hooked, KO */
@@ -161,10 +161,10 @@ input_data (struct t_gui_buffer *buffer, const char *data)
     char *pos, *buf;
     const char *ptr_data, *ptr_data_for_buffer;
     int length, char_size;
-    
+
     if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
         return;
-    
+
     /* use new data (returned by plugin) */
     ptr_data = data;
     while (ptr_data && ptr_data[0])
@@ -172,7 +172,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
         pos = strchr (ptr_data, '\n');
         if (pos)
             pos[0] = '\0';
-        
+
         ptr_data_for_buffer = string_input_for_buffer (ptr_data);
         if (ptr_data_for_buffer)
         {
@@ -202,7 +202,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
             /* input string is a command */
             input_exec_command (buffer, 1, buffer->plugin, ptr_data);
         }
-        
+
         if (pos)
         {
             pos[0] = '\n';

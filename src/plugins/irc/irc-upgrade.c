@@ -59,7 +59,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     struct t_irc_notify *ptr_notify;
     struct t_irc_raw_message *ptr_raw_message;
     int rc;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -78,7 +78,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         weechat_infolist_free (infolist);
         if (!rc)
             return 0;
-        
+
         /* save server channels and nicks */
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
@@ -98,7 +98,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
             weechat_infolist_free (infolist);
             if (!rc)
                 return 0;
-            
+
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
@@ -119,7 +119,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                     return 0;
             }
         }
-        
+
         /* save server redirects */
         for (ptr_redirect = ptr_server->redirects; ptr_redirect;
              ptr_redirect = ptr_redirect->next_redirect)
@@ -139,7 +139,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
             if (!rc)
                 return 0;
         }
-        
+
         /* save server notify list */
         for (ptr_notify = ptr_server->notify_list; ptr_notify;
              ptr_notify = ptr_notify->next_notify)
@@ -160,7 +160,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                 return 0;
         }
     }
-    
+
     /* save raw messages */
     for (ptr_raw_message = irc_raw_messages; ptr_raw_message;
          ptr_raw_message = ptr_raw_message->next_message)
@@ -180,7 +180,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
     }
-    
+
     /* save redirect patterns */
     for (ptr_redirect_pattern = irc_redirect_patterns; ptr_redirect_pattern;
          ptr_redirect_pattern = ptr_redirect_pattern->next_redirect)
@@ -204,7 +204,7 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                 return 0;
         }
     }
-    
+
     return 1;
 }
 
@@ -218,15 +218,15 @@ irc_upgrade_save ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
-    
+
     rc = irc_upgrade_save_all_data (upgrade_file);
-    
+
     weechat_upgrade_close (upgrade_file);
-    
+
     return rc;
 }
 
@@ -240,7 +240,7 @@ irc_upgrade_set_buffer_callbacks ()
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
-    
+
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
     {
@@ -279,11 +279,11 @@ irc_upgrade_read_cb (void *data,
     struct t_irc_redirect *ptr_redirect;
     struct t_irc_notify *ptr_notify;
     struct t_gui_buffer *ptr_buffer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
-    
+
     weechat_infolist_reset_item_cursor (infolist);
     while (weechat_infolist_next (infolist))
     {
@@ -603,7 +603,7 @@ irc_upgrade_read_cb (void *data,
                 break;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -619,10 +619,10 @@ irc_upgrade_load ()
     struct t_upgrade_file *upgrade_file;
 
     irc_upgrade_set_buffer_callbacks ();
-    
+
     upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 0);
     rc = weechat_upgrade_read (upgrade_file, &irc_upgrade_read_cb, NULL);
-    
+
     return rc;
 }
 

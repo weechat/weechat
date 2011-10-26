@@ -48,17 +48,17 @@ irc_completion_server_cb (void *data, const char *completion_item,
                           struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_server)
     {
         weechat_hook_completion_list_add (completion, ptr_server->name,
                                           0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -73,17 +73,17 @@ irc_completion_server_nick_cb (void *data, const char *completion_item,
                                struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_server && ptr_server->nick)
     {
         weechat_hook_completion_list_add (completion, ptr_server->nick,
                                           1, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -98,14 +98,14 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
                                    struct t_gui_completion *completion)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     if (ptr_server)
     {
         for (ptr_channel = ptr_server->channels; ptr_channel;
@@ -118,7 +118,7 @@ irc_completion_server_channels_cb (void *data, const char *completion_item,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -133,14 +133,14 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
                                    struct t_gui_completion *completion)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     if (ptr_server)
     {
         for (ptr_channel = ptr_server->channels; ptr_channel;
@@ -153,7 +153,7 @@ irc_completion_server_privates_cb (void *data, const char *completion_item,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -169,13 +169,13 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
 {
     struct t_irc_channel *ptr_channel2;
     struct t_irc_nick *ptr_nick;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_server)
     {
         for (ptr_channel2 = ptr_server->channels; ptr_channel2;
@@ -191,12 +191,12 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
                 }
             }
         }
-        
+
         /* add self nick at the end */
         weechat_hook_completion_list_add (completion, ptr_server->nick,
                                           1, WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -210,19 +210,19 @@ irc_completion_servers_cb (void *data, const char *completion_item,
                            struct t_gui_completion *completion)
 {
     struct t_irc_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         weechat_hook_completion_list_add (completion, ptr_server->name,
                                           0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -236,17 +236,17 @@ irc_completion_channel_cb (void *data, const char *completion_item,
                            struct t_gui_completion *completion)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_channel)
     {
         weechat_hook_completion_list_add (completion, ptr_channel->name,
                                           0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -262,7 +262,7 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
 {
     int list_size, i;
     const char *nick;
-    
+
     if (channel->nicks_speaking[highlight])
     {
         list_size = weechat_list_size (channel->nicks_speaking[highlight]);
@@ -291,13 +291,13 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                                  struct t_gui_completion *completion)
 {
     struct t_irc_nick *ptr_nick;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_channel)
     {
         switch (ptr_channel->type)
@@ -342,7 +342,7 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
         }
         ptr_channel->nick_completion_reset = 0;
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -359,13 +359,13 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
     struct t_irc_nick *ptr_nick;
     char *buf;
     int length;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_channel)
     {
         switch (ptr_channel->type)
@@ -404,7 +404,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, const char *completion_item,
                 break;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -420,13 +420,13 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
 {
     char *topic, *topic_color;
     int length;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
         if (weechat_strncasecmp (ptr_channel->topic, ptr_channel->name,
@@ -449,7 +449,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
         }
         else
             topic = strdup (ptr_channel->topic);
-        
+
         topic_color = irc_color_decode_for_user_entry ((topic) ? topic : ptr_channel->topic);
         weechat_hook_completion_list_add (completion,
                                           (topic_color) ? topic_color : ((topic) ? topic : ptr_channel->topic),
@@ -459,7 +459,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
         if (topic)
             free (topic);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -475,12 +475,12 @@ irc_completion_channels_cb (void *data, const char *completion_item,
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -494,7 +494,7 @@ irc_completion_channels_cb (void *data, const char *completion_item,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -510,12 +510,12 @@ irc_completion_privates_cb (void *data, const char *completion_item,
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -529,7 +529,7 @@ irc_completion_privates_cb (void *data, const char *completion_item,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -543,13 +543,13 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
                             struct t_gui_completion *completion)
 {
     const char *msg_part;
-    
+
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_server)
     {
         msg_part = IRC_SERVER_OPTION_STRING(ptr_server,
@@ -560,7 +560,7 @@ irc_completion_msg_part_cb (void *data, const char *completion_item,
                                               0, WEECHAT_LIST_POS_SORT);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -576,12 +576,12 @@ irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
 {
     struct t_irc_ignore *ptr_ignore;
     char str_number[32];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
@@ -589,7 +589,7 @@ irc_completion_ignores_numbers_cb (void *data, const char *completion_item,
         weechat_hook_completion_list_add (completion, str_number,
                                           0, WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -604,13 +604,13 @@ irc_completion_notify_nicks_cb (void *data, const char *completion_item,
                                 struct t_gui_completion *completion)
 {
     struct t_irc_notify *ptr_notify;
-    
+
     IRC_BUFFER_GET_SERVER(buffer);
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     if (ptr_server)
     {
         for (ptr_notify = ptr_server->notify_list; ptr_notify;
@@ -633,7 +633,7 @@ irc_completion_notify_nicks_cb (void *data, const char *completion_item,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 

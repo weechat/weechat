@@ -37,7 +37,7 @@ enum t_gui_chat_prefix
     GUI_CHAT_PREFIX_ACTION,
     GUI_CHAT_PREFIX_JOIN,
     GUI_CHAT_PREFIX_QUIT,
-    
+
     GUI_CHAT_NUM_PREFIXES,
 };
 

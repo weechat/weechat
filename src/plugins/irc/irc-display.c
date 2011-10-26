@@ -46,7 +46,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
 {
     char *pos_nickserv, *pos, *pos_pwd, *pos_space;
     int char_size;
-    
+
     pos = string;
     while (pos)
     {
@@ -110,7 +110,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
             {
                 pos_pwd++;
             }
-            
+
             while (pos_pwd && pos_pwd[0] && (pos_pwd[0] != ' '))
             {
                 char_size = weechat_utf8_char_size (pos_pwd);
@@ -132,7 +132,7 @@ irc_display_away (struct t_irc_server *server, const char *string1,
                   const char *string2)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {

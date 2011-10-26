@@ -64,5 +64,5 @@ extern void irc_notify_hook_timer_ison ();
 extern void irc_notify_hook_timer_whois ();
 extern void irc_notify_init ();
 extern void irc_notify_end ();
-    
+
 #endif /* __WEECHAT_IRC_NOTIFY_H */

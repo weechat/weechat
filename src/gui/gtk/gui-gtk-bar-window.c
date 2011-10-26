@@ -45,7 +45,7 @@ int
 gui_bar_window_objects_init (struct t_gui_bar_window *bar_window)
 {
     struct t_gui_bar_window_gtk_objects *new_objects;
-    
+
     new_objects = malloc (sizeof (*new_objects));
     if (new_objects)
     {
@@ -75,7 +75,7 @@ void
 gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 {
     (void) bar_window;
-    
+
     /* TODO: write this function for Gtk */
 }
 
@@ -91,7 +91,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     (void) bar_window;
     (void) string;
     (void) max_chars;
-    
+
     /* TODO: write this function for Gtk */
     return 0;
 }
@@ -106,7 +106,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 {
     (void) bar_window;
     (void) window;
-    
+
     /* TODO: write this function for Gtk */
 }
 

@@ -84,13 +84,13 @@ struct t_gui_window *
 gui_window_search_by_number (int number)
 {
     struct t_gui_window *ptr_win;
-    
+
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->number == number)
             return ptr_win;
     }
-    
+
     /* window not found */
     return NULL;
 }
@@ -104,7 +104,7 @@ struct t_gui_window *
 gui_window_search_by_xy (int x, int y)
 {
     struct t_gui_window *ptr_window;
-    
+
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
@@ -115,7 +115,7 @@ gui_window_search_by_xy (int x, int y)
             return ptr_window;
         }
     }
-    
+
     /* no window at this location */
     return NULL;
 }
@@ -143,18 +143,18 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     int win_x, win_y;
     char *ptr_data, *data_next_line, *str_temp;
     char *word_start, *word_end, *last_space;
-    
+
     *chat = 0;
     *line = NULL;
     *line_x = -1;
     *word = NULL;
     *beginning = NULL;
     *end = NULL;
-    
+
     /* not in a window? */
     if (!window)
         return;
-    
+
     /* in window, but not in chat area? */
     win_x = x - window->win_chat_x;
     win_y = y - window->win_chat_y;
@@ -165,25 +165,25 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     {
         return;
     }
-    
+
     /* add horizontal scroll (buffers with free content) */
     if (window->scroll->start_col > 0)
         win_x += window->scroll->start_col;
-    
+
     *line_x = win_x;
-    
+
     /* we are in chat area */
     *chat = 1;
-    
+
     /* get line */
     *line = window->coords[win_y].line;
     if (!*line)
         return;
-    
+
     /* no data for line? */
     if (!window->coords[win_y].data)
         return;
-    
+
     if (win_x < window->coords_x_message)
     {
         /* X is before message (time/buffer/prefix) */
@@ -348,17 +348,17 @@ gui_window_scroll_search (struct t_gui_window *window,
                           struct t_gui_buffer *buffer)
 {
     struct t_gui_window_scroll *ptr_scroll;
-    
+
     if (!window || !buffer)
         return NULL;
-    
+
     for (ptr_scroll = window->scroll; ptr_scroll;
          ptr_scroll = ptr_scroll->next_scroll)
     {
         if (ptr_scroll->buffer == buffer)
             return ptr_scroll;
     }
-    
+
     /* scroll not found for buffer */
     return NULL;
 }
@@ -397,7 +397,7 @@ gui_window_scroll_free (struct t_gui_window *window,
         (scroll->next_scroll)->prev_scroll = scroll->prev_scroll;
     if (window->scroll == scroll)
         window->scroll = scroll->next_scroll;
-    
+
     free (scroll);
 }
 
@@ -426,14 +426,14 @@ void
 gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
 {
     struct t_gui_window_scroll *ptr_scroll, *next_scroll;
-    
+
     if (window)
     {
         ptr_scroll = window->scroll->next_scroll;
         while (ptr_scroll)
         {
             next_scroll = ptr_scroll->next_scroll;
-            
+
             if ((ptr_scroll->first_line_displayed == 0)
                 && (ptr_scroll->start_line == NULL)
                 && (ptr_scroll->start_line_pos == 0)
@@ -444,7 +444,7 @@ gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
             {
                 gui_window_scroll_free (window, ptr_scroll);
             }
-            
+
             ptr_scroll = next_scroll;
         }
     }
@@ -459,15 +459,15 @@ gui_window_scroll_switch (struct t_gui_window *window,
                           struct t_gui_buffer *buffer)
 {
     struct t_gui_window_scroll *ptr_scroll, *new_scroll;
-    
+
     if (window && buffer)
     {
         ptr_scroll = gui_window_scroll_search (window, buffer);
-        
+
         /* scroll is already selected (first in list)? */
         if (ptr_scroll && (ptr_scroll == window->scroll))
             return;
-        
+
         if (ptr_scroll)
         {
             /* scroll found, move it in first position */
@@ -492,7 +492,7 @@ gui_window_scroll_switch (struct t_gui_window *window,
                 window->scroll = new_scroll;
             }
         }
-        
+
         gui_window_scroll_remove_not_scrolled (window);
     }
 }
@@ -506,7 +506,7 @@ gui_window_scroll_remove_buffer (struct t_gui_window *window,
                                  struct t_gui_buffer *buffer)
 {
     struct t_gui_window_scroll *ptr_scroll;
-    
+
     if (window && buffer)
     {
         ptr_scroll = gui_window_scroll_search (window, buffer);
@@ -527,7 +527,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     struct t_gui_window *new_window;
     struct t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     struct t_gui_bar *ptr_bar;
-    
+
     if (parent_window)
     {
         child1 = malloc (sizeof (*child1));
@@ -540,7 +540,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             return NULL;
         }
         ptr_tree = parent_window->ptr_tree;
-        
+
         if (width_pct == 100)
         {
             ptr_tree->split_horizontal = 1;
@@ -551,27 +551,27 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             ptr_tree->split_horizontal = 0;
             ptr_tree->split_pct = width_pct;
         }
-        
+
         /*
          * parent window leaf becomes node and we add 2 leafs below
          * (#1 is parent win, #2 is new win)
          */
-        
+
         parent_window->ptr_tree = child1;
         child1->parent_node = ptr_tree;
         child1->child1 = NULL;
         child1->child2 = NULL;
         child1->window = ptr_tree->window;
-        
+
         child2->parent_node = ptr_tree;
         child2->child1 = NULL;
         child2->child2 = NULL;
         child2->window = NULL;    /* will be assigned by new window below */
-        
+
         ptr_tree->child1 = child1;
         ptr_tree->child2 = child2;
         ptr_tree->window = NULL;  /* leaf becomes node */
-        
+
         ptr_leaf = child2;
     }
     else
@@ -580,7 +580,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             return NULL;
         ptr_leaf = gui_windows_tree;
     }
-    
+
     if ((new_window = (malloc (sizeof (*new_window)))))
     {
         /* create scroll structure */
@@ -590,7 +590,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             free (new_window);
             return NULL;
         }
-        
+
         /* create window objects */
         if (!gui_window_objects_init (new_window))
         {
@@ -598,10 +598,10 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             free (new_window);
             return NULL;
         }
-        
+
         /* number */
         new_window->number = (last_gui_window) ? last_gui_window->number + 1 : 1;
-        
+
         /* position & size */
         new_window->win_x = x;
         new_window->win_y = y;
@@ -609,7 +609,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         new_window->win_height = height;
         new_window->win_width_pct = width_pct;
         new_window->win_height_pct = height_pct;
-        
+
         /* chat window */
         new_window->win_chat_x = 0;
         new_window->win_chat_y = 0;
@@ -621,27 +621,27 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
         /* bar windows */
         new_window->bar_windows = NULL;
         new_window->last_bar_window = NULL;
-        
+
         /* refresh */
         new_window->refresh_needed = 0;
-        
+
         /* buffer and layout infos */
         new_window->buffer = buffer;
         new_window->layout_plugin_name = NULL;
         new_window->layout_buffer_name = NULL;
-        
+
         /* scroll */
         gui_window_scroll_init (new_window->scroll, buffer);
-        
+
         /* coordinates */
         new_window->coords_size = 0;
         new_window->coords = NULL;
         new_window->coords_x_message = 0;
-        
+
         /* tree */
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
-        
+
         /* add window to windows queue */
         new_window->prev_window = last_gui_window;
         if (gui_windows)
@@ -650,7 +650,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
             gui_windows = new_window;
         last_gui_window = new_window;
         new_window->next_window = NULL;
-        
+
         /* create bar windows */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
@@ -660,7 +660,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     }
     else
         return NULL;
-    
+
     return new_window;
 }
 
@@ -674,17 +674,17 @@ int
 gui_window_valid (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_window;
-    
+
     if (!window)
         return 0;
-    
+
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
         if (ptr_window == window)
             return 1;
     }
-    
+
     /* window not found */
     return 0;
 }
@@ -703,20 +703,20 @@ struct t_gui_window *
 gui_window_search_with_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
-    
+
     if (!buffer)
         return NULL;
-    
+
     if (gui_current_window->buffer == buffer)
         return gui_current_window;
-    
+
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
         if (ptr_window->buffer == buffer)
             return ptr_window;
     }
-    
+
     /* no window displaying buffer */
     return NULL;
 }
@@ -759,7 +759,7 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
         if (string_strcasecmp (property, "lines_after") == 0)
             return window->scroll->lines_after;
     }
-    
+
     return 0;
 }
 
@@ -773,7 +773,7 @@ gui_window_get_string (struct t_gui_window *window, const char *property)
     if (window && property)
     {
     }
-    
+
     return NULL;
 }
 
@@ -788,14 +788,14 @@ gui_window_get_pointer (struct t_gui_window *window, const char *property)
     {
         if (string_strcasecmp (property, "current") == 0)
             return gui_current_window;
-        
+
         if (window)
         {
             if (string_strcasecmp (property, "buffer") == 0)
                 return window->buffer;
         }
     }
-    
+
     return NULL;
 }
 
@@ -812,7 +812,7 @@ gui_window_set_layout_plugin_name (struct t_gui_window *window,
         free (window->layout_plugin_name);
         window->layout_plugin_name = NULL;
     }
-    
+
     if (plugin_name)
         window->layout_plugin_name = strdup (plugin_name);
 }
@@ -830,7 +830,7 @@ gui_window_set_layout_buffer_name (struct t_gui_window *window,
         free (window->layout_buffer_name);
         window->layout_buffer_name = NULL;
     }
-    
+
     if (buffer_name)
         window->layout_buffer_name = strdup (buffer_name);
 }
@@ -844,7 +844,7 @@ gui_window_coords_init_line (struct t_gui_window *window, int line)
 {
     if (!window->coords || (line < 0) || (line >= window->coords_size))
         return;
-    
+
     window->coords[line].line = NULL;
     window->coords[line].data = NULL;
     window->coords[line].time_x1 = -1;
@@ -863,7 +863,7 @@ void
 gui_window_coords_alloc (struct t_gui_window *window)
 {
     int i;
-    
+
     if (window->coords && (window->coords_size != window->win_chat_height))
     {
         free (window->coords);
@@ -891,38 +891,38 @@ gui_window_free (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
     int i;
-    
+
     hook_signal_send ("window_closing", WEECHAT_HOOK_SIGNAL_POINTER, window);
-    
+
     if (window->buffer)
         gui_buffer_add_value_num_displayed (window->buffer, -1);
-    
+
     /* free data */
     if (window->gui_objects)
     {
         gui_window_objects_free (window, 1);
         free (window->gui_objects);
     }
-    
+
     /* remove bar windows */
     while (window->bar_windows)
     {
         gui_bar_window_free (window->bar_windows, window);
     }
-    
+
     /* free other data */
     if (window->layout_plugin_name)
         free (window->layout_plugin_name);
     if (window->layout_buffer_name)
         free (window->layout_buffer_name);
-    
+
     /* remove scroll list */
     gui_window_scroll_free_all (window);
-    
+
     /* free coords */
     if (window->coords)
         free (window->coords);
-    
+
     /* remove window from windows list */
     if (window->prev_window)
         (window->prev_window)->next_window = window->next_window;
@@ -935,16 +935,16 @@ gui_window_free (struct t_gui_window *window)
 
     if (gui_current_window == window)
         gui_current_window = gui_windows;
-    
+
     i = 1;
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         ptr_win->number = i;
         i++;
     }
-    
+
     hook_signal_send ("window_closed", WEECHAT_HOOK_SIGNAL_POINTER, window);
-    
+
     free (window);
 }
 
@@ -957,7 +957,7 @@ gui_window_switch_previous (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     gui_window_switch ((window->prev_window) ?
                        window->prev_window : last_gui_window);
 }
@@ -971,7 +971,7 @@ gui_window_switch_next (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     gui_window_switch ((window->next_window) ?
                        window->next_window : gui_windows);
 }
@@ -984,10 +984,10 @@ void
 gui_window_switch_by_number (int number)
 {
     struct t_gui_window *ptr_win;
-    
+
     if (!gui_ok)
         return;
-    
+
     ptr_win = gui_window_search_by_number (number);
     if (ptr_win)
         gui_window_switch (ptr_win);
@@ -1001,10 +1001,10 @@ void
 gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 {
     struct t_gui_window *ptr_win;
-    
+
     if (!gui_ok)
         return;
-    
+
     ptr_win = (window->next_window) ? window->next_window : gui_windows;
     while (ptr_win != window)
     {
@@ -1031,13 +1031,13 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     long number;
     struct t_gui_line *ptr_line;
     struct tm *date_tmp, line_date, old_line_date;
-    
+
     if (window->buffer->lines->first_line)
     {
         direction = 1;
         number = 0;
         time_letter = ' ';
-        
+
         /* search direction */
         if (scroll[0] == '-')
         {
@@ -1049,7 +1049,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             direction = +1;
             scroll++;
         }
-        
+
         /* search number and letter */
         pos = scroll;
         while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
@@ -1076,11 +1076,11 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                 pos[0] = saved_char;
             }
         }
-        
+
         /* at least number or letter has to he given */
         if ((number == 0) && (time_letter == ' '))
             return;
-        
+
         /* do the scroll! */
         stop = 0;
         count_msg = 0;
@@ -1115,12 +1115,12 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             date_tmp = localtime (&old_date);
             memcpy (&old_line_date, date_tmp, sizeof (struct tm));
         }
-        
+
         while (ptr_line)
         {
             ptr_line = (direction < 0) ?
                 gui_line_get_prev_displayed (ptr_line) : gui_line_get_next_displayed (ptr_line);
-            
+
             if (ptr_line
                 && ((window->buffer->type != GUI_BUFFER_TYPE_FORMATTED)
                     || (ptr_line->data->date != 0)))
@@ -1258,13 +1258,13 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
     int direction, percentage, start_col;
     char saved_char, *pos, *error;
     long number;
-    
+
     if (window->buffer->lines->first_line)
     {
         direction = 1;
         number = 0;
         percentage = 0;
-        
+
         /* search direction */
         if (scroll[0] == '-')
         {
@@ -1276,7 +1276,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
             direction = +1;
             scroll++;
         }
-        
+
         /* search number and percentage */
         pos = scroll;
         while (pos && pos[0] && isdigit ((unsigned char)pos[0]))
@@ -1294,17 +1294,17 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
                 number = 0;
             pos[0] = saved_char;
         }
-        
+
         /* for percentage, compute number of columns */
         if (percentage)
         {
             number = (window->win_chat_width * number) / 100;
         }
-        
+
         /* number must be different from 0 */
         if (number == 0)
             return;
-        
+
         /* do the horizontal scroll! */
         start_col = window->scroll->start_col + (number * direction);
         if (start_col < 0)
@@ -1325,7 +1325,7 @@ void
 gui_window_scroll_previous_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    
+
     if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
@@ -1358,7 +1358,7 @@ void
 gui_window_scroll_next_highlight (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    
+
     if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
@@ -1392,7 +1392,7 @@ int
 gui_window_search_text (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    
+
     if (window->buffer->text_search == GUI_TEXT_SEARCH_BACKWARD)
     {
         if (window->buffer->lines->first_line
@@ -1526,7 +1526,7 @@ gui_window_zoom (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     if (gui_window_layout_before_zoom)
     {
         /* restore layout as it was before zooming a window */
@@ -1560,10 +1560,10 @@ struct t_hdata *
 gui_window_hdata_window_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window");
     if (hdata)
     {
@@ -1606,10 +1606,10 @@ struct t_hdata *
 gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_scroll", "next_scroll");
     if (hdata)
     {
@@ -1635,10 +1635,10 @@ struct t_hdata *
 gui_window_hdata_window_tree_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
@@ -1663,14 +1663,14 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
                             struct t_gui_window *window)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !window)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_pointer (ptr_item, "pointer", window))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "current_window",
@@ -1705,7 +1705,7 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
                                     && (window->scroll->start_line)) ?
                                    window->scroll->start_line->data->y : 0))
         return 0;
-    
+
     return 1;
 }
 
@@ -1719,14 +1719,14 @@ gui_window_print_log ()
     struct t_gui_window *ptr_window;
     struct t_gui_window_scroll *ptr_scroll;
     struct t_gui_bar_window *ptr_bar_win;
-    
+
     log_printf ("");
     log_printf ("gui_windows . . . . . . . . . : 0x%lx", gui_windows);
     log_printf ("last_gui_window . . . . . . . : 0x%lx", last_gui_window);
     log_printf ("gui_current window. . . . . . : 0x%lx", gui_current_window);
     log_printf ("gui_windows_tree. . . . . . . : 0x%lx", gui_windows_tree);
     log_printf ("gui_window_layout_before_zoom : 0x%lx", gui_window_layout_before_zoom);
-    
+
     for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
     {
         log_printf ("");
@@ -1757,7 +1757,7 @@ gui_window_print_log ()
         log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);
-        
+
         for (ptr_scroll = ptr_window->scroll; ptr_scroll;
              ptr_scroll = ptr_scroll->next_scroll)
         {
@@ -1774,7 +1774,7 @@ gui_window_print_log ()
             log_printf ("    prev_scroll . . . . : 0x%lx", ptr_scroll->prev_scroll);
             log_printf ("    next_scroll . . . . : 0x%lx", ptr_scroll->next_scroll);
         }
-        
+
         for (ptr_bar_win = ptr_window->bar_windows; ptr_bar_win;
              ptr_bar_win = ptr_bar_win->next_bar_window)
         {

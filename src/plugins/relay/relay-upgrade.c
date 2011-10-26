@@ -66,7 +66,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
     }
-    
+
     /* save raw messages */
     for (ptr_raw_message = relay_raw_messages; ptr_raw_message;
          ptr_raw_message = ptr_raw_message->next_message)
@@ -86,7 +86,7 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -100,15 +100,15 @@ relay_upgrade_save ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
-    
+
     rc = relay_upgrade_save_all_data (upgrade_file);
-    
+
     weechat_upgrade_close (upgrade_file);
-    
+
     return rc;
 }
 
@@ -122,7 +122,7 @@ relay_upgrade_set_buffer_callbacks ()
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
-    
+
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
     {
@@ -160,11 +160,11 @@ relay_upgrade_read_cb (void *data,
                        struct t_infolist *infolist)
 {
     struct t_relay_client *new_client;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
-    
+
     weechat_infolist_reset_item_cursor (infolist);
     while (weechat_infolist_next (infolist))
     {
@@ -197,7 +197,7 @@ relay_upgrade_read_cb (void *data,
                             "%lu", &(new_client->bytes_recv));
                     sscanf (weechat_infolist_string (infolist, "bytes_sent"),
                             "%lu", &(new_client->bytes_sent));
-                    
+
                     switch (new_client->protocol)
                     {
                         case RELAY_PROTOCOL_WEECHAT:
@@ -211,7 +211,7 @@ relay_upgrade_read_cb (void *data,
                         case RELAY_NUM_PROTOCOLS:
                             break;
                     }
-                    
+
                     new_client->prev_client = NULL;
                     new_client->next_client = relay_clients;
                     if (relay_clients)
@@ -219,7 +219,7 @@ relay_upgrade_read_cb (void *data,
                     else
                         last_relay_client = new_client;
                     relay_clients = new_client;
-                    
+
                     relay_client_count++;
                 }
                 break;
@@ -230,7 +230,7 @@ relay_upgrade_read_cb (void *data,
                 break;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -244,11 +244,11 @@ relay_upgrade_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     relay_upgrade_set_buffer_callbacks ();
-    
+
     upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 0);
     rc = weechat_upgrade_read (upgrade_file, &relay_upgrade_read_cb, NULL);
-    
+
     return rc;
 }

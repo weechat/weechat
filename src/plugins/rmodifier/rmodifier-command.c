@@ -62,7 +62,7 @@ void
 rmodifier_command_list (const char *message)
 {
     struct t_rmodifier *ptr_rmodifier;
-    
+
     if (rmodifier_list)
     {
         weechat_printf (NULL, "");
@@ -91,11 +91,11 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_rmodifier *ptr_rmodifier;
     struct t_config_option *ptr_option;
     int i, count;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    
+
     if ((argc == 1)
         || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
     {
@@ -118,7 +118,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         }
         return WEECHAT_RC_OK;
     }
-    
+
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
         /* add a rmodifier */
@@ -149,13 +149,13 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                               ptr_rmodifier->modifiers,
                                               ptr_rmodifier->str_regex,
                                               ptr_rmodifier->groups);
-        
+
         /* display message */
         weechat_printf (NULL, _("Rmodifier \"%s\" created"),
                         ptr_rmodifier->name);
         return WEECHAT_RC_OK;
     }
-    
+
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
         /* add a rmodifier */
@@ -200,7 +200,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         }
         return WEECHAT_RC_OK;
     }
-    
+
     /* restore default rmodifiers (only with "-yes", for security reason) */
     if (weechat_strcasecmp (argv[1], "default") == 0)
     {
@@ -221,7 +221,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         }
         return WEECHAT_RC_OK;
     }
-    
+
     return WEECHAT_RC_OK;
 }
 

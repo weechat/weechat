@@ -69,7 +69,7 @@ struct t_gui_hotlist *
 gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
 {
     struct t_gui_hotlist *ptr_hotlist;
-    
+
     for (ptr_hotlist = hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
@@ -100,10 +100,10 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
     }
     else
         new_hotlist = ptr_hotlist->next_hotlist;
-    
+
     if (ptr_hotlist->next_hotlist)
         (ptr_hotlist->next_hotlist)->prev_hotlist = ptr_hotlist->prev_hotlist;
-    
+
     free (ptr_hotlist);
     *hotlist = new_hotlist;
 }
@@ -164,7 +164,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
                       struct t_gui_hotlist *new_hotlist)
 {
     struct t_gui_hotlist *ptr_hotlist;
-    
+
     switch (CONFIG_INTEGER(config_look_hotlist_sort))
     {
         case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
@@ -239,11 +239,11 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
                          struct t_gui_hotlist *new_hotlist)
 {
     struct t_gui_hotlist *pos_hotlist;
-    
+
     if (*hotlist)
     {
         pos_hotlist = gui_hotlist_find_pos (*hotlist, new_hotlist);
-        
+
         if (pos_hotlist)
         {
             /* insert hotlist into the hotlist (before hotlist found) */
@@ -288,34 +288,34 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
     struct t_gui_hotlist *new_hotlist, *ptr_hotlist;
     int i, count[GUI_HOTLIST_NUM_PRIORITIES];
     const char *away;
-    
+
     if (!buffer || !gui_add_hotlist)
         return NULL;
-    
+
     /* do not add core buffer if upgrading */
     if (weechat_upgrading && (buffer == gui_buffer_search_main ()))
         return NULL;
-    
+
     /* do not add buffer if it is displayed and away is not set */
     away = hashtable_get (buffer->local_variables, "away");
     if ((buffer->num_displayed > 0)
         && ((!away || !away[0])
             || !CONFIG_BOOLEAN(config_look_hotlist_add_buffer_if_away)))
         return NULL;
-    
+
     if (priority > GUI_HOTLIST_MAX)
         priority = GUI_HOTLIST_MAX;
-    
+
     /* check if priority is ok according to buffer notify level value */
     if (!gui_hotlist_check_buffer_notify (buffer, priority))
         return NULL;
-    
+
     /* init count */
     for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
     {
         count[i] = 0;
     }
-    
+
     ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer);
     if (ptr_hotlist)
     {
@@ -326,7 +326,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
             gui_hotlist_changed_signal ();
             return ptr_hotlist;
         }
-        
+
         /*
          * if buffer is present with lower priority: save counts, remove it
          * and go on
@@ -334,7 +334,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
         memcpy (count, ptr_hotlist->count, sizeof (ptr_hotlist->count));
         gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
     }
-    
+
     new_hotlist = malloc (sizeof (*new_hotlist));
     if (!new_hotlist)
     {
@@ -342,7 +342,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
                       "hotlist"));
         return NULL;
     }
-    
+
     new_hotlist->priority = priority;
     if (creation_time)
         memcpy (&(new_hotlist->creation_time),
@@ -354,11 +354,11 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
     new_hotlist->count[priority]++;
     new_hotlist->next_hotlist = NULL;
     new_hotlist->prev_hotlist = NULL;
-    
+
     gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, new_hotlist);
-    
+
     gui_hotlist_changed_signal ();
-    
+
     return new_hotlist;
 }
 
@@ -370,7 +370,7 @@ struct t_gui_hotlist *
 gui_hotlist_dup (struct t_gui_hotlist *hotlist)
 {
     struct t_gui_hotlist *new_hotlist;
-    
+
     new_hotlist = malloc (sizeof (*new_hotlist));
     if (new_hotlist)
     {
@@ -395,7 +395,7 @@ gui_hotlist_resort ()
 {
     struct t_gui_hotlist *new_hotlist, *last_new_hotlist;
     struct t_gui_hotlist *ptr_hotlist, *element;
-    
+
     /* copy and resort hotlist in new linked list */
     new_hotlist = NULL;
     last_new_hotlist = NULL;
@@ -405,12 +405,12 @@ gui_hotlist_resort ()
         element = gui_hotlist_dup (ptr_hotlist);
         gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
     }
-    
+
     gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
-    
+
     gui_hotlist = new_hotlist;
     last_gui_hotlist = last_new_hotlist;
-    
+
     gui_hotlist_changed_signal ();
 }
 
@@ -434,26 +434,26 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
     int hotlist_changed;
     struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
-    
+
     if (weechat_upgrading)
         return;
-    
+
     hotlist_changed = 0;
-    
+
     ptr_hotlist = gui_hotlist;
     while (ptr_hotlist)
     {
         next_hotlist = ptr_hotlist->next_hotlist;
-        
+
         if (ptr_hotlist->buffer->number == buffer->number)
         {
             gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
             hotlist_changed = 1;
         }
-        
+
         ptr_hotlist = next_hotlist;
     }
-    
+
     if (hotlist_changed)
         gui_hotlist_changed_signal ();
 }
@@ -470,14 +470,14 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     int i;
     char option_name[64];
-    
+
     if (!infolist || !hotlist)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_integer (ptr_item, "priority", hotlist->priority))
         return 0;
     switch (hotlist->priority)
@@ -525,7 +525,7 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
         if (!infolist_new_var_integer (ptr_item, option_name, hotlist->count[i]))
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -538,7 +538,7 @@ gui_hotlist_print_log ()
 {
     struct t_gui_hotlist *ptr_hotlist;
     int i;
-    
+
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {

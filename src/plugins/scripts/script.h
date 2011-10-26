@@ -61,9 +61,9 @@ struct t_plugin_script
     char *description;                   /* plugin description              */
     char *shutdown_func;                 /* function when script is unloaded*/
     char *charset;                       /* script charset                  */
-    
+
     struct t_script_callback *callbacks; /* callbacks for script            */
-    
+
     struct t_plugin_script *prev_script; /* link to previous script         */
     struct t_plugin_script *next_script; /* link to next script             */
 };

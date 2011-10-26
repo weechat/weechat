@@ -197,14 +197,14 @@ void
 weechat_parse_args (int argc, char *argv[])
 {
     int i;
-    
+
     weechat_argv0 = strdup (argv[0]);
     weechat_upgrading = 0;
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
     weechat_auto_load_plugins = 1;
     weechat_plugin_no_dlclose = 0;
-    
+
     for (i = 1; i < argc; i++)
     {
         if ((strcmp (argv[i], "-c") == 0)
@@ -323,7 +323,7 @@ weechat_create_home_dirs ()
             weechat_shutdown (EXIT_FAILURE, 0);
         }
     }
-    
+
     /* create home directory; error is fatal */
     if (!util_mkdir (weechat_home, 0755))
     {
@@ -383,7 +383,7 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_local_charset);
 
     network_end ();
-    
+
     if (crash)
         abort();
     else
@@ -398,21 +398,21 @@ int
 main (int argc, char *argv[])
 {
     weechat_init_vars ();               /* initialize some variables        */
-    
+
     setlocale (LC_ALL, "");             /* initialize gettext               */
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
     textdomain (PACKAGE);
 #endif
-    
+
 #ifdef HAVE_LANGINFO_CODESET
     weechat_local_charset = strdup (nl_langinfo (CODESET));
 #else
     weechat_local_charset = strdup ("");
 #endif
     utf8_init ();
-    
+
     util_catch_signal (SIGINT, SIG_IGN);  /* ignore SIGINT signal           */
     util_catch_signal (SIGQUIT, SIG_IGN); /* ignore SIGQUIT signal          */
     util_catch_signal (SIGPIPE, SIG_IGN); /* ignore SIGPIPE signal          */
@@ -449,9 +449,9 @@ main (int argc, char *argv[])
         gui_layout_window_apply (gui_layout_windows, -1); /* apply win layout */
     if (weechat_upgrading)
         upgrade_weechat_end ();         /* remove .upgrade files + signal   */
-    
+
     gui_main_loop ();                   /* WeeChat main loop                */
-    
+
     gui_layout_save_on_exit ();         /* save layout                      */
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
@@ -463,6 +463,6 @@ main (int argc, char *argv[])
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
-    
+
     return EXIT_SUCCESS;                /* make C compiler happy            */
 }

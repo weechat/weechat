@@ -69,14 +69,14 @@ debug_dump (int crash)
     /* prevent reentrance */
     if (debug_dump_active)
         exit (EXIT_FAILURE);
-    
+
     if (crash)
     {
         debug_dump_active = 1;
         log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...");
         weechat_log_use_time = 0;
     }
-    
+
     log_printf ("");
     if (crash)
     {
@@ -97,19 +97,19 @@ debug_dump (int crash)
     gui_bar_print_log ();
     gui_bar_item_print_log ();
     gui_hotlist_print_log ();
-    
+
     hdata_print_log ();
-    
+
     infolist_print_log ();
-    
+
     hook_print_log ();
-    
+
     config_file_print_log ();
-    
+
     proxy_print_log ();
-    
+
     plugin_print_log ();
-    
+
     log_printf ("");
     log_printf ("******             End of WeeChat dump             ******");
     log_printf ("");
@@ -127,10 +127,10 @@ debug_dump_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data || (string_strcasecmp ((char *)signal_data, "core") == 0))
         debug_dump (0);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -145,7 +145,7 @@ debug_sigsegv ()
     debug_dump (1);
     unhook_all ();
     gui_main_end (0);
-    
+
     string_iconv_fprintf (stderr, "\n");
     string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
     if (!log_crash_rename ())
@@ -160,9 +160,9 @@ debug_sigsegv ()
     string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
     string_iconv_fprintf (stderr, "***      (be careful, private info may be in this file since\n");
     string_iconv_fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
-    
+
     weechat_backtrace ();
-    
+
     /* shutdown with error code */
     weechat_shutdown (EXIT_FAILURE, 1);
 }
@@ -179,9 +179,9 @@ debug_buffer_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     gui_buffer_dump_hexa ((struct t_gui_buffer *)signal_data);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -193,7 +193,7 @@ void
 debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
 {
     char format[128];
-    
+
     if (tree)
     {
         if (tree->window)
@@ -229,7 +229,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
                              tree->split_horizontal,
                              tree->child1, tree->child2);
         }
-        
+
         if (tree->child1)
             debug_windows_tree_display (tree->child1, indent + 1);
         if (tree->child2)
@@ -262,9 +262,9 @@ debug_windows_cb (void *data, const char *signal, const char *type_data,
     (void) signal;
     (void) type_data;
     (void) signal_data;
-    
+
     debug_windows_tree ();
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -277,9 +277,9 @@ debug_memory ()
 {
 #ifdef HAVE_MALLINFO
     struct mallinfo info;
-    
+
     info = mallinfo ();
-    
+
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Memory usage (see \"man mallinfo\" for help):"));
     gui_chat_printf (NULL, "  arena   :%10d", info.arena);
@@ -310,12 +310,12 @@ debug_hdata_hash_var_map_cb (void *data,
 {
     struct t_weelist *list;
     char str_offset[16];
-    
+
     /* make C compiler happy */
     (void) hashtable;
-    
+
     list = (struct t_weelist *)data;
-    
+
     snprintf (str_offset, sizeof (str_offset),
               "%12d", (*((int *)value)) & 0xFFFF);
     weelist_add (list, str_offset, WEECHAT_LIST_POS_SORT, (void *)key);
@@ -333,7 +333,7 @@ debug_hdata_hash_list_map_cb (void *data,
     /* make C compiler happy */
     (void) data;
     (void) hashtable;
-    
+
     gui_chat_printf (NULL,
                      "    list: %s -> 0x%lx",
                      (char *)key,
@@ -352,13 +352,13 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
     void *ptr_value;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) hashtable;
-    
+
     ptr_hdata = (struct t_hdata *)value;
-    
+
     gui_chat_printf (NULL,
                      "  hdata 0x%lx: \"%s\", %d vars, %d lists:",
                      ptr_hdata, (const char *)key,
@@ -366,11 +366,11 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
                                             "items_count"),
                      hashtable_get_integer (ptr_hdata->hash_list,
                                             "items_count"));
-    
+
     /* display lists */
     hashtable_map (ptr_hdata->hash_list,
                    &debug_hdata_hash_list_map_cb, NULL);
-    
+
     /* display vars */
     list = weelist_new ();
     hashtable_map (ptr_hdata->hash_var,
@@ -399,12 +399,12 @@ void
 debug_hdata ()
 {
     int count;
-    
+
     count = hashtable_get_integer (weechat_hdata, "items_count");
-    
+
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "%d hdata in memory", count);
-    
+
     if (count > 0)
         hashtable_map (weechat_hdata, &debug_hdata_map_cb, NULL);
 }
@@ -421,21 +421,21 @@ debug_infolists ()
     struct t_infolist_var *ptr_var;
     int i, count, count_items, count_vars, size_structs, size_data;
     int total_items, total_vars, total_size;
-    
+
     count = 0;
     for (ptr_infolist = weechat_infolists; ptr_infolist;
          ptr_infolist = ptr_infolist->next_infolist)
     {
         count++;
     }
-    
+
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "%d infolists in memory (%s)", count,
                      (count == 0) ?
                      "this is ok!" :
                      "WARNING: this is probably a memory leak in WeeChat or "
                      "plugins/scripts!");
-    
+
     if (count > 0)
     {
         i = 0;

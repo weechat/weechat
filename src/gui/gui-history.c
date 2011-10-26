@@ -55,10 +55,10 @@ void
 gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 {
     struct t_gui_history *new_history, *ptr_history;
-    
+
     if (!string)
         return;
-    
+
     if (!buffer->history
         || (buffer->history
             && (strcmp (buffer->history->text, string) != 0)))
@@ -75,7 +75,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
             new_history->prev_history = NULL;
             buffer->history = new_history;
             buffer->num_history++;
-            
+
             /* remove one command if necessary */
             if ((CONFIG_INTEGER(config_history_max_commands) > 0)
                 && (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
@@ -105,7 +105,7 @@ gui_history_global_add (const char *string)
 
     if (!string)
         return;
-    
+
     if (!history_global
         || (history_global
             && (strcmp (history_global->text, string) != 0)))
@@ -122,7 +122,7 @@ gui_history_global_add (const char *string)
             new_history->prev_history = NULL;
             history_global = new_history;
             num_history_global++;
-            
+
             /* remove one command if necessary */
             if ((CONFIG_INTEGER(config_history_max_commands) > 0)
                 && (num_history_global > CONFIG_INTEGER(config_history_max_commands)))
@@ -149,11 +149,11 @@ void
 gui_history_add (struct t_gui_buffer *buffer, const char *string)
 {
     char *string2, str_buffer[128];
-    
+
     snprintf (str_buffer, sizeof (str_buffer),
               "0x%lx", (long unsigned int)(buffer));
     string2 = hook_modifier_exec (NULL, "history_add", str_buffer, string);
-    
+
     /*
      * if message was NOT dropped by modifier, then we add it to buffer and
      * global history
@@ -163,7 +163,7 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
         gui_history_buffer_add (buffer, (string2) ? string2 : string);
         gui_history_global_add ((string2) ? string2 : string);
     }
-    
+
     if (string2)
         free (string2);
 }
@@ -176,7 +176,7 @@ void
 gui_history_global_free ()
 {
     struct t_gui_history *ptr_history;
-    
+
     while (history_global)
     {
         ptr_history = history_global->next_history;
@@ -200,7 +200,7 @@ void
 gui_history_buffer_free (struct t_gui_buffer *buffer)
 {
     struct t_gui_history *ptr_history;
-    
+
     while (buffer->history)
     {
         ptr_history = buffer->history->next_history;
@@ -223,10 +223,10 @@ struct t_hdata *
 gui_history_hdata_history_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history");
     if (hdata)
     {
@@ -248,16 +248,16 @@ gui_history_add_to_infolist (struct t_infolist *infolist,
                              struct t_gui_history *history)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !history)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_string (ptr_item, "text", history->text))
         return 0;
-    
+
     return 1;
 }

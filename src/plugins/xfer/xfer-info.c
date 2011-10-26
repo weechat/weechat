@@ -38,19 +38,19 @@ xfer_info_get_infolist_cb (void *data, const char *infolist_name,
 {
     struct t_infolist *ptr_infolist;
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "xfer") == 0)
     {
         if (pointer && !xfer_valid (pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -80,7 +80,7 @@ xfer_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
-    
+
     return NULL;
 }
 

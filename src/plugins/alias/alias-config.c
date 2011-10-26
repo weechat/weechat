@@ -77,14 +77,14 @@ void
 alias_config_cmd_change_cb (void *data, struct t_config_option *option)
 {
     struct t_config_option *ptr_option_completion;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_option_completion = weechat_config_search_option (alias_config_file,
                                                           alias_config_section_completion,
                                                           weechat_config_option_get_pointer (option, "name"));
-    
+
     alias_new (weechat_config_option_get_pointer (option, "name"),
                weechat_config_option_get_pointer (option, "value"),
                (ptr_option_completion) ?
@@ -101,18 +101,18 @@ alias_config_cmd_delete_cb (void *data, struct t_config_option *option)
 {
     struct t_config_option *ptr_option_completion;
     struct t_alias *ptr_alias;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_option_completion = weechat_config_search_option (alias_config_file,
                                                           alias_config_section_completion,
                                                           weechat_config_option_get_pointer (option, "name"));
-    
+
     ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
     if (ptr_alias)
         alias_free (ptr_alias);
-    
+
     if (ptr_option_completion)
         weechat_config_option_free (ptr_option_completion);
 }
@@ -126,10 +126,10 @@ void
 alias_config_completion_change_cb (void *data, struct t_config_option *option)
 {
     struct t_alias *ptr_alias;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
     if (ptr_alias && ptr_alias->hook)
     {
@@ -147,10 +147,10 @@ void
 alias_config_completion_delete_cb (void *data, struct t_config_option *option)
 {
     struct t_alias *ptr_alias;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
     if (ptr_alias && ptr_alias->hook && ptr_alias->completion)
     {
@@ -167,11 +167,11 @@ alias_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     weechat_config_section_free_options (alias_config_section_cmd);
     weechat_config_section_free_options (alias_config_section_completion);
     alias_free_all ();
-    
+
     return weechat_config_reload (config_file);
 }
 
@@ -186,10 +186,10 @@ alias_config_cmd_write_default_cb (void *data,
                                    const char *section_name)
 {
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!weechat_config_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
@@ -200,7 +200,7 @@ alias_config_cmd_write_default_cb (void *data,
                                         "\"%s\"", alias_default_list[i][1]))
             return WEECHAT_CONFIG_WRITE_ERROR;
     }
-    
+
     return WEECHAT_CONFIG_WRITE_OK;
 }
 
@@ -232,15 +232,15 @@ alias_config_cmd_create_option_cb (void *data,
 {
     struct t_alias *ptr_alias;
     int rc;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) config_file;
     (void) section;
-    
+
     /* create config option */
     alias_config_cmd_new_option (option_name, value);
-    
+
     /* create alias */
     ptr_alias = alias_search (option_name);
     if (ptr_alias)
@@ -250,7 +250,7 @@ alias_config_cmd_create_option_cb (void *data,
             WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
     else
         rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-    
+
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
@@ -258,7 +258,7 @@ alias_config_cmd_create_option_cb (void *data,
                         weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
                         option_name, value);
     }
-    
+
     return rc;
 }
 
@@ -291,12 +291,12 @@ alias_config_completion_create_option_cb (void *data,
                                           const char *value)
 {
     struct t_alias *ptr_alias;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) config_file;
     (void) section;
-    
+
     ptr_alias = alias_search (option_name);
     if (!ptr_alias)
     {
@@ -307,13 +307,13 @@ alias_config_completion_create_option_cb (void *data,
                         option_name);
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
-    
+
     /* create config option */
     alias_config_completion_new_option (option_name, value);
-    
+
     /* create/update completion in alias */
     alias_update_completion (ptr_alias, value);
-    
+
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
@@ -326,12 +326,12 @@ int
 alias_config_init ()
 {
     struct t_config_section *ptr_section;
-    
+
     alias_config_file = weechat_config_new (ALIAS_CONFIG_NAME,
                                             &alias_config_reload, NULL);
     if (!alias_config_file)
         return 0;
-    
+
     /* cmd */
     ptr_section = weechat_config_new_section (alias_config_file, "cmd",
                                               1, 1,
@@ -346,7 +346,7 @@ alias_config_init ()
         return 0;
     }
     alias_config_section_cmd = ptr_section;
-    
+
     /* completion */
     ptr_section = weechat_config_new_section (alias_config_file, "completion",
                                               1, 1,
@@ -361,7 +361,7 @@ alias_config_init ()
         return 0;
     }
     alias_config_section_completion = ptr_section;
-    
+
     return 1;
 }
 

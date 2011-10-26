@@ -88,17 +88,17 @@ int
 plugin_valid (struct t_weechat_plugin *plugin)
 {
     struct t_weechat_plugin *ptr_plugin;
-    
+
     if (!plugin)
         return 0;
-    
+
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
         if (ptr_plugin == plugin)
             return 1;
     }
-    
+
     /* plugin not found */
     return 0;
 }
@@ -111,17 +111,17 @@ struct t_weechat_plugin *
 plugin_search (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
-    
+
     if (!name)
         return NULL;
-    
+
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
         if (string_strcasecmp (ptr_plugin->name, name) == 0)
             return ptr_plugin;
     }
-    
+
     /* plugin not found */
     return NULL;
 }
@@ -134,7 +134,7 @@ const char *
 plugin_get_name (struct t_weechat_plugin *plugin)
 {
     static char *plugin_core = PLUGIN_CORE;
-    
+
     return (plugin) ? plugin->name : plugin_core;
 }
 
@@ -151,21 +151,21 @@ plugin_check_autoload (char *plugin_full_name)
 {
     int i, plugin_authorized, plugin_blacklisted;
     char *ptr_base_name, *base_name, *plugin_name, *pos;
-    
+
     /* by default we can auto load all plugins */
     if (!plugin_autoload_array)
         return 1;
-    
+
     /* get short name of plugin (filename without extension) */
     plugin_name = NULL;
     ptr_base_name = basename (plugin_full_name);
     if (!ptr_base_name)
         return 1;
-    
+
     base_name = strdup (ptr_base_name);
     if (!base_name)
         return 1;
-    
+
     if (CONFIG_STRING(config_plugin_extension)
         && CONFIG_STRING(config_plugin_extension)[0])
     {
@@ -177,12 +177,12 @@ plugin_check_autoload (char *plugin_full_name)
     }
     else
         plugin_name = strdup (base_name);
-    
+
     free (base_name);
-    
+
     if (!plugin_name)
         return 1;
-    
+
     /* browse array and check if plugin is "authorized" or "blacklisted" */
     plugin_authorized = 0;
     plugin_blacklisted = 0;
@@ -203,12 +203,12 @@ plugin_check_autoload (char *plugin_full_name)
                 plugin_authorized = 1;
         }
     }
-    
+
     free (plugin_name);
-    
+
     if (plugin_blacklisted)
         return 0;
-    
+
     return plugin_authorized;
 }
 
@@ -247,15 +247,15 @@ plugin_load (const char *filename)
     char **argv;
     struct t_weechat_plugin *new_plugin;
     struct t_config_option *ptr_option;
-    
+
     if (!filename)
         return NULL;
-    
+
     full_name = util_search_full_lib_name (filename, "plugins");
-    
+
     if (!full_name)
         return NULL;
-    
+
     /*
      * if plugin must not be autoloaded, then return immediately
      * Note: the "plugin_autoload_array" variable is set only during auto-load,
@@ -263,14 +263,14 @@ plugin_load (const char *filename)
      */
     if (plugin_autoload_array && !plugin_check_autoload (full_name))
         return NULL;
-    
+
     full_name2 = string_expand_home (full_name);
     if (full_name2)
     {
         free (full_name);
         full_name = full_name2;
     }
-    
+
     handle = dlopen (full_name, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)
     {
@@ -286,7 +286,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin name */
     name = dlsym (handle, "weechat_plugin_name");
     if (!name)
@@ -301,7 +301,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for API version */
     api_version = dlsym (handle, "weechat_plugin_api_version");
     if (!api_version)
@@ -339,7 +339,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* check for plugin with same name */
     if (plugin_search (name))
     {
@@ -352,7 +352,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin description */
     description = dlsym (handle, "weechat_plugin_description");
     if (!description)
@@ -367,7 +367,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin author */
     author = dlsym (handle, "weechat_plugin_author");
     if (!author)
@@ -382,7 +382,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin version */
     version = dlsym (handle, "weechat_plugin_version");
     if (!version)
@@ -397,7 +397,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin license */
     license = dlsym (handle, "weechat_plugin_license");
     if (!license)
@@ -412,10 +412,10 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* look for plugin charset (optional, default is UTF-8) */
     charset = dlsym (handle, "weechat_plugin_charset");
-    
+
     /* look for plugin init function */
     init_func = dlsym (handle, "weechat_plugin_init");
     if (!init_func)
@@ -430,7 +430,7 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     /* create new plugin */
     new_plugin = malloc (sizeof (*new_plugin));
     if (new_plugin)
@@ -446,10 +446,10 @@ plugin_load (const char *filename)
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
         ptr_option = config_weechat_debug_get (name);
         new_plugin->debug = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
-        
+
         /* functions */
         new_plugin->plugin_get_name = &plugin_get_name;
-        
+
         new_plugin->charset_set = &plugin_api_charset_set;
         new_plugin->iconv_to_internal = &string_iconv_to_internal;
         new_plugin->iconv_from_internal = &string_iconv_from_internal;
@@ -481,7 +481,7 @@ plugin_load (const char *filename)
         new_plugin->string_decode_base64 = &string_decode_base64;
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
-        
+
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;
         new_plugin->utf8_normalize = &utf8_normalize;
@@ -499,18 +499,18 @@ plugin_load (const char *filename)
         new_plugin->utf8_real_pos = &utf8_real_pos;
         new_plugin->utf8_pos = &utf8_pos;
         new_plugin->utf8_strndup = &utf8_strndup;
-        
+
         new_plugin->mkdir_home = &util_mkdir_home;
         new_plugin->mkdir = &util_mkdir;
         new_plugin->mkdir_parents = &util_mkdir_parents;
         new_plugin->exec_on_files = &util_exec_on_files;
         new_plugin->file_get_content = &util_file_get_content;
-        
+
         new_plugin->util_timeval_cmp = &util_timeval_cmp;
         new_plugin->util_timeval_diff = &util_timeval_diff;
         new_plugin->util_timeval_add = &util_timeval_add;
         new_plugin->util_get_time_string = &util_get_time_string;
-        
+
         new_plugin->list_new = &weelist_new;
         new_plugin->list_add = &weelist_add;
         new_plugin->list_search = &weelist_search;
@@ -526,7 +526,7 @@ plugin_load (const char *filename)
         new_plugin->list_remove = &weelist_remove;
         new_plugin->list_remove_all = &weelist_remove_all;
         new_plugin->list_free = &weelist_free;
-        
+
         new_plugin->hashtable_new = &hashtable_new;
         new_plugin->hashtable_set_with_size = &hashtable_set_with_size;
         new_plugin->hashtable_set = &hashtable_set;
@@ -540,7 +540,7 @@ plugin_load (const char *filename)
         new_plugin->hashtable_remove = &hashtable_remove;
         new_plugin->hashtable_remove_all = &hashtable_remove_all;
         new_plugin->hashtable_free = &hashtable_free;
-        
+
         new_plugin->config_new = &config_file_new;
         new_plugin->config_new_section = &config_file_new_section;
         new_plugin->config_search_section = &config_file_search_section;
@@ -580,16 +580,16 @@ plugin_load (const char *filename)
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
         new_plugin->config_set_desc_plugin = &plugin_api_config_set_desc_plugin;
         new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
-        
+
         new_plugin->key_bind = &gui_key_bind_plugin;
         new_plugin->key_unbind = &gui_key_unbind_plugin;
-        
+
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
         new_plugin->printf_y = &gui_chat_printf_y;
         new_plugin->log_printf = &log_printf;
-        
+
         new_plugin->hook_command = &hook_command;
         new_plugin->hook_command_run = &hook_command_run;
         new_plugin->hook_timer = &hook_timer;
@@ -614,7 +614,7 @@ plugin_load (const char *filename)
         new_plugin->hook_focus = &hook_focus;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
-        
+
         new_plugin->buffer_new = &gui_buffer_new;
         new_plugin->buffer_search = &gui_buffer_search_by_name;
         new_plugin->buffer_search_main = &gui_buffer_search_main;
@@ -629,13 +629,13 @@ plugin_load (const char *filename)
         new_plugin->buffer_set_pointer = &gui_buffer_set_pointer;
         new_plugin->buffer_string_replace_local_var = &gui_buffer_string_replace_local_var;
         new_plugin->buffer_match_list = &gui_buffer_match_list;
-        
+
         new_plugin->window_search_with_buffer = &gui_window_search_with_buffer;
         new_plugin->window_get_integer = &gui_window_get_integer;
         new_plugin->window_get_string = &gui_window_get_string;
         new_plugin->window_get_pointer = &gui_window_get_pointer;
         new_plugin->window_set_title = &gui_window_set_title;
-        
+
         new_plugin->nicklist_add_group = &gui_nicklist_add_group;
         new_plugin->nicklist_search_group = &gui_nicklist_search_group;
         new_plugin->nicklist_add_nick = &gui_nicklist_add_nick;
@@ -651,7 +651,7 @@ plugin_load (const char *filename)
         new_plugin->nicklist_nick_get_string = &gui_nicklist_nick_get_string;
         new_plugin->nicklist_nick_get_pointer = &gui_nicklist_nick_get_pointer;
         new_plugin->nicklist_nick_set = &gui_nicklist_nick_set;
-        
+
         new_plugin->bar_item_search = &gui_bar_item_search;
         new_plugin->bar_item_new = &gui_bar_item_new;
         new_plugin->bar_item_update = &gui_bar_item_update;
@@ -661,15 +661,15 @@ plugin_load (const char *filename)
         new_plugin->bar_set = &gui_bar_set;
         new_plugin->bar_update = &gui_bar_update;
         new_plugin->bar_remove = &gui_bar_free;
-        
+
         new_plugin->command = &plugin_api_command;
-        
+
         new_plugin->network_pass_proxy = &network_pass_proxy;
         new_plugin->network_connect_to = &network_connect_to;
-        
+
         new_plugin->info_get = &hook_info_get;
         new_plugin->info_get_hashtable = &hook_info_get_hashtable;
-        
+
         new_plugin->infolist_new = &infolist_new;
         new_plugin->infolist_new_item = &infolist_new_item;
         new_plugin->infolist_new_var_integer = &infolist_new_var_integer;
@@ -707,12 +707,12 @@ plugin_load (const char *filename)
         new_plugin->hdata_pointer = &hdata_pointer;
         new_plugin->hdata_time = &hdata_time;
         new_plugin->hdata_get_string = &hdata_get_string;
-        
+
         new_plugin->upgrade_new = &upgrade_file_new;
         new_plugin->upgrade_write_object = &upgrade_file_write_object;
         new_plugin->upgrade_read = &upgrade_file_read;
         new_plugin->upgrade_close = &upgrade_file_close;
-        
+
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
         new_plugin->next_plugin = NULL;
@@ -721,13 +721,13 @@ plugin_load (const char *filename)
         else
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
-        
+
         /*
          * associate orphan buffers with this plugin (if asked during upgrade
          * process)
          */
         gui_buffer_set_plugin_for_upgrade (name, new_plugin);
-        
+
         /* build arguments for plugin */
         argc = 0;
         argv = NULL;
@@ -759,13 +759,13 @@ plugin_load (const char *filename)
                     argv[argc] = NULL;
             }
         }
-        
+
         /* init plugin */
         rc = ((t_weechat_init_func *)init_func) (new_plugin, argc, argv);
-        
+
         if (argv)
             free (argv);
-        
+
         if (rc != WEECHAT_RC_OK)
         {
             gui_chat_printf (NULL,
@@ -789,16 +789,16 @@ plugin_load (const char *filename)
         free (full_name);
         return NULL;
     }
-    
+
     if ((weechat_debug_core >= 1) || !plugin_quiet)
     {
         gui_chat_printf (NULL,
                          _("Plugin \"%s\" loaded"),
                          name);
     }
-    
+
     free (full_name);
-    
+
     return new_plugin;
 }
 
@@ -811,10 +811,10 @@ void
 plugin_auto_load_file (void *plugin, const char *filename)
 {
     char *pos;
-    
+
     /* make C compiler happy */
     (void) plugin;
-    
+
     if (CONFIG_STRING(config_plugin_extension)
         && CONFIG_STRING(config_plugin_extension)[0])
     {
@@ -841,10 +841,10 @@ void
 plugin_auto_load ()
 {
     char *dir_name, *plugin_path, *plugin_path2;
-    
+
     plugin_autoload_array = NULL;
     plugin_autoload_count = 0;
-    
+
     if (CONFIG_STRING(config_plugin_autoload)
         && CONFIG_STRING(config_plugin_autoload)[0])
     {
@@ -852,7 +852,7 @@ plugin_auto_load ()
                                               ",", 0, 0,
                                               &plugin_autoload_count);
     }
-    
+
     /* auto-load plugins in WeeChat home dir */
     if (CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
@@ -872,7 +872,7 @@ plugin_auto_load ()
         if (plugin_path2)
             free (plugin_path2);
     }
-    
+
     /* auto-load plugins in WeeChat global lib dir */
     dir_name = malloc (strlen (WEECHAT_LIBDIR) + 16);
     if (dir_name)
@@ -882,7 +882,7 @@ plugin_auto_load ()
         util_exec_on_files (dir_name, 0, NULL, &plugin_auto_load_file);
         free (dir_name);
     }
-    
+
     /* free autoload array */
     if (plugin_autoload_array)
     {
@@ -901,19 +901,19 @@ plugin_remove (struct t_weechat_plugin *plugin)
 {
     struct t_weechat_plugin *new_weechat_plugins;
     struct t_gui_buffer *ptr_buffer, *next_buffer;
-    
+
     /* close buffers created by this plugin */
     ptr_buffer = gui_buffers;
     while (ptr_buffer)
     {
         next_buffer = ptr_buffer->next_buffer;
-        
+
         if (ptr_buffer->plugin == plugin)
             gui_buffer_close (ptr_buffer);
-        
+
         ptr_buffer = next_buffer;
     }
-    
+
     /* remove plugin from list */
     if (last_weechat_plugin == plugin)
         last_weechat_plugin = plugin->prev_plugin;
@@ -924,25 +924,25 @@ plugin_remove (struct t_weechat_plugin *plugin)
     }
     else
         new_weechat_plugins = plugin->next_plugin;
-    
+
     if (plugin->next_plugin)
         (plugin->next_plugin)->prev_plugin = plugin->prev_plugin;
-    
+
     /* remove all config files */
     config_file_free_all_plugin (plugin);
-    
+
     /* remove all hooks */
     unhook_all_plugin (plugin);
-    
+
     /* remove all infolists */
     infolist_free_all_plugin (plugin);
-    
+
     /* remove all hdata */
     hdata_free_all_plugin (plugin);
-    
+
     /* remove all bar items */
     gui_bar_item_free_all_plugin (plugin);
-    
+
     /* free data */
     if (plugin->filename)
         free (plugin->filename);
@@ -960,9 +960,9 @@ plugin_remove (struct t_weechat_plugin *plugin)
         free (plugin->license);
     if (plugin->charset)
         free (plugin->charset);
-    
+
     free (plugin);
-    
+
     weechat_plugins = new_weechat_plugins;
 }
 
@@ -975,15 +975,15 @@ plugin_unload (struct t_weechat_plugin *plugin)
 {
     t_weechat_end_func *end_func;
     char *name;
-    
+
     name = (plugin->name) ? strdup (plugin->name) : NULL;
-    
+
     end_func = dlsym (plugin->handle, "weechat_plugin_end");
     if (end_func)
         (void) (end_func) (plugin);
-    
+
     plugin_remove (plugin);
-    
+
     if ((weechat_debug_core >= 1) || !plugin_quiet)
     {
         gui_chat_printf (NULL,
@@ -1002,7 +1002,7 @@ void
 plugin_unload_name (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
-    
+
     ptr_plugin = plugin_search (name);
     if (ptr_plugin)
         plugin_unload (ptr_plugin);
@@ -1023,16 +1023,16 @@ void
 plugin_unload_all ()
 {
     int plugins_loaded;
-    
+
     plugins_loaded = (weechat_plugins) ? 1 : 0;
-    
+
     plugin_quiet = 1;
     while (weechat_plugins)
     {
         plugin_unload (last_weechat_plugin);
     }
     plugin_quiet = 0;
-    
+
     if (plugins_loaded)
     {
         gui_chat_printf (NULL, _("Plugins unloaded"));
@@ -1048,7 +1048,7 @@ plugin_reload_name (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
     char *filename;
-    
+
     ptr_plugin = plugin_search (name);
     if (ptr_plugin)
     {
@@ -1082,16 +1082,16 @@ plugin_display_short_list ()
     struct t_weechat_plugin *ptr_plugin;
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
-    
+
     if (weechat_plugins)
     {
         list = weelist_new ();
         if (list)
         {
             plugins_loaded = _("Plugins loaded:");
-            
+
             length = strlen (plugins_loaded) + 1;
-            
+
             for (ptr_plugin = weechat_plugins; ptr_plugin;
                  ptr_plugin = ptr_plugin->next_plugin)
             {
@@ -1099,7 +1099,7 @@ plugin_display_short_list ()
                 weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
             }
             length++;
-            
+
             buf = malloc (length);
             if (buf)
             {
@@ -1132,11 +1132,11 @@ plugin_init (int auto_load, int argc, char *argv[])
 
     /* init plugin API (create some hooks) */
     plugin_api_init ();
-    
+
     /* read plugins options on disk */
     plugin_config_init ();
     plugin_config_read ();
-    
+
     /* auto-load plugins if asked */
     if (auto_load)
     {
@@ -1160,10 +1160,10 @@ plugin_end ()
 {
     /* write plugins config options */
     plugin_config_write ();
-    
+
     /* unload all plugins */
     plugin_unload_all ();
-    
+
     /* free all plugin options */
     plugin_config_end ();
 }
@@ -1176,10 +1176,10 @@ struct t_hdata *
 plugin_hdata_plugin_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_plugin", "next_plugin");
     if (hdata)
     {
@@ -1210,14 +1210,14 @@ plugin_add_to_infolist (struct t_infolist *infolist,
                         struct t_weechat_plugin *plugin)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !plugin)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_pointer (ptr_item, "pointer", plugin))
         return 0;
     if (!infolist_new_var_string (ptr_item, "filename", plugin->filename))
@@ -1238,7 +1238,7 @@ plugin_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "debug", plugin->debug))
         return 0;
-    
+
     return 1;
 }
 
@@ -1250,7 +1250,7 @@ void
 plugin_print_log ()
 {
     struct t_weechat_plugin *ptr_plugin;
-    
+
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {

@@ -71,14 +71,14 @@ upgrade_weechat_save_history (struct t_upgrade_file *upgrade_file,
     struct t_infolist_item *ptr_item;
     struct t_gui_history *ptr_history;
     int rc;
-    
+
     if (!last_history)
         return 1;
-    
+
     ptr_infolist = infolist_new ();
     if (!ptr_infolist)
         return 0;
-    
+
     ptr_history = last_history;
     while (ptr_history)
     {
@@ -88,23 +88,23 @@ upgrade_weechat_save_history (struct t_upgrade_file *upgrade_file,
             infolist_free (ptr_infolist);
             return 0;
         }
-        
+
         if (!infolist_new_var_string (ptr_item, "text", ptr_history->text))
         {
             infolist_free (ptr_infolist);
             return 0;
         }
-        
+
         ptr_history = ptr_history->prev_history;
     }
-    
+
     rc = upgrade_file_write_object (upgrade_file,
                                     UPGRADE_WEECHAT_TYPE_HISTORY,
                                     ptr_infolist);
     infolist_free (ptr_infolist);
     if (!rc)
         return 0;
-    
+
     return 1;
 }
 
@@ -119,7 +119,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     int rc;
-    
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -138,7 +138,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
         infolist_free (ptr_infolist);
         if (!rc)
             return 0;
-        
+
         /* save nicklist */
         if (ptr_buffer->nicklist)
         {
@@ -157,7 +157,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
             if (!rc)
                 return 0;
         }
-        
+
         /* save buffer lines */
         for (ptr_line = ptr_buffer->own_lines->first_line; ptr_line;
              ptr_line = ptr_line->next_line)
@@ -179,7 +179,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
             if (!rc)
                 return 0;
         }
-        
+
         /* save command/text history of buffer */
         if (ptr_buffer->history)
         {
@@ -189,7 +189,7 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
                 return 0;
         }
     }
-    
+
     return 1;
 }
 
@@ -203,11 +203,11 @@ upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
     struct t_infolist *ptr_infolist;
     struct t_infolist_item *ptr_item;
     int rc;
-    
+
     ptr_infolist = infolist_new ();
     if (!ptr_infolist)
         return 0;
-    
+
     ptr_item = infolist_new_item (ptr_infolist);
     if (!ptr_item)
     {
@@ -229,12 +229,12 @@ upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
         infolist_free (ptr_infolist);
         return 0;
     }
-    
+
     rc = upgrade_file_write_object (upgrade_file,
                                     UPGRADE_WEECHAT_TYPE_MISC,
                                     ptr_infolist);
     infolist_free (ptr_infolist);
-    
+
     return rc;
 }
 
@@ -248,7 +248,7 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
     struct t_infolist *ptr_infolist;
     struct t_gui_hotlist *ptr_hotlist;
     int rc;
-    
+
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
@@ -267,7 +267,7 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
         if (!rc)
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -282,39 +282,39 @@ upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
 {
     struct t_infolist *ptr_infolist;
     int rc;
-    
+
     ptr_infolist = infolist_new ();
     if (!ptr_infolist)
         return 0;
-    
+
     if (!gui_layout_window_add_to_infolist (ptr_infolist, layout_window))
     {
         infolist_free (ptr_infolist);
         return 0;
     }
-    
+
     rc = upgrade_file_write_object (upgrade_file,
                                     UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW,
                                     ptr_infolist);
-    
+
     infolist_free (ptr_infolist);
     if (!rc)
         return 0;
-    
+
     if (layout_window->child1)
     {
         if (!upgrade_weechat_save_layout_window_tree (upgrade_file,
                                                       layout_window->child1))
             return 0;
     }
-    
+
     if (layout_window->child2)
     {
         if (!upgrade_weechat_save_layout_window_tree (upgrade_file,
                                                       layout_window->child2))
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -327,16 +327,16 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 {
     struct t_gui_layout_window *layout_windows;
     int rc;
-    
+
     /* get current layout for windows */
     layout_windows = NULL;
     gui_layout_window_save (&layout_windows);
 
     /* save tree with layout of windows */
     rc = upgrade_weechat_save_layout_window_tree (upgrade_file, layout_windows);
-    
+
     gui_layout_window_remove_all (&layout_windows);
-    
+
     return rc;
 }
 
@@ -350,7 +350,7 @@ upgrade_weechat_save ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 1);
     if (!upgrade_file)
         return 0;
@@ -361,9 +361,9 @@ upgrade_weechat_save ()
     rc &= upgrade_weechat_save_misc (upgrade_file);
     rc &= upgrade_weechat_save_hotlist (upgrade_file);
     rc &= upgrade_weechat_save_layout_window (upgrade_file);
-    
+
     upgrade_file_close (upgrade_file);
-    
+
     return rc;
 }
 
@@ -387,11 +387,11 @@ upgrade_weechat_read_cb (void *data,
     struct timeval creation_time;
     void *buf;
     int i, size, index, length;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
-    
+
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
     {
@@ -673,7 +673,7 @@ upgrade_weechat_read_cb (void *data,
                 break;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -687,40 +687,40 @@ upgrade_weechat_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
-    
+
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
-    
+
     if (!hotlist_reset)
         gui_hotlist_clear ();
-    
+
     gui_color_buffer_assign ();
     gui_color_buffer_display ();
-    
+
     if (upgrade_layout_buffers)
     {
         gui_layout_buffer_apply (upgrade_layout_buffers);
         gui_layout_buffer_remove_all (&upgrade_layout_buffers,
                                       &last_upgrade_layout_buffer);
     }
-    
+
     if (upgrade_layout_windows)
     {
         gui_layout_window_apply (upgrade_layout_windows, -1);
         gui_layout_window_remove_all (&upgrade_layout_windows);
     }
-    
+
     if (upgrade_set_current_window > 0)
         gui_window_switch_by_number (upgrade_set_current_window);
-    
+
     if (upgrade_set_current_buffer)
     {
         gui_window_switch_to_buffer (gui_current_window,
                                      upgrade_set_current_buffer, 0);
     }
-    
+
     gui_layout_buffer_get_number_all (gui_layout_buffers);
-    
+
     return rc;
 }
 
@@ -733,7 +733,7 @@ upgrade_weechat_remove_file_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     if (string_match (filename, "*.upgrade", 1))
     {
         if (weechat_debug_core >= 2)
@@ -752,13 +752,13 @@ upgrade_weechat_end ()
 {
     struct timeval tv_now;
     long time_diff;
-    
+
     /* remove .upgrade files */
     util_exec_on_files (weechat_home,
                         0,
                         NULL,
                         &upgrade_weechat_remove_file_cb);
-    
+
     /* display message for end of /upgrade with duration */
     gettimeofday (&tv_now, NULL);
     time_diff = util_timeval_diff (&weechat_current_start_timeval, &tv_now);
@@ -767,10 +767,10 @@ upgrade_weechat_end ()
                      _("Upgrade done (%.02f %s)"),
                      ((float)time_diff) / 1000,
                      NG_("second", "seconds", time_diff / 1000));
-    
+
     /* upgrading ended */
     weechat_upgrading = 0;
-    
+
     /* send signal for end of /upgrade */
     hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }

@@ -71,7 +71,7 @@ network_set_gnutls_ca_file ()
 {
 #ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
-    
+
     ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
     if (ca_path)
     {
@@ -97,7 +97,7 @@ network_init ()
 #ifdef HAVE_GNUTLS
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
-    
+
     network_set_gnutls_ca_file ();
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a
     /* for gnutls >= 2.9.10 */
@@ -152,7 +152,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
 {
     char buffer[256], authbuf[128], authbuf_base64[512];
     int n, m;
-    
+
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
@@ -172,20 +172,20 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
         n = snprintf (buffer, sizeof (buffer),
                       "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
-    
+
     m = send (sock, buffer, n, 0);
     if (n != m)
         return 0;
-    
+
     n = recv (sock, buffer, sizeof (buffer), 0);
-    
+
     /* success result must be like: "HTTP/1.0 200 OK" */
     if (n < 12)
         return 0;
-    
+
     if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
         return 0;
-    
+
     /* connection ok */
     return 1;
 }
@@ -202,34 +202,34 @@ network_resolve (const char *hostname, char *ip, int *version)
 {
     char ipbuffer[NI_MAXHOST];
     struct addrinfo *res;
-    
+
     if (version != NULL)
         *version = 0;
-    
+
     res = NULL;
-    
+
     if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
         return 0;
-    
+
     if (!res)
         return 0;
-    
+
     if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer),
                      NULL, 0, NI_NUMERICHOST) != 0)
     {
         freeaddrinfo (res);
         return 0;
     }
-    
+
     if ((res->ai_family == AF_INET) && (version != NULL))
         *version = 4;
     if ((res->ai_family == AF_INET6) && (version != NULL))
         *version = 6;
-    
+
     strcpy (ip, ipbuffer);
-    
+
     freeaddrinfo (res);
-    
+
     /* resolution ok */
     return 1;
 }
@@ -246,11 +246,11 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
                           int port)
 {
     /* socks4 protocol is explained here: http://en.wikipedia.org/wiki/SOCKS */
-    
+
     struct t_network_socks4 socks4;
     unsigned char buffer[24];
     char ip_addr[NI_MAXHOST];
-    
+
     socks4.version = 4;
     socks4.method = 1;
     socks4.port = htons (port);
@@ -258,14 +258,14 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     socks4.address = inet_addr (ip_addr);
     strncpy (socks4.user, CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
              sizeof (socks4.user) - 1);
-    
+
     send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
     recv (sock, buffer, sizeof (buffer), 0);
-    
+
     /* connection ok */
     if ((buffer[0] == 0) && (buffer[1] == 90))
         return 1;
-    
+
     /* connection failed */
     return 0;
 }
@@ -285,26 +285,26 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
      * socks5 protocol is explained in RFC 1928
      * socks5 authentication with username/pass is explained in RFC 1929
      */
-    
+
     struct t_network_socks5 socks5;
     unsigned char buffer[288];
     int username_len, password_len, addr_len, addr_buffer_len;
     unsigned char *addr_buffer;
-    
+
     socks5.version = 5;
     socks5.nmethods = 1;
-    
+
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
         socks5.method = 2; /* with authentication */
     else
         socks5.method = 0; /* without authentication */
-    
+
     send (sock, (char *) &socks5, sizeof(socks5), 0);
     /* server socks5 must respond with 2 bytes */
     if (recv (sock, buffer, 2, 0) != 2)
         return 0;
-    
+
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
@@ -314,14 +314,14 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
          *       - socks version (buffer[0]) = 5 => socks5
          *       - socks method  (buffer[1]) = 2 => authentication
          */
-        
+
         if (buffer[0] != 5 || buffer[1] != 2)
             return 0;
-        
+
         /* authentication as in RFC 1929 */
         username_len = strlen (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]));
         password_len = strlen (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]));
-        
+
         /* make username/password buffer */
         buffer[0] = 1;
         buffer[1] = (unsigned char) username_len;
@@ -329,13 +329,13 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
         buffer[2 + username_len] = (unsigned char) password_len;
         memcpy (buffer + 3 + username_len,
                 CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]), password_len);
-        
+
         send (sock, buffer, 3 + username_len + password_len, 0);
-        
+
         /* server socks5 must respond with 2 bytes */
         if (recv (sock, buffer, 2, 0) != 2)
             return 0;
-        
+
         /* buffer[1] = auth state, must be 0 for success */
         if (buffer[1] != 0)
             return 0;
@@ -351,7 +351,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
         if (!((buffer[0] == 5) && (buffer[1] == 0)))
             return 0;
     }
-    
+
     /* authentication successful then giving address/port to connect */
     addr_len = strlen(address);
     addr_buffer_len = 4 + 1 + addr_len + 2;
@@ -365,17 +365,17 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     addr_buffer[4] = (unsigned char) addr_len;
     memcpy (addr_buffer + 5, address, addr_len); /* server address */
     *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
-    
+
     send (sock, addr_buffer, addr_buffer_len, 0);
     free (addr_buffer);
-    
+
     /* dialog with proxy server */
     if (recv (sock, buffer, 4, 0) != 4)
         return 0;
-    
+
     if (!((buffer[0] == 5) && (buffer[1] == 0)))
         return 0;
-    
+
     /* buffer[3] = address type */
     switch (buffer[3])
     {
@@ -413,7 +413,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
         default:
             return 0;
     }
-    
+
     /* connection ok */
     return 1;
 }
@@ -429,9 +429,9 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 {
     int rc;
     struct t_proxy *ptr_proxy;
-    
+
     rc = 0;
-    
+
     ptr_proxy = proxy_search (proxy);
     if (ptr_proxy)
     {
@@ -466,7 +466,7 @@ network_connect_to (const char *proxy, int sock,
     struct hostent *hostent;
     char *ip4;
     int ret;
-    
+
     ptr_proxy = NULL;
     if (proxy && proxy[0])
     {
@@ -474,13 +474,13 @@ network_connect_to (const char *proxy, int sock,
         if (!ptr_proxy)
             return 0;
     }
-    
+
     if (ptr_proxy)
     {
         memset (&addr, 0, sizeof (addr));
         addr.sin_addr.s_addr = htonl (address);
         ip4 = inet_ntoa(addr.sin_addr);
-        
+
         memset (&addr, 0, sizeof (addr));
         addr.sin_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
         addr.sin_family = AF_INET;
@@ -520,12 +520,12 @@ network_connect_child (struct t_hook *hook_connect)
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
     char status_ok_without_address[1 + 5 + 1];
     int rc, length, num_written;
-    
+
     res = NULL;
     res_local = NULL;
-    
+
     status_str[1] = '\0';
-    
+
     ptr_proxy = NULL;
     if (HOOK_CONNECT(hook_connect, proxy)
         && HOOK_CONNECT(hook_connect, proxy)[0])
@@ -541,7 +541,7 @@ network_connect_child (struct t_hook *hook_connect)
             return;
         }
     }
-    
+
     if (ptr_proxy)
     {
         /* get info about peer */
@@ -578,12 +578,12 @@ network_connect_child (struct t_hook *hook_connect)
             freeaddrinfo (res);
             return;
         }
-        
+
         if (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]))
             ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
         else
             ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
-        
+
         /* connect to peer */
         if (connect (HOOK_CONNECT(hook_connect, sock),
                      res->ai_addr, res->ai_addrlen) != 0)
@@ -596,7 +596,7 @@ network_connect_child (struct t_hook *hook_connect)
             freeaddrinfo (res);
             return;
         }
-        
+
         if (!network_pass_proxy (HOOK_CONNECT(hook_connect, proxy),
                                  HOOK_CONNECT(hook_connect, sock),
                                  HOOK_CONNECT(hook_connect, address),
@@ -652,7 +652,7 @@ network_connect_child (struct t_hook *hook_connect)
                 return;
             }
         }
-        
+
         /* get info about peer */
         memset (&hints, 0, sizeof(hints));
         hints.ai_family = (HOOK_CONNECT(hook_connect, ipv6)) ? AF_INET6 : AF_INET;
@@ -672,9 +672,9 @@ network_connect_child (struct t_hook *hook_connect)
                 freeaddrinfo (res_local);
             return;
         }
-        
+
         status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
-        
+
         /* try all IP addresses found, stop when connection is ok */
         for (ptr_res = res; ptr_res; ptr_res = ptr_res->ai_next)
         {
@@ -682,7 +682,7 @@ network_connect_child (struct t_hook *hook_connect)
             if ((HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET6))
                 || ((!HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET))))
                 continue;
-            
+
             /* connect to peer */
             if (HOOK_CONNECT(hook_connect, ipv6))
                 ((struct sockaddr_in6 *)(ptr_res->ai_addr))->sin6_port =
@@ -690,7 +690,7 @@ network_connect_child (struct t_hook *hook_connect)
             else
                 ((struct sockaddr_in *)(ptr_res->ai_addr))->sin_port =
                     htons (HOOK_CONNECT(hook_connect, port));
-            
+
             if (connect (HOOK_CONNECT(hook_connect, sock),
                          ptr_res->ai_addr, ptr_res->ai_addrlen) == 0)
             {
@@ -701,7 +701,7 @@ network_connect_child (struct t_hook *hook_connect)
                 status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
         }
     }
-    
+
     if (status_str[0] == '0' + WEECHAT_HOOK_CONNECT_OK)
     {
         status_ok_with_address = NULL;
@@ -736,7 +736,7 @@ network_connect_child (struct t_hook *hook_connect)
                           status_str, (int)strlen (ptr_address), ptr_address);
             }
         }
-        
+
         if (status_ok_with_address)
         {
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
@@ -759,7 +759,7 @@ network_connect_child (struct t_hook *hook_connect)
                              status_str, 1);
         (void) num_written;
     }
-    
+
     if (res)
         freeaddrinfo (res);
     if (res_local)
@@ -778,14 +778,14 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 {
     struct t_hook *hook_connect;
     int rc, direction, flags;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     hook_connect = (struct t_hook *)arg_hook_connect;
-    
+
     rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
-    
+
     if ((rc == GNUTLS_E_AGAIN) || (rc == GNUTLS_E_INTERRUPTED))
     {
         direction = gnutls_record_get_direction (*HOOK_CONNECT(hook_connect, gnutls_sess));
@@ -837,7 +837,7 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
                  HOOK_CONNECT(hook_connect, handshake_ip_address));
         unhook (hook_connect);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 #endif
@@ -852,14 +852,14 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
                                            int remaining_calls)
 {
     struct t_hook *hook_connect;
-    
+
     /* make C compiler happy */
     (void) remaining_calls;
-    
+
     hook_connect = (struct t_hook *)arg_hook_connect;
-    
+
     HOOK_CONNECT(hook_connect, handshake_hook_timer) = NULL;
-    
+
     (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
@@ -867,7 +867,7 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
              gnutls_strerror (GNUTLS_E_EXPIRED),
              HOOK_CONNECT(hook_connect, handshake_ip_address));
     unhook (hook_connect);
-    
+
     return WEECHAT_RC_OK;
 }
 #endif
@@ -889,11 +889,11 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 
     /* make C compiler happy */
     (void) fd;
-    
+
     hook_connect = (struct t_hook *)arg_hook_connect;
-    
+
     ip_address = NULL;
-    
+
     num_read = read (HOOK_CONNECT(hook_connect, child_read),
                      buffer, sizeof (buffer));
     if (num_read > 0)
@@ -1011,10 +1011,10 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
             (hook_connect->callback_data, buffer[0] - '0', 0, NULL, ip_address);
         unhook (hook_connect);
     }
-    
+
     if (ip_address)
         free (ip_address);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -1031,7 +1031,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     const char *pos_error;
 #endif
     pid_t pid;
-    
+
 #ifdef HAVE_GNUTLS
     /* initialize GnuTLS if SSL asked */
     if (HOOK_CONNECT(hook_connect, gnutls_sess))
@@ -1064,7 +1064,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
                                   (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
     }
 #endif
-    
+
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)
     {
@@ -1077,7 +1077,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
     }
     HOOK_CONNECT(hook_connect, child_read) = child_pipe[0];
     HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
-    
+
     switch (pid = fork ())
     {
         /* fork failed */

@@ -47,13 +47,13 @@ weechat_aspell_speller_exists (const char *lang)
     AspellDictInfoEnumeration *el;
     const AspellDictInfo *dict;
     int rc;
-    
+
     rc = 0;
-    
+
     config = new_aspell_config ();
     list = get_aspell_dict_info_list (config);
     el = aspell_dict_info_list_elements (list);
-    
+
     while ((dict = aspell_dict_info_enumeration_next (el)))
     {
         if (strcmp (dict->name, lang) == 0)
@@ -62,10 +62,10 @@ weechat_aspell_speller_exists (const char *lang)
             break;
         }
     }
-    
+
     delete_aspell_dict_info_enumeration (el);
     delete_aspell_config (config);
-    
+
     return rc;
 }
 
@@ -80,7 +80,7 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
 {
     char **argv;
     int argc, i;
-    
+
     if (dict_list)
     {
         argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
@@ -109,14 +109,14 @@ struct t_aspell_speller *
 weechat_aspell_speller_search (const char *lang)
 {
     struct t_aspell_speller *ptr_speller;
-    
+
     for (ptr_speller = weechat_aspell_spellers; ptr_speller;
          ptr_speller = ptr_speller->next_speller)
     {
         if (strcmp (ptr_speller->lang, lang) == 0)
             return ptr_speller;
     }
-    
+
     /* no speller found */
     return NULL;
 }
@@ -132,17 +132,17 @@ weechat_aspell_speller_new (const char *lang)
     AspellConfig *config;
     AspellCanHaveError *ret;
     struct t_infolist *infolist;
-    
+
     if (!lang)
         return NULL;
-    
+
     if (weechat_aspell_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: creating new speller for lang \"%s\"",
                         ASPELL_PLUGIN_NAME, lang);
     }
-    
+
     /* create a speller instance for the newly created cell */
     config = new_aspell_config();
     aspell_config_replace (config, "lang", lang);
@@ -159,9 +159,9 @@ weechat_aspell_speller_new (const char *lang)
         }
         weechat_infolist_free (infolist);
     }
-    
+
     ret = new_aspell_speller (config);
-    
+
     if (aspell_error (ret) != 0)
     {
         weechat_printf (NULL,
@@ -172,7 +172,7 @@ weechat_aspell_speller_new (const char *lang)
         delete_aspell_can_have_error (ret);
         return NULL;
     }
-    
+
     /* create and add a new speller cell */
     new_speller = malloc (sizeof (*new_speller));
     if (!new_speller)
@@ -182,7 +182,7 @@ weechat_aspell_speller_new (const char *lang)
                         weechat_prefix ("error"), ASPELL_PLUGIN_NAME);
         return NULL;
     }
-    
+
     new_speller->speller = to_aspell_speller (ret);
     new_speller->lang = strdup (lang);
 
@@ -194,10 +194,10 @@ weechat_aspell_speller_new (const char *lang)
     else
         weechat_aspell_spellers = new_speller;
     last_weechat_aspell_speller = new_speller;
-    
+
     /* free config */
     delete_aspell_config (config);
-    
+
     return new_speller;
 }
 
@@ -210,14 +210,14 @@ weechat_aspell_speller_free (struct t_aspell_speller *speller)
 {
     if (!speller)
         return;
-    
+
     if (weechat_aspell_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: removing speller for lang \"%s\"",
                         ASPELL_PLUGIN_NAME, speller->lang);
     }
-    
+
     /* free data */
     if (speller->speller)
     {
@@ -236,7 +236,7 @@ weechat_aspell_speller_free (struct t_aspell_speller *speller)
         weechat_aspell_spellers = speller->next_speller;
     if (last_weechat_aspell_speller == speller)
         last_weechat_aspell_speller = speller->prev_speller;
-    
+
     free (speller);
 }
 

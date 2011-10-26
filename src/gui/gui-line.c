@@ -68,7 +68,7 @@ gui_lines_alloc ()
         new_lines->buffer_max_length = 0;
         new_lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     }
-    
+
     return new_lines;
 }
 
@@ -91,14 +91,14 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
                     int with_suffix, int first_line)
 {
     int length_time, length_buffer, length_suffix;
-    
+
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
         && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))
     {
         return 0;
     }
-    
+
     /* length of time */
     if (buffer->time_for_each_line)
     {
@@ -106,14 +106,14 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
     else
         length_time = 0;
-    
+
     /* return immediately if alignment for end of lines is "buffer" */
     if (!first_line
         && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_BUFFER))
     {
         return length_time;
     }
-    
+
     /* length of buffer name (when many buffers are merged) */
     if (buffer->mixed_lines)
     {
@@ -132,20 +132,20 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
     else
         length_buffer = 0;
-    
+
     /* return immediately if alignment for end of lines is "prefix" */
     if (!first_line
         && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_PREFIX))
     {
         return length_time + length_buffer;
     }
-    
+
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {
         return length_time + length_buffer + line->data->prefix_length
             + ((line->data->prefix_length > 0) ? 1 : 0);
     }
-    
+
     length_suffix = 0;
     if (with_suffix)
     {
@@ -153,7 +153,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
             && CONFIG_STRING(config_look_prefix_suffix)[0])
             length_suffix = gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix)) + 1;
     }
-    
+
     return length_time + ((buffer->lines->prefix_max_length > 0) ? 1 : 0)
         + length_buffer
         + (((CONFIG_INTEGER(config_look_prefix_align_max) > 0)
@@ -173,7 +173,7 @@ gui_line_is_displayed (struct t_gui_line *line)
     /* line is hidden if filters are enabled and flag "displayed" is not set */
     if (gui_filters_enabled && !line->data->displayed)
         return 0;
-    
+
     /* in all other cases, line is displayed */
     return 1;
 }
@@ -186,13 +186,13 @@ struct t_gui_line *
 gui_line_get_first_displayed (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    
+
     ptr_line = buffer->lines->first_line;
     while (ptr_line && !gui_line_is_displayed (ptr_line))
     {
         ptr_line = ptr_line->next_line;
     }
-    
+
     return ptr_line;
 }
 
@@ -204,13 +204,13 @@ struct t_gui_line *
 gui_line_get_last_displayed (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    
+
     ptr_line = buffer->lines->last_line;
     while (ptr_line && !gui_line_is_displayed (ptr_line))
     {
         ptr_line = ptr_line->prev_line;
     }
-    
+
     return ptr_line;
 }
 
@@ -260,12 +260,12 @@ gui_line_search_text (struct t_gui_line *line, const char *text,
 {
     char *prefix, *message;
     int rc;
-    
+
     if (!line || !line->data->message || !text || !text[0])
         return 0;
-    
+
     rc = 0;
-    
+
     if (line->data->prefix)
     {
         prefix = gui_color_decode (line->data->prefix, NULL);
@@ -277,7 +277,7 @@ gui_line_search_text (struct t_gui_line *line, const char *text,
             free (prefix);
         }
     }
-    
+
     if (!rc)
     {
         message = gui_color_decode (line->data->message, NULL);
@@ -289,7 +289,7 @@ gui_line_search_text (struct t_gui_line *line, const char *text,
             free (message);
         }
     }
-    
+
     return rc;
 }
 
@@ -304,13 +304,13 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
 {
     char *prefix, *message;
     int match_prefix, match_message;
-    
+
     if (!line || (!regex_prefix && !regex_message))
         return 0;
-    
+
     prefix = NULL;
     message = NULL;
-    
+
     match_prefix = 1;
     match_message = 1;
 
@@ -339,12 +339,12 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
         if (regex_message)
             match_message = 0;
     }
-    
+
     if (prefix)
         free (prefix);
     if (message)
         free (message);
-    
+
     return (match_prefix && match_message);
 }
 
@@ -358,13 +358,13 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
                      char **tags_array)
 {
     int i, j;
-    
+
     if (!line)
         return 0;
-    
+
     if (line->data->tags_count == 0)
         return 0;
-    
+
     for (i = 0; i < tags_count; i++)
     {
         for (j = 0; j < line->data->tags_count; j++)
@@ -376,7 +376,7 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
                 return 1;
         }
     }
-    
+
     return 0;
 }
 
@@ -389,7 +389,7 @@ const char *
 gui_line_get_nick_tag (struct t_gui_line *line)
 {
     int i;
-    
+
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
@@ -408,7 +408,7 @@ gui_line_has_highlight (struct t_gui_line *line)
 {
     int rc, i, j, no_highlight;
     char *msg_no_color, *highlight_words;
-    
+
     /*
      * highlights are disabled on this buffer? (special value "-" means that
      * buffer does not want any highlight)
@@ -416,7 +416,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     if (line->data->buffer->highlight_words
         && (strcmp (line->data->buffer->highlight_words, "-") == 0))
         return 0;
-    
+
     /*
      * check if highlight is forced by a tag (with option highlight_tags) or
      * disabled for line
@@ -438,7 +438,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
     if (no_highlight)
         return 0;
-    
+
     /*
      * check that line matches highlight tags, if any (if no tag is specified,
      * then any tag is allowed)
@@ -450,12 +450,12 @@ gui_line_has_highlight (struct t_gui_line *line)
                                   line->data->buffer->highlight_tags_array))
             return 0;
     }
-    
+
     /* remove color codes from line message */
     msg_no_color = gui_color_decode (line->data->message, NULL);
     if (!msg_no_color)
         return 0;
-    
+
     /*
      * there is highlight on line if one of buffer highlight words matches line
      * or one of global highlight words matches line
@@ -467,7 +467,7 @@ gui_line_has_highlight (struct t_gui_line *line)
                                highlight_words : line->data->buffer->highlight_words);
     if (highlight_words)
         free (highlight_words);
-    
+
     if (!rc)
     {
         highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
@@ -478,21 +478,21 @@ gui_line_has_highlight (struct t_gui_line *line)
         if (highlight_words)
             free (highlight_words);
     }
-    
+
     if (!rc && config_highlight_regex)
     {
         rc = string_has_highlight_regex_compiled (msg_no_color,
                                                   config_highlight_regex);
     }
-    
+
     if (!rc && line->data->buffer->highlight_regex_compiled)
     {
         rc = string_has_highlight_regex_compiled (msg_no_color,
                                                   line->data->buffer->highlight_regex_compiled);
     }
-    
+
     free (msg_no_color);
-    
+
     return rc;
 }
 
@@ -508,7 +508,7 @@ gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
     struct t_gui_buffer *ptr_buffer;
     int length;
     const char *short_name;
-    
+
     lines->buffer_max_length = 0;
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -532,7 +532,7 @@ void
 gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 {
     struct t_gui_line *ptr_line;
-    
+
     lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     for (ptr_line = lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
@@ -557,10 +557,10 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     line->prev_line = lines->last_line;
     line->next_line = NULL;
     lines->last_line = line;
-    
+
     if (line->data->prefix_length > lines->prefix_max_length)
         lines->prefix_max_length = line->data->prefix_length;
-    
+
     lines->lines_count++;
 }
 
@@ -577,7 +577,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
     int i, update_prefix_max_length;
-    
+
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         /* reset scroll for any window scroll starting with this line */
@@ -601,10 +601,10 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             }
         }
     }
-    
+
     update_prefix_max_length =
         (line->data->prefix_length == lines->prefix_max_length);
-    
+
     /* move read marker if it was on line we are removing */
     if (lines->last_read_line == line)
     {
@@ -612,7 +612,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         lines->first_line_not_read = (lines->last_read_line) ? 0 : 1;
         gui_buffer_ask_chat_refresh (buffer, 1);
     }
-    
+
     /* free data */
     if (free_data)
     {
@@ -626,7 +626,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             free (line->data->message);
         free (line->data);
     }
-    
+
     /* remove line from list */
     if (line->prev_line)
         (line->prev_line)->next_line = line->next_line;
@@ -636,11 +636,11 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         lines->first_line = line->next_line;
     if (lines->last_line == line)
         lines->last_line = line->prev_line;
-    
+
     lines->lines_count--;
-    
+
     free (line);
-    
+
     /* compute "prefix_max_length" if needed */
     if (update_prefix_max_length)
         gui_line_compute_prefix_max_length (lines);
@@ -655,7 +655,7 @@ gui_line_mixed_add (struct t_gui_lines *lines,
                     struct t_gui_line_data *line_data)
 {
     struct t_gui_line *new_line;
-    
+
     new_line = malloc (sizeof (*new_line));
     if (new_line)
     {
@@ -672,14 +672,14 @@ void
 gui_line_mixed_free_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line, *ptr_next_line;
-    
+
     if (buffer->mixed_lines)
     {
         ptr_line = buffer->mixed_lines->first_line;
         while (ptr_line)
         {
             ptr_next_line = ptr_line->next_line;
-            
+
             if (ptr_line->data->buffer == buffer)
             {
                 gui_line_remove_from_list (buffer,
@@ -687,7 +687,7 @@ gui_line_mixed_free_buffer (struct t_gui_buffer *buffer)
                                            ptr_line,
                                            0);
             }
-            
+
             ptr_line = ptr_next_line;
         }
     }
@@ -720,7 +720,7 @@ void
 gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_line *ptr_line;
-    
+
     /* first remove mixed line if it exists */
     if (buffer->mixed_lines)
     {
@@ -737,7 +737,7 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
             }
         }
     }
-    
+
     /* remove line from lines list */
     gui_line_remove_from_list (buffer, buffer->own_lines, line, 1);
 }
@@ -765,7 +765,7 @@ int
 gui_line_get_notify_level (struct t_gui_line *line)
 {
     int i;
-    
+
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
@@ -795,14 +795,14 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     char *message_for_signal, buffer_full_name[512];
     const char *nick;
     int notify_level, *max_notify_level;
-    
+
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
     {
         log_printf (_("Not enough memory for new line"));
         return NULL;
     }
-    
+
     new_line_data = malloc (sizeof (*(new_line->data)));
     if (!new_line_data)
     {
@@ -811,7 +811,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         return NULL;
     }
     new_line->data = new_line_data;
-    
+
     /* fill data in new line */
     new_line->data->buffer = buffer;
     new_line->data->y = -1;
@@ -835,7 +835,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->data->prefix_length = (prefix) ?
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
-    
+
     /* get notify level and max notify level for nick in buffer */
     notify_level = gui_line_get_notify_level (new_line);
     nick = gui_line_get_nick_tag (new_line);
@@ -845,17 +845,17 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     if (max_notify_level
         && (*max_notify_level < notify_level))
         notify_level = *max_notify_level;
-    
+
     if (notify_level == GUI_HOTLIST_HIGHLIGHT)
         new_line->data->highlight = 1;
     else if (max_notify_level && (*max_notify_level < GUI_HOTLIST_HIGHLIGHT))
         new_line->data->highlight = 0;
     else
         new_line->data->highlight = gui_line_has_highlight (new_line);
-    
+
     /* add line to lines list */
     gui_line_add_to_list (buffer->own_lines, new_line);
-    
+
     /* check if line is filtered or not */
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
               gui_buffer_get_plugin_name (buffer),
@@ -907,13 +907,13 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                               WEECHAT_HOOK_SIGNAL_POINTER, buffer);
         }
     }
-    
+
     /* add mixed line, if buffer is attched to at least one other buffer */
     if (buffer->mixed_lines)
     {
         gui_line_mixed_add (buffer->mixed_lines, new_line->data);
     }
-    
+
     /* remove one line if necessary */
     if ((CONFIG_INTEGER(config_history_max_lines) > 0)
         && (buffer->own_lines->lines_count > CONFIG_INTEGER(config_history_max_lines)))
@@ -929,7 +929,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
             }
         }
     }
-    
+
     return new_line;
 }
 
@@ -943,7 +943,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     struct t_gui_line *ptr_line, *new_line;
     struct t_gui_line_data *new_line_data;
     char buffer_full_name[512];
-    
+
     /* search if line exists for "y" */
     for (ptr_line = buffer->own_lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
@@ -951,7 +951,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
         if (ptr_line->data->y >= y)
             break;
     }
-    
+
     if (!ptr_line || (ptr_line->data->y > y))
     {
         new_line = malloc (sizeof (*new_line));
@@ -960,7 +960,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
             log_printf (_("Not enough memory for new line"));
             return;
         }
-        
+
         new_line_data = malloc (sizeof (*(new_line->data)));
         if (!new_line_data)
         {
@@ -969,9 +969,9 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
             return;
         }
         new_line->data = new_line_data;
-        
+
         buffer->own_lines->lines_count++;
-        
+
         /* fill data in new line */
         new_line->data->buffer = buffer;
         new_line->data->y = y;
@@ -985,7 +985,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
         new_line->data->prefix_length = 0;
         new_line->data->message = NULL;
         new_line->data->highlight = 0;
-        
+
         /* add line to lines list */
         if (ptr_line)
         {
@@ -1012,12 +1012,12 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 
         ptr_line = new_line;
     }
-    
+
     /* set message for line */
     if (ptr_line->data->message)
         free (ptr_line->data->message);
     ptr_line->data->message = (message) ? strdup (message) : strdup ("");
-    
+
     /* check if line is filtered or not */
     snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
               gui_buffer_get_plugin_name (buffer),
@@ -1033,7 +1033,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
                               WEECHAT_HOOK_SIGNAL_POINTER, buffer);
         }
     }
-    
+
     ptr_line->data->refresh_needed = 1;
 }
 
@@ -1048,7 +1048,7 @@ gui_line_clear (struct t_gui_line *line)
     if (line->data->prefix)
         free (line->data->prefix);
     line->data->prefix = strdup ("");
-    
+
     if (line->data->message)
         free (line->data->message);
     line->data->message = strdup ("");
@@ -1065,7 +1065,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
     struct t_gui_buffer *ptr_buffer, *ptr_buffer_found;
     struct t_gui_lines *new_lines;
     struct t_gui_line *ptr_line1, *ptr_line2;
-    
+
     /* search first other buffer with same number */
     ptr_buffer_found = NULL;
     for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -1079,7 +1079,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
     }
     if (!ptr_buffer_found)
         return;
-    
+
     /* mix all lines (sorting by date) to a new structure "new_lines" */
     new_lines = gui_lines_alloc ();
     if (!new_lines)
@@ -1124,20 +1124,20 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
             }
         }
     }
-    
+
     /* compute "prefix_max_length" for mixed lines */
     gui_line_compute_prefix_max_length (new_lines);
-    
+
     /* compute "buffer_max_length" for mixed lines */
     gui_line_compute_buffer_max_length (buffer, new_lines);
-    
+
     /* free old mixed lines */
     if (ptr_buffer_found->mixed_lines)
     {
         gui_line_mixed_free_all (ptr_buffer_found);
         free (ptr_buffer_found->mixed_lines);
     }
-    
+
     /* use new structure with mixed lines in all buffers with correct number */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -1158,10 +1158,10 @@ struct t_hdata *
 gui_line_hdata_lines_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
@@ -1185,10 +1185,10 @@ struct t_hdata *
 gui_line_hdata_line_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line");
     if (hdata)
     {
@@ -1207,10 +1207,10 @@ struct t_hdata *
 gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
@@ -1244,14 +1244,14 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     int i, length;
     char option_name[64], *tags;
-    
+
     if (!infolist || !line)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_integer (ptr_item, "y", line->data->y))
         return 0;
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))
@@ -1260,7 +1260,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "str_time", line->data->str_time))
         return 0;
-    
+
     /* write tags */
     if (!infolist_new_var_integer (ptr_item, "tags_count", line->data->tags_count))
         return 0;
@@ -1289,7 +1289,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
         return 0;
     }
     free (tags);
-    
+
     if (!infolist_new_var_integer (ptr_item, "displayed", line->data->displayed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "highlight", line->data->highlight))
@@ -1301,7 +1301,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "last_read_line",
                                    (lines->last_read_line == line) ? 1 : 0))
         return 0;
-    
+
     return 1;
 }
 

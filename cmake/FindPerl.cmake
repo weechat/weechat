@@ -54,12 +54,12 @@ IF(PERL_EXECUTABLE)
     COMMAND ${PERL_EXECUTABLE} -MExtUtils::Embed -e ldopts
     OUTPUT_VARIABLE PERL_LFLAGS
     )
-  
+
   # remove the new lines from the output by replacing them with empty strings
   STRING(REPLACE "\n" "" PERL_INTERNAL_DIR "${PERL_INTERNAL_DIR}")
   STRING(REPLACE "\n" "" PERL_CFLAGS "${PERL_CFLAGS}")
   STRING(REPLACE "\n" "" PERL_LFLAGS "${PERL_LFLAGS}")
-  
+
   FIND_PATH(PERL_INCLUDE_PATH
     NAMES perl.h
     PATHS ${PERL_INTERNAL_DIR}
@@ -69,11 +69,11 @@ IF(PERL_EXECUTABLE)
     NAMES perl
     PATHS /usr/lib /usr/local/lib /usr/pkg/lib ${PERL_INTERNAL_DIR}
     )
-  
+
   IF(PERL_LIBRARY AND PERL_INCLUDE_PATH)
     SET(PERL_FOUND TRUE)
   ENDIF(PERL_LIBRARY AND PERL_INCLUDE_PATH)
-  
+
   MARK_AS_ADVANCED(
     PERL_EXECUTABLE
     PERL_INCLUDE_PATH

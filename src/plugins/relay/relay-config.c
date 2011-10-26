@@ -65,7 +65,7 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     if (relay_buffer)
         relay_buffer_refresh (NULL);
 }
@@ -80,11 +80,11 @@ relay_config_change_network_bind_address_cb (void *data,
                                              struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -105,11 +105,11 @@ relay_config_check_port_cb (void *data, struct t_config_option *option,
     char *error;
     long port;
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     error = NULL;
     port = strtol (value, &error, 10);
     ptr_server = relay_server_search_port ((int)port);
@@ -120,7 +120,7 @@ relay_config_check_port_cb (void *data, struct t_config_option *option,
                         RELAY_PLUGIN_NAME, (int)port);
         return 0;
     }
-    
+
     return 1;
 }
 
@@ -133,10 +133,10 @@ void
 relay_config_change_port_cb (void *data, struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
     if (ptr_server)
     {
@@ -154,10 +154,10 @@ void
 relay_config_delete_port_cb (void *data, struct t_config_option *option)
 {
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
     if (ptr_server)
         relay_server_free (ptr_server);
@@ -178,21 +178,21 @@ relay_config_create_option_port (void *data,
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
-    
+
     relay_server_get_protocol_args (option_name,
                                     &protocol, &protocol_args);
-    
+
     protocol_number = -1;
     port = -1;
-    
+
     if (protocol && protocol_args)
         protocol_number = relay_protocol_search (protocol);
-    
+
     if (protocol_number < 0)
     {
         weechat_printf (NULL, _("%s%s: error: unknown protocol \"%s\""),
@@ -208,7 +208,7 @@ relay_config_create_option_port (void *data,
                         RELAY_PLUGIN_NAME, option_name);
         rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
-    
+
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         error = NULL;
@@ -222,7 +222,7 @@ relay_config_create_option_port (void *data,
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }
     }
-    
+
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         /* create config option */
@@ -233,18 +233,18 @@ relay_config_create_option_port (void *data,
             &relay_config_check_port_cb, NULL,
             &relay_config_change_port_cb, NULL,
             &relay_config_delete_port_cb, NULL);
-        
+
         if (relay_server_new (protocol_number, protocol_args, port))
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         else
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
-    
+
     if (protocol)
         free (protocol);
     if (protocol_args)
         free (protocol_args);
-    
+
     return rc;
 }
 
@@ -257,7 +257,7 @@ relay_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     return  weechat_config_reload (config_file);
 }
 
@@ -270,12 +270,12 @@ int
 relay_config_init ()
 {
     struct t_config_section *ptr_section;
-    
+
     relay_config_file = weechat_config_new (RELAY_CONFIG_NAME,
                                             &relay_config_reload, NULL);
     if (!relay_config_file)
         return 0;
-    
+
     ptr_section = weechat_config_new_section (relay_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -286,7 +286,7 @@ relay_config_init ()
         weechat_config_free (relay_config_file);
         return 0;
     }
-    
+
     relay_config_look_auto_open_buffer = weechat_config_new_option (
         relay_config_file, ptr_section,
         "auto_open_buffer", "boolean",
@@ -298,7 +298,7 @@ relay_config_init ()
         N_("number of raw messages to save in memory when raw data buffer is "
            "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (relay_config_file, "color",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -309,7 +309,7 @@ relay_config_init ()
         weechat_config_free (relay_config_file);
         return 0;
     }
-    
+
     relay_config_color_text = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text", "color",
@@ -358,7 +358,7 @@ relay_config_init ()
         N_("text color for \"disconnected\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (relay_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -390,7 +390,7 @@ relay_config_init ()
         N_("password required by clients to access this relay (empty value "
             "means no password required)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (relay_config_file, "port",
                                               1, 1,
                                               NULL, NULL,
@@ -403,9 +403,9 @@ relay_config_init ()
         weechat_config_free (relay_config_file);
         return 0;
     }
-    
+
     relay_config_section_port = ptr_section;
-    
+
     return 1;
 }
 

@@ -39,19 +39,19 @@ logger_info_get_infolist_cb (void *data, const char *infolist_name,
 {
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "logger_buffer") == 0)
     {
         if (pointer && !logger_buffer_valid (pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -82,7 +82,7 @@ logger_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
-    
+
     return NULL;
 }
 

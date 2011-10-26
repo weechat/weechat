@@ -91,16 +91,16 @@ struct t_hashtable
     struct t_hashtable_item **htable;  /* table to map hashes with linked   */
                                        /* lists                             */
     int items_count;                   /* number of items in hashtable      */
-    
+
     /* type for keys and values */
     enum t_hashtable_type type_keys;   /* type for keys: int/str/pointer    */
     enum t_hashtable_type type_values; /* type for values: int/str/pointer  */
-    
+
     /* callbacks */
     t_hashtable_hash_key *callback_hash_key;     /* hash key to int value   */
     t_hashtable_keycmp *callback_keycmp;         /* compare two keys        */
     t_hashtable_free_value *callback_free_value; /* callback to free value  */
-    
+
     /* keys/values as string */
     char *keys_values;                 /* keys/values as string (NULL if    */
                                        /* never asked)                      */

@@ -54,7 +54,7 @@ infolist_new (struct t_weechat_plugin *plugin)
         new_infolist->items = NULL;
         new_infolist->last_item = NULL;
         new_infolist->ptr_item = NULL;
-        
+
         new_infolist->prev_infolist = last_weechat_infolist;
         new_infolist->next_infolist = NULL;
         if (weechat_infolists)
@@ -63,7 +63,7 @@ infolist_new (struct t_weechat_plugin *plugin)
             weechat_infolists = new_infolist;
         last_weechat_infolist = new_infolist;
     }
-    
+
     return new_infolist;
 }
 
@@ -82,7 +82,7 @@ infolist_new_item (struct t_infolist *infolist)
         new_item->vars = NULL;
         new_item->last_var = NULL;
         new_item->fields = NULL;
-        
+
         new_item->prev_item = infolist->last_item;
         new_item->next_item = NULL;
         if (infolist->items)
@@ -91,7 +91,7 @@ infolist_new_item (struct t_infolist *infolist)
             infolist->items = new_item;
         infolist->last_item = new_item;
     }
-    
+
     return new_item;
 }
 
@@ -104,10 +104,10 @@ infolist_new_var_integer (struct t_infolist_item *item,
                           const char *name, int value)
 {
     struct t_infolist_var *new_var;
-    
+
     if (!item || !name || !name[0])
         return NULL;
-    
+
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
@@ -116,7 +116,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (int));
         if (new_var->value)
             *((int *)new_var->value) = value;
-        
+
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
         if (item->vars)
@@ -125,7 +125,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
             item->vars = new_var;
         item->last_var = new_var;
     }
-    
+
     return new_var;
 }
 
@@ -138,17 +138,17 @@ infolist_new_var_string (struct t_infolist_item *item,
                          const char *name, const char *value)
 {
     struct t_infolist_var *new_var;
-    
+
     if (!item || !name || !name[0])
         return NULL;
-    
+
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
         new_var->type = INFOLIST_STRING;
         new_var->value = (value) ? strdup (value) : NULL;
-        
+
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
         if (item->vars)
@@ -157,7 +157,7 @@ infolist_new_var_string (struct t_infolist_item *item,
             item->vars = new_var;
         item->last_var = new_var;
     }
-    
+
     return new_var;
 }
 
@@ -170,17 +170,17 @@ infolist_new_var_pointer (struct t_infolist_item *item,
                           const char *name, void *pointer)
 {
     struct t_infolist_var *new_var;
-    
+
     if (!item || !name || !name[0])
         return NULL;
-    
+
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
         new_var->type = INFOLIST_POINTER;
         new_var->value = pointer;
-        
+
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
         if (item->vars)
@@ -189,7 +189,7 @@ infolist_new_var_pointer (struct t_infolist_item *item,
             item->vars = new_var;
         item->last_var = new_var;
     }
-    
+
     return new_var;
 }
 
@@ -202,10 +202,10 @@ infolist_new_var_buffer (struct t_infolist_item *item,
                          const char *name, void *pointer, int size)
 {
     struct t_infolist_var *new_var;
-    
+
     if (!item || !name || !name[0] || (size <= 0))
         return NULL;
-    
+
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
@@ -215,7 +215,7 @@ infolist_new_var_buffer (struct t_infolist_item *item,
         if (new_var->value)
             memcpy (new_var->value, pointer, size);
         new_var->size = size;
-        
+
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
         if (item->vars)
@@ -224,7 +224,7 @@ infolist_new_var_buffer (struct t_infolist_item *item,
             item->vars = new_var;
         item->last_var = new_var;
     }
-    
+
     return new_var;
 }
 
@@ -237,10 +237,10 @@ infolist_new_var_time (struct t_infolist_item *item,
                        const char *name, time_t time)
 {
     struct t_infolist_var *new_var;
-    
+
     if (!item || !name || !name[0])
         return NULL;
-    
+
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
@@ -249,7 +249,7 @@ infolist_new_var_time (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (time_t));
         if (new_var->value)
             *((time_t *)new_var->value) = time;
-        
+
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
         if (item->vars)
@@ -258,7 +258,7 @@ infolist_new_var_time (struct t_infolist_item *item,
             item->vars = new_var;
         item->last_var = new_var;
     }
-    
+
     return new_var;
 }
 
@@ -272,14 +272,14 @@ int
 infolist_valid (struct t_infolist *infolist)
 {
     struct t_infolist *ptr_infolist;
-    
+
     for (ptr_infolist = weechat_infolists; ptr_infolist;
          ptr_infolist = ptr_infolist->next_infolist)
     {
         if (ptr_infolist == infolist)
             return 1;
     }
-    
+
     /* list not found */
     return 0;
 }
@@ -339,25 +339,25 @@ infolist_fields (struct t_infolist *infolist)
 {
     struct t_infolist_var *ptr_var;
     int length;
-    
+
     if (!infolist || !infolist->ptr_item)
         return NULL;
 
     /* list of fields already asked ? if yes, just return string */
     if (infolist->ptr_item->fields)
         return infolist->ptr_item->fields;
-    
+
     length = 0;
     for (ptr_var = infolist->ptr_item->vars;
          ptr_var; ptr_var = ptr_var->next_var)
     {
         length += strlen (ptr_var->name) + 3;
     }
-    
+
     infolist->ptr_item->fields = malloc (length + 1);
     if (!infolist->ptr_item->fields)
         return NULL;
-    
+
     infolist->ptr_item->fields[0] = '\0';
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
@@ -384,7 +384,7 @@ infolist_fields (struct t_infolist *infolist)
         if (ptr_var->next_var)
             strcat (infolist->ptr_item->fields, ",");
     }
-    
+
     return infolist->ptr_item->fields;
 }
 
@@ -396,10 +396,10 @@ int
 infolist_integer (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
-    
+
     if (!infolist || !infolist->ptr_item || !var || !var[0])
         return 0;
-    
+
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
@@ -411,7 +411,7 @@ infolist_integer (struct t_infolist *infolist, const char *var)
                 return 0;
         }
     }
-    
+
     /* variable not found */
     return 0;
 }
@@ -424,10 +424,10 @@ const char *
 infolist_string (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
-    
+
     if (!infolist || !infolist->ptr_item || !var || !var[0])
         return NULL;
-    
+
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
@@ -439,7 +439,7 @@ infolist_string (struct t_infolist *infolist, const char *var)
                 return NULL;
         }
     }
-    
+
     /* variable not found */
     return NULL;
 }
@@ -452,10 +452,10 @@ void *
 infolist_pointer (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
-    
+
     if (!infolist || !infolist->ptr_item || !var || !var[0])
         return NULL;
-    
+
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
@@ -467,7 +467,7 @@ infolist_pointer (struct t_infolist *infolist, const char *var)
                 return NULL;
         }
     }
-    
+
     /* variable not found */
     return NULL;
 }
@@ -482,10 +482,10 @@ infolist_buffer (struct t_infolist *infolist, const char *var,
                  int *size)
 {
     struct t_infolist_var *ptr_var;
-    
+
     if (!infolist || !infolist->ptr_item || !var || !var[0])
         return NULL;
-    
+
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
@@ -500,7 +500,7 @@ infolist_buffer (struct t_infolist *infolist, const char *var,
                 return NULL;
         }
     }
-    
+
     /* variable not found */
     return NULL;
 }
@@ -513,10 +513,10 @@ time_t
 infolist_time (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
-    
+
     if (!infolist || !infolist->ptr_item || !var || !var[0])
         return 0;
-    
+
     for (ptr_var = infolist->ptr_item->vars; ptr_var;
          ptr_var = ptr_var->next_var)
     {
@@ -528,7 +528,7 @@ infolist_time (struct t_infolist *infolist, const char *var)
                 return 0;
         }
     }
-    
+
     /* variable not found */
     return 0;
 }
@@ -542,7 +542,7 @@ infolist_var_free (struct t_infolist_item *item,
                    struct t_infolist_var *var)
 {
     struct t_infolist_var *new_vars;
-    
+
     /* remove var */
     if (item->last_var == var)
         item->last_var = var->prev_var;
@@ -553,10 +553,10 @@ infolist_var_free (struct t_infolist_item *item,
     }
     else
         new_vars = var->next_var;
-    
+
     if (var->next_var)
         (var->next_var)->prev_var = var->prev_var;
-    
+
     /* free data */
     if (var->name)
         free (var->name);
@@ -568,9 +568,9 @@ infolist_var_free (struct t_infolist_item *item,
     {
         free (var->value);
     }
-    
+
     free (var);
-    
+
     item->vars = new_vars;
 }
 
@@ -583,7 +583,7 @@ infolist_item_free (struct t_infolist *infolist,
                     struct t_infolist_item *item)
 {
     struct t_infolist_item *new_items;
-    
+
     /* remove var */
     if (infolist->last_item == item)
         infolist->last_item = item->prev_item;
@@ -594,10 +594,10 @@ infolist_item_free (struct t_infolist *infolist,
     }
     else
         new_items = item->next_item;
-    
+
     if (item->next_item)
         (item->next_item)->prev_item = item->prev_item;
-    
+
     /* free data */
     while (item->vars)
     {
@@ -605,9 +605,9 @@ infolist_item_free (struct t_infolist *infolist,
     }
     if (item->fields)
         free (item->fields);
-    
+
     free (item);
-    
+
     infolist->items = new_items;
 }
 
@@ -619,7 +619,7 @@ void
 infolist_free (struct t_infolist *infolist)
 {
     struct t_infolist *new_weechat_infolists;
-    
+
     /* remove list */
     if (last_weechat_infolist == infolist)
         last_weechat_infolist = infolist->prev_infolist;
@@ -630,18 +630,18 @@ infolist_free (struct t_infolist *infolist)
     }
     else
         new_weechat_infolists = infolist->next_infolist;
-    
+
     if (infolist->next_infolist)
         (infolist->next_infolist)->prev_infolist = infolist->prev_infolist;
-    
+
     /* free data */
     while (infolist->items)
     {
         infolist_item_free (infolist, infolist->items);
     }
-    
+
     free (infolist);
-    
+
     weechat_infolists = new_weechat_infolists;
 }
 
@@ -653,7 +653,7 @@ void
 infolist_free_all_plugin (struct t_weechat_plugin *plugin)
 {
     struct t_infolist *ptr_infolist, *next_infolist;
-    
+
     ptr_infolist = weechat_infolists;
     while (ptr_infolist)
     {
@@ -674,7 +674,7 @@ infolist_print_log ()
     struct t_infolist *ptr_infolist;
     struct t_infolist_item *ptr_item;
     struct t_infolist_var *ptr_var;
-    
+
     for (ptr_infolist = weechat_infolists; ptr_infolist;
          ptr_infolist = ptr_infolist->next_infolist)
     {
@@ -686,7 +686,7 @@ infolist_print_log ()
         log_printf ("  ptr_item . . . . . . . : 0x%lx", ptr_infolist->ptr_item);
         log_printf ("  prev_infolist. . . . . : 0x%lx", ptr_infolist->prev_infolist);
         log_printf ("  next_infolist. . . . . : 0x%lx", ptr_infolist->next_infolist);
-        
+
         for (ptr_item = ptr_infolist->items; ptr_item;
              ptr_item = ptr_item->next_item)
         {
@@ -696,7 +696,7 @@ infolist_print_log ()
             log_printf ("      last_var . . . . . . . : 0x%lx", ptr_item->last_var);
             log_printf ("      prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
             log_printf ("      next_item. . . . . . . : 0x%lx", ptr_item->next_item);
-            
+
             for (ptr_var = ptr_item->vars; ptr_var;
                  ptr_var = ptr_var->next_var)
             {

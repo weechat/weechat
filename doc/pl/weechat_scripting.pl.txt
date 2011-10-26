@@ -102,7 +102,7 @@ Argumenty:
 * 'licencja': string, licencja
 * 'opis': string, krótki opis skryptu
 * 'funkcja_wyłączająca': string, nazwa funkcji wywoływanej podczas wyładowania skryptu
-* 'kodowanie': string, kodowane skryptu (opcjonalne, jeśli skrypt jest napisany 
+* 'kodowanie': string, kodowane skryptu (opcjonalne, jeśli skrypt jest napisany
   w UTF-8 można nie podawać tej wartości - UTF-8 to domyślne kodowanie)
 
 Przykład dla skryptu w każdym z języków:
@@ -194,7 +194,7 @@ Możesz zajrzeć do 'Opisu API wtyczek WeeChat' po więcej informacji na temat
 każdej z funkcji API: prototyp, argumenty, zwracane wartości, przykłady.
 
 Ważne jest rozróżnienie 'wtyczki' od 'skryptu': 'wtyczka' jest plikiem binarnym
-skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast 'skrypt' jest 
+skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast 'skrypt' jest
 plikiem tekstowym załadowanym przez wtyczkę jak 'python' za pomocą komendy
 `/python`.
 
@@ -596,7 +596,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 Wykonuje proces w tle
 ^^^^^^^^^^^^^^^^^^^^^
 
-Do wykonywania procesów w tle służy `hook_process`. Twoje callbacki zostaną 
+Do wykonywania procesów w tle służy `hook_process`. Twoje callbacki zostaną
 wywołane, kiedy dane będą gotowe. Może zostać wywołane wiele razy.
 
 Dla ostatniego wykonania Twojego callbacku 'rc' jest ustawiane na 0, lub wartość
@@ -782,7 +782,7 @@ Informacje
 Wersja WeeChat
 ^^^^^^^^^^^^^^^
 
-Najprostszym sposobem na sprawdzenie wersji to pozyskanie "version_number" 
+Najprostszym sposobem na sprawdzenie wersji to pozyskanie "version_number"
 i wykonanie porównania między liczbą całkowitą a heksadecymalnym numerem wersji.
 
 Przykład:

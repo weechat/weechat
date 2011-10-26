@@ -86,7 +86,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
         || !scm_is_string (description) || !scm_is_string (shutdown_func)
         || !scm_is_string (charset))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     if (script_search (weechat_guile_plugin, guile_scripts,
                        scm_i_string_chars (name)))
     {
@@ -98,7 +98,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
                         weechat_prefix ("error"), GUILE_PLUGIN_NAME, name);
         API_RETURN_ERROR;
     }
-    
+
     /* register script */
     guile_current_script = script_add (weechat_guile_plugin,
                                        &guile_scripts, &last_guile_script,
@@ -129,7 +129,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
     {
         API_RETURN_ERROR;
     }
-    
+
     API_RETURN_OK;
 }
 
@@ -142,13 +142,13 @@ SCM
 weechat_guile_api_plugin_get_name (SCM plugin)
 {
     const char *result;
-    
+
     API_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
     if (!scm_is_string (plugin))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_plugin_get_name (script_str2ptr (scm_i_string_chars (plugin)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -162,9 +162,9 @@ weechat_guile_api_charset_set (SCM charset)
     API_FUNC(1, "charset_set", API_RETURN_ERROR);
     if (!scm_is_string (charset))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_charset_set (guile_current_script, scm_i_string_chars (charset));
-    
+
     API_RETURN_OK;
 }
 
@@ -177,14 +177,14 @@ weechat_guile_api_iconv_to_internal (SCM charset, SCM string)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
     if (!scm_is_string (charset) || !scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_iconv_to_internal (scm_i_string_chars (charset),
                                         scm_i_string_chars (string));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -198,14 +198,14 @@ weechat_guile_api_iconv_from_internal (SCM charset, SCM string)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
     if (!scm_is_string (charset) || !scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_iconv_from_internal (scm_i_string_chars (charset),
                                           scm_i_string_chars (string));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -217,13 +217,13 @@ SCM
 weechat_guile_api_gettext (SCM string)
 {
     const char *result;
-    
+
     API_FUNC(1, "gettext", API_RETURN_EMPTY);
     if (!scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_gettext (scm_i_string_chars (string));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -235,16 +235,16 @@ SCM
 weechat_guile_api_ngettext (SCM single, SCM plural, SCM count)
 {
     const char *result;
-    
+
     API_FUNC(1, "ngettext", API_RETURN_EMPTY);
     if (!scm_is_string (single) || !scm_is_string (plural)
         || !scm_is_integer (count))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_ngettext (scm_i_string_chars (single),
                                scm_i_string_chars (plural),
                                scm_to_int (count));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -258,16 +258,16 @@ SCM
 weechat_guile_api_string_match (SCM string, SCM mask, SCM case_sensitive)
 {
     int value;
-    
+
     API_FUNC(1, "string_match", API_RETURN_INT(0));
     if (!scm_is_string (string) || !scm_is_string (mask)
         || !scm_is_integer (case_sensitive))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_string_match (scm_i_string_chars (string),
                                   scm_i_string_chars (mask),
                                   scm_to_int (case_sensitive));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -283,14 +283,14 @@ SCM
 weechat_guile_api_string_has_highlight (SCM string, SCM highlight_words)
 {
     int value;
-    
+
     API_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
     if (!scm_is_string (string) || !scm_is_string (highlight_words))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_string_has_highlight (scm_i_string_chars (string),
                                           scm_i_string_chars (highlight_words));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -306,14 +306,14 @@ SCM
 weechat_guile_api_string_has_highlight_regex (SCM string, SCM regex)
 {
     int value;
-    
+
     API_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
     if (!scm_is_string (string) || !scm_is_string (regex))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_string_has_highlight_regex (scm_i_string_chars (string),
                                                 scm_i_string_chars (regex));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -329,13 +329,13 @@ weechat_guile_api_string_mask_to_regex (SCM mask)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "string_mask_to_regex", API_RETURN_EMPTY);
     if (!scm_is_string (mask))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_string_mask_to_regex (scm_i_string_chars (mask));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -348,14 +348,14 @@ weechat_guile_api_string_remove_color (SCM string, SCM replacement)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     if (!scm_is_string (string) || !scm_is_string (replacement))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_string_remove_color (scm_i_string_chars (string),
                                           scm_i_string_chars (replacement));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -368,13 +368,13 @@ SCM
 weechat_guile_api_string_is_command_char (SCM string)
 {
     int value;
-    
+
     API_FUNC(1, "string_is_command_char", API_RETURN_INT(0));
     if (!scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_string_is_command_char (scm_i_string_chars (string));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -388,13 +388,13 @@ SCM
 weechat_guile_api_string_input_for_buffer (SCM string)
 {
     const char *result;
-    
+
     API_FUNC(1, "string_input_for_buffer", API_RETURN_EMPTY);
     if (!scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_string_input_for_buffer (scm_i_string_chars (string));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -408,10 +408,10 @@ weechat_guile_api_mkdir_home (SCM directory, SCM mode)
     API_FUNC(1, "mkdir_home", API_RETURN_ERROR);
     if (!scm_is_string (directory) || !scm_is_integer (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     if (weechat_mkdir_home (scm_i_string_chars (directory), scm_to_int (mode)))
         API_RETURN_OK;
-    
+
     API_RETURN_ERROR;
 }
 
@@ -425,10 +425,10 @@ weechat_guile_api_mkdir (SCM directory, SCM mode)
     API_FUNC(1, "mkdir", API_RETURN_ERROR);
     if (!scm_is_string (directory) || !scm_is_integer (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     if (weechat_mkdir (scm_i_string_chars (directory), scm_to_int (mode)))
         API_RETURN_OK;
-    
+
     API_RETURN_ERROR;
 }
 
@@ -443,10 +443,10 @@ weechat_guile_api_mkdir_parents (SCM directory, SCM mode)
     API_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
     if (!scm_is_string (directory) || !scm_is_integer (mode))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     if (weechat_mkdir_parents (scm_i_string_chars (directory), scm_to_int (mode)))
         API_RETURN_OK;
-    
+
     API_RETURN_ERROR;
 }
 
@@ -458,11 +458,11 @@ SCM
 weechat_guile_api_list_new ()
 {
     char *result;
-    
+
     API_FUNC(1, "list_new", API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_new ());
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -474,17 +474,17 @@ SCM
 weechat_guile_api_list_add (SCM weelist, SCM data, SCM where, SCM user_data)
 {
     char *result;
-    
+
     API_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (!scm_is_string (weelist) || !scm_is_string (data)
         || !scm_is_string (where) || !scm_is_string (user_data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_add (script_str2ptr(scm_i_string_chars (weelist)),
                                                scm_i_string_chars (data),
                                                scm_i_string_chars (where),
                                                script_str2ptr (scm_i_string_chars (user_data))));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -496,14 +496,14 @@ SCM
 weechat_guile_api_list_search (SCM weelist, SCM data)
 {
     char *result;
-    
+
     API_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (!scm_is_string (weelist) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_search (script_str2ptr(scm_i_string_chars (weelist)),
                                                   scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -515,14 +515,14 @@ SCM
 weechat_guile_api_list_search_pos (SCM weelist, SCM data)
 {
     int pos;
-    
+
     API_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
     if (!scm_is_string (weelist) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     pos = weechat_list_search_pos (script_str2ptr (scm_i_string_chars (weelist)),
                                    scm_i_string_chars (data));
-    
+
     API_RETURN_INT(pos);
 }
 
@@ -534,14 +534,14 @@ SCM
 weechat_guile_api_list_casesearch (SCM weelist, SCM data)
 {
     char *result;
-    
+
     API_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (!scm_is_string (weelist) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_casesearch (script_str2ptr (scm_i_string_chars (weelist)),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -554,14 +554,14 @@ SCM
 weechat_guile_api_list_casesearch_pos (SCM weelist, SCM data)
 {
     int pos;
-    
+
     API_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
     if (!scm_is_string (weelist) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     pos = weechat_list_casesearch_pos (script_str2ptr (scm_i_string_chars (weelist)),
                                        scm_i_string_chars (data));
-    
+
     API_RETURN_INT(pos);
 }
 
@@ -573,14 +573,14 @@ SCM
 weechat_guile_api_list_get (SCM weelist, SCM position)
 {
     char *result;
-    
+
     API_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (!scm_is_string (weelist) || !scm_is_integer (position))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_get (script_str2ptr (scm_i_string_chars (weelist)),
                                                scm_to_int (position)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -594,10 +594,10 @@ weechat_guile_api_list_set (SCM item, SCM new_value)
     API_FUNC(1, "list_set", API_RETURN_ERROR);
     if (!scm_is_string (item) || !scm_is_string (new_value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_list_set (script_str2ptr (scm_i_string_chars (item)),
                       scm_i_string_chars (new_value));
-    
+
     API_RETURN_OK;
 }
 
@@ -609,13 +609,13 @@ SCM
 weechat_guile_api_list_next (SCM item)
 {
     char *result;
-    
+
     API_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (!scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_next (script_str2ptr (scm_i_string_chars (item))));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -627,13 +627,13 @@ SCM
 weechat_guile_api_list_prev (SCM item)
 {
     char *result;
-    
+
     API_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (!scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_list_prev (script_str2ptr (scm_i_string_chars (item))));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -645,13 +645,13 @@ SCM
 weechat_guile_api_list_string (SCM item)
 {
     const char *result;
-    
+
     API_FUNC(1, "list_string", API_RETURN_EMPTY);
     if (!scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_list_string (script_str2ptr (scm_i_string_chars (item)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -663,13 +663,13 @@ SCM
 weechat_guile_api_list_size (SCM weelist)
 {
     int size;
-    
+
     API_FUNC(1, "list_size", API_RETURN_INT(0));
     if (!scm_is_string (weelist))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     size = weechat_list_size (script_str2ptr (scm_i_string_chars (weelist)));
-    
+
     API_RETURN_INT(size);
 }
 
@@ -683,10 +683,10 @@ weechat_guile_api_list_remove (SCM weelist, SCM item)
     API_FUNC(1, "list_remove", API_RETURN_ERROR);
     if (!scm_is_string (weelist) || !scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_list_remove (script_str2ptr (scm_i_string_chars (weelist)),
                          script_str2ptr (scm_i_string_chars (item)));
-    
+
     API_RETURN_OK;
 }
 
@@ -700,9 +700,9 @@ weechat_guile_api_list_remove_all (SCM weelist)
     API_FUNC(1, "list_remove_all", API_RETURN_ERROR);
     if (!scm_is_string (weelist))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_list_remove_all (script_str2ptr (scm_i_string_chars (weelist)));
-    
+
     API_RETURN_OK;
 }
 
@@ -716,9 +716,9 @@ weechat_guile_api_list_free (SCM weelist)
     API_FUNC(1, "list_free", API_RETURN_ERROR);
     if (!scm_is_string (weelist))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_list_free (script_str2ptr (scm_i_string_chars (weelist)));
-    
+
     API_RETURN_OK;
 }
 
@@ -734,19 +734,19 @@ weechat_guile_api_config_reload_cb (void *data,
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (config_file);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
         else
@@ -756,10 +756,10 @@ weechat_guile_api_config_reload_cb (void *data,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
@@ -772,19 +772,19 @@ weechat_guile_api_config_new (SCM name, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_new", API_RETURN_EMPTY);
     if (!scm_is_string (name) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_config_new (weechat_guile_plugin,
                                                     guile_current_script,
                                                     scm_i_string_chars (name),
                                                     &weechat_guile_api_config_reload_cb,
                                                     scm_i_string_chars (function),
                                                     scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -802,9 +802,9 @@ weechat_guile_api_config_read_cb (void *data,
     void *func_argv[5];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
@@ -812,12 +812,12 @@ weechat_guile_api_config_read_cb (void *data,
         func_argv[2] = script_ptr2str (section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
         else
@@ -829,10 +829,10 @@ weechat_guile_api_config_read_cb (void *data,
             free (func_argv[1]);
         if (func_argv[2])
             free (func_argv[2]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
@@ -849,20 +849,20 @@ weechat_guile_api_config_section_write_cb (void *data,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
         else
@@ -872,10 +872,10 @@ weechat_guile_api_config_section_write_cb (void *data,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
@@ -893,20 +893,20 @@ weechat_guile_api_config_section_write_default_cb (void *data,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_WRITE_ERROR;
         else
@@ -916,10 +916,10 @@ weechat_guile_api_config_section_write_default_cb (void *data,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
@@ -939,9 +939,9 @@ weechat_guile_api_config_section_create_option_cb (void *data,
     void *func_argv[5];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
@@ -949,12 +949,12 @@ weechat_guile_api_config_section_create_option_cb (void *data,
         func_argv[2] = script_ptr2str (section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_SET_ERROR;
         else
@@ -966,10 +966,10 @@ weechat_guile_api_config_section_create_option_cb (void *data,
             free (func_argv[1]);
         if (func_argv[2])
             free (func_argv[2]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
@@ -988,21 +988,21 @@ weechat_guile_api_config_section_delete_option_cb (void *data,
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (config_file);
         func_argv[2] = script_ptr2str (section);
         func_argv[3] = script_ptr2str (option);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
         else
@@ -1016,10 +1016,10 @@ weechat_guile_api_config_section_delete_option_cb (void *data,
             free (func_argv[2]);
         if (func_argv[3])
             free (func_argv[3]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
 
@@ -1036,11 +1036,11 @@ weechat_guile_api_config_new_section (SCM args)
     SCM data_create_option, function_delete_option, data_delete_option;
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     if (!scm_list_p (args) || (scm_to_int (scm_length (args)) != 14))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     config_file = scm_list_ref (args, scm_from_int (0));
     name = scm_list_ref (args, scm_from_int (1));
     user_can_add_options = scm_list_ref (args, scm_from_int (2));
@@ -1064,7 +1064,7 @@ weechat_guile_api_config_new_section (SCM args)
         || !scm_is_string (function_create_option) || !scm_is_string (data_create_option)
         || !scm_is_string (function_delete_option) || !scm_is_string (data_delete_option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_config_new_section (weechat_guile_plugin,
                                                             guile_current_script,
                                                             script_str2ptr (scm_i_string_chars (config_file)),
@@ -1086,7 +1086,7 @@ weechat_guile_api_config_new_section (SCM args)
                                                             &weechat_guile_api_config_section_delete_option_cb,
                                                             scm_i_string_chars (function_delete_option),
                                                             scm_i_string_chars (data_delete_option)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -1099,14 +1099,14 @@ weechat_guile_api_config_search_section (SCM config_file, SCM section_name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     if (!scm_is_string (config_file) || !scm_is_string (section_name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_config_search_section (script_str2ptr (scm_i_string_chars (config_file)),
                                                             scm_i_string_chars (section_name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -1124,20 +1124,20 @@ weechat_guile_api_config_option_check_value_cb (void *data,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (option);
         func_argv[2] = (value) ? (char *)value : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = 0;
         else
@@ -1147,10 +1147,10 @@ weechat_guile_api_config_option_check_value_cb (void *data,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return 0;
 }
 
@@ -1166,22 +1166,22 @@ weechat_guile_api_config_option_change_cb (void *data,
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
     int *rc;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (option);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         if (rc)
             free (rc);
     }
@@ -1199,22 +1199,22 @@ weechat_guile_api_config_option_delete_cb (void *data,
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
     int *rc;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (option);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         if (rc)
             free (rc);
     }
@@ -1233,11 +1233,11 @@ weechat_guile_api_config_new_option (SCM args)
     SCM data_delete;
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (!scm_list_p (args) || (scm_to_int (scm_length (args)) != 17))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     config_file = scm_list_ref (args, scm_from_int (0));
     section = scm_list_ref (args, scm_from_int (1));
     name = scm_list_ref (args, scm_from_int (2));
@@ -1255,7 +1255,7 @@ weechat_guile_api_config_new_option (SCM args)
     data_change = scm_list_ref (args, scm_from_int (14));
     function_delete = scm_list_ref (args, scm_from_int (15));
     data_delete = scm_list_ref (args, scm_from_int (16));
-    
+
     if (!scm_is_string (config_file) || !scm_is_string (section)
         || !scm_is_string (name) || !scm_is_string (type)
         || !scm_is_string (description) || !scm_is_string (string_values)
@@ -1267,7 +1267,7 @@ weechat_guile_api_config_new_option (SCM args)
         || !scm_is_string (function_change) || !scm_is_string (data_change)
         || !scm_is_string (function_delete) || !scm_is_string (data_delete))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_config_new_option (weechat_guile_plugin,
                                                            guile_current_script,
                                                            script_str2ptr (scm_i_string_chars (config_file)),
@@ -1290,7 +1290,7 @@ weechat_guile_api_config_new_option (SCM args)
                                                            &weechat_guile_api_config_option_delete_cb,
                                                            scm_i_string_chars (function_delete),
                                                            scm_i_string_chars (data_delete)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -1305,16 +1305,16 @@ weechat_guile_api_config_search_option (SCM config_file, SCM section,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     if (!scm_is_string (config_file) || !scm_is_string (section)
         || !scm_is_string (option_name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_config_search_option (script_str2ptr (scm_i_string_chars (config_file)),
                                                            script_str2ptr (scm_i_string_chars (section)),
                                                            scm_i_string_chars (option_name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -1326,13 +1326,13 @@ SCM
 weechat_guile_api_config_string_to_boolean (SCM text)
 {
     int value;
-    
+
     API_FUNC(1, "config_string_to_boolean", API_RETURN_INT(0));
     if (!scm_is_string (text))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_config_string_to_boolean (scm_i_string_chars (text));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1344,14 +1344,14 @@ SCM
 weechat_guile_api_config_option_reset (SCM option, SCM run_callback)
 {
     int rc;
-    
+
     API_FUNC(1, "config_option_reset", API_RETURN_INT(0));
     if (!scm_is_string (option) || !scm_is_integer (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     rc = weechat_config_option_reset (script_str2ptr (scm_i_string_chars (option)),
                                       scm_to_int (run_callback));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1364,16 +1364,16 @@ weechat_guile_api_config_option_set (SCM option, SCM new_value,
                                      SCM run_callback)
 {
     int rc;
-    
+
     API_FUNC(1, "config_option_set", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (!scm_is_string (option) || !scm_is_string (new_value)
         || !scm_is_integer (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    
+
     rc = weechat_config_option_set (script_str2ptr (scm_i_string_chars (option)),
                                     scm_i_string_chars (new_value),
                                     scm_to_int (run_callback));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1386,14 +1386,14 @@ SCM
 weechat_guile_api_config_option_set_null (SCM option, SCM run_callback)
 {
     int rc;
-    
+
     API_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (!scm_is_string (option) || !scm_is_integer (run_callback))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    
+
     rc = weechat_config_option_set_null (script_str2ptr (scm_i_string_chars (option)),
                                          scm_to_int (run_callback));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1405,13 +1405,13 @@ SCM
 weechat_guile_api_config_option_unset (SCM option)
 {
     int rc;
-    
+
     API_FUNC(1, "config_option_unset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-    
+
     rc = weechat_config_option_unset (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1425,10 +1425,10 @@ weechat_guile_api_config_option_rename (SCM option, SCM new_name)
     API_FUNC(1, "config_option_rename", API_RETURN_ERROR);
     if (!scm_is_string (option) || !scm_is_string (new_name))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_config_option_rename (script_str2ptr (scm_i_string_chars (option)),
                                   scm_i_string_chars (new_name));
-    
+
     API_RETURN_OK;
 }
 
@@ -1440,13 +1440,13 @@ SCM
 weechat_guile_api_config_option_is_null (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_option_is_null", API_RETURN_INT(1));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(1));
-    
+
     value = weechat_config_option_is_null (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1459,13 +1459,13 @@ SCM
 weechat_guile_api_config_option_default_is_null (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_option_default_is_null", API_RETURN_INT(1));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(1));
-    
+
     value = weechat_config_option_default_is_null (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1477,13 +1477,13 @@ SCM
 weechat_guile_api_config_boolean (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_boolean", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_config_boolean (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1495,13 +1495,13 @@ SCM
 weechat_guile_api_config_boolean_default (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_boolean_default", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_config_boolean_default (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1513,13 +1513,13 @@ SCM
 weechat_guile_api_config_integer (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_integer", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_config_integer (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1531,13 +1531,13 @@ SCM
 weechat_guile_api_config_integer_default (SCM option)
 {
     int value;
-    
+
     API_FUNC(1, "config_integer_default", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_config_integer_default (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -1549,13 +1549,13 @@ SCM
 weechat_guile_api_config_string (SCM option)
 {
     const char *result;
-    
+
     API_FUNC(1, "config_string", API_RETURN_EMPTY);
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_config_string (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1567,13 +1567,13 @@ SCM
 weechat_guile_api_config_string_default (SCM option)
 {
     const char *result;
-    
+
     API_FUNC(1, "config_string_default", API_RETURN_EMPTY);
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_config_string_default (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1585,13 +1585,13 @@ SCM
 weechat_guile_api_config_color (SCM option)
 {
     const char *result;
-    
+
     API_FUNC(1, "config_color", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     result = weechat_config_color (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1603,13 +1603,13 @@ SCM
 weechat_guile_api_config_color_default (SCM option)
 {
     const char *result;
-    
+
     API_FUNC(1, "config_color_default", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     result = weechat_config_color_default (script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1623,10 +1623,10 @@ weechat_guile_api_config_write_option (SCM config_file, SCM option)
     API_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (!scm_is_string (config_file) || !scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_config_write_option (script_str2ptr (scm_i_string_chars (config_file)),
                                  script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_OK;
 }
 
@@ -1641,12 +1641,12 @@ weechat_guile_api_config_write_line (SCM config_file,
     API_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (!scm_is_string (config_file) || !scm_is_string (option_name) || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_config_write_line (script_str2ptr (scm_i_string_chars (config_file)),
                                scm_i_string_chars (option_name),
                                "%s",
                                scm_i_string_chars (value));
-    
+
     API_RETURN_OK;
 }
 
@@ -1658,13 +1658,13 @@ SCM
 weechat_guile_api_config_write (SCM config_file)
 {
     int rc;
-    
+
     API_FUNC(1, "config_write", API_RETURN_INT(-1));
     if (!scm_is_string (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     rc = weechat_config_write (script_str2ptr (scm_i_string_chars (config_file)));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1676,13 +1676,13 @@ SCM
 weechat_guile_api_config_read (SCM config_file)
 {
     int rc;
-    
+
     API_FUNC(1, "config_read", API_RETURN_INT(-1));
     if (!scm_is_string (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     rc = weechat_config_read (script_str2ptr (scm_i_string_chars (config_file)));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1694,13 +1694,13 @@ SCM
 weechat_guile_api_config_reload (SCM config_file)
 {
     int rc;
-    
+
     API_FUNC(1, "config_reload", API_RETURN_INT(-1));
     if (!scm_is_string (config_file))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     rc = weechat_config_reload (script_str2ptr (scm_i_string_chars (config_file)));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1714,11 +1714,11 @@ weechat_guile_api_config_option_free (SCM option)
     API_FUNC(1, "config_option_free", API_RETURN_ERROR);
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_config_option_free (weechat_guile_plugin,
                                    guile_current_script,
                                    script_str2ptr (scm_i_string_chars (option)));
-    
+
     API_RETURN_OK;
 }
 
@@ -1733,11 +1733,11 @@ weechat_guile_api_config_section_free_options (SCM section)
     API_FUNC(1, "config_section_free_options", API_RETURN_ERROR);
     if (!scm_is_string (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_config_section_free_options (weechat_guile_plugin,
                                             guile_current_script,
                                             script_str2ptr (scm_i_string_chars (section)));
-    
+
     API_RETURN_OK;
 }
 
@@ -1751,11 +1751,11 @@ weechat_guile_api_config_section_free (SCM section)
     API_FUNC(1, "config_section_free", API_RETURN_ERROR);
     if (!scm_is_string (section))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_config_section_free (weechat_guile_plugin,
                                     guile_current_script,
                                     script_str2ptr (scm_i_string_chars (section)));
-    
+
     API_RETURN_OK;
 }
 
@@ -1769,11 +1769,11 @@ weechat_guile_api_config_free (SCM config_file)
     API_FUNC(1, "config_free", API_RETURN_ERROR);
     if (!scm_is_string (config_file))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_config_free (weechat_guile_plugin,
                             guile_current_script,
                             script_str2ptr (scm_i_string_chars (config_file)));
-    
+
     API_RETURN_OK;
 }
 
@@ -1786,13 +1786,13 @@ weechat_guile_api_config_get (SCM option)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "config_get", API_RETURN_EMPTY);
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_config_get (scm_i_string_chars (option)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -1804,15 +1804,15 @@ SCM
 weechat_guile_api_config_get_plugin (SCM option)
 {
     const char *result;
-    
+
     API_FUNC(1, "config_get_plugin", API_RETURN_EMPTY);
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_api_config_get_plugin (weechat_guile_plugin,
                                            guile_current_script,
                                            scm_i_string_chars (option));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1824,15 +1824,15 @@ SCM
 weechat_guile_api_config_is_set_plugin (SCM option)
 {
     int rc;
-    
+
     API_FUNC(1, "config_is_set_plugin", API_RETURN_INT(0));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     rc = script_api_config_is_set_plugin (weechat_guile_plugin,
                                           guile_current_script,
                                           scm_i_string_chars (option));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1844,16 +1844,16 @@ SCM
 weechat_guile_api_config_set_plugin (SCM option, SCM value)
 {
     int rc;
-    
+
     API_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
     if (!scm_is_string (option) || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    
+
     rc = script_api_config_set_plugin (weechat_guile_plugin,
                                        guile_current_script,
                                        scm_i_string_chars (option),
                                        scm_i_string_chars (value));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1867,12 +1867,12 @@ weechat_guile_api_config_set_desc_plugin (SCM option, SCM description)
     API_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
     if (!scm_is_string (option) || !scm_is_string (description))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_config_set_desc_plugin (weechat_guile_plugin,
                                        guile_current_script,
                                        scm_i_string_chars (option),
                                        scm_i_string_chars (description));
-    
+
     API_RETURN_OK;
 }
 
@@ -1884,15 +1884,15 @@ SCM
 weechat_guile_api_config_unset_plugin (SCM option)
 {
     int rc;
-    
+
     API_FUNC(1, "config_unset_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
     if (!scm_is_string (option))
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-    
+
     rc = script_api_config_unset_plugin (weechat_guile_plugin,
                                          guile_current_script,
                                          scm_i_string_chars (option));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -1905,19 +1905,19 @@ weechat_guile_api_key_bind (SCM context, SCM keys)
 {
     struct t_hashtable *c_keys;
     int num_keys;
-    
+
     API_FUNC(1, "key_bind", API_RETURN_INT(0));
     if (!scm_is_string (context) || !scm_list_p (keys))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     c_keys = weechat_guile_alist_to_hashtable (keys,
                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
-    
+
     num_keys = weechat_key_bind (scm_i_string_chars (context), c_keys);
-    
+
     if (c_keys)
         weechat_hashtable_free (c_keys);
-    
+
     API_RETURN_INT(num_keys);
 }
 
@@ -1929,14 +1929,14 @@ SCM
 weechat_guile_api_key_unbind (SCM context, SCM key)
 {
     int num_keys;
-    
+
     API_FUNC(1, "key_unbind", API_RETURN_INT(0));
     if (!scm_is_string (context) || !scm_is_string (key))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     num_keys = weechat_key_unbind (scm_i_string_chars (context),
                                    scm_i_string_chars (key));
-    
+
     API_RETURN_INT(num_keys);
 }
 
@@ -1948,13 +1948,13 @@ SCM
 weechat_guile_api_prefix (SCM prefix)
 {
     const char *result;
-    
+
     API_FUNC(0, "prefix", API_RETURN_EMPTY);
     if (!scm_is_string (prefix))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_prefix (scm_i_string_chars (prefix));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1966,13 +1966,13 @@ SCM
 weechat_guile_api_color (SCM color)
 {
     const char *result;
-    
+
     API_FUNC(0, "color", API_RETURN_EMPTY);
     if (!scm_is_string (color))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_color (scm_i_string_chars (color));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -1986,12 +1986,12 @@ weechat_guile_api_print (SCM buffer, SCM message)
     API_FUNC(0, "print", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_printf (weechat_guile_plugin,
                        guile_current_script,
                        script_str2ptr (scm_i_string_chars (buffer)),
                        "%s", scm_i_string_chars (message));
-    
+
     API_RETURN_OK;
 }
 
@@ -2007,14 +2007,14 @@ weechat_guile_api_print_date_tags (SCM buffer, SCM date, SCM tags, SCM message)
     if (!scm_is_string (buffer) || !scm_is_integer (date)
         || !scm_is_string (tags) || !scm_is_string (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_printf_date_tags (weechat_guile_plugin,
                                  guile_current_script,
                                  script_str2ptr (scm_i_string_chars (buffer)),
                                  scm_to_int (date),
                                  scm_i_string_chars (tags),
                                  "%s", scm_i_string_chars (message));
-    
+
     API_RETURN_OK;
 }
 
@@ -2029,13 +2029,13 @@ weechat_guile_api_print_y (SCM buffer, SCM y, SCM message)
     if (!scm_is_string (buffer) || !scm_is_integer (y)
         || !scm_is_string (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_printf_y (weechat_guile_plugin,
                          guile_current_script,
                          script_str2ptr (scm_i_string_chars (buffer)),
                          scm_to_int (y),
                          "%s", scm_i_string_chars (message));
-    
+
     API_RETURN_OK;
 }
 
@@ -2049,11 +2049,11 @@ weechat_guile_api_log_print (SCM message)
     API_FUNC(1, "log_print", API_RETURN_ERROR);
     if (!scm_is_string (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_log_printf (weechat_guile_plugin,
                            guile_current_script,
                            "%s", scm_i_string_chars (message));
-    
+
     API_RETURN_OK;
 }
 
@@ -2069,23 +2069,23 @@ weechat_guile_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     /* make C compiler happy */
     (void) argv;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (buffer);
         func_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2095,10 +2095,10 @@ weechat_guile_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2113,14 +2113,14 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_command", API_RETURN_EMPTY);
     if (!scm_is_string (command) || !scm_is_string (description)
         || !scm_is_string (args) || !scm_is_string (args_description)
         || !scm_is_string (completion) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     result = script_ptr2str (script_api_hook_command (weechat_guile_plugin,
                                                       guile_current_script,
                                                       scm_i_string_chars (command),
@@ -2131,7 +2131,7 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
                                                       &weechat_guile_api_hook_command_cb,
                                                       scm_i_string_chars (function),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2147,20 +2147,20 @@ weechat_guile_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (buffer);
         func_argv[2] = (command) ? (char *)command : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2170,10 +2170,10 @@ weechat_guile_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2186,19 +2186,19 @@ weechat_guile_api_hook_command_run (SCM command, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     if (!scm_is_string (command) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_command_run (weechat_guile_plugin,
                                                           guile_current_script,
                                                           scm_i_string_chars (command),
                                                           &weechat_guile_api_hook_command_run_cb,
                                                           scm_i_string_chars (function),
                                                           scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2213,22 +2213,22 @@ weechat_guile_api_hook_timer_cb (void *data, int remaining_calls)
     void *func_argv[2];
     char str_remaining_calls[32], empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_remaining_calls, sizeof (str_remaining_calls),
                   "%d", remaining_calls);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_remaining_calls;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2236,10 +2236,10 @@ weechat_guile_api_hook_timer_cb (void *data, int remaining_calls)
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2253,13 +2253,13 @@ weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     if (!scm_is_integer (interval) || !scm_is_integer (align_second)
         || !scm_is_integer (max_calls) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_timer (weechat_guile_plugin,
                                                     guile_current_script,
                                                     scm_to_int (interval),
@@ -2268,7 +2268,7 @@ weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
                                                     &weechat_guile_api_hook_timer_cb,
                                                     scm_i_string_chars (function),
                                                     scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2283,21 +2283,21 @@ weechat_guile_api_hook_fd_cb (void *data, int fd)
     void *func_argv[2];
     char str_fd[32], empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_fd, sizeof (str_fd), "%d", fd);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_fd;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2305,10 +2305,10 @@ weechat_guile_api_hook_fd_cb (void *data, int fd)
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2322,13 +2322,13 @@ weechat_guile_api_hook_fd (SCM fd, SCM read, SCM write, SCM exception,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     if (!scm_is_integer (fd) || !scm_is_integer (read)
         || !scm_is_integer (write) || !scm_is_integer (exception)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_fd (weechat_guile_plugin,
                                                  guile_current_script,
                                                  scm_to_int (fd),
@@ -2338,7 +2338,7 @@ weechat_guile_api_hook_fd (SCM fd, SCM read, SCM write, SCM exception,
                                                  &weechat_guile_api_hook_fd_cb,
                                                  scm_i_string_chars (function),
                                                  scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2355,24 +2355,24 @@ weechat_guile_api_hook_process_cb (void *data,
     void *func_argv[5];
     char str_rc[32], empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_rc, sizeof (str_rc), "%d", return_code);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (command) ? (char *)command : empty_arg;
         func_argv[2] = str_rc;
         func_argv[3] = (out) ? (char *)out : empty_arg;
         func_argv[4] = (err) ? (char *)err : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2380,10 +2380,10 @@ weechat_guile_api_hook_process_cb (void *data,
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2397,12 +2397,12 @@ weechat_guile_api_hook_process (SCM command, SCM timeout, SCM function,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_process", API_RETURN_EMPTY);
     if (!scm_is_string (command) || !scm_is_integer (timeout)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_process (weechat_guile_plugin,
                                                       guile_current_script,
                                                       scm_i_string_chars (command),
@@ -2410,7 +2410,7 @@ weechat_guile_api_hook_process (SCM command, SCM timeout, SCM function,
                                                       &weechat_guile_api_hook_process_cb,
                                                       scm_i_string_chars (function),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2427,25 +2427,25 @@ weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     char str_status[32], str_gnutls_rc[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
         func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
         func_argv[4] = (error) ? (char *)error : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2453,10 +2453,10 @@ weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2471,14 +2471,14 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM sock,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (!scm_is_string (proxy) || !scm_is_string (address)
         || !scm_is_integer (port) || !scm_is_integer (sock)
         || !scm_is_integer (ipv6) || !scm_is_string (local_hostname)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_connect (weechat_guile_plugin,
                                                       guile_current_script,
                                                       scm_i_string_chars (proxy),
@@ -2494,7 +2494,7 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM sock,
                                                       &weechat_guile_api_hook_connect_cb,
                                                       scm_i_string_chars (function),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2514,16 +2514,16 @@ weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     char empty_arg[1] = { '\0' };
     static char timebuffer[64];
     int *rc, ret;
-    
+
     /* make C compiler happy */
     (void) tags_count;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (buffer);
         func_argv[2] = timebuffer;
@@ -2534,12 +2534,12 @@ weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         func_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
         func_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         func_argv[7] = (message) ? (char *)message : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ssssssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2555,10 +2555,10 @@ weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
             free (func_argv[4]);
         if (func_argv[5])
             free (func_argv[5]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2572,13 +2572,13 @@ weechat_guile_api_hook_print (SCM buffer, SCM tags, SCM message,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_print", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (tags)
         || !scm_is_string (message) || !scm_is_integer (strip_colors)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_print (weechat_guile_plugin,
                                                     guile_current_script,
                                                     script_str2ptr (scm_i_string_chars (buffer)),
@@ -2588,7 +2588,7 @@ weechat_guile_api_hook_print (SCM buffer, SCM tags, SCM message,
                                                     &weechat_guile_api_hook_print_cb,
                                                     scm_i_string_chars (function),
                                                     scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2605,9 +2605,9 @@ weechat_guile_api_hook_signal_cb (void *data, const char *signal,
     char empty_arg[1] = { '\0' };
     static char value_str[64];
     int *rc, ret, free_needed;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
@@ -2630,12 +2630,12 @@ weechat_guile_api_hook_signal_cb (void *data, const char *signal,
         }
         else
             func_argv[2] = empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2645,10 +2645,10 @@ weechat_guile_api_hook_signal_cb (void *data, const char *signal,
         }
         if (free_needed && func_argv[2])
             free (func_argv[2]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2661,18 +2661,18 @@ weechat_guile_api_hook_signal (SCM signal, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     if (!scm_is_string (signal) || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_signal (weechat_guile_plugin,
                                                      guile_current_script,
                                                      scm_i_string_chars (signal),
                                                      &weechat_guile_api_hook_signal_cb,
                                                      scm_i_string_chars (function),
                                                      scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2685,11 +2685,11 @@ weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
                                    SCM signal_data)
 {
     int number;
-    
+
     API_FUNC(1, "hook_signal_send", API_RETURN_ERROR);
     if (!scm_is_string (signal) || !scm_is_string (type_data))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     if (strcmp (scm_i_string_chars (type_data), WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         if (!scm_is_string (signal_data))
@@ -2718,7 +2718,7 @@ weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
                                   script_str2ptr (scm_i_string_chars (signal_data)));
         API_RETURN_OK;
     }
-    
+
     API_RETURN_ERROR;
 }
 
@@ -2734,20 +2734,20 @@ weechat_guile_api_hook_hsignal_cb (void *data, const char *signal,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (signal) ? (char *)signal : empty_arg;
         func_argv[2] = hashtable;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ssh", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2755,10 +2755,10 @@ weechat_guile_api_hook_hsignal_cb (void *data, const char *signal,
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2771,19 +2771,19 @@ weechat_guile_api_hook_hsignal (SCM signal, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     if (!scm_is_string (signal) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_hsignal (weechat_guile_plugin,
                                                       guile_current_script,
                                                       scm_i_string_chars (signal),
                                                       &weechat_guile_api_hook_hsignal_cb,
                                                       scm_i_string_chars (function),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2795,19 +2795,19 @@ SCM
 weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
 {
     struct t_hashtable *c_hashtable;
-    
+
     API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
     if (!scm_is_string (signal) || !scm_list_p (hashtable))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     c_hashtable = weechat_guile_alist_to_hashtable (hashtable,
                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
-    
+
     weechat_hook_hsignal_send (scm_i_string_chars (signal), c_hashtable);
-    
+
     if (c_hashtable)
         weechat_hashtable_free (c_hashtable);
-    
+
     API_RETURN_OK;
 }
 
@@ -2822,20 +2822,20 @@ weechat_guile_api_hook_config_cb (void *data, const char *option, const char *va
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (option) ? (char *)option : empty_arg;
         func_argv[2] = (value) ? (char *)value : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2843,10 +2843,10 @@ weechat_guile_api_hook_config_cb (void *data, const char *option, const char *va
             ret = *rc;
             free (rc);
         }
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2859,19 +2859,19 @@ weechat_guile_api_hook_config (SCM option, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_config", API_RETURN_EMPTY);
     if (!scm_is_string (option) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_config (weechat_guile_plugin,
                                                      guile_current_script,
                                                      scm_i_string_chars (option),
                                                      &weechat_guile_api_hook_config_cb,
                                                      scm_i_string_chars (function),
                                                      scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2888,7 +2888,7 @@ weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
@@ -2897,12 +2897,12 @@ weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
         func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
         func_argv[2] = script_ptr2str (buffer);
         func_argv[3] = script_ptr2str (completion);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -2914,10 +2914,10 @@ weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
             free (func_argv[2]);
         if (func_argv[3])
             free (func_argv[3]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -2931,12 +2931,12 @@ weechat_guile_api_hook_completion (SCM completion, SCM description,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     if (!scm_is_string (completion) || !scm_is_string (description)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_completion (weechat_guile_plugin,
                                                          guile_current_script,
                                                          scm_i_string_chars (completion),
@@ -2944,7 +2944,7 @@ weechat_guile_api_hook_completion (SCM completion, SCM description,
                                                          &weechat_guile_api_hook_completion_cb,
                                                          scm_i_string_chars (function),
                                                          scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -2960,12 +2960,12 @@ weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
     if (!scm_is_string (completion) || !scm_is_string (word)
         || !scm_is_integer (nick_completion) || !scm_is_string (where))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_hook_completion_list_add (script_str2ptr (scm_i_string_chars (completion)),
                                       scm_i_string_chars (word),
                                       scm_to_int (nick_completion),
                                       scm_i_string_chars (where));
-    
+
     API_RETURN_OK;
 }
 
@@ -2980,7 +2980,7 @@ weechat_guile_api_hook_modifier_cb (void *data, const char *modifier,
     struct t_script_callback *script_callback;
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
@@ -2989,13 +2989,13 @@ weechat_guile_api_hook_modifier_cb (void *data, const char *modifier,
         func_argv[1] = (modifier) ? (char *)modifier : empty_arg;
         func_argv[2] = (modifier_data) ? (char *)modifier_data : empty_arg;
         func_argv[3] = (string) ? (char *)string : empty_arg;
-        
+
         return (char *)weechat_guile_exec (script_callback->script,
                                            WEECHAT_SCRIPT_EXEC_STRING,
                                            script_callback->function,
                                            "ssss", func_argv);
     }
-    
+
     return NULL;
 }
 
@@ -3008,19 +3008,19 @@ weechat_guile_api_hook_modifier (SCM modifier, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     if (!scm_is_string (modifier) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_modifier (weechat_guile_plugin,
                                                        guile_current_script,
                                                        scm_i_string_chars (modifier),
                                                        &weechat_guile_api_hook_modifier_cb,
                                                        scm_i_string_chars (function),
                                                        scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3034,16 +3034,16 @@ weechat_guile_api_hook_modifier_exec (SCM modifier, SCM modifier_data,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
     if (!scm_is_string (modifier) || !scm_is_string (modifier_data)
         || !scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hook_modifier_exec (scm_i_string_chars (modifier),
                                          scm_i_string_chars (modifier_data),
                                          scm_i_string_chars (string));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3058,21 +3058,21 @@ weechat_guile_api_hook_info_cb (void *data, const char *info_name,
     struct t_script_callback *script_callback;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = (arguments) ? (char *)arguments : empty_arg;
-        
+
         return (const char *)weechat_guile_exec (script_callback->script,
                                                  WEECHAT_SCRIPT_EXEC_STRING,
                                                  script_callback->function,
                                                  "sss", func_argv);
     }
-    
+
     return NULL;
 }
 
@@ -3086,13 +3086,13 @@ weechat_guile_api_hook_info (SCM info_name, SCM description,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_info", API_RETURN_EMPTY);
     if (!scm_is_string (info_name) || !scm_is_string (description)
         || !scm_is_string (args_description) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_info (weechat_guile_plugin,
                                                    guile_current_script,
                                                    scm_i_string_chars (info_name),
@@ -3101,7 +3101,7 @@ weechat_guile_api_hook_info (SCM info_name, SCM description,
                                                    &weechat_guile_api_hook_info_cb,
                                                    scm_i_string_chars (function),
                                                    scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3116,21 +3116,21 @@ weechat_guile_api_hook_info_hashtable_cb (void *data, const char *info_name,
     struct t_script_callback *script_callback;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = hashtable;
-        
+
         return (struct t_hashtable *)weechat_guile_exec (script_callback->script,
                                                          WEECHAT_SCRIPT_EXEC_HASHTABLE,
                                                          script_callback->function,
                                                          "ssh", func_argv);
     }
-    
+
     return NULL;
 }
 
@@ -3146,13 +3146,13 @@ weechat_guile_api_hook_info_hashtable (SCM info_name, SCM description,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     if (!scm_is_string (info_name) || !scm_is_string (description)
         || !scm_is_string (args_description) || !scm_is_string (output_description)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_info_hashtable (weechat_guile_plugin,
                                                              guile_current_script,
                                                              scm_i_string_chars (info_name),
@@ -3162,7 +3162,7 @@ weechat_guile_api_hook_info_hashtable (SCM info_name, SCM description,
                                                              &weechat_guile_api_hook_info_hashtable_cb,
                                                              scm_i_string_chars (function),
                                                              scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3178,27 +3178,27 @@ weechat_guile_api_hook_infolist_cb (void *data, const char *infolist_name,
     void *func_argv[4];
     char empty_arg[1] = { '\0' };
     struct t_infolist *result;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
         func_argv[2] = script_ptr2str (pointer);
         func_argv[3] = (arguments) ? (char *)arguments : empty_arg;
-        
+
         result = (struct t_infolist *)weechat_guile_exec (script_callback->script,
                                                           WEECHAT_SCRIPT_EXEC_STRING,
                                                           script_callback->function,
                                                           "ssss", func_argv);
-        
+
         if (func_argv[2])
             free (func_argv[2]);
-        
+
         return result;
     }
-    
+
     return NULL;
 }
 
@@ -3213,13 +3213,13 @@ weechat_guile_api_hook_infolist (SCM infolist_name, SCM description,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     if (!scm_is_string (infolist_name) || !scm_is_string (description)
         || !scm_is_string (pointer_description) || !scm_is_string (args_description)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_infolist (weechat_guile_plugin,
                                                        guile_current_script,
                                                        scm_i_string_chars (infolist_name),
@@ -3229,7 +3229,7 @@ weechat_guile_api_hook_infolist (SCM infolist_name, SCM description,
                                                        &weechat_guile_api_hook_infolist_cb,
                                                        scm_i_string_chars (function),
                                                        scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3243,20 +3243,20 @@ weechat_guile_api_hook_focus_cb (void *data, struct t_hashtable *info)
     struct t_script_callback *script_callback;
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = info;
-        
+
         return (struct t_hashtable *)weechat_guile_exec (script_callback->script,
                                                          WEECHAT_SCRIPT_EXEC_HASHTABLE,
                                                          script_callback->function,
                                                          "sh", func_argv);
     }
-    
+
     return NULL;
 }
 
@@ -3269,19 +3269,19 @@ weechat_guile_api_hook_focus (SCM area, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     if (!scm_is_string (area) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_hook_focus (weechat_guile_plugin,
                                                     guile_current_script,
                                                     scm_i_string_chars (area),
                                                     &weechat_guile_api_hook_focus_cb,
                                                     scm_i_string_chars (function),
                                                     scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3295,11 +3295,11 @@ weechat_guile_api_unhook (SCM hook)
     API_FUNC(1, "unhook", API_RETURN_ERROR);
     if (!scm_is_string (hook))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_unhook (weechat_guile_plugin,
                        guile_current_script,
                        script_str2ptr (scm_i_string_chars (hook)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3311,9 +3311,9 @@ SCM
 weechat_guile_api_unhook_all ()
 {
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
-    
+
     script_api_unhook_all (guile_current_script);
-    
+
     API_RETURN_OK;
 }
 
@@ -3329,20 +3329,20 @@ weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (buffer);
         func_argv[2] = (input_data) ? (char *)input_data : empty_arg;
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "sss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -3352,10 +3352,10 @@ weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -3370,19 +3370,19 @@ weechat_guile_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     void *func_argv[2];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (buffer);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -3392,10 +3392,10 @@ weechat_guile_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
         }
         if (func_argv[1])
             free (func_argv[1]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -3409,13 +3409,13 @@ weechat_guile_api_buffer_new (SCM name, SCM function_input, SCM data_input,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     if (!scm_is_string (name) || !scm_is_string (function_input)
         || !scm_is_string (data_input) || !scm_is_string (function_close)
         || !scm_is_string (data_close))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_buffer_new (weechat_guile_plugin,
                                                     guile_current_script,
                                                     scm_i_string_chars (name),
@@ -3425,7 +3425,7 @@ weechat_guile_api_buffer_new (SCM name, SCM function_input, SCM data_input,
                                                     &weechat_guile_api_buffer_close_cb,
                                                     scm_i_string_chars (function_close),
                                                     scm_i_string_chars (data_close)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3438,14 +3438,14 @@ weechat_guile_api_buffer_search (SCM plugin, SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     if (!scm_is_string (plugin) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_buffer_search (scm_i_string_chars (plugin),
                                                     scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3458,11 +3458,11 @@ weechat_guile_api_buffer_search_main ()
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "buffer_search_main", API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_buffer_search_main ());
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3475,11 +3475,11 @@ weechat_guile_api_current_buffer ()
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "current_buffer", API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_current_buffer ());
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3493,9 +3493,9 @@ weechat_guile_api_buffer_clear (SCM buffer)
     API_FUNC(1, "buffer_clear", API_RETURN_ERROR);
     if (!scm_is_string (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_buffer_clear (script_str2ptr (scm_i_string_chars (buffer)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3509,11 +3509,11 @@ weechat_guile_api_buffer_close (SCM buffer)
     API_FUNC(1, "buffer_close", API_RETURN_ERROR);
     if (!scm_is_string (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_buffer_close (weechat_guile_plugin,
                              guile_current_script,
                              script_str2ptr (scm_i_string_chars (buffer)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3527,10 +3527,10 @@ weechat_guile_api_buffer_merge (SCM buffer, SCM target_buffer)
     API_FUNC(1, "buffer_merge", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (target_buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_buffer_merge (script_str2ptr (scm_i_string_chars (buffer)),
                           script_str2ptr (scm_i_string_chars (target_buffer)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3545,10 +3545,10 @@ weechat_guile_api_buffer_unmerge (SCM buffer, SCM number)
     API_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_integer (number))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_buffer_unmerge (script_str2ptr (scm_i_string_chars (buffer)),
                             scm_to_int (number));
-    
+
     API_RETURN_OK;
 }
 
@@ -3560,14 +3560,14 @@ SCM
 weechat_guile_api_buffer_get_integer (SCM buffer, SCM property)
 {
     int value;
-    
+
     API_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
     if (!scm_is_string (buffer) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     value = weechat_buffer_get_integer (script_str2ptr (scm_i_string_chars (buffer)),
                                         scm_i_string_chars (property));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -3579,14 +3579,14 @@ SCM
 weechat_guile_api_buffer_get_string (SCM buffer, SCM property)
 {
     const char *result;
-    
+
     API_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_buffer_get_string (script_str2ptr (scm_i_string_chars (buffer)),
                                         scm_i_string_chars (property));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -3599,14 +3599,14 @@ weechat_guile_api_buffer_get_pointer (SCM buffer, SCM property)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (scm_i_string_chars (buffer)),
                                                          scm_i_string_chars (property)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3621,11 +3621,11 @@ weechat_guile_api_buffer_set (SCM buffer, SCM property, SCM value)
     if (!scm_is_string (buffer) || !scm_is_string (property)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_buffer_set (script_str2ptr (scm_i_string_chars (buffer)),
                         scm_i_string_chars (property),
                         scm_i_string_chars (value));
-    
+
     API_RETURN_OK;
 }
 
@@ -3640,14 +3640,14 @@ weechat_guile_api_buffer_string_replace_local_var (SCM buffer, SCM string)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "buffer_string_replace_local_var", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     result = weechat_buffer_string_replace_local_var (script_str2ptr (scm_i_string_chars (buffer)),
                                                       scm_i_string_chars (string));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3659,14 +3659,14 @@ SCM
 weechat_guile_api_buffer_match_list (SCM buffer, SCM string)
 {
     int value;
-    
+
     API_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
     if (!scm_is_string (buffer) || !scm_is_string (string))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_buffer_match_list (script_str2ptr (scm_i_string_chars (buffer)),
                                        scm_i_string_chars (string));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -3679,11 +3679,11 @@ weechat_guile_api_current_window ()
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "current_window", API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_current_window ());
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3697,13 +3697,13 @@ weechat_guile_api_window_search_with_buffer (SCM buffer)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     if (!scm_is_string (buffer))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (scm_i_string_chars (buffer))));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3715,14 +3715,14 @@ SCM
 weechat_guile_api_window_get_integer (SCM window, SCM property)
 {
     int value;
-    
+
     API_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
     if (!scm_is_string (window) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     value = weechat_window_get_integer (script_str2ptr (scm_i_string_chars (window)),
                                         scm_i_string_chars (property));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -3734,14 +3734,14 @@ SCM
 weechat_guile_api_window_get_string (SCM window, SCM property)
 {
     const char *result;
-    
+
     API_FUNC(1, "window_get_string", API_RETURN_EMPTY);
     if (!scm_is_string (window) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_window_get_string (script_str2ptr (scm_i_string_chars (window)),
                                         scm_i_string_chars (property));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -3754,14 +3754,14 @@ weechat_guile_api_window_get_pointer (SCM window, SCM property)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (window) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (scm_i_string_chars (window)),
                                                          scm_i_string_chars (property)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3775,9 +3775,9 @@ weechat_guile_api_window_set_title (SCM title)
     API_FUNC(1, "window_set_title", API_RETURN_ERROR);
     if (!scm_is_string (title))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_window_set_title (scm_i_string_chars (title));
-    
+
     API_RETURN_OK;
 }
 
@@ -3791,19 +3791,19 @@ weechat_guile_api_nicklist_add_group (SCM buffer, SCM parent_group, SCM name,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (parent_group)
         || !scm_is_string (name) || !scm_is_string (color)
         || !scm_is_integer (visible))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_add_group (script_str2ptr (scm_i_string_chars (buffer)),
                                                          script_str2ptr (scm_i_string_chars (parent_group)),
                                                          scm_i_string_chars (name),
                                                          scm_i_string_chars (color),
                                                          scm_to_int (visible)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3816,16 +3816,16 @@ weechat_guile_api_nicklist_search_group (SCM buffer, SCM from_group, SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (from_group)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_search_group (script_str2ptr (scm_i_string_chars (buffer)),
                                                             script_str2ptr (scm_i_string_chars (from_group)),
                                                             scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3840,14 +3840,14 @@ weechat_guile_api_nicklist_add_nick (SCM buffer, SCM group, SCM name,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (group)
         || !scm_is_string (name) || !scm_is_string (color)
         || !scm_is_string (prefix) || !scm_is_string (prefix_color)
         || !scm_is_integer (visible))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (scm_i_string_chars (buffer)),
                                                         script_str2ptr (scm_i_string_chars (group)),
                                                         scm_i_string_chars (name),
@@ -3855,7 +3855,7 @@ weechat_guile_api_nicklist_add_nick (SCM buffer, SCM group, SCM name,
                                                         scm_i_string_chars (prefix),
                                                         scm_i_string_chars (prefix_color),
                                                         scm_to_int (visible)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3868,16 +3868,16 @@ weechat_guile_api_nicklist_search_nick (SCM buffer, SCM from_group, SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (from_group)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_search_nick (script_str2ptr (scm_i_string_chars (buffer)),
                                                            script_str2ptr (scm_i_string_chars (from_group)),
                                                            scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -3891,10 +3891,10 @@ weechat_guile_api_nicklist_remove_group (SCM buffer, SCM group)
     API_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (group))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_nicklist_remove_group (script_str2ptr (scm_i_string_chars (buffer)),
                                    script_str2ptr (scm_i_string_chars (group)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3908,10 +3908,10 @@ weechat_guile_api_nicklist_remove_nick (SCM buffer, SCM nick)
     API_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (nick))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_nicklist_remove_nick (script_str2ptr (scm_i_string_chars (buffer)),
                                   script_str2ptr (scm_i_string_chars (nick)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3925,9 +3925,9 @@ weechat_guile_api_nicklist_remove_all (SCM buffer)
     API_FUNC(1, "nicklist_remove_all", API_RETURN_ERROR);
     if (!scm_is_string (buffer))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_nicklist_remove_all (script_str2ptr (scm_i_string_chars (buffer)));
-    
+
     API_RETURN_OK;
 }
 
@@ -3940,16 +3940,16 @@ weechat_guile_api_nicklist_group_get_integer (SCM buffer, SCM group,
                                               SCM property)
 {
     int value;
-    
+
     API_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
     if (!scm_is_string (buffer) || !scm_is_string (group)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     value = weechat_nicklist_group_get_integer (script_str2ptr (scm_i_string_chars (buffer)),
                                                 script_str2ptr (scm_i_string_chars (group)),
                                                 scm_i_string_chars (property));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -3962,16 +3962,16 @@ weechat_guile_api_nicklist_group_get_string (SCM buffer, SCM group,
                                              SCM property)
 {
     const char *result;
-    
+
     API_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (group)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_nicklist_group_get_string (script_str2ptr (scm_i_string_chars (buffer)),
                                                 script_str2ptr (scm_i_string_chars (group)),
                                                 scm_i_string_chars (property));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -3985,16 +3985,16 @@ weechat_guile_api_nicklist_group_get_pointer (SCM buffer, SCM group,
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (group)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (scm_i_string_chars (buffer)),
                                                                  script_str2ptr (scm_i_string_chars (group)),
                                                                  scm_i_string_chars (property)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4009,12 +4009,12 @@ weechat_guile_api_nicklist_group_set (SCM buffer, SCM group, SCM property,
     API_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (group) || !scm_is_string (property) || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_nicklist_group_set (script_str2ptr (scm_i_string_chars (buffer)),
                                 script_str2ptr (scm_i_string_chars (group)),
                                 scm_i_string_chars (property),
                                 scm_i_string_chars (value));
-    
+
     API_RETURN_OK;
 }
 
@@ -4026,16 +4026,16 @@ SCM
 weechat_guile_api_nicklist_nick_get_integer (SCM buffer, SCM nick, SCM property)
 {
     int value;
-    
+
     API_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
     if (!scm_is_string (buffer) || !scm_is_string (nick)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_INT(-1));
-    
+
     value = weechat_nicklist_nick_get_integer (script_str2ptr (scm_i_string_chars (buffer)),
                                                script_str2ptr (scm_i_string_chars (nick)),
                                                scm_i_string_chars (property));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4047,16 +4047,16 @@ SCM
 weechat_guile_api_nicklist_nick_get_string (SCM buffer, SCM nick, SCM property)
 {
     const char *result;
-    
+
     API_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (nick)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_nicklist_nick_get_string (script_str2ptr (scm_i_string_chars (buffer)),
                                                script_str2ptr (scm_i_string_chars (nick)),
                                                scm_i_string_chars (property));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4069,16 +4069,16 @@ weechat_guile_api_nicklist_nick_get_pointer (SCM buffer, SCM nick, SCM property)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (buffer) || !scm_is_string (nick)
         || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (scm_i_string_chars (buffer)),
                                                                 script_str2ptr (scm_i_string_chars (nick)),
                                                                 scm_i_string_chars (property)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4094,12 +4094,12 @@ weechat_guile_api_nicklist_nick_set (SCM buffer, SCM nick, SCM property,
     if (!scm_is_string (buffer) || !scm_is_string (nick)
         || !scm_is_string (property) || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_nicklist_nick_set (script_str2ptr (scm_i_string_chars (buffer)),
                                script_str2ptr (scm_i_string_chars (nick)),
                                scm_i_string_chars (property),
                                scm_i_string_chars (value));
-    
+
     API_RETURN_OK;
 }
 
@@ -4112,13 +4112,13 @@ weechat_guile_api_bar_item_search (SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     if (!scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_bar_item_search (scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4133,7 +4133,7 @@ weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     struct t_script_callback *script_callback;
     void *func_argv[3];
     char empty_arg[1] = { '\0' }, *ret;
-    
+
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
@@ -4141,20 +4141,20 @@ weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (item);
         func_argv[2] = script_ptr2str (window);
-        
+
         ret = (char *)weechat_guile_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_STRING,
                                           script_callback->function,
                                           "sss", func_argv);
-        
+
         if (func_argv[1])
             free (func_argv[1]);
         if (func_argv[2])
             free (func_argv[2]);
-        
+
         return ret;
     }
-    
+
     return NULL;
 }
 
@@ -4167,19 +4167,19 @@ weechat_guile_api_bar_item_new (SCM name, SCM function, SCM data)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     if (!scm_is_string (name) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (script_api_bar_item_new (weechat_guile_plugin,
                                                       guile_current_script,
                                                       scm_i_string_chars (name),
                                                       &weechat_guile_api_bar_item_build_cb,
                                                       scm_i_string_chars (function),
                                                       scm_i_string_chars (data)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4193,9 +4193,9 @@ weechat_guile_api_bar_item_update (SCM name)
     API_FUNC(1, "bar_item_update", API_RETURN_ERROR);
     if (!scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_bar_item_update (scm_i_string_chars (name));
-    
+
     API_RETURN_OK;
 }
 
@@ -4209,11 +4209,11 @@ weechat_guile_api_bar_item_remove (SCM item)
     API_FUNC(1, "bar_item_remove", API_RETURN_ERROR);
     if (!scm_is_string (item))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_bar_item_remove (weechat_guile_plugin,
                                 guile_current_script,
                                 script_str2ptr (scm_i_string_chars (item)));
-    
+
     API_RETURN_OK;
 }
 
@@ -4226,13 +4226,13 @@ weechat_guile_api_bar_search (SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "bar_search", API_RETURN_EMPTY);
     if (!scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_bar_search (scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4248,11 +4248,11 @@ weechat_guile_api_bar_new (SCM args)
     SCM separator, items;
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (!scm_list_p (args) || (scm_to_int (scm_length (args)) != 15))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     name = scm_list_ref (args, scm_from_int (0));
     hidden = scm_list_ref (args, scm_from_int (1));
     priority = scm_list_ref (args, scm_from_int (2));
@@ -4268,7 +4268,7 @@ weechat_guile_api_bar_new (SCM args)
     color_bg = scm_list_ref (args, scm_from_int (12));
     separator = scm_list_ref (args, scm_from_int (13));
     items = scm_list_ref (args, scm_from_int (14));
-    
+
     if (!scm_is_string (name) || !scm_is_string (hidden)
         || !scm_is_string (priority) || !scm_is_string (type)
         || !scm_is_string (conditions) || !scm_is_string (position)
@@ -4278,7 +4278,7 @@ weechat_guile_api_bar_new (SCM args)
         || !scm_is_string (color_bg) || !scm_is_string (separator)
         || !scm_is_string (items))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_bar_new (scm_i_string_chars (name),
                                               scm_i_string_chars (hidden),
                                               scm_i_string_chars (priority),
@@ -4294,7 +4294,7 @@ weechat_guile_api_bar_new (SCM args)
                                               scm_i_string_chars (color_bg),
                                               scm_i_string_chars (separator),
                                               scm_i_string_chars (items)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4309,11 +4309,11 @@ weechat_guile_api_bar_set (SCM bar, SCM property, SCM value)
     if (!scm_is_string (bar) || !scm_is_string (property)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_bar_set (script_str2ptr (scm_i_string_chars (bar)),
                      scm_i_string_chars (property),
                      scm_i_string_chars (value));
-    
+
     API_RETURN_OK;
 }
 
@@ -4327,9 +4327,9 @@ weechat_guile_api_bar_update (SCM name)
     API_FUNC(1, "bar_update", API_RETURN_ERROR);
     if (!scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_bar_update (scm_i_string_chars (name));
-    
+
     API_RETURN_OK;
 }
 
@@ -4343,9 +4343,9 @@ weechat_guile_api_bar_remove (SCM bar)
     API_FUNC(1, "bar_remove", API_RETURN_ERROR);
     if (!scm_is_string (bar))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_bar_remove (script_str2ptr (scm_i_string_chars (bar)));
-    
+
     API_RETURN_OK;
 }
 
@@ -4359,12 +4359,12 @@ weechat_guile_api_command (SCM buffer, SCM command)
     API_FUNC(1, "command", API_RETURN_ERROR);
     if (!scm_is_string (buffer) || !scm_is_string (command))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     script_api_command (weechat_guile_plugin,
                         guile_current_script,
                         script_str2ptr (scm_i_string_chars (buffer)),
                         scm_i_string_chars (command));
-    
+
     API_RETURN_OK;
 }
 
@@ -4376,14 +4376,14 @@ SCM
 weechat_guile_api_info_get (SCM info_name, SCM arguments)
 {
     const char *result;
-    
+
     API_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (!scm_is_string (info_name) || !scm_is_string (arguments))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_info_get (scm_i_string_chars (info_name),
                                scm_i_string_chars (arguments));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4396,23 +4396,23 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
 {
     struct t_hashtable *c_hashtable, *result_hashtable;
     SCM result_hash;
-    
+
     API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (!scm_is_string (info_name) || !scm_list_p (hash))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     c_hashtable = weechat_guile_alist_to_hashtable (hash,
                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
-    
+
     result_hashtable = weechat_info_get_hashtable (scm_i_string_chars (info_name),
                                                    c_hashtable);
     result_hash = weechat_guile_hashtable_to_alist (result_hashtable);
-    
+
     if (c_hashtable)
         weechat_hashtable_free (c_hashtable);
     if (result_hashtable)
         weechat_hashtable_free (result_hashtable);
-    
+
     return result_hash;
 }
 
@@ -4425,11 +4425,11 @@ weechat_guile_api_infolist_new ()
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new", API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new ());
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4442,13 +4442,13 @@ weechat_guile_api_infolist_new_item (SCM infolist)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (scm_i_string_chars (infolist))));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4462,16 +4462,16 @@ weechat_guile_api_infolist_new_var_integer (SCM infolist, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (name)
         || !scm_is_integer (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new_var_integer (script_str2ptr (scm_i_string_chars (infolist)),
                                                                scm_i_string_chars (name),
                                                                scm_to_int (value)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4485,16 +4485,16 @@ weechat_guile_api_infolist_new_var_string (SCM infolist, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (name)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (scm_i_string_chars (infolist)),
                                                               scm_i_string_chars (name),
                                                               scm_i_string_chars (value)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4508,16 +4508,16 @@ weechat_guile_api_infolist_new_var_pointer (SCM infolist, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (name)
         || !scm_is_string (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (scm_i_string_chars (infolist)),
                                                                scm_i_string_chars (name),
                                                                script_str2ptr (scm_i_string_chars (value))));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4530,16 +4530,16 @@ weechat_guile_api_infolist_new_var_time (SCM infolist, SCM name, SCM value)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (name)
         || !scm_is_integer (value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_new_var_time (script_str2ptr (scm_i_string_chars (infolist)),
                                                             scm_i_string_chars (name),
                                                             scm_to_int (value)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4552,16 +4552,16 @@ weechat_guile_api_infolist_get (SCM name, SCM pointer, SCM arguments)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     if (!scm_is_string (name) || !scm_is_string (pointer)
         || !scm_is_string (arguments))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_get (scm_i_string_chars (name),
                                                    script_str2ptr (scm_i_string_chars (pointer)),
                                                    scm_i_string_chars (arguments)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4573,13 +4573,13 @@ SCM
 weechat_guile_api_infolist_next (SCM infolist)
 {
     int value;
-    
+
     API_FUNC(1, "infolist_next", API_RETURN_INT(0));
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_infolist_next (script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4592,13 +4592,13 @@ SCM
 weechat_guile_api_infolist_prev (SCM infolist)
 {
     int value;
-    
+
     API_FUNC(1, "infolist_prev", API_RETURN_INT(0));
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_infolist_prev (script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4613,9 +4613,9 @@ weechat_guile_api_infolist_reset_item_cursor (SCM infolist)
     API_FUNC(1, "infolist_reset_item_cursor", API_RETURN_ERROR);
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_infolist_reset_item_cursor (script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_OK;
 }
 
@@ -4627,13 +4627,13 @@ SCM
 weechat_guile_api_infolist_fields (SCM infolist)
 {
     const char *result;
-    
+
     API_FUNC(1, "infolist_fields", API_RETURN_EMPTY);
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_infolist_fields (script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4646,14 +4646,14 @@ SCM
 weechat_guile_api_infolist_integer (SCM infolist, SCM variable)
 {
     int value;
-    
+
     API_FUNC(1, "infolist_integer", API_RETURN_INT(0));
     if (!scm_is_string (infolist) || !scm_is_string (variable))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_infolist_integer (script_str2ptr (scm_i_string_chars (infolist)),
                                       scm_i_string_chars (variable));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4665,14 +4665,14 @@ SCM
 weechat_guile_api_infolist_string (SCM infolist, SCM variable)
 {
     const char *result;
-    
+
     API_FUNC(1, "infolist_string", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_infolist_string (script_str2ptr (scm_i_string_chars (infolist)),
                                       scm_i_string_chars (variable));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4686,14 +4686,14 @@ weechat_guile_api_infolist_pointer (SCM infolist, SCM variable)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_infolist_pointer (script_str2ptr (scm_i_string_chars (infolist)),
                                                        scm_i_string_chars (variable)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4707,16 +4707,16 @@ weechat_guile_api_infolist_time (SCM infolist, SCM variable)
     char timebuffer[64], *result;
     time_t time;
     SCM return_value;
-    
+
     API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
     if (!scm_is_string (infolist) || !scm_is_string (variable))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     time = weechat_infolist_time (script_str2ptr (scm_i_string_chars (infolist)),
                                   scm_i_string_chars (variable));
     strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
     result = strdup (timebuffer);
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4730,9 +4730,9 @@ weechat_guile_api_infolist_free (SCM infolist)
     API_FUNC(1, "infolist_free", API_RETURN_ERROR);
     if (!scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_infolist_free (script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_OK;
 }
 
@@ -4745,13 +4745,13 @@ weechat_guile_api_hdata_get (SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     if (!scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_hdata_get (scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4763,14 +4763,14 @@ SCM
 weechat_guile_api_hdata_get_var_offset (SCM hdata, SCM name)
 {
     int value;
-    
+
     API_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
     if (!scm_is_string (hdata) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_hdata_get_var_offset (script_str2ptr (scm_i_string_chars (hdata)),
                                           scm_i_string_chars (name));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4783,14 +4783,14 @@ SCM
 weechat_guile_api_hdata_get_var_type_string (SCM hdata, SCM name)
 {
     const char *result;
-    
+
     API_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hdata_get_var_type_string (script_str2ptr (scm_i_string_chars (hdata)),
                                                 scm_i_string_chars (name));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4802,14 +4802,14 @@ SCM
 weechat_guile_api_hdata_get_var_hdata (SCM hdata, SCM name)
 {
     const char *result;
-    
+
     API_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hdata_get_var_hdata (script_str2ptr (scm_i_string_chars (hdata)),
                                           scm_i_string_chars (name));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4822,14 +4822,14 @@ weechat_guile_api_hdata_get_list (SCM hdata, SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (scm_i_string_chars (hdata)),
                                                      scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4842,16 +4842,16 @@ weechat_guile_api_hdata_move (SCM hdata, SCM pointer, SCM count)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (pointer)
         || !scm_is_integer (count))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hdata_move (script_str2ptr (scm_i_string_chars (hdata)),
                                  script_str2ptr (scm_i_string_chars (pointer)),
                                  scm_to_int (count));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4864,16 +4864,16 @@ SCM
 weechat_guile_api_hdata_integer (SCM hdata, SCM pointer, SCM name)
 {
     int value;
-    
+
     API_FUNC(1, "hdata_integer", API_RETURN_INT(0));
     if (!scm_is_string (hdata) || !scm_is_string (pointer)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     value = weechat_hdata_integer (script_str2ptr (scm_i_string_chars (hdata)),
                                    script_str2ptr (scm_i_string_chars (pointer)),
                                    scm_i_string_chars (name));
-    
+
     API_RETURN_INT(value);
 }
 
@@ -4886,16 +4886,16 @@ SCM
 weechat_guile_api_hdata_long (SCM hdata, SCM pointer, SCM name)
 {
     long value;
-    
+
     API_FUNC(1, "hdata_long", API_RETURN_LONG(0));
     if (!scm_is_string (hdata) || !scm_is_string (pointer)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_LONG(0));
-    
+
     value = weechat_hdata_long (script_str2ptr (scm_i_string_chars (hdata)),
                                 script_str2ptr (scm_i_string_chars (pointer)),
                                 scm_i_string_chars (name));
-    
+
     API_RETURN_LONG(value);
 }
 
@@ -4908,16 +4908,16 @@ SCM
 weechat_guile_api_hdata_string (SCM hdata, SCM pointer, SCM name)
 {
     const char *result;
-    
+
     API_FUNC(1, "hdata_string", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (pointer)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hdata_string (script_str2ptr (scm_i_string_chars (hdata)),
                                    script_str2ptr (scm_i_string_chars (pointer)),
                                    scm_i_string_chars (name));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4931,16 +4931,16 @@ weechat_guile_api_hdata_pointer (SCM hdata, SCM pointer, SCM name)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (pointer)
         || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (scm_i_string_chars (hdata)),
                                                     script_str2ptr (scm_i_string_chars (pointer)),
                                                     scm_i_string_chars (name)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4955,17 +4955,17 @@ weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
     char timebuffer[64], *result;
     time_t time;
     SCM return_value;
-    
+
     API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (pointer) || !scm_is_string (name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     time = weechat_hdata_time (script_str2ptr (scm_i_string_chars (hdata)),
                                script_str2ptr (scm_i_string_chars (pointer)),
                                scm_i_string_chars (name));
     strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
     result = strdup (timebuffer);
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -4977,14 +4977,14 @@ SCM
 weechat_guile_api_hdata_get_string (SCM hdata, SCM property)
 {
     const char *result;
-    
+
     API_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
     if (!scm_is_string (hdata) || !scm_is_string (property))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = weechat_hdata_get_var_type_string (script_str2ptr (scm_i_string_chars (hdata)),
                                                 scm_i_string_chars (property));
-    
+
     API_RETURN_STRING(result);
 }
 
@@ -4997,14 +4997,14 @@ weechat_guile_api_upgrade_new (SCM filename, SCM write)
 {
     char *result;
     SCM return_value;
-    
+
     API_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     if (!scm_is_string (filename) || !scm_is_integer (write))
         API_WRONG_ARGS(API_RETURN_EMPTY);
-    
+
     result = script_ptr2str (weechat_upgrade_new (scm_i_string_chars (filename),
                                                   scm_to_int (write)));
-    
+
     API_RETURN_STRING_FREE(result);
 }
 
@@ -5017,16 +5017,16 @@ weechat_guile_api_upgrade_write_object (SCM upgrade_file, SCM object_id,
                                         SCM infolist)
 {
     int rc;
-    
+
     API_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
     if (!scm_is_string (upgrade_file) || !scm_is_integer (object_id)
         || !scm_is_string (infolist))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     rc = weechat_upgrade_write_object (script_str2ptr (scm_i_string_chars (upgrade_file)),
                                        scm_to_int (object_id),
                                        script_str2ptr (scm_i_string_chars (infolist)));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -5045,23 +5045,23 @@ weechat_guile_api_upgrade_read_cb (void *data,
     void *func_argv[4];
     char empty_arg[1] = { '\0' }, str_object_id[32];
     int *rc, ret;
-    
+
     script_callback = (struct t_script_callback *)data;
-    
+
     if (script_callback && script_callback->function && script_callback->function[0])
     {
         snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
-        
+
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = script_ptr2str (upgrade_file);
         func_argv[2] = str_object_id;
         func_argv[3] = script_ptr2str (infolist);
-        
+
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
                                          "ssss", func_argv);
-        
+
         if (!rc)
             ret = WEECHAT_RC_ERROR;
         else
@@ -5073,10 +5073,10 @@ weechat_guile_api_upgrade_read_cb (void *data,
             free (func_argv[1]);
         if (func_argv[3])
             free (func_argv[3]);
-        
+
         return ret;
     }
-    
+
     return WEECHAT_RC_ERROR;
 }
 
@@ -5088,19 +5088,19 @@ SCM
 weechat_guile_api_upgrade_read (SCM upgrade_file, SCM function, SCM data)
 {
     int rc;
-    
+
     API_FUNC(1, "upgrade_read", API_RETURN_INT(0));
     if (!scm_is_string (upgrade_file) || !scm_is_string (function)
         || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_INT(0));
-    
+
     rc = script_api_upgrade_read (weechat_guile_plugin,
                                   guile_current_script,
                                   script_str2ptr (scm_i_string_chars (upgrade_file)),
                                   &weechat_guile_api_upgrade_read_cb,
                                   scm_i_string_chars (function),
                                   scm_i_string_chars (data));
-    
+
     API_RETURN_INT(rc);
 }
 
@@ -5114,9 +5114,9 @@ weechat_guile_api_upgrade_close (SCM upgrade_file)
     API_FUNC(1, "upgrade_close", API_RETURN_ERROR);
     if (!scm_is_string (upgrade_file))
         API_WRONG_ARGS(API_RETURN_ERROR);
-    
+
     weechat_upgrade_close (script_str2ptr (scm_i_string_chars (upgrade_file)));
-    
+
     API_RETURN_OK;
 }
 
@@ -5129,7 +5129,7 @@ weechat_guile_api_module_init (void *data)
 {
     scm_t_bits port_type;
     scm_t_port *pt;
-    
+
     /* make C compiler happy */
     (void) data;
 
@@ -5143,7 +5143,7 @@ weechat_guile_api_module_init (void *data)
     pt->rw_random = 0;
     scm_set_current_output_port (guile_port);
     scm_set_current_error_port (guile_port);
-    
+
     /* interface functions */
     scm_c_define_gsubr ("weechat:register", 7, 0, 0, &weechat_guile_api_register);
     scm_c_define_gsubr ("weechat:plugin_get_name", 1, 0, 0, &weechat_guile_api_plugin_get_name);
@@ -5322,7 +5322,7 @@ weechat_guile_api_module_init (void *data)
     scm_c_define_gsubr ("weechat:upgrade_write_object", 3, 0, 0, &weechat_guile_api_upgrade_write_object);
     scm_c_define_gsubr ("weechat:upgrade_read", 3, 0, 0, &weechat_guile_api_upgrade_read);
     scm_c_define_gsubr ("weechat:upgrade_close", 1, 0, 0, &weechat_guile_api_upgrade_close);
-    
+
     scm_c_export ("weechat:register", "weechat:plugin_get_name",
                   "weechat:charset_set", "weechat:iconv_to_internal",
                   "weechat:iconv_from_internal", "weechat:gettext",
@@ -5413,12 +5413,12 @@ weechat_guile_api_module_init (void *data)
                   "weechat:upgrade_write_object", "weechat:upgrade_read",
                   "weechat:upgrade_close",
                   NULL);
-    
+
     /* interface constants */
     scm_c_define ("weechat:WEECHAT_RC_OK", scm_from_int (WEECHAT_RC_OK));
     scm_c_define ("weechat:WEECHAT_RC_OK_EAT", scm_from_int (WEECHAT_RC_OK_EAT));
     scm_c_define ("weechat:WEECHAT_RC_ERROR", scm_from_int (WEECHAT_RC_ERROR));
-    
+
     scm_c_define ("weechat:WEECHAT_CONFIG_READ_OK", scm_from_int (WEECHAT_CONFIG_READ_OK));
     scm_c_define ("weechat:WEECHAT_CONFIG_READ_MEMORY_ERROR", scm_from_int (WEECHAT_CONFIG_READ_MEMORY_ERROR));
     scm_c_define ("weechat:WEECHAT_CONFIG_READ_FILE_NOT_FOUND", scm_from_int (WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
@@ -5433,19 +5433,19 @@ weechat_guile_api_module_init (void *data)
     scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_OK_RESET));
     scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED));
     scm_c_define ("weechat:WEECHAT_CONFIG_OPTION_UNSET_ERROR", scm_from_int (WEECHAT_CONFIG_OPTION_UNSET_ERROR));
-    
+
     scm_c_define ("weechat:WEECHAT_LIST_POS_SORT", scm_from_locale_string (WEECHAT_LIST_POS_SORT));
     scm_c_define ("weechat:WEECHAT_LIST_POS_BEGINNING", scm_from_locale_string (WEECHAT_LIST_POS_BEGINNING));
     scm_c_define ("weechat:WEECHAT_LIST_POS_END", scm_from_locale_string (WEECHAT_LIST_POS_END));
-    
+
     scm_c_define ("weechat:WEECHAT_HOTLIST_LOW", scm_from_locale_string (WEECHAT_HOTLIST_LOW));
     scm_c_define ("weechat:WEECHAT_HOTLIST_MESSAGE", scm_from_locale_string (WEECHAT_HOTLIST_MESSAGE));
     scm_c_define ("weechat:WEECHAT_HOTLIST_PRIVATE", scm_from_locale_string (WEECHAT_HOTLIST_PRIVATE));
     scm_c_define ("weechat:WEECHAT_HOTLIST_HIGHLIGHT", scm_from_locale_string (WEECHAT_HOTLIST_HIGHLIGHT));
-    
+
     scm_c_define ("weechat:WEECHAT_HOOK_PROCESS_RUNNING", scm_from_int (WEECHAT_HOOK_PROCESS_RUNNING));
     scm_c_define ("weechat:WEECHAT_HOOK_PROCESS_ERROR", scm_from_int (WEECHAT_HOOK_PROCESS_ERROR));
-    
+
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_OK", scm_from_int (WEECHAT_HOOK_CONNECT_OK));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", scm_from_int (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", scm_from_int (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
@@ -5455,7 +5455,7 @@ weechat_guile_api_module_init (void *data)
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
-    
+
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_STRING", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_STRING));
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_INT", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_INT));
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_POINTER", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_POINTER));

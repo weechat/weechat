@@ -39,19 +39,19 @@ relay_info_get_infolist_cb (void *data, const char *infolist_name,
 {
     struct t_infolist *ptr_infolist;
     struct t_relay_client *ptr_client;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) arguments;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "relay") == 0)
     {
         if (pointer && !relay_client_valid (pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -81,7 +81,7 @@ relay_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
-    
+
     return NULL;
 }
 

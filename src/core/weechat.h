@@ -75,7 +75,7 @@
     "\n" \
     "You should have received a copy of the GNU General Public License\n" \
     "along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.\n\n"
-    
+
 /* directory separator, depending on OS */
 
 #ifdef _WIN32

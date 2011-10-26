@@ -47,10 +47,10 @@ struct t_gui_completion
     int direction;                /* +1=search next word, -1=previous word   */
     int add_space;                /* add space after completion?             */
     int force_partial_completion; /* force partial completion?               */
-    
+
     /* for command argument completion */
     struct t_weelist *completion_list; /* data list for completion           */
-    
+
     /* completion found */
     char *word_found;             /* word found (to replace base word)       */
     int word_found_is_nick;       /* word found is nick?                     */

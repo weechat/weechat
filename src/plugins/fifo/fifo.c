@@ -74,17 +74,17 @@ fifo_remove_old_pipes ()
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
-    
+
     buf_len = PATH_MAX;
     buf = malloc (buf_len);
     if (!buf)
         return;
-    
+
     weechat_home = weechat_info_get ("weechat_dir", "");
     dir_separator = weechat_info_get ("dir_separator", "");
-    
+
     prefix_len = strlen (FIFO_FILENAME_PREFIX);
-    
+
     dp = opendir (weechat_home);
     if (dp != NULL)
     {
@@ -108,7 +108,7 @@ fifo_remove_old_pipes ()
         }
         closedir (dp);
     }
-    
+
     free (buf);
 }
 
@@ -121,20 +121,20 @@ fifo_create ()
 {
     int filename_length;
     const char *fifo_option, *weechat_home;
-    
+
     fifo_option = weechat_config_get_plugin ("fifo");
     if (!fifo_option)
     {
         weechat_config_set_plugin ("fifo", "on");
         fifo_option = weechat_config_get_plugin ("fifo");
     }
-    
+
     weechat_home = weechat_info_get ("weechat_dir", "");
-    
+
     if (fifo_option && weechat_home)
     {
         fifo_remove_old_pipes ();
-        
+
         if (weechat_strcasecmp (fifo_option, "on") == 0)
         {
             /*
@@ -149,9 +149,9 @@ fifo_create ()
                           "%s/%s%d",
                           weechat_home, FIFO_FILENAME_PREFIX, (int) getpid());
             }
-            
+
             fifo_fd = -1;
-            
+
             /* create FIFO pipe, writable for user only */
             if (mkfifo (fifo_filename, 0600) == 0)
             {
@@ -205,11 +205,11 @@ fifo_remove ()
         close (fifo_fd);
         fifo_fd = -1;
     }
-    
+
     /* remove FIFO from disk */
     if (fifo_filename)
         unlink (fifo_filename);
-    
+
     /* remove any unterminated message */
     if (fifo_unterminated)
     {
@@ -223,7 +223,7 @@ fifo_remove ()
         free (fifo_filename);
         fifo_filename = NULL;
     }
-    
+
     weechat_printf (NULL,
                     _("%s: pipe closed"),
                     FIFO_PLUGIN_NAME);
@@ -238,14 +238,14 @@ fifo_exec (const char *text)
 {
     char *text2, *pos_msg, *pos_buffer;
     struct t_gui_buffer *ptr_buffer;
-    
+
     text2 = strdup (text);
     if (!text2)
         return;
-    
+
     pos_msg = NULL;
     ptr_buffer = NULL;
-    
+
     /*
      * look for plugin + buffer name at beginning of text
      * text may be: "plugin.buffer *text" or "*text"
@@ -268,7 +268,7 @@ fifo_exec (const char *text)
         }
         pos_msg[0] = '\0';
         pos_msg += 2;
-        
+
         pos_buffer = strchr (text2, '.');
         if (!pos_buffer)
         {
@@ -280,11 +280,11 @@ fifo_exec (const char *text)
         }
         pos_buffer[0] = '\0';
         pos_buffer++;
-        
+
         if (text2[0] && pos_buffer[0])
             ptr_buffer = weechat_buffer_search (text2, pos_buffer);
     }
-    
+
     if (!ptr_buffer)
     {
         weechat_printf (NULL,
@@ -293,9 +293,9 @@ fifo_exec (const char *text)
         free (text2);
         return;
     }
-    
+
     weechat_command (ptr_buffer, pos_msg);
-    
+
     free (text2);
 }
 
@@ -309,12 +309,12 @@ fifo_read ()
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read;
-    
+
     num_read = read (fifo_fd, buffer, sizeof (buffer) - 2);
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
-        
+
         buf2 = NULL;
         ptr_buf = buffer;
         if (fifo_unterminated)
@@ -330,7 +330,7 @@ fifo_read ()
             free (fifo_unterminated);
             fifo_unterminated = NULL;
         }
-        
+
         while (ptr_buf && ptr_buf[0])
         {
             next_ptr_buf = NULL;
@@ -355,13 +355,13 @@ fifo_read ()
                     next_ptr_buf = NULL;
                 }
             }
-            
+
             if (ptr_buf)
                 fifo_exec (ptr_buf);
-            
+
             ptr_buf = next_ptr_buf;
         }
-        
+
         if (buf2)
             free (buf2);
     }
@@ -406,7 +406,7 @@ fifo_config_cb (void *data, const char *option, const char *value)
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     if (weechat_strcasecmp (value, "on") == 0)
     {
         if (fifo_fd < 0)
@@ -417,7 +417,7 @@ fifo_config_cb (void *data, const char *option, const char *value)
         if (fifo_fd >= 0)
             fifo_remove ();
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -431,19 +431,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* make C compiler happy */
     (void) argc;
     (void) argv;
-    
+
     weechat_plugin = plugin;
-    
+
     fifo_quiet = 1;
-    
+
     fifo_create ();
-    
+
     weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
-    
+
     fifo_info_init ();
-    
+
     fifo_quiet = 0;
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -456,8 +456,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
-    
+
     fifo_remove ();
-    
+
     return WEECHAT_RC_OK;
 }

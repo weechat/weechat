@@ -51,49 +51,49 @@ struct t_gui_window_coords
 struct t_gui_window
 {
     int number;                        /* window number (first is 1)        */
-    
+
     /* global position & size */
     int win_x, win_y;                  /* position of window                */
     int win_width, win_height;         /* window geometry                   */
     int win_width_pct;                 /* % of width (compared to win size) */
     int win_height_pct;                /* % of height (compared to win size)*/
-    
+
     /* chat window settings */
     int win_chat_x, win_chat_y;        /* chat window position              */
     int win_chat_width;                /* width of chat window              */
     int win_chat_height;               /* height of chat window             */
     int win_chat_cursor_x;             /* position of cursor in chat window */
     int win_chat_cursor_y;             /* position of cursor in chat window */
-    
+
     /* bar windows */
     struct t_gui_bar_window *bar_windows;     /* bar windows                */
     struct t_gui_bar_window *last_bar_window; /* last bar window            */
-    
+
     /* refresh */
     int refresh_needed;                /* 1 if refresh needed for window    */
-    
+
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
-    
+
     /* buffer and layout infos */
     struct t_gui_buffer *buffer;       /* buffer currently displayed        */
     char *layout_plugin_name;          /* plugin and buffer that should be  */
     char *layout_buffer_name;          /* displayed in this window (even if */
                                        /* buffer does not exist yet, it will*/
                                        /* be assigned later)                */
-    
+
     /* scroll */
     struct t_gui_window_scroll *scroll; /* scroll infos for each buffer     */
                                         /* scrolled in this window          */
-    
+
     /* coordinates (for focus) */
     int coords_size;                   /* size of coords (number of lines)  */
     struct t_gui_window_coords *coords;/* coords for window                 */
     int coords_x_message;              /* start X for messages              */
-    
+
     /* tree */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
-    
+
     struct t_gui_window *prev_window;  /* link to previous window           */
     struct t_gui_window *next_window;  /* link to next window               */
 };
@@ -118,13 +118,13 @@ struct t_gui_window_scroll
 struct t_gui_window_tree
 {
     struct t_gui_window_tree *parent_node; /* pointer to parent node        */
-    
+
     /* node info */
     int split_pct;                     /* % of split size (child1)          */
     int split_horizontal;              /* 1 if horizontal, 0 if vertical    */
     struct t_gui_window_tree *child1;  /* first child, NULL if a leaf       */
     struct t_gui_window_tree *child2;  /* second child, NULL if a leaf      */
-    
+
     /* leaf info */
     struct t_gui_window *window;       /* pointer to window, NULL if a node */
 };

@@ -77,7 +77,7 @@ xfer_config_refresh_cb (void *data, struct t_config_option *option)
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     if (xfer_buffer)
         xfer_buffer_refresh (NULL);
 }
@@ -91,7 +91,7 @@ xfer_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
     (void) data;
-    
+
     return  weechat_config_reload (config_file);
 }
 
@@ -104,12 +104,12 @@ int
 xfer_config_init ()
 {
     struct t_config_section *ptr_section;
-    
+
     xfer_config_file = weechat_config_new (XFER_CONFIG_NAME,
                                            &xfer_config_reload, NULL);
     if (!xfer_config_file)
         return 0;
-    
+
     ptr_section = weechat_config_new_section (xfer_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -120,7 +120,7 @@ xfer_config_init ()
         weechat_config_free (xfer_config_file);
         return 0;
     }
-    
+
     xfer_config_look_auto_open_buffer = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "auto_open_buffer", "boolean",
@@ -133,7 +133,7 @@ xfer_config_init ()
         N_("size of progress bar, in chars (if 0, progress bar is disabled)"),
         NULL, 0, XFER_CONFIG_PROGRESS_BAR_MAX_SIZE, "20", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (xfer_config_file, "color",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -144,7 +144,7 @@ xfer_config_init ()
         weechat_config_free (xfer_config_file);
         return 0;
     }
-    
+
     xfer_config_color_text = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text", "color",
@@ -199,7 +199,7 @@ xfer_config_init ()
         N_("text color for \"aborted\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (xfer_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -210,7 +210,7 @@ xfer_config_init ()
         weechat_config_free (xfer_config_file);
         return 0;
     }
-    
+
     xfer_config_network_timeout = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "timeout", "integer",
@@ -248,7 +248,7 @@ xfer_config_init ()
         N_("speed limit for sending files, in kilo-bytes by second (0 means "
            "no limit)"),
         NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     ptr_section = weechat_config_new_section (xfer_config_file, "file",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -259,7 +259,7 @@ xfer_config_init ()
         weechat_config_free (xfer_config_file);
         return 0;
     }
-    
+
     xfer_config_file_download_path = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "download_path", "string",
@@ -304,7 +304,7 @@ xfer_config_init ()
         "auto_accept_chats", "boolean",
         N_("automatically accept chat requests (use carefully!)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     return 1;
 }
 

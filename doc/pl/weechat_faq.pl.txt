@@ -148,7 +148,7 @@ W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 Podczas używania WeeChat pod screenem/tmuxem pojawiają mi się dziwne, losowe znaki, jak to naprawić?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Może to być spowodowane przez złą wartość zmiennej TERM w swojej powłoce (spójrz 
+Może to być spowodowane przez złą wartość zmiennej TERM w swojej powłoce (spójrz
 na wynik `echo $TERM` w swoim terminalu, *poza screenem/tmuxem*).
 
 Na przykład, 'xterm-color' może wyświetlać takie dziwne znaki, możesz użyc 'xterm',
@@ -232,8 +232,8 @@ Na przykład:
 /bar del input
 ----------------------------------------
 
-Jeśli kiedyś przestanie ci to odpowiadać, po prostu usuń ten pasek, WeeChat 
-automatycznie stworzy nowy pasek "input" jeśli element "input_text" nie zostanie 
+Jeśli kiedyś przestanie ci to odpowiadać, po prostu usuń ten pasek, WeeChat
+automatycznie stworzy nowy pasek "input" jeśli element "input_text" nie zostanie
 użyty w żadnym z pasków:
 
 ----------------------------------------
@@ -325,7 +325,7 @@ zalecane wartości to:
 * poza screenem: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
 
 [NOTE]
-Może okazać się konieczne zainstalowanie pakietu "ncurses-term" w celu użycia 
+Może okazać się konieczne zainstalowanie pakietu "ncurses-term" w celu użycia
 tych wartości w zmiennej 'TERM'.
 
 Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
@@ -415,7 +415,7 @@ Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 Jak używać globalnej historii (zamiast historii buforu) za pomocą strzałek góra/dół?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Możesz przypisać strzałki w górę i dół do globalnej historii (domyślnie dla 
+Możesz przypisać strzałki w górę i dół do globalnej historii (domyślnie dla
 globalnej historii przypisane są klawisze @k(C-)@k(↑) oraz @k(C-)@k(↓)).
 
 Przykład:
@@ -426,7 +426,7 @@ Przykład:
 ----------------------------------------
 
 [NOTE]
-Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu 
+Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu
 znalezienia ich kodów wciśnij @k(A-)@k(k) następnie przycisk (góra lub dół).
 
 
@@ -504,7 +504,7 @@ filtry (domyślnie @k(A-)@k(=) zmienia stan filtrów).
 Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Za pomocą inteligentnych filtrów (zachowuje wejścia/opuszczenia/wyjścia od osób 
+Za pomocą inteligentnych filtrów (zachowuje wejścia/opuszczenia/wyjścia od osób
 piszących niedawno):
 
 ----------------------------------------

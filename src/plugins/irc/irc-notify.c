@@ -56,7 +56,7 @@ irc_notify_valid (struct t_irc_server *server, struct t_irc_notify *notify)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify;
-    
+
     if (!notify)
         return 0;
 
@@ -82,7 +82,7 @@ irc_notify_valid (struct t_irc_server *server, struct t_irc_notify *notify)
             }
         }
     }
-    
+
     /* notify not found */
     return 0;
 }
@@ -95,17 +95,17 @@ struct t_irc_notify *
 irc_notify_search (struct t_irc_server *server, const char *nick)
 {
     struct t_irc_notify *ptr_notify;
-    
+
     if (!server || !nick)
         return NULL;
-    
+
     for (ptr_notify = server->notify_list; ptr_notify;
          ptr_notify = ptr_notify->next_notify)
     {
         if (strcmp (ptr_notify->nick, nick) == 0)
             return ptr_notify;
     }
-    
+
     /* notify not found */
     return NULL;
 }
@@ -121,7 +121,7 @@ irc_notify_set_server_option (struct t_irc_server *server)
     char *str, *str2;
     struct t_irc_notify *ptr_notify;
     int total_length, length;
-    
+
     if (!server)
         return;
 
@@ -183,10 +183,10 @@ struct t_irc_notify *
 irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
 {
     struct t_irc_notify *new_notify;
-    
+
     if (!server || !nick || !nick[0])
         return NULL;
-    
+
     new_notify = malloc (sizeof (*new_notify));
     if (new_notify)
     {
@@ -196,7 +196,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
         new_notify->is_on_server = 0;
         new_notify->away_message = NULL;
         new_notify->ison_received = 0;
-        
+
         /* add notify to notify list on server */
         new_notify->prev_notify = server->last_notify;
         if (server->notify_list)
@@ -206,7 +206,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
         server->last_notify = new_notify;
         new_notify->next_notify = NULL;
     }
-    
+
     return new_notify;
 }
 
@@ -221,14 +221,14 @@ irc_notify_new_for_server (struct t_irc_server *server)
     const char *notify;
     char **items, *pos_params, **params;
     int i, j, num_items, num_params, check_away;
-    
+
     irc_notify_free_all (server);
-    
+
     notify = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_NOTIFY);
-    
+
     if (!notify || !notify[0])
         return;
-    
+
     items = weechat_string_split (notify, ",", 0, 0, &num_items);
 
     if (items)
@@ -272,7 +272,7 @@ void
 irc_notify_new_for_all_servers ()
 {
     struct t_irc_server *ptr_server;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -289,13 +289,13 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
 {
     weechat_hook_signal_send ("irc_notify_removing",
                               WEECHAT_HOOK_SIGNAL_POINTER, notify);
-    
+
     /* free data */
     if (notify->nick)
         free (notify->nick);
     if (notify->away_message)
         free (notify->away_message);
-    
+
     /* remove notify from list */
     if (notify->prev_notify)
         (notify->prev_notify)->next_notify = notify->next_notify;
@@ -305,9 +305,9 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
         server->notify_list = notify->next_notify;
     if (server->last_notify == notify)
         server->last_notify = notify->prev_notify;
-    
+
     free (notify);
-    
+
     weechat_hook_signal_send ("irc_notify_removed",
                               WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
@@ -436,13 +436,13 @@ irc_notify_get_tags (struct t_config_option *option)
 {
     static char string[1024];
     const char *tags;
-    
+
     tags = weechat_config_string (option);
-    
+
     snprintf (string, sizeof (string), "irc_notify%s%s",
               (tags && tags[0]) ? "," : "",
               (tags && tags[0]) ? tags : "");
-    
+
     return string;
 }
 
@@ -457,11 +457,11 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify,
 {
     if (!notify)
         return;
-    
+
     /* same status, then do nothing */
     if (notify->is_on_server == is_on_server)
         return;
-    
+
     notify->is_on_server = is_on_server;
 
     weechat_printf_tags (notify->server->buffer,
@@ -489,13 +489,13 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
 {
     if (!notify)
         return;
-    
+
     /* same away message, then do nothing */
     if ((!notify->away_message && !away_message)
         || (notify->away_message && away_message
             && (strcmp (notify->away_message, away_message) == 0)))
         return;
-    
+
     if (!notify->away_message && away_message)
     {
         weechat_printf_tags (notify->server->buffer,
@@ -528,7 +528,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                              IRC_COLOR_RESET,
                              away_message);
     }
-    
+
     if (notify->away_message)
         free (notify->away_message);
     notify->away_message = (away_message) ? strdup (away_message) : NULL;
@@ -550,30 +550,30 @@ irc_notify_hsignal_cb (void *data, const char *signal,
     int away_message_updated, no_such_nick;
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    
+
     error = weechat_hashtable_get (hashtable, "error");
     server = weechat_hashtable_get (hashtable, "server");
     pattern = weechat_hashtable_get (hashtable, "pattern");
     command = weechat_hashtable_get (hashtable, "command");
     output = weechat_hashtable_get (hashtable, "output");
-    
+
     /* if there is an error on redirection, just ignore result */
     if (error && error[0])
         return WEECHAT_RC_OK;
-    
+
     /* missing things in redirection */
     if (!server || !pattern || !command || !output)
         return WEECHAT_RC_OK;
-    
+
     /* search server */
     ptr_server = irc_server_search (server);
     if (!ptr_server)
         return WEECHAT_RC_OK;
-    
+
     /* search for start of arguments in command sent to server */
     ptr_args = strchr (command, ' ');
     if (!ptr_args)
@@ -585,7 +585,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
     }
     if (!ptr_args[0])
         return WEECHAT_RC_OK;
-    
+
     /* read output of command */
     if (strcmp (pattern, "ison") == 0)
     {
@@ -663,7 +663,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
                         irc_notify_set_is_on_server (ptr_notify, 0);
                     }
                 }
-                
+
             }
             weechat_string_free_split (messages);
         }
@@ -716,7 +716,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -733,11 +733,11 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify, *ptr_next_notify;
     struct t_hashtable *hashtable;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -746,16 +746,16 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
             message = malloc (7);
             if (!message)
                 continue;
-            
+
             snprintf (message, 7, "ISON :");
             total_length = 7;
             nicks_added = 0;
-            
+
             ptr_notify = ptr_server->notify_list;
             while (ptr_notify)
             {
                 ptr_next_notify = ptr_notify->next_notify;
-                
+
                 length = strlen (ptr_notify->nick);
                 total_length += length + 1;
                 message2 = realloc (message, total_length);
@@ -771,10 +771,10 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                     strcat (message, " ");
                 strcat (message, ptr_notify->nick);
                 nicks_added++;
-                
+
                 ptr_notify = ptr_next_notify;
             }
-            
+
             if (message && (nicks_added > 0))
             {
                 hashtable = irc_message_split (ptr_server, message);
@@ -798,12 +798,12 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                     weechat_hashtable_free (hashtable);
                 }
             }
-            
+
             if (message)
                 free (message);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -816,11 +816,11 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_notify *ptr_notify, *ptr_next_notify;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
-    
+
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -830,7 +830,7 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
             while (ptr_notify)
             {
                 ptr_next_notify = ptr_notify->next_notify;
-                
+
                 if (ptr_notify->check_away)
                 {
                     /*
@@ -844,12 +844,12 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
                                       IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                                       "WHOIS :%s", ptr_notify->nick);
                 }
-                
+
                 ptr_notify = ptr_next_notify;
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -861,10 +861,10 @@ struct t_hdata *
 irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = weechat_hdata_new (hdata_name, "prev_notify", "next_notify");
     if (hdata)
     {
@@ -890,10 +890,10 @@ irc_notify_add_to_infolist (struct t_infolist *infolist,
                             struct t_irc_notify *notify)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !notify)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
@@ -910,7 +910,7 @@ irc_notify_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "away_message", notify->away_message))
         return 0;
-    
+
     return 1;
 }
 
@@ -922,7 +922,7 @@ void
 irc_notify_print_log (struct t_irc_server *server)
 {
     struct t_irc_notify *ptr_notify;
-    
+
     for (ptr_notify = server->notify_list; ptr_notify;
          ptr_notify = ptr_notify->next_notify)
     {
@@ -948,7 +948,7 @@ irc_notify_hook_timer_ison ()
 {
     if (irc_notify_timer_ison)
         weechat_unhook (irc_notify_timer_ison);
-    
+
     irc_notify_timer_ison = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_ison),
         0, 0, &irc_notify_timer_ison_cb, NULL);
@@ -963,7 +963,7 @@ irc_notify_hook_timer_whois ()
 {
     if (irc_notify_timer_whois)
         weechat_unhook (irc_notify_timer_whois);
-    
+
     irc_notify_timer_whois = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_whois),
         0, 0, &irc_notify_timer_whois_cb, NULL);
@@ -978,7 +978,7 @@ irc_notify_init ()
 {
     irc_notify_hook_timer_ison ();
     irc_notify_hook_timer_whois ();
-    
+
     irc_notify_hsignal = weechat_hook_hsignal ("irc_redirection_notify_*",
                                                &irc_notify_hsignal_cb,
                                                NULL);

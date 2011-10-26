@@ -206,7 +206,7 @@ les touches vitales :
 - 'tab': compléter le texte de la barre d'entrée, comme avec votre shell
 - 'page préc/suiv': faire défiler le texte dans le tampon courant
 - 'alt + A': sauter au tampon avec de l'activité (dans la "hotlist")
-     
+
 Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
 quelle touche à une commande avec la commande `/key`.
 Une touche utile est meta-k (alt-k) pour trouver le code des touches.

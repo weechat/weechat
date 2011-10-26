@@ -74,7 +74,7 @@ log_open (const char *filename, const char *mode)
         snprintf (weechat_log_filename, filename_length,
                   "%s/%s", weechat_home, WEECHAT_LOG_NAME);
     }
-    
+
     weechat_log_file = fopen (weechat_log_filename, mode);
     if (!weechat_log_file)
     {
@@ -129,10 +129,10 @@ log_printf (const char *message, ...)
     char *ptr_buffer;
     static time_t seconds;
     struct tm *date_tmp;
-    
+
     if (!weechat_log_file)
         return;
-    
+
     weechat_va_format (message);
     if (vbuffer)
     {
@@ -146,7 +146,7 @@ log_printf (const char *message, ...)
                 ptr_buffer[0] = '.';
             ptr_buffer++;
         }
-        
+
         if (!weechat_log_use_time)
             string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
         else
@@ -163,9 +163,9 @@ log_printf (const char *message, ...)
             else
                 string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
         }
-        
+
         fflush (weechat_log_file);
-        
+
         free (vbuffer);
     }
 }
@@ -179,7 +179,7 @@ log_printf_hexa (const char *spaces, const char *string)
 {
     int msg_pos, hexa_pos, ascii_pos;
     char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
-    
+
     msg_pos = 0;
     hexa_pos = 0;
     ascii_pos = 0;
@@ -243,13 +243,13 @@ log_crash_rename ()
 
     if (!weechat_log_filename)
         return 0;
-    
+
     old_name = strdup (weechat_log_filename);
     if (!old_name)
         return 0;
 
     log_close ();
-    
+
     length = strlen (weechat_home) + 128;
     new_name = malloc (length);
     if (new_name)

@@ -25,7 +25,7 @@ struct t_aspell_speller
 {
     AspellSpeller *speller;                /* aspell speller                */
     char *lang;                            /* language                      */
-    
+
     struct t_aspell_speller *prev_speller; /* pointer to next speller       */
     struct t_aspell_speller *next_speller; /* pointer to previous speller   */
 };

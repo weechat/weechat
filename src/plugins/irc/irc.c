@@ -68,11 +68,11 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
                     void *signal_data)
 {
     struct t_irc_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    
+
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         for (ptr_server = irc_servers; ptr_server;
@@ -82,7 +82,7 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
                                      (signal_data) ? (char *)signal_data : NULL);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -96,15 +96,15 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 {
     struct t_irc_server *ptr_server;
     int disconnected;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
     (void) signal_data;
-    
+
     irc_signal_upgrade_received = 1;
-    
+
     /*
      * FIXME: it's not possible to upgrade with SSL servers connected (GnuTLS
      * lib can't reload data after upgrade), so we close connection for
@@ -142,7 +142,7 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                         disconnected,
                         NG_("server", "servers", disconnected));
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -154,23 +154,23 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int i, auto_connect, upgrading;
-    
+
     weechat_plugin = plugin;
-    
+
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
-    
+
     if (irc_config_read () < 0)
         return WEECHAT_RC_ERROR;
-    
+
     irc_command_init ();
-    
+
     irc_info_init ();
-    
+
     irc_redirect_init ();
-    
+
     irc_notify_init ();
-    
+
     /* hook some signals */
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
@@ -179,20 +179,20 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
     weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
     weechat_hook_signal ("irc_input_send", &irc_input_send_cb, NULL);
-    
+
     /* hook hsignals for redirection */
     weechat_hook_hsignal ("irc_redirect_pattern", &irc_redirect_pattern_hsignal_cb, NULL);
     weechat_hook_hsignal ("irc_redirect_command", &irc_redirect_command_hsignal_cb, NULL);
-    
+
     /* modifiers */
     weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
     weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);
-    
+
     /* hook completions */
     irc_completion_init ();
-    
+
     irc_bar_item_init ();
-    
+
     /* look at arguments */
     auto_connect = 1;
     upgrading = 0;
@@ -219,7 +219,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             upgrading = 1;
         }
     }
-    
+
     if (upgrading)
     {
         if (!irc_upgrade_load ())
@@ -236,10 +236,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         if (auto_connect)
             irc_server_auto_connect ();
     }
-    
+
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -252,10 +252,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
-    
+
     if (irc_hook_timer)
         weechat_unhook (irc_hook_timer);
-    
+
     if (irc_signal_upgrade_received)
     {
         irc_config_write (1);
@@ -266,18 +266,18 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_config_write (0);
         irc_server_disconnect_all ();
     }
-    
+
     irc_ignore_free_all ();
-    
+
     irc_raw_message_free_all ();
-    
+
     irc_server_free_all ();
-    
+
     irc_config_free ();
-    
+
     irc_notify_end ();
-    
+
     irc_redirect_end ();
-    
+
     return WEECHAT_RC_OK;
 }

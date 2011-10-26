@@ -56,5 +56,5 @@ extern struct t_hdata *irc_ignore_hdata_ignore_cb (void *data,
 extern int irc_ignore_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_ignore *ignore);
 extern void irc_ignore_print_log ();
-    
+
 #endif /* __WEECHAT_IRC_IGNORE_H */

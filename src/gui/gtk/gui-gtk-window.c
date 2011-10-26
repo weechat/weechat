@@ -70,7 +70,7 @@ int
 gui_window_objects_init (struct t_gui_window *window)
 {
     struct t_gui_window_gtk_objects *new_objects;
-    
+
     if ((new_objects = malloc (sizeof (*new_objects))))
     {
         window->gui_objects = new_objects;
@@ -131,7 +131,7 @@ gui_window_draw_separator (struct t_gui_window *window)
     /* TODO: write this function for Gtk */
     /*if (window->win_separator)
         delwin (window->win_separator);
-    
+
     if (window->win_x > 0)
     {
         window->win_separator = newwin (window->win_height,
@@ -176,14 +176,14 @@ gui_window_switch (struct t_gui_window *window)
 {
     if (gui_current_window == window)
         return;
-    
+
     /* remove unused bars from current window */
     /* ... */
-    
+
     gui_current_window = window;
-    
+
     gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
-    
+
     gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
@@ -197,9 +197,9 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                              int set_last_read)
 {
     GtkTextIter start, end;
-    
+
     gui_buffer_add_value_num_displayed (window->buffer, -1);
-    
+
     if (window->buffer != buffer)
     {
         window->scroll->start_line = NULL;
@@ -223,10 +223,10 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
             }
         }
     }
-    
+
     window->buffer = buffer;
     gui_window_calculate_pos_size (window);
-    
+
     if (!GUI_WINDOW_OBJECTS(window)->textview_chat)
     {
         GUI_WINDOW_OBJECTS(window)->textview_chat = gtk_text_view_new ();
@@ -235,20 +235,20 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         gtk_widget_set_size_request (GUI_WINDOW_OBJECTS(window)->textview_chat, 300, -1);
         gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), FALSE);
         gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), FALSE);
-        
+
         GUI_WINDOW_OBJECTS(window)->textbuffer_chat = gtk_text_buffer_new (NULL);
         gtk_text_view_set_buffer (GTK_TEXT_VIEW (GUI_WINDOW_OBJECTS(window)->textview_chat), GUI_WINDOW_OBJECTS(window)->textbuffer_chat);
-        
+
         /*GUI_WINDOW_OBJECTS(window)->texttag_chat = gtk_text_buffer_create_tag(GUI_WINDOW_OBJECTS(window)->textbuffer_chat, "courier", "font_family", "lucida");*/
         gtk_text_buffer_get_bounds (GUI_WINDOW_OBJECTS(window)->textbuffer_chat, &start, &end);
         gtk_text_buffer_apply_tag (GUI_WINDOW_OBJECTS(window)->textbuffer_chat, GUI_WINDOW_OBJECTS(window)->texttag_chat, &start, &end);
     }
-    
+
     window->scroll->start_line = NULL;
     window->scroll->start_line_pos = 0;
-    
+
     gui_buffer_add_value_num_displayed (buffer, 1);
-    
+
     gui_hotlist_remove_buffer (buffer);
 }
 
@@ -261,7 +261,7 @@ gui_window_page_up (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     if (!window->scroll->first_line_displayed)
     {
         gui_chat_calculate_line_diff (window, &window->scroll->start_line,
@@ -282,16 +282,16 @@ gui_window_page_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     int line_pos;
-    
+
     if (!gui_ok)
         return;
-    
+
     if (window->scroll->start_line)
     {
         gui_chat_calculate_line_diff (window, &window->scroll->start_line,
                                       &window->scroll->start_line_pos,
                                       window->win_chat_height - 1);
-        
+
         /* check if we can display all */
         ptr_line = window->scroll->start_line;
         line_pos = window->scroll->start_line_pos;
@@ -303,7 +303,7 @@ gui_window_page_down (struct t_gui_window *window)
             window->scroll->start_line = NULL;
             window->scroll->start_line_pos = 0;
         }
-        
+
         gui_chat_draw (window->buffer, 0);
     }
 }
@@ -317,7 +317,7 @@ gui_window_scroll_up (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     if (!window->scroll->first_line_displayed)
     {
         gui_chat_calculate_line_diff (window, &window->scroll->start_line,
@@ -339,29 +339,29 @@ gui_window_scroll_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     int line_pos;
-    
+
     if (!gui_ok)
         return;
-    
+
     if (window->scroll->start_line)
     {
         gui_chat_calculate_line_diff (window, &window->scroll->start_line,
                                       &window->scroll->start_line_pos,
                                       CONFIG_INTEGER(config_look_scroll_amount));
-        
+
         /* check if we can display all */
         ptr_line = window->scroll->start_line;
         line_pos = window->scroll->start_line_pos;
         gui_chat_calculate_line_diff (window, &ptr_line,
                                       &line_pos,
                                       window->win_chat_height - 1);
-        
+
         if (!ptr_line)
         {
             window->scroll->start_line = NULL;
             window->scroll->start_line_pos = 0;
         }
-        
+
         gui_chat_draw (window->buffer, 0);
     }
 }
@@ -375,7 +375,7 @@ gui_window_scroll_top (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     if (!window->scroll->first_line_displayed)
     {
         window->scroll->start_line = window->buffer->lines->first_line;
@@ -393,7 +393,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
-    
+
     if (window->scroll->start_line)
     {
         window->scroll->start_line = NULL;
@@ -415,7 +415,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
                         int simulate)
 {
     int size1, size2;
-    
+
     if (tree)
     {
         if (tree->window)
@@ -465,7 +465,7 @@ void
 gui_window_refresh_windows ()
 {
     /*struct t_gui_window *ptr_win, *old_current_window;*/
-    
+
     if (gui_ok)
     {
         /* TODO: write this function for Gtk */
@@ -481,15 +481,15 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int height1, height2;
-    
+
     if (!gui_ok)
         return NULL;
-    
+
     new_window = NULL;
-    
+
     height1 = (window->win_height * percentage) / 100;
     height2 = window->win_height - height1;
-    
+
     if ((percentage > 0) && (percentage <= 100))
     {
         new_window = gui_window_new (window, window->buffer,
@@ -502,18 +502,18 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
             window->win_y = new_window->win_y + new_window->win_height;
             window->win_height = height2;
             window->win_height_pct = 100 - percentage;
-            
+
             /* assign same buffer for new window (top window) */
             gui_buffer_add_value_num_displayed (new_window->buffer, 1);
-            
+
             gui_window_switch_to_buffer (window, window->buffer, 1);
-            
+
             gui_current_window = new_window;
             gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
         }
     }
-    
+
     return new_window;
 }
 
@@ -526,15 +526,15 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int width1, width2;
-    
+
     if (!gui_ok)
         return NULL;
-    
+
     new_window = NULL;
-    
+
     width1 = (window->win_width * percentage) / 100;
     width2 = window->win_width - width1 - 1;
-    
+
     if ((percentage > 0) && (percentage <= 100))
     {
         new_window = gui_window_new (window, window->buffer,
@@ -546,21 +546,21 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
             /* reduce old window height (left window) */
             window->win_width = width1;
             window->win_width_pct = 100 - percentage;
-            
+
             /* assign same buffer for new window (right window) */
             gui_buffer_add_value_num_displayed (new_window->buffer, 1);
-            
+
             gui_window_switch_to_buffer (window, window->buffer, 1);
-            
+
             gui_current_window = new_window;
             gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
-            
+
             /* create & draw separator */
             gui_window_draw_separator (gui_current_window);
         }
     }
-    
+
     return new_window;
 }
 
@@ -596,16 +596,16 @@ int
 gui_window_merge (struct t_gui_window *window)
 {
     struct t_gui_window_tree *parent, *sister;
-    
+
     parent = window->ptr_tree->parent_node;
     if (parent)
     {
         sister = (parent->child1->window == window) ?
             parent->child2 : parent->child1;
-        
+
         if (!(sister->window))
             return 0;
-        
+
         if (window->win_y == sister->window->win_y)
         {
             /* horizontal merge */
@@ -622,10 +622,10 @@ gui_window_merge (struct t_gui_window *window)
             window->win_x = sister->window->win_x;
         if (sister->window->win_y < window->win_y)
             window->win_y = sister->window->win_y;
-        
+
         gui_window_free (sister->window);
         gui_window_tree_node_to_leaf (parent, window);
-        
+
         gui_window_switch_to_buffer (window, window->buffer, 1);
         gui_window_redraw_buffer (window->buffer);
         return 1;
@@ -685,7 +685,7 @@ gui_window_side_by_side (struct t_gui_window *win1, struct t_gui_window *win2)
             return 0;
         return 3;
     }
-    
+
     /* win2 on the left ? */
     if (win2->win_x + win2->win_width + 1 == win1->win_x)
     {
@@ -707,7 +707,7 @@ void
 gui_window_switch_up (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
-    
+
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -730,7 +730,7 @@ void
 gui_window_switch_down (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
-    
+
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -753,7 +753,7 @@ void
 gui_window_switch_left (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
-    
+
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -776,7 +776,7 @@ void
 gui_window_switch_right (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
-    
+
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -801,7 +801,7 @@ int
 gui_window_balance (struct t_gui_window_tree *tree)
 {
     (void) tree;
-    
+
     /* TODO: write this function for Gtk */
     return 0;
 }
@@ -820,7 +820,7 @@ gui_window_swap (struct t_gui_window *window, int direction)
 {
     (void) window;
     (void) direction;
-    
+
     /* TODO: write this function for Gtk */
 }
 
@@ -832,7 +832,7 @@ void
 gui_window_refresh_screen (int full_refresh)
 {
     (void) full_refresh;
-    
+
     /* TODO: write this function for Gtk */
 }
 
@@ -844,7 +844,7 @@ void
 gui_window_set_title (const char *title)
 {
     (void) title;
-    
+
     /* TODO: write this function for Gtk */
 }
 
@@ -857,7 +857,7 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
 {
     (void) storage_unit;
     (void) text;
-    
+
     /* TODO: write this function for Gtk */
 }
 

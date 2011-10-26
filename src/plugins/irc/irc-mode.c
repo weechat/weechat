@@ -46,12 +46,12 @@ irc_mode_channel_set (struct t_irc_server *server,
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
     int modes_count, channel_modes_updated, argc, current_arg;
     struct t_irc_nick *ptr_nick;
-    
+
     if (!server || !channel || !modes)
         return 0;
-    
+
     channel_modes_updated = 0;
-    
+
     argc = 0;
     argv = NULL;
     pos_args = strchr (modes, ' ');
@@ -85,7 +85,7 @@ irc_mode_channel_set (struct t_irc_server *server,
         pos++;
     }
     current_arg = argc - modes_count;
-    
+
     if (str_modes && str_modes[0])
     {
         set_flag = '+';
@@ -158,14 +158,14 @@ irc_mode_channel_set (struct t_irc_server *server,
             pos++;
         }
     }
-    
+
     if (str_modes)
         free (str_modes);
     if (argv)
         weechat_string_free_split (argv);
-    
+
     weechat_bar_item_update ("buffer_name");
-    
+
     return channel_modes_updated;
 }
 
@@ -180,7 +180,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
 
     str_mode[0] = mode;
     str_mode[1] = '\0';
-    
+
     if (server->nick_modes)
     {
         if (!strchr (server->nick_modes, mode))
@@ -218,7 +218,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
 {
     char *pos, *nick_modes2;
     int new_size;
-    
+
     if (server->nick_modes)
     {
         pos = strchr (server->nick_modes, mode);

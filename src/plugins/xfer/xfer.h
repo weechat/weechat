@@ -60,7 +60,7 @@ enum t_xfer_status
     /* number of xfer status */
     XFER_NUM_STATUS,
 };
-    
+
 /* xfer errors */
 
 enum t_xfer_error
@@ -121,7 +121,7 @@ struct t_xfer
     char *proxy;                       /* proxy to use (optional)           */
     unsigned long address;             /* local or remote IP address        */
     int port;                          /* remote port                       */
-    
+
     /* internal data */
     enum t_xfer_status status;         /* xfer status (waiting, sending,..) */
     struct t_gui_buffer *buffer;       /* buffer (for chat only)            */

@@ -73,7 +73,7 @@ gui_chat_init ()
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = strdup (gui_chat_prefix_empty);
-    
+
     /* some hsignals */
     hook_hsignal (NULL, "chat_quote_time_prefix_message",
                   &gui_chat_hsignal_quote_line_cb, NULL);
@@ -93,7 +93,7 @@ gui_chat_prefix_build ()
 {
     char prefix[128];
     int i;
-    
+
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
     {
         if (gui_chat_prefix[i])
@@ -102,27 +102,27 @@ gui_chat_prefix_build ()
             gui_chat_prefix[i] = NULL;
         }
     }
-    
+
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ERROR),
               CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ERROR]));
     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (prefix);
-    
+
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_NETWORK),
               CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_NETWORK]));
     gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (prefix);
-    
+
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ACTION),
               CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ACTION]));
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (prefix);
-    
+
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_JOIN),
               CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_JOIN]));
     gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (prefix);
-    
+
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_QUIT),
               CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_QUIT]));
@@ -140,13 +140,13 @@ gui_chat_utf_char_valid (const char *utf_char)
     /* chars below 32 are not valid */
     if ((unsigned char)utf_char[0] < 32)
         return 0;
-    
+
     /* 146 or 0x7F are not valid */
     if ((((unsigned char)(utf_char[0]) == 146)
          || ((unsigned char)(utf_char[0]) == 0x7F))
         && (!utf_char[1]))
         return 0;
-    
+
     /* any other char is valid */
     return 1;
 }
@@ -160,7 +160,7 @@ int
 gui_chat_strlen_screen (const char *string)
 {
     int length, size_on_screen;
-    
+
     length = 0;
     while (string && string[0])
     {
@@ -209,7 +209,7 @@ char *
 gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 {
     int size_on_screen;
-    
+
     while (string && string[0] && (offset_screen > 0))
     {
         string = gui_chat_string_next_char (NULL, NULL,
@@ -235,10 +235,10 @@ gui_chat_string_real_pos (const char *string, int pos)
 {
     const char *real_pos, *ptr_string;
     int size_on_screen;
-    
+
     if (pos <= 0)
         return 0;
-    
+
     real_pos = string;
     ptr_string = string;
     while (ptr_string && ptr_string[0] && (pos > 0))
@@ -271,14 +271,14 @@ gui_chat_get_word_info (struct t_gui_window *window,
     const char *start_data;
     char *next_char, *next_char2;
     int leading_spaces, char_size;
-    
+
     *word_start_offset = 0;
     *word_end_offset = 0;
     *word_length_with_spaces = 0;
     *word_length = 0;
-    
+
     start_data = data;
-    
+
     leading_spaces = 1;
     while (data && data[0])
     {
@@ -331,17 +331,17 @@ gui_chat_get_time_string (time_t date)
     char *text_with_color;
     int i, time_first_digit, time_last_digit, last_color;
     struct tm *local_time;
-    
+
     if (!CONFIG_STRING(config_look_buffer_time_format)
         || !CONFIG_STRING(config_look_buffer_time_format)[0])
         return NULL;
-    
+
     local_time = localtime (&date);
     if (strftime (text_time, sizeof (text_time),
                   CONFIG_STRING(config_look_buffer_time_format),
                   local_time) == 0)
         return NULL;
-    
+
     if (strstr (text_time, "${"))
     {
         text_with_color = gui_color_string_replace_colors (text_time);
@@ -352,7 +352,7 @@ gui_chat_get_time_string (time_t date)
             free (text_with_color);
         }
     }
-    
+
     time_first_digit = -1;
     time_last_digit = -1;
     i = 0;
@@ -366,7 +366,7 @@ gui_chat_get_time_string (time_t date)
         }
         i++;
     }
-    
+
     text_time2[0] = '\0';
     text_time_char[1] = '\0';
     last_color = -1;
@@ -419,7 +419,7 @@ gui_chat_get_time_string (time_t date)
         }
         i++;
     }
-    
+
     return strdup (text_time2);
 }
 
@@ -434,21 +434,21 @@ gui_chat_get_time_length ()
     time_t date;
     char *text_time;
     int length;
-    
+
     if (!CONFIG_STRING(config_look_buffer_time_format)
         || !CONFIG_STRING(config_look_buffer_time_format)[0])
         return 0;
-    
+
     length = 0;
     date = time (NULL);
     text_time = gui_chat_get_time_string (date);
-    
+
     if (text_time)
     {
         length = gui_chat_strlen_screen (text_time);
         free (text_time);
     }
-    
+
     return length;
 }
 
@@ -487,7 +487,7 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
 {
     char *string, *string_without_colors;
     int length;
-    
+
     length = 0;
     if (line->data->prefix)
         length += strlen (line->data->prefix);
@@ -495,7 +495,7 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
     if (line->data->message)
         length += strlen (line->data->message);
     length++;
-    
+
     string = malloc (length);
     if (string)
     {
@@ -516,7 +516,7 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
             string = string_without_colors;
         }
     }
-    
+
     return string;
 }
 
@@ -530,7 +530,7 @@ gui_chat_build_string_message_tags (struct t_gui_line *line)
 {
     int i, length;
     char *buf;
-    
+
     length = 64 + 2;
     if (line->data->message)
         length += strlen (line->data->message);
@@ -539,7 +539,7 @@ gui_chat_build_string_message_tags (struct t_gui_line *line)
         length += strlen (line->data->tags_array[i]) + 1;
     }
     length += 2;
-    
+
     buf = malloc (length);
     buf[0] = '\0';
     if (line->data->message)
@@ -555,7 +555,7 @@ gui_chat_build_string_message_tags (struct t_gui_line *line)
     }
     strcat (buf, GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
     strcat (buf, "]");
-    
+
     return buf;
 }
 
@@ -575,13 +575,13 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     char *pos, *pos_prefix, *pos_tab, *pos_end, *pos_lines;
     char *modifier_data, *new_msg, *ptr_msg, *lines_waiting;
     struct t_gui_line *ptr_line;
-    
+
     if (!gui_buffer_valid (buffer))
         return;
-    
+
     if (!message)
         return;
-    
+
     if (gui_init_ok)
     {
         if (!buffer)
@@ -589,10 +589,10 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 
         if (!buffer)
             return;
-        
+
         if (buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             buffer = gui_buffers;
-        
+
         if (buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             return;
     }
@@ -602,19 +602,19 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         || ((gui_chat_mute == GUI_CHAT_MUTE_BUFFER)
             && (gui_chat_mute_buffer == buffer)))
         return;
-    
+
     weechat_va_format (message);
     if (!vbuffer)
         return;
-    
+
     utf8_normalize (vbuffer, '?');
-    
+
     date_printed = time (NULL);
     if (date <= 0)
         date = date_printed;
-    
+
     at_least_one_message_printed = 0;
-    
+
     pos = vbuffer;
     while (pos)
     {
@@ -622,7 +622,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         pos_end = strchr (pos, '\n');
         if (pos_end)
             pos_end[0] = '\0';
-        
+
         /* call modifier for message printed ("weechat_print") */
         new_msg = NULL;
         if (buffer)
@@ -661,11 +661,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                 }
             }
         }
-        
+
         pos_prefix = NULL;
         display_time = 1;
         ptr_msg = (new_msg) ? new_msg : pos;
-        
+
         /* space followed by tab => prefix ignored */
         if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
         {
@@ -691,7 +691,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                 }
             }
         }
-        
+
         if (gui_init_ok)
         {
             ptr_line = gui_line_add (buffer, (display_time) ? date : 0,
@@ -748,16 +748,16 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                 memcpy (pos_lines, ptr_msg, strlen (ptr_msg) + 1);
             }
         }
-        
+
         if (new_msg)
             free (new_msg);
-        
+
         pos = (pos_end && pos_end[1]) ? pos_end + 1 : NULL;
     }
-    
+
     if (gui_init_ok && at_least_one_message_printed)
         gui_buffer_ask_chat_refresh (buffer, 1);
-    
+
 end:
     free (vbuffer);
 }
@@ -773,25 +773,25 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 {
     struct t_gui_line *ptr_line;
     int i, num_lines_to_add;
-    
+
     if (gui_init_ok)
     {
         if (!buffer)
             buffer = gui_buffer_search_main ();
-        
+
         if (buffer->type != GUI_BUFFER_TYPE_FREE)
             buffer = gui_buffers;
-        
+
         if (buffer->type != GUI_BUFFER_TYPE_FREE)
             return;
     }
-    
+
     weechat_va_format (message);
     if (!vbuffer)
         return;
-    
+
     utf8_normalize (vbuffer, '?');
-    
+
     /* no message: delete line */
     if (!vbuffer[0])
     {
@@ -840,7 +840,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
         else
             string_iconv_fprintf (stdout, "%s\n", vbuffer);
     }
-    
+
     free (vbuffer);
 }
 
@@ -853,7 +853,7 @@ gui_chat_print_lines_waiting_buffer ()
 {
     char **lines;
     int num_lines, i;
-    
+
     if (gui_chat_lines_waiting_buffer)
     {
         lines = string_split (gui_chat_lines_waiting_buffer, "\n", 0, 0,
@@ -889,26 +889,26 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
     const char *time, *prefix, *message;
     int length_time, length_prefix, length_message, length;
     char *str;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!gui_current_window->buffer->input)
         return WEECHAT_RC_OK;
-    
+
     time = (strstr (signal, "time")) ?
         hashtable_get (hashtable, "_chat_line_time") : NULL;
     prefix = (strstr (signal, "prefix")) ?
         hashtable_get (hashtable, "_chat_line_prefix") : NULL;
     message = hashtable_get (hashtable, "_chat_line_message");
-    
+
     if (!message)
         return WEECHAT_RC_OK;
-    
+
     length_time = (time) ? strlen (time) : 0;
     length_prefix = (prefix) ? strlen (prefix) : 0;
     length_message = strlen (message);
-    
+
     length = length_time + 1 + length_prefix + 1 +
         strlen (CONFIG_STRING(config_look_prefix_suffix)) + 1 +
         length_message + 1 + 1;
@@ -928,7 +928,7 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 1);
         free (str);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -940,7 +940,7 @@ void
 gui_chat_end ()
 {
     int i;
-    
+
     /* free prefixes */
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
     {
@@ -950,7 +950,7 @@ gui_chat_end ()
             gui_chat_prefix[i] = NULL;
         }
     }
-    
+
     /* free lines waiting for buffer (should always be NULL here) */
     if (gui_chat_lines_waiting_buffer)
     {

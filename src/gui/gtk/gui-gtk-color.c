@@ -65,13 +65,13 @@ int
 gui_color_search (const char *color_name)
 {
     int i;
-    
+
     for (i = 0; gui_weechat_colors[i].string; i++)
     {
         if (string_strcasecmp (gui_weechat_colors[i].string, color_name) == 0)
             return i;
     }
-    
+
     /* color not found */
     return -1;
 }
@@ -84,7 +84,7 @@ int
 gui_color_assign (int *color, const char *color_name)
 {
     int i;
-    
+
     /* look for curses colors in table */
     i = 0;
     while (gui_weechat_colors[i].string)
@@ -96,7 +96,7 @@ gui_color_assign (int *color, const char *color_name)
         }
         i++;
     }
-    
+
     /* color not found */
     return 0;
 }
@@ -117,7 +117,7 @@ gui_color_assign_by_diff (int *color, const char *color_name, int diff)
     (void) color;
     (void) color_name;
     (void) diff;
-    
+
     return 1;
 }
 
@@ -150,7 +150,7 @@ gui_color_get_pair (int fg, int bg)
 {
     (void) fg;
     (void) bg;
-    
+
     return 0;
 }
 
@@ -162,7 +162,7 @@ int
 gui_color_weechat_get_pair (int weechat_color)
 {
     (void) weechat_color;
-    
+
     return 0;
 }
 
@@ -194,7 +194,7 @@ void
 gui_color_rebuild_weechat ()
 {
     int i;
-    
+
     for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         if (gui_color[i])
@@ -290,7 +290,7 @@ gui_color_palette_new (int number, const char *value)
     /* This function does nothing in Gtk GUI */
     (void) number;
     (void) value;
-    
+
     return NULL;
 }
 
@@ -313,7 +313,7 @@ void
 gui_color_pre_init ()
 {
     int i;
-    
+
     for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         gui_color[i] = NULL;
@@ -348,7 +348,7 @@ void
 gui_color_end ()
 {
     int i;
-    
+
     for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         gui_color_free (gui_color[i]);

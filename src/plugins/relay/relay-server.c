@@ -55,7 +55,7 @@ relay_server_get_protocol_args (const char *protocol_and_args,
                                 char **protocol, char **protocol_args)
 {
     char *pos;
-    
+
     pos = strchr (protocol_and_args, '.');
     if (pos)
     {
@@ -79,12 +79,12 @@ relay_server_search (const char *protocol_and_args)
 {
     char *protocol, *protocol_args;
     struct t_relay_server *ptr_server;
-    
+
     relay_server_get_protocol_args (protocol_and_args,
                                     &protocol, &protocol_args);
-    
+
     ptr_server = NULL;
-    
+
     if (protocol && protocol_args)
     {
         for (ptr_server = relay_servers; ptr_server;
@@ -97,12 +97,12 @@ relay_server_search (const char *protocol_and_args)
             }
         }
     }
-    
+
     if (protocol)
         free (protocol);
     if (protocol_args)
         free (protocol_args);
-    
+
     return ptr_server;
 }
 
@@ -114,14 +114,14 @@ struct t_relay_server *
 relay_server_search_port (int port)
 {
     struct t_relay_server *ptr_server;
-    
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         if (ptr_server->port == port)
             return ptr_server;
     }
-    
+
     /* server not found */
     return NULL;
 }
@@ -167,15 +167,15 @@ relay_server_sock_cb (void *data, int fd)
     socklen_t client_length;
     int client_fd;
     char ipv4_address[INET_ADDRSTRLEN + 1], *ptr_address;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     server = (struct t_relay_server *)data;
-    
+
     client_length = sizeof (client_addr);
     memset (&client_addr, 0, client_length);
-    
+
     client_fd = accept (server->sock, (struct sockaddr *) &client_addr,
                         &client_length);
     if (client_fd < 0)
@@ -189,7 +189,7 @@ relay_server_sock_cb (void *data, int fd)
                         server->protocol_args);
         return WEECHAT_RC_OK;
     }
-    
+
     ptr_address = NULL;
     if (inet_ntop (AF_INET,
                    &(client_addr.sin_addr),
@@ -198,9 +198,9 @@ relay_server_sock_cb (void *data, int fd)
     {
         ptr_address = ipv4_address;
     }
-    
+
     relay_client_new (client_fd, ptr_address, server);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -213,7 +213,7 @@ relay_server_create_socket (struct t_relay_server *server)
 {
     int set, max_clients;
     struct sockaddr_in server_addr;
-    
+
     server->sock = socket (AF_INET, SOCK_STREAM, 0);
     if (server->sock < 0)
     {
@@ -222,7 +222,7 @@ relay_server_create_socket (struct t_relay_server *server)
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         return 0;
     }
-    
+
     set = 1;
     if (setsockopt (server->sock, SOL_SOCKET, SO_REUSEADDR,
                     (void *) &set, sizeof (set)) < 0)
@@ -235,7 +235,7 @@ relay_server_create_socket (struct t_relay_server *server)
         server->sock = -1;
         return 0;
     }
-    
+
     set = 1;
     if (setsockopt (server->sock, SOL_SOCKET, SO_KEEPALIVE,
                     (void *) &set, sizeof (set)) < 0)
@@ -248,7 +248,7 @@ relay_server_create_socket (struct t_relay_server *server)
         server->sock = -1;
         return 0;
     }
-    
+
     memset(&server_addr, 0, sizeof(struct sockaddr_in));
     server_addr.sin_family = AF_INET;
     if (weechat_config_string (relay_config_network_bind_address)
@@ -261,7 +261,7 @@ relay_server_create_socket (struct t_relay_server *server)
         server_addr.sin_addr.s_addr = INADDR_ANY;
     }
     server_addr.sin_port = htons (server->port);
-    
+
     if (bind (server->sock, (struct sockaddr *) &server_addr,
               sizeof (server_addr)) < 0)
     {
@@ -275,11 +275,11 @@ relay_server_create_socket (struct t_relay_server *server)
         server->sock = -1;
         return 0;
     }
-    
+
     max_clients = weechat_config_integer (relay_config_network_max_clients);
-    
+
     listen (server->sock, max_clients);
-    
+
     weechat_printf (NULL,
                     _("%s: listening on port %d (relay: %s.%s, max %d clients)"),
                     RELAY_PLUGIN_NAME,
@@ -287,14 +287,14 @@ relay_server_create_socket (struct t_relay_server *server)
                     relay_protocol_string[server->protocol],
                     server->protocol_args,
                     max_clients);
-    
+
     server->hook_fd = weechat_hook_fd (server->sock,
                                        1, 0, 0,
                                        &relay_server_sock_cb,
                                        server);
 
     server->start_time = time (NULL);
-    
+
     return 1;
 }
 
@@ -316,7 +316,7 @@ relay_server_new (enum t_relay_protocol protocol,
                         RELAY_PLUGIN_NAME, port);
         return NULL;
     }
-    
+
     new_server = malloc (sizeof (*new_server));
     if (new_server)
     {
@@ -327,7 +327,7 @@ relay_server_new (enum t_relay_protocol protocol,
         new_server->sock = -1;
         new_server->hook_fd = NULL;
         new_server->start_time = 0;
-        
+
         new_server->prev_server = NULL;
         new_server->next_server = relay_servers;
         if (relay_servers)
@@ -335,7 +335,7 @@ relay_server_new (enum t_relay_protocol protocol,
         else
             last_relay_server = new_server;
         relay_servers = new_server;
-        
+
         relay_server_create_socket (new_server);
     }
     else
@@ -344,7 +344,7 @@ relay_server_new (enum t_relay_protocol protocol,
                         _("%s%s: not enough memory for listening on new port"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
     }
-    
+
     return new_server;
 }
 
@@ -371,10 +371,10 @@ void
 relay_server_free (struct t_relay_server *server)
 {
     struct t_relay_server *new_relay_servers;
-    
+
     if (!server)
         return;
-    
+
     /* remove server from list */
     if (last_relay_server == server)
         last_relay_server = server->prev_server;
@@ -387,14 +387,14 @@ relay_server_free (struct t_relay_server *server)
         new_relay_servers = server->next_server;
     if (server->next_server)
         (server->next_server)->prev_server = server->prev_server;
-    
+
     /* free data */
     relay_server_close_socket (server);
     if (server->protocol_args)
         free (server->protocol_args);
-    
+
     free (server);
-    
+
     relay_servers = new_relay_servers;
 }
 
@@ -419,7 +419,7 @@ void
 relay_server_print_log ()
 {
     struct t_relay_server *ptr_server;
-    
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {

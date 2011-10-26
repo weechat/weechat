@@ -43,7 +43,7 @@ xfer_chat_send (struct t_xfer *xfer, const char *buffer, int size_buf)
 {
     if (!xfer)
         return -1;
-    
+
     return send (xfer->sock, buffer, size_buf, 0);
 }
 
@@ -55,21 +55,21 @@ void
 xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
 {
     char *ptr_msg, *msg_encoded;
-    
+
     if (!xfer || (xfer->sock < 0))
         return;
-    
+
     weechat_va_format (format);
     if (!vbuffer)
         return;
-    
+
     msg_encoded = (xfer->charset_modifier) ?
         weechat_hook_modifier_exec ("charset_encode",
                                     xfer->charset_modifier,
                                     vbuffer) : NULL;
-    
+
     ptr_msg = (msg_encoded) ? msg_encoded : vbuffer;
-    
+
     if (xfer_chat_send (xfer, ptr_msg, strlen (ptr_msg)) <= 0)
     {
         weechat_printf (NULL,
@@ -78,10 +78,10 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
                         xfer->remote_nick);
         xfer_close (xfer, XFER_STATUS_FAILED);
     }
-    
+
     if (msg_encoded)
         free (msg_encoded);
-    
+
     free (vbuffer);
 }
 
@@ -98,17 +98,17 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     char *ptr_buf_decoded, *ptr_buf_without_weechat_colors, *ptr_buf_color;
     char str_tags[256];
     int num_read, length, ctcp_action;
-    
+
     /* make C compiler happy */
     (void) fd;
-    
+
     xfer = (struct t_xfer *)arg_xfer;
-    
+
     num_read = recv (xfer->sock, buffer, sizeof (buffer) - 2, 0);
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
-        
+
         buf2 = NULL;
         ptr_buf = buffer;
         if (xfer->unterminated_message)
@@ -124,7 +124,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
             free (xfer->unterminated_message);
             xfer->unterminated_message = NULL;
         }
-        
+
         while (ptr_buf && ptr_buf[0])
         {
             next_ptr_buf = NULL;
@@ -140,7 +140,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                 ptr_buf = NULL;
                 next_ptr_buf = NULL;
             }
-            
+
             if (ptr_buf)
             {
                 ctcp_action = 0;
@@ -156,7 +156,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                         ctcp_action = 1;
                     }
                 }
-                
+
                 ptr_buf_decoded = (xfer->charset_modifier) ?
                     weechat_hook_modifier_exec ("charset_decode",
                                                 xfer->charset_modifier,
@@ -206,10 +206,10 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                 if (ptr_buf_color)
                     free (ptr_buf_color);
             }
-            
+
             ptr_buf = next_ptr_buf;
         }
-        
+
         if (buf2)
             free (buf2);
     }
@@ -218,7 +218,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
         xfer_close (xfer, XFER_STATUS_ABORTED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -233,12 +233,12 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 {
     struct t_xfer *ptr_xfer;
     char *input_data_color;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     ptr_xfer = xfer_search_by_buffer (buffer);
-    
+
     if (ptr_xfer)
     {
         if (!XFER_HAS_ENDED(ptr_xfer->status))
@@ -260,7 +260,7 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             }
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -273,7 +273,7 @@ int
 xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
@@ -290,7 +290,7 @@ xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             ptr_xfer->buffer = NULL;
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -303,9 +303,9 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
 {
     char *name;
     int length, buffer_created;
-    
+
     buffer_created = 0;
-    
+
     length = strlen (xfer->plugin_name) + 8 + strlen (xfer->plugin_id) + 1
         + strlen (xfer->remote_nick) + 1;
     name = malloc (length);
@@ -320,7 +320,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
                                                &xfer_chat_buffer_input_cb, NULL,
                                                &xfer_chat_buffer_close_cb, NULL);
             buffer_created = 1;
-            
+
             /* failed to create buffer ? then return */
             if (!xfer->buffer)
                 return;
@@ -339,7 +339,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
             weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
             weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
         }
-        
+
         weechat_printf (xfer->buffer,
                         _("Connected to %s (%d.%d.%d.%d) via "
                           "xfer chat"),
@@ -348,7 +348,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
                         (xfer->address >> 16) & 0xff,
                         (xfer->address >> 8) & 0xff,
                         xfer->address & 0xff);
-        
+
         free (name);
     }
 }

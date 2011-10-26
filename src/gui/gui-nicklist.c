@@ -59,7 +59,7 @@ gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
 {
     char *str_args;
     int length;
-    
+
     if (buffer)
     {
         length = 128 + ((arguments) ? strlen (arguments) : 0) + 1 + 1;
@@ -90,13 +90,13 @@ gui_nicklist_find_pos_group (struct t_gui_nick_group *groups,
                              struct t_gui_nick_group *group)
 {
     struct t_gui_nick_group *ptr_group;
-    
+
     for (ptr_group = groups; ptr_group; ptr_group = ptr_group->next_group)
     {
         if (string_strcasecmp (group->name, ptr_group->name) < 0)
             return ptr_group;
     }
-    
+
     /* group will be inserted at end of list */
     return NULL;
 }
@@ -111,11 +111,11 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
                                   struct t_gui_nick_group *group)
 {
     struct t_gui_nick_group *pos_group;
-    
+
     if (*groups)
     {
         pos_group = gui_nicklist_find_pos_group (*groups, group);
-        
+
         if (pos_group)
         {
             /* insert group into the list (before group found) */
@@ -157,16 +157,16 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
 {
     struct t_gui_nick_group *ptr_group;
     const char *ptr_name;
-    
+
     if (!buffer)
         return NULL;
-    
+
     if (!from_group)
         from_group = buffer->nicklist_root;
-    
+
     if (!from_group)
         return NULL;
-    
+
     if (from_group->children)
     {
         ptr_group = gui_nicklist_search_group_internal (buffer,
@@ -176,7 +176,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
         if (ptr_group)
             return ptr_group;
     }
-    
+
     ptr_group = from_group;
     while (ptr_group)
     {
@@ -186,7 +186,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
             return ptr_group;
         ptr_group = ptr_group->next_group;
     }
-    
+
     /* group not found */
     return NULL;
 }
@@ -201,9 +201,9 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            const char *name)
 {
     const char *ptr_name;
-    
+
     ptr_name = gui_nicklist_get_group_start (name);
-    
+
     return gui_nicklist_search_group_internal (buffer, from_group, name,
                                                (ptr_name == name) ? 1 : 0);
 }
@@ -218,14 +218,14 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
                         const char *color, int visible)
 {
     struct t_gui_nick_group *new_group;
-    
+
     if (!buffer || !name || gui_nicklist_search_group (buffer, parent_group, name))
         return NULL;
-    
+
     new_group = malloc (sizeof (*new_group));
     if (!new_group)
         return NULL;
-    
+
     new_group->name = strdup (name);
     new_group->color = (color) ? strdup (color) : NULL;
     new_group->visible = visible;
@@ -237,7 +237,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     new_group->last_nick = NULL;
     new_group->prev_group = NULL;
     new_group->next_group = NULL;
-    
+
     if (new_group->parent)
     {
         gui_nicklist_insert_group_sorted (&(new_group->parent->children),
@@ -248,12 +248,12 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     {
         buffer->nicklist_root = new_group;
     }
-    
+
     if (buffer->nicklist_display_groups && visible)
         buffer->nicklist_visible_count++;
-    
+
     gui_nicklist_send_signal ("nicklist_group_added", buffer, name);
-    
+
     return new_group;
 }
 
@@ -266,16 +266,16 @@ gui_nicklist_find_pos_nick (struct t_gui_nick_group *group,
                             struct t_gui_nick *nick)
 {
     struct t_gui_nick *ptr_nick;
-    
+
     if (!group)
         return NULL;
-    
+
     for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
         if (string_strcasecmp (nick->name, ptr_nick->name) < 0)
             return ptr_nick;
     }
-    
+
     /* nick will be inserted at end of list */
     return NULL;
 }
@@ -289,11 +289,11 @@ gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
                                  struct t_gui_nick *nick)
 {
     struct t_gui_nick *pos_nick;
-    
+
     if (group->nicks)
     {
         pos_nick = gui_nicklist_find_pos_nick (group, nick);
-        
+
         if (pos_nick)
         {
             /* insert nick into the list (before nick found) */
@@ -334,13 +334,13 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 {
     struct t_gui_nick *ptr_nick;
     struct t_gui_nick_group *ptr_group;
-    
+
     if (!buffer && !from_group)
         return NULL;
-    
+
     if (!from_group && !buffer->nicklist_root)
         return NULL;
-    
+
     for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
@@ -356,7 +356,7 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
         if (ptr_nick)
             return ptr_nick;
     }
-    
+
     /* nick not found */
     return NULL;
 }
@@ -373,28 +373,28 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                        int visible)
 {
     struct t_gui_nick *new_nick;
-    
+
     if (!buffer || !name || gui_nicklist_search_nick (buffer, NULL, name))
         return NULL;
-    
+
     new_nick = malloc (sizeof (*new_nick));
     if (!new_nick)
         return NULL;
-    
+
     new_nick->group = (group) ? group : buffer->nicklist_root;
     new_nick->name = strdup (name);
     new_nick->color = (color) ? strdup (color) : NULL;
     new_nick->prefix = (prefix) ? strdup (prefix) : NULL;
     new_nick->prefix_color = (prefix_color) ? strdup (prefix_color) : NULL;
     new_nick->visible = visible;
-    
+
     gui_nicklist_insert_nick_sorted (new_nick->group, new_nick);
-    
+
     if (visible)
         buffer->nicklist_visible_count++;
-    
+
     gui_nicklist_send_signal ("nicklist_nick_added", buffer, name);
-    
+
     return new_nick;
 }
 
@@ -407,12 +407,12 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
                           struct t_gui_nick *nick)
 {
     char *nick_removed;
-    
+
     if (!buffer || !nick)
         return;
-    
+
     nick_removed = (nick->name) ? strdup (nick->name) : NULL;
-    
+
     /* remove nick from list */
     if (nick->prev_nick)
         (nick->prev_nick)->next_nick = nick->next_nick;
@@ -422,7 +422,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         (nick->group)->nicks = nick->next_nick;
     if ((nick->group)->last_nick == nick)
         (nick->group)->last_nick = nick->prev_nick;
-    
+
     /* free data */
     if (nick->name)
         free (nick->name);
@@ -432,17 +432,17 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         free (nick->prefix);
     if (nick->prefix_color)
         free (nick->prefix_color);
-    
+
     if (nick->visible)
     {
         if (buffer->nicklist_visible_count > 0)
             buffer->nicklist_visible_count--;
     }
-    
+
     free (nick);
-    
+
     gui_nicklist_send_signal ("nicklist_nick_removed", buffer, nick_removed);
-    
+
     if (nick_removed)
         free (nick_removed);
 }
@@ -456,24 +456,24 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
                            struct t_gui_nick_group *group)
 {
     char *group_removed;
-    
+
     if (!buffer || !group)
         return;
-    
+
     group_removed = (group->name) ? strdup (group->name) : NULL;
-    
+
     /* remove children first */
     while (group->children)
     {
         gui_nicklist_remove_group (buffer, group->children);
     }
-    
+
     /* remove nicks from group */
     while (group->nicks)
     {
         gui_nicklist_remove_nick (buffer, group->nicks);
     }
-    
+
     if (group->parent)
     {
         /* remove group from list */
@@ -490,24 +490,24 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     {
         buffer->nicklist_root = NULL;
     }
-    
+
     /* free data */
     if (group->name)
         free (group->name);
     if (group->color)
         free (group->color);
-    
+
     if (group->visible)
     {
         if (buffer->nicklist_display_groups
             && (buffer->nicklist_visible_count > 0))
             buffer->nicklist_visible_count--;
     }
-    
+
     free (group);
-    
+
     gui_nicklist_send_signal ("nicklist_group_removed", buffer, group_removed);
-    
+
     if (group_removed)
         free (group_removed);
 }
@@ -539,24 +539,24 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
                             struct t_gui_nick **nick)
 {
     struct t_gui_nick_group *ptr_group;
-    
+
     if (!buffer)
         return;
-    
+
     /* root group */
     if (!*group && !*nick)
     {
         *group = buffer->nicklist_root;
         return;
     }
-    
+
     /* next nick */
     if (*nick && (*nick)->next_nick)
     {
         *nick = (*nick)->next_nick;
         return;
     }
-    
+
     if (*group && !*nick)
     {
         /* first child */
@@ -577,17 +577,17 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
             return;
         }
     }
-    
+
     *nick = NULL;
     ptr_group = (*group) ? *group : buffer->nicklist_root;
-    
+
     /* next group */
     if (ptr_group->next_group)
     {
         *group = ptr_group->next_group;
         return;
     }
-    
+
     /* find next group by parents */
     while ((ptr_group = ptr_group->parent))
     {
@@ -597,7 +597,7 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
             return;
         }
     }
-    
+
     /* nothing found */
     *group = NULL;
 }
@@ -613,7 +613,7 @@ const char *
 gui_nicklist_get_group_start (const char *name)
 {
     const char *ptr_name;
-    
+
     ptr_name = name;
     while (isdigit ((unsigned char)ptr_name[0]))
     {
@@ -638,10 +638,10 @@ gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
     int length, max_length;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    
+
     if (!buffer)
         return 0;
-    
+
     max_length = 0;
     for (ptr_group = (group) ? group : buffer->nicklist_root;
          ptr_group; ptr_group = ptr_group->next_group)
@@ -687,21 +687,21 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    
+
     if (!buffer || !group)
         return;
-    
+
     /* count for children */
     for (ptr_group = group->children; ptr_group;
          ptr_group = ptr_group->next_group)
     {
         gui_nicklist_compute_visible_count (buffer, ptr_group);
     }
-    
+
     /* count current group */
     if (buffer->nicklist_display_groups && group->visible)
         buffer->nicklist_visible_count++;
-    
+
     /* count nicks in group */
     for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
@@ -720,7 +720,7 @@ gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (group && property)
     {
         if (string_strcasecmp (property, "visible") == 0)
@@ -728,7 +728,7 @@ gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
         else if (string_strcasecmp (property, "level") == 0)
             return group->level;
     }
-    
+
     return 0;
 }
 
@@ -743,7 +743,7 @@ gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (group && property)
     {
         if (string_strcasecmp (property, "name") == 0)
@@ -751,7 +751,7 @@ gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
         else if (string_strcasecmp (property, "color") == 0)
             return group->color;
     }
-    
+
     return NULL;
 }
 
@@ -766,13 +766,13 @@ gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (group && property)
     {
         if (string_strcasecmp (property, "parent") == 0)
             return group->parent;
     }
-    
+
     return NULL;
 }
 
@@ -788,12 +788,12 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
     long number;
     char *error;
     int group_changed;
-    
+
     if (!buffer || !group || !property || !value)
         return;
-    
+
     group_changed = 0;
-    
+
     if (string_strcasecmp (property, "color") == 0)
     {
         if (group->color)
@@ -809,7 +809,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
             group->visible = (number) ? 1 : 0;
         group_changed = 1;
     }
-    
+
     if (group_changed)
     {
         gui_nicklist_send_signal ("nicklist_group_changed", buffer,
@@ -828,13 +828,13 @@ gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (nick && property)
     {
         if (string_strcasecmp (property, "visible") == 0)
             return nick->visible;
     }
-    
+
     return 0;
 }
 
@@ -849,7 +849,7 @@ gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (nick && property)
     {
         if (string_strcasecmp (property, "name") == 0)
@@ -861,7 +861,7 @@ gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
         else if (string_strcasecmp (property, "prefix_color") == 0)
             return nick->prefix_color;
     }
-    
+
     return NULL;
 }
 
@@ -876,13 +876,13 @@ gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) buffer;
-    
+
     if (nick && property)
     {
         if (string_strcasecmp (property, "group") == 0)
             return nick->group;
     }
-    
+
     return NULL;
 }
 
@@ -898,12 +898,12 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
     long number;
     char *error;
     int nick_changed;
-    
+
     if (!buffer || !nick || !property || !value)
         return;
-    
+
     nick_changed = 0;
-    
+
     if (string_strcasecmp (property, "color") == 0)
     {
         if (nick->color)
@@ -933,7 +933,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
             nick->visible = (number) ? 1 : 0;
         nick_changed = 1;
     }
-    
+
     if (nick_changed)
     {
         gui_nicklist_send_signal ("nicklist_nick_changed", buffer,
@@ -949,10 +949,10 @@ struct t_hdata *
 gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_group", "next_group");
     if (hdata)
     {
@@ -979,10 +979,10 @@ struct t_hdata *
 gui_nicklist_hdata_nick_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_nick", "next_nick");
     if (hdata)
     {
@@ -1008,14 +1008,14 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_nick_group *group)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !group)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_string (ptr_item, "type", "group"))
         return 0;
     if (group->parent)
@@ -1031,7 +1031,7 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "level", group->level))
         return 0;
-    
+
     return 1;
 }
 
@@ -1045,14 +1045,14 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
                                    struct t_gui_nick *nick)
 {
     struct t_infolist_item *ptr_item;
-    
+
     if (!infolist || !nick)
         return 0;
-    
+
     ptr_item = infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!infolist_new_var_string (ptr_item, "type", "nick"))
         return 0;
     if (nick->group)
@@ -1070,7 +1070,7 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "visible", nick->visible))
         return 0;
-    
+
     return 1;
 }
 
@@ -1086,10 +1086,10 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    
+
     if (!infolist || !buffer)
         return 0;
-    
+
     /* add only one nick if asked */
     if (name && (strncmp (name, "nick_", 5) == 0))
     {
@@ -1098,7 +1098,7 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
             return 0;
         return gui_nicklist_add_nick_to_infolist (infolist, ptr_nick);
     }
-    
+
     /* add only one group if asked */
     if (name && (strncmp (name, "group_", 6) == 0))
     {
@@ -1107,7 +1107,7 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
             return 0;
         return gui_nicklist_add_group_to_infolist (infolist, ptr_group);
     }
-    
+
     ptr_group = NULL;
     ptr_nick = NULL;
     gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -1117,10 +1117,10 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
             gui_nicklist_add_nick_to_infolist (infolist, ptr_nick);
         else
             gui_nicklist_add_group_to_infolist (infolist, ptr_group);
-        
+
         gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     }
-    
+
     return 1;
 }
 
@@ -1134,7 +1134,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
     char format[128];
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
-    
+
     snprintf (format, sizeof (format),
               "%%-%ds=> group (addr:0x%%lx)",
               (indent * 2) + 4);
@@ -1179,7 +1179,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
               "%%-%dsnext_group. : 0x%%lx",
               (indent * 2) + 6);
     log_printf (format, " ", group->next_group);
-    
+
     /* display child groups first */
     if (group->children)
     {

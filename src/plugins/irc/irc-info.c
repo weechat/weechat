@@ -74,10 +74,10 @@ irc_info_get_info_cb (void *data, const char *info_name,
     static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (weechat_strcasecmp (info_name, "irc_is_channel") == 0)
     {
         if (irc_channel_is_channel (arguments))
@@ -118,7 +118,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
             host = NULL;
             ptr_server = NULL;
             ptr_channel = NULL;
-            
+
             pos_comma = strchr (arguments, ',');
             if (pos_comma)
             {
@@ -140,7 +140,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
                 else
                     server = strdup (arguments);
             }
-            
+
             /*
              * replace channel by nick in host if channel is not a channel
              * (private ?)
@@ -154,10 +154,10 @@ irc_info_get_info_cb (void *data, const char *info_name,
                     nick = irc_message_get_nick_from_host (host);
                     if (nick)
                         channel = strdup (nick);
-                    
+
                 }
             }
-            
+
             /* search for server or channel buffer */
             if (server)
             {
@@ -165,14 +165,14 @@ irc_info_get_info_cb (void *data, const char *info_name,
                 if (ptr_server && channel)
                     ptr_channel = irc_channel_search (ptr_server, channel);
             }
-            
+
             if (server)
                 free (server);
             if (channel)
                 free (channel);
             if (host)
                 free (host);
-            
+
             if (ptr_channel)
             {
                 irc_info_create_string_with_pointer (&ptr_channel->buffer_as_string,
@@ -227,7 +227,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
         }
         return isupport_value;
     }
-    
+
     return NULL;
 }
 
@@ -243,13 +243,13 @@ irc_info_get_info_hashtable_cb (void *data, const char *info_name,
     const char *server, *message;
     struct t_irc_server *ptr_server;
     struct t_hashtable *value;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!hashtable)
         return NULL;
-    
+
     if (weechat_strcasecmp (info_name, "irc_message_parse") == 0)
     {
         message = weechat_hashtable_get (hashtable, "message");
@@ -270,7 +270,7 @@ irc_info_get_info_hashtable_cb (void *data, const char *info_name,
             return value;
         }
     }
-    
+
     return NULL;
 }
 
@@ -290,18 +290,18 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     struct t_irc_notify *ptr_notify;
     char **argv;
     int argc;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (!infolist_name || !infolist_name[0])
         return NULL;
-    
+
     if (weechat_strcasecmp (infolist_name, "irc_server") == 0)
     {
         if (pointer && !irc_server_valid (pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -367,7 +367,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
                 {
                     if (pointer && !irc_channel_valid (ptr_server, pointer))
                         return NULL;
-                    
+
                     ptr_infolist = weechat_infolist_new ();
                     if (ptr_infolist)
                     {
@@ -441,7 +441,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
                 {
                     if (pointer && !irc_nick_valid (ptr_channel, pointer))
                         return NULL;
-                    
+
                     ptr_infolist = weechat_infolist_new ();
                     if (ptr_infolist)
                     {
@@ -480,7 +480,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     {
         if (pointer && !irc_ignore_valid (pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -514,7 +514,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     {
         if (pointer && !irc_notify_valid (NULL, pointer))
             return NULL;
-        
+
         ptr_infolist = weechat_infolist_new ();
         if (ptr_infolist)
         {
@@ -553,7 +553,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
-    
+
     return NULL;
 }
 
@@ -601,7 +601,7 @@ irc_info_init ()
                        N_("value of feature, if supported by server (from IRC message 005)"),
                        N_("server,feature"),
                        &irc_info_get_info_cb, NULL);
-    
+
     /* info_hashtable hooks */
     weechat_hook_info_hashtable ("irc_message_parse",
                                  N_("parse an IRC message"),
@@ -622,7 +622,7 @@ irc_info_init ()
                                     "messages, "
                                     "\"count\": number of messages"),
                                  &irc_info_get_info_hashtable_cb, NULL);
-    
+
     /* infolist hooks */
     weechat_hook_infolist ("irc_server",
                            N_("list of IRC servers"),

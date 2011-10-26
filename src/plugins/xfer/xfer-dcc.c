@@ -51,14 +51,14 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
     uint32_t ack;
     time_t last_sent, new_time, last_second, sent_ok;
     unsigned long long sent_last_second;
-    
+
     blocksize = xfer->blocksize;
     if (weechat_config_integer (xfer_config_network_speed_limit) > 0)
     {
         if (blocksize > weechat_config_integer (xfer_config_network_speed_limit) * 1024)
             blocksize = weechat_config_integer (xfer_config_network_speed_limit) * 1024;
     }
-    
+
     last_sent = time (NULL);
     last_second = time (NULL);
     sent_ok = 0;
@@ -83,7 +83,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                 {
                     recv (xfer->sock, (char *) &ack, 4, 0);
                     xfer->ack = ntohl (ack);
-                    
+
                     /* DCC send ok? */
                     if ((xfer->pos >= xfer->size)
                         && (xfer->ack >= xfer->size))
@@ -97,7 +97,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                     break;
             }
         }
-        
+
         /* send a block to receiver */
         if ((xfer->pos < xfer->size) &&
              (xfer->fast_send || (xfer->pos <= xfer->ack)))
@@ -153,14 +153,14 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
         }
         else
             usleep (1000);
-        
+
         new_time = time (NULL);
         if (new_time > last_second)
         {
             last_second = new_time;
             sent_last_second = 0;
         }
-        
+
         /*
          * if send if ok since 2 seconds or more, and that no ack was received,
          * then consider it's ok
@@ -185,7 +185,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     static char buffer[XFER_BLOCKSIZE_MAX];
     uint32_t pos;
     time_t last_sent, new_time;
-    
+
     /* first connect to sender (blocking) */
     if (!weechat_network_connect_to (xfer->proxy, xfer->sock,
                                      xfer->address, xfer->port))
@@ -194,11 +194,11 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                                  XFER_ERROR_CONNECT_SENDER);
         return;
     }
-    
+
     /* connection is ok, change DCC status (inform parent process) */
     xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
                              XFER_NO_ERROR);
-    
+
     last_sent = time (NULL);
     while (1)
     {
@@ -223,20 +223,20 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                                          XFER_ERROR_RECV_BLOCK);
                 return;
             }
-            
+
             if (write (xfer->file, buffer, num_read) == -1)
             {
                 xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                          XFER_ERROR_WRITE_LOCAL);
                 return;
             }
-            
+
             xfer->pos += (unsigned long long) num_read;
             pos = htonl (xfer->pos);
-            
+
             /* we don't check return code, not a problem if an ACK send failed */
             send (xfer->sock, (char *) &pos, 4, 0);
-            
+
             /* file received ok? */
             if (xfer->pos >= xfer->size)
             {
@@ -244,7 +244,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                                          XFER_NO_ERROR);
                 return;
             }
-            
+
             new_time = time (NULL);
             if (last_sent != new_time)
             {

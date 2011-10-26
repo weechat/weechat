@@ -65,17 +65,17 @@ struct t_config_file *
 config_file_search (const char *name)
 {
     struct t_config_file *ptr_config;
-    
+
     if (!name)
         return NULL;
-    
+
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
         if (string_strcasecmp (ptr_config->name, name) == 0)
             return ptr_config;
     }
-    
+
     /* configuration file not found */
     return NULL;
 }
@@ -93,14 +93,14 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
     struct t_config_file *new_config_file;
     char *filename;
     int length;
-    
+
     if (!name)
         return NULL;
-    
+
     /* it's NOT authorized to create two configuration files with same filename */
     if (config_file_search (name))
         return NULL;
-    
+
     new_config_file = malloc (sizeof (*new_config_file));
     if (new_config_file)
     {
@@ -132,7 +132,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         new_config_file->callback_reload_data = callback_reload_data;
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
-        
+
         new_config_file->prev_config = last_config_file;
         new_config_file->next_config = NULL;
         if (config_files)
@@ -141,7 +141,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
             config_files = new_config_file;
         last_config_file = new_config_file;
     }
-    
+
     return new_config_file;
 }
 
@@ -179,13 +179,13 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
                          void *callback_delete_option_data)
 {
     struct t_config_section *new_section;
-    
+
     if (!config_file || !name)
         return NULL;
-    
+
     if (config_file_search_section (config_file, name))
         return NULL;
-    
+
     new_section = malloc (sizeof (*new_section));
     if (new_section)
     {
@@ -210,7 +210,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
         new_section->callback_delete_option_data = callback_delete_option_data;
         new_section->options = NULL;
         new_section->last_option = NULL;
-        
+
         new_section->prev_section = config_file->last_section;
         new_section->next_section = NULL;
         if (config_file->sections)
@@ -219,7 +219,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
             config_file->sections = new_section;
         config_file->last_section = new_section;
     }
-    
+
     return new_section;
 }
 
@@ -235,14 +235,14 @@ config_file_search_section (struct t_config_file *config_file,
 
     if (!config_file || !section_name)
         return NULL;
-    
+
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
         if (string_strcasecmp (ptr_section->name, section_name) == 0)
             return ptr_section;
     }
-    
+
     /* section not found */
     return NULL;
 }
@@ -256,10 +256,10 @@ config_file_option_full_name (struct t_config_option *option)
 {
     int length_option;
     char *option_full_name;
-    
+
     if (!option)
         return NULL;
-    
+
     length_option = strlen (option->config_file->name) + 1 +
         strlen (option->section->name) + 1 + strlen (option->name) + 1;
     option_full_name = malloc (length_option);
@@ -271,7 +271,7 @@ config_file_option_full_name (struct t_config_option *option)
                   option->section->name,
                   option->name);
     }
-    
+
     return option_full_name;
 }
 
@@ -283,7 +283,7 @@ void
 config_file_hook_config_exec (struct t_config_option *option)
 {
     char *option_full_name, str_value[256];
-    
+
     if (option)
     {
         option_full_name = config_file_option_full_name (option);
@@ -322,7 +322,7 @@ config_file_hook_config_exec (struct t_config_option *option)
             }
             else
                 hook_config_exec (option_full_name, NULL);
-            
+
             free (option_full_name);
         }
     }
@@ -347,7 +347,7 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
                 return ptr_option;
         }
     }
-    
+
     /* position not found (we will add to the end of list) */
     return NULL;
 }
@@ -361,10 +361,10 @@ void
 config_file_option_insert_in_section (struct t_config_option *option)
 {
     struct t_config_option *pos_option;
-    
+
     if (!option || !option->section)
         return;
-    
+
     if (option->section->options)
     {
         pos_option = config_file_option_find_pos (option->section,
@@ -407,7 +407,7 @@ struct t_config_option *
 config_file_option_malloc ()
 {
     struct t_config_option *new_option;
-    
+
     new_option = malloc (sizeof (*new_option));
     if (new_option)
     {
@@ -432,7 +432,7 @@ config_file_option_malloc ()
         new_option->prev_option = NULL;
         new_option->next_option = NULL;
     }
-    
+
     return new_option;
 }
 
@@ -463,14 +463,14 @@ config_file_new_option (struct t_config_file *config_file,
     int var_type, int_value, argc, i, index_value;
     long number;
     char *error;
-    
+
     if (!name)
         return NULL;
-    
+
     if (config_file && section
         && config_file_search_option (config_file, section, name))
         return NULL;
-    
+
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
@@ -487,7 +487,7 @@ config_file_new_option (struct t_config_file *config_file,
                          type);
         return NULL;
     }
-    
+
     if (!null_value_allowed)
     {
         if (default_value && !value)
@@ -497,7 +497,7 @@ config_file_new_option (struct t_config_file *config_file,
         if (!default_value || !value)
             return NULL;
     }
-    
+
     new_option = config_file_option_malloc ();
     if (new_option)
     {
@@ -677,14 +677,14 @@ config_file_new_option (struct t_config_file *config_file,
             new_option->prev_option = NULL;
             new_option->next_option = NULL;
         }
-        
+
         /* run config hook(s) */
         if (new_option->config_file && new_option->section)
         {
             config_file_hook_config_exec (new_option);
         }
     }
-    
+
     return new_option;
 
 error:
@@ -730,7 +730,7 @@ config_file_search_option (struct t_config_file *config_file,
             }
         }
     }
-    
+
     /* option not found */
     return NULL;
 }
@@ -749,10 +749,10 @@ config_file_search_section_option (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    
+
     *section_found = NULL;
     *option_found = NULL;
-    
+
     if (section)
     {
         for (ptr_option = section->options; ptr_option;
@@ -810,15 +810,15 @@ config_file_search_with_string (const char *option_name,
         *option = NULL;
     if (pos_option_name)
         *pos_option_name = NULL;
-    
+
     ptr_config = NULL;
     ptr_section = NULL;
     ptr_option = NULL;
-    
+
     file_name = NULL;
     section_name = NULL;
     pos_option = NULL;
-    
+
     pos_section = strchr (option_name, '.');
     pos_option = (pos_section) ? strchr (pos_section + 1, '.') : NULL;
     if (pos_section && pos_option)
@@ -845,12 +845,12 @@ config_file_search_with_string (const char *option_name,
             }
         }
     }
-    
+
     if (file_name)
         free (file_name);
     if (section_name)
         free (section_name);
-    
+
     if (config_file)
         *config_file = ptr_config;
     if (section)
@@ -867,10 +867,10 @@ int
 config_file_string_boolean_is_valid (const char *text)
 {
     int i;
-    
+
     if (!text)
         return 0;
-    
+
     for (i = 0; config_boolean_true[i]; i++)
     {
         if (string_strcasecmp (text, config_boolean_true[i]) == 0)
@@ -882,7 +882,7 @@ config_file_string_boolean_is_valid (const char *text)
         if (string_strcasecmp (text, config_boolean_false[i]) == 0)
             return 1;
     }
-    
+
     /* text is not a boolean */
     return 0;
 }
@@ -896,16 +896,16 @@ int
 config_file_string_to_boolean (const char *text)
 {
     int i;
-    
+
     if (!text)
         return CONFIG_BOOLEAN_FALSE;
-    
+
     for (i = 0; config_boolean_true[i]; i++)
     {
         if (string_strcasecmp (text, config_boolean_true[i]) == 0)
             return CONFIG_BOOLEAN_TRUE;
     }
-    
+
     return CONFIG_BOOLEAN_FALSE;
 }
 
@@ -921,12 +921,12 @@ int
 config_file_option_reset (struct t_config_option *option, int run_callback)
 {
     int rc, old_value_was_null;
-    
+
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     if (option->default_value)
     {
         old_value_was_null = (option->value == NULL);
@@ -1018,20 +1018,20 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
     }
-    
+
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
-    
+
     /* run config hook(s) */
     if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
         && option->config_file && option->section)
     {
         config_file_hook_config_exec (option);
     }
-    
+
     return rc;
 }
 
@@ -1050,12 +1050,12 @@ config_file_option_set (struct t_config_option *option, const char *value,
     int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
     long number;
     char *error;
-    
+
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     if (option->callback_check_value)
     {
         if (!(int)(option->callback_check_value)
@@ -1064,7 +1064,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
              value))
             return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
-    
+
     if (value)
     {
         old_value_was_null = (option->value == NULL);
@@ -1329,21 +1329,21 @@ config_file_option_set (struct t_config_option *option, const char *value,
         else
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
-    
+
     /* run callback if asked and value was changed */
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
-    
+
     /* run config hook(s) */
     if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
         && option->config_file && option->section)
     {
         config_file_hook_config_exec (option);
     }
-    
+
     return rc;
 }
 
@@ -1359,12 +1359,12 @@ int
 config_file_option_set_null (struct t_config_option *option, int run_callback)
 {
     int rc;
-    
+
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     /* null value is authorized only if it's allowed in option */
     if (option->null_value_allowed)
     {
@@ -1379,21 +1379,21 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
         }
     }
-    
+
     /* run callback if asked and value was changed */
     if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
         && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
-    
+
     /* run config hook(s) */
     if ((rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
         && option->config_file && option->section)
     {
         config_file_hook_config_exec (option);
     }
-    
+
     return rc;
 }
 
@@ -1411,12 +1411,12 @@ config_file_option_unset (struct t_config_option *option)
 {
     int rc;
     char *option_full_name;
-    
+
     if (!option)
         return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
-    
+
     rc = WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
-    
+
     if (option->section && option->section->user_can_delete_options)
     {
         /* delete option */
@@ -1426,7 +1426,7 @@ config_file_option_unset (struct t_config_option *option)
                 (option->callback_delete_data,
                  option);
         }
-        
+
         option_full_name = config_file_option_full_name (option);
 
         if (option->section->callback_delete_option)
@@ -1442,7 +1442,7 @@ config_file_option_unset (struct t_config_option *option)
             config_file_option_free (option);
             rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
         }
-        
+
         if (option_full_name)
         {
             hook_config_exec (option_full_name, NULL);
@@ -1465,7 +1465,7 @@ config_file_option_unset (struct t_config_option *option)
                 break;
         }
     }
-    
+
     return rc;
 }
 
@@ -1478,7 +1478,7 @@ config_file_option_rename (struct t_config_option *option,
                            const char *new_name)
 {
     char *str_new_name;
-    
+
     if (!option || !new_name || !new_name[0]
         || config_file_search_option (option->config_file, option->section, new_name))
         return;
@@ -1498,12 +1498,12 @@ config_file_option_rename (struct t_config_option *option,
             if (option->section->last_option == option)
                 (option->section)->last_option = option->prev_option;
         }
-        
+
         /* rename option */
         if (option->name)
             free (option->name);
         option->name = str_new_name;
-        
+
         /* re-insert option in section */
         if (option->section)
             config_file_option_insert_in_section (option);
@@ -1520,7 +1520,7 @@ config_file_option_get_pointer (struct t_config_option *option,
 {
     if (!option || !property)
         return NULL;
-    
+
     if (string_strcasecmp (property, "config_file") == 0)
         return option->config_file;
     else if (string_strcasecmp (property, "section") == 0)
@@ -1545,7 +1545,7 @@ config_file_option_get_pointer (struct t_config_option *option,
         return option->prev_option;
     else if (string_strcasecmp (property, "next_option") == 0)
         return option->next_option;
-    
+
     return NULL;
 }
 
@@ -1559,7 +1559,7 @@ config_file_option_is_null (struct t_config_option *option)
 {
     if (!option)
         return 1;
-    
+
     return (option->value) ? 0 : 1;
 }
 
@@ -1573,7 +1573,7 @@ config_file_option_default_is_null (struct t_config_option *option)
 {
     if (!option)
         return 1;
-    
+
     return (option->default_value) ? 0 : 1;
 }
 
@@ -1595,12 +1595,12 @@ config_file_option_set_with_string (const char *option_name, const char *value)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     char *pos_option;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
-    
+
     config_file_search_with_string (option_name, &ptr_config, &ptr_section,
                                     &ptr_option, &pos_option);
-    
+
     if (ptr_config && ptr_section)
     {
         if (ptr_option)
@@ -1623,7 +1623,7 @@ config_file_option_set_with_string (const char *option_name, const char *value)
             }
         }
     }
-    
+
     return rc;
 }
 
@@ -1636,7 +1636,7 @@ config_file_option_boolean (struct t_config_option *option)
 {
     if (!option)
         return 0;
-    
+
     if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
         return CONFIG_BOOLEAN(option);
     else
@@ -1652,7 +1652,7 @@ config_file_option_boolean_default (struct t_config_option *option)
 {
     if (!option)
         return 0;
-    
+
     if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
         return CONFIG_BOOLEAN_DEFAULT(option);
     else
@@ -1668,7 +1668,7 @@ config_file_option_integer (struct t_config_option *option)
 {
     if (!option)
         return 0;
-    
+
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -1696,7 +1696,7 @@ config_file_option_integer_default (struct t_config_option *option)
 {
     if (!option)
         return 0;
-    
+
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -1724,7 +1724,7 @@ config_file_option_string (struct t_config_option *option)
 {
     if (!option)
         return NULL;
-    
+
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -1755,7 +1755,7 @@ config_file_option_string_default (struct t_config_option *option)
 {
     if (!option)
         return NULL;
-    
+
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -1813,12 +1813,12 @@ config_file_write_option (struct t_config_file *config_file,
                           struct t_config_option *option)
 {
     int rc;
-    
+
     if (!config_file || !config_file->file || !option)
         return 0;
-    
+
     rc = 1;
-    
+
     if (option->value)
     {
         switch (option->type)
@@ -1858,7 +1858,7 @@ config_file_write_option (struct t_config_file *config_file,
         rc = string_iconv_fprintf (config_file->file, "%s\n",
                                    option->name);
     }
-    
+
     return rc;
 }
 
@@ -1873,10 +1873,10 @@ config_file_write_line (struct t_config_file *config_file,
                         const char *option_name, const char *value, ...)
 {
     int rc;
-    
+
     if (!config_file || !option_name)
         return 0;
-    
+
     if (value && value[0])
     {
         weechat_va_format (value);
@@ -1892,7 +1892,7 @@ config_file_write_line (struct t_config_file *config_file,
             free (vbuffer);
         }
     }
-    
+
     return (string_iconv_fprintf (config_file->file, "\n[%s]\n",
                                   option_name));
 }
@@ -1914,7 +1914,7 @@ config_file_write_internal (struct t_config_file *config_file,
     char *filename, *filename2;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    
+
     if (!config_file)
         return WEECHAT_CONFIG_WRITE_ERROR;
 
@@ -1926,7 +1926,7 @@ config_file_write_internal (struct t_config_file *config_file,
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
-    
+
     /*
      * build temporary filename, this temp file will be renamed to filename
      * after write
@@ -1938,11 +1938,11 @@ config_file_write_internal (struct t_config_file *config_file,
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     }
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
-    
+
     log_printf (_("Writing configuration file %s %s"),
                 config_file->filename,
                 (default_options) ? _("(default options)") : "");
-    
+
     /* open temp file in write mode */
     config_file->file = fopen (filename2, "wb");
     if (!config_file->file)
@@ -1953,7 +1953,7 @@ config_file_write_internal (struct t_config_file *config_file,
                          filename2);
         goto error;
     }
-    
+
     /* write header with name of config file and WeeChat version */
     if (!string_iconv_fprintf (config_file->file, "#\n"))
         goto error;
@@ -1961,7 +1961,7 @@ config_file_write_internal (struct t_config_file *config_file,
                                "# %s -- %s v%s\n#\n",
                                config_file->filename, PACKAGE_NAME, PACKAGE_VERSION))
         goto error;
-    
+
     /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -1995,31 +1995,31 @@ config_file_write_internal (struct t_config_file *config_file,
             }
         }
     }
-    
+
     if (fflush (config_file->file) != 0)
         goto error;
-    
+
     /* close temp file */
     fclose (config_file->file);
     config_file->file = NULL;
-    
+
     /* update file mode */
     chmod (filename2, 0600);
-    
+
     /* remove target file */
     unlink (filename);
-    
+
     /* rename temp file to target file */
     rc = rename (filename2, filename);
-    
+
     free (filename);
     free (filename2);
-    
+
     if (rc != 0)
         return WEECHAT_CONFIG_WRITE_ERROR;
-    
+
     return WEECHAT_CONFIG_WRITE_OK;
-    
+
 error:
     gui_chat_printf (NULL,
                      _("%sError writing configuration file \"%s\""),
@@ -2069,10 +2069,10 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     char line[1024], *ptr_line, *ptr_line2, *pos, *pos2;
-    
+
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
-    
+
     /* build filename */
     filename_length = strlen (weechat_home) + strlen (config_file->filename) + 2;
     filename = malloc (filename_length);
@@ -2095,10 +2095,10 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
         }
     }
-    
+
     if (!reload)
         log_printf (_("Reading configuration file %s"), config_file->filename);
-    
+
     /* read all lines */
     ptr_section = NULL;
     line_number = 0;
@@ -2115,7 +2115,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 snprintf (line, sizeof (line) - 1, "%s", ptr_line2);
                 free (ptr_line2);
             }
-            
+
             /* skip spaces */
             while (ptr_line[0] == ' ')
                 ptr_line++;
@@ -2155,7 +2155,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 else
                 {
                     undefined_value = 1;
-                    
+
                     /* remove CR/LF */
                     pos = strchr (line, '\r');
                     if (pos != NULL)
@@ -2163,13 +2163,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     pos = strchr (line, '\n');
                     if (pos != NULL)
                         pos[0] = '\0';
-                    
+
                     pos = strstr (line, " =");
                     if (pos)
                     {
                         pos[0] = '\0';
                         pos += 2;
-                        
+
                         /* remove spaces before '=' */
                         pos2 = pos - 3;
                         while ((pos2 > line) && (pos2[0] == ' '))
@@ -2177,13 +2177,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             pos2[0] = '\0';
                             pos2--;
                         }
-                        
+
                         /* skip spaces after '=' */
                         while (pos[0] && (pos[0] == ' '))
                         {
                             pos++;
                         }
-                        
+
                         if (pos[0]
                             && string_strcasecmp (pos, WEECHAT_CONFIG_OPTION_NULL) != 0)
                         {
@@ -2209,7 +2209,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             }
                         }
                     }
-                    
+
                     if (ptr_section && ptr_section->callback_read)
                     {
                         ptr_option = NULL;
@@ -2248,7 +2248,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             }
                         }
                     }
-                    
+
                     switch (rc)
                     {
                         case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
@@ -2283,11 +2283,11 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             }
         }
     }
-    
+
     fclose (config_file->file);
     config_file->file = NULL;
     free (filename);
-    
+
     return WEECHAT_CONFIG_READ_OK;
 }
 
@@ -2319,12 +2319,12 @@ config_file_reload (struct t_config_file *config_file)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     int rc;
-    
+
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
-    
+
     log_printf (_("Reloading configuration file %s"), config_file->filename);
-    
+
     /* init "loaded" flag for all options */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -2338,10 +2338,10 @@ config_file_reload (struct t_config_file *config_file)
             }
         }
     }
-    
+
     /* read configuration file */
     rc = config_file_read_internal (config_file, 1);
-    
+
     /* reset options not found in configuration file */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -2356,7 +2356,7 @@ config_file_reload (struct t_config_file *config_file)
             }
         }
     }
-    
+
     return rc;
 }
 
@@ -2388,12 +2388,12 @@ config_file_option_free (struct t_config_option *option)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *new_options;
-    
+
     if (!option)
         return;
-    
+
     ptr_section = option->section;
-    
+
     /* remove option from section */
     if (ptr_section)
     {
@@ -2410,10 +2410,10 @@ config_file_option_free (struct t_config_option *option)
             (option->next_option)->prev_option = option->prev_option;
         ptr_section->options = new_options;
     }
-    
+
     /* free data */
     config_file_option_free_data (option);
-    
+
     free (option);
 }
 
@@ -2426,7 +2426,7 @@ config_file_section_free_options (struct t_config_section *section)
 {
     if (!section)
         return;
-    
+
     while (section->options)
     {
         config_file_option_free (section->options);
@@ -2442,12 +2442,12 @@ config_file_section_free (struct t_config_section *section)
 {
     struct t_config_file *ptr_config;
     struct t_config_section *new_sections;
-    
+
     if (!section)
         return;
-    
+
     ptr_config = section->config_file;
-    
+
     /* remove section */
     if (ptr_config->last_section == section)
         ptr_config->last_section = section->prev_section;
@@ -2458,17 +2458,17 @@ config_file_section_free (struct t_config_section *section)
     }
     else
         new_sections = section->next_section;
-    
+
     if (section->next_section)
         (section->next_section)->prev_section = section->prev_section;
-    
+
     /* free data */
     config_file_section_free_options (section);
     if (section->name)
         free (section->name);
-    
+
     free (section);
-    
+
     ptr_config->sections = new_sections;
 }
 
@@ -2480,10 +2480,10 @@ void
 config_file_free (struct t_config_file *config_file)
 {
     struct t_config_file *new_config_files;
-    
+
     if (!config_file)
         return;
-    
+
     /* remove configuration file */
     if (last_config_file == config_file)
         last_config_file = config_file->prev_config;
@@ -2494,10 +2494,10 @@ config_file_free (struct t_config_file *config_file)
     }
     else
         new_config_files = config_file->next_config;
-    
+
     if (config_file->next_config)
         (config_file->next_config)->prev_config = config_file->prev_config;
-    
+
     /* free data */
     while (config_file->sections)
     {
@@ -2507,9 +2507,9 @@ config_file_free (struct t_config_file *config_file)
         free (config_file->name);
     if (config_file->filename)
         free (config_file->filename);
-    
+
     free (config_file);
-    
+
     config_files = new_config_files;
 }
 
@@ -2534,15 +2534,15 @@ void
 config_file_free_all_plugin (struct t_weechat_plugin *plugin)
 {
     struct t_config_file *ptr_config, *next_config;
-    
+
     ptr_config = config_files;
     while (ptr_config)
     {
         next_config = ptr_config->next_config;
-        
+
         if (ptr_config->plugin == plugin)
             config_file_free (ptr_config);
-        
+
         ptr_config = next_config;
     }
 }
@@ -2555,10 +2555,10 @@ struct t_hdata *
 config_file_hdata_config_file_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_config", "next_config");
     if (hdata)
     {
@@ -2586,10 +2586,10 @@ struct t_hdata *
 config_file_hdata_config_section_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_section", "next_section");
     if (hdata)
     {
@@ -2623,10 +2623,10 @@ struct t_hdata *
 config_file_hdata_config_option_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = hdata_new (NULL, hdata_name, "prev_option", "next_option");
     if (hdata)
     {
@@ -2669,10 +2669,10 @@ config_file_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     int length;
     char *option_full_name, value[128], *string_values;
-    
+
     if (!infolist)
         return 0;
-    
+
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
@@ -2960,7 +2960,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
             }
         }
     }
-    
+
     return 1;
 }
 
@@ -2974,7 +2974,7 @@ config_file_print_log ()
     struct t_config_file *ptr_config_file;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    
+
     for (ptr_config_file = config_files; ptr_config_file;
          ptr_config_file = ptr_config_file->next_config)
     {
@@ -2992,7 +2992,7 @@ config_file_print_log ()
         log_printf ("  last_section . . . . . : 0x%lx", ptr_config_file->last_section);
         log_printf ("  prev_config. . . . . . : 0x%lx", ptr_config_file->prev_config);
         log_printf ("  next_config. . . . . . : 0x%lx", ptr_config_file->next_config);
-        
+
         for (ptr_section = ptr_config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
@@ -3014,7 +3014,7 @@ config_file_print_log ()
             log_printf ("      last_option. . . . . . . . : 0x%lx", ptr_section->last_option);
             log_printf ("      prev_section . . . . . . . : 0x%lx", ptr_section->prev_section);
             log_printf ("      next_section . . . . . . . : 0x%lx", ptr_section->next_section);
-            
+
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {

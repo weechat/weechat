@@ -50,7 +50,7 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
     {
         snprintf (option_name, sizeof (option_name),
                   "%s.%s", server->name, message);
-        
+
         /* search for msgbuffer in config file, for server */
         ptr_option = weechat_config_search_option (irc_config_file,
                                                    irc_config_section_msgbuffer,
@@ -58,14 +58,14 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
         if (ptr_option)
             return ptr_option;
     }
-    
+
     /* search for msgbuffer in config file */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_msgbuffer,
                                                message);
     if (ptr_option)
         return ptr_option;
-    
+
     /* no msgbuffer found in config */
     return NULL;
 }
@@ -92,18 +92,18 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_channel *ptr_channel;
     struct t_weechat_plugin *buffer_plugin;
-    
+
     ptr_option = irc_msgbuffer_get_option (server, message);
     if (!ptr_option && alias && alias[0])
         ptr_option = irc_msgbuffer_get_option (server, alias);
-    
+
     if (!ptr_option)
     {
         if (default_buffer)
             return default_buffer;
         return (server) ? server->buffer : NULL;
     }
-    
+
     target = weechat_config_integer (ptr_option);
     switch (target)
     {
@@ -129,11 +129,11 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
             return (server) ? server->buffer : NULL;
             break;
     }
-    
+
     ptr_buffer = weechat_current_buffer ();
     buffer_plugin = weechat_buffer_get_pointer (ptr_buffer, "plugin");
     if (buffer_plugin == weechat_irc_plugin)
         return ptr_buffer;
-    
+
     return (server) ? server->buffer : NULL;
 }

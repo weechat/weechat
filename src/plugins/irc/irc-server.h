@@ -121,7 +121,7 @@ struct t_irc_server
     /* user choices */
     char *name;                             /* internal name of server       */
     struct t_config_option *options[IRC_SERVER_NUM_OPTIONS];
-    
+
     /* internal vars */
     int temp_server;                /* temporary server (not saved)          */
     int reloading_from_config;      /* 1 if reloading from config file       */

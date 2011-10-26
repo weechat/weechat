@@ -73,10 +73,10 @@ long
 util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 {
     long diff_sec, diff_usec;
-    
+
     diff_sec = tv2->tv_sec - tv1->tv_sec;
     diff_usec = tv2->tv_usec - tv1->tv_usec;
-    
+
     if (diff_usec < 0)
     {
         diff_usec += 1000000;
@@ -93,7 +93,7 @@ void
 util_timeval_add (struct timeval *tv, long interval)
 {
     long usec;
-    
+
     tv->tv_sec += (interval / 1000);
     usec = tv->tv_usec + ((interval % 1000) * 1000);
     if (usec > 1000000)
@@ -115,11 +115,11 @@ util_get_time_string (const time_t *date)
 {
     struct tm *local_time;
     static char text_time[128];
-    
+
     local_time = localtime (date);
     strftime (text_time, sizeof (text_time),
               CONFIG_STRING(config_look_time_format), local_time);
-    
+
     return text_time;
 }
 
@@ -131,7 +131,7 @@ void
 util_catch_signal (int signum, void (*handler)(int))
 {
     struct sigaction act;
-    
+
     sigemptyset (&act.sa_mask);
     act.sa_flags = 0;
     act.sa_handler = handler;
@@ -148,18 +148,18 @@ util_mkdir_home (const char *directory, int mode)
 {
     char *dir_name;
     int dir_length;
-    
+
     if (!directory)
         return 0;
-    
+
     /* build directory, adding WeeChat home */
     dir_length = strlen (weechat_home) + strlen (directory) + 2;
     dir_name = malloc (dir_length);
     if (!dir_name)
         return 0;
-    
+
     snprintf (dir_name, dir_length, "%s/%s", weechat_home, directory);
-    
+
     if (mkdir (dir_name, mode) < 0)
     {
         if (errno != EEXIST)
@@ -168,7 +168,7 @@ util_mkdir_home (const char *directory, int mode)
             return 0;
         }
     }
-    
+
     free (dir_name);
     return 1;
 }
@@ -183,13 +183,13 @@ util_mkdir (const char *directory, int mode)
 {
     if (!directory)
         return 0;
-    
+
     if (mkdir (directory, mode) < 0)
     {
         if (errno != EEXIST)
             return 0;
     }
-    
+
     return 1;
 }
 
@@ -204,26 +204,26 @@ util_mkdir_parents (const char *directory, int mode)
     char *string, *ptr_string, *pos_sep;
     struct stat buf;
     int rc;
-    
+
     if (!directory)
         return 0;
-    
+
     string = strdup (directory);
     if (!string)
         return 0;
-    
+
     ptr_string = string;
     while (ptr_string[0] == DIR_SEPARATOR_CHAR)
     {
         ptr_string++;
     }
-    
+
     while (ptr_string && ptr_string[0])
     {
         pos_sep = strchr (ptr_string, DIR_SEPARATOR_CHAR);
         if (pos_sep)
             pos_sep[0] = '\0';
-        
+
         rc = stat (string, &buf);
         if ((rc < 0) || !S_ISDIR(buf.st_mode))
         {
@@ -234,7 +234,7 @@ util_mkdir_parents (const char *directory, int mode)
                 return 0;
             }
         }
-        
+
         if (pos_sep)
         {
             pos_sep[0] = DIR_SEPARATOR_CHAR;
@@ -243,9 +243,9 @@ util_mkdir_parents (const char *directory, int mode)
         else
             ptr_string = NULL;
     }
-    
+
     free (string);
-    
+
     return 1;
 }
 
@@ -262,10 +262,10 @@ util_exec_on_files (const char *directory, int hidden_files, void *data,
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
-    
+
     if (!directory || !callback)
         return;
-    
+
     dir = opendir (directory);
     if (dir)
     {
@@ -302,11 +302,11 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
     char *name_with_ext, *final_name;
     int length;
     struct stat st;
-    
+
     /* filename is already a full path */
     if (strchr (filename, '/') || strchr (filename, '\\'))
         return strdup (filename);
-    
+
     length = strlen (filename) + 16;
     if (CONFIG_STRING(config_plugin_extension)
         && CONFIG_STRING(config_plugin_extension)[0])
@@ -319,7 +319,7 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
         && CONFIG_STRING(config_plugin_extension)
         && CONFIG_STRING(config_plugin_extension)[0])
         strcat (name_with_ext, CONFIG_STRING(config_plugin_extension));
-    
+
     /* try WeeChat user's dir */
     length = strlen (weechat_home) + strlen (name_with_ext) +
         strlen (sys_directory) + 16;
@@ -337,7 +337,7 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
         return final_name;
     }
     free (final_name);
-    
+
     /* try WeeChat global lib dir */
     length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
         strlen (sys_directory) + 16;
@@ -372,10 +372,10 @@ util_file_get_content (const char *filename)
     char *buffer, *buffer2;
     FILE *f;
     size_t count, fp;
-    
+
     buffer = NULL;
     fp = 0;
-    
+
     f = fopen (filename, "r");
     if (f)
     {
@@ -408,7 +408,7 @@ util_file_get_content (const char *filename)
         buffer[fp] = '\0';
         fclose (f);
     }
-    
+
     return buffer;
 }
 
@@ -430,7 +430,7 @@ util_version_number (const char *version)
     char **items, buf[64], *ptr_item, *error;
     int num_items, i, version_int[4], index_buf;
     long number;
-    
+
     items = string_split (version, ".", 0, 4, &num_items);
     for (i = 0; i < 4; i++)
     {
@@ -468,7 +468,7 @@ util_version_number (const char *version)
     }
     if (items)
         string_free_split (items);
-    
+
     return (version_int[0] << 24) | (version_int[1] << 16)
         | (version_int[2] << 8) | version_int[3];
 }

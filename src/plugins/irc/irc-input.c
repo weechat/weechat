@@ -46,19 +46,19 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 {
     struct t_irc_nick *ptr_nick;
     char *text_decoded;
-    
+
     text_decoded = irc_color_decode (text,
                                      weechat_config_boolean (irc_config_network_colors_send));
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     if (ptr_channel)
     {
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
         else
             ptr_nick = NULL;
-        
+
         weechat_printf_tags (buffer,
                              irc_protocol_tags ("privmsg",
                                                 "notify_none,no_highlight",
@@ -70,7 +70,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
                                                  IRC_COLOR_CHAT_NICK_SELF),
                              (text_decoded) ? text_decoded : text);
     }
-    
+
     if (text_decoded)
         free (text_decoded);
 }
@@ -89,12 +89,12 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
     int number;
     char hash_key[32], *str_args;
     struct t_hashtable *hashtable;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     if (!ptr_server || !ptr_channel || !message || !message[0])
         return;
-    
+
     if (!ptr_server->is_connected)
     {
         weechat_printf (buffer,
@@ -132,9 +132,9 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
 {
     const char *ptr_data;
     char *data_with_colors, *msg;
-    
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    
+
     if (buffer == irc_raw_buffer)
     {
         if (weechat_strcasecmp (input_data, "q") == 0)
@@ -156,7 +156,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
             }
             return WEECHAT_RC_OK;
         }
-        
+
         if (ptr_channel)
         {
             ptr_data = weechat_string_input_for_buffer (input_data);
@@ -164,14 +164,14 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
                 ptr_data = input_data;
             data_with_colors = irc_color_encode (ptr_data,
                                                  weechat_config_boolean (irc_config_network_colors_send));
-            
+
             msg = strdup ((data_with_colors) ? data_with_colors : ptr_data);
             if (msg)
             {
                 irc_input_send_user_message (buffer, flags, NULL, msg);
                 free (msg);
             }
-            
+
             if (data_with_colors)
                 free (data_with_colors);
         }
@@ -182,7 +182,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -196,7 +196,7 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
 {
     /* make C compiler happy */
     (void) data;
-    
+
     return irc_input_data (buffer, input_data, IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
 }
 
@@ -226,14 +226,14 @@ irc_input_send_cb (void *data, const char *signal,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     ptr_string = (const char *)signal_data;
-    
+
     server = NULL;
     channel = NULL;
     flags = NULL;
@@ -241,7 +241,7 @@ irc_input_send_cb (void *data, const char *signal,
     ptr_message = NULL;
     ptr_server = NULL;
     ptr_channel = NULL;
-    
+
     pos_semicol1 = strchr (ptr_string, ';');
     if (pos_semicol1)
     {
@@ -278,7 +278,7 @@ irc_input_send_cb (void *data, const char *signal,
             }
         }
     }
-    
+
     flags_value = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
     if (flags)
     {
@@ -287,7 +287,7 @@ irc_input_send_cb (void *data, const char *signal,
         if (flags_value < 0)
             flags_value = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
     }
-    
+
     if (server && ptr_message)
     {
         ptr_server = irc_server_search (server);
@@ -300,10 +300,10 @@ irc_input_send_cb (void *data, const char *signal,
                 if (ptr_channel)
                     ptr_buffer = ptr_channel->buffer;
             }
-            
+
             /* set tags to use by default */
             irc_server_set_send_default_tags (tags);
-            
+
             /* send text to buffer, or execute command */
             if (weechat_string_input_for_buffer (ptr_message))
             {
@@ -320,12 +320,12 @@ irc_input_send_cb (void *data, const char *signal,
                 if (data_with_colors)
                     free (data_with_colors);
             }
-            
+
             /* reset tags to use by default */
             irc_server_set_send_default_tags (NULL);
         }
     }
-    
+
     if (server)
         free (server);
     if (channel)
@@ -334,6 +334,6 @@ irc_input_send_cb (void *data, const char *signal,
         free (flags);
     if (tags)
         free (tags);
-    
+
     return WEECHAT_RC_OK;
 }

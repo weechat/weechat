@@ -38,19 +38,19 @@ rmodifier_completion_cb (void *data, const char *completion_item,
                          struct t_gui_completion *completion)
 {
     struct t_rmodifier *ptr_rmodifier;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
-    
+
     for (ptr_rmodifier = rmodifier_list; ptr_rmodifier;
          ptr_rmodifier = ptr_rmodifier->next_rmodifier)
     {
         weechat_hook_completion_list_add (completion, ptr_rmodifier->name,
                                           0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 

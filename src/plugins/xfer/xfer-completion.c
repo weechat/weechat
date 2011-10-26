@@ -40,11 +40,11 @@ xfer_completion_nick_cb (void *data, const char *completion_item,
                          struct t_gui_completion *completion)
 {
     struct t_xfer *ptr_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    
+
     ptr_xfer = xfer_search_by_buffer (buffer);
     if (ptr_xfer)
     {
@@ -59,7 +59,7 @@ xfer_completion_nick_cb (void *data, const char *completion_item,
                                           1,
                                           WEECHAT_LIST_POS_END);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 

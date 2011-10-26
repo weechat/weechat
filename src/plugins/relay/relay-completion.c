@@ -42,12 +42,12 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
 {
     struct t_infolist *infolist;
     char protocol_name[256];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) completion_item;
-    
+
     infolist = weechat_infolist_get("irc_server", NULL, NULL);
     if (infolist)
     {
@@ -60,10 +60,10 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
         }
         weechat_infolist_free (infolist);
     }
-    
+
     weechat_hook_completion_list_add (completion, "weechat",
                                       0, WEECHAT_LIST_POS_SORT);
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -79,12 +79,12 @@ relay_completion_relays_cb (void *data, const char *completion_item,
 {
     struct t_relay_server *ptr_server;
     char protocol_name[256];
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) completion_item;
-    
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -94,7 +94,7 @@ relay_completion_relays_cb (void *data, const char *completion_item,
         weechat_hook_completion_list_add (completion, protocol_name,
                                           0, WEECHAT_LIST_POS_SORT);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -110,12 +110,12 @@ relay_completion_free_port_cb (void *data, const char *completion_item,
     struct t_relay_server *ptr_server;
     char str_port[16];
     int port_max;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) completion_item;
-    
+
     port_max = -1;
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -125,11 +125,11 @@ relay_completion_free_port_cb (void *data, const char *completion_item,
     }
     if (port_max < 0)
         port_max = 8000 - 1;
-    
+
     snprintf (str_port, sizeof (str_port), "%d", port_max + 1);
     weechat_hook_completion_list_add (completion, str_port,
                                       0, WEECHAT_LIST_POS_SORT);
-    
+
     return WEECHAT_RC_OK;
 }
 

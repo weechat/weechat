@@ -72,7 +72,7 @@ struct t_gui_buffer
      * loaded
      */
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
-    
+
     int number;                        /* buffer number (first is 1)        */
     int layout_number;                 /* number of buffer saved in layout  */
     int layout_number_merge_order;     /* order in merge for layout         */
@@ -88,15 +88,15 @@ struct t_gui_buffer
                                        /* merged and that this one is not   */
                                        /* selected buffer                   */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
-    
+
     /* close callback */
     int (*close_callback)(void *data,  /* called when buffer is closed      */
                           struct t_gui_buffer *buffer);
     void *close_callback_data;         /* data for callback                 */
-    
+
     /* buffer title */
     char *title;                       /* buffer title                      */
-    
+
     /* chat content */
     struct t_gui_lines *own_lines;     /* lines (for this buffer only)      */
     struct t_gui_lines *mixed_lines;   /* mixed lines (if buffers merged)   */
@@ -105,7 +105,7 @@ struct t_gui_buffer
     int time_for_each_line;            /* time is displayed for each line?  */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
-    
+
     /* nicklist */
     int nicklist;                      /* = 1 if nicklist is enabled        */
     int nicklist_case_sensitive;       /* nicks are case sensitive ?        */
@@ -113,7 +113,7 @@ struct t_gui_buffer
     int nicklist_max_length;           /* max length for a nick             */
     int nicklist_display_groups;       /* display groups ?                  */
     int nicklist_visible_count;        /* number of nicks/groups to display */
-    
+
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
     int (*input_callback)(void *data,  /* called when user send data        */
@@ -129,29 +129,29 @@ struct t_gui_buffer
     int input_buffer_length;           /* number of chars in buffer         */
     int input_buffer_pos;              /* position into buffer              */
     int input_buffer_1st_display;      /* first char displayed on screen    */
-    
+
     /* undo/redo for input */
     struct t_gui_input_undo *input_undo_snap; /* snapshot of input buffer   */
     struct t_gui_input_undo *input_undo;      /* undo for input             */
     struct t_gui_input_undo *last_input_undo; /* last undo for input        */
     struct t_gui_input_undo *ptr_input_undo;  /* pointer to current undo    */
     int input_undo_count;              /* number of undos                   */
-    
+
     /* completion */
     struct t_gui_completion *completion; /* completion                      */
-    
+
     /* history */
     struct t_gui_history *history;     /* commands history                  */
     struct t_gui_history *last_history;/* last command in history           */
     struct t_gui_history *ptr_history; /* current command in history        */
     int num_history;                   /* number of commands in history     */
-    
+
     /* text search */
     int text_search;                   /* text search type                  */
     int text_search_exact;             /* exact search (case sensitive) ?   */
     int text_search_found;             /* 1 if text found, otherwise 0      */
     char *text_search_input;           /* input saved before text search    */
-    
+
     /* highlight settings for buffer */
     char *highlight_words;             /* list of words to highlight        */
     char *highlight_regex;             /* regex for highlight               */
@@ -160,19 +160,19 @@ struct t_gui_buffer
     int highlight_tags_count;          /* number of tags to highlight       */
                                        /* (if 0, any tag is highlighted)    */
     char **highlight_tags_array;       /* tags to highlight                 */
-    
+
     /* hotlist settings for buffer */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */
                                                  /* some nicks              */
-    
+
     /* keys associated to buffer */
     struct t_gui_key *keys;            /* keys specific to buffer           */
     struct t_gui_key *last_key;        /* last key for buffer               */
     int keys_count;                    /* number of keys in buffer          */
-    
+
     /* local variables */
     struct t_hashtable *local_variables; /* local variables                 */
-    
+
     /* link to previous/next buffer */
     struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
     struct t_gui_buffer *next_buffer;  /* link to next buffer               */

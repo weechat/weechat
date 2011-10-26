@@ -50,17 +50,17 @@ int
 irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     if (!server)
         return 0;
-    
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         if (ptr_channel == channel)
             return 1;
     }
-    
+
     /* channel not found */
     return 0;
 }
@@ -77,12 +77,12 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
     int number_found;
     char str_number[32];
     struct t_irc_channel *ptr_channel;
-    
+
     number = weechat_buffer_get_integer (buffer, "number");
     number_last_channel = 0;
     number_last_private = 0;
     number_found = 0;
-    
+
     if (server->channels)
     {
         /* search last channel/pv number for server */
@@ -106,7 +106,7 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
                 }
             }
         }
-        
+
         /* use last channel/pv number + 1 */
         switch (channel_type)
         {
@@ -130,7 +130,7 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
             number_found = weechat_buffer_get_integer (server->buffer, "number") + 1;
         }
     }
-    
+
     /* switch to number found */
     if ((number_found >= 1) && (number_found != number))
     {
@@ -154,7 +154,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     int i, buffer_created, current_buffer_number, buffer_position, manual_join;
     char *buffer_name, str_number[32], str_group[32], *channel_name_lower;
     const char *prefix_modes;
-    
+
     /* alloc memory for new channel */
     if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
     {
@@ -163,7 +163,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return NULL;
     }
-    
+
     /* create buffer for channel (or use existing one) */
     buffer_created = 0;
     buffer_name = irc_buffer_build_name (server->name, channel_name);
@@ -206,7 +206,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         }
         buffer_created = 1;
     }
-    
+
     if (buffer_created)
     {
         if (!weechat_buffer_get_integer (new_buffer, "short_name_is_set"))
@@ -227,7 +227,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             weechat_buffer_set (new_buffer, "nicklist", "1");
             weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
         }
-        
+
         /* set highlights settings on channel buffer */
         weechat_buffer_set(new_buffer, "highlight_words_add", "$nick");
         if (weechat_config_string (irc_config_look_highlight_tags)
@@ -237,7 +237,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                                 weechat_config_string (irc_config_look_highlight_tags));
         }
     }
-    
+
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         prefix_modes = irc_server_get_prefix_modes (server);
@@ -253,7 +253,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_nicklist_add_group (new_buffer, NULL, str_group,
                                     "weechat.color.nicklist_group", 1);
     }
-    
+
     /* initialize new channel */
     new_channel->type = channel_type;
     new_channel->name = strdup (channel_name);
@@ -279,7 +279,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->last_nick_speaking_time = NULL;
     new_channel->buffer = new_buffer;
     new_channel->buffer_as_string = NULL;
-    
+
     /* add new channel to channels list */
     new_channel->prev_channel = server->last_channel;
     new_channel->next_channel = NULL;
@@ -288,7 +288,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     else
         server->channels = new_channel;
     server->last_channel = new_channel;
-    
+
     manual_join = 0;
     channel_name_lower = NULL;
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
@@ -301,7 +301,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                                                      channel_name_lower);
         }
     }
-    
+
     if (switch_to_channel)
     {
         if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
@@ -310,23 +310,23 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                 || (!manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
                 switch_to_channel = 0;
         }
-        
+
         if (switch_to_channel)
         {
             weechat_buffer_set (new_buffer, "display",
                                 (auto_switch) ? "auto" : "1");
         }
     }
-    
+
     if (manual_join)
         weechat_hashtable_remove (server->manual_joins, channel_name_lower);
     if (channel_name_lower)
         free (channel_name_lower);
-    
+
     weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
                               "irc_channel_opened" : "irc_pv_opened",
                               WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
-    
+
     /* all is ok, return address of new channel */
     return new_channel;
 }
@@ -340,7 +340,7 @@ irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
 {
     if (channel->topic)
         free (channel->topic);
-    
+
     channel->topic = (topic) ? strdup (topic) : NULL;
     weechat_buffer_set (channel->buffer, "title",
                         (channel->topic) ? channel->topic : "");
@@ -354,10 +354,10 @@ struct t_irc_channel *
 irc_channel_search (struct t_irc_server *server, const char *channel_name)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     if (!server || !channel_name)
         return NULL;
-    
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -375,10 +375,10 @@ int
 irc_channel_is_channel (const char *string)
 {
     char first_char[2];
-    
+
     if (!string)
         return 0;
-    
+
     first_char[0] = string[0];
     first_char[1] = '\0';
     return (strpbrk (first_char, IRC_CHANNEL_PREFIX)) ? 1 : 0;
@@ -393,7 +393,7 @@ irc_channel_remove_away (struct t_irc_server *server,
                          struct t_irc_channel *channel)
 {
     struct t_irc_nick *ptr_nick;
-    
+
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
@@ -436,7 +436,7 @@ irc_channel_set_away (struct t_irc_server *server,
                       int is_away)
 {
     struct t_irc_nick *ptr_nick;
-    
+
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         ptr_nick = irc_nick_search (channel, nick_name);
@@ -456,21 +456,21 @@ irc_channel_nick_speaking_add_to_list (struct t_irc_channel *channel,
 {
     int size, to_remove, i;
     struct t_weelist_item *ptr_item;
-    
+
     /* create list if it does not exist */
     if (!channel->nicks_speaking[highlight])
         channel->nicks_speaking[highlight] = weechat_list_new ();
-    
+
     /* remove item if it was already in list */
     ptr_item = weechat_list_casesearch (channel->nicks_speaking[highlight],
                                         nick_name);
     if (ptr_item)
         weechat_list_remove (channel->nicks_speaking[highlight], ptr_item);
-    
+
     /* add nick in list */
     weechat_list_add (channel->nicks_speaking[highlight], nick_name,
                       WEECHAT_LIST_POS_END, NULL);
-    
+
     /* reduce list size if it's too big */
     size = weechat_list_size (channel->nicks_speaking[highlight]);
     if (size > IRC_CHANNEL_NICKS_SPEAKING_LIMIT)
@@ -498,7 +498,7 @@ irc_channel_nick_speaking_add (struct t_irc_channel *channel,
         highlight = 1;
     if (highlight)
         irc_channel_nick_speaking_add_to_list (channel, nick_name, 1);
-    
+
     irc_channel_nick_speaking_add_to_list (channel, nick_name, 0);
 }
 
@@ -537,10 +537,10 @@ irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
 {
     struct t_irc_channel_speaking *ptr_nick;
     time_t time_limit;
-    
+
     time_limit = time (NULL) -
         (weechat_config_integer (irc_config_look_smart_filter_delay) * 60);
-    
+
     for (ptr_nick = channel->nicks_speaking_time; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
@@ -551,7 +551,7 @@ irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
             return ptr_nick;
         }
     }
-    
+
     /* nick speaking time not found */
     return NULL;
 }
@@ -567,7 +567,7 @@ irc_channel_nick_speaking_time_free (struct t_irc_channel *channel,
     /* free data */
     if (nick_speaking->nick)
         free (nick_speaking->nick);
-    
+
     /* remove nick from list */
     if (nick_speaking->prev_nick)
         (nick_speaking->prev_nick)->next_nick = nick_speaking->next_nick;
@@ -577,7 +577,7 @@ irc_channel_nick_speaking_time_free (struct t_irc_channel *channel,
         channel->nicks_speaking_time = nick_speaking->next_nick;
     if (channel->last_nick_speaking_time == nick_speaking)
         channel->last_nick_speaking_time = nick_speaking->prev_nick;
-    
+
     free (nick_speaking);
 }
 
@@ -603,7 +603,7 @@ void
 irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel)
 {
     time_t time_limit;
-    
+
     time_limit = time (NULL) -
         (weechat_config_integer (irc_config_look_smart_filter_delay) * 60);
 
@@ -611,7 +611,7 @@ irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel)
     {
         if (channel->last_nick_speaking_time->time_last_message >= time_limit)
             break;
-        
+
         irc_channel_nick_speaking_time_free (channel,
                                              channel->last_nick_speaking_time);
     }
@@ -627,17 +627,17 @@ irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
                                     time_t time_last_message)
 {
     struct t_irc_channel_speaking *ptr_nick, *new_nick;
-    
+
     ptr_nick = irc_channel_nick_speaking_time_search (channel, nick_name, 0);
     if (ptr_nick)
         irc_channel_nick_speaking_time_free (channel, ptr_nick);
-    
+
     new_nick = malloc (sizeof (*new_nick));
     if (new_nick)
     {
         new_nick->nick = strdup (nick_name);
         new_nick->time_last_message = time_last_message;
-        
+
         /* insert nick at beginning of list */
         new_nick->prev_nick = NULL;
         new_nick->next_nick = channel->nicks_speaking_time;
@@ -660,7 +660,7 @@ irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
                                        const char *new_nick)
 {
     struct t_irc_channel_speaking *ptr_nick;
-    
+
     if (channel->nicks_speaking_time)
     {
         ptr_nick = irc_channel_nick_speaking_time_search (channel, old_nick, 0);
@@ -680,12 +680,12 @@ void
 irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
 {
     char join_args[256];
-    
+
     snprintf (join_args, sizeof (join_args), "%s%s%s",
               channel->name,
               (channel->key) ? " " : "",
               (channel->key) ? channel->key : "");
-    
+
     irc_command_join_server (server, join_args, 0);
 }
 
@@ -698,12 +698,12 @@ irc_channel_autorejoin_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server, *ptr_server_found;
     struct t_irc_channel *ptr_channel_arg, *ptr_channel;
-    
+
     /* make C compiler happy */
     (void) remaining_calls;
-    
+
     ptr_channel_arg = (struct t_irc_channel *)data;
-    
+
     ptr_server_found = NULL;
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -718,13 +718,13 @@ irc_channel_autorejoin_cb (void *data, int remaining_calls)
             }
         }
     }
-    
+
     if (ptr_server_found && (ptr_channel_arg->hook_autorejoin))
     {
         irc_channel_rejoin (ptr_server_found, ptr_channel_arg);
         ptr_channel_arg->hook_autorejoin = NULL;
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -740,10 +740,10 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                                      const char *nickname)
 {
     struct t_irc_channel *ptr_channel;
-    
+
     if (!server || (!nick && !nickname))
         return;
-    
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -777,10 +777,10 @@ void
 irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
 {
     struct t_irc_channel *new_channels;
-    
+
     if (!server || !channel)
         return;
-    
+
     /* remove channel from channels list */
     if (server->last_channel == channel)
         server->last_channel = channel->prev_channel;
@@ -791,10 +791,10 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     }
     else
         new_channels = channel->next_channel;
-    
+
     if (channel->next_channel)
         (channel->next_channel)->prev_channel = channel->prev_channel;
-    
+
     /* free data */
     if (channel->name)
         free (channel->name);
@@ -818,9 +818,9 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     irc_channel_nick_speaking_time_free_all (channel);
     if (channel->buffer_as_string)
         free (channel->buffer_as_string);
-    
+
     free (channel);
-    
+
     server->channels = new_channels;
 }
 
@@ -845,10 +845,10 @@ struct t_hdata *
 irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = weechat_hdata_new (hdata_name, "prev_channel", "next_channel");
     if (hdata)
     {
@@ -889,10 +889,10 @@ struct t_hdata *
 irc_channel_hdata_channel_speaking_cb (void *data, const char *hdata_name)
 {
     struct t_hdata *hdata;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick");
     if (hdata)
     {
@@ -918,14 +918,14 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
     struct t_irc_channel_speaking *ptr_nick;
     char option_name[64];
     int i, index;
-    
+
     if (!infolist || !channel)
         return 0;
-    
+
     ptr_item = weechat_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
-    
+
     if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", channel->buffer))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "buffer_name",
@@ -1003,7 +1003,7 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
             i++;
         }
     }
-    
+
     return 1;
 }
 
@@ -1018,7 +1018,7 @@ irc_channel_print_log (struct t_irc_channel *channel)
     struct t_irc_channel_speaking *ptr_nick_speaking;
     int i, index;
     struct t_irc_nick *ptr_nick;
-    
+
     weechat_log_printf ("");
     weechat_log_printf ("  => channel %s (addr:0x%lx):", channel->name, channel);
     weechat_log_printf ("       type . . . . . . . . . . : %d",    channel->type);

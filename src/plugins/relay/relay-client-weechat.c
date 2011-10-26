@@ -45,19 +45,19 @@ relay_client_weechat_sendf (struct t_relay_client *client,
 {
     char str_length[8];
     int length_vbuffer, num_sent, total_sent;
-    
+
     if (!client)
         return 0;
-    
+
     weechat_va_format (format);
     if (!vbuffer)
         return 0;
     length_vbuffer = strlen (vbuffer);
-    
+
     total_sent = 0;
-    
+
     snprintf (str_length, sizeof (str_length), "%07d", length_vbuffer);
-    
+
     num_sent = send (client->sock, str_length, 7, 0);
     client->bytes_sent += 7;
     total_sent += num_sent;
@@ -67,7 +67,7 @@ relay_client_weechat_sendf (struct t_relay_client *client,
         client->bytes_sent += length_vbuffer;
         total_sent += num_sent;
     }
-    
+
     if (num_sent < 0)
     {
         weechat_printf (NULL,
@@ -75,7 +75,7 @@ relay_client_weechat_sendf (struct t_relay_client *client,
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         strerror (errno));
     }
-    
+
     return total_sent;
 }
 
@@ -91,9 +91,9 @@ relay_client_weechat_send_infolist (struct t_relay_client *client,
     const char *fields;
     char **argv;
     int i, argc, size;
-    
+
     relay_client_weechat_sendf (client, "name %s", name);
-    
+
     while (weechat_infolist_next (infolist))
     {
         fields = weechat_infolist_fields (infolist);
@@ -154,16 +154,16 @@ relay_client_weechat_recv_one_msg (struct t_relay_client *client, char *data)
 {
     char *pos;
     struct t_infolist *infolist;
-    
+
     pos = strchr (data, '\r');
     if (pos)
         pos[0] = '\0';
-    
+
     if (weechat_relay_plugin->debug)
     {
         weechat_printf (NULL, "relay: weechat: \"%s\"", data);
     }
-    
+
     if (weechat_strcasecmp (data, "quit") == 0)
         relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
     else
@@ -186,7 +186,7 @@ relay_client_weechat_recv (struct t_relay_client *client, const char *data)
 {
     char **items;
     int items_count, i;
-    
+
     items = weechat_string_split (data, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
@@ -204,7 +204,7 @@ void
 relay_client_weechat_alloc (struct t_relay_client *client)
 {
     struct t_relay_client_weechat_data *weechat_data;
-    
+
     client->protocol_data = malloc (sizeof (*weechat_data));
     if (client->protocol_data)
     {
@@ -222,10 +222,10 @@ relay_client_weechat_alloc_with_infolist (struct t_relay_client *client,
                                           struct t_infolist *infolist)
 {
     struct t_relay_client_weechat_data *weechat_data;
-    
+
     /* make C compiler happy */
     (void) infolist;
-    
+
     client->protocol_data = malloc (sizeof (*weechat_data));
     if (client->protocol_data)
     {
@@ -256,7 +256,7 @@ relay_client_weechat_add_to_infolist (struct t_infolist_item *item,
 {
     if (!item || !client)
         return 0;
-    
+
     return 1;
 }
 

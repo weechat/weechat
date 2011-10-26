@@ -64,7 +64,7 @@ weelist_find_pos (struct t_weelist *weelist, const char *data)
 
     if (!weelist || !data)
         return NULL;
-    
+
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
@@ -87,7 +87,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
 
     if (!weelist || !item)
         return;
-    
+
     if (weelist->items)
     {
         /* remove element if already in list */
@@ -106,7 +106,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
             pos_item = NULL;
         else
             pos_item = weelist_find_pos (weelist, item->data);
-        
+
         if (pos_item)
         {
             /* insert data into the list (before position found) */
@@ -145,10 +145,10 @@ weelist_add (struct t_weelist *weelist, const char *data, const char *where,
              void *user_data)
 {
     struct t_weelist_item *new_item;
-    
+
     if (!weelist || !data || !data[0] || !where || !where[0])
         return NULL;
-    
+
     new_item = malloc (sizeof (*new_item));
     if (new_item)
     {
@@ -171,7 +171,7 @@ weelist_search (struct t_weelist *weelist, const char *data)
 
     if (!weelist || !data)
         return NULL;
-    
+
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
@@ -192,7 +192,7 @@ weelist_search_pos (struct t_weelist *weelist, const char *data)
 {
     struct t_weelist_item *ptr_item;
     int i;
-    
+
     if (!weelist || !data)
         return -1;
 
@@ -219,7 +219,7 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
 
     if (!weelist || !data)
         return NULL;
-    
+
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
@@ -240,10 +240,10 @@ weelist_casesearch_pos (struct t_weelist *weelist, const char *data)
 {
     struct t_weelist_item *ptr_item;
     int i;
-    
+
     if (!weelist || !data)
         return -1;
-    
+
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
@@ -267,7 +267,7 @@ weelist_get (struct t_weelist *weelist, int position)
 
     if (!weelist)
         return NULL;
-    
+
     i = 0;
     ptr_item = weelist->items;
     while (ptr_item)
@@ -305,7 +305,7 @@ weelist_next (struct t_weelist_item *item)
 {
     if (item)
         return item->next_item;
-    
+
     return NULL;
 }
 
@@ -318,7 +318,7 @@ weelist_prev (struct t_weelist_item *item)
 {
     if (item)
         return item->prev_item;
-    
+
     return NULL;
 }
 
@@ -331,7 +331,7 @@ weelist_string (struct t_weelist_item *item)
 {
     if (item)
         return item->data;
-    
+
     return NULL;
 }
 
@@ -344,7 +344,7 @@ weelist_size (struct t_weelist *weelist)
 {
     if (weelist)
         return weelist->size;
-    
+
     return 0;
 }
 
@@ -356,10 +356,10 @@ void
 weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
 {
     struct t_weelist_item *new_items;
-    
+
     if (!weelist || !item)
         return;
-    
+
     /* remove item from list */
     if (weelist->last_item == item)
         weelist->last_item = item->prev_item;
@@ -370,16 +370,16 @@ weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
     }
     else
         new_items = item->next_item;
-    
+
     if (item->next_item)
         (item->next_item)->prev_item = item->prev_item;
-    
+
     /* free data */
     if (item->data)
         free (item->data);
     free (item);
     weelist->items = new_items;
-    
+
     weelist->size--;
 }
 
@@ -392,7 +392,7 @@ weelist_remove_all (struct t_weelist *weelist)
 {
     if (!weelist)
         return;
-    
+
     while (weelist->items)
     {
         weelist_remove (weelist, weelist->items);
@@ -408,7 +408,7 @@ weelist_free (struct t_weelist *weelist)
 {
     if (!weelist)
         return;
-    
+
     weelist_remove_all (weelist);
     free (weelist);
 }
@@ -421,9 +421,9 @@ void
 weelist_print_log (struct t_weelist *weelist, const char *name)
 {
     struct t_weelist_item *ptr_item;
-    
+
     log_printf ("[weelist %s (addr:0x%lx)]", name, weelist);
-    
+
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {

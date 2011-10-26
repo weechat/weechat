@@ -67,7 +67,7 @@ relay_protocol_search (const char *name)
             return i;
         }
     }
-    
+
     /* protocol not found */
     return -1;
 }
@@ -81,21 +81,21 @@ relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
                          void *signal_data)
 {
     struct t_relay_server *ptr_server;
-    
+
     /* make C compiler happy */
     (void) data;
     (void) signal;
     (void) type_data;
     (void) signal_data;
-    
+
     relay_signal_upgrade_received = 1;
-    
+
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         relay_server_close_socket (ptr_server);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -111,22 +111,22 @@ relay_debug_dump_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    
+
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, RELAY_PLUGIN_NAME) == 0))
     {
         weechat_log_printf ("");
         weechat_log_printf ("***** \"%s\" plugin dump *****",
                             weechat_plugin->name);
-        
+
         relay_server_print_log ();
         relay_client_print_log ();
-        
+
         weechat_log_printf ("");
         weechat_log_printf ("***** End of \"%s\" plugin dump *****",
                             weechat_plugin->name);
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -138,29 +138,29 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int i, upgrading;
-    
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
-    
+
     weechat_plugin = plugin;
-    
+
     if (!relay_config_init ())
         return WEECHAT_RC_ERROR;
-    
+
     if (relay_config_read () < 0)
         return WEECHAT_RC_ERROR;
-    
+
     relay_command_init ();
-    
+
     /* hook completions */
     relay_completion_init ();
-    
+
     weechat_hook_signal ("upgrade", &relay_signal_upgrade_cb, NULL);
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL);
-    
+
     relay_info_init ();
-    
+
     /* look at arguments */
     upgrading = 0;
     for (i = 0; i < argc; i++)
@@ -170,10 +170,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             upgrading = 1;
         }
     }
-    
+
     if (upgrading)
         relay_upgrade_load ();
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -186,24 +186,24 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
-    
+
     relay_config_write ();
-    
+
     if (relay_signal_upgrade_received)
         relay_upgrade_save ();
     else
     {
         relay_raw_message_free_all ();
-        
+
         relay_server_free_all ();
-        
+
         relay_client_disconnect_all ();
-        
+
         if (relay_buffer)
             weechat_buffer_close (relay_buffer);
-        
+
         relay_client_free_all ();
     }
-    
+
     return WEECHAT_RC_OK;
 }

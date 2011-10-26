@@ -64,10 +64,10 @@ weechat_aspell_config_change_commands (void *data,
 {
     const char *value;
     int i;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     if (weechat_aspell_commands_to_check)
     {
         weechat_string_free_split (weechat_aspell_commands_to_check);
@@ -80,7 +80,7 @@ weechat_aspell_config_change_commands (void *data,
         free (weechat_aspell_length_commands_to_check);
         weechat_aspell_length_commands_to_check = NULL;
     }
-    
+
     value = weechat_config_string (option);
     if (value && value[0])
     {
@@ -111,7 +111,7 @@ weechat_aspell_config_change_default_dict (void *data,
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     weechat_aspell_create_spellers (weechat_current_buffer ());
 }
 
@@ -126,7 +126,7 @@ weechat_aspell_config_dict_change (void *data,
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     weechat_aspell_create_spellers (weechat_current_buffer ());
 }
 
@@ -144,11 +144,11 @@ weechat_aspell_config_dict_delete_option (void *data,
     (void) data;
     (void) config_file;
     (void) section;
-    
+
     weechat_config_option_free (option);
-    
+
     weechat_aspell_create_spellers (weechat_current_buffer ());
-    
+
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
@@ -165,15 +165,15 @@ weechat_aspell_config_dict_create_option (void *data,
 {
     struct t_config_option *ptr_option;
     int rc;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     if (value && value[0])
         weechat_aspell_speller_check_dictionaries (value);
-    
+
     if (option_name)
     {
         ptr_option = weechat_config_search_option (config_file, section,
@@ -207,7 +207,7 @@ weechat_aspell_config_dict_create_option (void *data,
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
     }
-    
+
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
@@ -217,7 +217,7 @@ weechat_aspell_config_dict_create_option (void *data,
     }
     else
         weechat_aspell_create_spellers (weechat_current_buffer ());
-    
+
     return rc;
 }
 
@@ -232,7 +232,7 @@ weechat_aspell_config_option_change (void *data,
     /* make C compiler happy */
     (void) data;
     (void) option;
-    
+
     weechat_aspell_speller_free_all ();
     weechat_aspell_create_spellers (weechat_current_buffer ());
 }
@@ -251,12 +251,12 @@ weechat_aspell_config_option_delete_option (void *data,
     (void) data;
     (void) config_file;
     (void) section;
-    
+
     weechat_config_option_free (option);
-    
+
     weechat_aspell_speller_free_all ();
     weechat_aspell_create_spellers (weechat_current_buffer ());
-    
+
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
@@ -273,12 +273,12 @@ weechat_aspell_config_option_create_option (void *data,
 {
     struct t_config_option *ptr_option;
     int rc;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    
+
     if (option_name)
     {
         ptr_option = weechat_config_search_option (config_file, section,
@@ -313,7 +313,7 @@ weechat_aspell_config_option_create_option (void *data,
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
     }
-    
+
     if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
@@ -326,7 +326,7 @@ weechat_aspell_config_option_create_option (void *data,
         weechat_aspell_speller_free_all ();
         weechat_aspell_create_spellers (weechat_current_buffer ());
     }
-    
+
     return rc;
 }
 
@@ -365,12 +365,12 @@ int
 weechat_aspell_config_init ()
 {
     struct t_config_section *ptr_section;
-    
+
     weechat_aspell_config_file = weechat_config_new (ASPELL_CONFIG_NAME,
                                                      NULL, NULL);
     if (!weechat_aspell_config_file)
         return 0;
-    
+
     /* look */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "look",
                                               0, 0,
@@ -382,13 +382,13 @@ weechat_aspell_config_init ()
         weechat_config_free (weechat_aspell_config_file);
         return 0;
     }
-    
+
     weechat_aspell_config_look_color = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "color", "color",
         N_("color used for misspelled words"),
         NULL, 0, 0, "lightred", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     /* check */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "check",
                                               0, 0,
@@ -400,7 +400,7 @@ weechat_aspell_config_init ()
         weechat_config_free (weechat_aspell_config_file);
         return 0;
     }
-    
+
     weechat_aspell_config_check_commands = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "commands", "string",
@@ -435,7 +435,7 @@ weechat_aspell_config_init ()
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
         NULL, 0, INT_MAX, "2", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    
+
     /* dict */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",
                                               1, 1,
@@ -449,9 +449,9 @@ weechat_aspell_config_init ()
         weechat_config_free (weechat_aspell_config_file);
         return 0;
     }
-    
+
     weechat_aspell_config_section_dict = ptr_section;
-    
+
     /* option */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "option",
                                               1, 1,
@@ -465,7 +465,7 @@ weechat_aspell_config_init ()
         weechat_config_free (weechat_aspell_config_file);
         return 0;
     }
-    
+
     return 1;
 }
 
@@ -477,14 +477,14 @@ int
 weechat_aspell_config_read ()
 {
     int rc;
-    
+
     rc = weechat_config_read (weechat_aspell_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         weechat_aspell_config_change_commands (NULL,
                                                weechat_aspell_config_check_commands);
     }
-    
+
     return rc;
 }
 
@@ -506,7 +506,7 @@ void
 weechat_aspell_config_free ()
 {
     weechat_config_free (weechat_aspell_config_file);
-    
+
     if (weechat_aspell_commands_to_check)
         weechat_string_free_split (weechat_aspell_commands_to_check);
     if (weechat_aspell_length_commands_to_check)

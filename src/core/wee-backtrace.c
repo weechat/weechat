@@ -80,14 +80,14 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
     char cmd_line[1024];
     char line[1024], *ptr_line, *pos;
     char function_name[1024];
-    
+
     rc = dladdr (address, &info);
     if ((rc == 0) || !info.dli_fname || !info.dli_fname[0])
     {
         weechat_backtrace_printf ("%03d  %s", number, symbol);
         return;
     }
-    
+
     addr = address;
     if (info.dli_fbase >= (const void *) 0x40000000)
         addr = (void *)((unsigned long)((const char *) addr) -
@@ -166,7 +166,7 @@ weechat_backtrace ()
 #ifdef HAVE_BACKTRACE
     trace_size = backtrace (trace, BACKTRACE_MAX);
     symbols = backtrace_symbols (trace, trace_size);
-    
+
     for (i = 0; i < trace_size; i++)
     {
         weechat_backtrace_addr2line (i + 1, trace[i], symbols[i]);
@@ -175,6 +175,6 @@ weechat_backtrace ()
     weechat_backtrace_printf ("  No backtrace info (no debug info available "
                               "or no backtrace possible on your system).");
 #endif
-    
+
     weechat_backtrace_printf ("======= End of  backtrace =======");
 }

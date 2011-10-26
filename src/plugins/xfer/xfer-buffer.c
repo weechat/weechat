@@ -50,7 +50,7 @@ xfer_buffer_refresh (const char *hotlist)
     int i, length, line, progress_bar_size, num_bars;
     unsigned long long pct_complete;
     struct tm *date_tmp;
-    
+
     if (xfer_buffer)
     {
         weechat_buffer_clear (xfer_buffer);
@@ -85,14 +85,14 @@ xfer_buffer_refresh (const char *hotlist)
                 snprintf (suffix, sizeof (suffix),
                           " (.%d)", ptr_xfer->filename_suffix);
             }
-            
+
             snprintf (str_color, sizeof (str_color),
                       "%s,%s",
                       (line == xfer_buffer_selected_line) ?
                       weechat_config_string (xfer_config_color_text_selected) :
                       weechat_config_string (xfer_config_color_text),
                       weechat_config_string (xfer_config_color_text_bg));
-            
+
             /* display first line with remote nick and filename */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
                               "%s%s%-24s %s%s%s%s",
@@ -105,7 +105,7 @@ xfer_buffer_refresh (const char *hotlist)
                               ptr_xfer->filename : _("xfer chat"),
                               (XFER_IS_FILE(ptr_xfer->type)) ? "\"" : "",
                               suffix);
-            
+
             snprintf (status, sizeof (status),
                       "%s", _(xfer_status_string[ptr_xfer->status]));
             length = weechat_utf8_strlen_screen (status);
@@ -116,7 +116,7 @@ xfer_buffer_refresh (const char *hotlist)
                     strcat (status, " ");
                 }
             }
-            
+
             if (XFER_IS_CHAT(ptr_xfer->type))
             {
                 /* display second line for chat with status and date */
@@ -166,7 +166,7 @@ xfer_buffer_refresh (const char *hotlist)
                     }
                     strcat (progress_bar, "] ");
                 }
-                
+
                 /* computes percentage */
                 if (ptr_xfer->size == 0)
                 {
@@ -177,12 +177,12 @@ xfer_buffer_refresh (const char *hotlist)
                 }
                 else
                     pct_complete = (unsigned long long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
-                
+
                 /* position, total and bytes per second */
                 str_pos = weechat_string_format_size (ptr_xfer->pos);
                 str_total = weechat_string_format_size (ptr_xfer->size);
                 str_bytes_per_sec = weechat_string_format_size (ptr_xfer->bytes_per_sec);
-                
+
                 /* ETA */
                 eta[0] = '\0';
                 if (ptr_xfer->status == XFER_STATUS_ACTIVE)
@@ -194,7 +194,7 @@ xfer_buffer_refresh (const char *hotlist)
                               (ptr_xfer->eta / 60) % 60,
                               ptr_xfer->eta % 60);
                 }
-                
+
                 /* display second line for file with status, progress bar and estimated time */
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%3llu%%   %s / %s  (%s%s/s)",
@@ -233,12 +233,12 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                       const char *input_data)
 {
     struct t_xfer *xfer, *ptr_xfer, *next_xfer;
-    
+
     /* make C compiler happy */
     (void) data;
-    
+
     xfer = xfer_search_by_number (xfer_buffer_selected_line);
-    
+
     /* accept xfer */
     if (weechat_strcasecmp (input_data, "a") == 0)
     {
@@ -284,7 +284,7 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
     }
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -298,9 +298,9 @@ xfer_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    
+
     xfer_buffer = NULL;
-    
+
     return WEECHAT_RC_OK;
 }
 
@@ -316,11 +316,11 @@ xfer_buffer_open ()
         xfer_buffer = weechat_buffer_new (XFER_BUFFER_NAME,
                                           &xfer_buffer_input_cb, NULL,
                                           &xfer_buffer_close_cb, NULL);
-        
+
         /* failed to create buffer ? then exit */
         if (!xfer_buffer)
             return;
-        
+
         weechat_buffer_set (xfer_buffer, "type", "free");
         weechat_buffer_set (xfer_buffer, "title", _("Xfer list"));
         weechat_buffer_set (xfer_buffer, "key_bind_meta2-A", "/xfer up");
