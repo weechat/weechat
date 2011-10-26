@@ -327,7 +327,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
                     argv2[i] = INT2FIX (*((int *)argv[i]));
                     break;
                 case 'h': /* hash */
-                    argv2[i] = (VALUE)argv[i];
+                    argv2[i] = weechat_ruby_hashtable_to_hash (argv[i]);
                     break;
             }
         }
@@ -615,7 +615,7 @@ weechat_ruby_load_cb (void *data, const char *filename)
 void
 weechat_ruby_unload (struct t_plugin_script *script)
 {
-    int *r;
+    int *rc;
     void *interpreter;
     
     if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
@@ -627,12 +627,12 @@ weechat_ruby_unload (struct t_plugin_script *script)
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
-        r = (int *) weechat_ruby_exec (script,
+        rc = (int *)weechat_ruby_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script->shutdown_func,
                                        0, NULL);
-        if (r)
-            free (r);
+        if (rc)
+            free (rc);
     }
     
     interpreter = script->interpreter;

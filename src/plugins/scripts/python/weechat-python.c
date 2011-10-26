@@ -642,7 +642,7 @@ weechat_python_load_cb (void *data, const char *filename)
 void
 weechat_python_unload (struct t_plugin_script *script)
 {
-    int *r;
+    int *rc;
     void *interpreter;
     PyThreadState *old_interpreter;
     
@@ -655,12 +655,12 @@ weechat_python_unload (struct t_plugin_script *script)
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
-        r = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
-                                         script->shutdown_func, NULL, NULL);
-        if (r)
-            free (r);
+        rc = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
+                                          script->shutdown_func, NULL, NULL);
+        if (rc)
+            free (rc);
     }
-
+    
     old_interpreter = PyThreadState_Swap (NULL);
     interpreter = script->interpreter;
     

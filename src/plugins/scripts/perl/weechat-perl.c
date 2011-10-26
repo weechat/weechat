@@ -555,7 +555,7 @@ weechat_perl_load_cb (void *data, const char *filename)
 void
 weechat_perl_unload (struct t_plugin_script *script)
 {
-    int *r;
+    int *rc;
     void *interpreter;
 
     if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
@@ -573,12 +573,12 @@ weechat_perl_unload (struct t_plugin_script *script)
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
-        r = (int *) weechat_perl_exec (script,
+        rc = (int *)weechat_perl_exec (script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script->shutdown_func,
                                        NULL, NULL);
-        if (r)
-            free (r);
+        if (rc)
+            free (rc);
     }
     
     interpreter = script->interpreter;

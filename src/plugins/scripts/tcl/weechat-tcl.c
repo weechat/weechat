@@ -367,7 +367,7 @@ void
 weechat_tcl_unload (struct t_plugin_script *script)
 {
     Tcl_Interp* interp;
-    void *pointer;
+    int *rc;
     
     if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
     {
@@ -378,12 +378,12 @@ weechat_tcl_unload (struct t_plugin_script *script)
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
-        pointer = weechat_tcl_exec (script,
-                                    WEECHAT_SCRIPT_EXEC_INT,
-                                    script->shutdown_func,
-                                    NULL, NULL);
-        if (pointer)
-            free (pointer);
+        rc = (int *)weechat_tcl_exec (script,
+                                      WEECHAT_SCRIPT_EXEC_INT,
+                                      script->shutdown_func,
+                                      NULL, NULL);
+        if (rc)
+            free (rc);
     }
     
     interp = (Tcl_Interp*)script->interpreter;
