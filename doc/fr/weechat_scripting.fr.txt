@@ -18,7 +18,14 @@ WeeChat (Wee Enhanced Environment for Chat) est un client de discussion libre,
 rapide et léger, conçu pour différents systèmes d'exploitation.
 
 Ce manuel documente la façon d'écrire des scripts pour WeeChat, en utilisant
-l'un des cinq langages de script supportés : perl, python, ruby, lua ou tcl.
+l'un des langages de script supportés :
+
+* python
+* perl
+* ruby
+* lua
+* tcl
+* guile (scheme)
 
 [NOTE]
 La majorité des exemples de cette documentation sont écrits en Python, mais
@@ -32,20 +39,45 @@ Scripts dans WeeChat
 Spécificités des langages
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quelques choses sont spécifiques aux langages :
+Python
+^^^^^^
 
-* perl :
-** les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`
-* python :
-** vous devez utiliser `import weechat`
-** les fonctions `print*` se nomment `prnt*` en python (car 'print' est un mot
-   clé réservé)
-** les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
-* ruby :
-** vous devez définir 'weechat_init' et appeler 'register' dedans
-** les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`
-* tcl :
-** les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`
+* Vous devez utiliser `import weechat`
+* Les fonctions `print*` se nomment `prnt*` en python (car 'print' est un mot
+  clé réservé)
+* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+
+Perl
+^^^^
+
+* Les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`
+
+Ruby
+^^^^
+
+* Vous devez définir 'weechat_init' et appeler 'register' dedans
+* Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`
+
+Lua
+^^^
+
+* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+
+Tcl
+^^^
+
+* Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`
+
+Guile (scheme)
+^^^^^^^^^^^^^^
+
+* Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`
+* Les fonctions suivantes prennent une liste de paramètres en entrée (au lieu
+  de plusieurs paramètres pour les autres fonctions), car le nombre de
+  paramètres excède la limite de Guile :
+** config_new_section
+** config_new_option
+** bar_new
 
 [[register_function]]
 Fonction register
@@ -76,14 +108,6 @@ Paramètres :
 
 Exemple, pour chaque langage :
 
-* perl :
-
-[source,perl]
-----------------------------------------
-weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Script de test", "", "");
-weechat::print("", "Bonjour, du script perl !");
-----------------------------------------
-
 * python :
 
 [source,python]
@@ -92,6 +116,14 @@ import weechat
 
 weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
 weechat.prnt("", "Bonjour, du script python !")
+----------------------------------------
+
+* perl :
+
+[source,perl]
+----------------------------------------
+weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Script de test", "", "");
+weechat::print("", "Bonjour, du script perl !");
 ----------------------------------------
 
 * ruby :
@@ -115,10 +147,18 @@ weechat.print("", "Bonjour, du script lua !")
 
 * tcl :
 
-// [source,tcl]
+[source,tcl]
 ----------------------------------------
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Script de test" "" ""
 weechat::print "" "Bonjour, du script tcl !"
+----------------------------------------
+
+* guile (scheme):
+
+[source,lisp]
+----------------------------------------
+(weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Script de test" "" "")
+(weechat:print "" "Bonjour, du script scheme !")
 ----------------------------------------
 
 [[load_script]]
@@ -128,11 +168,12 @@ Chargement du script
 Vous devez utiliser la commande, dépendant du langage :
 
 ----------------------------------------
-/perl load perl/script.pl
 /python load python/script.py
+/perl load perl/script.pl
 /ruby load ruby/script.rb
 /lua load lua/script.lua
 /tcl load tcl/script.tcl
+/guile load guile/script.scm
 ----------------------------------------
 
 Vous pouvez faire un lien dans le répertoire 'langage/autoload' pour charger

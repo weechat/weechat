@@ -4,6 +4,8 @@
 
 | alias | alias | liste des alias | pointeur vers l'alias (optionnel) | nom d'alias (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
+| guile | guile_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (peut démarrer ou se terminer par "*" comme joker) (optionnel)
+
 | irc | irc_channel | liste des canaux pour un serveur IRC | pointeur vers le canal (optionnel) | serveur,canal (le canal est optionnel)
 
 | irc | irc_ignore | liste des ignores IRC | pointeur vers l'ignore (optionnel) | -

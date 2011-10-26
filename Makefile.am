@@ -43,6 +43,7 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindRuby.cmake \
              cmake/FindSourcehighlight.cmake \
              cmake/FindTCL.cmake \
+             cmake/FindGuile.cmake \
              cmake/makedist.sh.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \

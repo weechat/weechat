@@ -8,6 +8,8 @@
 
 | aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für Aspell
 
+| guile | guile_script | Liste der Skripten
+
 | irc | irc_channel | Aktueller IRC-Channel
 
 | irc | irc_channel_nicks_hosts | Liste der Nicks und Hostnamen des aktuellen Channels
@@ -38,11 +40,11 @@
 
 | irc | nick | Liste der Nicks im aktuellen Channel
 
-| lua | lua_script | Liste der Skripten:
+| lua | lua_script | Liste der Skripten
 
-| perl | perl_script | Liste der Skripten:
+| perl | perl_script | Liste der Skripten
 
-| python | python_script | Liste der Skripten:
+| python | python_script | Liste der Skripten
 
 | relay | relay_free_port | Erster freier Port für Relay-Erweiterung
 
@@ -52,9 +54,9 @@
 
 | rmodifier | rmodifier | Liste der rmodifier
 
-| ruby | ruby_script | Liste der Skripten:
+| ruby | ruby_script | Liste der Skripten
 
-| tcl | tcl_script | Liste der Skripten:
+| tcl | tcl_script | Liste der Skripten
 
 | weechat | bars_names | Namen der Infobars
 

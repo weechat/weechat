@@ -86,23 +86,24 @@ Abhängigkeiten
 folgende Tabelle beschreibt welche Pakete zwingend notwendig sind um WeeChat zu kompilieren und
 welche Pakete optional genutzt werden können.
 
-[width="80%",cols="4,^2,13",options="header"]
+[width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Paket ^(1)^             | benötigt | Funktion
-| cmake                   | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-| libncursesw5-dev ^(2)^  | *ja*     | ncurses Oberfläche
-| gettext                 | nein     | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
-| libgcrypt11-dev         | nein     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
-| libgnutls-dev (≥ 2.2.0) | nein     | SSL Verbindung zu einem IRC Server
-| ca-certificates         | nein     | Zertifikate für SSL Verbindungen
-| libaspell-dev           | nein     | aspell Erweiterung
-| libperl-dev             | nein     | perl Erweiterung
-| python-dev              | nein     | python Erweiterung
-| ruby1.8-dev             | nein     | ruby Erweiterung
-| liblua5.1-0-dev         | nein     | lua Erweiterung
-| tcl-dev (≥ 8.5)         | nein     | tcl Erweiterung
-| asciidoc (≥ 8.5.0)      | nein     | erstellt Dokumentation (HTML Dateien)
-| source-highlight        | nein     | Syntax highlight für Quelltext in HTML Dokumentation
+| Paket ^(1)^            | Version   | benötigt | Funktion
+| cmake                  |           | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+| libncursesw5-dev ^(2)^ |           | *ja*     | ncurses Oberfläche
+| gettext                |           |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
+| libgcrypt11-dev        |           |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
+| libgnutls-dev          | ≥ 2.2.0   |          | SSL Verbindung zu einem IRC Server
+| ca-certificates        |           |          | Zertifikate für SSL Verbindungen
+| libaspell-dev          |           |          | aspell Erweiterung
+| python-dev             | 2.5 → 2.7 |          | python Erweiterung
+| libperl-dev            |           |          | perl Erweiterung
+| ruby1.8-dev            |           |          | ruby Erweiterung
+| liblua5.1-0-dev        |           |          | lua Erweiterung
+| tcl-dev                | ≥ 8.5     |          | tcl Erweiterung
+| guile-1.8-dev          |           |          | guile (scheme) Erweiterung
+| asciidoc               | ≥ 8.5.0   |          | erstellt Dokumentation (HTML Dateien)
+| source-highlight       |           |          | Syntax highlight für Quelltext in HTML Dokumentation
 |========================================
 
 [NOTE]
@@ -1005,8 +1006,8 @@ nachträglich zu laden oder zu entfernen.
 
 Es ist wichtig zwischen 'Erweiterung' und 'Skript' zu unterscheiden. Eine Erweiterung
 ist eine Binärdatei die kompiliert wurde und mit dem Befehl `/plugin` geladen wird.
-Dem gegenüber ist ein 'Skript' eine Textdatei die durch eine Erweiterung z.B. 'perl'
-mittels dem Befehl `/perl` geladen wird.
+Dem gegenüber ist ein 'Skript' eine Textdatei die durch eine Erweiterung z.B. 'python'
+mittels dem Befehl `/python` geladen wird.
 
 Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
 mit dem Befehl alle installierten Erweiterungen aufgelistet werden. Wird eine Erweiterung
@@ -1035,11 +1036,12 @@ Standarderweiterungen:
 | logger      | erstellt Protokolldateien von Buffern
 | relay       | Daten via Netzwerk übermitteln (IRC Proxy)
 | rmodifier   | wandelt Schlüsselwörter mit regulären Ausdrücken
-| perl        | Perl-Skript API
 | python      | Python-Skript API
+| perl        | Perl-Skript API
 | ruby        | Ruby-Skript API
 | lua         | Lua-Skript API
 | tcl         | Tcl-Skript API
+| guile       | Guile(scheme)-Skript API
 | xfer        | Datentransfer und Direktchat
 |========================================
 
@@ -1237,11 +1239,11 @@ $ echo 'irc.freenode.#weechat *Hallo!' >~/.weechat/weechat_fifo_12345
 $ echo '*hello!' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
-* sendet zwei Befehle um alle Perl-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
+* sendet zwei Befehle um alle Python-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
   mit "\n" getrennt werden):
 
 ----------------------------------------
-$ echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345
+$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
 Das nachfolgende Skript sendet einen Befehl an alle laufenden WeeChat Instanzen:
@@ -1943,7 +1945,8 @@ Lautet die Befehlszeile `/oper nick password` wird diese in der Befehlszeile als
 Skripten Erweiterungen
 ~~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat unterstützt fünf Skript-Erweiterungen: Perl, Python, Ruby, Lua und Tcl.
+WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl und Guile
+(scheme).
 Diese Erweiterungen können für die jeweilige Sprache die Skripten laden, ausführen und
 entfernen.
 
@@ -1952,17 +1955,17 @@ bitte die 'WeeChat Scripting Guide'.
 
 Skripten für WeeChat finden Sie auf: http://www.weechat.org/scripts
 
-[[perl_commands]]
-Perl Befehle
-^^^^^^^^^^^^
-
-include::autogen/user/perl_commands.txt[]
-
 [[python_commands]]
 Python Befehle
 ^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
+
+[[perl_commands]]
+Perl Befehle
+^^^^^^^^^^^^
+
+include::autogen/user/perl_commands.txt[]
 
 [[ruby_commands]]
 Ruby Befehle
@@ -1981,6 +1984,12 @@ Tcl Befehle
 ^^^^^^^^^^^
 
 include::autogen/user/tcl_commands.txt[]
+
+[[guile_commands]]
+Guile Befehle
+^^^^^^^^^^^^^
+
+include::autogen/user/guile_commands.txt[]
 
 [[xfer_plugin]]
 Xfer Erweiterung

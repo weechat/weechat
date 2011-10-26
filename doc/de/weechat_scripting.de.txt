@@ -16,9 +16,16 @@ Einleitung
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
 schlanker Chat-Client der für viele Betriebssysteme entwickelt wird.
 
-Diese Anleitung beschreibt die Vorgehensweise um Skripten für WeeChat zu
-erstellen. Dabei werden fünf Skriptsprachen unterstützt: perl, python,
-ruby, lua und tcl.
+// TRANSLATION MISSING
+This manual documents way to write scripts for WeeChat, using one of supported
+script languages:
+
+* python
+* perl
+* ruby
+* lua
+* tcl
+* guile (scheme)
 
 [NOTE]
 Beinahe alle Beispiele in dieser Dokumentation beziehen sich auf Python.
@@ -32,20 +39,46 @@ Skripten in WeeChat
 Besonderheiten der einzelnen Skriptsprachen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Es existieren einige Besonderheiten für jede Skriptsprache:
+Python
+^^^^^^
 
-* perl:
-** Funktionen werden im Format `weechat::xxx(arg1, arg2, ...);` ausgeführt
-* python:
-** WeeChat muss als Modul eingebunden werden: `import weechat`
-** Um die WeeChat Funktion `print*` nutzen zu können muss `prnt*` genutzt
-   werden ('print' ist ein reservierter Befehl von Python!)
-** Funktionen werden im Format `weechat.xxx(arg1, arg2, ...)` ausgeführt
-* ruby:
-** Es muss 'weechat_init' definiert und darin die Funktion 'register' ausgeführt werden
-** Funktionen werden im Format `Weechat.xxx(arg1, arg2, ...)` ausgeführt
-* tcl:
-** Funktionen werden im Format `weechat::xxx arg1 arg2 ...` ausgeführt
+* WeeChat muss als Modul eingebunden werden: `import weechat`
+* Um die WeeChat Funktion `print*` nutzen zu können muss `prnt*` genutzt
+  werden ('print' ist ein reservierter Befehl von Python!)
+* Funktionen werden im Format `weechat.xxx(arg1, arg2, ...)` ausgeführt
+
+Perl
+^^^^
+
+* Funktionen werden im Format `weechat::xxx(arg1, arg2, ...);` ausgeführt
+
+Ruby
+^^^^
+
+* Es muss 'weechat_init' definiert und darin die Funktion 'register' ausgeführt werden
+* Funktionen werden im Format `Weechat.xxx(arg1, arg2, ...)` ausgeführt
+
+Lua
+^^^
+
+* Funktionen werden im Format `weechat.xxx(arg1, arg2, ...)` ausgeführt
+
+Tcl
+^^^
+
+* Funktionen werden im Format `weechat::xxx arg1 arg2 ...` ausgeführt
+
+Guile (scheme)
+^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+* Functions are called with `(weechat:xxx arg1 arg2 ...)`
+* Following functions take one list of arguments (instead of many arguments
+  for other functions), because number of arguments exceed number of allowed
+  arguments in Guile:
+** config_new_section
+** config_new_option
+** bar_new
 
 [[register_function]]
 Die "Register" Funktion
@@ -74,14 +107,6 @@ Argumente:
 
 Beispielskripten, für jede Sprache:
 
-* perl:
-
-[source,perl]
-----------------------------------------
-weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test Skript", "", "");
-weechat::print("", "Hallo, von einem perl Skript!");
-----------------------------------------
-
 * python:
 
 [source,python]
@@ -90,6 +115,14 @@ import weechat
 
 weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Test Skript", "", "")
 weechat.prnt("", "Hallo, von einem python Skript!")
+----------------------------------------
+
+* perl:
+
+[source,perl]
+----------------------------------------
+weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test Skript", "", "");
+weechat::print("", "Hallo, von einem perl Skript!");
 ----------------------------------------
 
 * ruby:
@@ -113,10 +146,18 @@ weechat.print("", "Hallo, von einem lua Skript!")
 
 * tcl:
 
-// [source,tcl]
+[source,tcl]
 ----------------------------------------
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test Skript" "" ""
 weechat::print "" "Hallo, von einem tcl Skript!"
+----------------------------------------
+
+* guile (scheme):
+
+[source,lisp]
+----------------------------------------
+(weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Test script" "" "")
+(weechat:print "" "Hello, from scheme script!")
 ----------------------------------------
 
 [[load_script]]
@@ -127,11 +168,12 @@ Der Befehl zum Laden von Skripten ist davon abhängig welche Skriptsprache
 genutzt werden soll:
 
 ----------------------------------------
-/perl load perl/skript.pl
 /python load python/skript.py
+/perl load perl/skript.pl
 /ruby load ruby/skript.rb
 /lua load lua/skript.lua
 /tcl load tcl/skript.tcl
+/guile load guile/skript.scm
 ----------------------------------------
 
 Um Skripten automatisch beim Start von WeeChat zu laden kann man einen Link

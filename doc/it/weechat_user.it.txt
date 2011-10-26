@@ -90,23 +90,24 @@ Dipendenze
 La seguente tabella mostra l'elenco di pacchetti richiesti o opzionali per
 compilare WeeChat.
 
-[width="80%",cols="4,^2,13",options="header"]
+[width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Pacchetto ^(1)^         | Richiesto | Caratteristica
-| cmake                   | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
-| libncursesw5-dev ^(2)^  | *sì*      | interfaccia ncurses
-| gettext                 | no        | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| libgcrypt11-dev         | no        | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
-| libgnutls-dev (≥ 2.2.0) | no        | connessione SSL al server IRC
-| ca-certificates         | no        | certificati per le connessioni SSL
-| libaspell-dev           | no        | plugin aspell
-| libperl-dev             | no        | plugin perl
-| python-dev              | no        | plugin python
-| ruby1.8-dev             | no        | plugin ruby
-| liblua5.1-0-dev         | no        | plugin lua
-| tcl-dev (≥ 8.5)         | no        | plugin tcl
-| asciidoc (≥ 8.5.0)      | no        | compilazione della documentazione (file HTML)
-| source-highlight        | no        | evidenziazione della sintassi per i sorgenti nella documentazione HTML
+| Pacchetto ^(1)^        | Versione  | Richiesto | Caratteristica
+| cmake                  |           | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| libncursesw5-dev ^(2)^ |           | *sì*      | interfaccia ncurses
+| gettext                |           |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
+| libgcrypt11-dev        |           |           | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
+| libgnutls-dev          | ≥ 2.2.0   |           | connessione SSL al server IRC
+| ca-certificates        |           |           | certificati per le connessioni SSL
+| libaspell-dev          |           |           | plugin aspell
+| python-dev             | 2.5 → 2.7 |           | plugin python
+| libperl-dev            |           |           | plugin perl
+| ruby1.8-dev            |           |           | plugin ruby
+| liblua5.1-0-dev        |           |           | plugin lua
+| tcl-dev                | ≥ 8.5     |           | plugin tcl
+| guile-1.8-dev          |           |           | plugin guile (scheme)
+| asciidoc               | ≥ 8.5.0   |           | compilazione della documentazione (file HTML)
+| source-highlight       |           |           | evidenziazione della sintassi per i sorgenti nella documentazione HTML
 |========================================
 
 [NOTE]
@@ -1011,8 +1012,8 @@ I plugin trovati vengono caricati automaticamente all'avvio di WeeChat, ed
 
 È importante evidenziare la differenza tra un 'plugin' ed uno 'script': un
 'plugin' è un file binario compilato e caricato con il comando `/plugin`,
-mentre uno 'script' è un file di testo caricato con un plugin come 'perl'
-con il comando `/perl`.
+mentre uno 'script' è un file di testo caricato con un plugin come 'python'
+con il comando `/python`.
 
 È possibile utilizzare il comando `/plugin` per caricare/scaricare un plugin,
 oppure elencare tutti i plugin caricati.
@@ -1041,11 +1042,12 @@ I plugin predefiniti sono:
 | logger    | Registra i buffer su file
 | relay     | Relay dei dati via rete (proxy IRC)
 | rmodifier | Cambia le stringhe del modificatore con espressioni regolari
-| perl      | API per lo scripting in Perl
 | python    | API per lo scripting in Python
+| perl      | API per lo scripting in Perl
 | ruby      | API per lo scripting in Ruby
 | lua       | API per lo scripting in Lua
 | tcl       | API per lo scripting in TCL
+| guile     | API per lo scripting in Guile (scheme)
 | xfer      | Trasferimento file e chat diretta
 |=======================================
 
@@ -1244,11 +1246,11 @@ $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
 $ echo '*hello!' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
-* inviare due comandi per scaricare/caricare gli script Perl (è necessario
+* inviare due comandi per scaricare/caricare gli script Python (è necessario
   separarli con "\n"):
 
 ----------------------------------------
-$ echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345
+$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
 È possibile realizzare uno script per inviare un comando a tutte le istanze di
@@ -1956,7 +1958,8 @@ Se la riga di comando contiene: `/oper nick password` allora sullo schermo diven
 Plugin per gli script
 ~~~~~~~~~~~~~~~~~~~~~
 
-WeeChat fornisce 5 plugin per lo scripting: Perl, Python, Ruby, Lua, Tcl.
+WeeChat fornisce 6 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme).
 Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
@@ -1965,17 +1968,17 @@ per gli script, consultare la 'Guida allo Scripting di WeeChat'.
 
 È possibile trovare alcuni script qui: http://www.weechat.org/scripts
 
-[[perl_commands]]
-Comandi Perl
-^^^^^^^^^^^^
-
-include::autogen/user/perl_commands.txt[]
-
 [[python_commands]]
 Comandi Python
 ^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
+
+[[perl_commands]]
+Comandi Perl
+^^^^^^^^^^^^
+
+include::autogen/user/perl_commands.txt[]
 
 [[ruby_commands]]
 Comandi Ruby
@@ -1994,6 +1997,12 @@ Comandi Tcl
 ^^^^^^^^^^^
 
 include::autogen/user/tcl_commands.txt[]
+
+[[guile_commands]]
+Comandi Guile
+^^^^^^^^^^^^^
+
+include::autogen/user/guile_commands.txt[]
 
 [[xfer_plugin]]
 Plugin Xfer

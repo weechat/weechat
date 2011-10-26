@@ -48,6 +48,10 @@ if PLUGIN_TCL
 tcl_dir = tcl
 endif
 
-SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir)
+if PLUGIN_GUILE
+guile_dir = guile
+endif
+
+SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) $(guile_dir)
 
 EXTRA_DIST = CMakeLists.txt

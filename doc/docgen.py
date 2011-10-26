@@ -93,6 +93,7 @@ plugin_list = { 'weechat'  : 'co',
                 'ruby'     : '',
                 'lua'      : '',
                 'tcl'      : '',
+                'guile'    : '',
                 'xfer'     : 'co' }
 
 # options to ignore
@@ -251,16 +252,24 @@ def get_completions():
 
 def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     """Update a doc file."""
-    shaold = hashlib.sha224(open(oldfile, 'r').read()).hexdigest()
-    shanew = hashlib.sha224(open(newfile, 'r').read()).hexdigest()
+    try:
+        shaold = hashlib.sha224(open(oldfile, 'r').read()).hexdigest()
+    except:
+        shaold = ''
+    try:
+        shanew = hashlib.sha224(open(newfile, 'r').read()).hexdigest()
+    except:
+        shanew = ''
     if shaold != shanew:
-        os.unlink(oldfile)
+        if os.path.exists(oldfile):
+            os.unlink(oldfile)
         os.rename(newfile, oldfile)
         num_files_updated['total1'] += 1
         num_files_updated['total2'] += 1
         num_files_updated[obj] += 1
     else:
-        os.unlink(newfile)
+        if os.path.exists(oldfile):
+            os.unlink(newfile)
     num_files['total1'] += 1
     num_files['total2'] += 1
     num_files[obj] += 1

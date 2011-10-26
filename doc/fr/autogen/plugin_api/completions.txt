@@ -8,6 +8,8 @@
 
 | aspell | aspell_langs | liste des langues supportées pour aspell
 
+| guile | guile_script | liste des scripts
+
 | irc | irc_channel | canal IRC courant
 
 | irc | irc_channel_nicks_hosts | pseudos et noms d'hôtes du canal IRC courant

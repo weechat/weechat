@@ -86,6 +86,10 @@ if PLUGIN_TCL
 script_dir = scripts
 endif
 
+if PLUGIN_GUILE
+script_dir = scripts
+endif
+
 if PLUGIN_XFER
 xfer_dir = xfer
 endif

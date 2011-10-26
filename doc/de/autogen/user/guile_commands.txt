@@ -1,0 +1,20 @@
+[[command_guile_guile]]
+[command]*`guile`* auflisten/installieren/deinstallieren von Skripten::
+........................................
+/guile  list|listfull [<name>]
+        load <filename>
+        autoload
+        reload|unload [<name>]
+
+    list: installierte Erweiterungen werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Erweiterungen
+    load: installiert eine Erweiterung
+autoload: installiert automatisch alle Erweiterungen aus System- oder Benutzerverzeichnis
+  reload: eine Erweiterung wird erneut installiert (falls kein Name angegeben wird dann werden alle Erweiterungen entfernt und erneut installiert)
+  unload: deinstalliert eine oder alle Erweiterungen
+filename: Skript (Datei) das geladen werden soll
+    name: Name eines Skripts (Name welcher mit der "register" Funktion genutzt wird)
+
+Ohne Angabe eines Argumentes listet /plugin alle geladenen Erweiterungen auf.
+........................................
+

@@ -88,23 +88,24 @@ Dépendances
 Le tableau suivant liste les paquets qui sont requis ou optionnels pour
 compiler WeeChat.
 
-[width="80%",cols="4,^2,13",options="header"]
+[width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Paquet ^(1)^            | Requis | Fonctionnalité
-| cmake                   | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^(2)^  | *oui*  | interface ncurses
-| gettext                 | non    | internationalisation (traduction des messages; la langue de base est l'anglais)
-| libgcrypt11-dev         | non    | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
-| libgnutls-dev (≥ 2.2.0) | non    | connexion SSL au serveur IRC
-| ca-certificates         | no     | certificats pour les connexions SSL
-| libaspell-dev           | non    | extension aspell
-| libperl-dev             | non    | extension perl
-| python-dev              | non    | extension python
-| ruby1.8-dev             | non    | extension ruby
-| liblua5.1-0-dev         | non    | extension lua
-| tcl-dev (≥ 8.5)         | non    | extension tcl
-| asciidoc (≥ 8.5.0)      | non    | construction de la documentation (fichiers HTML)
-| source-highlight        | non    | coloration des sources dans la documentation HTML
+| Paquet ^(1)^           | Version   | Requis | Fonctionnalité
+| cmake                  |           | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^ |           | *oui*  | interface ncurses
+| gettext                |           |        | internationalisation (traduction des messages; la langue de base est l'anglais)
+| libgcrypt11-dev        |           |        | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
+| libgnutls-dev          | ≥ 2.2.0   |        | connexion SSL au serveur IRC
+| ca-certificates        |           |        | certificats pour les connexions SSL
+| libaspell-dev          |           |        | extension aspell
+| python-dev             | 2.5 → 2.7 |        | extension python
+| libperl-dev            |           |        | extension perl
+| ruby1.8-dev            |           |        | extension ruby
+| liblua5.1-0-dev        |           |        | extension lua
+| tcl-dev                | ≥ 8.5     |        | extension tcl
+| guile-1.8-dev          |           |        | extention guile (scheme)
+| asciidoc               | ≥ 8.5.0   |        | construction de la documentation (fichiers HTML)
+| source-highlight       |           |        | coloration des sources dans la documentation HTML
 |========================================
 
 [NOTE]
@@ -1020,7 +1021,7 @@ WeeChat tourne.
 Il est important de bien faire la différence entre une 'extension' et un
 'script' : une 'extension' est un fichier binaire compilé et chargé avec la
 commande `/plugin`, tandis qu'un 'script' est un fichier texte chargé par une
-extension comme 'perl' par la commande `perl`.
+extension comme 'python' par la commande `/python`.
 
 Vous pouvez utiliser la commande `/plugin` pour charger/décharger une
 extension, ou afficher les extensions chargées.
@@ -1049,11 +1050,12 @@ Les extensions par défaut sont :
 | logger    | Enregistrement des tampons dans des fichiers
 | relay     | Relai de données via le réseau (proxy IRC)
 | rmodifier | Modification des chaînes de "modifier" avec des expressions régulières
-| perl      | Interface (API) pour scripts Perl
 | python    | Interface (API) pour scripts Python
+| perl      | Interface (API) pour scripts Perl
 | ruby      | Interface (API) pour scripts Ruby
 | lua       | Interface (API) pour scripts Lua
 | tcl       | Interface (API) pour scripts Tcl
+| guile     | Interface (API) pour scripts Guile (scheme)
 | xfer      | Transfert de fichier et discussion directe
 |========================================
 
@@ -1258,11 +1260,11 @@ $ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo_12345
 $ echo '*bonjour !' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
-* envoyer deux commandes pour décharger/recharger les scripts Perl (vous devez
+* envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
   les séparer par "\n") :
 
 ----------------------------------------
-$ echo -e '*/perl unload\n*/perl autoload' >~/.weechat/weechat_fifo_12345
+$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
 ----------------------------------------
 
 Vous pouvez écrire un script qui envoie les commandes à tous les WeeChat qui
@@ -1971,7 +1973,8 @@ sera : `/oper nick ********`.
 Extensions Scripts
 ~~~~~~~~~~~~~~~~~~
 
-WeeChat fournit 5 extensions pour scripts : Perl, Python, Ruby, Lua et Tcl.
+WeeChat fournit 6 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl et
+Guile (scheme).
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
@@ -1981,17 +1984,17 @@ WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
 Vous pouvez trouver des scripts pour WeeChat ici :
 http://www.weechat.org/scripts
 
-[[perl_commands]]
-Commandes Perl
-^^^^^^^^^^^^^^
-
-include::autogen/user/perl_commands.txt[]
-
 [[python_commands]]
 Commandes Python
 ^^^^^^^^^^^^^^^^
 
 include::autogen/user/python_commands.txt[]
+
+[[perl_commands]]
+Commandes Perl
+^^^^^^^^^^^^^^
+
+include::autogen/user/perl_commands.txt[]
 
 [[ruby_commands]]
 Commandes Ruby
@@ -2010,6 +2013,12 @@ Commandes Tcl
 ^^^^^^^^^^^^^
 
 include::autogen/user/tcl_commands.txt[]
+
+[[guile_commands]]
+Commandes Guile
+^^^^^^^^^^^^^^^
+
+include::autogen/user/guile_commands.txt[]
 
 [[xfer_plugin]]
 Extension Xfer

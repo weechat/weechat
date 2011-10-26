@@ -121,6 +121,7 @@ AH_VERBATIM([PLUGIN_PYTHON],           [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY],             [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA],              [#undef PLUGIN_LUA])
 AH_VERBATIM([PLUGIN_TCL],              [#undef PLUGIN_TCL])
+AH_VERBATIM([PLUGIN_GUILE],            [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
 AH_VERBATIM([DOC],                     [#undef DOC])
 
@@ -148,6 +149,7 @@ AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script pl
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
+AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
@@ -297,6 +299,7 @@ if test "x$enable_scripts" = "xno" ; then
     enable_ruby="no"
     enable_lua="no"
     enable_tcl="no"
+    enable_guile="no"
 fi
 
 # ---------------------------------- alias -------------------------------------
@@ -746,6 +749,40 @@ if test "x$enable_tcl" = "xyes" ; then
     AC_DEFINE(PLUGIN_TCL)
 fi
 
+# --------------------------------- guile -------------------------------------
+
+GUILE_VERSION=
+
+if test "x$enable_guile" = "xyes" ; then
+    enable_plugins="yes"
+    
+    guile_found="no"
+    GUILECONFIG=""
+    AC_CHECK_PROGS(GUILECONFIG, guile-config)
+    if test "x$GUILECONFIG" != "x" ; then
+        AC_MSG_CHECKING(for Guile headers and librairies with guile-config)
+        echo
+        GUILE_CFLAGS=`$GUILECONFIG compile`
+        GUILE_LFLAGS=`$GUILECONFIG link`
+        GUILE_VERSION=`$GUILECONFIG info guileversion`
+        tcl_found="yes"
+    fi
+        
+    if test "x$tcl_found" = "xno" ; then
+        AC_MSG_WARN([
+*** Script guile-config couldn't be found on your system.
+*** WeeChat will be built without Guile (scheme) support.])
+        enable_guile="no"
+        not_found="$not_found guile"
+    fi
+fi
+
+if test "x$enable_guile" = "xyes" ; then
+    AC_SUBST(GUILE_CFLAGS)
+    AC_SUBST(GUILE_LFLAGS)
+    AC_DEFINE(PLUGIN_GUILE)
+fi
+
 # ---------------------------------- xfer --------------------------------------
 
 if test "x$enable_xfer" = "xyes" ; then
@@ -1023,6 +1060,7 @@ AM_CONDITIONAL(PLUGIN_PYTHON,           test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,             test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
+AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 
@@ -1053,6 +1091,7 @@ AC_OUTPUT([Makefile
            src/plugins/scripts/ruby/Makefile
            src/plugins/scripts/lua/Makefile
            src/plugins/scripts/tcl/Makefile
+           src/plugins/scripts/guile/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
@@ -1128,6 +1167,9 @@ if test "x$enable_lua" = "xyes"; then
 fi
 if test "x$enable_tcl" = "xyes"; then
     listplugins="$listplugins tcl($TCL_VERSION)"
+fi
+if test "x$enable_guile" = "xyes"; then
+    listplugins="$listplugins guile($GUILE_VERSION)"
 fi
 if test "x$enable_xfer" = "xyes"; then
     listplugins="$listplugins xfer"

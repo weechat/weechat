@@ -214,6 +214,10 @@ SET(WEECHAT_SOURCES
 ./src/plugins/rmodifier/rmodifier.h
 ./src/plugins/rmodifier/rmodifier-info.c
 ./src/plugins/rmodifier/rmodifier-info.h
+./src/plugins/scripts/guile/weechat-guile-api.c
+./src/plugins/scripts/guile/weechat-guile-api.h
+./src/plugins/scripts/guile/weechat-guile.c
+./src/plugins/scripts/guile/weechat-guile.h
 ./src/plugins/scripts/lua/weechat-lua-api.c
 ./src/plugins/scripts/lua/weechat-lua-api.h
 ./src/plugins/scripts/lua/weechat-lua.c
