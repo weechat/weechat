@@ -64,6 +64,7 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
 int ruby_quiet = 0;
+int ruby_hide_errors = 0;
 struct t_plugin_script *ruby_scripts = NULL;
 struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
@@ -409,6 +410,9 @@ weechat_ruby_exec (struct t_plugin_script *script,
 static VALUE
 weechat_ruby_output (VALUE self, VALUE str)
 {
+    if (ruby_hide_errors)
+        return Qnil;
+
     char *msg, *p, *m;
 
     /* make C compiler happy */
@@ -1034,6 +1038,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     RUBY_INIT_STACK;
 #endif
 
+    ruby_hide_errors = 1;
     ruby_init ();
     ruby_init_loadpath ();
     ruby_script ("__weechat_plugin__");
@@ -1051,6 +1056,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                                weechat_ruby_output, 1);
     rb_define_singleton_method(ruby_mWeechatOutputs, "flush",
                                weechat_ruby_output_flush, 0);
+    ruby_hide_errors = 0;
 
     rb_eval_string_protect(weechat_ruby_code, &ruby_error);
     if (ruby_error)
