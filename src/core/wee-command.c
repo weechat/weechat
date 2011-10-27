@@ -5526,11 +5526,7 @@ command_init ()
                      "  filter nicks displayed when joining channels or with /names:\n"
                      "    /filter add nicks * irc_366 *\n"
                      "  filter nick \"toto\" on IRC channel #weechat:\n"
-                     "    /filter add toto irc.freenode.#weechat * toto\\t\n"
-                     "  keep only nick \"titi\" on IRC channel #test:\n"
-                     "    /filter add titi irc.freenode.#test * !titi\\t\n"
-                     "  filter lines containing word \"spam\":\n"
-                     "    /filter add filterspam * * spam\n"
+                     "    /filter add toto irc.freenode.#weechat nick_toto *\n"
                      "  filter lines containing \"weechat sucks\" on IRC "
                      "channel #weechat:\n"
                      "    /filter add sucks irc.freenode.#weechat * weechat sucks"),

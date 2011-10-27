@@ -239,11 +239,7 @@ Examples:
   filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
   filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat * toto\t
-  keep only nick "titi" on IRC channel #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filter lines containing word "spam":
-    /filter add filterspam * * spam
+    /filter add toto irc.freenode.#weechat nick_toto *
   filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................

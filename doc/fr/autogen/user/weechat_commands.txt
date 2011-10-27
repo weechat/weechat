@@ -239,11 +239,7 @@ Exemples:
   filtrer les pseudos afficher en rejoignant les canaux ou avec /names:
     /filter add nicks * irc_366 *
   filtrer le pseudo "toto" sur le canal IRC #weechat:
-    /filter add toto irc.freenode.#weechat * toto\t
-  garder uniquement le pseudo "titi" sur le canal IRC #test:
-    /filter add titi irc.freenode.#test * !titi\t
-  filtrer les lignes contenant le mot "spam":
-    /filter add filtrespam * * spam
+    /filter add toto irc.freenode.#weechat nick_toto *
   filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
