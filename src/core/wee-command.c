@@ -5288,8 +5288,6 @@ command_init ()
                      "    /bar hide mybar\n"
                      "  scroll nicklist 10 lines down on current buffer:\n"
                      "    /bar scroll nicklist * y+10\n"
-                     "  scroll nicklist one page up on #weechat buffer:\n"
-                     "    /bar scroll nicklist #weechat y-100%\n"
                      "  scroll to end of nicklist on current buffer:\n"
                      "    /bar scroll nicklist * ye"),
                   "list"

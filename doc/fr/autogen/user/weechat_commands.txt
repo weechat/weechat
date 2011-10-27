@@ -53,8 +53,6 @@ Exemples:
     /bar hide mabarre
   faire défiler la liste des pseudos de 10 lignes vers le bas sur le tampon courant:
     /bar scroll nicklist * y+10
-  faire défiler la liste des pseudos d'une page vers le haut sur le tampon #weechat:
-    /bar scroll nicklist #weechat y-100%
   faire défiler la liste des pseudos à la fin sur le tampon courant:
     /bar scroll nicklist * ye
 ........................................

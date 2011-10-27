@@ -53,8 +53,6 @@ Beispiele:
     /bar hide meinebar
   scrollt die Nickliste im aktuellen Buffer um 10 Zeilen nach unten:
     /bar scroll nicklist * y+10
-  scrollt die Nickliste im Buffer #weechat eine ganze Seite nach oben:
-    /bar scroll nicklist #weechat y-100%
   scrollt zum Ende der Nicklist im aktuellen Buffer:
     /bar scroll nicklist * ye
 ........................................

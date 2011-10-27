@@ -53,8 +53,6 @@ Esempi:
     /bar hide miabarra
   scorre la lista nick di 10 righe in basso sul buffer corrente:
     /bar scroll nicklist * y+10
-  scorre la lista nick di una pagina in alto sul buffer #weechat:
-    /bar scroll nicklist #weechat y-100%
   scorre fino alla fine della lista nick sul buffer corrente:
     /bar scroll nicklist * ye
 ........................................
