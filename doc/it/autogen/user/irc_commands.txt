@@ -306,8 +306,8 @@ messaggio: messaggio da inviare
 [[command_irc_mode]]
 [command]*`mode`* cambia modalità canale o utente::
 ........................................
-/mode  [<canale>] [+|-]o|p|s|i|t|n|b|v [<argomenti>]
-       <nick> [+|-]i|w|s|o
+/mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
+       <nick> [+|-]i|s|w|o
 
 modalità canale:
   canale: nome canale da modificare (quello attivo è il predefinito)

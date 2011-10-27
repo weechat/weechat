@@ -306,8 +306,8 @@ Message: zu sendende Nachricht
 [[command_irc_mode]]
 [command]*`mode`* Modus von einem Channel oder User ändern::
 ........................................
-/mode  [<channel>] [+|-]o|p|s|i|t|n|b|v [<arguments>]
-       <nick> [+|-]i|w|s|o
+/mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
+       <nick> [+|-]i|s|w|o
 
 Channel-Modi:
   channel: zu ändernder Channel (standardmäßig der erste Channel)

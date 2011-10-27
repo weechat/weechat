@@ -5012,8 +5012,8 @@ irc_command_init ()
                           NULL, &irc_command_me, NULL);
     weechat_hook_command ("mode",
                           N_("change channel or user mode"),
-                          N_("[<channel>] [+|-]o|p|s|i|t|n|b|v [<arguments>]"
-                             " || <nick> [+|-]i|w|s|o"),
+                          N_("[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k "
+                             "[<arguments>] || <nick> [+|-]i|s|w|o"),
                           N_("channel modes:\n"
                              "  channel: channel name to modify (default is "
                              "current one)\n"
