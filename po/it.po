@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-19 16:21+0200\n"
+"POT-Creation-Date: 2011-10-27 08:40+0200\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3546,16 +3546,17 @@ msgstr "%s%s: impossibile creare il file di configurazione"
 msgid "create an alias for a command"
 msgstr "crea un alias per un comando"
 
-msgid "[-completion <completion>] <alias> [<command> [<arguments>]]"
+#, fuzzy
+msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completamento>] <alias> [<comando> [<argomenti>]]"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
-"   command: command name (many commands can be separated by semicolons)\n"
-" arguments: arguments for command\n"
+"   command: command name with arguments (many commands can be separated by "
+"semicolons)\n"
 "\n"
 "Without argument, this command lists all defined alias.\n"
 "\n"
@@ -7645,32 +7646,20 @@ msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr "%s: script \"%s\" registrato, versione %s (%s)"
 
 #, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: impossibile eseguire la funzione \"%s\""
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" non trovato"
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: errore nella funzioe \"%s\""
 
 #, c-format
 msgid "%s: loading script \"%s\""
 msgstr "%s: caricamento dello script \"%s\""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: impossibile creare un nuovo sub-interprete"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: impossibile reindirizzare verso stdout e stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: impossibile caricare il file \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: impossibile eseguire il file \"%s\""
 
 #, c-format
 msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
@@ -7691,6 +7680,30 @@ msgstr "%s%s: script \"%s\" non caricato"
 #, c-format
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s%s: opzione sconosciuta per il comando \"%s\""
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: impossibile eseguire la funzione \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" non trovato"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: impossibile creare un nuovo sub-interprete"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: impossibile reindirizzare verso stdout e stderr"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: impossibile caricare il file \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: impossibile eseguire il file \"%s\""
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -7723,18 +7736,6 @@ msgstr "%s%s: errore sconosciuto durante la lettura del file \"%s\""
 #, c-format
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: impossibile inizializzare %s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: errore nella funzioe \"%s\""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: stdout/stderr: %s%s"
 
 #, c-format
 msgid "%s%s: unable to initialize WeeChat module"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-19 16:21+0200\n"
+"POT-Creation-Date: 2011-10-27 08:40+0200\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3084,7 +3084,7 @@ msgid "create an alias for a command"
 msgstr "создать ярлык на команду"
 
 #, fuzzy
-msgid "[-completion <completion>] <alias> [<command> [<arguments>]]"
+msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[сокращение [команда [аргументы]]]"
 
 #, fuzzy, c-format
@@ -3092,8 +3092,8 @@ msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
-"   command: command name (many commands can be separated by semicolons)\n"
-" arguments: arguments for command\n"
+"   command: command name with arguments (many commands can be separated by "
+"semicolons)\n"
 "\n"
 "Without argument, this command lists all defined alias.\n"
 "\n"
@@ -6995,33 +6995,21 @@ msgstr ""
 msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s: loading script \"%s\""
 msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
@@ -7044,6 +7032,30 @@ msgstr "%s сервер \"%s\" не найден\n"
 #, fuzzy, c-format
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -7076,18 +7088,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to initialize %s"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to initialize WeeChat module"

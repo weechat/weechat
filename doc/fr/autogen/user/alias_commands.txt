@@ -1,12 +1,11 @@
 [[command_alias_alias]]
 [command]*`alias`* créer un alias pour une commande::
 ........................................
-/alias  [-completion <complétion>] alias [<commande> [<paramètres>]]
+/alias  [-completion <complétion>] alias [<commande> [;<commande>...]]
 
 complétion: complétion pour l'alias (optionnel, par défaut la complétion se fait avec la commande cible)
      alias: nom de l'alias (peut démarrer ou se terminer par "*" pour une liste d'alias)
-  commande: nom de la commande (plusieurs commandes peuvent être séparées par des point-virgules)
-paramètres: paramètres pour la commande
+  commande: nom de la commande avec les paramètres (plusieurs commandes peuvent être séparées par des point-virgules)
 
 Sans paramètre, cette commande liste tous les alias définis.
 

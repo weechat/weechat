@@ -971,15 +971,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_command ("alias",
                           N_("create an alias for a command"),
                           N_("[-completion <completion>] <alias> [<command> "
-                             "[<arguments>]]"),
+                             "[;<command>...]]"),
                           N_("completion: completion for alias (optional, by "
                              "default completion is done with target "
                              "command)\n"
                              "     alias: name of alias (can start or end "
                              "with \"*\" for alias listing)\n"
-                             "   command: command name (many commands can be "
-                             "separated by semicolons)\n"
-                             " arguments: arguments for command\n\n"
+                             "   command: command name with arguments (many "
+                             "commands can be separated by semicolons)\n\n"
                              "Without argument, this command lists all "
                              "defined alias.\n\n"
                              "Note: in command, special variables "
