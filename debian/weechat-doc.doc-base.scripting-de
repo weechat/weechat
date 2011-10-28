@@ -6,5 +6,5 @@ Abstract: This document describes the API to create scripts
 Section: Network/Communication
 
 Format: HTML
-Index: /usr/share/doc/weechat-doc/weechat_scripting.de.html
-Files: /usr/share/doc/weechat-doc/weechat_scripting.de.html
+Index: /usr/share/doc/weechat-doc/html/weechat_scripting.de.html
+Files: /usr/share/doc/weechat-doc/html/weechat_scripting.de.html

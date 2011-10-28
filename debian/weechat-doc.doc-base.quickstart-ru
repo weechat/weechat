@@ -5,5 +5,5 @@ Abstract: A short HowTo for new WeeChat users (Russian version).
 Section: Network/Communication
 
 Format: HTML
-Index: /usr/share/doc/weechat-doc/weechat_quickstart.ru.html
-Files: /usr/share/doc/weechat-doc/weechat_quickstart.ru.html
+Index: /usr/share/doc/weechat-doc/html/weechat_quickstart.ru.html
+Files: /usr/share/doc/weechat-doc/html/weechat_quickstart.ru.html

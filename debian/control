@@ -14,6 +14,7 @@ Vcs-Browser: http://git.debian.org/?p=users/kolter/weechat.git
 Package: weechat
 Architecture: all
 Depends: ${misc:Depends}, weechat-curses (>= ${source:Version})
+Suggests: weechat-doc (= ${source:Version})
 Description: Fast, light and extensible chat client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -37,6 +38,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
 Conflicts: weechat-common
 Breaks: weechat-scripts (<= 20090221-1)
 Recommends: weechat-plugins (= ${binary:Version})
+Suggests: weechat-doc (= ${source:Version})
 Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.

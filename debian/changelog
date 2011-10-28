@@ -1,3 +1,20 @@
+weechat (0.3.6-1) unstable; urgency=low
+
+  * New upstream release
+    - Fix a FTBFS due to wrong detection of ncursesw headers
+      (Closes: #646299)
+  * Add new doc-base files (Polish translations).
+  * Install html documentation in /usr/share/doc/weechat/html instead
+    of /usr/share/doc/weechat
+  * Add a symlink from /usr/share/doc/weechat/html to
+  /usr/share/doc/weechat-doc/html so that it will be easier to find
+  documentation when weechat-doc is installed (Closes: #632621)
+  * Add a Suggest on weechat-doc for weechat and weechat-curses. Thanks to
+  Jonathan Nieder for the proposal.
+  * Fix the cmake invokation from debian/rules (cflags and ldflags)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 26 Oct 2011 20:10:09 +0000
+
 weechat (0.3.5-1) unstable; urgency=low
 
   * New upstream release
