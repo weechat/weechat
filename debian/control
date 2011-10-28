@@ -5,7 +5,8 @@ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
 Build-Depends-Indep: asciidoc (>= 8.5), source-highlight
 Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  ruby1.9.1, ruby1.9.1-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl8.5-dev, libgcrypt11-dev, libgnutls-dev, dpkg-dev (>= 1.13.19), pkg-config
+ tcl8.5-dev, guile-1.8-dev, libgcrypt11-dev, libgnutls-dev, dpkg-dev (>= 1.13.19),
+ pkg-config
 Standards-Version: 3.9.2
 Homepage: http://weechat.org/
 Vcs-Git: git://git.debian.org/users/kolter/weechat.git
@@ -27,7 +28,7 @@ Description: Fast, light and extensible chat client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - Perl, Python, Ruby, Lua, Tcl and Guile scripting
   - spell checking
   - highly customizable and extensible
   - and much more!
@@ -51,7 +52,7 @@ Description: Fast, light and extensible chat client - console client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - Perl, Python, Ruby, Lua, Tcl, and Guile scripting
   - spell checking
   - highly customizable and extensible
   - and much more!
@@ -81,7 +82,7 @@ Description: Fast, light and extensible chat client - plugins
  .
  This package provides some plugins to enhance WeeChat. It currently
  ships the following plugins:
-  - Perl, Python, Ruby, Lua, and Tcl scripting
+  - Perl, Python, Ruby, Lua, Tcl, and Guile scripting
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
   - IRC proxy
