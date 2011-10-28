@@ -9735,10 +9735,10 @@ Paramètres :
    caractères
 ** 'first_line_displayed' : 1 si la première du tampon est affichée à l'écran,
    sinon 0
-** 'scroll' : 1 s'il y a un défilement en cours dans la fenêtre (la dernière
+** 'scrolling' : 1 s'il y a un défilement en cours dans la fenêtre (la dernière
    ligne n'est pas affichée)
-** 'scroll_lines_after' : nombre de lignes non affichées après la dernière
-   ligne affichée (lors d'un défilement)
+** 'lines_after' : nombre de lignes non affichées après la dernière ligne
+   affichée (lors d'un défilement)
 
 Valeur de retour :
 

@@ -9640,10 +9640,10 @@ Argomenti:
 ** 'win_chat_height': altezza della finestra di chat, in caratteri
 ** 'first_line_displayed': 1 se la prima riga del buffer viene visualizzata
    su schermo, altrimenti 0
-** 'scroll': 1 se lo scorrimento è attivo sulla finestra (ultima riga non
+** 'scrolling': 1 se lo scorrimento è attivo sulla finestra (ultima riga non
    visualizzata)
-** 'scroll_lines_after': numero di righe non visualizzate dopo l'ultima
-   visualizzata (durante lo scorrimento)
+** 'lines_after': numero di righe non visualizzate dopo l'ultima visualizzata
+   (durante lo scorrimento)
 
 Valore restituito:
 

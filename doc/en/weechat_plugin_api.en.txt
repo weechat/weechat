@@ -9564,9 +9564,9 @@ Arguments:
 ** 'win_chat_height': height of chat window, in chars
 ** 'first_line_displayed': 1 if first line of buffer is displayed on screen,
    otherwise 0
-** 'scroll': 1 if scroll is active on window (last line not displayed)
-** 'scroll_lines_after': number of lines not displayed after last one
-   displayed (when scrolling)
+** 'scrolling': 1 if scroll is active on window (last line not displayed)
+** 'lines_after': number of lines not displayed after last one displayed
+   (when scrolling)
 
 Return value:
 
