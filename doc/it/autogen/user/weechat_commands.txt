@@ -436,21 +436,23 @@ Esempi:
 [[command_weechat_plugin]]
 [command]*`plugin`* elenca/carica/scarica plugin::
 ........................................
-/plugin  list|listfull [<nome>]
-         load <nomefile>
-         autoload
-         reload|unload [<nome>]
+/plugin  list|listfull [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name> [<arguments>]]
+         unload [<name>]
 
-    list: elenca i plugin caricati
-listfull: elenca i plugin caricati (dettagliato)
-    load: carica un plugin
-autoload: carica automaticamente un plugin nella cartella di sistema o utente
-  reload: ricarica un plugin (se non specificato, scarica e poi ricarica tutti i plugin)
-  unload: scarica un plugin (se non specificato, scarica tutti i plugin
-nomefile: plugin (file) da caricare
-    nome: nome di un plugin
+     list: list loaded plugins
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
+ filename: plugin (file) to load
+     name: a plugin name
+arguments: arguments given to plugin on load
 
-Senza argomento, questo comando elenca i plugin caricati.
+Without argument, this command lists loaded plugins.
 ........................................
 
 [[command_weechat_proxy]]

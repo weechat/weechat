@@ -437,18 +437,20 @@ Examples:
 [command]*`plugin`* list/load/unload plugins::
 ........................................
 /plugin  list|listfull [<name>]
-         load <filename>
-         autoload
-         reload|unload [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name> [<arguments>]]
+         unload [<name>]
 
-    list: list loaded plugins
-listfull: list loaded plugins (verbose)
-    load: load a plugin
-autoload: autoload plugins in system or user directory
-  reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
-  unload: unload a plugin (if no name given, unload all plugins)
-filename: plugin (file) to load
-    name: a plugin name
+     list: list loaded plugins
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
+ filename: plugin (file) to load
+     name: a plugin name
+arguments: arguments given to plugin on load
 
 Without argument, this command lists loaded plugins.
 ........................................

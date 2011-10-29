@@ -437,20 +437,22 @@ Beispiele:
 [command]*`plugin`* Erweiterungen verwalten (auflisten/installieren/deinstallieren)::
 ........................................
 /plugin  list|listfull [<name>]
-         load <filename>
-         autoload
-         reload|unload [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name> [<arguments>]]
+         unload [<name>]
 
-    list: installierte Erweiterungen werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Erweiterungen
-    load: installiert eine Erweiterung
-autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
-  reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
-  unload: deinstalliere eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung entfernt)
-filename: Erweiterung (Datei) welche installiert werden soll
-    name: Name einer Erweiterung
+     list: list loaded plugins
+ listfull: list loaded plugins (verbose)
+     load: load a plugin
+ autoload: autoload plugins in system or user directory
+   reload: reload a plugin (if no name given, unload all plugins, then autoload plugins)
+   unload: unload a plugin (if no name given, unload all plugins)
+ filename: plugin (file) to load
+     name: a plugin name
+arguments: arguments given to plugin on load
 
-Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
+Without argument, this command lists loaded plugins.
 ........................................
 
 [[command_weechat_proxy]]

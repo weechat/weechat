@@ -3521,59 +3521,108 @@ command_plugin_list (const char *name, int full)
 
 COMMAND_CALLBACK(plugin)
 {
+    int plugin_argc;
+    char **plugin_argv;
+
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv_eol;
 
-    switch (argc)
+    if (argc == 1)
     {
-        case 1:
-            /* list all plugins */
-            command_plugin_list (NULL, 0);
-            break;
-        case 2:
-            if (string_strcasecmp (argv[1], "list") == 0)
-                command_plugin_list (NULL, 0);
-            else if (string_strcasecmp (argv[1], "listfull") == 0)
-                command_plugin_list (NULL, 1);
-            else if (string_strcasecmp (argv[1], "autoload") == 0)
-                plugin_auto_load ();
-            else if (string_strcasecmp (argv[1], "reload") == 0)
+        /* list all plugins */
+        command_plugin_list (NULL, 0);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "list") == 0)
+    {
+        command_plugin_list ((argc > 2) ? argv[2] : NULL, 0);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "listfull") == 0)
+    {
+        command_plugin_list ((argc > 2) ? argv[2] : NULL, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "autoload") == 0)
+    {
+        if (argc > 2)
+        {
+            plugin_argv = string_split (argv_eol[2], " ", 0, 0,
+                                        &plugin_argc);
+            plugin_auto_load (plugin_argc, plugin_argv);
+        }
+        else
+            plugin_auto_load (0, NULL);
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "load") == 0)
+    {
+        if (argc > 2)
+        {
+            if (argc > 3)
             {
-                plugin_unload_all ();
-                plugin_auto_load ();
+                plugin_argv = string_split (argv_eol[3], " ", 0, 0,
+                                            &plugin_argc);
+                plugin_load (argv[2], plugin_argc, plugin_argv);
+                if (plugin_argv)
+                    string_free_split (plugin_argv);
             }
-            else if (string_strcasecmp (argv[1], "unload") == 0)
-                plugin_unload_all ();
-            break;
-        case 3:
-            if (string_strcasecmp (argv[1], "list") == 0)
-                command_plugin_list (argv[2], 0);
-            else if (string_strcasecmp (argv[1], "listfull") == 0)
-                command_plugin_list (argv[2], 1);
-            else if (string_strcasecmp (argv[1], "load") == 0)
-                plugin_load (argv[2]);
-            else if (string_strcasecmp (argv[1], "reload") == 0)
-                plugin_reload_name (argv[2]);
-            else if (string_strcasecmp (argv[1], "unload") == 0)
-                plugin_unload_name (argv[2]);
             else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: unknown option for \"%s\" "
-                                   "command"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 "plugin");
-            }
-            break;
-        default:
+                plugin_load (argv[2], 0, NULL);
+        }
+        else
+        {
             gui_chat_printf (NULL,
                              _("%sError: wrong argument count for \"%s\" "
                                "command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              "plugin");
+        }
+        return WEECHAT_RC_OK;
     }
+
+    if (string_strcasecmp (argv[1], "reload") == 0)
+    {
+        if (argc > 2)
+        {
+            if (argc > 3)
+            {
+                plugin_argv = string_split (argv_eol[3], " ", 0, 0,
+                                            &plugin_argc);
+                plugin_reload_name (argv[2], plugin_argc, plugin_argv);
+                if (plugin_argv)
+                    string_free_split (plugin_argv);
+            }
+            else
+                plugin_reload_name (argv[2], 0, NULL);
+        }
+        else
+        {
+            plugin_unload_all ();
+            plugin_auto_load (0, NULL);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (string_strcasecmp (argv[1], "unload") == 0)
+    {
+        if (argc > 2)
+            plugin_unload_name (argv[2]);
+        else
+            plugin_unload_all ();
+        return WEECHAT_RC_OK;
+    }
+
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "plugin");
 
     return WEECHAT_RC_OK;
 }
@@ -5775,19 +5824,21 @@ command_init ()
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),
                   N_("list|listfull [<name>]"
-                     " || load <filename>"
-                     " || autoload"
-                     " || reload|unload [<name>]"),
-                  N_("    list: list loaded plugins\n"
-                     "listfull: list loaded plugins (verbose)\n"
-                     "    load: load a plugin\n"
-                     "autoload: autoload plugins in system or user directory\n"
-                     "  reload: reload a plugin (if no name given, unload "
+                     " || load <filename> [<arguments>]"
+                     " || autoload [<arguments>]"
+                     " || reload [<name> [<arguments>]]"
+                     " || unload [<name>]"),
+                  N_("     list: list loaded plugins\n"
+                     " listfull: list loaded plugins (verbose)\n"
+                     "     load: load a plugin\n"
+                     " autoload: autoload plugins in system or user directory\n"
+                     "   reload: reload a plugin (if no name given, unload "
                      "all plugins, then autoload plugins)\n"
-                     "  unload: unload a plugin (if no name given, unload "
+                     "   unload: unload a plugin (if no name given, unload "
                      "all plugins)\n"
-                     "filename: plugin (file) to load\n"
-                     "    name: a plugin name\n\n"
+                     " filename: plugin (file) to load\n"
+                     "     name: a plugin name\n"
+                     "arguments: arguments given to plugin on load\n\n"
                      "Without argument, this command lists loaded plugins."),
                   "list %(plugins_names)"
                   " || listfull %(plugins_names)"

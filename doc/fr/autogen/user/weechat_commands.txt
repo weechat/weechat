@@ -437,18 +437,20 @@ Exemples:
 [command]*`plugin`* lister/charger/décharger des extensions::
 ........................................
 /plugin  list|listfull [<nom>]
-         load <fichier>
-         autoload
-         reload|unload [<nom>]
+         load <fichier> [<paramètres>]
+         autoload [<paramètres>]
+         reload [<nom> [<paramètres]]
+         unload [<nom>]
 
-    list: lister les extensions chargées
-listfull: lister les extensions chargées (verbeux)
-    load: charger une extension
-autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
-  reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis recharger automatiquement les extensions)
-  unload: décharger une extension (si pas de nom donné, décharger toutes les extensions)
- fichier: extension (fichier) à charger
-     nom: nom d'extension
+      list: lister les extensions chargées
+  listfull: lister les extensions chargées (verbeux)
+      load: charger une extension
+  autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
+    reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis recharger automatiquement les extensions)
+    unload: décharger une extension (si pas de nom donné, décharger toutes les extensions)
+   fichier: extension (fichier) à charger
+       nom: nom d'extension
+paramètres: paramètres donnés à l'extension lors de son chargement
 
 Sans paramètre, cette commande liste les extensions chargées.
 ........................................
