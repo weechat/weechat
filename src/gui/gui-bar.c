@@ -1343,7 +1343,9 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "string",
                     N_("condition(s) for displaying bar (for bars of type "
-                       "\"window\")"),
+                       "\"window\"): \"active\" = window must be active, "
+                        "\"inactive\" = window must be inactive, "
+                        "\"nicklist\" = buffer must have a nicklist"),
                     NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
                 break;
