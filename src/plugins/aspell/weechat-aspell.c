@@ -969,7 +969,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "dictionary\n"
                              "\n"
                              "Input line beginning with a '/' is not checked, "
-                             "except for some commands."),
+                             "except for some commands.\n\n"
+                             "To enable aspell on all buffers, use option "
+                             "\"default_dict\", for example:\n"
+                             "  /set aspell.check.default_dict \"en\""),
                           "dictlist"
                           " || enable %(aspell_langs)"
                           " || disable"
