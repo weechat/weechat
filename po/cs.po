@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-29 11:38+0200\n"
+"POT-Creation-Date: 2011-10-29 16:32+0200\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -87,6 +87,9 @@ msgstr "%s výchozí klávesy:\n"
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Chyba: chybí argument pro volbu \"%s\"\n"
+
+msgid "Error: WEECHAT_HOME is undefined, check build options\n"
+msgstr ""
 
 msgid "Error: unable to get HOME directory\n"
 msgstr "Chyba: nemohu získat HOME adresář\n"

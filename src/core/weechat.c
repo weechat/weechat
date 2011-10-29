@@ -282,23 +282,47 @@ weechat_parse_args (int argc, char *argv[])
 void
 weechat_create_home_dirs ()
 {
-    char *ptr_home;
+    char *ptr_home, *config_weechat_home = WEECHAT_HOME;
     int dir_length;
     struct stat statinfo;
 
     if (!weechat_home)
     {
-        ptr_home = getenv ("HOME");
-        if (!ptr_home)
+        if (strlen (config_weechat_home) == 0)
         {
             string_iconv_fprintf (stderr,
-                                  _("Error: unable to get HOME directory\n"));
+                                  _("Error: WEECHAT_HOME is undefined, check "
+                                    "build options\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
             /* make C static analyzer happy (never executed) */
             return;
         }
-        dir_length = strlen (ptr_home) + 10;
-        weechat_home = malloc (dir_length);
+
+        if (config_weechat_home[0] == '~')
+        {
+            /* replace leading '~' by $HOME */
+            ptr_home = getenv ("HOME");
+            if (!ptr_home)
+            {
+                string_iconv_fprintf (stderr,
+                                      _("Error: unable to get HOME directory\n"));
+                weechat_shutdown (EXIT_FAILURE, 0);
+                /* make C static analyzer happy (never executed) */
+                return;
+            }
+            dir_length = strlen (ptr_home) + strlen (config_weechat_home + 1) + 1;
+            weechat_home = malloc (dir_length);
+            if (weechat_home)
+            {
+                snprintf (weechat_home, dir_length,
+                          "%s%s", ptr_home, config_weechat_home + 1);
+            }
+        }
+        else
+        {
+            weechat_home = strdup (config_weechat_home);
+        }
+
         if (!weechat_home)
         {
             string_iconv_fprintf (stderr,
@@ -308,8 +332,6 @@ weechat_create_home_dirs ()
             /* make C static analyzer happy (never executed) */
             return;
         }
-        snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
-                  DIR_SEPARATOR);
     }
 
     /* if home already exists, it has to be a directory */

@@ -84,6 +84,15 @@ OPTION(ENABLE_GUILE     "Enable Scheme (guile) scripting language" ON)
 OPTION(ENABLE_XFER      "Enable Xfer plugin"                       ON)
 OPTION(ENABLE_DOC       "Enable Documentation"                     ON)
 
+IF(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
+  SET(WEECHAT_HOME "~/.weechat")
+ENDIF(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
+
+SET(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
+  STRING "WeeChat home directory for config, logs, scripts.. (default is \"~/.weechat\")"
+  FORCE)
+MARK_AS_ADVANCED(CLEAR WEECHAT_HOME)
+
 IF(ENABLE_NLS)
   ADD_SUBDIRECTORY( po )
 ENDIF(ENABLE_NLS)

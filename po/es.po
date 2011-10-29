@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-29 11:38+0200\n"
+"POT-Creation-Date: 2011-10-29 16:32+0200\n"
 "PO-Revision-Date: 2011-10-27 11:56+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -88,6 +88,9 @@ msgstr "teclas por defecto de %s (contexto: \"%s\"):\n"
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Error: falta un argumento para la opción \"%s\"\n"
+
+msgid "Error: WEECHAT_HOME is undefined, check build options\n"
+msgstr ""
 
 msgid "Error: unable to get HOME directory\n"
 msgstr "Error: no ha sido posible obtener el directorio HOME\n"

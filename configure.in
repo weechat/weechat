@@ -124,6 +124,7 @@ AH_VERBATIM([PLUGIN_TCL],              [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE],            [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
 AH_VERBATIM([DOC],                     [#undef DOC])
+AH_VERBATIM([WEECHAT_HOME],            [#define WEECHAT_HOME "~/.weechat"])
 
 # Arguments for ./configure
 
@@ -157,6 +158,13 @@ AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG 
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
 AC_ARG_ENABLE(doc,          [  --disable-doc           turn off documentation (default=built)],enable_doc=$enableval,enable_doc=yes)
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
+
+AC_ARG_VAR(WEECHAT_HOME, [WeeChat home directory for config, logs, scripts.. (default is "~/.weechat")])
+
+if test "x$WEECHAT_HOME" = "x" ; then
+    WEECHAT_HOME="~/.weechat"
+fi
+AC_DEFINE_UNQUOTED(WEECHAT_HOME, "$WEECHAT_HOME")
 
 not_asked=""
 not_found=""
@@ -1223,7 +1231,9 @@ if test "x$not_asked" != "x" || test "x$not_found" != "x"; then
 fi
 
 echo ""
-eval echo "WeeChat will be installed in $bindir."
+echo "WeeChat home directory is ${WEECHAT_HOME}"
+echo ""
+eval echo "WeeChat will be installed in $bindir"
 echo ""
 echo "configure complete, now type 'make' to build WeeChat $VERSION"
 echo ""
