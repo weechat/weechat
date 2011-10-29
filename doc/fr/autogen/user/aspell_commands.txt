@@ -12,5 +12,8 @@ dictlist: afficher les dictionnaires installés
  addword: ajouter un mot dans le dictionnaire personnel aspell
 
 Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes.
+
+Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par exemple :
+  /set aspell.check.default_dict "en"
 ........................................
 

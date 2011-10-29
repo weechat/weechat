@@ -6,11 +6,14 @@
          disable
          addword [<lingua>] <parola>
 
-dictlist: mostra i dizionari installati
-  enable: abilita aspell sul buffer corrente
- disable: disabilita aspell sul buffer corrente
- addword: aggiunge una parola nel dizionario personale aspell
+dictlist: show installed dictionaries
+  enable: enable aspell on current buffer
+ disable: disable aspell on current buffer
+ addword: add a word in your personal aspell dictionary
 
-La riga di input che comincia con '/' non viene controllata, tranne che per alcuni comandi.
+Input line beginning with a '/' is not checked, except for some commands.
+
+To enable aspell on all buffers, use option "default_dict", for example:
+  /set aspell.check.default_dict "en"
 ........................................
 
