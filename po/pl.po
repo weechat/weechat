@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-29 10:32+0200\n"
+"POT-Creation-Date: 2011-10-29 11:24+0200\n"
 "PO-Revision-Date: 2011-10-27 11:56+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -489,6 +489,14 @@ msgstr "Zresetowano układ dla buforów"
 
 msgid "Layout reset for windows"
 msgstr "Zresetowano układ dla okien"
+
+#, fuzzy
+msgid "Mouse enabled"
+msgstr "Obsługa myszy włączona"
+
+#, fuzzy
+msgid "Mouse disabled"
+msgstr "Obsługa myszy wyłączona"
 
 msgid "Plugins loaded:"
 msgstr "Załadowane wtyczki:"

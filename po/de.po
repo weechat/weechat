@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-29 10:32+0200\n"
+"POT-Creation-Date: 2011-10-29 11:24+0200\n"
 "PO-Revision-Date: 2011-10-27 11:56+0200\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -499,6 +499,14 @@ msgstr "Layout für Buffer zurücksetzen"
 
 msgid "Layout reset for windows"
 msgstr "Zurücksetzen des Fensterlayouts"
+
+#, fuzzy
+msgid "Mouse enabled"
+msgstr "Maus ist aktiviert"
+
+#, fuzzy
+msgid "Mouse disabled"
+msgstr "Maus ist deaktiviert"
 
 msgid "Plugins loaded:"
 msgstr "Installierte Erweiterungen:"

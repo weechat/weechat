@@ -3121,6 +3121,7 @@ COMMAND_CALLBACK(mouse)
     if (string_strcasecmp (argv[1], "enable") == 0)
     {
         gui_mouse_enable ();
+        gui_chat_printf (NULL, _("Mouse enabled"));
         if (argc > 2)
             command_mouse_timer (argv[2]);
         return WEECHAT_RC_OK;
@@ -3130,6 +3131,7 @@ COMMAND_CALLBACK(mouse)
     if (string_strcasecmp (argv[1], "disable") == 0)
     {
         gui_mouse_disable ();
+        gui_chat_printf (NULL, _("Mouse disabled"));
         if (argc > 2)
             command_mouse_timer (argv[2]);
         return WEECHAT_RC_OK;
@@ -3139,13 +3141,25 @@ COMMAND_CALLBACK(mouse)
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
         if (gui_mouse_enabled)
+        {
             gui_mouse_disable ();
+            gui_chat_printf (NULL, _("Mouse disabled"));
+        }
         else
+        {
             gui_mouse_enable ();
+            gui_chat_printf (NULL, _("Mouse enabled"));
+        }
         if (argc > 2)
             command_mouse_timer (argv[2]);
         return WEECHAT_RC_OK;
     }
+
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "mouse");
 
     return WEECHAT_RC_OK;
 }

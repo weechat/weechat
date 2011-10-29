@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-29 10:32+0200\n"
+"POT-Creation-Date: 2011-10-29 11:24+0200\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -483,6 +483,14 @@ msgstr "Rozložení bufferů resetováno"
 
 msgid "Layout reset for windows"
 msgstr "Rozložení oken resetováno"
+
+#, fuzzy
+msgid "Mouse enabled"
+msgstr "1 pokud jsou filtry povoleny"
+
+#, fuzzy
+msgid "Mouse disabled"
+msgstr "Filtrování zpráv zakázáno"
 
 msgid "Plugins loaded:"
 msgstr "Načtené pluginy:"
