@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-10-29
+v0.3.7-dev, 2011-10-30
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: fix help on plugin option when config_set_desc_plugin is called to set
+  help on newly created option
 * core: add WEECHAT_HOME option in cmake and configure to setup default
   WeeChat home (default is "~/.weechat") (task #11266)
 * core: add optional arguments for command /plugin load/reload/autoload
