@@ -1,3 +1,10 @@
+weechat (0.3.6-2) unstable; urgency=low
+
+  * Update debian/rules to use build flags from dpkg-buildflags when it's
+  possible (ie: with dpkg >= 1.16.1).
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 29 Oct 2011 07:31:14 +0000
+
 weechat (0.3.6-1) unstable; urgency=low
 
   * New upstream release
