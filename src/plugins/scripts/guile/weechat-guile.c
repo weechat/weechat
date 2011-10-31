@@ -337,8 +337,24 @@ weechat_guile_exec (struct t_plugin_script *script,
 void
 weechat_guile_module_init_script (void *data)
 {
+    SCM rc;
+
     weechat_guile_catch (scm_c_eval_string, "(use-modules (weechat))");
-    weechat_guile_catch (scm_c_primitive_load, data);
+    rc = weechat_guile_catch (scm_c_primitive_load, data);
+
+    /* error loading script? */
+    if (rc == SCM_BOOL_F)
+    {
+        /* if script was registered, remove it from list */
+        if (guile_current_script)
+        {
+            script_remove (weechat_guile_plugin,
+                           &guile_scripts, &last_guile_script,
+                           guile_current_script);
+        }
+        guile_current_script = NULL;
+        guile_registered_script = NULL;
+    }
 }
 
 /*
@@ -381,7 +397,7 @@ weechat_guile_load (const char *filename)
         return 0;
     }
 
-    scm_gc_protect_object (module);
+    weechat_guile_catch (scm_gc_protect_object, (void *)module);
 
     guile_current_script = guile_registered_script;
     guile_current_script->interpreter = (void *)module;
@@ -436,7 +452,7 @@ weechat_guile_unload (struct t_plugin_script *script)
             free (rc);
     }
 
-    scm_gc_unprotect_object (script->interpreter);
+    weechat_guile_catch (scm_gc_unprotect_object, script->interpreter);
 
     if (guile_current_script == script)
         guile_current_script = (guile_current_script->prev_script) ?
@@ -844,7 +860,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                                                 &weechat_guile_api_module_init,
                                                 NULL);
     scm_c_use_module ("weechat");
-    scm_gc_protect_object (guile_module_weechat);
+    weechat_guile_catch (scm_gc_protect_object, (void *)guile_module_weechat);
 
     guile_quiet = 1;
     script_init (weechat_guile_plugin,
@@ -879,7 +895,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     guile_quiet = 0;
 
     /* unprotect module */
-    scm_gc_unprotect_object (guile_module_weechat);
+    weechat_guile_catch (scm_gc_unprotect_object, (void *)guile_module_weechat);
 
     /* free some data */
     if (guile_action_install_list)
