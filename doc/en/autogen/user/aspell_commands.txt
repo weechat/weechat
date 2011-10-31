@@ -11,7 +11,7 @@ dictlist: show installed dictionaries
  disable: disable aspell on current buffer
  addword: add a word in your personal aspell dictionary
 
-Input line beginning with a '/' is not checked, except for some commands.
+Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
 
 To enable aspell on all buffers, use option "default_dict", for example:
   /set aspell.check.default_dict "en"
