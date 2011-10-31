@@ -289,6 +289,9 @@ problèmes, vous devez désactiver cette option.
 
 Une autre solution est d'utiliser l'un des scripts suivants :
 
+urlserver.py::
+    réduit les URLs avec un serveur HTTP dans le script
+
 urlbar.py::
     affiche les URLs dans une barre
 

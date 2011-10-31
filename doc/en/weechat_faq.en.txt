@@ -281,6 +281,9 @@ turn off this option.
 
 Other solution is to use one of following scripts:
 
+urlserver.py::
+    shorten URLs with HTTP server in script
+
 urlbar.py::
     display URLs in a bar
 

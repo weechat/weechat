@@ -282,6 +282,10 @@ wyłącz tą opcję.
 
 Innym rozwiązaniem będzie użycie któregoś z poniższych skryptów:
 
+// TRANSLATION MISSING
+urlserver.py::
+    shorten URLs with HTTP server in script
+
 urlbar.py::
     wyświetla adresy URL na pasku
 

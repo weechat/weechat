@@ -288,6 +288,10 @@ tali problemi, è necessario disabilitare questa opzione.
 
 Una soluzione alternativa è l'uso di uno dei seguenti script:
 
+// TRANSLATION MISSING
+urlserver.py::
+    shorten URLs with HTTP server in script
+
 urlbar.py::
     visualizza URL in una barra
 
