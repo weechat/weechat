@@ -326,10 +326,12 @@ weechat_lua_load (const char *filename)
                         lua_tostring (lua_current_interpreter, -1));
         lua_close (lua_current_interpreter);
         fclose (fp);
-        /* if script was registered, removing from list */
+
+        /* if script was registered, remove it from list */
         if (lua_current_script)
             script_remove (weechat_lua_plugin, &lua_scripts, &last_lua_script,
                            lua_current_script);
+
         return 0;
     }
     fclose (fp);
