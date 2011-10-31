@@ -571,7 +571,7 @@ weechat_python_load (const char *filename)
         if (PyErr_Occurred ())
             PyErr_Print ();
 
-        /* if script was registered, removing from list */
+        /* if script was registered, remove it from list */
         if (python_current_script != NULL)
         {
             script_remove (weechat_python_plugin,
