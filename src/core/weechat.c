@@ -149,7 +149,7 @@ weechat_display_usage (char *exec_name)
                             "                    for example, irc plugin can connect\n"
                             "                    to server with url like:\n"
                             "                    irc[6][s]://[nickname[:password]@]"
-                            "irc.example.org[/port][//#channel1][,#channel2[...]]\n"
+                            "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
                             "                    (look at plugins documentation for more information\n"
                             "                    about possible options)\n"));
     string_iconv_fprintf(stdout, "\n");
