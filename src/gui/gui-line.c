@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+#include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -794,8 +795,28 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_window *ptr_win;
     char *message_for_signal, buffer_full_name[512];
     const char *nick;
-    int notify_level, *max_notify_level;
+    int notify_level, *max_notify_level, lines_removed;
+    time_t current_time;
 
+    /*
+     * remove line(s) if necessary, according to history options:
+     *   max_lines:   if > 0, keep only N lines in buffer
+     *   max_minutes: if > 0, keep only lines from last N minutes
+     */
+    lines_removed = 0;
+    current_time = time (NULL);
+    while (buffer->own_lines->first_line
+           && (((CONFIG_INTEGER(config_history_max_lines) > 0)
+                && (buffer->own_lines->lines_count + 1 > CONFIG_INTEGER(config_history_max_lines)))
+               || ((CONFIG_INTEGER(config_history_max_minutes) > 0)
+                   && (current_time - buffer->own_lines->first_line->data->date_printed >
+                       CONFIG_INTEGER(config_history_max_minutes) * 60))))
+    {
+        gui_line_free (buffer, buffer->own_lines->first_line);
+        lines_removed++;
+    }
+
+    /* create new line */
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
     {
@@ -803,6 +824,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         return NULL;
     }
 
+    /* create data for line */
     new_line_data = malloc (sizeof (*(new_line->data)));
     if (!new_line_data)
     {
@@ -914,11 +936,13 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         gui_line_mixed_add (buffer->mixed_lines, new_line->data);
     }
 
-    /* remove one line if necessary */
-    if ((CONFIG_INTEGER(config_history_max_lines) > 0)
-        && (buffer->own_lines->lines_count > CONFIG_INTEGER(config_history_max_lines)))
+    /*
+     * if some lines were removed, force a full refresh if at least one window
+     * is displaying buffer and that number of lines in buffer is lower than
+     * window height
+     */
+    if (lines_removed > 0)
     {
-        gui_line_free (buffer, buffer->own_lines->first_line);
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
             if ((ptr_win->buffer == buffer)

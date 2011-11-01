@@ -324,9 +324,14 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `100`)
 
 * *weechat.history.max_lines*
-** description: `nombre maximum de lignes dans l'historique (0 = sans limite)`
+** description: `nombre maximum de lignes dans l'historique par tampon (0 = sans limite)`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `4096`)
+
+* *weechat.history.max_minutes*
+** description: `nombre maximum de minutes dans l'historique par tampon (0 = sans limite, exemples: 1440 = une journée, 10080 = une semaine, 43200 = un mois, 525600 = une année)`
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: `0`)
 
 * *weechat.history.max_visited_buffers*
 ** description: `nombre maximum de tampons visités à garder en mémoire`

@@ -234,6 +234,7 @@ extern struct t_config_option *config_completion_partial_completion_other;
 extern struct t_config_option *config_completion_partial_completion_count;
 
 extern struct t_config_option *config_history_max_lines;
+extern struct t_config_option *config_history_max_minutes;
 extern struct t_config_option *config_history_max_commands;
 extern struct t_config_option *config_history_max_visited_buffers;
 extern struct t_config_option *config_history_display_default;

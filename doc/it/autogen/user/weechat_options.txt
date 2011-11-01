@@ -328,6 +328,11 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `4096`)
 
+* *weechat.history.max_minutes*
+** descrizione: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** tipo: intero
+** valori: 0 .. 2147483647 (valore predefinito: `0`)
+
 * *weechat.history.max_visited_buffers*
 ** descrizione: `numero massimo di buffer visitati da memorizzare`
 ** tipo: intero

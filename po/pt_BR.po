@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-10-31 10:03+0100\n"
+"POT-Creation-Date: 2011-11-01 19:23+0100\n"
 "PO-Revision-Date: 2011-10-26 19:30+0200\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2952,6 +2952,12 @@ msgid "display count for each partial completion in bar item"
 msgstr "mostra contagem para cada completação parcial em um item de barra"
 
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
+msgstr "número máximo de linhas no histórico por buffer (0 = ilimitado)"
+
+#, fuzzy
+msgid ""
+"maximum number of minutes in history per buffer (0 = unlimited, examples: "
+"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)"
 msgstr "número máximo de linhas no histórico por buffer (0 = ilimitado)"
 
 msgid "maximum number of user commands in history (0 = unlimited)"
