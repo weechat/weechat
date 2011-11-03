@@ -24,7 +24,6 @@ Main features are:
 
 * multi-protocols (IRC, Jabber)
 * multi-servers connection (with SSL, IPv6, proxy)
-* many GUI: Curses (wxWidgets, Gtk and Qt under development)
 * small, fast and light
 * customizable and extensible with plugins and scripts
 * compliant with IRC RFCs http://www.ietf.org/rfc/rfc1459.txt[1459],

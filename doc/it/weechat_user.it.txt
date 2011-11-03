@@ -25,7 +25,6 @@ Le principali caratteristiche:
 
 * multi-protocollo (IRC, Jabber)
 * connessione a server multipli (con SSL, IPv6, proxy)
-* interfacce multiple: Curses (wxWidgets, Gtk e Qt in fase di sviluppo)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
 * conforme alle RFC di IRC http://www.ietf.org/rfc/rfc1459.txt[1459],

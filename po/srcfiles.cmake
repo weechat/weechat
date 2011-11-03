@@ -92,10 +92,6 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-nicklist.h
 ./src/gui/gui-window.c
 ./src/gui/gui-window.h
-./src/gui/qt/gui-qt.c
-./src/gui/qt/gui-qt.h
-./src/gui/wxwidgets/gui-display.c
-./src/gui/wxwidgets/gui-input.c
 ./src/plugins/alias/alias.c
 ./src/plugins/alias/alias.h
 ./src/plugins/alias/alias-config.c

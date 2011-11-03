@@ -25,7 +25,6 @@ Ses principales fonctionnalités sont les suivantes :
 
 * multi-protocoles (IRC, Jabber)
 * connexion multi-serveurs (avec SSL, IPv6, proxy)
-* plusieurs interfaces : Curses (wxWidgets, Gtk et Qt en développement)
 * petit, rapide et léger
 * paramétrable et extensible avec des extensions et des scripts
 * conforme aux RFCs IRC http://www.ietf.org/rfc/rfc1459.txt[1459],
