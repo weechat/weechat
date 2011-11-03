@@ -250,7 +250,7 @@ extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
 extern int irc_server_connect (struct t_irc_server *server);
-extern void irc_server_auto_connect ();
+extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *data, int fd);
 extern int irc_server_timer_sasl_cb (void *data, int remaining_calls);

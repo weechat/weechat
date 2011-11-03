@@ -233,8 +233,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     }
     else
     {
-        if (auto_connect)
-            irc_server_auto_connect ();
+        irc_server_auto_connect (auto_connect);
     }
 
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,

@@ -3497,17 +3497,22 @@ irc_server_reconnect (struct t_irc_server *server)
 
 /*
  * irc_server_auto_connect: auto-connect to servers (called at startup)
+ *                          if auto_connect = 1, auto connect to all servers
+ *                                               with flag "autoconnect"
+ *                                          = 0, auto connect to temp servers
+ *                                               only (created with "irc://..")
  */
 
 void
-irc_server_auto_connect ()
+irc_server_auto_connect (int auto_connect)
 {
     struct t_irc_server *ptr_server;
 
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOCONNECT))
+        if ((auto_connect || ptr_server->temp_server)
+            && (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOCONNECT)))
         {
             if (!irc_server_connect (ptr_server))
                 irc_server_reconnect_schedule (ptr_server);
