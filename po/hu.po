@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-01 19:35+0100\n"
+"POT-Creation-Date: 2011-11-03 16:55+0100\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7264,7 +7264,7 @@ msgid "%s%s: unable to create new interpreter"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error occured while parsing file \"%s\": %s"
+msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 msgid "  [A] Accept"

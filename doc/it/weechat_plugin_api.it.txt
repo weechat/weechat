@@ -6463,7 +6463,7 @@ Argomenti:
 
 Valore restituito:
 
-* pointer to new hook, NULL if error occured
+* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 

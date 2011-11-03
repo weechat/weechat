@@ -362,7 +362,7 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
 /*
  * util_file_get_content: read the content of a file
  *                        return an allocated buffer with the file content
- *                        else NULL if an error occured
+ *                        else NULL if an error occurred
  *                        (the buffer must be freed by the caller)
  */
 

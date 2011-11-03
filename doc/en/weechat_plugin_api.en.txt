@@ -2037,7 +2037,7 @@ Arguments:
 
 Return value:
 
-* 1 if directory was successfully created, 0 if an error occured
+* 1 if directory was successfully created, 0 if an error occurred
 
 C example:
 
@@ -2079,7 +2079,7 @@ Arguments:
 
 Return value:
 
-* 1 if directory was successfully created, 0 if an error occured
+* 1 if directory was successfully created, 0 if an error occurred
 
 C example:
 
@@ -2121,7 +2121,7 @@ Arguments:
 
 Return value:
 
-* 1 if directory was successfully created, 0 if an error occured
+* 1 if directory was successfully created, 0 if an error occurred
 
 C example:
 
@@ -2996,7 +2996,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hashtable, NULL if an error occured
+* pointer to new hashtable, NULL if an error occurred
 
 C example:
 
@@ -3500,7 +3500,7 @@ Arguments:
 
 Return value:
 
-* pointer to new configuration file, NULL if an error occured
+* pointer to new configuration file, NULL if an error occurred
 
 [NOTE]
 File is NOT created on disk by this function. It will be created by call to
@@ -3658,7 +3658,7 @@ Arguments:
 
 Return value:
 
-* pointer to new section in configuration file, NULL if an error occured
+* pointer to new section in configuration file, NULL if an error occurred
 
 C example:
 
@@ -4249,7 +4249,7 @@ Return value:
 
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been reset
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occured
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occurred
 
 C example:
 
@@ -4310,7 +4310,7 @@ Return value:
 
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been changed
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occured
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occurred
 
 C example:
 
@@ -4374,7 +4374,7 @@ Return value:
 
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been changed
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occured
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if an error occurred
 
 C example:
 
@@ -4432,7 +4432,7 @@ Return value:
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET' if option value has not been reset
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET' if option value has been reset
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED' if option has been removed
-* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' if an error occured
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' if an error occurred
 
 C example:
 
@@ -5092,7 +5092,7 @@ Return value:
 
 * 'WEECHAT_CONFIG_WRITE_OK' if configuration was written
 * 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR' if there was not enough memory
-* 'WEECHAT_CONFIG_WRITE_ERROR' if another error occured
+* 'WEECHAT_CONFIG_WRITE_ERROR' if another error occurred
 
 C example:
 
@@ -5532,7 +5532,7 @@ Return value:
 * 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' if option value has been changed
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' if value was not changed
 * 'WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND' if option was not found
-* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if other error occured
+* 'WEECHAT_CONFIG_OPTION_SET_ERROR' if other error occurred
 
 C example:
 
@@ -5641,7 +5641,7 @@ Return value:
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET' if option value has not been reset
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_RESET' if option value has been reset
 * 'WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED' if option has been removed
-* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' if an error occured
+* 'WEECHAT_CONFIG_OPTION_UNSET_ERROR' if an error occurred
 
 C example:
 
@@ -6262,7 +6262,7 @@ Special codes:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -6374,7 +6374,7 @@ be executed by WeeChat after callback).
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -6443,7 +6443,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -6512,7 +6512,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -6589,7 +6589,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 When command has ended, or if timeout is reached, WeeChat will automatically
 unhook (and kill process if it is still running).
@@ -6735,7 +6735,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -6871,7 +6871,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -7156,7 +7156,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -7424,7 +7424,7 @@ pattern.
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -7702,7 +7702,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -7780,7 +7780,7 @@ recommended to choose a name with a unique prefix, like "plugin_xxx" (where
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8021,7 +8021,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8143,7 +8143,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8216,7 +8216,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8294,7 +8294,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8369,7 +8369,7 @@ Arguments:
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8495,7 +8495,7 @@ irc buffers).
 
 Return value:
 
-* pointer to new hook, NULL if error occured
+* pointer to new hook, NULL if error occurred
 
 C example:
 
@@ -8645,7 +8645,7 @@ Arguments:
 
 Return value:
 
-* pointer to new buffer, NULL if error occured
+* pointer to new buffer, NULL if error occurred
 
 C example:
 
@@ -9745,7 +9745,7 @@ order: first "test" then "abc".
 
 Return value:
 
-* pointer to new group, NULL if an error occured
+* pointer to new group, NULL if an error occurred
 
 C example:
 
@@ -9859,7 +9859,7 @@ Arguments:
 
 Return value:
 
-* pointer to new nick, NULL if an error occured
+* pointer to new nick, NULL if an error occurred
 
 C example:
 
@@ -10536,7 +10536,7 @@ Arguments:
 
 Return value:
 
-* pointer to new bar item, NULL if an error occured
+* pointer to new bar item, NULL if an error occurred
 
 C example:
 
@@ -10739,7 +10739,7 @@ Arguments:
 
 Return value:
 
-* pointer to new bar, NULL if an error occured
+* pointer to new bar, NULL if an error occurred
 
 C example:
 
@@ -10799,7 +10799,7 @@ Arguments:
 
 Return value:
 
-* 1 if new value was set, 0 if an error occured
+* 1 if new value was set, 0 if an error occurred
 
 C example:
 
@@ -10961,7 +10961,7 @@ Arguments:
 
 Return value:
 
-* 1 if connection is ok, 0 if an error occured
+* 1 if connection is ok, 0 if an error occurred
 
 C example:
 
@@ -11004,7 +11004,7 @@ Arguments:
 
 Return value:
 
-* 1 if connection is ok, 0 if an error occured
+* 1 if connection is ok, 0 if an error occurred
 
 C example:
 
@@ -11060,7 +11060,7 @@ include::autogen/plugin_api/infos.txt[]
 
 Return value:
 
-* string with info asked, NULL if an error occured
+* string with info asked, NULL if an error occurred
 
 C example:
 
@@ -11110,7 +11110,7 @@ include::autogen/plugin_api/infos_hashtable.txt[]
 
 Return value:
 
-* hashtable with info asked, NULL if an error occured
+* hashtable with info asked, NULL if an error occurred
 
 C example:
 
@@ -11494,7 +11494,7 @@ include::autogen/plugin_api/infolists.txt[]
 
 Return value:
 
-* pointer to infolist, NULL if an error occured
+* pointer to infolist, NULL if an error occurred
 
 C example:
 
@@ -12131,7 +12131,7 @@ include::autogen/plugin_api/hdata.txt[]
 
 Return value:
 
-* pointer to hdata, NULL if an error occured
+* pointer to hdata, NULL if an error occurred
 
 C example:
 
@@ -12172,7 +12172,7 @@ Arguments:
 
 Return value:
 
-* variable offset, 0 if an error occured
+* variable offset, 0 if an error occurred
 
 C example:
 
@@ -12205,7 +12205,7 @@ Arguments:
 
 Return value:
 
-* variable type, -1 if an error occured
+* variable type, -1 if an error occurred
 
 C example:
 
@@ -12262,7 +12262,7 @@ Arguments:
 
 Return value:
 
-* variable type, NULL if an error occured
+* variable type, NULL if an error occurred
 
 C example:
 
@@ -12303,7 +12303,7 @@ Arguments:
 
 Return value:
 
-* hdata for variable, NULL if no hdata or if an error occured
+* hdata for variable, NULL if no hdata or if an error occurred
 
 C example:
 
@@ -12345,7 +12345,7 @@ Arguments:
 
 Return value:
 
-* pointer to content of variable, NULL if an error occured
+* pointer to content of variable, NULL if an error occurred
 
 C example:
 
@@ -12381,7 +12381,7 @@ Arguments:
 
 Return value:
 
-* pointer to content of variable, NULL if an error occured
+* pointer to content of variable, NULL if an error occurred
 
 C example:
 
@@ -12417,7 +12417,7 @@ Arguments:
 
 Return value:
 
-* list pointer, NULL if an error occured
+* list pointer, NULL if an error occurred
 
 C example:
 
@@ -12462,7 +12462,7 @@ Arguments:
 
 Return value:
 
-* pointer to element reached, NULL if an error occured
+* pointer to element reached, NULL if an error occurred
 
 C example:
 

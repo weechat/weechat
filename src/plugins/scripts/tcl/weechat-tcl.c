@@ -314,7 +314,7 @@ weechat_tcl_load (const char *filename)
     if (Tcl_EvalFile (interp, filename) != TCL_OK)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: error occured while "
+                        weechat_gettext ("%s%s: error occurred while "
                                          "parsing file \"%s\": %s"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
                         Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
