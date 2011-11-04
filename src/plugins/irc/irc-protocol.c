@@ -3636,7 +3636,9 @@ IRC_PROTOCOL_CALLBACK(366)
                         ((ptr_option) ? strlen (weechat_color (weechat_config_string (ptr_option))) : 0) +
                         strlen (weechat_infolist_string (infolist, "prefix")) +
                         16 + /* nick color */
-                        strlen (weechat_infolist_string (infolist, "name")) + 1;
+                        strlen (weechat_infolist_string (infolist, "name")) +
+                        16 + /* reset color */
+                        1; /* space */
                 }
             }
             if (length > 0)
@@ -3652,7 +3654,10 @@ IRC_PROTOCOL_CALLBACK(366)
                                     "nick") == 0)
                         {
                             if (i > 0)
+                            {
+                                strcat (string, IRC_COLOR_RESET);
                                 strcat (string, " ");
+                            }
                             prefix = weechat_infolist_string (infolist, "prefix");
                             if (prefix[0] && (prefix[0] != ' '))
                             {
