@@ -38,27 +38,27 @@ FIND_PROGRAM(RUBY_EXECUTABLE
 
 IF(RUBY_EXECUTABLE)
   EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts Config::CONFIG['rubyhdrdir'] || Config::CONFIG['archdir']"
+    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts RbConfig::CONFIG['rubyhdrdir'] || RbConfig::CONFIG['archdir']"
     OUTPUT_VARIABLE RUBY_ARCH_DIR
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts Config::CONFIG['arch']"
+    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts RbConfig::CONFIG['arch']"
     OUTPUT_VARIABLE RUBY_ARCH
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts Config::CONFIG['libdir']"
+    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts RbConfig::CONFIG['libdir']"
     OUTPUT_VARIABLE RUBY_POSSIBLE_LIB_PATH
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts Config::CONFIG['rubylibdir']"
+    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts RbConfig::CONFIG['rubylibdir']"
     OUTPUT_VARIABLE RUBY_RUBY_LIB_PATH
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts Config::CONFIG['ruby_version']"
+    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "puts RbConfig::CONFIG['ruby_version']"
     OUTPUT_VARIABLE RUBY_VERSION
     )
 
