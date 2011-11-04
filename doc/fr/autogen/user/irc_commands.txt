@@ -55,12 +55,13 @@ Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
 [[command_irc_connect]]
 [command]*`connect`* se connecter à un/plusieurs serveur(s) IRC::
 ........................................
-/connect  [<serveur> [<serveur>...] | <nom>[/<port>]] [-<option>[=<valeur>]] [-no<option>] [-nojoin] [-switch]
+/connect  [<serveur> [<serveur>...] [-<option>[=<valeur>]] [-no<option>] [-nojoin] [-switch]
           -all|-open [-nojoin] [-switch]
 
- serveur: nom du serveur interne pour se connecter (le serveur doit avoir été créé par /server add)
-     nom: nom (ou adresse IP) d'un serveur (ceci crééra un serveur TEMPORAIRE)
-    port: port pour le serveur (6667 par défaut)
+ serveur: nom du serveur, qui peut être :
+          - nom interne de serveur (créé par /server add, usage recommandé)
+          - nom/port ou IP/port (ceci crééra un serveur TEMPORAIRE), le port par défaut est 6667
+          - URL avec le format: irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/#canal1][,#canal2[...]]
   option: définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
     -all: se connecter à tous les serveurs définis dans la configuration
@@ -74,6 +75,7 @@ Exemples:
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
   /connect my.server.org/6697 -ssl -password=test
+  /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
 ........................................
 

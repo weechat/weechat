@@ -840,27 +840,45 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                 }
                 else
                 {
-                    name = irc_server_get_name_without_port (argv[i]);
-                    ptr_server = irc_server_alloc ((name) ? name : argv[i]);
-                    if (name)
-                        free (name);
-                    if (ptr_server)
+                    if ((strncmp (argv[i], "irc", 3) == 0)
+                        && strstr (argv[i], "://"))
                     {
-                        ptr_server->temp_server = 1;
-                        weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
-                                                   argv[i], 1);
-                        weechat_printf (NULL,
-                                        _("%s: server %s%s%s created (temporary server, NOT SAVED!)"),
-                                        IRC_PLUGIN_NAME,
-                                        IRC_COLOR_CHAT_SERVER,
-                                        ptr_server->name,
-                                        IRC_COLOR_RESET);
-                        irc_server_apply_command_line_options (ptr_server,
-                                                               argc, argv);
-                        if (!irc_command_connect_one_server (ptr_server, 0, 0))
-                            connect_ok = 0;
+                        /* read server using URL format */
+                        ptr_server = irc_server_alloc_with_url (argv[i]);
+                        if (ptr_server)
+                        {
+                            irc_server_apply_command_line_options (ptr_server,
+                                                                   argc, argv);
+                            if (!irc_command_connect_one_server (ptr_server, 0, 0))
+                                connect_ok = 0;
+                        }
                     }
                     else
+                    {
+                        /* create server with address */
+                        name = irc_server_get_name_without_port (argv[i]);
+                        ptr_server = irc_server_alloc ((name) ? name : argv[i]);
+                        if (name)
+                            free (name);
+                        if (ptr_server)
+                        {
+                            ptr_server->temp_server = 1;
+                            weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
+                                                       argv[i], 1);
+                            weechat_printf (NULL,
+                                            _("%s: server %s%s%s created "
+                                              "(temporary server, NOT SAVED!)"),
+                                            IRC_PLUGIN_NAME,
+                                            IRC_COLOR_CHAT_SERVER,
+                                            ptr_server->name,
+                                            IRC_COLOR_RESET);
+                            irc_server_apply_command_line_options (ptr_server,
+                                                                   argc, argv);
+                            if (!irc_command_connect_one_server (ptr_server, 0, 0))
+                                connect_ok = 0;
+                        }
+                    }
+                    if (!ptr_server)
                     {
                         weechat_printf (NULL,
                                         _("%s%s: unable to create server "
@@ -4784,15 +4802,18 @@ irc_command_init ()
                           "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command ("connect",
                           N_("connect to IRC server(s)"),
-                          N_("[<server> [<server>...] | <hostname>[/<port>]] "
-                             "[-<option>[=<value>]] [-no<option>] [-nojoin] "
-                             "[-switch]"
+                          N_("<server> [<server>...] [-<option>[=<value>]] "
+                             "[-no<option>] [-nojoin] [-switch]"
                              " || -all|-open [-nojoin] [-switch]"),
-                          N_("    server: internal server name to connect "
-                             "(server must have been created by /server add)\n"
-                             "  hostname: hostname (or IP) of a server (this "
-                             "will create a TEMPORARY server)\n"
-                             "      port: port for server (6667 by default)\n"
+                          N_("    server: server name, which can be:\n"
+                             "            - internal server name (created by "
+                             "/server add, recommended usage)\n"
+                             "            - hostname/port or IP/port (this "
+                             "will create a TEMPORARY server), port is 6667 "
+                             "by default\n"
+                             "            - URL with format: "
+                             "irc[6][s]://[nickname[:password]@]"
+                            "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
                              "    option: set option for server (for boolean "
                              "option, value can be omitted)\n"
                              "  nooption: set boolean option to 'off' (for "
@@ -4810,6 +4831,7 @@ irc_command_init ()
                              "  /connect irc6.oftc.net/6667 -ipv6\n"
                              "  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
                              "  /connect my.server.org/6697 -ssl -password=test\n"
+                             "  /connect irc://nick@irc.oftc.net/#channel\n"
                              "  /connect -switch"),
                           "%(irc_servers)|-all|-open|-nojoin|-switch|%*",
                           &irc_command_connect, NULL);

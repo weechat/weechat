@@ -705,11 +705,10 @@ irc_server_alloc (const char *name)
 /*
  * irc_server_alloc_with_url: init a server with url of this form:
  *                            irc://nick:pass@irc.toto.org:6667
- *                            returns: 1 = ok
- *                                     0 = error
+ *                            return server pointer, or NULL if error
  */
 
-int
+struct t_irc_server *
 irc_server_alloc_with_url (const char *irc_url)
 {
     char *irc_url2, *pos_server, *pos_nick, *pos_password;
@@ -720,7 +719,7 @@ irc_server_alloc_with_url (const char *irc_url)
 
     irc_url2 = strdup (irc_url);
     if (!irc_url2)
-        return 0;
+        return NULL;
 
     pos_server = NULL;
     pos_nick = NULL;
@@ -733,10 +732,10 @@ irc_server_alloc_with_url (const char *irc_url)
     ssl = 0;
 
     pos_server = strstr (irc_url2, "://");
-    if (!pos_server)
+    if (!pos_server || !pos_server[3])
     {
         free (irc_url2);
-        return 0;
+        return NULL;
     }
     pos_server[0] = '\0';
     pos_server += 3;
@@ -796,7 +795,7 @@ irc_server_alloc_with_url (const char *irc_url)
         if (!pos)
         {
             free (irc_url2);
-            return 0;
+            return NULL;
         }
         pos[0] = '\0';
         pos++;
@@ -900,7 +899,7 @@ irc_server_alloc_with_url (const char *irc_url)
 
     free (irc_url2);
 
-    return (ptr_server) ? 1 : 0;
+    return ptr_server;
 }
 
 /*

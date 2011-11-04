@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-01
+v0.3.7-dev, 2011-11-04
 
 
 Version 0.3.7 (under dev!)
@@ -17,6 +17,7 @@ Version 0.3.7 (under dev!)
 * core: fix compilation error with "pid_t" on Mac OS X (bug #34639)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
+* irc: allow URL "irc://" in command /connect
 * irc: auto-connect to servers created with "irc://" on command line but not
   other servers if "-a" ("--no-connect") is given
 * guile: new script plugin for scheme (task #7289)

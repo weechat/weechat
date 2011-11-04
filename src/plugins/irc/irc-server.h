@@ -230,7 +230,7 @@ extern char irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
 extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
                                                  char mode);
 extern struct t_irc_server *irc_server_alloc (const char *name);
-extern int irc_server_alloc_with_url (const char *irc_url);
+extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,
                                                    int argc, char **argv);
 extern void irc_server_free_all ();

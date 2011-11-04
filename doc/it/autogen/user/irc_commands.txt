@@ -55,25 +55,27 @@ Senza argomento, il comando mostra la lista dei ban per il canale corrente.
 [[command_irc_connect]]
 [command]*`connect`* connette ad uno o più server IRC::
 ........................................
-/connect  [<server> [<server>...] | <hostname>[/<porta>]] [-<opzione>[=<valore>]] [-no<opzione>] [-nojoin] [-switch]
+/connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-open [-nojoin] [-switch]
 
-    server: nome interno del server a cui connettersi (il server deve essere stato creato con /server add)
-  hostname: nome host (o IP) di un server (in questo modo viene creato un server TEMPORANEO)
-     porta: porta per il server (6667 è la predefinita)
-   opzione: imposta opzione per il server (per un'opzione bool, il valore può essere omesso)
-  nooption: imposta un'opzione bool su 'off' (ad esempio: -nossl)
-      -all: connette a tutti i server definiti nella configurazione
-     -open: connette a tutti i server aperti a cui non si è connessi
-   -nojoin: non entra su nessun canale (anche se l'ingresso automatico è attivo sul server)
-   -switch: passa all'indirizzo successivo del server
+    server: server name, which can be:
+            - internal server name (created by /server add, recommended usage)
+            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
+            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-Esempi:
+Examples:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
   /connect my.server.org/6697 -ssl -password=test
+  /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
 ........................................
 
