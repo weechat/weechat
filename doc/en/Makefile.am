@@ -39,7 +39,7 @@ all-local: weechat_user.en.html \
 
 # user's guide
 weechat_user.en.html: weechat_user.en.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.txt
 
 # plugin API reference
 weechat_plugin_api.en.html: weechat_plugin_api.en.txt $(wildcard autogen/plugin_api/*.txt)
