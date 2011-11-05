@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-05 11:34+0100\n"
+"POT-Creation-Date: 2011-11-05 16:04+0100\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2628,15 +2628,15 @@ msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
+msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
+msgid "%sWarning: %s, line %d: option outside section: %s"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
+msgid "%sWarning: %s, line %d: invalid value for option: %s"
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
 #, fuzzy, c-format
@@ -7688,3 +7688,7 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
+#~ msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"

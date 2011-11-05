@@ -2111,14 +2111,14 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             /* encode line to internal charset */
             ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
             if (ptr_line2)
-            {
                 snprintf (line, sizeof (line) - 1, "%s", ptr_line2);
-                free (ptr_line2);
-            }
 
             /* skip spaces */
             while (ptr_line[0] == ' ')
+            {
                 ptr_line++;
+            }
+
             /* not a comment and not an empty line */
             if ((ptr_line[0] != '#') && (ptr_line[0] != '\r')
                 && (ptr_line[0] != '\n'))
@@ -2255,32 +2255,36 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             if (ptr_section)
                                 gui_chat_printf (NULL,
                                                  _("%sWarning: %s, line %d: "
-                                                   "option \"%s\" "
-                                                   "unknown for "
-                                                   "section \"%s\""),
+                                                   "unknown option for section "
+                                                   "\"%s\": %s"),
                                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                  filename, line_number,
-                                                 line, ptr_section->name);
+                                                 ptr_section->name,
+                                                 ptr_line2);
                             else
                                 gui_chat_printf (NULL,
                                                  _("%sWarning: %s, line %d: "
-                                                   "unknown option \"%s\" "
-                                                   "(outside a section)"),
+                                                   "option outside section: "
+                                                   "%s"),
                                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                  filename, line_number,
-                                                 line);
+                                                 ptr_line2);
                             break;
                         case WEECHAT_CONFIG_OPTION_SET_ERROR:
                             gui_chat_printf (NULL,
                                              _("%sWarning: %s, line %d: "
-                                               "invalid value for option "
-                                               "\"%s\""),
+                                               "invalid value for option: "
+                                               "%s"),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             filename, line_number, line);
+                                             filename, line_number,
+                                             ptr_line2);
                             break;
                     }
                 }
             }
+
+            if (ptr_line2)
+                free (ptr_line2);
         }
     }
 

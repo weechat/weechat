@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-05 11:34+0100\n"
+"POT-Creation-Date: 2011-11-05 16:04+0100\n"
 "PO-Revision-Date: 2011-11-03 16:57+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3102,18 +3102,18 @@ msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr ""
 "%sAttenzione: %s, riga %d: identificatore di sezione sconosciuto (\"%s\")"
 
-#, c-format
-msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
 msgstr ""
 "%sAttenzione: %s, riga %d: opzione \"%s\" sconosciuta per la sezione \"%s\""
 
-#, c-format
-msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: option outside section: %s"
 msgstr ""
-"%sAttenzione: %s, riga %d: opzione \"%s\" sconosciuta (fuori dalla sezione)"
+"%sAttenzione: %s, riga %d: opzione \"%s\" sconosciuta per la sezione \"%s\""
 
-#, c-format
-msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: invalid value for option: %s"
 msgstr "%sAttenzione: %s, riga %d: valore non valido per l'opzione \"%s\""
 
 #, c-format
@@ -8331,6 +8331,11 @@ msgstr "Variabili"
 
 msgid "Lists"
 msgstr "Liste"
+
+#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
+#~ msgstr ""
+#~ "%sAttenzione: %s, riga %d: opzione \"%s\" sconosciuta (fuori dalla "
+#~ "sezione)"
 
 #~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
 #~ msgstr ""
