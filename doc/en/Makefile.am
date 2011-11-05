@@ -27,6 +27,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.en.txt \
              weechat_quickstart.en.txt \
              weechat_tester.en.txt \
+             weechat_dev.en.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
@@ -35,7 +36,8 @@ all-local: weechat_user.en.html \
 		weechat_scripting.en.html \
 		weechat_faq.en.html \
 		weechat_quickstart.en.html \
-		weechat_tester.en.html
+		weechat_tester.en.html \
+		weechat_dev.en.html
 
 # user's guide
 weechat_user.en.html: weechat_user.en.txt $(wildcard autogen/user/*.txt)
@@ -60,6 +62,10 @@ weechat_quickstart.en.html: weechat_quickstart.en.txt
 # tester's guide
 weechat_tester.en.html: weechat_tester.en.txt
 	$(ASCIIDOC) -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.txt
+
+# developer's guide
+weechat_dev.en.html: weechat_dev.en.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.txt
 
 # install docs
 
