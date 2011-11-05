@@ -318,20 +318,20 @@
 ** type: integer
 ** values: 0 .. 2147483647 (default value: `5`)
 
-* *weechat.history.max_commands*
-** description: `maximum number of user commands in history (0 = unlimited)`
+* *weechat.history.max_buffer_lines_minutes*
+** description: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: `100`)
+** values: 0 .. 2147483647 (default value: `0`)
 
-* *weechat.history.max_lines*
+* *weechat.history.max_buffer_lines_number*
 ** description: `maximum number of lines in history per buffer (0 = unlimited)`
 ** type: integer
 ** values: 0 .. 2147483647 (default value: `4096`)
 
-* *weechat.history.max_minutes*
-** description: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+* *weechat.history.max_commands*
+** description: `maximum number of user commands in history (0 = unlimited)`
 ** type: integer
-** values: 0 .. 2147483647 (default value: `0`)
+** values: 0 .. 2147483647 (default value: `100`)
 
 * *weechat.history.max_visited_buffers*
 ** description: `maximum number of visited buffers to keep in memory`

@@ -215,8 +215,8 @@ struct t_config_option *config_completion_partial_completion_count;
 
 /* config, history section */
 
-struct t_config_option *config_history_max_lines;
-struct t_config_option *config_history_max_minutes;
+struct t_config_option *config_history_max_buffer_lines_number;
+struct t_config_option *config_history_max_buffer_lines_minutes;
 struct t_config_option *config_history_max_commands;
 struct t_config_option *config_history_max_visited_buffers;
 struct t_config_option *config_history_display_default;
@@ -2495,15 +2495,15 @@ config_weechat_init_options ()
         return 0;
     }
 
-    config_history_max_lines = config_file_new_option (
+    config_history_max_buffer_lines_number = config_file_new_option (
         weechat_config_file, ptr_section,
-        "max_lines", "integer",
+        "max_buffer_lines_number", "integer",
         N_("maximum number of lines in history per buffer "
            "(0 = unlimited)"),
         NULL, 0, INT_MAX, "4096", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_history_max_minutes = config_file_new_option (
+    config_history_max_buffer_lines_minutes = config_file_new_option (
         weechat_config_file, ptr_section,
-        "max_minutes", "integer",
+        "max_buffer_lines_minutes", "integer",
         N_("maximum number of minutes in history per buffer "
            "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
            "43200 = one month, 525600 = one year)"),

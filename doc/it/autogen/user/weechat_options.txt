@@ -318,20 +318,20 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `5`)
 
-* *weechat.history.max_commands*
-** descrizione: `numero massimo di comandi utente nella cronologia (0 = nessun limite)`
+* *weechat.history.max_buffer_lines_minutes*
+** descrizione: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: `100`)
+** valori: 0 .. 2147483647 (valore predefinito: `0`)
 
-* *weechat.history.max_lines*
+* *weechat.history.max_buffer_lines_number*
 ** descrizione: `numero massimo di righe nella cronologia per buffer (0 = nessun limite)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `4096`)
 
-* *weechat.history.max_minutes*
-** descrizione: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+* *weechat.history.max_commands*
+** descrizione: `numero massimo di comandi utente nella cronologia (0 = nessun limite)`
 ** tipo: intero
-** valori: 0 .. 2147483647 (valore predefinito: `0`)
+** valori: 0 .. 2147483647 (valore predefinito: `100`)
 
 * *weechat.history.max_visited_buffers*
 ** descrizione: `numero massimo di buffer visitati da memorizzare`

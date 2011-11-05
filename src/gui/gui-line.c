@@ -806,11 +806,12 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     lines_removed = 0;
     current_time = time (NULL);
     while (buffer->own_lines->first_line
-           && (((CONFIG_INTEGER(config_history_max_lines) > 0)
-                && (buffer->own_lines->lines_count + 1 > CONFIG_INTEGER(config_history_max_lines)))
-               || ((CONFIG_INTEGER(config_history_max_minutes) > 0)
+           && (((CONFIG_INTEGER(config_history_max_buffer_lines_number) > 0)
+                && (buffer->own_lines->lines_count + 1 >
+                    CONFIG_INTEGER(config_history_max_buffer_lines_number)))
+               || ((CONFIG_INTEGER(config_history_max_buffer_lines_minutes) > 0)
                    && (current_time - buffer->own_lines->first_line->data->date_printed >
-                       CONFIG_INTEGER(config_history_max_minutes) * 60))))
+                       CONFIG_INTEGER(config_history_max_buffer_lines_minutes) * 60))))
     {
         gui_line_free (buffer, buffer->own_lines->first_line);
         lines_removed++;
