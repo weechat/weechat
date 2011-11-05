@@ -254,7 +254,7 @@ config_change_save_config_on_exit (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (!CONFIG_BOOLEAN(config_look_save_config_on_exit))
+    if (gui_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit))
     {
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
