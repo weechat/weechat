@@ -64,7 +64,8 @@ irc_color_decode (const char *string, int keep_colors)
 {
     unsigned char *out, *ptr_string;
     int out_length, length, out_pos;
-    char str_fg[3], str_bg[3], str_color[128];
+    char str_fg[3], str_bg[3], str_color[128], str_key[128];
+    const char *remapped_color;
     int fg, bg, bold, reverse, italic, underline, rc;
 
     out_length = (strlen (string) * 2) + 1;
@@ -175,11 +176,24 @@ irc_color_decode (const char *string, int keep_colors)
                                 bg %= IRC_NUM_COLORS;
                             }
                         }
-                        snprintf (str_color, sizeof (str_color),
-                                  "|%s%s%s",
-                                  (fg >= 0) ? irc_color_to_weechat[fg] : "",
-                                  (bg >= 0) ? "," : "",
-                                  (bg >= 0) ? irc_color_to_weechat[bg] : "");
+                        /* search "fg,bg" in hashtable of remapped colors */
+                        snprintf (str_key, sizeof (str_key), "%d,%d", fg, bg);
+                        remapped_color = weechat_hashtable_get (
+                            irc_config_hashtable_color_mirc_remap,
+                            str_key);
+                        if (remapped_color)
+                        {
+                            snprintf (str_color, sizeof (str_color),
+                                      "|%s", remapped_color);
+                        }
+                        else
+                        {
+                            snprintf (str_color, sizeof (str_color),
+                                      "|%s%s%s",
+                                      (fg >= 0) ? irc_color_to_weechat[fg] : "",
+                                      (bg >= 0) ? "," : "",
+                                      (bg >= 0) ? irc_color_to_weechat[bg] : "");
+                        }
                         strcat ((char *)out, weechat_color(str_color));
                     }
                     else
