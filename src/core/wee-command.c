@@ -951,6 +951,7 @@ COMMAND_CALLBACK(buffer)
     {
         gui_buffer_switch_by_number (gui_current_window,
                                      (int) number);
+        return WEECHAT_RC_OK;
     }
     else
     {
@@ -958,7 +959,10 @@ COMMAND_CALLBACK(buffer)
         if (!ptr_buffer)
             ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
         if (ptr_buffer)
+        {
             gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
+            return WEECHAT_RC_OK;
+        }
     }
 
     gui_chat_printf (NULL,
