@@ -7,6 +7,7 @@ v0.3.7-dev, 2011-11-07
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: display error in command /buffer if arguments are wrong (bug #34180)
 * core: add developer's guide (task #5416)
 * core: add option weechat.history.max_buffer_lines_minutes: maximum number of
   minutes in history per buffer (task #10900), rename option

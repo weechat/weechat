@@ -872,6 +872,14 @@ COMMAND_CALLBACK(buffer)
             gui_buffer_switch_by_number (gui_current_window,
                                          target_buffer);
         }
+        else
+        {
+            /* invalid number */
+            gui_chat_printf (NULL,
+                             _("%sError: incorrect buffer number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
 
         return WEECHAT_RC_OK;
     }
@@ -888,6 +896,14 @@ COMMAND_CALLBACK(buffer)
                 target_buffer -= last_gui_buffer->number;
             gui_buffer_switch_by_number (gui_current_window,
                                          target_buffer);
+        }
+        else
+        {
+            /* invalid number */
+            gui_chat_printf (NULL,
+                             _("%sError: incorrect buffer number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
         }
 
         return WEECHAT_RC_OK;
@@ -916,6 +932,14 @@ COMMAND_CALLBACK(buffer)
                 }
             }
         }
+        else
+        {
+            /* invalid number */
+            gui_chat_printf (NULL,
+                             _("%sError: incorrect buffer number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
 
         return WEECHAT_RC_OK;
     }
@@ -936,6 +960,12 @@ COMMAND_CALLBACK(buffer)
         if (ptr_buffer)
             gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
     }
+
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "buffer");
 
     return WEECHAT_RC_OK;
 }
