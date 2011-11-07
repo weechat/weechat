@@ -1338,7 +1338,7 @@ erstes Beispiel: Verbindung zu oftc und Überprüfung der Zertifikate
 
 ----------------------------------------
 $ mkdir ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
 Hinweis: es ist möglich mehrere Zertifikate in der Datei CAs.pem zu halten.

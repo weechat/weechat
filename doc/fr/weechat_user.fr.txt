@@ -1364,7 +1364,7 @@ Premier exemple : se connecter à oftc en vérifiant le certificat
 
 ----------------------------------------
 $ mkdir ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
 Note: il est possible de concaténer plusieurs certificats dans une le fichier

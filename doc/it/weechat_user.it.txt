@@ -1348,7 +1348,7 @@ Primo esempio: connessione a otfc e verifica del certificato
 
 ----------------------------------------
 $ mkdir ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/secretary/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
 Nota: è possibile concatenare più certificati nel file CAs.pem.
