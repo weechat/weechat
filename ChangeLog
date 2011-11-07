@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-06
+v0.3.7-dev, 2011-11-07
 
 
 Version 0.3.7 (under dev!)
@@ -19,6 +19,8 @@ Version 0.3.7 (under dev!)
 * core: fix compilation error with "pid_t" on Mac OS X (bug #34639)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
+* irc: display channel voice notices received in channel buffer (bug #34762),
+  display channel/op notices sent in channel buffer
 * irc: add option irc.color.mirc_remap to remap mirc colors in messages to
   WeeChat colors
 * irc: allow URL "irc://" in command /connect

@@ -2740,7 +2740,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
     char *string, hash_key[32], *str_args;
-    int arg_nick, arg_text, number;
+    int arg_target, arg_text, number, is_channel;
     struct t_irc_channel *ptr_channel;
     struct t_hashtable *hashtable;
 
@@ -2751,22 +2751,34 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 2)
     {
-        arg_nick = 1;
+        arg_target = 1;
         arg_text = 2;
         if ((argc >= 5) && (weechat_strcasecmp (argv[1], "-server") == 0))
         {
             ptr_server = irc_server_search (argv[2]);
-            arg_nick = 3;
+            arg_target = 3;
             arg_text = 4;
         }
 
         IRC_COMMAND_CHECK_SERVER("notice", 1);
-        ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
+        is_channel = 0;
+        if (((argv[arg_target][0] == '@') || (argv[arg_target][0] == '+'))
+            && irc_channel_is_channel (argv[arg_target] + 1))
+        {
+            ptr_channel = irc_channel_search (ptr_server, argv[arg_target] + 1);
+            is_channel = 1;
+        }
+        else
+        {
+            ptr_channel = irc_channel_search (ptr_server, argv[arg_target]);
+            if (ptr_channel)
+                is_channel = 1;
+        }
         hashtable = irc_server_sendf (ptr_server,
                                       IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_HASHTABLE,
                                       NULL,
                                       "NOTICE %s :%s",
-                                      argv[arg_nick], argv_eol[arg_text]);
+                                      argv[arg_target], argv_eol[arg_text]);
         if (hashtable)
         {
             number = 1;
@@ -2786,9 +2798,8 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                                      /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                                      _("Notice"),
                                      IRC_COLOR_RESET,
-                                     (irc_channel_is_channel (argv[arg_nick])) ?
-                                     IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
-                                     argv[arg_nick],
+                                     (is_channel) ? IRC_COLOR_CHAT_CHANNEL : IRC_COLOR_CHAT_NICK,
+                                     argv[arg_target],
                                      IRC_COLOR_RESET,
                                      (string) ? string : str_args);
                 if (string)
