@@ -6,14 +6,14 @@
          disable
          addword [<lang>] <word>
 
-dictlist: show installed dictionaries
-  enable: enable aspell on current buffer
- disable: disable aspell on current buffer
- addword: add a word in your personal aspell dictionary
+dictlist: listet installierte Wörterbücher auf
+  enable: aktiviert Aspell in aktuellem Buffer [lang = Wörterbuch)
+ disable: deaktiviert Aspell in aktuellem Buffer
+ addword: fügt ein Wort in das persönliche Wörterbuch von Aspell hinzu
 
-Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
+Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set aspell.check.commands).
 
-To enable aspell on all buffers, use option "default_dict", for example:
-  /set aspell.check.default_dict "en"
+Um in allen Buffern Aspell anzuwenden sollte man die Option "default_dict" nutzen , als Beispiel:
+  /set aspell.check.default_dict "de_DE-neu"
 ........................................
 

@@ -319,7 +319,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `5`)
 
 * *weechat.history.max_buffer_lines_minutes*
-** Beschreibung: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** Beschreibung: `maximale Anzahl in Minuten wie Lange die Zeilen m Verlaufspeicher pro Buffer gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 

@@ -293,9 +293,8 @@ auftreten, sollte diese Option wieder deaktiviert werden.
 
 Eine weitere Möglichkeit ist, eines der folgenden Skripten zu nutzen:
 
-// TRANSLATION MISSING
 urlserver.py::
-    shorten URLs with HTTP server in script
+    verkürzt lange URLs mittels eigenem HTTP Server
 
 urlbar.py::
     stellt die URL in einer Bar dar.

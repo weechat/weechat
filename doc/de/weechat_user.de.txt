@@ -528,8 +528,7 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
 | @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
-// TRANSLATION MISSING
-| @k(A-)@k(/)               | Switch to last buffer displayed (before last jump to a buffer) | /input jump_last_buffer_displayed
+| @k(A-)@k(/)               | wechselt zum jeweils zuletzt angezeigten Buffern | /input jump_last_buffer_displayed
 | @k(A-)@k(=)               | schaltet Filterfunktion an/aus | /filter toggle
 |========================================
 
@@ -945,9 +944,7 @@ Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 * `*` : fett
 * `!` : invertierte Darstellung
 * `_` : unterstrichen
-// TRANSLATION MISSING
-* `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color
+* `|` : behält Attribut bei: fett, invertierte Darstellung, Unterstrichen wird beim Farbwechsel nicht zurückgesetzt
 
 Um zum Beispiel dem eigenen Nick die Farbe weiß und unterstrichen
 zuzuordnen:
