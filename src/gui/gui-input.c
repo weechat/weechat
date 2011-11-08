@@ -1293,6 +1293,27 @@ gui_input_jump_last_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_input_jump_last_buffer_displayed: jump to last buffer displayed (before
+ *                                       last jump to a buffer)
+ *                                       (default key: meta-/)
+ */
+
+void
+gui_input_jump_last_buffer_displayed (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    {
+        if (gui_buffer_last_displayed)
+            gui_buffer_switch_by_number (window,
+                                         gui_buffer_last_displayed->number);
+    }
+}
+
+/*
  * gui_input_jump_previously_visited_buffer: jump to previously visited buffer
  *                                           (buffer displayed before current one)
  *                                           (default key: meta-<)

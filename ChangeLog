@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-07
+v0.3.7-dev, 2011-11-08
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add option "jump_last_buffer_displayed" for command /input
+  (key: alt+"/") (task #11553)
 * core: display error in command /buffer if arguments are wrong (bug #34180)
 * core: add developer's guide (task #5416)
 * core: add option weechat.history.max_buffer_lines_minutes: maximum number of

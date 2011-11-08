@@ -538,6 +538,7 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(z)               | Zoom sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
 | @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | /input jump_next_visited_buffer
+| @k(A-)@k(/)               | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | /input jump_last_buffer_displayed
 | @k(A-)@k(=)               | Activer/désactiver les filtres | /filter toggle
 |========================================
 

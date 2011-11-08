@@ -2345,6 +2345,8 @@ COMMAND_CALLBACK(input)
             gui_input_jump_smart (buffer);
         else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
             gui_input_jump_last_buffer (buffer);
+        else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
+            gui_input_jump_last_buffer_displayed (buffer);
         else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
             gui_input_jump_previously_visited_buffer (buffer);
         else if (string_strcasecmp (argv[1], "jump_next_visited_buffer") == 0)
@@ -5699,6 +5701,8 @@ command_init ()
                      "history\n"
                      "  jump_smart: jump to next buffer with activity\n"
                      "  jump_last_buffer: jump to last buffer\n"
+                     "  jump_last_buffer_displayed: jump to last buffer "
+                     "displayed (before last jump to a buffer)\n"
                      "  jump_previously_visited_buffer: jump to previously "
                      "visited buffer\n"
                      "  jump_next_visited_buffer: jump to next visited buffer\n"

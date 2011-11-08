@@ -1051,6 +1051,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 
     if (window->buffer->number != buffer->number)
     {
+        gui_buffer_last_displayed = window->buffer;
         gui_window_scroll_switch (window, buffer);
         if (!gui_buffers_visited_frozen)
         {

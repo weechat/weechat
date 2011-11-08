@@ -305,6 +305,7 @@ list des actions:
   history_global_next: rappeler la commande suivante dans l'historique global
   jump_smart: sauter au prochain tampon avec de l'activité
   jump_last_buffer: sauter au dernier tampon
+  jump_last_buffer_displayed: sauter au dernier tampon affiché (avant le dernier saut vers un tampon)
   jump_previously_visited_buffer: sauter au tampon visité précédemment
   jump_next_visited_buffer: sauter au tampon visité après
   hotlist_clear: effacer la hotlist

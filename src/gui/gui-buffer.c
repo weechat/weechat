@@ -70,6 +70,7 @@ struct t_gui_buffer_visited *last_gui_buffer_visited = NULL;
 int gui_buffers_visited_index = -1;             /* index of pointer in list */
 int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
+struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
 
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
@@ -2221,6 +2222,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
             ptr_window->buffer = gui_buffers;
     }
 
+    if (gui_buffer_last_displayed == buffer)
+        gui_buffer_last_displayed = NULL;
+
     hook_signal_send ("buffer_closed",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
@@ -3385,6 +3389,16 @@ gui_buffer_print_log ()
     struct t_gui_input_undo *ptr_undo;
     char *tags;
     int num;
+
+    log_printf ("");
+    log_printf ("gui_buffers . . . . . . . . . : 0x%lx", gui_buffers);
+    log_printf ("last_gui_buffer . . . . . . . : 0x%lx", last_gui_buffer);
+    log_printf ("gui_buffers_visited . . . . . : 0x%lx", gui_buffers_visited);
+    log_printf ("last_gui_buffer_visited . . . : 0x%lx", last_gui_buffer_visited);
+    log_printf ("gui_buffers_visited_index . . : %d",    gui_buffers_visited_index);
+    log_printf ("gui_buffers_visited_count . . : %d",    gui_buffers_visited_count);
+    log_printf ("gui_buffers_visited_frozen. . : %d",    gui_buffers_visited_frozen);
+    log_printf ("gui_buffer_last_displayed . . : 0x%lx", gui_buffer_last_displayed);
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)

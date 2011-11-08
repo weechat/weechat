@@ -305,6 +305,7 @@ list of actions:
   history_global_next: recall next command in global history
   jump_smart: jump to next buffer with activity
   jump_last_buffer: jump to last buffer
+  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
   jump_previously_visited_buffer: jump to previously visited buffer
   jump_next_visited_buffer: jump to next visited buffer
   hotlist_clear: clear hotlist

@@ -529,6 +529,7 @@ Keys for buffers / windows
 | @k(A-)@k(z)               | Zoom on current window (@k(A-)@k(z) again: restore initial windows state, before zoom) | /window zoom
 | @k(A-)@k(<)               | Switch to previous buffer in list of visited buffers | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Switch to next buffer in list of visited buffers | /input jump_next_visited_buffer
+| @k(A-)@k(/)               | Switch to last buffer displayed (before last jump to a buffer) | /input jump_last_buffer_displayed
 | @k(A-)@k(=)               | Toggle filters on/off | /filter toggle
 |========================================
 

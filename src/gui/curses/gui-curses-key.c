@@ -204,6 +204,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-9         */ "meta-9",             "/buffer *9");
         BIND(/* m-<         */ "meta-<",             "/input jump_previously_visited_buffer");
         BIND(/* m->         */ "meta->",             "/input jump_next_visited_buffer");
+        BIND(/* m-/         */ "meta-/",             "/input jump_last_buffer_displayed");
         BIND(/* m-m         */ "meta-m",             "/mute mouse toggle");
 
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
