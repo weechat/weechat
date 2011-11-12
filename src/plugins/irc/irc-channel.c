@@ -361,7 +361,7 @@ irc_channel_search (struct t_irc_server *server, const char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (weechat_strcasecmp (ptr_channel->name, channel_name) == 0)
+        if (irc_server_strcasecmp (server, ptr_channel->name, channel_name) == 0)
             return ptr_channel;
     }
     return NULL;
@@ -439,7 +439,7 @@ irc_channel_set_away (struct t_irc_server *server,
 
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        ptr_nick = irc_nick_search (channel, nick_name);
+        ptr_nick = irc_nick_search (server, channel, nick_name);
         if (ptr_nick)
             irc_nick_set_away (server, channel, ptr_nick, is_away);
     }
@@ -531,7 +531,8 @@ irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
  */
 
 struct t_irc_channel_speaking *
-irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
+irc_channel_nick_speaking_time_search (struct t_irc_server *server,
+                                       struct t_irc_channel *channel,
                                        const char *nick_name,
                                        int check_time)
 {
@@ -544,7 +545,7 @@ irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
     for (ptr_nick = channel->nicks_speaking_time; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
-        if (strcmp (ptr_nick->nick, nick_name) == 0)
+        if (irc_server_strcasecmp (server, ptr_nick->nick, nick_name) == 0)
         {
             if (check_time && (ptr_nick->time_last_message < time_limit))
                 return NULL;
@@ -622,13 +623,15 @@ irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel)
  */
 
 void
-irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
+irc_channel_nick_speaking_time_add (struct t_irc_server *server,
+                                    struct t_irc_channel *channel,
                                     const char *nick_name,
                                     time_t time_last_message)
 {
     struct t_irc_channel_speaking *ptr_nick, *new_nick;
 
-    ptr_nick = irc_channel_nick_speaking_time_search (channel, nick_name, 0);
+    ptr_nick = irc_channel_nick_speaking_time_search (server, channel,
+                                                      nick_name, 0);
     if (ptr_nick)
         irc_channel_nick_speaking_time_free (channel, ptr_nick);
 
@@ -655,7 +658,8 @@ irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
  */
 
 void
-irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
+irc_channel_nick_speaking_time_rename (struct t_irc_server *server,
+                                       struct t_irc_channel *channel,
                                        const char *old_nick,
                                        const char *new_nick)
 {
@@ -663,7 +667,7 @@ irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
 
     if (channel->nicks_speaking_time)
     {
-        ptr_nick = irc_channel_nick_speaking_time_search (channel, old_nick, 0);
+        ptr_nick = irc_channel_nick_speaking_time_search (server, channel, old_nick, 0);
         if (ptr_nick)
         {
             free (ptr_nick->nick);
@@ -749,7 +753,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
     {
         if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             && ptr_channel->has_quit_server
-            && (strcmp (ptr_channel->name, (nick) ? nick->name : nickname) == 0))
+            && (irc_server_strcasecmp (server, ptr_channel->name, (nick) ? nick->name : nickname) == 0))
         {
             if (weechat_config_boolean (irc_config_look_display_pv_back))
             {

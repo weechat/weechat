@@ -187,7 +187,8 @@ irc_config_compute_nick_colors ()
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                if (weechat_strcasecmp (ptr_nick->name, ptr_server->nick) != 0)
+                if (irc_server_strcasecmp (ptr_server, ptr_nick->name,
+                                           ptr_server->nick) != 0)
                 {
                     if (ptr_nick->color)
                         free (ptr_nick->color);

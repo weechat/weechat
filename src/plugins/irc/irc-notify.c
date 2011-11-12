@@ -102,7 +102,7 @@ irc_notify_search (struct t_irc_server *server, const char *nick)
     for (ptr_notify = server->notify_list; ptr_notify;
          ptr_notify = ptr_notify->next_notify)
     {
-        if (strcmp (ptr_notify->nick, nick) == 0)
+        if (irc_server_strcasecmp (server, ptr_notify->nick, nick) == 0)
             return ptr_notify;
     }
 
@@ -629,7 +629,9 @@ irc_notify_hsignal_cb (void *data, const char *signal,
                                          ptr_notify;
                                          ptr_notify = ptr_notify->next_notify)
                                     {
-                                        if (strcmp (ptr_notify->nick, nicks_recv[j]) == 0)
+                                        if (irc_server_strcasecmp (ptr_server,
+                                                                   ptr_notify->nick,
+                                                                   nicks_recv[j]) == 0)
                                         {
                                             irc_notify_set_is_on_server (ptr_notify, 1);
                                             ptr_notify->ison_received = 1;
@@ -652,7 +654,9 @@ irc_notify_hsignal_cb (void *data, const char *signal,
                     nick_was_sent = 0;
                     for (j = 0; j < num_nicks_sent; j++)
                     {
-                        if (strcmp (nicks_sent[j], ptr_notify->nick) == 0)
+                        if (irc_server_strcasecmp (ptr_server,
+                                                   nicks_sent[j],
+                                                   ptr_notify->nick) == 0)
                         {
                             nick_was_sent = 1;
                             break;

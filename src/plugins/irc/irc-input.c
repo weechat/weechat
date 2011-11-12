@@ -54,10 +54,12 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 
     if (ptr_channel)
     {
+        ptr_nick = NULL;
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-            ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-        else
-            ptr_nick = NULL;
+        {
+            ptr_nick = irc_nick_search (ptr_server, ptr_channel,
+                                        ptr_server->nick);
+        }
 
         weechat_printf_tags (buffer,
                              irc_protocol_tags ("privmsg",

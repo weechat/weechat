@@ -452,7 +452,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
             && channel
             && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
         {
-            ptr_nick = irc_nick_search (channel, server->nick);
+            ptr_nick = irc_nick_search (server, channel, server->nick);
             if (ptr_nick)
             {
                 if (ptr_nick->prefix[0] != ' ')
@@ -532,7 +532,7 @@ irc_bar_item_focus_buffer_nicklist (void *data,
         nick = weechat_hashtable_get (info, "nick");
         if (nick)
         {
-            ptr_nick = irc_nick_search (ptr_channel, nick);
+            ptr_nick = irc_nick_search (ptr_server, ptr_channel, nick);
             if (ptr_nick && ptr_nick->host)
             {
                 weechat_hashtable_set (info, "irc_host", ptr_nick->host);

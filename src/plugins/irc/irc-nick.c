@@ -447,7 +447,7 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 
     if (weechat_config_boolean(irc_config_look_color_nicks_in_nicklist))
     {
-        if (weechat_strcasecmp (nick->name, server->nick) == 0)
+        if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
             return nick_color_self;
         else
             return irc_nick_find_color_name (nick->name);
@@ -582,7 +582,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     int length;
 
     /* nick already exists on this channel? */
-    ptr_nick = irc_nick_search (channel, nickname);
+    ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
     {
         /* remove old nick from nicklist */
@@ -616,7 +616,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->prefix[1] = '\0';
     irc_nick_set_prefixes (server, new_nick, prefixes);
     new_nick->away = away;
-    if (weechat_strcasecmp (new_nick->name, server->nick) == 0)
+    if (irc_server_strcasecmp (server, new_nick->name, server->nick) == 0)
         new_nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
         new_nick->color = strdup (irc_nick_find_color (new_nick->name));
@@ -655,7 +655,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_nicklist_remove (server, channel, nick);
 
     /* update nicks speaking */
-    nick_is_me = (strcmp (nick->name, server->nick) == 0) ? 1 : 0;
+    nick_is_me = (irc_server_strcasecmp (server, nick->name, server->nick) == 0) ? 1 : 0;
     if (!nick_is_me)
         irc_channel_nick_speaking_rename (channel, nick->name, new_nick);
 
@@ -699,7 +699,7 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
     /* add nick in nicklist */
     irc_nick_nicklist_add (server, channel, nick);
 
-    if (strcmp (nick->name, server->nick) == 0)
+    if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
         weechat_bar_item_update ("input_prompt");
 }
 
@@ -772,11 +772,12 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
- * irc_nick_search: returns pointer on a nick
+ * irc_nick_search: search nick in a channel
  */
 
 struct t_irc_nick *
-irc_nick_search (struct t_irc_channel *channel, const char *nickname)
+irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
+                 const char *nickname)
 {
     struct t_irc_nick *ptr_nick;
 
@@ -786,7 +787,7 @@ irc_nick_search (struct t_irc_channel *channel, const char *nickname)
     for (ptr_nick = channel->nicks; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
-        if (weechat_strcasecmp (ptr_nick->name, nickname) == 0)
+        if (irc_server_strcasecmp (server, ptr_nick->name, nickname) == 0)
             return ptr_nick;
     }
 

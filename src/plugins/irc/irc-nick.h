@@ -75,7 +75,8 @@ extern void irc_nick_free (struct t_irc_server *server,
                            struct t_irc_nick *nick);
 extern void irc_nick_free_all (struct t_irc_server *server,
                                struct t_irc_channel *channel);
-extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *channel,
+extern struct t_irc_nick *irc_nick_search (struct t_irc_server *server,
+                                           struct t_irc_channel *channel,
                                            const char *nickname);
 extern void irc_nick_count (struct t_irc_server *server,
                             struct t_irc_channel *channel, int *total,

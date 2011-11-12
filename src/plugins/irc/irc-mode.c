@@ -142,7 +142,8 @@ irc_mode_channel_set (struct t_irc_server *server,
                             argv[current_arg] : NULL;
                         if (ptr_arg)
                         {
-                            ptr_nick = irc_nick_search (channel, ptr_arg);
+                            ptr_nick = irc_nick_search (server, channel,
+                                                        ptr_arg);
                             if (ptr_nick)
                             {
                                 irc_nick_set_mode (server, channel, ptr_nick,

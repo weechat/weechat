@@ -102,14 +102,17 @@ extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,
 extern void irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
                                               const char *old_nick,
                                               const char *new_nick);
-extern struct t_irc_channel_speaking *irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
+extern struct t_irc_channel_speaking *irc_channel_nick_speaking_time_search (struct t_irc_server *server,
+                                                                             struct t_irc_channel *channel,
                                                                              const char *nick_name,
                                                                              int check_time);
 extern void irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel);
-extern void irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
+extern void irc_channel_nick_speaking_time_add (struct t_irc_server *server,
+                                                struct t_irc_channel *channel,
                                                 const char *nick_name,
                                                 time_t time_last_message);
-extern void irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
+extern void irc_channel_nick_speaking_time_rename (struct t_irc_server *server,
+                                                   struct t_irc_channel *channel,
                                                    const char *old_nick,
                                                    const char *new_nick);
 extern void irc_channel_rejoin (struct t_irc_server *server,

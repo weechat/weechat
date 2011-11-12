@@ -257,6 +257,7 @@ irc_completion_channel_cb (void *data, const char *completion_item,
 
 void
 irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
+                                           struct t_irc_server *server,
                                            struct t_irc_channel *channel,
                                            int highlight)
 {
@@ -269,7 +270,7 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
         for (i = 0; i < list_size; i++)
         {
             nick = weechat_list_string (weechat_list_get (channel->nicks_speaking[highlight], i));
-            if (nick && irc_nick_search (channel, nick))
+            if (nick && irc_nick_search (server, channel, nick))
             {
                 weechat_hook_completion_list_add (completion,
                                                   nick,
@@ -314,12 +315,12 @@ irc_completion_channel_nicks_cb (void *data, const char *completion_item,
                 /* add recent speakers on channel */
                 if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
                 {
-                    irc_completion_channel_nicks_add_speakers (completion, ptr_channel, 0);
+                    irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 0);
                 }
                 /* add nicks whose make highlights on me recently on this channel */
                 if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS_HIGHLIGHTS)
                 {
-                    irc_completion_channel_nicks_add_speakers (completion, ptr_channel, 1);
+                    irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 1);
                 }
                 /* add self nick at the end */
                 weechat_hook_completion_list_add (completion,
@@ -429,8 +430,9 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
 
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
-        if (weechat_strncasecmp (ptr_channel->topic, ptr_channel->name,
-                                 strlen (ptr_channel->name)) == 0)
+        if (irc_server_strncasecmp (ptr_server, ptr_channel->topic,
+                                    ptr_channel->name,
+                                    strlen (ptr_channel->name)) == 0)
         {
             /*
              * if topic starts with channel name, add another channel name

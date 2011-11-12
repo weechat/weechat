@@ -93,6 +93,9 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "",
 };
 
+char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
+{ "rfc1459", "strict-rfc1459", "ascii" };
+
 char *irc_server_prefix_modes_default = "qaohvu";
 char *irc_server_prefix_chars_default = "~&@%+-";
 
@@ -155,6 +158,87 @@ irc_server_search_option (const char *option_name)
 
     /* server option not found */
     return -1;
+}
+
+/*
+ * irc_server_search_casemapping: search casemapping with string
+ */
+
+int
+irc_server_search_casemapping (const char *casemapping)
+{
+    int i;
+
+    for (i = 0; i < IRC_SERVER_NUM_CASEMAPPING; i++)
+    {
+        if (weechat_strcasecmp (irc_server_casemapping_string[i], casemapping) == 0)
+            return i;
+    }
+
+    /* casemapping not found */
+    return -1;
+}
+
+/*
+ * irc_server_strcasecmp: case insensitive string comparison on server
+ *                        (depends on casemapping)
+ */
+
+int
+irc_server_strcasecmp (struct t_irc_server *server,
+                       const char *string1, const char *string2)
+{
+    int casemapping, rc;
+
+    casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
+    rc = 0;
+    switch (casemapping)
+    {
+        case IRC_SERVER_CASEMAPPING_RFC1459:
+            rc = weechat_strcasecmp_range (string1, string2, 30);
+            break;
+        case IRC_SERVER_CASEMAPPING_STRICT_RFC1459:
+            rc = weechat_strcasecmp_range (string1, string2, 29);
+            break;
+        case IRC_SERVER_CASEMAPPING_ASCII:
+            rc = weechat_strcasecmp (string1, string2);
+            break;
+        default:
+            rc = weechat_strcasecmp_range (string1, string2, 30);
+            break;
+    }
+    return rc;
+}
+
+/*
+ * irc_server_strncasecmp: case insensitive string comparison on server for max
+ *                         chars (depends on casemapping)
+ */
+
+int
+irc_server_strncasecmp (struct t_irc_server *server,
+                        const char *string1, const char *string2, int max)
+{
+    int casemapping, rc;
+
+    casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
+    rc = 0;
+    switch (casemapping)
+    {
+        case IRC_SERVER_CASEMAPPING_RFC1459:
+            rc = weechat_strncasecmp_range (string1, string2, max, 30);
+            break;
+        case IRC_SERVER_CASEMAPPING_STRICT_RFC1459:
+            rc = weechat_strncasecmp_range (string1, string2, max, 29);
+            break;
+        case IRC_SERVER_CASEMAPPING_ASCII:
+            rc = weechat_strncasecmp (string1, string2, max);
+            break;
+        default:
+            rc = weechat_strncasecmp_range (string1, string2, max, 30);
+            break;
+    }
+    return rc;
 }
 
 /*
@@ -634,6 +718,7 @@ irc_server_alloc (const char *name)
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
     new_server->nick_max_length = 0;
+    new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -4079,6 +4164,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_max_length, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, NULL);
@@ -4265,6 +4351,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "prefix_chars", server->prefix_chars))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "nick_max_length", server->nick_max_length))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "casemapping", server->casemapping))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "casemapping_string", irc_server_casemapping_string[server->casemapping]))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -4568,6 +4658,9 @@ irc_server_print_log ()
         weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);
         weechat_log_printf ("  nick_max_length. . . : %d",    ptr_server->nick_max_length);
+        weechat_log_printf ("  casemapping. . . . . : %d (%s)",
+                            ptr_server->casemapping,
+                            irc_server_casemapping_string[ptr_server->casemapping]);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);

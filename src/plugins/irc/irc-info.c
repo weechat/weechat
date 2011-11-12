@@ -428,7 +428,8 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
                     }
                     if (!pointer && (argc >= 3))
                     {
-                        pointer = irc_nick_search (ptr_channel, argv[2]);
+                        pointer = irc_nick_search (ptr_server, ptr_channel,
+                                                   argv[2]);
                         if (!pointer)
                         {
                             weechat_string_free_split (argv);

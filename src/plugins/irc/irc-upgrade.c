@@ -446,7 +446,8 @@ irc_upgrade_read_cb (void *data,
                                 break;
                             snprintf (option_name, sizeof (option_name),
                                       "nick_speaking_time_time_%05d", index);
-                            irc_channel_nick_speaking_time_add (irc_upgrade_current_channel,
+                            irc_channel_nick_speaking_time_add (irc_upgrade_current_server,
+                                                                irc_upgrade_current_channel,
                                                                 nick,
                                                                 weechat_infolist_time (infolist,
                                                                                        option_name));

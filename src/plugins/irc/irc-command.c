@@ -4457,7 +4457,7 @@ irc_command_version (void *data, struct t_gui_buffer *buffer, int argc,
     if (argc > 1)
     {
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-            && irc_nick_search (ptr_channel, argv[1]))
+            && irc_nick_search (ptr_server, ptr_channel, argv[1]))
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "PRIVMSG %s :\01VERSION\01", argv[1]);
@@ -4612,7 +4612,9 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
                  ptr_nick = ptr_nick->next_nick)
             {
                 if (irc_nick_is_op (ptr_server, ptr_nick)
-                    && (strcmp (ptr_nick->name, ptr_server->nick) != 0))
+                    && (irc_server_strcasecmp (ptr_server,
+                                               ptr_nick->name,
+                                               ptr_server->nick) != 0))
                 {
                     irc_server_sendf (ptr_server,
                                       IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,

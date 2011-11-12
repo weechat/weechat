@@ -102,6 +102,16 @@ enum t_irc_server_option
 #define IRC_SERVER_SEND_OUTQ_PRIO_LOW    2
 #define IRC_SERVER_SEND_RETURN_HASHTABLE 4
 
+/* casemapping (string comparisons for nicks/channels) */
+enum t_irc_server_casemapping
+{
+    IRC_SERVER_CASEMAPPING_RFC1459 = 0,    /* A-Z [ \ ] ^ ==> a-z { | } ~    */
+    IRC_SERVER_CASEMAPPING_STRICT_RFC1459, /* A-Z [ \ ]   ==> a-z { | }      */
+    IRC_SERVER_CASEMAPPING_ASCII,          /* A-Z         ==> a-z            */
+    /* number of casemapping */
+    IRC_SERVER_NUM_CASEMAPPING,
+};
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -156,6 +166,7 @@ struct t_irc_server
     char *prefix_modes;             /* prefix modes from msg 005 (eg "aohv") */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "&@%+") */
     int nick_max_length;            /* max lenth of nick (from msg 005)      */
+    int casemapping;                /* casemapping from msg 005              */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -208,6 +219,12 @@ extern char *irc_server_option_default[];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern int irc_server_search_option (const char *option_name);
+extern int irc_server_search_casemapping (const char *casemapping);
+extern int irc_server_strcasecmp (struct t_irc_server *server,
+                                  const char *string1, const char *string2);
+extern int irc_server_strncasecmp (struct t_irc_server *server,
+                                   const char *string1, const char *string2,
+                                   int max);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern void irc_server_set_addresses (struct t_irc_server *server,

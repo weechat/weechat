@@ -365,7 +365,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
-    first_arg = (strcmp (argv[2], server->nick) == 0) ? 3 : 2;
+    first_arg = (irc_server_strcasecmp (server, argv[2], server->nick) == 0) ? 3 : 2;
 
     if ((argv[first_arg][0] != ':') && argv[first_arg + 1])
     {
@@ -393,7 +393,8 @@ IRC_PROTOCOL_CALLBACK(generic_error)
                          "%s%s%s%s%s%s",
                          weechat_prefix ("network"),
                          (ptr_channel && chan_nick
-                          && (strcmp (chan_nick, ptr_channel->name) == 0)) ?
+                          && (irc_server_strcasecmp (server, chan_nick,
+                                                     ptr_channel->name) == 0)) ?
                          IRC_COLOR_CHAT_CHANNEL : "",
                          (chan_nick) ? chan_nick : "",
                          IRC_COLOR_RESET,
@@ -456,7 +457,7 @@ IRC_PROTOCOL_CALLBACK(join)
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
 
-    local_join = (strcmp (nick, server->nick) == 0);
+    local_join = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
     pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
 
@@ -502,7 +503,7 @@ IRC_PROTOCOL_CALLBACK(join)
     {
         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                              && (weechat_config_boolean (irc_config_look_smart_filter_join))) ?
-            irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+            irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
         display_host = (local_join) ?
             weechat_config_boolean (irc_config_look_display_host_join_local) :
             weechat_config_boolean (irc_config_look_display_host_join);
@@ -564,8 +565,8 @@ IRC_PROTOCOL_CALLBACK(kick)
     if (!ptr_channel)
         return WEECHAT_RC_OK;
 
-    ptr_nick = irc_nick_search (ptr_channel, nick);
-    ptr_nick_kicked = irc_nick_search (ptr_channel, argv[3]);
+    ptr_nick = irc_nick_search (server, ptr_channel, nick);
+    ptr_nick_kicked = irc_nick_search (server, ptr_channel, argv[3]);
 
     if (!ignored)
     {
@@ -605,7 +606,7 @@ IRC_PROTOCOL_CALLBACK(kick)
         }
     }
 
-    if (strcmp (argv[3], server->nick) == 0)
+    if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
     {
         /*
          * my nick was kicked => free all nicks, channel is not active any
@@ -667,8 +668,8 @@ IRC_PROTOCOL_CALLBACK(kill)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        ptr_nick = irc_nick_search (ptr_channel, nick);
-        ptr_nick_killed = irc_nick_search (ptr_channel, argv[2]);
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
+        ptr_nick_killed = irc_nick_search (server, ptr_channel, argv[2]);
 
         if (!ignored)
         {
@@ -704,7 +705,7 @@ IRC_PROTOCOL_CALLBACK(kill)
             }
         }
 
-        if (strcmp (argv[2], server->nick) == 0)
+        if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
         {
             /*
              * my nick was killed => free all nicks, channel is not active any
@@ -758,7 +759,7 @@ IRC_PROTOCOL_CALLBACK(mode)
                                   "MODE %s", ptr_channel->name);
             }
         }
-        ptr_nick = irc_nick_search (ptr_channel, nick);
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (!ignored)
         {
             ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
@@ -825,7 +826,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 
     new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
 
-    local_nick = (strcmp (nick, server->nick) == 0) ? 1 : 0;
+    local_nick = (irc_server_strcasecmp (server, nick, server->nick) == 0) ? 1 : 0;
 
     if (local_nick)
         irc_server_set_nick (server, new_nick);
@@ -839,7 +840,7 @@ IRC_PROTOCOL_CALLBACK(nick)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
                 /* rename private window if this is with "old nick" */
-                if ((weechat_strcasecmp (ptr_channel->name, nick) == 0)
+                if ((irc_server_strcasecmp (server, ptr_channel->name, nick) == 0)
                     && !irc_channel_search (server, new_nick))
                 {
                     free (ptr_channel->name);
@@ -859,7 +860,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
                 /* rename nick in nicklist if found */
-                ptr_nick = irc_nick_search (ptr_channel, nick);
+                ptr_nick = irc_nick_search (server, ptr_channel, nick);
                 if (ptr_nick)
                 {
                     ptr_nick_found = ptr_nick;
@@ -892,7 +893,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                         {
                             ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                                  && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
-                                irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                                irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
                             weechat_printf_tags (ptr_channel->buffer,
                                                  irc_protocol_tags (command,
                                                                     (!weechat_config_boolean (irc_config_look_smart_filter)
@@ -913,7 +914,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                         }
                         irc_channel_nick_speaking_rename (ptr_channel,
                                                           nick, new_nick);
-                        irc_channel_nick_speaking_time_rename (ptr_channel,
+                        irc_channel_nick_speaking_time_rename (server, ptr_channel,
                                                                nick, new_nick);
                     }
 
@@ -999,7 +1000,7 @@ IRC_PROTOCOL_CALLBACK(notice)
         {
             /* notice for channel */
             ptr_channel = irc_channel_search (server, pos_target);
-            ptr_nick = irc_nick_search (ptr_channel, nick);
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
             weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                  irc_protocol_tags (command,
                                                     "notify_message",
@@ -1080,7 +1081,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                  * if notice is sent from myself (for example another WeeChat
                  * via relay), then display message of outgoing notice
                  */
-                if (nick && strcmp (server->nick, nick) == 0)
+                if (nick && (irc_server_strcasecmp (server, server->nick, nick) == 0))
                 {
                     weechat_printf_tags (ptr_buffer,
                                          irc_protocol_tags (command,
@@ -1180,10 +1181,10 @@ IRC_PROTOCOL_CALLBACK(part)
                                       (argv[2][0] == ':') ? argv[2] + 1 : argv[2]);
     if (ptr_channel)
     {
-        ptr_nick = irc_nick_search (ptr_channel, nick);
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
         {
-            local_part = (strcmp (nick, server->nick) == 0);
+            local_part = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
             /* display part message */
             if (!ignored)
@@ -1193,7 +1194,7 @@ IRC_PROTOCOL_CALLBACK(part)
                 {
                     ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                          && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
-                        irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                        irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
                 }
                 display_host = weechat_config_boolean (irc_config_look_display_host_quit);
                 if (pos_comment)
@@ -1402,7 +1403,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             }
 
             /* other message */
-            ptr_nick = irc_nick_search (ptr_channel, nick);
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
             if (ptr_nick && !ptr_nick->host)
                 ptr_nick->host = strdup (address);
@@ -1422,13 +1423,13 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                            weechat_string_has_highlight (pos_args,
                                                                          server->nick));
             irc_channel_nick_speaking_time_remove_old (ptr_channel);
-            irc_channel_nick_speaking_time_add (ptr_channel, nick,
+            irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
                                                 time (NULL));
         }
     }
     else
     {
-        nick_is_me = (strcmp (server->nick, nick) == 0);
+        nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
 
         remote_nick = (nick_is_me) ? argv[2] : nick;
 
@@ -1514,20 +1515,21 @@ IRC_PROTOCOL_CALLBACK(quit)
         if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             ptr_nick = NULL;
         else
-            ptr_nick = irc_nick_search (ptr_channel, nick);
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
-        if (ptr_nick || (weechat_strcasecmp (ptr_channel->name, nick) == 0))
+        if (ptr_nick
+            || (irc_server_strcasecmp (server, ptr_channel->name, nick) == 0))
         {
             /* display quit message */
             if (!irc_ignore_check (server, ptr_channel->name, nick, host))
             {
-                local_quit = (strcmp (nick, server->nick) == 0);
+                local_quit = (irc_server_strcasecmp (server, nick, server->nick) == 0);
                 ptr_nick_speaking = NULL;
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 {
                     ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                          && (weechat_config_boolean (irc_config_look_smart_filter_quit))) ?
-                        irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
+                        irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
                 }
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
                 {
@@ -1612,7 +1614,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
     IRC_PROTOCOL_MIN_ARGS(3);
 
     /* skip nickname if at beginning of server message */
-    if (strcmp (server->nick, argv[2]) == 0)
+    if (irc_server_strcasecmp (server, server->nick, argv[2]) == 0)
     {
         pos_mode = argv[3];
         pos_args = (argc > 4) ? ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
@@ -1645,7 +1647,7 @@ IRC_PROTOCOL_CALLBACK(numeric)
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
-    if (weechat_strcasecmp (server->nick, argv[2]) == 0)
+    if (irc_server_strcasecmp (server, server->nick, argv[2]) == 0)
     {
         pos_args = (argc > 3) ?
             ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
@@ -1696,7 +1698,7 @@ IRC_PROTOCOL_CALLBACK(topic)
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
 
     ptr_channel = irc_channel_search (server, argv[2]);
-    ptr_nick = irc_nick_search (ptr_channel, nick);
+    ptr_nick = irc_nick_search (server, ptr_channel, nick);
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
     if (!ignored)
@@ -1855,7 +1857,7 @@ IRC_PROTOCOL_CALLBACK(001)
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
-    if (strcmp (server->nick, argv[2]) != 0)
+    if (irc_server_strcasecmp (server, server->nick, argv[2]) != 0)
         irc_server_set_nick (server, argv[2]);
 
     irc_protocol_cb_numeric (server,
@@ -1927,7 +1929,7 @@ IRC_PROTOCOL_CALLBACK(001)
 IRC_PROTOCOL_CALLBACK(005)
 {
     char *pos, *pos2, *pos_start, *error, *isupport2;
-    int length_isupport, length, nick_max_length;
+    int length_isupport, length, nick_max_length, casemapping;
 
     /*
      * 005 message looks like:
@@ -1968,6 +1970,21 @@ IRC_PROTOCOL_CALLBACK(005)
         nick_max_length = (int)strtol (pos, &error, 10);
         if (error && !error[0] && (nick_max_length > 0))
             server->nick_max_length = nick_max_length;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save casemapping */
+    pos = strstr (argv_eol[3], "CASEMAPPING=");
+    if (pos)
+    {
+        pos += 12;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        casemapping = irc_server_search_casemapping (pos);
+        if (casemapping >= 0)
+            server->casemapping = casemapping;
         if (pos2)
             pos2[0] = ' ';
     }
@@ -2950,7 +2967,8 @@ IRC_PROTOCOL_CALLBACK(333)
         topic_address = NULL;
 
     ptr_channel = irc_channel_search (server, argv[3]);
-    ptr_nick = (ptr_channel) ? irc_nick_search (ptr_channel, topic_nick) : NULL;
+    ptr_nick = (ptr_channel) ?
+        irc_nick_search (server, ptr_channel, topic_nick) : NULL;
     arg_date = (argc > 5) ? 5 : 4;
     datetime = (time_t)(atol ((argv_eol[arg_date][0] == ':') ?
                               argv_eol[arg_date] + 1 : argv_eol[arg_date]));
@@ -3451,7 +3469,8 @@ IRC_PROTOCOL_CALLBACK(352)
     }
 
     ptr_channel = irc_channel_search (server, argv[3]);
-    ptr_nick = (ptr_channel) ? irc_nick_search (ptr_channel, argv[7]) : NULL;
+    ptr_nick = (ptr_channel) ?
+        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
     /* update host for nick */
     if (ptr_nick)
@@ -3563,7 +3582,7 @@ IRC_PROTOCOL_CALLBACK(353)
             /* add or update nick on channel */
             if (nickname)
             {
-                ptr_nick = irc_nick_search (ptr_channel, nickname);
+                ptr_nick = irc_nick_search (server, ptr_channel, nickname);
                 away = (ptr_nick && ptr_nick->away) ? 1 : 0;
                 prefixes = (pos_nick > pos_nick_orig) ?
                     weechat_strndup (pos_nick_orig, pos_nick - pos_nick_orig) : NULL;
@@ -3690,7 +3709,7 @@ IRC_PROTOCOL_CALLBACK(366)
                             nickname = weechat_infolist_string (infolist, "name");
                             if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
                             {
-                                if (weechat_strcasecmp (nickname, server->nick) == 0)
+                                if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
                                     strcat (string, IRC_COLOR_CHAT_NICK_SELF);
                                 else
                                     strcat (string, irc_nick_find_color (nickname));
@@ -4023,7 +4042,8 @@ IRC_PROTOCOL_CALLBACK(437)
 
     if (!server->is_connected)
     {
-        if ((argc >= 4) && (strcmp (server->nick, argv[3]) == 0))
+        if ((argc >= 4)
+            && (irc_server_strcasecmp (server, server->nick, argv[3]) == 0))
         {
             ptr_buffer = irc_msgbuffer_get_target_buffer (server, NULL,
                                                           command, NULL, NULL);

@@ -903,7 +903,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
         {
             if (channel)
             {
-                ptr_nick = irc_nick_search (channel, nick);
+                ptr_nick = irc_nick_search (server, channel, nick);
 
                 irc_channel_nick_speaking_add (channel,
                                                nick,
@@ -911,7 +911,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
                                                weechat_string_has_highlight (pos_args,
                                                                              server->nick) : 0);
                 irc_channel_nick_speaking_time_remove_old (channel);
-                irc_channel_nick_speaking_time_add (channel, nick,
+                irc_channel_nick_speaking_time_add (server, channel, nick,
                                                     time (NULL));
 
                 weechat_printf_tags (channel->buffer,
@@ -928,7 +928,7 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
             }
             else
             {
-                nick_is_me = (strcmp (server->nick, nick) == 0);
+                nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
                 ptr_channel = irc_channel_search (server, remote_nick);
                 if (!ptr_channel)
                 {
