@@ -1,4 +1,4 @@
-* *rmodifier.look.hide_char*
+* [[option_rmodifier.look.hide_char]] *rmodifier.look.hide_char*
 ** descrizione: `carattere usato per nascondere parte di una stringa`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"*"`)

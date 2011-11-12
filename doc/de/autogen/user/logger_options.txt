@@ -1,44 +1,44 @@
-* *logger.file.auto_log*
+* [[option_logger.file.auto_log]] *logger.file.auto_log*
 ** Beschreibung: `Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *logger.file.flush_delay*
+* [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** Beschreibung: `Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert werden soll (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)`
 ** Typ: integer
 ** Werte: 0 .. 3600 (Standardwert: `120`)
 
-* *logger.file.info_lines*
+* [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, falls die Protokollierung gestartet oder beendet wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
-* *logger.file.mask*
+* [[option_logger.file.mask]] *logger.file.mask*
 ** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zu/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
 
-* *logger.file.name_lower_case*
+* [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
 ** Beschreibung: `Benutze ausschließlich Kleinschreibung für Protokoll-Dateien`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *logger.file.path*
+* [[option_logger.file.path]] *logger.file.path*
 ** Beschreibung: `Pfad für WeeChat Protokolldateien; "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat"); eine Datumsspezifikation ist zulässig (siehe: man strftime)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/logs/"`)
 
-* *logger.file.replacement_char*
+* [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** Beschreibung: `Ersatzzeichen für Dateinamen, falls der Dateiname Sonderzeichen beinhaltet (z.B. das Trennzeichen bei Verzeichnissen "/")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"_"`)
 
-* *logger.file.time_format*
+* [[option_logger.file.time_format]] *logger.file.time_format*
 ** Beschreibung: `Zeitstempel in Protokoll-Datei nutzen (bitte dazu die Anleitung zu "strftime" (man strftime) durchlesen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%Y-%m-%d %H:%M:%S"`)
 
-* *logger.look.backlog*
+* [[option_logger.look.backlog]] *logger.look.backlog*
 ** Beschreibung: `maximale Anzahl der Zeilen die aus der Protokoll-Datei dargestellt werden sollen, wenn ein Buffer geöffnet wird (0 = kein Darstellung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `20`)

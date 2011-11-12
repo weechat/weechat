@@ -1,64 +1,64 @@
-* *relay.color.status_active*
+* [[option_relay.color.status_active]] *relay.color.status_active*
 ** descrizione: `colore del testo per lo status "connesso"`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightblue`)
 
-* *relay.color.status_auth_failed*
+* [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** descrizione: `colore del testo per lo status "autenticazione fallita"`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
 
-* *relay.color.status_connecting*
+* [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** descrizione: `colore del testo per lo status "connessione in corso"`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
-* *relay.color.status_disconnected*
+* [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** descrizione: `colore del testo per lo status "disconnesso"`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
 
-* *relay.color.status_waiting_auth*
+* [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
 ** descrizione: `colore del testo per lo status "in attesa dell'autenticazione"`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
-* *relay.color.text*
+* [[option_relay.color.text]] *relay.color.text*
 ** descrizione: `colore del testo`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
-* *relay.color.text_bg*
+* [[option_relay.color.text_bg]] *relay.color.text_bg*
 ** descrizione: `colore di sfondo`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
-* *relay.color.text_selected*
+* [[option_relay.color.text_selected]] *relay.color.text_selected*
 ** descrizione: `colore della riga del client selezionato`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
-* *relay.look.auto_open_buffer*
+* [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** descrizione: `apre automaticamente il buffer relay alla connessione di un nuovo client`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *relay.look.raw_messages*
+* [[option_relay.look.raw_messages]] *relay.look.raw_messages*
 ** descrizione: `numero di messaggi raw da salvare in memoria quando il buffer dei dati raw viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati raw)`
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
-* *relay.network.bind_address*
+* [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** descrizione: `indirizzo associato (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *relay.network.max_clients*
+* [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** descrizione: `numero massimo di client connessi ad una porta`
 ** tipo: intero
 ** valori: 1 .. 1024 (valore predefinito: `5`)
 
-* *relay.network.password*
+* [[option_relay.network.password]] *relay.network.password*
 ** descrizione: `password richiesta dai client per accedere a questo relay (un valore nullo corrisponde a nessuna password richiesta)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)

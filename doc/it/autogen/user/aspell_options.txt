@@ -1,29 +1,29 @@
-* *aspell.check.commands*
+* [[option_aspell.check.commands]] *aspell.check.commands*
 ** descrizione: `elenco separato da virgole di comandi per cui il controllo ortografico è abilitato (il controllo ortografico è disabilitato per tutti gli altri comandi)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
-* *aspell.check.default_dict*
+* [[option_aspell.check.default_dict]] *aspell.check.default_dict*
 ** descrizione: `dizionario predefinito (o elenco separato da virgole di dizionari) da usare quando il buffer non ha alcun dizionario definito (vuoto per disabilitare il controllo ortografico sui buffer in cui non è stato esplicitamente abilitato)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *aspell.check.during_search*
+* [[option_aspell.check.during_search]] *aspell.check.during_search*
 ** descrizione: `controlla le parole durante la ricerca del testo nel buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *aspell.check.real_time*
+* [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** descrizione: `controllo ortografico in tempo reale (più lento, disabilitato per default: le parole vengono controllate solo se seguite da un delimitatore)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *aspell.check.word_min_length*
+* [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** descrizione: `lunghezza minima per una parola da controllare (0 per controllarle tutte)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2`)
 
-* *aspell.look.color*
+* [[option_aspell.look.color]] *aspell.look.color*
 ** descrizione: `colore usato per le parole non corrette`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)

@@ -1,514 +1,514 @@
-* *irc.color.input_nick*
+* [[option_irc.color.input_nick]] *irc.color.input_nick*
 ** descrizione: `colore per il nick nella riga di input`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
-* *irc.color.item_away*
+* [[option_irc.color.item_away]] *irc.color.item_away*
 ** descrizione: `colore per l'elemento assenza`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
-* *irc.color.item_channel_modes*
+* [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** descrizione: `colore per le modalità dei canali, vicino ai nomi dei canali`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
-* *irc.color.item_lag_counting*
+* [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
 ** descrizione: `colore per l'indicatore del lag, durante il conteggio (pong non ricevuto dal server, lag in aumento)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
-* *irc.color.item_lag_finished*
+* [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
 ** descrizione: `colore per l'indicatore di ritardo, quando il pong viene ricevuto dal server`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
-* *irc.color.message_join*
+* [[option_irc.color.message_join]] *irc.color.message_join*
 ** descrizione: `colore per il testo nei messaggi di entrata`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
-* *irc.color.message_quit*
+* [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** descrizione: `colore per il testo nei messaggi di uscita/abbandono`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
-* *irc.color.mirc_remap*
+* [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** descrizione: `remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black on any bg to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"1,-1:darkgray"`)
 
-* *irc.color.nick_prefix*
+* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
 ** descrizione: `colore per il prefisso del nick (il prefisso è la stringa personalizzata visualizzata prima del nick)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
-* *irc.color.nick_prefixes*
+* [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voce, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
-* *irc.color.nick_suffix*
+* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
 ** descrizione: `colore per il suffisso del nick (il suffisso è la stringa personalizzata visualizzata dopo il nick)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
-* *irc.color.notice*
+* [[option_irc.color.notice]] *irc.color.notice*
 ** descrizione: `colore per il testo "Notifica" nelle notifiche`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
-* *irc.color.reason_quit*
+* [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** descrizione: `colore per il motivo nei messaggi di uscita/abbandono`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
-* *irc.color.topic_new*
+* [[option_irc.color.topic_new]] *irc.color.topic_new*
 ** descrizione: `colore del nuovo argomento del canale (quando viene cambiato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
-* *irc.color.topic_old*
+* [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** descrizione: `colore del precedente argomento del canale (quando viene cambiato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
-* *irc.look.buffer_switch_autojoin*
+* [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** descrizione: `passa automaticamente al buffer del canale con l'ingresso automatico abilitato (con l'opzione del server "autojoin")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.buffer_switch_join*
+* [[option_irc.look.buffer_switch_join]] *irc.look.buffer_switch_join*
 ** descrizione: `passa automaticamente al buffer del canale quando si entra manualmente (con il comando /join)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.color_nicks_in_names*
+* [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
 ** descrizione: `usa colore nick nell'output di /names (o l'elenco di nick mostrati all'ingresso di un canale)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.look.color_nicks_in_nicklist*
+* [[option_irc.look.color_nicks_in_nicklist]] *irc.look.color_nicks_in_nicklist*
 ** descrizione: `usa il colore del nick nella lista nick`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.look.color_nicks_in_server_messages*
+* [[option_irc.look.color_nicks_in_server_messages]] *irc.look.color_nicks_in_server_messages*
 ** descrizione: `usa i colori dei nick nei messaggi dal server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.color_pv_nick_like_channel*
+* [[option_irc.look.color_pv_nick_like_channel]] *irc.look.color_pv_nick_like_channel*
 ** descrizione: `usa lo stesso colore del nick per canale e privato`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_away*
+* [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: `visualizza messaggio al cambio dello stato di assenza`
 ** tipo: intero
 ** valori: off, local, channel (valore predefinito: `local`)
 
-* *irc.look.display_ctcp_blocked*
+* [[option_irc.look.display_ctcp_blocked]] *irc.look.display_ctcp_blocked*
 ** descrizione: `visualizza messaggio CTCP anche se bloccato`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_ctcp_reply*
+* [[option_irc.look.display_ctcp_reply]] *irc.look.display_ctcp_reply*
 ** descrizione: `visualizza risposta CTCP inviata da WeeChat`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_ctcp_unknown*
+* [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
 ** descrizione: `visualizza messaggio CTCP anche se è CTCP sconosciuto`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_host_join*
+* [[option_irc.look.display_host_join]] *irc.look.display_host_join*
 ** descrizione: `visualizza l'host nei messaggi di entrata`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_host_join_local*
+* [[option_irc.look.display_host_join_local]] *irc.look.display_host_join_local*
 ** descrizione: `visualizza l'host nei messaggi di entrata dal client locale`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_host_quit*
+* [[option_irc.look.display_host_quit]] *irc.look.display_host_quit*
 ** descrizione: `visualizza host nei messaggi di uscita/abbandono`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_old_topic*
+* [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** descrizione: `visualizza l'argomento del canale precedente quando viene cambiato`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_pv_away_once*
+* [[option_irc.look.display_pv_away_once]] *irc.look.display_pv_away_once*
 ** descrizione: `mostra il messaggio di assenza remota una sola volta in privato`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.display_pv_back*
+* [[option_irc.look.display_pv_back]] *irc.look.display_pv_back*
 ** descrizione: `visualizza un messaggio in privato quando l'utente è tornato (dopo l'uscita dal server)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.hide_nickserv_pwd*
+* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
 ** descrizione: `nascondi password visualizzata da nickserv`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.highlight_tags*
+* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
 ** descrizione: `elenco separato da liste di tag per i messaggi che potrebbero generare eventi (di solito qualsiasi messaggio da altri utenti, non quelli dal server...)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg,irc_notice"`)
 
-* *irc.look.item_away_message*
+* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
 ** descrizione: `mostra il messaggio di assenza del server nell'elemento barra di away`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.item_channel_modes*
+* [[option_irc.look.item_channel_modes]] *irc.look.item_channel_modes*
 ** descrizione: `visualizza le modalità canale nell'elemento barra "buffer_name"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.item_channel_modes_hide_key*
+* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
 ** descrizione: `nasconde la chiave del canale se le modalità sono visualizzate nell'elemento barra "buffer_name" (in questo modo saranno nascosti tutti gli argomenti delle modalità del canale se la modalità +k è impostata sul canale)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.look.item_display_server*
+* [[option_irc.look.item_display_server]] *irc.look.item_display_server*
 ** descrizione: `nome dell'elemento barra dov'è visualizzato il server IRC (per la barra di stato)`
 ** tipo: intero
 ** valori: buffer_plugin, buffer_name (valore predefinito: `buffer_plugin`)
 
-* *irc.look.item_nick_modes*
+* [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
 ** descrizione: `visualizza le modalità nick nell'elemento barra "input_prompt"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.item_nick_prefix*
+* [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
 ** descrizione: `visualizza il prefisso del nick nell'elemento barra "input_prompt"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.msgbuffer_fallback*
+* [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
 ** descrizione: `buffer di destinazione predefinito per le opzioni di msgbuffer quando la destinazione è privata ed il buffer privato non viene trovato`
 ** tipo: intero
 ** valori: current, server (valore predefinito: `current`)
 
-* *irc.look.new_channel_position*
+* [[option_irc.look.new_channel_position]] *irc.look.new_channel_position*
 ** descrizione: `forza la posizione del nuovo canale nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer), next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
 ** tipo: intero
 ** valori: none, next, near_server (valore predefinito: `none`)
 
-* *irc.look.new_pv_position*
+* [[option_irc.look.new_pv_position]] *irc.look.new_pv_position*
 ** descrizione: `forza la posizione del nuovo buffer privato nell'elenco dei buffer (none = posizione predefinita (dovrebbe essere l'ultimo buffer), next = buffer corrente + 1, near_server = dopo l'ultimo canale/privato del server)`
 ** tipo: intero
 ** valori: none, next, near_server (valore predefinito: `none`)
 
-* *irc.look.nick_color_force*
+* [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
 ** descrizione: `forza colore per alcuni nick: l'hash calcolato con il nick per trovare il colore non verrà usato per questi nick (il formato è: "nick1:color1;nick2:color2")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.look.nick_color_stop_chars*
+* [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
 ** descrizione: `caratteri usati per fermare il calcolo del colore con le lettere del nick (almeno un carattere al di fuori di questa lista deve essere nella lista prima di fermarlo) (esempio: nick "|nick|away" con "|" nei caratteri restituisce il colore del nick "|nick")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"_|["`)
 
-* *irc.look.nick_completion_smart*
+* [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
 ** descrizione: `completamento intelligente per i nick (usando prima chi ha parlato per ultimo)`
 ** tipo: intero
 ** valori: off, speakers, speakers_highlights (valore predefinito: `speakers`)
 
-* *irc.look.nick_prefix*
+* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
 ** descrizione: `testo da visualizzare prima del nick nella finestra di chat`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.look.nick_suffix*
+* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
 ** descrizione: `testo da visualizzare dopo il nick nella finestra di chat`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.look.notice_as_pv*
+* [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
 ** descrizione: `visualizza notifiche come messaggi privati (se automatico, usa il buffer privato se viene trovato)`
 ** tipo: intero
 ** valori: auto, never, always (valore predefinito: `auto`)
 
-* *irc.look.notify_tags_ison*
+* [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** descrizione: `elenco separato da virgole di tag usati nei messaggi stampati dalle notifiche quando un nick entra o esce da un server (risultato del comando ison), ad esempio: "notify_highlight", "notify_message" o "notify_private"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"notify_message"`)
 
-* *irc.look.notify_tags_whois*
+* [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
 ** descrizione: `elenco separato da virgole di tag usati nei messaggi stampati dalle notifiche quando un nick cambia lo stato di assenza (risultato del comando whois), ad esempio: "notify_highligh", "notify_message" o "notify_private"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"notify_message"`)
 
-* *irc.look.part_closes_buffer*
+* [[option_irc.look.part_closes_buffer]] *irc.look.part_closes_buffer*
 ** descrizione: `chiude buffer quando viene digitato /part nel canale`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.look.raw_messages*
+* [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** descrizione: `numero di messaggi raw da salvare in memoria quando il buffer dei dati raw viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati raw)`
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
-* *irc.look.server_buffer*
+* [[option_irc.look.server_buffer]] *irc.look.server_buffer*
 ** descrizione: `unisci i buffer dei server`
 ** tipo: intero
 ** valori: merge_with_core, merge_without_core, independent (valore predefinito: `merge_with_core`)
 
-* *irc.look.smart_filter*
+* [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** descrizione: `filtra i messaggi di entrata/uscita/abbandono/utente per un nick se inattivo per alcuni minuti sul canale (è necessario creare un filtro sul tag "irc_smart_filter")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.smart_filter_delay*
+* [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
 ** descrizione: `ritardo per il filtraggio dei messaggi di entrata/uscita/abbandono (in minuti)`
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: `5`)
 
-* *irc.look.smart_filter_join*
+* [[option_irc.look.smart_filter_join]] *irc.look.smart_filter_join*
 ** descrizione: `abilita filtro smart per i messaggi "join" (entrata)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.smart_filter_nick*
+* [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
 ** descrizione: `abilita filtro smart per i messaggi "nick"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.smart_filter_quit*
+* [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
 ** descrizione: `abilita filtro smart per i messaggi "part" (uscita) e "quit (disconnessione)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.look.topic_strip_colors*
+* [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
 ** descrizione: `elimina colori nell'argomento (usato solo quando mostrato il titolo del buffer)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.network.autoreconnect_delay_growing*
+* [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** descrizione: `fattore di crescita per il ritardo della riconnessione automatica al server (1 = sempre identico, 2 = ritardo*2 per ogni tentativo, ...)`
 ** tipo: intero
 ** valori: 1 .. 100 (valore predefinito: `2`)
 
-* *irc.network.autoreconnect_delay_max*
+* [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
 ** descrizione: `ritardo massimo per la riconnessione automatica al server (in secondi, 0 = nessun massimo)`
 ** tipo: intero
 ** valori: 0 .. 86400 (valore predefinito: `1800`)
 
-* *irc.network.colors_receive*
+* [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** descrizione: `se disabilitato, i codici colori vengono ignorati nei messaggi in entrata`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.network.colors_send*
+* [[option_irc.network.colors_send]] *irc.network.colors_send*
 ** descrizione: `consente all'utente di inviare i colori con dei codici speciali (ctrl-c + un codice ed un colore opzionale: b=grassetto, cxx.yy=colore+sfondo, u=sottolineato, r=inverso)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.network.lag_check*
+* [[option_irc.network.lag_check]] *irc.network.lag_check*
 ** descrizione: `intervallo tra due controlli per il ritardo (in secondi, 0 = nessun controllo)`
 ** tipo: intero
 ** valori: 0 .. 604800 (valore predefinito: `60`)
 
-* *irc.network.lag_disconnect*
+* [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
 ** descrizione: `disconnetti dopo un ritardo eccessivo (in minuti, 0 = nessuna disconnessione)`
 ** tipo: intero
 ** valori: 0 .. 10080 (valore predefinito: `0`)
 
-* *irc.network.lag_min_show*
+* [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** descrizione: `ritardo minimo da visualizzare (in millisecondi)`
 ** tipo: intero
 ** valori: 0 .. 86400000 (valore predefinito: `500`)
 
-* *irc.network.lag_refresh_interval*
+* [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** descrizione: `intervallo tra due aggiornamenti per l'elemento ritardo, quando è in aumento (in secondi)`
 ** tipo: intero
 ** valori: 1 .. 3600 (valore predefinito: `1`)
 
-* *irc.network.notify_check_ison*
+* [[option_irc.network.notify_check_ison]] *irc.network.notify_check_ison*
 ** descrizione: `intervallo tra due verifiche per la notifica con il comando IRC "ison" (in minuti)`
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: `1`)
 
-* *irc.network.notify_check_whois*
+* [[option_irc.network.notify_check_whois]] *irc.network.notify_check_whois*
 ** descrizione: `intervallo tra due verifiche per la notifica con il comando IRC "whois" (in minuti)`
 ** tipo: intero
 ** valori: 1 .. 10080 (valore predefinito: `5`)
 
-* *irc.network.send_unknown_commands*
+* [[option_irc.network.send_unknown_commands]] *irc.network.send_unknown_commands*
 ** descrizione: `invia comandi sconosciuti al server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.server_default.addresses*
+* [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** descrizione: `elenco di host/porte o IP/porte per il server (separati da virgole)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.anti_flood_prio_high*
+* [[option_irc.server_default.anti_flood_prio_high]] *irc.server_default.anti_flood_prio_high*
 ** descrizione: `anti-flood per coda ad alta priorità: numero di secondi tra due messaggi utente o comandi inviati al server IRC (0 = nessun anti-flood)`
 ** tipo: intero
 ** valori: 0 .. 60 (valore predefinito: `2`)
 
-* *irc.server_default.anti_flood_prio_low*
+* [[option_irc.server_default.anti_flood_prio_low]] *irc.server_default.anti_flood_prio_low*
 ** descrizione: `anti-flood per coda a bassa priorità: numero di secondi tra due messaggi inviati al server IRC (messaggi come risposte CTCP automatiche) (0 = nessun anti-flood)`
 ** tipo: intero
 ** valori: 0 .. 60 (valore predefinito: `2`)
 
-* *irc.server_default.autoconnect*
+* [[option_irc.server_default.autoconnect]] *irc.server_default.autoconnect*
 ** descrizione: `connette automaticamente ai server all'avvio di WeeChat`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.server_default.autojoin*
+* [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
 ** descrizione: `elenco separato da virgole di canali in cui entrare quando si è connessi al server (esempio: "#canale1", #canale2, #canale3 chiave1,chiave2")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.autoreconnect*
+* [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
 ** descrizione: `riconnette automaticamente al server alla disconnessione`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.server_default.autoreconnect_delay*
+* [[option_irc.server_default.autoreconnect_delay]] *irc.server_default.autoreconnect_delay*
 ** descrizione: `ritardo (in secondi) prima di riprovare a riconnettersi al server`
 ** tipo: intero
 ** valori: 1 .. 65535 (valore predefinito: `10`)
 
-* *irc.server_default.autorejoin*
+* [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
 ** descrizione: `rientra automaticamente nei canali dopo il kick`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.server_default.autorejoin_delay*
+* [[option_irc.server_default.autorejoin_delay]] *irc.server_default.autorejoin_delay*
 ** descrizione: `ritardo (in secondi) prima di rientrare automaticamente (dopo il kick)`
 ** tipo: intero
 ** valori: 0 .. 86400 (valore predefinito: `30`)
 
-* *irc.server_default.away_check*
+* [[option_irc.server_default.away_check]] *irc.server_default.away_check*
 ** descrizione: `intervallo tra le due verifiche per l'assenza (in minuti, 0 = nessun check)`
 ** tipo: intero
 ** valori: 0 .. 10080 (valore predefinito: `0`)
 
-* *irc.server_default.away_check_max_nicks*
+* [[option_irc.server_default.away_check_max_nicks]] *irc.server_default.away_check_max_nicks*
 ** descrizione: `non verificare l'assenza su canali con un elevato numero di nick (0 = illimitato)`
 ** tipo: intero
 ** valori: 0 .. 1000000 (valore predefinito: `25`)
 
-* *irc.server_default.command*
+* [[option_irc.server_default.command]] *irc.server_default.command*
 ** descrizione: `comando(i) da eseguire quando si è connessi al server (più comandi vanno separati da ":", usare ";" per un punto e virgola, le variabili speciali $nick, $canale e $server vengono sostituite dai loro valori)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.command_delay*
+* [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
 ** descrizione: `ritardo (in secondi) dopo l'esecuzione del comando (esempio: fornire il tempo per l'autenticazione)`
 ** tipo: intero
 ** valori: 0 .. 3600 (valore predefinito: `0`)
 
-* *irc.server_default.connection_timeout*
+* [[option_irc.server_default.connection_timeout]] *irc.server_default.connection_timeout*
 ** descrizione: `timeout (in secondi) tra la connessione TCP al server ed il messaggio 001 ricevuto, se questo timeout viene raggiunto prima della ricezione del messaggio 001, WeeChat effettuerà la disconnessione`
 ** tipo: intero
 ** valori: 1 .. 3600 (valore predefinito: `60`)
 
-* *irc.server_default.default_msg_part*
+* [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
 ** descrizione: `messaggio di uscita predefinito (in uscita dal canale) ("%v" verrà sostituito dalla versione di WeeChat)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"WeeChat %v"`)
 
-* *irc.server_default.default_msg_quit*
+* [[option_irc.server_default.default_msg_quit]] *irc.server_default.default_msg_quit*
 ** descrizione: `messaggio di abbandono predefinito (disconnessione dal server) ("%v" verrà sostituito dalla versione di WeeChat)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"WeeChat %v"`)
 
-* *irc.server_default.ipv6*
+* [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** descrizione: `usa il protocollo IPv6 per le comunicazioni col server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.server_default.local_hostname*
+* [[option_irc.server_default.local_hostname]] *irc.server_default.local_hostname*
 ** descrizione: `nome host/IP locale definito per il server (opzionale, se vuoto viene usato il nome host locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.nicks*
+* [[option_irc.server_default.nicks]] *irc.server_default.nicks*
 ** descrizione: `nick da usare sul server (separati da virgole)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.notify*
+* [[option_irc.server_default.notify]] *irc.server_default.notify*
 ** descrizione: `elenco notifiche per il server (si consiglia di non cambiare questa opzione ma di usare il comando /notify)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.password*
+* [[option_irc.server_default.password]] *irc.server_default.password*
 ** descrizione: `password per il server`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.proxy*
+* [[option_irc.server_default.proxy]] *irc.server_default.proxy*
 ** descrizione: `proxy usato per il server (opzionale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.realname*
+* [[option_irc.server_default.realname]] *irc.server_default.realname*
 ** descrizione: `nome reale da usare sul server`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.sasl_mechanism*
+* [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
 ** descrizione: `meccanismo per l'autenticazione SASL`
 ** tipo: intero
 ** valori: plain, dh-blowfish (valore predefinito: `plain`)
 
-* *irc.server_default.sasl_password*
+* [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
 ** descrizione: `password per l'autenticazione SASL`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.sasl_timeout*
+* [[option_irc.server_default.sasl_timeout]] *irc.server_default.sasl_timeout*
 ** descrizione: `timeout (in secondi) prima di annullare l'autenticazione SASL`
 ** tipo: intero
 ** valori: 1 .. 3600 (valore predefinito: `15`)
 
-* *irc.server_default.sasl_username*
+* [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
 ** descrizione: `nome utente per l'autenticazione SASL`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.ssl*
+* [[option_irc.server_default.ssl]] *irc.server_default.ssl*
 ** descrizione: `usa SSL per le comunicazioni col server`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *irc.server_default.ssl_cert*
+* [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
 ** descrizione: `file del certificato ssl usato per identificare automaticamente il proprio nick ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
-* *irc.server_default.ssl_dhkey_size*
+* [[option_irc.server_default.ssl_dhkey_size]] *irc.server_default.ssl_dhkey_size*
 ** descrizione: `dimensione della chiave usata durante lo Scambio Chiavi Diffie-Hellman`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2048`)
 
-* *irc.server_default.ssl_priorities*
+* [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** descrizione: `stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"NORMAL"`)
 
-* *irc.server_default.ssl_verify*
+* [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
 ** descrizione: `verifica che la connessione ssl sia totalmente fidata`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *irc.server_default.username*
+* [[option_irc.server_default.username]] *irc.server_default.username*
 ** descrizione: `nome utente da usare sul server`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)

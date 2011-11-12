@@ -384,7 +384,7 @@ def docgen_cmd_cb(data, buffer, args):
                                    'color (for text color only, not '
                                    'background): \"*\" for bold, \"!\" for '
                                    'reverse, \"_\" for underline')
-                    f.write('* *%s.%s.%s*\n' % (config, section, option))
+                    f.write('* [[option_%s.%s.%s]] *%s.%s.%s*\n' % (config, section, option, config, section, option))
                     f.write('** %s: `%s`\n' % (_('description'), description))
                     f.write('** %s: %s\n' % (_('type'), type_nls))
                     f.write('** %s: %s (%s: `%s`)\n' % (_('values'), values,

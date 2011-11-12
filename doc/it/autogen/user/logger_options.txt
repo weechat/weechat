@@ -1,44 +1,44 @@
-* *logger.file.auto_log*
+* [[option_logger.file.auto_log]] *logger.file.auto_log*
 ** descrizione: `salva automaticamente il contenuto dei buffer su file (a meno che un buffer disabiliti il log)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *logger.file.flush_delay*
+* [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** descrizione: `numero di secondi tra il flush (scrittura) dei file di log (0 = scrive sui file di log immediatamente per ogni riga stampata)`
 ** tipo: intero
 ** valori: 0 .. 3600 (valore predefinito: `120`)
 
-* *logger.file.info_lines*
+* [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** descrizione: `scrive una riga informativa nel file di log quando il log inizia o termina per un buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
-* *logger.file.mask*
+* [[option_logger.file.mask]] *logger.file.mask*
 ** descrizione: `mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è usata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$plugin.$name.weechatlog"`)
 
-* *logger.file.name_lower_case*
+* [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
 ** descrizione: `usare solo lettere minuscole per i nomi dei file di log`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* *logger.file.path*
+* [[option_logger.file.path]] *logger.file.path*
 ** descrizione: `percorso per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla cartella home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/logs/"`)
 
-* *logger.file.replacement_char*
+* [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** descrizione: `carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di cartella)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"_"`)
 
-* *logger.file.time_format*
+* [[option_logger.file.time_format]] *logger.file.time_format*
 ** descrizione: `data e ora usati nei file di log (consultare man strftime per gli specificatori di data/ora)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%Y-%m-%d %H:%M:%S"`)
 
-* *logger.look.backlog*
+* [[option_logger.look.backlog]] *logger.look.backlog*
 ** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessun backlog)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `20`)

@@ -1,4 +1,4 @@
-* *rmodifier.look.hide_char*
+* [[option_rmodifier.look.hide_char]] *rmodifier.look.hide_char*
 ** Beschreibung: `Zeichen dass benutzt werden soll um bei einer Eingabe einer Zeichenkette zu verbergen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)

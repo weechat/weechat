@@ -1,124 +1,124 @@
-* *xfer.color.status_aborted*
+* [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
 ** Beschreibung: `Textfarbe für Status: "abgebrochen"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 
-* *xfer.color.status_active*
+* [[option_xfer.color.status_active]] *xfer.color.status_active*
 ** Beschreibung: `Textfarbe für Status: "aktiv"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightblue`)
 
-* *xfer.color.status_connecting*
+* [[option_xfer.color.status_connecting]] *xfer.color.status_connecting*
 ** Beschreibung: `Textfarbe für Status: "verbinde"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
-* *xfer.color.status_done*
+* [[option_xfer.color.status_done]] *xfer.color.status_done*
 ** Beschreibung: `Textfarbe für Status: "fertig"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightgreen`)
 
-* *xfer.color.status_failed*
+* [[option_xfer.color.status_failed]] *xfer.color.status_failed*
 ** Beschreibung: `Textfarbe für Status: "fehlgeschlagen"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 
-* *xfer.color.status_waiting*
+* [[option_xfer.color.status_waiting]] *xfer.color.status_waiting*
 ** Beschreibung: `Textfarbe für Status: "wartend"`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightcyan`)
 
-* *xfer.color.text*
+* [[option_xfer.color.text]] *xfer.color.text*
 ** Beschreibung: `Textfarbe`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
-* *xfer.color.text_bg*
+* [[option_xfer.color.text_bg]] *xfer.color.text_bg*
 ** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
-* *xfer.color.text_selected*
+* [[option_xfer.color.text_selected]] *xfer.color.text_selected*
 ** Beschreibung: `Farbe der selektierten Transfer-Zeile`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
-* *xfer.file.auto_accept_chats*
+* [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
 ** Beschreibung: `Die Annahme einer Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
-* *xfer.file.auto_accept_files*
+* [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
 ** Beschreibung: `Die Annahme von Daten wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
-* *xfer.file.auto_rename*
+* [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** Beschreibung: `Eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen  '.1', '.2', ... hinzugefügt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.file.auto_resume*
+* [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
 ** Beschreibung: `Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung getrennt wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.file.convert_spaces*
+* [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
 ** Beschreibung: `Ein Leerzeichen wird in einen Unterstrich gewandelt wenn Daten versendet werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.file.download_path*
+* [[option_xfer.file.download_path]] *xfer.file.download_path*
 ** Beschreibung: `Pfad in welchem die ankommenden Dateien gespeichert werden ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/xfer"`)
 
-* *xfer.file.upload_path*
+* [[option_xfer.file.upload_path]] *xfer.file.upload_path*
 ** Beschreibung: `Pfad in welchem sich die Quelldatei befindet (falls vom Anwender kein Pfad angegeben wurde) ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"~"`)
 
-* *xfer.file.use_nick_in_filename*
+* [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
 ** Beschreibung: `Nutzt den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.look.auto_open_buffer*
+* [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
 ** Beschreibung: `öffnet automatisch den Übertragungs-Buffer falls eine neue Übertragung hinzugefügt wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.look.progress_bar_size*
+* [[option_xfer.look.progress_bar_size]] *xfer.look.progress_bar_size*
 ** Beschreibung: `Größe des Fortschrittsbalkens, in Zeichen (0, falls Fortschrittsbalken deaktiviert sein soll)`
 ** Typ: integer
 ** Werte: 0 .. 256 (Standardwert: `20`)
 
-* *xfer.network.blocksize*
+* [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** Beschreibung: `Blockgröße für versendete Pakete (in Bytes)`
 ** Typ: integer
 ** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
-* *xfer.network.fast_send*
+* [[option_xfer.network.fast_send]] *xfer.network.fast_send*
 ** Beschreibung: `Wartet beim Versenden von Dateien nicht auf das Bestätigungssignal (ACK)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* *xfer.network.own_ip*
+* [[option_xfer.network.own_ip]] *xfer.network.own_ip*
 ** Beschreibung: `IP- oder DNS-Adresse für ausgehenden Datentransfer/Chat (falls kein Wert angegeben ist, wird die IP des lokalen Interfaces benutzt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
-* *xfer.network.port_range*
+* [[option_xfer.network.port_range]] *xfer.network.port_range*
 ** Beschreibung: `Schränkt den ausgehenden Datenversand bzw. Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen welche Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
-* *xfer.network.speed_limit*
+* [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
 ** Beschreibung: `Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilo-Bytes pro Sekunde (0 = keine Begrenzung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
-* *xfer.network.timeout*
+* [[option_xfer.network.timeout]] *xfer.network.timeout*
 ** Beschreibung: `Zeitüberschreitung bei Transfer-Anfrage (in Sekunden)`
 ** Typ: integer
 ** Werte: 5 .. 2147483647 (Standardwert: `300`)

@@ -1,29 +1,29 @@
-* *aspell.check.commands*
+* [[option_aspell.check.commands]] *aspell.check.commands*
 ** description: `comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)`
 ** type: string
 ** values: any string (default value: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
-* *aspell.check.default_dict*
+* [[option_aspell.check.default_dict]] *aspell.check.default_dict*
 ** description: `default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable aspell on buffers for which you didn't explicitly enabled it)`
 ** type: string
 ** values: any string (default value: `""`)
 
-* *aspell.check.during_search*
+* [[option_aspell.check.during_search]] *aspell.check.during_search*
 ** description: `check words during text search in buffer`
 ** type: boolean
 ** values: on, off (default value: `off`)
 
-* *aspell.check.real_time*
+* [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** description: `real-time spell checking of words (slower, disabled by default: words are checked only if there's delimiter after)`
 ** type: boolean
 ** values: on, off (default value: `off`)
 
-* *aspell.check.word_min_length*
+* [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** description: `minimum length for a word to be spell checked (use 0 to check all words)`
 ** type: integer
 ** values: 0 .. 2147483647 (default value: `2`)
 
-* *aspell.look.color*
+* [[option_aspell.look.color]] *aspell.look.color*
 ** description: `color used for misspelled words`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightred`)

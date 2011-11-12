@@ -1,29 +1,29 @@
-* *aspell.check.commands*
+* [[option_aspell.check.commands]] *aspell.check.commands*
 ** description: `liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
-* *aspell.check.default_dict*
+* [[option_aspell.check.default_dict]] *aspell.check.default_dict*
 ** description: `dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez pas explicitement activé)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
-* *aspell.check.during_search*
+* [[option_aspell.check.during_search]] *aspell.check.during_search*
 ** description: `vérifier les mots pendant la recherche de texte dans le tampon`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
-* *aspell.check.real_time*
+* [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** description: `vérification orthographique des mots en temps réel (plus lent, désactivé par défaut: les mots sont vérifiés seulement s'il y a un délimiteur après)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
-* *aspell.check.word_min_length*
+* [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** description: `longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `2`)
 
-* *aspell.look.color*
+* [[option_aspell.look.color]] *aspell.look.color*
 ** description: `couleur utilisée pour les mots mal orthographiés`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)

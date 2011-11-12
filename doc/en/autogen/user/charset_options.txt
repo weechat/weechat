@@ -1,9 +1,9 @@
-* *charset.default.decode*
+* [[option_charset.default.decode]] *charset.default.decode*
 ** description: `global decoding charset`
 ** type: string
 ** values: any string (default value: `"iso-8859-1"`)
 
-* *charset.default.encode*
+* [[option_charset.default.encode]] *charset.default.encode*
 ** description: `global encoding charset`
 ** type: string
 ** values: any string (default value: `""`)

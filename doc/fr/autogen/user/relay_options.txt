@@ -1,64 +1,64 @@
-* *relay.color.status_active*
+* [[option_relay.color.status_active]] *relay.color.status_active*
 ** description: `couleur du texte pour le statut "connecté"`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightblue`)
 
-* *relay.color.status_auth_failed*
+* [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** description: `couleur du texte pour le statut "échec auth"`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
 
-* *relay.color.status_connecting*
+* [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** description: `couleur du texte pour le statut "connexion"`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
 
-* *relay.color.status_disconnected*
+* [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** description: `couleur du texte pour le statut "déconnecté"`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
 
-* *relay.color.status_waiting_auth*
+* [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
 ** description: `couleur du texte pour le statut "attente auth"`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `brown`)
 
-* *relay.color.text*
+* [[option_relay.color.text]] *relay.color.text*
 ** description: `couleur du texte`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
-* *relay.color.text_bg*
+* [[option_relay.color.text_bg]] *relay.color.text_bg*
 ** description: `couleur du fond`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
-* *relay.color.text_selected*
+* [[option_relay.color.text_selected]] *relay.color.text_selected*
 ** description: `couleur du texte pour la ligne client sélectionnée`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
 
-* *relay.look.auto_open_buffer*
+* [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** description: `ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau client est ajouté à la liste`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* *relay.look.raw_messages*
+* [[option_relay.look.raw_messages]] *relay.look.raw_messages*
 ** description: `nombre de messages bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)`
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: `256`)
 
-* *relay.network.bind_address*
+* [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** description: `addresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
-* *relay.network.max_clients*
+* [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** description: `nombre maximum de clients qui se connectent sur un port`
 ** type: entier
 ** valeurs: 1 .. 1024 (valeur par défaut: `5`)
 
-* *relay.network.password*
+* [[option_relay.network.password]] *relay.network.password*
 ** description: `mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)

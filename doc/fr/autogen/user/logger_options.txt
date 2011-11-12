@@ -1,44 +1,44 @@
-* *logger.file.auto_log*
+* [[option_logger.file.auto_log]] *logger.file.auto_log*
 ** description: `sauve automatiquement le contenu des tampons dans des fichiers (sauf si un tampon désactive le log)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* *logger.file.flush_delay*
+* [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** description: `nombre de secondes entre les "flush" (écriture) dans les fichiers de log (0 = écrire immédiatement dans les fichiers de log pour chaque ligne affichée)`
 ** type: entier
 ** valeurs: 0 .. 3600 (valeur par défaut: `120`)
 
-* *logger.file.info_lines*
+* [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** description: `écrire une ligne d'information dans le fichier log quand le log démarre ou se termine pour un tampon`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
-* *logger.file.mask*
+* [[option_logger.file.mask]] *logger.file.mask*
 ** description: `masque de fichier par défaut pour les fichiers de log (le format est "repertoire/vers/fichier" ou "fichier", sans le premier "/" car l'option "path" est utilisée pour construire le chemin complet vers le fichier); les variables locales du tampon sont permises; les caractères de formatage de date sont autorisés (voir man strftime)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$plugin.$name.weechatlog"`)
 
-* *logger.file.name_lower_case*
+* [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
 ** description: `utiliser seulement des minuscules dans le nom des fichiers de log`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* *logger.file.path*
+* [[option_logger.file.path]] *logger.file.path*
 ** description: `chemin pour les fichiers de log WeeChat; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut: "~/.weechat"); les caractères de formatage de date sont autorisés (voir man strftime)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%h/logs/"`)
 
-* *logger.file.replacement_char*
+* [[option_logger.file.replacement_char]] *logger.file.replacement_char*
 ** description: `caractère de remplacement dans le nom de fichier construit avec le masque (comme le délimiteur de répertoire)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"_"`)
 
-* *logger.file.time_format*
+* [[option_logger.file.time_format]] *logger.file.time_format*
 ** description: `format de date/heure utilisé dans les fichiers log (voir man strftime pour le format de date/heure)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%Y-%m-%d %H:%M:%S"`)
 
-* *logger.look.backlog*
+* [[option_logger.look.backlog]] *logger.look.backlog*
 ** description: `nombre maximum de lignes à afficher du fichier de log lors de l'ouverture du tampon (0 = ne rien afficher)`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `20`)
