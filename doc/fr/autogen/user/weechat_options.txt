@@ -263,6 +263,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 
+* [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
+** description: `si activé, le mot de base pour la complétion s'arrête au caractère avant le curseur; sinon le mot de base s'arrête au premier espace après le curseur`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** description: `modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle)`
 ** type: chaîne

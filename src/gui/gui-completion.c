@@ -686,12 +686,21 @@ gui_completion_find_context (struct t_gui_completion *completion,
             }
             pos_start = i + 1;
         }
-        i = pos;
-        while ((i < size) && (data[i] != ' '))
+        if (CONFIG_BOOLEAN (config_completion_base_word_until_cursor))
         {
-            i++;
+            /* base word stops at cursor */
+            pos_end = pos - 1;
         }
-        pos_end = i - 1;
+        else
+        {
+            /* base word stops after first space found (on or after cursor) */
+            i = pos;
+            while ((i < size) && (data[i] != ' '))
+            {
+                i++;
+            }
+            pos_end = i - 1;
+        }
 
         if (completion->context == GUI_COMPLETION_COMMAND)
         {

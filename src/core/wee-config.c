@@ -202,6 +202,7 @@ struct t_config_option *config_color_nicklist_offline;
 
 /* config, completion section */
 
+struct t_config_option *config_completion_base_word_until_cursor;
 struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_add_space;
 struct t_config_option *config_completion_nick_completer;
@@ -2427,6 +2428,12 @@ config_weechat_init_options ()
         return 0;
     }
 
+    config_completion_base_word_until_cursor = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "base_word_until_cursor", "boolean",
+        N_("if enabled, the base word to complete ends at char before cursor; "
+           "otherwise the base word ends at first space after cursor"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_default_template = config_file_new_option (
         weechat_config_file, ptr_section,
         "default_template", "string",

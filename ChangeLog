@@ -7,6 +7,8 @@ v0.3.7-dev, 2011-11-12
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add new option weechat.completion.base_word_until_cursor: allow
+  completion in middle of words (enabled by default) (task #9771)
 * core: add option "jump_last_buffer_displayed" for command /input
   (key: alt+"/") (task #11553)
 * core: display error in command /buffer if arguments are wrong (bug #34180)

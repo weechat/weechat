@@ -263,6 +263,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
+* [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
+** Beschreibung: `if enabled, the base word to complete ends at char before cursor; otherwise the base word ends at first space after cursor`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** Beschreibung: `Standardvorlage für die automatische Vervollständigung (in der Dokumentation finden Sie die vorgegebenen Codes und Werte)`
 ** Typ: Zeichenkette

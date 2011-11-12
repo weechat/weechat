@@ -263,6 +263,11 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
 
+* [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
+** description: `if enabled, the base word to complete ends at char before cursor; otherwise the base word ends at first space after cursor`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
 ** description: `default completion template (please see documentation for template codes and values)`
 ** type: string
