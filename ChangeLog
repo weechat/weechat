@@ -7,6 +7,8 @@ v0.3.7-dev, 2011-11-12
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more)
+  (bug #34727)
 * core: add new option weechat.completion.base_word_until_cursor: allow
   completion in middle of words (enabled by default) (task #9771)
 * core: add option "jump_last_buffer_displayed" for command /input

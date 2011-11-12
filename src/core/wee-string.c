@@ -32,12 +32,7 @@
 #include <ctype.h>
 #include <wctype.h>
 #include <regex.h>
-
-#if defined(__OpenBSD__)
-#include <utf8/wchar.h>
-#else
 #include <wchar.h>
-#endif
 
 #ifdef HAVE_ICONV
 #include <iconv.h>

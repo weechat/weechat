@@ -24,11 +24,7 @@
 #define __USE_XOPEN
 #endif
 
-#if defined(__OpenBSD__)
-#include <utf8/wchar.h>
-#else
 #include <wchar.h>
-#endif
 
 extern int local_utf8;
 
