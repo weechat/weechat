@@ -137,6 +137,7 @@
   'prefix_modes' (string) +
   'prefix_chars' (string) +
   'nick_max_length' (integer) +
+  'casemapping' (integer) +
   'reconnect_delay' (integer) +
   'reconnect_start' (time) +
   'command_time' (time) +
