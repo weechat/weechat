@@ -139,6 +139,37 @@ string_strcasecmp (const char *string1, const char *string2)
 }
 
 /*
+ * string_strcasecmp_range: locale and case independent string comparison
+ *                          using range to compare case:
+ *                          - range = 26: A-Z         ==> a-z
+ *                          - range = 29: A-Z [ \ ]   ==> a-z { | }
+ *                          - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
+ *                          (ranges 29 and 30 are used by some protocols like
+ *                          IRC)
+ */
+
+int
+string_strcasecmp_range (const char *string1, const char *string2, int range)
+{
+    int diff;
+
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+
+    while (string1[0] && string2[0])
+    {
+        diff = utf8_charcasecmp_range (string1, string2, range);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+    }
+
+    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+}
+
+/*
  * string_strncasecmp: locale and case independent string comparison
  *                     with max length
  */
@@ -155,6 +186,43 @@ string_strncasecmp (const char *string1, const char *string2, int max)
     while ((count < max) && string1[0] && string2[0])
     {
         diff = utf8_charcasecmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
+        count++;
+    }
+
+    if (count >= max)
+        return 0;
+    else
+        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+}
+
+/*
+ * string_strncasecmp_range: locale and case independent string comparison
+ *                           with max length, using range to compare case:
+ *                           - range = 26: A-Z         ==> a-z
+ *                           - range = 29: A-Z [ \ ]   ==> a-z { | }
+ *                           - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
+ *                           (ranges 29 and 30 are used by some protocols like
+ *                           IRC)
+ */
+
+int
+string_strncasecmp_range (const char *string1, const char *string2, int max,
+                          int range)
+{
+    int count, diff;
+
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+
+    count = 0;
+    while ((count < max) && string1[0] && string2[0])
+    {
+        diff = utf8_charcasecmp_range (string1, string2, range);
         if (diff != 0)
             return diff;
 

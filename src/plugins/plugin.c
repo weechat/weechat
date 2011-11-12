@@ -463,7 +463,9 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_tolower = &string_tolower;
         new_plugin->string_toupper = &string_toupper;
         new_plugin->strcasecmp = &string_strcasecmp;
+        new_plugin->strcasecmp_range = &string_strcasecmp_range;
         new_plugin->strncasecmp = &string_strncasecmp;
+        new_plugin->strncasecmp_range = &string_strncasecmp_range;
         new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;
         new_plugin->strcasestr = &string_strcasestr;
         new_plugin->string_match = &string_match;

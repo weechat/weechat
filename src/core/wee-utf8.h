@@ -46,6 +46,8 @@ extern int utf8_strnlen (const char *string, int bytes);
 extern int utf8_strlen_screen (const char *string);
 extern int utf8_charcmp (const char *string1, const char *string2);
 extern int utf8_charcasecmp (const char *string1, const char *string2);
+extern int utf8_charcasecmp_range (const char *string1, const char *string2,
+                                   int range);
 extern int utf8_char_size_screen (const char *string);
 extern char *utf8_add_offset (const char *string, int offset);
 extern int utf8_real_pos (const char *string, int pos);

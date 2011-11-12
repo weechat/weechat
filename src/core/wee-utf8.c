@@ -471,6 +471,35 @@ utf8_charcasecmp (const char *string1, const char *string2)
 }
 
 /*
+ * utf8_charcasecmp_range: compare two utf8 chars, case is ignored
+ *                         using a range, examples:
+ *                         - range = 26: A-Z         ==> a-z
+ *                         - range = 29: A-Z [ \ ]   ==> a-z { | }
+ *                         - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
+ *                         (ranges 29 and 30 are used by some protocols like
+ *                         IRC)
+ */
+
+int
+utf8_charcasecmp_range (const char *string1, const char *string2, int range)
+{
+    wint_t wchar1, wchar2;
+
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+
+    wchar1 = utf8_wide_char (string1);
+    if ((wchar1 >= 'A') && (wchar1 < 'A' + (unsigned int)range))
+        wchar1 += ('a' - 'A');
+
+    wchar2 = utf8_wide_char (string2);
+    if ((wchar2 >= 'A') && (wchar2 < 'A' + (unsigned int)range))
+        wchar2 += ('a' - 'A');
+
+    return (wchar1 < wchar2) ? -1 : ((wchar1 == wchar2) ? 0 : 1);
+}
+
+/*
  * utf8_char_size_screen: return number of chars needed on screen to display
  *                        UTF-8 char
  */

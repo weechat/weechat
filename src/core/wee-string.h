@@ -28,8 +28,12 @@ extern char *string_strndup (const char *string, int length);
 extern void string_tolower (char *string);
 extern void string_toupper (char *string);
 extern int string_strcasecmp (const char *string1, const char *string2);
+extern int string_strcasecmp_range (const char *string1, const char *string2,
+                                    int range);
 extern int string_strncasecmp (const char *string1, const char *string2,
                                int max);
+extern int string_strncasecmp_range (const char *string1, const char *string2,
+                                     int max, int range);
 extern int string_strcmp_ignore_chars (const char *string1,
                                        const char *string2,
                                        const char *chars_ignored,

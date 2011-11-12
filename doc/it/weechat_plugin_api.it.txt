@@ -613,6 +613,51 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+weechat_strcasecmp_range
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Confronta stringa indipendente da caso (maiuscole
+o minuscole) e da locale, using a range for case comparison.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_strcasecmp_range (const char *string1, const char *string2, int range);
+----------------------------------------
+
+Argomenti:
+
+* 'string1': prima stringa da comparare
+* 'string2': seconda stringa da comparare
+// TRANSLATION MISSING
+* 'range': number of chars in case comparison, for example:
+** 26: "A-Z" are lowered to "a-z"
+** 29: "A-Z [ \ ]" are lowered to "a-z { | }"
+** 30: "A-Z [ \ ] ^" are lowered to "a-z { | } ~"
+
+// TRANSLATION MISSING
+[NOTE]
+Values 29 and 30 are used by some protocols like IRC.
+
+Valore restituito:
+
+* differenze tra le due stringhe:
+** negativa se stringa1 < stringa2
+** zero se stringa1 == stringa1
+** positiva se stringa1 > stringa2
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+int diff = weechat_strcasecmp ("nick{away}", "NICK[AWAY]"); /* == 0 */
+----------------------------------------
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
 
@@ -644,6 +689,52 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
+----------------------------------------
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+weechat_strncasecmp_range
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Confronta stringa indipendente da caso (maiuscole o minuscole) e da locale, per
+un numero 'max' di caratteri, using a range for case comparison.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_strncasecmp_range (const char *string1, const char *string2, int max, int range);
+----------------------------------------
+
+Argomenti:
+
+* 'string1': prima stringa da comparare
+* 'string2': seconda stringa da comparare
+* 'max': numero massimo di caratteri da comparare
+// TRANSLATION MISSING
+* 'range': number of chars in case comparison, for example:
+** 26: "A-Z" are lowered to "a-z"
+** 29: "A-Z [ \ ]" are lowered to "a-z { | }"
+** 30: "A-Z [ \ ] ^" are lowered to "a-z { | } ~"
+
+// TRANSLATION MISSING
+[NOTE]
+Values 29 and 30 are used by some protocols like IRC.
+
+Valore restituito:
+
+* differenze tra le due stringhe:
+** negativa se stringa1 < stringa2
+** zero se stringa1 == stringa1
+** positiva se stringa1 > stringa2
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 0 */
 ----------------------------------------
 
 [NOTE]

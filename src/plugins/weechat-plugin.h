@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20110826-01"
+#define WEECHAT_PLUGIN_API_VERSION "20111112-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -207,7 +207,11 @@ struct t_weechat_plugin
     void (*string_tolower) (char *string);
     void (*string_toupper) (char *string);
     int (*strcasecmp) (const char *string1, const char *string2);
+    int (*strcasecmp_range) (const char *string1, const char *string2,
+                             int range);
     int (*strncasecmp) (const char *string1, const char *string2, int max);
+    int (*strncasecmp_range) (const char *string1, const char *string2,
+                              int max, int range);
     int (*strcmp_ignore_chars) (const char *string1, const char *string2,
                                 const char *chars_ignored, int case_sensitive);
     char *(*strcasestr) (const char *string, const char *search);
@@ -884,8 +888,13 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_toupper(__string)
 #define weechat_strcasecmp(__string1, __string2)                        \
     weechat_plugin->strcasecmp(__string1, __string2)
+#define weechat_strcasecmp_range(__string1, __string2, __range)         \
+    weechat_plugin->strcasecmp_range(__string1, __string2, __range)
 #define weechat_strncasecmp(__string1, __string2, __max)                \
     weechat_plugin->strncasecmp(__string1, __string2, __max)
+#define weechat_strncasecmp_range(__string1, __string2, __max, __range) \
+    weechat_plugin->strncasecmp_range(__string1, __string2, __max,      \
+                                      __range)
 #define weechat_strcmp_ignore_chars(__string1, __string2,               \
                                     __chars_ignored, __case_sensitive)  \
     weechat_plugin->strcmp_ignore_chars(__string1, __string2,           \

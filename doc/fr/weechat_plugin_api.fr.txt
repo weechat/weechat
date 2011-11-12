@@ -603,6 +603,50 @@ int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_strcasecmp_range
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Comparaison de chaînes indépendante de la locale et de la casse, avec un
+intervalle pour comparer la casse.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_strcasecmp_range (const char *string1, const char *string2, int range);
+----------------------------------------
+
+Paramètres :
+
+* 'string1' : première chaîne à comparer
+* 'string2' : seconde chaîne à comparer
+* 'range' : nombre de caractères pour la comparaison de casse, par exemple :
+** 26 : "A-Z" deviennent en minuscules "a-z"
+** 29 : "A-Z [ \ ]" deviennent minuscules "a-z { | }"
+** 30 : "A-Z [ \ ] ^" deviennent minuscules "a-z { | } ~"
+
+[NOTE]
+Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
+
+Valeur de retour :
+
+* différence entre les deux chaînes :
+** négative si string1 < string2
+** zéro si string1 == string2
+** positive si string1 > string2
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29); /* == 0 */
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
 
@@ -634,6 +678,51 @@ Exemple en C :
 [source,C]
 ----------------------------------------
 int diff = weechat_strncasecmp ("aabb", "aacc", 2); /* == 0 */
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_strncasecmp_range
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Comparaison de chaînes indépendante de la locale et de la casse, pour 'max'
+caractères, avec un intervalle pour comparer la casse.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_strncasecmp_range (const char *string1, const char *string2, int max, int range);
+----------------------------------------
+
+Paramètres :
+
+* 'string1' : première chaîne à comparer
+* 'string2' : seconde chaîne à comparer
+* 'max' : nombre maximum de caractères à comparer
+* 'range' : nombre de caractères pour la comparaison de casse, par exemple :
+** 26 : "A-Z" deviennent en minuscules "a-z"
+** 29 : "A-Z [ \ ]" deviennent minuscules "a-z { | }"
+** 30 : "A-Z [ \ ] ^" deviennent minuscules "a-z { | } ~"
+
+[NOTE]
+Les valeurs 29 et 30 sont utilisés par quelques protocoles comme IRC.
+
+Valeur de retour :
+
+* différence entre les deux chaînes :
+** négative si string1 < string2
+** zéro si string1 == string2
+** positive si string1 > string2
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int diff = weechat_strncasecmp_range ("nick{away}", "NICK[away]", 6, 29); /* == 0 */
 ----------------------------------------
 
 [NOTE]
