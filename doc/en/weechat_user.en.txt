@@ -810,6 +810,10 @@ Example: display of "hello everybody!" with "hello" in light blue bold and
 ^Cc12^Cbhello ^Cb^Cc04^Cueverybody^Cu^Cc!
 ----------------------------------------
 
+[NOTE]
+In irc plugin, you can remap these colors using option
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
 [[colors]]
 Colors
 ~~~~~~

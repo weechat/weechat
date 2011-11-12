@@ -826,6 +826,11 @@ e "a tutti" in rosso chiaro sottolineato:
 ^Cc12^Cbciao ^Cb^Cc04^Cua tutti^Cu^Cc !
 ----------------------------------------
 
+// TRANSLATION MISSING
+[NOTE]
+In irc plugin, you can remap these colors using option
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
 [[colors]]
 Colori
 ~~~~~~

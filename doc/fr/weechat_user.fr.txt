@@ -830,6 +830,10 @@ gras, et "tout le monde" en rouge clair souligné :
 ^Cc12^Cbbonjour ^Cb^Cc04^Cutout le monde^Cu^Cc !
 ----------------------------------------
 
+[NOTE]
+Dans l'extension irc, vous pouvez réassigner les couleurs en utilisant l'option
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
 [[colors]]
 Couleurs
 ~~~~~~~~

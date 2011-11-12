@@ -812,6 +812,11 @@ und "an alle" rot und unterstrichen dargestellt.
 ^Cc12^CbHallo ^Cb^Cc04^Cuan alle^Cu^Cc!
 ----------------------------------------
 
+// TRANSLATION MISSING
+[NOTE]
+In irc plugin, you can remap these colors using option
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
 [[colors]]
 Farben
 ~~~~~~
