@@ -355,7 +355,13 @@ config_change_eat_newline_glitch (void *data, struct t_config_option *option)
     if (gui_ok)
     {
         if (CONFIG_BOOLEAN(config_look_eat_newline_glitch))
+        {
+            gui_chat_printf (NULL,
+                             _("WARNING: this option can cause serious display "
+                               "bugs, if you have such problems, you must "
+                               "turn off this option."));
             gui_term_set_eat_newline_glitch (0);
+        }
         else
             gui_term_set_eat_newline_glitch (1);
     }
