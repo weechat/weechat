@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-12
+v0.3.7-dev, 2011-11-15
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: allow list for option weechat.plugin.extension (makes weechat.conf
+  portable accross Un*x and Windows) (task #11479)
 * core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more)
   (bug #34727)
 * core: add new option weechat.completion.base_word_until_cursor: allow

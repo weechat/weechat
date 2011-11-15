@@ -729,9 +729,9 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** Beschreibung: `Standard Dateinamenserweiterung (Beispiel: ".so" unter Linux oder ".dll" unter Microsoft Windows)`
+** Beschreibung: `comma separated list of file name extensions for plugins`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `".so"`)
+** Werte: beliebige Zeichenkette (Standardwert: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
 ** Beschreibung: `Suchpfad für Erweiterungen ("%h"' wird durch das WeeChat-Basisverzeichnis ersetzt, voreingestellt ist "~/.weechat")`

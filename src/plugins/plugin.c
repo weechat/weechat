@@ -143,6 +143,39 @@ plugin_get_name (struct t_weechat_plugin *plugin)
 }
 
 /*
+ * plugin_check_extension_allowed: check if extension of filename is allowed
+ *                                 by option "weechat.plugin.extension"
+ */
+
+int
+plugin_check_extension_allowed (const char *filename)
+{
+    int i, length, length_ext;
+
+    /* extension allowed if no extension is defined */
+    if (!config_plugin_extensions)
+        return 1;
+
+    length = strlen (filename);
+    for (i = 0; i < config_num_plugin_extensions; i++)
+    {
+        length_ext = strlen (config_plugin_extensions[i]);
+        if (length >= length_ext)
+        {
+            if (string_strcasecmp (filename + length - length_ext,
+                                   config_plugin_extensions[i]) == 0)
+            {
+                /* extension allowed */
+                return 1;
+            }
+        }
+    }
+
+    /* extension not allowed */
+    return 0;
+}
+
+/*
  * plugin_check_autoload: check if a plugin can be autoloaded or not
  *                        return 1 if plugin can be autoloaded
  *                               0 if plugin can NOT be autoloaded
@@ -151,36 +184,58 @@ plugin_get_name (struct t_weechat_plugin *plugin)
  */
 
 int
-plugin_check_autoload (char *plugin_full_name)
+plugin_check_autoload (const char *filename)
 {
-    int i, plugin_authorized, plugin_blacklisted;
-    char *ptr_base_name, *base_name, *plugin_name, *pos;
+    int i, plugin_authorized, plugin_blacklisted, length, length_ext;
+    char *full_name, *ptr_base_name, *base_name, *plugin_name;
 
     /* by default we can auto load all plugins */
     if (!plugin_autoload_array)
         return 1;
 
+    full_name = strdup (filename);
+    if (!full_name)
+        return 0;
+
     /* get short name of plugin (filename without extension) */
     plugin_name = NULL;
-    ptr_base_name = basename (plugin_full_name);
+    ptr_base_name = basename (full_name);
     if (!ptr_base_name)
+    {
+        free (full_name);
         return 1;
+    }
 
     base_name = strdup (ptr_base_name);
     if (!base_name)
-        return 1;
-
-    if (CONFIG_STRING(config_plugin_extension)
-        && CONFIG_STRING(config_plugin_extension)[0])
     {
-        pos = strstr (base_name,
-                      CONFIG_STRING(config_plugin_extension));
-        plugin_name = (pos) ?
-            string_strndup (base_name, pos - base_name) :
-            strdup (base_name);
+        free (full_name);
+        return 1;
+    }
+
+    free (full_name);
+
+    if (config_plugin_extensions)
+    {
+        length = strlen (base_name);
+        for (i = 0; i < config_num_plugin_extensions; i++)
+        {
+            length_ext = strlen (config_plugin_extensions[i]);
+            if (length >= length_ext)
+            {
+                if (string_strcasecmp (base_name + length - length_ext,
+                                       config_plugin_extensions[i]) == 0)
+                {
+                    plugin_name = string_strndup (base_name, length - length_ext);
+                    break;
+                }
+            }
+        }
     }
     else
+    {
         plugin_name = strdup (base_name);
+    }
 
     free (base_name);
 
@@ -242,7 +297,6 @@ plugin_find_pos (struct t_weechat_plugin *plugin)
 struct t_weechat_plugin *
 plugin_load (const char *filename, int argc, char **argv)
 {
-    char *full_name, *full_name2;
     void *handle;
     char *name, *api_version, *author, *description, *version;
     char *license, *charset;
@@ -255,39 +309,26 @@ plugin_load (const char *filename, int argc, char **argv)
     if (!filename)
         return NULL;
 
-    full_name = util_search_full_lib_name (filename, "plugins");
-
-    if (!full_name)
-        return NULL;
-
     /*
      * if plugin must not be autoloaded, then return immediately
      * Note: the "plugin_autoload_array" variable is set only during auto-load,
      * ie when WeeChat is starting or when doing /plugin autoload
      */
-    if (plugin_autoload_array && !plugin_check_autoload (full_name))
+    if (plugin_autoload_array && !plugin_check_autoload (filename))
         return NULL;
 
-    full_name2 = string_expand_home (full_name);
-    if (full_name2)
-    {
-        free (full_name);
-        full_name = full_name2;
-    }
-
-    handle = dlopen (full_name, RTLD_GLOBAL | RTLD_NOW);
+    handle = dlopen (filename, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)
     {
         gui_chat_printf (NULL,
                          _("%sError: unable to load plugin \"%s\": %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         full_name, dlerror());
+                         filename, dlerror());
         gui_chat_printf (NULL,
                          _("%sIf you're trying to load a script and not a C "
                            "plugin, try command to load scripts (/perl, "
                            "/python, ...)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        free (full_name);
         return NULL;
     }
 
@@ -300,9 +341,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_name",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -315,14 +355,13 @@ plugin_load (const char *filename, int argc, char **argv)
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_api_version",
-                         full_name);
+                         filename);
         gui_chat_printf (NULL,
                          _("%sIf plugin \"%s\" is old/obsolete, you can "
                            "delete this file."),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          name);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
     if (strcmp (api_version, WEECHAT_PLUGIN_API_VERSION) != 0)
@@ -331,7 +370,7 @@ plugin_load (const char *filename, int argc, char **argv)
                          _("%sError: API mismatch for plugin \"%s\" (current "
                            "API: \"%s\", plugin API: \"%s\"), failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         full_name,
+                         filename,
                          WEECHAT_PLUGIN_API_VERSION,
                          api_version);
         gui_chat_printf (NULL,
@@ -340,7 +379,6 @@ plugin_load (const char *filename, int argc, char **argv)
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          name);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -351,9 +389,8 @@ plugin_load (const char *filename, int argc, char **argv)
                          _("%sError: unable to load plugin \"%s\": a plugin "
                            "with same name already exists"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -366,9 +403,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_description",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -381,9 +417,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_author",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -396,9 +431,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_version",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -411,9 +445,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_license",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -429,9 +462,8 @@ plugin_load (const char *filename, int argc, char **argv)
                            "found in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_init",
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -440,7 +472,7 @@ plugin_load (const char *filename, int argc, char **argv)
     if (new_plugin)
     {
         /* variables */
-        new_plugin->filename = strdup (full_name);
+        new_plugin->filename = strdup (filename);
         new_plugin->handle = handle;
         new_plugin->name = strdup (name);
         new_plugin->description = strdup (description);
@@ -779,9 +811,8 @@ plugin_load (const char *filename, int argc, char **argv)
                              _("%sError: unable to initialize plugin "
                                "\"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             full_name);
+                             filename);
             plugin_remove (new_plugin);
-            free (full_name);
             return NULL;
         }
     }
@@ -791,9 +822,8 @@ plugin_load (const char *filename, int argc, char **argv)
                          _("%sError: unable to load plugin \"%s\" "
                            "(not enough memory)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         full_name);
+                         filename);
         dlclose (handle);
-        free (full_name);
         return NULL;
     }
 
@@ -803,8 +833,6 @@ plugin_load (const char *filename, int argc, char **argv)
                          _("Plugin \"%s\" loaded"),
                          name);
     }
-
-    free (full_name);
 
     return new_plugin;
 }
@@ -818,24 +846,10 @@ void
 plugin_auto_load_file (void *args, const char *filename)
 {
     struct t_plugin_args *plugin_args;
-    char *pos;
 
     plugin_args = (struct t_plugin_args *)args;
 
-    if (CONFIG_STRING(config_plugin_extension)
-        && CONFIG_STRING(config_plugin_extension)[0])
-    {
-        pos = strstr (filename, CONFIG_STRING(config_plugin_extension));
-        if (pos)
-        {
-            if (string_strcasecmp (pos,
-                                   CONFIG_STRING(config_plugin_extension)) == 0)
-            {
-                plugin_load (filename, plugin_args->argc, plugin_args->argv);
-            }
-        }
-    }
-    else
+    if (plugin_check_extension_allowed (filename))
         plugin_load (filename, plugin_args->argc, plugin_args->argv);
 }
 
@@ -849,6 +863,7 @@ plugin_auto_load (int argc, char **argv)
 {
     char *dir_name, *plugin_path, *plugin_path2;
     struct t_plugin_args plugin_args;
+    int length;
 
     plugin_args.argc = argc;
     plugin_args.argv = argv;
@@ -885,11 +900,11 @@ plugin_auto_load (int argc, char **argv)
     }
 
     /* auto-load plugins in WeeChat global lib dir */
-    dir_name = malloc (strlen (WEECHAT_LIBDIR) + 16);
+    length = strlen (WEECHAT_LIBDIR) + 16 + 1;
+    dir_name = malloc (length);
     if (dir_name)
     {
-        snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
-                  "%s/plugins", WEECHAT_LIBDIR);
+        snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
         util_exec_on_files (dir_name, 0, &plugin_args, &plugin_auto_load_file);
         free (dir_name);
     }

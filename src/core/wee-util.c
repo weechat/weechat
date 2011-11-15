@@ -287,50 +287,49 @@ util_exec_on_files (const char *directory, int hidden_files, void *data,
 }
 
 /*
- * util_search_full_lib_name: search the full name of a WeeChat library
- *                            file with a part of name
+ *  util_search_full_lib_name: search the full name of a WeeChat library
+ *                             file with name and extension
  *                            - look in WeeChat user's dir, then WeeChat
  *                              global lib dir
  *                            - sys_directory is the system directory under
  *                              WeeChat lib prefix, for example "plugins"
- *                            - result has to be free() after use
+ *                            - result has to be free() after use (if not NULL)
+ *                            - NULL is returned if lib is not found
  */
 
 char *
-util_search_full_lib_name (const char *filename, const char *sys_directory)
+util_search_full_lib_name_ext (const char *filename, const char *extension,
+                               const char *plugins_dir)
 {
     char *name_with_ext, *final_name;
     int length;
     struct stat st;
 
-    /* filename is already a full path */
-    if (strchr (filename, '/') || strchr (filename, '\\'))
-        return strdup (filename);
-
-    length = strlen (filename) + 16;
-    if (CONFIG_STRING(config_plugin_extension)
-        && CONFIG_STRING(config_plugin_extension)[0])
-        length += strlen (CONFIG_STRING(config_plugin_extension));
+    length = strlen (filename) + strlen (extension) + 1;
     name_with_ext = malloc (length);
     if (!name_with_ext)
-        return strdup (filename);
-    strcpy (name_with_ext, filename);
-    if (!strchr (filename, '.')
-        && CONFIG_STRING(config_plugin_extension)
-        && CONFIG_STRING(config_plugin_extension)[0])
-        strcat (name_with_ext, CONFIG_STRING(config_plugin_extension));
+        return NULL;
+    snprintf (name_with_ext, length,
+              "%s%s",
+              filename,
+              (strchr (filename, '.')) ? "" : extension);
 
     /* try WeeChat user's dir */
     length = strlen (weechat_home) + strlen (name_with_ext) +
-        strlen (sys_directory) + 16;
+        strlen (plugins_dir) + 16;
     final_name = malloc (length);
     if (!final_name)
     {
         free (name_with_ext);
-        return strdup (filename);
+        return NULL;
     }
     snprintf (final_name, length,
-              "%s/%s/%s", weechat_home, sys_directory, name_with_ext);
+              "%s%s%s%s%s",
+              weechat_home,
+              DIR_SEPARATOR,
+              plugins_dir,
+              DIR_SEPARATOR,
+              name_with_ext);
     if ((stat (final_name, &st) == 0) && (st.st_size > 0))
     {
         free (name_with_ext);
@@ -340,15 +339,20 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
 
     /* try WeeChat global lib dir */
     length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
-        strlen (sys_directory) + 16;
+        strlen (plugins_dir) + 16;
     final_name = malloc (length);
     if (!final_name)
     {
         free (name_with_ext);
-        return strdup (filename);
+        return NULL;
     }
     snprintf (final_name, length,
-              "%s/%s/%s", WEECHAT_LIBDIR, sys_directory, name_with_ext);
+              "%s%s%s%s%s",
+              WEECHAT_LIBDIR,
+              DIR_SEPARATOR,
+              plugins_dir,
+              DIR_SEPARATOR,
+              name_with_ext);
     if ((stat (final_name, &st) == 0) && (st.st_size > 0))
     {
         free (name_with_ext);
@@ -356,7 +360,58 @@ util_search_full_lib_name (const char *filename, const char *sys_directory)
     }
     free (final_name);
 
-    return name_with_ext;
+    free (name_with_ext);
+
+    return NULL;
+}
+
+/*
+ * util_search_full_lib_name: search the full name of a WeeChat library
+ *                            file with a part of name
+ *                            - look in WeeChat user's dir, then WeeChat
+ *                              global lib dir
+ *                            - plugins_dir is the directory under WeeChat lib
+ *                              prefix (for system dir) or under WeeChat home,
+ *                              for example "plugins"
+ *                            - result has to be free() after use (if not NULL)
+ */
+
+char *
+util_search_full_lib_name (const char *filename, const char *plugins_dir)
+{
+    char *filename2, *full_name;
+    int i;
+
+    /* expand home in filename */
+    filename2 = string_expand_home (filename);
+    if (!filename2)
+        return NULL;
+
+    /* if full path, return it */
+    if (strchr (filename2, '/') || strchr (filename2, '\\'))
+        return filename2;
+
+    if (config_plugin_extensions)
+    {
+        for (i = 0; i < config_num_plugin_extensions; i++)
+        {
+            full_name = util_search_full_lib_name_ext (filename2,
+                                                       config_plugin_extensions[i],
+                                                       plugins_dir);
+            if (full_name)
+                return full_name;
+        }
+    }
+    else
+    {
+        full_name = util_search_full_lib_name_ext (filename2, "", plugins_dir);
+        if (full_name)
+            return full_name;
+    }
+
+    free (filename2);
+
+    return strdup (filename);
 }
 
 /*

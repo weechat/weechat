@@ -729,9 +729,9 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** descrizione: `estensione standard dei plugin nei nomi file (per esempio ".so" sotto Linux oppure ".dll" sotto Microsoft Windows)`
+** descrizione: `comma separated list of file name extensions for plugins`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `".so"`)
+** valori: qualsiasi stringa (valore predefinito: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
 ** descrizione: `percorso per la ricerca dei plugin ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`

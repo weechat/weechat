@@ -3572,7 +3572,7 @@ command_plugin_list (const char *name, int full)
 COMMAND_CALLBACK(plugin)
 {
     int plugin_argc;
-    char **plugin_argv;
+    char **plugin_argv, *full_name;
 
     /* make C compiler happy */
     (void) data;
@@ -3614,16 +3614,19 @@ COMMAND_CALLBACK(plugin)
     {
         if (argc > 2)
         {
+            plugin_argv = NULL;
+            plugin_argc = 0;
             if (argc > 3)
             {
                 plugin_argv = string_split (argv_eol[3], " ", 0, 0,
                                             &plugin_argc);
-                plugin_load (argv[2], plugin_argc, plugin_argv);
-                if (plugin_argv)
-                    string_free_split (plugin_argv);
             }
-            else
-                plugin_load (argv[2], 0, NULL);
+            full_name = util_search_full_lib_name (argv[2], "plugins");
+            plugin_load (full_name, plugin_argc, plugin_argv);
+            if (full_name)
+                free (full_name);
+            if (plugin_argv)
+                string_free_split (plugin_argv);
         }
         else
         {

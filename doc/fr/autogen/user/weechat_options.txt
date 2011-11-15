@@ -729,9 +729,9 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** description: `extension par défaut des extensions (par example ".so" sous Linux ou ".dll" sous Microsoft Windows)`
+** description: `liste d'extensions de noms de fichiers pour les extensions (séparées par des virgules)`
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `".so"`)
+** valeurs: toute chaîne (valeur par défaut: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
 ** description: `chemin de recherche des extensions ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")`

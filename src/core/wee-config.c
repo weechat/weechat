@@ -242,6 +242,8 @@ int config_day_change_old_day = -1;
 regex_t *config_highlight_regex = NULL;
 char **config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
+char **config_plugin_extensions = NULL;
+int config_num_plugin_extensions = 0;
 
 
 /*
@@ -534,6 +536,31 @@ config_change_network_gnutls_ca_file (void *data,
         network_set_gnutls_ca_file ();
 }
 
+/*
+ * config_change_plugin_extension: called when plugin extension is changed
+ */
+
+void
+config_change_plugin_extension (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (config_plugin_extensions)
+    {
+        string_free_split (config_plugin_extensions);
+        config_plugin_extensions = NULL;
+    }
+    config_num_plugin_extensions = 0;
+
+    if (CONFIG_STRING(config_plugin_extension)
+        && CONFIG_STRING(config_plugin_extension)[0])
+    {
+        config_plugin_extensions = string_split (CONFIG_STRING(config_plugin_extension),
+                                                 ",", 0, 0, &config_num_plugin_extensions);
+    }
+}
 
 /*
  * config_day_change_timer_cb: timer callback for displaying
@@ -2600,15 +2627,9 @@ config_weechat_init_options ()
     config_plugin_extension = config_file_new_option (
         weechat_config_file, ptr_section,
         "extension", "string",
-        N_("standard plugins extension in filename (for example "
-           "\".so\" under Linux or \".dll\" under Microsoft Windows)"),
-        NULL, 0, 0,
-#if defined(WIN32) || defined(__CYGWIN__)
-        ".dll",
-#else
-        ".so",
-#endif
-        NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        N_("comma separated list of file name extensions for plugins"),
+        NULL, 0, 0, ".so,.dll", NULL, 0, NULL, NULL,
+        &config_change_plugin_extension, NULL, NULL, NULL);
     config_plugin_path = config_file_new_option (
         weechat_config_file, ptr_section,
         "path", "string",
@@ -2736,6 +2757,8 @@ config_weechat_init ()
         config_change_highlight_regex (NULL, NULL);
     if (!config_highlight_tags)
         config_change_highlight_tags (NULL, NULL);
+    if (!config_plugin_extensions)
+        config_change_plugin_extension (NULL, NULL);
 
     return rc;
 }
