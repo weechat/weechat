@@ -222,34 +222,6 @@ gui_filter_global_disable ()
 }
 
 /*
- * gui_filter_enable: enable a filter
- */
-
-void
-gui_filter_enable (struct t_gui_filter *filter)
-{
-    if (filter && !filter->enabled)
-    {
-        filter->enabled = 1;
-        gui_filter_all_buffers ();
-    }
-}
-
-/*
- * gui_filter_disable: disable a filter
- */
-
-void
-gui_filter_disable (struct t_gui_filter *filter)
-{
-    if (filter && filter->enabled)
-    {
-        filter->enabled = 0;
-        gui_filter_all_buffers ();
-    }
-}
-
-/*
  * gui_filter_search_by_name: search a filter by name
  */
 
@@ -382,8 +354,6 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         last_gui_filter = new_filter;
         new_filter->next_filter = NULL;
 
-        gui_filter_all_buffers ();
-
         hook_signal_send ("filter_added",
                           WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
     }
@@ -455,8 +425,6 @@ gui_filter_free (struct t_gui_filter *filter)
         last_gui_filter = filter->prev_filter;
 
     free (filter);
-
-    gui_filter_all_buffers ();
 
     hook_signal_send ("filter_removed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }

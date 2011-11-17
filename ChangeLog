@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-15
+v0.3.7-dev, 2011-11-17
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: apply filters after full reload of configuration files (with /reload)
+  (bug #31182)
 * core: allow list for option weechat.plugin.extension (makes weechat.conf
   portable accross Un*x and Windows) (task #11479)
 * core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more)

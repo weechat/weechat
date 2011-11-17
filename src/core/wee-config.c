@@ -661,6 +661,9 @@ config_weechat_init_after_read ()
         if (!gui_keys[i])
             gui_key_default_bindings (i);
     }
+
+    /* apply filters on all buffers */
+    gui_filter_all_buffers ();
 }
 
 /*
@@ -704,8 +707,7 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
 
     rc = config_file_reload (config_file);
 
-    if (rc == WEECHAT_CONFIG_READ_OK)
-        config_weechat_init_after_read ();
+    config_weechat_init_after_read ();
 
     return rc;
 }
@@ -2783,8 +2785,8 @@ config_weechat_read ()
     int rc;
 
     rc = config_file_read (weechat_config_file);
-    if (rc == WEECHAT_CONFIG_READ_OK)
-        config_weechat_init_after_read ();
+
+    config_weechat_init_after_read ();
 
     if (rc != WEECHAT_CONFIG_READ_OK)
     {

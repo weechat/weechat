@@ -55,10 +55,9 @@ extern int gui_filters_enabled;
 
 extern int gui_filter_check_line (struct t_gui_line *line,
                                   const char *buffer_full_name);
+extern void gui_filter_all_buffers ();
 extern void gui_filter_global_enable ();
 extern void gui_filter_global_disable ();
-extern void gui_filter_enable (struct t_gui_filter *filter);
-extern void gui_filter_disable (struct t_gui_filter *filter);
 extern struct t_gui_filter *gui_filter_search_by_name (const char *name);
 extern struct t_gui_filter *gui_filter_new (int enabled,
                                             const char *name,
