@@ -568,42 +568,39 @@ IRC_PROTOCOL_CALLBACK(kick)
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
     ptr_nick_kicked = irc_nick_search (server, ptr_channel, argv[3]);
 
-    if (!ignored)
+    if (pos_comment)
     {
-        if (pos_comment)
-        {
-            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                  command, NULL,
-                                                                  ptr_channel->buffer),
-                                 irc_protocol_tags (command, NULL, NULL),
-                                 _("%s%s%s%s has kicked %s%s%s %s(%s%s%s)"),
-                                 weechat_prefix ("quit"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                 nick,
-                                 IRC_COLOR_MESSAGE_QUIT,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
-                                 argv[3],
-                                 IRC_COLOR_MESSAGE_QUIT,
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_RESET,
-                                 pos_comment,
-                                 IRC_COLOR_CHAT_DELIMITERS);
-        }
-        else
-        {
-            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                  command, NULL,
-                                                                  ptr_channel->buffer),
-                                 irc_protocol_tags (command, NULL, NULL),
-                                 _("%s%s%s%s has kicked %s%s%s"),
-                                 weechat_prefix ("quit"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                 nick,
-                                 IRC_COLOR_MESSAGE_QUIT,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
-                                 argv[3],
-                                 IRC_COLOR_MESSAGE_QUIT);
-        }
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              ptr_channel->buffer),
+                             irc_protocol_tags (command, NULL, NULL),
+                             _("%s%s%s%s has kicked %s%s%s %s(%s%s%s)"),
+                             weechat_prefix ("quit"),
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             nick,
+                             IRC_COLOR_MESSAGE_QUIT,
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
+                             argv[3],
+                             IRC_COLOR_MESSAGE_QUIT,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             pos_comment,
+                             IRC_COLOR_CHAT_DELIMITERS);
+    }
+    else
+    {
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              ptr_channel->buffer),
+                             irc_protocol_tags (command, NULL, NULL),
+                             _("%s%s%s%s has kicked %s%s%s"),
+                             weechat_prefix ("quit"),
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             nick,
+                             IRC_COLOR_MESSAGE_QUIT,
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
+                             argv[3],
+                             IRC_COLOR_MESSAGE_QUIT);
     }
 
     if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
@@ -671,38 +668,35 @@ IRC_PROTOCOL_CALLBACK(kill)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_nick_killed = irc_nick_search (server, ptr_channel, argv[2]);
 
-        if (!ignored)
+        if (pos_comment)
         {
-            if (pos_comment)
-            {
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_channel->buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%sYou were killed by %s%s%s %s(%s%s%s)"),
-                                     weechat_prefix ("quit"),
-                                     IRC_COLOR_MESSAGE_QUIT,
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_MESSAGE_QUIT,
-                                     IRC_COLOR_CHAT_DELIMITERS,
-                                     IRC_COLOR_RESET,
-                                     pos_comment,
-                                     IRC_COLOR_CHAT_DELIMITERS);
-            }
-            else
-            {
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_channel->buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%sYou were killed by %s%s%s"),
-                                     weechat_prefix ("quit"),
-                                     IRC_COLOR_MESSAGE_QUIT,
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_MESSAGE_QUIT);
-            }
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_channel->buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%sYou were killed by %s%s%s %s(%s%s%s)"),
+                                 weechat_prefix ("quit"),
+                                 IRC_COLOR_MESSAGE_QUIT,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_MESSAGE_QUIT,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_RESET,
+                                 pos_comment,
+                                 IRC_COLOR_CHAT_DELIMITERS);
+        }
+        else
+        {
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_channel->buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%sYou were killed by %s%s%s"),
+                                 weechat_prefix ("quit"),
+                                 IRC_COLOR_MESSAGE_QUIT,
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_MESSAGE_QUIT);
         }
 
         if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
@@ -760,44 +754,38 @@ IRC_PROTOCOL_CALLBACK(mode)
             }
         }
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
-        if (!ignored)
-        {
-            ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                  command, NULL,
-                                                                  ptr_buffer),
-                                 irc_protocol_tags (command, NULL, NULL),
-                                 _("%sMode %s%s %s[%s%s%s]%s by %s%s"),
-                                 weechat_prefix ("network"),
-                                 IRC_COLOR_CHAT_CHANNEL,
-                                 (ptr_channel) ? ptr_channel->name : argv[2],
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_RESET,
-                                 pos_modes,
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_RESET,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                 nick);
-        }
+        ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              ptr_buffer),
+                             irc_protocol_tags (command, NULL, NULL),
+                             _("%sMode %s%s %s[%s%s%s]%s by %s%s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_CHANNEL,
+                             (ptr_channel) ? ptr_channel->name : argv[2],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             pos_modes,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             nick);
     }
     else
     {
-        if (!ignored)
-        {
-            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                  command, NULL,
-                                                                  NULL),
-                                 irc_protocol_tags (command, NULL, NULL),
-                                 _("%sUser mode %s[%s%s%s]%s by %s%s"),
-                                 weechat_prefix ("network"),
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_RESET,
-                                 pos_modes,
-                                 IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_RESET,
-                                 IRC_COLOR_CHAT_NICK,
-                                 nick);
-        }
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              NULL),
+                             irc_protocol_tags (command, NULL, NULL),
+                             _("%sUser mode %s[%s%s%s]%s by %s%s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             pos_modes,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             IRC_COLOR_CHAT_NICK,
+                             nick);
         irc_mode_user_set (server, pos_modes, 0);
     }
 
@@ -1701,102 +1689,99 @@ IRC_PROTOCOL_CALLBACK(topic)
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
-    if (!ignored)
+    if (pos_topic && pos_topic[0])
     {
-        if (pos_topic && pos_topic[0])
+        topic_color = irc_color_decode (pos_topic,
+                                        weechat_config_boolean (irc_config_network_colors_receive));
+        if (weechat_config_boolean (irc_config_look_display_old_topic)
+            && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
         {
-            topic_color = irc_color_decode (pos_topic,
-                                            weechat_config_boolean (irc_config_network_colors_receive));
-            if (weechat_config_boolean (irc_config_look_display_old_topic)
-                && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
-            {
-                old_topic_color = irc_color_decode (ptr_channel->topic,
-                                                    weechat_config_boolean (irc_config_network_colors_receive));
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%s%s%s has changed topic for %s%s%s "
-                                       "from \"%s%s%s\" to \"%s%s%s\""),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     argv[2],
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_TOPIC_OLD,
-                                     (old_topic_color) ? old_topic_color : ptr_channel->topic,
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_TOPIC_NEW,
-                                     (topic_color) ? topic_color : pos_topic,
-                                     IRC_COLOR_RESET);
-                if (old_topic_color)
-                    free (old_topic_color);
-            }
-            else
-            {
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%s%s%s has changed topic for %s%s%s "
-                                       "to \"%s%s%s\""),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     argv[2],
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_TOPIC_NEW,
-                                     (topic_color) ? topic_color : pos_topic,
-                                     IRC_COLOR_RESET);
-            }
-            if (topic_color)
-                free (topic_color);
+            old_topic_color = irc_color_decode (ptr_channel->topic,
+                                                weechat_config_boolean (irc_config_network_colors_receive));
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%s%s%s has changed topic for %s%s%s "
+                                   "from \"%s%s%s\" to \"%s%s%s\""),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[2],
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_TOPIC_OLD,
+                                 (old_topic_color) ? old_topic_color : ptr_channel->topic,
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_TOPIC_NEW,
+                                 (topic_color) ? topic_color : pos_topic,
+                                 IRC_COLOR_RESET);
+            if (old_topic_color)
+                free (old_topic_color);
         }
         else
         {
-            if (weechat_config_boolean (irc_config_look_display_old_topic)
-                && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
-            {
-                old_topic_color = irc_color_decode (ptr_channel->topic,
-                                                    weechat_config_boolean (irc_config_network_colors_receive));
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%s%s%s has unset topic for %s%s%s "
-                                       "(old topic: \"%s%s%s\")"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     argv[2],
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_TOPIC_OLD,
-                                     (old_topic_color) ? old_topic_color : ptr_channel->topic,
-                                     IRC_COLOR_RESET);
-                if (old_topic_color)
-                    free (old_topic_color);
-            }
-            else
-            {
-                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                      command, NULL,
-                                                                      ptr_buffer),
-                                     irc_protocol_tags (command, NULL, NULL),
-                                     _("%s%s%s%s has unset topic for %s%s%s"),
-                                     weechat_prefix ("network"),
-                                     IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
-                                     nick,
-                                     IRC_COLOR_RESET,
-                                     IRC_COLOR_CHAT_CHANNEL,
-                                     argv[2],
-                                     IRC_COLOR_RESET);
-            }
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%s%s%s has changed topic for %s%s%s "
+                                   "to \"%s%s%s\""),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[2],
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_TOPIC_NEW,
+                                 (topic_color) ? topic_color : pos_topic,
+                                 IRC_COLOR_RESET);
+        }
+        if (topic_color)
+            free (topic_color);
+    }
+    else
+    {
+        if (weechat_config_boolean (irc_config_look_display_old_topic)
+            && ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
+        {
+            old_topic_color = irc_color_decode (ptr_channel->topic,
+                                                weechat_config_boolean (irc_config_network_colors_receive));
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%s%s%s has unset topic for %s%s%s "
+                                   "(old topic: \"%s%s%s\")"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[2],
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_TOPIC_OLD,
+                                 (old_topic_color) ? old_topic_color : ptr_channel->topic,
+                                 IRC_COLOR_RESET);
+            if (old_topic_color)
+                free (old_topic_color);
+        }
+        else
+        {
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, NULL,
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, NULL, NULL),
+                                 _("%s%s%s%s has unset topic for %s%s%s"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 nick,
+                                 IRC_COLOR_RESET,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[2],
+                                 IRC_COLOR_RESET);
         }
     }
 

@@ -31,6 +31,8 @@ Version 0.3.7 (under dev!)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
 * api: add new functions strcasecmp_range and strncasecmp_range
+* irc: display messages kick/kill/mode/topic even if nick is ignored
+  (bug #34853)
 * irc: add case insensitive string comparison based on casemapping of server
   (rfc1459, strict-rfc1459, ascii) (bug #34239)
 * irc: display channel voice notices received in channel buffer (bug #34762),
