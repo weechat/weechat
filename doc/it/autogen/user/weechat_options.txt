@@ -264,7 +264,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** descrizione: `if enabled, the base word to complete ends at char before cursor; otherwise the base word ends at first space after cursor`
+** descrizione: `se abilitata, la parola base da completare termina al carattere prima del cursore; altrimenti la parola base termina al primo spazio dopo il cursore`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -324,7 +324,7 @@
 ** valori: 0 .. 2147483647 (valore predefinito: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** descrizione: `maximum number of minutes in history per buffer (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** descrizione: `numero massimo di minuti nella cronologia per buffer (0 = nessun limite, esempi: 1440 = un giorno, 10000 = una settimana; 43200 = un mese, 525600 = un anno)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `0`)
 
@@ -729,7 +729,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** descrizione: `comma separated list of file name extensions for plugins`
+** descrizione: `elenco separato da virgole di estensioni dei nomi file per i plugin`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `".so,.dll"`)
 

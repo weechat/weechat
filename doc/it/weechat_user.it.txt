@@ -537,8 +537,7 @@ Tasti per buffer / finestre
 | @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | /window zoom
 | @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | /input jump_next_visited_buffer
-// TRANSLATION MISSING
-| @k(A-)@k(/)               | Switch to last buffer displayed (before last jump to a buffer) | /input jump_last_buffer_displayed
+| @k(A-)@k(/)               | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | /input jump_last_buffer_displayed
 | @k(A-)@k(=)               | Attiva/disattiva filtri | /filter toggle
 |========================================
 
@@ -826,9 +825,8 @@ e "a tutti" in rosso chiaro sottolineato:
 ^Cc12^Cbciao ^Cb^Cc04^Cua tutti^Cu^Cc !
 ----------------------------------------
 
-// TRANSLATION MISSING
 [NOTE]
-In irc plugin, you can remap these colors using option
+Nel plugin irc, si possono riorganizzare i colori usando l'opzione
 <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
 
 [[colors]]
