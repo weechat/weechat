@@ -814,7 +814,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     if (channel->pv_remote_nick_color)
         free (channel->pv_remote_nick_color);
     if (channel->hook_autorejoin)
-        weechat_unhook(channel->hook_autorejoin);
+        weechat_unhook (channel->hook_autorejoin);
     if (channel->nicks_speaking[0])
         weechat_list_free (channel->nicks_speaking[0]);
     if (channel->nicks_speaking[1])

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-17
+v0.3.7-dev, 2011-11-18
 
 
 Version 0.3.7 (under dev!)
@@ -31,6 +31,7 @@ Version 0.3.7 (under dev!)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
 * api: add new functions strcasecmp_range and strncasecmp_range
+* irc: remove autorejoin on channels when disconnected from server (bug #32207)
 * irc: display messages kick/kill/mode/topic even if nick is ignored
   (bug #34853)
 * irc: add case insensitive string comparison based on casemapping of server

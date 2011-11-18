@@ -3624,6 +3624,11 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
              ptr_channel = ptr_channel->next_channel)
         {
             irc_nick_free_all (server, ptr_channel);
+            if (ptr_channel->hook_autorejoin)
+            {
+                weechat_unhook (ptr_channel->hook_autorejoin);
+                ptr_channel->hook_autorejoin = NULL;
+            }
             weechat_printf (ptr_channel->buffer,
                             _("%s%s: disconnected from server"),
                             "",
