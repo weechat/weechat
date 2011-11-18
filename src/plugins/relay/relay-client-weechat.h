@@ -27,12 +27,7 @@ struct t_relay_client;
 
 struct t_relay_client_weechat_data
 {
-    char *address;                     /* client address (used when sending */
-                                       /* data to client)                   */
-    char *nick;                        /* nick for client                   */
-    int user_received;                 /* command "USER" received           */
-    int connected;                     /* 1 if client is connected as IRC   */
-                                       /* client                            */
+    int password_ok;                   /* password received and ok?         */
 };
 
 extern void relay_client_weechat_recv (struct t_relay_client *client,

@@ -33,6 +33,7 @@
 #include "relay.h"
 #include "relay-client-weechat.h"
 #include "relay-client.h"
+#include "relay-config.h"
 
 
 /*
@@ -150,31 +151,84 @@ relay_client_weechat_send_infolist (struct t_relay_client *client,
  */
 
 void
-relay_client_weechat_recv_one_msg (struct t_relay_client *client, char *data)
+relay_client_weechat_recv_one_msg (struct t_relay_client *client,
+                                   const char *data)
 {
-    char *pos;
+    char **argv, **argv_eol, *args;
+    int argc, rc;
+    long unsigned int value;
+    const char *info;
     struct t_infolist *infolist;
-
-    pos = strchr (data, '\r');
-    if (pos)
-        pos[0] = '\0';
 
     if (weechat_relay_plugin->debug)
     {
         weechat_printf (NULL, "relay: weechat: \"%s\"", data);
     }
 
-    if (weechat_strcasecmp (data, "quit") == 0)
-        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
-    else
+    argv = weechat_string_split (data, " ", 0, 0, &argc);
+    argv_eol = weechat_string_split (data, " ", 1, 0, NULL);
+    if (argv && argv_eol && (argc >= 1))
     {
-        infolist = weechat_infolist_get (data, NULL, NULL);
-        if (infolist)
+        if (!RELAY_WEECHAT_DATA(client, password_ok))
         {
-            relay_client_weechat_send_infolist (client, data, infolist);
-            weechat_infolist_free (infolist);
+            if ((argc > 1)
+                && (weechat_strcasecmp (argv[0], "pass") == 0)
+                && (strcmp (weechat_config_string (relay_config_network_password),
+                            argv_eol[1]) == 0))
+            {
+                RELAY_WEECHAT_DATA(client, password_ok) = 1;
+            }
+        }
+
+        if (!RELAY_WEECHAT_DATA(client, password_ok))
+        {
+            relay_client_set_status (client,
+                                     RELAY_STATUS_DISCONNECTED);
+            goto end;
+        }
+
+        if (weechat_strcasecmp (argv[0], "quit") == 0)
+        {
+            relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        }
+        else if (weechat_strcasecmp (argv[0], "info") == 0)
+        {
+            if (argc > 1)
+            {
+                info = weechat_info_get (argv[1],
+                                         (argc > 2) ? argv_eol[2] : NULL);
+                relay_client_weechat_sendf (client, "%s", info);
+            }
+        }
+        else if (weechat_strcasecmp (argv[0], "infolist") == 0)
+        {
+            if (argc > 1)
+            {
+                value = 0;
+                args = NULL;
+                if (argc > 2)
+                {
+                    rc = sscanf (argv[2], "%lx", &value);
+                    if ((rc == EOF) || (rc == 0))
+                        value = 0;
+                    if (argc > 3)
+                        args = argv_eol[3];
+                }
+                infolist = weechat_infolist_get (argv[1], (void *)value, args);
+                if (infolist)
+                {
+                    relay_client_weechat_send_infolist (client, data, infolist);
+                    weechat_infolist_free (infolist);
+                }
+            }
         }
     }
+
+end:
+    if (argv)
+        weechat_string_free_split (argv);
+    if (argv_eol)
+        weechat_string_free_split (argv_eol);
 }
 
 /*
@@ -204,11 +258,14 @@ void
 relay_client_weechat_alloc (struct t_relay_client *client)
 {
     struct t_relay_client_weechat_data *weechat_data;
+    const char *password;
+
+    password = weechat_config_string (relay_config_network_password);
 
     client->protocol_data = malloc (sizeof (*weechat_data));
     if (client->protocol_data)
     {
-        /* ... */
+        RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
     }
 }
 
