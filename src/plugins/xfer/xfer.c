@@ -536,15 +536,18 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     else
         xfer_file_find_filename (new_xfer);
 
-    /* write info message on server buffer */
+    /* write info message on core buffer */
     switch (type)
     {
         case XFER_TYPE_FILE_RECV:
             weechat_printf (NULL,
                             _("%s: incoming file from %s "
-                              "(%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"),
+                              "(%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+                              "(protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
+                            plugin_name,
+                            plugin_id,
                             address >> 24,
                             (address >> 16) & 0xff,
                             (address >> 8) & 0xff,
@@ -556,10 +559,12 @@ xfer_new (const char *plugin_name, const char *plugin_id,
             break;
         case XFER_TYPE_FILE_SEND:
             weechat_printf (NULL,
-                            _("%s: sending file to %s: %s "
+                            _("%s: sending file to %s (%s.%s): %s "
                               "(local filename: %s), %llu bytes (protocol: %s)"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
+                            plugin_name,
+                            plugin_id,
                             filename,
                             local_filename,
                             size,
@@ -569,9 +574,11 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         case XFER_TYPE_CHAT_RECV:
             weechat_printf (NULL,
                             _("%s: incoming chat request from %s "
-                              "(%d.%d.%d.%d)"),
+                              "(%s.%s), ip: %d.%d.%d.%d"),
                             XFER_PLUGIN_NAME,
                             remote_nick,
+                            plugin_name,
+                            plugin_id,
                             address >> 24,
                             (address >> 16) & 0xff,
                             (address >> 8) & 0xff,
@@ -580,9 +587,11 @@ xfer_new (const char *plugin_name, const char *plugin_id,
             break;
         case XFER_TYPE_CHAT_SEND:
             weechat_printf (NULL,
-                            _("%s: sending chat request to %s"),
+                            _("%s: sending chat request to %s (%s.%s)"),
                             XFER_PLUGIN_NAME,
-                            remote_nick);
+                            remote_nick,
+                            plugin_name,
+                            plugin_id);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             break;
         case XFER_NUM_TYPES:

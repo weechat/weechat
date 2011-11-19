@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-15 11:43+0100\n"
-"PO-Revision-Date: 2011-11-15 11:44+0100\n"
+"POT-Creation-Date: 2011-11-19 11:35+0100\n"
+"PO-Revision-Date: 2011-11-19 11:25+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -8099,23 +8099,28 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
 
 #, c-format
-msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
+msgid ""
+"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"(protocol: %s)"
 msgstr ""
-"%s: réception fichier de %s (%d.%d.%d.%d): %s, %llu octets (protocole: %s)"
+"%s: réception fichier de %s (%s.%s), ip: %d.%d.%d.%d, nom: %s, %llu octets "
+"(protocole: %s)"
 
 #, c-format
 msgid ""
-"%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
 msgstr ""
-"%s: envoi fichier à %s: %s (nom local: %s), %llu octets (protocole: %s)"
+"%s: envoi fichier à %s (%s.%s): %s (nom local: %s), %llu octets (protocole: "
+"%s)"
 
 #, c-format
-msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
-msgstr "%s: demande de discussion reçue de %s (%d.%d.%d.%d)"
+msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+msgstr "%s: demande de discussion reçue de %s (%s.%s), ip: %d.%d.%d.%d"
 
 #, c-format
-msgid "%s: sending chat request to %s"
-msgstr "%s: envoi d'une demande de discussion à %s"
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr "%s: envoi d'une demande de discussion à %s (%s.%s)"
 
 #, c-format
 msgid "%s: file %s (local filename: %s) will be resumed at position %llu"

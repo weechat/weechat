@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-15 11:43+0100\n"
+"POT-Creation-Date: 2011-11-19 11:35+0100\n"
 "PO-Revision-Date: 2011-11-08 22:03+0100\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8269,23 +8269,26 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr ""
 "%s%s: Für einen neuen Transfer steht nicht ausreichend Speicher zur Verfügung"
 
-#, c-format
-msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %llu bytes (protocol: %s)"
+#, fuzzy, c-format
+msgid ""
+"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"(protocol: %s)"
 msgstr ""
 "%s: eingehende Datei von %s (%d.%d.%d.%d): %s, %llu Bytes (Protokoll: %s)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s: %s (local filename: %s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
 msgstr ""
 "%s: Sende Datei an %s: %s (lokaler Dateiname: %s), %llu Bytes (Protokoll: %s)"
 
-#, c-format
-msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
 msgstr "%s: eingehende Chatanforderung von %s (%d.%d.%d.%d)"
 
-#, c-format
-msgid "%s: sending chat request to %s"
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
 msgstr "%s: Sende Chatanforderung an: %s"
 
 #, c-format

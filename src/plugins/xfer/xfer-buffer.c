@@ -93,9 +93,9 @@ xfer_buffer_refresh (const char *hotlist)
                       weechat_config_string (xfer_config_color_text),
                       weechat_config_string (xfer_config_color_text_bg));
 
-            /* display first line with remote nick and filename */
+            /* display first line with remote nick, filename and plugin name/id */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
-                              "%s%s%-24s %s%s%s%s",
+                              "%s%s%-24s %s%s%s%s (%s.%s)",
                               weechat_color(str_color),
                               (line == xfer_buffer_selected_line) ?
                               "*** " : "    ",
@@ -104,7 +104,9 @@ xfer_buffer_refresh (const char *hotlist)
                               (XFER_IS_FILE(ptr_xfer->type)) ?
                               ptr_xfer->filename : _("xfer chat"),
                               (XFER_IS_FILE(ptr_xfer->type)) ? "\"" : "",
-                              suffix);
+                              suffix,
+                              ptr_xfer->plugin_name,
+                              ptr_xfer->plugin_id);
 
             snprintf (status, sizeof (status),
                       "%s", _(xfer_status_string[ptr_xfer->status]));
