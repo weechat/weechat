@@ -154,25 +154,39 @@ void
 relay_client_weechat_recv_one_msg (struct t_relay_client *client,
                                    const char *data)
 {
-    char **argv, **argv_eol, *args;
+    char *data2, *pos, **argv, **argv_eol, *args;
     int argc, rc;
     long unsigned int value;
     const char *info;
     struct t_infolist *infolist;
 
+    data2 = NULL;
+    argv = NULL;
+    argv_eol = NULL;
+
+    data2 = strdup (data);
+    if (!data2)
+        goto end;
+    pos = strchr (data2, '\r');
+    if (pos)
+        pos[0] = '\0';
+    pos = strchr (data2, '\n');
+    if (pos)
+        pos[0] = '\0';
+
     if (weechat_relay_plugin->debug)
     {
-        weechat_printf (NULL, "relay: weechat: \"%s\"", data);
+        weechat_printf (NULL, "relay: weechat: \"%s\"", data2);
     }
 
-    argv = weechat_string_split (data, " ", 0, 0, &argc);
-    argv_eol = weechat_string_split (data, " ", 1, 0, NULL);
+    argv = weechat_string_split (data2, " ", 0, 0, &argc);
+    argv_eol = weechat_string_split (data2, " ", 1, 0, NULL);
     if (argv && argv_eol && (argc >= 1))
     {
         if (!RELAY_WEECHAT_DATA(client, password_ok))
         {
             if ((argc > 1)
-                && (weechat_strcasecmp (argv[0], "pass") == 0)
+                && (strcmp (argv[0], "password") == 0)
                 && (strcmp (weechat_config_string (relay_config_network_password),
                             argv_eol[1]) == 0))
             {
@@ -187,11 +201,11 @@ relay_client_weechat_recv_one_msg (struct t_relay_client *client,
             goto end;
         }
 
-        if (weechat_strcasecmp (argv[0], "quit") == 0)
+        if (strcmp (argv[0], "quit") == 0)
         {
             relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
         }
-        else if (weechat_strcasecmp (argv[0], "info") == 0)
+        else if (strcmp (argv[0], "info") == 0)
         {
             if (argc > 1)
             {
@@ -200,7 +214,7 @@ relay_client_weechat_recv_one_msg (struct t_relay_client *client,
                 relay_client_weechat_sendf (client, "%s", info);
             }
         }
-        else if (weechat_strcasecmp (argv[0], "infolist") == 0)
+        else if (strcmp (argv[0], "infolist") == 0)
         {
             if (argc > 1)
             {
@@ -225,6 +239,8 @@ relay_client_weechat_recv_one_msg (struct t_relay_client *client,
     }
 
 end:
+    if (data2)
+        free (data2);
     if (argv)
         weechat_string_free_split (argv);
     if (argv_eol)
