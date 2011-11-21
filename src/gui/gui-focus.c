@@ -180,6 +180,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         FOCUS_INT("_buffer_number", ((focus_info->window)->buffer)->number);
         FOCUS_STR("_buffer_plugin", plugin_get_name (((focus_info->window)->buffer)->plugin));
         FOCUS_STR("_buffer_name", ((focus_info->window)->buffer)->name);
+        FOCUS_STR("_buffer_full_name", ((focus_info->window)->buffer)->full_name);
         hashtable_map (focus_info->window->buffer->local_variables,
                        &gui_focus_buffer_localvar_map_cb, hashtable);
     }
@@ -190,6 +191,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         FOCUS_STR("_buffer_number", "-1");
         FOCUS_STR("_buffer_plugin", "");
         FOCUS_STR("_buffer_name", "");
+        FOCUS_STR("_buffer_full_name", "");
     }
 
     /* chat area */

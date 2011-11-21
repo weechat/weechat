@@ -174,7 +174,6 @@ completion_list_add_buffers_plugins_names_cb (void *data,
                                               struct t_gui_completion *completion)
 {
     struct t_gui_buffer *ptr_buffer;
-    char name[512];
 
     /* make C compiler happy */
     (void) data;
@@ -184,10 +183,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        snprintf (name, sizeof (name), "%s.%s",
-                  gui_buffer_get_plugin_name (ptr_buffer),
-                  ptr_buffer->name);
-        gui_completion_list_add (completion, name,
+        gui_completion_list_add (completion, ptr_buffer->full_name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
 

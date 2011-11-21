@@ -77,6 +77,7 @@ struct t_gui_buffer
     int layout_number;                 /* number of buffer saved in layout  */
     int layout_number_merge_order;     /* order in merge for layout         */
     char *name;                        /* buffer name                       */
+    char *full_name;                   /* plugin name + '.' + buffer name   */
     char *short_name;                  /* short buffer name                 */
     enum t_gui_buffer_type type;       /* buffer type (formatted, free, ..) */
     int notify;                        /* 0 = never                         */
@@ -205,6 +206,7 @@ extern char *gui_buffer_properties_set[];
 
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
+extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_notify_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
@@ -219,8 +221,8 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                   const char *string);
-extern int gui_buffer_full_name_match_list (const char *full_name,
-                                            int num_buffers, char **buffers);
+extern int gui_buffer_match_list_split (struct t_gui_buffer *buffer,
+                                        int num_buffers, char **buffers);
 extern int gui_buffer_match_list (struct t_gui_buffer *buffer,
                                   const char *string);
 extern void gui_buffer_set_plugin_for_upgrade (char *name,

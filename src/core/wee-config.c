@@ -1373,9 +1373,7 @@ config_weechat_notify_delete_option_cb (void *data,
 int
 config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
 {
-    const char *plugin_name;
-    char *option_name;
-    int i, value, length;
+    int i, value;
 
     if (!buffer || !notify)
         return 0;
@@ -1392,24 +1390,14 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
     if ((value < 0) && (strcmp (notify, "reset") != 0))
         return 0;
 
-    plugin_name = gui_buffer_get_plugin_name (buffer);
-    length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
-    option_name = malloc (length);
-    if (option_name)
-    {
-        snprintf (option_name, length, "%s.%s", plugin_name, buffer->name);
-
-        /* create/update option */
-        config_weechat_notify_create_option_cb (NULL,
-                                                weechat_config_file,
-                                                weechat_config_section_notify,
-                                                option_name,
-                                                (value < 0) ?
-                                                NULL : gui_buffer_notify_string[value]);
-        return 1;
-    }
-
-    return 0;
+    /* create/update option */
+    config_weechat_notify_create_option_cb (NULL,
+                                            weechat_config_file,
+                                            weechat_config_section_notify,
+                                            buffer->full_name,
+                                            (value < 0) ?
+                                            NULL : gui_buffer_notify_string[value]);
+    return 1;
 }
 
 /*

@@ -437,6 +437,7 @@ upgrade_weechat_read_cb (void *data,
                             upgrade_set_current_buffer = upgrade_current_buffer;
                         upgrade_current_buffer->plugin_name_for_upgrade =
                             strdup (infolist_string (infolist, "plugin_name"));
+                        gui_buffer_build_full_name (upgrade_current_buffer);
                         upgrade_current_buffer->short_name =
                             (infolist_string (infolist, "short_name")) ?
                             strdup (infolist_string (infolist, "short_name")) : NULL;

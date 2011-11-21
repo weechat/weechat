@@ -825,10 +825,9 @@ COMMAND_CALLBACK(buffer)
         if (gui_buffer_property_in_list (gui_buffer_properties_get_integer,
                                          argv[2]))
         {
-            gui_chat_printf (NULL, "%s%s.%s%s: (int) %s = %d",
+            gui_chat_printf (NULL, "%s%s%s: (int) %s = %d",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             gui_buffer_get_plugin_name (buffer),
-                             buffer->name,
+                             buffer->full_name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
                              gui_buffer_get_integer (buffer, argv[2]));
@@ -836,10 +835,9 @@ COMMAND_CALLBACK(buffer)
         if (gui_buffer_property_in_list (gui_buffer_properties_get_string,
                                          argv[2]))
         {
-            gui_chat_printf (NULL, "%s%s.%s%s: (str) %s = %s",
+            gui_chat_printf (NULL, "%s%s%s: (str) %s = %s",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             gui_buffer_get_plugin_name (buffer),
-                             buffer->name,
+                             buffer->full_name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
                              gui_buffer_get_string (buffer, argv[2]));
@@ -847,10 +845,9 @@ COMMAND_CALLBACK(buffer)
         if (gui_buffer_property_in_list (gui_buffer_properties_get_pointer,
                                          argv[2]))
         {
-            gui_chat_printf (NULL, "%s%s.%s%s: (ptr) %s = 0x%lx",
+            gui_chat_printf (NULL, "%s%s%s: (ptr) %s = 0x%lx",
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             gui_buffer_get_plugin_name (buffer),
-                             buffer->name,
+                             buffer->full_name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              argv[2],
                              gui_buffer_get_pointer (buffer, argv[2]));
@@ -3998,21 +3995,21 @@ command_repeat_timer_cb (void *data, int remaining_calls)
     if (!repeat_args)
         return WEECHAT_RC_ERROR;
 
-    if (repeat_args[0] && repeat_args[1] && repeat_args[2])
+    if (repeat_args[0] && repeat_args[1])
     {
         /* search buffer, fallback to core buffer if not found */
-        ptr_buffer = gui_buffer_search_by_name (repeat_args[0], repeat_args[1]);
+        ptr_buffer = gui_buffer_search_by_full_name (repeat_args[0]);
         if (!ptr_buffer)
             ptr_buffer = gui_buffer_search_main ();
 
         /* execute command */
         if (ptr_buffer)
-            input_exec_command (ptr_buffer, 1, NULL, repeat_args[2]);
+            input_exec_command (ptr_buffer, 1, NULL, repeat_args[1]);
     }
 
     if (remaining_calls == 0)
     {
-        for (i = 0; i < 3; i++)
+        for (i = 0; i < 2; i++)
         {
             if (repeat_args[i])
                 free (repeat_args[i]);
@@ -4086,7 +4083,7 @@ COMMAND_CALLBACK(repeat)
             }
             else
             {
-                repeat_args = malloc (3 * sizeof (*repeat_args));
+                repeat_args = malloc (2 * sizeof (*repeat_args));
                 if (!repeat_args)
                 {
                     gui_chat_printf (NULL,
@@ -4094,9 +4091,8 @@ COMMAND_CALLBACK(repeat)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_OK;
                 }
-                repeat_args[0] = strdup (gui_buffer_get_plugin_name (buffer));
-                repeat_args[1] = strdup (buffer->name);
-                repeat_args[2] = command;
+                repeat_args[0] = strdup (buffer->full_name);
+                repeat_args[1] = command;
                 hook_timer (NULL, interval, 0, count - 1,
                             &command_repeat_timer_cb, repeat_args);
             }
@@ -4859,19 +4855,19 @@ command_wait_timer_cb (void *data, int remaining_calls)
     if (!timer_args)
         return WEECHAT_RC_ERROR;
 
-    if (timer_args[0] && timer_args[1] && timer_args[2])
+    if (timer_args[0] && timer_args[1])
     {
         /* search buffer, fallback to core buffer if not found */
-        ptr_buffer = gui_buffer_search_by_name (timer_args[0], timer_args[1]);
+        ptr_buffer = gui_buffer_search_by_full_name (timer_args[0]);
         if (!ptr_buffer)
             ptr_buffer = gui_buffer_search_main ();
 
         /* execute command */
         if (ptr_buffer)
-            input_data (ptr_buffer, timer_args[2]);
+            input_data (ptr_buffer, timer_args[1]);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 2; i++)
     {
         if (timer_args[i])
             free (timer_args[i]);
@@ -4932,7 +4928,7 @@ COMMAND_CALLBACK(wait)
                 delay = number * factor;
 
                 /* build arguments for timer callback */
-                timer_args = malloc (3 * sizeof (*timer_args));
+                timer_args = malloc (2 * sizeof (*timer_args));
                 if (!timer_args)
                 {
                     gui_chat_printf (NULL,
@@ -4940,9 +4936,8 @@ COMMAND_CALLBACK(wait)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_OK;
                 }
-                timer_args[0] = strdup (gui_buffer_get_plugin_name (buffer));
-                timer_args[1] = strdup (buffer->name);
-                timer_args[2] = strdup (argv_eol[2]);
+                timer_args[0] = strdup (buffer->full_name);
+                timer_args[1] = strdup (argv_eol[2]);
 
                 /* schedule command, execute it after "delay" milliseconds */
                 hook_timer (NULL, delay, 0, 1,

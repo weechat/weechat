@@ -793,7 +793,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
     struct t_gui_window *ptr_win;
-    char *message_for_signal, buffer_full_name[512];
+    char *message_for_signal;
     const char *nick;
     int notify_level, *max_notify_level, lines_removed;
     time_t current_time;
@@ -880,11 +880,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     gui_line_add_to_list (buffer->own_lines, new_line);
 
     /* check if line is filtered or not */
-    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              gui_buffer_get_plugin_name (buffer),
-              buffer->name);
-    new_line->data->displayed = gui_filter_check_line (new_line,
-                                                       buffer_full_name);
+    new_line->data->displayed = gui_filter_check_line (new_line);
     if (new_line->data->displayed)
     {
         if (new_line->data->highlight)
@@ -967,7 +963,6 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 {
     struct t_gui_line *ptr_line, *new_line;
     struct t_gui_line_data *new_line_data;
-    char buffer_full_name[512];
 
     /* search if line exists for "y" */
     for (ptr_line = buffer->own_lines->first_line; ptr_line;
@@ -1044,11 +1039,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     ptr_line->data->message = (message) ? strdup (message) : strdup ("");
 
     /* check if line is filtered or not */
-    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              gui_buffer_get_plugin_name (buffer),
-              buffer->name);
-    ptr_line->data->displayed = gui_filter_check_line (ptr_line,
-                                                       buffer_full_name);
+    ptr_line->data->displayed = gui_filter_check_line (ptr_line);
     if (!ptr_line->data->displayed)
     {
         if (!buffer->own_lines->lines_hidden)

@@ -897,8 +897,7 @@ gui_key_focus_matching (struct t_gui_key *key,
                         struct t_hashtable **hashtable_focus)
 {
     int match[2], area;
-    char buffer_full_name[512];
-    const char *chat, *buffer_plugin, *buffer_name, *bar_name, *bar_item_name;
+    const char *chat, *buffer_full_name, *bar_name, *bar_item_name;
 
     for (area = 0; area < 2; area++)
     {
@@ -910,16 +909,11 @@ gui_key_focus_matching (struct t_gui_key *key,
                 break;
             case GUI_KEY_FOCUS_CHAT:
                 chat = hashtable_get (hashtable_focus[area], "_chat");
-                buffer_plugin = hashtable_get (hashtable_focus[area],
-                                               "_buffer_plugin");
-                buffer_name = hashtable_get (hashtable_focus[area],
-                                             "_buffer_name");
+                buffer_full_name = hashtable_get (hashtable_focus[area],
+                                                  "_buffer_full_name");
                 if (chat && (strcmp (chat, "1") == 0)
-                    && buffer_plugin && buffer_plugin[0]
-                    && buffer_name && buffer_name[0])
+                    && buffer_full_name && buffer_full_name[0])
                 {
-                    snprintf (buffer_full_name, sizeof (buffer_full_name),
-                              "%s.%s", buffer_plugin, buffer_name);
                     if (string_match (buffer_full_name, key->area_name[area], 0))
                         match[area] = 1;
                 }

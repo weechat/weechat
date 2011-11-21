@@ -75,7 +75,7 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
  */
 
 int
-gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
+gui_filter_check_line (struct t_gui_line *line)
 {
     struct t_gui_filter *ptr_filter;
     int rc;
@@ -93,9 +93,9 @@ gui_filter_check_line (struct t_gui_line *line, const char *buffer_full_name)
         if (ptr_filter->enabled)
         {
             /* check buffer */
-            if (gui_buffer_full_name_match_list (buffer_full_name,
-                                                 ptr_filter->num_buffers,
-                                                 ptr_filter->buffers))
+            if (gui_buffer_match_list_split (line->data->buffer,
+                                             ptr_filter->num_buffers,
+                                             ptr_filter->buffers))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
                     || (gui_line_match_tags (line,
@@ -134,20 +134,15 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
     int line_displayed, lines_hidden;
-    char buffer_full_name[512];
 
     lines_hidden = 0;
 
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
 
-    snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-              gui_buffer_get_plugin_name (buffer),
-              buffer->name);
-
     for (ptr_line = buffer->lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        line_displayed = gui_filter_check_line (ptr_line, buffer_full_name);
+        line_displayed = gui_filter_check_line (ptr_line);
 
         if (line_displayed
             && (ptr_line->data->prefix_length > buffer->lines->prefix_max_length))

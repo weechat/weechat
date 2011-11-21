@@ -86,8 +86,8 @@ char *gui_buffer_properties_get_integer[] =
   NULL
 };
 char *gui_buffer_properties_get_string[] =
-{ "plugin", "name", "short_name", "title", "input", "text_search_input",
-  "highlight_words", "highlight_regex", "highlight_tags",
+{ "plugin", "name", "full_name", "short_name", "title", "input",
+  "text_search_input", "highlight_words", "highlight_regex", "highlight_tags",
   "hotlist_max_level_nicks",
   NULL
 };
@@ -133,6 +133,28 @@ const char *
 gui_buffer_get_short_name (struct t_gui_buffer *buffer)
 {
     return (buffer->short_name) ? buffer->short_name : buffer->name;
+}
+
+/*
+ * gui_buffer_build_full_name: build "full_name" of buffer (for example after
+ *                             changing name or plugin_name_for_upgrade)
+ */
+
+void
+gui_buffer_build_full_name (struct t_gui_buffer *buffer)
+{
+    int length;
+
+    if (buffer->full_name)
+        free (buffer->full_name);
+    length = strlen (gui_buffer_get_plugin_name (buffer)) + 1 +
+        strlen (buffer->name) + 1;
+    buffer->full_name = malloc (length);
+    if (buffer->full_name)
+    {
+        snprintf (buffer->full_name, length, "%s.%s",
+                  gui_buffer_get_plugin_name (buffer), buffer->name);
+    }
 }
 
 /*
@@ -200,17 +222,15 @@ gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
 int
 gui_buffer_notify_get (struct t_gui_buffer *buffer)
 {
-    const char *plugin_name;
     char *option_name, *ptr_end;
     int length;
     struct t_config_option *ptr_option;
 
-    plugin_name = gui_buffer_get_plugin_name (buffer);
-    length = strlen (plugin_name) + 1 + strlen (buffer->name) + 1;
+    length = strlen (buffer->full_name) + 1;
     option_name = malloc (length);
     if (option_name)
     {
-        snprintf (option_name, length, "%s.%s", plugin_name, buffer->name);
+        snprintf (option_name, length, "%s", buffer->full_name);
 
         ptr_end = option_name + strlen (option_name);
         while (ptr_end >= option_name)
@@ -261,10 +281,9 @@ gui_buffer_notify_set (struct t_gui_buffer *buffer)
     {
         buffer->notify = new_notify;
         gui_chat_printf (NULL,
-                         _("Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""),
+                         _("Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         gui_buffer_get_plugin_name (buffer),
-                         buffer->name,
+                         buffer->full_name,
                          GUI_COLOR(GUI_COLOR_CHAT),
                          GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                          gui_buffer_notify_string[old_notify],
@@ -445,6 +464,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                       &(new_buffer->layout_number),
                                       &(new_buffer->layout_number_merge_order));
         new_buffer->name = strdup (name);
+        new_buffer->full_name = NULL;
+        gui_buffer_build_full_name (new_buffer);
         new_buffer->short_name = NULL;
         new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
@@ -681,13 +702,13 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_buffer_full_name_match_list: return 1 if full name of buffer matches
- *                                  list of buffers
+ * gui_buffer_match_list_split: return 1 if full name of buffer matches
+ *                              (split) list of buffers
  */
 
 int
-gui_buffer_full_name_match_list (const char *full_name,
-                                 int num_buffers, char **buffers)
+gui_buffer_match_list_split (struct t_gui_buffer *buffer,
+                             int num_buffers, char **buffers)
 {
     int i, match;
     char *ptr_name;
@@ -699,7 +720,7 @@ gui_buffer_full_name_match_list (const char *full_name,
         ptr_name = buffers[i];
         if (ptr_name[0] == '!')
             ptr_name++;
-        if (string_match (full_name, ptr_name, 0))
+        if (string_match (buffer->full_name, ptr_name, 0))
         {
             if (buffers[i][0] == '!')
                 return 0;
@@ -727,7 +748,7 @@ gui_buffer_full_name_match_list (const char *full_name,
 int
 gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
 {
-    char **buffers, buffer_full_name[512];
+    char **buffers;
     int num_buffers, match;
 
     if (!string || !string[0])
@@ -738,11 +759,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
     buffers = string_split (string, ",", 0, 0, &num_buffers);
     if (buffers)
     {
-        snprintf (buffer_full_name, sizeof (buffer_full_name), "%s.%s",
-                  gui_buffer_get_plugin_name (buffer),
-                  buffer->name);
-        match = gui_buffer_full_name_match_list (buffer_full_name,
-                                                 num_buffers, buffers);
+        match = gui_buffer_match_list_split (buffer, num_buffers, buffers);
         string_free_split (buffers);
     }
 
@@ -769,6 +786,8 @@ gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
             ptr_buffer->plugin_name_for_upgrade = NULL;
 
             ptr_buffer->plugin = plugin;
+
+            gui_buffer_build_full_name (ptr_buffer);
         }
     }
 }
@@ -879,6 +898,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return gui_buffer_get_plugin_name (buffer);
         else if (string_strcasecmp (property, "name") == 0)
             return buffer->name;
+        else if (string_strcasecmp (property, "full_name") == 0)
+            return buffer->full_name;
         else if (string_strcasecmp (property, "short_name") == 0)
             return gui_buffer_get_short_name (buffer);
         else if (string_strcasecmp (property, "title") == 0)
@@ -948,6 +969,7 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         if (buffer->name)
             free (buffer->name);
         buffer->name = strdup (name);
+        gui_buffer_build_full_name (buffer);
 
         gui_buffer_local_var_add (buffer, "name", name);
 
@@ -1797,23 +1819,19 @@ struct t_gui_buffer *
 gui_buffer_search_by_full_name (const char *full_name)
 {
     struct t_gui_buffer *ptr_buffer;
-    char *name, *pos;
 
-    ptr_buffer = NULL;
-
-    name = strdup (full_name);
-    if (name)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        pos = strchr (name, '.');
-        if (pos)
+        if (ptr_buffer->full_name
+            && (strcmp (ptr_buffer->full_name, full_name) == 0))
         {
-            pos[0] = '\0';
-            ptr_buffer = gui_buffer_search_by_name (name, pos + 1);
+            return ptr_buffer;
         }
-        free (name);
     }
 
-    return ptr_buffer;
+    /* buffer not found */
+    return NULL;
 }
 
 /*
@@ -3071,6 +3089,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number_merge_order, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, name, STRING, NULL);
+        HDATA_VAR(struct t_gui_buffer, full_name, STRING, NULL);
         HDATA_VAR(struct t_gui_buffer, short_name, STRING, NULL);
         HDATA_VAR(struct t_gui_buffer, type, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, notify, INTEGER, NULL);
@@ -3219,6 +3238,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "layout_number_merge_order", buffer->layout_number_merge_order))
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "full_name", buffer->full_name))
         return 0;
     if (!infolist_new_var_string (ptr_item, "short_name", gui_buffer_get_short_name (buffer)))
         return 0;
@@ -3412,6 +3433,7 @@ gui_buffer_print_log ()
         log_printf ("  layout_number . . . . . : %d",    ptr_buffer->layout_number);
         log_printf ("  layout_number_merge_order: %d",    ptr_buffer->layout_number_merge_order);
         log_printf ("  name. . . . . . . . . . : '%s'",  ptr_buffer->name);
+        log_printf ("  full_name . . . . . . . : '%s'",  ptr_buffer->full_name);
         log_printf ("  short_name. . . . . . . : '%s'",  ptr_buffer->short_name);
         log_printf ("  type. . . . . . . . . . : %d",    ptr_buffer->type);
         log_printf ("  notify. . . . . . . . . : %d",    ptr_buffer->notify);

@@ -53,8 +53,7 @@ extern int gui_filters_enabled;
 
 /* filter functions */
 
-extern int gui_filter_check_line (struct t_gui_line *line,
-                                  const char *buffer_full_name);
+extern int gui_filter_check_line (struct t_gui_line *line);
 extern void gui_filter_all_buffers ();
 extern void gui_filter_global_enable ();
 extern void gui_filter_global_disable ();

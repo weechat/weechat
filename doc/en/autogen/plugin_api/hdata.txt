@@ -228,6 +228,7 @@
   'layout_number' (integer) +
   'layout_number_merge_order' (integer) +
   'name' (string) +
+  'full_name' (string) +
   'short_name' (string) +
   'type' (integer) +
   'notify' (integer) +

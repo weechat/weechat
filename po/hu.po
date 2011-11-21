@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-19 11:35+0100\n"
+"POT-Creation-Date: 2011-11-21 12:36+0100\n"
 "PO-Revision-Date: 2011-10-22 12:21+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2984,7 +2984,7 @@ msgid "Act: "
 msgstr "Akt: "
 
 #, fuzzy, c-format
-msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format

@@ -8536,6 +8536,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _buffer_number             | number of buffer            | "1" ... "n"                                      | "-1"
 | _buffer_plugin             | plugin name of buffer       | "core", "irc", ...                               | ""
 | _buffer_name               | name of buffer              | "weechat", "freenode.#weechat", ...              | ""
+| _buffer_full_name          | full name of buffer         | "core.weechat", "irc.freenode.#weechat", ...     | ""
 | _buffer_localvar_XXX ^(2)^ | local variables of buffer   | any value                                        | not set
 | _chat                      | chat area indicator         | "0" or "1"                                       | "0"
 | _chat_line_x               | column in line ^(3)^        | "0" ... "n"                                      | "-1"
@@ -9144,6 +9145,7 @@ Arguments:
 ** 'plugin': name of plugin which created this buffer ("core" for WeeChat main
    buffer)
 ** 'name': name of buffer
+** 'full_name': full name of buffer ("plugin.name") (_new in version 0.3.7_)
 ** 'short_name': short name of buffer
 ** 'title': title of buffer
 ** 'input': input text

@@ -400,7 +400,6 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_hotlist *ptr_hotlist;
     struct t_gui_key *ptr_key;
     struct t_weechat_plugin *ptr_plugin;
-    char buffer_full_name[1024];
     int context, number;
     char *error;
 
@@ -563,12 +562,8 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
-                    snprintf (buffer_full_name, sizeof (buffer_full_name),
-                              "%s.%s",
-                              gui_buffer_get_plugin_name (ptr_buffer),
-                              ptr_buffer->name);
                     if (!arguments || !arguments[0]
-                        || string_match (buffer_full_name, arguments, 0))
+                        || string_match (ptr_buffer->full_name, arguments, 0))
                     {
                         if (!gui_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
                         {

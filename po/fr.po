@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-19 11:35+0100\n"
-"PO-Revision-Date: 2011-11-19 11:25+0100\n"
+"POT-Creation-Date: 2011-11-21 12:36+0100\n"
+"PO-Revision-Date: 2011-11-21 12:36+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3510,8 +3510,8 @@ msgid "Act: "
 msgstr "Act: "
 
 #, c-format
-msgid "Notify changed for \"%s%s.%s%s\": \"%s%s%s\" to \"%s%s%s\""
-msgstr "Notification changée pour \"%s%s.%s%s\": \"%s%s%s\" à \"%s%s%s\""
+msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgstr "Notification changée pour \"%s%s%s\": \"%s%s%s\" à \"%s%s%s\""
 
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"

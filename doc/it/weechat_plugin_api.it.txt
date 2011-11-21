@@ -8596,6 +8596,8 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _buffer_number             | numero del buffer           | "1" ... "n"                                      | "-1"
 | _buffer_plugin             | nome plugin del buffer      | "core", "irc", ...                               | ""
 | _buffer_name               | nome del buffer             | "weechat", "freenode.#weechat", ...              | ""
+// TRANSLATION MISSING
+| _buffer_full_name          | full name of buffer         | "core.weechat", "irc.freenode.#weechat", ...     | ""
 | _buffer_localvar_XXX ^(2)^ | variabili locali del buffer | qualsiasi valore                                 | non impostato
 | _chat                      | indicatore area di chat     | "0" o  "1"                                       | "0"
 | _chat_line_x               | colonna nella riga ^(3)^    | "0" ... "n"                                      | "-1"
@@ -9208,6 +9210,8 @@ Argomenti:
 ** 'plugin': nome del plugin che ha creato questo buffer ("core"
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
+// TRANSLATION MISSING
+** 'full_name': full name of buffer ("plugin.name") (_novità nella versione 0.3.7_)
 ** 'short_name': nome breve del buffer
 ** 'title': titolo del buffer
 ** 'input': testo in ingresso
