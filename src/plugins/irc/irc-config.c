@@ -1022,7 +1022,13 @@ irc_config_reload (void *data, struct t_config_file *config_file)
     {
         next_server = ptr_server->next_server;
 
-        if (!ptr_server->reloaded_from_config)
+        /*
+         * if server existed before reload, but was not read in irc.conf:
+         * - if connected to server: display a warning, keep server in memory
+         * - if not connected: delete server
+         */
+        if (ptr_server->reloading_from_config
+            && !ptr_server->reloaded_from_config)
         {
             if (ptr_server->is_connected)
             {
