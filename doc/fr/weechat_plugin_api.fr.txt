@@ -12297,6 +12297,7 @@ Paramètres :
 * 'name' : nom de la variable
 * 'offset' : position (offset) de la variable dans la structure
 * 'type' : type de la variable, un parmi ceux-ci :
+** WEECHAT_HDATA_CHAR
 ** WEECHAT_HDATA_INTEGER
 ** WEECHAT_HDATA_LONG
 ** WEECHAT_HDATA_STRING
@@ -12512,6 +12513,9 @@ Exemple en C :
 int type = weechat_hdata_get_var_type (hdata, "name");
 switch (type)
 {
+    case WEECHAT_HDATA_CHAR:
+        /* ... */
+        break;
     case WEECHAT_HDATA_INTEGER:
         /* ... */
         break;
@@ -12795,6 +12799,49 @@ buffer = weechat.hdata_move(hdata, buffer, 2)
 # se déplacer au tampon précédent
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
+----------------------------------------
+
+weechat_hdata_char
+^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme de caractère.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "char")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme de caractère
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+value = weechat.hdata_char(hdata, pointer, name)
+
+# exemple
+weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----------------------------------------
 
 weechat_hdata_integer

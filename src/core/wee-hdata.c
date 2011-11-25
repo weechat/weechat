@@ -38,8 +38,8 @@
 
 struct t_hashtable *weechat_hdata = NULL;
 
-char *hdata_type_string[6] =
-{ "other", "integer", "long", "string", "pointer", "time" };
+char *hdata_type_string[7] =
+{ "other", "char", "integer", "long", "string", "pointer", "time" };
 
 
 /*
@@ -259,6 +259,25 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
     }
 
     return NULL;
+}
+
+/*
+ * hdata_char: get char value of a variable in structure using hdata
+ */
+
+char
+hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
+{
+    int offset;
+
+    if (hdata && pointer)
+    {
+        offset = hdata_get_var_offset (hdata, name);
+        if (offset >= 0)
+            return *((char *)(pointer + offset));
+    }
+
+    return '\0';
 }
 
 /*

@@ -5352,6 +5352,32 @@ weechat_lua_api_hdata_move (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hdata_char: get char value of a variable in structure using
+ *                             hdata
+ */
+
+static int
+weechat_lua_api_hdata_char (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    int value;
+
+    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+
+    value = (int)weechat_hdata_char (script_str2ptr (hdata),
+                                     script_str2ptr (pointer),
+                                     name);
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_hdata_integer: get integer value of a variable in structure
  *                                using hdata
  */
@@ -6205,6 +6231,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hdata_get_var_hdata", &weechat_lua_api_hdata_get_var_hdata },
     { "hdata_get_list", &weechat_lua_api_hdata_get_list },
     { "hdata_move", &weechat_lua_api_hdata_move },
+    { "hdata_char", &weechat_lua_api_hdata_char },
     { "hdata_integer", &weechat_lua_api_hdata_integer },
     { "hdata_long", &weechat_lua_api_hdata_long },
     { "hdata_string", &weechat_lua_api_hdata_string },

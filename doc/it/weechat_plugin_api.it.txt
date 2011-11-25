@@ -12205,6 +12205,7 @@ Argomenti:
 * 'name': nome della variabile
 * 'offset': offset della variabile nella struttura
 * 'type': tipo variabile, una di:
+** WEECHAT_HDATA_CHAR
 ** WEECHAT_HDATA_INTEGER
 ** WEECHAT_HDATA_LONG
 ** WEECHAT_HDATA_STRING
@@ -12419,6 +12420,9 @@ Esempio in C:
 int type = weechat_hdata_get_var_type (hdata, "name");
 switch (type)
 {
+    case WEECHAT_HDATA_CHAR:
+        /* ... */
+        break;
     case WEECHAT_HDATA_INTEGER:
         /* ... */
         break;
@@ -12702,6 +12706,49 @@ buffer = weechat.hdata_move(hdata, buffer, 2)
 # passa al buffer precedente
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
+----------------------------------------
+
+weechat_hdata_char
+^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.7._
+
+Restituisce il valore di una variabile char in una struttura dati usando hdata.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+char weechat_hdata_char (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Argomenti:
+
+* 'hdata': puntatore hdata
+* 'pointer': puntatore all'oggetto di WeeChat/plugin
+* 'name': nome della variabile (deve essere di tipo "char")
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* char value of variable
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter"));
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+value = weechat.hdata_char(hdata, pointer, name)
+
+# esempio
+weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----------------------------------------
 
 weechat_hdata_integer

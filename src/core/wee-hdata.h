@@ -62,6 +62,8 @@ extern void *hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer,
                                       int offset);
 extern void *hdata_get_list (struct t_hdata *hdata, const char *name);
 extern void *hdata_move (struct t_hdata *hdata, void *pointer, int count);
+extern char hdata_char (struct t_hdata *hdata, void *pointer,
+                        const char *name);
 extern int hdata_integer (struct t_hdata *hdata, void *pointer,
                           const char *name);
 extern long hdata_long (struct t_hdata *hdata, void *pointer,

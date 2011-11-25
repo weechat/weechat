@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20111112-01"
+#define WEECHAT_PLUGIN_API_VERSION "20111125-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -105,11 +105,12 @@ struct timeval;
 
 /* types for hdata */
 #define WEECHAT_HDATA_OTHER                         0
-#define WEECHAT_HDATA_INTEGER                       1
-#define WEECHAT_HDATA_LONG                          2
-#define WEECHAT_HDATA_STRING                        3
-#define WEECHAT_HDATA_POINTER                       4
-#define WEECHAT_HDATA_TIME                          5
+#define WEECHAT_HDATA_CHAR                          1
+#define WEECHAT_HDATA_INTEGER                       2
+#define WEECHAT_HDATA_LONG                          3
+#define WEECHAT_HDATA_STRING                        4
+#define WEECHAT_HDATA_POINTER                       5
+#define WEECHAT_HDATA_TIME                          6
 
 /* buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
@@ -824,6 +825,8 @@ struct t_weechat_plugin
                                       int offset);
     void *(*hdata_get_list) (struct t_hdata *hdata, const char *name);
     void *(*hdata_move) (struct t_hdata *hdata, void *pointer, int count);
+    char (*hdata_char) (struct t_hdata *hdata, void *pointer,
+                        const char *name);
     int (*hdata_integer) (struct t_hdata *hdata, void *pointer,
                           const char *name);
     long (*hdata_long) (struct t_hdata *hdata, void *pointer,
@@ -1567,6 +1570,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hdata_get_list(__hdata, __name)
 #define weechat_hdata_move(__hdata, __pointer, __count)                 \
     weechat_plugin->hdata_move(__hdata, __pointer, __count)
+#define weechat_hdata_char(__hdata, __pointer, __name)                  \
+    weechat_plugin->hdata_char(__hdata, __pointer, __name)
 #define weechat_hdata_integer(__hdata, __pointer, __name)               \
     weechat_plugin->hdata_integer(__hdata, __pointer, __name)
 #define weechat_hdata_long(__hdata, __pointer, __name)                  \

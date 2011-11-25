@@ -5090,6 +5090,31 @@ XS (XS_weechat_api_hdata_move)
 }
 
 /*
+ * weechat::hdata_char: get char value of a variable in structure using hdata
+ */
+
+XS (XS_weechat_api_hdata_char)
+{
+    char *hdata, *pointer, *name;
+    int value;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+
+    value = (int)weechat_hdata_char (script_str2ptr (hdata),
+                                     script_str2ptr (pointer),
+                                     name);
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat::hdata_integer: get integer value of a variable in structure using
  *                         hdata
  */
@@ -5562,6 +5587,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hdata_get_var_hdata", XS_weechat_api_hdata_get_var_hdata, "weechat");
     newXS ("weechat::hdata_get_list", XS_weechat_api_hdata_get_list, "weechat");
     newXS ("weechat::hdata_move", XS_weechat_api_hdata_move, "weechat");
+    newXS ("weechat::hdata_char", XS_weechat_api_hdata_char, "weechat");
     newXS ("weechat::hdata_integer", XS_weechat_api_hdata_integer, "weechat");
     newXS ("weechat::hdata_long", XS_weechat_api_hdata_long, "weechat");
     newXS ("weechat::hdata_string", XS_weechat_api_hdata_string, "weechat");
