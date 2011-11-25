@@ -1237,9 +1237,9 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_line_data, str_time, STRING, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_array, POINTER, NULL);
-        HDATA_VAR(struct t_gui_line_data, displayed, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_line_data, highlight, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_line_data, refresh_needed, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_line_data, displayed, CHAR, NULL);
+        HDATA_VAR(struct t_gui_line_data, highlight, CHAR, NULL);
+        HDATA_VAR(struct t_gui_line_data, refresh_needed, CHAR, NULL);
         HDATA_VAR(struct t_gui_line_data, prefix, STRING, NULL);
         HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER, NULL);
         HDATA_VAR(struct t_gui_line_data, message, STRING, NULL);

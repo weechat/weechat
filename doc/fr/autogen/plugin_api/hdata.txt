@@ -445,9 +445,9 @@
   'str_time' (string) +
   'tags_count' (integer) +
   'tags_array' (pointer) +
-  'displayed' (integer) +
-  'highlight' (integer) +
-  'refresh_needed' (integer) +
+  'displayed' (char) +
+  'highlight' (char) +
+  'refresh_needed' (char) +
   'prefix' (string) +
   'prefix_length' (integer) +
   'message' (string) |
