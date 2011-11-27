@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-11-25
+v0.3.7-dev, 2011-11-27
 
 
 Version 0.3.7 (under dev!)
@@ -31,6 +31,8 @@ Version 0.3.7 (under dev!)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
 * api: add new functions strcasecmp_range, strncasecmp_range and hdata_char
+* irc: fix crash when signon time in message 317 (whois, idle) is invalid
+  (too large) (bug #34905)
 * irc: do not delete servers added in irc.conf on /reload (bug #34872)
 * irc: remove autorejoin on channels when disconnected from server (bug #32207)
 * irc: display messages kick/kill/mode/topic even if nick is ignored

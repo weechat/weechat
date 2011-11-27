@@ -117,8 +117,15 @@ util_get_time_string (const time_t *date)
     static char text_time[128];
 
     local_time = localtime (date);
-    strftime (text_time, sizeof (text_time),
-              CONFIG_STRING(config_look_time_format), local_time);
+    if (local_time)
+    {
+        strftime (text_time, sizeof (text_time),
+                  CONFIG_STRING(config_look_time_format), local_time);
+    }
+    else
+    {
+        text_time[0] = '\0';
+    }
 
     return text_time;
 }
