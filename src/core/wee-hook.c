@@ -3752,16 +3752,24 @@ hook_print_log ()
                         log_printf ("    interval. . . . . . . : %ld",   HOOK_TIMER(ptr_hook, interval));
                         log_printf ("    align_second. . . . . : %d",    HOOK_TIMER(ptr_hook, align_second));
                         log_printf ("    remaining_calls . . . : %d",    HOOK_TIMER(ptr_hook, remaining_calls));
+                        text_time[0] = '\0';
                         local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
-                        strftime (text_time, sizeof (text_time),
-                                  "%d/%m/%Y %H:%M:%S", local_time);
+                        if (local_time)
+                        {
+                            strftime (text_time, sizeof (text_time),
+                                      "%d/%m/%Y %H:%M:%S", local_time);
+                        }
                         log_printf ("    last_exec.tv_sec. . . : %ld (%s)",
                                     HOOK_TIMER(ptr_hook, last_exec.tv_sec),
                                     text_time);
                         log_printf ("    last_exec.tv_usec . . : %ld",   HOOK_TIMER(ptr_hook, last_exec.tv_usec));
+                        text_time[0] = '\0';
                         local_time = localtime (&HOOK_TIMER(ptr_hook, next_exec).tv_sec);
-                        strftime (text_time, sizeof (text_time),
-                                  "%d/%m/%Y %H:%M:%S", local_time);
+                        if (local_time)
+                        {
+                            strftime (text_time, sizeof (text_time),
+                                      "%d/%m/%Y %H:%M:%S", local_time);
+                        }
                         log_printf ("    next_exec.tv_sec. . . : %ld (%s)",
                                     HOOK_TIMER(ptr_hook, next_exec.tv_sec),
                                     text_time);

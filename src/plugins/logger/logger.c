@@ -564,9 +564,9 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         if (weechat_config_boolean (logger_config_file_info_lines)
             && logger_buffer->write_start_info_line)
         {
+            buf_time[0] = '\0';
             seconds = time (NULL);
             date_tmp = localtime (&seconds);
-            buf_time[0] = '\0';
             if (date_tmp)
             {
                 strftime (buf_time, sizeof (buf_time) - 1,
@@ -624,9 +624,9 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
     {
         if (write_info_line && weechat_config_boolean (logger_config_file_info_lines))
         {
+            buf_time[0] = '\0';
             seconds = time (NULL);
             date_tmp = localtime (&seconds);
-            buf_time[0] = '\0';
             if (date_tmp)
             {
                 strftime (buf_time, sizeof (buf_time) - 1,
@@ -1180,8 +1180,8 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
             && (date > 0)
             && (line_log_level <= ptr_logger_buffer->log_level))
         {
-            date_tmp = localtime (&date);
             buf_time[0] = '\0';
+            date_tmp = localtime (&date);
             if (date_tmp)
             {
                 strftime (buf_time, sizeof (buf_time) - 1,

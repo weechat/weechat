@@ -337,6 +337,8 @@ gui_chat_get_time_string (time_t date)
         return NULL;
 
     local_time = localtime (&date);
+    if (!local_time)
+        return NULL;
     if (strftime (text_time, sizeof (text_time),
                   CONFIG_STRING(config_look_buffer_time_format),
                   local_time) == 0)

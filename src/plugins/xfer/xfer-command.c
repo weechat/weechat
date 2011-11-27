@@ -129,9 +129,13 @@ xfer_command_xfer_list (int full)
             }
             else
             {
+                date[0] = '\0';
                 date_tmp = localtime (&(ptr_xfer->start_time));
-                strftime (date, sizeof (date),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                if (date_tmp)
+                {
+                    strftime (date, sizeof (date),
+                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                }
                 weechat_printf (NULL,
                                 /* TRANSLATORS: "%s" after "started on" is a date */
                                 _("%3d. %s, chat with %s (local nick: %s), "
@@ -165,9 +169,13 @@ xfer_command_xfer_list (int full)
                                     (ptr_xfer->address >> 8) & 0xff,
                                     ptr_xfer->address & 0xff,
                                     ptr_xfer->port);
+                    date[0] = '\0';
                     date_tmp = localtime (&(ptr_xfer->start_transfer));
-                    strftime (date, sizeof (date),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                    if (date_tmp)
+                    {
+                        strftime (date, sizeof (date),
+                                  "%a, %d %b %Y %H:%M:%S", date_tmp);
+                    }
                     weechat_printf (NULL,
                                     /* TRANSLATORS: "%s" after "started on" is a date */
                                     _("     fast_send: %s, blocksize: %d, "

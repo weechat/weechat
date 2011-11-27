@@ -4922,6 +4922,7 @@ XS (XS_weechat_api_infolist_pointer)
 XS (XS_weechat_api_infolist_time)
 {
     time_t time;
+    struct tm *date_tmp;
     char timebuffer[64], *result, *infolist, *variable;
     dXSARGS;
 
@@ -4931,8 +4932,12 @@ XS (XS_weechat_api_infolist_time)
 
     infolist = SvPV_nolen (ST (0));
     variable = SvPV_nolen (ST (1));
+
+    timebuffer[0] = '\0';
     time = weechat_infolist_time (script_str2ptr (infolist), variable);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -5224,6 +5229,7 @@ XS (XS_weechat_api_hdata_pointer)
 XS (XS_weechat_api_hdata_time)
 {
     time_t time;
+    struct tm *date_tmp;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     dXSARGS;
 
@@ -5235,10 +5241,13 @@ XS (XS_weechat_api_hdata_time)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
+    timebuffer[0] = '\0';
     time = weechat_hdata_time (script_str2ptr (hdata),
                                script_str2ptr (pointer),
                                name);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);

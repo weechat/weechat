@@ -5857,6 +5857,7 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
 {
     char *c_infolist, *c_variable, timebuffer[64], *result;
     time_t time;
+    struct tm *date_tmp;
     VALUE return_value;
 
     API_FUNC(1, "infolist_time", API_RETURN_EMPTY);
@@ -5869,8 +5870,11 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     c_infolist = StringValuePtr (infolist);
     c_variable = StringValuePtr (variable);
 
+    timebuffer[0] = '\0';
     time = weechat_infolist_time (script_str2ptr (c_infolist), c_variable);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -6221,6 +6225,7 @@ weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
 {
     char *c_hdata, *c_pointer, *c_name, timebuffer[64], *result;
     time_t time;
+    struct tm *date_tmp;
     VALUE return_value;
 
     API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
@@ -6235,10 +6240,13 @@ weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
     c_pointer = StringValuePtr (pointer);
     c_name = StringValuePtr (name);
 
+    timebuffer[0] = '\0';
     time = weechat_hdata_time (script_str2ptr (c_hdata),
                                script_str2ptr (c_pointer),
                                c_name);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);

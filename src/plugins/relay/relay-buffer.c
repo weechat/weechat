@@ -95,15 +95,22 @@ relay_buffer_refresh (const char *hotlist)
                 }
             }
 
+            date_start[0] = '\0';
             date_tmp = localtime (&(ptr_client->start_time));
-            strftime (date_start, sizeof (date_start),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (date_tmp)
+            {
+                strftime (date_start, sizeof (date_start),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+            }
             date_end[0] = '\0';
             if (ptr_client->end_time > 0)
             {
                 date_tmp = localtime (&(ptr_client->end_time));
-                strftime (date_end, sizeof (date_end),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                if (date_tmp)
+                {
+                    strftime (date_end, sizeof (date_end),
+                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                }
             }
 
             /* first line with status and start time */

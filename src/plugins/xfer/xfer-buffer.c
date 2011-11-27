@@ -122,9 +122,13 @@ xfer_buffer_refresh (const char *hotlist)
             if (XFER_IS_CHAT(ptr_xfer->type))
             {
                 /* display second line for chat with status and date */
+                date[0] = '\0';
                 date_tmp = localtime (&(ptr_xfer->start_time));
-                strftime (date, sizeof (date),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                if (date_tmp)
+                {
+                    strftime (date, sizeof (date),
+                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                }
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%s",
                                   weechat_color(str_color),

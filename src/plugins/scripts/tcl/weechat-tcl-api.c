@@ -5607,6 +5607,7 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     time_t time;
+    struct tm *date_tmp;
     char timebuffer[64], *result, *infolist, *variable;
     int i;
 
@@ -5616,9 +5617,12 @@ weechat_tcl_api_infolist_time (ClientData clientData, Tcl_Interp *interp,
 
     infolist = Tcl_GetStringFromObj (objv[1], &i);
     variable = Tcl_GetStringFromObj (objv[2], &i);
-    time = weechat_infolist_time (script_str2ptr (infolist), variable);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
 
+    timebuffer[0] = '\0';
+    time = weechat_infolist_time (script_str2ptr (infolist), variable);
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -5921,6 +5925,7 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     time_t time;
+    struct tm *date_tmp;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     int i;
 
@@ -5932,11 +5937,13 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
     pointer = Tcl_GetStringFromObj (objv[2], &i);
     name = Tcl_GetStringFromObj (objv[3], &i);
 
+    timebuffer[0] = '\0';
     time = weechat_hdata_time (script_str2ptr (hdata),
                                script_str2ptr (pointer),
                                name);
-    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
-
+    date_tmp = localtime (&time);
+    if (date_tmp)
+        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);

@@ -54,13 +54,21 @@ relay_command_client_list (int full)
         for (ptr_client = relay_clients; ptr_client;
              ptr_client = ptr_client->next_client)
         {
+            date_start[0] = '\0';
             date_tmp = localtime (&(ptr_client->start_time));
-            strftime (date_start, sizeof (date_start),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (date_tmp)
+            {
+                strftime (date_start, sizeof (date_start),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+            }
 
+            date_activity[0] = '\0';
             date_tmp = localtime (&(ptr_client->last_activity));
-            strftime (date_activity, sizeof (date_activity),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (date_tmp)
+            {
+                strftime (date_activity, sizeof (date_activity),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+            }
 
             if (full)
             {
@@ -121,9 +129,13 @@ relay_command_server_list ()
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
+            date_start[0] = '\0';
             date_tmp = localtime (&(ptr_server->start_time));
-            strftime (date_start, sizeof (date_start),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (date_tmp)
+            {
+                strftime (date_start, sizeof (date_start),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+            }
 
             weechat_printf (NULL,
                             _("  port %s%d%s, relay: %s%s.%s%s, started on: %s"),
