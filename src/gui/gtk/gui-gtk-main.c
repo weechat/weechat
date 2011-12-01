@@ -143,7 +143,7 @@ gui_main_init ()
     gtk_widget_show (gui_gtk_scrolledwindow_chat);
     gtk_paned_pack1 (GTK_PANED (gui_gtk_hpaned1), gui_gtk_scrolledwindow_chat,
                      FALSE, TRUE);
-    //gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_chat, TRUE, TRUE, 0);
+    /*gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_chat, TRUE, TRUE, 0);*/
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (gui_gtk_scrolledwindow_chat),
                                     GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
     gtk_widget_modify_text (gui_gtk_scrolledwindow_chat, GTK_STATE_NORMAL, &color_fg);
@@ -153,7 +153,7 @@ gui_main_init ()
     gtk_widget_show (gui_gtk_scrolledwindow_nick);
     gtk_paned_pack2 (GTK_PANED (gui_gtk_hpaned1), gui_gtk_scrolledwindow_nick,
                      FALSE, TRUE);
-    //gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_nick, TRUE, TRUE, 0);
+    /*gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_nick, TRUE, TRUE, 0);*/
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (gui_gtk_scrolledwindow_nick),
                                     GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
     gtk_widget_modify_text (gui_gtk_scrolledwindow_nick, GTK_STATE_NORMAL, &color_fg);
