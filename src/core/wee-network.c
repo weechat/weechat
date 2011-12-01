@@ -958,7 +958,6 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                         hook_fd (hook_connect->plugin,
                                  HOOK_CONNECT(hook_connect, sock),
                                  (!direction ? 1 : 0), (direction  ? 1 : 0), 0,
-                                 //1, 1, 0,
                                  &network_connect_gnutls_handshake_fd_cb,
                                  hook_connect);
                     HOOK_CONNECT(hook_connect, handshake_hook_timer) =
