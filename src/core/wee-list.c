@@ -244,6 +244,7 @@ weelist_casesearch_pos (struct t_weelist *weelist, const char *data)
     if (!weelist || !data)
         return -1;
 
+    i = 0;
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
