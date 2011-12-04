@@ -345,8 +345,10 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
 
     new_hotlist->priority = priority;
     if (creation_time)
+    {
         memcpy (&(new_hotlist->creation_time),
-                creation_time, sizeof (creation_time));
+                creation_time, sizeof (*creation_time));
+    }
     else
         gettimeofday (&(new_hotlist->creation_time), NULL);
     new_hotlist->buffer = buffer;
