@@ -10304,6 +10304,58 @@ weechat.nicklist_remove_all(buffer)
 weechat.nicklist_remove_all(my_buffer)
 ----------------------------------------
 
+weechat_nicklist_get_next_item
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Retourne le prochain groupe ou pseudo de la liste des pseudos (utilisé
+principalement pour afficher la liste des pseudos).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
+                                 struct t_gui_nick_group **group,
+                                 struct t_gui_nick **nick);
+----------------------------------------
+
+Paramètres :
+
+* 'buffer' : pointeur vers le tampon
+* 'group' : pointeur vers un pointeur sur le groupe
+* 'nick' : pointeur vers un pointeur sur le pseudo
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *ptr_group;
+struct t_gui_nick *ptr_nick;
+
+ptr_group = NULL;
+ptr_nick = NULL;
+gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+while (ptr_group || ptr_nick)
+{
+    if (ptr_nick)
+    {
+        /* pseudo */
+        /* ... */
+    }
+    else
+    {
+        /* groupe */
+        /* ... */
+    }
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+}
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_nicklist_group_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

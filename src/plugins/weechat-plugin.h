@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20111125-01"
+#define WEECHAT_PLUGIN_API_VERSION "20111206-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -694,6 +694,9 @@ struct t_weechat_plugin
     void (*nicklist_remove_nick) (struct t_gui_buffer *buffer,
                                   struct t_gui_nick *nick);
     void (*nicklist_remove_all) (struct t_gui_buffer *buffer);
+    void (*nicklist_get_next_item) (struct t_gui_buffer *buffer,
+                                    struct t_gui_nick_group **group,
+                                    struct t_gui_nick **nick);
     int (*nicklist_group_get_integer) (struct t_gui_buffer *buffer,
                                        struct t_gui_nick_group *group,
                                        const char *property);
@@ -1416,6 +1419,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->nicklist_remove_nick(__buffer, __nick)
 #define weechat_nicklist_remove_all(__buffer)                           \
     weechat_plugin->nicklist_remove_all(__buffer)
+#define weechat_nicklist_get_next_item(__buffer, __group, __nick)       \
+    weechat_plugin->nicklist_get_next_item(__buffer, __group, __nick)
 #define weechat_nicklist_group_get_integer(__buffer, __group,           \
                                            __property)                  \
     weechat_plugin->nicklist_group_get_integer(__buffer, __group,       \

@@ -10129,6 +10129,57 @@ weechat.nicklist_remove_all(buffer)
 weechat.nicklist_remove_all(my_buffer)
 ----------------------------------------
 
+weechat_nicklist_get_next_item
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.7._
+
+Get next group or nick from nicklist (mainly used to display nicklist).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
+                                 struct t_gui_nick_group **group,
+                                 struct t_gui_nick **nick);
+----------------------------------------
+
+Arguments:
+
+* 'buffer': buffer pointer
+* 'group': pointer on pointer to group
+* 'nick': pointer on pointer to nick
+
+C example:
+
+[source,C]
+----------------------------------------
+struct t_gui_nick_group *ptr_group;
+struct t_gui_nick *ptr_nick;
+
+ptr_group = NULL;
+ptr_nick = NULL;
+gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+while (ptr_group || ptr_nick)
+{
+    if (ptr_nick)
+    {
+        /* nick */
+        /* ... */
+    }
+    else
+    {
+        /* group */
+        /* ... */
+    }
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+}
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
 weechat_nicklist_group_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
