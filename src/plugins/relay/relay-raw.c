@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <time.h>
 
@@ -218,10 +219,10 @@ relay_raw_message_add_to_list (time_t date, const char *prefix,
  */
 
 struct t_relay_raw_message *
-relay_raw_message_add (struct t_relay_client *client, int send,
+relay_raw_message_add (struct t_relay_client *client, int flags,
                        const char *message)
 {
-    char *buf, *buf2, prefix[256];
+    char *buf, *buf2, prefix[256], prefix_arrow[16];
     const unsigned char *ptr_buf;
     const char *hexa = "0123456789ABCDEF";
     int pos_buf, pos_buf2, char_size, i;
@@ -255,27 +256,46 @@ relay_raw_message_add (struct t_relay_client *client, int send,
         buf2[pos_buf2] = '\0';
     }
 
+    /* build prefix with arrow */
+    prefix_arrow[0] = '\0';
+    switch (flags & (RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_SEND))
+    {
+        case RELAY_RAW_FLAG_RECV:
+            strcpy (prefix_arrow, RELAY_RAW_PREFIX_RECV);
+            break;
+        case RELAY_RAW_FLAG_SEND:
+            strcpy (prefix_arrow, RELAY_RAW_PREFIX_SEND);
+            break;
+        default:
+            if (flags & RELAY_RAW_FLAG_RECV)
+                strcpy (prefix_arrow, RELAY_RAW_PREFIX_RECV);
+            else
+                strcpy (prefix_arrow, RELAY_RAW_PREFIX_SEND);
+            break;
+    }
+
     if (client)
     {
-        snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s %s%s",
+        snprintf (prefix, sizeof (prefix), "%s[%s%d%s] %s%s.%s %s%s",
                   weechat_color ("chat_delimiters"),
                   weechat_color ("chat"),
                   client->id,
                   weechat_color ("chat_delimiters"),
                   weechat_color ("chat_server"),
+                  relay_protocol_string[client->protocol],
                   client->protocol_args,
-                  (send) ?
+                  (flags & RELAY_RAW_FLAG_SEND) ?
                   weechat_color ("chat_prefix_quit") :
                   weechat_color ("chat_prefix_join"),
-                  (send) ? RELAY_RAW_PREFIX_SEND : RELAY_RAW_PREFIX_RECV);
+                  prefix_arrow);
     }
     else
     {
         snprintf (prefix, sizeof (prefix), "%s%s",
-                  (send) ?
+                  (flags & RELAY_RAW_FLAG_SEND) ?
                   weechat_color ("chat_prefix_quit") :
                   weechat_color ("chat_prefix_join"),
-                  (send) ? RELAY_RAW_PREFIX_SEND : RELAY_RAW_PREFIX_RECV);
+                  prefix_arrow);
     }
 
     new_raw_message = relay_raw_message_add_to_list (time (NULL),
@@ -295,18 +315,20 @@ relay_raw_message_add (struct t_relay_client *client, int send,
  */
 
 void
-relay_raw_print (struct t_relay_client *client, int send, const char *message)
+relay_raw_print (struct t_relay_client *client, int flags,
+                 const char *format, ...)
 {
     struct t_relay_raw_message *new_raw_message;
 
-    if (!message)
+    weechat_va_format (format);
+    if (!vbuffer)
         return;
 
     /* auto-open Relay raw buffer if debug for irc plugin is >= 1 */
     if (!relay_raw_buffer && (weechat_relay_plugin->debug >= 1))
         relay_raw_open (0);
 
-    new_raw_message = relay_raw_message_add (client, send, message);
+    new_raw_message = relay_raw_message_add (client, flags, vbuffer);
     if (new_raw_message)
     {
         if (relay_raw_buffer)
@@ -314,6 +336,8 @@ relay_raw_print (struct t_relay_client *client, int send, const char *message)
         if (weechat_config_integer (relay_config_look_raw_messages) == 0)
             relay_raw_message_free (new_raw_message);
     }
+
+    free (vbuffer);
 }
 
 /*

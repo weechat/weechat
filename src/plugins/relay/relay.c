@@ -63,9 +63,7 @@ relay_protocol_search (const char *name)
     for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
     {
         if (weechat_strcasecmp (relay_protocol_string[i], name) == 0)
-        {
             return i;
-        }
     }
 
     /* protocol not found */

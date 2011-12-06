@@ -34,8 +34,8 @@
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-client.h"
-#include "relay-client-irc.h"
-#include "relay-client-weechat.h"
+#include "irc/relay-irc.h"
+#include "weechat/relay-weechat.h"
 #include "relay-config.h"
 #include "relay-buffer.h"
 #include "relay-server.h"
@@ -123,10 +123,10 @@ relay_client_recv_cb (void *arg_client, int fd)
         switch (client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                relay_client_weechat_recv (client, buffer);
+                relay_weechat_recv (client, buffer);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_client_irc_recv (client, buffer);
+                relay_irc_recv (client, buffer);
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -146,7 +146,7 @@ relay_client_recv_cb (void *arg_client, int fd)
  */
 
 struct t_relay_client *
-relay_client_new (int sock, char *address, struct t_relay_server *server)
+relay_client_new (int sock, const char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
 
@@ -171,10 +171,10 @@ relay_client_new (int sock, char *address, struct t_relay_server *server)
         switch (new_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                relay_client_weechat_alloc (new_client);
+                relay_weechat_alloc (new_client);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_client_irc_alloc (new_client);
+                relay_irc_alloc (new_client);
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -234,7 +234,7 @@ relay_client_set_status (struct t_relay_client *client,
 {
     client->status = status;
 
-    if (RELAY_CLIENT_HAS_ENDED(client->status))
+    if (RELAY_CLIENT_HAS_ENDED(client))
     {
         client->end_time = time (NULL);
 
@@ -246,9 +246,10 @@ relay_client_set_status (struct t_relay_client *client,
         switch (client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
+                relay_weechat_close_connection (client);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_client_irc_close_connection (client);
+                relay_irc_close_connection (client);
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -327,10 +328,10 @@ relay_client_free (struct t_relay_client *client)
         switch (client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                relay_client_weechat_free (client);
+                relay_weechat_free (client);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_client_irc_free (client);
+                relay_irc_free (client);
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -446,10 +447,10 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     switch (client->protocol)
     {
         case RELAY_PROTOCOL_WEECHAT:
-            relay_client_weechat_add_to_infolist (ptr_item, client);
+            relay_weechat_add_to_infolist (ptr_item, client);
             break;
         case RELAY_PROTOCOL_IRC:
-            relay_client_irc_add_to_infolist (ptr_item, client);
+            relay_irc_add_to_infolist (ptr_item, client);
             break;
         case RELAY_NUM_PROTOCOLS:
             break;
@@ -493,10 +494,10 @@ relay_client_print_log ()
         switch (ptr_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
-                relay_client_weechat_print_log (ptr_client);
+                relay_weechat_print_log (ptr_client);
                 break;
             case RELAY_PROTOCOL_IRC:
-                relay_client_irc_print_log (ptr_client);
+                relay_irc_print_log (ptr_client);
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;

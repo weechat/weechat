@@ -21,8 +21,10 @@ ADD_LIBRARY(relay MODULE
 relay.c relay.h
 relay-buffer.c relay-buffer.h
 relay-client.c relay-client.h
-relay-client-irc.c relay-client-irc.h
-relay-client-weechat.c relay-client-weechat.h
+irc/relay-irc.c irc/relay-irc.h
+weechat/relay-weechat.c weechat/relay-weechat.h
+weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
+weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
 relay-command.c relay-command.h
 relay-completion.c relay-completion.h
 relay-config.c relay-config.h
@@ -32,6 +34,12 @@ relay-server.c relay-server.h
 relay-upgrade.c relay-upgrade.h)
 SET_TARGET_PROPERTIES(relay PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(relay)
+SET (LINK_LIBS)
+
+IF(ZLIB_FOUND)
+  LIST(APPEND LINK_LIBS ${ZLIB_LIBRARY})
+ENDIF(ZLIB_FOUND)
+
+TARGET_LINK_LIBRARIES(relay ${LINK_LIBS})
 
 INSTALL(TARGETS relay LIBRARY DESTINATION ${LIBDIR}/plugins)

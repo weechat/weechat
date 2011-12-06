@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(ZLIB_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
@@ -29,10 +29,14 @@ relay_la_SOURCES = relay.c \
                    relay-buffer.h \
                    relay-client.c \
                    relay-client.h \
-                   relay-client-irc.c \
-                   relay-client-irc.h \
-                   relay-client-weechat.c \
-                   relay-client-weechat.h \
+                   irc/relay-irc.c \
+                   irc/relay-irc.h \
+                   weechat/relay-weechat.c \
+                   weechat/relay-weechat.h \
+                   weechat/relay-weechat-msg.c \
+                   weechat/relay-weechat-msg.h \
+                   weechat/relay-weechat-protocol.c \
+                   weechat/relay-weechat-protocol.h \
                    relay-command.c \
                    relay-command.h \
                    relay-completion.c \
@@ -49,6 +53,6 @@ relay_la_SOURCES = relay.c \
                    relay-upgrade.h
 
 relay_la_LDFLAGS = -module
-relay_la_LIBADD  = $(RELAY_LFLAGS)
+relay_la_LIBADD  = $(RELAY_LFLAGS) $(ZLIB_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

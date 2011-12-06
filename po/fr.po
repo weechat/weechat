@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-21 12:36+0100\n"
-"PO-Revision-Date: 2011-11-21 12:36+0100\n"
+"POT-Creation-Date: 2011-12-06 22:53+0100\n"
+"PO-Revision-Date: 2011-11-30 10:49+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -7452,18 +7452,6 @@ msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: déconnecté du client %s%s%s (%s.%s)"
 
-#, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: mémoire insuffisante pour analyser le message"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: erreur d'envoi de données au client: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: erreur d'envoi de données au client %s"
-
 msgid "Clients for relay:"
 msgstr "Clients pour le relai:"
 
@@ -7601,12 +7589,27 @@ msgid "text color for \"disconnected\" status"
 msgstr "couleur du texte pour le statut \"déconnecté\""
 
 msgid ""
+"regular expression with IPs allowed to use relay, example: \"^(123.45.67.89|"
+"192.160.*)$\""
+msgstr ""
+"expression régulière avec les IPs autorisées pour le relai, par exemple: \"^"
+"(123.45.67.89|192.160.*)$\""
+
+msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
 "addresse pour le bind (si vide, la connexion est possible sur toutes les "
 "interfaces, utiliser \"127.0.0.1\" pour autoriser les connections depuis la "
 "machine locale seulement)"
+
+msgid ""
+"compression level for packets sent to client with WeeChat protocol (0 = "
+"disable compression, 1 = low compression ... 9 = best compression)"
+msgstr ""
+"niveau de compression pour les paquets envoyés au client avec le protocole "
+"WeeChat (0 = désactiver la compression, 1 = peu de compression ... 9 = "
+"meilleure compression)"
 
 msgid "maximum number of clients connecting to a port"
 msgstr "nombre maximum de clients qui se connectent sur un port"
@@ -7636,6 +7639,10 @@ msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: impossible d'accepter le client sur le port %d (%s.%s)"
 
 #, c-format
+msgid "%s%s: IP address \"%s\" not allowed for relay"
+msgstr "%s%s: adresse IP \"%s\" non autorisée pour le relai"
+
+#, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s.%s)"
 
@@ -7646,6 +7653,30 @@ msgstr "%s: écoute sur le port %d (relai: %s.%s, max %d clients)"
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: pas assez de mémoire pour écouter sur le nouveau port"
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: mémoire insuffisante pour analyser le message"
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: erreur d'envoi de données au client: %s"
+
+#, c-format
+msgid "%s%s: error sending data to client %d (%s)"
+msgstr "%s%s: erreur d'envoi de données au client %d (%s)"
+
+#, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgstr "%s%s: echec d'exécution de la commamde \"%s\" pour le client %d"
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from client %d for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: trop peu de paramètres reçus du client %d pour la commande \"%s"
+"\" (reçu: %d paramètres, attendu: au moins %d)"
 
 #, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
@@ -8436,6 +8467,13 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
+
+#~ msgid ""
+#~ "compression level (0 = no compression - faster, 9 = best compression - "
+#~ "slower)"
+#~ msgstr ""
+#~ "niveau de compression des paquets envoyés au client avec le protocole "
+#~ "WeeChat (0 = pas de compression ... 9 = meilleure compression)"
 
 #~ msgid ""
 #~ "standard plugins extension in filename (for example \".so\" under Linux "

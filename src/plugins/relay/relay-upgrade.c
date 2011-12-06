@@ -30,8 +30,8 @@
 #include "relay-upgrade.h"
 #include "relay-buffer.h"
 #include "relay-client.h"
-#include "relay-client-irc.h"
-#include "relay-client-weechat.h"
+#include "irc/relay-irc.h"
+#include "weechat/relay-weechat.h"
 #include "relay-raw.h"
 
 
@@ -201,12 +201,12 @@ relay_upgrade_read_cb (void *data,
                     switch (new_client->protocol)
                     {
                         case RELAY_PROTOCOL_WEECHAT:
-                            relay_client_weechat_alloc_with_infolist (new_client,
-                                                                      infolist);
+                            relay_weechat_alloc_with_infolist (new_client,
+                                                               infolist);
                             break;
                         case RELAY_PROTOCOL_IRC:
-                            relay_client_irc_alloc_with_infolist (new_client,
-                                                                  infolist);
+                            relay_irc_alloc_with_infolist (new_client,
+                                                           infolist);
                             break;
                         case RELAY_NUM_PROTOCOLS:
                             break;

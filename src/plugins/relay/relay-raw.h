@@ -24,6 +24,9 @@
 #define RELAY_RAW_PREFIX_RECV     "-->"
 #define RELAY_RAW_PREFIX_SEND     "<--"
 
+#define RELAY_RAW_FLAG_RECV     1
+#define RELAY_RAW_FLAG_SEND     2
+
 struct t_relay_raw_message
 {
     time_t date;                       /* date/time of message              */
@@ -43,8 +46,8 @@ extern void relay_raw_open (int switch_to_buffer);
 extern struct t_relay_raw_message *relay_raw_message_add_to_list (time_t date,
                                                                   const char *prefix,
                                                                   const char *message);
-extern void relay_raw_print (struct t_relay_client *client, int send,
-                             const char *message);
+extern void relay_raw_print (struct t_relay_client *client, int flags,
+                             const char *format, ...);
 extern void relay_raw_message_free_all ();
 extern int relay_raw_add_to_infolist (struct t_infolist *infolist,
                                       struct t_relay_raw_message *raw_message);

@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_RELAY_CONFIG_H
 #define __WEECHAT_RELAY_CONFIG_H 1
 
+#include <regex.h>
+
 #define RELAY_CONFIG_NAME "relay"
 
 extern struct t_config_file *relay_config_file;
@@ -36,6 +38,9 @@ extern struct t_config_option *relay_config_color_status[];
 extern struct t_config_option *relay_config_network_bind_address;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
+extern struct t_config_option *relay_config_network_compression_level;
+
+extern regex_t *relay_config_regex_allowed_ips;
 
 extern int relay_config_create_option_port (void *data,
                                             struct t_config_file *config_file,

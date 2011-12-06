@@ -90,7 +90,7 @@ relay_command_client_list (int full)
             }
             else
             {
-                if (!RELAY_CLIENT_HAS_ENDED(ptr_client->status))
+                if (!RELAY_CLIENT_HAS_ENDED(ptr_client))
                 {
                     weechat_printf (NULL,
                                     _("  id: %d, %s%s%s, started on: %s"),

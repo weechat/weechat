@@ -37,8 +37,9 @@ enum t_relay_status
 
 /* macros for status */
 
-#define RELAY_CLIENT_HAS_ENDED(status) ((status == RELAY_STATUS_AUTH_FAILED) ||      \
-                                        (status == RELAY_STATUS_DISCONNECTED))
+#define RELAY_CLIENT_HAS_ENDED(client)                                  \
+    ((client->status == RELAY_STATUS_AUTH_FAILED) ||                    \
+     (client->status == RELAY_STATUS_DISCONNECTED))
 
 /* relay client */
 
@@ -71,7 +72,7 @@ extern int relay_client_count;
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
 extern int relay_client_recv_cb (void *arg_client, int fd);
-extern struct t_relay_client *relay_client_new (int sock, char *address,
+extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);
 extern void relay_client_set_status (struct t_relay_client *client,
                                      enum t_relay_status status);

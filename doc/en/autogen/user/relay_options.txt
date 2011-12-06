@@ -48,10 +48,20 @@
 ** type: integer
 ** values: 0 .. 65535 (default value: `256`)
 
+* [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
+** description: `regular expression with IPs allowed to use relay, example: "^(123.45.67.89|192.160.*)$"`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** description: `address for bind (if empty, connection is possible on all interfaces, use "127.0.0.1" to allow connections from local machine only)`
 ** type: string
 ** values: any string (default value: `""`)
+
+* [[option_relay.network.compression_level]] *relay.network.compression_level*
+** description: `compression level for packets sent to client with WeeChat protocol (0 = disable compression, 1 = low compression ... 9 = best compression)`
+** type: integer
+** values: 0 .. 9 (default value: `6`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** description: `maximum number of clients connecting to a port`

@@ -48,10 +48,20 @@
 ** tipo: intero
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
+* [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
+** descrizione: `regular expression with IPs allowed to use relay, example: "^(123.45.67.89|192.160.*)$"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** descrizione: `indirizzo associato (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
+
+* [[option_relay.network.compression_level]] *relay.network.compression_level*
+** descrizione: `compression level for packets sent to client with WeeChat protocol (0 = disable compression, 1 = low compression ... 9 = best compression)`
+** tipo: intero
+** valori: 0 .. 9 (valore predefinito: `6`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** descrizione: `numero massimo di client connessi ad una porta`

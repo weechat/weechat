@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-21 12:36+0100\n"
+"POT-Creation-Date: 2011-12-06 22:53+0100\n"
 "PO-Revision-Date: 2011-11-03 16:57+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7324,18 +7324,6 @@ msgstr "%s%s: nie powiodła się autentykacja z klientem %s%s%s (%s.%s)"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: rozłączono od klienta %s%s%s (%s.%s)"
 
-#, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: za mało pamięci na przetworzenie otrzymanych wiadomości"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: błąd podczas wysyłania danych do klienta: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
-
 msgid "Clients for relay:"
 msgstr "Klienci do przekazania:"
 
@@ -7470,12 +7458,22 @@ msgid "text color for \"disconnected\" status"
 msgstr "kolor statusu \"disconnected\""
 
 msgid ""
+"regular expression with IPs allowed to use relay, example: \"^(123.45.67.89|"
+"192.160.*)$\""
+msgstr ""
+
+msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
 "adres do przypisania (jeśli puste, połączenie jest możliwe na wszystkich "
 "interfejsach, użyj \"127.0.0.1\", aby pozwolić tylko na połączenia z tej "
 "maszyny)"
+
+msgid ""
+"compression level for packets sent to client with WeeChat protocol (0 = "
+"disable compression, 1 = low compression ... 9 = best compression)"
+msgstr ""
 
 msgid "maximum number of clients connecting to a port"
 msgstr "maksymalna ilość klientów łączących się na port"
@@ -7504,6 +7502,10 @@ msgstr "%s: gniazdo zamknięte dla %s.%s (port %d)"
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s.%s)"
 
+#, fuzzy, c-format
+msgid "%s%s: IP address \"%s\" not allowed for relay"
+msgstr "%s%s: nie znaleziono adresu \"%s\""
+
 #, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr "%s%s: błąd podczas \"bind\" na porcie %d (%s.%s)"
@@ -7515,6 +7517,30 @@ msgstr "%s: nasłuchuję na porcie %d (relay:%s.%s, max %d klientów)"
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: za mało pamięci do nasłuchu na nowym porcie"
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: za mało pamięci na przetworzenie otrzymanych wiadomości"
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %d (%s)"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta %s"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgstr "%s%s: nie udało się wykonać komendy \"%s\" (zgłoś problem autorom):"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: too few arguments received from client %d for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: pozyskano za mało argumentów od serwera IRC dla komendy \"%s"
+"\" (otrzymano: %d argumentów, spodziewano się przynajmniej %d)"
 
 #, c-format
 msgid "%s%s: error compiling regular expression \"%s\""

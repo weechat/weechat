@@ -199,6 +199,22 @@ relay_server_sock_cb (void *data, int fd)
         ptr_address = ipv4_address;
     }
 
+    /* check if IP is allowed, if not, just close socket */
+    if (relay_config_regex_allowed_ips
+        && (regexec (relay_config_regex_allowed_ips, ptr_address, 0, NULL, 0) != 0))
+    {
+        if (weechat_relay_plugin->debug >= 2)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: IP address \"%s\" not allowed for relay"),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME,
+                            ptr_address);
+        }
+        close (client_fd);
+        return WEECHAT_RC_OK;
+    }
+
     relay_client_new (client_fd, ptr_address, server);
 
     return WEECHAT_RC_OK;

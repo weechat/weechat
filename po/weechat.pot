@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-21 12:36+0100\n"
+"POT-Creation-Date: 2011-12-06 22:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5895,18 +5895,6 @@ msgstr ""
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr ""
-
 msgid "Clients for relay:"
 msgstr ""
 
@@ -6021,8 +6009,18 @@ msgid "text color for \"disconnected\" status"
 msgstr ""
 
 msgid ""
+"regular expression with IPs allowed to use relay, example: \"^(123.45.67.89|"
+"192.160.*)$\""
+msgstr ""
+
+msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
+msgstr ""
+
+msgid ""
+"compression level for packets sent to client with WeeChat protocol (0 = "
+"disable compression, 1 = low compression ... 9 = best compression)"
 msgstr ""
 
 msgid "maximum number of clients connecting to a port"
@@ -6051,6 +6049,10 @@ msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr ""
 
 #, c-format
+msgid "%s%s: IP address \"%s\" not allowed for relay"
+msgstr ""
+
+#, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr ""
 
@@ -6060,6 +6062,28 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to client %d (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from client %d for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 
 #, c-format

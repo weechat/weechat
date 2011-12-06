@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-11-21 12:36+0100\n"
+"POT-Creation-Date: 2011-12-06 22:53+0100\n"
 "PO-Revision-Date: 2011-11-08 22:03+0100\n"
 "Last-Translator: Nils Görs\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7616,18 +7616,6 @@ msgstr "%s%s: Authentifizierung mit Client %s%s%s (%s.%s) fehlgeschlagen"
 msgid "%s: disconnected from client %s%s%s (%s.%s)"
 msgstr "%s: Trennung vom Client %s%s%s (%s.%s)"
 
-#, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: Nicht genug Speicher vorhanden um Nachricht zu parsen"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %s"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client %s"
-
 msgid "Clients for relay:"
 msgstr "Clients für Relay:"
 
@@ -7766,12 +7754,22 @@ msgid "text color for \"disconnected\" status"
 msgstr "Textfarbe für Status: \"Verbindung getrennt\""
 
 msgid ""
+"regular expression with IPs allowed to use relay, example: \"^(123.45.67.89|"
+"192.160.*)$\""
+msgstr ""
+
+msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
 "\"127.0.0.1\" to allow connections from local machine only)"
 msgstr ""
 "Adresse für Bind (falls nicht gesetzt ist eine Verbindung zu allen "
 "Interfaces möglich. Wird die Adresse \"127.0.0.1\" genutzt kann nur eine "
 "Verbindung mit dem lokalen Rechner hergestellt werden)"
+
+msgid ""
+"compression level for packets sent to client with WeeChat protocol (0 = "
+"disable compression, 1 = low compression ... 9 = best compression)"
+msgstr ""
 
 msgid "maximum number of clients connecting to a port"
 msgstr "Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen"
@@ -7800,6 +7798,10 @@ msgstr "%s: Socket für %s.%s (Port %d) geschlossen"
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: Kann den Client am Port %d (%s.%s) nicht akzeptieren"
 
+#, fuzzy, c-format
+msgid "%s%s: IP address \"%s\" not allowed for relay"
+msgstr "%s%s: Adresse \"%s\" nicht gefunden"
+
 #, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
 msgstr "%s%s: Fehler mit \"bind\" auf Port %d (%s.%s)"
@@ -7811,6 +7813,32 @@ msgstr "%s: Lausche am Port %d (Relay: %s.%s, Max. %d Clients)"
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: Nicht genug Speicher um an einem neuen Port zu lauschen"
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: Nicht genug Speicher vorhanden um Nachricht zu parsen"
+
+#, c-format
+msgid "%s%s: error sending data to client: %s"
+msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to client %d (%s)"
+msgstr "%s%s: Fehler beim Senden von Daten an den Client %s"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgstr ""
+"%s%s: Kann den Befehl \"%s\" nicht parsen (bitte melden Sie das den "
+"Entwicklern):"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: too few arguments received from client %d for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: Zu wenige Argumente vom IRC-Server für den Befehl \"%s\" erhalten "
+"(Empfangen: %d Argumente, Erwartet: mindestens %d)"
 
 #, c-format
 msgid "%s%s: error compiling regular expression \"%s\""

@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <limits.h>
+#include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -49,9 +50,15 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 
 /* relay config, network section */
 
+struct t_config_option *relay_config_network_allowed_ips;
 struct t_config_option *relay_config_network_bind_address;
+struct t_config_option *relay_config_network_compression_level;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
+
+/* other */
+
+regex_t *relay_config_regex_allowed_ips = NULL;
 
 
 /*
@@ -68,6 +75,42 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
 
     if (relay_buffer)
         relay_buffer_refresh (NULL);
+}
+
+/*
+ * relay_config_change_network_allowed_ips: called when allowed ips changes
+ */
+
+void
+relay_config_change_network_allowed_ips (void *data,
+                                         struct t_config_option *option)
+{
+    const char *allowed_ips;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (relay_config_regex_allowed_ips)
+    {
+        regfree (relay_config_regex_allowed_ips);
+        free (relay_config_regex_allowed_ips);
+        relay_config_regex_allowed_ips = NULL;
+    }
+
+    allowed_ips = weechat_config_string (relay_config_network_allowed_ips);
+    if (allowed_ips && allowed_ips[0])
+    {
+        relay_config_regex_allowed_ips = malloc (sizeof (*relay_config_regex_allowed_ips));
+        if (relay_config_regex_allowed_ips)
+        {
+            if (regcomp (relay_config_regex_allowed_ips, allowed_ips, REG_EXTENDED) != 0)
+            {
+                free (relay_config_regex_allowed_ips);
+                relay_config_regex_allowed_ips = NULL;
+            }
+        }
+    }
 }
 
 /*
@@ -370,6 +413,13 @@ relay_config_init ()
         return 0;
     }
 
+    relay_config_network_allowed_ips = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "allowed_ips", "string",
+        N_("regular expression with IPs allowed to use relay, example: "
+           "\"^(123.45.67.89|192.160.*)$\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &relay_config_change_network_allowed_ips, NULL, NULL, NULL);
     relay_config_network_bind_address = weechat_config_new_option (
         relay_config_file, ptr_section,
         "bind_address", "string",
@@ -378,6 +428,14 @@ relay_config_init ()
             "local machine only)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_bind_address_cb, NULL, NULL, NULL);
+    relay_config_network_compression_level = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "compression_level", "integer",
+        N_("compression level for packets sent to client with WeeChat protocol "
+           "(0 = disable compression, 1 = low compression ... 9 = best "
+           "compression)"),
+        NULL, 0, 9, "6", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
         "max_clients", "integer",
