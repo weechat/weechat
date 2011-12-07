@@ -19,6 +19,12 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+if(COMMAND cmake_policy)
+  if(POLICY CMP0017)
+    cmake_policy(SET CMP0017 NEW)
+  endif(POLICY CMP0017)
+endif(COMMAND cmake_policy)
+
 ADD_DEFINITIONS(-DHAVE_CONFIG_H)
 
 INCLUDE(CheckIncludeFiles)
