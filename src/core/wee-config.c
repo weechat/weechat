@@ -141,6 +141,7 @@ struct t_config_option *config_look_read_marker_string;
 struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
+struct t_config_option *config_look_scroll_bottom_after_switch;
 struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
@@ -2039,6 +2040,13 @@ config_weechat_init_options ()
         N_("how many lines to scroll by with scroll_up and "
            "scroll_down"),
         NULL, 1, INT_MAX, "3", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_scroll_bottom_after_switch = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "scroll_bottom_after_switch", "boolean",
+        N_("scroll to bottom of window after switch to another buffer (do not "
+           "remember scroll position in windows); the scroll is done only for "
+            "buffers with formatted content (not free content)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_scroll_page_percent = config_file_new_option (
         weechat_config_file, ptr_section,
         "scroll_page_percent", "integer",

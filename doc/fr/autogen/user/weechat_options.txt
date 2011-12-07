@@ -678,6 +678,11 @@
 ** type: entier
 ** valeurs: 1 .. 2147483647 (valeur par défaut: `3`)
 
+* [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
+** description: `faire défiler en bas de la fenêtre après un basculemment vers un autre tampon (ne pas sauvegarder la position du défilement dans les fenêtres); le défilement n'est fait que pour les tampons avec contenu formaté (pas le contenu libre)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_weechat.look.scroll_page_percent]] *weechat.look.scroll_page_percent*
 ** description: `pourcentage de l'écran à faire défiler lors du défilement avec page précédente ou suivante (par exemple 100 signifie une page, 50 une demi-page)`
 ** type: entier

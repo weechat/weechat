@@ -678,6 +678,11 @@
 ** type: integer
 ** values: 1 .. 2147483647 (default value: `3`)
 
+* [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
+** description: `scroll to bottom of window after switch to another buffer (do not remember scroll position in windows); the scroll is done only for buffers with formatted content (not free content)`
+** type: boolean
+** values: on, off (default value: `off`)
+
 * [[option_weechat.look.scroll_page_percent]] *weechat.look.scroll_page_percent*
 ** description: `percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)`
 ** type: integer

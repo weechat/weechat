@@ -1053,6 +1053,14 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     {
         gui_buffer_last_displayed = window->buffer;
         gui_window_scroll_switch (window, buffer);
+        if ((buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+            && CONFIG_BOOLEAN(config_look_scroll_bottom_after_switch))
+        {
+            window->scroll->start_line = NULL;
+            window->scroll->start_line_pos = 0;
+            window->scroll->scrolling = 0;
+            window->scroll->reset_allowed = 1;
+        }
         if (!gui_buffers_visited_frozen)
         {
             gui_buffer_visited_add (window->buffer);
