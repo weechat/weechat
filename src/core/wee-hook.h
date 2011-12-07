@@ -398,6 +398,7 @@ struct t_hook_focus
 
 /* hook variables */
 
+extern char *hook_type_string[];
 extern struct t_hook *weechat_hooks[];
 extern struct t_hook *last_weechat_hook[];
 

@@ -184,6 +184,7 @@ Examples:
     color: display infos about current color pairs
    cursor: toggle debug for cursor mode
     hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
 infolists: display infos about infolists
    memory: display infos about memory usage
     mouse: toggle debug for mouse

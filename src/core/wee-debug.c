@@ -37,6 +37,7 @@
 #include "wee-config-file.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
+#include "wee-hook.h"
 #include "wee-infolist.h"
 #include "wee-list.h"
 #include "wee-log.h"
@@ -407,6 +408,35 @@ debug_hdata ()
 
     if (count > 0)
         hashtable_map (weechat_hdata, &debug_hdata_map_cb, NULL);
+}
+
+/*
+ * debug_hooks: display infos about hooks
+ */
+
+void
+debug_hooks ()
+{
+    int i, num_hooks, num_hooks_total;
+    struct t_hook *ptr_hook;
+
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, "hooks in memory:");
+
+    num_hooks_total = 0;
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        num_hooks = 0;
+        for (ptr_hook = weechat_hooks[i]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            num_hooks++;
+        }
+        gui_chat_printf (NULL, "%17s:%5d", hook_type_string[i], num_hooks);
+        num_hooks_total += num_hooks;
+    }
+    gui_chat_printf (NULL, "%17s------", "---------");
+    gui_chat_printf (NULL, "%17s:%5d", "total", num_hooks_total);
 }
 
 /*

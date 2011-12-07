@@ -7,6 +7,7 @@ v0.3.7-dev, 2011-12-07
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add option "hooks" for command /debug
 * core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
   restore old behaviour before fix of bug #25555 in version 0.3.5)
 * core: apply filters after full reload of configuration files (with /reload)

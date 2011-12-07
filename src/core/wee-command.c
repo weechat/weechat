@@ -1320,6 +1320,10 @@ COMMAND_CALLBACK(debug)
         else
             debug_hdata ();
     }
+    else if (string_strcasecmp (argv[1], "hooks") == 0)
+    {
+        debug_hooks ();
+    }
     else if (string_strcasecmp (argv[1], "infolists") == 0)
     {
         debug_infolists ();
@@ -5552,6 +5556,7 @@ command_init ()
                      "   cursor: toggle debug for cursor mode\n"
                      "    hdata: display infos about hdata (with free: remove "
                      "all hdata in memory)\n"
+                     "    hooks: display infos about hooks\n"
                      "infolists: display infos about infolists\n"
                      "   memory: display infos about memory usage\n"
                      "    mouse: toggle debug for mouse\n"
@@ -5565,6 +5570,7 @@ command_init ()
                   " || color"
                   " || cursor verbose"
                   " || hdata free"
+                  " || hooks"
                   " || infolists"
                   " || memory"
                   " || mouse verbose"
