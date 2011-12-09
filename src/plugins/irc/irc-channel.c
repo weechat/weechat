@@ -314,7 +314,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         if (switch_to_channel)
         {
             weechat_buffer_set (new_buffer, "display",
-                                (auto_switch) ? "auto" : "1");
+                                (auto_switch && !manual_join) ? "auto" : "1");
         }
     }
 

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-12-07
+v0.3.7-dev, 2011-12-09
 
 
 Version 0.3.7 (under dev!)
@@ -35,6 +35,7 @@ Version 0.3.7 (under dev!)
   reconnection problem (bug #34626)
 * api: add new functions strcasecmp_range, strncasecmp_range, hdata_char and
   nicklist_get_next_item
+* irc: reset read marker of current buffer on manual /join
 * irc: fix crash when signon time in message 317 (whois, idle) is invalid
   (too large) (bug #34905)
 * irc: do not delete servers added in irc.conf on /reload (bug #34872)
