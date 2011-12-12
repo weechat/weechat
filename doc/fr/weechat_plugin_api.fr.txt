@@ -3493,10 +3493,10 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
      "cle1" => "valeur 1"
      "cle2" => "valeur 2"
    alors les variables suivantes seront ajoutées dans l'objet de l'infolist :
-     "testhash_name_00001"  = "cle1"
-     "testhash_value_00001" = "valeur 1"
-     "testhash_name_00002"  = "cle2"
-     "testhash_value_00002" = "valeur 2"
+     "testhash_name_00000"  = "cle1"
+     "testhash_value_00000" = "valeur 1"
+     "testhash_name_00001"  = "cle2"
+     "testhash_value_00001" = "valeur 2"
 */
 ----------------------------------------
 
