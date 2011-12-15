@@ -511,7 +511,7 @@ COMMAND_CALLBACK(buffer)
     struct t_gui_buffer *ptr_buffer, *weechat_buffer;
     long number, number1, number2;
     char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, target_buffer;
+    int i, target_buffer, error_main_buffer, num_buffers;
 
     /* make C compiler happy */
     (void) data;
@@ -744,6 +744,8 @@ COMMAND_CALLBACK(buffer)
                 }
                 if ((number1 >= 1) && (number2 >= 1) && (number2 >= number1))
                 {
+                    error_main_buffer = 0;
+                    num_buffers = 0;
                     for (i = number2; i >= number1; i--)
                     {
                         for (ptr_buffer = last_gui_buffer; ptr_buffer;
@@ -751,12 +753,10 @@ COMMAND_CALLBACK(buffer)
                         {
                             if (ptr_buffer->number == i)
                             {
+                                num_buffers++;
                                 if (ptr_buffer == weechat_buffer)
                                 {
-                                    gui_chat_printf (NULL,
-                                                     _("%sError: WeeChat main "
-                                                       "buffer can't be closed"),
-                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                    error_main_buffer = 1;
                                 }
                                 else
                                 {
@@ -764,6 +764,17 @@ COMMAND_CALLBACK(buffer)
                                 }
                             }
                         }
+                    }
+                    /*
+                     * display error for main buffer if it was the only
+                     * buffer to close with matching number
+                     */
+                    if (error_main_buffer && (num_buffers <= 1))
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sError: WeeChat main "
+                                           "buffer can't be closed"),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     }
                 }
             }
