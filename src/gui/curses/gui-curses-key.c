@@ -119,9 +119,11 @@ gui_key_default_bindings (int context)
         BIND(/* m-b         */ "meta-b",             "/input move_previous_word");
         BIND(/* ^left       */ "meta-Od",            "/input move_previous_word");
         BIND(/* ^left       */ "meta-OD",            "/input move_previous_word");
+        BIND(/* ^left       */ "meta2-1;5D",         "/input move_previous_word");
         BIND(/* m-f         */ "meta-f",             "/input move_next_word");
         BIND(/* ^right      */ "meta-Oc",            "/input move_next_word");
         BIND(/* ^right      */ "meta-OC",            "/input move_next_word");
+        BIND(/* ^right      */ "meta2-1;5C",         "/input move_next_word");
         BIND(/* up          */ "meta2-A",            "/input history_previous");
         BIND(/* down        */ "meta2-B",            "/input history_next");
         BIND(/* ^up         */ "meta-Oa",            "/input history_global_previous");

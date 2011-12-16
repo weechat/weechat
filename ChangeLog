@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2011-12-09
+v0.3.7-dev, 2011-12-16
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add default keys "meta2-1;5D" and "meta2-1;5C" (ctrl+left/right) for
+  gnome-terminal
 * core: add option "hooks" for command /debug
 * core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
   restore old behaviour before fix of bug #25555 in version 0.3.5)
