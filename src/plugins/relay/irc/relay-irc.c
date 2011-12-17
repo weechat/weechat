@@ -34,6 +34,7 @@
 #include "../../weechat-plugin.h"
 #include "../relay.h"
 #include "relay-irc.h"
+#include "../relay-buffer.h"
 #include "../relay-client.h"
 #include "../relay-config.h"
 #include "../relay-raw.h"
@@ -207,6 +208,8 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     client->bytes_sent += total_sent;
 
     free (vbuffer);
+
+    relay_buffer_refresh (NULL);
 
     return total_sent;
 }
@@ -978,12 +981,14 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     int items_count, i;
 
     items = weechat_string_split (data, "\n", 0, 0, &items_count);
-    for (i = 0; i < items_count; i++)
-    {
-        relay_irc_recv_one_msg (client, items[i]);
-    }
     if (items)
+    {
+        for (i = 0; i < items_count; i++)
+        {
+            relay_irc_recv_one_msg (client, items[i]);
+        }
         weechat_string_free_split (items);
+    }
 }
 
 /*

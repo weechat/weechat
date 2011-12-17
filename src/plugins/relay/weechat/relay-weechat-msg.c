@@ -40,6 +40,7 @@
 #include "../relay.h"
 #include "relay-weechat.h"
 #include "relay-weechat-msg.h"
+#include "../relay-buffer.h"
 #include "../relay-client.h"
 #include "../relay-config.h"
 #include "../relay-raw.h"
@@ -880,6 +881,12 @@ relay_weechat_msg_send (struct t_relay_client *client,
                     }
                 }
 
+                if (num_sent > 0)
+                {
+                    client->bytes_sent += num_sent;
+                    relay_buffer_refresh (NULL);
+                }
+
                 free (dest);
                 return;
             }
@@ -907,6 +914,12 @@ relay_weechat_msg_send (struct t_relay_client *client,
             relay_raw_print (client, RELAY_RAW_FLAG_SEND,
                              "error: %s", strerror (errno));
         }
+    }
+
+    if (num_sent > 0)
+    {
+        client->bytes_sent += num_sent;
+        relay_buffer_refresh (NULL);
     }
 }
 
