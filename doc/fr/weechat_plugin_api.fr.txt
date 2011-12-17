@@ -7219,6 +7219,9 @@ Paramètres :
 | weechat | buffer_type_changed | pointeur : tampon |
   type de tampon changé
 
+| weechat | buffer_line_added | pointeur : ligne |
+  ligne ajoutée dans un tampon
+
 | weechat | day_changed | chaîne : nouvelle date, format : "2010-01-31" |
   le jour de la date système a changé
 

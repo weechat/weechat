@@ -7120,6 +7120,9 @@ Arguments:
 | weechat | buffer_type_changed | pointer: buffer |
   type of buffer changed
 
+| weechat | buffer_line_added | pointer: line |
+  line added in a buffer
+
 | weechat | day_changed | string: new date, format: "2010-01-31" |
   day of system date has changed
 

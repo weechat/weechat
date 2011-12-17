@@ -7,6 +7,7 @@ v0.3.7-dev, 2011-12-17
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add signal "buffer_line_added"
 * core: add default keys "meta2-1;5D" and "meta2-1;5C" (ctrl+left/right) for
   gnome-terminal
 * core: add option "hooks" for command /debug

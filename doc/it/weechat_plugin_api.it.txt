@@ -7152,6 +7152,10 @@ Argomenti:
 | weechat | buffer_type_changed | puntatore: buffer |
   tipo di buffer modificato
 
+// TRANSLATION MISSING
+| weechat | buffer_line_added | puntatore: line |
+  line added in a buffer
+
 | weechat | debug_dump | stringa: nome plugin |
   richiesta di dump
 
