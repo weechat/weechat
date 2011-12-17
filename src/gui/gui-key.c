@@ -723,7 +723,7 @@ struct t_gui_key *
 gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
               const char *command)
 {
-    if (!key || !command)
+    if (!key || !command || (string_strcasecmp (key, "meta-") == 0))
         return NULL;
 
     gui_key_unbind (buffer, context, key);
