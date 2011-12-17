@@ -4489,6 +4489,13 @@ COMMAND_CALLBACK(unset)
 
     if (argc >= 2)
     {
+        if (strcmp (argv_eol[1], "*") == 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sReset of all options is not allowed"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
         for (ptr_config = config_files; ptr_config;
              ptr_config = ptr_config->next_config)
         {

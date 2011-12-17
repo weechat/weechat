@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-17 18:30+0100\n"
+"POT-Creation-Date: 2011-12-17 18:39+0100\n"
 "PO-Revision-Date: 2011-11-03 16:57+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -718,6 +718,10 @@ msgstr "Volba vytvořena: "
 
 msgid "Option changed"
 msgstr "Volba změněna"
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr ""
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
