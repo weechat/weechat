@@ -4,7 +4,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 
 This document is the specification of WeeChat relay protocol: the protocol used
-to relay WeeChat data to clients, which are mostly remote interfaces (GUI).
+to relay WeeChat data to clients, which are mostly remote interfaces.
 
 [WARNING]
 This document is a *DRAFT*. +
@@ -24,7 +24,7 @@ The following terms are used in this document:
 * 'relay': this is the WeeChat with relay plugin, which acts as "server" and
   allows 'clients' to connect
 * 'client': this is another software, connected to 'relay' via a network
-  connection; in most cases, this 'client' is a remote GUI
+  connection; in most cases, this 'client' is a remote interface
 
 [[network_diagram]]
 Network diagram
@@ -46,7 +46,7 @@ The 'clients' are connected to 'relay' like shown in this diagram:
 
 
 └─────────────┘    └─────────────────────┘╘══════════╛└──────────────────────┘
-network servers       ncurses interface      relay      graphical interfaces
+network servers       ncurses interface      relay       remote interfaces
                                             protocol
 ........................................
 
@@ -95,6 +95,8 @@ List of available commands (detail in next chapters):
 | infolist | Request infolist
 | nicklist | Request nicklist
 | input    | Send data to a buffer (text or command)
+| sync     | Synchronize buffer(s) (get updates for buffer(s))
+| desync   | Desynchronize buffer(s) (stop updates for buffer(s))
 | quit     | Disconnect from 'relay'
 |=====================================================
 
@@ -280,6 +282,82 @@ input core.weechat /help filter
 input irc.freenode.#weechat hello guys!
 ----------------------------------------
 
+[[command_sync]]
+sync
+~~~~
+
+Synchronize one or more buffers, to get updates.
+
+Syntax:
+
+----------------------------------------
+sync [<buffer>[,<buffer>...] <options>]
+----------------------------------------
+
+Arguments:
+
+* 'buffer': pointer ('0x12345') or full name of buffer (for example:
+  'core.weechat' or 'irc.freenode.#weechat'); name '*' can be used to
+  specify all buffers
+* 'options': one of following keywords, separated by commas (default is
+  'buffer,nicklist'):
+** 'buffer': receive signals about buffer (new lines, buffer renamed/moved/...)
+** 'nicklist': receive nicklist after changes
+
+Examples:
+
+----------------------------------------
+# synchronize all buffers with nicklist (the 3 commands are equivalent)
+sync
+sync *
+sync * buffer,nicklist
+
+# synchronize core buffer
+sync core.buffer
+
+# synchronize #weechat channel, without nicklist
+sync irc.freenode.#weechat buffer
+----------------------------------------
+
+[[command_desync]]
+desync
+~~~~~~
+
+Desynchronize one or more buffers, to stop updates.
+
+[NOTE]
+This will remove 'options' for buffers. If some options are still active for
+buffers, the client will still receive updates for buffers.
+
+Syntax:
+
+----------------------------------------
+desync [<buffer>[,<buffer>...] <options>]
+----------------------------------------
+
+Arguments:
+
+* 'buffer': pointer ('0x12345') or full name of buffer (for example:
+  'core.weechat' or 'irc.freenode.#weechat'); name '*' can be used to
+  specify all buffers
+* 'options': one of following keywords, separated by commas (default is
+  'buffer,nicklist'):
+** 'buffer': receive signals about buffer (new lines, buffer renamed/moved...)
+** 'nicklist': receive nicklist after changes
+
+Examples:
+
+----------------------------------------
+# desynchronize all buffers
+desync
+
+# desynchronize nicklist for #weechat channel (keep buffer updates)
+desync irc.freenode.#weechat nicklist
+
+# desynchronize #weechat channel
+desync irc.freenode.#weechat
+----------------------------------------
+
 [[command_quit]]
 quit
 ~~~~
@@ -346,11 +424,40 @@ There are two different identifiers ('id'):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="^2m,8,8",options="header"]
+[width="100%",cols="4m,3,2,15",options="header"]
 |=====================================================
-| Id          | Description                            | Object(s) sent
-| _line_added | Line added in a buffer (NOT DEVELOPED) | hdata, type: line_data
-| ...         | TO BE COMPLETED                        | ...
+| Identifier            | Description           | Hdata type | Hdata content
+
+| _buffer_opened        | Buffer opened         | buffer |
+  'number' (integer), 'full_name' (string), 'short_name' (string), +
+  'nicklist' (integer), 'title' (string), +
+  'prev_buffer' (pointer), 'next_buffer' (pointer)
+
+| _buffer_moved         | Buffer moved          | buffer |
+  'number' (integer), 'full_name' (string), +
+  'prev_buffer' (pointer), 'next_buffer' (pointer)
+
+| _buffer_merged        | Buffer merged         | buffer |
+  'number' (integer), 'full_name' (string), +
+  'prev_buffer' (pointer), 'next_buffer' (pointer)
+
+| _buffer_renamed       | Buffer renamed        | buffer |
+  'number' (integer), 'full_name' (string), 'short_name' (string)
+
+| _buffer_title_changed | Buffer moved          | buffer |
+  'number' (integer), 'full_name' (string), 'title' (string)
+
+| _buffer_line_added    | Line added in buffer  | line_data |
+  'buffer' (pointer), 'date' (time), 'displayed' (char), 'prefix' (string),
+  'message' (string)
+
+| _buffer_closing       | Buffer closing        | buffer |
+  'number' (integer), 'full_name' (string)
+
+| _nicklist             | Nicklist for a buffer | nicklist_item |
+  'group' (char), 'visible' (char), 'level' (integer), +
+  'name' (string), 'color' (string), +
+  'prefix' (string), 'prefix_color' (string)
 |=====================================================
 
 [[message_objects]]
@@ -360,7 +467,7 @@ Objects
 Objects are identified by 3 letters, called 'type'. Following types are
 available:
 
-[width="100%",cols="^2m,8,8",options="header"]
+[width="60%",cols="^2m,5,7",options="header"]
 |=====================================================
 | Type | Value                | Length
 | chr  | Signed char          | 1 byte
@@ -682,7 +789,7 @@ Typical session
                ║                                       ║                           ║
                ╟─────────────────────────────────────► ║                           ║
                ║ cmd: hdata buffer ...                 ╟─────────────────────────► ║
-               ║                                       ║ request hdata             ║ read hdata values
+               ║      sync ...                         ║ request hdata             ║ read hdata values
                ║                                       ║                           ║
                ║                                       ║ ◄─────────────────────────╢
                ║ ◄─────────────────────────────────────╢                     hdata ║
@@ -698,7 +805,7 @@ create buffers ║                       msg: hda buffer ║                    
                ║                                       ║                           ║ signal received
                ║                                       ║ ◄─────────────────────────╢ (hooked by relay)
                ║ ◄─────────────────────────────────────╢                signal XXX ║
-update buffers ║                        msg: event XXX ║                           ║
+update buffers ║                msg: id: "_buffer_..." ║                           ║
                ║                                       ║                           ║
                ║                ........               ║          ........         ║
                ║                                       ║                           ║

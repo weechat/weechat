@@ -20,6 +20,9 @@
 #ifndef __WEECHAT_RELAY_WEECHAT_PROTOCOL_H
 #define __WEECHAT_RELAY_WEECHAT_PROTOCOL_H 1
 
+#define RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER   1
+#define RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST 2
+
 #define RELAY_WEECHAT_PROTOCOL_CALLBACK(__command)                      \
     int                                                                 \
     relay_weechat_protocol_cb_##__command (                             \
@@ -57,6 +60,16 @@ struct t_relay_weechat_protocol_cb
     t_relay_weechat_cmd_func *cmd_function; /* callback                     */
 };
 
+extern int relay_weechat_protocol_signal_buffer_cb (void *data,
+                                                    const char *signal,
+                                                    const char *type_data,
+                                                    void *signal_data);
+extern int relay_weechat_protocol_signal_nicklist_cb (void *data,
+                                                      const char *signal,
+                                                      const char *type_data,
+                                                      void *signal_data);
+extern int relay_weechat_protocol_timer_nicklist_cb (void *data,
+                                                     int remaining_calls);
 extern void relay_weechat_protocol_recv (struct t_relay_client *client,
                                          char *data);
 

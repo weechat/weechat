@@ -599,7 +599,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                 void *pointer,
                                 const char *arguments)
 {
-    struct t_infolist *infolist;
+    struct t_infolist *ptr_infolist;
     const char *fields;
     char **list_fields;
     void *buf_ptr;
@@ -607,8 +607,8 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
     int pos_count_items, count_items, pos_count_vars, count_vars;
     uint32_t count32;
 
-    infolist = weechat_infolist_get (name, pointer, arguments);
-    if (!infolist)
+    ptr_infolist = weechat_infolist_get (name, pointer, arguments);
+    if (!ptr_infolist)
         return;
 
     /* start infolist in message */
@@ -620,9 +620,9 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
     count_items = 0;
     relay_weechat_msg_add_int (msg, 0);
 
-    while (weechat_infolist_next (infolist))
+    while (weechat_infolist_next (ptr_infolist))
     {
-        fields = weechat_infolist_fields (infolist);
+        fields = weechat_infolist_fields (ptr_infolist);
         if (fields)
         {
             list_fields = weechat_string_split (fields, ",", 0, 0, &num_fields);
@@ -643,24 +643,24 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                             case 'i':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
                                 relay_weechat_msg_add_int (msg,
-                                                           weechat_infolist_integer (infolist,
+                                                           weechat_infolist_integer (ptr_infolist,
                                                                                      list_fields[i] + 2));
                                 break;
                             case 's':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
                                 relay_weechat_msg_add_string (msg,
-                                                              weechat_infolist_string (infolist,
+                                                              weechat_infolist_string (ptr_infolist,
                                                                                        list_fields[i] + 2));
                                 break;
                             case 'p':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
                                 relay_weechat_msg_add_pointer (msg,
-                                                               weechat_infolist_pointer (infolist,
+                                                               weechat_infolist_pointer (ptr_infolist,
                                                                                          list_fields[i] + 2));
                                 break;
                             case 'b':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_BUFFER);
-                                buf_ptr = weechat_infolist_buffer (infolist,
+                                buf_ptr = weechat_infolist_buffer (ptr_infolist,
                                                                    list_fields[i] + 2,
                                                                    &buf_size);
                                 relay_weechat_msg_add_buffer (msg, buf_ptr, buf_size);
@@ -668,7 +668,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                             case 't':
                                 relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
                                 relay_weechat_msg_add_time (msg,
-                                                            weechat_infolist_time (infolist,
+                                                            weechat_infolist_time (ptr_infolist,
                                                                                    list_fields[i] + 2));
                                 break;
                         }
@@ -688,7 +688,7 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
     count32 = htonl ((uint32_t)count_items);
     relay_weechat_msg_set_bytes (msg, pos_count_items, &count32, 4);
 
-    weechat_infolist_free (infolist);
+    weechat_infolist_free (ptr_infolist);
 }
 
 /*
@@ -726,6 +726,10 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                                         (char)weechat_hdata_integer(ptr_hdata_nick,
                                                                     ptr_nick,
                                                                     "visible"));
+            relay_weechat_msg_add_int (msg,
+                                       weechat_hdata_integer (ptr_hdata_nick,
+                                                              ptr_nick,
+                                                              "level"));
             relay_weechat_msg_add_string (msg,
                                           weechat_hdata_string (ptr_hdata_nick,
                                                                 ptr_nick,
@@ -742,10 +746,6 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                                           weechat_hdata_string (ptr_hdata_nick,
                                                                 ptr_nick,
                                                                 "prefix_color"));
-            relay_weechat_msg_add_int (msg,
-                                       weechat_hdata_integer (ptr_hdata_nick,
-                                                              ptr_nick,
-                                                              "level"));
             count++;
         }
         else
@@ -757,6 +757,10 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                                         (char)weechat_hdata_integer(ptr_hdata_group,
                                                                     ptr_group,
                                                                     "visible"));
+            relay_weechat_msg_add_int (msg,
+                                       weechat_hdata_integer (ptr_hdata_group,
+                                                              ptr_group,
+                                                              "level"));
             relay_weechat_msg_add_string (msg,
                                           weechat_hdata_string (ptr_hdata_group,
                                                                 ptr_group,
@@ -767,10 +771,6 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                                                                 "color"));
             relay_weechat_msg_add_string (msg, NULL); /* prefix */
             relay_weechat_msg_add_string (msg, NULL); /* prefix_color */
-            relay_weechat_msg_add_int (msg,
-                                       weechat_hdata_integer (ptr_hdata_group,
-                                                              ptr_group,
-                                                              "level"));
             count++;
         }
         weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -794,10 +794,11 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
     uint32_t count32;
 
     relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
-    relay_weechat_msg_add_string (msg, "buffer/nick_group");
+    relay_weechat_msg_add_string (msg, "buffer/nicklist_item");
     relay_weechat_msg_add_string (msg,
-                                  "group:chr,visible:chr,name:str,color:str,"
-                                  "prefix:str,prefix_color:str,level:int");
+                                  "group:chr,visible:chr,level:int,"
+                                  "name:str,color:str,"
+                                  "prefix:str,prefix_color:str");
 
     /* "count" will be set later, with number of objects in hdata */
     pos_count = msg->data_size;
@@ -827,7 +828,8 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
 
 void
 relay_weechat_msg_send (struct t_relay_client *client,
-                        struct t_relay_weechat_msg *msg)
+                        struct t_relay_weechat_msg *msg,
+                        int display_in_raw_buffer)
 {
     uint32_t size32;
     char compression;
@@ -862,18 +864,20 @@ relay_weechat_msg_send (struct t_relay_client *client,
                 num_sent = send (client->sock, dest, dest_size + 5, 0);
 
                 /* display message in raw buffer */
-                relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                                 "obj: %d/%d bytes (%d%%, %ldms), id: %s",
-                                 (int)dest_size + 5,
-                                 msg->data_size,
-                                 100 - ((((int)dest_size + 5) * 100) / msg->data_size),
-                                 time_diff,
-                                 msg->id);
-
-                if (num_sent < 0)
+                if (display_in_raw_buffer)
                 {
                     relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                                     "error: %s", strerror (errno));
+                                     "obj: %d/%d bytes (%d%%, %ldms), id: %s",
+                                     (int)dest_size + 5,
+                                     msg->data_size,
+                                     100 - ((((int)dest_size + 5) * 100) / msg->data_size),
+                                     time_diff,
+                                     msg->id);
+                    if (num_sent < 0)
+                    {
+                        relay_raw_print (client, RELAY_RAW_FLAG_SEND,
+                                         "error: %s", strerror (errno));
+                    }
                 }
 
                 free (dest);
@@ -894,13 +898,15 @@ relay_weechat_msg_send (struct t_relay_client *client,
     num_sent = send (client->sock, msg->data, msg->data_size, 0);
 
     /* display message in raw buffer */
-    relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                     "obj: %d bytes", msg->data_size);
-
-    if (num_sent < 0)
+    if (display_in_raw_buffer)
     {
         relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                         "error: %s", strerror (errno));
+                         "obj: %d bytes", msg->data_size);
+        if (num_sent < 0)
+        {
+            relay_raw_print (client, RELAY_RAW_FLAG_SEND,
+                             "error: %s", strerror (errno));
+        }
     }
 }
 

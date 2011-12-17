@@ -37,9 +37,20 @@ struct t_relay_weechat_data
 {
     int password_ok;                   /* password received and ok?         */
     int compression;                   /* compression type                  */
+
+    /* sync of buffers */
+    struct t_hashtable *buffers_sync;  /* buffers synchronized (events      */
+                                       /* received for these buffers)       */
+    struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_xxx"  */
+    struct t_hook *hook_signal_nicklist;  /* hook for signals "nicklist_xxx"*/
+    struct t_hashtable *buffers_nicklist; /* send nicklist for these buffers*/
+    struct t_hook *hook_timer_nicklist;   /* timer for sending nicklist     */
 };
 
 extern int relay_weechat_compression_search (const char *compression);
+extern void relay_weechat_hook_signals (struct t_relay_client *client);
+extern void relay_weechat_unhook_signals (struct t_relay_client *client);
+extern void relay_weechat_hook_timer_nicklist (struct t_relay_client *client);
 extern void relay_weechat_recv (struct t_relay_client *client,
                                 const char *data);
 extern void relay_weechat_close_connection (struct t_relay_client *client);
