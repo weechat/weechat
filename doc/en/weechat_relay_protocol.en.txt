@@ -447,7 +447,7 @@ WeeChat reserved identifiers:
 | _buffer_title_changed | Buffer moved          | buffer |
   'number' (integer), 'full_name' (string), 'title' (string)
 
-| _buffer_line_added    | Line added in buffer  | line_data |
+| _buffer_line_added    | Line added in buffer  | line |
   'buffer' (pointer), 'date' (time), 'displayed' (char), 'prefix' (string),
   'message' (string)
 
