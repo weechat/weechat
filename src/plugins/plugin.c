@@ -739,6 +739,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hdata_get_var = &hdata_get_var;
         new_plugin->hdata_get_var_at_offset = &hdata_get_var_at_offset;
         new_plugin->hdata_get_list = &hdata_get_list;
+        new_plugin->hdata_check_pointer = &hdata_check_pointer;
         new_plugin->hdata_move = &hdata_move;
         new_plugin->hdata_char = &hdata_char;
         new_plugin->hdata_integer = &hdata_integer;

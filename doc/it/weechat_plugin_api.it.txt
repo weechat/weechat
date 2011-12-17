@@ -12441,8 +12441,16 @@ Esempio in C:
 int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----------------------------------------
 
-[NOTE]
-Questa funzione non è disponibile nelle API per lo scripting.
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+offset = weechat.hdata_get_var_offset(hdata, name)
+
+# esempio
+offset = weechat.hdata_get(hdata, "name")
+----------------------------------------
 
 weechat_hdata_get_var_type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -12701,6 +12709,69 @@ list = weechat.hdata_get_list(hdata, name)
 # esempio
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
+----------------------------------------
+
+weechat_hdata_check_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.7._
+
+// TRANSLATION MISSING
+Check if a pointer is valid for a hdata and a list pointer.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer);
+----------------------------------------
+
+Argomenti:
+
+* 'hdata': puntatore hdata
+// TRANSLATION MISSING
+* 'list': list pointer
+// TRANSLATION MISSING
+* 'pointer': pointer to check
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* 1 if pointer is in list, 0 if not found
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+/* check if a buffer pointer is valid */
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+if (weechat_hdata_check_pointer (hdata,
+                                 weechat_hdata_get_list (hdata, "gui_buffers"),
+                                 ptr_buffer))
+{
+    /* valid pointer */
+}
+else
+{
+    /* invalid pointer */
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+rc = weechat.hdata_check_pointer(hdata, list, pointer)
+
+# esempio
+hdata = weechat.hdata_get("buffer")
+if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
+    # valid pointer
+    # ...
+else:
+    # invalid pointer
+    # ...
 ----------------------------------------
 
 weechat_hdata_move

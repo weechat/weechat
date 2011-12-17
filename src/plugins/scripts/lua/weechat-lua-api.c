@@ -5330,6 +5330,31 @@ weechat_lua_api_hdata_get_list (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hdata_check_pointer: check pointer with hdata/list
+ */
+
+static int
+weechat_lua_api_hdata_check_pointer (lua_State *L)
+{
+    const char *hdata, *list, *pointer;
+    int value;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    list = lua_tostring (lua_current_interpreter, -2);
+    pointer = lua_tostring (lua_current_interpreter, -1);
+
+    value = weechat_hdata_check_pointer (script_str2ptr (hdata),
+                                         script_str2ptr (list),
+                                         script_str2ptr (pointer));
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_hdata_move: move pointer to another element in list
  */
 
@@ -6238,6 +6263,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hdata_get_var_type_string", &weechat_lua_api_hdata_get_var_type_string },
     { "hdata_get_var_hdata", &weechat_lua_api_hdata_get_var_hdata },
     { "hdata_get_list", &weechat_lua_api_hdata_get_list },
+    { "hdata_check_pointer", &weechat_lua_api_hdata_check_pointer },
     { "hdata_move", &weechat_lua_api_hdata_move },
     { "hdata_char", &weechat_lua_api_hdata_char },
     { "hdata_integer", &weechat_lua_api_hdata_integer },

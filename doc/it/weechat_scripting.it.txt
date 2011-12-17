@@ -353,10 +353,11 @@ Elenco di funzioni nelle API per gli script:
   infolist_get, infolist_next, infolist_prev, infolist_reset_item_cursor, +
   infolist_fields, infolist_integer, infolist_string, infolist_pointer, +
   infolist_time, infolist_free
-| hdata               |
+| hdata                  |
   hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
-  hdata_get_var_hdata, hdata_get_list, hdata_move, hdata_integer, hdata_long,
-  hdata_string, hdata_pointer, hdata_time, hdata_get_string
+  hdata_get_var_hdata, hdata_get_list, hdata_check_pointer, hdata_move,
+  hdata_char, hdata_integer, hdata_long, hdata_string, hdata_pointer,
+  hdata_time, hdata_get_string
 | aggiornamento          |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================

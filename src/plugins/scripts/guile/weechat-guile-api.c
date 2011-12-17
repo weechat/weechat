@@ -4838,6 +4838,27 @@ weechat_guile_api_hdata_get_list (SCM hdata, SCM name)
 }
 
 /*
+ * weechat_guile_api_hdata_check_pointer: check pointer with hdata/list
+ */
+
+SCM
+weechat_guile_api_hdata_check_pointer (SCM hdata, SCM list, SCM pointer)
+{
+    int value;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    if (!scm_is_string (hdata) || !scm_is_string (list)
+        || !scm_is_string (pointer))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_hdata_check_pointer (script_str2ptr (scm_i_string_chars (hdata)),
+                                         script_str2ptr (scm_i_string_chars (list)),
+                                         script_str2ptr (scm_i_string_chars (pointer)));
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat_guile_api_hdata_move: move pointer to another element in list
  */
 
@@ -5341,6 +5362,7 @@ weechat_guile_api_module_init (void *data)
     scm_c_define_gsubr ("weechat:hdata_get_var_type_string", 2, 0, 0, &weechat_guile_api_hdata_get_var_type_string);
     scm_c_define_gsubr ("weechat:hdata_get_var_hdata", 2, 0, 0, &weechat_guile_api_hdata_get_var_hdata);
     scm_c_define_gsubr ("weechat:hdata_get_list", 2, 0, 0, &weechat_guile_api_hdata_get_list);
+    scm_c_define_gsubr ("weechat:hdata_check_pointer", 3, 0, 0, &weechat_guile_api_hdata_check_pointer);
     scm_c_define_gsubr ("weechat:hdata_move", 3, 0, 0, &weechat_guile_api_hdata_move);
     scm_c_define_gsubr ("weechat:hdata_char", 3, 0, 0, &weechat_guile_api_hdata_char);
     scm_c_define_gsubr ("weechat:hdata_integer", 3, 0, 0, &weechat_guile_api_hdata_integer);
@@ -5361,16 +5383,20 @@ weechat_guile_api_module_init (void *data)
                   "weechat:string_has_highlight", "weechat:string_has_highlight_regex",
                   "weechat:string_mask_to_regex", "weechat:string_remove_color",
                   "weechat:string_is_command_char", "weechat:string_input_for_buffer",
-                  "weechat:mkdir_home", "weechat:mkdir",
-                  "weechat:mkdir_parents", "weechat:list_new",
-                  "weechat:list_add", "weechat:list_search",
-                  "weechat:list_search_pos", "weechat:list_casesearch",
-                  "weechat:list_casesearch_pos", "weechat:list_get",
-                  "weechat:list_set", "weechat:list_next",
-                  "weechat:list_prev", "weechat:list_string",
-                  "weechat:list_size", "weechat:list_remove",
-                  "weechat:list_remove_all", "weechat:list_free",
-                  "weechat:config_new", "weechat:config_new_section",
+                  NULL);
+    scm_c_export ("weechat:mkdir_home", "weechat:mkdir",
+                  "weechat:mkdir_parents",
+                  NULL);
+    scm_c_export ("weechat:list_new", "weechat:list_add",
+                  "weechat:list_search", "weechat:list_search_pos",
+                  "weechat:list_casesearch", "weechat:list_casesearch_pos",
+                  "weechat:list_get", "weechat:list_set",
+                  "weechat:list_next", "weechat:list_prev",
+                  "weechat:list_string", "weechat:list_size",
+                  "weechat:list_remove", "weechat:list_remove_all",
+                  "weechat:list_free",
+                  NULL);
+    scm_c_export ("weechat:config_new", "weechat:config_new_section",
                   "weechat:config_search_section", "weechat:config_new_option",
                   "weechat:config_search_option", "weechat:config_string_to_boolean",
                   "weechat:config_option_reset", "weechat:config_option_set",
@@ -5388,11 +5414,14 @@ weechat_guile_api_module_init (void *data)
                   "weechat:config_get", "weechat:config_get_plugin",
                   "weechat:config_is_set_plugin", "weechat:config_set_plugin",
                   "weechat:config_set_desc_plugin", "weechat:config_unset_plugin",
-                  "weechat:key_bind", "weechat:key_unbind",
-                  "weechat:prefix", "weechat:color",
+                  NULL);
+    scm_c_export ("weechat:key_bind", "weechat:key_unbind",
+                  NULL);
+    scm_c_export ("weechat:prefix", "weechat:color",
                   "weechat:print", "weechat:print_date_tags",
                   "weechat:print_y", "weechat:log_print",
-                  "weechat:hook_command", "weechat:hook_command_run",
+                  NULL);
+    scm_c_export ("weechat:hook_command", "weechat:hook_command_run",
                   "weechat:hook_timer", "weechat:hook_fd",
                   "weechat:hook_process", "weechat:hook_connect",
                   "weechat:hook_print", "weechat:hook_signal",
@@ -5403,46 +5432,57 @@ weechat_guile_api_module_init (void *data)
                   "weechat:hook_info", "weechat:hook_info_hashtable",
                   "weechat:hook_infolist", "weechat:hook_focus",
                   "weechat:unhook", "weechat:unhook_all",
-                  "weechat:buffer_new", "weechat:buffer_search",
+                  NULL);
+    scm_c_export ("weechat:buffer_new", "weechat:buffer_search",
                   "weechat:buffer_search_main", "weechat:current_buffer",
                   "weechat:buffer_clear", "weechat:buffer_close",
                   "weechat:buffer_merge", "weechat:buffer_unmerge",
                   "weechat:buffer_get_integer", "weechat:buffer_get_string",
                   "weechat:buffer_get_pointer", "weechat:buffer_set",
                   "weechat:buffer_string_replace_local_var", "weechat:buffer_match_list",
-                  "weechat:current_window", "weechat:window_search_with_buffer",
+                  NULL);
+    scm_c_export ("weechat:current_window", "weechat:window_search_with_buffer",
                   "weechat:window_get_integer", "weechat:window_get_string",
                   "weechat:window_get_pointer", "weechat:window_set_title",
-                  "weechat:nicklist_add_group", "weechat:nicklist_search_group",
+                  NULL);
+    scm_c_export ("weechat:nicklist_add_group", "weechat:nicklist_search_group",
                   "weechat:nicklist_add_nick", "weechat:nicklist_search_nick",
                   "weechat:nicklist_remove_group", "weechat:nicklist_remove_nick",
                   "weechat:nicklist_remove_all", "weechat:nicklist_group_get_integer",
                   "weechat:nicklist_group_get_string", "weechat:nicklist_group_get_pointer",
                   "weechat:nicklist_group_set", "weechat:nicklist_nick_get_integer",
                   "weechat:nicklist_nick_get_string", "weechat:nicklist_nick_get_pointer",
-                  "weechat:nicklist_nick_set", "weechat:bar_item_search",
-                  "weechat:bar_item_new", "weechat:bar_item_update",
-                  "weechat:bar_item_remove", "weechat:bar_search",
-                  "weechat:bar_new", "weechat:bar_set",
-                  "weechat:bar_update", "weechat:bar_remove",
-                  "weechat:command", "weechat:info_get",
-                  "weechat:info_get_hashtable", "weechat:infolist_new",
-                  "weechat:infolist_new_item", "weechat:infolist_new_var_integer",
-                  "weechat:infolist_new_var_string", "weechat:infolist_new_var_pointer",
-                  "weechat:infolist_new_var_time", "weechat:infolist_get",
-                  "weechat:infolist_next", "weechat:infolist_prev",
-                  "weechat:infolist_reset_item_cursor", "weechat:infolist_fields",
-                  "weechat:infolist_integer", "weechat:infolist_string",
-                  "weechat:infolist_pointer", "weechat:infolist_time",
-                  "weechat:infolist_free", "weechat:hdata_get",
-                  "weechat:hdata_get_var_offset", "weechat:hdata_get_var_type_string",
-                  "weechat:hdata_get_var_hdata", "weechat:hdata_get_list",
-                  "weechat:hdata_move", "weechat:hdata_integer",
-                  "weechat:hdata_long", "weechat:hdata_string",
-                  "weechat:hdata_pointer", "weechat:hdata_time",
-                  "weechat:hdata_get_string", "weechat:upgrade_new",
-                  "weechat:upgrade_write_object", "weechat:upgrade_read",
-                  "weechat:upgrade_close",
+                  "weechat:nicklist_nick_set",
+                  NULL);
+    scm_c_export ("weechat:bar_item_search", "weechat:bar_item_new",
+                  "weechat:bar_item_update", "weechat:bar_item_remove",
+                  "weechat:bar_search", "weechat:bar_new",
+                  "weechat:bar_set", "weechat:bar_update",
+                  "weechat:bar_remove",
+                  NULL);
+    scm_c_export ("weechat:command",
+                  NULL);
+    scm_c_export ("weechat:info_get", "weechat:info_get_hashtable",
+                  NULL);
+    scm_c_export ("weechat:infolist_new", "weechat:infolist_new_item",
+                  "weechat:infolist_new_var_integer", "weechat:infolist_new_var_string",
+                  "weechat:infolist_new_var_pointer", "weechat:infolist_new_var_time",
+                  "weechat:infolist_get", "weechat:infolist_next",
+                  "weechat:infolist_prev", "weechat:infolist_reset_item_cursor",
+                  "weechat:infolist_fields", "weechat:infolist_integer",
+                  "weechat:infolist_string", "weechat:infolist_pointer",
+                  "weechat:infolist_time", "weechat:infolist_free",
+                  NULL);
+    scm_c_export ("weechat:hdata_get", "weechat:hdata_get_var_offset",
+                  "weechat:hdata_get_var_type_string", "weechat:hdata_get_var_hdata",
+                  "weechat:hdata_get_list", "weechat:hdata_check_pointer",
+                  "weechat:hdata_move", "weechat:hdata_char",
+                  "weechat:hdata_integer", "weechat:hdata_long",
+                  "weechat:hdata_string", "weechat:hdata_pointer",
+                  "weechat:hdata_time", "weechat:hdata_get_string",
+                  NULL);
+    scm_c_export ("weechat:upgrade_new", "weechat:upgrade_write_object",
+                  "weechat:upgrade_read", "weechat:upgrade_close",
                   NULL);
 
     /* interface constants */

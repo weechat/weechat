@@ -5070,6 +5070,31 @@ XS (XS_weechat_api_hdata_get_list)
 }
 
 /*
+ * weechat::hdata_check_pointer: check pointer with hdata/list
+ */
+
+XS (XS_weechat_api_hdata_check_pointer)
+{
+    char *hdata, *list, *pointer;
+    int value;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = SvPV_nolen (ST (0));
+    list = SvPV_nolen (ST (1));
+    pointer = SvPV_nolen (ST (2));
+
+    value = weechat_hdata_check_pointer (script_str2ptr (hdata),
+                                         script_str2ptr (list),
+                                         script_str2ptr (pointer));
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat::hdata_move: move pointer to another element in list
  */
 
@@ -5595,6 +5620,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hdata_get_var_type_string", XS_weechat_api_hdata_get_var_type_string, "weechat");
     newXS ("weechat::hdata_get_var_hdata", XS_weechat_api_hdata_get_var_hdata, "weechat");
     newXS ("weechat::hdata_get_list", XS_weechat_api_hdata_get_list, "weechat");
+    newXS ("weechat::hdata_check_pointer", XS_weechat_api_hdata_check_pointer, "weechat");
     newXS ("weechat::hdata_move", XS_weechat_api_hdata_move, "weechat");
     newXS ("weechat::hdata_char", XS_weechat_api_hdata_char, "weechat");
     newXS ("weechat::hdata_integer", XS_weechat_api_hdata_integer, "weechat");

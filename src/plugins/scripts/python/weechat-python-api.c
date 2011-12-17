@@ -5250,6 +5250,30 @@ weechat_python_api_hdata_get_list (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hdata_check_pointer: check pointer with hdata/list
+ */
+
+static PyObject *
+weechat_python_api_hdata_check_pointer (PyObject *self, PyObject *args)
+{
+    char *hdata, *list, *pointer;
+    int value;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    hdata = NULL;
+    list = NULL;
+    pointer = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &list, &pointer))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_hdata_check_pointer (script_str2ptr (hdata),
+                                         script_str2ptr (list),
+                                         script_str2ptr (pointer));
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat_python_api_hdata_move: move pointer to another element in list
  */
 
@@ -5765,6 +5789,7 @@ PyMethodDef weechat_python_funcs[] =
     { "hdata_get_var_type_string", &weechat_python_api_hdata_get_var_type_string, METH_VARARGS, "" },
     { "hdata_get_var_hdata", &weechat_python_api_hdata_get_var_hdata, METH_VARARGS, "" },
     { "hdata_get_list", &weechat_python_api_hdata_get_list, METH_VARARGS, "" },
+    { "hdata_check_pointer", &weechat_python_api_hdata_check_pointer, METH_VARARGS, "" },
     { "hdata_move", &weechat_python_api_hdata_move, METH_VARARGS, "" },
     { "hdata_char", &weechat_python_api_hdata_char, METH_VARARGS, "" },
     { "hdata_integer", &weechat_python_api_hdata_integer, METH_VARARGS, "" },

@@ -6029,6 +6029,36 @@ weechat_ruby_api_hdata_get_list (VALUE class, VALUE hdata, VALUE name)
 }
 
 /*
+ * weechat_ruby_api_hdata_check_pointer: check pointer with hdata/list
+ */
+
+static VALUE
+weechat_ruby_api_hdata_check_pointer (VALUE class, VALUE hdata, VALUE list,
+                                      VALUE pointer)
+{
+    char *c_hdata, *c_list, *c_pointer;
+    int value;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    if (NIL_P (hdata) || NIL_P (list) || NIL_P (pointer))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (list, T_STRING);
+    Check_Type (pointer, T_STRING);
+
+    c_hdata = StringValuePtr (hdata);
+    c_list = StringValuePtr (list);
+    c_pointer = StringValuePtr (pointer);
+
+    value = weechat_hdata_check_pointer (script_str2ptr (c_hdata),
+                                         script_str2ptr (c_list),
+                                         script_str2ptr (c_pointer));
+
+    API_RETURN_INT(value);
+}
+
+/*
  * weechat_ruby_api_hdata_move: move pointer to another element in list
  */
 
@@ -6657,6 +6687,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hdata_get_var_type_string", &weechat_ruby_api_hdata_get_var_type_string, 2);
     rb_define_module_function (ruby_mWeechat, "hdata_get_var_hdata", &weechat_ruby_api_hdata_get_var_hdata, 2);
     rb_define_module_function (ruby_mWeechat, "hdata_get_list", &weechat_ruby_api_hdata_get_list, 2);
+    rb_define_module_function (ruby_mWeechat, "hdata_check_pointer", &weechat_ruby_api_hdata_check_pointer, 3);
     rb_define_module_function (ruby_mWeechat, "hdata_move", &weechat_ruby_api_hdata_move, 3);
     rb_define_module_function (ruby_mWeechat, "hdata_char", &weechat_ruby_api_hdata_char, 3);
     rb_define_module_function (ruby_mWeechat, "hdata_integer", &weechat_ruby_api_hdata_integer, 3);

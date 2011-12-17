@@ -12324,8 +12324,16 @@ C example:
 int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----------------------------------------
 
-[NOTE]
-This function is not available in scripting API.
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+offset = weechat.hdata_get_var_offset(hdata, name)
+
+# example
+offset = weechat.hdata_get(hdata, "name")
+----------------------------------------
 
 weechat_hdata_get_var_type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -12583,6 +12591,65 @@ list = weechat.hdata_get_list(hdata, name)
 # example
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
+----------------------------------------
+
+weechat_hdata_check_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.7._
+
+Check if a pointer is valid for a hdata and a list pointer.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer);
+----------------------------------------
+
+Arguments:
+
+* 'hdata': hdata pointer
+* 'list': list pointer
+* 'pointer': pointer to check
+
+Return value:
+
+* 1 if pointer is in list, 0 if not found
+
+C example:
+
+[source,C]
+----------------------------------------
+/* check if a buffer pointer is valid */
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+if (weechat_hdata_check_pointer (hdata,
+                                 weechat_hdata_get_list (hdata, "gui_buffers"),
+                                 ptr_buffer))
+{
+    /* valid pointer */
+}
+else
+{
+    /* invalid pointer */
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+rc = weechat.hdata_check_pointer(hdata, list, pointer)
+
+# example
+hdata = weechat.hdata_get("buffer")
+if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
+    # valid pointer
+    # ...
+else:
+    # invalid pointer
+    # ...
 ----------------------------------------
 
 weechat_hdata_move

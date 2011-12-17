@@ -356,8 +356,9 @@ Liste des fonctions de l'API script :
   infolist_time, infolist_free
 | hdata               |
   hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
-  hdata_get_var_hdata, hdata_get_list, hdata_move, hdata_integer, hdata_long,
-  hdata_string, hdata_pointer, hdata_time, hdata_get_string
+  hdata_get_var_hdata, hdata_get_list, hdata_check_pointer, hdata_move,
+  hdata_char, hdata_integer, hdata_long, hdata_string, hdata_pointer,
+  hdata_time, hdata_get_string
 | mise à jour               |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================

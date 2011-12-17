@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20111206-01"
+#define WEECHAT_PLUGIN_API_VERSION "20111217-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -827,6 +827,8 @@ struct t_weechat_plugin
     void *(*hdata_get_var_at_offset) (struct t_hdata *hdata, void *pointer,
                                       int offset);
     void *(*hdata_get_list) (struct t_hdata *hdata, const char *name);
+    int (*hdata_check_pointer) (struct t_hdata *hdata, void *list,
+                                void *pointer);
     void *(*hdata_move) (struct t_hdata *hdata, void *pointer, int count);
     char (*hdata_char) (struct t_hdata *hdata, void *pointer,
                         const char *name);
@@ -1573,6 +1575,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                             __offset)
 #define weechat_hdata_get_list(__hdata, __name)                         \
     weechat_plugin->hdata_get_list(__hdata, __name)
+#define weechat_hdata_check_pointer(__hdata, __list, __pointer)         \
+    weechat_plugin->hdata_check_pointer(__hdata, __list, __pointer)
 #define weechat_hdata_move(__hdata, __pointer, __count)                 \
     weechat_plugin->hdata_move(__hdata, __pointer, __count)
 #define weechat_hdata_char(__hdata, __pointer, __name)                  \

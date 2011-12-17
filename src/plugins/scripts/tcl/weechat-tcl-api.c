@@ -5773,6 +5773,33 @@ weechat_tcl_api_hdata_get_list (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hdata_check_pointer: check pointer with hdata/list
+ */
+
+static int
+weechat_tcl_api_hdata_check_pointer (ClientData clientData, Tcl_Interp *interp,
+                                     int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *list, *pointer;
+    int result, i;
+
+    API_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    list = Tcl_GetStringFromObj (objv[2], &i);
+    pointer = Tcl_GetStringFromObj (objv[3], &i);
+
+    result = weechat_hdata_check_pointer (script_str2ptr (hdata),
+                                          script_str2ptr (list),
+                                          script_str2ptr (pointer));
+
+    API_RETURN_INT(result);
+}
+
+/*
  * weechat_tcl_api_hdata_move: move pointer to another element in list
  */
 
@@ -6568,6 +6595,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
                           weechat_tcl_api_hdata_get_var_hdata, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_get_list",
                           weechat_tcl_api_hdata_get_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp, "weechat::hdata_check_pointer",
+                          weechat_tcl_api_hdata_check_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_move",
                           weechat_tcl_api_hdata_move, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp, "weechat::hdata_integer",

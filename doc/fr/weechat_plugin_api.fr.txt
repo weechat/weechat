@@ -1141,10 +1141,10 @@ Paramètres :
 * 'separators' : délimiteurs utilisés pour le découpage
 * 'keep_eol' : si différent de 0, alors chaque paramètre contiendra toutes les
   chaînes jusqu'à la fin de la ligne (voir exemple ci-dessous)
-** 0: chaque chaîne contiendra un mot
-** 1: chaque chaîne contiendra toute la chaîne jusqu'à la fin de la ligne (voir
+** 0 : chaque chaîne contiendra un mot
+** 1 : chaque chaîne contiendra toute la chaîne jusqu'à la fin de la ligne (voir
    exemple ci-dessous)
-** 2: comme 1, mais ne supprime pas les séparateurs en fin de chaîne avant le
+** 2 : comme 1, mais ne supprime pas les séparateurs en fin de chaîne avant le
    découpage (_nouveau dans la version 0.3.6_)
 * 'num_items_max' : nombre maximum de chaînes à créer (0 = pas de limite)
 * 'num_items' : pointeur vers un entier qui contiendra le nombre de chaînes
@@ -6776,7 +6776,7 @@ toujours).
 
 [NOTE]
 La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a
-2 tampons: un pour stdout et un pour stderr).
+2 tampons : un pour stdout et un pour stderr).
 Si la sortie du processus fils (stdout ou stderr) est plus longue que 64 Ko, le
 "callback" sera appelé plusieurs fois.
 
@@ -8072,7 +8072,7 @@ my_completion_cb (void *data, const char *completion_item,
 }
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -8572,7 +8572,7 @@ weechat_hook_hdata
 
 Accroche un hdata : le "callback" retournera un pointeur vers le hdata demandé.
 
-Prototype:
+Prototype :
 
 [source,C]
 ----------------------------------------
@@ -8712,7 +8712,7 @@ relâché). +
 ^(4)^ Il s'agit de la date lorsque WeeChat ajoute la ligne dans le tampon
 (supérieure ou égale à "_chat_line_date").
 
-Informations additionnelles pour l'objet de barre "buffer_nicklist":
+Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 
 [width="70%",cols="3m,3,8",options="header"]
 |========================================
@@ -9219,7 +9219,7 @@ Paramètres :
 ** 'number' : numéro du tampon (commence à 1)
 ** 'layout_number' : numéro du tampon sauvegardé dans le "layout"
 ** 'layout_number_merge_order' : ordre du tampon mélangé pour le "layout"
-** 'short_name_is_set': 1 si le nom court est défini, 0 si non défini
+** 'short_name_is_set' : 1 si le nom court est défini, 0 si non défini
 ** 'type' : type de tampon (0 : formaté, 1 : contenu libre)
 ** 'notify' : niveau de notification du tampon
 ** 'num_displayed' : nombre de fenêtres affichant ce tampon
@@ -9760,7 +9760,7 @@ struct t_gui_window *weechat_window_search_with_buffer (struct t_gui_buffer *buf
 
 Paramètre :
 
-* 'buffer': buffer pointer
+* 'buffer' : pointeur vers le tampon
 
 Valeur de retour :
 
@@ -9776,7 +9776,7 @@ weechat_printf (NULL,
                 weechat_window_search_with_buffer (weechat_buffer_search_main ()));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12491,7 +12491,7 @@ Exemple en C :
 struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12532,8 +12532,16 @@ Exemple en C :
 int offset = weechat_hdata_get_var_offset (hdata, "name");
 ----------------------------------------
 
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+offset = weechat.hdata_get_var_offset(hdata, name)
+
+# exemple
+offset = weechat.hdata_get(hdata, "name")
+----------------------------------------
 
 weechat_hdata_get_var_type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -12625,7 +12633,7 @@ Exemple en C :
 weechat_printf (NULL, "type = %s", weechat_hdata_get_var_type_string (hdata, "name"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12666,7 +12674,7 @@ Exemple en C :
 weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12782,7 +12790,7 @@ struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12792,6 +12800,65 @@ list = weechat.hdata_get_list(hdata, name)
 # exemple
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
+----------------------------------------
+
+weechat_hdata_check_pointer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Vérifie si un pointeur est valide pour un hdata et un pointeur de liste.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'list' : pointeur vers une liste
+* 'pointer' : pointeur à vérifier
+
+Valeur de retour :
+
+* 1 si le pointeur est dans la liste, 0 si non trouvé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+/* vérifie si le pointeur vers le tampon est valide */
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+if (weechat_hdata_check_pointer (hdata,
+                                 weechat_hdata_get_list (hdata, "gui_buffers"),
+                                 ptr_buffer))
+{
+    /* pointeur valide */
+}
+else
+{
+    /* pointeur invalide */
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+rc = weechat.hdata_check_pointer(hdata, list, pointer)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
+    # pointeur valide
+    # ...
+else:
+    # pointeur invalide
+    # ...
 ----------------------------------------
 
 weechat_hdata_move
@@ -12834,7 +12901,7 @@ if (buffer)
     buffer = weechat_hdata_move (hdata, buffer, -1);
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12885,7 +12952,7 @@ Exemple en C :
 weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12930,7 +12997,7 @@ struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 weechat_printf (NULL, "number = %d", weechat_hdata_integer (hdata, buffer, "number"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -12975,7 +13042,7 @@ Exemple en C :
 weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "longvar"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -13020,7 +13087,7 @@ struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 weechat_printf (NULL, "name = %s", weechat_hdata_string (hdata, buffer, "name"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -13067,7 +13134,7 @@ struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "lines"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -13130,7 +13197,7 @@ if (ptr)
 }
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
@@ -13199,7 +13266,7 @@ weechat_printf (NULL, "variables dans le hdata: %s" weechat_hdata_get_string (hd
 weechat_printf (NULL, "listes dans le hdata: %s" weechat_hdata_get_string (hdata, "list_keys"));
 ----------------------------------------
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----------------------------------------
