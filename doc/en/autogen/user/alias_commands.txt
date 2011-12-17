@@ -4,6 +4,7 @@
 /alias  [-completion <completion>] <alias> [<command> [;<command>...]]
 
 completion: completion for alias (optional, by default completion is done with target command)
+            note: you can use %%command to use completion of an existing command
      alias: name of alias (can start or end with "*" for alias listing)
    command: command name with arguments (many commands can be separated by semicolons)
 

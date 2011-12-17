@@ -975,6 +975,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           N_("completion: completion for alias (optional, by "
                              "default completion is done with target "
                              "command)\n"
+                             "            note: you can use %%command to use "
+                             "completion of an existing command\n"
                              "     alias: name of alias (can start or end "
                              "with \"*\" for alias listing)\n"
                              "   command: command name with arguments (many "
