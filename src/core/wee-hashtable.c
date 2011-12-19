@@ -423,6 +423,46 @@ hashtable_has_key (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
+ * hashtable_to_string: convert a value (from any type) to a string
+ *                      Value returned is a pointer to a static buffer (except
+ *                      if type is string, then pointer to string itself is
+ *                      returned) and must be used immediately, it is
+ *                      overwritten by subsequent calls to this function.
+ */
+
+const char *
+hashtable_to_string (enum t_hashtable_type type, const void *value)
+{
+    static char str_value[128];
+
+    switch (type)
+    {
+        case HASHTABLE_INTEGER:
+            snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+            return str_value;
+            break;
+        case HASHTABLE_STRING:
+            return (const char *)value;
+            break;
+        case HASHTABLE_POINTER:
+        case HASHTABLE_BUFFER:
+            snprintf (str_value, sizeof (str_value),
+                      "0x%lx", (long unsigned int)value);
+            return str_value;
+            break;
+        case HASHTABLE_TIME:
+            snprintf (str_value, sizeof (str_value),
+                      "%ld", (long)(*((time_t *)value)));
+            return str_value;
+            break;
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+
+    return NULL;
+}
+
+/*
  * hashtable_map: call a function on all hashtable entries
  */
 
@@ -448,6 +488,54 @@ hashtable_map (struct t_hashtable *hashtable,
                                    hashtable,
                                    ptr_item->key,
                                    ptr_item->value);
+
+            ptr_item = ptr_next_item;
+        }
+    }
+}
+
+/*
+ * hashtable_map_string: call a function on all hashtable entries,
+ *                       sending keys and values as strings
+ */
+
+void
+hashtable_map_string (struct t_hashtable *hashtable,
+                      t_hashtable_map_string *callback_map,
+                      void *callback_map_data)
+{
+    int i;
+    struct t_hashtable_item *ptr_item, *ptr_next_item;
+    const char *str_key, *str_value;
+    char *key, *value;
+
+    if (!hashtable)
+        return;
+
+    for (i = 0; i < hashtable->size; i++)
+    {
+        ptr_item = hashtable->htable[i];
+        while (ptr_item)
+        {
+            ptr_next_item = ptr_item->next_item;
+
+            str_key = hashtable_to_string (hashtable->type_keys,
+                                           ptr_item->key);
+            key = (str_key) ? strdup (str_key) : NULL;
+
+            str_value = hashtable_to_string (hashtable->type_values,
+                                             ptr_item->value);
+            value = (str_value) ? strdup (str_value) : NULL;
+
+            (void) (callback_map) (callback_map_data,
+                                   hashtable,
+                                   key,
+                                   value);
+
+            if (key)
+                free (key);
+            if (value)
+                free (value);
 
             ptr_item = ptr_next_item;
         }
@@ -510,7 +598,6 @@ hashtable_get_list_keys_map_cb (void *data,
                                 const void *key, const void *value)
 {
     struct t_weelist *list;
-    char str_key[128];
 
     /* make C compiler happy */
     (void) hashtable;
@@ -518,27 +605,8 @@ hashtable_get_list_keys_map_cb (void *data,
 
     list = (struct t_weelist *)data;
 
-    switch (hashtable->type_keys)
-    {
-        case HASHTABLE_INTEGER:
-            snprintf (str_key, sizeof (str_key), "%d", *((int *)key));
-            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
-            break;
-        case HASHTABLE_STRING:
-            weelist_add (list, (const char *)key, WEECHAT_LIST_POS_SORT, NULL);
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-            snprintf (str_key, sizeof (str_key), "0x%lx", (long unsigned int)key);
-            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
-            break;
-        case HASHTABLE_TIME:
-            snprintf (str_key, sizeof (str_key), "%ld", (long)(*((time_t *)key)));
-            weelist_add (list, str_key, WEECHAT_LIST_POS_SORT, NULL);
-            break;
-        case HASHTABLE_NUM_TYPES:
-            break;
-    }
+    weelist_add (list, hashtable_to_string (hashtable->type_keys, key),
+                 WEECHAT_LIST_POS_SORT, NULL);
 }
 
 /*
@@ -584,7 +652,7 @@ hashtable_compute_length_keys_cb (void *data,
                                   struct t_hashtable *hashtable,
                                   const void *key, const void *value)
 {
-    char str_value[128];
+    const char *str_key;
     int *length;
 
     /* make C compiler happy */
@@ -592,27 +660,9 @@ hashtable_compute_length_keys_cb (void *data,
 
     length = (int *)data;
 
-    switch (hashtable->type_keys)
-    {
-        case HASHTABLE_INTEGER:
-            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
-            *length += strlen (str_value) + 1;
-            break;
-        case HASHTABLE_STRING:
-            *length += strlen ((char *)key) + 1;
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
-            *length += strlen (str_value) + 1;
-            break;
-        case HASHTABLE_TIME:
-            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
-            *length += strlen (str_value) + 1;
-            break;
-        case HASHTABLE_NUM_TYPES:
-            break;
-    }
+    str_key = hashtable_to_string (hashtable->type_keys, key);
+    if (str_key)
+        *length += strlen (str_key) + 1;
 }
 
 /*
@@ -624,7 +674,7 @@ hashtable_compute_length_values_cb (void *data,
                                     struct t_hashtable *hashtable,
                                     const void *key, const void *value)
 {
-    char str_value[128];
+    const char *str_value;
     int *length;
 
     /* make C compiler happy */
@@ -634,27 +684,9 @@ hashtable_compute_length_values_cb (void *data,
 
     if (value)
     {
-        switch (hashtable->type_values)
-        {
-            case HASHTABLE_INTEGER:
-                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-                *length += strlen (str_value) + 1;
-                break;
-            case HASHTABLE_STRING:
-                *length += strlen ((char *)value) + 1;
-                break;
-            case HASHTABLE_POINTER:
-            case HASHTABLE_BUFFER:
-                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
-                *length += strlen (str_value) + 1;
-                break;
-            case HASHTABLE_TIME:
-                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
-                *length += strlen (str_value) + 1;
-                break;
-            case HASHTABLE_NUM_TYPES:
-                break;
-        }
+        str_value = hashtable_to_string (hashtable->type_values, value);
+        if (str_value)
+            *length += strlen (str_value) + 1;
     }
     else
     {
@@ -684,7 +716,7 @@ hashtable_build_string_keys_cb (void *data,
                                 struct t_hashtable *hashtable,
                                 const void *key, const void *value)
 {
-    char str_value[128];
+    const char *str_key;
     char *str;
 
     /* make C compiler happy */
@@ -695,27 +727,9 @@ hashtable_build_string_keys_cb (void *data,
     if (str[0])
         strcat (str, ",");
 
-    switch (hashtable->type_keys)
-    {
-        case HASHTABLE_INTEGER:
-            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_STRING:
-            strcat (str, (char *)key);
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_TIME:
-            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_NUM_TYPES:
-            break;
-    }
+    str_key = hashtable_to_string (hashtable->type_keys, key);
+    if (str_key)
+        strcat (str, str_key);
 }
 
 /*
@@ -727,7 +741,7 @@ hashtable_build_string_values_cb (void *data,
                                   struct t_hashtable *hashtable,
                                   const void *key, const void *value)
 {
-    char str_value[128];
+    const char *str_value;
     char *str;
 
     /* make C compiler happy */
@@ -740,27 +754,9 @@ hashtable_build_string_values_cb (void *data,
 
     if (value)
     {
-        switch (hashtable->type_values)
-        {
-            case HASHTABLE_INTEGER:
-                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_STRING:
-                strcat (str, (char *)value);
-                break;
-            case HASHTABLE_POINTER:
-            case HASHTABLE_BUFFER:
-                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_TIME:
-                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_NUM_TYPES:
-                break;
-        }
+        str_value = hashtable_to_string (hashtable->type_values, value);
+        if (str_value)
+            strcat (str, str_value);
     }
     else
     {
@@ -777,7 +773,7 @@ hashtable_build_string_keys_values_cb (void *data,
                                        struct t_hashtable *hashtable,
                                        const void *key, const void *value)
 {
-    char str_value[128];
+    const char *str_key, *str_value;
     char *str;
 
     str = (char *)data;
@@ -785,53 +781,17 @@ hashtable_build_string_keys_values_cb (void *data,
     if (str[0])
         strcat (str, ",");
 
-    switch (hashtable->type_keys)
-    {
-        case HASHTABLE_INTEGER:
-            snprintf (str_value, sizeof (str_value), "%d", *((int *)key));
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_STRING:
-            strcat (str, (char *)key);
-            break;
-        case HASHTABLE_POINTER:
-        case HASHTABLE_BUFFER:
-            snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)key);
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_TIME:
-            snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)key)));
-            strcat (str, str_value);
-            break;
-        case HASHTABLE_NUM_TYPES:
-            break;
-    }
+    str_key = hashtable_to_string (hashtable->type_keys, key);
+    if (str_key)
+        strcat (str, str_key);
 
     strcat (str, ":");
 
     if (value)
     {
-        switch (hashtable->type_values)
-        {
-            case HASHTABLE_INTEGER:
-                snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_STRING:
-                strcat (str, (char *)value);
-                break;
-            case HASHTABLE_POINTER:
-            case HASHTABLE_BUFFER:
-                snprintf (str_value, sizeof (str_value), "0x%lx", (long unsigned int)value);
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_TIME:
-                snprintf (str_value, sizeof (str_value), "%ld", (long)(*((time_t *)value)));
-                strcat (str, str_value);
-                break;
-            case HASHTABLE_NUM_TYPES:
-                break;
-        }
+        str_value = hashtable_to_string (hashtable->type_values, value);
+        if (str_value)
+            strcat (str, str_value);
     }
     else
     {

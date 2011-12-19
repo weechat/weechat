@@ -79,8 +79,8 @@ Tcl_Interp* cinterp;
 void
 weechat_tcl_hashtable_map_cb (void *data,
                               struct t_hashtable *hashtable,
-                              const void *key,
-                              const void *value)
+                              const char *key,
+                              const char *value)
 {
     void **data_array;
     Tcl_Interp *interp;
@@ -94,8 +94,8 @@ weechat_tcl_hashtable_map_cb (void *data,
     dict = data_array[1];
 
     Tcl_DictObjPut (interp, dict,
-                    Tcl_NewStringObj ((char *)key, -1),
-                    Tcl_NewStringObj ((char *)value, -1));
+                    Tcl_NewStringObj (key, -1),
+                    Tcl_NewStringObj (value, -1));
 }
 
 /*
@@ -116,9 +116,9 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
     data[0] = interp;
     data[1] = dict;
 
-    weechat_hashtable_map (hashtable,
-                           &weechat_tcl_hashtable_map_cb,
-                           data);
+    weechat_hashtable_map_string (hashtable,
+                                  &weechat_tcl_hashtable_map_cb,
+                                  data);
 
     return dict;
 }

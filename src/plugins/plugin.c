@@ -571,6 +571,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hashtable_get = &hashtable_get;
         new_plugin->hashtable_has_key = &hashtable_has_key;
         new_plugin->hashtable_map = &hashtable_map;
+        new_plugin->hashtable_map_string = &hashtable_map_string;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
         new_plugin->hashtable_get_string = &hashtable_get_string;
         new_plugin->hashtable_set_pointer = &hashtable_set_pointer;
@@ -747,6 +748,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hdata_string = &hdata_string;
         new_plugin->hdata_pointer = &hdata_pointer;
         new_plugin->hdata_time = &hdata_time;
+        new_plugin->hdata_hashtable = &hdata_hashtable;
         new_plugin->hdata_get_string = &hdata_get_string;
 
         new_plugin->upgrade_new = &upgrade_file_new;

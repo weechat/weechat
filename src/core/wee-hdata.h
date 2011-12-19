@@ -76,6 +76,8 @@ extern void *hdata_pointer (struct t_hdata *hdata, void *pointer,
                             const char *name);
 extern time_t hdata_time (struct t_hdata *hdata, void *pointer,
                           const char *name);
+extern struct t_hashtable *hdata_hashtable (struct t_hdata *hdata,
+                                            void *pointer, const char *name);
 extern const char *hdata_get_string (struct t_hdata *hdata,
                                      const char *property);
 extern void hdata_free_all_plugin (struct t_weechat_plugin *plugin);

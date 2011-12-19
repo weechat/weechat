@@ -161,8 +161,8 @@ weechat_guile_exec_function (const char *function, SCM args)
 void
 weechat_guile_hashtable_map_cb (void *data,
                                 struct t_hashtable *hashtable,
-                                const void *key,
-                                const void *value)
+                                const char *key,
+                                const char *value)
 {
     SCM *alist, pair, list;
 
@@ -171,8 +171,8 @@ weechat_guile_hashtable_map_cb (void *data,
 
     alist = (SCM *)data;
 
-    pair = scm_cons (scm_from_locale_string ((const char *)key),
-                     scm_from_locale_string ((const char *)value));
+    pair = scm_cons (scm_from_locale_string (key),
+                     scm_from_locale_string (value));
     list = scm_list_1 (pair);
 
     *alist = scm_append (scm_list_2 (*alist, list));
@@ -189,9 +189,9 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 
     alist = scm_list_n (SCM_UNDEFINED);
 
-    weechat_hashtable_map (hashtable,
-                           &weechat_guile_hashtable_map_cb,
-                           &alist);
+    weechat_hashtable_map_string (hashtable,
+                                  &weechat_guile_hashtable_map_cb,
+                                  &alist);
 
     return alist;
 }

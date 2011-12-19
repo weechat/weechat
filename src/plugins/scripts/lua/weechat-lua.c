@@ -77,8 +77,8 @@ char *lua_action_remove_list = NULL;
 void
 weechat_lua_hashtable_map_cb (void *data,
                               struct t_hashtable *hashtable,
-                              const void *key,
-                              const void *value)
+                              const char *key,
+                              const char *value)
 {
     lua_State *interpreter;
 
@@ -87,8 +87,8 @@ weechat_lua_hashtable_map_cb (void *data,
 
     interpreter = (lua_State *)data;
 
-    lua_pushstring (interpreter, (char *)key);
-    lua_pushstring (interpreter, (char *)value);
+    lua_pushstring (interpreter, key);
+    lua_pushstring (interpreter, value);
     lua_rawset (interpreter, -3);
 }
 
@@ -101,9 +101,9 @@ weechat_lua_pushhashtable (lua_State *interpreter, struct t_hashtable *hashtable
 {
     lua_newtable (interpreter);
 
-    weechat_hashtable_map (hashtable,
-                           &weechat_lua_hashtable_map_cb,
-                           interpreter);
+    weechat_hashtable_map_string (hashtable,
+                                  &weechat_lua_hashtable_map_cb,
+                                  interpreter);
 }
 
 /*

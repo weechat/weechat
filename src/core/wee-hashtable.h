@@ -32,6 +32,9 @@ typedef void (t_hashtable_free_value)(struct t_hashtable *hashtable,
 typedef void (t_hashtable_map)(void *data,
                                struct t_hashtable *hashtable,
                                const void *key, const void *value);
+typedef void (t_hashtable_map_string)(void *data,
+                                      struct t_hashtable *hashtable,
+                                      const char *key, const char *value);
 
 /*
  * Hashtable is a structure with an array "htable", each entry is a pointer
@@ -121,6 +124,9 @@ extern int hashtable_has_key (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_map (struct t_hashtable *hashtable,
                            t_hashtable_map *callback_map,
                            void *callback_map_data);
+extern void hashtable_map_string (struct t_hashtable *hashtable,
+                                  t_hashtable_map_string *callback_map,
+                                  void *callback_map_data);
 extern struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
 struct t_weelist *hashtable_get_list_keys (struct t_hashtable *hashtable);
 extern int hashtable_get_integer (struct t_hashtable *hashtable,

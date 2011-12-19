@@ -3140,11 +3140,11 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, NULL);
-        HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, HASHTABLE, NULL);
         HDATA_VAR(struct t_gui_buffer, keys, POINTER, "key");
         HDATA_VAR(struct t_gui_buffer, last_key, POINTER, "key");
         HDATA_VAR(struct t_gui_buffer, keys_count, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_buffer, local_variables, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, local_variables, HASHTABLE, NULL);
         HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER, hdata_name);
         HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER, hdata_name);
         HDATA_LIST(gui_buffers);

@@ -194,6 +194,12 @@
         return TCL_OK;                                                  \
     }
 
+#define API_DEF_FUNC(__name)                                            \
+    Tcl_CreateObjCommand (interp, "weechat::" #__name,                  \
+                          weechat_tcl_api_##__name,                     \
+                          (ClientData) NULL,                            \
+                          (Tcl_CmdDeleteProc*)NULL);
+
 
 /*
  * weechat_tcl_api_register: startup function for all WeeChat Tcl scripts
@@ -5977,6 +5983,36 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hdata_hashtable: get hashtable value of a variable in
+ *                                  structure using hdata
+ */
+
+static int
+weechat_tcl_api_hdata_hashtable (ClientData clientData, Tcl_Interp *interp,
+                                 int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp, *result_dict;
+    char *hdata, *pointer, *name;
+    int i;
+
+    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+
+    result_dict = weechat_tcl_hashtable_to_dict (
+        interp,
+        weechat_hdata_hashtable (script_str2ptr (hdata),
+                                 script_str2ptr (pointer),
+                                 name));
+
+    API_RETURN_OBJ(result_dict);
+}
+
+/*
  * weechat_tcl_api_hdata_get_string: get hdata property as string
  */
 
@@ -6263,360 +6299,183 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_DecrRefCount (objp);
 
     /* interface functions */
-    Tcl_CreateObjCommand (interp, "weechat::register",
-                          weechat_tcl_api_register, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::plugin_get_name",
-                          weechat_tcl_api_plugin_get_name, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::charset_set",
-                          weechat_tcl_api_charset_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::iconv_to_internal",
-                          weechat_tcl_api_iconv_to_internal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::iconv_from_internal",
-                          weechat_tcl_api_iconv_from_internal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::gettext",
-                          weechat_tcl_api_gettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::ngettext",
-                          weechat_tcl_api_ngettext, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_match",
-                          weechat_tcl_api_string_match, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_has_highlight",
-                          weechat_tcl_api_string_has_highlight, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_has_highlight_regex",
-                          weechat_tcl_api_string_has_highlight_regex, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_mask_to_regex",
-                          weechat_tcl_api_string_mask_to_regex, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_remove_color",
-                          weechat_tcl_api_string_remove_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_is_command_char",
-                          weechat_tcl_api_string_is_command_char, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::string_input_for_buffer",
-                          weechat_tcl_api_string_input_for_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::mkdir_home",
-                          weechat_tcl_api_mkdir_home, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::mkdir",
-                          weechat_tcl_api_mkdir, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::mkdir_parents",
-                          weechat_tcl_api_mkdir_parents, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_new",
-                          weechat_tcl_api_list_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_add",
-                          weechat_tcl_api_list_add, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_search",
-                          weechat_tcl_api_list_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_search_pos",
-                          weechat_tcl_api_list_search_pos, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_casesearch",
-                          weechat_tcl_api_list_casesearch, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_casesearch_pos",
-                          weechat_tcl_api_list_casesearch_pos, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_get",
-                          weechat_tcl_api_list_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_set",
-                          weechat_tcl_api_list_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_next",
-                          weechat_tcl_api_list_next, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_prev",
-                          weechat_tcl_api_list_prev, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_string",
-                          weechat_tcl_api_list_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_size",
-                          weechat_tcl_api_list_size, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_remove",
-                          weechat_tcl_api_list_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_remove_all",
-                          weechat_tcl_api_list_remove_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::list_free",
-                          weechat_tcl_api_list_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_new",
-                          weechat_tcl_api_config_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_new_section",
-                          weechat_tcl_api_config_new_section, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_search_section",
-                          weechat_tcl_api_config_search_section, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_new_option",
-                          weechat_tcl_api_config_new_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_search_option",
-                          weechat_tcl_api_config_search_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_string_to_boolean",
-                          weechat_tcl_api_config_string_to_boolean, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_reset",
-                          weechat_tcl_api_config_option_reset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_set",
-                          weechat_tcl_api_config_option_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_set_null",
-                          weechat_tcl_api_config_option_set_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_unset",
-                          weechat_tcl_api_config_option_unset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_rename",
-                          weechat_tcl_api_config_option_rename, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_is_null",
-                          weechat_tcl_api_config_option_is_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_default_is_null",
-                          weechat_tcl_api_config_option_default_is_null, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_boolean",
-                          weechat_tcl_api_config_boolean, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_boolean_default",
-                          weechat_tcl_api_config_boolean_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_integer",
-                          weechat_tcl_api_config_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_integer_default",
-                          weechat_tcl_api_config_integer_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_string",
-                          weechat_tcl_api_config_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_string_default",
-                          weechat_tcl_api_config_string_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_color",
-                          weechat_tcl_api_config_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_color_default",
-                          weechat_tcl_api_config_color_default, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_write_option",
-                          weechat_tcl_api_config_write_option, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_write_line",
-                          weechat_tcl_api_config_write_line, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_write",
-                          weechat_tcl_api_config_write, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_read",
-                          weechat_tcl_api_config_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_reload",
-                          weechat_tcl_api_config_reload, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_option_free",
-                          weechat_tcl_api_config_option_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_section_free_options",
-                          weechat_tcl_api_config_section_free_options, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_section_free",
-                          weechat_tcl_api_config_section_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_free",
-                          weechat_tcl_api_config_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_get",
-                          weechat_tcl_api_config_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_get_plugin",
-                          weechat_tcl_api_config_get_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_is_set_plugin",
-                          weechat_tcl_api_config_is_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_set_plugin",
-                          weechat_tcl_api_config_set_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_set_desc_plugin",
-                          weechat_tcl_api_config_set_desc_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::config_unset_plugin",
-                          weechat_tcl_api_config_unset_plugin, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::key_bind",
-                          weechat_tcl_api_key_bind, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::key_unbind",
-                          weechat_tcl_api_key_unbind, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::prefix",
-                          weechat_tcl_api_prefix, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::color",
-                          weechat_tcl_api_color, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::print",
-                          weechat_tcl_api_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::print_date_tags",
-                          weechat_tcl_api_print_date_tags, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::print_y",
-                          weechat_tcl_api_print_y, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::log_print",
-                          weechat_tcl_api_log_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_command",
-                          weechat_tcl_api_hook_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_command_run",
-                          weechat_tcl_api_hook_command_run, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_timer",
-                          weechat_tcl_api_hook_timer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_fd",
-                          weechat_tcl_api_hook_fd, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_process",
-                          weechat_tcl_api_hook_process, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_connect",
-                          weechat_tcl_api_hook_connect, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_print",
-                          weechat_tcl_api_hook_print, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_signal",
-                          weechat_tcl_api_hook_signal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_signal_send",
-                          weechat_tcl_api_hook_signal_send, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_hsignal",
-                          weechat_tcl_api_hook_hsignal, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_hsignal_send",
-                          weechat_tcl_api_hook_hsignal_send, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_config",
-                          weechat_tcl_api_hook_config, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_completion",
-                          weechat_tcl_api_hook_completion, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_completion_list_add",
-                          weechat_tcl_api_hook_completion_list_add, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_modifier",
-                          weechat_tcl_api_hook_modifier, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_modifier_exec",
-                          weechat_tcl_api_hook_modifier_exec, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_info",
-                          weechat_tcl_api_hook_info, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_info_hashtable",
-                          weechat_tcl_api_hook_info_hashtable, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_infolist",
-                          weechat_tcl_api_hook_infolist, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hook_focus",
-                          weechat_tcl_api_hook_focus, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::unhook",
-                          weechat_tcl_api_unhook, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::unhook_all",
-                          weechat_tcl_api_unhook_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_new",
-                          weechat_tcl_api_buffer_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_search",
-                          weechat_tcl_api_buffer_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_search_main",
-                          weechat_tcl_api_buffer_search_main, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::current_buffer",
-                          weechat_tcl_api_current_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_clear",
-                          weechat_tcl_api_buffer_clear, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_close",
-                          weechat_tcl_api_buffer_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_merge",
-                          weechat_tcl_api_buffer_merge, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_unmerge",
-                          weechat_tcl_api_buffer_unmerge, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_get_integer",
-                          weechat_tcl_api_buffer_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_get_string",
-                          weechat_tcl_api_buffer_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_get_pointer",
-                          weechat_tcl_api_buffer_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_set",
-                          weechat_tcl_api_buffer_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_string_replace_local_var",
-                          weechat_tcl_api_buffer_string_replace_local_var, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::buffer_match_list",
-                          weechat_tcl_api_buffer_match_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::current_window",
-                          weechat_tcl_api_current_window, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::window_search_with_buffer",
-                          weechat_tcl_api_window_search_with_buffer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::window_get_integer",
-                          weechat_tcl_api_window_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::window_get_string",
-                          weechat_tcl_api_window_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::window_get_pointer",
-                          weechat_tcl_api_window_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::window_set_title",
-                          weechat_tcl_api_window_set_title, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_add_group",
-                          weechat_tcl_api_nicklist_add_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_search_group",
-                          weechat_tcl_api_nicklist_search_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_add_nick",
-                          weechat_tcl_api_nicklist_add_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_search_nick",
-                          weechat_tcl_api_nicklist_search_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_group",
-                          weechat_tcl_api_nicklist_remove_group, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_nick",
-                          weechat_tcl_api_nicklist_remove_nick, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_remove_all",
-                          weechat_tcl_api_nicklist_remove_all, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_integer",
-                          weechat_tcl_api_nicklist_group_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_string",
-                          weechat_tcl_api_nicklist_group_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_get_pointer",
-                          weechat_tcl_api_nicklist_group_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_group_set",
-                          weechat_tcl_api_nicklist_group_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_integer",
-                          weechat_tcl_api_nicklist_nick_get_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_string",
-                          weechat_tcl_api_nicklist_nick_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_get_pointer",
-                          weechat_tcl_api_nicklist_nick_get_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::nicklist_nick_set",
-                          weechat_tcl_api_nicklist_nick_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_item_search",
-                          weechat_tcl_api_bar_item_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_item_new",
-                          weechat_tcl_api_bar_item_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_item_update",
-                          weechat_tcl_api_bar_item_update, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_item_remove",
-                          weechat_tcl_api_bar_item_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_search",
-                          weechat_tcl_api_bar_search, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_new",
-                          weechat_tcl_api_bar_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_set",
-                          weechat_tcl_api_bar_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_update",
-                          weechat_tcl_api_bar_update, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::bar_remove",
-                          weechat_tcl_api_bar_remove, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::command",
-                          weechat_tcl_api_command, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::info_get",
-                          weechat_tcl_api_info_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::info_get_hashtable",
-                          weechat_tcl_api_info_get_hashtable, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new",
-                          weechat_tcl_api_infolist_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new_item",
-                          weechat_tcl_api_infolist_new_item, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_integer",
-                          weechat_tcl_api_infolist_new_var_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_string",
-                          weechat_tcl_api_infolist_new_var_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_pointer",
-                          weechat_tcl_api_infolist_new_var_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_new_var_time",
-                          weechat_tcl_api_infolist_new_var_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_get",
-                          weechat_tcl_api_infolist_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_next",
-                          weechat_tcl_api_infolist_next, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_prev",
-                          weechat_tcl_api_infolist_prev, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_reset_item_cursor",
-                          weechat_tcl_api_infolist_reset_item_cursor, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_fields",
-                          weechat_tcl_api_infolist_fields, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_integer",
-                          weechat_tcl_api_infolist_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_string",
-                          weechat_tcl_api_infolist_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_pointer",
-                          weechat_tcl_api_infolist_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_time",
-                          weechat_tcl_api_infolist_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::infolist_free",
-                          weechat_tcl_api_infolist_free, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get",
-                          weechat_tcl_api_hdata_get, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_offset",
-                          weechat_tcl_api_hdata_get_var_offset, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_type_string",
-                          weechat_tcl_api_hdata_get_var_type_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get_var_hdata",
-                          weechat_tcl_api_hdata_get_var_hdata, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get_list",
-                          weechat_tcl_api_hdata_get_list, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_check_pointer",
-                          weechat_tcl_api_hdata_check_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_move",
-                          weechat_tcl_api_hdata_move, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_integer",
-                          weechat_tcl_api_hdata_integer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_long",
-                          weechat_tcl_api_hdata_long, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_string",
-                          weechat_tcl_api_hdata_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_pointer",
-                          weechat_tcl_api_hdata_pointer, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_time",
-                          weechat_tcl_api_hdata_time, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::hdata_get_string",
-                          weechat_tcl_api_hdata_get_string, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::upgrade_new",
-                          weechat_tcl_api_upgrade_new, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::upgrade_write_object",
-                          weechat_tcl_api_upgrade_write_object, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::upgrade_read",
-                          weechat_tcl_api_upgrade_read, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
-    Tcl_CreateObjCommand (interp, "weechat::upgrade_close",
-                          weechat_tcl_api_upgrade_close, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    API_DEF_FUNC(register);
+    API_DEF_FUNC(plugin_get_name);
+    API_DEF_FUNC(charset_set);
+    API_DEF_FUNC(iconv_to_internal);
+    API_DEF_FUNC(iconv_from_internal);
+    API_DEF_FUNC(gettext);
+    API_DEF_FUNC(ngettext);
+    API_DEF_FUNC(string_match);
+    API_DEF_FUNC(string_has_highlight);
+    API_DEF_FUNC(string_has_highlight_regex);
+    API_DEF_FUNC(string_mask_to_regex);
+    API_DEF_FUNC(string_remove_color);
+    API_DEF_FUNC(string_is_command_char);
+    API_DEF_FUNC(string_input_for_buffer);
+    API_DEF_FUNC(mkdir_home);
+    API_DEF_FUNC(mkdir);
+    API_DEF_FUNC(mkdir_parents);
+    API_DEF_FUNC(list_new);
+    API_DEF_FUNC(list_add);
+    API_DEF_FUNC(list_search);
+    API_DEF_FUNC(list_search_pos);
+    API_DEF_FUNC(list_casesearch);
+    API_DEF_FUNC(list_casesearch_pos);
+    API_DEF_FUNC(list_get);
+    API_DEF_FUNC(list_set);
+    API_DEF_FUNC(list_next);
+    API_DEF_FUNC(list_prev);
+    API_DEF_FUNC(list_string);
+    API_DEF_FUNC(list_size);
+    API_DEF_FUNC(list_remove);
+    API_DEF_FUNC(list_remove_all);
+    API_DEF_FUNC(list_free);
+    API_DEF_FUNC(config_new);
+    API_DEF_FUNC(config_new_section);
+    API_DEF_FUNC(config_search_section);
+    API_DEF_FUNC(config_new_option);
+    API_DEF_FUNC(config_search_option);
+    API_DEF_FUNC(config_string_to_boolean);
+    API_DEF_FUNC(config_option_reset);
+    API_DEF_FUNC(config_option_set);
+    API_DEF_FUNC(config_option_set_null);
+    API_DEF_FUNC(config_option_unset);
+    API_DEF_FUNC(config_option_rename);
+    API_DEF_FUNC(config_option_is_null);
+    API_DEF_FUNC(config_option_default_is_null);
+    API_DEF_FUNC(config_boolean);
+    API_DEF_FUNC(config_boolean_default);
+    API_DEF_FUNC(config_integer);
+    API_DEF_FUNC(config_integer_default);
+    API_DEF_FUNC(config_string);
+    API_DEF_FUNC(config_string_default);
+    API_DEF_FUNC(config_color);
+    API_DEF_FUNC(config_color_default);
+    API_DEF_FUNC(config_write_option);
+    API_DEF_FUNC(config_write_line);
+    API_DEF_FUNC(config_write);
+    API_DEF_FUNC(config_read);
+    API_DEF_FUNC(config_reload);
+    API_DEF_FUNC(config_option_free);
+    API_DEF_FUNC(config_section_free_options);
+    API_DEF_FUNC(config_section_free);
+    API_DEF_FUNC(config_free);
+    API_DEF_FUNC(config_get);
+    API_DEF_FUNC(config_get_plugin);
+    API_DEF_FUNC(config_is_set_plugin);
+    API_DEF_FUNC(config_set_plugin);
+    API_DEF_FUNC(config_set_desc_plugin);
+    API_DEF_FUNC(config_unset_plugin);
+    API_DEF_FUNC(key_bind);
+    API_DEF_FUNC(key_unbind);
+    API_DEF_FUNC(prefix);
+    API_DEF_FUNC(color);
+    API_DEF_FUNC(print);
+    API_DEF_FUNC(print_date_tags);
+    API_DEF_FUNC(print_y);
+    API_DEF_FUNC(log_print);
+    API_DEF_FUNC(hook_command);
+    API_DEF_FUNC(hook_command_run);
+    API_DEF_FUNC(hook_timer);
+    API_DEF_FUNC(hook_fd);
+    API_DEF_FUNC(hook_process);
+    API_DEF_FUNC(hook_connect);
+    API_DEF_FUNC(hook_print);
+    API_DEF_FUNC(hook_signal);
+    API_DEF_FUNC(hook_signal_send);
+    API_DEF_FUNC(hook_hsignal);
+    API_DEF_FUNC(hook_hsignal_send);
+    API_DEF_FUNC(hook_config);
+    API_DEF_FUNC(hook_completion);
+    API_DEF_FUNC(hook_completion_list_add);
+    API_DEF_FUNC(hook_modifier);
+    API_DEF_FUNC(hook_modifier_exec);
+    API_DEF_FUNC(hook_info);
+    API_DEF_FUNC(hook_info_hashtable);
+    API_DEF_FUNC(hook_infolist);
+    API_DEF_FUNC(hook_focus);
+    API_DEF_FUNC(unhook);
+    API_DEF_FUNC(unhook_all);
+    API_DEF_FUNC(buffer_new);
+    API_DEF_FUNC(buffer_search);
+    API_DEF_FUNC(buffer_search_main);
+    API_DEF_FUNC(current_buffer);
+    API_DEF_FUNC(buffer_clear);
+    API_DEF_FUNC(buffer_close);
+    API_DEF_FUNC(buffer_merge);
+    API_DEF_FUNC(buffer_unmerge);
+    API_DEF_FUNC(buffer_get_integer);
+    API_DEF_FUNC(buffer_get_string);
+    API_DEF_FUNC(buffer_get_pointer);
+    API_DEF_FUNC(buffer_set);
+    API_DEF_FUNC(buffer_string_replace_local_var);
+    API_DEF_FUNC(buffer_match_list);
+    API_DEF_FUNC(current_window);
+    API_DEF_FUNC(window_search_with_buffer);
+    API_DEF_FUNC(window_get_integer);
+    API_DEF_FUNC(window_get_string);
+    API_DEF_FUNC(window_get_pointer);
+    API_DEF_FUNC(window_set_title);
+    API_DEF_FUNC(nicklist_add_group);
+    API_DEF_FUNC(nicklist_search_group);
+    API_DEF_FUNC(nicklist_add_nick);
+    API_DEF_FUNC(nicklist_search_nick);
+    API_DEF_FUNC(nicklist_remove_group);
+    API_DEF_FUNC(nicklist_remove_nick);
+    API_DEF_FUNC(nicklist_remove_all);
+    API_DEF_FUNC(nicklist_group_get_integer);
+    API_DEF_FUNC(nicklist_group_get_string);
+    API_DEF_FUNC(nicklist_group_get_pointer);
+    API_DEF_FUNC(nicklist_group_set);
+    API_DEF_FUNC(nicklist_nick_get_integer);
+    API_DEF_FUNC(nicklist_nick_get_string);
+    API_DEF_FUNC(nicklist_nick_get_pointer);
+    API_DEF_FUNC(nicklist_nick_set);
+    API_DEF_FUNC(bar_item_search);
+    API_DEF_FUNC(bar_item_new);
+    API_DEF_FUNC(bar_item_update);
+    API_DEF_FUNC(bar_item_remove);
+    API_DEF_FUNC(bar_search);
+    API_DEF_FUNC(bar_new);
+    API_DEF_FUNC(bar_set);
+    API_DEF_FUNC(bar_update);
+    API_DEF_FUNC(bar_remove);
+    API_DEF_FUNC(command);
+    API_DEF_FUNC(info_get);
+    API_DEF_FUNC(info_get_hashtable);
+    API_DEF_FUNC(infolist_new);
+    API_DEF_FUNC(infolist_new_item);
+    API_DEF_FUNC(infolist_new_var_integer);
+    API_DEF_FUNC(infolist_new_var_string);
+    API_DEF_FUNC(infolist_new_var_pointer);
+    API_DEF_FUNC(infolist_new_var_time);
+    API_DEF_FUNC(infolist_get);
+    API_DEF_FUNC(infolist_next);
+    API_DEF_FUNC(infolist_prev);
+    API_DEF_FUNC(infolist_reset_item_cursor);
+    API_DEF_FUNC(infolist_fields);
+    API_DEF_FUNC(infolist_integer);
+    API_DEF_FUNC(infolist_string);
+    API_DEF_FUNC(infolist_pointer);
+    API_DEF_FUNC(infolist_time);
+    API_DEF_FUNC(infolist_free);
+    API_DEF_FUNC(hdata_get);
+    API_DEF_FUNC(hdata_get_var_offset);
+    API_DEF_FUNC(hdata_get_var_type_string);
+    API_DEF_FUNC(hdata_get_var_hdata);
+    API_DEF_FUNC(hdata_get_list);
+    API_DEF_FUNC(hdata_check_pointer);
+    API_DEF_FUNC(hdata_move);
+    API_DEF_FUNC(hdata_integer);
+    API_DEF_FUNC(hdata_long);
+    API_DEF_FUNC(hdata_string);
+    API_DEF_FUNC(hdata_pointer);
+    API_DEF_FUNC(hdata_time);
+    API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_get_string);
+    API_DEF_FUNC(upgrade_new);
+    API_DEF_FUNC(upgrade_write_object);
+    API_DEF_FUNC(upgrade_read);
+    API_DEF_FUNC(upgrade_close);
 }

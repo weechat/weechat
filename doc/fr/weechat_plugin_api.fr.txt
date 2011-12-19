@@ -3326,6 +3326,55 @@ weechat_hashtable_map (hashtable, &map_cb, NULL);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_hashtable_map_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Appelle une fonction pour chaque entrée d'une hashtable, en envoyant les clés
+et valeurs sous forme de chaînes.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void hashtable_map_string (struct t_hashlist *hashlist,
+                           void (*callback_map)(void *data,
+                                                struct t_hashtable *hashtable,
+                                                const char *key,
+                                                const char *value),
+                           void *callback_map_data);
+----------------------------------------
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la hashtable
+* 'callback_map' : fonction appelée pour chaque entrée de la hashtable
+* 'callback_map_data' : pointeur donné au "callback" lorsqu'il est appelé
+
+[NOTE]
+Les chaînes 'key' et 'value' envoyées au "callback" sont des chaînes
+temporaires, elles sont supprimées après l'appel au "callback".
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+void
+map_cb (void *data, struct t_hashtable *hashtable,
+        const char *key, const char *value)
+{
+    /* afficher la clé et la valeur */
+    weechat_printf (NULL, "clé: '%s', valeur: '%s'",
+                    key, value);
+}
+/* ... */
+weechat_hashtable_map_string (hashtable, &map_cb, NULL);
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -13220,6 +13269,58 @@ if ptr:
         if ptr:
             hdata = weechat.hdata_get("line_data")
             weechat.prnt("", "heure de la première ligne affichée = %s" % weechat.hdata_time(hdata, ptr, "date"))
+----------------------------------------
+
+weechat_hdata_hashtable
+^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+forme de hashtable.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+struct t_hashtable *weechat_hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable (doit être de type "hashtable")
+
+Valeur de retour :
+
+* valeur de la variable, sous forme de pointeur vers la hashtable
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer = weechat_buffer_search_main ();
+struct t_hashtable *hashtable = weechat_hdata_hashtable (hdata, buffer, "local_variables");
+weechat_printf (NULL, "%d variables locales dans le tampon principal",
+                weechat_hashtable_get_integer (hashtable, "items_count"));
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+hashtable = weechat.hdata_hashtable(hdata, pointer, name)
+
+# example
+hdata = weechat.hdata_get("buffer")
+buffer = weechat.buffer_search_main()
+hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
+weechat.prnt("", "variables locales dans le tampon principal :")
+for key in hash:
+    weechat.prnt("", "  %s == %s" % (key, hash[key]))
 ----------------------------------------
 
 weechat_hdata_get_string

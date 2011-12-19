@@ -127,8 +127,8 @@ weechat_python_set_python2_bin ()
 void
 weechat_python_hashtable_map_cb (void *data,
                                  struct t_hashtable *hashtable,
-                                 const void *key,
-                                 const void *value)
+                                 const char *key,
+                                 const char *value)
 {
     PyObject *dict, *dict_key, *dict_value;
 
@@ -137,8 +137,8 @@ weechat_python_hashtable_map_cb (void *data,
 
     dict = (PyObject *)data;
 
-    dict_key = Py_BuildValue ("s", (const char *)key);
-    dict_value = Py_BuildValue ("s", (const char *)value);
+    dict_key = Py_BuildValue ("s", key);
+    dict_value = Py_BuildValue ("s", value);
 
     PyDict_SetItem (dict, dict_key, dict_value);
 
@@ -163,9 +163,9 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
         return Py_None;
     }
 
-    weechat_hashtable_map (hashtable,
-                           &weechat_python_hashtable_map_cb,
-                           dict);
+    weechat_hashtable_map_string (hashtable,
+                                  &weechat_python_hashtable_map_cb,
+                                  dict);
 
     return dict;
 }

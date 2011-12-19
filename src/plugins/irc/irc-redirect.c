@@ -1014,12 +1014,12 @@ irc_redirect_hdata_redirect_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_redirect, timeout, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, command, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, start_time, TIME, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start, POINTER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop, POINTER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_extra, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start, HASHTABLE, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop, HASHTABLE, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_extra, HASHTABLE, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start_received, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop_received, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_filter, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_filter, HASHTABLE, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, output, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, output_size, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, prev_redirect, POINTER, hdata_name);

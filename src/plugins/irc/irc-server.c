@@ -4191,7 +4191,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, last_redirect, POINTER, "irc_redirect");
         WEECHAT_HDATA_VAR(struct t_irc_server, notify_list, POINTER, "irc_notify");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_notify, POINTER, "irc_notify");
-        WEECHAT_HDATA_VAR(struct t_irc_server, manual_joins, POINTER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, manual_joins, HASHTABLE, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer_as_string, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, channels, POINTER, "irc_channel");

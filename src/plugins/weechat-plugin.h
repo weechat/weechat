@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20111217-01"
+#define WEECHAT_PLUGIN_API_VERSION "20111219-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -111,6 +111,7 @@ struct timeval;
 #define WEECHAT_HDATA_STRING                        4
 #define WEECHAT_HDATA_POINTER                       5
 #define WEECHAT_HDATA_TIME                          6
+#define WEECHAT_HDATA_HASHTABLE                     7
 
 /* buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
@@ -323,6 +324,12 @@ struct t_weechat_plugin
                                                  const void *key,
                                                  const void *value),
                            void *callback_map_data);
+    void (*hashtable_map_string) (struct t_hashtable *hashtable,
+                                  void (*callback_map) (void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const char *key,
+                                                        const char *value),
+                                  void *callback_map_data);
     int (*hashtable_get_integer) (struct t_hashtable *hashtable,
                                   const char *property);
     const char *(*hashtable_get_string) (struct t_hashtable *hashtable,
@@ -842,6 +849,8 @@ struct t_weechat_plugin
                             const char *name);
     time_t (*hdata_time) (struct t_hdata *hdata, void *pointer,
                           const char *name);
+    struct t_hashtable *(*hdata_hashtable) (struct t_hdata *hdata,
+                                            void *pointer, const char *name);
     const char *(*hdata_get_string) (struct t_hdata *hdata,
                                      const char *property);
 
@@ -1063,6 +1072,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hashtable_has_key(__hashtable, __key)
 #define weechat_hashtable_map(__hashtable, __cb_map, __cb_map_data)     \
     weechat_plugin->hashtable_map(__hashtable, __cb_map, __cb_map_data)
+#define weechat_hashtable_map_string(__hashtable, __cb_map,             \
+                                     __cb_map_data)                     \
+    weechat_plugin->hashtable_map_string(__hashtable, __cb_map,         \
+                                         __cb_map_data)
 #define weechat_hashtable_get_integer(__hashtable, __property)          \
     weechat_plugin->hashtable_get_integer(__hashtable, __property)
 #define weechat_hashtable_get_string(__hashtable, __property)           \
@@ -1591,6 +1604,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hdata_pointer(__hdata, __pointer, __name)
 #define weechat_hdata_time(__hdata, __pointer, __name)                  \
     weechat_plugin->hdata_time(__hdata, __pointer, __name)
+#define weechat_hdata_hashtable(__hdata, __pointer, __name)             \
+    weechat_plugin->hdata_hashtable(__hdata, __pointer, __name)
 #define weechat_hdata_get_string(__hdata, __property)                   \
     weechat_plugin->hdata_get_string(__hdata, __property)
 

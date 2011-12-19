@@ -69,6 +69,11 @@
 #define API_RETURN_LONG(__long)                                         \
     return scm_from_long (__long);
 
+#define API_DEF_FUNC(__name, __argc)                                    \
+    scm_c_define_gsubr ("weechat:" #__name, __argc, 0, 0,               \
+                        &weechat_guile_api_##__name);                   \
+    scm_c_export ("weechat:" #__name, NULL);
+
 
 /*
  * weechat_guile_api_register: startup function for all WeeChat Guile scripts
@@ -4395,7 +4400,7 @@ SCM
 weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
 {
     struct t_hashtable *c_hashtable, *result_hashtable;
-    SCM result_hash;
+    SCM result_alist;
 
     API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     if (!scm_is_string (info_name) || !scm_list_p (hash))
@@ -4406,14 +4411,14 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
 
     result_hashtable = weechat_info_get_hashtable (scm_i_string_chars (info_name),
                                                    c_hashtable);
-    result_hash = weechat_guile_hashtable_to_alist (result_hashtable);
+    result_alist = weechat_guile_hashtable_to_alist (result_hashtable);
 
     if (c_hashtable)
         weechat_hashtable_free (c_hashtable);
     if (result_hashtable)
         weechat_hashtable_free (result_hashtable);
 
-    return result_hash;
+    return result_alist;
 }
 
 /*
@@ -5021,6 +5026,29 @@ weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
 }
 
 /*
+ * weechat_guile_api_hdata_hashtable: get hashtable value of a variable in
+ *                                    structure using hdata
+ */
+
+SCM
+weechat_guile_api_hdata_hashtable (SCM hdata, SCM pointer, SCM name)
+{
+    SCM result_alist;
+
+    API_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
+    if (!scm_is_string (hdata) || !scm_is_string (pointer)
+        || !scm_is_string (name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result_alist = weechat_guile_hashtable_to_alist (
+        weechat_hdata_hashtable (script_str2ptr (scm_i_string_chars (hdata)),
+                                 script_str2ptr (scm_i_string_chars (pointer)),
+                                 scm_i_string_chars (name)));
+
+    return result_alist;
+}
+
+/*
  * weechat_guile_api_hdata_get_string: get hdata property as string
  */
 
@@ -5196,294 +5224,186 @@ weechat_guile_api_module_init (void *data)
     scm_set_current_error_port (guile_port);
 
     /* interface functions */
-    scm_c_define_gsubr ("weechat:register", 7, 0, 0, &weechat_guile_api_register);
-    scm_c_define_gsubr ("weechat:plugin_get_name", 1, 0, 0, &weechat_guile_api_plugin_get_name);
-    scm_c_define_gsubr ("weechat:charset_set", 1, 0, 0, &weechat_guile_api_charset_set);
-    scm_c_define_gsubr ("weechat:iconv_to_internal", 2, 0, 0, &weechat_guile_api_iconv_to_internal);
-    scm_c_define_gsubr ("weechat:iconv_from_internal", 2, 0, 0, &weechat_guile_api_iconv_from_internal);
-    scm_c_define_gsubr ("weechat:gettext", 1, 0, 0, &weechat_guile_api_gettext);
-    scm_c_define_gsubr ("weechat:ngettext", 3, 0, 0, &weechat_guile_api_ngettext);
-    scm_c_define_gsubr ("weechat:string_match", 3, 0, 0, &weechat_guile_api_string_match);
-    scm_c_define_gsubr ("weechat:string_has_highlight", 2, 0, 0, &weechat_guile_api_string_has_highlight);
-    scm_c_define_gsubr ("weechat:string_has_highlight_regex", 2, 0, 0, &weechat_guile_api_string_has_highlight_regex);
-    scm_c_define_gsubr ("weechat:string_mask_to_regex", 1, 0, 0, &weechat_guile_api_string_mask_to_regex);
-    scm_c_define_gsubr ("weechat:string_remove_color", 2, 0, 0, &weechat_guile_api_string_remove_color);
-    scm_c_define_gsubr ("weechat:string_is_command_char", 1, 0, 0, &weechat_guile_api_string_is_command_char);
-    scm_c_define_gsubr ("weechat:string_input_for_buffer", 1, 0, 0, &weechat_guile_api_string_input_for_buffer);
-    scm_c_define_gsubr ("weechat:mkdir_home", 2, 0, 0, &weechat_guile_api_mkdir_home);
-    scm_c_define_gsubr ("weechat:mkdir", 2, 0, 0, &weechat_guile_api_mkdir);
-    scm_c_define_gsubr ("weechat:mkdir_parents", 2, 0, 0, &weechat_guile_api_mkdir_parents);
-    scm_c_define_gsubr ("weechat:list_new", 0, 0, 0, &weechat_guile_api_list_new);
-    scm_c_define_gsubr ("weechat:list_add", 4, 0, 0, &weechat_guile_api_list_add);
-    scm_c_define_gsubr ("weechat:list_search", 2, 0, 0, &weechat_guile_api_list_search);
-    scm_c_define_gsubr ("weechat:list_search_pos", 2, 0, 0, &weechat_guile_api_list_search_pos);
-    scm_c_define_gsubr ("weechat:list_casesearch", 2, 0, 0, &weechat_guile_api_list_casesearch);
-    scm_c_define_gsubr ("weechat:list_casesearch_pos", 2, 0, 0, &weechat_guile_api_list_casesearch_pos);
-    scm_c_define_gsubr ("weechat:list_get", 2, 0, 0, &weechat_guile_api_list_get);
-    scm_c_define_gsubr ("weechat:list_set", 2, 0, 0, &weechat_guile_api_list_set);
-    scm_c_define_gsubr ("weechat:list_next", 1, 0, 0, &weechat_guile_api_list_next);
-    scm_c_define_gsubr ("weechat:list_prev", 1, 0, 0, &weechat_guile_api_list_prev);
-    scm_c_define_gsubr ("weechat:list_string", 1, 0, 0, &weechat_guile_api_list_string);
-    scm_c_define_gsubr ("weechat:list_size", 1, 0, 0, &weechat_guile_api_list_size);
-    scm_c_define_gsubr ("weechat:list_remove", 2, 0, 0, &weechat_guile_api_list_remove);
-    scm_c_define_gsubr ("weechat:list_remove_all", 1, 0, 0, &weechat_guile_api_list_remove_all);
-    scm_c_define_gsubr ("weechat:list_free", 1, 0, 0, &weechat_guile_api_list_free);
-    scm_c_define_gsubr ("weechat:config_new", 3, 0, 0, &weechat_guile_api_config_new);
-    scm_c_define_gsubr ("weechat:config_new_section", 1, 0, 0, &weechat_guile_api_config_new_section);
-    scm_c_define_gsubr ("weechat:config_search_section", 2, 0, 0, &weechat_guile_api_config_search_section);
-    scm_c_define_gsubr ("weechat:config_new_option", 1, 0, 0, &weechat_guile_api_config_new_option);
-    scm_c_define_gsubr ("weechat:config_search_option", 3, 0, 0, &weechat_guile_api_config_search_option);
-    scm_c_define_gsubr ("weechat:config_string_to_boolean", 1, 0, 0, &weechat_guile_api_config_string_to_boolean);
-    scm_c_define_gsubr ("weechat:config_option_reset", 2, 0, 0, &weechat_guile_api_config_option_reset);
-    scm_c_define_gsubr ("weechat:config_option_set", 3, 0, 0, &weechat_guile_api_config_option_set);
-    scm_c_define_gsubr ("weechat:config_option_set_null", 2, 0, 0, &weechat_guile_api_config_option_set_null);
-    scm_c_define_gsubr ("weechat:config_option_unset", 1, 0, 0, &weechat_guile_api_config_option_unset);
-    scm_c_define_gsubr ("weechat:config_option_rename", 2, 0, 0, &weechat_guile_api_config_option_rename);
-    scm_c_define_gsubr ("weechat:config_option_is_null", 1, 0, 0, &weechat_guile_api_config_option_is_null);
-    scm_c_define_gsubr ("weechat:config_option_default_is_null", 1, 0, 0, &weechat_guile_api_config_option_default_is_null);
-    scm_c_define_gsubr ("weechat:config_boolean", 1, 0, 0, &weechat_guile_api_config_boolean);
-    scm_c_define_gsubr ("weechat:config_boolean_default", 1, 0, 0, &weechat_guile_api_config_boolean_default);
-    scm_c_define_gsubr ("weechat:config_integer", 1, 0, 0, &weechat_guile_api_config_integer);
-    scm_c_define_gsubr ("weechat:config_integer_default", 1, 0, 0, &weechat_guile_api_config_integer_default);
-    scm_c_define_gsubr ("weechat:config_string", 1, 0, 0, &weechat_guile_api_config_string);
-    scm_c_define_gsubr ("weechat:config_string_default", 1, 0, 0, &weechat_guile_api_config_string_default);
-    scm_c_define_gsubr ("weechat:config_color", 1, 0, 0, &weechat_guile_api_config_color);
-    scm_c_define_gsubr ("weechat:config_color_default", 1, 0, 0, &weechat_guile_api_config_color_default);
-    scm_c_define_gsubr ("weechat:config_write_option", 2, 0, 0, &weechat_guile_api_config_write_option);
-    scm_c_define_gsubr ("weechat:config_write_line", 3, 0, 0, &weechat_guile_api_config_write_line);
-    scm_c_define_gsubr ("weechat:config_write", 1, 0, 0, &weechat_guile_api_config_write);
-    scm_c_define_gsubr ("weechat:config_read", 1, 0, 0, &weechat_guile_api_config_read);
-    scm_c_define_gsubr ("weechat:config_reload", 1, 0, 0, &weechat_guile_api_config_reload);
-    scm_c_define_gsubr ("weechat:config_option_free", 1, 0, 0, &weechat_guile_api_config_option_free);
-    scm_c_define_gsubr ("weechat:config_section_free_options", 1, 0, 0, &weechat_guile_api_config_section_free_options);
-    scm_c_define_gsubr ("weechat:config_section_free", 1, 0, 0, &weechat_guile_api_config_section_free);
-    scm_c_define_gsubr ("weechat:config_free", 1, 0, 0, &weechat_guile_api_config_free);
-    scm_c_define_gsubr ("weechat:config_get", 1, 0, 0, &weechat_guile_api_config_get);
-    scm_c_define_gsubr ("weechat:config_get_plugin", 1, 0, 0, &weechat_guile_api_config_get_plugin);
-    scm_c_define_gsubr ("weechat:config_is_set_plugin", 1, 0, 0, &weechat_guile_api_config_is_set_plugin);
-    scm_c_define_gsubr ("weechat:config_set_plugin", 2, 0, 0, &weechat_guile_api_config_set_plugin);
-    scm_c_define_gsubr ("weechat:config_set_desc_plugin", 2, 0, 0, &weechat_guile_api_config_set_desc_plugin);
-    scm_c_define_gsubr ("weechat:config_unset_plugin", 1, 0, 0, &weechat_guile_api_config_unset_plugin);
-    scm_c_define_gsubr ("weechat:key_bind", 2, 0, 0, &weechat_guile_api_key_bind);
-    scm_c_define_gsubr ("weechat:key_unbind", 2, 0, 0, &weechat_guile_api_key_unbind);
-    scm_c_define_gsubr ("weechat:prefix", 1, 0, 0, &weechat_guile_api_prefix);
-    scm_c_define_gsubr ("weechat:color", 1, 0, 0, &weechat_guile_api_color);
-    scm_c_define_gsubr ("weechat:print", 2, 0, 0, &weechat_guile_api_print);
-    scm_c_define_gsubr ("weechat:print_date_tags", 4, 0, 0, &weechat_guile_api_print_date_tags);
-    scm_c_define_gsubr ("weechat:print_y", 3, 0, 0, &weechat_guile_api_print_y);
-    scm_c_define_gsubr ("weechat:log_print", 1, 0, 0, &weechat_guile_api_log_print);
-    scm_c_define_gsubr ("weechat:hook_command", 7, 0, 0, &weechat_guile_api_hook_command);
-    scm_c_define_gsubr ("weechat:hook_command_run", 3, 0, 0, &weechat_guile_api_hook_command_run);
-    scm_c_define_gsubr ("weechat:hook_timer", 5, 0, 0, &weechat_guile_api_hook_timer);
-    scm_c_define_gsubr ("weechat:hook_fd", 6, 0, 0, &weechat_guile_api_hook_fd);
-    scm_c_define_gsubr ("weechat:hook_process", 4, 0, 0, &weechat_guile_api_hook_process);
-    scm_c_define_gsubr ("weechat:hook_connect", 8, 0, 0, &weechat_guile_api_hook_connect);
-    scm_c_define_gsubr ("weechat:hook_print", 6, 0, 0, &weechat_guile_api_hook_print);
-    scm_c_define_gsubr ("weechat:hook_signal", 3, 0, 0, &weechat_guile_api_hook_signal);
-    scm_c_define_gsubr ("weechat:hook_signal_send", 3, 0, 0, &weechat_guile_api_hook_signal_send);
-    scm_c_define_gsubr ("weechat:hook_hsignal", 3, 0, 0, &weechat_guile_api_hook_hsignal);
-    scm_c_define_gsubr ("weechat:hook_hsignal_send", 2, 0, 0, &weechat_guile_api_hook_hsignal_send);
-    scm_c_define_gsubr ("weechat:hook_config", 3, 0, 0, &weechat_guile_api_hook_config);
-    scm_c_define_gsubr ("weechat:hook_completion", 4, 0, 0, &weechat_guile_api_hook_completion);
-    scm_c_define_gsubr ("weechat:hook_completion_list_add", 4, 0, 0, &weechat_guile_api_hook_completion_list_add);
-    scm_c_define_gsubr ("weechat:hook_modifier", 3, 0, 0, &weechat_guile_api_hook_modifier);
-    scm_c_define_gsubr ("weechat:hook_modifier_exec", 3, 0, 0, &weechat_guile_api_hook_modifier_exec);
-    scm_c_define_gsubr ("weechat:hook_info", 5, 0, 0, &weechat_guile_api_hook_info);
-    scm_c_define_gsubr ("weechat:hook_info_hashtable", 6, 0, 0, &weechat_guile_api_hook_info_hashtable);
-    scm_c_define_gsubr ("weechat:hook_infolist", 6, 0, 0, &weechat_guile_api_hook_infolist);
-    scm_c_define_gsubr ("weechat:hook_focus", 3, 0, 0, &weechat_guile_api_hook_focus);
-    scm_c_define_gsubr ("weechat:unhook", 1, 0, 0, &weechat_guile_api_unhook);
-    scm_c_define_gsubr ("weechat:unhook_all", 0, 0, 0, &weechat_guile_api_unhook_all);
-    scm_c_define_gsubr ("weechat:buffer_new", 5, 0, 0, &weechat_guile_api_buffer_new);
-    scm_c_define_gsubr ("weechat:buffer_search", 2, 0, 0, &weechat_guile_api_buffer_search);
-    scm_c_define_gsubr ("weechat:buffer_search_main", 0, 0, 0, &weechat_guile_api_buffer_search_main);
-    scm_c_define_gsubr ("weechat:current_buffer", 0, 0, 0, &weechat_guile_api_current_buffer);
-    scm_c_define_gsubr ("weechat:buffer_clear", 1, 0, 0, &weechat_guile_api_buffer_clear);
-    scm_c_define_gsubr ("weechat:buffer_close", 1, 0, 0, &weechat_guile_api_buffer_close);
-    scm_c_define_gsubr ("weechat:buffer_merge", 2, 0, 0, &weechat_guile_api_buffer_merge);
-    scm_c_define_gsubr ("weechat:buffer_unmerge", 2, 0, 0, &weechat_guile_api_buffer_unmerge);
-    scm_c_define_gsubr ("weechat:buffer_get_integer", 2, 0, 0, &weechat_guile_api_buffer_get_integer);
-    scm_c_define_gsubr ("weechat:buffer_get_string", 2, 0, 0, &weechat_guile_api_buffer_get_string);
-    scm_c_define_gsubr ("weechat:buffer_get_pointer", 2, 0, 0, &weechat_guile_api_buffer_get_pointer);
-    scm_c_define_gsubr ("weechat:buffer_set", 3, 0, 0, &weechat_guile_api_buffer_set);
-    scm_c_define_gsubr ("weechat:buffer_string_replace_local_var", 2, 0, 0, &weechat_guile_api_buffer_string_replace_local_var);
-    scm_c_define_gsubr ("weechat:buffer_match_list", 2, 0, 0, &weechat_guile_api_buffer_match_list);
-    scm_c_define_gsubr ("weechat:current_window", 0, 0, 0, &weechat_guile_api_current_window);
-    scm_c_define_gsubr ("weechat:window_search_with_buffer", 1, 0, 0, &weechat_guile_api_window_search_with_buffer);
-    scm_c_define_gsubr ("weechat:window_get_integer", 2, 0, 0, &weechat_guile_api_window_get_integer);
-    scm_c_define_gsubr ("weechat:window_get_string", 2, 0, 0, &weechat_guile_api_window_get_string);
-    scm_c_define_gsubr ("weechat:window_get_pointer", 2, 0, 0, &weechat_guile_api_window_get_pointer);
-    scm_c_define_gsubr ("weechat:window_set_title", 1, 0, 0, &weechat_guile_api_window_set_title);
-    scm_c_define_gsubr ("weechat:nicklist_add_group", 5, 0, 0, &weechat_guile_api_nicklist_add_group);
-    scm_c_define_gsubr ("weechat:nicklist_search_group", 3, 0, 0, &weechat_guile_api_nicklist_search_group);
-    scm_c_define_gsubr ("weechat:nicklist_add_nick", 7, 0, 0, &weechat_guile_api_nicklist_add_nick);
-    scm_c_define_gsubr ("weechat:nicklist_search_nick", 3, 0, 0, &weechat_guile_api_nicklist_search_nick);
-    scm_c_define_gsubr ("weechat:nicklist_remove_group", 2, 0, 0, &weechat_guile_api_nicklist_remove_group);
-    scm_c_define_gsubr ("weechat:nicklist_remove_nick", 2, 0, 0, &weechat_guile_api_nicklist_remove_nick);
-    scm_c_define_gsubr ("weechat:nicklist_remove_all", 1, 0, 0, &weechat_guile_api_nicklist_remove_all);
-    scm_c_define_gsubr ("weechat:nicklist_group_get_integer", 3, 0, 0, &weechat_guile_api_nicklist_group_get_integer);
-    scm_c_define_gsubr ("weechat:nicklist_group_get_string", 3, 0, 0, &weechat_guile_api_nicklist_group_get_string);
-    scm_c_define_gsubr ("weechat:nicklist_group_get_pointer", 3, 0, 0, &weechat_guile_api_nicklist_group_get_pointer);
-    scm_c_define_gsubr ("weechat:nicklist_group_set", 4, 0, 0, &weechat_guile_api_nicklist_group_set);
-    scm_c_define_gsubr ("weechat:nicklist_nick_get_integer", 3, 0, 0, &weechat_guile_api_nicklist_nick_get_integer);
-    scm_c_define_gsubr ("weechat:nicklist_nick_get_string", 3, 0, 0, &weechat_guile_api_nicklist_nick_get_string);
-    scm_c_define_gsubr ("weechat:nicklist_nick_get_pointer", 3, 0, 0, &weechat_guile_api_nicklist_nick_get_pointer);
-    scm_c_define_gsubr ("weechat:nicklist_nick_set", 4, 0, 0, &weechat_guile_api_nicklist_nick_set);
-    scm_c_define_gsubr ("weechat:bar_item_search", 1, 0, 0, &weechat_guile_api_bar_item_search);
-    scm_c_define_gsubr ("weechat:bar_item_new", 3, 0, 0, &weechat_guile_api_bar_item_new);
-    scm_c_define_gsubr ("weechat:bar_item_update", 1, 0, 0, &weechat_guile_api_bar_item_update);
-    scm_c_define_gsubr ("weechat:bar_item_remove", 1, 0, 0, &weechat_guile_api_bar_item_remove);
-    scm_c_define_gsubr ("weechat:bar_search", 1, 0, 0, &weechat_guile_api_bar_search);
-    scm_c_define_gsubr ("weechat:bar_new", 1, 0, 0, &weechat_guile_api_bar_new);
-    scm_c_define_gsubr ("weechat:bar_set", 3, 0, 0, &weechat_guile_api_bar_set);
-    scm_c_define_gsubr ("weechat:bar_update", 1, 0, 0, &weechat_guile_api_bar_update);
-    scm_c_define_gsubr ("weechat:bar_remove", 1, 0, 0, &weechat_guile_api_bar_remove);
-    scm_c_define_gsubr ("weechat:command", 2, 0, 0, &weechat_guile_api_command);
-    scm_c_define_gsubr ("weechat:info_get", 2, 0, 0, &weechat_guile_api_info_get);
-    scm_c_define_gsubr ("weechat:info_get_hashtable", 2, 0, 0, &weechat_guile_api_info_get_hashtable);
-    scm_c_define_gsubr ("weechat:infolist_new", 0, 0, 0, &weechat_guile_api_infolist_new);
-    scm_c_define_gsubr ("weechat:infolist_new_item", 1, 0, 0, &weechat_guile_api_infolist_new_item);
-    scm_c_define_gsubr ("weechat:infolist_new_var_integer", 3, 0, 0, &weechat_guile_api_infolist_new_var_integer);
-    scm_c_define_gsubr ("weechat:infolist_new_var_string", 3, 0, 0, &weechat_guile_api_infolist_new_var_string);
-    scm_c_define_gsubr ("weechat:infolist_new_var_pointer", 3, 0, 0, &weechat_guile_api_infolist_new_var_pointer);
-    scm_c_define_gsubr ("weechat:infolist_new_var_time", 3, 0, 0, &weechat_guile_api_infolist_new_var_time);
-    scm_c_define_gsubr ("weechat:infolist_get", 3, 0, 0, &weechat_guile_api_infolist_get);
-    scm_c_define_gsubr ("weechat:infolist_next", 1, 0, 0, &weechat_guile_api_infolist_next);
-    scm_c_define_gsubr ("weechat:infolist_prev", 1, 0, 0, &weechat_guile_api_infolist_prev);
-    scm_c_define_gsubr ("weechat:infolist_reset_item_cursor", 1, 0, 0, &weechat_guile_api_infolist_reset_item_cursor);
-    scm_c_define_gsubr ("weechat:infolist_fields", 1, 0, 0, &weechat_guile_api_infolist_fields);
-    scm_c_define_gsubr ("weechat:infolist_integer", 2, 0, 0, &weechat_guile_api_infolist_integer);
-    scm_c_define_gsubr ("weechat:infolist_string", 2, 0, 0, &weechat_guile_api_infolist_string);
-    scm_c_define_gsubr ("weechat:infolist_pointer", 2, 0, 0, &weechat_guile_api_infolist_pointer);
-    scm_c_define_gsubr ("weechat:infolist_time", 2, 0, 0, &weechat_guile_api_infolist_time);
-    scm_c_define_gsubr ("weechat:infolist_free", 1, 0, 0, &weechat_guile_api_infolist_free);
-    scm_c_define_gsubr ("weechat:hdata_get", 1, 0, 0, &weechat_guile_api_hdata_get);
-    scm_c_define_gsubr ("weechat:hdata_get_var_offset", 2, 0, 0, &weechat_guile_api_hdata_get_var_offset);
-    scm_c_define_gsubr ("weechat:hdata_get_var_type_string", 2, 0, 0, &weechat_guile_api_hdata_get_var_type_string);
-    scm_c_define_gsubr ("weechat:hdata_get_var_hdata", 2, 0, 0, &weechat_guile_api_hdata_get_var_hdata);
-    scm_c_define_gsubr ("weechat:hdata_get_list", 2, 0, 0, &weechat_guile_api_hdata_get_list);
-    scm_c_define_gsubr ("weechat:hdata_check_pointer", 3, 0, 0, &weechat_guile_api_hdata_check_pointer);
-    scm_c_define_gsubr ("weechat:hdata_move", 3, 0, 0, &weechat_guile_api_hdata_move);
-    scm_c_define_gsubr ("weechat:hdata_char", 3, 0, 0, &weechat_guile_api_hdata_char);
-    scm_c_define_gsubr ("weechat:hdata_integer", 3, 0, 0, &weechat_guile_api_hdata_integer);
-    scm_c_define_gsubr ("weechat:hdata_long", 3, 0, 0, &weechat_guile_api_hdata_long);
-    scm_c_define_gsubr ("weechat:hdata_string", 3, 0, 0, &weechat_guile_api_hdata_string);
-    scm_c_define_gsubr ("weechat:hdata_pointer", 3, 0, 0, &weechat_guile_api_hdata_pointer);
-    scm_c_define_gsubr ("weechat:hdata_time", 3, 0, 0, &weechat_guile_api_hdata_time);
-    scm_c_define_gsubr ("weechat:hdata_get_string", 2, 0, 0, &weechat_guile_api_hdata_get_string);
-    scm_c_define_gsubr ("weechat:upgrade_new", 2, 0, 0, &weechat_guile_api_upgrade_new);
-    scm_c_define_gsubr ("weechat:upgrade_write_object", 3, 0, 0, &weechat_guile_api_upgrade_write_object);
-    scm_c_define_gsubr ("weechat:upgrade_read", 3, 0, 0, &weechat_guile_api_upgrade_read);
-    scm_c_define_gsubr ("weechat:upgrade_close", 1, 0, 0, &weechat_guile_api_upgrade_close);
-
-    scm_c_export ("weechat:register", "weechat:plugin_get_name",
-                  "weechat:charset_set", "weechat:iconv_to_internal",
-                  "weechat:iconv_from_internal", "weechat:gettext",
-                  "weechat:ngettext", "weechat:string_match",
-                  "weechat:string_has_highlight", "weechat:string_has_highlight_regex",
-                  "weechat:string_mask_to_regex", "weechat:string_remove_color",
-                  "weechat:string_is_command_char", "weechat:string_input_for_buffer",
-                  NULL);
-    scm_c_export ("weechat:mkdir_home", "weechat:mkdir",
-                  "weechat:mkdir_parents",
-                  NULL);
-    scm_c_export ("weechat:list_new", "weechat:list_add",
-                  "weechat:list_search", "weechat:list_search_pos",
-                  "weechat:list_casesearch", "weechat:list_casesearch_pos",
-                  "weechat:list_get", "weechat:list_set",
-                  "weechat:list_next", "weechat:list_prev",
-                  "weechat:list_string", "weechat:list_size",
-                  "weechat:list_remove", "weechat:list_remove_all",
-                  "weechat:list_free",
-                  NULL);
-    scm_c_export ("weechat:config_new", "weechat:config_new_section",
-                  "weechat:config_search_section", "weechat:config_new_option",
-                  "weechat:config_search_option", "weechat:config_string_to_boolean",
-                  "weechat:config_option_reset", "weechat:config_option_set",
-                  "weechat:config_option_set_null", "weechat:config_option_unset",
-                  "weechat:config_option_rename", "weechat:config_option_is_null",
-                  "weechat:config_option_default_is_null", "weechat:config_boolean",
-                  "weechat:config_boolean_default", "weechat:config_integer",
-                  "weechat:config_integer_default", "weechat:config_string",
-                  "weechat:config_string_default", "weechat:config_color",
-                  "weechat:config_color_default", "weechat:config_write_option",
-                  "weechat:config_write_line", "weechat:config_write",
-                  "weechat:config_read", "weechat:config_reload",
-                  "weechat:config_option_free", "weechat:config_section_free_options",
-                  "weechat:config_section_free", "weechat:config_free",
-                  "weechat:config_get", "weechat:config_get_plugin",
-                  "weechat:config_is_set_plugin", "weechat:config_set_plugin",
-                  "weechat:config_set_desc_plugin", "weechat:config_unset_plugin",
-                  NULL);
-    scm_c_export ("weechat:key_bind", "weechat:key_unbind",
-                  NULL);
-    scm_c_export ("weechat:prefix", "weechat:color",
-                  "weechat:print", "weechat:print_date_tags",
-                  "weechat:print_y", "weechat:log_print",
-                  NULL);
-    scm_c_export ("weechat:hook_command", "weechat:hook_command_run",
-                  "weechat:hook_timer", "weechat:hook_fd",
-                  "weechat:hook_process", "weechat:hook_connect",
-                  "weechat:hook_print", "weechat:hook_signal",
-                  "weechat:hook_signal_send", "weechat:hook_hsignal",
-                  "weechat:hook_hsignal_send", "weechat:hook_config",
-                  "weechat:hook_completion", "weechat:hook_completion_list_add",
-                  "weechat:hook_modifier", "weechat:hook_modifier_exec",
-                  "weechat:hook_info", "weechat:hook_info_hashtable",
-                  "weechat:hook_infolist", "weechat:hook_focus",
-                  "weechat:unhook", "weechat:unhook_all",
-                  NULL);
-    scm_c_export ("weechat:buffer_new", "weechat:buffer_search",
-                  "weechat:buffer_search_main", "weechat:current_buffer",
-                  "weechat:buffer_clear", "weechat:buffer_close",
-                  "weechat:buffer_merge", "weechat:buffer_unmerge",
-                  "weechat:buffer_get_integer", "weechat:buffer_get_string",
-                  "weechat:buffer_get_pointer", "weechat:buffer_set",
-                  "weechat:buffer_string_replace_local_var", "weechat:buffer_match_list",
-                  NULL);
-    scm_c_export ("weechat:current_window", "weechat:window_search_with_buffer",
-                  "weechat:window_get_integer", "weechat:window_get_string",
-                  "weechat:window_get_pointer", "weechat:window_set_title",
-                  NULL);
-    scm_c_export ("weechat:nicklist_add_group", "weechat:nicklist_search_group",
-                  "weechat:nicklist_add_nick", "weechat:nicklist_search_nick",
-                  "weechat:nicklist_remove_group", "weechat:nicklist_remove_nick",
-                  "weechat:nicklist_remove_all", "weechat:nicklist_group_get_integer",
-                  "weechat:nicklist_group_get_string", "weechat:nicklist_group_get_pointer",
-                  "weechat:nicklist_group_set", "weechat:nicklist_nick_get_integer",
-                  "weechat:nicklist_nick_get_string", "weechat:nicklist_nick_get_pointer",
-                  "weechat:nicklist_nick_set",
-                  NULL);
-    scm_c_export ("weechat:bar_item_search", "weechat:bar_item_new",
-                  "weechat:bar_item_update", "weechat:bar_item_remove",
-                  "weechat:bar_search", "weechat:bar_new",
-                  "weechat:bar_set", "weechat:bar_update",
-                  "weechat:bar_remove",
-                  NULL);
-    scm_c_export ("weechat:command",
-                  NULL);
-    scm_c_export ("weechat:info_get", "weechat:info_get_hashtable",
-                  NULL);
-    scm_c_export ("weechat:infolist_new", "weechat:infolist_new_item",
-                  "weechat:infolist_new_var_integer", "weechat:infolist_new_var_string",
-                  "weechat:infolist_new_var_pointer", "weechat:infolist_new_var_time",
-                  "weechat:infolist_get", "weechat:infolist_next",
-                  "weechat:infolist_prev", "weechat:infolist_reset_item_cursor",
-                  "weechat:infolist_fields", "weechat:infolist_integer",
-                  "weechat:infolist_string", "weechat:infolist_pointer",
-                  "weechat:infolist_time", "weechat:infolist_free",
-                  NULL);
-    scm_c_export ("weechat:hdata_get", "weechat:hdata_get_var_offset",
-                  "weechat:hdata_get_var_type_string", "weechat:hdata_get_var_hdata",
-                  "weechat:hdata_get_list", "weechat:hdata_check_pointer",
-                  "weechat:hdata_move", "weechat:hdata_char",
-                  "weechat:hdata_integer", "weechat:hdata_long",
-                  "weechat:hdata_string", "weechat:hdata_pointer",
-                  "weechat:hdata_time", "weechat:hdata_get_string",
-                  NULL);
-    scm_c_export ("weechat:upgrade_new", "weechat:upgrade_write_object",
-                  "weechat:upgrade_read", "weechat:upgrade_close",
-                  NULL);
+    API_DEF_FUNC(register, 7);
+    API_DEF_FUNC(plugin_get_name, 1);
+    API_DEF_FUNC(charset_set, 1);
+    API_DEF_FUNC(iconv_to_internal, 2);
+    API_DEF_FUNC(iconv_from_internal, 2);
+    API_DEF_FUNC(gettext, 1);
+    API_DEF_FUNC(ngettext, 3);
+    API_DEF_FUNC(string_match, 3);
+    API_DEF_FUNC(string_has_highlight, 2);
+    API_DEF_FUNC(string_has_highlight_regex, 2);
+    API_DEF_FUNC(string_mask_to_regex, 1);
+    API_DEF_FUNC(string_remove_color, 2);
+    API_DEF_FUNC(string_is_command_char, 1);
+    API_DEF_FUNC(string_input_for_buffer, 1);
+    API_DEF_FUNC(mkdir_home, 2);
+    API_DEF_FUNC(mkdir, 2);
+    API_DEF_FUNC(mkdir_parents, 2);
+    API_DEF_FUNC(list_new, 0);
+    API_DEF_FUNC(list_add, 4);
+    API_DEF_FUNC(list_search, 2);
+    API_DEF_FUNC(list_search_pos, 2);
+    API_DEF_FUNC(list_casesearch, 2);
+    API_DEF_FUNC(list_casesearch_pos, 2);
+    API_DEF_FUNC(list_get, 2);
+    API_DEF_FUNC(list_set, 2);
+    API_DEF_FUNC(list_next, 1);
+    API_DEF_FUNC(list_prev, 1);
+    API_DEF_FUNC(list_string, 1);
+    API_DEF_FUNC(list_size, 1);
+    API_DEF_FUNC(list_remove, 2);
+    API_DEF_FUNC(list_remove_all, 1);
+    API_DEF_FUNC(list_free, 1);
+    API_DEF_FUNC(config_new, 3);
+    API_DEF_FUNC(config_new_section, 1);
+    API_DEF_FUNC(config_search_section, 2);
+    API_DEF_FUNC(config_new_option, 1);
+    API_DEF_FUNC(config_search_option, 3);
+    API_DEF_FUNC(config_string_to_boolean, 1);
+    API_DEF_FUNC(config_option_reset, 2);
+    API_DEF_FUNC(config_option_set, 3);
+    API_DEF_FUNC(config_option_set_null, 2);
+    API_DEF_FUNC(config_option_unset, 1);
+    API_DEF_FUNC(config_option_rename, 2);
+    API_DEF_FUNC(config_option_is_null, 1);
+    API_DEF_FUNC(config_option_default_is_null, 1);
+    API_DEF_FUNC(config_boolean, 1);
+    API_DEF_FUNC(config_boolean_default, 1);
+    API_DEF_FUNC(config_integer, 1);
+    API_DEF_FUNC(config_integer_default, 1);
+    API_DEF_FUNC(config_string, 1);
+    API_DEF_FUNC(config_string_default, 1);
+    API_DEF_FUNC(config_color, 1);
+    API_DEF_FUNC(config_color_default, 1);
+    API_DEF_FUNC(config_write_option, 2);
+    API_DEF_FUNC(config_write_line, 3);
+    API_DEF_FUNC(config_write, 1);
+    API_DEF_FUNC(config_read, 1);
+    API_DEF_FUNC(config_reload, 1);
+    API_DEF_FUNC(config_option_free, 1);
+    API_DEF_FUNC(config_section_free_options, 1);
+    API_DEF_FUNC(config_section_free, 1);
+    API_DEF_FUNC(config_free, 1);
+    API_DEF_FUNC(config_get, 1);
+    API_DEF_FUNC(config_get_plugin, 1);
+    API_DEF_FUNC(config_is_set_plugin, 1);
+    API_DEF_FUNC(config_set_plugin, 2);
+    API_DEF_FUNC(config_set_desc_plugin, 2);
+    API_DEF_FUNC(config_unset_plugin, 1);
+    API_DEF_FUNC(key_bind, 2);
+    API_DEF_FUNC(key_unbind, 2);
+    API_DEF_FUNC(prefix, 1);
+    API_DEF_FUNC(color, 1);
+    API_DEF_FUNC(print, 2);
+    API_DEF_FUNC(print_date_tags, 4);
+    API_DEF_FUNC(print_y, 3);
+    API_DEF_FUNC(log_print, 1);
+    API_DEF_FUNC(hook_command, 7);
+    API_DEF_FUNC(hook_command_run, 3);
+    API_DEF_FUNC(hook_timer, 5);
+    API_DEF_FUNC(hook_fd, 6);
+    API_DEF_FUNC(hook_process, 4);
+    API_DEF_FUNC(hook_connect, 8);
+    API_DEF_FUNC(hook_print, 6);
+    API_DEF_FUNC(hook_signal, 3);
+    API_DEF_FUNC(hook_signal_send, 3);
+    API_DEF_FUNC(hook_hsignal, 3);
+    API_DEF_FUNC(hook_hsignal_send, 2);
+    API_DEF_FUNC(hook_config, 3);
+    API_DEF_FUNC(hook_completion, 4);
+    API_DEF_FUNC(hook_completion_list_add, 4);
+    API_DEF_FUNC(hook_modifier, 3);
+    API_DEF_FUNC(hook_modifier_exec, 3);
+    API_DEF_FUNC(hook_info, 5);
+    API_DEF_FUNC(hook_info_hashtable, 6);
+    API_DEF_FUNC(hook_infolist, 6);
+    API_DEF_FUNC(hook_focus, 3);
+    API_DEF_FUNC(unhook, 1);
+    API_DEF_FUNC(unhook_all, 0);
+    API_DEF_FUNC(buffer_new, 5);
+    API_DEF_FUNC(buffer_search, 2);
+    API_DEF_FUNC(buffer_search_main, 0);
+    API_DEF_FUNC(current_buffer, 0);
+    API_DEF_FUNC(buffer_clear, 1);
+    API_DEF_FUNC(buffer_close, 1);
+    API_DEF_FUNC(buffer_merge, 2);
+    API_DEF_FUNC(buffer_unmerge, 2);
+    API_DEF_FUNC(buffer_get_integer, 2);
+    API_DEF_FUNC(buffer_get_string, 2);
+    API_DEF_FUNC(buffer_get_pointer, 2);
+    API_DEF_FUNC(buffer_set, 3);
+    API_DEF_FUNC(buffer_string_replace_local_var, 2);
+    API_DEF_FUNC(buffer_match_list, 2);
+    API_DEF_FUNC(current_window, 0);
+    API_DEF_FUNC(window_search_with_buffer, 1);
+    API_DEF_FUNC(window_get_integer, 2);
+    API_DEF_FUNC(window_get_string, 2);
+    API_DEF_FUNC(window_get_pointer, 2);
+    API_DEF_FUNC(window_set_title, 1);
+    API_DEF_FUNC(nicklist_add_group, 5);
+    API_DEF_FUNC(nicklist_search_group, 3);
+    API_DEF_FUNC(nicklist_add_nick, 7);
+    API_DEF_FUNC(nicklist_search_nick, 3);
+    API_DEF_FUNC(nicklist_remove_group, 2);
+    API_DEF_FUNC(nicklist_remove_nick, 2);
+    API_DEF_FUNC(nicklist_remove_all, 1);
+    API_DEF_FUNC(nicklist_group_get_integer, 3);
+    API_DEF_FUNC(nicklist_group_get_string, 3);
+    API_DEF_FUNC(nicklist_group_get_pointer, 3);
+    API_DEF_FUNC(nicklist_group_set, 4);
+    API_DEF_FUNC(nicklist_nick_get_integer, 3);
+    API_DEF_FUNC(nicklist_nick_get_string, 3);
+    API_DEF_FUNC(nicklist_nick_get_pointer, 3);
+    API_DEF_FUNC(nicklist_nick_set, 4);
+    API_DEF_FUNC(bar_item_search, 1);
+    API_DEF_FUNC(bar_item_new, 3);
+    API_DEF_FUNC(bar_item_update, 1);
+    API_DEF_FUNC(bar_item_remove, 1);
+    API_DEF_FUNC(bar_search, 1);
+    API_DEF_FUNC(bar_new, 1);
+    API_DEF_FUNC(bar_set, 3);
+    API_DEF_FUNC(bar_update, 1);
+    API_DEF_FUNC(bar_remove, 1);
+    API_DEF_FUNC(command, 2);
+    API_DEF_FUNC(info_get, 2);
+    API_DEF_FUNC(info_get_hashtable, 2);
+    API_DEF_FUNC(infolist_new, 0);
+    API_DEF_FUNC(infolist_new_item, 1);
+    API_DEF_FUNC(infolist_new_var_integer, 3);
+    API_DEF_FUNC(infolist_new_var_string, 3);
+    API_DEF_FUNC(infolist_new_var_pointer, 3);
+    API_DEF_FUNC(infolist_new_var_time, 3);
+    API_DEF_FUNC(infolist_get, 3);
+    API_DEF_FUNC(infolist_next, 1);
+    API_DEF_FUNC(infolist_prev, 1);
+    API_DEF_FUNC(infolist_reset_item_cursor, 1);
+    API_DEF_FUNC(infolist_fields, 1);
+    API_DEF_FUNC(infolist_integer, 2);
+    API_DEF_FUNC(infolist_string, 2);
+    API_DEF_FUNC(infolist_pointer, 2);
+    API_DEF_FUNC(infolist_time, 2);
+    API_DEF_FUNC(infolist_free, 1);
+    API_DEF_FUNC(hdata_get, 1);
+    API_DEF_FUNC(hdata_get_var_offset, 2);
+    API_DEF_FUNC(hdata_get_var_type_string, 2);
+    API_DEF_FUNC(hdata_get_var_hdata, 2);
+    API_DEF_FUNC(hdata_get_list, 2);
+    API_DEF_FUNC(hdata_check_pointer, 3);
+    API_DEF_FUNC(hdata_move, 3);
+    API_DEF_FUNC(hdata_char, 3);
+    API_DEF_FUNC(hdata_integer, 3);
+    API_DEF_FUNC(hdata_long, 3);
+    API_DEF_FUNC(hdata_string, 3);
+    API_DEF_FUNC(hdata_pointer, 3);
+    API_DEF_FUNC(hdata_time, 3);
+    API_DEF_FUNC(hdata_hashtable, 3);
+    API_DEF_FUNC(hdata_get_string, 2);
+    API_DEF_FUNC(upgrade_new, 2);
+    API_DEF_FUNC(upgrade_write_object, 3);
+    API_DEF_FUNC(upgrade_read, 3);
+    API_DEF_FUNC(upgrade_close, 1);
 
     /* interface constants */
     scm_c_define ("weechat:WEECHAT_RC_OK", scm_from_int (WEECHAT_RC_OK));

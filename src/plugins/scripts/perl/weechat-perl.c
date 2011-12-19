@@ -134,8 +134,8 @@ char *perl_weechat_code =
 void
 weechat_perl_hashtable_map_cb (void *data,
                                struct t_hashtable *hashtable,
-                               const void *key,
-                               const void *value)
+                               const char *key,
+                               const char *value)
 {
     HV *hash;
 
@@ -144,8 +144,7 @@ weechat_perl_hashtable_map_cb (void *data,
 
     hash = (HV *)data;
 
-    (void) hv_store (hash, (char *)key, strlen ((char *)key),
-                     newSVpv ((char *)value, 0), 0);
+    (void) hv_store (hash, key, strlen (key), newSVpv (value, 0), 0);
 }
 
 /*
@@ -161,9 +160,9 @@ weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
     if (!hash)
         return NULL;
 
-    weechat_hashtable_map (hashtable,
-                           &weechat_perl_hashtable_map_cb,
-                           hash);
+    weechat_hashtable_map_string (hashtable,
+                                  &weechat_perl_hashtable_map_cb,
+                                  hash);
 
     return hash;
 }
