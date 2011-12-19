@@ -3252,7 +3252,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-void hashtable_map (struct t_hashlist *hashlist,
+void hashtable_map (struct t_hashtable *hashtable,
                     void (*callback_map)(void *data,
                                          struct t_hashtable *hashtable,
                                          const void *key,
@@ -3299,7 +3299,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-void hashtable_map_string (struct t_hashlist *hashlist,
+void hashtable_map_string (struct t_hashtable *hashtable,
                            void (*callback_map)(void *data,
                                                 struct t_hashtable *hashtable,
                                                 const char *key,
