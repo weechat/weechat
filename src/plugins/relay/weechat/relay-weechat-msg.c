@@ -252,6 +252,77 @@ relay_weechat_msg_add_time (struct t_relay_weechat_msg *msg, time_t time)
 }
 
 /*
+ * relay_weechat_msg_hashtable_map_cb: callback used to add hashtable items in
+ *                                     message
+ */
+
+void
+relay_weechat_msg_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
+                                    const void *key, const void *value)
+{
+    struct t_relay_weechat_msg *msg;
+    char *types[2] = { "type_keys", "type_values" };
+    const void *pointers[2];
+    const char *type;
+    int i;
+
+    msg = (struct t_relay_weechat_msg *)data;
+    pointers[0] = key;
+    pointers[1] = value;
+
+    for (i = 0; i < 2; i++)
+    {
+        type = weechat_hashtable_get_string (hashtable, types[i]);
+        if (strcmp (type, WEECHAT_HASHTABLE_INTEGER) == 0)
+            relay_weechat_msg_add_int (msg, *((int *)pointers[i]));
+        else if (strcmp (type, WEECHAT_HASHTABLE_STRING) == 0)
+            relay_weechat_msg_add_string (msg, (const char *)pointers[i]);
+        else if (strcmp (type, WEECHAT_HASHTABLE_POINTER) == 0)
+            relay_weechat_msg_add_pointer (msg, (void *)pointers[i]);
+        else if (strcmp (type, WEECHAT_HASHTABLE_BUFFER) == 0)
+            relay_weechat_msg_add_pointer (msg, (void *)pointers[i]);
+        else if (strcmp (type, WEECHAT_HASHTABLE_TIME) == 0)
+            relay_weechat_msg_add_time (msg, *((time_t *)pointers[i]));
+    }
+}
+
+/*
+ * relay_weechat_msg_add_hashtable: add a hashtable to a message
+ */
+
+void
+relay_weechat_msg_add_hashtable (struct t_relay_weechat_msg *msg,
+                                 struct t_hashtable *hashtable)
+{
+    char *types[2] = { "type_keys", "type_values" };
+    const char *type;
+    int i, count;
+
+    for (i = 0; i < 2; i++)
+    {
+        type = weechat_hashtable_get_string (hashtable, types[i]);
+        if (strcmp (type, WEECHAT_HASHTABLE_INTEGER) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
+        else if (strcmp (type, WEECHAT_HASHTABLE_STRING) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
+        else if (strcmp (type, WEECHAT_HASHTABLE_POINTER) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
+        else if (strcmp (type, WEECHAT_HASHTABLE_BUFFER) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
+        else if (strcmp (type, WEECHAT_HASHTABLE_TIME) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
+    }
+
+    /* number of items */
+    count = weechat_hashtable_get_integer (hashtable, "items_count");
+    relay_weechat_msg_add_int (msg, count);
+
+    /* add all items */
+    weechat_hashtable_map (hashtable,
+                           &relay_weechat_msg_hashtable_map_cb, msg);
+}
+
+/*
  * relay_weechat_msg_add_hdata_path: recursively add hdata for a path
  *                                   return number of hdata objects added in
  *                                   message
@@ -384,6 +455,12 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                                         weechat_hdata_time (hdata,
                                                                             pointer,
                                                                             list_keys[i]));
+                            break;
+                        case WEECHAT_HDATA_HASHTABLE:
+                            relay_weechat_msg_add_hashtable (msg,
+                                                             weechat_hdata_hashtable (hdata,
+                                                                                      pointer,
+                                                                                      list_keys[i]));
                             break;
                     }
                 }
@@ -547,6 +624,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                     break;
                 case WEECHAT_HDATA_TIME:
                     strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_TIME);
+                    break;
+                case WEECHAT_HDATA_HASHTABLE:
+                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
                     break;
             }
         }
