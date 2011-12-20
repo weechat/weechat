@@ -372,6 +372,8 @@ irc_upgrade_read_cb (void *data,
                             free (irc_upgrade_current_server->prefix_chars);
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
+                    irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
+                    irc_upgrade_current_server->casemapping = weechat_infolist_integer (infolist, "casemapping");
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
