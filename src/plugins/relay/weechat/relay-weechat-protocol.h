@@ -38,15 +38,19 @@
     (void) command;                                                     \
     (void) argv;                                                        \
     (void) argv_eol;                                                    \
-    if ((weechat_relay_plugin->debug >= 1) && (argc < __min_args))      \
+    if (argc < __min_args)                                              \
     {                                                                   \
-        weechat_printf (NULL,                                           \
-                        _("%s%s: too few arguments received from "      \
-                          "client %d for command \"%s\" "               \
-                          "(received: %d arguments, expected: at "      \
-                          "least %d)"),                                 \
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,    \
-                        client->id, command, argc, __min_args);         \
+        if (weechat_relay_plugin->debug >= 1)                           \
+        {                                                               \
+            weechat_printf (NULL,                                       \
+                            _("%s%s: too few arguments received from "  \
+                              "client %d for command \"%s\" "           \
+                              "(received: %d arguments, expected: at "  \
+                              "least %d)"),                             \
+                            weechat_prefix ("error"),                   \
+                            RELAY_PLUGIN_NAME,                          \
+                            client->id, command, argc, __min_args);     \
+        }                                                               \
         return WEECHAT_RC_ERROR;                                        \
     }
 
