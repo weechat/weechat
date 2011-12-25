@@ -156,7 +156,7 @@ stop: beendet den Cursor-Modus
 
 Ohne Angabe von Argumenten wird der Cursor-Modus umgeschaltet.
 
-Ist die Mausfunktion aktiviert (siehe /help mouse), aktiviert man den Cursor-Modus man mit der mittleren Maustaste und positioniert den Cursor an diesen Punkt.
+Ist die Mausfunktion aktiviert (siehe /help mouse), startet man den Cursor-Modus mit der mittleren Maustaste und positioniert den Cursor an diesen Punkt.
 
 Beispiele:
   gehe zur Nickliste:
@@ -175,22 +175,22 @@ Beispiele:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: zeigt alle Erweiterungen mit Debuglevel an
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    color: zeigt Informationen über die aktuellen Farbpaarungen an
+   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
+    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
+    hooks: zeigt die aktiven Hooks an
+infolists: zeigt Information über die Infolists an
+   memory: gibt Informationen über den genutzten Speicher aus
+    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an
+     term: gibt Informationen über das Terminal und verfügbare Farben aus
+  windows: zeigt die Fensterstruktur an
 ........................................
 
 [[command_weechat_filter]]
@@ -202,7 +202,7 @@ infolists: display infos about infolists
          del <name>|-all
 
    list: alle Filter auflisten
- enable: Filter wird aktiviert (Filter werden standardmässig aktiviert)
+ enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
 disable: Filter deaktivieren
  toggle: Filter de-/aktivieren
    name: Name des Filters
@@ -215,10 +215,10 @@ disable: Filter deaktivieren
          - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
          - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
    tags: durch Kommata  getrennte Liste mit Tags. Zum Beispiel: "irc_join,irc_part,irc_quit"
-        regex: regulärer Ausdruck um in einer Zeile zu suchen
-               - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
-               - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
-               - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+  regex: regulärer Ausdruck um in einer Zeile zu suchen
+         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
 
 Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.
 
@@ -444,14 +444,14 @@ Beispiele:
          reload [<name> [<arguments>]]
          unload [<name>]
 
-    list: installierte Erweiterungen werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Erweiterungen
-    load: installiert eine Erweiterung
-autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
-  reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
-  unload: deinstalliere eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung entfernt)
-filename: Erweiterung (Datei) welche installiert werden soll
-    name: Name einer Erweiterung
+     list: installierte Erweiterungen werden aufgelistet
+ listfull: detaillierte Auflistung aller installierten Erweiterungen
+     load: installiert eine Erweiterung
+ autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
+   reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
+   unload: deinstalliere eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung entfernt)
+ filename: Erweiterung (Datei) welche installiert werden soll
+     name: Name einer Erweiterung
 arguments: Argumente die der Erweiterung beim installieren übergeben werden sollen
 
 Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
@@ -495,7 +495,7 @@ Beispiele:
 ........................................
 /quit  [-yes] [<arguments>]
 
-     -yes: Option muß genutzt werden falls weechat.look.confirm_quit aktiviert sein sollte
+     -yes: Option muss genutzt werden falls weechat.look.confirm_quit aktiviert sein sollte
 arguments: Text der beim Signal "quit" verschickt wird
            (zum Beispiel sendet die IRC Erweiterung diesen Text als Quit-Nachricht an den Server)
 ........................................

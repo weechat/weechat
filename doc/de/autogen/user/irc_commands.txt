@@ -553,21 +553,21 @@ reason: Grund der Abmeldung
          del|keep <server>
          deloutq|jump|raw
 
-      list: listet Server auf (Standardaufruf)
-  listfull: listet Server mit detaillierten Informationen über jeden einzelnen Server auf
-       add: erstellt einen neuen Server
+    list: listet Server auf (Standardaufruf)
+listfull: listet Server mit detaillierten Informationen über jeden einzelnen Server auf
+     add: erstellt einen neuen Server
   server: Servername, dient der internen Nutzung und zur Darstellung
-  hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
-      temp: erstellt temporären Server (wird nicht gespeichert)
-    option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
-  nooption: stellt die Boolean Option auf "off" (Beispiel: -nossl)
-      copy: erstellt eine Kopie des Servers
-    rename: benennt den Server um
-      keep: behält den Server in der Konfigurationsdatei (ausschließlich für die Nutzung bei temporären Servern)
-       del: entfernt einen Server
-   deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
-      jump: springt zum Server-Buffer
-       raw: öffnet Buffer mit Roh-IRC-Daten
+hostname: Name oder IP-Adresse des Servers. Optional kann noch der Port festgelegt werden (Standard-Port: 6667). Verschiedene Ports können durch Kommata getrennt werden
+    temp: erstellt temporären Server (wird nicht gespeichert)
+  option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
+nooption: stellt die Boolean Option auf "off" (Beispiel: -nossl)
+    copy: erstellt eine Kopie des Servers
+  rename: benennt den Server um
+    keep: behält den Server in der Konfigurationsdatei (ausschließlich für die Nutzung bei temporären Servern)
+     del: entfernt einen Server
+ deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
+    jump: springt zum Server-Buffer
+     raw: öffnet Buffer mit Roh-IRC-Daten
 
 Beispiele:
   /server listfull

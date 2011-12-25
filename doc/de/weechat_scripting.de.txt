@@ -16,9 +16,8 @@ Einleitung
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
 schlanker Chat-Client der für viele Betriebssysteme entwickelt wird.
 
-// TRANSLATION MISSING
-This manual documents way to write scripts for WeeChat, using one of supported
-script languages:
+Dieses Handbuch beschreibt wie man Skripten für WeeChat schreiben kann. Dabei
+werden folgende Programmiersprachen unterstützt:
 
 * python
 * perl
@@ -71,11 +70,10 @@ Tcl
 Guile (scheme)
 ^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-* Functions are called with `(weechat:xxx arg1 arg2 ...)`
-* Following functions take one list of arguments (instead of many arguments
-  for other functions), because number of arguments exceed number of allowed
-  arguments in Guile:
+* Funktionen werden im Format `(weechat:xxx arg1 arg2 ...)` ausgeführt
+* folgende Funktionen nutzen eine Liste von Argumente (anstelle von vielen
+  Argumenten für andere Funktionen), dies liegt daran das Guile die Anzahl
+  der Argumente eingeschränkt ist:
 ** config_new_section
 ** config_new_option
 ** bar_new
@@ -315,8 +313,7 @@ Liste der Skript API Funktionen:
   config_free, +
   config_get, config_get_plugin, config_is_set_plugin, config_set_plugin,
   config_set_desc_plugin, config_unset_plugin
-// TRANSLATION MISSING
-| key bindings        |
+| Tastenbelegung      |
   key_bind, key_unbind
 | Ausgabe             |
   prefix, color, print (für Python: prnt), print_date_tags (für Python:

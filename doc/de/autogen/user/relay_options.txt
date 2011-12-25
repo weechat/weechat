@@ -49,7 +49,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** Beschreibung: `regular expression with IPs allowed to use relay, example: "^(123.45.67.89|192.160.*)$"`
+** Beschreibung: `regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen, Beispiel:  "^(123.45.67.89|192.160.*)$"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -59,7 +59,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
-** Beschreibung: `compression level for packets sent to client with WeeChat protocol (0 = disable compression, 1 = low compression ... 9 = best compression)`
+** Beschreibung: `Kompressionsstärke der Pakete die durch das WeeChat Protokoll an den Client gesendet werden sollen (0 = Kompression deaktiviert, 1 = niedrige Kompression ... 9 = stärkste Kompression)`
 ** Typ: integer
 ** Werte: 0 .. 9 (Standardwert: `6`)
 

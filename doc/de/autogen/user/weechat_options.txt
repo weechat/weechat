@@ -264,7 +264,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute werden vor einer Farbe gesetzt (ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** Beschreibung: `if enabled, the base word to complete ends at char before cursor; otherwise the base word ends at first space after cursor`
+** Beschreibung: `Ist diese Option aktiviert beginnt eine Vervollständigung an der aktuellen Position des Cursors; andernfalls beginnt eine Vervollständigung erst wenn ein Leerzeichen als Trennung zum nächsten Wort vorhanden ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -594,7 +594,7 @@
 ** Werte: none, left, right (Standardwert: `right`)
 
 * [[option_weechat.look.prefix_align_max]] *weechat.look.prefix_align_max*
-** Beschreibung: `maximale Größe des Präfix (0 = keine maximale Länge)`
+** Beschreibung: `maximale Größe des Präfix (0 = keine Limitierung)`
 ** Typ: integer
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
@@ -679,7 +679,7 @@
 ** Werte: 1 .. 2147483647 (Standardwert: `3`)
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
-** Beschreibung: `scroll to bottom of window after switch to another buffer (do not remember scroll position in windows); the scroll is done only for buffers with formatted content (not free content)`
+** Beschreibung: `scrollt zum unteren Ende des Fensters nachdem zu einem anderen Buffer gewechselt wurde (die aktuelle Position wird dabei nicht gesichert); diese Funktion hat nur einen Einfluss auf Buffer mit einem formatierten Inhalt (und nicht auf Buffer mit einem freien Inhalt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -734,7 +734,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** Beschreibung: `comma separated list of file name extensions for plugins`
+** Beschreibung: `Durch Kommata getrennte Liste von Dateinamenerweiterungen welche für die Erweiterungen genutzt werden sollen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `".so,.dll"`)
 
