@@ -398,18 +398,17 @@ Senza argomenti, il comando visualizza il layout salvato.
 ........................................
 /mouse  enable|disable|toggle [<ritardo>]
 
- enable: abilita mouse
-disable: disabilita mouse
- toggle: abilita/disabilita mouse
-ritardo: ritardo (in secondi) dopo il quale viene ripristinato lo stato iniziale del mouse (utile per disattivarlo temporaneamente)
+ enable: enable mouse
+disable: disable mouse
+ toggle: toggle mouse
+  delay: delay (in seconds) after which initial mouse state is restored (useful to temporarily disable mouse)
 
-Per abilitare/disabilitare il mouse all'avvio, usare:
-  /set weechat.look.mouse on/off
+The mouse state is saved in option "weechat.look.mouse".
 
-Esempi:
-  abilita mouse:
+Examples:
+  enable mouse:
     /mouse enable
-  abilita/disabilita mouse per 5 secondi:
+  toggle mouse for 5 seconds:
     /mouse toggle 5
 ........................................
 

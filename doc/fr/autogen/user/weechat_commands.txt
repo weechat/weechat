@@ -403,8 +403,7 @@ disable: désactiver la souris
  toggle: activer/désactiver la souris
   délai: délai (en secondes) après lequel l'état initial de la souris est restauré (pratique pour désactiver temporairement la souris)
 
-Pour activer/désactiver la souris au démarrage, faites :
-  /set weechat.look.mouse on/off
+L'état de la souris est sauvé dans l'option "weechat.look.mouse".
 
 Exemples:
   activer la souris:

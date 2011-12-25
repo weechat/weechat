@@ -559,7 +559,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** description: `activer le support de la souris au démarrage (pour l'activer maintenant, voir /help mouse)`
+** description: `activer le support de la souris`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 

@@ -3126,9 +3126,15 @@ command_mouse_timer_cb (void *data, int remaining_calls)
     (void) remaining_calls;
 
     if (gui_mouse_enabled)
+    {
         gui_mouse_disable ();
+        config_file_option_set (config_look_mouse, "0", 1);
+    }
     else
+    {
         gui_mouse_enable ();
+        config_file_option_set (config_look_mouse, "1", 1);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -3172,6 +3178,7 @@ COMMAND_CALLBACK(mouse)
     if (string_strcasecmp (argv[1], "enable") == 0)
     {
         gui_mouse_enable ();
+        config_file_option_set (config_look_mouse, "1", 1);
         gui_chat_printf (NULL, _("Mouse enabled"));
         if (argc > 2)
             command_mouse_timer (argv[2]);
@@ -3182,6 +3189,7 @@ COMMAND_CALLBACK(mouse)
     if (string_strcasecmp (argv[1], "disable") == 0)
     {
         gui_mouse_disable ();
+        config_file_option_set (config_look_mouse, "0", 1);
         gui_chat_printf (NULL, _("Mouse disabled"));
         if (argc > 2)
             command_mouse_timer (argv[2]);
@@ -3194,11 +3202,13 @@ COMMAND_CALLBACK(mouse)
         if (gui_mouse_enabled)
         {
             gui_mouse_disable ();
+            config_file_option_set (config_look_mouse, "0", 1);
             gui_chat_printf (NULL, _("Mouse disabled"));
         }
         else
         {
             gui_mouse_enable ();
+            config_file_option_set (config_look_mouse, "1", 1);
             gui_chat_printf (NULL, _("Mouse enabled"));
         }
         if (argc > 2)
@@ -5865,8 +5875,7 @@ command_init ()
                      " toggle: toggle mouse\n"
                      "  delay: delay (in seconds) after which initial mouse "
                      "state is restored (useful to temporarily disable mouse)\n\n"
-                     "To enable/disable mouse at startup, use:\n"
-                     "  /set weechat.look.mouse on/off\n\n"
+                     "The mouse state is saved in option \"weechat.look.mouse\".\n\n"
                      "Examples:\n"
                      "  enable mouse:\n"
                      "    /mouse enable\n"

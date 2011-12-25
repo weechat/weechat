@@ -559,7 +559,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** description: `enable mouse support at startup (to enable it now, see /help mouse)`
+** description: `enable mouse support`
 ** type: boolean
 ** values: on, off (default value: `off`)
 

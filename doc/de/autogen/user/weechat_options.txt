@@ -559,7 +559,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** Beschreibung: `Mausunterstützung beim Start aktivieren (um die Funktion direkt zu aktivieren, siehe /help mouse)`
+** Beschreibung: `enable mouse support`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

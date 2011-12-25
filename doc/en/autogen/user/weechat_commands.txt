@@ -403,8 +403,7 @@ disable: disable mouse
  toggle: toggle mouse
   delay: delay (in seconds) after which initial mouse state is restored (useful to temporarily disable mouse)
 
-To enable/disable mouse at startup, use:
-  /set weechat.look.mouse on/off
+The mouse state is saved in option "weechat.look.mouse".
 
 Examples:
   enable mouse:

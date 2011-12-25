@@ -398,18 +398,17 @@ Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout dargestel
 ........................................
 /mouse  enable|disable|toggle [<delay>]
 
- enable: aktiviert Maus
-disable: deaktiviert Maus
- toggle: umschalten der Mausunterstützung
-  delay: Verzögerung (in Sekunden) nach der der ursprüngliche Status wiederhergestellt wird (nützlich um zeitgesteuert die Mausunterstützung zu deaktivieren)
+ enable: enable mouse
+disable: disable mouse
+ toggle: toggle mouse
+  delay: delay (in seconds) after which initial mouse state is restored (useful to temporarily disable mouse)
 
-Um die Mausunterstützung beim Programmstart ein-/auszuschalten:
-  /set weechat.look.mouse on/off
+The mouse state is saved in option "weechat.look.mouse".
 
-Beispiele:
-  Mausunterstützung aktivieren:
+Examples:
+  enable mouse:
     /mouse enable
-  Mausunterstützung für 5 Sekunden umschalten:
+  toggle mouse for 5 seconds:
     /mouse toggle 5
 ........................................
 

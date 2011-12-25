@@ -312,6 +312,26 @@ config_change_buffer_content (void *data, struct t_config_option *option)
 }
 
 /*
+ * config_change_mouse: called when mouse state is changed
+ */
+
+void
+config_change_mouse (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (gui_ok)
+    {
+        if (CONFIG_BOOLEAN(config_look_mouse))
+            gui_mouse_enable ();
+        else
+            gui_mouse_disable ();
+    }
+}
+
+/*
  * config_change_buffer_notify_default: called when buffer default notify changes
  */
 
@@ -1915,8 +1935,8 @@ config_weechat_init_options ()
     config_look_mouse = config_file_new_option (
         weechat_config_file, ptr_section,
         "mouse", "boolean",
-        N_("enable mouse support at startup (to enable it now, see /help mouse)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        N_("enable mouse support"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_mouse, NULL, NULL, NULL);
     config_look_mouse_timer_delay = config_file_new_option (
         weechat_config_file, ptr_section,
         "mouse_timer_delay", "integer",
