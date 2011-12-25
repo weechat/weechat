@@ -80,12 +80,12 @@
   'timeout' (integer) +
   'command' (string) +
   'start_time' (time) +
-  'cmd_start' (pointer) +
-  'cmd_stop' (pointer) +
-  'cmd_extra' (pointer) +
+  'cmd_start' (hashtable) +
+  'cmd_stop' (hashtable) +
+  'cmd_extra' (hashtable) +
   'cmd_start_received' (integer) +
   'cmd_stop_received' (integer) +
-  'cmd_filter' (pointer) +
+  'cmd_filter' (hashtable) +
   'output' (string) +
   'output_size' (integer) +
   'prev_redirect' (pointer, hdata: 'irc_redirect') +
@@ -138,6 +138,7 @@
   'prefix_chars' (string) +
   'nick_max_length' (integer) +
   'casemapping' (integer) +
+  'chantypes' (string) +
   'reconnect_delay' (integer) +
   'reconnect_start' (time) +
   'command_time' (time) +
@@ -159,7 +160,7 @@
   'last_redirect' (pointer, hdata: 'irc_redirect') +
   'notify_list' (pointer, hdata: 'irc_notify') +
   'last_notify' (pointer, hdata: 'irc_notify') +
-  'manual_joins' (pointer) +
+  'manual_joins' (hashtable) +
   'buffer' (pointer, hdata: 'buffer') +
   'buffer_as_string' (string) +
   'channels' (pointer, hdata: 'irc_channel') +
@@ -279,11 +280,11 @@
   'highlight_tags' (string) +
   'highlight_tags_count' (integer) +
   'highlight_tags_array' (pointer) +
-  'hotlist_max_level_nicks' (pointer) +
+  'hotlist_max_level_nicks' (hashtable) +
   'keys' (pointer, hdata: 'key') +
   'last_key' (pointer, hdata: 'key') +
   'keys_count' (integer) +
-  'local_variables' (pointer) +
+  'local_variables' (hashtable) +
   'prev_buffer' (pointer, hdata: 'buffer') +
   'next_buffer' (pointer, hdata: 'buffer') |
   'gui_buffers' +
