@@ -70,7 +70,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
                       const char *arguments)
 {
     char *pos_comma, *pos_comma2, *server, *channel, *host;
-    const char *nick, *isupport_value;
+    const char *nick, *pos_channel, *isupport_value;
     static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -80,7 +80,20 @@ irc_info_get_info_cb (void *data, const char *info_name,
 
     if (weechat_strcasecmp (info_name, "irc_is_channel") == 0)
     {
-        if (irc_channel_is_channel (arguments))
+        ptr_server = NULL;
+        pos_channel = arguments;
+        pos_comma = strchr (arguments, ',');
+        if (pos_comma)
+        {
+            pos_channel = pos_comma + 1;
+            server = weechat_strndup (arguments, pos_comma - arguments);
+            if (server)
+            {
+                ptr_server = irc_server_search (server);
+                free (server);
+            }
+        }
+        if (irc_channel_is_channel (ptr_server, pos_channel))
             return str_true;
         return NULL;
     }
@@ -135,11 +148,13 @@ irc_info_get_info_cb (void *data, const char *info_name,
             }
             else
             {
-                if (irc_channel_is_channel (arguments))
-                    channel = strdup (arguments);
-                else
+                if (irc_server_search (arguments))
                     server = strdup (arguments);
+                else
+                    channel = strdup (arguments);
             }
+            if (server)
+                ptr_server = irc_server_search (server);
 
             /*
              * replace channel by nick in host if channel is not a channel
@@ -147,7 +162,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
              */
             if (channel && host)
             {
-                if (!irc_channel_is_channel (channel))
+                if (!irc_channel_is_channel (ptr_server, channel))
                 {
                     free (channel);
                     channel = NULL;
@@ -159,12 +174,8 @@ irc_info_get_info_cb (void *data, const char *info_name,
             }
 
             /* search for server or channel buffer */
-            if (server)
-            {
-                ptr_server = irc_server_search (server);
-                if (ptr_server && channel)
-                    ptr_channel = irc_channel_search (ptr_server, channel);
-            }
+            if (server && ptr_server && channel)
+                ptr_channel = irc_channel_search (ptr_server, channel);
 
             if (server)
                 free (server);
@@ -252,10 +263,12 @@ irc_info_get_info_hashtable_cb (void *data, const char *info_name,
 
     if (weechat_strcasecmp (info_name, "irc_message_parse") == 0)
     {
+        server = weechat_hashtable_get (hashtable, "server");
+        ptr_server = (server) ? irc_server_search (server) : NULL;
         message = weechat_hashtable_get (hashtable, "message");
         if (message)
         {
-            value = irc_message_parse_to_hashtable (message);
+            value = irc_message_parse_to_hashtable (ptr_server, message);
             return value;
         }
     }
@@ -567,8 +580,8 @@ irc_info_init ()
 {
     /* info hooks */
     weechat_hook_info ("irc_is_channel",
-                       N_("1 if string is a valid IRC channel name"),
-                       N_("channel name"),
+                       N_("1 if string is a valid IRC channel name for server"),
+                       N_("server,channel (server is optional)"),
                        &irc_info_get_info_cb, NULL);
     weechat_hook_info ("irc_is_nick",
                        N_("1 if string is a valid IRC nick name"),
@@ -606,7 +619,8 @@ irc_info_init ()
     /* info_hashtable hooks */
     weechat_hook_info_hashtable ("irc_message_parse",
                                  N_("parse an IRC message"),
-                                 N_("\"message\": IRC message"),
+                                 N_("\"message\": IRC message, "
+                                    "\"server\": server name (optional)"),
                                  /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
                                  N_("\"nick\": nick, \"host\": host, "
                                     "\"command\": command, \"channel\": channel, "
@@ -614,8 +628,8 @@ irc_info_init ()
                                  &irc_info_get_info_hashtable_cb, NULL);
     weechat_hook_info_hashtable ("irc_message_split",
                                  N_("split an IRC message (to fit in 512 bytes)"),
-                                 N_("\"message\": IRC message, \"server\": server "
-                                    "name (optional)"),
+                                 N_("\"message\": IRC message, "
+                                    "\"server\": server name (optional)"),
                                  /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
                                  N_("\"msg1\" ... \"msgN\": messages to send "
                                     "(without final \"\\r\\n\"), "

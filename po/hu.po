@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-10-22 12:21+0200\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -5412,12 +5412,12 @@ msgstr[0] "%d szoba"
 msgstr[1] "%d szoba"
 
 #, fuzzy
-msgid "1 if string is a valid IRC channel name"
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "felhasználók listája a szobában"
 
 #, fuzzy
-msgid "channel name"
-msgstr "%d szoba"
+msgid "server,channel (server is optional)"
+msgstr "szoba: szoba neve"
 
 #, fuzzy
 msgid "1 if string is a valid IRC nick name"
@@ -5471,9 +5471,8 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr "üzenet: küldendő üzenet"
 
-#, fuzzy
-msgid "\"message\": IRC message"
-msgstr "üzenet: küldendő üzenet"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -5482,9 +5481,6 @@ msgid ""
 msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
-msgstr ""
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
@@ -7729,7 +7725,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-11-03 16:57+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -6031,11 +6031,13 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canales"
 
-msgid "1 if string is a valid IRC channel name"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 si la cadena es un nombre de canal IRC válido"
 
-msgid "channel name"
-msgstr "nombre del canal"
+#, fuzzy
+msgid "server,channel (server is optional)"
+msgstr "servidor,canal (canal es opcional)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 si la cadena es un apodo IRC válido"
@@ -6082,8 +6084,8 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr "analiza un mensaje IRC"
 
-msgid "\"message\": IRC message"
-msgstr "\"mensaje\": mensaje IRC"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr "\"message\": mensaje IRC, \"server\": nombre del servidor (opcional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6095,9 +6097,6 @@ msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
 msgstr "separar un mensaje IRC (para coincidir en 512 bytes)"
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr "\"message\": mensaje IRC, \"server\": nombre del servidor (opcional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -8413,23 +8412,3 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listas"
-
-#~ msgid "enable mouse support at startup (to enable it now, see /help mouse)"
-#~ msgstr ""
-#~ "activar el soporte para ratón al inicio del programa (para activarlo "
-#~ "ahora, ver /help mouse)"
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "extensión estándar de los archivos de plugin (por ejemplo \".so\" en "
-#~ "linux o \".dll\" en Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr ""
-#~ "%sAtención: %s, línea %d: opción desconocida \"%s\" (fuera de la sección)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr ""
-#~ "condicion(es) para mostrar la barra (para barras del tipo \"window\""

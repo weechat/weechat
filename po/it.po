@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-11-15 19:37+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -6038,11 +6038,13 @@ msgid_plural "channels"
 msgstr[0] "canale"
 msgstr[1] "canali"
 
-msgid "1 if string is a valid IRC channel name"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 se la stringa è nome valido di un canale IRC"
 
-msgid "channel name"
-msgstr "nome canale"
+#, fuzzy
+msgid "server,channel (server is optional)"
+msgstr "server,canale (canale è opzionale)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 se la stringa è un nick IRC valido"
@@ -6087,8 +6089,8 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr "controlla un messaggio IRC"
 
-msgid "\"message\": IRC message"
-msgstr "\"messaggio\": messaggio IRC"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr "\"message\": messaggio IRC, \"server\": nome server (opzionale)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6100,9 +6102,6 @@ msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
 msgstr "divide un messaggio IRC (per adattarlo in 512 byte)"
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr "\"message\": messaggio IRC, \"server\": nome server (opzionale)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -8396,25 +8395,3 @@ msgstr "Variabili"
 
 msgid "Lists"
 msgstr "Liste"
-
-#~ msgid "enable mouse support at startup (to enable it now, see /help mouse)"
-#~ msgstr ""
-#~ "abilita il supporto del mouse all'avvio (per attivarlo ora, consultare /"
-#~ "help mouse)"
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "estensione standard dei plugin nei nomi file (per esempio \".so\" sotto "
-#~ "Linux oppure \".dll\" sotto Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr ""
-#~ "%sAttenzione: %s, riga %d: opzione \"%s\" sconosciuta (fuori dalla "
-#~ "sezione)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr ""
-#~ "condizione(i) per la visualizzazione della barra (barre di tipo \"window"
-#~ "\")"

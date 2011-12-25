@@ -42,6 +42,8 @@ Version 0.3.7 (under dev!)
 * api: add new functions strcasecmp_range, strncasecmp_range,
   hashtable_map_string, hdata_check_pointer, hdata_char, hdata_hashtable and
   nicklist_get_next_item
+* irc: add optional server in info "irc_is_channel" (before channel name)
+  (bug #35124), add optional server in info_hashtable "irc_message_parse"
 * irc: reset read marker of current buffer on manual /join
 * irc: fix crash when signon time in message 317 (whois, idle) is invalid
   (too large) (bug #34905)

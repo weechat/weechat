@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-12-25 21:38+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6097,11 +6097,11 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canaux"
 
-msgid "1 if string is a valid IRC channel name"
-msgstr "1 si la chaîne est un nom de canal IRC valide"
+msgid "1 if string is a valid IRC channel name for server"
+msgstr "1 si la chaîne est un nom de canal IRC valide pour le serveur"
 
-msgid "channel name"
-msgstr "nom de canal"
+msgid "server,channel (server is optional)"
+msgstr "serveur,canal (le serveur est optionnel)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 si la chaîne est un pseudo IRC valide"
@@ -6146,8 +6146,8 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr "analyse un message IRC"
 
-msgid "\"message\": IRC message"
-msgstr "\"message\": message IRC"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr "\"message\": message IRC, \"server\": nom du serveur (optionnel)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6159,9 +6159,6 @@ msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
 msgstr "découper un message IRC (pour tenir dans les 512 octets)"
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr "\"message\": message IRC, \"server\": nom du serveur (optionnel)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -8483,30 +8480,3 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listes"
-
-#~ msgid "enable mouse support at startup (to enable it now, see /help mouse)"
-#~ msgstr ""
-#~ "activer le support de la souris au démarrage (pour l'activer maintenant, "
-#~ "voir /help mouse)"
-
-#~ msgid ""
-#~ "compression level (0 = no compression - faster, 9 = best compression - "
-#~ "slower)"
-#~ msgstr ""
-#~ "niveau de compression des paquets envoyés au client avec le protocole "
-#~ "WeeChat (0 = pas de compression ... 9 = meilleure compression)"
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "extension par défaut des extensions (par example \".so\" sous Linux ou \"."
-#~ "dll\" sous Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr ""
-#~ "%sAttention: %s, ligne %d: option \"%s\" inconnue (hors d'une section)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr ""
-#~ "condition(s) pour afficher la barre (pour les barres de type \"window\")"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-11-03 16:57+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -5839,11 +5839,13 @@ msgstr[0] "kanál"
 msgstr[1] "kanály"
 msgstr[2] "kanálů"
 
-msgid "1 if string is a valid IRC channel name"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 pokud je řetězec validní jméno IRC kanálu"
 
-msgid "channel name"
-msgstr "jméno kanálu"
+#, fuzzy
+msgid "server,channel (server is optional)"
+msgstr "server,kanál (kanál je volitelný)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 pokud je řetězec validní jméno IRC přezdívky"
@@ -5887,8 +5889,8 @@ msgstr "hodnota funkce, pokud je podporována serverem (z IRC zprávy 005)"
 msgid "parse an IRC message"
 msgstr "rozdělit IRC zprávu"
 
-msgid "\"message\": IRC message"
-msgstr "\"zpráva\": IRC zpráva"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -5899,9 +5901,6 @@ msgstr ""
 "kanál, \"arguments\": argumenty (včetně kanálu)"
 
 msgid "split an IRC message (to fit in 512 bytes)"
-msgstr ""
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
@@ -8198,16 +8197,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "standardní přípona souboru pluginů (například \".so\" pod Linuxem nebo \"."
-#~ "dll\" pod Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr "%sUpozornění: %s, řádek %d: neznámé nastavení \"%s\" (mimo sekci)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr "podmínka/podmínky pro zobrazení pole (pro pole typu \"window\")"

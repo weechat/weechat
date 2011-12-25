@@ -37,8 +37,9 @@
  */
 
 void
-irc_message_parse (const char *message, char **nick, char **host,
-                   char **command, char **channel, char **arguments)
+irc_message_parse (struct t_irc_server *server, const char *message,
+                   char **nick, char **host, char **command, char **channel,
+                   char **arguments)
 {
     const char *pos, *pos2, *pos3, *pos4, *pos5;
 
@@ -108,7 +109,7 @@ irc_message_parse (const char *message, char **nick, char **host,
                 *arguments = strdup (pos2);
             if (pos2[0] != ':')
             {
-                if (irc_channel_is_channel (pos2))
+                if (irc_channel_is_channel (server, pos2))
                 {
                     pos3 = strchr (pos2, ' ');
                     if (channel)
@@ -137,7 +138,7 @@ irc_message_parse (const char *message, char **nick, char **host,
                         {
                             pos3++;
                         }
-                        if (irc_channel_is_channel (pos3))
+                        if (irc_channel_is_channel (server, pos3))
                         {
                             pos5 = strchr (pos3, ' ');
                             if (channel)
@@ -172,13 +173,15 @@ irc_message_parse (const char *message, char **nick, char **host,
  */
 
 struct t_hashtable *
-irc_message_parse_to_hashtable (const char *message)
+irc_message_parse_to_hashtable (struct t_irc_server *server,
+                                const char *message)
 {
     char *nick, *host, *command, *channel, *arguments;
     char empty_str[1] = { '\0' };
     struct t_hashtable *hashtable;
 
-    irc_message_parse (message, &nick, &host, &command, &channel, &arguments);
+    irc_message_parse (server, message, &nick, &host, &command, &channel,
+                       &arguments);
 
     hashtable = weechat_hashtable_new (8,
                                        WEECHAT_HASHTABLE_STRING,
@@ -815,7 +818,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
          */
         if (index_args + 2 <= argc - 1)
         {
-            if (irc_channel_is_channel (argv[index_args + 1]))
+            if (irc_channel_is_channel (server, argv[index_args + 1]))
             {
                 snprintf (target, sizeof (target), "%s %s",
                           argv[index_args], argv[index_args + 1]);

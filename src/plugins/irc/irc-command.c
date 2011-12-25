@@ -640,7 +640,7 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             pos_channel = argv[1];
             pos_args = 2;
@@ -1002,7 +1002,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             channel_name = argv[1];
             pos_args = argv_eol[2];
@@ -1855,7 +1855,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             if (manual_join)
             {
                 snprintf (new_args, length, "%s%s",
-                          (irc_channel_is_channel (channels[0])) ? "" : "#",
+                          (irc_channel_is_channel (server, channels[0])) ? "" : "#",
                           channels[0]);
                 ptr_channel = irc_channel_search (server, new_args);
                 if (ptr_channel)
@@ -1871,7 +1871,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 if (i > 0)
                     strcat (new_args, ",");
                 if (((num_channels > 1) || (strcmp (channels[i], "0") != 0))
-                    && !irc_channel_is_channel (channels[i]))
+                    && !irc_channel_is_channel (server, channels[i]))
                 {
                     strcat (new_args, "#");
                 }
@@ -1959,7 +1959,7 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             if (argc < 3)
             {
@@ -2033,7 +2033,7 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             if (argc < 3)
             {
@@ -2540,7 +2540,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
             }
             else
             {
-                if (irc_channel_is_channel (targets[i]))
+                if (irc_channel_is_channel (ptr_server, targets[i]))
                 {
                     ptr_channel = irc_channel_search (ptr_server,
                                                       targets[i]);
@@ -2763,7 +2763,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         IRC_COMMAND_CHECK_SERVER("notice", 1);
         is_channel = 0;
         if (((argv[arg_target][0] == '@') || (argv[arg_target][0] == '+'))
-            && irc_channel_is_channel (argv[arg_target] + 1))
+            && irc_channel_is_channel (ptr_server, argv[arg_target] + 1))
         {
             ptr_channel = irc_channel_search (ptr_server, argv[arg_target] + 1);
             is_channel = 1;
@@ -3117,7 +3117,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             channel_name = argv[1];
             pos_args = argv_eol[2];
@@ -4236,7 +4236,7 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             channel_name = argv[1];
             new_topic = argv_eol[2];
@@ -4334,7 +4334,7 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             pos_channel = argv[1];
             pos_args = 2;
@@ -4538,7 +4538,7 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 1)
     {
-        if (irc_channel_is_channel (argv[1]))
+        if (irc_channel_is_channel (ptr_server, argv[1]))
         {
             pos_channel = argv[1];
             pos_args = 2;

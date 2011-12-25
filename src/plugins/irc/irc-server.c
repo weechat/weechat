@@ -482,9 +482,9 @@ irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
  * irc_server_set_prefix_modes_chars: set "prefix_modes" and "prefix_chars" in
  *                                    server using value of PREFIX in IRC
  *                                    message 005
- *                                    for example, if prefix is "(aohv)&@%+",
- *                                    prefix_modes = "aohv"
- *                                    prefix_chars = "&@%+"
+ *                                    for example, if prefix is "(ohv)@%+",
+ *                                    prefix_modes = "ohv"
+ *                                    prefix_chars = "@%+"
  */
 
 void
@@ -719,6 +719,7 @@ irc_server_alloc (const char *name)
     new_server->prefix_chars = NULL;
     new_server->nick_max_length = 0;
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    new_server->chantypes = NULL;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -954,7 +955,7 @@ irc_server_alloc_with_url (const char *irc_url)
         /* autojoin */
         if (pos_channel && pos_channel[0])
         {
-            if (irc_channel_is_channel (pos_channel))
+            if (irc_channel_is_channel (ptr_server, pos_channel))
                 server_autojoin = strdup (pos_channel);
             else
             {
@@ -1652,7 +1653,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
     rc = 1;
 
-    irc_message_parse (message, &nick, NULL, &command, &channel, NULL);
+    irc_message_parse (server, message, &nick, NULL, &command, &channel, NULL);
     snprintf (str_modifier, sizeof (str_modifier),
               "irc_out_%s",
               (command) ? command : "unknown");
@@ -2076,7 +2077,9 @@ irc_server_msgq_flush ()
                     irc_raw_print (irc_recv_msgq->server, IRC_RAW_FLAG_RECV,
                                    ptr_data);
 
-                    irc_message_parse (ptr_data, NULL, NULL, &command, NULL, NULL);
+                    irc_message_parse (irc_recv_msgq->server,
+                                       ptr_data, NULL, NULL, &command, NULL,
+                                       NULL);
                     snprintf (str_modifier, sizeof (str_modifier),
                               "irc_in_%s",
                               (command) ? command : "unknown");
@@ -2112,11 +2115,14 @@ irc_server_msgq_flush ()
                                                ptr_msg);
                             }
 
-                            irc_message_parse (ptr_msg, &nick, &host, &command,
+                            irc_message_parse (irc_recv_msgq->server,
+                                               ptr_msg, &nick, &host, &command,
                                                &channel, &arguments);
 
                             /* convert charset for message */
-                            if (channel && irc_channel_is_channel (channel))
+                            if (channel
+                                && irc_channel_is_channel (irc_recv_msgq->server,
+                                                           channel))
                             {
                                 snprintf (modifier_data, sizeof (modifier_data),
                                           "%s.%s.%s",
@@ -4170,6 +4176,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_max_length, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, NULL);
@@ -4360,6 +4367,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "casemapping", server->casemapping))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "casemapping_string", irc_server_casemapping_string[server->casemapping]))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "chantypes", server->chantypes))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -4666,6 +4675,7 @@ irc_server_print_log ()
         weechat_log_printf ("  casemapping. . . . . : %d (%s)",
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
+        weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);

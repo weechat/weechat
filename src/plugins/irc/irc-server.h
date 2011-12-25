@@ -163,10 +163,11 @@ struct t_irc_server
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
-    char *prefix_modes;             /* prefix modes from msg 005 (eg "aohv") */
-    char *prefix_chars;             /* prefix chars from msg 005 (eg "&@%+") */
+    char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
+    char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */
     int nick_max_length;            /* max lenth of nick (from msg 005)      */
     int casemapping;                /* casemapping from msg 005              */
+    char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-12-18 14:57+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: \n"
@@ -6244,11 +6244,13 @@ msgid_plural "channels"
 msgstr[0] "Channel"
 msgstr[1] "Channels"
 
-msgid "1 if string is a valid IRC channel name"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "1, falls die Zeichenkette ein gültiger IRC-Channel ist"
 
-msgid "channel name"
-msgstr "Channelname"
+#, fuzzy
+msgid "server,channel (server is optional)"
+msgstr "Server,Channel (Channel ist optional)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1, falls die Zeichenkette ein gültiger IRC Nickname ist"
@@ -6295,8 +6297,8 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr "Parse eine IRC Nachricht"
 
-msgid "\"message\": IRC message"
-msgstr "\"message\": IRC Nachricht"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr "\"message\": IRC Nachricht, \"server\": Servername (optional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6310,9 +6312,6 @@ msgid "split an IRC message (to fit in 512 bytes)"
 msgstr ""
 "dient zum Aufteilen einer überlangen IRC Nachricht (in maximal 512 Bytes "
 "große Nachrichten)"
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr "\"message\": IRC Nachricht, \"server\": Servername (optional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -8659,20 +8658,3 @@ msgstr "Variablen"
 
 msgid "Lists"
 msgstr "Listen"
-
-#~ msgid "enable mouse support at startup (to enable it now, see /help mouse)"
-#~ msgstr ""
-#~ "Mausunterstützung beim Start aktivieren (um die Funktion direkt zu "
-#~ "aktivieren, siehe /help mouse)"
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "Standard Dateinamenserweiterung (Beispiel: \".so\" unter Linux oder \".dll"
-#~ "\" unter Microsoft Windows)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr ""
-#~ "Bedingung(en) für die Darstellung von Infobar(s) (für Infobars des Typs "
-#~ "\"window\")"

@@ -210,7 +210,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
         server_match = 0;
         channel_match = 0;
 
-        if (!server || (strcmp (ptr_ignore->server, "*") == 0))
+        if (strcmp (ptr_ignore->server, "*") == 0)
             server_match = 1;
         else
             server_match = (weechat_strcasecmp (ptr_ignore->server,
@@ -220,7 +220,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
             channel_match = 1;
         else
         {
-            if (irc_channel_is_channel (channel))
+            if (irc_channel_is_channel (server, channel))
             {
                 channel_match = (weechat_strcasecmp (ptr_ignore->channel,
                                                      channel) == 0);

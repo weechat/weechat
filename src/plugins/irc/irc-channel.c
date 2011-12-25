@@ -368,11 +368,11 @@ irc_channel_search (struct t_irc_server *server, const char *channel_name)
 }
 
 /*
- * irc_channel_is_channel: returns 1 if string is channel
+ * irc_channel_is_channel: returns 1 if string is a channel for given server
  */
 
 int
-irc_channel_is_channel (const char *string)
+irc_channel_is_channel (struct t_irc_server *server, const char *string)
 {
     char first_char[2];
 
@@ -381,7 +381,10 @@ irc_channel_is_channel (const char *string)
 
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return (strpbrk (first_char, IRC_CHANNEL_PREFIX)) ? 1 : 0;
+    return (strpbrk (first_char,
+                     (server && server->chantypes) ?
+                     server->chantypes : IRC_CHANNEL_DEFAULT_CHANTYPES)) ?
+        1 : 0;
 }
 
 /*

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-11-03 16:57+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -5997,11 +5997,13 @@ msgstr[0] "kanał"
 msgstr[1] "kanały"
 msgstr[2] "kanałów"
 
-msgid "1 if string is a valid IRC channel name"
+#, fuzzy
+msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 jeśli ciąg jest poprawną nazwą kanału IRC"
 
-msgid "channel name"
-msgstr "nazwa kanału"
+#, fuzzy
+msgid "server,channel (server is optional)"
+msgstr "serwer,kanał (kanał jest opcjonalny)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 jeśli ciąg jest poprawną nazwą użytkownika IRC"
@@ -6045,8 +6047,8 @@ msgstr "wartość opcji, jeśli jest wpierana przez serwer (z wiadomości IRC 00
 msgid "parse an IRC message"
 msgstr "przetwarza wiadomość IRC"
 
-msgid "\"message\": IRC message"
-msgstr "\"wiadomość\": wiadomość IRC"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr "\"message\": wiadomość IRC, \"server\": nazwa serwera (opcjonalne)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6058,9 +6060,6 @@ msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
 msgstr "dziel wiadomość IRC (aby zmieściła się w 512 bajtach)"
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
-msgstr "\"message\": wiadomość IRC, \"server\": nazwa serwera (opcjonalne)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -8321,21 +8320,3 @@ msgstr "Zmienne"
 
 msgid "Lists"
 msgstr "Listy"
-
-#~ msgid "enable mouse support at startup (to enable it now, see /help mouse)"
-#~ msgstr ""
-#~ "włącza wsparcie dla myszy po starcie (aby włączyć teraz, zobacz /help "
-#~ "mouse)"
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "domyślne rozszerzenie wtyczek (na przykład \".so\" pod Linuksem lub \".dll"
-#~ "\" pod Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr "%sOstrzeżenie: %s, w linii %d: nieznana opcja \"%s\" (poza sekcją)"
-
-#~ msgid "condition(s) for displaying bar (for bars of type \"window\")"
-#~ msgstr "warunek(i) wyświetlenia paska (dla pasków o typie \"window\")"

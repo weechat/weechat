@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 21:44+0100\n"
-"PO-Revision-Date: 2011-11-03 16:58+0100\n"
+"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Ivan Sichmann Freitas <ivansichfreitas@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Portuguese\n"
@@ -5474,10 +5474,10 @@ msgid_plural "channels"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "1 if string is a valid IRC channel name"
+msgid "1 if string is a valid IRC channel name for server"
 msgstr ""
 
-msgid "channel name"
+msgid "server,channel (server is optional)"
 msgstr ""
 
 msgid "1 if string is a valid IRC nick name"
@@ -5522,7 +5522,7 @@ msgstr ""
 msgid "parse an IRC message"
 msgstr ""
 
-msgid "\"message\": IRC message"
+msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
@@ -5532,9 +5532,6 @@ msgid ""
 msgstr ""
 
 msgid "split an IRC message (to fit in 512 bytes)"
-msgstr ""
-
-msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr ""
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
@@ -7618,14 +7615,3 @@ msgstr ""
 
 msgid "Lists"
 msgstr ""
-
-#~ msgid ""
-#~ "standard plugins extension in filename (for example \".so\" under Linux "
-#~ "or \".dll\" under Microsoft Windows)"
-#~ msgstr ""
-#~ "extensão padrão dos plugins no nome de arquivo (por exemplo \".so\" em "
-#~ "Linux ou \".dll\" em Microsoft Windows)"
-
-#~ msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
-#~ msgstr ""
-#~ "%sAviso: %s, linha %d: opção desconhedica \"%s\" (fora de uma seção)"

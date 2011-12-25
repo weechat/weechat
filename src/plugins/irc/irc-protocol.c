@@ -742,7 +742,7 @@ IRC_PROTOCOL_CALLBACK(mode)
 
     pos_modes = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
 
-    if (irc_channel_is_channel (argv[2]))
+    if (irc_channel_is_channel (server, argv[2]))
     {
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
@@ -954,7 +954,7 @@ IRC_PROTOCOL_CALLBACK(notice)
         if (argc < 4)
             return WEECHAT_RC_ERROR;
         pos_target = argv[2];
-        is_channel = irc_channel_is_channel (pos_target + 1);
+        is_channel = irc_channel_is_channel (server, pos_target + 1);
         if ((pos_target[0] == '@') && is_channel)
         {
             pos_target++;
@@ -984,7 +984,7 @@ IRC_PROTOCOL_CALLBACK(notice)
     }
     else
     {
-        if (pos_target && irc_channel_is_channel (pos_target))
+        if (pos_target && irc_channel_is_channel (server, pos_target))
         {
             /* notice for channel */
             ptr_channel = irc_channel_search (server, pos_target);
@@ -1375,7 +1375,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
 
     /* receiver is a channel ? */
-    if (irc_channel_is_channel (argv[2]))
+    if (irc_channel_is_channel (server, argv[2]))
     {
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
@@ -1674,7 +1674,7 @@ IRC_PROTOCOL_CALLBACK(topic)
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
-    if (!irc_channel_is_channel (argv[2]))
+    if (!irc_channel_is_channel (server, argv[2]))
     {
         weechat_printf (server->buffer,
                         _("%s%s: \"%s\" command received without channel"),
@@ -1970,6 +1970,21 @@ IRC_PROTOCOL_CALLBACK(005)
         casemapping = irc_server_search_casemapping (pos);
         if (casemapping >= 0)
             server->casemapping = casemapping;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save chantypes */
+    pos = strstr (argv_eol[3], "CHANTYPES=");
+    if (pos)
+    {
+        pos += 10;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        if (server->chantypes)
+            free (server->chantypes);
+        server->chantypes = strdup (pos);
         if (pos2)
             pos2[0] = ' ';
     }
@@ -2813,7 +2828,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
     }
     else
     {
-        ptr_channel = (irc_channel_is_channel (argv[3])) ?
+        ptr_channel = (irc_channel_is_channel (server, argv[3])) ?
             irc_channel_search (server, argv[3]) : NULL;
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -3528,7 +3543,7 @@ IRC_PROTOCOL_CALLBACK(353)
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
-    if (irc_channel_is_channel (argv[3]))
+    if (irc_channel_is_channel (server, argv[3]))
     {
         pos_channel = argv[3];
         args = 4;
