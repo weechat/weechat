@@ -426,49 +426,53 @@ WeeChat reserved identifiers:
 
 [width="100%",cols="5m,5,3,15",options="header"]
 |=====================================================
-| Identifier               | Description            | Hdata type | Hdata content
+| Identifier               | Description             | Hdata type | Hdata content
 
-| _buffer_opened           | Buffer opened          | buffer |
+| _buffer_opened           | Buffer opened           | buffer |
   'number' (integer), 'full_name' (string), 'short_name' (string), +
   'nicklist' (integer), 'title' (string), 'local_variables' (hashtable), +
   'prev_buffer' (pointer), 'next_buffer' (pointer)
 
-| _buffer_moved            | Buffer moved           | buffer |
+| _buffer_type_changed     | Type of buffer changed  | buffer |
+  'number' (integer), 'full_name' (string), +
+  'type' (integer)
+
+| _buffer_moved            | Buffer moved            | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer)
 
-| _buffer_merged           | Buffer merged          | buffer |
+| _buffer_merged           | Buffer merged           | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer)
 
-| _buffer_unmerged         | Buffer unmerged        | buffer |
+| _buffer_unmerged         | Buffer unmerged         | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer)
 
-| _buffer_renamed          | Buffer renamed         | buffer |
+| _buffer_renamed          | Buffer renamed          | buffer |
   'number' (integer), 'full_name' (string), 'short_name' (string),
   'local_variables' (hashtable)
 
-| _buffer_title_changed    | Buffer moved           | buffer |
+| _buffer_title_changed    | Title of buffer changed | buffer |
   'number' (integer), 'full_name' (string), 'title' (string)
 
-| _buffer_localvar_added   | Local variable added   | buffer |
+| _buffer_localvar_added   | Local variable added    | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable)
 
-| _buffer_localvar_changed | Local variable changed | buffer |
+| _buffer_localvar_changed | Local variable changed  | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable)
 
-| _buffer_localvar_removed | Local variable removed | buffer |
+| _buffer_localvar_removed | Local variable removed  | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable)
 
-| _buffer_line_added       | Line added in buffer   | line |
+| _buffer_line_added       | Line added in buffer    | line |
   'buffer' (pointer), 'date' (time), 'displayed' (char), 'prefix' (string),
   'message' (string)
 
-| _buffer_closing          | Buffer closing         | buffer |
+| _buffer_closing          | Buffer closing          | buffer |
   'number' (integer), 'full_name' (string)
 
-| _nicklist                | Nicklist for a buffer  | nicklist_item |
+| _nicklist                | Nicklist for a buffer   | nicklist_item |
   'group' (char), 'visible' (char), 'level' (integer), +
   'name' (string), 'color' (string), +
   'prefix' (string), 'prefix_color' (string)

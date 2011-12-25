@@ -306,6 +306,23 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             relay_weechat_msg_free (msg);
         }
     }
+    else if (strcmp (signal, "buffer_type_changed") == 0)
+    {
+        ptr_buffer = (struct t_gui_buffer *)signal_data;
+        if (!ptr_buffer)
+            return WEECHAT_RC_OK;
+
+        msg = relay_weechat_msg_new (str_signal);
+        if (msg)
+        {
+            snprintf (cmd_hdata, sizeof (cmd_hdata),
+                      "buffer:0x%lx", (long unsigned int)ptr_buffer);
+            relay_weechat_msg_add_hdata (msg, cmd_hdata,
+                                         "number,full_name,type");
+            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_free (msg);
+        }
+    }
     else if (strcmp (signal, "buffer_moved") == 0)
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
