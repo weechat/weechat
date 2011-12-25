@@ -324,7 +324,8 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             relay_weechat_msg_free (msg);
         }
     }
-    else if (strcmp (signal, "buffer_merged") == 0)
+    else if ((strcmp (signal, "buffer_merged") == 0)
+             || (strcmp (signal, "buffer_unmerged") == 0))
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
         if (!ptr_buffer)

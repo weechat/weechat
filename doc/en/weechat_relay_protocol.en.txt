@@ -441,6 +441,10 @@ WeeChat reserved identifiers:
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer)
 
+| _buffer_unmerged         | Buffer unmerged        | buffer |
+  'number' (integer), 'full_name' (string), +
+  'prev_buffer' (pointer), 'next_buffer' (pointer)
+
 | _buffer_renamed          | Buffer renamed         | buffer |
   'number' (integer), 'full_name' (string), 'short_name' (string),
   'local_variables' (hashtable)
