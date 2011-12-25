@@ -90,6 +90,7 @@ gui_mouse_enable ()
 {
     gui_mouse_enabled = 1;
     fprintf (stderr, "\033[?1005h\033[?1000h\033[?1002h");
+    config_file_option_set (config_look_mouse, "1", 1);
 }
 
 /*
@@ -101,6 +102,7 @@ gui_mouse_disable ()
 {
     gui_mouse_enabled = 0;
     fprintf (stderr, "\033[?1002l\033[?1000l\033[?1005l");
+    config_file_option_set (config_look_mouse, "0", 1);
 }
 
 /*
