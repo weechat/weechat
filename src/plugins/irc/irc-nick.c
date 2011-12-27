@@ -177,23 +177,18 @@ irc_nick_find_color (const char *nickname)
     if (irc_config_num_nick_colors == 0)
         return weechat_color ("default");
 
-    nickname2 = irc_nick_strdup_for_color (nickname);
-
     /* look if color is forced */
     forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
-                                          (nickname2) ? nickname2 : nickname);
+                                          nickname);
     if (forced_color)
     {
         forced_color = weechat_color (forced_color);
         if (forced_color && forced_color[0])
-        {
-            if (nickname2)
-                free (nickname2);
             return forced_color;
-        }
     }
 
     /* hash nickname to get color */
+    nickname2 = irc_nick_strdup_for_color (nickname);
     color = irc_nick_hash_color ((nickname2) ? nickname2 : nickname);
     if (nickname2)
         free (nickname2);
@@ -222,19 +217,14 @@ irc_nick_find_color_name (const char *nickname)
     if (irc_config_num_nick_colors == 0)
         return default_color;
 
-    nickname2 = irc_nick_strdup_for_color (nickname);
-
     /* look if color is forced */
     forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
-                                          (nickname2) ? nickname2 : nickname);
+                                          nickname);
     if (forced_color)
-    {
-        if (nickname2)
-            free (nickname2);
         return forced_color;
-    }
 
     /* hash nickname to get color */
+    nickname2 = irc_nick_strdup_for_color (nickname);
     color = irc_nick_hash_color ((nickname2) ? nickname2 : nickname);
     if (nickname2)
         free (nickname2);
