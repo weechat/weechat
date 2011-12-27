@@ -1843,9 +1843,13 @@ Relay Erweiterung
 ~~~~~~~~~~~~~~~~~
 
 Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokolle,
-über ein Netzwerk zu übermitteln.
+über ein Netzwerk zu übermitteln:
 
-Zur Zeit wird ausschließlich das "IRC" Protokoll unterstützt (IRC Proxy).
+// TRANSLATION MISSING
+* 'irc': IRC proxy: used to share connections to IRC servers with one or many
+  other IRC clients
+* 'weechat': protocol used by remote interfaces to display and interact with
+  WeeChat (for example QWeeChat)
 
 [[relay_options]]
 Optionen (relay.conf)
@@ -1881,6 +1885,23 @@ Die Anzahl an erlaubten Clients kann limitiert werden:
 ----------------------------------------
 /set relay.network.max_clients 1
 ----------------------------------------
+
+// TRANSLATION MISSING
+[[relay_weechat_protocol]]
+WeeChat protocol
+^^^^^^^^^^^^^^^^
+
+The Relay plugin can send data to remote interface using WeeChat protocol.
+
+For example:
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add weechat.* 9000
+----------------------------------------
+
+Now you can connect on port 9000 with a remote interface (like QWeeChat),
+using password "mypass".
 
 [[rmodifier_plugin]]
 Rmodifier Erweiterung

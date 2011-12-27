@@ -1868,9 +1868,12 @@ Extension Relay
 ~~~~~~~~~~~~~~~
 
 L'extension Relay est utilisée pour relayer des données via le réseau, en
-utilisant divers protocoles.
+utilisant divers protocoles :
 
-Actuellement, seul le protocole "irc" est supporté (proxy IRC).
+* 'irc' : proxy IRC : utilisé pour partager la connexions aux serveurs IRC avec
+  un ou plusieurs autres clients IRC
+* 'weechat' : protocole utilisé par les interfaces distantes (par exemple
+  QWeeChat).
 
 [[relay_options]]
 Options (relay.conf)
@@ -1907,6 +1910,23 @@ Vous pouvez limiter le nombre de clients autorisés :
 ----------------------------------------
 /set relay.network.max_clients 1
 ----------------------------------------
+
+[[relay_weechat_protocol]]
+WeeChat protocol
+^^^^^^^^^^^^^^^^
+
+L'extension Relay peut envoyer les données à une interface distante en
+utilisant le protocole WeeChat.
+
+Par exemple :
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add weechat.* 9000
+----------------------------------------
+
+Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
+distante (comme QWeeChat), en utilisant le mot de passe "mypass".
 
 [[rmodifier_plugin]]
 Extension Rmodifier
