@@ -53,7 +53,7 @@ try:
     import os, gettext, re, hashlib
     from collections import defaultdict
     from operator import itemgetter
-except ImportError, message:
+except ImportError as message:
     print('Missing package(s) for %s: %s' % (SCRIPT_NAME, message))
     import_ok = False
 
