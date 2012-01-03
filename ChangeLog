@@ -63,7 +63,7 @@ Version 0.3.7 (under dev!)
 * irc: auto-connect to servers created with "irc://" on command line but not
   other servers if "-a" ("--no-connect") is given
 * guile: new script plugin for scheme (task #7289)
-* python: support of Python 3.x (task #11704)
+* python: add support of Python 3.x (task #11704)
 * relay: add WeeChat protocol for remote GUI
 * ruby: fix crash when reloading ruby plugin (bug #34474)
 * xfer: display origin of xfer in core and xfer buffers (task #10956)
