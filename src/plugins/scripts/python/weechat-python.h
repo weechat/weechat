@@ -26,6 +26,14 @@
 
 #define PYTHON_CURRENT_SCRIPT_NAME ((python_current_script) ? python_current_script->name : "-")
 
+/* define some bytes functions for old python (<= 2.5) */
+#if PY_VERSION_HEX < 0x02060000
+#define PyBytes_AsString PyString_AsString
+#define PyBytes_Check PyString_Check
+#define PyBytes_FromString PyString_FromString
+#define PyUnicode_FromString PyString_FromString
+#endif
+
 extern struct t_weechat_plugin *weechat_python_plugin;
 
 extern int python_quiet;

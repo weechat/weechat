@@ -40,17 +40,17 @@ FIND_PROGRAM(PYTHON_EXECUTABLE
 
 IF(PYTHON_EXECUTABLE)
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('CONFINCLUDEPY')"
+    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('CONFINCLUDEPY'))"
     OUTPUT_VARIABLE PYTHON_INC_DIR
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('LIBPL')"
+    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('LIBPL'))"
     OUTPUT_VARIABLE PYTHON_POSSIBLE_LIB_PATH
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print get_config_var('LINKFORSHARED')"
+    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('LINKFORSHARED'))"
     OUTPUT_VARIABLE PYTHON_LFLAGS
     )
 

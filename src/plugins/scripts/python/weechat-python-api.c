@@ -50,8 +50,8 @@
                                       python_function_name);            \
         __ret;                                                          \
     }
-#define API_RETURN_OK return Py_BuildValue ("i", 1);
-#define API_RETURN_ERROR return Py_BuildValue ("i", 0);
+#define API_RETURN_OK return PyLong_FromLong((long)1);
+#define API_RETURN_ERROR return PyLong_FromLong ((long)0);
 #define API_RETURN_EMPTY                                                \
     Py_INCREF (Py_None);                                                \
     return Py_None;
@@ -68,9 +68,9 @@
     }                                                                   \
     return Py_BuildValue ("s", "")
 #define API_RETURN_INT(__int)                                           \
-    return Py_BuildValue ("i", __int);
+    return PyLong_FromLong((long)__int);
 #define API_RETURN_LONG(__long)                                         \
-    return Py_BuildValue ("l", __long);
+    return PyLong_FromLong(__long);
 
 #define API_DEF_FUNC(__name)                                            \
     { #__name, &weechat_python_api_##__name, METH_VARARGS, "" }
