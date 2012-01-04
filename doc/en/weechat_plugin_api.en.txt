@@ -7703,7 +7703,7 @@ test_whois_cb (void *data, const char *signal, struct t_hashtable *hashtable)
 weechat_hook_hsignal ("irc_redirection_test_whois", &test_whois_cb, NULL);
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
-                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       WEECHAT_HASHTABLE_STRING,
                                                        NULL,
                                                        NULL);
 if (hashtable)
@@ -7775,7 +7775,7 @@ C example:
 ----------------------------------------
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
-                                                       WEECHAT_HASHTABLE_INTEGER,
+                                                       WEECHAT_HASHTABLE_STRING,
                                                        NULL,
                                                        NULL);
 if (hashtable)
