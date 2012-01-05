@@ -7735,6 +7735,19 @@ Quando è stata ricevuta la risposta completa dal proprio comando, verrà
 inviato un hsignal. Questo hsignal ha il nome 'irc_redirection_xxx_yyy' dove
 'xxx' è il segnale e 'yyy' lo 'schema' usato.
 
+// TRANSLATION MISSING
+Hashtable sent in hsignal has following content (key and values are strings):
+
+// TRANSLATION MISSING
+* 'output': output of command (messages are separated by "\n")
+* 'output_size': number of bytes in 'output' (as string)
+* 'error': error string (if an error occurred):
+** 'timeout': redirection stopped after timeout
+* 'server': internal server name
+* 'pattern': redirect pattern
+* 'signal': signal name
+* 'command': redirected command
+
 Esempio in C:
 
 [source,C]

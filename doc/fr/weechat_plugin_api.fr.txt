@@ -7802,6 +7802,18 @@ Lorsque la réponse complète à votre commande a été reçue, un hsignal est e
 Ce hsignal a le nom 'irc_redirection_xxx_yyy' où 'xxx' est le 'signal' et 'yyy'
 le 'pattern' utilisé.
 
+La hashtable envoyée dans le hsignal a le contenu suivant (les clés et valeurs
+sont des chaînes) :
+
+* 'output' : sortie de la commande (les messages sont séparés par "\n")
+* 'output_size' : nombre d'octets dans 'output' (sous forme de chaîne)
+* 'error' : chaîne d'erreur (si une erreur s'est produite) :
+** 'timeout' : redirection stoppée après le délai maximum dépassé
+* 'server' : nom interne du serveur
+* 'pattern' : modèle de redirection
+* 'signal' : nom du signal
+* 'command' : commande redirigée
+
 Exemple en C :
 
 [source,C]
