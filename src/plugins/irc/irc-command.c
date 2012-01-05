@@ -5144,8 +5144,7 @@ irc_command_init ()
                              "  notify when \"toto\" is away or back on "
                              "freenode server:\n"
                              "    /notify add toto freenode -away"),
-                          "list"
-                          " || add %(irc_channel_nicks) %(irc_servers) "
+                          "add %(irc_channel_nicks) %(irc_servers) "
                           "-away %-"
                           " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
                           &irc_command_notify, NULL);
