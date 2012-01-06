@@ -8,8 +8,8 @@ Version 0.3.7 (under dev!)
 --------------------------
 
 * extented regex is used in filters and irc ignore, so some chars that
-  needed escape in past do not need any more (for example "[0-9]\+" becomes
-  "[0-9]+"), filters and ignore have to be manually fixed
+  needed escape in past do not need any more (for example `[0-9]\+` becomes
+  `[0-9]+`), filters and ignore have to be manually fixed
 * option 'weechat.history.max_lines' has been renamed to
   'weechat.history.max_buffer_lines_number'
 
