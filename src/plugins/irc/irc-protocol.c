@@ -487,12 +487,9 @@ IRC_PROTOCOL_CALLBACK(join)
         }
     }
 
-    /* remove topic and display channel creation date if joining new channel */
+    /* remove topic if joining new channel */
     if (!ptr_channel->nicks)
-    {
         irc_channel_set_topic (ptr_channel, NULL);
-        ptr_channel->display_creation_date = 1;
-    }
 
     /* add nick in channel */
     ptr_nick = irc_nick_new (server, ptr_channel, nick, NULL, 0);
@@ -731,6 +728,7 @@ IRC_PROTOCOL_CALLBACK(mode)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *hashtable;
 
     /*
      * MODE message looks like:
@@ -747,10 +745,36 @@ IRC_PROTOCOL_CALLBACK(mode)
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
         {
-            if (irc_mode_channel_set (server, ptr_channel, pos_modes))
+            if (ptr_channel->modes)
             {
-                irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                                  "MODE %s", ptr_channel->name);
+                if (irc_mode_channel_set (server, ptr_channel, pos_modes))
+                {
+                    hashtable = weechat_hashtable_new (8,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+                    if (hashtable)
+                    {
+                        weechat_hashtable_set (hashtable, "server", server->name);
+                        weechat_hashtable_set (hashtable, "pattern", "mode_channel");
+                        weechat_hashtable_set (hashtable, "signal", "mode");
+                        weechat_hashtable_set (hashtable, "string", ptr_channel->name);
+                        weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
+                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                                          NULL, "MODE %s", ptr_channel->name);
+                        weechat_hashtable_free (hashtable);
+                    }
+                    else
+                    {
+                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                                          NULL, "MODE %s", ptr_channel->name);
+                    }
+                }
+            }
+            else
+            {
+                (void) irc_mode_channel_set (server, ptr_channel, pos_modes);
             }
         }
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
@@ -2605,39 +2629,26 @@ IRC_PROTOCOL_CALLBACK(324)
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel)
     {
+        irc_channel_set_modes (ptr_channel, ((argc > 4) ? argv_eol[4] : NULL));
         if (argc > 4)
         {
-            if (ptr_channel->modes)
-                free (ptr_channel->modes);
-            ptr_channel->modes = strdup (argv_eol[4]);
             irc_mode_channel_set (server, ptr_channel,
                                   ptr_channel->modes);
         }
-        else
-        {
-            if (ptr_channel->modes)
-            {
-                free (ptr_channel->modes);
-                ptr_channel->modes = NULL;
-            }
-        }
     }
-    else
-    {
-        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                              command, NULL,
-                                                              NULL),
-                             irc_protocol_tags (command, "irc_numeric", NULL),
-                             _("%sMode %s%s %s[%s%s%s]"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_CHANNEL,
-                             argv[3],
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_RESET,
-                             (argc > 4) ?
-                             ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
-                             IRC_COLOR_CHAT_DELIMITERS);
-    }
+    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                          command, NULL,
+                                                          (ptr_channel) ? ptr_channel->buffer : NULL),
+                         irc_protocol_tags (command, "irc_numeric", NULL),
+                         _("%sMode %s%s %s[%s%s%s]"),
+                         weechat_prefix ("network"),
+                         IRC_COLOR_CHAT_CHANNEL,
+                         argv[3],
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_RESET,
+                         (argc > 4) ?
+                         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
+                         IRC_COLOR_CHAT_DELIMITERS);
 
     return WEECHAT_RC_OK;
 }
@@ -2757,18 +2768,14 @@ IRC_PROTOCOL_CALLBACK(329)
 
     if (ptr_channel)
     {
-        if (ptr_channel->display_creation_date)
-        {
-            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                                  command, NULL,
-                                                                  ptr_channel->buffer),
-                                 irc_protocol_tags (command, "irc_numeric", NULL),
-                                 /* TRANSLATORS: "%s" after "created on" is a date */
-                                 _("%sChannel created on %s"),
-                                 weechat_prefix ("network"),
-                                 weechat_util_get_time_string (&datetime));
-            ptr_channel->display_creation_date = 0;
-        }
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, NULL,
+                                                              ptr_channel->buffer),
+                             irc_protocol_tags (command, "irc_numeric", NULL),
+                             /* TRANSLATORS: "%s" after "created on" is a date */
+                             _("%sChannel created on %s"),
+                             weechat_prefix ("network"),
+                             weechat_util_get_time_string (&datetime));
     }
     else
     {
@@ -4205,6 +4212,69 @@ IRC_PROTOCOL_CALLBACK(sasl_end)
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
 
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_redirection_mode_cb: callback for redirection of "mode" command
+ */
+
+int
+irc_protocol_redirection_mode_cb (void *data, const char *signal,
+                                  struct t_hashtable *hashtable)
+{
+    const char *output, *server;
+    char **messages, *command, *arguments, **argv, **argv_eol;
+    int num_messages, argc, i;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+
+    output = weechat_hashtable_get (hashtable, "output");
+    server = weechat_hashtable_get (hashtable, "server");
+    if (!output || !server)
+        return WEECHAT_RC_OK;
+
+    ptr_server = irc_server_search (server);
+    if (!ptr_server)
+        return WEECHAT_RC_OK;
+
+    messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
+    if (messages)
+    {
+        for (i = 0; i < num_messages; i++)
+        {
+            irc_message_parse (ptr_server, messages[i], NULL, NULL,
+                               &command, NULL, &arguments);
+            if (command && (strcmp (command, "324") == 0) && arguments)
+            {
+                argv = weechat_string_split (arguments, " ", 0, 0, &argc);
+                argv_eol = weechat_string_split (arguments, " ", 1, 0, NULL);
+                if (argv && argv_eol && (argc >= 2))
+                {
+                    ptr_channel = irc_channel_search (ptr_server, argv[1]);
+                    if (ptr_channel)
+                    {
+                        irc_channel_set_modes (ptr_channel,
+                                               (argc >= 3) ? argv_eol[2] : NULL);
+                        if (argc >= 3)
+                        {
+                            irc_mode_channel_set (ptr_server, ptr_channel,
+                                                  ptr_channel->modes);
+                        }
+                    }
+                }
+                if (argv)
+                    weechat_string_free_split (argv);
+                if (argv_eol)
+                    weechat_string_free_split (argv_eol);
+            }
+        }
+        weechat_string_free_split (messages);
+    }
     return WEECHAT_RC_OK;
 }
 

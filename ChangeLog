@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2012-01-03
+v0.3.7-dev, 2012-01-06
 
 
 Version 0.3.7 (under dev!)
@@ -42,6 +42,8 @@ Version 0.3.7 (under dev!)
 * api: add new functions strcasecmp_range, strncasecmp_range,
   hashtable_map_string, hdata_check_pointer, hdata_char, hdata_hashtable and
   nicklist_get_next_item
+* irc: use redirection to get channel modes after update of modes on channel,
+  display output of /mode #channel
 * irc: do not use option irc.look.nick_color_stop_chars for forced nick colors
   (bug #33480)
 * irc: add optional server in info "irc_is_channel" (before channel name)

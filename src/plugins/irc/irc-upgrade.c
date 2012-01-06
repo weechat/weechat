@@ -423,7 +423,6 @@ irc_upgrade_read_cb (void *data,
                         irc_upgrade_current_channel->has_quit_server = weechat_infolist_integer (infolist, "has_quit_server");
                         irc_upgrade_current_channel->cycle = weechat_infolist_integer (infolist, "cycle");
                         irc_upgrade_current_channel->part = weechat_infolist_integer (infolist, "part");
-                        irc_upgrade_current_channel->display_creation_date = weechat_infolist_integer (infolist, "display_creation_date");
                         irc_upgrade_current_channel->nick_completion_reset = weechat_infolist_integer (infolist, "nick_completion_reset");
                         for (i = 0; i < 2; i++)
                         {
