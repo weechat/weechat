@@ -3781,7 +3781,8 @@ IRC_PROTOCOL_CALLBACK(366)
                              NG_("normal", "normals", num_normal),
                              IRC_COLOR_CHAT_DELIMITERS);
 
-        irc_command_mode_server (server, ptr_channel, NULL);
+        irc_command_mode_server (server, ptr_channel, NULL,
+                                 IRC_SERVER_SEND_OUTQ_PRIO_LOW);
         irc_channel_check_away (server, ptr_channel);
     }
     else

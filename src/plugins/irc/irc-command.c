@@ -2377,19 +2377,20 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
 
 void
 irc_command_mode_server (struct t_irc_server *server,
-                         struct t_irc_channel *channel, const char *arguments)
+                         struct t_irc_channel *channel, const char *arguments,
+                         int flags)
 {
     if (server && (channel || arguments))
     {
         if (channel && arguments)
         {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+            irc_server_sendf (server, flags, NULL,
                               "MODE %s %s",
                               channel->name, arguments);
         }
         else
         {
-            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+            irc_server_sendf (server, flags, NULL,
                               "MODE %s",
                               (channel) ? channel->name : arguments);
         }
@@ -2424,20 +2425,28 @@ irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
                                 "mode");
                 return WEECHAT_RC_OK;
             }
-            irc_command_mode_server (ptr_server, ptr_channel, argv_eol[1]);
+            irc_command_mode_server (ptr_server, ptr_channel, argv_eol[1],
+                                     IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
         }
         else
         {
             /* user gives channel, use arguments as-is */
-            irc_command_mode_server (ptr_server, NULL, argv_eol[1]);
+            irc_command_mode_server (ptr_server, NULL, argv_eol[1],
+                                     IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
         }
     }
     else
     {
         if (ptr_channel)
-            irc_command_mode_server (ptr_server, ptr_channel, NULL);
+        {
+            irc_command_mode_server (ptr_server, ptr_channel, NULL,
+                                     IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
+        }
         else
-            irc_command_mode_server (ptr_server, NULL, ptr_server->nick);
+        {
+            irc_command_mode_server (ptr_server, NULL, ptr_server->nick,
+                                     IRC_SERVER_SEND_OUTQ_PRIO_HIGH);
+        }
     }
 
     return WEECHAT_RC_OK;
