@@ -43,7 +43,8 @@ Version 0.3.7 (under dev!)
   hashtable_map_string, hdata_check_pointer, hdata_char, hdata_hashtable and
   nicklist_get_next_item
 * irc: use redirection to get channel modes after update of modes on channel,
-  display output of /mode #channel
+  display output of /mode #channel, allow /mode without argument (display modes
+  of current channel or user modes on server buffer)
 * irc: do not use option irc.look.nick_color_stop_chars for forced nick colors
   (bug #33480)
 * irc: add optional server in info "irc_is_channel" (before channel name)

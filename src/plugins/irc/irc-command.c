@@ -2434,7 +2434,10 @@ irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
     }
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "mode");
+        if (ptr_channel)
+            irc_command_mode_server (ptr_server, ptr_channel, NULL);
+        else
+            irc_command_mode_server (ptr_server, NULL, ptr_server->nick);
     }
 
     return WEECHAT_RC_OK;
