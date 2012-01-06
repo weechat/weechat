@@ -146,7 +146,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         return NULL;
     }
 
-    if (regcomp (regex, complete_mask, REG_NOSUB | REG_ICASE) != 0)
+    if (regcomp (regex, complete_mask, REG_NOSUB | REG_ICASE | REG_EXTENDED) != 0)
     {
         free (regex);
         free (complete_mask);
