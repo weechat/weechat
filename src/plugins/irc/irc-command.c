@@ -2246,7 +2246,7 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
                 if (ptr_server->cmd_list_regexp)
                 {
                     if ((ret = regcomp (ptr_server->cmd_list_regexp, ptr_regex,
-                                        REG_NOSUB | REG_ICASE)) != 0)
+                                        REG_NOSUB | REG_ICASE | REG_EXTENDED)) != 0)
                     {
                         regerror (ret, ptr_server->cmd_list_regexp,
                                   buf, sizeof(buf));
