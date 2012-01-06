@@ -42,6 +42,7 @@ Version 0.3.7 (under dev!)
 * api: add new functions strcasecmp_range, strncasecmp_range,
   hashtable_map_string, hdata_check_pointer, hdata_char, hdata_hashtable and
   nicklist_get_next_item
+* alias: add default alias umode => /mode $nick
 * irc: use redirection to get channel modes after update of modes on channel,
   display output of /mode #channel, allow /mode without argument (display modes
   of current channel or user modes on server buffer)

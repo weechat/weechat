@@ -58,6 +58,7 @@ char *alias_default_list[][2] =
   { "SIGNOFF", "quit"                 },
   { "T",       "topic"                },
   { "UB",      "unban"                },
+  { "UMODE",   "mode $nick"           },
   { "V",       "command core version" },
   { "W",       "who"                  },
   { "WC",      "window merge"         },
