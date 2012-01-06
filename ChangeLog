@@ -7,6 +7,7 @@ v0.3.7-dev, 2012-01-06
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: use extended regex in filters (patch #7616)
 * core: save current mouse state in option weechat.look.mouse (set option when
   mouse state is changed with command /mouse)
 * core: add type "hashtable" for hdata

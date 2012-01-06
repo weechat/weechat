@@ -285,7 +285,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             if (regex1)
             {
                 if (regcomp (regex1, regex_prefix,
-                             REG_NOSUB | REG_ICASE) != 0)
+                             REG_NOSUB | REG_ICASE | REG_EXTENDED) != 0)
                 {
                     free (regex_prefix);
                     free (regex1);
@@ -298,7 +298,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         if (regex2)
         {
             if (regcomp (regex2, pos_regex_message,
-                         REG_NOSUB | REG_ICASE) != 0)
+                         REG_NOSUB | REG_ICASE | REG_EXTENDED) != 0)
             {
                 if (regex_prefix)
                     free (regex_prefix);
