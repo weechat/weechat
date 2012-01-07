@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2006-2007 Pavel Shevchuk <stlwrt@gmail.com>
+# Copyright (C) 2012 Aleksey V Zapparov <ixti@member.fsf.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -20,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 22:56+0100\n"
-"PO-Revision-Date: 2011-12-25 22:56+0100\n"
-"Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
+"POT-Creation-Date: 2012-01-07 09:25+0100\n"
+"PO-Revision-Date: 2012-01-07 09:24+0100\n"
+"Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +44,7 @@ msgstr ""
 
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr ""
+msgstr "Использование: %s [опция...] [расширение:опция...]\n"
 
 #, fuzzy
 msgid ""
@@ -88,7 +89,7 @@ msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
-msgstr ""
+msgstr "Ошибка: WEECHAT_HOME не определена, проверьте опции сборки\n"
 
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
@@ -124,10 +125,10 @@ msgid "height"
 msgstr "справа"
 
 msgid "width"
-msgstr ""
+msgstr "ширина"
 
 msgid "auto"
-msgstr ""
+msgstr "авто"
 
 #, fuzzy, c-format
 msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
@@ -210,7 +211,7 @@ msgid "%sError: unknown option for \"%s\" command"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 msgid "Buffers list:"
-msgstr ""
+msgstr "Список буферов:"
 
 #, fuzzy, c-format
 msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
@@ -222,7 +223,7 @@ msgstr "%s неправильный номер буфера\n"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
-msgstr ""
+msgstr "%sОшибка: нельзя закрыть основной буфер WeeChat"
 
 #, fuzzy, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -230,26 +231,26 @@ msgstr "время в буферах"
 
 #, c-format
 msgid "No local variable defined for buffer \"%s\""
-msgstr ""
+msgstr "Нет локальной переменной определённой для буфера \"%s\""
 
 #, c-format
 msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
-msgstr ""
+msgstr "%sОшибочный код цвета \"%s\" (должен быть в диапазоне от %d до %d)"
 
 #, c-format
 msgid "%sColor \"%s\" is not defined in palette"
-msgstr ""
+msgstr "%sЦвет \"%s\" не определён в палитре"
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s адрес \"%s\" не найден\n"
 
 msgid "Raw content of buffers has been written in log file"
-msgstr ""
+msgstr "Содержимое буфера записано в файл журнала"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
-msgstr ""
+msgstr "Отладка отключена для \"%s\""
 
 #, fuzzy, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -268,7 +269,7 @@ msgid "Message filtering disabled"
 msgstr "Сокращения не заданы.\n"
 
 msgid "Message filters:"
-msgstr ""
+msgstr "Фильтры сообщения:"
 
 #, fuzzy
 msgid "No message filter defined"
@@ -293,6 +294,7 @@ msgstr "%s игнорирование уже существует\n"
 #, c-format
 msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
+"%sОшибка: Вы должны указать как минимум метку(и) или шаблон для фильтра"
 
 #, fuzzy, c-format
 msgid "Filter \"%s\" added:"
@@ -327,10 +329,10 @@ msgid "description"
 msgstr "  . описание: %s\n"
 
 msgid "type"
-msgstr ""
+msgstr "тип"
 
 msgid "boolean"
-msgstr ""
+msgstr "boolean"
 
 #, fuzzy
 msgid "values"
@@ -345,7 +347,7 @@ msgid "(undefined)"
 msgstr "  . значение по умолчанию: %d\n"
 
 msgid "current value"
-msgstr ""
+msgstr "текущее значение"
 
 #, fuzzy
 msgid "string"
@@ -378,10 +380,14 @@ msgid ""
 "color only, not background): \"*\" for bold, \"!\" for reverse, \"_\" for "
 "underline"
 msgstr ""
+"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
+"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
+"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
-msgstr ""
+msgstr "разрешено неопределённое значение (null)"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -415,7 +421,7 @@ msgstr "%s не могу установить клавишу \"%s\"\n"
 
 #, c-format
 msgid "Key \"%s\" has already default value"
-msgstr ""
+msgstr "Для \"%s\" уже определено значение по-умолчанию"
 
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
@@ -480,10 +486,10 @@ msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
 msgstr ""
 
 msgid "horizontal split"
-msgstr ""
+msgstr "горизонтальное разделение"
 
 msgid "vertical split"
-msgstr ""
+msgstr "вертикальное разделение"
 
 #, fuzzy
 msgid "Saved layout for buffers:"
@@ -494,13 +500,13 @@ msgid "Saved layout for windows:"
 msgstr "конец списка /who"
 
 msgid "No layout saved"
-msgstr ""
+msgstr "Нет сохранённых раскладок"
 
 msgid "Layout saved for buffers (order of buffers)"
-msgstr ""
+msgstr "Раскладка сохранена для буферов (порядок буферов)"
 
 msgid "Layout saved for windows (buffer displayed by each window)"
-msgstr ""
+msgstr "Раскладка сохранена для окон (буфер показан по каждому окну)"
 
 #, fuzzy
 msgid "Layout reset for buffers"
@@ -524,7 +530,7 @@ msgstr "Загруженные plugin'ы\n"
 
 #, c-format
 msgid "  written by \"%s\", license: %s"
-msgstr ""
+msgstr "  автор \"%s\", лицензия: %s"
 
 #, fuzzy
 msgid "    commands hooked:"
@@ -540,7 +546,7 @@ msgstr "     обработчики таймера:\n"
 
 #, c-format
 msgid "      %d %s (%d calls remaining)"
-msgstr ""
+msgstr "      %d %s (%d вызовов осталось)"
 
 #, fuzzy
 msgid "second"
@@ -558,7 +564,7 @@ msgstr[2] "секунда"
 
 #, c-format
 msgid "      %d %s (no call limit)"
-msgstr ""
+msgstr "      %d %s (без ограничений)"
 
 #, fuzzy
 msgid "    fd hooked:"
@@ -569,10 +575,10 @@ msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr "       %d секунд\n"
 
 msgid " read"
-msgstr ""
+msgstr " чтение"
 
 msgid " write"
-msgstr ""
+msgstr " запись"
 
 #, fuzzy
 msgid " exception"
@@ -592,7 +598,7 @@ msgstr "     обработчики команд:\n"
 
 #, c-format
 msgid "      socket: %d, address: %s, port: %d, child pid: %d"
-msgstr ""
+msgstr "      соккет: %d, адрес: %s, порт: %d, child pid: %d"
 
 #, fuzzy
 msgid "    prints hooked:"
@@ -619,7 +625,7 @@ msgid "      signal: %s"
 msgstr "       IRC(%s)\n"
 
 msgid "(all)"
-msgstr ""
+msgstr "(все)"
 
 #, fuzzy
 msgid "    configuration options hooked:"
@@ -651,7 +657,7 @@ msgstr "Список сокращений:\n"
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
-msgstr ""
+msgstr "  %s%s%s: %s, %s/%d (%s), имя пользователя: %s, пароль: %s"
 
 #, fuzzy
 msgid "No proxy defined"
@@ -693,6 +699,8 @@ msgstr "%s неизвестный параметр для команды \"%s\"\
 msgid ""
 "%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
 msgstr ""
+"%sНеобходимо подтвердить команду выхода дополнительным аргументом \"-yes"
+"\" (см. /help quit)"
 
 #, fuzzy, c-format
 msgid "Options reloaded from %s"
@@ -726,6 +734,8 @@ msgid ""
 "%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
 "option to see a sublist)"
 msgstr ""
+"%sОпция \"%s\" не найдена (подсказка: Вы можете использовать \"*\" в начале "
+"и/или конце названия опции чтобы увидеть список похожих)"
 
 #, fuzzy
 msgid "No configuration option found"
@@ -767,7 +777,7 @@ msgstr "не на канале"
 
 #, c-format
 msgid "%sReset of all options is not allowed"
-msgstr ""
+msgstr "%sСброс всех опций запрещён"
 
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -783,7 +793,7 @@ msgstr "не на канале"
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
-msgstr ""
+msgstr "%d опция сброшено, %d опций удалено"
 
 #, c-format
 msgid ""
