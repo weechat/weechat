@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2011 Sebastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2005-2006 Julien Louis <ptitlouis@sysif.net>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2011-12-25 22:56+0100\n"
+"POT-Creation-Date: 2012-01-08 12:03+0100\n"
 "PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
