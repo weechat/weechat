@@ -14,7 +14,6 @@
   'has_quit_server' (integer) +
   'cycle' (integer) +
   'part' (integer) +
-  'display_creation_date' (integer) +
   'nick_completion_reset' (integer) +
   'pv_remote_nick_color' (string) +
   'hook_autorejoin' (pointer) +
