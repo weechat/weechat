@@ -914,8 +914,9 @@ relay_weechat_msg_send (struct t_relay_client *client,
 {
     uint32_t size32;
     char compression;
+    int num_sent;
 #ifdef HAVE_ZLIB
-    int rc, num_sent;
+    int rc;
     Bytef *dest;
     uLongf dest_size;
     struct timeval tv1, tv2;
