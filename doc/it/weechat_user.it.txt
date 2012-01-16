@@ -1860,11 +1860,10 @@ Plugin Relay
 Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
 protocolli differenti:
 
-// TRANSLATION MISSING
-* 'irc': IRC proxy: used to share connections to IRC servers with one or many
-  other IRC clients
-* 'weechat': protocol used by remote interfaces to display and interact with
-  WeeChat (for example QWeeChat)
+* 'irc': proxy IRC: usato per condividere le connessioni ai server IRC con uno
+  o più client IRC
+* 'weechat': protocollo usato dalle interfacce remote per mostrare ed interagire
+  con WeeChat (ad esempio QWeeChat)
 
 [[relay_options]]
 Opzioni (relay.conf)
@@ -1901,22 +1900,22 @@ Ora è possibile connettersi sulla porta 8000 con qualsiasi client IRC
 /set relay.network.max_clients 1
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[relay_weechat_protocol]]
-WeeChat protocol
-^^^^^^^^^^^^^^^^
+Protocollo WeeChat
+^^^^^^^^^^^^^^^^^^
 
-The Relay plugin can send data to remote interface using WeeChat protocol.
+Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
+WeeChat.
 
-For example:
+Ad esempio:
 
 ----------------------------------------
-/set relay.network.password "mypass"
+/set relay.network.password "miapass"
 /relay add weechat.* 9000
 ----------------------------------------
 
-Now you can connect on port 9000 with a remote interface (like QWeeChat),
-using password "mypass".
+Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota
+(come QWeeChat) usando la password "miapass".
 
 [[rmodifier_plugin]]
 Plugin Rmodifier
