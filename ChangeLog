@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2012-01-06
+v0.3.7-dev, 2012-01-16
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add library "pthread" in cmake file for link on OpenBSD
 * core: use extended regex in filters (patch #7616)
 * core: save current mouse state in option weechat.look.mouse (set option when
   mouse state is changed with command /mouse)
