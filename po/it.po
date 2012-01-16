@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2012-01-15 09:29+0100\n"
-"PO-Revision-Date: 2011-12-25 22:56+0100\n"
+"PO-Revision-Date: 2012-01-16 22:07+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -718,7 +718,7 @@ msgstr "Opzione modificata"
 
 #, c-format
 msgid "%sReset of all options is not allowed"
-msgstr ""
+msgstr "%sIl ripristino di tutte le opzioni non è consentito"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -1147,7 +1147,6 @@ msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
-#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1180,6 +1179,7 @@ msgstr ""
 "   cursor: abilita/disabilita debug per la modalità cursore\n"
 "    hdata: mostra informazioni su hdata (con free: rimuove tutti gli hdata "
 "in memoria)\n"
+"    hooks: mostra informazioni sugli hook\n"
 "infolists: mostra informazioni sulle liste info\n"
 "   memory: mostra informazioni sull'uso della memoria\n"
 "    mouse: abilita/disabilita debug per il mouse\n"
@@ -1609,7 +1609,6 @@ msgstr "controllo mouse"
 msgid "enable|disable|toggle [<delay>]"
 msgstr "enable|disable|toggle [<ritardo>]"
 
-#, fuzzy
 msgid ""
 " enable: enable mouse\n"
 "disable: disable mouse\n"
@@ -1631,8 +1630,7 @@ msgstr ""
 "ritardo: ritardo (in secondi) dopo il quale viene ripristinato lo stato "
 "iniziale del mouse (utile per disattivarlo temporaneamente)\n"
 "\n"
-"Per abilitare/disabilitare il mouse all'avvio, usare:\n"
-"  /set weechat.look.mouse on/off\n"
+"Lo stato del mouse viene salvato nell'opzione \"weechat.look.mouse\".\n"
 "\n"
 "Esempi:\n"
 "  abilita mouse:\n"
@@ -2619,7 +2617,7 @@ msgstr ""
 "disabilitato, allora passa al buffer numero -1)"
 
 msgid "enable mouse support"
-msgstr ""
+msgstr "abilita il supporto del mouse"
 
 msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
@@ -2722,6 +2720,10 @@ msgid ""
 "scroll position in windows); the scroll is done only for buffers with "
 "formatted content (not free content)"
 msgstr ""
+"scorri verso il fondo della finestra dopo essere passati ad un altro buffer "
+"non ricordare la posizione di scorrimento nelle finestre); lo scorrimento "
+"viene eseguito solo per i buffer con contenuto formattato (contenuto non "
+"libero)"
 
 msgid ""
 "percent of screen to scroll when scrolling one page up or down (for example "
@@ -3482,9 +3484,9 @@ msgstr "%s-ANCORA(%d)-"
 msgid "Act: "
 msgstr "Attività: "
 
-#, fuzzy, c-format
+#, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
-msgstr "Notifica modificata per \"%s%s,%s%s\": \"%s%s%s\" a \"%s%s%s\""
+msgstr "Notifica modificata per \"%s%s%s\": \"%s%s%s\" a \"%s%s%s\""
 
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
@@ -3585,7 +3587,7 @@ msgstr "crea un alias per un comando"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completamento>] <alias> [<comando> [;<comando>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
@@ -3621,10 +3623,12 @@ msgid ""
 msgstr ""
 "completamento: completamento per l'alias (opzionale, per default il "
 "completamento viene eseguito con il comando di destinazione)\n"
+"\t     nota: è possibile usare %%comando per usare il completamento di un "
+"comando esistente\n"
 "        alias: nome dell'alias (può iniziare o terminare con \"*\" per "
 "elencare gli alias)\n"
-"      comando: nome del comando (comandi multipli vanno separati da punto e "
-"virgola)\n"
+"      comando: nome del comando con gli argomenti (più comandi vanno "
+"separati da punto e virgola)\n"
 "\n"
 "Senza argomento, questo comando elenca tutti gli alias definiti.\n"
 "\n"
@@ -6038,13 +6042,11 @@ msgid_plural "channels"
 msgstr[0] "canale"
 msgstr[1] "canali"
 
-#, fuzzy
 msgid "1 if string is a valid IRC channel name for server"
-msgstr "1 se la stringa è nome valido di un canale IRC"
+msgstr "1 se la stringa è il nome di un canale IRC valido per il server"
 
-#, fuzzy
 msgid "server,channel (server is optional)"
-msgstr "server,canale (canale è opzionale)"
+msgstr "server,canale (server è opzionale)"
 
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 se la stringa è un nick IRC valido"
@@ -7197,9 +7199,8 @@ msgstr ""
 "nome plugin (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
 
-#, fuzzy
 msgid "options for URL"
-msgstr "opzioni per le barre"
+msgstr "opzioni per la URL"
 
 msgid "list of windows"
 msgstr "elenco delle finestre"
@@ -7542,6 +7543,8 @@ msgid ""
 "regular expression with IPs allowed to use relay, example: \"^(123.45.67.89|"
 "192.160.*)$\""
 msgstr ""
+"espressione regolare con gli indirizzi IP a cui è consentito usare il relay, "
+"esempio: \"^(123.45.67.89|192.160.*)$\""
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
@@ -7555,6 +7558,9 @@ msgid ""
 "compression level for packets sent to client with WeeChat protocol (0 = "
 "disable compression, 1 = low compression ... 9 = best compression)"
 msgstr ""
+"livello di compressione per i pacchetti inviati al client con il protocollo "
+"WeeChat (0 = disabilita compressione, 1 = compressione bassa ... 9 = "
+"compressione migliore)"
 
 msgid "maximum number of clients connecting to a port"
 msgstr "numero massimo di client connessi ad una porta"
@@ -7583,9 +7589,9 @@ msgstr "%s: socket chiuso per %s.%s (porta %d)"
 msgid "%s%s: cannot accept client on port %d (%s.%s)"
 msgstr "%s%s: impossibile accettare il client sulla porta \"%d\" (%s.%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
-msgstr "%s%s: indirizzo \"%s\" non trovato"
+msgstr "%s%s: indirizzo IP \"%s\" non consentito per il relay"
 
 #, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
@@ -7607,22 +7613,20 @@ msgstr "%s%s: memoria non sufficiente per verificare il messaggio"
 msgid "%s%s: error sending data to client: %s"
 msgstr "%s%s: errore durante l'invio dei dati al client: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: errore nell'invio dei dati al client %s"
+msgstr "%s%s: errore nell'invio dei dati al client %d (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
-msgstr ""
-"%s%s: impossibile verificare il comando \"%s\" (per favore segnalare agli "
-"sviluppatori):"
+msgstr "%s%s: impossibile eseguire il comando \"%s\" per il client %d"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: too few arguments received from client %d for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: pochi argomenti ricevuti dal server IRC per il comando \"%s"
+"%s%s: argomenti non sufficienti ricevuti dal client %d per il comando \"%s"
 "\" (ricevuti: %d argomenti, attesi: %d come minimo)"
 
 #, c-format
@@ -8074,26 +8078,29 @@ msgstr "%s: chat con %s (%d.%d.%d.%d) chiusa"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: memoria non sufficiente per nuovo xfer"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
 "(protocol: %s)"
-msgstr "%s: file in arrivo da %s (%d.%d.%d.%d): %s, %llu byte (protocollo: %s)"
+msgstr ""
+"%s: file in arrivo da %s (%s.%s), ip: %d.%d.%d.%d, nome: %s, %llu byte "
+"(protocollo: %s)"
 
 #, fuzzy, c-format
 msgid ""
 "%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
-"%s: invio file a %s: %s (nome file locale: %s), %llu byte (protocollo: %s)"
+"%s: invio file a %s (%s.%s), ip: %d.%d.%d.%d, nome: %s, %llu byte "
+"(protocollo: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
-msgstr "%s: richiesta di chat in arrivo da %s (%d.%d.%d.%d)"
+msgstr "%s: richiesta di chat in arrivo da %s (%s.%s), ip: %d.%d.%d.%d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
-msgstr "%s: invio richiesta di chat a %s"
+msgstr "%s: invio richiesta di chat a %s (%s.%s)"
 
 #, c-format
 msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
@@ -8400,12 +8407,11 @@ msgstr "Variabili"
 msgid "Lists"
 msgstr "Liste"
 
-#, fuzzy
 msgid "Option"
-msgstr "<opzione>"
+msgstr "Opzione"
 
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgid "Constants"
-msgstr ""
+msgstr "Costanti"

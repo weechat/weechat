@@ -559,7 +559,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** descrizione: `enable mouse support`
+** descrizione: `abilita il supporto del mouse`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -679,7 +679,7 @@
 ** valori: 1 .. 2147483647 (valore predefinito: `3`)
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
-** descrizione: `scroll to bottom of window after switch to another buffer (do not remember scroll position in windows); the scroll is done only for buffers with formatted content (not free content)`
+** descrizione: `scorri verso il fondo della finestra dopo essere passati ad un altro buffer non ricordare la posizione di scorrimento nelle finestre); lo scorrimento viene eseguito solo per i buffer con contenuto formattato (contenuto non libero)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 

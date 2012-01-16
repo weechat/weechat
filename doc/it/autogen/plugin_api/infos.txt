@@ -6,7 +6,7 @@
 
 | irc | irc_buffer | ottiene puntatore al buffer per un server/canale/nick IRC | server,canale,nick (canale e nick sono opzionali)
 
-| irc | irc_is_channel | 1 if string is a valid IRC channel name for server | server,channel (server is optional)
+| irc | irc_is_channel | 1 se la stringa è il nome di un canale IRC valido per il server | server,canale (server è opzionale)
 
 | irc | irc_is_nick | 1 se la stringa è un nick IRC valido | nick
 
