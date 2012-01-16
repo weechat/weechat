@@ -1,0 +1,91 @@
+[width="100%",cols="2,^1,7",options="header"]
+|========================================
+| Option | Type | Constantes ^(1)^
+
+| header | long |
+
+| wildcardmatch | long |
+
+| failonerror | long |
+
+| protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, all
+
+| redir_protocols | mask | http, https, ftp, ftps, scp, sftp, telnet, ldap, ldaps, dict, file, tftp, imap, imaps, pop3, pop3s, smtp, smtps, rtsp, rtmp, rtmpt, rtmpe, rtmpte, rtmps, rtmpts, gopher, all
+
+| proxy | string |
+
+| proxyport | long |
+
+| proxytype | long | http, http_1_0, socks4, socks5, socks4a, socks5_hostname
+
+| noproxy | string |
+
+| httpproxytunnel | long |
+
+| socks5_gssapi_service | string |
+
+| socks5_gssapi_nec | long |
+
+| interface | string |
+
+| localport | long |
+
+| localportrange | long |
+
+| dns_cache_timeout | long |
+
+| buffersize | long |
+
+| port | long |
+
+| tcp_nodelay | long |
+
+| address_scope | long |
+
+| netrc | long | ignored, optional, required
+
+| netrc_file | string |
+
+| userpwd | string |
+
+| proxyuserpwd | string |
+
+| username | string |
+
+| password | string |
+
+| proxyusername | string |
+
+| proxypassword | string |
+
+| httpauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
+
+| tlsauth_type | mask | none, srp
+
+| tlsauth_username | string |
+
+| tlsauth_password | string |
+
+| proxyauth | mask | none, basic, digest, gssnegotiate, ntlm, digest_ie, ntlm_wb, only, any, anysafe
+
+| autoreferer | long |
+
+| accept_encoding | string |
+
+| transfer_encoding | long |
+
+| followlocation | long |
+
+| unrestricted_auth | long |
+
+| maxredirs | long |
+
+| postredir | mask | post_301, post_302
+
+| post | long |
+
+| postfields | string |
+
+| postfieldsize | long |
+
+|========================================

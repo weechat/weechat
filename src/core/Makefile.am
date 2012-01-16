@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS)
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS) $(GNUTLS_CFLAGS) $(CURL_CFLAGS)
 
 noinst_LIBRARIES = lib_weechat_core.a
 
@@ -59,6 +59,8 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-upgrade.h \
                              wee-upgrade-file.c \
                              wee-upgrade-file.h \
+                             wee-url.c \
+                             wee-url.h \
                              wee-utf8.c \
                              wee-utf8.h \
                              wee-util.c \

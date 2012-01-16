@@ -250,6 +250,18 @@ def get_completions():
     weechat.infolist_free(infolist)
     return completions
 
+def get_url_options():
+    """Get list of completions hooked by plugins in a dict with 3 indexes: plugin, item, xxx."""
+    url_options = []
+    infolist = weechat.infolist_get('url_options', '', '')
+    while weechat.infolist_next(infolist):
+        url_options.append({ 'name': weechat.infolist_string(infolist, 'name').lower(),
+                             'option': weechat.infolist_integer(infolist, 'option'),
+                             'type': weechat.infolist_string(infolist, 'type'),
+                             'constants': weechat.infolist_string(infolist, 'constants').lower().replace(',', ', ') })
+    weechat.infolist_free(infolist)
+    return url_options
+
 def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     """Update a doc file."""
     try:
@@ -288,6 +300,7 @@ def docgen_cmd_cb(data, buffer, args):
     infolists = get_infolists()
     hdata = get_hdata()
     completions = get_completions()
+    url_options = get_url_options()
 
     # get path and replace ~ by home if needed
     path = weechat.config_get_plugin('path')
@@ -496,6 +509,24 @@ def docgen_cmd_cb(data, buffer, args):
         f.write('|========================================\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated, 'completions')
+
+        # write url options
+        filename = '%s/plugin_api/url_options.txt' % directory
+        tmpfilename = '%s.tmp' % filename
+        f = open(tmpfilename, 'w')
+        f.write('[width="100%",cols="2,^1,7",options="header"]\n')
+        f.write('|========================================\n')
+        f.write('| %s | %s | %s\n\n' % (_('Option'), _('Type'), _('Constants') + ' ^(1)^'))
+        for option in url_options:
+            constants = option['constants']
+            if constants:
+                constants = ' ' + constants
+            f.write('| %s | %s |%s\n\n' % (escape(option['name']),
+                                            escape(option['type']),
+                                            escape(constants)))
+        f.write('|========================================\n')
+        f.close()
+        update_file(filename, tmpfilename, num_files, num_files_updated, 'url_options')
 
         # write counters
         weechat.prnt('',

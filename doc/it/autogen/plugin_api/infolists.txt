@@ -58,6 +58,8 @@
 
 | weechat | plugin | elenco dei plugin | puntatore al plugin (opzionale) | nome plugin (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
+| weechat | url_options | options for URL | - | -
+
 | weechat | window | elenco delle finestre | puntatore alla finestra (opzionale) | "current" per la finestra corrente o un numero della finestra (opzionale)
 
 | xfer | xfer | lista di xfer | puntatore a xfer (opzionale) | -

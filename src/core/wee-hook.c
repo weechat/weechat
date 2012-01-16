@@ -46,6 +46,7 @@
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-string.h"
+#include "wee-url.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
@@ -1293,13 +1294,14 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
 }
 
 /*
- * hook_process: hook a process (using fork)
+ * hook_process_hashtable: hook a process (using fork) with options in hashtable
  */
 
 struct t_hook *
-hook_process (struct t_weechat_plugin *plugin,
-              const char *command, int timeout,
-              t_hook_callback_process *callback, void *callback_data)
+hook_process_hashtable (struct t_weechat_plugin *plugin,
+                        const char *command, struct t_hashtable *options,
+                        int timeout,
+                        t_hook_callback_process *callback, void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_process *new_hook_process;
@@ -1341,6 +1343,7 @@ hook_process (struct t_weechat_plugin *plugin,
     new_hook->hook_data = new_hook_process;
     new_hook_process->callback = callback;
     new_hook_process->command = strdup (command);
+    new_hook_process->options = (options) ? hashtable_dup (options) : NULL;
     new_hook_process->timeout = timeout;
     new_hook_process->child_read[HOOK_PROCESS_STDOUT] = -1;
     new_hook_process->child_read[HOOK_PROCESS_STDERR] = -1;
@@ -1363,6 +1366,19 @@ hook_process (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * hook_process: hook a process (using fork)
+ */
+
+struct t_hook *
+hook_process (struct t_weechat_plugin *plugin,
+              const char *command, int timeout,
+              t_hook_callback_process *callback, void *callback_data)
+{
+    return hook_process_hashtable (plugin, command, NULL, timeout,
+                                   callback, callback_data);
+}
+
+/*
  * hook_process_child: child process for hook process: execute function and
  *                     return string result into pipe for WeeChat process
  */
@@ -1371,6 +1387,8 @@ void
 hook_process_child (struct t_hook *hook_process)
 {
     char *exec_args[4] = { "sh", "-c", NULL, NULL };
+    const char *ptr_url;
+    int rc;
 
     /*
      * close stdin, so that process will fail to read stdin (process reading
@@ -1392,14 +1410,36 @@ hook_process_child (struct t_hook *hook_process)
         _exit (EXIT_FAILURE);
     }
 
-    /* launch command */
-    exec_args[2] = HOOK_PROCESS(hook_process, command);
-    execvp (exec_args[0], exec_args);
+    rc = EXIT_SUCCESS;
 
-    /* should not be executed if execvp was ok */
-    fprintf (stderr, "Error with command '%s'\n",
-             HOOK_PROCESS(hook_process, command));
-    _exit (EXIT_FAILURE);
+    if (strncmp (HOOK_PROCESS(hook_process, command), "url:", 4) == 0)
+    {
+        /* get URL output (on stdout or file, depending on options) */
+        ptr_url = HOOK_PROCESS(hook_process, command) + 4;
+        while (ptr_url[0] == ' ')
+        {
+            ptr_url++;
+        }
+        rc = weeurl_download (ptr_url, HOOK_PROCESS(hook_process, options));
+        if (rc != 0)
+            fprintf (stderr, "Error with URL '%s'\n", ptr_url);
+    }
+    else
+    {
+        /* launch command */
+        exec_args[2] = HOOK_PROCESS(hook_process, command);
+        execvp (exec_args[0], exec_args);
+
+        /* should not be executed if execvp was ok */
+        fprintf (stderr, "Error with command '%s'\n",
+                 HOOK_PROCESS(hook_process, command));
+        rc = EXIT_FAILURE;
+    }
+
+    fflush (stdout);
+    fflush (stderr);
+
+    _exit (rc);
 }
 
 /*
@@ -3051,6 +3091,8 @@ unhook (struct t_hook *hook)
             case HOOK_TYPE_PROCESS:
                 if (HOOK_PROCESS(hook, command))
                     free (HOOK_PROCESS(hook, command));
+                if (HOOK_PROCESS(hook, options))
+                    hashtable_free (HOOK_PROCESS(hook, options));
                 if (HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDOUT]))
                     unhook (HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDOUT]));
                 if (HOOK_PROCESS(hook, hook_fd[HOOK_PROCESS_STDERR]))
@@ -3377,6 +3419,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                     if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_PROCESS(ptr_hook, callback)))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "command", HOOK_PROCESS(ptr_hook, command)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "options", hashtable_get_string (HOOK_PROCESS(ptr_hook, options), "keys_values")))
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "timeout", HOOK_PROCESS(ptr_hook, timeout)))
                         return 0;
@@ -3792,6 +3836,10 @@ hook_print_log ()
                         log_printf ("  process data:");
                         log_printf ("    callback. . . . . . . : 0x%lx", HOOK_PROCESS(ptr_hook, callback));
                         log_printf ("    command . . . . . . . : '%s'",  HOOK_PROCESS(ptr_hook, command));
+                        log_printf ("    options . . . . . . . : 0x%lx (hashtable: '%s')",
+                                    HOOK_PROCESS(ptr_hook, options),
+                                    hashtable_get_string (HOOK_PROCESS(ptr_hook, options),
+                                                          "keys_values"));
                         log_printf ("    timeout . . . . . . . : %d",    HOOK_PROCESS(ptr_hook, timeout));
                         log_printf ("    child_read[stdout]. . : %d",    HOOK_PROCESS(ptr_hook, child_read[HOOK_PROCESS_STDOUT]));
                         log_printf ("    child_write[stdout] . : %d",    HOOK_PROCESS(ptr_hook, child_write[HOOK_PROCESS_STDOUT]));

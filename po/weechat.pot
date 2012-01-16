@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-08 12:03+0100\n"
+"POT-Creation-Date: 2012-01-15 09:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5713,6 +5713,9 @@ msgstr ""
 msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
+msgid "options for URL"
+msgstr ""
+
 msgid "list of windows"
 msgstr ""
 
@@ -6782,4 +6785,13 @@ msgid "Variables"
 msgstr ""
 
 msgid "Lists"
+msgstr ""
+
+msgid "Option"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
 msgstr ""

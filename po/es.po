@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-08 12:03+0100\n"
+"POT-Creation-Date: 2012-01-15 09:29+0100\n"
 "PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7201,6 +7201,10 @@ msgstr ""
 "nombre del plugin (puede empezar o terminar con \"*\" como comodín) "
 "(opcional)"
 
+#, fuzzy
+msgid "options for URL"
+msgstr "opciones para barras"
+
 msgid "list of windows"
 msgstr "lista de ventanas"
 
@@ -8412,3 +8416,13 @@ msgstr "Variables"
 
 msgid "Lists"
 msgstr "Listas"
+
+#, fuzzy
+msgid "Option"
+msgstr "<opción>"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""

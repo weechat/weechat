@@ -41,9 +41,10 @@ Version 0.3.7 (under dev!)
 * core: fix compilation error with "pid_t" on Mac OS X (bug #34639)
 * core: enable background process under Cygwin to connect to servers, fix
   reconnection problem (bug #34626)
+* api: add support of URL in hook_process/hook_process_hashtable (task #10247)
 * api: add new functions strcasecmp_range, strncasecmp_range,
-  hashtable_map_string, hdata_check_pointer, hdata_char, hdata_hashtable and
-  nicklist_get_next_item
+  hashtable_map_string, hook_process_hashtable, hdata_check_pointer, hdata_char,
+  hdata_hashtable and nicklist_get_next_item
 * alias: add default alias umode => /mode $nick
 * irc: use low priority for MODE sent automatically by WeeChat (when joining
   channel)

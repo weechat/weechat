@@ -42,6 +42,7 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-string.h"
+#include "../core/wee-url.h"
 #include "../core/wee-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
@@ -400,7 +401,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_hotlist *ptr_hotlist;
     struct t_gui_key *ptr_key;
     struct t_weechat_plugin *ptr_plugin;
-    int context, number;
+    int context, number, i;
     char *error;
 
     /* make C compiler happy */
@@ -770,6 +771,22 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             }
         }
     }
+    else if (string_strcasecmp (infolist_name, "url_options") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (i = 0; url_options[i].name; i++)
+            {
+                if (!weeurl_option_add_to_infolist (ptr_infolist, &url_options[i]))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
+        }
+    }
     else if (string_strcasecmp (infolist_name, "window") == 0)
     {
         /* invalid window pointer ? */
@@ -1079,6 +1096,10 @@ plugin_api_init ()
     hook_infolist (NULL, "plugin", N_("list of plugins"),
                    N_("plugin pointer (optional)"),
                    N_("plugin name (can start or end with \"*\" as wildcard) (optional)"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "url_options", N_("options for URL"),
+                   NULL,
+                   NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "window", N_("list of windows"),
                    N_("window pointer (optional)"),

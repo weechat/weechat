@@ -6731,7 +6731,9 @@ struct t_hook *weechat_hook_process (const char *command,
 
 Argomenti:
 
-* 'command': comando da avviare nel processo figlio
+// TRANSLATION MISSING
+* 'command': comando da avviare nel processo figlio or URL
+  (_novità nella versione 0.3.7_), see below
 * 'timeout': timeout per il comando (in millisecondi): dopo questo timeout,
   il processo figlio viene terminato (0 vuol dire nessun timeout)
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
@@ -6756,6 +6758,11 @@ Valore restituito:
 
 Quando il comando ha terminato, o se viene raggiunto il timeout, WeeChat
 effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione).
+
+// TRANSLATION MISSING
+The command can be an URL with format: "url:http://www.example.com", to download
+content of URL (_new in version 0.3.7_). Options are possible for URL with
+function <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
@@ -6826,6 +6833,131 @@ def my_process_cb(data, command, return_code, out, err):
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
+----------------------------------------
+
+weechat_hook_process_hashtable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.7._
+
+// TRANSLATION MISSING
+Hook a process (launched with fork) using options in a hashtable, and catch
+output.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+struct t_hook *weechat_hook_process_hashtable (const char *command,
+                                               struct t_hashtable *options,
+                                               int timeout,
+                                               int (*callback)(void *data,
+                                                               const char *command,
+                                                               int return_code,
+                                                               const char *out,
+                                                               const char *err),
+                                               void *callback_data);
+----------------------------------------
+
+// TRANSLATION MISSING
+Arguments are the same as function <<_weechat_hook_process,weechat_hook_process>>,
+with an extra argument:
+
+* 'options': options for command executed (see table below); the hashtable is
+  duplicated in function, so it's safe to free it after this call
+
+// TRANSLATION MISSING
+For command "url:...", following options are available (see
+`man curl_easy_setopt` for a description of each option):
+
+include::autogen/plugin_api/url_options.txt[]
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ When constants are available they must be used as value for option. For
+options with type "mask", format is: "value1+value2+value3".
+
+For URL, two extra options (strings) are allowed for input/output file:
+
+* 'file_in': file to read and send with URLs (post file)
+* 'file_out': write downloaded URL/file in this file (instead of standard
+  output)
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+int
+my_process_cb (void *data, const char *command, int return_code,
+               const char *out, const char *err)
+{
+    if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
+    {
+        weechat_printf (NULL, "Error with command '%s'", command);
+        return WEECHAT_RC_OK;
+    }
+
+    if (return_code >= 0)
+    {
+        weechat_printf (NULL, "return_code = %d", return_code);
+    }
+
+    if (out)
+    {
+        weechat_printf (NULL, "stdout: %s", out);
+    }
+
+    if (err)
+    {
+        weechat_printf (NULL, "stderr: %s", err);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+struct t_hashtable *options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+if (hashtable)
+{
+    weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://www.weechat.org/",
+                                                                     options,
+                                                                     20000,
+                                                                     &my_process_cb, NULL);
+    weechat_hashtable_free (options);
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+hook = weechat.hook_process_hashtable(command, options, timeout, callback, callback_data)
+
+# esempio
+def my_process_cb(data, command, return_code, out, err):
+    if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
+        weechat.prnt("", "Error with command '%s'" % command)
+        return weechat.WEECHAT_RC_OK
+    if return_code >= 0:
+        weechat.prnt("", "return_code = %d" % return_code)
+    if out != "":
+        weechat.prnt("", "stdout: %s" % out)
+    if err != "":
+        weechat.prnt("", "stderr: %s" % err)
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process_hashtable("url:http://www.weechat.org/",
+                                      { "file_out": "/tmp/weechat.org.html" },
+                                      20000, "my_process_cb", "")
 ----------------------------------------
 
 weechat_hook_connect

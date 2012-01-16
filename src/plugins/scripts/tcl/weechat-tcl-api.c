@@ -2934,6 +2934,49 @@ weechat_tcl_api_hook_process (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hook_process_hashtable: hook a process with options in
+ *                                         a hashtable
+ */
+
+static int
+weechat_tcl_api_hook_process_hashtable (ClientData clientData,
+                                        Tcl_Interp *interp,
+                                        int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *command, *function, *data, *result;
+    struct t_hashtable *options;
+    int i, timeout;
+
+    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    if (objc < 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    if ((Tcl_GetIntFromObj (interp, objv[3], &timeout) != TCL_OK))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    command = Tcl_GetStringFromObj (objv[1], &i);
+    options = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    function = Tcl_GetStringFromObj (objv[4], &i);
+    data = Tcl_GetStringFromObj (objv[5], &i);
+
+    result = script_ptr2str (script_api_hook_process_hashtable (weechat_tcl_plugin,
+                                                                tcl_current_script,
+                                                                command,
+                                                                options,
+                                                                timeout,
+                                                                &weechat_tcl_api_hook_process_cb,
+                                                                function,
+                                                                data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_hook_connect_cb: callback for connect hooked
  */
 
@@ -6380,6 +6423,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hook_timer);
     API_DEF_FUNC(hook_fd);
     API_DEF_FUNC(hook_process);
+    API_DEF_FUNC(hook_process_hashtable);
     API_DEF_FUNC(hook_connect);
     API_DEF_FUNC(hook_print);
     API_DEF_FUNC(hook_signal);

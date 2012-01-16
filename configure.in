@@ -930,6 +930,21 @@ else
 fi
 
 # ------------------------------------------------------------------------------
+#                                     curl
+# ------------------------------------------------------------------------------
+
+AC_PATH_PROG(CURL_CONFIG, curl-config)
+if test "x$CURL_CONFIG" = "x" ; then
+    AC_MSG_ERROR([
+*** "curl-config" couldn't be found on your system.
+*** Try to install libcurl-dev with your software package manager.])
+fi
+CURL_CFLAGS=`$CURL_CONFIG --cflags`
+CURL_LFLAGS=`$CURL_CONFIG --libs`
+AC_SUBST(CURL_CFLAGS)
+AC_SUBST(CURL_LFLAGS)
+
+# ------------------------------------------------------------------------------
 #                               documentation
 # ------------------------------------------------------------------------------
 

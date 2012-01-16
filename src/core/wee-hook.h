@@ -194,6 +194,7 @@ struct t_hook_process
 {
     t_hook_callback_process *callback; /* process callback (after child end)*/
     char *command;                     /* command executed by child         */
+    struct t_hashtable *options;       /* options for process (see doc)     */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
     int child_read[2];                 /* to read data in pipe from child   */
     int child_write[2];                /* to write data in pipe for child   */
@@ -443,6 +444,12 @@ extern struct t_hook *hook_process (struct t_weechat_plugin *plugin,
                                     int timeout,
                                     t_hook_callback_process *callback,
                                     void *callback_data);
+extern struct t_hook *hook_process_hashtable (struct t_weechat_plugin *plugin,
+                                              const char *command,
+                                              struct t_hashtable *options,
+                                              int timeout,
+                                              t_hook_callback_process *callback,
+                                              void *callback_data);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int sock, int ipv6,

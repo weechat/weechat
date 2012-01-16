@@ -2506,6 +2506,41 @@ XS (XS_weechat_api_hook_process)
 }
 
 /*
+ * weechat::hook_process_hashtable: hook a process with options in a hashtable
+ */
+
+XS (XS_weechat_api_hook_process_hashtable)
+{
+    char *command, *function, *data, *result;
+    struct t_hashtable *options;
+    dXSARGS;
+
+    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    if (items < 5)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    command = SvPV_nolen (ST (0));
+    options = weechat_perl_hash_to_hashtable (ST (1),
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    function = SvPV_nolen (ST (3));
+    data = SvPV_nolen (ST (4));
+
+    result = script_ptr2str (script_api_hook_process_hashtable (weechat_perl_plugin,
+                                                                perl_current_script,
+                                                                command,
+                                                                options,
+                                                                SvIV (ST (2)), /* timeout */
+                                                                &weechat_perl_api_hook_process_cb,
+                                                                function,
+                                                                data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_perl_api_hook_connect_cb: callback for connect hooked
  */
 
@@ -5565,6 +5600,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hook_timer);
     API_DEF_FUNC(hook_fd);
     API_DEF_FUNC(hook_process);
+    API_DEF_FUNC(hook_process_hashtable);
     API_DEF_FUNC(hook_connect);
     API_DEF_FUNC(hook_print);
     API_DEF_FUNC(hook_signal);

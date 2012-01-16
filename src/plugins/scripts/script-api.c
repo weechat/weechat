@@ -859,7 +859,50 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_api_hook_connect: hook a connection
+ * script_api_hook_process_hashtable: hook a process
+ *                                    return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugin,
+                                   struct t_plugin_script *script,
+                                   const char *command,
+                                   struct t_hashtable *options,
+                                   int timeout,
+                                   int (*callback)(void *data,
+                                                   const char *command,
+                                                   int return_code,
+                                                   const char *out,
+                                                   const char *err),
+                                   const char *function,
+                                   const char *data)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+
+    script_callback_init (new_script_callback, script, function, data);
+    script_callback_add (script, new_script_callback);
+
+    new_hook = weechat_hook_process_hashtable (command, options, timeout,
+                                               callback, new_script_callback);
+
+    if (!new_hook)
+    {
+        script_callback_remove (script, new_script_callback);
+        return NULL;
+    }
+
+    new_script_callback->hook = new_hook;
+
+    return new_hook;
+}
+
+/*
+ * script_api_hook_process: hook a process
  *                          return new hook, NULL if error
  */
 
@@ -876,28 +919,9 @@ script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
                          const char *function,
                          const char *data)
 {
-    struct t_script_callback *new_script_callback;
-    struct t_hook *new_hook;
-
-    new_script_callback = script_callback_alloc ();
-    if (!new_script_callback)
-        return NULL;
-
-    script_callback_init (new_script_callback, script, function, data);
-    script_callback_add (script, new_script_callback);
-
-    new_hook = weechat_hook_process (command, timeout, callback,
-                                     new_script_callback);
-
-    if (!new_hook)
-    {
-        script_callback_remove (script, new_script_callback);
-        return NULL;
-    }
-
-    new_script_callback->hook = new_hook;
-
-    return new_hook;
+    return script_api_hook_process_hashtable (weechat_plugin, script, command,
+                                              NULL, timeout,
+                                              callback, function, data);
 }
 
 /*

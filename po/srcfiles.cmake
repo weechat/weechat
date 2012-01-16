@@ -33,6 +33,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-upgrade.h
 ./src/core/wee-upgrade-file.c
 ./src/core/wee-upgrade-file.h
+./src/core/wee-url.c
+./src/core/wee-url.h
 ./src/core/wee-utf8.c
 ./src/core/wee-utf8.h
 ./src/core/wee-util.c

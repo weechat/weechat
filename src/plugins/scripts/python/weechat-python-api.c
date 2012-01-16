@@ -2609,6 +2609,46 @@ weechat_python_api_hook_process (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hook_process_hashtable: hook a process with options in
+ *                                            a hashtable
+ */
+
+static PyObject *
+weechat_python_api_hook_process_hashtable (PyObject *self, PyObject *args)
+{
+    char *command, *function, *data, *result;
+    int timeout;
+    struct t_hashtable *options;
+    PyObject *dict, *return_value;
+
+    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    command = NULL;
+    options = NULL;
+    timeout = 0;
+    function = NULL;
+    data = NULL;
+    if (!PyArg_ParseTuple (args, "sOiss", &command, &dict, &timeout, &function,
+                           &data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+    options = weechat_python_dict_to_hashtable (dict,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    result = script_ptr2str (script_api_hook_process_hashtable (weechat_python_plugin,
+                                                                python_current_script,
+                                                                command,
+                                                                options,
+                                                                timeout,
+                                                                &weechat_python_api_hook_process_cb,
+                                                                function,
+                                                                data));
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_hook_connect_cb: callback for connect hooked
  */
 
@@ -5733,6 +5773,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_timer),
     API_DEF_FUNC(hook_fd),
     API_DEF_FUNC(hook_process),
+    API_DEF_FUNC(hook_process_hashtable),
     API_DEF_FUNC(hook_connect),
     API_DEF_FUNC(hook_print),
     API_DEF_FUNC(hook_signal),

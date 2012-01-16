@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20111219-01"
+#define WEECHAT_PLUGIN_API_VERSION "20120112-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -516,6 +516,16 @@ struct t_weechat_plugin
                                                     const char *out,
                                                     const char *err),
                                     void *callback_data);
+    struct t_hook *(*hook_process_hashtable) (struct t_weechat_plugin *plugin,
+                                              const char *command,
+                                              struct t_hashtable *options,
+                                              int timeout,
+                                              int (*callback)(void *data,
+                                                              const char *command,
+                                                              int return_code,
+                                                              const char *out,
+                                                              const char *err),
+                                              void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
                                     const char *proxy,
                                     const char *address,
@@ -1281,6 +1291,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                              __callback_data)                           \
     weechat_plugin->hook_process(weechat_plugin, __command, __timeout,  \
                                  __callback, __callback_data)
+#define weechat_hook_process_hashtable(__command, __options, __timeout, \
+                                       __callback, __callback_data)     \
+    weechat_plugin->hook_process_hashtable(weechat_plugin, __command,   \
+                                           __options, __timeout,        \
+                                            __callback, __callback_data)
 #define weechat_hook_connect(__proxy, __address, __port, __sock,        \
                             __ipv6, __gnutls_sess, __gnutls_cb,         \
                              __gnutls_dhkey_size, __gnutls_priorities,  \

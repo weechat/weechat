@@ -124,6 +124,9 @@ IF(ICONV_FOUND)
   ADD_DEFINITIONS( -DHAVE_ICONV )
 ENDIF(ICONV_FOUND)
 
+# Check for CURL
+FIND_PACKAGE(CURL REQUIRED)
+
 FIND_LIBRARY(DL_LIBRARY
   NAMES dl
   PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec

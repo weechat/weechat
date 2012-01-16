@@ -31,6 +31,7 @@ weechat_curses_LDADD = ./../../core/lib_weechat_core.a \
                        $(NCURSES_LFLAGS) \
                        $(GCRYPT_LFLAGS) \
                        $(GNUTLS_LFLAGS) \
+                       $(CURL_LFLAGS) \
                        -lm
 
 weechat_curses_SOURCES = gui-curses-bar-window.c \

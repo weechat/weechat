@@ -2989,6 +2989,54 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
 }
 
 /*
+ * weechat_ruby_api_hook_process_hashtable: hook a process with options in
+ *                                          a hashtable
+ */
+
+static VALUE
+weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
+                                         VALUE options, VALUE timeout,
+                                         VALUE function, VALUE data)
+{
+    char *c_command, *c_function, *c_data, *result;
+    struct t_hashtable *c_options;
+    int c_timeout;
+    VALUE return_value;
+
+    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    if (NIL_P (command) || NIL_P (options) || NIL_P (timeout)
+        || NIL_P (function) || NIL_P (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (command, T_STRING);
+    Check_Type (options, T_HASH);
+    Check_Type (timeout, T_FIXNUM);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+
+    c_command = StringValuePtr (command);
+    c_options = weechat_ruby_hash_to_hashtable (options,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+    c_timeout = FIX2INT (timeout);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+
+    result = script_ptr2str (script_api_hook_process_hashtable (weechat_ruby_plugin,
+                                                                ruby_current_script,
+                                                                c_command,
+                                                                c_options,
+                                                                c_timeout,
+                                                                &weechat_ruby_api_hook_process_cb,
+                                                                c_function,
+                                                                c_data));
+
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_hook_connect_cb: callback for connect hooked
  */
 
@@ -6638,6 +6686,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_timer, 5);
     API_DEF_FUNC(hook_fd, 6);
     API_DEF_FUNC(hook_process, 4);
+    API_DEF_FUNC(hook_process_hashtable, 5);
     API_DEF_FUNC(hook_connect, 8);
     API_DEF_FUNC(hook_print, 6);
     API_DEF_FUNC(hook_signal, 3);
