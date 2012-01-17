@@ -6804,7 +6804,13 @@ Paramètres :
 ** 'void *data' : pointeur
 ** 'const char *command' : commande exécutée par le fils
 ** 'int return_code' : code retour :
-*** '>= 0' : code retour du fils
+*** '>= 0': code retour du fils pour une commande, et pour l'URL, les valeurs
+    possibles sont :
+**** '0': transfert ok
+**** '1': URL invalide
+**** '2': erreur de transfert
+**** '3': pas assez de mémoire
+**** '4': erreur avec un fichier
 *** '< 0' : 'WEECHAT_HOOK_PROCESS_RUNNING' (données disponibles, mais le
     fils tourne toujours) ou 'WEECHAT_HOOK_PROCESS_ERROR' (erreur en lançant
     la commande)

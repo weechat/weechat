@@ -6715,7 +6715,12 @@ Arguments:
 ** 'void *data': pointer
 ** 'const char *command': command executed by child
 ** 'int return_code': return code:
-*** '>= 0': child command return code
+*** '>= 0': child return code for a command, and for URL possible values are:
+**** '0': transfer ok
+**** '1': invalid URL
+**** '2': transfer error
+**** '3': not enough memory
+**** '4': error with a file
 *** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (data available, but child still
     running) or 'WEECHAT_HOOK_PROCESS_ERROR' (error when launching command)
 ** 'out': standard output of command (stdout)

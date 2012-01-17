@@ -6741,7 +6741,13 @@ Argomenti:
 ** 'void *data': puntatore
 ** 'const char *command': comando eseguito dal processo figlio
 ** 'int return_code': codice restituito:
-*** '>= 0': codice restituito dal comando figlio
+// TRANSLATION MISSING
+*** '>= 0': child return code for a command, and for URL possible values are:
+**** '0': transfer ok
+**** '1': invalid URL
+**** '2': transfer error
+**** '3': not enough memory
+**** '4': error with a file
 *** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (dati disponibili, ma figlio
     ancora in esecuzione) o 'WEECHAT_HOOK_PROCESS_ERROR' (errore nella
     esecuzione del comando)
