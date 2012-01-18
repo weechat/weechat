@@ -43,7 +43,7 @@
     { #__name, CURLOPT_##__name, URL_TYPE_##__type, __constants }
 
 
-char *url_type_string[] = { "string", "long", "mask" };
+char *url_type_string[] = { "string", "long", "long long", "mask" };
 
 struct t_url_constant url_proxy_types[] =
 {
@@ -176,148 +176,665 @@ struct t_url_constant url_postredir[] =
     { NULL, 0 },
 };
 
+struct t_url_constant url_http_version[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070901
+    /* libcurl >= 7.9.1 */
+    URL_DEF_CONST(_HTTP_VERSION, NONE),
+    URL_DEF_CONST(_HTTP_VERSION, 1_0),
+    URL_DEF_CONST(_HTTP_VERSION, 1_1),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ftp_auth[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070C02
+    /* libcurl >= 7.12.2 */
+    URL_DEF_CONST(FTPAUTH, DEFAULT),
+    URL_DEF_CONST(FTPAUTH, SSL),
+    URL_DEF_CONST(FTPAUTH, TLS),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ftp_ssl_ccc[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071002
+    /* libcurl >= 7.16.2 */
+    URL_DEF_CONST(FTPSSL, CCC_NONE),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071001
+    /* libcurl >= 7.16.1 */
+    URL_DEF_CONST(FTPSSL, CCC_PASSIVE),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071002
+    /* libcurl >= 7.16.2 */
+    URL_DEF_CONST(FTPSSL, CCC_ACTIVE),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ftp_file_method[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070F03
+    /* libcurl >= 7.15.3 */
+    URL_DEF_CONST(FTPMETHOD, MULTICWD),
+    URL_DEF_CONST(FTPMETHOD, NOCWD),
+    URL_DEF_CONST(FTPMETHOD, SINGLECWD),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_rtsp_request[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071400
+    /* libcurl >= 7.20.0 */
+    URL_DEF_CONST(_RTSPREQ, OPTIONS),
+    URL_DEF_CONST(_RTSPREQ, DESCRIBE),
+    URL_DEF_CONST(_RTSPREQ, ANNOUNCE),
+    URL_DEF_CONST(_RTSPREQ, SETUP),
+    URL_DEF_CONST(_RTSPREQ, PLAY),
+    URL_DEF_CONST(_RTSPREQ, PAUSE),
+    URL_DEF_CONST(_RTSPREQ, TEARDOWN),
+    URL_DEF_CONST(_RTSPREQ, GET_PARAMETER),
+    URL_DEF_CONST(_RTSPREQ, SET_PARAMETER),
+    URL_DEF_CONST(_RTSPREQ, RECORD),
+    URL_DEF_CONST(_RTSPREQ, RECEIVE),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_time_condition[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070907
+    /* libcurl >= 7.9.7 */
+    URL_DEF_CONST(_TIMECOND, NONE),
+    URL_DEF_CONST(_TIMECOND, IFMODSINCE),
+    URL_DEF_CONST(_TIMECOND, IFUNMODSINCE),
+    URL_DEF_CONST(_TIMECOND, LASTMOD),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ip_resolve[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070A08
+    /* libcurl >= 7.10.8 */
+    URL_DEF_CONST(_IPRESOLVE, WHATEVER),
+    URL_DEF_CONST(_IPRESOLVE, V4),
+    URL_DEF_CONST(_IPRESOLVE, V6),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_use_ssl[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071100
+    /* libcurl >= 7.17.0 */
+    URL_DEF_CONST(USESSL, NONE),
+    URL_DEF_CONST(USESSL, TRY),
+    URL_DEF_CONST(USESSL, CONTROL),
+    URL_DEF_CONST(USESSL, ALL),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ssl_version[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x070902
+    /* libcurl >= 7.9.2 */
+    URL_DEF_CONST(_SSLVERSION, DEFAULT),
+    URL_DEF_CONST(_SSLVERSION, TLSv1),
+    URL_DEF_CONST(_SSLVERSION, SSLv2),
+    URL_DEF_CONST(_SSLVERSION, SSLv3),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_gssapi_delegation[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071600
+    /* libcurl >= 7.22.0 */
+    URL_DEF_CONST(GSSAPI_DELEGATION, NONE),
+    URL_DEF_CONST(GSSAPI_DELEGATION, POLICY_FLAG),
+    URL_DEF_CONST(GSSAPI_DELEGATION, FLAG),
+#endif
+    { NULL, 0 },
+};
+
+struct t_url_constant url_ssh_auth[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071001
+    /* libcurl >= 7.16.1 */
+    URL_DEF_CONST(SSH_AUTH, NONE),
+    URL_DEF_CONST(SSH_AUTH, PUBLICKEY),
+    URL_DEF_CONST(SSH_AUTH, PASSWORD),
+    URL_DEF_CONST(SSH_AUTH, HOST),
+    URL_DEF_CONST(SSH_AUTH, KEYBOARD),
+    URL_DEF_CONST(SSH_AUTH, DEFAULT),
+    URL_DEF_CONST(SSH_AUTH, ANY),
+#endif
+    { NULL, 0 },
+};
+
 struct t_url_option url_options[] =
 {
-    /* behavior options */
+    /*
+     * behavior options
+     */
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(HEADER,                LONG,   NULL),
+    URL_DEF_OPTION(VERBOSE, LONG, NULL),
+    URL_DEF_OPTION(HEADER, LONG, NULL),
+    URL_DEF_OPTION(NOPROGRESS, LONG, NULL),
+#endif
+    #if LIBCURL_VERSION_NUM >= 0x070A00
+    /* libcurl >= 7.10 */
+    URL_DEF_OPTION(NOSIGNAL, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071501
     /* libcurl >= 7.21 */
-    URL_DEF_OPTION(WILDCARDMATCH,         LONG,   NULL),
+    URL_DEF_OPTION(WILDCARDMATCH, LONG, NULL),
 #endif
-    /* error options */
+    /*
+     * error options
+     */
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(FAILONERROR,           LONG,   NULL),
+    URL_DEF_OPTION(FAILONERROR, LONG, NULL),
 #endif
-    /* network options */
+    /*
+     * network options
+     */
 #if LIBCURL_VERSION_NUM >= 0x071304
     /* libcurl >= 7.19.4 */
-    URL_DEF_OPTION(PROTOCOLS,             MASK,   url_protocols),
-    URL_DEF_OPTION(REDIR_PROTOCOLS,       MASK,   url_protocols),
+    URL_DEF_OPTION(PROTOCOLS, MASK, url_protocols),
+    URL_DEF_OPTION(REDIR_PROTOCOLS, MASK, url_protocols),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(PROXY,                 STRING, NULL),
-    URL_DEF_OPTION(PROXYPORT,             LONG,   NULL),
+    URL_DEF_OPTION(PROXY, STRING, NULL),
+    URL_DEF_OPTION(PROXYPORT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A00
     /* libcurl >= 7.10 */
-    URL_DEF_OPTION(PROXYTYPE,             LONG,   url_proxy_types),
+    URL_DEF_OPTION(PROXYTYPE, LONG, url_proxy_types),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
     /* libcurl >= 7.19.4 */
-    URL_DEF_OPTION(NOPROXY,               STRING, NULL),
+    URL_DEF_OPTION(NOPROXY, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070300
     /* libcurl >= 7.3 */
-    URL_DEF_OPTION(HTTPPROXYTUNNEL,       LONG,   NULL),
+    URL_DEF_OPTION(HTTPPROXYTUNNEL, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071304
     /* libcurl >= 7.19.4 */
     URL_DEF_OPTION(SOCKS5_GSSAPI_SERVICE, STRING, NULL),
-    URL_DEF_OPTION(SOCKS5_GSSAPI_NEC,     LONG,   NULL),
+    URL_DEF_OPTION(SOCKS5_GSSAPI_NEC, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070300
     /* libcurl >= 7.3 */
-    URL_DEF_OPTION(INTERFACE,             STRING, NULL),
+    URL_DEF_OPTION(INTERFACE, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070F02
     /* libcurl >= 7.15.2 */
-    URL_DEF_OPTION(LOCALPORT,             LONG,   NULL),
-    URL_DEF_OPTION(LOCALPORTRANGE,        LONG,   NULL),
+    URL_DEF_OPTION(LOCALPORT, LONG, NULL),
+    URL_DEF_OPTION(LOCALPORTRANGE, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070903
     /* libcurl >= 7.9.3 */
-    URL_DEF_OPTION(DNS_CACHE_TIMEOUT,     LONG,   NULL),
+    URL_DEF_OPTION(DNS_CACHE_TIMEOUT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A00
     /* libcurl >= 7.10 */
-    URL_DEF_OPTION(BUFFERSIZE,            LONG,   NULL),
+    URL_DEF_OPTION(BUFFERSIZE, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(PORT,                  LONG,   NULL),
+    URL_DEF_OPTION(PORT, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B02
     /* libcurl >= 7.11.2 */
-    URL_DEF_OPTION(TCP_NODELAY,           LONG,   NULL),
+    URL_DEF_OPTION(TCP_NODELAY, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071300
     /* libcurl >= 7.19.0 */
-    URL_DEF_OPTION(ADDRESS_SCOPE,         LONG,   NULL),
+    URL_DEF_OPTION(ADDRESS_SCOPE, LONG, NULL),
 #endif
-    /* name and password options (authentication) */
+    /*
+     * name and password options (authentication)
+     */
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(NETRC,                 LONG,   url_netrc),
+    URL_DEF_OPTION(NETRC, LONG, url_netrc),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070B00
     /* libcurl >= 7.11.0 */
-    URL_DEF_OPTION(NETRC_FILE,            STRING, NULL),
+    URL_DEF_OPTION(NETRC_FILE, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(USERPWD,               STRING, NULL),
-    URL_DEF_OPTION(PROXYUSERPWD,          STRING, NULL),
+    URL_DEF_OPTION(USERPWD, STRING, NULL),
+    URL_DEF_OPTION(PROXYUSERPWD, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071301
     /* libcurl >= 7.19.1 */
-    URL_DEF_OPTION(USERNAME,              STRING, NULL),
-    URL_DEF_OPTION(PASSWORD,              STRING, NULL),
-    URL_DEF_OPTION(PROXYUSERNAME,         STRING, NULL),
-    URL_DEF_OPTION(PROXYPASSWORD,         STRING, NULL),
+    URL_DEF_OPTION(USERNAME, STRING, NULL),
+    URL_DEF_OPTION(PASSWORD, STRING, NULL),
+    URL_DEF_OPTION(PROXYUSERNAME, STRING, NULL),
+    URL_DEF_OPTION(PROXYPASSWORD, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A06
     /* libcurl >= 7.10.6 */
-    URL_DEF_OPTION(HTTPAUTH,              MASK,   url_auth),
+    URL_DEF_OPTION(HTTPAUTH, MASK, url_auth),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071504
     /* libcurl >= 7.21.4 */
-    URL_DEF_OPTION(TLSAUTH_TYPE,          MASK,   url_authtype),
-    URL_DEF_OPTION(TLSAUTH_USERNAME,      STRING, NULL),
-    URL_DEF_OPTION(TLSAUTH_PASSWORD,      STRING, NULL),
+    URL_DEF_OPTION(TLSAUTH_TYPE, MASK, url_authtype),
+    URL_DEF_OPTION(TLSAUTH_USERNAME, STRING, NULL),
+    URL_DEF_OPTION(TLSAUTH_PASSWORD, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A07
     /* libcurl >= 7.10.7 */
-    URL_DEF_OPTION(PROXYAUTH,             MASK,   url_auth),
+    URL_DEF_OPTION(PROXYAUTH, MASK, url_auth),
 #endif
-    /* HTTP options */
+    /*
+     * HTTP options
+     */
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(AUTOREFERER,           LONG,   NULL),
+    URL_DEF_OPTION(AUTOREFERER, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071506
     /* libcurl >= 7.15.6 */
-    URL_DEF_OPTION(ACCEPT_ENCODING,       STRING, NULL),
-    URL_DEF_OPTION(TRANSFER_ENCODING,     LONG,   NULL),
+    URL_DEF_OPTION(ACCEPT_ENCODING, STRING, NULL),
+    URL_DEF_OPTION(TRANSFER_ENCODING, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(FOLLOWLOCATION,        LONG,   NULL),
+    URL_DEF_OPTION(FOLLOWLOCATION, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070A04
     /* libcurl >= 7.10.4 */
-    URL_DEF_OPTION(UNRESTRICTED_AUTH,     LONG,   NULL),
+    URL_DEF_OPTION(UNRESTRICTED_AUTH, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070500
     /* libcurl >= 7.5 */
-    URL_DEF_OPTION(MAXREDIRS,             LONG,   NULL),
+    URL_DEF_OPTION(MAXREDIRS, LONG, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071301
     /* libcurl >= 7.19.1 */
-    URL_DEF_OPTION(POSTREDIR,             MASK,   url_postredir),
+    URL_DEF_OPTION(POSTREDIR, MASK, url_postredir),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070100
     /* libcurl >= 7.1 */
-    URL_DEF_OPTION(POST,                  LONG,   NULL),
-    URL_DEF_OPTION(POSTFIELDS,            STRING, NULL),
+    URL_DEF_OPTION(PUT, LONG, NULL),
+    URL_DEF_OPTION(POST, LONG, NULL),
+    URL_DEF_OPTION(POSTFIELDS, STRING, NULL),
 #endif
 #if LIBCURL_VERSION_NUM >= 0x070200
     /* libcurl >= 7.2 */
-    URL_DEF_OPTION(POSTFIELDSIZE,         LONG,   NULL),
+    URL_DEF_OPTION(POSTFIELDSIZE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070B01
+    /* libcurl >= 7.11.1 */
+    URL_DEF_OPTION(POSTFIELDSIZE_LARGE, LONGLONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071101
+    /* libcurl >= 7.17.1 */
+    URL_DEF_OPTION(COPYPOSTFIELDS, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    /*URL_DEF_OPTION(HTTPPOST, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(REFERER, STRING, NULL),
+    URL_DEF_OPTION(USERAGENT, STRING, NULL),
+    /*URL_DEF_OPTION(HTTPHEADER, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A03
+    /* libcurl >= 7.10.3 */
+    /*URL_DEF_OPTION(HTTP200ALIASES, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(COOKIE, STRING, NULL),
+    URL_DEF_OPTION(COOKIEFILE, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070900
+    /* libcurl >= 7.9 */
+    URL_DEF_OPTION(COOKIEJAR, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070907
+    /* libcurl >= 7.9.7 */
+    URL_DEF_OPTION(COOKIESESSION, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070E01
+    /* libcurl >= 7.14.1 */
+    URL_DEF_OPTION(COOKIELIST, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070801
+    /* libcurl >= 7.8.1 */
+    URL_DEF_OPTION(HTTPGET, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070901
+    /* libcurl >= 7.9.1 */
+    URL_DEF_OPTION(HTTP_VERSION, LONG, url_http_version),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070E01
+    /* libcurl >= 7.14.1 */
+    URL_DEF_OPTION(IGNORE_CONTENT_LENGTH, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071002
+    /* libcurl >= 7.16.2 */
+    URL_DEF_OPTION(HTTP_CONTENT_DECODING, LONG, NULL),
+    URL_DEF_OPTION(HTTP_TRANSFER_DECODING, LONG, NULL),
+#endif
+    /*
+     * SMTP options
+     */
+#if LIBCURL_VERSION_NUM >= 0x071400
+    /* libcurl >= 7.20.0 */
+    URL_DEF_OPTION(MAIL_FROM, STRING, NULL),
+    /*URL_DEF_OPTION(MAIL_RCPT, LIST, NULL),*/
+#endif
+    /*
+     * TFTP options
+     */
+#if LIBCURL_VERSION_NUM >= 0x071304
+    /* libcurl >= 7.19.4 */
+    URL_DEF_OPTION(TFTP_BLKSIZE, LONG, NULL),
+#endif
+    /*
+     * FTP options
+     */
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(FTPPORT, STRING, NULL),
+    /*URL_DEF_OPTION(QUOTE, LIST, NULL),*/
+    /*URL_DEF_OPTION(POSTQUOTE, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070905
+    /* libcurl >= 7.9.5 */
+    /*URL_DEF_OPTION(PREQUOTE, LIST, NULL),*/
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071100
+    /* libcurl >= 7.17.0 */
+    URL_DEF_OPTION(DIRLISTONLY, LONG, NULL),
+    URL_DEF_OPTION(APPEND, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A05
+    /* libcurl >= 7.10.5 */
+    URL_DEF_OPTION(FTP_USE_EPRT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070902
+    /* libcurl >= 7.9.2 */
+    URL_DEF_OPTION(FTP_USE_EPSV, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071400
+    /* libcurl >= 7.20.0 */
+    URL_DEF_OPTION(FTP_USE_PRET, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A07
+    /* libcurl >= 7.10.7 */
+    URL_DEF_OPTION(FTP_CREATE_MISSING_DIRS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A08
+    /* libcurl >= 7.10.8 */
+    URL_DEF_OPTION(FTP_RESPONSE_TIMEOUT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070F05
+    /* libcurl >= 7.15.5 */
+    URL_DEF_OPTION(FTP_ALTERNATIVE_TO_USER, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070F00
+    /* libcurl >= 7.15.0 */
+    URL_DEF_OPTION(FTP_SKIP_PASV_IP, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070C02
+    /* libcurl >= 7.12.2 */
+    URL_DEF_OPTION(FTPSSLAUTH, LONG, url_ftp_auth),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071001
+    /* libcurl >= 7.16.1 */
+    URL_DEF_OPTION(FTP_SSL_CCC, LONG, url_ftp_ssl_ccc),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070D00
+    /* libcurl >= 7.13.0 */
+    URL_DEF_OPTION(FTP_ACCOUNT, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070F01
+    /* libcurl >= 7.15.1 */
+    URL_DEF_OPTION(FTP_FILEMETHOD, LONG, url_ftp_file_method),
+#endif
+    /*
+     * RTSP options
+     */
+#if LIBCURL_VERSION_NUM >= 0x071400
+    /* libcurl >= 7.20.0 */
+    URL_DEF_OPTION(RTSP_REQUEST, LONG, url_rtsp_request),
+    URL_DEF_OPTION(RTSP_SESSION_ID, STRING, NULL),
+    URL_DEF_OPTION(RTSP_STREAM_URI, STRING, NULL),
+    URL_DEF_OPTION(RTSP_TRANSPORT, STRING, NULL),
+    URL_DEF_OPTION(RTSP_CLIENT_CSEQ, LONG, NULL),
+    URL_DEF_OPTION(RTSP_SERVER_CSEQ, LONG, NULL),
+#endif
+    /*
+     * protocol options
+     */
+#if LIBCURL_VERSION_NUM >= 0x070101
+    /* libcurl >= 7.1.1 */
+    URL_DEF_OPTION(TRANSFERTEXT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071200
+    /* libcurl >= 7.18.0 */
+    URL_DEF_OPTION(PROXY_TRANSFER_MODE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(CRLF, LONG, NULL),
+    URL_DEF_OPTION(RANGE, STRING, NULL),
+    URL_DEF_OPTION(RESUME_FROM, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070B00
+    /* libcurl >= 7.11.0 */
+    URL_DEF_OPTION(RESUME_FROM_LARGE, LONGLONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(CUSTOMREQUEST, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070500
+    /* libcurl >= 7.5 */
+    URL_DEF_OPTION(FILETIME, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(NOBODY, LONG, NULL),
+    URL_DEF_OPTION(INFILESIZE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070B00
+    /* libcurl >= 7.11.0 */
+    URL_DEF_OPTION(INFILESIZE_LARGE, LONGLONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(UPLOAD, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A08
+    /* libcurl >= 7.10.8 */
+    URL_DEF_OPTION(MAXFILESIZE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070B00
+    /* libcurl >= 7.11.0 */
+    URL_DEF_OPTION(MAXFILESIZE_LARGE, LONGLONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(TIMECONDITION, LONG, url_time_condition),
+    URL_DEF_OPTION(TIMEVALUE, LONG, NULL),
+#endif
+    /*
+     * connection options
+     */
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(TIMEOUT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071002
+    /* libcurl >= 7.16.2 */
+    URL_DEF_OPTION(TIMEOUT_MS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(LOW_SPEED_LIMIT, LONG, NULL),
+    URL_DEF_OPTION(LOW_SPEED_TIME, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070F05
+    /* libcurl >= 7.15.5 */
+    URL_DEF_OPTION(MAX_SEND_SPEED_LARGE, LONGLONG, NULL),
+    URL_DEF_OPTION(MAX_RECV_SPEED_LARGE, LONGLONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071003
+    /* libcurl >= 7.16.3 */
+    URL_DEF_OPTION(MAXCONNECTS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070700
+    /* libcurl >= 7.7 */
+    URL_DEF_OPTION(FRESH_CONNECT, LONG, NULL),
+    URL_DEF_OPTION(FORBID_REUSE, LONG, NULL),
+    URL_DEF_OPTION(CONNECTTIMEOUT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071002
+    /* libcurl >= 7.16.2 */
+    URL_DEF_OPTION(CONNECTTIMEOUT_MS, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070A08
+    /* libcurl >= 7.10.8 */
+    URL_DEF_OPTION(IPRESOLVE, LONG, url_ip_resolve),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070F02
+    /* libcurl >= 7.15.2 */
+    URL_DEF_OPTION(CONNECT_ONLY, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071100
+    /* libcurl >= 7.17.0 */
+    URL_DEF_OPTION(USE_SSL, LONG, url_use_ssl),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071503
+    /* libcurl >= 7.21.3 */
+    /*URL_DEF_OPTION(RESOLVE, LIST, NULL),*/
+#endif
+    /*
+     * SSL and security options
+     */
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(SSLCERT, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070903
+    /* libcurl >= 7.9.3 */
+    URL_DEF_OPTION(SSLCERTTYPE, STRING, NULL),
+    URL_DEF_OPTION(SSLKEY, STRING, NULL),
+    URL_DEF_OPTION(SSLKEYTYPE, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071100
+    /* libcurl >= 7.17.0 */
+    URL_DEF_OPTION(KEYPASSWD, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070903
+    /* libcurl >= 7.9.3 */
+    URL_DEF_OPTION(SSLENGINE, STRING, NULL),
+    URL_DEF_OPTION(SSLENGINE_DEFAULT, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070100
+    /* libcurl >= 7.1 */
+    URL_DEF_OPTION(SSLVERSION, LONG, url_ssl_version),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070402
+    /* libcurl >= 7.4.2 */
+    URL_DEF_OPTION(SSL_VERIFYPEER, LONG, NULL),
+    URL_DEF_OPTION(CAINFO, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071300
+    /* libcurl >= 7.19.0 */
+    URL_DEF_OPTION(ISSUERCERT, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070908
+    /* libcurl >= 7.9.8 */
+    URL_DEF_OPTION(CAPATH, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071300
+    /* libcurl >= 7.19.0 */
+    URL_DEF_OPTION(CRLFILE, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070801
+    /* libcurl >= 7.8.1 */
+    URL_DEF_OPTION(SSL_VERIFYHOST, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071301
+    /* libcurl >= 7.19.1 */
+    URL_DEF_OPTION(CERTINFO, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070700
+    /* libcurl >= 7.7 */
+    URL_DEF_OPTION(RANDOM_FILE, STRING, NULL),
+    URL_DEF_OPTION(EGDSOCKET, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x070900
+    /* libcurl >= 7.9 */
+    URL_DEF_OPTION(SSL_CIPHER_LIST, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071000
+    /* libcurl >= 7.16.0 */
+    URL_DEF_OPTION(SSL_SESSIONID_CACHE, LONG, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071004
+    /* libcurl >= 7.16.4 */
+    URL_DEF_OPTION(KRBLEVEL, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071600
+    /* libcurl >= 7.22.0 */
+    URL_DEF_OPTION(GSSAPI_DELEGATION, LONG, url_gssapi_delegation),
+#endif
+    /*
+     * SSH options
+     */
+#if LIBCURL_VERSION_NUM >= 0x071001
+    /* libcurl >= 7.16.1 */
+    URL_DEF_OPTION(SSH_AUTH_TYPES, MASK, url_gssapi_delegation),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071101
+    /* libcurl >= 7.17.1 */
+    URL_DEF_OPTION(SSH_HOST_PUBLIC_KEY_MD5, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071001
+    /* libcurl >= 7.16.1 */
+    URL_DEF_OPTION(SSH_PUBLIC_KEYFILE, STRING, NULL),
+    URL_DEF_OPTION(SSH_PRIVATE_KEYFILE, STRING, NULL),
+#endif
+#if LIBCURL_VERSION_NUM >= 0x071306
+    /* libcurl >= 7.19.6 */
+    URL_DEF_OPTION(SSH_KNOWNHOSTS, STRING, NULL),
+#endif
+    /*
+     * other options
+     */
+#if LIBCURL_VERSION_NUM >= 0x071004
+    /* libcurl >= 7.16.4 */
+    URL_DEF_OPTION(NEW_FILE_PERMS, LONG, NULL),
+    URL_DEF_OPTION(NEW_DIRECTORY_PERMS, LONG, NULL),
+#endif
+    /*
+     * telnet options
+     */
+#if LIBCURL_VERSION_NUM >= 0x070700
+    /* libcurl >= 7.7 */
+    /*URL_DEF_OPTION(TELNET_OPTIONS, LIST, NULL),*/
 #endif
     { NULL, 0, 0, NULL },
 };
@@ -433,6 +950,7 @@ weeurl_option_map_cb (void *data,
     CURL *curl;
     int index, index_constant, rc;
     long long_value;
+    long long long_long_value;
 
     /* make C compiler happy */
     (void) hashtable;
@@ -468,6 +986,27 @@ weeurl_option_map_cb (void *data,
                     {
                         curl_easy_setopt (curl, url_options[index].option,
                                           long_value);
+                    }
+                }
+                break;
+            case URL_TYPE_LONGLONG:
+                if (url_options[index].constants)
+                {
+                    index_constant = weeurl_search_constant (url_options[index].constants,
+                                                             (const char *)value);
+                    if (index_constant >= 0)
+                    {
+                        curl_easy_setopt (curl, url_options[index].option,
+                                          url_options[index].constants[index_constant].value);
+                    }
+                }
+                else
+                {
+                    rc = sscanf ((const char *)value, "%lld", &long_long_value);
+                    if (rc != EOF)
+                    {
+                        curl_easy_setopt (curl, url_options[index].option,
+                                          (curl_off_t)long_long_value);
                     }
                 }
                 break;

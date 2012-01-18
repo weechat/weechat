@@ -2,7 +2,13 @@
 |========================================
 | Option | Type | Constantes ^(1)^
 
+| verbose | long |
+
 | header | long |
+
+| noprogress | long |
+
+| nosignal | long |
 
 | wildcardmatch | long |
 
@@ -82,10 +88,200 @@
 
 | postredir | mask | post_301, post_302
 
+| put | long |
+
 | post | long |
 
 | postfields | string |
 
 | postfieldsize | long |
+
+| postfieldsize_large | long long |
+
+| copypostfields | string |
+
+| referer | string |
+
+| useragent | string |
+
+| cookie | string |
+
+| cookiefile | string |
+
+| cookiejar | string |
+
+| cookiesession | long |
+
+| cookielist | string |
+
+| httpget | long |
+
+| http_version | long | none, 1_0, 1_1
+
+| ignore_content_length | long |
+
+| http_content_decoding | long |
+
+| http_transfer_decoding | long |
+
+| mail_from | string |
+
+| tftp_blksize | long |
+
+| ftpport | string |
+
+| dirlistonly | long |
+
+| append | long |
+
+| ftp_use_eprt | long |
+
+| ftp_use_epsv | long |
+
+| ftp_use_pret | long |
+
+| ftp_create_missing_dirs | long |
+
+| ftp_response_timeout | long |
+
+| ftp_alternative_to_user | string |
+
+| ftp_skip_pasv_ip | long |
+
+| ftpsslauth | long | default, ssl, tls
+
+| ftp_ssl_ccc | long | ccc_none, ccc_passive, ccc_active
+
+| ftp_account | string |
+
+| ftp_filemethod | long | multicwd, nocwd, singlecwd
+
+| rtsp_request | long | options, describe, announce, setup, play, pause, teardown, get_parameter, set_parameter, record, receive
+
+| rtsp_session_id | string |
+
+| rtsp_stream_uri | string |
+
+| rtsp_transport | string |
+
+| rtsp_client_cseq | long |
+
+| rtsp_server_cseq | long |
+
+| transfertext | long |
+
+| proxy_transfer_mode | long |
+
+| crlf | long |
+
+| range | string |
+
+| resume_from | long |
+
+| resume_from_large | long long |
+
+| customrequest | string |
+
+| filetime | long |
+
+| nobody | long |
+
+| infilesize | long |
+
+| infilesize_large | long long |
+
+| upload | long |
+
+| maxfilesize | long |
+
+| maxfilesize_large | long long |
+
+| timecondition | long | none, ifmodsince, ifunmodsince, lastmod
+
+| timevalue | long |
+
+| timeout | long |
+
+| timeout_ms | long |
+
+| low_speed_limit | long |
+
+| low_speed_time | long |
+
+| max_send_speed_large | long long |
+
+| max_recv_speed_large | long long |
+
+| maxconnects | long |
+
+| fresh_connect | long |
+
+| forbid_reuse | long |
+
+| connecttimeout | long |
+
+| connecttimeout_ms | long |
+
+| ipresolve | long | whatever, v4, v6
+
+| connect_only | long |
+
+| use_ssl | long | none, try, control, all
+
+| sslcert | string |
+
+| sslcerttype | string |
+
+| sslkey | string |
+
+| sslkeytype | string |
+
+| keypasswd | string |
+
+| sslengine | string |
+
+| sslengine_default | long |
+
+| sslversion | long | default, tlsv1, sslv2, sslv3
+
+| ssl_verifypeer | long |
+
+| cainfo | string |
+
+| issuercert | string |
+
+| capath | string |
+
+| crlfile | string |
+
+| ssl_verifyhost | long |
+
+| certinfo | long |
+
+| random_file | string |
+
+| egdsocket | string |
+
+| ssl_cipher_list | string |
+
+| ssl_sessionid_cache | long |
+
+| krblevel | string |
+
+| gssapi_delegation | long | none, policy_flag, flag
+
+| ssh_auth_types | mask | none, policy_flag, flag
+
+| ssh_host_public_key_md5 | string |
+
+| ssh_public_keyfile | string |
+
+| ssh_private_keyfile | string |
+
+| ssh_knownhosts | string |
+
+| new_file_perms | long |
+
+| new_directory_perms | long |
 
 |========================================

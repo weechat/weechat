@@ -27,6 +27,7 @@ enum t_url_type
 {
     URL_TYPE_STRING = 0,
     URL_TYPE_LONG,
+    URL_TYPE_LONGLONG,
     URL_TYPE_MASK,
 };
 
