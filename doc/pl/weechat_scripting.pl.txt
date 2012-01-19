@@ -607,22 +607,66 @@ Przykład:
 
 [source,python]
 ----------------------------------------
+process_output = ""
+
+def my_process_cb(data, command, rc, out, err):
+    global process_output
+    if out != "":
+        process_output += out
+    if int(rc) >= 0:
+        weechat.prnt("", process_output)
+    return weechat.WEECHAT_RC_OK
+
+weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
+----------------------------------------
+
+// TRANSLATION MISSING
+[[url_transfer]]
+URL transfer
+^^^^^^^^^^^^
+
+_Nowe w wersji 0.3.7._
+
+To download URL (or post to URL), you have to use function `hook_process`, or
+`hook_process_hashtable` if you need to set options for URL transfer.
+
+Example of URL transfer without option: the HTML page will be received as "out"
+in callback (standard output of process):
+
+[source,python]
+----------------------------------------
 # Wyświetla wersje Linuksowych kerneli.
 kernel_txt = ""
 
-def kernel_process_cb(data, command, rc, stdout, stderr):
-    """ Callback reading command output. """
+def kernel_process_cb(data, command, rc, out, err):
     global kernel_txt
-    if stdout != "":
-        kernel_txt += stdout
+    if out != "":
+        kernel_txt += out
     if int(rc) >= 0:
         weechat.prnt("", kernel_txt)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("python -c \"import urllib; "
-                     "print urllib.urlopen('http://www.kernel.org/kdist/finger_banner').read()\"",
-                     10 * 1000, "kernel_process_cb", "")
+weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
+                     30 * 1000, "kernel_process_cb", "")
 ----------------------------------------
+
+Example of URL transfer with an option: download latest WeeChat development
+package in file '/tmp/weechat-devel.tar.gz':
+
+[source,python]
+----------------------------------------
+def my_process_cb(data, command, rc, out, err):
+    if int(rc) >= 0:
+        weechat.prnt("", "End of transfer (rc=%s)" % rc)
+    return weechat.WEECHAT_RC_OK
+
+weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
+                               { "file_out": "/tmp/weechat-devel.tar.gz" },
+                               30 * 1000, "my_process_cb", "")
+----------------------------------------
+
+For more information about URL transfer and available options, see functions
+`hook_process` and `hook_process_hashtable` in 'WeeChat Plugin API Reference'.
 
 [[config_options]]
 Konfiguracja / opcje
@@ -664,7 +708,7 @@ SCRIPT_NAME = "myscript"
 # ...
 
 def config_cb(data, option, value):
-    """ Callback called when a script option is changed. """
+    """Callback called when a script option is changed."""
     # na przykład, odczyt wszystkich opcji skryptu...
     # ...
     return weechat.WEECHAT_RC_OK
