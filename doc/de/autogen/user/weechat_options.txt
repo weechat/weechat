@@ -559,7 +559,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
-** Beschreibung: `enable mouse support`
+** Beschreibung: `Mausunterstützung einschalten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

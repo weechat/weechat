@@ -6,7 +6,7 @@
 
 | irc | irc_buffer | hole Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
 
-| irc | irc_is_channel | 1 if string is a valid IRC channel name for server | server,channel (server is optional)
+| irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channelname für den Server ist | Server,Channel (Server ist optional)
 
 | irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | Nickname
 

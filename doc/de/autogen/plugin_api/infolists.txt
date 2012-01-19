@@ -58,7 +58,7 @@
 
 | weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| weechat | url_options | options for URL | - | -
+| weechat | url_options | Optionen für URL | - | -
 
 | weechat | window | Auflistung der Windows | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
 
