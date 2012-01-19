@@ -314,10 +314,10 @@ Lista funkcji w API skryptów:
   prnt_date_tags), print_y (for python: prnt_y), log_print
 | hooks               |
   hook_command, hook_command_run, hook_timer, hook_fd, hook_process,
-  hook_connect, hook_print, hook_signal, hook_signal_send, hook_hsignal,
-  hook_hsignal_send, hook_config, hook_completion, hook_completion_list_add,
-  hook_modifier, hook_modifier_exec, hook_info, hook_info_hashtable,
-  hook_infolist, hook_focus, unhook, unhook_all
+  hook_process_hashtable, hook_connect, hook_print, hook_signal,
+  hook_signal_send, hook_hsignal, hook_hsignal_send, hook_config,
+  hook_completion, hook_completion_list_add, hook_modifier, hook_modifier_exec,
+  hook_info, hook_info_hashtable, hook_infolist, hook_focus, unhook, unhook_all
 | bufory              |
   buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
   buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
@@ -349,7 +349,7 @@ Lista funkcji w API skryptów:
   hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
   hdata_get_var_hdata, hdata_get_list, hdata_check_pointer, hdata_move,
   hdata_char, hdata_integer, hdata_long, hdata_string, hdata_pointer,
-  hdata_time, hdata_get_string
+  hdata_time, hdata_hashtable, hdata_get_string
 | uaktualnienie       |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================
