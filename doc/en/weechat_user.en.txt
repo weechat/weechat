@@ -87,30 +87,32 @@ compile WeeChat.
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Package ^(1)^          | Version   | Required | Feature
-| cmake                  |           | *yes*    | build (autotools still possible, but cmake is recommended)
-| libncursesw5-dev ^(2)^ |           | *yes*    | ncurses interface
-| libcurl4-xxxxx-dev     |           | *yes*    | URL transfer
-| gettext                |           |          | internationalization (translation of messages; base language is english)
-| libgcrypt11-dev        |           |          | SASL authentication with IRC server using DH-BLOWFISH mechanism
-| libgnutls-dev          | ≥ 2.2.0   |          | SSL connection to IRC server
-| ca-certificates        |           |          | certificates for SSL connections
-| libaspell-dev          |           |          | aspell plugin
-| python-dev             | 2.5 → 2.7 |          | python plugin
-| libperl-dev            |           |          | perl plugin
-| ruby1.8-dev            |           |          | ruby plugin
-| liblua5.1-0-dev        |           |          | lua plugin
-| tcl-dev                | ≥ 8.5     |          | tcl plugin
-| guile-1.8-dev          |           |          | guile (scheme) plugin
-| asciidoc               | ≥ 8.5.0   |          | build documentation (HTML files)
-| source-highlight       |           |          | syntax highlight for sources in HTML documentation
+| Package ^(1)^          | Version     | Required | Feature
+| cmake                  |             | *yes*    | build (autotools still possible, but cmake is recommended)
+| libncursesw5-dev ^(2)^ |             | *yes*    | ncurses interface
+| libcurl4-xxxxx-dev     |             | *yes*    | URL transfer
+| gettext                |             |          | internationalization (translation of messages; base language is english)
+| libgcrypt11-dev        |             |          | SASL authentication with IRC server using DH-BLOWFISH mechanism
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server
+| ca-certificates        |             |          | certificates for SSL connections
+| libaspell-dev          |             |          | aspell plugin
+| python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
+| libperl-dev            |             |          | perl plugin
+| ruby1.8-dev            |             |          | ruby plugin
+| liblua5.1-0-dev        |             |          | lua plugin
+| tcl-dev                | ≥ 8.5       |          | tcl plugin
+| guile-1.8-dev          |             |          | guile (scheme) plugin
+| asciidoc               | ≥ 8.5.0     |          | build documentation (HTML files)
+| source-highlight       |             |          | syntax highlight for sources in HTML documentation
 |========================================
 
 [NOTE]
 ^(1)^ Name comes from the Debian GNU/Linux distribution, versions and package
 names may be different in different distributions and versions. +
 ^(2)^ WeeChat can compile with libncurses5-dev, but it is *NOT* recommended (you
-will have display bugs with wide chars).
+will have display bugs with wide chars). +
+^(3)^ WeeChat can compile with Python 3.x, but recommended Python version is 2.7
+(all scripts run fine with version 2.x, but not with version 3.x).
 
 [[compile_with_cmake]]
 Compile with cmake

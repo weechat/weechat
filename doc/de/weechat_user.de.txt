@@ -87,30 +87,33 @@ welche Pakete optional genutzt werden können.
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Paket ^(1)^            | Version   | benötigt | Funktion
-| cmake                  |           | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-| libncursesw5-dev ^(2)^ |           | *ja*     | ncurses Oberfläche
-| libcurl4-xxxxx-dev     |           | *ja*     | URL Transfer
-| gettext                |           |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
-| libgcrypt11-dev        |           |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
-| libgnutls-dev          | ≥ 2.2.0   |          | SSL Verbindung zu einem IRC Server
-| ca-certificates        |           |          | Zertifikate für SSL Verbindungen
-| libaspell-dev          |           |          | aspell Erweiterung
-| python-dev             | 2.5 → 2.7 |          | python Erweiterung
-| libperl-dev            |           |          | perl Erweiterung
-| ruby1.8-dev            |           |          | ruby Erweiterung
-| liblua5.1-0-dev        |           |          | lua Erweiterung
-| tcl-dev                | ≥ 8.5     |          | tcl Erweiterung
-| guile-1.8-dev          |           |          | guile (scheme) Erweiterung
-| asciidoc               | ≥ 8.5.0   |          | erstellt Dokumentation (HTML Dateien)
-| source-highlight       |           |          | Syntax highlight für Quelltext in HTML Dokumentation
+| Paket ^(1)^            | Version     | benötigt | Funktion
+| cmake                  |             | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+| libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
+| libcurl4-xxxxx-dev     |             | *ja*     | URL Transfer
+| gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
+| libgcrypt11-dev        |             |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server
+| ca-certificates        |             |          | Zertifikate für SSL Verbindungen
+| libaspell-dev          |             |          | aspell Erweiterung
+| python-dev             | ≥ 2.5 ^(3)^ |          | python Erweiterung
+| libperl-dev            |             |          | perl Erweiterung
+| ruby1.8-dev            |             |          | ruby Erweiterung
+| liblua5.1-0-dev        |             |          | lua Erweiterung
+| tcl-dev                | ≥ 8.5       |          | tcl Erweiterung
+| guile-1.8-dev          |             |          | guile (scheme) Erweiterung
+| asciidoc               | ≥ 8.5.0     |          | erstellt Dokumentation (HTML Dateien)
+| source-highlight       |             |          | Syntax highlight für Quelltext in HTML Dokumentation
 |========================================
 
 [NOTE]
 ^(1)^ Paketnamen wurden von der Debian GNU/Linux Distribution übernommen. Versionen und Paketnamen
 können für andere Distributionen abweichend sein. +
 ^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
-treten dabei Darstellungsfehler mit breiten Zeichen auf).
+treten dabei Darstellungsfehler mit breiten Zeichen auf). +
+// TRANSLATION MISSING
+^(3)^ WeeChat can compile with Python 3.x, but recommended Python version is 2.7
+(all scripts run fine with version 2.x, but not with version 3.x).
 
 [[compile_with_cmake]]
 Kompilieren mit cmake
