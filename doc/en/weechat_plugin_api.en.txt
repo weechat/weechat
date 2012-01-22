@@ -983,6 +983,145 @@ free (str);
 [NOTE]
 This function is not available in scripting API.
 
+weechat_string_mask_to_regex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return a regex, built with a mask, where only special char is "`*`". All other
+special chars for regex are escaped.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_string_mask_to_regex (const char *mask);
+----------------------------------------
+
+Arguments:
+
+* 'mask': mask
+
+Return value:
+
+* regular expression, as string (must be freed by calling "free" after use)
+
+C example:
+
+[source,C]
+----------------------------------------
+char *str_regex = weechat_string_mask_to_regex ("test*mask");
+/* result: "test.*mask" */
+/* ... */
+free (str_regex);
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+regex = weechat.string_mask_to_regex(mask)
+
+# example
+regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
+----------------------------------------
+
+weechat_string_regex_flags
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.7._
+
+Get pointer on string after flags and return mask with flags to compile regular
+expression.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+const char *weechat_string_regex_flags (const char *regex, int default_flags, int *flags)
+----------------------------------------
+
+Arguments:
+
+* 'regex': regular expression
+* 'default_flags': combination of following values (see `man regcomp`):
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+* 'flags': pointer value is set with flags used in regular expression (default
+  flags + flags set in regular expression)
+
+Flags must be at beginning of regular expression. Format is:
+"(?eins-eins)string".
+
+Allowed flags are:
+
+* 'e': POSIX extended regular expression ('REG_EXTENDED')
+* 'i': case insensitive ('REG_ICASE')
+* 'n': match-any-character operators don't match a newline ('REG_NEWLINE')
+* 's': support for substring addressing of matches is not required ('REG_NOSUB')
+
+Return value:
+
+* pointer in 'regex', after flags
+
+C example:
+
+[source,C]
+----------------------------------------
+const char *regex = "(?i)test";
+int flags;
+const char *ptr_regex = weechat_string_regex_flags (regex, REG_EXTENDED, &flags);
+/* ptr_regex == "test", flags == REG_EXTENDED | REG_ICASE */
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
+weechat_string_regcomp
+^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.7._
+
+Compile a regular expression using optional flags at beginning of string (for
+format of flags, see <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_string_regcomp (regex_t *preg, const char *regex, int default_flags)
+----------------------------------------
+
+Arguments:
+
+* 'preg': pointer to 'regex_t' structure
+* 'regex': regular expression
+* 'default_flags': combination of following values (see `man regcomp`):
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+
+Return value:
+
+* same return code as function `regcomp` (0 if ok, other value for error,
+  see `man regcomp`)
+
+C example:
+
+[source,C]
+----------------------------------------
+regex_t my_regex;
+if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
+{
+    /* error */
+}
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
 weechat_string_has_highlight
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1064,48 +1203,6 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 
 # example
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
-----------------------------------------
-
-weechat_string_mask_to_regex
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Return a regex, built with a mask, where only special char is "`*`". All other
-special chars for regex are escaped.
-
-Prototype:
-
-[source,C]
-----------------------------------------
-char *weechat_string_mask_to_regex (const char *mask);
-----------------------------------------
-
-Arguments:
-
-* 'mask': mask
-
-Return value:
-
-* regular expression, as string (must be freed by calling "free" after use)
-
-C example:
-
-[source,C]
-----------------------------------------
-char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* result: "test.*mask" */
-/* ... */
-free (str_regex);
-----------------------------------------
-
-Script (Python):
-
-[source,python]
-----------------------------------------
-# prototype
-regex = weechat.string_mask_to_regex(mask)
-
-# example
-regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 ----------------------------------------
 
 weechat_string_split

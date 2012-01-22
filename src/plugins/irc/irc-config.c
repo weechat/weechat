@@ -80,6 +80,9 @@ struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
 struct t_config_option *irc_config_look_hide_nickserv_pwd;
+struct t_config_option *irc_config_look_highlight_server;
+struct t_config_option *irc_config_look_highlight_channel;
+struct t_config_option *irc_config_look_highlight_pv;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
@@ -2183,6 +2186,42 @@ irc_config_init ()
         "hide_nickserv_pwd", "boolean",
         N_("hide password displayed by nickserv"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_highlight_server = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "highlight_server", "string",
+        N_("comma separated list of words to highlight in server buffers "
+           "(case insensitive, use \"(?-i)\" at beginning of words to "
+           "make them case sensitive; special variables $nick, $channel and "
+           "$server are replaced by their value), these words are added to "
+           "buffer local variable \"highlight_words\" only when buffer is "
+           "created (it does not affect current buffers), an empty string "
+           "disables default highlight on nick, examples: \"$nick\", "
+           "\"(?-i)$nick\""),
+        NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_highlight_channel = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "highlight_channel", "string",
+        N_("comma separated list of words to highlight in channel buffers "
+           "(case insensitive, use \"(?-i)\" at beginning of words to "
+           "make them case sensitive; special variables $nick, $channel and "
+           "$server are replaced by their value), these words are added to "
+           "buffer local variable \"highlight_words\" only when buffer is "
+           "created (it does not affect current buffers), an empty string "
+           "disables default highlight on nick, examples: \"$nick\", "
+           "\"(?-i)$nick\""),
+        NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_highlight_pv = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "highlight_pv", "string",
+        N_("comma separated list of words to highlight in private buffers "
+           "(case insensitive, use \"(?-i)\" at beginning of words to "
+           "make them case sensitive; special variables $nick, $channel and "
+           "$server are replaced by their value), these words are added to "
+           "buffer local variable \"highlight_words\" only when buffer is "
+           "created (it does not affect current buffers), an empty string "
+           "disables default highlight on nick, examples: \"$nick\", "
+           "\"(?-i)$nick\""),
+        NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_tags = weechat_config_new_option (
         irc_config_file, ptr_section,
         "highlight_tags", "string",

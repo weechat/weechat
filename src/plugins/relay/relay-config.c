@@ -104,7 +104,9 @@ relay_config_change_network_allowed_ips (void *data,
         relay_config_regex_allowed_ips = malloc (sizeof (*relay_config_regex_allowed_ips));
         if (relay_config_regex_allowed_ips)
         {
-            if (regcomp (relay_config_regex_allowed_ips, allowed_ips, REG_EXTENDED) != 0)
+            if (weechat_string_regcomp (relay_config_regex_allowed_ips,
+                                        allowed_ips,
+                                        REG_EXTENDED | REG_ICASE) != 0)
             {
                 free (relay_config_regex_allowed_ips);
                 relay_config_regex_allowed_ips = NULL;
@@ -416,7 +418,8 @@ relay_config_init ()
     relay_config_network_allowed_ips = weechat_config_new_option (
         relay_config_file, ptr_section,
         "allowed_ips", "string",
-        N_("regular expression with IPs allowed to use relay, example: "
+        N_("regular expression with IPs allowed to use relay (case insensitive, "
+           "use \"(?-i)\" at beginning to make it case sensitive), example: "
            "\"^(123.45.67.89|192.160.*)$\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL, NULL);

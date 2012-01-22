@@ -676,6 +676,144 @@ string_is_word_char (const char *string)
 }
 
 /*
+ * string_mask_to_regex: convert a mask (string with only "*" as wildcard) to a
+ *                       regex, paying attention to special chars in a regex
+ */
+
+char *
+string_mask_to_regex (const char *mask)
+{
+    char *result;
+    const char *ptr_mask;
+    int index_result;
+    char *regex_special_char = ".[]{}()?+";
+
+    if (!mask)
+        return NULL;
+
+    result = malloc ((strlen (mask) * 2) + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+    index_result = 0;
+    ptr_mask = mask;
+    while (ptr_mask[0])
+    {
+        /* '*' in string ? then replace by '.*' */
+        if (ptr_mask[0] == '*')
+        {
+            result[index_result++] = '.';
+            result[index_result++] = '*';
+        }
+        /* special regex char in string ? escape it with '\' */
+        else if (strchr (regex_special_char, ptr_mask[0]))
+        {
+            result[index_result++] = '\\';
+            result[index_result++] = ptr_mask[0];
+        }
+        /* standard char, just copy it */
+        else
+            result[index_result++] = ptr_mask[0];
+
+        ptr_mask++;
+    }
+
+    /* add final '\0' */
+    result[index_result] = '\0';
+
+    return result;
+}
+
+/*
+ * string_regex_flags: get pointer on string after flags and return mask with
+ *                     flags to compile regex
+ *                     format of flags is:
+ *                       (?eins-eins)string
+ *                     flags:
+ *                       e: POSIX extended regex (REG_EXTENDED)
+ *                       i: case insensitive (REG_ICASE)
+ *                       n: match-any-character operators don't match a newline (REG_NEWLINE)
+ *                       s: support for substring addressing of matches is not required (REG_NOSUB)
+ *                     examples (with default_flags = REG_EXTENDED):
+ *                       "(?i)toto"  : regex "toto", flags = REG_EXTENDED | REG_ICASE
+ *                       "(?i)toto"  : regex "toto", flags = REG_EXTENDED | REG_ICASE
+ *                       "(?i-e)toto": regex "toto", flags = REG_ICASE
+ */
+
+const char *
+string_regex_flags (const char *regex, int default_flags, int *flags)
+{
+    const char *ptr_regex, *ptr_flags;
+    int set_flag, flag;
+    char *pos;
+
+    ptr_regex = regex;
+    if (flags)
+        *flags = default_flags;
+
+    while (strncmp (ptr_regex, "(?", 2) == 0)
+    {
+        pos = strchr (ptr_regex, ')');
+        if (!pos)
+            break;
+        if (!isalpha (ptr_regex[2]) && (ptr_regex[2] != '-'))
+            break;
+        if (flags)
+        {
+            set_flag = 1;
+            for (ptr_flags = ptr_regex + 2; ptr_flags < pos; ptr_flags++)
+            {
+                flag = 0;
+                switch (ptr_flags[0])
+                {
+                    case '-':
+                        set_flag = 0;
+                        break;
+                    case 'e':
+                        flag = REG_EXTENDED;
+                        break;
+                    case 'i':
+                        flag = REG_ICASE;
+                        break;
+                    case 'n':
+                        flag = REG_NEWLINE;
+                        break;
+                    case 's':
+                        flag = REG_NOSUB;
+                        break;
+                }
+                if (flag > 0)
+                {
+                    if (set_flag)
+                        *flags |= flag;
+                    else
+                        *flags &= ~flag;
+                }
+            }
+        }
+        ptr_regex = pos + 1;
+    }
+
+    return ptr_regex;
+}
+
+/*
+ * string_regcomp: compile a regex using optional flags at beginning of string
+ *                 (for format of flags in regex, see string_regex_flags())
+ */
+
+int
+string_regcomp (regex_t *preg, const char *regex, int default_flags)
+{
+    const char *ptr_regex;
+    int flags;
+
+    ptr_regex = string_regex_flags (regex, default_flags, &flags);
+    return regcomp (preg, ptr_regex, flags);
+}
+
+/*
  * string_has_highlight: return 1 if string contains a highlight (using list of
  *                       words to highlight)
  *                       return 0 if no highlight is found in string
@@ -684,13 +822,13 @@ string_is_word_char (const char *string)
 int
 string_has_highlight (const char *string, const char *highlight_words)
 {
-    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
-    int end, length, startswith, endswith, wildcard_start, wildcard_end;
+    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos;
+    char *pos, *pos_end, *ptr_str, *ptr_string_ref;
+    int end, length, startswith, endswith, wildcard_start, wildcard_end, flags;
 
     if (!string || !string[0] || !highlight_words || !highlight_words[0])
         return 0;
 
-    /* convert both strings to lower case */
     msg = strdup (string);
     if (!msg)
         return 0;
@@ -707,6 +845,10 @@ string_has_highlight (const char *string, const char *highlight_words)
     end = 0;
     while (!end)
     {
+        ptr_string_ref = (char *)string;
+        flags = 0;
+        pos = (char *)string_regex_flags (pos, REG_ICASE, &flags);
+
         pos_end = strchr (pos, ',');
         if (!pos_end)
         {
@@ -719,6 +861,16 @@ string_has_highlight (const char *string, const char *highlight_words)
             free (msg);
             free (highlight);
             return 0;
+        }
+
+        if (flags & REG_ICASE)
+        {
+            for (ptr_str = pos; ptr_str < pos_end; ptr_str++)
+            {
+                if ((ptr_str[0] >= 'A') && (ptr_str[0] <= 'Z'))
+                    ptr_str[0] += ('a' - 'A');
+            }
+            ptr_string_ref = msg;
         }
 
         length = pos_end - pos;
@@ -739,15 +891,15 @@ string_has_highlight (const char *string, const char *highlight_words)
 
         if (length > 0)
         {
-            msg_pos = msg;
+            msg_pos = ptr_string_ref;
             /* highlight found! */
             while ((match = strstr (msg_pos, pos)) != NULL)
             {
-                match_pre = utf8_prev_char (msg, match);
+                match_pre = utf8_prev_char (ptr_string_ref, match);
                 if (!match_pre)
                     match_pre = match - 1;
                 match_post = match + length;
-                startswith = ((match == msg) || (!string_is_word_char (match_pre)));
+                startswith = ((match == ptr_string_ref) || (!string_is_word_char (match_pre)));
                 endswith = ((!match_post[0]) || (!string_is_word_char (match_post)));
                 if ((wildcard_start && wildcard_end) ||
                     (!wildcard_start && !wildcard_end &&
@@ -834,7 +986,7 @@ string_has_highlight_regex (const char *string, const char *regex)
     if (!string || !regex || !regex[0])
         return 0;
 
-    if (regcomp (&reg, regex, REG_EXTENDED) != 0)
+    if (string_regcomp (&reg, regex, REG_EXTENDED | REG_ICASE) != 0)
         return 0;
 
     rc = string_has_highlight_regex_compiled (string, &reg);
@@ -842,56 +994,6 @@ string_has_highlight_regex (const char *string, const char *regex)
     regfree (&reg);
 
     return rc;
-}
-
-/*
- * string_mask_to_regex: convert a mask (string with only "*" as wildcard) to a
- *                       regex, paying attention to special chars in a regex
- */
-
-char *
-string_mask_to_regex (const char *mask)
-{
-    char *result;
-    const char *ptr_mask;
-    int index_result;
-    char *regex_special_char = ".[]{}()?+";
-
-    if (!mask)
-        return NULL;
-
-    result = malloc ((strlen (mask) * 2) + 1);
-    if (!result)
-        return NULL;
-
-    result[0] = '\0';
-    index_result = 0;
-    ptr_mask = mask;
-    while (ptr_mask[0])
-    {
-        /* '*' in string ? then replace by '.*' */
-        if (ptr_mask[0] == '*')
-        {
-            result[index_result++] = '.';
-            result[index_result++] = '*';
-        }
-        /* special regex char in string ? escape it with '\' */
-        else if (strchr (regex_special_char, ptr_mask[0]))
-        {
-            result[index_result++] = '\\';
-            result[index_result++] = ptr_mask[0];
-        }
-        /* standard char, just copy it */
-        else
-            result[index_result++] = ptr_mask[0];
-
-        ptr_mask++;
-    }
-
-    /* add final '\0' */
-    result[index_result] = '\0';
-
-    return result;
 }
 
 /*

@@ -49,7 +49,7 @@
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** descrizione: `espressione regolare con gli indirizzi IP a cui è consentito usare il relay, esempio: "^(123.45.67.89|192.160.*)$"`
+** descrizione: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

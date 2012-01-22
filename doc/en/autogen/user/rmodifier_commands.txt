@@ -12,7 +12,7 @@ listdefault: list default rmodifiers
        name: name of rmodifier
   modifiers: comma separated list of modifiers
      groups: action on groups found: comma separated list of groups (from 1 to 9) with optional "*" after number to hide group
-      regex: regular expression
+      regex: regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
         del: delete a rmodifier
        -all: delete all rmodifiers
     default: restore default rmodifiers

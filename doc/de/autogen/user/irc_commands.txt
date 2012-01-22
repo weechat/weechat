@@ -163,21 +163,23 @@ reason: Begründung der Trennung
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
 
-     list: zeigt alle Ignorierungen an
-      add: fügt eine Ignorierung hinzu
-     nick: Nick oder Hostname (dies kann ein regulärer Ausdruck sein, sofern "re:" angegeben wird oder eine Maske mittels "*" genutzt wird um ein oder mehrere Zeichen zu ersetzen)
-      del: entfernt eine Ignorierung
-   number: Nummer der Ignorierung die entfernt werden soll (nutze "list" um den entsprechenden Eintrag zu finden)
-     -all: entfernt alle Einträge
-   server: interner Name des Server auf welchem die Ignorierung statt finden soll
-  channel: Name des Channel, in dem die Ignorierung statt finden soll
+     list: list all ignores
+      add: add an ignore
+     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
+      del: delete an ignore
+   number: number of ignore to delete (look at list to find it)
+     -all: delete all ignores
+   server: internal server name where ignore is working
+  channel: channel name where ignore is working
 
-Beispiele:
-  ignoriert den Nick "toto" global:
+Note: the regular expression can start with "(?-i)" to become case sensitive.
+
+Examples:
+  ignore nick "toto" everywhere:
     /ignore add toto
-  ignoriert den Host "toto@domain.com" auf dem freenode Server:
+  ignore host "toto@domain.com" on freenode server:
     /ignore add toto@domain.com freenode
-  ignoriert den Host "toto*@*.domain.com" im Chat  freenode/#weechat:
+  ignore host "toto*@*.domain.com" on freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
 ........................................
 
@@ -270,16 +272,16 @@ Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen
 ........................................
 /list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
 
-channel: aufzulistender Channel
- server: Servername
- regexp: regulärer Ausdruck der für die Ausgabe angewendet werden soll
+channel: channel to list
+ server: server name
+  regex: regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
-Beispiele:
-  listet alle Channels des Servers auf (dies kann bei umfangreichen Netzwerken sehr lange dauern):
+Examples:
+  list all channels on server (can be very slow on large networks):
     /list
-  listet den Channel #weechat auf:
+  list channel #weechat:
     /list #weechat
-  listet alle Channels auf die mit "#weechat" beginnen (dies kann bei umfangreichen Netzwerken sehr lange dauern):
+  list all channels beginning with "#weechat" (can be very slow on large networks):
     /list -re #weechat.*
 ........................................
 

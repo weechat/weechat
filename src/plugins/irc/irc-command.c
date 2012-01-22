@@ -2245,8 +2245,8 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
                 ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
                 if (ptr_server->cmd_list_regexp)
                 {
-                    if ((ret = regcomp (ptr_server->cmd_list_regexp, ptr_regex,
-                                        REG_NOSUB | REG_ICASE | REG_EXTENDED)) != 0)
+                    if ((ret = weechat_string_regcomp (ptr_server->cmd_list_regexp, ptr_regex,
+                                                       REG_EXTENDED | REG_ICASE | REG_NOSUB)) != 0)
                     {
                         regerror (ret, ptr_server->cmd_list_regexp,
                                   buf, sizeof(buf));
@@ -4946,6 +4946,8 @@ irc_command_init ()
                              "is working\n"
                              "  channel: channel name where ignore is "
                              "working\n\n"
+                             "Note: the regular expression can start with "
+                             "\"(?-i)\" to become case sensitive.\n\n"
                              "Examples:\n"
                              "  ignore nick \"toto\" everywhere:\n"
                              "    /ignore add toto\n"
@@ -5029,7 +5031,8 @@ irc_command_init ()
                           N_("channel: channel to list\n"
                              " server: server name\n"
                              "  regex: regular expression used to filter "
-                             "results\n\n"
+                             "results (case insensitive, can start by \"(?-i)\" "
+                             "to become case sensitive)\n\n"
                              "Examples:\n"
                              "  list all channels on server (can be very slow "
                              "on large networks):\n"

@@ -1270,9 +1270,9 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
                 malloc (sizeof (*buffer->highlight_regex_compiled));
             if (buffer->highlight_regex_compiled)
             {
-                if (regcomp (buffer->highlight_regex_compiled,
-                             buffer->highlight_regex,
-                             REG_EXTENDED) != 0)
+                if (string_regcomp (buffer->highlight_regex_compiled,
+                                    buffer->highlight_regex,
+                                    REG_EXTENDED | REG_ICASE) != 0)
                 {
                     free (buffer->highlight_regex_compiled);
                     buffer->highlight_regex_compiled = NULL;
@@ -3359,7 +3359,8 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
             free (message_without_colors);
         tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
                                                ",");
-        log_printf ("  tags: %s", (tags) ? tags : "(none)");
+        log_printf ("  tags: %s, highlight: %d",
+                    (tags) ? tags : "(none)", ptr_line->data->highlight);
         if (tags)
             free (tags);
         snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date));

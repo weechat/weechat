@@ -229,7 +229,10 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         }
 
         /* set highlights settings on channel buffer */
-        weechat_buffer_set(new_buffer, "highlight_words_add", "$nick");
+        weechat_buffer_set(new_buffer, "highlight_words_add",
+                           (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
+                           weechat_config_string (irc_config_look_highlight_channel) :
+                           weechat_config_string (irc_config_look_highlight_pv));
         if (weechat_config_string (irc_config_look_highlight_tags)
             && weechat_config_string (irc_config_look_highlight_tags)[0])
         {

@@ -271,8 +271,8 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
     if (!regex)
         return NULL;
 
-    if (regcomp (regex, str_regex,
-                 REG_EXTENDED | REG_ICASE) != 0)
+    if (weechat_string_regcomp (regex, str_regex,
+                                REG_EXTENDED | REG_ICASE) != 0)
     {
         weechat_printf (NULL,
                         _("%s%s: error compiling regular expression \"%s\""),

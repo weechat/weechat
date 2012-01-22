@@ -48,12 +48,15 @@ extern char *string_remove_quotes (const char *string, const char *quotes);
 extern char *string_strip (const char *string, int left, int right,
                            const char *chars);
 extern char *string_convert_hex_chars (const char *string);
+extern char *string_mask_to_regex (const char *mask);
+extern const char *string_regex_flags (const char *regex, int default_flags,
+                                       int *flags);
+extern int string_regcomp (regex_t *preg, const char *regex, int default_flags);
 extern int string_has_highlight (const char *string,
                                  const char *highlight_words);
 extern int string_has_highlight_regex_compiled (const char *string,
                                                 regex_t *regex);
 extern int string_has_highlight_regex (const char *string, const char *regex);
-extern char *string_mask_to_regex (const char *mask);
 extern char **string_split (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
 extern void string_free_split (char **split_string);

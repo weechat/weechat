@@ -219,6 +219,7 @@ disable: disable filters
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
          - two regular expressions are created: one for prefix and one for message
+         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
 The default key alt+'=' toggles filtering on/off.
 

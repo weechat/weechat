@@ -172,6 +172,8 @@ serveur: nom du serveur pour se déconecter
     serveur: nom de serveur interne où le ignore fonctionnera
       canal: canal où le ignore fonctionnera
 
+Note: l'expression régulière peut commencer par "(?-i)" pour devenir sensible à la casse.
+
 Exemples:
   ignorer le pseudo "toto" partout:
     /ignore add toto
@@ -272,7 +274,7 @@ masque_serveur: liste des serveurs correspondant au masque
 
   canal: canal à lister
 serveur: nom du serveur
-  regex: expression régulière utilisée pour filtrer les résultats
+  regex: expression régulière utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
 
 Exemples:
   lister tous les canaux du serveur (peut être très lent pour les grands réseaux):

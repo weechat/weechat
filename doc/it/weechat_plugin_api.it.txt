@@ -1006,47 +1006,6 @@ free (str);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
-weechat_string_has_highlight
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Controlla se una stringa ha uno o più eventi, usando la lista di parole per
-gli eventi.
-
-Prototipo:
-
-[source,C]
-----------------------------------------
-int weechat_string_has_highlight (const char *string,
-                                  const char highlight_words);
-----------------------------------------
-
-Argomenti:
-
-* 'string': stringa
-* 'highlight_words': lista di parole per gli eventi, separate da virgole
-
-Valore restituito:
-
-* 1 se la stringa ha uno o più eventi, altrimenti 0
-
-Esempio in C:
-
-[source,C]
-----------------------------------------
-int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
-----------------------------------------
-
-Script (Python):
-
-[source,python]
-----------------------------------------
-# prototipo
-highlight = weechat.string_has_highlight(string, highlight_words)
-
-# esempio
-highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
-----------------------------------------
-
 weechat_string_mask_to_regex
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1089,6 +1048,146 @@ regex = weechat.string_mask_to_regex(mask)
 
 # esempio
 regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
+----------------------------------------
+
+// TRANSLATION MISSING
+weechat_string_regex_flags
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.7._
+
+Get pointer on string after flags and return mask with flags to compile regular
+expression.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+const char *weechat_string_regex_flags (const char *regex, int default_flags, int *flags)
+----------------------------------------
+
+Argomenti:
+
+* 'regex': regular expression
+* 'default_flags': combination of following values (see `man regcomp`):
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+* 'flags': pointer value is set with flags used in regular expression (default
+  flags + flags set in regular expression)
+
+Flags must be at beginning of regular expression. Format is:
+"(?eins-eins)string".
+
+Allowed flags are:
+
+* 'e': POSIX extended regular expression ('REG_EXTENDED')
+* 'i': case insensitive ('REG_ICASE')
+* 'n': match-any-character operators don't match a newline ('REG_NEWLINE')
+* 's': support for substring addressing of matches is not required ('REG_NOSUB')
+
+Valore restituito:
+
+* pointer in 'regex', after flags
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+const char *regex = "(?i)test";
+int flags;
+const char *ptr_regex = weechat_string_regex_flags (regex, REG_EXTENDED, &flags);
+/* ptr_regex == "test", flags == REG_EXTENDED | REG_ICASE */
+----------------------------------------
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+// TRANSLATION MISSING
+weechat_string_regcomp
+^^^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.3.7._
+
+Compile a regular expression using optional flags at beginning of string (for
+format of flags, see <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_string_regcomp (regex_t *preg, const char *regex, int default_flags)
+----------------------------------------
+
+Argomenti:
+
+* 'preg': pointer to 'regex_t' structure
+* 'regex': regular expression
+* 'default_flags': combination of following values (see `man regcomp`):
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+
+Valore restituito:
+
+* same return code as function `regcomp` (0 if ok, other value for error,
+  see `man regcomp`)
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+regex_t my_regex;
+if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
+{
+    /* error */
+}
+----------------------------------------
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+weechat_string_has_highlight
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Controlla se una stringa ha uno o più eventi, usando la lista di parole per
+gli eventi.
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+int weechat_string_has_highlight (const char *string,
+                                  const char highlight_words);
+----------------------------------------
+
+Argomenti:
+
+* 'string': stringa
+* 'highlight_words': lista di parole per gli eventi, separate da virgole
+
+Valore restituito:
+
+* 1 se la stringa ha uno o più eventi, altrimenti 0
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototipo
+highlight = weechat.string_has_highlight(string, highlight_words)
+
+# esempio
+highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----------------------------------------
 
 weechat_string_split

@@ -12,7 +12,7 @@ listdefault: lister les rmodifiers par défaut
        name: nom du rmodifier
   modifiers: liste de modifiers (séparés par une virgule)
     groupes: action sur les groupes trouvés: liste de groupes (séparés par une virgule) (de 1 à 9) avec en option "*" après le nombre pour cacher le groupe
-      regex: expression régulière
+      regex: expression régulière (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
         del: supprimer un rmodifier
        -all: supprimer tous les rmodifiers
     default: restaurer les rmodifiers par défaut

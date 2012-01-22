@@ -26,6 +26,7 @@
 #define __WEECHAT_WEECHAT_PLUGIN_H 1
 
 #include <sys/types.h>
+#include <regex.h>
 
 struct t_config_option;
 struct t_gui_window;
@@ -46,7 +47,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20120112-01"
+#define WEECHAT_PLUGIN_API_VERSION "20120122-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -225,10 +226,13 @@ struct t_weechat_plugin
     char *(*string_remove_quotes) (const char *string, const char *quotes);
     char *(*string_strip) (const char *string, int left, int right,
                            const char *chars);
+    char *(*string_mask_to_regex) (const char *mask);
+    const char *(*string_regex_flags) (const char *regex, int default_flags,
+                                       int *flags);
+    int (*string_regcomp) (regex_t *preg, const char *regex, int default_flags);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);
-    char *(*string_mask_to_regex) (const char *mask);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
     void (*string_free_split) (char **split_string);
@@ -939,12 +943,17 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_remove_quotes(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \
     weechat_plugin->string_strip(__string, __left, __right, __chars)
+#define weechat_string_mask_to_regex(__mask)                            \
+    weechat_plugin->string_mask_to_regex(__mask)
+#define weechat_string_regex_flags(__regex, __default_flags, __flags)   \
+    weechat_plugin->string_regex_flags(__regex, __default_flags,        \
+                                       __flags)
+#define weechat_string_regcomp(__preg, __regex, __default_flags)        \
+    weechat_plugin->string_regcomp(__preg, __regex, __default_flags)
 #define weechat_string_has_highlight(__string, __highlight_words)       \
     weechat_plugin->string_has_highlight(__string, __highlight_words)
 #define weechat_string_has_highlight_regex(__string, __regex)           \
     weechat_plugin->string_has_highlight_regex(__string, __regex)
-#define weechat_string_mask_to_regex(__mask)                            \
-    weechat_plugin->string_mask_to_regex(__mask)
 #define weechat_string_split(__string, __separator, __eol, __max,       \
                              __num_items)                               \
     weechat_plugin->string_split(__string, __separator, __eol,          \

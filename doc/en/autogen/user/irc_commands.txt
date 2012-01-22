@@ -172,6 +172,8 @@ reason: reason for quit
    server: internal server name where ignore is working
   channel: channel name where ignore is working
 
+Note: the regular expression can start with "(?-i)" to become case sensitive.
+
 Examples:
   ignore nick "toto" everywhere:
     /ignore add toto
@@ -272,7 +274,7 @@ server_mask: list of servers must match this mask
 
 channel: channel to list
  server: server name
-  regex: regular expression used to filter results
+  regex: regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
 Examples:
   list all channels on server (can be very slow on large networks):

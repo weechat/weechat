@@ -412,9 +412,9 @@ config_change_highlight_regex (void *data, struct t_config_option *option)
         config_highlight_regex = malloc (sizeof (*config_highlight_regex));
         if (config_highlight_regex)
         {
-            if (regcomp (config_highlight_regex,
-                         CONFIG_STRING(config_look_highlight_regex),
-                         REG_EXTENDED) != 0)
+            if (string_regcomp (config_highlight_regex,
+                                CONFIG_STRING(config_look_highlight_regex),
+                                REG_EXTENDED | REG_ICASE) != 0)
             {
                 free (config_highlight_regex);
                 config_highlight_regex = NULL;
@@ -1797,8 +1797,10 @@ config_weechat_init_options ()
     config_look_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight", "string",
-        N_("comma separated list of words to highlight (case insensitive "
-           "comparison, words may begin or end with \"*\" for partial match)"),
+        N_("comma separated list of words to highlight; case insensitive "
+           "comparison (use \"(?-i)\" at beginning of words to make them case "
+           "sensitive), words may begin or end with \"*\" for partial match; "
+           "example: \"test,(?-i)*toto*,flash*\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_highlight_regex = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1806,7 +1808,8 @@ config_weechat_init_options ()
         N_("regular expression used to check if a message has highlight or not, "
            "at least one match in string must be surrounded by word chars "
             "(alphanumeric, \"-\", \"_\" or \"|\"), regular expression is case "
-           "sensitive, example: \"FlashCode|flashy\""),
+           "insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
+           "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_regex, NULL, NULL, NULL);
     config_look_highlight_tags = config_file_new_option (
         weechat_config_file, ptr_section,

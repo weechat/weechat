@@ -449,12 +449,12 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** description: `liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)`
+** description: `liste des mots pour la notification séparés par des virgules; la comparaison est insensible à la casse (utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse), les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle; exemple: "test,(?-i)*toto*,flash*"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** description: `expression régulière utilisée pour vérifier si un message a un "highlight" ou non, au moins une correspondance dans la chaîne doit être entourée de caractères de mot (alpha-numérique, "-", "_" ou "|"), l'expression régulière est sensible à la casse, exemple: "FlashCode|flashy"`
+** description: `expression régulière utilisée pour vérifier si un message a un "highlight" ou non, au moins une correspondance dans la chaîne doit être entourée de caractères de mot (alpha-numérique, "-", "_" ou "|"), l'expression régulière est insensible à la casse (utilisez "(?-i)" au début pour la rendre sensible à la casse), exemples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

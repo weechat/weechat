@@ -449,12 +449,12 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** Beschreibung: `Durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet. Die Schlagwörter können mit "*", als Joker, beginnen oder enden)`
+** Beschreibung: `comma separated list of words to highlight; case insensitive comparison (use "(?-i)" at beginning of words to make them case sensitive), words may begin or end with "*" for partial match; example: "test,(?-i)*toto*,flash*"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** Beschreibung: `Suchmuster (regulärer Ausdrück) dass genutzt werden soll um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"), das Suchmuster unterscheidet zwischen Groß-und Kleinschreibung. Beispiel: "FlashCode|flashy"`
+** Beschreibung: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

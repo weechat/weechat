@@ -49,7 +49,7 @@
 ** valeurs: 0 .. 65535 (valeur par défaut: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** description: `expression régulière avec les IPs autorisées pour le relai, par exemple: "^(123.45.67.89|192.160.*)$"`
+** description: `expression régulière avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre sensible à la casse), exemple: "^(123.45.67.89|192.160.*)$"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

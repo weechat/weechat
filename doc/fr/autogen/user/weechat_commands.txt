@@ -219,6 +219,7 @@ disable: désactiver les filtres
          - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
          - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
          - deux expressions régulières sont créées: une pour le préfixe et une pour le message
+         - les expressions régulières sont insensibles à la casse, elles peuvent commencer par "(?-i)" pour devenir sensibles à la casse
 
 La touche par défaut alt+'=' active/désactive le filtrage.
 

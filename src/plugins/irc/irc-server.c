@@ -3010,7 +3010,8 @@ irc_server_create_buffer (struct t_irc_server *server)
         weechat_buffer_set (server->buffer, "input_get_unknown_commands", "1");
 
     /* set highlights settings on server buffer */
-    weechat_buffer_set (server->buffer, "highlight_words_add", "$nick");
+    weechat_buffer_set (server->buffer, "highlight_words_add",
+                        weechat_config_string (irc_config_look_highlight_server));
     if (weechat_config_string (irc_config_look_highlight_tags)
         && weechat_config_string (irc_config_look_highlight_tags)[0])
     {

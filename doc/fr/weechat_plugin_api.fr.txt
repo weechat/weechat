@@ -992,6 +992,151 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_string_mask_to_regex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retourne une expression régulière ("regex"), construite avec un masque où le
+seul caractère spécial est "`*`". Tous les autres caractères spéciaux
+d'expression régulière sont échappés.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+char *weechat_string_mask_to_regex (const char *mask);
+----------------------------------------
+
+Paramètres :
+
+* 'mask' : masque
+
+Valeur de retour :
+
+* expression régulière, sous forme de chaîne (doit être libérée par un appel à
+  "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+char *str_regex = weechat_string_mask_to_regex ("test*mask");
+/* résultat : "test.*mask" */
+/* ... */
+free (str_regex);
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+regex = weechat.string_mask_to_regex(mask)
+
+# exemple
+regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
+----------------------------------------
+
+weechat_string_regex_flags
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Retourne un pointeur dans la chaîne après les "flags" et retourne le masque avec
+les "flags" pour compiler l'expression régulière.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_string_regex_flags (const char *regex, int default_flags, int *flags)
+----------------------------------------
+
+Paramètres :
+
+* 'regex' : expression régulière
+* 'default_flags' : combinaison des valeurs suivantes (voir `man regcomp`) :
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+* 'flags' : la valeur du pointer est alimentée avec les "flags" utilisés dans
+  l'expression régulière ("flags" par défaut + "flags" définis dans l'expression
+  régulière)
+
+Les "flags" doivent être au début de l'expression régulière. Le format est :
+"(?eins-eins)chaîne".
+
+Les "flags" autorisés sont :
+
+* 'e' : expression régulière POSIX étendue ('REG_EXTENDED')
+* 'i' : insensible à la casse ('REG_ICASE')
+* 'n' : les opérateurs qui cherchent n'importe quel caractère ne trouvent pas
+  les nouvelles lignes ('REG_NEWLINE')
+* 's' : le support d'adressage des sous-chaînes de correspondance n'est pas
+  requis ('REG_NOSUB')
+
+Valeur de retour :
+
+* pointeur dans la 'regex', après les "flags"
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+const char *regex = "(?i)test";
+int flags;
+const char *ptr_regex = weechat_string_regex_flags (regex, REG_EXTENDED, &flags);
+/* ptr_regex == "test", flags == REG_EXTENDED | REG_ICASE */
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+weechat_string_regcomp
+^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.7._
+
+Compile une expression régulière avec des "flags" optionnels en début de chaîne
+(pour le format des "flags", voir
+<<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_string_regcomp (regex_t *preg, const char *regex, int default_flags)
+----------------------------------------
+
+Paramètres :
+
+* 'preg' : pointeur vers la structure 'regex_t'
+* 'regex' : expression régulière
+* 'default_flags' : combinaison des valeurs suivantes (voir `man regcomp`) :
+** REG_EXTENDED
+** REG_ICASE
+** REG_NEWLINE
+** REG_NOSUB
+
+Valeur de retour :
+
+* même code retour que la fonction `regcomp` (0 si ok, autre valeur pour une
+  erreur, voir `man regcomp`)
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+regex_t my_regex;
+if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
+{
+    /* erreur */
+}
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_string_has_highlight
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1075,50 +1220,6 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 
 # exemple
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
-----------------------------------------
-
-weechat_string_mask_to_regex
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Retourne une expression régulière ("regex"), construite avec un masque où le
-seul caractère spécial est "`*`". Tous les autres caractères spéciaux
-d'expression régulière sont échappés.
-
-Prototype :
-
-[source,C]
-----------------------------------------
-char *weechat_string_mask_to_regex (const char *mask);
-----------------------------------------
-
-Paramètres :
-
-* 'mask' : masque
-
-Valeur de retour :
-
-* expression régulière, sous forme de chaîne (doit être libérée par un appel à
-  "free" après utilisation)
-
-Exemple en C :
-
-[source,C]
-----------------------------------------
-char *str_regex = weechat_string_mask_to_regex ("test*mask");
-/* résultat : "test.*mask" */
-/* ... */
-free (str_regex);
-----------------------------------------
-
-Script (Python) :
-
-[source,python]
-----------------------------------------
-# prototype
-regex = weechat.string_mask_to_regex(mask)
-
-# exemple
-regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 ----------------------------------------
 
 weechat_string_split

@@ -505,9 +505,11 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_expand_home = &string_expand_home;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
+        new_plugin->string_mask_to_regex = &string_mask_to_regex;
+        new_plugin->string_regex_flags = &string_regex_flags;
+        new_plugin->string_regcomp = &string_regcomp;
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
-        new_plugin->string_mask_to_regex = &string_mask_to_regex;
         new_plugin->string_split = &string_split;
         new_plugin->string_free_split = &string_free_split;
         new_plugin->string_build_with_split_string = &string_build_with_split_string;

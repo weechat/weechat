@@ -158,6 +158,21 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
+** Beschreibung: `comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
+
+* [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
+** Beschreibung: `comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
+
+* [[option_irc.look.highlight_server]] *irc.look.highlight_server*
+** Beschreibung: `comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
+
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
 ** Beschreibung: `Eine durch Kommata getrennte Liste von Tags die bei einer Nachricht selbige hervorhebt (Highlight). (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
 ** Typ: Zeichenkette
