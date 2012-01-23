@@ -160,6 +160,7 @@ relay_upgrade_read_cb (void *data,
                        struct t_infolist *infolist)
 {
     struct t_relay_client *new_client;
+    const char *str;
 
     /* make C compiler happy */
     (void) data;
@@ -179,7 +180,9 @@ relay_upgrade_read_cb (void *data,
                     new_client->address = strdup (weechat_infolist_string (infolist, "address"));
                     new_client->status = weechat_infolist_integer (infolist, "status");
                     new_client->protocol = weechat_infolist_integer (infolist, "protocol");
-                    new_client->protocol_args = strdup (weechat_infolist_string (infolist, "protocol_args"));
+                    str = weechat_infolist_string (infolist, "protocol_args");
+                    if (str)
+                        new_client->protocol_args = strdup (str);
                     new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
                     new_client->start_time = weechat_infolist_time (infolist, "start_time");
                     new_client->end_time = weechat_infolist_time (infolist, "end_time");

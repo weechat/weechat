@@ -1871,7 +1871,7 @@ For example:
 
 ----------------------------------------
 /set relay.network.password "mypass"
-/relay add weechat.* 9000
+/relay add weechat 9000
 ----------------------------------------
 
 Now you can connect on port 9000 with a remote interface (like QWeeChat),

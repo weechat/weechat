@@ -1914,7 +1914,7 @@ Ad esempio:
 
 ----------------------------------------
 /set relay.network.password "miapass"
-/relay add weechat.* 9000
+/relay add weechat 9000
 ----------------------------------------
 
 Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota

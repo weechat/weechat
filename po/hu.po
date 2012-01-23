@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-23 11:36+0100\n"
+"POT-Creation-Date: 2012-01-23 12:18+0100\n"
 "PO-Revision-Date: 2011-12-25 22:56+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6778,7 +6778,7 @@ msgid "disconnected"
 msgstr "csatlakozva"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6786,11 +6786,11 @@ msgid "%s%s: not enough memory for new client"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
+msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client %s%s%s (%s.%s)"
+msgid "%s: disconnected from client %s%s%s (%s%s%s)"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 msgid "Clients for relay:"
@@ -6814,7 +6814,7 @@ msgid "Listening on ports:"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
 msgstr "%s%s%s távol: %s\n"
 
 #, fuzzy
@@ -6878,6 +6878,14 @@ msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: name is not allowed for protocol \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: name is not required for protocol \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy, c-format
@@ -6955,11 +6963,11 @@ msgid "Relay raw messages"
 msgstr "hibakereső üzenetek megjelenítése"
 
 #, fuzzy, c-format
-msgid "%s: socket closed for %s.%s (port %d)"
+msgid "%s: socket closed for %s%s%s (port %d)"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s.%s)"
+msgid "%s%s: cannot accept client on port %d (%s%s%s)"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
@@ -6967,11 +6975,11 @@ msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
 msgstr ""
 
 #, fuzzy, c-format

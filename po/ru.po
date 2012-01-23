@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-23 11:36+0100\n"
+"POT-Creation-Date: 2012-01-23 12:18+0100\n"
 "PO-Revision-Date: 2012-01-07 09:24+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6801,7 +6801,7 @@ msgid "disconnected"
 msgstr "подключен"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6809,11 +6809,11 @@ msgid "%s%s: not enough memory for new client"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
+msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client %s%s%s (%s.%s)"
+msgid "%s: disconnected from client %s%s%s (%s%s%s)"
 msgstr "Отключен от сервера!\n"
 
 msgid "Clients for relay:"
@@ -6837,7 +6837,7 @@ msgid "Listening on ports:"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
 msgstr "%s%s%s отсутствует: %s\n"
 
 #, fuzzy
@@ -6901,6 +6901,14 @@ msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: name is not allowed for protocol \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: name is not required for protocol \"%s\""
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
 
 #, fuzzy, c-format
@@ -6978,11 +6986,11 @@ msgid "Relay raw messages"
 msgstr "выводить отладочные сообщения"
 
 #, fuzzy, c-format
-msgid "%s: socket closed for %s.%s (port %d)"
+msgid "%s: socket closed for %s%s%s (port %d)"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s.%s)"
+msgid "%s%s: cannot accept client on port %d (%s%s%s)"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
@@ -6990,11 +6998,11 @@ msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s адрес \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
+msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s невозможно создать сокет\n"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
 msgstr ""
 
 #, fuzzy, c-format

@@ -66,7 +66,7 @@ relay_server_get_protocol_args (const char *protocol_and_args,
     else
     {
         *protocol = strdup (protocol_and_args);
-        *protocol_args = strdup ("*");
+        *protocol_args = NULL;
     }
 }
 
@@ -85,15 +85,20 @@ relay_server_search (const char *protocol_and_args)
 
     ptr_server = NULL;
 
-    if (protocol && protocol_args)
+    if (protocol)
     {
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if ((strcmp (protocol, relay_protocol_string[ptr_server->protocol]) == 0)
-                && (strcmp (protocol_args, ptr_server->protocol_args) == 0))
+            if (strcmp (protocol, relay_protocol_string[ptr_server->protocol]) == 0)
             {
-                break;
+                if (!protocol_args && !ptr_server->protocol_args)
+                    break;
+                if (protocol_args && ptr_server->protocol_args
+                    && (strcmp (protocol_args, ptr_server->protocol_args) == 0))
+                {
+                    break;
+                }
             }
         }
     }
@@ -146,10 +151,11 @@ relay_server_close_socket (struct t_relay_server *server)
         if (!relay_signal_upgrade_received)
         {
             weechat_printf (NULL,
-                            _("%s: socket closed for %s.%s (port %d)"),
+                            _("%s: socket closed for %s%s%s (port %d)"),
                             RELAY_PLUGIN_NAME,
                             relay_protocol_string[server->protocol],
-                            server->protocol_args,
+                            (server->protocol_args) ? "." : "",
+                            (server->protocol_args) ? server->protocol_args : "",
                             server->port);
         }
     }
@@ -181,12 +187,13 @@ relay_server_sock_cb (void *data, int fd)
     if (client_fd < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: cannot accept client on port %d (%s.%s)"),
+                        _("%s%s: cannot accept client on port %d (%s%s%s)"),
                         weechat_prefix ("error"),
                         RELAY_PLUGIN_NAME,
                         server->port,
                         relay_protocol_string[server->protocol],
-                        server->protocol_args);
+                        (server->protocol_args) ? "." : "",
+                        (server->protocol_args) ? server->protocol_args : "");
         return WEECHAT_RC_OK;
     }
 
@@ -282,11 +289,12 @@ relay_server_create_socket (struct t_relay_server *server)
               sizeof (server_addr)) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: error with \"bind\" on port %d (%s.%s)"),
+                        _("%s%s: error with \"bind\" on port %d (%s%s%s)"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         server->port,
                         relay_protocol_string[server->protocol],
-                        server->protocol_args);
+                        (server->protocol_args) ? "." : "",
+                        (server->protocol_args) ? server->protocol_args : "");
         close (server->sock);
         server->sock = -1;
         return 0;
@@ -297,11 +305,12 @@ relay_server_create_socket (struct t_relay_server *server)
     listen (server->sock, max_clients);
 
     weechat_printf (NULL,
-                    _("%s: listening on port %d (relay: %s.%s, max %d clients)"),
+                    _("%s: listening on port %d (relay: %s%s%s, max %d clients)"),
                     RELAY_PLUGIN_NAME,
                     server->port,
                     relay_protocol_string[server->protocol],
-                    server->protocol_args,
+                    (server->protocol_args) ? "." : "",
+                    (server->protocol_args) ? server->protocol_args : "",
                     max_clients);
 
     server->hook_fd = weechat_hook_fd (server->sock,
@@ -338,7 +347,7 @@ relay_server_new (enum t_relay_protocol protocol,
     {
         new_server->protocol = protocol;
         new_server->protocol_args =
-            (protocol_args) ? strdup (protocol_args) : strdup ("*");
+            (protocol_args) ? strdup (protocol_args) : NULL;
         new_server->port = port;
         new_server->sock = -1;
         new_server->hook_fd = NULL;

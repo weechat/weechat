@@ -1926,7 +1926,7 @@ Par exemple :
 
 ----------------------------------------
 /set relay.network.password "mypass"
-/relay add weechat.* 9000
+/relay add weechat 9000
 ----------------------------------------
 
 Maintenant vous pouvez vous connecter sur le port 9000 avec une interface

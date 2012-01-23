@@ -158,7 +158,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->address = strdup ((address) ? address : "?");
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
-        new_client->protocol_args = strdup (server->protocol_args);
+        new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
         new_client->end_time = 0;
@@ -189,7 +189,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         relay_clients = new_client;
 
         weechat_printf (NULL,
-                        _("%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"),
+                        _("%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"),
                         RELAY_PLUGIN_NAME,
                         RELAY_COLOR_CHAT_HOST,
                         new_client->address,
@@ -197,7 +197,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                         server->port,
                         new_client->id,
                         relay_protocol_string[new_client->protocol],
-                        new_client->protocol_args);
+                        (new_client->protocol_args) ? "." : "",
+                        (new_client->protocol_args) ? new_client->protocol_args : "");
 
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
@@ -258,24 +259,26 @@ relay_client_set_status (struct t_relay_client *client,
         {
             case RELAY_STATUS_AUTH_FAILED:
                 weechat_printf (NULL,
-                                _("%s%s: authentication failed with client %s%s%s (%s.%s)"),
+                                _("%s%s: authentication failed with client %s%s%s (%s%s%s)"),
                                 weechat_prefix ("error"),
                                 RELAY_PLUGIN_NAME,
                                 RELAY_COLOR_CHAT_HOST,
                                 client->address,
                                 RELAY_COLOR_CHAT,
                                 relay_protocol_string[client->protocol],
-                                client->protocol_args);
+                                (client->protocol_args) ? "." : "",
+                                (client->protocol_args) ? client->protocol_args : "");
                 break;
             case RELAY_STATUS_DISCONNECTED:
                 weechat_printf (NULL,
-                                _("%s: disconnected from client %s%s%s (%s.%s)"),
+                                _("%s: disconnected from client %s%s%s (%s%s%s)"),
                                 RELAY_PLUGIN_NAME,
                                 RELAY_COLOR_CHAT_HOST,
                                 client->address,
                                 RELAY_COLOR_CHAT,
                                 relay_protocol_string[client->protocol],
-                                client->protocol_args);
+                                (client->protocol_args) ? "." : "",
+                                (client->protocol_args) ? client->protocol_args : "");
                 break;
             default:
                 break;

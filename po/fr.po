@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-23 11:36+0100\n"
-"PO-Revision-Date: 2012-01-23 11:36+0100\n"
+"POT-Creation-Date: 2012-01-23 12:18+0100\n"
+"PO-Revision-Date: 2012-01-23 12:18+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -7526,20 +7526,20 @@ msgid "disconnected"
 msgstr "déconnecté"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s.%s)"
-msgstr "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s.%s)"
+msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+msgstr "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s%s%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: pas assez de mémoire pour un nouveau client"
 
 #, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s.%s)"
-msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s.%s)"
+msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
+msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s%s%s)"
 
 #, c-format
-msgid "%s: disconnected from client %s%s%s (%s.%s)"
-msgstr "%s: déconnecté du client %s%s%s (%s.%s)"
+msgid "%s: disconnected from client %s%s%s (%s%s%s)"
+msgstr "%s: déconnecté du client %s%s%s (%s%s%s)"
 
 msgid "Clients for relay:"
 msgstr "Clients pour le relai:"
@@ -7563,8 +7563,8 @@ msgid "Listening on ports:"
 msgstr "Ecoute sur les ports:"
 
 #, c-format
-msgid "  port %s%d%s, relay: %s%s.%s%s, started on: %s"
-msgstr "  port %s%d%s, relai: %s%s.%s%s, démarré le: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+msgstr "  port %s%d%s, relai: %s%s%s%s%s, démarré le: %s"
 
 msgid "No server for relay"
 msgstr "Pas de serveur pour le relai"
@@ -7649,6 +7649,14 @@ msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: erreur: protocole \"%s\" inconnu"
 
 #, c-format
+msgid "%s%s: error: name is not allowed for protocol \"%s\""
+msgstr "%s%s: erreur: le nom est interdit pour le protocole \"%s\""
+
+#, c-format
+msgid "%s%s: error: name is not required for protocol \"%s\""
+msgstr "%s%s: erreur: le nom est requis pour le protocole \"%s\""
+
+#, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s%s: erreur: le relai pour \"%s\" existe déjà"
 
@@ -7726,24 +7734,24 @@ msgid "Relay raw messages"
 msgstr "Messages bruts Relay"
 
 #, c-format
-msgid "%s: socket closed for %s.%s (port %d)"
-msgstr "%s: socket fermée pour %s.%s (port %d)"
+msgid "%s: socket closed for %s%s%s (port %d)"
+msgstr "%s: socket fermée pour %s%s%s (port %d)"
 
 #, c-format
-msgid "%s%s: cannot accept client on port %d (%s.%s)"
-msgstr "%s%s: impossible d'accepter le client sur le port %d (%s.%s)"
+msgid "%s%s: cannot accept client on port %d (%s%s%s)"
+msgstr "%s%s: impossible d'accepter le client sur le port %d (%s%s%s)"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adresse IP \"%s\" non autorisée pour le relai"
 
 #, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s.%s)"
-msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s.%s)"
+msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
+msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s%s%s)"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s.%s, max %d clients)"
-msgstr "%s: écoute sur le port %d (relai: %s.%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
+msgstr "%s: écoute sur le port %d (relai: %s%s%s, max %d clients)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
