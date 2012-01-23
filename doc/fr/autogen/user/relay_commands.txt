@@ -11,16 +11,18 @@
     listrelay: lister les relais (nom et port)
           add: ajouter un relai pour un protocole + nom
           del: supprimer un relai pour un protocole + nom
-protocole.nom: protocole et nom à relayer
-               actuellement, seul le protocole "irc" est supporté
-               par exemple: irc.freenode
+protocole.nom: protocole et nom à relayer:
+                 - protocole "irc": le nom est le serveur à partager
+                 - protocole "weechat" (le nom n'est pas utilisé)
          port: port utilisé pour le relai
           raw: ouvrir le tampon avec les données brutes Relay
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 
-Exemple:
+Exemples:
   proxy irc, pour le serveur "freenode":
     /relay add irc.freenode 8000
+  protocole weechat:
+    /relay add weechat 8001
 ........................................
 

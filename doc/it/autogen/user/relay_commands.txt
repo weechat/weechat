@@ -6,21 +6,23 @@
         del <protocollo.nome>
         raw
 
-           list: elenca i client relay (solo quelli attivi)
-       listfull: elenca i client relay (dettagliato, tutti i relay)
-      listrelay: elenca i relay (nome e porta)
-            add: aggiungi relay per un protocollo + nome
-            del: rimuovi relay per un protocollo + nome
-protocollo.nome: protocollo e nome con cui effettuare il relay
-                 al momento, è supportato solo il protocollo "irc"
-                 ad esempio: irc.freenode
-          porta: porta usata per il relay
-            raw: apre il buffer con dati Relay
+         list: list relay clients (only active relays)
+     listfull: list relay clients (verbose, all relays)
+    listrelay: list relays (name and port)
+          add: add relay for a protocol + name
+          del: remove relay for a protocol + name
+protocol.name: protocol and name to relay:
+                 - protocol "irc": name is the server to share
+                 - protocol "weechat" (name is not used)
+         port: port used for relay
+          raw: open buffer with raw Relay data
 
-Senza argomento, il comando apre i buffer con l'elenco dei client relay.
+Without argument, this command opens buffer with list of relay clients.
 
-Esempio:
-  proxy irc, per il server "freenode":
-    /relay add irc.freenode.net 8000
+Examples:
+  irc proxy, for server "freenode":
+    /relay add irc.freenode 8000
+  weechat protocol:
+    /relay add weechat 8001
 ........................................
 
