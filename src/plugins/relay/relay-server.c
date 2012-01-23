@@ -344,6 +344,14 @@ relay_server_new (enum t_relay_protocol protocol,
         new_server->hook_fd = NULL;
         new_server->start_time = 0;
 
+        if (!relay_server_create_socket (new_server))
+        {
+            if (new_server->protocol_args)
+                free (new_server->protocol_args);
+            free (new_server);
+            return NULL;
+        }
+
         new_server->prev_server = NULL;
         new_server->next_server = relay_servers;
         if (relay_servers)
@@ -351,8 +359,6 @@ relay_server_new (enum t_relay_protocol protocol,
         else
             last_relay_server = new_server;
         relay_servers = new_server;
-
-        relay_server_create_socket (new_server);
     }
     else
     {

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2012-01-22
+v0.3.7-dev, 2012-01-23
 
 
 Version 0.3.7 (under dev!)
@@ -78,6 +78,8 @@ Version 0.3.7 (under dev!)
   other servers if "-a" ("--no-connect") is given
 * guile: new script plugin for scheme (task #7289)
 * python: add support of Python 3.x (task #11704)
+* relay: do not create relay if there is a problem with socket creation
+  (bug #35345)
 * relay: add WeeChat protocol for remote GUI
 * ruby: fix crash when reloading ruby plugin (bug #34474)
 * xfer: display origin of xfer in core and xfer buffers (task #10956)
