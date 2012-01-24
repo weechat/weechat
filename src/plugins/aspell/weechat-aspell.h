@@ -34,9 +34,6 @@ struct t_aspell_code
 
 extern struct t_weechat_plugin *weechat_aspell_plugin;
 
-extern struct t_aspell_code langs_avail[];
-extern struct t_aspell_code countries_avail[];
-
 extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
 
 #endif /* __WEECHAT_ASPELL_H */

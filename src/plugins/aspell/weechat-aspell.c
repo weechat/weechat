@@ -49,7 +49,7 @@ char *aspell_last_modifier_string = NULL; /* last str. received by modifier */
 char *aspell_last_modifier_result = NULL; /* last str. built by modifier    */
 
 /* aspell supported langs (updated on of 2008-10-17) */
-struct t_aspell_code langs_avail[] =
+struct t_aspell_code aspell_langs_avail[] =
 {
     { "af",     "Afrikaans" },
     { "am",     "Amharic" },
@@ -140,7 +140,7 @@ struct t_aspell_code langs_avail[] =
     { NULL,     NULL}
 };
 
-struct t_aspell_code countries_avail[] =
+struct t_aspell_code aspell_countries_avail[] =
 {
     { "AT", "Austria" },
     { "BR", "Brazil" },
@@ -154,6 +154,11 @@ struct t_aspell_code countries_avail[] =
     { "US", "United States of America" },
     { NULL, NULL}
 };
+
+char *aspell_url_prefix[] =
+{ "http:", "https:", "ftp:", "tftp:", "ftps:", "ssh:", "fish:", "dict:",
+  "ldap:", "file:", "telnet:", "gopher:", "irc:", "ircs:", "irc6:", "irc6s:",
+  "cvs:", "svn:", "svn+ssh:", "git:", NULL };
 
 
 /*
@@ -350,10 +355,10 @@ weechat_aspell_iso_to_lang (const char *code)
 {
     int i;
 
-    for (i = 0; langs_avail[i].code; i++)
+    for (i = 0; aspell_langs_avail[i].code; i++)
     {
-        if (strcmp (langs_avail[i].code, code) == 0)
-            return strdup (langs_avail[i].name);
+        if (strcmp (aspell_langs_avail[i].code, code) == 0)
+            return strdup (aspell_langs_avail[i].name);
     }
 
     /* lang code not found */
@@ -371,10 +376,10 @@ weechat_aspell_iso_to_country (const char *code)
 {
     int i;
 
-    for (i = 0; countries_avail[i].code; i++)
+    for (i = 0; aspell_countries_avail[i].code; i++)
     {
-        if (strcmp (countries_avail[i].code, code) == 0)
-            return strdup (countries_avail[i].name);
+        if (strcmp (aspell_countries_avail[i].code, code) == 0)
+            return strdup (aspell_countries_avail[i].name);
     }
 
     /* country code not found */
@@ -544,28 +549,16 @@ weechat_aspell_command_authorized (const char *command)
 int
 weechat_aspell_string_is_url (const char *word)
 {
-    if ((weechat_strncasecmp(word,    "http://",     7) == 0)
-        || (weechat_strncasecmp(word, "https://",    8) == 0)
-        || (weechat_strncasecmp(word, "ftp://",      6) == 0)
-        || (weechat_strncasecmp(word, "tftp://",     7) == 0)
-        || (weechat_strncasecmp(word, "ftps://",     7) == 0)
-        || (weechat_strncasecmp(word, "ssh://",      6) == 0)
-        || (weechat_strncasecmp(word, "fish://",     7) == 0)
-        || (weechat_strncasecmp(word, "dict://",     7) == 0)
-        || (weechat_strncasecmp(word, "ldap://",     7) == 0)
-        || (weechat_strncasecmp(word, "file://",     7) == 0)
-        || (weechat_strncasecmp(word, "telnet://",   9) == 0)
-        || (weechat_strncasecmp(word, "gopher://",   9) == 0)
-        || (weechat_strncasecmp(word, "irc://",      6) == 0)
-        || (weechat_strncasecmp(word, "ircs://",     7) == 0)
-        || (weechat_strncasecmp(word, "irc6://",     7) == 0)
-        || (weechat_strncasecmp(word, "irc6s://",    8) == 0)
-        || (weechat_strncasecmp(word, "cvs://",      6) == 0)
-        || (weechat_strncasecmp(word, "svn://",      6) == 0)
-        || (weechat_strncasecmp(word, "svn+ssh://", 10) == 0)
-        || (weechat_strncasecmp(word, "git://",      6) == 0))
-        return 1;
+    int i;
 
+    for (i = 0; aspell_url_prefix[i]; i++)
+    {
+        if (weechat_strncasecmp (word, aspell_url_prefix[i],
+                                 strlen (aspell_url_prefix[i])) == 0)
+            return 1;
+    }
+
+    /* word is not an URL */
     return 0;
 }
 
@@ -613,30 +606,24 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
         rc = 1;
     else
     {
-        /* word is URL? then do not check word */
-        if (weechat_aspell_string_is_url (word))
+        /* word is a number? then do not check word */
+        if (weechat_aspell_string_is_simili_number (word))
             rc = 1;
         else
         {
-            /* word is a number? then do not check word */
-            if (weechat_aspell_string_is_simili_number (word))
+            /* word is a nick of nicklist on this buffer? then do not check word */
+            if (weechat_nicklist_search_nick (buffer, NULL, word))
                 rc = 1;
             else
             {
-                /* word is a nick of nicklist on this buffer? then do not check word */
-                if (weechat_nicklist_search_nick (buffer, NULL, word))
-                    rc = 1;
-                else
+                /* check word with all spellers for this buffer (order is important) */
+                for (ptr_speller = weechat_aspell_spellers; ptr_speller;
+                     ptr_speller = ptr_speller->next_speller)
                 {
-                    /* check word with all spellers for this buffer (order is important) */
-                    for (ptr_speller = weechat_aspell_spellers; ptr_speller;
-                         ptr_speller = ptr_speller->next_speller)
+                    if (aspell_speller_check (ptr_speller->speller, word, -1) == 1)
                     {
-                        if (aspell_speller_check (ptr_speller->speller, word, -1) == 1)
-                        {
-                            rc = 1;
-                            break;
-                        }
+                        rc = 1;
+                        break;
                     }
                 }
             }
@@ -796,15 +783,38 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                     break;
                 utf8_char_int = weechat_utf8_char_int (ptr_end);
             }
+            word_ok = 0;
+            if (weechat_aspell_string_is_url (ptr_string))
+            {
+                /*
+                 * word is an URL, then it is ok, and search for next space
+                 * (will be end of word)
+                 */
+                word_ok = 1;
+                if (ptr_end[0])
+                {
+                    utf8_char_int = weechat_utf8_char_int (ptr_end);
+                    while (!iswspace (utf8_char_int))
+                    {
+                        ptr_end = weechat_utf8_next_char (ptr_end);
+                        if (!ptr_end[0])
+                            break;
+                        utf8_char_int = weechat_utf8_char_int (ptr_end);
+                    }
+                }
+            }
             save_end = ptr_end[0];
             ptr_end[0] = '\0';
             length_word = ptr_end - ptr_string;
 
-            if ((save_end != '\0')
-                || (weechat_config_integer (weechat_aspell_config_check_real_time)))
-                word_ok = weechat_aspell_check_word (buffer, ptr_string);
-            else
-                word_ok = 1;
+            if (!word_ok)
+            {
+                if ((save_end != '\0')
+                    || (weechat_config_integer (weechat_aspell_config_check_real_time)))
+                    word_ok = weechat_aspell_check_word (buffer, ptr_string);
+                else
+                    word_ok = 1;
+            }
 
             /* add error color */
             if (!word_ok)
@@ -927,9 +937,10 @@ weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; langs_avail[i].code; i++)
+    for (i = 0; aspell_langs_avail[i].code; i++)
     {
-        weechat_hook_completion_list_add (completion, langs_avail[i].code,
+        weechat_hook_completion_list_add (completion,
+                                          aspell_langs_avail[i].code,
                                           0, WEECHAT_LIST_POS_SORT);
     }
 
