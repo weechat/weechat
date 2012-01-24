@@ -532,7 +532,7 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(m)               | Activer/désactiver la souris | /mouse toggle
 | @k(A-)@k(n)               | Se positionner sur le highlight suivant | /window scroll_next_highlight
 | @k(A-)@k(p)               | Se positionner sur le highlight précédent | /window scroll_previous_highlight
-| @k(A-)@k(u)               | Se positionner sur la première ligne non lue du tampon | /input scroll_unread
+| @k(A-)@k(u)               | Se positionner sur la première ligne non lue du tampon | /window scroll_unread
 | @k(A-)@k(w) , @k(A-)@k(↑) | Sauter à la fenêtre au dessus | /window up
 | @k(A-)@k(w) , @k(A-)@k(↓) | Sauter à la fenêtre en dessous | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Sauter à la fenêtre de gauche | /window left

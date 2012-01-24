@@ -532,7 +532,7 @@ Tasti per buffer / finestre
 | @k(A-)@k(m)               | Abilita/disabilita | /mouse toggle
 | @k(A-)@k(n)               | Scorre fino all'evento successivo | /window scroll_next_highlight
 | @k(A-)@k(p)               | Scorre fino all'evento precedente | /window scroll_previous_highlight
-| @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /input scroll_unread
+| @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /window scroll_unread
 | @k(A-)@k(w) , @k(A-)@k(↑) | Passa alla finestra in alto | /window up
 | @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Passa alla finestra sulla sinistra | /window left

@@ -522,7 +522,7 @@ Keys for buffers / windows
 | @k(A-)@k(m)               | Toggle mouse | /mouse toggle
 | @k(A-)@k(n)               | Scroll to next highlight | /window scroll_next_highlight
 | @k(A-)@k(p)               | Scroll to previous highlight | /window scroll_previous_highlight
-| @k(A-)@k(u)               | Scroll to first unread line in buffer | /input scroll_unread
+| @k(A-)@k(u)               | Scroll to first unread line in buffer | /window scroll_unread
 | @k(A-)@k(w) , @k(A-)@k(↑) | Switch to window above | /window up
 | @k(A-)@k(w) , @k(A-)@k(↓) | Switch to window below | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Switch to window on the left | /window left

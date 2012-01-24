@@ -315,7 +315,6 @@ list des actions:
   grab_key_command: capturer une touche avec sa commande associée (paramètre facultatif: délai pour la fin de la capture, par défaut 500 millisecondes)
   grab_mouse: capturer un évènement de la souris
   grab_mouse_area: capturer un évènement de la souris avec la zone
-  scroll_unread: faire défiler jusqu'au marqueur de données non lues
   set_unread: définir le marqueur de données non lues pour tous les tampons
   set_unread_current_buffer: définir le marqueur de données non lues pour le tampon courant
   switch_active_buffer: basculer vers le tampon mélangé suivant
@@ -647,7 +646,7 @@ Exemples:
          refresh
          scroll [-window <numéro>] [+/-]<valeur>[s|m|h|d|M|y]
          scroll_horiz [-window <numéro>] [+/-]<valeur>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <numéro>]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numéro>]
          swap [-window <numéro>] [up|down|left|right]
          zoom [-window <numéro>]
 
@@ -676,6 +675,7 @@ Exemples:
 scroll_bottom: faire défiler jusqu'en bas du tampon
 scroll_previous_highlight: faire défiler jusqu'au highlight précédent
 scroll_next_highlight: faire défiler jusqu'au highlight suivant
+scroll_unread: faire défiler jusqu'au marqueur de données non lues
          swap: échanger les tampons de deux fenêtres (avec une direction facultative pour la fenêtre cible)
          zoom: zoomer sur la fenêtre
 

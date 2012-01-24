@@ -1419,44 +1419,6 @@ gui_input_grab_mouse (struct t_gui_buffer *buffer, int area)
 }
 
 /*
- * gui_input_scroll_unread: scroll to first unread line of buffer
- *                          (default key: meta-u)
- */
-
-void
-gui_input_scroll_unread (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *window;
-
-    window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
-    {
-        if (CONFIG_STRING(config_look_read_marker) &&
-            CONFIG_STRING(config_look_read_marker)[0] &&
-            (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) &&
-            (window->buffer->lines->first_line_not_read ||
-             (window->buffer->lines->last_read_line &&
-              window->buffer->lines->last_read_line != window->buffer->lines->last_line)))
-        {
-            if (window->buffer->lines->first_line_not_read)
-                window->scroll->start_line = window->buffer->lines->first_line;
-            else
-                window->scroll->start_line = window->buffer->lines->last_read_line->next_line;
-            if (window->scroll->start_line)
-            {
-                if (!gui_line_is_displayed (window->scroll->start_line))
-                    window->scroll->start_line = gui_line_get_next_displayed (window->scroll->start_line);
-            }
-            window->scroll->start_line_pos = 0;
-            window->scroll->first_line_displayed =
-                (window->scroll->start_line == gui_line_get_first_displayed (window->buffer));
-            gui_buffer_ask_chat_refresh (window->buffer, 2);
-        }
-    }
-}
-
-/*
  * gui_input_set_unread: set unread marker for all buffers
  *                       (default key: ctrl-s, ctrl-u)
  */

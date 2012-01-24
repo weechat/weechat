@@ -522,7 +522,7 @@ Tastenbefehle für Buffer / Fenster
 | @k(A-)@k(m)               | schaltet Mausfunktion ein/aus | /mouse toggle
 | @k(A-)@k(n)               | springt zur nächsten Highlight Nachricht | /window scroll_next_highlight
 | @k(A-)@k(p)               | springt zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
-| @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | /input scroll_unread
+| @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | /window scroll_unread
 | @k(A-)@k(w) , @k(A-)@k(↑) | wechselt zum oberen Fenster | /window up
 | @k(A-)@k(w) , @k(A-)@k(↓) | wechselt zum unteren Fenster | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | wechselt zum linken Fenster | /window left

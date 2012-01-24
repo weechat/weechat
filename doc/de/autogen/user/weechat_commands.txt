@@ -275,54 +275,53 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ........................................
 /input  <action> [<arguments>]
 
-Auflistung der Aktionen:
-  return: simuliert die "enter" Taste
-  complete_next: vervollständigt Wort mit nächster Komplettierung
-  complete_previous: vervollständigt Word mit vorheriger Komplettierung
-  search_text: sucht nach Text im Buffer
-  search_switch_case: schaltet Groß-/Kleinschreibung ein und aus
-  search_previous: sucht vorheriger Zeile
-  search_next: sucht nächste Zeile
-  search_stop: suche stoppen
-  delete_previous_char: entfernt vorheriges Zeichen
-  delete_next_char: entfernt nächstes Zeichen
-  delete_previous_word: entfernt vorheriges Wort
-  delete_next_word: entfernt nächstes Wort
-  delete_beginning_of_line: entfernt alle Zeichen ab Zeilenanfang bis zum Cursor
-  delete_end_of_line: entfernt alle Zeichen ab Cursor bis zum Ende der Zeile
-  delete_line: löscht die komplette Eingabezeile
-  clipboard_paste: fügt Zeichenkette aus der Zwischenablage ein
-  transpose_chars: Zeichen austauschen
-  undo: letzten Befehl in der Eingabezeile rückgängig machen
-  redo: letzten Befehl in der Eingabezeile wiederherstellen
-  move_beginning_of_line: springt an den Anfang der Eingabezeile
-  move_end_of_line: springt ans Ende der Eingabezeile
-  move_previous_char: setzt den Cursor eine Position nach links
-  move_next_char: setzt den Cursor eine Position nach rechts
-  move_previous_word: springt zum Anfang des vorherigen Wortes, in der Eingabezeile
-  move_next_word: springt zum Anfang des nächsten Wortes, in der Eingabezeile
-  history_previous: ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen)
-  history_next: ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen)
-  history_global_previous: ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  history_global_next: ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
-  jump_smart: wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, …)
-  jump_last_buffer: springt zum letzten Buffer, in der Bufferliste
-  jump_last_buffer_displayed: wechselt zum jeweils zuletzt angezeigten Buffer
-  jump_previously_visited_buffer: springt zum letzten besuchten Buffer
-  jump_next_visited_buffer: springt zum nächsten besuchten Buffer
-  hotlist_clear: löscht Hotliste (Aktivitätsanzeige für die Buffer)
-  grab_key: fängt eine Taste (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
-  grab_key_command: zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
-  grab_mouse: fängt den Code einer Maus Aktivität
-  grab_mouse_area: fängt den Code einer Maus Aktivität mit Bereich
-  scroll_unread: springe zur ersten ungelesenen Zeile im Buffer
-  set_unread: setzt für alle Buffer die Markierung der ungelesen Nachrichten
-  set_unread_current_buffer: setzt nur für den aktuellen Buffer eine Markierung der ungelesen Nachrichten
-  switch_active_buffer: springt zum nächsten zusammengefügten Buffer
-  switch_active_buffer_previous: springt zum vorherigen zusammengefügten Buffer
-  insert: fügt einen Text in die Eingabezeile ein
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_previous: search previous line
+  search_next: search next line
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer: jump to last buffer
+  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  insert: insert text in command line
 
-Dieser Befehl wird durch Tastenbelegungen oder Erweiterungen genutzt.
+This command is used by key bindings or plugins.
 ........................................
 
 [[command_weechat_key]]
@@ -649,50 +648,51 @@ Beispiele:
          refresh
          scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
          scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight [-window <number>]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom[-window <number>]
 
-         list: listet die geöffneten Fenster (ohne Angabe von Parametern wird diese Funktion aufgerufen)
-           -1: springt zum vorherigen Fenster
-           +1: springt zum nächsten Fenster
-           b#: springt zum nächsten Fenster, welches die Buffer Nummer # besitzt
-           up: wechselt zum Fenster über dem aktuellen
-         down: wechselt zum Fenster unter dem aktuellen
-         left: wechselt zum linken Fenster
-        right: wechselt zum rechten Fenster
-       number: Nummer des Fensters (siehe /window list)
-       splith: teilt das aktuelle Fenster horizontal
-       splitv: teilt das aktuelle Fenster vertikal
-       resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
-      balance: passt die Größe aller Fenster an
-        merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
-      page_up: scrollt eine Seite nach oben
-    page_down: scrollt eine Seite nach unten
-      refresh: Seite wird neu aufgebaut
-       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer gewissen Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre
- scroll_horiz: scrollt horizontal eine Anzahl an Spalten (+/-N) oder prozentual von der Fenstergröße ausgehend (dieses scrolling ist nur in Buffern möglich die über einen freien Inhalt verfügen)
-    scroll_up: scrollt ein paar Zeilen nach oben
-  scroll_down: scrollt ein paar Zeilen nach unten
-   scroll_top: scrollt zum Anfang des Buffers
-scroll_bottom: scrollt zum Ende des  Buffers
-scroll_previous_highlight: scrollt zum vorherigen Hightlight
-scroll_next_highlight: scrollt zum nächsten Highlight
-         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
-         zoom: vergrößert ein Fenster auf 100%
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       number: window number (see /window list)
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is <pct> percentage of parent window
+      balance: balance the sizes of all windows
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+scroll_unread: scroll to unread marker
+         swap: swap buffers of two windows (with optional direction for target window)
+         zoom: zoom on window
 
-Bei splith und splitv gibt "pct" die neue Größe des Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hat.
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
-Beispiele:
-  springt zum Fenster mit dem Buffer #1:
+Examples:
+  jump to window displaying buffer #1:
     /window b1
-   scrollt zwei Zeilen hoch:
+  scroll 2 lines up:
     /window scroll -2
-  scrollt zwei Tage hoch: /window scroll -2d
+  scroll 2 days up:
     /window scroll -2d
-  scrollt zum Beginn des aktuellen Tages:
+  scroll to beginning of current day:
     /window scroll -d
-  Fenster #2 wird vergrößert:
+  zoom on window #2:
     /window zoom -window 2
 ........................................
 

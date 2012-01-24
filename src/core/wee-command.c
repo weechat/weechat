@@ -2376,8 +2376,6 @@ COMMAND_CALLBACK(input)
             gui_input_grab_mouse (buffer, 0);
         else if (string_strcasecmp (argv[1], "grab_mouse_area") == 0)
             gui_input_grab_mouse (buffer, 1);
-        else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
-            gui_input_scroll_unread (buffer);
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
             gui_input_set_unread ();
         else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
@@ -5143,6 +5141,13 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
+    /* scroll to unread marker */
+    if (string_strcasecmp (argv[1], "scroll_unread") == 0)
+    {
+        gui_window_scroll_unread (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+
     /* split window horizontally */
     if (string_strcasecmp (argv[1], "splith") == 0)
     {
@@ -5751,7 +5756,6 @@ command_init ()
                      "default is 500 milliseconds)\n"
                      "  grab_mouse: grab mouse event code\n"
                      "  grab_mouse_area: grab mouse event code with area\n"
-                     "  scroll_unread: scroll to unread marker\n"
                      "  set_unread: set unread marker for all buffers\n"
                      "  set_unread_current_buffer: set unread marker for "
                      "current buffer\n"
@@ -6127,7 +6131,7 @@ command_init ()
                      " || scroll_horiz [-window <number>] [+/-]<value>[%]"
                      " || scroll_up|scroll_down|scroll_top|"
                      "scroll_bottom|scroll_previous_highlight|"
-                     "scroll_next_highlight [-window <number>]"
+                     "scroll_next_highlight|scroll_unread [-window <number>]"
                      " || swap [-window <number>] [up|down|left|right]"
                      " || zoom[-window <number>]"),
                   N_("         list: list opened windows (without argument, "
@@ -6161,6 +6165,7 @@ command_init ()
                      "scroll_bottom: scroll to bottom of buffer\n"
                      "scroll_previous_highlight: scroll to previous highlight\n"
                      "scroll_next_highlight: scroll to next highlight\n"
+                     "scroll_unread: scroll to unread marker\n"
                      "         swap: swap buffers of two windows (with optional "
                      "direction for target window)\n"
                      "         zoom: zoom on window\n\n"
@@ -6201,6 +6206,7 @@ command_init ()
                   " || scroll_bottom -window %(windows_numbers)"
                   " || scroll_previous_highlight -window %(windows_numbers)"
                   " || scroll_next_highlight -window %(windows_numbers)"
+                  " || scroll_unread  -window %(windows_numbers)"
                   " || swap up|down|left|right|-window %(windows_numbers)"
                   " || zoom -window %(windows_numbers)"
                   " || merge all|-window %(windows_numbers)",

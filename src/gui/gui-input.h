@@ -74,7 +74,6 @@ extern void gui_input_hotlist_clear (struct t_gui_buffer *buffer);
 extern void gui_input_grab_key (struct t_gui_buffer *buffer, int command,
                                 const char *delay);
 extern void gui_input_grab_mouse (struct t_gui_buffer *buffer, int area);
-extern void gui_input_scroll_unread (struct t_gui_buffer *buffer);
 extern void gui_input_set_unread ();
 extern void gui_input_set_unread_current (struct t_gui_buffer *buffer);
 extern void gui_input_switch_active_buffer (struct t_gui_buffer *buffer);
