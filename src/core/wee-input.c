@@ -158,57 +158,71 @@ input_exec_command (struct t_gui_buffer *buffer,
 void
 input_data (struct t_gui_buffer *buffer, const char *data)
 {
-    char *pos, *buf;
+    char *pos, *buf, str_buffer[128], *new_data;
     const char *ptr_data, *ptr_data_for_buffer;
     int length, char_size;
 
     if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
         return;
 
-    /* use new data (returned by plugin) */
-    ptr_data = data;
-    while (ptr_data && ptr_data[0])
-    {
-        pos = strchr (ptr_data, '\n');
-        if (pos)
-            pos[0] = '\0';
+    /* execute modifier "input_text_for_buffer" */
+    snprintf (str_buffer, sizeof (str_buffer),
+              "0x%lx", (long unsigned int)buffer);
+    new_data = hook_modifier_exec (NULL,
+                                   "input_text_for_buffer",
+                                   str_buffer,
+                                   data);
 
-        ptr_data_for_buffer = string_input_for_buffer (ptr_data);
-        if (ptr_data_for_buffer)
+    /* data not dropped? */
+    if (!new_data || new_data[0])
+    {
+        ptr_data = (new_data) ? new_data : data;
+        while (ptr_data && ptr_data[0])
         {
-            /*
-             * input string is NOT a command, send it to buffer input
-             * callback
-             */
-            if (string_is_command_char (ptr_data_for_buffer))
+            pos = strchr (ptr_data, '\n');
+            if (pos)
+                pos[0] = '\0';
+
+            ptr_data_for_buffer = string_input_for_buffer (ptr_data);
+            if (ptr_data_for_buffer)
             {
-                char_size = utf8_char_size (ptr_data_for_buffer);
-                length = strlen (ptr_data_for_buffer) + char_size + 1;
-                buf = malloc (length);
-                if (buf)
+                /*
+                 * input string is NOT a command, send it to buffer input
+                 * callback
+                 */
+                if (string_is_command_char (ptr_data_for_buffer))
                 {
-                    memcpy (buf, ptr_data_for_buffer, char_size);
-                    snprintf (buf + char_size, length - char_size,
-                              "%s", ptr_data_for_buffer);
-                    input_exec_data (buffer, buf);
-                    free (buf);
+                    char_size = utf8_char_size (ptr_data_for_buffer);
+                    length = strlen (ptr_data_for_buffer) + char_size + 1;
+                    buf = malloc (length);
+                    if (buf)
+                    {
+                        memcpy (buf, ptr_data_for_buffer, char_size);
+                        snprintf (buf + char_size, length - char_size,
+                                  "%s", ptr_data_for_buffer);
+                        input_exec_data (buffer, buf);
+                        free (buf);
+                    }
                 }
+                else
+                    input_exec_data (buffer, ptr_data_for_buffer);
             }
             else
-                input_exec_data (buffer, ptr_data_for_buffer);
-        }
-        else
-        {
-            /* input string is a command */
-            input_exec_command (buffer, 1, buffer->plugin, ptr_data);
-        }
+            {
+                /* input string is a command */
+                input_exec_command (buffer, 1, buffer->plugin, ptr_data);
+            }
 
-        if (pos)
-        {
-            pos[0] = '\n';
-            ptr_data = pos + 1;
+            if (pos)
+            {
+                pos[0] = '\n';
+                ptr_data = pos + 1;
+            }
+            else
+                ptr_data = NULL;
         }
-        else
-            ptr_data = NULL;
     }
+
+    if (new_data)
+        free (new_data);
 }

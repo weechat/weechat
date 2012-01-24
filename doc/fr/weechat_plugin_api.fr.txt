@@ -8481,7 +8481,8 @@ Paramètres :
   contenu du message reçu du serveur IRC (avant décodage du jeu de caractères) |
   nouveau contenu du message
 
-| irc | irc_in2_xxx ^(1)^ |
+| irc | irc_in2_xxx ^(1)^ +
+  (_nouveau dans la version 0.3.5_) |
   nom de serveur |
   contenu du message reçu du serveur IRC (après décodage du jeu de caractères) |
   nouveau contenu du message
@@ -8496,28 +8497,35 @@ Paramètres :
   chaîne vide |
   "1" pour afficher la barre, "0" pour la cacher
 
-| weechat | history_add |
+| weechat | history_add +
+  (_nouveau dans la version 0.3.2_) |
   chaîne avec un pointeur vers le tampon ("0x123..") |
-  chaîne saisie par l'utilisateur à ajouter à l'historique des commandes
+  contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global) |
   chaîne ajoutée à l'historique des commandes
 
 | weechat | input_text_content |
   chaîne avec un pointeur vers le tampon ("0x123..") |
-  chaîne saisie par l'utilisateur |
-  nouvelle chaîne
+  contenu de la ligne de commande |
+  nouvelle chaîne pour la ligne de commande
 
 | weechat | input_text_display |
   chaîne avec un pointeur vers le tampon ("0x123..") |
-  chaîne saisie par l'utilisateur, sans le code du curseur dedans |
-  nouvelle chaîne, pour affichage seulement (les données de l'utilisateur ne
-  sont pas changées)
+  contenu de la ligne de commande, sans le code du curseur dedans |
+  nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
+  modifiée)
 
 | weechat | input_text_display_with_cursor |
   chaîne avec un pointeur vers le tampon ("0x123..") |
-  chaîne saisie par l'utilisateur, avec le code du curseur dedans |
-  nouvelle chaîne, pour affichage seulement (les données de l'utilisateur ne
-  sont pas changées)
+  contenu de la ligne de commande, avec le code du curseur dedans |
+  nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
+  modifiée)
+
+| weechat | input_text_for_buffer +
+  (_nouveau dans la version 0.3.7_) |
+  chaîne avec un pointeur vers le tampon ("0x123..") |
+  contenu de la ligne de commande envoyée au tampon (texte ou commande) |
+  nouveau contenu de la ligne de commande envoyée au tampon
 
 | weechat | weechat_print |
   extension;nom_tampon;étiquettes |

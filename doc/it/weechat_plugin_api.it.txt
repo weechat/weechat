@@ -8409,7 +8409,8 @@ Argomenti:
   contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri) |
   nuovo contenuto del messaggio
 
-| irc | irc_in2_xxx ^(1)^ |
+| irc | irc_in2_xxx ^(1)^ +
+  (_novità nella versione 0.3.5_) |
   nome server |
   contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
   nuovo contenuto del messaggio
@@ -8424,27 +8425,37 @@ Argomenti:
   stringa vuota |
   "1" per visualizzare la barra, "0" per nasconderla
 
-| weechat | history_add |
+// TRANSLATION MISSING
+| weechat | history_add +
+  (_novità nella versione 0.3.2_) |
   stringa con puntatore al buffer ("0x123..") |
-  input buffer (from user) to add in command history (buffer and global) |
+  content of command line to add in command history (buffer and global) |
   string added to command history
 
+// TRANSLATION MISSING
 | weechat | input_text_content |
   stringa con puntatore al buffer ("0x123..") |
-  input buffer (dall'utente) |
-  nuovo contenuto del buffer di input
+  content of command line |
+  new content of command line
 
+// TRANSLATION MISSING
 | weechat | input_text_display |
   stringa con puntatore al buffer ("0x123..") |
-  buffer di input (dall'utente), senza tag di cursore |
-  nuovo contenuto del buffer di input, solo per visualizzazione (il buffer
-  di input non è modificato)
+  content of command line, without cursor tag |
+  new string, for display only (command line is not changed)
 
+// TRANSLATION MISSING
 | weechat | input_text_display_with_cursor |
   stringa con puntatore al buffer ("0x123..") |
-  buffer di input (dall'utente), con tag di cursore |
-  nuovo contenuto del buffer di input, solo per la visualizzazione (buffer di
-  input non è modificato)
+  content of command line, with cursor tag |
+  new string, for display only (command line is not changed)
+
+// TRANSLATION MISSING
+| weechat | input_text_for_buffer +
+  (_novità nella versione 0.3.7_) |
+  stringa con puntatore al buffer ("0x123..") |
+  content of command line sent to buffer (text or command) |
+  new content of command line sent to buffer
 
 | weechat | weechat_print |
   plugin;buffer_name;tags |

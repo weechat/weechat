@@ -8345,7 +8345,8 @@ Arguments:
   content of message received from IRC server (before charset decoding) |
   new content of message
 
-| irc | irc_in2_xxx ^(1)^ |
+| irc | irc_in2_xxx ^(1)^ +
+  (_new in version 0.3.5_) |
   server name |
   content of message received from IRC server (after charset decoding) |
   new content of message
@@ -8360,25 +8361,32 @@ Arguments:
   empty string |
   "1" to display bar, "0" to hide it
 
-| weechat | history_add |
+| weechat | history_add +
+  (_new in version 0.3.2_) |
   string with buffer pointer ("0x123..") |
-  input buffer (from user) to add in command history (buffer and global) |
+  content of command line to add in command history (buffer and global) |
   string added to command history
 
 | weechat | input_text_content |
   string with buffer pointer ("0x123..") |
-  input buffer (from user) |
-  new content of input buffer
+  content of command line |
+  new content of command line
 
 | weechat | input_text_display |
   string with buffer pointer ("0x123..") |
-  input buffer (from user), without cursor tag |
-  new content of input buffer, for display only (input buffer is not changed)
+  content of command line, without cursor tag |
+  new string, for display only (command line is not changed)
 
 | weechat | input_text_display_with_cursor |
   string with buffer pointer ("0x123..") |
-  input buffer (from user), with cursor tag |
-  new content of input buffer, for display only (input buffer is not changed)
+  content of command line, with cursor tag |
+  new string, for display only (command line is not changed)
+
+| weechat | input_text_for_buffer +
+  (_new in version 0.3.7_) |
+  string with buffer pointer ("0x123..") |
+  content of command line sent to buffer (text or command) |
+  new content of command line sent to buffer
 
 | weechat | weechat_print |
   plugin;buffer_name;tags |
