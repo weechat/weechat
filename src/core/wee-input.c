@@ -40,7 +40,7 @@
 
 
 /*
- * input_exec_data: send data to buffer input callbackr
+ * input_exec_data: send data to buffer input callback
  */
 
 void
