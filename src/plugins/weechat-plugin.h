@@ -26,7 +26,6 @@
 #define __WEECHAT_WEECHAT_PLUGIN_H 1
 
 #include <sys/types.h>
-#include <regex.h>
 
 struct t_config_option;
 struct t_gui_window;
@@ -229,7 +228,7 @@ struct t_weechat_plugin
     char *(*string_mask_to_regex) (const char *mask);
     const char *(*string_regex_flags) (const char *regex, int default_flags,
                                        int *flags);
-    int (*string_regcomp) (regex_t *preg, const char *regex, int default_flags);
+    int (*string_regcomp) (void *preg, const char *regex, int default_flags);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);

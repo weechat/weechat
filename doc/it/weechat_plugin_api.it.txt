@@ -1117,7 +1117,7 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-int weechat_string_regcomp (regex_t *preg, const char *regex, int default_flags)
+int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 ----------------------------------------
 
 Argomenti:

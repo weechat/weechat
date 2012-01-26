@@ -51,7 +51,7 @@ extern char *string_convert_hex_chars (const char *string);
 extern char *string_mask_to_regex (const char *mask);
 extern const char *string_regex_flags (const char *regex, int default_flags,
                                        int *flags);
-extern int string_regcomp (regex_t *preg, const char *regex, int default_flags);
+extern int string_regcomp (void *preg, const char *regex, int default_flags);
 extern int string_has_highlight (const char *string,
                                  const char *highlight_words);
 extern int string_has_highlight_regex_compiled (const char *string,

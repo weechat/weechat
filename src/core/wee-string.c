@@ -804,13 +804,13 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
  */
 
 int
-string_regcomp (regex_t *preg, const char *regex, int default_flags)
+string_regcomp (void *preg, const char *regex, int default_flags)
 {
     const char *ptr_regex;
     int flags;
 
     ptr_regex = string_regex_flags (regex, default_flags, &flags);
-    return regcomp (preg, ptr_regex, flags);
+    return regcomp ((regex_t *)preg, ptr_regex, flags);
 }
 
 /*
