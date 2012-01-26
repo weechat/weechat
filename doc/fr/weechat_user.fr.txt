@@ -2092,7 +2092,7 @@ Empaqueteurs::
 Traductions::
     Jiri Golembiovsky, soltys, Nils Görs, rettub, Frank Zacharias,
     Pavel Shevchuk, Elián Hanisch (m4v), Voroskoi, Marco Paolone,
-    Ivan Sichmann Freitas
+    Ivan Sichmann Freitas, Lázaro A.
 
 Patchs::
     Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,

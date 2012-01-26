@@ -1090,11 +1090,12 @@ AC_OUTPUT([Makefile
            doc/Makefile
            doc/en/Makefile
            doc/fr/Makefile
-           doc/pl/Makefile
+           doc/it/Makefile
            doc/de/Makefile
+           doc/pl/Makefile
+           doc/es/Makefile
            doc/ru/Makefile
            doc/ja/Makefile
-           doc/it/Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile

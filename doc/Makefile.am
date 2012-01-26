@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = . en fr pl de ru ja it
+SUBDIRS = . en fr it de pl es ru ja
 
 man_MANS = weechat-curses.1
 

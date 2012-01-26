@@ -1,0 +1,266 @@
+WeeChat Quick Start Guide
+=========================
+Sébastien Helleu <flashcode@flashtux.org>
+
+
+[[start]]
+Iniciar WeeChat
+---------------
+
+Es recomendable una terminal emulada para X (pero no indispensable)
+rxvt-unicode (tiene un buen soporte para UTF-8, y no da problemas con
+los atajas de teclados predeterminados).
+
+Ejecute "weechat-curses" en la consola.
+
+
+[[help_options]]
+Ayuda en linea / Opciones
+-------------------------
+
+WeeChat tiene ayuda para todos los comandos, solo teclee /help Para
+obtener ayuda específicamente de un comando, teclee: `/help comando`
+
+Para configurar una opción, use `/set config.section.option valor`
+donde `config` es el nombre de la configuración del núcleo o del
+plugin que desea configurar,  `section`, la sección de esa configuración
+y `option` el nombre de la opción.
+
+WeeChat usará inmediatamente el nuevo valor asignado (*no* es necesario
+reiniciar WeeChat después de aplicar cambios a la configuración).
+
+Usando el comando `/set` con un nombre tecleado parcialmente y el
+comodín "*" al principio o al final del texto; pude mostrar todas las
+opciones que contienen esas letras. Por ejemplo:
+
+`/set`::
+    Mostrará todas las opciones de WeeChat y sus plugins.
+
+`/set weechat.*`::
+    Mostrará solo las opciones de WeeChat.
+
+`/set irc.*`::
+    Mostrará las opciones del plugin IRC
+
+Puede mostrar la ayuda de una opción en especifico con  `/help`, por
+ejemplo:
+`/help weechat.look.highlight`.
+
+Todas las opciones se salvarán de manera automática cuando cierre
+WeeChat o usando el comando `/save` para forzar la forzar a WeeChat a
+guardar todos los archivos de configuración.
+
+Puede editar los ficheros de configuración (*.conf) directamente y
+después recargarlos con el comando `/reload` si no desea usar el
+comando `/set`.
+
+
+[[core_vs_plugins]]
+Núcleo vs Plugins
+-----------------
+
+Llamaremos "Núcleo de WeeChat" a la aplicación que solo se usa para
+mostrar información en pantalla e interactuar con el usuario, eso es lo
+único que hace el núcleo de WeeChat sin no tiene plugins. (para los
+fieles seguidores: IRC fue parte del núcleo para las versiones ≤
+0.2.6).
+
+Todos los protocolos de red como IRC, provienen en plugins separados.
+
+Use el comando `/plugin` para ver una lista de los plugins cargados,
+seguramente vera irc y otros.
+
+
+[[create_irc_server]]
+Crear un servidor IRC
+---------------------
+
+Puede agregar un servidor IRC usando el comando `/server`, por ejemplo:
+
+  /server add oftc irc.oftc.net/6667
+
+La ayuda está disponible; si te pierdes: `/help server`
+
+
+[[irc_server_options]]
+Personalizar las opciones de un servidor IRC
+--------------------------------------------
+
+WeeChat usa las opciones por defecto para todos los servidores
+("predeterminado") si no le especifica un valor individual a un servidor
+en específico. Esas opciones por defectos son las que se muestran en
+"irc.server_default.*"
+
+Para cada opción de "server", WeeChat usa estos valores previamente
+asignados siempre y cuando no sean Nulos. Si no hay nada asignado,
+WeeChat usara los valores predeterminados ("irc.server_default.xxx")
+
+Por ejemplo, tenemos el nick por defecto (que se basa en su login) pero
+usted puedes sobreescribirlo para el servidor identificado como oftc
+de la siguiente manera:
+
+  /set irc.server.oftc.nicks "nick1,nick2,nick3,nick4,nick5"
+
+También para configurar el nombre de usuario y el nombre real:
+
+  /set irc.server.oftc.username "Mi nombre de usuario"
+  /set irc.server.oftc.realname "Mi nombre real"
+
+Para que el servidor se conecte cuando WeeChat inicie:
+
+  /set irc.server.oftc.autoconnect on
+
+Para correr un comando después de establecer la conexión, por
+ejemplo, una identificación con el nickserv:
+
+  /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+
+Nota: varios comandos pueden ser escritos separados por ';' (punto y coma)
+
+Para unirse automáticamente a canales cuando el servidor se conecte:
+
+  /set irc.server.oftc.autojoin "#uncanal,#otrocanal"
+
+Para eliminar un valor asignado a una opción de servidor y usar los
+valores por defecto en su lugar, por ejemplo, usar el nick por defecto
+(irc.server_default.nicks):
+
+  /set irc.server.oftc.nicks null
+
+Otras opciones: pude configurar otras opciones con el siguiente comando,
+donde "xxx" es el nombre de la opción.
+
+  /set irc.server.oftc.xxx valor
+
+
+[[connect_to_irc_server]]
+Conectarse a un servidor IRC
+----------------------------
+
+  /connect oftc
+
+[NOTE]
+Este comando también puede usarse para crear y conectarse a un nuevo
+servidor sin usar el comando `/server` (¿debo reiterar que se puede ver
+la ayuda de este comando con `/help connect`?).
+
+Por defecto, todos los buffers del servidor están junto al buffer de
+núcleo. Para cambiar entre el buffer del núcleo y el buffer de los
+servidores use ctrl+X.
+
+Es posible deshabilitar esta manera de tener todos los buffer de
+servidores juntos para tenerlos de manera independiente:
+
+  /set irc.look.server_buffer independent
+
+
+[[join_part_irc_channels]]
+join/part y canales IRC
+-----------------------
+
+`/join #canal`::
+    Se une a un canal llamado "#canal"
+
+`/part [mensaje de partida]`::
+    sale de un canal (mantiene el buffer abierto)
+
+`/close [mensaje de partida]`::
+    cierra un servidor o el buffer de un canal
+     (`/close` es un alias de `/buffer close`)
+
+
+[[buffer_window]]
+Manipulando buffer/ventana
+--------------------------
+
+Un buffer, es un componente vinculado a un plugin con un número, una
+categoría y un nombre. El buffer contiene los datos que se muestran en
+la pantalla.
+
+Una ventana es una vista de un buffer. Por defecto, una sola ventana
+muestra un solo buffer. Si divide la pantalla, podrá ver muchas
+ventanas conteniendo varios buffer al mismo tiempo.
+
+Comandos para manipular buffer y ventana:
+
+  /buffer
+  /window
+
+(le reitero que puede obtener ayuda de los comandos con /help buffer y
+/help ventana respectivamente)
+
+Por ejemplo, para dividir la pantalla una pequeña ventana (1/3)
+junto a otras mas grande (2/3) use el comando
+
+  /window splitv 33
+
+
+[[key_bindings]]
+Atajos de teclado
+-----------------
+
+WeeChat usa muchas teclas por defecto. Las mismas, están bien
+explicadas en la documentación pero debe conocer al menos la mas
+importantes.
+
+- 'alt + cursor izquierdo/derecho' (o 'F5'/'F6'): Cambiara al buffer siguiente/anterior
+- 'F7'/'F8': Cambiara a la siguiente/anterior ventana (cuando la pantalla este dividida)
+- 'F9'/'F10': desplazamiento del texto en la barra de titulo
+- 'F11'/'F12': desplazamiento del texto en la lista de nick
+- 'tab': Completa los textos o nick que se escriben
+- 'pag up/down': desplazamiento del texto en el buffer
+- 'alt + A': salta al siguiente buffer con actividad reciente
+
+De acuerdo con su teclado y/o sus necesidades, puede asignar teclas a un
+comando usando el comando `/key`.
+Una combinación de teclas muy valiosa es meta-k (alt-k) para hallar el código de
+alguna tecla.
+
+Por ejemplo, para asignar la combinación meta-y (alt-y) al comando
+`/buffer close`:
+
+  /key bind (presionamos meta-k) (presionamos meta-y) /buffer close
+
+El comando se vera mas o menos así:
+
+  /key bind meta-y /buffer close
+
+Para eliminar una combinación:
+
+  /key unbind meta-y
+
+
+[[plugins_scripts]]
+Plugins/scripts
+---------------
+
+En algunas distribuciones como Debian, los plugins están disponibles en
+un paquete separado (como weechat-plugin).
+Los plugins se cargan de manera automática cuando son encontrados por WeeChat
+(por favor, refierase a la documentación de WeeChat para ver como cargar/descargar
+plugins y scripts).
+
+Algunos plugins, permiten usar scripts en WeeChat (en muchos lenguajes
+como Perl, Python, Ruby, Lua y Tcl). Estos plugins deben ser cargados con
+el comando `/plugin` los mismos proveen comandos como `/perl`, usados
+para cargar scripts en este lenguaje.
+
+Muchos plugins/scripts externos (de contribuidores) están disponibles
+para WeeChat en: http://www.weechat.org/scripts
+
+Una manera fácil de instalar scripts es usar un script llamado
+'weeget.py'
+
+. descarga y copia 'weeget.py' en ~/.weechat/python/autoload/
+. carga script: `/python autoload`
+. lista los scripts: `/weeget list` (ayuda: `/help weeget`)
+
+
+[[more_doc]]
+Más documentación
+-----------------
+
+Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
+en: http://www.weechat.org/doc
+
+Disfrute de WeeChat!
