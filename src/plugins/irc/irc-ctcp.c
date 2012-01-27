@@ -34,6 +34,7 @@
 #include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
 #include "irc-server.h"
@@ -120,7 +121,9 @@ irc_ctcp_display_request (struct t_irc_server *server,
         && !weechat_config_boolean (irc_config_look_display_ctcp_blocked))
         return;
 
-    weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, nick,
+                                                          NULL, "ctcp",
+                                                          (channel) ? channel->buffer : NULL),
                          irc_protocol_tags (command, "irc_ctcp", NULL),
                          _("%sCTCP requested by %s%s%s: %s%s%s%s%s%s"),
                          weechat_prefix ("network"),
@@ -178,8 +181,11 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
 
                     difftime = ((sec2 * 1000000) + usec2) -
                         ((sec1 * 1000000) + usec1);
-
-                    weechat_printf_tags (server->buffer,
+                    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server,
+                                                                          nick,
+                                                                          NULL,
+                                                                          "ctcp",
+                                                                          NULL),
                                          irc_protocol_tags (command,
                                                             "irc_ctcp",
                                                             NULL),
@@ -202,7 +208,11 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
             }
             else
             {
-                weechat_printf_tags (server->buffer,
+                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server,
+                                                                      nick,
+                                                                      NULL,
+                                                                      "ctcp",
+                                                                      NULL),
                                      irc_protocol_tags (command,
                                                         "irc_ctcp",
                                                         NULL),
@@ -221,7 +231,9 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
         }
         else
         {
-            weechat_printf_tags (server->buffer,
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, nick,
+                                                                  NULL, "ctcp",
+                                                                  NULL),
                                  irc_protocol_tags (command, NULL, NULL),
                                  _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                                  weechat_prefix ("network"),
@@ -277,7 +289,11 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 str_args = weechat_hashtable_get (hashtable, hash_key);
                 if (!str_args)
                     break;
-                weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+                weechat_printf_tags (irc_msgbuffer_get_target_buffer (server,
+                                                                      nick,
+                                                                      NULL,
+                                                                      "ctcp",
+                                                                      (channel) ? channel->buffer : NULL),
                                      irc_protocol_tags (command,
                                                         "irc_ctcp,irc_ctcp_reply,"
                                                         "notify_none,no_highlight",
@@ -1010,7 +1026,11 @@ irc_ctcp_recv (struct t_irc_server *server, const char *command,
             {
                 if (weechat_config_boolean (irc_config_look_display_ctcp_unknown))
                 {
-                    weechat_printf_tags ((channel) ? channel->buffer : server->buffer,
+                    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server,
+                                                                          nick,
+                                                                          NULL,
+                                                                          "ctcp",
+                                                                          (channel) ? channel->buffer : NULL),
                                          irc_protocol_tags (command,
                                                             "irc_ctcp",
                                                             NULL),

@@ -42,6 +42,7 @@
 #include "irc-display.h"
 #include "irc-ignore.h"
 #include "irc-input.h"
+#include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -941,7 +942,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "PRIVMSG %s :\01PING %s\01",
                               argv[1], str_time);
-            weechat_printf (ptr_server->buffer,
+            weechat_printf (irc_msgbuffer_get_target_buffer (ptr_server,
+                                                             argv[1],
+                                                             NULL, "ctcp",
+                                                             NULL),
                             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
                             weechat_prefix ("network"),
                             IRC_COLOR_CHAT_NICK,
@@ -961,7 +965,10 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
                               irc_cmd,
                               (argv_eol[3]) ? " " : "",
                               (argv_eol[3]) ? argv_eol[3] : "");
-            weechat_printf (ptr_server->buffer,
+            weechat_printf (irc_msgbuffer_get_target_buffer (ptr_server,
+                                                             argv[1],
+                                                             NULL, "ctcp",
+                                                             NULL),
                             _("%sCTCP query to %s%s%s: %s%s%s%s%s"),
                             weechat_prefix ("network"),
                             IRC_COLOR_CHAT_NICK,
@@ -2802,7 +2809,11 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                     break;
                 string = irc_color_decode (str_args,
                                            weechat_config_boolean (irc_config_network_colors_receive));
-                weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
+                weechat_printf_tags (irc_msgbuffer_get_target_buffer (ptr_server,
+                                                                      argv[arg_target],
+                                                                      "notice",
+                                                                      NULL,
+                                                                      (ptr_channel) ? ptr_channel->buffer : NULL),
                                      "notify_none,no_highlight",
                                      "%s%s%s%s -> %s%s%s: %s",
                                      weechat_prefix ("network"),

@@ -1636,6 +1636,7 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | quit    |               | quit
 | topic   |               | topic
 | wallops |               | wallops
+|         | ctcp          | ctcp (envoyé ou reçu, dans un message privmsg ou notice)
 | 221     |               | chaîne de mode utilisateur
 | 275     | whois         | whois (connexion sécurisée)
 | 301     | whois         | whois (absent)

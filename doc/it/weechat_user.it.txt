@@ -1626,6 +1626,8 @@ personalizzare:
 | quit      |               | quit
 | topic     |               | topic
 | wallops   |               | wallops
+// TRANSLATION MISSING
+|           | ctcp          | ctcp (sent or received, in a privmsg or notice message)
 | 221       |               | stringa modalità utente
 | 275       | whois         | whois (connessione sicura)
 | 301       | whois         | whois (assente)

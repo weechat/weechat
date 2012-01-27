@@ -1608,6 +1608,8 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | quit      |               | quit
 | topic     |               | topic
 | wallops   |               | wallops
+// TRANSLATION MISSING
+|           | ctcp          | ctcp (sent or received, in a privmsg or notice message)
 | 221       |               | User mode string
 | 275       | whois         | whois (sichere Verbindung)
 | 301       | whois         | whois (abwesend)

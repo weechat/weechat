@@ -1587,6 +1587,7 @@ Non-comprehensive list of IRC messages or alias that you can customize:
 | quit    |               | quit
 | topic   |               | topic
 | wallops |               | wallops
+|         | ctcp          | ctcp (sent or received, in a privmsg or notice message)
 | 221     |               | user mode string
 | 275     | whois         | whois (secure connection)
 | 301     | whois         | whois (away)

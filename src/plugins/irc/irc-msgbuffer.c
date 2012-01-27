@@ -93,7 +93,10 @@ irc_msgbuffer_get_target_buffer (struct t_irc_server *server, const char *nick,
     struct t_irc_channel *ptr_channel;
     struct t_weechat_plugin *buffer_plugin;
 
-    ptr_option = irc_msgbuffer_get_option (server, message);
+    ptr_option = NULL;
+
+    if (message && message[0])
+        ptr_option = irc_msgbuffer_get_option (server, message);
     if (!ptr_option && alias && alias[0])
         ptr_option = irc_msgbuffer_get_option (server, alias);
 
