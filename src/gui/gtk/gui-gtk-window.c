@@ -30,7 +30,9 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
+#include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
 #include "../gui-buffer.h"
@@ -185,6 +187,9 @@ gui_window_switch (struct t_gui_window *window)
     gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
 
     gui_window_redraw_buffer (gui_current_window->buffer);
+
+    hook_signal_send ("window_switch",
+                      WEECHAT_HOOK_SIGNAL_POINTER, window);
 }
 
 /*

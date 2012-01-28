@@ -889,8 +889,10 @@ gui_window_coords_alloc (struct t_gui_window *window)
 void
 gui_window_free (struct t_gui_window *window)
 {
-    struct t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win, *old_current_window;
     int i;
+
+    old_current_window = gui_current_window;
 
     hook_signal_send ("window_closing", WEECHAT_HOOK_SIGNAL_POINTER, window);
 
@@ -946,6 +948,12 @@ gui_window_free (struct t_gui_window *window)
     hook_signal_send ("window_closed", WEECHAT_HOOK_SIGNAL_POINTER, window);
 
     free (window);
+
+    if (gui_current_window != old_current_window)
+    {
+        hook_signal_send ("window_switch",
+                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+    }
 }
 
 /*

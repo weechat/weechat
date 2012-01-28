@@ -16,7 +16,7 @@ Version 0.3.7 (under dev!)
 * core: save current mouse state in option weechat.look.mouse (set option when
   mouse state is changed with command /mouse)
 * core: add type "hashtable" for hdata
-* core: add signal "buffer_line_added"
+* core: add signals "buffer_line_added" and "window_switch"
 * core: add default keys "meta2-1;5D" and "meta2-1;5C" (ctrl+left/right) for
   gnome-terminal
 * core: add option "hooks" for command /debug

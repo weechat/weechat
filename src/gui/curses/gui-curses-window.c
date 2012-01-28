@@ -1178,6 +1178,9 @@ gui_window_switch (struct t_gui_window *window)
     old_window->refresh_needed = 1;
 
     gui_input_move_to_buffer (old_window->buffer, window->buffer);
+
+    hook_signal_send ("window_switch",
+                      WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
 }
 
 /*

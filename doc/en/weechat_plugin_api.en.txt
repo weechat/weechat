@@ -7471,6 +7471,9 @@ Arguments:
 | weechat | window_scrolled | pointer: window |
   scroll in window
 
+| weechat | window_switch | pointer: window |
+  switching window
+
 | weechat | window_unzooming | pointer: current window |
   unzooming window
 

@@ -7581,6 +7581,9 @@ Paramètres :
 | weechat | window_scrolled | pointeur : fenêtre |
   défilement dans la fenêtre
 
+| weechat | window_switch | pointeur : fenêtre |
+  basculement vers une autre fenêtre
+
 | weechat | window_unzooming | pointeur : fenêtre courante |
   fin du zoom en cours sur la fenêtre
 

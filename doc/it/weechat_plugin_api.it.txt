@@ -7516,6 +7516,10 @@ Argomenti:
 | weechat | window_scrolled | puntatore: finestra |
   scroll nella finestra
 
+// TRANSLATION MISSING
+| weechat | window_switch | pointer: window |
+  switching window
+
 | weechat | window_unzooming | puntatore: finestra corrente |
   minimizzazione della finestra
 
