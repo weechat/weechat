@@ -1070,7 +1070,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
 
     /* set default options */
     curl_easy_setopt (curl, CURLOPT_URL, url);
-    curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, "1");
+    curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, 1L);
 
     /* set file in/out from options in hashtable */
     if (options)
