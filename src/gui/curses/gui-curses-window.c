@@ -1139,8 +1139,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 
     gui_input_move_to_buffer (old_buffer, window->buffer);
 
-    hook_signal_send ("buffer_switch",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    if (old_buffer != buffer)
+    {
+        hook_signal_send ("buffer_switch",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    }
 }
 
 /*

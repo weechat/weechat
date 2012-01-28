@@ -7,6 +7,8 @@ v0.3.7-dev, 2012-01-28
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: fix signal "buffer_switch": send it only once when switching buffer
+  (bug #31158)
 * core: move option "scroll_unread" from command /input to /window
 * core: add support of flags in regular expressions and highlight options
 * core: add library "pthread" in cmake file for link on OpenBSD
