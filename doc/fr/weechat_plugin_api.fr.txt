@@ -7409,212 +7409,292 @@ Paramètres :
 |========================================
 | Extension | Signal | Paramètres | Description
 
-| irc | xxx,irc_in_yyy ^(1)^ | chaîne : message |
+| irc | xxx,irc_in_yyy ^(1)^ |
+  chaîne : message |
   message irc du serveur (avant utilisation par l'extension irc,
   signal envoyé uniquement si le message n'est *pas* ignoré)
 
-| irc | xxx,irc_in2_yyy ^(1)^ | chaîne : message |
+| irc | xxx,irc_in2_yyy ^(1)^ |
+  chaîne : message |
   message irc du serveur (après utilisation par l'extension irc,
   signal envoyé uniquement si le message n'est *pas* ignoré)
 
-| irc | xxx,irc_raw_in_yyy ^(1)^ | chaîne : message |
+| irc | xxx,irc_raw_in_yyy ^(1)^ +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : message |
   message irc du serveur (avant utilisation par l'extension irc,
   signal envoyé même si le message est ignoré)
 
-| irc | xxx,irc_raw_in2_yyy ^(1)^ | chaîne : message |
+| irc | xxx,irc_raw_in2_yyy ^(1)^ +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : message |
   message irc du serveur (après utilisation par l'extension irc,
   signal envoyé même si le message est ignoré)
 
-| irc | xxx,irc_out_yyy ^(1)^ | chaîne : message |
+| irc | xxx,irc_out_yyy ^(1)^ |
+  chaîne : message |
   message irc envoyé au serveur
 
-| irc | xxx,irc_outtags_yyy ^(1)^ | chaîne : étiquettes + ";" + message |
+| irc | xxx,irc_outtags_yyy ^(1)^ +
+  (_nouveau dans la version 0.3.4_) |
+  chaîne : étiquettes + ";" + message |
   étiquettes + message irc envoyé au serveur
 
-| irc | irc_ctcp | chaîne : message |
+| irc | irc_ctcp |
+  chaîne : message |
   CTCP reçu
 
-| irc | irc_dcc | chaîne message |
+| irc | irc_dcc |
+  chaîne : message |
   nouveau DCC
 
-| irc | irc_pv | chaîne : message |
+| irc | irc_pv |
+  chaîne : message |
   message privé reçu
 
-| irc | irc_channel_opened | pointeur : tampon |
+| irc | irc_channel_opened |
+  pointeur : tampon |
   canal ouvert
 
-| irc | irc_pv_opened | pointeur : tampon |
+| irc | irc_pv_opened |
+  pointeur : tampon |
   discussion privée ouverte
 
-| irc | irc_server_connecting | chaîne : nom du serveur |
+| irc | irc_server_connecting |
+  chaîne : nom du serveur |
   connexion en cours au serveur
 
-| irc | irc_server_connected | chaîne : nom du serveur |
+| irc | irc_server_connected |
+  chaîne : nom du serveur |
   connecté au serveur
 
-| irc | irc_server_disconnected | chaîne : nom du serveur |
+| irc | irc_server_disconnected |
+  chaîne : nom du serveur |
   déconnecté du serveur
 
-| irc | irc_ignore_removing | pointeur : ignore |
+| irc | irc_ignore_removing |
+  pointeur : ignore |
   suppression d'un ignore en cours
 
-| irc | irc_ignore_removed | - |
+| irc | irc_ignore_removed |
+  - |
   ignore supprimé
 
-| logger | logger_start | pointeur : tampon |
+| logger | logger_start |
+  pointeur : tampon |
   démarrage de l'enregistrement sur disque pour le tampon
 
-| logger | logger_stop | pointeur : tampon |
+| logger | logger_stop |
+  pointeur : tampon |
   fin de l'enregistrement sur disque pour le tampon
 
-| logger | logger_backlog | pointeur : tampon |
+| logger | logger_backlog |
+  pointeur : tampon |
   affichage du backlog pour le tampon
 
-| weechat | buffer_closing | pointeur : tampon |
+| weechat | buffer_closing |
+  pointeur : tampon |
   fermeture du tampon en cours
 
-| weechat | buffer_closed | pointeur : tampon |
+| weechat | buffer_closed |
+  pointeur : tampon |
   tampon fermé
 
-| weechat | buffer_lines_hidden | pointeur : tampon |
+| weechat | buffer_lines_hidden |
+  pointeur : tampon |
   lignes cachées dans le tampon
 
-| weechat | buffer_localvar_added | pointeur : tampon |
+| weechat | buffer_localvar_added |
+  pointeur : tampon |
   variable locale ajoutée
 
-| weechat | buffer_localvar_changed | pointeur : tampon |
+| weechat | buffer_localvar_changed |
+  pointeur : tampon |
   variable locale modifiée
 
-| weechat | buffer_localvar_removed | pointeur : tampon |
+| weechat | buffer_localvar_removed |
+  pointeur : tampon |
   variable locale supprimée
 
-| weechat | buffer_moved | pointeur : tampon |
+| weechat | buffer_moved |
+  pointeur : tampon |
   tampon déplacé
 
-| weechat | buffer_opened | pointeur : tampon |
+| weechat | buffer_opened |
+  pointeur : tampon |
   tampon ouvert
 
-| weechat | buffer_renamed | pointeur : tampon |
+| weechat | buffer_renamed |
+  pointeur : tampon |
   tampon renommé
 
-| weechat | buffer_switch | pointeur : tampon |
+| weechat | buffer_switch |
+  pointeur : tampon |
   basculement vers un autre tampon
 
-| weechat | buffer_title_changed | pointeur : tampon |
+| weechat | buffer_title_changed |
+  pointeur : tampon |
   titre du tampon changé
 
-| weechat | buffer_type_changed | pointeur : tampon |
+| weechat | buffer_type_changed |
+  pointeur : tampon |
   type de tampon changé
 
-| weechat | buffer_line_added | pointeur : ligne |
+| weechat | buffer_line_added +
+  (_nouveau dans la version 0.3.7_) |
+  pointeur : ligne |
   ligne ajoutée dans un tampon
 
-| weechat | day_changed | chaîne : nouvelle date, format : "2010-01-31" |
+| weechat | day_changed +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : nouvelle date, format : "2010-01-31" |
   le jour de la date système a changé
 
-| weechat | debug_dump | chaîne : nom d'extension |
+| weechat | debug_dump |
+  chaîne : nom d'extension |
   requête de "dump"
 
-| weechat | filter_added | pointeur : filtre |
+| weechat | filter_added |
+  pointeur : filtre |
   filtre ajouté
 
-| weechat | filter_removing | pointre : filtre |
+| weechat | filter_removing |
+  pointre : filtre |
   suppression de filtre en cours
 
-| weechat | filter_removed | - |
+| weechat | filter_removed |
+  - |
   filtre supprimé
 
-| weechat | filter_enabled | - |
+| weechat | filters_enabled |
+  - |
   filtres activés
 
-| weechat | filter_disabled | - |
+| weechat | filters_disabled |
+  - |
   filtres désactivés
 
-| weechat | hotlist_changed | - |
+| weechat | hotlist_changed |
+  - |
   la hotlist a changé
 
-| weechat | input_paste_pending | - |
+| weechat | input_paste_pending |
+  - |
   coller de lignes en cours
 
-| weechat | input_search | - |
+| weechat | input_search |
+  - |
   recherche de texte dans le tampon
 
-| weechat | input_text_changed | - |
+| weechat | input_text_changed |
+  - |
   texte modifié dans la barre "input"
 
-| weechat | input_text_cursor_moved | - |
+| weechat | input_text_cursor_moved |
+  - |
   curseur déplacé dans la barre "input"
 
-| weechat | key_pressed | chaîne : touche appuyée |
+| weechat | key_pressed |
+  chaîne : touche appuyée |
   touche appuyée
 
-| weechat | nicklist_group_added | chaîne : pointeur tampon + "," + nom du groupe |
+| weechat | nicklist_group_added +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : pointeur tampon + "," + nom du groupe |
   groupe ajouté dans la liste des pseudos
 
-| weechat | nicklist_group_removed | chaîne : pointeur tampon + "," + nom du groupe |
+| weechat | nicklist_group_removed +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : pointeur tampon + "," + nom du groupe |
   groupe supprimé de la liste des pseudos
 
-| weechat | nicklist_nick_added | chaîne : pointeur tampon + "," + pseudo |
+| weechat | nicklist_nick_added +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : pointeur tampon + "," + pseudo |
   pseudo ajouté dans la liste des pseudos
 
-| weechat | nicklist_nick_removed | chaîne : pointeur tampon + "," + pseudo |
+| weechat | nicklist_nick_removed +
+  (_nouveau dans la version 0.3.2_) |
+  chaîne : pointeur tampon + "," + pseudo |
   pseudo supprimé de la liste des pseudos
 
-| weechat | partial_completion | - |
+| weechat | partial_completion |
+  - |
   une complétion partielle a été faite
 
-| weechat | quit | chaîne : paramètres pour le /quit |
+| weechat | quit |
+  chaîne : paramètres pour le /quit |
   la commande `/quit` a été exécutée par l'utilisateur
 
-| weechat | upgrade | - |
+| weechat | upgrade |
+  - |
   la commande `/upgrade` a été exécutée par l'utilisateur
 
-| weechat | upgrade_ended | - |
+| weechat | upgrade_ended +
+  (_nouveau dans la version 0.3.4_) |
+  - |
   fin du processus de mise à jour (commande `/upgrade`)
 
-| weechat | weechat_highlight | chaîne : message avec le préfixe |
+| weechat | weechat_highlight |
+  chaîne : message avec le préfixe |
   un highlight est survenu
 
-| weechat | weechat_pv | chaîne : message avec le préfixe |
+| weechat | weechat_pv |
+  chaîne : message avec le préfixe |
   un message privé a été affiché
 
-| weechat | window_scrolled | pointeur : fenêtre |
+| weechat | window_scrolled |
+  pointeur : fenêtre |
   défilement dans la fenêtre
 
-| weechat | window_switch | pointeur : fenêtre |
+| weechat | window_switch +
+  (_nouveau dans la version 0.3.7_) |
+  pointeur : fenêtre |
   basculement vers une autre fenêtre
 
-| weechat | window_unzooming | pointeur : fenêtre courante |
+| weechat | window_unzoom |
+  pointeur : fenêtre courante |
   fin du zoom en cours sur la fenêtre
 
-| weechat | window_unzoomed | pointeur : fenêtre courante |
+| weechat | window_unzoomed |
+  pointeur : fenêtre courante |
   fin du zoom effectué sur la fenêtre
 
-| weechat | window_zooming | pointeur : fenêtre courante |
+| weechat | window_zoom |
+  pointeur : fenêtre courante |
   zoom en cours sur la fenêtre
 
-| weechat | window_zoomed | pointeur : fenêtre courante |
+| weechat | window_zoomed |
+  pointeur : fenêtre courante |
   zomm effectué sur la fenêtre
 
-| xfer | xfer_add | pointeur : infolist avec l'info xfer |
+| xfer | xfer_add |
+  pointeur : infolist avec l'info xfer |
   nouveau xfer
 
-| xfer | xfer_send_ready | pointeur : infolist avec l'info xfer |
+| xfer | xfer_send_ready |
+  pointeur : infolist avec l'info xfer |
   xfer ready
 
-| xfer | xfer_accept_resume | pointeur : infolist avec l'info xfer |
+| xfer | xfer_accept_resume |
+  pointeur : infolist avec l'info xfer |
   le xfer accepte la reprise (envoi)
 
-| xfer | xfer_send_accept_resume | pointeur : infolist avec l'info xfer |
+| xfer | xfer_send_accept_resume |
+  pointeur : infolist avec l'info xfer |
   le xfer accepte la reprise (envoi)
 
-| xfer | xfer_start_resume | pointeur : infolist avec l'info xfer |
+| xfer | xfer_start_resume |
+  pointeur : infolist avec l'info xfer |
   redémarrage
 
-| xfer | xfer_resume_ready | pointer : infolist avec l'info xfer |
+| xfer | xfer_resume_ready |
+  pointer : infolist avec l'info xfer |
   redémarrage prêt
 
-| xfer | xfer_ended | pointer : infolist avec l'info xfer |
+| xfer | xfer_ended +
+  (_nouveau dans la version 0.3.2_) |
+  pointer : infolist avec l'info xfer |
   le xfer s'est terminé
 |========================================
 

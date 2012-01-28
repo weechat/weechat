@@ -7339,219 +7339,299 @@ Argomenti:
 |========================================
 | Plugin | Segnale | Argomenti | Descrizione
 
-| irc | xxx,irc_in_yyy ^(1)^ | string: messaggio |
+| irc | xxx,irc_in_yyy ^(1)^ |
+  string: messaggio |
   messaggio irc dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
   messaggio *non* viene ignorato)
 
-| irc | xxx,irc_in2_yyy ^(1)^ | string: messaggio |
+| irc | xxx,irc_in2_yyy ^(1)^ |
+  string: messaggio |
   messaggio irc dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
   solo se il messaggio *non* viene ignorato)
 
-| irc | xxx,irc_raw_in_yyy ^(1)^ | string: messaggio |
+| irc | xxx,irc_raw_in_yyy ^(1)^ +
+  (_novità nella versione 0.3.2_) |
+  string: messaggio |
   messaggio irc dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
   messaggio è stato ignorato)
 
-| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: messaggio |
+| irc | xxx,irc_raw_in2_yyy ^(1)^ +
+  (_novità nella versione 0.3.2_) |
+  string: messaggio |
   messaggio irc dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato)
 
-| irc | xxx,irc_out_yyy ^(1)^ | string: messaggio |
+| irc | xxx,irc_out_yyy ^(1)^ |
+  string: messaggio |
   messaggio irc inviato al server
 
-| irc | xxx,irc_outtags_yyy ^(1)^ | stringa: tag + ";" + messaggio |
+| irc | xxx,irc_outtags_yyy ^(1)^ +
+  (_novità nella versione 0.3.4_) |
+  stringa: tag + ";" + messaggio |
   tag + messaggio irc inviato al server
 
-| irc | irc_ctcp | string: messaggio |
+| irc | irc_ctcp |
+  string: messaggio |
   CTCP ricevuto
 
-| irc | irc_dcc | string: messaggio |
+| irc | irc_dcc |
+  string: messaggio |
   nuova DCC
 
-| irc | irc_pv | string: messaggio |
+| irc | irc_pv |
+  string: messaggio |
   messaggio privato ricevuto
 
-| irc | irc_channel_opened | puntatore: buffer |
+| irc | irc_channel_opened |
+  puntatore: buffer |
   canale aperto
 
-| irc | irc_pv_opened | puntatore: buffer |
+| irc | irc_pv_opened |
+  puntatore: buffer |
   chat privata aperta
 
-| irc | irc_server_connecting | string: nome server |
+| irc | irc_server_connecting |
+  string: nome server |
   connessione al server
 
-| irc | irc_server_connected | string: nome server |
+| irc | irc_server_connected |
+  string: nome server |
   connesso al server
 
-| irc | irc_server_disconnected | string: nome server |
+| irc | irc_server_disconnected |
+  string: nome server |
   disconnesso dal server
 
-| irc | irc_ignore_removing | puntatore: ignore |
+| irc | irc_ignore_removing |
+  puntatore: ignore |
   rimozione dell'ignore
 
-| irc | irc_ignore_removed | - |
+| irc | irc_ignore_removed |
+  - |
   ignore rimosso
 
-| logger | logger_start | puntatore: buffer |
+| logger | logger_start |
+  puntatore: buffer |
   avvia il logging per il buffer
 
-| logger | logger_stop | puntatore: buffer |
+| logger | logger_stop |
+  puntatore: buffer |
   ferma il logging per il buffer
 
-| logger | logger_backlog | puntatore: buffer |
+| logger | logger_backlog |
+  puntatore: buffer |
   visualizza log precedenti per il buffer
 
-| weechat | buffer_closing | puntatore: buffer |
+| weechat | buffer_closing |
+  puntatore: buffer |
   chiusura del buffer
 
-| weechat | buffer_closed | puntatore: buffer |
+| weechat | buffer_closed |
+  puntatore: buffer |
   buffer chiuso
 
-| weechat | buffer_lines_hidden | puntatore: buffer |
+| weechat | buffer_lines_hidden |
+  puntatore: buffer |
   righe nascoste nel buffer
 
-| weechat | buffer_localvar_added | puntatore: buffer |
+| weechat | buffer_localvar_added |
+  puntatore: buffer |
   variabili locali aggiunte
 
-| weechat | buffer_localvar_changed | puntatore: buffer |
+| weechat | buffer_localvar_changed |
+  puntatore: buffer |
   variabili locali modificate
 
-| weechat | buffer_localvar_removed | puntatore: buffer |
+| weechat | buffer_localvar_removed |
+  puntatore: buffer |
   variabili locali rimosse
 
-| weechat | buffer_moved | puntatore: buffer |
+| weechat | buffer_moved |
+  puntatore: buffer |
   buffer spostato
 
-| weechat | buffer_opened | puntatore: buffer |
+| weechat | buffer_opened |
+  puntatore: buffer |
   buffer aperto
 
-| weechat | buffer_renamed | puntatore: buffer |
+| weechat | buffer_renamed |
+  puntatore: buffer |
   buffer rinominato
 
-| weechat | buffer_switch | puntatore: buffer |
+| weechat | buffer_switch |
+  puntatore: buffer |
   passaggio tra buffer
 
-| weechat | buffer_title_changed | puntatore: buffer |
+| weechat | buffer_title_changed |
+  puntatore: buffer |
   titolo del buffer modificato
 
-| weechat | buffer_type_changed | puntatore: buffer |
+| weechat | buffer_type_changed |
+  puntatore: buffer |
   tipo di buffer modificato
 
 // TRANSLATION MISSING
-| weechat | buffer_line_added | puntatore: line |
+| weechat | buffer_line_added +
+  (_novità nella versione 0.3.7_) |
+  puntatore: line |
   line added in a buffer
 
-| weechat | debug_dump | stringa: nome plugin |
-  richiesta di dump
-
-| weechat | day_changed | string: nuova data, formato: "2010-01-31" |
+| weechat | day_changed +
+  (_novità nella versione 0.3.2_) |
+  string: nuova data, formato: "2010-01-31" |
   data di sistema modificata
 
-| weechat | filter_added | puntatore: filtro |
+| weechat | debug_dump |
+  stringa: nome plugin |
+  richiesta di dump
+
+| weechat | filter_added |
+  puntatore: filtro |
   filtro aggiunto
 
-| weechat | filter_removing | puntatore: filtro |
+| weechat | filter_removing |
+  puntatore: filtro |
   rimozione del filtro
 
-| weechat | filter_removed | - |
+| weechat | filter_removed |
+  - |
   filtro rimosso
 
-| weechat | filter_enabled | - |
+| weechat | filters_enabled |
+  - |
   filtri abilitati
 
-| weechat | filter_disabled | - |
+| weechat | filters_disabled |
+  - |
   filtri disabilitati
 
-| weechat | hotlist_changed | - |
+| weechat | hotlist_changed |
+  - |
   hotlist modificata
 
-| weechat | input_paste_pending | - |
+| weechat | input_paste_pending |
+  - |
   incolla testo in attesa
 
-| weechat | input_search | - |
+| weechat | input_search |
+  - |
   ricerca testo nel buffer
 
-| weechat | input_text_changed | - |
+| weechat | input_text_changed |
+  - |
   testo in input modificato
 
-| weechat | input_text_cursor_moved | - |
+| weechat | input_text_cursor_moved |
+  - |
   cursore del testo di input spostato
 
-| weechat | key_pressed | string: tasto digitato |
+| weechat | key_pressed |
+  string: tasto digitato |
   tasto digitato
 
-| weechat | nicklist_group_added | string: buffer pointer + "," + group name |
+| weechat | nicklist_group_added +
+  (_novità nella versione 0.3.2_) |
+  string: buffer pointer + "," + group name |
   group added in nicklist
 
-| weechat | nicklist_group_removed | string: buffer pointer + "," + group name |
+| weechat | nicklist_group_removed +
+  (_novità nella versione 0.3.2_) |
+  string: buffer pointer + "," + group name |
   group removed from nicklist
 
-| weechat | nicklist_nick_added | string: buffer pointer + "," + nick name |
+| weechat | nicklist_nick_added +
+  (_novità nella versione 0.3.2_) |
+  string: buffer pointer + "," + nick name |
   nick added in nicklist
 
-| weechat | nicklist_nick_removed | string: buffer pointer + "," + nick name |
+| weechat | nicklist_nick_removed +
+  (_novità nella versione 0.3.2_) |
+  string: buffer pointer + "," + nick name |
   nick removed from nicklist
 
-| weechat | partial_completion | - |
+| weechat | partial_completion |
+  - |
   completamento parziale avvenuto
 
-| weechat | quit | string: argomenti per /quit |
+| weechat | quit |
+  string: argomenti per /quit |
   comando `/quit` digitato dall'utente
 
-| weechat | upgrade | - |
+| weechat | upgrade |
+  - |
   comando `/upgrade` digitato dall'utente
 
-| weechat | upgrade_ended | - |
+| weechat | upgrade_ended +
+  (_novità nella versione 0.3.4_) |
+  - |
   fine del processo di aggiornamento (comando `/upgrade`)
 
-| weechat | weechat_highlight | string: messaggio con prefisso |
+| weechat | weechat_highlight |
+  string: messaggio con prefisso |
   evento accaduto
 
-| weechat | weechat_pv | string: messaggio con prefisso |
+| weechat | weechat_pv |
+  string: messaggio con prefisso |
   messaggio privato visualizzato
 
-| weechat | window_scrolled | puntatore: finestra |
+| weechat | window_scrolled |
+  puntatore: finestra |
   scroll nella finestra
 
 // TRANSLATION MISSING
-| weechat | window_switch | pointer: window |
+| weechat | window_switch +
+  (_novità nella versione 0.3.7_) |
+  pointer: window |
   switching window
 
-| weechat | window_unzooming | puntatore: finestra corrente |
+| weechat | window_unzoom |
+  puntatore: finestra corrente |
   minimizzazione della finestra
 
-| weechat | window_unzoomed | puntatore: finestra corrente |
+| weechat | window_unzoomed |
+  puntatore: finestra corrente |
   window unzoomed
   finestra minimizzata
 
-| weechat | window_zooming | puntatore: finestra corrente |
+| weechat | window_zoom |
+  puntatore: finestra corrente |
   massimizzazione della finestra
 
-| weechat | window_zoomed | puntatore: finestra corrente |
+| weechat | window_zoomed |
+  puntatore: finestra corrente |
   finestra massimizzata
 
-| xfer | xfer_add | puntatore: lista info con info per xfer|
+| xfer | xfer_add |
+  puntatore: lista info con info per xfer|
   nuovo xfer
 
-| xfer | xfer_send_ready | puntatore: lista info xon info per xfer |
+| xfer | xfer_send_ready |
+  puntatore: lista info xon info per xfer |
   xfer pronto
 
-| xfer | xfer_accept_resume | puntatore: lista info con info per xfer |
+| xfer | xfer_accept_resume |
+  puntatore: lista info con info per xfer |
   xfer accetta la ripresa
 
-| xfer | xfer_send_accept_resume | puntatore: lista info con info per xfer |
+| xfer | xfer_send_accept_resume |
+  puntatore: lista info con info per xfer |
   xfer accetta la ripresa (invio)
 
-| xfer | xfer_start_resume |  puntatore: lista info con info per xfer |
+| xfer | xfer_start_resume |
+  puntatore: lista info con info per xfer |
   avvia ripresa
 
-| xfer | xfer_resume_ready | puntatore: lista info con info per xfer |
+| xfer | xfer_resume_ready |
+  puntatore: lista info con info per xfer |
   ripresa xfer pronta
 
-| xfer | xfer_ended | puntatore: lista info con info per xfer |
+| xfer | xfer_ended +
+  (_novità nella versione 0.3.2_) |
+  puntatore: lista info con info per xfer |
   xfer terminato
 
 |========================================

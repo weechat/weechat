@@ -7299,212 +7299,292 @@ Arguments:
 |========================================
 | Plugin | Signal | Arguments | Description
 
-| irc | xxx,irc_in_yyy ^(1)^ | string: message |
+| irc | xxx,irc_in_yyy ^(1)^ |
+  string: message |
   irc message from server (before irc plugin uses it,
   signal sent only if message is *not* ignored)
 
-| irc | xxx,irc_in2_yyy ^(1)^ | string: message |
+| irc | xxx,irc_in2_yyy ^(1)^ |
+  string: message |
   irc message from server (after irc plugin uses it,
   signal sent only if message is *not* ignored)
 
-| irc | xxx,irc_raw_in_yyy ^(1)^ | string: message |
+| irc | xxx,irc_raw_in_yyy ^(1)^ +
+  (_new in version 0.3.2_) |
+  string: message |
   irc message from server (before irc plugin uses it,
   signal sent even if message is ignored)
 
-| irc | xxx,irc_raw_in2_yyy ^(1)^ | string: message |
+| irc | xxx,irc_raw_in2_yyy ^(1)^ +
+  (_new in version 0.3.2_) |
+  string: message |
   irc message from server (after irc plugin uses it,
   signal sent even if message is ignored)
 
-| irc | xxx,irc_out_yyy ^(1)^ | string: message |
+| irc | xxx,irc_out_yyy ^(1)^ |
+  string: message |
   irc message sent to server
 
-| irc | xxx,irc_outtags_yyy ^(1)^ | string: tags + ";" + message |
+| irc | xxx,irc_outtags_yyy ^(1)^ +
+  (_new in version 0.3.4_) |
+  string: tags + ";" + message |
   tags + irc message sent to server
 
-| irc | irc_ctcp | string: message |
+| irc | irc_ctcp |
+  string: message |
   CTCP received
 
-| irc | irc_dcc | string: message |
+| irc | irc_dcc |
+  string: message |
   new DCC
 
-| irc | irc_pv | string: message |
+| irc | irc_pv |
+  string: message |
   private message received
 
-| irc | irc_channel_opened | pointer: buffer |
+| irc | irc_channel_opened |
+  pointer: buffer |
   channel opened
 
-| irc | irc_pv_opened | pointer: buffer |
+| irc | irc_pv_opened |
+  pointer: buffer |
   private opened
 
-| irc | irc_server_connecting | string: server name |
+| irc | irc_server_connecting |
+  string: server name |
   connecting to server
 
-| irc | irc_server_connected | string: server name |
+| irc | irc_server_connected |
+  string: server name |
   connected to server
 
-| irc | irc_server_disconnected | string: server name |
+| irc | irc_server_disconnected |
+  string: server name |
   disconnected from server
 
-| irc | irc_ignore_removing | pointer: ignore |
+| irc | irc_ignore_removing |
+  pointer: ignore |
   removing ignore
 
-| irc | irc_ignore_removed | - |
+| irc | irc_ignore_removed |
+  - |
   ignore removed
 
-| logger | logger_start | pointer: buffer |
+| logger | logger_start |
+  pointer: buffer |
   start logging for buffer
 
-| logger | logger_stop | pointer: buffer |
+| logger | logger_stop |
+  pointer: buffer |
   stop logging for buffer
 
-| logger | logger_backlog | pointer: buffer |
+| logger | logger_backlog |
+  pointer: buffer |
   display backlog for buffer
 
-| weechat | buffer_closing | pointer: buffer |
+| weechat | buffer_closing |
+  pointer: buffer |
   closing buffer
 
-| weechat | buffer_closed | pointer: buffer |
+| weechat | buffer_closed |
+  pointer: buffer |
   buffer closed
 
-| weechat | buffer_lines_hidden | pointer: buffer |
+| weechat | buffer_lines_hidden |
+  pointer: buffer |
   lines hidden in buffer
 
-| weechat | buffer_localvar_added | pointer: buffer |
+| weechat | buffer_localvar_added |
+  pointer: buffer |
   local variable has been added
 
-| weechat | buffer_localvar_changed | pointer: buffer |
+| weechat | buffer_localvar_changed |
+  pointer: buffer |
   local variable has changed
 
-| weechat | buffer_localvar_removed | pointer: buffer |
+| weechat | buffer_localvar_removed |
+  pointer: buffer |
   local variable has been removed
 
-| weechat | buffer_moved | pointer: buffer |
+| weechat | buffer_moved |
+  pointer: buffer |
   buffer moved
 
-| weechat | buffer_opened | pointer: buffer |
+| weechat | buffer_opened |
+  pointer: buffer |
   buffer opened
 
-| weechat | buffer_renamed | pointer: buffer |
+| weechat | buffer_renamed |
+  pointer: buffer |
   buffer renamed
 
-| weechat | buffer_switch | pointer: buffer |
+| weechat | buffer_switch |
+  pointer: buffer |
   switching buffer
 
-| weechat | buffer_title_changed | pointer: buffer |
+| weechat | buffer_title_changed |
+  pointer: buffer |
   title of buffer changed
 
-| weechat | buffer_type_changed | pointer: buffer |
+| weechat | buffer_type_changed |
+  pointer: buffer |
   type of buffer changed
 
-| weechat | buffer_line_added | pointer: line |
+| weechat | buffer_line_added +
+  (_new in version 0.3.7_) |
+  pointer: line |
   line added in a buffer
 
-| weechat | day_changed | string: new date, format: "2010-01-31" |
+| weechat | day_changed +
+  (_new in version 0.3.2_) |
+  string: new date, format: "2010-01-31" |
   day of system date has changed
 
-| weechat | debug_dump | string: plugin name |
+| weechat | debug_dump |
+  string: plugin name |
   dump request
 
-| weechat | filter_added | pointer: filter |
+| weechat | filter_added |
+  pointer: filter |
   filter added
 
-| weechat | filter_removing | pointer: filter |
+| weechat | filter_removing |
+  pointer: filter |
   removing filter
 
-| weechat | filter_removed | - |
-  filter added
+| weechat | filter_removed |
+  - |
+  filter removed
 
-| weechat | filter_enabled | - |
+| weechat | filters_enabled |
+  - |
   filters enabled
 
-| weechat | filter_disabled | - |
+| weechat | filters_disabled |
+  - |
   filters disabled
 
-| weechat | hotlist_changed | - |
+| weechat | hotlist_changed |
+  - |
   hotlist changed
 
-| weechat | input_paste_pending | - |
+| weechat | input_paste_pending |
+  - |
   paste pending
 
-| weechat | input_search | - |
+| weechat | input_search |
+  - |
   text search in buffer
 
-| weechat | input_text_changed | - |
+| weechat | input_text_changed |
+  - |
   input text changed
 
-| weechat | input_text_cursor_moved | - |
+| weechat | input_text_cursor_moved |
+  - |
   input text cursor moved
 
-| weechat | key_pressed | string: key pressed |
+| weechat | key_pressed |
+  string: key pressed |
   key pressed
 
-| weechat | nicklist_group_added | string: buffer pointer + "," + group name |
+| weechat | nicklist_group_added +
+  (_new in version 0.3.2_) |
+  string: buffer pointer + "," + group name |
   group added in nicklist
 
-| weechat | nicklist_group_removed | string: buffer pointer + "," + group name |
+| weechat | nicklist_group_removed +
+  (_new in version 0.3.2_) |
+  string: buffer pointer + "," + group name |
   group removed from nicklist
 
-| weechat | nicklist_nick_added | string: buffer pointer + "," + nick name |
+| weechat | nicklist_nick_added +
+  (_new in version 0.3.2_) |
+  string: buffer pointer + "," + nick name |
   nick added in nicklist
 
-| weechat | nicklist_nick_removed | string: buffer pointer + "," + nick name |
+| weechat | nicklist_nick_removed +
+  (_new in version 0.3.2_) |
+  string: buffer pointer + "," + nick name |
   nick removed from nicklist
 
-| weechat | partial_completion | - |
+| weechat | partial_completion |
+  - |
   partial completion happened
 
-| weechat | quit | string: arguments for /quit |
+| weechat | quit |
+  string: arguments for /quit |
   command `/quit` issued by user
 
-| weechat | upgrade | - |
+| weechat | upgrade |
+  - |
   command `/upgrade` issued by user
 
-| weechat | upgrade_ended | - |
+| weechat | upgrade_ended +
+  (_new in version 0.3.4_) |
+  - |
   end of upgrade process (command `/upgrade`)
 
-| weechat | weechat_highlight | string: message with prefix |
+| weechat | weechat_highlight |
+  string: message with prefix |
   highlight happened
 
-| weechat | weechat_pv | string: message with prefix |
+| weechat | weechat_pv |
+  string: message with prefix |
   private message displayed
 
-| weechat | window_scrolled | pointer: window |
+| weechat | window_scrolled |
+  pointer: window |
   scroll in window
 
-| weechat | window_switch | pointer: window |
+| weechat | window_switch +
+  (_new in version 0.3.7_) |
+  pointer: window |
   switching window
 
-| weechat | window_unzooming | pointer: current window |
+| weechat | window_unzoom |
+  pointer: current window |
   unzooming window
 
-| weechat | window_unzoomed | pointer: current window |
+| weechat | window_unzoomed |
+  pointer: current window |
   window unzoomed
 
-| weechat | window_zooming | pointer: current window |
+| weechat | window_zoom |
+  pointer: current window |
   zomming window
 
-| weechat | window_zoomed | pointer: current window |
+| weechat | window_zoomed |
+  pointer: current window |
   window zoomed
 
-| xfer | xfer_add | pointer: infolist with xfer info |
+| xfer | xfer_add |
+  pointer: infolist with xfer info |
   new xfer
 
-| xfer | xfer_send_ready | pointer: infolist with xfer info |
+| xfer | xfer_send_ready |
+  pointer: infolist with xfer info |
   xfer ready
 
-| xfer | xfer_accept_resume | pointer: infolist with xfer info |
+| xfer | xfer_accept_resume |
+  pointer: infolist with xfer info |
   xfer accepts resume (send)
 
-| xfer | xfer_send_accept_resume | pointer: infolist with xfer info |
+| xfer | xfer_send_accept_resume |
+  pointer: infolist with xfer info |
   xfer accepts resume (send)
 
-| xfer | xfer_start_resume | pointer: infolist with xfer info |
+| xfer | xfer_start_resume |
+  pointer: infolist with xfer info |
   start resume
 
-| xfer | xfer_resume_ready | pointer: infolist with xfer info |
+| xfer | xfer_resume_ready |
+  pointer: infolist with xfer info |
   xfer resume ready
 
-| xfer | xfer_ended | pointer: infolist with xfer info |
+| xfer | xfer_ended +
+  (_new in version 0.3.2_) |
+  pointer: infolist with xfer info |
   xfer has ended
 |========================================
 
