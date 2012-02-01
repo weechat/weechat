@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2012-01-28
+v0.3.7-dev, 2012-02-01
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: do not auto add space after nick completer if option
+  weechat.completion.nick_add_space is off
 * core: fix signal "buffer_switch": send it only once when switching buffer
   (bug #31158)
 * core: move option "scroll_unread" from command /input to /window
