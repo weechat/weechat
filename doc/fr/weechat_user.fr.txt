@@ -627,7 +627,6 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 | ◽◾◽        | -            | n'importe où      | Démarrer le mode curseur ("cursor") à ce point | /cursor go ${_x},${_y}
 |========================================
 
-// TRANSLATION MISSING
 [[mouse]]
 Support souris
 ~~~~~~~~~~~~~~
