@@ -449,12 +449,12 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** Beschreibung: `comma separated list of words to highlight; case insensitive comparison (use "(?-i)" at beginning of words to make them case sensitive), words may begin or end with "*" for partial match; example: "test,(?-i)*toto*,flash*"`
+** Beschreibung: `Durch Kommata getrennte Liste der hervorzuhebenden Wörter. Groß- und Kleinschreibung wird dabei standardmäßig nicht beachtet (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Schlagwörter können mit "*", als Joker, beginnen oder enden; Beipiel: "test,(?-i)*toto*,flash*"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** Beschreibung: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** Beschreibung: `Suchmuster (regulärer Ausdrück) welches genutzt werden soll um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"), das Suchmuster unterscheidet dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Beispiele:  "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -674,12 +674,12 @@
 ** Werte: none, buffers, windows, all (Standardwert: `none`)
 
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
-** Beschreibung: `Anzahl der zu scrollenden Zeilen wenn Seitenweise geblättert wird (Bild hoch/runter)`
+** Beschreibung: `Anzahl der zu scrollenden Zeilen wenn seitenweise geblättert wird (Bild hoch/runter)`
 ** Typ: integer
 ** Werte: 1 .. 2147483647 (Standardwert: `3`)
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
-** Beschreibung: `scrollt zum unteren Ende des Fensters nachdem zu einem anderen Buffer gewechselt wurde (die aktuelle Position wird dabei nicht gesichert); diese Funktion hat nur einen Einfluss auf Buffer mit einem formatierten Inhalt (und nicht auf Buffer mit einem freien Inhalt)`
+** Beschreibung: `scrollt zum unteren Ende des Fensters nachdem zu einem anderen Buffer gewechselt wurde (die aktuelle Position wird dabei nicht gesichert); diese Funktion hat nur einen Einfluss auf Buffer mit einem formatierten Inhalt und nicht auf Buffer mit einem freien Inhalt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

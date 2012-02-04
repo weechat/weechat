@@ -31,6 +31,6 @@ Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen
 ........................................
 /demo_printf  <text>
 
-Text: schreibe diesen Text
+Text: schreibt diesen Text
 ........................................
 

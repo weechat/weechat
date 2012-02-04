@@ -159,17 +159,17 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** Beschreibung: `comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 

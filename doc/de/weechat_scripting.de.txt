@@ -631,18 +631,18 @@ def my_process_cb(data, command, rc, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[url_transfer]]
-URL transfer
-^^^^^^^^^^^^
+URL Übertragung
+^^^^^^^^^^^^^^^
 
-_New in version 0.3.7._
+_Neu seit Version 0.3.7._
 
-To download URL (or post to URL), you have to use function `hook_process`, or
-`hook_process_hashtable` if you need to set options for URL transfer.
+Um URLs herunterzuladen (oder um etwas zu einer URL zu senden), muss die Funktion
+`hook_process` genutzt werden. Müssen zusätzliche Optionen gesetzt werden, für
+einen URL Transfer, kommt die Funktion `hook_process_hashtable` zum Einsatz.
 
-Example of URL transfer without option: the HTML page will be received as "out"
-in callback (standard output of process):
+Beispiel eines URL Transfers, ohne zusätzliche Optionen: Die HTML Seite wird
+dabei in der Callback-Variable "out" gesichert (Standardausgabe des Prozesses):
 
 [source,python]
 ----------------------------------------
@@ -661,8 +661,8 @@ weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
                      30 * 1000, "kernel_process_cb", "")
 ----------------------------------------
 
-Example of URL transfer with an option: download latest WeeChat development
-package in file '/tmp/weechat-devel.tar.gz':
+Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
+WeeChat Entwicklerpaket in die Datei '/tmp/weechat-devel.tar.gz' gesichert:
 
 [source,python]
 ----------------------------------------
@@ -676,8 +676,8 @@ weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.t
                                30 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in 'WeeChat Plugin API Reference'.
+Für weiterführende Informationen zum URL Transfer und für die verfügbaren Optionen,
+siehe `hook_process` und `hook_process_hashtable` in der API Erweiterung Anleitung.
 
 [[config_options]]
 Konfiguration / Optionen
@@ -817,7 +817,7 @@ Eine fehlerhafte Nachricht kann WeeChat zum Absturz bringen oder andere ernsthaf
 Nachrichten parsen
 ^^^^^^^^^^^^^^^^^^
 
-_Neu in Version 0.3.4._
+_Neu seit Version 0.3.4._
 
 Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen "irc_message_parse" parsen.
 

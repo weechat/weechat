@@ -14,12 +14,12 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
-** Beschreibung: `Echtzeit Korrektur während der Texteingabe (da dies langsamer ist, ist diese Funktion standardmäßig deaktiviert. Wörter werden erst überprüft wenn ein Leerzeichen dem Wort folgt)`
+** Beschreibung: `Eine Korrektur findet während der Texteingabe statt (da dies langsamer ist, ist diese Funktion standardmäßig deaktiviert. Wörter werden erst überprüft sobald ein Leerzeichen dem vorangegangenen Wort folgt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
-** Beschreibung: `Minimallänge für ein Wort welches auf Rechtschreibung überprüft werden soll (bei 0 werden alle Wörter überprüft)`
+** Beschreibung: `Mindestlänge für ein Wort, welches auf Rechtschreibung überprüft werden soll (bei 0 werden alle Wörter überprüft)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `2`)
 
