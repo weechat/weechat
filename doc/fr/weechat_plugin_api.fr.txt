@@ -7431,9 +7431,14 @@ Paramètres :
   message irc du serveur (après utilisation par l'extension irc,
   signal envoyé même si le message est ignoré)
 
+| irc | xxx,irc_out1_yyy ^(1)^ +
+  (_nouveau dans la version 0.3.7_) |
+  chaîne : message |
+  message irc envoyé au serveur (avant découpage automatique pour tenir dans les 512 octets)
+
 | irc | xxx,irc_out_yyy ^(1)^ |
   chaîne : message |
-  message irc envoyé au serveur
+  message irc envoyé au serveur (après découpage automatique pour tenir dans les 512 octets)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   (_nouveau dans la version 0.3.4_) |
@@ -8570,9 +8575,15 @@ Paramètres :
   contenu du message reçu du serveur IRC (après décodage du jeu de caractères) |
   nouveau contenu du message
 
+| irc | irc_out1_xxx ^(1)^ +
+  (_nouveau dans la version 0.3.7_) |
+  nom de serveur |
+  contenu du message qui va être envoyé au serveur IRC (avant découpage automatique pour tenir dans les 512 octets) |
+  nouveau contenu du message
+
 | irc | irc_out_xxx ^(1)^ |
   nom de serveur |
-  contenu du message qui va être envoyé au serveur IRC |
+  contenu du message qui va être envoyé au serveur IRC (après découpage automatique pour tenir dans les 512 octets) |
   nouveau contenu du message
 
 | weechat | bar_condition_yyy ^(2)^ |

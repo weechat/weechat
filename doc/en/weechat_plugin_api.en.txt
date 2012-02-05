@@ -7321,9 +7321,14 @@ Arguments:
   irc message from server (after irc plugin uses it,
   signal sent even if message is ignored)
 
+| irc | xxx,irc_out1_yyy ^(1)^ +
+  (_new in version 0.3.7_) |
+  string: message |
+  irc message sent to server (before automatic split to fit in 512 bytes)
+
 | irc | xxx,irc_out_yyy ^(1)^ |
   string: message |
-  irc message sent to server
+  irc message sent to server (after automatic split to fit in 512 bytes)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   (_new in version 0.3.4_) |
@@ -8434,9 +8439,15 @@ Arguments:
   content of message received from IRC server (after charset decoding) |
   new content of message
 
+| irc | irc_out1_xxx ^(1)^ +
+  (_new in version 0.3.7_) |
+  server name |
+  content of message about to be sent to IRC server (before automatic split to fit in 512 bytes) |
+  new content of message
+
 | irc | irc_out_xxx ^(1)^ |
   server name |
-  content of message about to be sent to IRC server |
+  content of message about to be sent to IRC server (after automatic split to fit in 512 bytes) |
   new content of message
 
 | weechat | bar_condition_yyy ^(2)^ |

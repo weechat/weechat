@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-dev, 2012-02-04
+v0.3.7-dev, 2012-02-05
 
 
 Version 0.3.7 (under dev!)
@@ -55,6 +55,8 @@ Version 0.3.7 (under dev!)
   nicklist_get_next_item
 * alias: add default alias umode => /mode $nick
 * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
+* irc: add signal "xxx,irc_out1_yyy" and modifier "irc_out1_xxx" (outgoing
+  message before automatic split to fit in 512 bytes)
 * irc: fix self-highlight when using /me with an IRC bouncer like znc
   (bug #35123)
 * irc: add alias "ctcp" for target buffer of CTCP messages

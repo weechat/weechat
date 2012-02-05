@@ -1640,20 +1640,21 @@ irc_server_outqueue_send (struct t_irc_server *server)
 
 int
 irc_server_send_one_msg (struct t_irc_server *server, int flags,
-                         const char *message, const char *tags)
+                         const char *message, const char *nick,
+                         const char *command, const char *channel,
+                         const char *tags)
 {
     static char buffer[4096];
-    const char *ptr_msg;
-    char *new_msg, *pos, *nick, *command, *channel, *tags_to_send;
-    char *ptr_chan_nick, *msg_encoded;
-    char str_modifier[64], modifier_data[256];
+    const char *ptr_msg, *ptr_chan_nick;
+    char *new_msg, *pos, *tags_to_send, *msg_encoded;
+    char str_modifier[128], modifier_data[256];
     int rc, queue_msg, add_to_queue, first_message, anti_flood;
     time_t time_now;
     struct t_irc_redirect *ptr_redirect;
 
     rc = 1;
 
-    irc_message_parse (server, message, &nick, NULL, &command, &channel, NULL);
+    /* run modifier "irc_out_xxx" */
     snprintf (str_modifier, sizeof (str_modifier),
               "irc_out_%s",
               (command) ? command : "unknown");
@@ -1809,12 +1810,6 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                        _("(message dropped)"));
     }
 
-    if (nick)
-        free (nick);
-    if (command)
-        free (command);
-    if (channel)
-        free (channel);
     if (new_msg)
         free (new_msg);
 
@@ -1834,7 +1829,8 @@ struct t_hashtable *
 irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                   const char *format, ...)
 {
-    char **items, hash_key[32], value[32];
+    char **items, hash_key[32], value[32], *nick, *command, *channel, *new_msg;
+    char str_modifier[128];
     const char *str_message, *str_args;
     int i, items_count, number, ret_number, rc;
     struct t_hashtable *hashtable, *ret_hashtable;
@@ -1861,46 +1857,83 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     items = weechat_string_split (vbuffer, "\n", 0, 0, &items_count);
     for (i = 0; i < items_count; i++)
     {
-        /* split message if needed (max is 512 bytes including final "\r\n") */
-        hashtable = irc_message_split (server, items[i]);
-        if (hashtable)
+        /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
+        irc_message_parse (server, items[i],
+                           &nick, NULL, &command, &channel, NULL);
+        snprintf (str_modifier, sizeof (str_modifier),
+                  "irc_out1_%s",
+                  (command) ? command : "unknown");
+        new_msg = weechat_hook_modifier_exec (str_modifier,
+                                              server->name,
+                                              items[i]);
+
+        /* no changes in new message */
+        if (new_msg && (strcmp (items[i], new_msg) == 0))
         {
-            number = 1;
-            while (1)
+            free (new_msg);
+            new_msg = NULL;
+        }
+
+        /* message not dropped? */
+        if (!new_msg || new_msg[0])
+        {
+            /* send signal with command that will be sent to server (before split) */
+            irc_server_send_signal (server, "irc_out1",
+                                    (command) ? command : "unknown",
+                                    (new_msg) ? new_msg : items[i],
+                                    NULL);
+
+            /* split message if needed (max is 512 bytes including final "\r\n") */
+            hashtable = irc_message_split (server,
+                                           (new_msg) ? new_msg : items[i]);
+            if (hashtable)
             {
-                snprintf (hash_key, sizeof (hash_key), "msg%d", number);
-                str_message = weechat_hashtable_get (hashtable, hash_key);
-                if (!str_message)
-                    break;
-                snprintf (hash_key, sizeof (hash_key), "args%d", number);
-                str_args = weechat_hashtable_get (hashtable, hash_key);
+                number = 1;
+                while (1)
+                {
+                    snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+                    str_message = weechat_hashtable_get (hashtable, hash_key);
+                    if (!str_message)
+                        break;
+                    snprintf (hash_key, sizeof (hash_key), "args%d", number);
+                    str_args = weechat_hashtable_get (hashtable, hash_key);
 
-                rc = irc_server_send_one_msg (server, flags, str_message, tags);
-                if (!rc)
-                    break;
+                    rc = irc_server_send_one_msg (server, flags, str_message,
+                                                  nick, command, channel, tags);
+                    if (!rc)
+                        break;
 
+                    if (ret_hashtable)
+                    {
+                        snprintf (hash_key, sizeof (hash_key), "msg%d", ret_number);
+                        weechat_hashtable_set (ret_hashtable, hash_key, str_message);
+                        if (str_args)
+                        {
+                            snprintf (hash_key, sizeof (hash_key), "args%d", ret_number);
+                            weechat_hashtable_set (ret_hashtable, hash_key, str_args);
+                        }
+                        ret_number++;
+                    }
+                    number++;
+                }
                 if (ret_hashtable)
                 {
-                    snprintf (hash_key, sizeof (hash_key), "msg%d", ret_number);
-                    weechat_hashtable_set (ret_hashtable, hash_key, str_message);
-                    if (str_args)
-                    {
-                        snprintf (hash_key, sizeof (hash_key), "args%d", ret_number);
-                        weechat_hashtable_set (ret_hashtable, hash_key, str_args);
-                    }
-                    ret_number++;
+                    snprintf (value, sizeof (value), "%d", ret_number - 1);
+                    weechat_hashtable_set (ret_hashtable, "count", value);
                 }
-                number++;
+                weechat_hashtable_free (hashtable);
+                if (!rc)
+                    break;
             }
-            if (ret_hashtable)
-            {
-                snprintf (value, sizeof (value), "%d", ret_number - 1);
-                weechat_hashtable_set (ret_hashtable, "count", value);
-            }
-            weechat_hashtable_free (hashtable);
-            if (!rc)
-                break;
         }
+        if (nick)
+            free (nick);
+        if (command)
+            free (command);
+        if (channel)
+            free (channel);
+        if (new_msg)
+            free (new_msg);
     }
     if (items)
         weechat_string_free_split (items);
@@ -2057,7 +2090,7 @@ irc_server_msgq_flush ()
     char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
     char *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
-    char str_modifier[64], modifier_data[256];
+    char str_modifier[128], modifier_data[256];
 
     while (irc_recv_msgq)
     {

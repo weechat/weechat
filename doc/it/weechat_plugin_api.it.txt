@@ -7365,9 +7365,16 @@ Argomenti:
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato)
 
+// TRANSLATION MISSING
+| irc | xxx,irc_out1_yyy ^(1)^ +
+  (_novità nella versione 0.3.7_) |
+  string: messaggio |
+  messaggio irc inviato al server (before automatic split to fit in 512 bytes)
+
+// TRANSLATION MISSING
 | irc | xxx,irc_out_yyy ^(1)^ |
   string: messaggio |
-  messaggio irc inviato al server
+  messaggio irc inviato al server (after automatic split to fit in 512 bytes)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   (_novità nella versione 0.3.4_) |
@@ -8499,9 +8506,17 @@ Argomenti:
   contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
   nuovo contenuto del messaggio
 
+// TRANSLATION MISSING
+| irc | irc_out1_xxx ^(1)^ +
+  (_novità nella versione 0.3.7_) |
+  nome server |
+  contenuto del messaggio che sta per essere inviato al server IRC (before automatic split to fit in 512 bytes) |
+  nuovo contenuto del messaggio
+
+// TRANSLATION MISSING
 | irc | irc_out_xxx ^(1)^ |
   nome server |
-  contenuto del messaggio che sta per essere inviato al server IRC |
+  contenuto del messaggio che sta per essere inviato al server IRC (after automatic split to fit in 512 bytes) |
   nuovo contenuto del messaggio
 
 | weechat | bar_condition_yyy ^(2)^ |
