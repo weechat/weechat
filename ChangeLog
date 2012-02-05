@@ -14,7 +14,7 @@ Version 0.3.7 (under dev!)
 * core: move option "scroll_unread" from command /input to /window
 * core: add support of flags in regular expressions and highlight options
 * core: add library "pthread" in cmake file for link on OpenBSD
-* core: use extended regex in filters (patch #7616)
+* core: use extended regex in filters (task #9497, patch #7616)
 * core: save current mouse state in option weechat.look.mouse (set option when
   mouse state is changed with command /mouse)
 * core: add type "hashtable" for hdata
