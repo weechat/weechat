@@ -757,7 +757,7 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
         pos = strchr (ptr_regex, ')');
         if (!pos)
             break;
-        if (!isalpha (ptr_regex[2]) && (ptr_regex[2] != '-'))
+        if (!isalpha ((unsigned char)ptr_regex[2]) && (ptr_regex[2] != '-'))
             break;
         if (flags)
         {
