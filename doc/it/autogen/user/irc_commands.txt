@@ -163,24 +163,24 @@ motivo: motivo per la disconnessione
          add [re:]<nick> [<server> [<canale>]]
          del <numero>|-all
 
-     list: list all ignores
-      add: add an ignore
-     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
-      del: delete an ignore
-   number: number of ignore to delete (look at list to find it)
-     -all: delete all ignores
-   server: internal server name where ignore is working
-  channel: channel name where ignore is working
+     list: elenca tutti gli ignore
+      add: aggiungi un ignore
+     nick: nick oppure nome host (può essere un'espressione regolare se viene passato il parametro "re:" oppure usando un mask "*" per sostituire uno o più caratteri)
+      del: elimina un ignore
+numero: numero di ignore da eliminare (nella lista)
+     -all: elimina tutti gli ignore
+   server: nome interno del server dove l'ignore è attivo
+   canale: nome del canale dove l'ignore è attivo
 
-Note: the regular expression can start with "(?-i)" to become case sensitive.
+Nota: l'espressione regolare può iniziare con "(?-i)" per diventare sensibile alle maiuscole.
 
-Examples:
-  ignore nick "toto" everywhere:
-    /ignore add toto
-  ignore host "toto@domain.com" on freenode server:
-    /ignore add toto@domain.com freenode
-  ignore host "toto*@*.domain.com" on freenode/#weechat:
-    /ignore add toto*@*.domain.com freenode #weechat
+Esempi:
+  ignora nick "tizio" su tutti gli host/canali:
+    /ignore add tizio
+  ignora l'host "tizio@dominio.com" sul server freenode:
+    /ignore add tizio@dominio.com freenode
+  ignora l'host "tizio*@*.dominio.com" su freenode/#weechat:
+    /ignore add tizio*@*.dominio.com freenode #weechat
 ........................................
 
 [[command_irc_info]]
@@ -272,16 +272,16 @@ mask_server: elenco dei server che devono corrispondere a questa mask
 ........................................
 /list  [<canale>[,<canale>...]] [<server>] [-re <regexp>]
 
-channel: channel to list
- server: server name
-  regex: regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
+canale: canale da elencare
+server: nome del server
+ regex: espressione regolare usata per filtrare i risultati (non sensibile alle maiuscole, può iniziare con "(?-i)" per renderla sensibile alle maiuscole)
 
-Examples:
-  list all channels on server (can be very slow on large networks):
+Esempi:
+  elenca tutti i canali sul server (può essere molto lento su grandi network):
     /list
-  list channel #weechat:
-    /list #weechat
-  list all channels beginning with "#weechat" (can be very slow on large networks):
+  elenca il canale #weechat:
+    /list #weechat.*
+  elenca tutti i canali che iniziano con "#weechat" (può essere molto lento su grandi network):
     /list -re #weechat.*
 ........................................
 
@@ -338,7 +338,7 @@ L'elenco delle modalità non è completa, è necessario leggere la documentazion
 
 Esempi:
   protegge l'argomento sul canale #weechat:
-    /mode #weecht +t
+    /mode #weechat +t
   diventa invisibile sul server:
     /mode nick +i
 ........................................

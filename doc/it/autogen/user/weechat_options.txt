@@ -449,17 +449,17 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** descrizione: `comma separated list of words to highlight; case insensitive comparison (use "(?-i)" at beginning of words to make them case sensitive), words may begin or end with "*" for partial match; example: "test,(?-i)*toto*,flash*"`
+** descrizione: `elenco separato da virgole di parole da evidenziare; confronto non sensibile alle maiuscole (usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole), le parole possono iniziare o terminare con "*" per la corrispondenza parziale; ad esempio: "test,(?-i)*tizio*,flash*"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** descrizione: `regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** descrizione: `espressione regolare usata per verificare se un messaggio contiene un evento oppure no, almeno una corrispondenza nella stringa deve essere circondata da caratteri :(alfanumerici, "-", "_" or "|"), l'espressione regolare non è sensibile alle maiuscole (usare "(?-i)" all'inizio per renderla sensibile alle maiuscole), ad esempio: "flashcode|flashy", "(?-i)Flashcode|flashy"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** descrizione: `elenco separato da virgole di tag da evidenziare (senza differenza tra maiuscole/minuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
+** descrizione: `elenco separato da virgole di tag da evidenziare (confronto non sensibile alle maiuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -649,12 +649,12 @@
 ** valori: qualsiasi stringa (valore predefinito: `"|"`)
 
 * [[option_weechat.look.read_marker]] *weechat.look.read_marker*
-** descrizione: `usa evidenziatore (riga o carattere) sui buffer per mostrare la prima riga non letta`
+** descrizione: `usa segnalibro (riga o carattere) sui buffer per mostrare la prima riga non letta`
 ** tipo: intero
 ** valori: none, line, char (valore predefinito: `line`)
 
 * [[option_weechat.look.read_marker_always_show]] *weechat.look.read_marker_always_show*
-** descrizione: `mostra sempre l'evidenziatore di lettura, anche se si trova dopo l'ultima riga del buffer`
+** descrizione: `mostra sempre il segnalibro, anche se si trova dopo l'ultima riga del buffer`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 

@@ -49,12 +49,12 @@
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** descrizione: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"`
+** descrizione: `espressione regolare con gli indirizzi IP a cui è consentito usare il relay, (non sensibile alle maiuscole, usare "(?-i)" all'inizio per renderla sensibile alle maiuscole), esempio: "^(123.45.67.89|192.160.*)$"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
-** descrizione: `indirizzo associato (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)`
+** descrizione: `indirizzo per l'associazione (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
