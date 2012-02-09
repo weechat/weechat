@@ -7355,6 +7355,11 @@ Arguments:
   pointer: buffer |
   private opened
 
+| irc | irc_server_opened +
+  (_new in version 0.3.7_) |
+  pointer: buffer |
+  server buffer opened
+
 | irc | irc_server_connecting |
   string: server name |
   connecting to server

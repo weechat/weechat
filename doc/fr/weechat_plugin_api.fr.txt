@@ -7465,6 +7465,11 @@ Paramètres :
   pointeur : tampon |
   discussion privée ouverte
 
+| irc | irc_server_opened +
+  (_nouveau dans la version 0.3.7_) |
+  pointeur : tampon |
+  tampon du serveur ouvert
+
 | irc | irc_server_connecting |
   chaîne : nom du serveur |
   connexion en cours au serveur

@@ -3065,6 +3065,9 @@ irc_server_create_buffer (struct t_irc_server *server)
         weechat_buffer_merge (server->buffer, ptr_buffer_for_merge);
     }
 
+    weechat_hook_signal_send ("irc_server_opened",
+                              WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
+
     return server->buffer;
 }
 

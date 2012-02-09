@@ -7401,6 +7401,12 @@ Argomenti:
   puntatore: buffer |
   chat privata aperta
 
+// TRANSLATION MISSING
+| irc | irc_server_opened +
+  (_novità nella versione 0.3.7_) |
+  puntatore: buffer |
+  server buffer opened
+
 | irc | irc_server_connecting |
   string: nome server |
   connessione al server
