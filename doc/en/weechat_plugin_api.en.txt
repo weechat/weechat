@@ -556,7 +556,7 @@ C example:
 [source,C]
 ----------------------------------------
 char *str = "AbCdé";
-weechat_string_tolower (str); /* str is now: "ABCDé" */
+weechat_string_toupper (str); /* str is now: "ABCDé" */
 ----------------------------------------
 
 [NOTE]

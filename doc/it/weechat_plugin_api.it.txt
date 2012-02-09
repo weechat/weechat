@@ -572,7 +572,7 @@ Esempio in C:
 [source,C]
 ----------------------------------------
 char *str = "AbCdé";
-weechat_string_tolower (str); /* str ora è: "ABCDé" */
+weechat_string_toupper (str); /* str ora è: "ABCDé" */
 ----------------------------------------
 
 [NOTE]
