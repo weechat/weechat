@@ -228,6 +228,10 @@
 
 | use_ssl | long | none, try, control, all
 
+| dns_servers | string |
+
+| accepttimeout_ms | long |
+
 | sslcert | string |
 
 | sslcerttype | string |

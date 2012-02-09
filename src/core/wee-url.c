@@ -729,6 +729,11 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.21.3 */
     /*URL_DEF_OPTION(RESOLVE, LIST, NULL),*/
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071800
+    /* libcurl >= 7.24.0 */
+    URL_DEF_OPTION(DNS_SERVERS, STRING, NULL),
+    URL_DEF_OPTION(ACCEPTTIMEOUT_MS, LONG, NULL),
+#endif
     /*
      * SSL and security options
      */
