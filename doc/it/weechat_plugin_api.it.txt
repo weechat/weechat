@@ -581,8 +581,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strcasecmp
 ^^^^^^^^^^^^^^^^^^
 
-Confronta stringa indipendente da caso (maiuscole
-o minuscole) e da locale.
+Confronta stringa non sensibile alle maiuscole e alla localizzazione.
 
 Prototipo:
 
@@ -616,9 +615,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strcasecmp_range
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Confronta stringa indipendente da caso (maiuscole
-o minuscole) e da locale, using a range for case comparison.
+Confronta stringa non sensibile alle maiuscole e alla localizzazione, usando una
+serie per il confronto.
 
 Prototipo:
 
@@ -631,15 +629,13 @@ Argomenti:
 
 * 'string1': prima stringa da comparare
 * 'string2': seconda stringa da comparare
-// TRANSLATION MISSING
-* 'range': number of chars in case comparison, for example:
-** 26: "A-Z" are lowered to "a-z"
-** 29: "A-Z [ \ ]" are lowered to "a-z { | }"
-** 30: "A-Z [ \ ] ^" are lowered to "a-z { | } ~"
+* 'range': numero di caratteri nel confronto maiuscole/minuscole, ad esempio:
+** 26: "A-Z" vengono ridotti ad "a-z"
+** 29: "A-Z [ \ ]" vengono ridotti ad "a-z { | }"
+** 30: "A-Z [ \ ] ^" vengono ridotti ad "a-z { | } ~"
 
-// TRANSLATION MISSING
 [NOTE]
-Values 29 and 30 are used by some protocols like IRC.
+I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 Valore restituito:
 
@@ -661,8 +657,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strncasecmp
 ^^^^^^^^^^^^^^^^^^^
 
-Confronta stringa indipendente da caso (maiuscole o minuscole) e da locale, per
-un numero 'max' di caratteri.
+Confronta stringa indipendente non sensibile alle maiuscole e alla
+localizzazione, per un numero 'max' di caratteri.
 
 Prototipo:
 
@@ -680,9 +676,9 @@ Argomenti:
 Valore restituito:
 
 * differenze tra le due stringhe:
-** negativa se stringa1 < stringa2
-** zero se stringa1 == stringa1
-** positiva se stringa1 > stringa2
+** negativa se string1 < string2
+** zero se string1 == string1
+** positiva se string1 > string2
 
 Esempio in C:
 
@@ -697,9 +693,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strncasecmp_range
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Confronta stringa indipendente da caso (maiuscole o minuscole) e da locale, per
-un numero 'max' di caratteri, using a range for case comparison.
+Confronta una stringa non sensibile alle maiuscole e alla localizzazione, per un
+numero 'max' di caratteri, usando una serie per il confronto.
 
 Prototipo:
 
@@ -713,22 +708,20 @@ Argomenti:
 * 'string1': prima stringa da comparare
 * 'string2': seconda stringa da comparare
 * 'max': numero massimo di caratteri da comparare
-// TRANSLATION MISSING
-* 'range': number of chars in case comparison, for example:
-** 26: "A-Z" are lowered to "a-z"
-** 29: "A-Z [ \ ]" are lowered to "a-z { | }"
-** 30: "A-Z [ \ ] ^" are lowered to "a-z { | } ~"
+* 'range': numero di caratteri nel confronto maiuscole/minuscole, ad esempio:
+** 26: "A-Z" vengono ridotti ad "a-z"
+** 29: "A-Z [ \ ]" vengono ridotti ad "a-z { | }"
+** 30: "A-Z [ \ ] ^" vengono ridotti ad "a-z { | } ~"
 
-// TRANSLATION MISSING
 [NOTE]
-Values 29 and 30 are used by some protocols like IRC.
+I valori 29 e 30 vengono usati da alcuni protocolli come IRC.
 
 Valore restituito:
 
 * differenze tra le due stringhe:
-** negativa se stringa1 < stringa2
-** zero se stringa1 == stringa1
-** positiva se stringa1 > stringa2
+** negativa se string1 < string2
+** zero se string1 == string1
+** positiva se string1 > string2
 
 Esempio in C:
 
@@ -743,8 +736,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strcmp_ignore_chars
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Confronta una stringa locale (ed opzionalmente indipendente
-da maiuscole/minuscole), ignorando alcuni caratteri.
+Confronta una stringa localizzata (e opzionalmente non sensibile alle
+maiuscole), ignorando alcuni caratteri.
 
 Prototipo:
 
@@ -760,8 +753,7 @@ Argomenti:
 * 'string1': prima stringa per il confronto
 * 'string2': seconda stringa per il confronto
 * 'chars_ignored': stringa con caratteri da ignorare
-* 'case_sensitive': 1 per il confronto con caso esatto (maiuscole/minuscole),
-  altrimenti 0
+* 'case_sensitive': 1 per il confronto sensibile alle maiuscole, altrimenti 0
 
 Valore restituito:
 
@@ -783,8 +775,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strcasestr
 ^^^^^^^^^^^^^^^^^^
 
-Cerca una stringa indipendente da locale e caso esatto
-(maiuscole/minuscole).
+Cerca una stringa non sensibile alle maiuscole e indipendente dalla
+localizzazione.
 
 Prototipo:
 
@@ -830,8 +822,7 @@ Argomenti:
 * 'string': stringa
 * 'mask': mask, può iniziare o terminare con "`*`" (nessun altro "`*`"
   consentito all'interno della mask)
-* 'case_sensitive': 1 per il confronto con caso esatto (maiuscole/minuscole),
-  altrimenti 0
+* 'case_sensitive': 1 per il confronto sensibile alle maiuscole, altrimenti 0
 
 Valore restituito:
 
@@ -1050,14 +1041,13 @@ regex = weechat.string_mask_to_regex(mask)
 regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 ----------------------------------------
 
-// TRANSLATION MISSING
 weechat_string_regex_flags
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.7._
 
-Get pointer on string after flags and return mask with flags to compile regular
-expression.
+Restituisce sia il puntatore sulla stringa dopo le flag che la mask con le flag
+per compilare l'espressione regolare.
 
 Prototipo:
 
@@ -1068,8 +1058,8 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 Argomenti:
 
-* 'regex': regular expression
-* 'default_flags': combination of following values (see `man regcomp`):
+* 'regex': espressione regolare
+* 'default_flags': combinazione dei seguenti valori (consultare `man regcomp`):
 ** REG_EXTENDED
 ** REG_ICASE
 ** REG_NEWLINE
@@ -1104,14 +1094,14 @@ const char *ptr_regex = weechat_string_regex_flags (regex, REG_EXTENDED, &flags)
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
 weechat_string_regcomp
 ^^^^^^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.7._
 
-Compile a regular expression using optional flags at beginning of string (for
-format of flags, see <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+Compila un'espressione regolare usando flag opzionali all'inizio della stringa
+(per il formato delle flag consultare
+<<_weechat_string_regex_flags,weechat_string_regex_flags>>).
 
 Prototipo:
 
@@ -2000,7 +1990,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_utf8_charcasecmp
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Confronta due caratteri UTF-8, ignorando maiuscole/minuscole.
+Confronta due caratteri UTF-8, ignorando la sensibilità alle maiuscole.
 
 Prototipo:
 
@@ -3390,9 +3380,8 @@ weechat_hashtable_map_string
 
 _Novità nella versione 0.3.7._
 
-// TRANSLATION MISSING
-Chiama una funzione su tutte le voci della tabella hash, sending keys and values
-as strings.
+Chiama una funzione su tutte le voci della tabella hash, inviando chiavi e
+valori come stringhe.
 
 Prototipo:
 
@@ -3412,10 +3401,9 @@ Argomenti:
 * 'callback_map': funzione chiamata per ogni voce nella tabella hash
 * 'callback_map_data': puntatore fornito alla mappa di callback quando chiamata
 
-// TRANSLATION MISSING
 [NOTE]
-The strings 'key' and 'value' sent to callback are temporary strings, they
-are deleted after call to callback.
+Le stringhe 'key' e 'value' inviate alla callback sono temporanee, vengono
+eliminate dopo la chiamata alla callback.
 
 Esempio in C:
 
@@ -6260,7 +6248,7 @@ Argomenti:
 
 * 'buffer': puntatore al buffer, se NULL, il messaggio viene visualizzato
   sul buffer di WeeChat
-* 'date': data per il messaggio (0 vuol dire data/ora corrente)
+* 'date': data per il messaggio (0 indica data/ora corrente)
 * 'message': messaggio da visualizzare
 
 Esempio in C:
@@ -6321,7 +6309,7 @@ Argomenti:
 
 * 'buffer': puntatore al buffer, se NULL il messaggio viene visualizzato
   sul buffer di WeeChat
-* 'date': data per il messaggio (0 vuol dire data/ora corrente)
+* 'date': data per il messaggio (0 indica data/ora corrente)
 * 'tags': lista di tag separati da virgole
 * 'message': messaggio da visualizzare
 
@@ -6830,23 +6818,22 @@ struct t_hook *weechat_hook_process (const char *command,
 
 Argomenti:
 
-// TRANSLATION MISSING
-* 'command': comando da avviare nel processo figlio or URL
-  (_novità nella versione 0.3.7_), see below
+* 'command': comando da avviare nel processo figlio o URL
+  (_novità nella versione 0.3.7_), segue:
 * 'timeout': timeout per il comando (in millisecondi): dopo questo timeout,
-  il processo figlio viene terminato (0 vuol dire nessun timeout)
+  il processo figlio viene terminato (0 indica nessun timeout)
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
   oppure quando è terminato, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'const char *command': comando eseguito dal processo figlio
 ** 'int return_code': codice restituito:
-// TRANSLATION MISSING
-*** '>= 0': child return code for a command, and for URL possible values are:
-**** '0': transfer ok
-**** '1': invalid URL
-**** '2': transfer error
-**** '3': not enough memory
-**** '4': error with a file
+*** '>= 0': codice ritorno figlio per un comando, e per un URL i valori
+    possibili sono:
+**** '0': trasferimento riuscito
+**** '1': URL non valido
+**** '2': errore di trasferimento
+**** '3': memoria non sufficiente
+**** '4': errore con un file
 *** '< 0': 'WEECHAT_HOOK_PROCESS_RUNNING' (dati disponibili, ma figlio
     ancora in esecuzione) o 'WEECHAT_HOOK_PROCESS_ERROR' (errore nella
     esecuzione del comando)
@@ -6864,10 +6851,10 @@ Valore restituito:
 Quando il comando ha terminato, o se viene raggiunto il timeout, WeeChat
 effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione).
 
-// TRANSLATION MISSING
-The command can be an URL with format: "url:http://www.example.com", to download
-content of URL (_new in version 0.3.7_). Options are possible for URL with
-function <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
+Il comando può essere un URL con il formato: "url:http://www.esempio.com", per
+scaricare il contenuto dell'URL (_novità nella versione 0.3.7_). Le opzioni per
+un URL sono disponibili con la funzione
+<<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
@@ -6945,9 +6932,8 @@ weechat_hook_process_hashtable
 
 _Novità nella versione 0.3.7._
 
-// TRANSLATION MISSING
-Hook a process (launched with fork) using options in a hashtable, and catch
-output.
+Hook su un processo (avviato con un fork) usando le opzioni nella tabella hash,
+e cattura dell'output.
 
 Prototipo:
 
@@ -6964,29 +6950,29 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
                                                void *callback_data);
 ----------------------------------------
 
-// TRANSLATION MISSING
-Arguments are the same as function <<_weechat_hook_process,weechat_hook_process>>,
-with an extra argument:
+Gli argomenti sono gli stessi della funzione
+<<_weechat_hook_process,weechat_hook_process>>, con un argomento aggiuntivo:
 
-* 'options': options for command executed (see table below); the hashtable is
-  duplicated in function, so it's safe to free it after this call
+* 'options': le opzioni per il comando eseguito (consultare la tabella in
+  basso); la tabella hash è duplicata nella funzione, per cui è possibile
+  liberarla dopo questa chiamata
 
-// TRANSLATION MISSING
-For command "url:...", following options are available (see
-`man curl_easy_setopt` for a description of each option):
+Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
+`man curl_easy_setopt` per la descrizione di ogni opzione):
 
 include::autogen/plugin_api/url_options.txt[]
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ When constants are available they must be used as value for option. For
-options with type "mask", format is: "value1+value2+value3".
+^(1)^ Quando sono disponibili le costanti, esse vanno usate come valore per
+l'opzione. Per le opzioni con il tipo "mask" il formato è:
+"value1+value2+value3".
 
-For URL, two extra options (strings) are allowed for input/output file:
+Per un URL, sono consentite due opzioni aggiuntive (stringhe) per il file in
+input/output:
 
-* 'file_in': file to read and send with URLs (post file)
-* 'file_out': write downloaded URL/file in this file (instead of standard
-  output)
+* 'file_in': file da leggere e inviare con gli URL (invio del file "post")
+* 'file_out': scrive URL scaricato/file in questo file (invece dello standard
+* output)
 
 Valore restituito:
 
@@ -7365,16 +7351,14 @@ Argomenti:
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato)
 
-// TRANSLATION MISSING
 | irc | xxx,irc_out1_yyy ^(1)^ +
   (_novità nella versione 0.3.7_) |
   string: messaggio |
-  messaggio irc inviato al server (before automatic split to fit in 512 bytes)
+  messaggio irc inviato al server (prima della divisione automatica da adattare in 512 byte)
 
-// TRANSLATION MISSING
 | irc | xxx,irc_out_yyy ^(1)^ |
   string: messaggio |
-  messaggio irc inviato al server (after automatic split to fit in 512 bytes)
+  messaggio irc inviato al server (dopo la divisione automatica da adattare in 512 byte)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   (_novità nella versione 0.3.4_) |
@@ -7401,11 +7385,10 @@ Argomenti:
   puntatore: buffer |
   chat privata aperta
 
-// TRANSLATION MISSING
 | irc | irc_server_opened +
   (_novità nella versione 0.3.7_) |
   puntatore: buffer |
-  server buffer opened
+  server del buffer aperto
 
 | irc | irc_server_connecting |
   string: nome server |
@@ -7487,11 +7470,10 @@ Argomenti:
   puntatore: buffer |
   tipo di buffer modificato
 
-// TRANSLATION MISSING
 | weechat | buffer_line_added +
   (_novità nella versione 0.3.7_) |
-  puntatore: line |
-  line added in a buffer
+  puntatore: riga |
+  riga aggiunta in un buffer
 
 | weechat | day_changed +
   (_novità nella versione 0.3.2_) |
@@ -7595,11 +7577,10 @@ Argomenti:
   puntatore: finestra |
   scroll nella finestra
 
-// TRANSLATION MISSING
 | weechat | window_switch +
   (_novità nella versione 0.3.7_) |
-  pointer: window |
-  switching window
+  puntatore: finestra |
+  passaggio alla finestra
 
 | weechat | window_unzoom |
   puntatore: finestra corrente |
@@ -8069,18 +8050,17 @@ Quando è stata ricevuta la risposta completa dal proprio comando, verrà
 inviato un hsignal. Questo hsignal ha il nome 'irc_redirection_xxx_yyy' dove
 'xxx' è il segnale e 'yyy' lo 'schema' usato.
 
-// TRANSLATION MISSING
-Hashtable sent in hsignal has following content (key and values are strings):
+La tabella hash inviata in hsignal ha il seguente contenuto (chiavi e valori
+sono stringhe):
 
-// TRANSLATION MISSING
-* 'output': output of command (messages are separated by "\n")
-* 'output_size': number of bytes in 'output' (as string)
-* 'error': error string (if an error occurred):
-** 'timeout': redirection stopped after timeout
-* 'server': internal server name
-* 'pattern': redirect pattern
-* 'signal': signal name
-* 'command': redirected command
+* 'output': output del comando (i messaggi vengono separati da "\n")
+* 'output_size': numero di byte in 'output' (come stringa)
+* 'error': stringa di errore (in caso di errore):
+** 'timeout': redirezione fermata dopo il timeout
+* 'server': nome interno del server
+* 'pattern': schema di redirezione
+* 'signal': nome del segnale
+* 'command': comando rediretto
 
 Esempio in C:
 
@@ -8512,17 +8492,15 @@ Argomenti:
   contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
   nuovo contenuto del messaggio
 
-// TRANSLATION MISSING
 | irc | irc_out1_xxx ^(1)^ +
   (_novità nella versione 0.3.7_) |
   nome server |
-  contenuto del messaggio che sta per essere inviato al server IRC (before automatic split to fit in 512 bytes) |
+  contenuto del messaggio che sta per essere inviato al server IRC (prima della divisione automatica da adattare in 512 byte) |
   nuovo contenuto del messaggio
 
-// TRANSLATION MISSING
 | irc | irc_out_xxx ^(1)^ |
   nome server |
-  contenuto del messaggio che sta per essere inviato al server IRC (after automatic split to fit in 512 bytes) |
+  contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte) |
   nuovo contenuto del messaggio
 
 | weechat | bar_condition_yyy ^(2)^ |
@@ -8530,37 +8508,32 @@ Argomenti:
   stringa vuota |
   "1" per visualizzare la barra, "0" per nasconderla
 
-// TRANSLATION MISSING
 | weechat | history_add +
   (_novità nella versione 0.3.2_) |
   stringa con puntatore al buffer ("0x123..") |
-  content of command line to add in command history (buffer and global) |
-  string added to command history
+  contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale |
+  stringa aggiunta alla cronologia comandi
 
-// TRANSLATION MISSING
 | weechat | input_text_content |
   stringa con puntatore al buffer ("0x123..") |
-  content of command line |
-  new content of command line
+  contenuto della riga di comando |
+  nuovo contenuto della riga di comando
 
-// TRANSLATION MISSING
 | weechat | input_text_display |
   stringa con puntatore al buffer ("0x123..") |
-  content of command line, without cursor tag |
-  new string, for display only (command line is not changed)
+  contenuto della riga di comando, senza tag al cursore |
+  nuova stringa, solo da mostrare (la riga di comando non viene modificata)
 
-// TRANSLATION MISSING
 | weechat | input_text_display_with_cursor |
   stringa con puntatore al buffer ("0x123..") |
-  content of command line, with cursor tag |
-  new string, for display only (command line is not changed)
+  contenuto della riga di comando, con tag al cursore |
+  nuova stringa, solo da mostrare (la riga di comando non viene modificata)
 
-// TRANSLATION MISSING
 | weechat | input_text_for_buffer +
   (_novità nella versione 0.3.7_) |
   stringa con puntatore al buffer ("0x123..") |
-  content of command line sent to buffer (text or command) |
-  new content of command line sent to buffer
+  contenuto della riga di comando inviata al buffer (testo o comando) |
+  nuovo contenuto della riga di comando inviata al buffer
 
 | weechat | weechat_print |
   plugin;buffer_name;tags |
@@ -9017,8 +8990,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _buffer_number             | numero del buffer           | "1" ... "n"                                      | "-1"
 | _buffer_plugin             | nome plugin del buffer      | "core", "irc", ...                               | ""
 | _buffer_name               | nome del buffer             | "weechat", "freenode.#weechat", ...              | ""
-// TRANSLATION MISSING
-| _buffer_full_name          | full name of buffer         | "core.weechat", "irc.freenode.#weechat", ...     | ""
+| _buffer_full_name          | nome completo del buffer    | "core.weechat", "irc.freenode.#weechat", ...     | ""
 | _buffer_localvar_XXX ^(2)^ | variabili locali del buffer | qualsiasi valore                                 | non impostato
 | _chat                      | indicatore area di chat     | "0" o  "1"                                       | "0"
 | _chat_line_x               | colonna nella riga ^(3)^    | "0" ... "n"                                      | "-1"
@@ -9562,14 +9534,16 @@ Argomenti:
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer
 ** 'active': 1 se il buffer è attivo, 0 se il buffer è unito e non selezionato
-** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati, altrimenti 0
+** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati,
+   altrimenti 0
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
 ** 'prefix_max_length': lunghezza massima del prefisso in questo buffer
 ** 'time_for_each_line': 1 se l'ora è visualizzata per ogni riga nel buffer
    (predefinito), altrimenti 0
 ** 'nicklist': 1 se la lista nick è abilitata, altrimenti 0
-** 'nicklist_case_sensitive': 1 se i nick sono in maiuscole/minuscole, altrimenti 0
+** 'nicklist_case_sensitive': 1 se i nick sono sensibili alle maiuscole,
+   altrimenti 0
 ** 'nicklist_max_length': lunghezza massima per un nick
 ** 'nicklist_display_groups': 1 se i gruppi vengono visualizzati, altrimenti 0
 ** 'nicklist_visible_count': numero di nick/gruppi visualizzati
@@ -9631,8 +9605,7 @@ Argomenti:
 ** 'plugin': nome del plugin che ha creato questo buffer ("core"
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
-// TRANSLATION MISSING
-** 'full_name': full name of buffer ("plugin.name") (_novità nella versione 0.3.7_)
+** 'full_name': nome completo del buffer ("plugin.nome") (_novità nella versione 0.3.7_)
 ** 'short_name': nome breve del buffer
 ** 'title': titolo del buffer
 ** 'input': testo in ingresso
@@ -9782,9 +9755,8 @@ Argomenti:
   la lista nick per il buffer
 
 | nicklist_case_sensitive | "0" oppure "1" |
-  "0" per avere una lista nick case insenstive (maiuscole/minuscole
-  ignorate), "1" per avere una lista nick case sensitive
-  (maiuscole/minuscole non ignorate)
+  "0" per avere una lista nick non sensibile alle maiuscole, "1" per
+  una lista nick sensibile alle maiuscole
 
 | nicklist_display_groups | "0" oppure "1" |
   "0" per nascondere i gruppi nella lista nick, "1" per visualizzare
@@ -10145,9 +10117,9 @@ Argomenti:
 ** 'win_width': larghezza della finestra, in caratteri
 ** 'win_height': altezza della finestra, in caratteri
 ** 'win_width_pct': misura percentuale, paragonata alla finestra genitore
-   (ad esempio 50 vuol dire metà grandezza)
+   (ad esempio 50 indica metà grandezza)
 ** 'win_height_pct': misura percentuale, paragonata alla finestra genitore
-   (ad esempio 50 vuol dire metà grandezza)
+   (ad esempio 50 indica metà grandezza)
 ** 'win_chat_x': posizione X della finestra di chat nel terminale
    (la prima colonna è 0)
 ** 'win_chat_y': posizione Y della finestra di chat nel terminale
@@ -10637,8 +10609,8 @@ weechat_nicklist_get_next_item
 
 _Novità nella versione 0.3.7._
 
-// TRANSLATION MISSING
-Get next group or nick from nicklist (mainly used to display nicklist).
+Ottiene il prossimo gruppo oppure il nick dalla lista nick (usato principalmente
+per mostrare la lista nick).
 
 Prototipo:
 
@@ -10652,10 +10624,8 @@ void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
 Argomenti:
 
 * 'buffer': puntatore al buffer
-// TRANSLATION MISSING
-* 'group': pointer on pointer to group
-// TRANSLATION MISSING
-* 'nick': pointer on pointer to nick
+* 'group': puntatore sul puntatore al gruppo
+* 'nick': puntatore sul puntatore al nick
 
 Esempio in C:
 
@@ -10676,7 +10646,7 @@ while (ptr_group || ptr_nick)
     }
     else
     {
-        /* group */
+        /* gruppo */
         /* ... */
     }
     gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -12794,7 +12764,7 @@ Restituisce hdata per una struttura di WeeChat o di un plugin.
 
 [NOTE]
 Hdata non contiene dati, è una tabella hash con la posizione delle variabili
-nella struttura. Ciò vuol dire che è necessario questo hdata ed un puntatore ad
+nella struttura. Ciò indica che è necessario questo hdata ed un puntatore ad
 un oggetto di WeeChat/plugin per leggere dei dati.
 
 Prototipo:
@@ -13137,8 +13107,7 @@ weechat_hdata_check_pointer
 
 _Novità nella versione 0.3.7._
 
-// TRANSLATION MISSING
-Check if a pointer is valid for a hdata and a list pointer.
+Verifica se un puntatore è valido per un hdata e un puntatore della lista.
 
 Prototipo:
 
@@ -13150,15 +13119,12 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 Argomenti:
 
 * 'hdata': puntatore hdata
-// TRANSLATION MISSING
-* 'list': list pointer
-// TRANSLATION MISSING
-* 'pointer': pointer to check
+* 'list': puntatore alla lista
+* 'pointer': puntatore da verificare
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* 1 if pointer is in list, 0 if not found
+* 1 se il puntatore è in lista, 0 in caso contrario
 
 Esempio in C:
 
@@ -13276,8 +13242,7 @@ Argomenti:
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* char value of variable
+* valore char della variabile
 
 Esempio in C:
 
@@ -13553,8 +13518,8 @@ weechat_hdata_hashtable
 
 _Novità nella versione 0.3.7._
 
-// TRANSLATION MISSING
-Return value of hashtable variable in structure using hdata.
+Restituisce il valore di una variabile nella tabella hash nella struttura usando
+hdata.
 
 Prototipo:
 
@@ -13571,8 +13536,7 @@ Argomenti:
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* hashtable value of variable (pointer to hashtable)
+* valore della tabella hash della variabile (puntatore alla tabella hash)
 
 Esempio in C:
 

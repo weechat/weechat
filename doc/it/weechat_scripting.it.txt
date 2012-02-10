@@ -632,18 +632,18 @@ def my_process_cb(data, command, rc, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[url_transfer]]
-URL transfer
-^^^^^^^^^^^^
+Trasferimento URL
+^^^^^^^^^^^^^^^^^
 
 _Novità nella versione 0.3.7._
 
-To download URL (or post to URL), you have to use function `hook_process`, or
-`hook_process_hashtable` if you need to set options for URL transfer.
+Per scaricare un URL (o inviare verso un URL), è necessario usare la funzione
+`hook_process` oppure `hook_process_hashtable` se ci fosse bisogno di impostare
+delle opzioni per il trasferimento dell'URL.
 
-Example of URL transfer without option: the HTML page will be received as "out"
-in callback (standard output of process):
+Esempio di trasferimento di un URL senza opzioni: la pagina HTML verrà
+ricevuta come "out" nella callback (output standard di un processo):
 
 [source,python]
 ----------------------------------------
@@ -662,8 +662,8 @@ weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
                      30 * 1000, "kernel_process_cb", "")
 ----------------------------------------
 
-Example of URL transfer with an option: download latest WeeChat development
-package in file '/tmp/weechat-devel.tar.gz':
+Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto
+di sviluppo di WeeChat nel file '/tmp/weechat-devel.tar.gz':
 
 [source,python]
 ----------------------------------------
@@ -677,8 +677,9 @@ weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.t
                                30 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in 'WeeChat Plugin API Reference'.
+Per maggiori informazioni sul trasferimento degli URL e le opzioni disponibili,
+consultare le funzioni `hook_process` e `hook_process_hashtable` in 'Referenze
+API per Plugin'.
 
 [[config_options]]
 Configurazione / opzioni

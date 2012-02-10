@@ -94,8 +94,7 @@ compilare WeeChat.
 | Pacchetto ^(1)^        | Versione    | Richiesto | Caratteristica
 | cmake                  |             | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
 | libncursesw5-dev ^(2)^ |             | *sì*      | interfaccia ncurses
-// TRANSLATION MISSING
-| libcurl4-xxxxx-dev     |             | *sì*      | URL transfer
+| libcurl4-xxxxx-dev     |             | *sì*      | trasferimento URL
 | gettext                |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | libgcrypt11-dev        |             |           | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
 | libgnutls-dev          | ≥ 2.2.0     |           | connessione SSL al server IRC
@@ -116,9 +115,9 @@ compilare WeeChat.
 potrebbero essere differenti in versioni e distribuzioni differenti. +
 ^(2)^ WeeChat può essere compilato con libncurses5-dev, ma *NON* è raccomandato
 (potrebbero verificarsi bug di visualizzazione). +
-// TRANSLATION MISSING
-^(3)^ WeeChat can compile with Python 3.x, but recommended Python version is 2.7
-(all scripts run fine with version 2.x, but not with version 3.x).
+^(3)^ WeeChat può compilare con Python 3.x, ma si raccomanda di usare la
+versione 2.7 (tutti gli script vengono eseguiti correttamente con la versione
+2.x, ma non con la 3.x).
 
 [[compile_with_cmake]]
 Compilazione con cmake
@@ -1617,7 +1616,7 @@ personalizzare:
 | messaggio | alias         | descrizione
 | error     |               | errore
 | invite    |               | invitato su un canale
-| join      |               | channel join
+| join      |               | ingresso nel canale
 | kick      |               | kick
 | kill      |               | kill
 | mode      |               | mode
@@ -1626,8 +1625,7 @@ personalizzare:
 | quit      |               | quit
 | topic     |               | topic
 | wallops   |               | wallops
-// TRANSLATION MISSING
-|           | ctcp          | ctcp (sent or received, in a privmsg or notice message)
+|           | ctcp          | ctcp (inviato o ricevuto, in un messaggio privato o di notifica)
 | 221       |               | stringa modalità utente
 | 275       | whois         | whois (connessione sicura)
 | 301       | whois         | whois (assente)
