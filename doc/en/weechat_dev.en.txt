@@ -714,12 +714,160 @@ struct t_gui_buffer
 
 Then the two list pointers, to the head and tail of list:
 
-
 [source,C]
 ----------------------------------------
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 ----------------------------------------
+
+[[color_codes_in_strings]]
+Color codes in strings
+~~~~~~~~~~~~~~~~~~~~~~
+
+WeeChat uses own color codes in strings to display attributes (bold,
+underline, ...) and colors on screen.
+
+All attributes/colors are prefixed with a char in string, which can be:
+
+* '0x19': color code (followed by color code(s))
+* '0x1A': set attribute (followed by attribute on one char)
+* '0x1B': remove attribute (followed by attribute on one char)
+* '0x1C': reset (nothing after)
+
+Allowed attributes are (one or more chars):
+
+* `*`: bold
+* `!`: reverse
+* `/`: italic
+* `_`: underline
+* `|`: keep attributes
+
+Possible colors are:
+
+* standard color: optional attributes + number on 2 digits
+* extended color: `@` + optional attributes + number on 5 digits
+
+In following table, these conventions are used:
+
+* `STD`: standard color (2 digits)
+* `(A)STD`: standard color with optional attributes (attributes + 2 digits)
+* `EXT`: extended color (`@` + 5 digits)
+* `(A)EXT`: extended color with optional attributes (`@` + attributes + 5 digits)
+* `ATTR`: one attribute char (`*`, `!`, `/`, `_` or `|`)
+
+All combinations are summarized in this table:
+
+[width="100%",cols="3,2,1,5",options="header"]
+|========================================
+| Code                                 | Example                | Areas       | Description
+| @h(19) + STD                         | @h(19)`01`             | chat + bars | Set attributes and color using option, see table below
+| @h(19) + EXT                         | @h(19)`@00001`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
+| @h(19) + "F" + (A)STD                | @h(19)`F*05`           | chat + bars | Set foreground (WeeChat color)
+| @h(19) + "F" + (A)EXT                | @h(19)`F@00214`        | chat + bars | Set foreground (extended color)
+| @h(19) + "B" + STD                   | @h(19)`B05`            | chat + bars | Set background (WeeChat color)
+| @h(19) + "B" + EXT                   | @h(19)`B@00124`        | chat + bars | Set background (extended color)
+| @h(19) + "*" + (A)STD                | @h(19)`*05`            | chat + bars | Set foreground (WeeChat color)
+| @h(19) + "*" + (A)EXT                | @h(19)`*@00214`        | chat + bars | Set foreground (extended color)
+| @h(19) + "*" + (A)STD + "," + (A)STD | @h(19)`*08,05`         | chat + bars | Set foreground/background (WeeChat colors)
+| @h(19) + "*" + (A)STD + "," + (A)EXT | @h(19)`*01,@00214`     | chat + bars | Set foreground (WeeChat color) and background (extended color)
+| @h(19) + "*" + (A)EXT + "," + (A)STD | @h(19)`*@00214,05`     | chat + bars | Set foreground (extended color) and background (WeeChat color)
+| @h(19) + "*" + (A)EXT + "," + (A)EXT | @h(19)`*@00214,@00017` | chat + bars | Set foreground/background (extended colors)
+| @h(19) + "b" + "F"                   | @h(19)`bF`             | bars        | Set bar foreground color
+| @h(19) + "b" + "D"                   | @h(19)`bD`             | bars        | Set bar delimiter color
+| @h(19) + "b" + "B"                   | @h(19)`bB`             | bars        | Set bar background color
+| @h(19) + "b" + "_"                   | @h(19)`b_`             | input bar   | Start input char (used only in item "input_text")
+| @h(19) + "b" + "-"                   | @h(19)`b-`             | input bar   | Start input hidden char (used only in item "input_text")
+| @h(19) + "b" + "#"                   | @h(19)`b#`             | input bar   | Move cursor char char (used only in item "input_text")
+| @h(19) + "b" + "i"                   | @h(19)`bi`             | bars        | Start item
+| @h(19) + "b" + "l" (lower L)         | @h(19)`bl`             | bars        | Start line item
+| @h(19) + @h(1C)                      | @h(19)@h(1C)           | chat + bars | Reset color (keep attributes)
+| @h(1A) + ATTR                        | @h(1A)`*`              | chat + bars | Set attribute
+| @h(1B) + ATTR                        | @h(1B)`*`              | chat + bars | Remove attribute
+| @h(1C)                               | @h(1C)                 | chat + bars | Reset attributes and color
+|========================================
+
+Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'):
+
+[width="40%",cols="^1m,5",options="header"]
+|========================================
+| Code | Option
+| 00   | weechat.color.separator
+| 01   | weechat.color.chat
+| 02   | weechat.color.chat_time
+| 03   | weechat.color.chat_time_delimiters
+| 04   | weechat.color.chat_prefix_error
+| 05   | weechat.color.chat_prefix_network
+| 06   | weechat.color.chat_prefix_action
+| 07   | weechat.color.chat_prefix_join
+| 08   | weechat.color.chat_prefix_quit
+| 09   | weechat.color.chat_prefix_more
+| 10   | weechat.color.chat_prefix_suffix
+| 11   | weechat.color.chat_buffer
+| 12   | weechat.color.chat_server
+| 13   | weechat.color.chat_channel
+| 14   | weechat.color.chat_nick
+| 15   | weechat.color.chat_nick_self
+| 16   | weechat.color.chat_nick_other
+| 17   | _(not used any more since WeeChat 0.3.4)_
+| 18   | _(not used any more since WeeChat 0.3.4)_
+| 19   | _(not used any more since WeeChat 0.3.4)_
+| 20   | _(not used any more since WeeChat 0.3.4)_
+| 21   | _(not used any more since WeeChat 0.3.4)_
+| 22   | _(not used any more since WeeChat 0.3.4)_
+| 23   | _(not used any more since WeeChat 0.3.4)_
+| 24   | _(not used any more since WeeChat 0.3.4)_
+| 25   | _(not used any more since WeeChat 0.3.4)_
+| 26   | _(not used any more since WeeChat 0.3.4)_
+| 27   | weechat.color.chat_host
+| 28   | weechat.color.chat_delimiters
+| 29   | weechat.color.chat_highlight
+| 30   | weechat.color.chat_read_marker
+| 31   | weechat.color.chat_text_found
+| 32   | weechat.color.chat_value
+| 33   | weechat.color.chat_prefix_buffer
+| 34   | weechat.color.chat_tags
+| 35   | weechat.color.chat_inactive_window
+| 36   | weechat.color.chat_inactive_buffer
+| 37   | weechat.color.chat_prefix_buffer_inactive_buffer
+|========================================
+
+WeeChat colors are:
+
+[width="40%",cols="^1m,5",options="header"]
+|========================================
+| Code | Color
+| 00   | default (terminal foreground/background)
+| 01   | black
+| 02   | dark gray
+| 03   | dark red
+| 04   | light red
+| 05   | dark green
+| 06   | light green
+| 07   | brown
+| 08   | yellow
+| 09   | dark blue
+| 10   | light blue
+| 11   | dark magenta
+| 12   | light magenta
+| 13   | dark cyan
+| 14   | light cyan
+| 15   | gray
+| 16   | white
+|========================================
+
+Examples of color codes:
+
+[width="50%",cols="1,2",options="header"]
+|========================================
+| Code                    | Description
+| @h(19)`01`              | color of option "01" (chat text)
+| @h(19)`*08,03`          | yellow on red
+| @h(19)`*@00214`         | orange (extended color 214)
+| @h(19)`*@_00214,@00017` | underlined orange (214) on dark blue (17)
+| @h(1A)`_`               | set underline
+| @h(1B)`_`               | remove underline
+| @h(1C)`bD`              | reset attributes and color
+|========================================
 
 [[plugin_internals]]
 Plugin internals

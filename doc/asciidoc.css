@@ -65,3 +65,12 @@ p.table {
 .keyplus {
     font-size: 0.8em;
 }
+.hexa {
+    color: #000077;
+    font-size: 0.85em;
+    font-family: monospace;
+    font-variant: small-caps;
+    border: solid 1px #8888BB;
+    padding: 0 0.2em 0 0.2em;
+    margin: 0 0.2em 0 0.2em;
+}

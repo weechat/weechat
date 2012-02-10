@@ -20,6 +20,11 @@
 #ifndef __WEECHAT_GUI_COLOR_H
 #define __WEECHAT_GUI_COLOR_H 1
 
+/*
+ * Color from options
+ * (when changing something here, please update the Developer's guide)
+ */
+
 enum t_gui_color_enum
 {
     GUI_COLOR_SEPARATOR = 0,
