@@ -859,14 +859,14 @@ Examples of color codes:
 
 [width="50%",cols="1,2",options="header"]
 |========================================
-| Code                    | Description
-| @h(19)`01`              | color of option "01" (chat text)
-| @h(19)`*08,03`          | yellow on red
-| @h(19)`*@00214`         | orange (extended color 214)
-| @h(19)`*@_00214,@00017` | underlined orange (214) on dark blue (17)
-| @h(1A)`_`               | set underline
-| @h(1B)`_`               | remove underline
-| @h(1C)`bD`              | reset attributes and color
+| Code                     | Description
+| @h(19)`01`               | color of option "01" (chat text)
+| @h(19)`*08,03`           | yellow on red
+| @h(19)`*@00214`          | orange (extended color 214)
+| @h(19)`*@*_00214,@00017` | bold underlined orange (214) on dark blue (17)
+| @h(1A)`_`                | set underline
+| @h(1B)`_`                | remove underline
+| @h(1C)`bD`               | reset attributes and color
 |========================================
 
 [[plugin_internals]]
