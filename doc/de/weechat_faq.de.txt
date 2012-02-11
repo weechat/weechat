@@ -670,6 +670,19 @@ Fall weniger sicher):
 ----------------------------------------
 
 
+// TRANSLATION MISSING
+[[irc_ssl_handshake_error]]
+When connecting to server with SSL, I see only error "TLS handshake failed", what can I do?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can try a different priority string (WeeChat ≥ 0.3.5 only), replace "xxx"
+by your server name:
+
+----------------------------------------
+/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+----------------------------------------
+
+
 [[irc_ssl_freenode]]
 Wie kann ich eine SSL gesicherte Verbindung zum freenode Server herstellen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

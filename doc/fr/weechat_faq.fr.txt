@@ -661,6 +661,18 @@ Si vous voyez des erreurs à propos du certificat, vous pouvez désactiver
 ----------------------------------------
 
 
+[[irc_ssl_handshake_error]]
+Lors de la connexion SSL à un serveur, je vois juste une erreur "TLS handshake failed", que puis-je faire ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vous pouvez essayer une chaîne de priorité différente (WeeChat ≥ 0.3.5
+seulement), remplacez "xxx" par le nom de votre serveur :
+
+----------------------------------------
+/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+----------------------------------------
+
+
 [[irc_ssl_freenode]]
 Comment puis-je me connecter à freenode avec SSL ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
