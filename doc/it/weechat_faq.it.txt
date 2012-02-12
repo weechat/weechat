@@ -656,13 +656,12 @@ Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_ssl_handshake_error]]
-When connecting to server with SSL, I see only error "TLS handshake failed", what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Alla connessione al server con SSL ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can try a different priority string (WeeChat ≥ 0.3.5 only), replace "xxx"
-by your server name:
+Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
+"xxx" con il nome del server:
 
 ----------------------------------------
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
