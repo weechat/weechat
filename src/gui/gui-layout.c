@@ -150,31 +150,6 @@ gui_layout_buffer_add (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_save: save current layout for buffers
- */
-
-void
-gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
-                        struct t_gui_layout_buffer **last_layout_buffer)
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    if (!layout_buffers || !last_layout_buffer)
-        return;
-
-    gui_layout_buffer_remove_all (layout_buffers, last_layout_buffer);
-
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        gui_layout_buffer_add (layout_buffers, last_layout_buffer,
-                               gui_buffer_get_plugin_name (ptr_buffer),
-                               ptr_buffer->name,
-                               ptr_buffer->number);
-    }
-}
-
-/*
  * gui_layout_buffer_get_number: get layout number for a plugin/buffer
  */
 
@@ -235,6 +210,34 @@ gui_layout_buffer_get_number_all (struct t_gui_layout_buffer *layout_buffers)
                                       &(ptr_buffer->layout_number),
                                       &(ptr_buffer->layout_number_merge_order));
     }
+}
+
+/*
+ * gui_layout_buffer_save: save current layout for buffers
+ */
+
+void
+gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
+                        struct t_gui_layout_buffer **last_layout_buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    if (!layout_buffers || !last_layout_buffer)
+        return;
+
+    gui_layout_buffer_remove_all (layout_buffers, last_layout_buffer);
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_layout_buffer_add (layout_buffers, last_layout_buffer,
+                               gui_buffer_get_plugin_name (ptr_buffer),
+                               ptr_buffer->name,
+                               ptr_buffer->number);
+    }
+
+    /* get layout number for all buffers */
+    gui_layout_buffer_get_number_all (*layout_buffers);
 }
 
 /*
