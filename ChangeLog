@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc1, 2012-02-09
+v0.3.7-rc1, 2012-02-13
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: fix bug with layout: assign layout number in buffers when doing
+  /layout save
 * core: do not auto add space after nick completer if option
   weechat.completion.nick_add_space is off
 * core: fix signal "buffer_switch": send it only once when switching buffer
