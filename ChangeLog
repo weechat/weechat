@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc2, 2012-02-13
+v0.3.7-rc2, 2012-02-16
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: automatically add newline char after last pasted line (when pasting many
+  lines with confirmation)
 * core: fix bug with layout: assign layout number in buffers when doing
   /layout save
 * core: do not auto add space after nick completer if option

@@ -1422,6 +1422,14 @@ gui_key_get_paste_lines ()
 void
 gui_key_paste_accept ()
 {
+    /* add final '\n' if there is not in pasted text */
+    if ((gui_key_buffer_size > 0)
+        && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
+        && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
+    {
+        gui_key_buffer_add ('\n');
+    }
+
     gui_key_paste_pending = 0;
     gui_input_paste_pending_signal ();
 }
