@@ -8,7 +8,7 @@ Version 0.3.7 (under dev!)
 --------------------------
 
 * core: automatically add newline char after last pasted line (when pasting many
-  lines with confirmation)
+  lines with confirmation) (task #10703)
 * core: fix bug with layout: assign layout number in buffers when doing
   /layout save
 * core: do not auto add space after nick completer if option
