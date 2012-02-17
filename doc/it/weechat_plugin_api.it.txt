@@ -4251,7 +4251,7 @@ option4 = weechat.config_new_option(config_file, section, "option4", "string",
 
 option5 = weechat.config_new_option(config_file, section, "option5", "color",
     "My option, type color",
-    "", 0, 100, "lightblue", "lightblue", 0,
+    "", 0, 0, "lightblue", "lightblue", 0,
     "", "",
     "", "",
     "", "")
