@@ -109,6 +109,12 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     password_crypted = NULL;
     answer = NULL;
     answer_base64 = NULL;
+    data_prime_number = NULL;
+    data_generator_number = NULL;
+    data_server_pub_key = NULL;
+    pub_key = NULL;
+    priv_key = NULL;
+    secret_mpi = NULL;
 
     /* decode data */
     data = malloc (strlen (data_base64) + 1);
@@ -225,6 +231,18 @@ end:
         free (password_crypted);
     if (answer)
         free (answer);
+    if (data_prime_number)
+        gcry_mpi_release (data_prime_number);
+    if (data_generator_number)
+        gcry_mpi_release (data_generator_number);
+    if (data_server_pub_key)
+        gcry_mpi_release (data_server_pub_key);
+    if (pub_key)
+        gcry_mpi_release (pub_key);
+    if (priv_key)
+        gcry_mpi_release (priv_key);
+    if (secret_mpi)
+        gcry_mpi_release (secret_mpi);
 
     return answer_base64;
 #else

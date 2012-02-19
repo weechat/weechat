@@ -61,6 +61,7 @@ Version 0.3.7 (under dev!)
   nicklist_get_next_item
 * alias: add default alias umode => /mode $nick
 * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
+* irc: fix memory leak in SASL/blowfish authentication
 * irc: fix memory leak when a server is deleted
 * irc: add option "cap" in servers to enable capabilities on connection
 * irc: add signal "irc_server_opened"
