@@ -1181,6 +1181,8 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->prefix_modes);
     if (server->prefix_chars)
         free (server->prefix_chars);
+    if (server->chantypes)
+        free (server->chantypes);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
