@@ -418,6 +418,11 @@
 ** Typ: integer
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
+* [[option_irc.server_default.cap]] *irc.server_default.cap*
+** Beschreibung: `comma-separated list of capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** Beschreibung: `Enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon schreiben muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt`
 ** Typ: Zeichenkette

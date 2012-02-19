@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc2, 2012-02-16
+v0.3.7-rc2, 2012-02-19
 
 
 Version 0.3.7 (under dev!)
@@ -59,6 +59,7 @@ Version 0.3.7 (under dev!)
   nicklist_get_next_item
 * alias: add default alias umode => /mode $nick
 * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
+* irc: add option "cap" in servers to enable capabilities on connection
 * irc: add signal "irc_server_opened"
 * irc: add signal "xxx,irc_out1_yyy" and modifier "irc_out1_xxx" (outgoing
   message before automatic split to fit in 512 bytes)

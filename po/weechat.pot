@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-01-24 21:20+0100\n"
+"POT-Creation-Date: 2012-02-19 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4243,6 +4243,12 @@ msgstr ""
 msgid "password for server"
 msgstr ""
 
+#. TRANSLATORS: please keep word "capabilities" between brackets if translation is different (see fr.po)
+msgid ""
+"comma-separated list of capabilities to enable for server if they are "
+"available (example: \"multi-prefix,extended-join\")"
+msgstr ""
+
 msgid "mechanism for SASL authentication"
 msgstr ""
 
@@ -4897,7 +4903,7 @@ msgid "%s%s: client capability, server supports: %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: client capability, requesting: sasl"
+msgid "%s%s: client capability, requesting: %s"
 msgstr ""
 
 #, c-format

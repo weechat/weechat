@@ -418,6 +418,11 @@
 ** type: entier
 ** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
 
+* [[option_irc.server_default.cap]] *irc.server_default.cap*
+** description: `liste séparée par des virgules de capacités ("capabilities") à activer sur le serveur si elles sont disponibles (exemple: "multi-prefix,extended-join")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** description: `commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)`
 ** type: chaîne

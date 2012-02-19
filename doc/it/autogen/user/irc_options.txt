@@ -418,6 +418,11 @@
 ** tipo: intero
 ** valori: 0 .. 1000000 (valore predefinito: `25`)
 
+* [[option_irc.server_default.cap]] *irc.server_default.cap*
+** descrizione: `comma-separated list of capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** descrizione: `comando(i) da eseguire quando si è connessi al server (più comandi vanno separati da ":", usare ";" per un punto e virgola, le variabili speciali $nick, $canale e $server vengono sostituite dai loro valori)`
 ** tipo: stringa
