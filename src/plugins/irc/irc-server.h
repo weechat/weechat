@@ -42,7 +42,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
     IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
-    IRC_SERVER_OPTION_CAP,           /* capabilities to enable on server     */
+    IRC_SERVER_OPTION_CAPABILITIES,  /* client capabilities to enable        */
     IRC_SERVER_OPTION_SASL_MECHANISM,/* mechanism for SASL authentication    */
     IRC_SERVER_OPTION_SASL_USERNAME, /* username for SASL authentication     */
     IRC_SERVER_OPTION_SASL_PASSWORD, /* password for SASL authentication     */

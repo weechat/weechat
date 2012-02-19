@@ -68,7 +68,7 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 { "addresses", "proxy", "ipv6",
   "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_verify",
-  "password", "cap",
+  "password", "capabilities",
   "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout",
   "autoconnect", "autoreconnect", "autoreconnect_delay",
   "nicks", "username", "realname", "local_hostname",
@@ -2711,12 +2711,12 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
 void
 irc_server_login (struct t_irc_server *server)
 {
-    const char *password, *username, *realname, *cap;
+    const char *password, *username, *realname, *capabilities;
 
     password = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD);
     username = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME);
     realname = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME);
-    cap = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAP);
+    capabilities = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES);
 
     if (password && password[0])
         irc_server_sendf (server, 0, NULL, "PASS %s", password);
@@ -2731,7 +2731,7 @@ irc_server_login (struct t_irc_server *server)
     else
         server->nick_first_tried = irc_server_get_nick_index (server);
 
-    if (irc_server_sasl_enabled (server) || (cap && cap[0]))
+    if (irc_server_sasl_enabled (server) || (capabilities && capabilities[0]))
     {
         irc_server_sendf (server, 0, NULL, "CAP LS");
     }
@@ -4310,8 +4310,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "password",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD)))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "cap",
-                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAP)))
+    if (!weechat_infolist_new_var_string (ptr_item, "capabilities",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sasl_mechanism",
                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)))
@@ -4530,13 +4530,13 @@ irc_server_print_log ()
             weechat_log_printf ("  password . . . . . . : null");
         else
             weechat_log_printf ("  password . . . . . . : (hidden)");
-        /* cap (capabilities) */
-        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CAP]))
-            weechat_log_printf ("  cap. . . . . . . . . : null ('%s')",
-                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_CAP));
+        /* client capabilities */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_CAPABILITIES]))
+            weechat_log_printf ("  capabilities . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_CAPABILITIES));
         else
-            weechat_log_printf ("  cap. . . . . . . . . : '%s'",
-                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_CAP]));
+            weechat_log_printf ("  capabilities . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_CAPABILITIES]));
         /* sasl_mechanism */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SASL_MECHANISM]))
             weechat_log_printf ("  sasl_mechanism . . . : null ('%s')",

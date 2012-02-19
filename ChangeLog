@@ -63,7 +63,8 @@ Version 0.3.7 (under dev!)
 * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
 * irc: fix memory leak in SASL/blowfish authentication
 * irc: fix memory leak when a server is deleted
-* irc: add option "cap" in servers to enable capabilities on connection
+* irc: add option "capabilities" in servers to enable client capabilities on
+  connection
 * irc: add signal "irc_server_opened"
 * irc: add signal "xxx,irc_out1_yyy" and modifier "irc_out1_xxx" (outgoing
   message before automatic split to fit in 512 bytes)

@@ -1446,13 +1446,13 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
-        case IRC_SERVER_OPTION_CAP:
+        case IRC_SERVER_OPTION_CAPABILITIES:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                /* TRANSLATORS: please keep word "capabilities" between brackets if translation is different (see fr.po) */
-                N_("comma-separated list of capabilities to enable for server "
-                   "if they are available (example: "
+                /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po) */
+                N_("comma-separated list of client capabilities to enable for "
+                   "server if they are available (example: "
                    "\"multi-prefix,extended-join\")"),
                 NULL, 0, 0,
                 default_value, value,

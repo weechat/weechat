@@ -418,8 +418,8 @@
 ** type: entier
 ** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
 
-* [[option_irc.server_default.cap]] *irc.server_default.cap*
-** description: `liste séparée par des virgules de capacités ("capabilities") à activer sur le serveur si elles sont disponibles (exemple: "multi-prefix,extended-join")`
+* [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
+** description: `liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles (exemple: "multi-prefix,extended-join")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

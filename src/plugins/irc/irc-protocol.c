@@ -227,7 +227,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 sasl_requested = irc_server_sasl_enabled (server);
                 sasl_to_do = 0;
                 ptr_cap_option = IRC_SERVER_OPTION_STRING(server,
-                                                          IRC_SERVER_OPTION_CAP);
+                                                          IRC_SERVER_OPTION_CAPABILITIES);
                 length = ((ptr_cap_option && ptr_cap_option[0]) ? strlen (ptr_cap_option) : 0) + 16;
                 cap_option = malloc (length);
                 cap_req = malloc (length);

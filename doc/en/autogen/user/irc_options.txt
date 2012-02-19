@@ -418,8 +418,8 @@
 ** type: integer
 ** values: 0 .. 1000000 (default value: `25`)
 
-* [[option_irc.server_default.cap]] *irc.server_default.cap*
-** description: `comma-separated list of capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+* [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
+** description: `comma-separated list of client capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
 ** type: string
 ** values: any string (default value: `""`)
 
