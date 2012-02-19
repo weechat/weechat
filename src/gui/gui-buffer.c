@@ -2185,12 +2185,16 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->mixed_lines);
 
     /* free some data */
-    if (buffer->title)
-        free (buffer->title);
+    if (buffer->plugin_name_for_upgrade)
+        free (buffer->plugin_name_for_upgrade);
     if (buffer->name)
         free (buffer->name);
+    if (buffer->full_name)
+        free (buffer->full_name);
     if (buffer->short_name)
         free (buffer->short_name);
+    if (buffer->title)
+        free (buffer->title);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     gui_buffer_undo_free_all (buffer);
