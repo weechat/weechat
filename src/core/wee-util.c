@@ -403,14 +403,20 @@ util_search_full_lib_name (const char *filename, const char *plugins_dir)
                                                        config_plugin_extensions[i],
                                                        plugins_dir);
             if (full_name)
+            {
+                free (filename2);
                 return full_name;
+            }
         }
     }
     else
     {
         full_name = util_search_full_lib_name_ext (filename2, "", plugins_dir);
         if (full_name)
+        {
+            free (filename2);
             return full_name;
+        }
     }
 
     free (filename2);

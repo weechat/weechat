@@ -7,6 +7,7 @@ v0.3.7-rc2, 2012-02-19
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: fix memory leak in function util_search_full_lib_name
 * core: automatically add newline char after last pasted line (when pasting many
   lines with confirmation) (task #10703)
 * core: fix bug with layout: assign layout number in buffers when doing
