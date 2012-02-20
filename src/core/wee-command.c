@@ -5776,8 +5776,8 @@ command_init ()
                   "history_global_previous|history_global_next|"
                   "jump_smart|jump_last_buffer|jump_previously_visited_buffer|"
                   "jump_next_visited_buffer|hotlist_clear|grab_key|"
-                  "grab_key_command|grab_mouse|grab_mouse_area|scroll_unread|"
-                  "set_unread|set_unread_current_buffer|switch_active_buffer|"
+                  "grab_key_command|grab_mouse|grab_mouse_area|set_unread|"
+                  "set_unread_current_buffer|switch_active_buffer|"
                   "switch_active_buffer_previous|insert",
                   &command_input, NULL);
     hook_command (NULL, "key",
