@@ -419,7 +419,7 @@
 ** valori: 0 .. 1000000 (valore predefinito: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** descrizione: `comma-separated list of client capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+** descrizione: `elenco separato da virgole delle capacità del client ("client capabilities") da abilitare per il server se disponibili (esempio: "multi-prefix,extended-join")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

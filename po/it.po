@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-19 20:19+0100\n"
+"POT-Creation-Date: 2012-02-20 17:24+0100\n"
 "PO-Revision-Date: 2012-02-05 22:24+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5508,6 +5508,9 @@ msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available (example: \"multi-prefix,extended-join\")"
 msgstr ""
+"elenco separato da virgole delle capacità del client (\"client capabilities"
+"\") da abilitare per il server se disponibili (esempio: \"multi-prefix,"
+"extended-join\")"
 
 msgid "mechanism for SASL authentication"
 msgstr "meccanismo per l'autenticazione SASL"
@@ -6315,9 +6318,9 @@ msgstr ""
 msgid "%s%s: client capability, server supports: %s"
 msgstr "%s%s: capacità del client, il server supporta: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, requesting: %s"
-msgstr "%s%s: capacità del client, richiesta in corso: sasl"
+msgstr "%s%s: capacità del client, richiesta in corso: %s"
 
 #, c-format
 msgid "%s%s: client capability: sasl not supported"
