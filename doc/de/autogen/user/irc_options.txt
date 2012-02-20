@@ -419,7 +419,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `comma-separated list of client capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+** Beschreibung: `Durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (Beispiel: "multi-prefix,extended-join")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
