@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc3, 2012-02-19
+v0.3.7-rc3, 2012-02-20
 
 
 Version 0.3.7 (under dev!)
@@ -11,7 +11,7 @@ Version 0.3.7 (under dev!)
   therefore default command of key alt-u has been updated. To bind key with new
   default value:
 ** `/key bind meta-u /window scroll_unread`
-* extented regex is used in filters and irc ignore, so some chars that
+* extended regex is used in filters and irc ignore, so some chars that
   needed escape in past do not need any more (for example `[0-9]\+` becomes
   `[0-9]+`), filters and ignore have to be manually fixed
 * option 'weechat.look.highlight_regex' becomes case insensitive by default,
