@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc3, 2012-02-19
+v0.3.7-rc3, 2012-02-20
 
 
 Version 0.3.7 (under dev!)
@@ -100,6 +100,8 @@ Version 0.3.7 (under dev!)
 * irc: auto-connect to servers created with "irc://" on command line but not
   other servers if "-a" ("--no-connect") is given
 * guile: new script plugin for scheme (task #7289)
+* perl: increment count of hash returned by API (fix crash when script tries to
+  read hash without making a copy)
 * python: add support of Python 3.x (task #11704)
 * relay: do not create relay if there is a problem with socket creation
   (bug #35345)
