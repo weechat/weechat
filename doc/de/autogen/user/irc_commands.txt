@@ -325,7 +325,7 @@ Channel-Modi:
   l: maximale Anzahl an Usern im Channel festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
   e: lege Ausnahmemaske fest
-  v: vergebe/nehme Voice (d.h. Schreibrechte bei moderierten Channels)
+  v: vergebe/nehme Voice (d.h. schreibrechte bei moderierten Channels)
   k: lege ein Passwort für den Channel fest
 User-Modi:
   nick: zu ändernder Nickname

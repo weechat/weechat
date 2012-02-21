@@ -96,7 +96,7 @@
 
 | weechat | keys_contexts | Tastaturkontext
 
-| weechat | nicks | Nicks in Nickliste des aktuellen Buffers
+| weechat | nicks | Nicks in Nickliste für aktuellen Buffer
 
 | weechat | palette_colors | Farbpalette
 
