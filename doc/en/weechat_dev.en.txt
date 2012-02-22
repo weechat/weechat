@@ -111,6 +111,7 @@ WeeChat "core" reside in following directories:
 |    wee-string.c               | Functions on strings
 |    wee-upgrade-file.c         | Internal upgrade system
 |    wee-upgrade.c              | Upgrade for WeeChat core (buffers, lines, history, ...)
+|    wee-url.c                  | URL transfer (using libcurl)
 |    wee-utf8.c                 | UTF-8 functions
 |    wee-util.c                 | Some other functions
 | gui/                          | Functions for buffers, windows, ... (used by all interfaces)
@@ -278,23 +279,24 @@ Documentation
 
 [width="100%",cols="1l,5",options="header"]
 |========================================
-| Path/file                       | Description
-| doc/                            | Documentation
-|    asciidoc.conf                | Asciidoc configuration file (some macros)
-|    asciidoc.css                 | Asciidoc style
-|    docgen.py                    | Python script to build files in "autogen/" directory (see below)
-|    weechat-curses.1             | Weechat man page
-|    XX/                          | Documentation for language XX (languages: en, fr, de, it, ...)
-|       weechat_quickstart.XX.txt | Quickstart guide
-|       weechat_user.XX.txt       | User's guide
-|       weechat_faq.XX.txt        | FAQ
-|       weechat_plugin_api.XX.txt | Plugin API reference
-|       weechat_scripting.XX.txt  | Scripting guide
-|       weechat_tester.XX.txt     | Tester's guide
-|       weechat_dev.XX.txt        | Developer's guide (this document)
-|       autogen/                  | Files auto-built with script docgen.py (do *NEVER* update manually!)
-|          user/                  | Files auto-built for user's guide
-|          plugin_api/            | Files auto-built for plugin API
+| Path/file                           | Description
+| doc/                                | Documentation
+|    asciidoc.conf                    | Asciidoc configuration file (some macros)
+|    asciidoc.css                     | Asciidoc style
+|    docgen.py                        | Python script to build files in "autogen/" directory (see below)
+|    weechat-curses.1                 | Weechat man page
+|    XX/                              | Documentation for language XX (languages: en, fr, de, it, ...)
+|       weechat_quickstart.XX.txt     | Quickstart guide
+|       weechat_user.XX.txt           | User's guide
+|       weechat_faq.XX.txt            | FAQ
+|       weechat_plugin_api.XX.txt     | Plugin API reference
+|       weechat_scripting.XX.txt      | Scripting guide
+|       weechat_tester.XX.txt         | Tester's guide
+|       weechat_dev.XX.txt            | Developer's guide (this document)
+|       weechat_relay_protocol.en.txt | Relay protocol
+|       autogen/                      | Files auto-built with script docgen.py (do *NEVER* update manually!)
+|          user/                      | Files auto-built for user's guide
+|          plugin_api/                | Files auto-built for plugin API
 |========================================
 
 [[translations]]
