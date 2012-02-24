@@ -282,9 +282,8 @@ wyłącz tą opcję.
 
 Innym rozwiązaniem będzie użycie któregoś z poniższych skryptów:
 
-// TRANSLATION MISSING
 urlserver.py::
-    shorten URLs with HTTP server in script
+    skracanie URLi za pomocą serwera HTTP
 
 urlbar.py::
     wyświetla adresy URL na pasku
@@ -568,8 +567,7 @@ Dla Bitlbee ≥ 3, należy wykonać na kanale '&bitlbee':
 channel set show_users online,away
 ----------------------------------------
 
-// TRANSLATION MISSING
-For older version of Bitlbee, do that on channel '&bitlbee':
+Dla starszych wersji Bitlbee, należy wykonać na kanale '&bitlbee':
 
 ----------------------------------------
 set away_devoice false
@@ -578,9 +576,8 @@ set away_devoice false
 Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie o
 <<color_away_nicks,nieobecnych osobach>>.
 
-// TRANSLATION MISSING
-If you really want to filter voice messages, you can use this command, but this
-is not perfect (will work only if first mode changed is voice):
+Jeśli napewno chcesz filtrować wiadomości o statusie voice, możesz użyć tej komendy,
+nie jest ona jednak doskonała (działa tylko jeśli pierwszy z modyfikowanych trybów to voice):
 
 ----------------------------------------
 /filter add hidevoices * irc_mode \(\+\|\-\)v
@@ -610,20 +607,19 @@ Dla WeeChat ≤ 0.3.3, opcje te to 'irc.network.away_check' oraz
 'irc.network.away_check_max_nicks'.
 
 
-// TRANSLATION MISSING
 [[highlight_notification]]
-Jak mogę zostać powiadomiony, jeśli ktoś będzię chciał przyciągnąć moją uwagę na kanale?
+Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use a script like 'beep.pl' or 'launcher.pl'.
+Możesz użyć skryptu jak 'beep.pl' lub 'launcher.pl'.
 
-For 'launcher.pl', you have to setup command:
+Dla 'launcher.pl', należ przeprowadzić konfigurację:
 
 ----------------------------------------
-/set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
+/set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"
 ----------------------------------------
 
-Other scripts on this subject: http://www.weechat.org/scripts/stable/tag/notify/
+Inne podobne skrypty: http://www.weechat.org/scripts/stable/tag/notify/
 
 
 [[irc_ssl_connection]]
@@ -637,7 +633,7 @@ Diffie-Hellman (domyślnie 2048):
 /set irc.server.freenode.ssl_dhkey_size 1024
 ----------------------------------------
 
-Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opjcę "ssl_verify"
+Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "ssl_verify"
 (należy jednak uważać, ponieważ połączenie będzie mniej bezpieczne):
 
 ----------------------------------------
@@ -645,13 +641,12 @@ Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opjcę "s
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_ssl_handshake_error]]
-When connecting to server with SSL, I see only error "TLS handshake failed", what can I do?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Podczas łączenia się z serwerem poprzez SSL widzę tylko błąd "TLS handshake failed", co mogę zrobić?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can try a different priority string (WeeChat ≥ 0.3.5 only), replace "xxx"
-by your server name:
+Możesz spróbować innego ciągu priorytetu (tylko WeeChat ≥ 0.3.5), zamień "xxx"
+nazwą serwera:
 
 ----------------------------------------
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
@@ -662,21 +657,17 @@ by your server name:
 Jak mogę połączyć się z serwerem freenode używając SSL?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Set option 'weechat.network.gnutls_ca_file' to file with certificates:
+Ustaw opcję 'weechat.network.gnutls_ca_file' do pliku z certyfikatami:
 
 ----------------------------------------
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----------------------------------------
 
 [NOTE]
-// TRANSLATION MISSING
-Check that you have this file on your system (commonly brought by package
-"ca-certificates").
+Należy sprawdzić czy plik znajduje się w systemie (zazwyczaj dostarczany
+przez pakiet "ca-certificates").
 
-// TRANSLATION MISSING
-Setup server port, SSL, dhkey_size, then connect:
-
+Ustaw port serwera, SSL, dhkey_size, następnie się połącz:
 ----------------------------------------
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
@@ -685,12 +676,11 @@ Setup server port, SSL, dhkey_size, then connect:
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[irc_target_buffer]]
-How can I change target buffer for commands on merged buffers (like buffer with servers)?
+Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default key is @k(C-)@k(x) (command is: `/input switch_active_buffer`).
+Domyślna kombinacja to @k(C-)@k(x) (komenda: `/input switch_active_buffer`).
 
 
 [[plugins_scripts]]
@@ -743,8 +733,8 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
   niż starsze wersje)
 * nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python,
   ruby, lua, tcl, xfer (używana do DCC)
-* ładować tylko naprawde używane skrypty
-* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość lini trzymanych
+* ładować tylko naprawdę używane skrypty
+* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość linii trzymanych
   w pamięci dla każdego bufora)
 * zmniejszyć wartość opcji 'weechat.history.max_commands' (ilość komend
   użytkownika trzymanych w pamięci)
@@ -784,7 +774,7 @@ $ gdb /scieżka/do/weechat-curses
 Cannot find new threads: generic error
 ----------------------------------------
 
-Żeby to naprawić, można użyć takiej komendy(należy zmienić scieżki do libpthread oraz
+Żeby to naprawić, można użyć takiej komendy(należy zmienić ścieżki do libpthread oraz
 WeeChat na właściwe dla naszego systemu):
 
 ----------------------------------------
@@ -814,7 +804,7 @@ http://www.weechat.org/support
 
 
 [[donate]]
-Czy mogę dac pieniądze albo inne rzeczy deweloperą WeeChat?
+Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Tak możesz dać nam pieniądze, aby wspomóc rozwój.

@@ -16,9 +16,8 @@ Wprowadzenie
 WeeChat (Wee Enhanced Environment for Chat) jest darmowym klientem rozmów, szybkim
 i lekkim, zaprojektowanym dla wielu systemów operacyjnych.
 
-// TRANSLATION MISSING
-This manual documents way to write scripts for WeeChat, using one of supported
-script languages:
+Ten dokument przedstawia sposób pisania skryptów dla WeeChat z użyciem jednego ze
+wspieranych języków skryptowych:
 
 * python
 * perl
@@ -71,11 +70,10 @@ Tcl
 Guile (scheme)
 ^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-* Functions are called with `(weechat:xxx arg1 arg2 ...)`
-* Following functions take one list of arguments (instead of many arguments
-  for other functions), because number of arguments exceed number of allowed
-  arguments in Guile:
+* Funkcje są wywoływane za pomocą `(weechat:xxx arg1 arg2 ...)`
+* Następujące funkcje przyjmują pojedynczą listę argumentów (zamiast wielu
+  argumentów dla innych funkcji), ponieważ ilość argumentów przekracza ilość
+  argumentów dozwolonych w Guile:
 ** config_new_section
 ** config_new_option
 ** bar_new
@@ -114,7 +112,7 @@ Przykład dla skryptu w każdym z języków:
 import weechat
 
 weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
-weechat.prnt("", "Witaj, z pythonowego skryptu!")
+weechat.prnt("", "Witaj z pythonowego skryptu!")
 ----------------------------------------
 
 * perl:
@@ -122,7 +120,7 @@ weechat.prnt("", "Witaj, z pythonowego skryptu!")
 [source,perl]
 ----------------------------------------
 weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "");
-weechat::print("", "Witaj, z perlowego skryptu!");
+weechat::print("", "Witaj z perlowego skryptu!");
 ----------------------------------------
 
 * ruby:
@@ -131,7 +129,7 @@ weechat::print("", "Witaj, z perlowego skryptu!");
 ----------------------------------------
 def weechat_init
   Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
-  Weechat.print("", "Witaj, ze skryptu ruby!")
+  Weechat.print("", "Witaj ze skryptu ruby!")
   return Weechat::WEECHAT_RC_OK
 end
 ----------------------------------------
@@ -141,7 +139,7 @@ end
 [source,lua]
 ----------------------------------------
 weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "")
-weechat.print("", "Witaj, ze skryptu lua!")
+weechat.print("", "Witaj ze skryptu lua!")
 ----------------------------------------
 
 * tcl:
@@ -149,15 +147,15 @@ weechat.print("", "Witaj, ze skryptu lua!")
 [source,tcl]
 ----------------------------------------
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Skrypt testowy" "" ""
-weechat::print "" "Witaj, ze skryptu tcl!"
+weechat::print "" "Witaj ze skryptu tcl!"
 ----------------------------------------
 
 * guile (scheme):
 
 [source,lisp]
 ----------------------------------------
-(weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Test script" "" "")
-(weechat:print "" "Hello, from scheme script!")
+(weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Skrypt testowy" "" "")
+(weechat:print "" "Witaj ze skryptu scheme!")
 ----------------------------------------
 
 [[load_script]]
@@ -363,7 +361,7 @@ Lista stałych w API skryptów:
 [width="100%",cols="^1,10",options="header"]
 |========================================
 | Kategoria           | Stałe
-| zwracane kofy       |
+| zwracane kody       |
   WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR
 | pliki konfiguracyjne|
   WEECHAT_CONFIG_READ_OK, WEECHAT_CONFIG_READ_MEMORY_ERROR,
@@ -424,7 +422,7 @@ weechat.prnt_date_tags("", 0, "no_log", "witaj")
 # (przedrostek i wiadomość muszą być oddzielone znakiem tabulacji)
 weechat.prnt(weechat.current_buffer(), "==>\twitaj")
 
-# wyświetla wiadomość o błędzie w głównym buforze (z przedrostiem błąd)
+# wyświetla wiadomość o błędzie w głównym buforze (z przedrostkiem błąd)
 weechat.prnt("", "%szłe argumenty" % weechat.prefix("błąd"))
 
 # wyświetl wiadomość z kolorem w głównym buforze
@@ -449,9 +447,7 @@ Wysyłanie tekstu do bufora
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Możesz wysłać tekst lub komendę do bufora. Dokładnie tak jakby wpisać tekst
-w linii poleceń i wcisnąć [Enter]
-You can send text or command to a buffer. This is exactly like if you type text
-on command line and press [Enter].
+w linii poleceń i wcisnąć [Enter].
 
 Przykłady:
 
@@ -526,7 +522,7 @@ weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
 # odczyt zmiennej lokalnej
 myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
 
-# kasowanie zmiennej loaklnej
+# kasowanie zmiennej lokalnej
 weechat.buffer_set(buffer, "localvar_del_myvar", "")
 ----------------------------------------
 
@@ -620,18 +616,17 @@ def my_process_cb(data, command, rc, out, err):
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[url_transfer]]
-URL transfer
+Transfer URL
 ^^^^^^^^^^^^
 
 _Nowe w wersji 0.3.7._
 
-To download URL (or post to URL), you have to use function `hook_process`, or
-`hook_process_hashtable` if you need to set options for URL transfer.
+Aby pobrać URL (albo wysłać do URL), należy użyć funkcji `hook_process`, lub
+`hook_process_hashtable` jeśli konieczne jest przekazanie parametrów.
 
-Example of URL transfer without option: the HTML page will be received as "out"
-in callback (standard output of process):
+Przykład transferu URL bez opcji: strona HTML jest otrzymywana jako "out"
+(standardowe wyjście procesu):
 
 [source,python]
 ----------------------------------------
@@ -650,8 +645,8 @@ weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
                      30 * 1000, "kernel_process_cb", "")
 ----------------------------------------
 
-Example of URL transfer with an option: download latest WeeChat development
-package in file '/tmp/weechat-devel.tar.gz':
+Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
+do pliku '/tmp/weechat-devel.tar.gz':
 
 [source,python]
 ----------------------------------------
@@ -665,8 +660,8 @@ weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.t
                                30 * 1000, "my_process_cb", "")
 ----------------------------------------
 
-For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in 'WeeChat Plugin API Reference'.
+Więcej informacji o transferach URL i dostępnych opcjach dla funkcji
+`hook_process` oraz `hook_process_hashtable` można znaleźć w 'Opisie API wtyczek'.
 
 [[config_options]]
 Konfiguracja / opcje
