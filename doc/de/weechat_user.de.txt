@@ -246,6 +246,9 @@ Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb gdb aus um die F
 auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
 
 ----------------------------------------
+(gdb) set logging file /tmp/crash.txt
+(gdb) set logging on
+Copying output to /tmp/crash.txt.
 (gdb) bt full
 #0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
 #1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6

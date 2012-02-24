@@ -247,6 +247,9 @@ Then under gdb, use command `bt full` to display backtrace.
 You will see something like that:
 
 ----------------------------------------
+(gdb) set logging file /tmp/crash.txt
+(gdb) set logging on
+Copying output to /tmp/crash.txt.
 (gdb) bt full
 #0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
 #1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6
