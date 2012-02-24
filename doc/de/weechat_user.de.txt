@@ -90,7 +90,7 @@ welche Pakete optional genutzt werden können.
 | Paket ^(1)^            | Version     | benötigt | Funktion
 | cmake                  |             | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
 | libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
-| libcurl4-xxxxx-dev     |             | *ja*     | URL Transfer
+| libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | libgcrypt11-dev        |             |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server

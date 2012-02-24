@@ -90,7 +90,7 @@ compile WeeChat.
 | Package ^(1)^          | Version     | Required | Feature
 | cmake                  |             | *yes*    | build (autotools still possible, but cmake is recommended)
 | libncursesw5-dev ^(2)^ |             | *yes*    | ncurses interface
-| libcurl4-xxxxx-dev     |             | *yes*    | URL transfer
+| libcurl4-gnutls-dev    |             | *yes*    | URL transfer
 | gettext                |             |          | internationalization (translation of messages; base language is english)
 | libgcrypt11-dev        |             |          | SASL authentication with IRC server using DH-BLOWFISH mechanism
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server
