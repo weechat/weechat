@@ -476,8 +476,11 @@ string_expand_home (const char *path)
     if (!path)
         return NULL;
 
-    if (!path[0] || (path[0] != '~') || (path[1] != DIR_SEPARATOR_CHAR))
+    if (!path[0] || (path[0] != '~')
+        || ((path[1] && path[1] != DIR_SEPARATOR_CHAR)))
+    {
         return strdup (path);
+    }
 
     ptr_home = getenv ("HOME");
 
