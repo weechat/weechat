@@ -1,7 +1,7 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc3, 2012-02-20
+v0.3.7-rc3, 2012-02-25
 
 
 Version 0.3.7 (under dev!)
@@ -19,6 +19,9 @@ Version 0.3.7 (under dev!)
   "(?-i)FlashCode|flashy"
 * option 'weechat.history.max_lines' has been renamed to
   'weechat.history.max_buffer_lines_number'
+* option 'weechat.plugin.extension' now supports list of extensions, and new
+  default value is ".so,.dll" (with this value, weechat.conf is compatible with
+  Cygwin)
 
 Version 0.3.6 (2011-10-22)
 --------------------------
