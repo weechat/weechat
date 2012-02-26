@@ -1,3 +1,16 @@
+weechat (0.3.7-1) unstable; urgency=low
+
+  * New upstream release
+  * Bump Standards-Version to 3.9.3
+  * Update debian/copyright: new year
+  * Add new doc-base files:
+    - Developer's Guide in English
+    - Relay Protocol in English
+    - Quickstart in Spanish
+  * Update Vcs-Git and Vcs-Browser fields
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 26 Feb 2012 10:32:35 +0000
+
 weechat (0.3.6-2) unstable; urgency=low
 
   * Update debian/rules to use build flags from dpkg-buildflags when it's
