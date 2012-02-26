@@ -224,7 +224,7 @@
 ** valeurs: none, next, near_server (valeur par défaut: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** description: `force la couleur pour certains pseudos: le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est: "pseudo1:couleur1;pseudo2:couleur2")`
+** description: `force la couleur pour certains pseudos: le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est: "pseudo1:couleur1;pseudo2:couleur2"); la recherche de pseudos s'effectue avec la casse exacte puis en minuscules, donc il est possible d'utiliser uniquement des minuscules pour les pseudos dans cette option`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

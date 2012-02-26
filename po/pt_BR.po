@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"POT-Creation-Date: 2012-02-26 18:02+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3449,13 +3449,6 @@ msgstr[1] "normais"
 msgid "Debug disabled for cursor mode"
 msgstr "Depuração desabilitada para modo cursor"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Depuração habilitada para mouse (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Depuração desabilitada para mouse"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 "Erro: memória insuficiente para adicionar um buffer na lista de atividades"
@@ -3485,6 +3478,13 @@ msgstr "Executando comando: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Memória insuficiente para nova linha"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Depuração habilitada para mouse (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Depuração desabilitada para mouse"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -5262,9 +5262,12 @@ msgstr "texto a ser exibido antes do apelido na janela de chat"
 msgid "text to display after nick in chat window"
 msgstr "texto a ser exibido depois do apelido na janela de chat"
 
+#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
+"lookup for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
 msgstr ""
 "forçar cor para alguns apelidos: hash computado com apelido para encontar "
 "cor não será utilizado para estes apelidos (formato: \"apelido1:cor1;"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"POT-Creation-Date: 2012-02-26 18:02+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3358,14 +3358,6 @@ msgstr[2] "normálních"
 msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
 
-#, fuzzy, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Ladění vypnuto pro \"%s\""
-
-#, fuzzy
-msgid "Debug disabled for mouse"
-msgstr "Ladění vypnuto pro \"%s\""
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Chyba: nedostatek paměti pro přidáni bufferu do hotlistu"
 
@@ -3395,6 +3387,14 @@ msgstr "výchozí příkaz:"
 
 msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek"
+
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Ladění vypnuto pro \"%s\""
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -5513,9 +5513,12 @@ msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
 msgid "text to display after nick in chat window"
 msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
 
+#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
+"lookup for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
 msgstr ""
 "vynutit barvu u některých přezdívek: hash spočítaný z přezdívky pro nalezení "
 "barvy nebude použit pro tyto přezdívky (formát je: \"přezdívka1:barva1;"

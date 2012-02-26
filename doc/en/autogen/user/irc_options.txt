@@ -224,7 +224,7 @@
 ** values: none, next, near_server (default value: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** description: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2")`
+** description: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); lookup for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
 ** type: string
 ** values: any string (default value: `""`)
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"POT-Creation-Date: 2012-02-26 18:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2660,13 +2660,6 @@ msgstr[1] ""
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
@@ -2694,6 +2687,13 @@ msgid "Executing command: \"%s\""
 msgstr ""
 
 msgid "Not enough memory for new line"
+msgstr ""
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
 msgstr ""
 
 #, c-format
@@ -4398,7 +4398,9 @@ msgstr ""
 
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
+"lookup for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
 msgstr ""
 
 msgid ""

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"POT-Creation-Date: 2012-02-26 18:02+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,7 +29,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -3512,13 +3513,6 @@ msgstr[2] "normalnych"
 msgid "Debug disabled for cursor mode"
 msgstr "Debugowanie wyłączone dla trybu kursora"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debugowanie włączone dla myszy (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debugowanie wyłączone dla myszy"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
 
@@ -3547,6 +3541,13 @@ msgstr "Wykonuję komendę: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Za mało pamięci na nowy wiersz"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debugowanie włączone dla myszy (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debugowanie wyłączone dla myszy"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -5680,9 +5681,12 @@ msgstr "teks wyświetlany przed nickiem w oknie rozmowy"
 msgid "text to display after nick in chat window"
 msgstr "teks wyświetlany za nickiem w oknie rozmowy"
 
+#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
+"lookup for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
 msgstr ""
 "wymusza kolory dla nicków: hash połączony z nickiem w celu znalezienia "
 "koloru nie zostanie użyty dla tych nicków (format: \"nick1:kolor1;nick2:"

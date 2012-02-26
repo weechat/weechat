@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"POT-Creation-Date: 2012-02-26 18:02+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
@@ -3431,13 +3431,6 @@ msgstr[0] "通常"
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "マウス (%s) のデバッグを有効化"
-
-msgid "Debug disabled for mouse"
-msgstr "マウスのデバッグを無効化"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "エラー: バッファをホットリストに追加するメモリが足りません"
 
@@ -3466,6 +3459,13 @@ msgstr "コマンド実行中: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "新しい行に使うメモリが足りません"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "マウス (%s) のデバッグを有効化"
+
+msgid "Debug disabled for mouse"
+msgstr "マウスのデバッグを無効化"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -5572,9 +5572,12 @@ msgstr "チャットウィンドウ内でニックネーム前に表示するテ
 msgid "text to display after nick in chat window"
 msgstr "チャットウィンドウ内でニックネーム後に表示するテキスト"
 
+#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\")"
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
+"lookup for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
 msgstr ""
 "ニックネーム色を強制するニックネーム: ニックネームから計算されるハッシュを元"
 "にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\")"

@@ -160,6 +160,37 @@ irc_nick_hash_color (const char *nickname)
 }
 
 /*
+ * irc_nick_get_forced_color: get forced color for a nick
+ *                            (NULL if no color is forced for nick)
+ */
+
+const char *
+irc_nick_get_forced_color (const char *nickname)
+{
+    const char *forced_color;
+    char *nick_lower;
+
+    if (!nickname)
+        return NULL;
+
+    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
+                                          nickname);
+    if (forced_color)
+        return forced_color;
+
+    nick_lower = strdup (nickname);
+    if (nick_lower)
+    {
+        weechat_string_tolower (nick_lower);
+        forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
+                                              nick_lower);
+        free (nick_lower);
+    }
+
+    return forced_color;
+}
+
+/*
  * irc_nick_find_color: find a color code for a nick
  *                      (according to nick letters)
  */
@@ -178,8 +209,7 @@ irc_nick_find_color (const char *nickname)
         return weechat_color ("default");
 
     /* look if color is forced */
-    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
-                                          nickname);
+    forced_color = irc_nick_get_forced_color (nickname);
     if (forced_color)
     {
         forced_color = weechat_color (forced_color);
@@ -218,8 +248,7 @@ irc_nick_find_color_name (const char *nickname)
         return default_color;
 
     /* look if color is forced */
-    forced_color = weechat_hashtable_get (irc_config_hashtable_nick_color_force,
-                                          nickname);
+    forced_color = irc_nick_get_forced_color (nickname);
     if (forced_color)
         return forced_color;
 

@@ -2087,7 +2087,9 @@ irc_config_init ()
         "nick_color_force", "string",
         N_("force color for some nicks: hash computed with nickname "
            "to find color will not be used for these nicks (format is: "
-           "\"nick1:color1;nick2:color2\")"),
+           "\"nick1:color1;nick2:color2\"); lookup for nicks is with "
+           "exact case then lower case, so it's possible to use only lower "
+           "case for nicks in this option"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &irc_config_change_look_nick_color_force, NULL, NULL, NULL);
     irc_config_look_nick_color_stop_chars = weechat_config_new_option (
