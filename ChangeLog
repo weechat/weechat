@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.7-rc3, 2012-02-25
+v0.3.7-rc3, 2012-02-26
 
 
 Version 0.3.7 (under dev!)
 --------------------------
 
+* core: add japanese translations
 * core: fix expand of path "~" to home of user in function string_expand_home
   ("~/xxx" was ok, but not "~")
 * core: fix memory leak when closing buffer
