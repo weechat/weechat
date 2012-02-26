@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.7-dev\n"
+"Project-Id-Version: WeeChat 0.3.7\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-25 13:43+0100\n"
-"PO-Revision-Date: 2012-02-25 15:04+0100\n"
+"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"PO-Revision-Date: 2012-02-26 08:04+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -3431,6 +3431,13 @@ msgstr[0] "通常"
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "マウス (%s) のデバッグを有効化"
+
+msgid "Debug disabled for mouse"
+msgstr "マウスのデバッグを無効化"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "エラー: バッファをホットリストに追加するメモリが足りません"
 
@@ -3459,13 +3466,6 @@ msgstr "コマンド実行中: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "新しい行に使うメモリが足りません"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "マウス (%s) のデバッグを有効化"
-
-msgid "Debug disabled for mouse"
-msgstr "マウスのデバッグを無効化"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""

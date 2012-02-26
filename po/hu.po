@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.7-dev\n"
+"Project-Id-Version: WeeChat 0.3.7\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-19 20:19+0100\n"
-"PO-Revision-Date: 2011-12-25 22:56+0100\n"
+"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"PO-Revision-Date: 2012-02-26 08:04+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -3027,6 +3027,13 @@ msgstr[1] "normál"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
@@ -3057,13 +3064,6 @@ msgstr "%s belső parancsok:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Nincs elég memória az új sorhoz\n"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""

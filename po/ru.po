@@ -19,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.7-dev\n"
+"Project-Id-Version: WeeChat 0.3.7\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-19 20:19+0100\n"
-"PO-Revision-Date: 2012-01-07 09:24+0100\n"
+"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"PO-Revision-Date: 2012-02-26 08:04+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -3057,6 +3057,13 @@ msgstr[2] "обычные"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
@@ -3087,13 +3094,6 @@ msgstr "Внутренние команды %s:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Недостаточно памяти для новой строчки\n"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""

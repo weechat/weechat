@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.7-dev\n"
+"Project-Id-Version: WeeChat 0.3.7\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-19 20:19+0100\n"
-"PO-Revision-Date: 2011-12-25 22:56+0100\n"
+"POT-Creation-Date: 2012-02-26 08:00+0100\n"
+"PO-Revision-Date: 2012-02-26 08:03+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -3358,6 +3358,14 @@ msgstr[2] "normálních"
 msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
 
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Ladění vypnuto pro \"%s\""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Chyba: nedostatek paměti pro přidáni bufferu do hotlistu"
 
@@ -3387,14 +3395,6 @@ msgstr "výchozí příkaz:"
 
 msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek"
-
-#, fuzzy, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Ladění vypnuto pro \"%s\""
-
-#, fuzzy
-msgid "Debug disabled for mouse"
-msgstr "Ladění vypnuto pro \"%s\""
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
