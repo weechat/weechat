@@ -1215,8 +1215,9 @@ irc_server_free (struct t_irc_server *server)
     if (!server)
         return;
 
-    /* close all channels/privates */
-    irc_channel_free_all (server);
+    /* close server buffer (and all channels/privates) */
+    if (server->buffer)
+        weechat_buffer_close (server->buffer);
 
     /* remove server from queue */
     if (last_irc_server == server)

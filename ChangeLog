@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-dev, 2012-02-26
+v0.3.8-dev, 2012-02-29
 
 
 Version 0.3.8 (under dev!)
 --------------------------
 
+* irc: close server buffer when server is deleted
 * irc: add search for lower case nicks in option irc.look.nick_color_force
 
 Version 0.3.7 (2012-02-26)
