@@ -262,7 +262,7 @@ irc_server_sasl_enabled (struct t_irc_server *server)
                                              IRC_SERVER_OPTION_SASL_PASSWORD);
 
     /*
-     * SASL is enabled if using mechanism "externel"
+     * SASL is enabled if using mechanism "external"
      * or if both username AND password are set
      */
     return ((sasl_mechanism == IRC_SASL_MECHANISM_EXTERNAL)
