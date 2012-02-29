@@ -26,6 +26,7 @@ enum t_irc_sasl_mechanism
 {
     IRC_SASL_MECHANISM_PLAIN = 0,
     IRC_SASL_MECHANISM_DH_BLOWFISH,
+    IRC_SASL_MECHANISM_EXTERNAL,
     /* number of SASL mechanisms */
     IRC_NUM_SASL_MECHANISMS,
 };

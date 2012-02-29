@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-02-26 18:02+0100\n"
+"POT-Creation-Date: 2012-02-29 14:32+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4927,9 +4927,11 @@ msgid ""
 "available (example: \"multi-prefix,extended-join\")"
 msgstr ""
 
-#, fuzzy
-msgid "mechanism for SASL authentication"
-msgstr "SSL használata a a kapcsolathoz"
+msgid ""
+"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
+"blowfish\" for crypted password, \"external\" for authentication using "
+"client side SSL cert"
+msgstr ""
 
 #, fuzzy
 msgid "username for SASL authentication"
@@ -7799,3 +7801,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "mechanism for SASL authentication"
+#~ msgstr "SSL használata a a kapcsolathoz"

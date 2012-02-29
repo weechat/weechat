@@ -1412,12 +1412,13 @@ Pour plus d'informations, consulter http://www.oftc.net/oftc/NickServ/CertFP
 Authentification avec SASL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat supporte l'authentification avec SASL, en utilisant deux mécanismes :
-"plain" (par défaut) ou "dh-blowfish" (mot de passe chiffré).
+WeeChat supporte l'authentification avec SASL, en utilisant trois mécanismes :
+"plain" (mot de passe en clair), "dh-blowfish" (mot de passe chiffré) ou
+"external" (certificat SSL côté client).
 
 Les options dans le serveur sont :
 
-* 'sasl_mechanism' : mécanisme à utiliser ("plain" ou "dh-blowfish")
+* 'sasl_mechanism' : mécanisme à utiliser ("plain", "dh-blowfish" ou "external")
 * 'sasl_timeout' : délai d'attente maximum (en secondes) pour l'authentification
 * 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe
@@ -2099,7 +2100,7 @@ Traductions::
 
 Patchs::
     Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
-    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n
+    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller
 
 
 [[support]]

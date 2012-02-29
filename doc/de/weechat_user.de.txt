@@ -1385,12 +1385,15 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 SASL Authentifizierung
 ^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat unterstützt zwei Möglichkeiten der SASL Authentifizierung:
-"plain" (standard) oder "dh-blowfish" (verschlüsseltes Passwort).
+// TRANSLATION MISSING
+WeeChat supports SASL authentication, using three mechanisms: "plain" (plain
+text password), "dh-blowfish" (crypted password) or "external" (client side SSL
+cert).
 
 Optionen für Server sind:
 
-* 'sasl_mechanism': Mechanismus welcher genutzt werden soll ("plain" oder "dh-blowfish")
+* 'sasl_mechanism': Mechanismus welcher genutzt werden soll ("plain",
+  "dh-blowfish" oder "external")
 * 'sasl_timeout': Zeitüberschreitung (in Sekunden) für Authentifizierung
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
@@ -2068,7 +2071,7 @@ Paket Ersteller::
 
 Patches::
     Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
-    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n
+    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller
 
 
 [[support]]

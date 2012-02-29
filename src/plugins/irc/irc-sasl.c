@@ -37,7 +37,7 @@
 
 
 char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
-{ "plain", "dh-blowfish" };
+{ "plain", "dh-blowfish", "external" };
 
 
 /*

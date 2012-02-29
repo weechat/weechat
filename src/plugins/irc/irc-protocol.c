@@ -139,6 +139,7 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick)
 
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
+    int sasl_mechanism;
     const char *sasl_username, *sasl_password;
     char *answer;
 
@@ -150,20 +151,24 @@ IRC_PROTOCOL_CALLBACK(authenticate)
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
-    sasl_username = IRC_SERVER_OPTION_STRING(server,
-                                             IRC_SERVER_OPTION_SASL_USERNAME);
-    sasl_password = IRC_SERVER_OPTION_STRING(server,
-                                             IRC_SERVER_OPTION_SASL_PASSWORD);
-    if (sasl_username && sasl_username[0]
-        && sasl_password && sasl_password[0])
+    if (irc_server_sasl_enabled (server))
     {
-        switch (IRC_SERVER_OPTION_INTEGER(server,
-                                          IRC_SERVER_OPTION_SASL_MECHANISM))
+        sasl_mechanism = IRC_SERVER_OPTION_INTEGER(server,
+                                                   IRC_SERVER_OPTION_SASL_MECHANISM);
+        sasl_username = IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SASL_USERNAME);
+        sasl_password = IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SASL_PASSWORD);
+        answer = NULL;
+        switch (sasl_mechanism)
         {
             case IRC_SASL_MECHANISM_DH_BLOWFISH:
                 answer = irc_sasl_mechanism_dh_blowfish (argv_eol[1],
                                                          sasl_username,
                                                          sasl_password);
+                break;
+            case IRC_SASL_MECHANISM_EXTERNAL:
+                answer = strdup ("++");
                 break;
             case IRC_SASL_MECHANISM_PLAIN:
             default:
@@ -339,6 +344,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                                         IRC_PLUGIN_NAME);
                         irc_server_sendf (server, 0, NULL, "CAP END");
 #endif
+                        break;
+                    case IRC_SASL_MECHANISM_EXTERNAL:
+                        irc_server_sendf (server, 0, NULL,
+                                          "AUTHENTICATE EXTERNAL");
                         break;
                     case IRC_SASL_MECHANISM_PLAIN:
                     default:

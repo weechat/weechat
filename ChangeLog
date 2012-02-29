@@ -7,6 +7,7 @@ v0.3.8-dev, 2012-02-29
 Version 0.3.8 (under dev!)
 --------------------------
 
+* irc: add support of "external" SASL mechanism (task #11864)
 * irc: close server buffer when server is deleted
 * irc: add search for lower case nicks in option irc.look.nick_color_force
 
