@@ -109,9 +109,9 @@ It's common issue, please read carefully and check *ALL* solutions below:
   distributions but not all): `ldd /path/to/weechat-curses`
 * check that the "Charset" plugin is loaded with `/plugin` command (if it is
   not, then you probably need the "weechat-plugins" package)
-* check the charset line (on server buffer). You should see 'ISO-XXXXXX' or
-  'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or other values,
-  your locale is probably wrong.
+* check the output of command `/charset` (on core buffer). You should see
+  'ISO-XXXXXX' or 'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or
+  other values, your locale is probably wrong (fix your $LANG).
 * setup global decode value, for example:
   `/set charset.default.decode "ISO-8859-15"`
 * if you are using UTF-8 locale:

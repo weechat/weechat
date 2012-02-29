@@ -111,9 +111,10 @@ soluzione tra quelle elencate:
   necessario su molte distribuzioni ma non tutte): `ldd /percorso/di/weechat-curses`
 * verificare che il plugin "charset" sia caricato con il comando `plugin` (se non
   lo è, probabilmente è necessario il pacchetto "weechat-plugins")
-* controllare la riga del set caratteri (sul buffer del server). Dovrebbe essere
-  possibile vedere 'ISO-XXXXXX' oppure 'UTF-8' per il set caratteri del terminale.
-  Se compare 'ANSI_X3.4-1968" o un altro valore, il proprio locale è errato.
+// TRANSLATION MISSING
+* check the output of command `/charset` (on core buffer). You should see
+  'ISO-XXXXXX' or 'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or
+  other values, your locale is probably wrong (fix your $LANG).
 * impostare il valore di decodifica globale, per esempio:
   `/set charset.default.decode = ISO-8859-15`
 * se si usa la localizzazione UTF-8:

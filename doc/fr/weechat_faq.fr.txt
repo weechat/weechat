@@ -113,9 +113,10 @@ points ci-dessous :
 * vérifiez que l'extension "Charset" est chargée avec la commande `/plugin`
   (s'il ne l'est pas, vous devez peut-être installer le paquet
   "weechat-plugins")
-* vérifiez la ligne charset (sur le tampon serveur), vous devriez voir
-  'ISO-XXXXXX' ou 'UTF-8' pour le charset du terminal. Si vous voyez
-  'ANSI_X3.4-1968' ou d'autres valeurs, votre locale est probablement erronée.
+* vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous
+  devriez voir 'ISO-XXXXXX' ou 'UTF-8' pour le charset du terminal. Si vous
+  voyez 'ANSI_X3.4-1968' ou d'autres valeurs, votre locale est probablement
+  erronée (corrigez votre $LANG).
 * affectez la valeur pour le décodage global, par exemple :
   `/set charset.default.decode "ISO-8859-15"`
 * si vous utilisez la locale UTF-8 :
