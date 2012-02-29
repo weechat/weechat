@@ -26,4 +26,6 @@
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 
+extern int irc_signal_upgrade_received;
+
 #endif /* __WEECHAT_IRC_H */
