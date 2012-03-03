@@ -233,13 +233,14 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 int
 gui_chat_string_real_pos (const char *string, int pos)
 {
-    const char *real_pos, *ptr_string;
+    const char *real_pos, *real_pos_prev, *ptr_string;
     int size_on_screen;
 
     if (pos <= 0)
         return 0;
 
     real_pos = string;
+    real_pos_prev = string;
     ptr_string = string;
     while (ptr_string && ptr_string[0] && (pos > 0))
     {
@@ -252,9 +253,12 @@ gui_chat_string_real_pos (const char *string, int pos)
             if (size_on_screen > 0)
                 pos -= size_on_screen;
             ptr_string = utf8_next_char (ptr_string);
+            real_pos_prev = real_pos;
             real_pos = ptr_string;
         }
     }
+    if (pos < 0)
+        real_pos = real_pos_prev;
     return 0 + (real_pos - string);
 }
 
