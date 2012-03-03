@@ -1,13 +1,18 @@
 WeeChat News
 ============
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-dev, 2012-02-26
+v0.3.8-dev, 2012-03-03
 
 
 Version 0.3.8 (under dev!)
 --------------------------
 
-No release note.
+* rmodifier "nickserv" has a new default regex which includes option "release"
+  for command "/msg nickserv". If you never added/changed rmodifiers, you can
+  just reset all rmodifiers (command: `/rmodifier default -yes`).
+  If you added/changed some rmodifiers, do it manually with these two commannds:
+** `/rmodifier del nickserv`
+** `/rmodifier add nickserv history_add,input_text_display 1,4* ^(/(msg|quote) +nickserv +(id|identify|ghost \S+|release \S+) +)(.*)`
 
 Version 0.3.7 (2012-02-26)
 --------------------------

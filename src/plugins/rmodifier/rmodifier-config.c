@@ -39,7 +39,7 @@ struct t_config_option *rmodifier_config_look_hide_char;
 char *rmodifier_config_default_list[][4] =
 {
     { "nickserv", "history_add,input_text_display",
-      "^(/(msg|quote) +nickserv +(identify|ghost \\S+) +)(.*)", "1,4*"
+      "^(/(msg|quote) +nickserv +(id|identify|ghost \\S+|release \\S+) +)(.*)", "1,4*"
     },
     { "oper", "history_add,input_text_display",
       "^(/oper +\\S+ +)(.*)", "1,2*"
