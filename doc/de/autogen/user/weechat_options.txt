@@ -579,7 +579,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** Beschreibung: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text "(ESC[200~", followed by the pasted text, followed by "ESC[201~")`
+** Beschreibung: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

@@ -1978,7 +1978,7 @@ config_weechat_init_options ()
         N_("enable terminal \"bracketed paste mode\" (not supported in all "
            "terminals/multiplexers): in this mode, pasted text is bracketed "
            "with control sequences so that WeeChat can differentiate pasted "
-           "text from typed-in text \"(ESC[200~\", followed by the pasted text, "
+           "text from typed-in text (\"ESC[200~\", followed by the pasted text, "
            "followed by \"ESC[201~\")"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_paste_bracketed, NULL, NULL, NULL);
     config_look_paste_max_lines = config_file_new_option (
