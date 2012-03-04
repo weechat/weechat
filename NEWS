@@ -9,7 +9,7 @@ Version 0.3.8 (under dev!)
 
 * option weechat.look.paste_max_lines can now be used with value 0 to detect
   paste with one line (only if terminal "bracketed paste mode" is enabled when
-  option 'weechat.look.bracketed_paste_mode' is on); so now the value -1 is used
+  option 'weechat.look.paste_bracketed' is on); so now the value -1 is used
   to disable paste detection: if your value was 0, you should set it to -1:
 ** `weechat.look.paste_max_lines -1`
 * rmodifier "nickserv" has a new default regex which includes option "release"

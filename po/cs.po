@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-04 10:18+0100\n"
+"POT-Creation-Date: 2012-03-04 11:33+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2239,13 +2239,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"enable terminal \"bracketed paste mode\" (not supported in all terminals/"
-"multiplexers): in this mode, pasted text is bracketed with control sequences "
-"so that WeeChat can differentiate pasted text from typed-in text \"(ESC[200~"
-"\", followed by the pasted text, followed by \"ESC[201~\")"
-msgstr ""
-
-msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
 "messages (default), message=messages+highlights, highlight=highlights only, "
@@ -2519,6 +2512,13 @@ msgstr "zobrazit mód přezdívky ((částečný)op/voice) před každou přezd�
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "zobrazit mezeru pokud mód přezdívkz není (částečný)op/voice"
+
+msgid ""
+"enable terminal \"bracketed paste mode\" (not supported in all terminals/"
+"multiplexers): in this mode, pasted text is bracketed with control sequences "
+"so that WeeChat can differentiate pasted text from typed-in text \"(ESC[200~"
+"\", followed by the pasted text, followed by \"ESC[201~\")"
+msgstr ""
 
 #, fuzzy
 msgid ""

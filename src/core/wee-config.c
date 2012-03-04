@@ -83,7 +83,6 @@ struct t_config_option *config_look_bar_more_left;
 struct t_config_option *config_look_bar_more_right;
 struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
-struct t_config_option *config_look_bracketed_paste_mode;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_basic_force_bold;
@@ -126,6 +125,7 @@ struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_nickmode;
 struct t_config_option *config_look_nickmode_empty;
+struct t_config_option *config_look_paste_bracketed;
 struct t_config_option *config_look_paste_max_lines;
 struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
@@ -313,22 +313,6 @@ config_change_buffer_content (void *data, struct t_config_option *option)
 }
 
 /*
- * config_change_bracketed_paste_mode: called when bracketed paste mode is
- *                                     changed
- */
-
-void
-config_change_bracketed_paste_mode (void *data, struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    if (gui_ok)
-        gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_bracketed_paste_mode));
-}
-
-/*
  * config_change_mouse: called when mouse state is changed
  */
 
@@ -478,6 +462,21 @@ config_change_hotlist (void *data, struct t_config_option *option)
     (void) option;
 
     gui_hotlist_resort ();
+}
+
+/*
+ * config_change_paste_bracketed: called when bracketed paste mode is changed
+ */
+
+void
+config_change_paste_bracketed (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (gui_ok)
+        gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_paste_bracketed));
 }
 
 /*
@@ -1699,15 +1698,6 @@ config_weechat_init_options ()
         N_("string displayed when bar can be scrolled down "
            "(for bars with filling different from \"horizontal\")"),
         NULL, 0, 0, "++", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
-    config_look_bracketed_paste_mode = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "bracketed_paste_mode", "boolean",
-        N_("enable terminal \"bracketed paste mode\" (not supported in all "
-           "terminals/multiplexers): in this mode, pasted text is bracketed "
-           "with control sequences so that WeeChat can differentiate pasted "
-           "text from typed-in text \"(ESC[200~\", followed by the pasted text, "
-           "followed by \"ESC[201~\")"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_bracketed_paste_mode, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_notify_default", "integer",
@@ -1982,6 +1972,15 @@ config_weechat_init_options ()
         "nickmode_empty", "boolean",
         N_("display space if nick mode is not (half)op/voice"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_paste_bracketed = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "paste_bracketed", "boolean",
+        N_("enable terminal \"bracketed paste mode\" (not supported in all "
+           "terminals/multiplexers): in this mode, pasted text is bracketed "
+           "with control sequences so that WeeChat can differentiate pasted "
+           "text from typed-in text \"(ESC[200~\", followed by the pasted text, "
+           "followed by \"ESC[201~\")"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_paste_bracketed, NULL, NULL, NULL);
     config_look_paste_max_lines = config_file_new_option (
         weechat_config_file, ptr_section,
         "paste_max_lines", "integer",

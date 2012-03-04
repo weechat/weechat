@@ -178,7 +178,7 @@ gui_main_init ()
     else
         gui_mouse_disable ();
 
-    gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_bracketed_paste_mode));
+    gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_paste_bracketed));
 }
 
 /*

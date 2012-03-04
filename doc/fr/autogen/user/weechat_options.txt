@@ -368,11 +368,6 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"--"`)
 
-* [[option_weechat.look.bracketed_paste_mode]] *weechat.look.bracketed_paste_mode*
-** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texté tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
-
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** description: `niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jemais afficher dans la hotlist`
 ** type: entier
@@ -580,6 +575,11 @@
 
 * [[option_weechat.look.nickmode_empty]] *weechat.look.nickmode_empty*
 ** description: `afficher un espace si le mode du pseudo n'est pas (half)op/voice`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
+* [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
+** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texté tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
