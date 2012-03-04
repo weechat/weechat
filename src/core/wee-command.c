@@ -2393,6 +2393,12 @@ COMMAND_CALLBACK(input)
             gui_input_undo (buffer);
         else if (string_strcasecmp (argv[1], "redo") == 0)
             gui_input_redo (buffer);
+        else if (string_strcasecmp (argv[1], "paste_start") == 0)
+            gui_key_paste_bracketed_start ();
+        else if (string_strcasecmp (argv[1], "paste_stop") == 0)
+        {
+            /* do nothing here */
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -5762,7 +5768,9 @@ command_init ()
                      "  switch_active_buffer: switch to next merged buffer\n"
                      "  switch_active_buffer_previous: switch to previous "
                      "merged buffer\n"
-                     "  insert: insert text in command line\n\n"
+                     "  insert: insert text in command line\n"
+                     "  paste_start: start paste (bracketed paste mode)\n"
+                     "  paste_stop: stop paste (bracketed paste mode)\n\n"
                      "This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_text|"
                   "search_switch_case|search_previous|search_next|search_stop|"
@@ -5778,7 +5786,7 @@ command_init ()
                   "jump_next_visited_buffer|hotlist_clear|grab_key|"
                   "grab_key_command|grab_mouse|grab_mouse_area|set_unread|"
                   "set_unread_current_buffer|switch_active_buffer|"
-                  "switch_active_buffer_previous|insert",
+                  "switch_active_buffer_previous|insert|paste_start|paste_stop",
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),

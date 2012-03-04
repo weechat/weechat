@@ -177,6 +177,8 @@ gui_main_init ()
         gui_mouse_enable ();
     else
         gui_mouse_disable ();
+
+    gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_bracketed_paste_mode));
 }
 
 /*
@@ -400,6 +402,9 @@ gui_main_end (int clean_exit)
             if (gui_window_refresh_needed)
                 gui_main_refreshs ();
         }
+
+        /* disable bracketed paste mode */
+        gui_window_set_bracketed_paste_mode (0);
 
         /* disable mouse */
         gui_mouse_disable ();

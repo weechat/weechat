@@ -108,6 +108,7 @@ extern struct t_config_option *config_look_bar_more_left;
 extern struct t_config_option *config_look_bar_more_right;
 extern struct t_config_option *config_look_bar_more_up;
 extern struct t_config_option *config_look_bar_more_down;
+extern struct t_config_option *config_look_bracketed_paste_mode;
 extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_command_chars;

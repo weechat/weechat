@@ -368,6 +368,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
+* [[option_weechat.look.bracketed_paste_mode]] *weechat.look.bracketed_paste_mode*
+** Beschreibung: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text "(ESC[200~", followed by the pasted text, followed by "ESC[201~")`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** Beschreibung: `Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt.`
 ** Typ: integer
@@ -579,9 +584,9 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** Beschreibung: `maximale Anzahl der Zeilen die eingefügt werden dürfen ohne dass der Anwender gefragt wird (0 = schaltet diese Funktion ab)`
+** Beschreibung: `max number of lines for paste without asking user (-1 = disable this feature)`
 ** Typ: integer
-** Werte: 0 .. 2147483647 (Standardwert: `3`)
+** Werte: -1 .. 2147483647 (Standardwert: `3`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** Beschreibung: `Präfix für Action-Nachrichten`

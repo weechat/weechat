@@ -32,6 +32,7 @@
 #include <time.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -83,6 +84,7 @@ int gui_key_buffer_size = 0;        /* input buffer size in bytes           */
 
 int gui_key_paste_pending = 0;      /* 1 is big paste was detected and      */
                                     /* WeeChat is asking user what to do    */
+int gui_key_paste_bracketed = 0;    /* bracketed paste mode detected        */
 int gui_key_paste_lines = 0;        /* number of lines for pending paste    */
 
 time_t gui_key_last_activity_time = 0; /* last activity time (key)          */
@@ -1397,6 +1399,50 @@ gui_key_buffer_add (unsigned char key)
 }
 
 /*
+ * gui_key_paste_start: start paste of text
+ */
+
+void
+gui_key_paste_start ()
+{
+    /* remove the "ESC[201~" at the end of buffer (end of bracketed paste) */
+    if ((gui_key_buffer_size >= 6)
+        && (gui_key_buffer[gui_key_buffer_size - 6] == '\x1B')
+        && (gui_key_buffer[gui_key_buffer_size- 5] == '[')
+        && (gui_key_buffer[gui_key_buffer_size - 4] == '2')
+        && (gui_key_buffer[gui_key_buffer_size - 3] == '0')
+        && (gui_key_buffer[gui_key_buffer_size - 2] == '1')
+        && (gui_key_buffer[gui_key_buffer_size - 1] == '~'))
+    {
+        gui_key_buffer_size -= 6;
+    }
+
+    /* remove final newline if there is only one line to paste */
+    if ((gui_key_paste_lines <= 1)
+        && (gui_key_buffer_size > 0)
+        && ((gui_key_buffer[gui_key_buffer_size - 1] == '\r')
+            || (gui_key_buffer[gui_key_buffer_size - 1] == '\n')))
+    {
+        gui_key_buffer_size--;
+        gui_key_paste_lines = 0;
+    }
+
+    gui_key_paste_pending = 1;
+    gui_input_paste_pending_signal ();
+}
+
+/*
+ * gui_key_paste_bracket_start: start bracketed paste of text
+ *                              (ESC[200~ detected)
+ */
+
+void
+gui_key_paste_bracketed_start ()
+{
+    gui_key_paste_bracketed = 1;
+}
+
+/*
  * gui_key_get_paste_lines: return real number of lines in buffer
  *                          if last key is not Return, then this is lines + 1
  *                          else it's lines
@@ -1405,14 +1451,58 @@ gui_key_buffer_add (unsigned char key)
 int
 gui_key_get_paste_lines ()
 {
-    if ((gui_key_buffer_size > 0)
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
+    int length;
+
+    length = gui_key_buffer_size;
+
+    if ((length >= 6)
+        && (gui_key_buffer[length - 6] == '\x1B')
+        && (gui_key_buffer[length- 5] == '[')
+        && (gui_key_buffer[length - 4] == '2')
+        && (gui_key_buffer[length - 3] == '0')
+        && (gui_key_buffer[length - 2] == '1')
+        && (gui_key_buffer[length - 1] == '~'))
+    {
+        length -= 6;
+    }
+
+    if ((length > 0)
+        && (gui_key_buffer[length - 1] != '\r')
+        && (gui_key_buffer[length - 1] != '\n'))
     {
         return gui_key_paste_lines + 1;
     }
 
-    return gui_key_paste_lines;
+    return (gui_key_paste_lines > 0) ? gui_key_paste_lines : 1;
+}
+
+/*
+ * gui_key_paste_check: check pasted lines: if more than N lines, then enable
+ *                      paste mode and ask confirmation to user
+ *                      (ctrl-Y=paste, ctrl-N=cancel)
+ *                      (N is option weechat.look.paste_max_lines)
+ *                      return 1 if paste mode has been enabled, 0 otherwise
+ */
+
+int
+gui_key_paste_check (int bracketed_paste)
+{
+    int max_lines;
+
+    max_lines = CONFIG_INTEGER(config_look_paste_max_lines);
+    if (max_lines >= 0)
+    {
+        if (!bracketed_paste && (max_lines == 0))
+            max_lines = 1;
+        if (gui_key_get_paste_lines () > max_lines)
+        {
+            /* ask user what to do */
+            gui_key_paste_start ();
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 /*
@@ -1422,8 +1512,12 @@ gui_key_get_paste_lines ()
 void
 gui_key_paste_accept ()
 {
-    /* add final '\n' if there is not in pasted text */
-    if ((gui_key_buffer_size > 0)
+    /*
+     * add final newline if there is not in pasted text
+     * (for at least 2 lines pasted)
+     */
+    if ((gui_key_get_paste_lines () > 1)
+        && (gui_key_buffer_size > 0)
         && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
         && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
     {

@@ -208,6 +208,8 @@ gui_key_default_bindings (int context)
         BIND(/* m->         */ "meta->",             "/input jump_next_visited_buffer");
         BIND(/* m-/         */ "meta-/",             "/input jump_last_buffer_displayed");
         BIND(/* m-m         */ "meta-m",             "/mute mouse toggle");
+        BIND(/* start paste */ "meta2-200~",         "/input paste_start");
+        BIND(/* end paste   */ "meta2-201~",         "/input paste_stop");
 
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
         for (i = 1; i < 100; i++)
@@ -288,9 +290,9 @@ gui_key_default_bindings (int context)
  */
 
 void
-gui_key_flush ()
+gui_key_flush (int ignore_bracketed)
 {
-    int i, key, insert_ok;
+    int i, j, key, insert_ok;
     static char key_str[64] = { '\0' };
     static int length_key_str = 0;
     char key_temp[2], *key_utf, *input_old, *ptr_char, *next_char, *ptr_error;
@@ -450,6 +452,36 @@ gui_key_flush ()
             else
                 key_str[0] = '\0';
             length_key_str = strlen (key_str);
+
+            /*
+             * bracketed paste detected (ESC[200~ + text + ESC[201~):
+             * the ESC[200~ has been found and will be removed immediately,
+             * the ESC[201~ should be found/removed later)
+             */
+            if (gui_key_paste_bracketed)
+            {
+                gui_key_paste_bracketed = 0;
+
+                if (!ignore_bracketed)
+                {
+                    /* check for large paste */
+                    if (gui_key_paste_check (1))
+                    {
+                        /*
+                         * paste mode has been enabled (ask to user what do to),
+                         * then remove the ESC[200~ from beginning of buffer,
+                         * stop reading buffer immediately and return
+                         */
+                        i++;
+                        for (j = 0; j < gui_key_buffer_size - i; j++)
+                        {
+                            gui_key_buffer[j] = gui_key_buffer[j + i];
+                        }
+                        gui_key_buffer_size -= i;
+                        return;
+                    }
+                }
+            }
         }
 
         gui_key_buffer_reset ();
@@ -463,7 +495,8 @@ gui_key_flush ()
 int
 gui_key_read_cb (void *data, int fd)
 {
-    int ret, i, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
+    int ret, i, accept_paste, cancel_paste, text_added_to_buffer;
+    int ignore_bracketed_paste;
     unsigned char buffer[4096];
 
     /* make C compiler happy */
@@ -473,6 +506,7 @@ gui_key_read_cb (void *data, int fd)
     accept_paste = 0;
     cancel_paste = 0;
     text_added_to_buffer = 0;
+    ignore_bracketed_paste = 0;
 
     if (gui_key_paste_pending)
     {
@@ -512,10 +546,13 @@ gui_key_read_cb (void *data, int fd)
 
         for (i = 0; i < ret; i++)
         {
-            /* add all chars (ignore a '\n' after a '\r') */
+            /*
+             * add all chars, but ignore a newline ('\r' or '\n') after
+             * another one)
+             */
             if ((i == 0)
-                || (buffer[i] != '\n')
-                || (buffer[i - 1] != '\r'))
+                || ((buffer[i] != '\r') && (buffer[i] != '\n'))
+                || ((buffer[i - 1] != '\r') && (buffer[i - 1] != '\n')))
             {
                 gui_key_buffer_add (buffer[i]);
             }
@@ -528,7 +565,10 @@ gui_key_read_cb (void *data, int fd)
     {
         /* user is ok for pasting text, let's paste! */
         if (accept_paste)
+        {
             gui_key_paste_accept ();
+            ignore_bracketed_paste = 1;
+        }
         /* user doesn't want to paste text: clear whole buffer! */
         else if (cancel_paste)
             gui_key_paste_cancel ();
@@ -536,23 +576,9 @@ gui_key_read_cb (void *data, int fd)
             gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 0);
     }
     else
-    {
-        /*
-         * detect user paste or large amount of text
-         * if so, ask user what to do
-         */
-        if (CONFIG_INTEGER(config_look_paste_max_lines) > 0)
-        {
-            paste_lines = gui_key_get_paste_lines ();
-            if (paste_lines > CONFIG_INTEGER(config_look_paste_max_lines))
-            {
-                gui_key_paste_pending = 1;
-                gui_input_paste_pending_signal ();
-            }
-        }
-    }
+        gui_key_paste_check (0);
 
-    gui_key_flush ();
+    gui_key_flush (ignore_bracketed_paste);
 
     return WEECHAT_RC_OK;
 }

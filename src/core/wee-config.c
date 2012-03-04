@@ -83,6 +83,7 @@ struct t_config_option *config_look_bar_more_left;
 struct t_config_option *config_look_bar_more_right;
 struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
+struct t_config_option *config_look_bracketed_paste_mode;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_basic_force_bold;
@@ -309,6 +310,22 @@ config_change_buffer_content (void *data, struct t_config_option *option)
 
     if (gui_ok)
         gui_current_window->refresh_needed = 1;
+}
+
+/*
+ * config_change_bracketed_paste_mode: called when bracketed paste mode is
+ *                                     changed
+ */
+
+void
+config_change_bracketed_paste_mode (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (gui_ok)
+        gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_bracketed_paste_mode));
 }
 
 /*
@@ -1682,6 +1699,15 @@ config_weechat_init_options ()
         N_("string displayed when bar can be scrolled down "
            "(for bars with filling different from \"horizontal\")"),
         NULL, 0, 0, "++", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_bracketed_paste_mode = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bracketed_paste_mode", "boolean",
+        N_("enable terminal \"bracketed paste mode\" (not supported in all "
+           "terminals/multiplexers): in this mode, pasted text is bracketed "
+           "with control sequences so that WeeChat can differentiate pasted "
+           "text from typed-in text \"(ESC[200~\", followed by the pasted text, "
+           "followed by \"ESC[201~\")"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_bracketed_paste_mode, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_notify_default", "integer",
@@ -1960,8 +1986,8 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "paste_max_lines", "integer",
         N_("max number of lines for paste without asking user "
-           "(0 = disable this feature)"),
-        NULL, 0, INT_MAX, "3", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+           "(-1 = disable this feature)"),
+        NULL, -1, INT_MAX, "3", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_error", "string",

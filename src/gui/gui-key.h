@@ -75,6 +75,7 @@ extern int gui_key_grab_count;
 extern int *gui_key_buffer;
 extern int gui_key_buffer_size;
 extern int gui_key_paste_pending;
+extern int gui_key_paste_bracketed;
 extern time_t gui_key_last_activity_time;
 
 /* key functions */
@@ -109,7 +110,10 @@ extern void gui_key_free_all (struct t_gui_key **keys,
                               int *keys_count);
 extern void gui_key_buffer_reset ();
 extern void gui_key_buffer_add (unsigned char key);
+extern void gui_key_paste_start ();
+extern void gui_key_paste_bracketed_start ();
 extern int gui_key_get_paste_lines ();
+extern int gui_key_paste_check (int bracketed_paste);
 extern void gui_key_paste_accept ();
 extern void gui_key_paste_cancel ();
 extern void gui_key_end ();

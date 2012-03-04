@@ -586,9 +586,8 @@ char *
 gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
                                   struct t_gui_window *window)
 {
-    char *text_paste_pending = N_("%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No");
-    char *ptr_message, *buf;
-    int length;
+    char buf[1024];
+    int lines;
 
     /* make C compiler happy */
     (void) data;
@@ -600,15 +599,14 @@ gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
     if (!gui_key_paste_pending)
         return NULL;
 
-    ptr_message = _(text_paste_pending);
-    length = strlen (ptr_message) + 16 + 1;
-    buf = malloc (length);
-    if (buf)
-        snprintf (buf, length, ptr_message,
-                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_actions))),
-                  gui_key_get_paste_lines ());
-
-    return buf;
+    lines = gui_key_get_paste_lines ();
+    snprintf (buf, sizeof (buf),
+              NG_("%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No",
+                  "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No",
+                  lines),
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_actions))),
+              lines);
+    return strdup (buf);
 }
 
 /*

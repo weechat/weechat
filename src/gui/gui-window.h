@@ -240,6 +240,7 @@ extern void gui_window_refresh_screen (int full_refresh);
 extern void gui_window_set_title (const char *title);
 extern void gui_window_send_clipboard (const char *storage_unit,
                                        const char *text);
+extern void gui_window_set_bracketed_paste_mode (int enable);
 extern void gui_window_move_cursor ();
 extern void gui_window_term_display_infos ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);

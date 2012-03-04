@@ -2274,6 +2274,28 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
 }
 
 /*
+ * gui_window_set_bracketed_paste_mode: enable/disable bracketed paste mode
+ */
+
+void
+gui_window_set_bracketed_paste_mode (int enable)
+{
+    char *envterm, *envtmux;
+    int tmux, screen;
+
+    envtmux = getenv ("TMUX");
+    tmux = (envtmux && envtmux[0]);
+
+    envterm = getenv ("TERM");
+    screen = (envterm && (strncmp (envterm, "screen", 6) == 0) && !tmux);
+
+    fprintf (stderr, "%s\033[?2004%s%s",
+             (screen) ? "\033P" : "",
+             (enable) ? "h" : "l",
+             (screen) ? "\033\\" : "");
+}
+
+/*
  * gui_window_move_cursor: move cursor on screen (for cursor mode)
  */
 

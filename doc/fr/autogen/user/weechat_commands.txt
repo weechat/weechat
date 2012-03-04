@@ -320,6 +320,8 @@ list des actions:
   switch_active_buffer: basculer vers le tampon mélangé suivant
   switch_active_buffer_previous: basculer vers le tampon mélangé précédent
   insert: insérer du texte dans la ligne de commande
+  paste_start: début de collage (mode "bracketed paste")
+  paste_stop: fin de collage (mode "bracketed paste")
 
 Cette commande est utilisé par les associations de touches ou les extensions.
 ........................................

@@ -867,6 +867,18 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
 }
 
 /*
+ * gui_window_set_bracketed_paste_mode: enable/disable bracketed paste mode
+ */
+
+void
+gui_window_set_bracketed_paste_mode (int enable)
+{
+    (void) enable;
+
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_window_move_cursor: move cursor on screen (for cursor mode)
  */
 

@@ -320,6 +320,8 @@ list of actions:
   switch_active_buffer: switch to next merged buffer
   switch_active_buffer_previous: switch to previous merged buffer
   insert: insert text in command line
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
 This command is used by key bindings or plugins.
 ........................................
