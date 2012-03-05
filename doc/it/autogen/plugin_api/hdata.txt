@@ -286,6 +286,7 @@
   'local_variables' (hashtable) +
   'prev_buffer' (pointer, hdata: 'buffer') +
   'next_buffer' (pointer, hdata: 'buffer') |
+  'gui_buffer_last_displayed' +
   'gui_buffers' +
   'last_gui_buffer'
 

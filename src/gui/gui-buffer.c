@@ -3153,6 +3153,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER, hdata_name);
         HDATA_LIST(gui_buffers);
         HDATA_LIST(last_gui_buffer);
+        HDATA_LIST(gui_buffer_last_displayed);
     }
     return hdata;
 }
