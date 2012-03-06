@@ -508,72 +508,72 @@ gui_key_read_cb (void *data, int fd)
     text_added_to_buffer = 0;
     ignore_bracketed_paste = 0;
 
-    if (gui_key_paste_pending)
+    ret = read (STDIN_FILENO, buffer, sizeof (buffer));
+    if (ret == 0)
     {
-        ret = read (STDIN_FILENO, buffer, 1);
-        if (ret == 0)
-        {
-            /* no data on stdin, terminal lost */
-            log_printf (_("Terminal lost, exiting WeeChat..."));
-            hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            weechat_quit = 1;
-            return WEECHAT_RC_OK;
-        }
-        if (ret <= 0)
-            return WEECHAT_RC_OK;
-
-        /* ctrl-Y: accept paste */
-        if (buffer[0] == 25)
-            accept_paste = 1;
-
-        /* ctrl-N: cancel paste */
-        if (buffer[0] == 14)
-            cancel_paste = 1;
+        /* no data on stdin, terminal lost */
+        log_printf (_("Terminal lost, exiting WeeChat..."));
+        hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        weechat_quit = 1;
+        return WEECHAT_RC_OK;
     }
-    else
-    {
-        ret = read (STDIN_FILENO, buffer, sizeof (buffer));
-        if (ret == 0)
-        {
-            /* no data on stdin, terminal lost */
-            log_printf (_("Terminal lost, exiting WeeChat..."));
-            hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            weechat_quit = 1;
-            return WEECHAT_RC_OK;
-        }
-        if (ret < 0)
-            return WEECHAT_RC_OK;
+    if (ret < 0)
+        return WEECHAT_RC_OK;
 
-        for (i = 0; i < ret; i++)
+    for (i = 0; i < ret; i++)
+    {
+        /*
+         * add all chars, but ignore a newline ('\r' or '\n') after
+         * another one)
+         */
+        if ((i == 0)
+            || ((buffer[i] != '\r') && (buffer[i] != '\n'))
+            || ((buffer[i - 1] != '\r') && (buffer[i - 1] != '\n')))
         {
-            /*
-             * add all chars, but ignore a newline ('\r' or '\n') after
-             * another one)
-             */
-            if ((i == 0)
-                || ((buffer[i] != '\r') && (buffer[i] != '\n'))
-                || ((buffer[i - 1] != '\r') && (buffer[i - 1] != '\n')))
+            if (gui_key_paste_pending)
+            {
+                if (buffer[i] == 25)
+                {
+                    /* ctrl-Y: accept paste */
+                    accept_paste = 1;
+                }
+                else if (buffer[i] == 14)
+                {
+                    /* ctrl-N: cancel paste */
+                    cancel_paste = 1;
+                }
+                else
+                {
+                    gui_key_buffer_add (buffer[i]);
+                    text_added_to_buffer = 1;
+                }
+            }
+            else
             {
                 gui_key_buffer_add (buffer[i]);
+                text_added_to_buffer = 1;
             }
         }
-
-        text_added_to_buffer = 1;
     }
 
     if (gui_key_paste_pending)
     {
-        /* user is ok for pasting text, let's paste! */
         if (accept_paste)
         {
+            /* user is ok for pasting text, let's paste! */
             gui_key_paste_accept ();
             ignore_bracketed_paste = 1;
         }
-        /* user doesn't want to paste text: clear whole buffer! */
         else if (cancel_paste)
+        {
+            /* user doesn't want to paste text: clear whole buffer! */
             gui_key_paste_cancel ();
+        }
         else if (text_added_to_buffer)
-            gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 0);
+        {
+            /* new text received while asking for paste, update message */
+            gui_input_paste_pending_signal ();
+        }
     }
     else
         gui_key_paste_check (0);
