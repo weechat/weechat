@@ -89,9 +89,6 @@
 #define IRC_COLOR_ITEM_CHANNEL_MODES weechat_color(weechat_config_string(irc_config_color_item_channel_modes))
 #define IRC_COLOR_ITEM_LAG_COUNTING weechat_color(weechat_config_string(irc_config_color_item_lag_counting))
 #define IRC_COLOR_ITEM_LAG_FINISHED weechat_color(weechat_config_string(irc_config_color_item_lag_finished))
-#define IRC_COLOR_NICK_IN_SERVER_MESSAGE(nick)                          \
-    ((nick && weechat_config_boolean(irc_config_look_color_nicks_in_server_messages)) ? \
-     nick->color : IRC_COLOR_CHAT_NICK)
 
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern char *irc_color_decode_for_user_entry (const char *string);

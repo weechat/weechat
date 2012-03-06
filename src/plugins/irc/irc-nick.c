@@ -134,6 +134,8 @@ irc_nick_strdup_for_color (const char *nickname)
 
 /*
  * irc_nick_hash_color: hash a nickname to find color
+ *                      return a number which is the index of color in the
+ *                      nicks colors of option weechat.color.chat_nick_colors
  */
 
 int
@@ -162,6 +164,7 @@ irc_nick_hash_color (const char *nickname)
 /*
  * irc_nick_get_forced_color: get forced color for a nick
  *                            (NULL if no color is forced for nick)
+ *                            return name of color (example: "green")
  */
 
 const char *
@@ -193,6 +196,7 @@ irc_nick_get_forced_color (const char *nickname)
 /*
  * irc_nick_find_color: find a color code for a nick
  *                      (according to nick letters)
+ *                      return a WeeChat color code
  */
 
 const char *
@@ -231,6 +235,7 @@ irc_nick_find_color (const char *nickname)
 /*
  * irc_nick_find_color_name: find a color name for a nick
  *                           (according to nick letters)
+ *                           return name of color (example: "green")
  */
 
 const char *
@@ -929,6 +934,25 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
               weechat_config_string (irc_config_look_nick_suffix) : "");
 
     return result;
+}
+
+/*
+ * irc_nick_color_for_server_message: return WeeChat color code for a nick
+ *                                    (used in a server message)
+ */
+
+const char *
+irc_nick_color_for_server_message (struct t_irc_nick *nick,
+                                   const char *nickname)
+{
+    if (weechat_config_boolean(irc_config_look_color_nicks_in_server_messages))
+    {
+        if (nick)
+            return nick->color;
+        if (nickname)
+            return irc_nick_find_color (nickname);
+    }
+    return IRC_COLOR_CHAT_NICK;
 }
 
 /*

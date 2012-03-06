@@ -586,7 +586,7 @@ IRC_PROTOCOL_CALLBACK(join)
                                                 nick),
                              _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
                              weechat_prefix ("join"),
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             irc_nick_color_for_server_message (ptr_nick, nick),
                              nick,
                              IRC_COLOR_CHAT_DELIMITERS,
                              (display_host) ? " (" : "",
@@ -643,10 +643,10 @@ IRC_PROTOCOL_CALLBACK(kick)
                              irc_protocol_tags (command, NULL, NULL),
                              _("%s%s%s%s has kicked %s%s%s %s(%s%s%s)"),
                              weechat_prefix ("quit"),
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             irc_nick_color_for_server_message (ptr_nick, nick),
                              nick,
                              IRC_COLOR_MESSAGE_QUIT,
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
+                             irc_nick_color_for_server_message (ptr_nick_kicked, argv[3]),
                              argv[3],
                              IRC_COLOR_MESSAGE_QUIT,
                              IRC_COLOR_CHAT_DELIMITERS,
@@ -662,10 +662,10 @@ IRC_PROTOCOL_CALLBACK(kick)
                              irc_protocol_tags (command, NULL, NULL),
                              _("%s%s%s%s has kicked %s%s%s"),
                              weechat_prefix ("quit"),
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             irc_nick_color_for_server_message (ptr_nick, nick),
                              nick,
                              IRC_COLOR_MESSAGE_QUIT,
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick_kicked),
+                             irc_nick_color_for_server_message (ptr_nick_kicked, argv[3]),
                              argv[3],
                              IRC_COLOR_MESSAGE_QUIT);
     }
@@ -744,7 +744,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                                  _("%s%sYou were killed by %s%s%s %s(%s%s%s)"),
                                  weechat_prefix ("quit"),
                                  IRC_COLOR_MESSAGE_QUIT,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_MESSAGE_QUIT,
                                  IRC_COLOR_CHAT_DELIMITERS,
@@ -761,7 +761,7 @@ IRC_PROTOCOL_CALLBACK(kill)
                                  _("%s%sYou were killed by %s%s%s"),
                                  weechat_prefix ("quit"),
                                  IRC_COLOR_MESSAGE_QUIT,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_MESSAGE_QUIT);
         }
@@ -862,7 +862,7 @@ IRC_PROTOCOL_CALLBACK(mode)
                              pos_modes,
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_RESET,
-                             IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                             irc_nick_color_for_server_message (ptr_nick, nick),
                              nick);
     }
     else
@@ -990,7 +990,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                  old_color : IRC_COLOR_CHAT_NICK,
                                                  nick,
                                                  IRC_COLOR_RESET,
-                                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                                 irc_nick_color_for_server_message (ptr_nick, new_nick),
                                                  new_nick,
                                                  IRC_COLOR_RESET);
                         }
@@ -1094,7 +1094,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                  _("Notice"),
                                  (notice_op) ? "Op" : ((notice_voice) ? "Voice" : ""),
                                  IRC_COLOR_CHAT_DELIMITERS,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  (nick && nick[0]) ? nick : "?",
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  IRC_COLOR_RESET,
@@ -1295,7 +1295,7 @@ IRC_PROTOCOL_CALLBACK(part)
                                          _("%s%s%s%s%s%s%s%s%s%s has left %s%s%s "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         irc_nick_color_for_server_message (ptr_nick, nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          (display_host) ? " (" : "",
@@ -1328,7 +1328,7 @@ IRC_PROTOCOL_CALLBACK(part)
                                          _("%s%s%s%s%s%s%s%s%s%s has left "
                                            "%s%s%s"),
                                          weechat_prefix ("quit"),
-                                         IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         irc_nick_color_for_server_message (ptr_nick, nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          (display_host) ? " (" : "",
@@ -1635,7 +1635,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
                                          (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
-                                         irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         irc_nick_color_for_pv (ptr_channel, nick) : irc_nick_color_for_server_message (ptr_nick, nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          (display_host) ? " (" : "",
@@ -1665,7 +1665,7 @@ IRC_PROTOCOL_CALLBACK(quit)
                                          _("%s%s%s%s%s%s%s%s%s%s has quit"),
                                          weechat_prefix ("quit"),
                                          (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE) ?
-                                         irc_nick_color_for_pv (ptr_channel, nick) : IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                         irc_nick_color_for_pv (ptr_channel, nick) : irc_nick_color_for_server_message (ptr_nick, nick),
                                          nick,
                                          IRC_COLOR_CHAT_DELIMITERS,
                                          (display_host) ? " (" : "",
@@ -1799,7 +1799,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                  _("%s%s%s%s has changed topic for %s%s%s "
                                    "from \"%s%s%s\" to \"%s%s%s\""),
                                  weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_RESET,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -1823,7 +1823,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                  _("%s%s%s%s has changed topic for %s%s%s "
                                    "to \"%s%s%s\""),
                                  weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_RESET,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -1850,7 +1850,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                  _("%s%s%s%s has unset topic for %s%s%s "
                                    "(old topic: \"%s%s%s\")"),
                                  weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_RESET,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -1870,7 +1870,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                  irc_protocol_tags (command, NULL, NULL),
                                  _("%s%s%s%s has unset topic for %s%s%s"),
                                  weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, nick),
                                  nick,
                                  IRC_COLOR_RESET,
                                  IRC_COLOR_CHAT_CHANNEL,
@@ -3064,7 +3064,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  /* TRANSLATORS: "%s" after "on" is a date */
                                  _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
                                  weechat_prefix ("network"),
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, topic_nick),
                                  topic_nick,
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  (topic_address && topic_address[0]) ? " (" : "",
@@ -3101,7 +3101,7 @@ IRC_PROTOCOL_CALLBACK(333)
                                  IRC_COLOR_CHAT_CHANNEL,
                                  argv[3],
                                  IRC_COLOR_RESET,
-                                 IRC_COLOR_NICK_IN_SERVER_MESSAGE(ptr_nick),
+                                 irc_nick_color_for_server_message (ptr_nick, topic_nick),
                                  topic_nick,
                                  IRC_COLOR_CHAT_DELIMITERS,
                                  (topic_address && topic_address[0]) ? " (" : "",
