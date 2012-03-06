@@ -4369,7 +4369,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     t_irc_recv_func *cmd_recv_func;
     const char *cmd_name;
     const char *nick1, *address1, *host1;
-    char *nick, *address, *host;
+    char *nick, *address, *address_color, *host, *host_no_color, *host_color;
     char **argv, **argv_eol;
     struct t_irc_protocol_msg irc_protocol_messages[] =
         { { "authenticate", /* authenticate */ 1, &irc_protocol_cb_authenticate },
@@ -4530,6 +4530,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     }
     nick = (nick1) ? strdup (nick1) : NULL;
     address = (address1) ? strdup (address1) : NULL;
+    address_color = (address) ? irc_color_decode (address,
+                                                  weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
     host = (host1) ? strdup (host1) : NULL;
     if (host)
     {
@@ -4537,6 +4539,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
         if (pos_space)
             pos_space[0] = '\0';
     }
+    host_no_color = (host) ? irc_color_decode (host, 0) : NULL;
+    host_color = (host) ? irc_color_decode (host,
+                                            weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
 
     /* check if message is ignored or not */
     ptr_channel = NULL;
@@ -4544,7 +4549,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         ptr_channel = irc_channel_search (server, msg_channel);
     message_ignored = irc_ignore_check (server,
                                         (ptr_channel) ? ptr_channel->name : msg_channel,
-                                        nick, host);
+                                        nick, host_no_color);
 
     /* send signal with received command, even if command is ignored */
     irc_server_send_signal (server, "irc_raw_in", msg_command,
@@ -4613,8 +4618,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
         argv_eol = weechat_string_split (dup_irc_message, " ", 1, 0, NULL);
 
         return_code = (int) (cmd_recv_func) (server,
-                                             nick, address, host, cmd_name,
-                                             message_ignored,
+                                             nick, address_color, host_color,
+                                             cmd_name, message_ignored,
                                              argc, argv, argv_eol);
 
         if (return_code == WEECHAT_RC_ERROR)
@@ -4646,8 +4651,14 @@ end:
         free (nick);
     if (address)
         free (address);
+    if (address_color)
+        free (address_color);
     if (host)
         free (host);
+    if (host_no_color)
+        free (host_no_color);
+    if (host_color)
+        free (host_color);
     if (dup_irc_message)
         free (dup_irc_message);
     if (argv)

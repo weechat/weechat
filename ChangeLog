@@ -11,6 +11,7 @@ Version 0.3.8 (under dev!)
   weechat.look.paste_bracketed (task #11316)
 * core: fix display of wide chars on last column of chat area (patch #7733)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"
+* irc: fix display of color in hostname (join/part/quit messages)
 * irc: compute hash to find nick color for nick in server message when nick
   is not in nicklist
 * irc: add support of "external" SASL mechanism (task #11864)
