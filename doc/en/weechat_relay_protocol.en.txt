@@ -466,8 +466,8 @@ WeeChat reserved identifiers:
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable)
 
 | _buffer_line_added       | Line added in buffer    | line |
-  'buffer' (pointer), 'date' (time), 'displayed' (char), 'prefix' (string),
-  'message' (string)
+  'buffer' (pointer), 'date' (time), 'date_printed' (time), 'displayed' (char),
+  'highlight' (char), 'prefix' (string), 'message' (string)
 
 | _buffer_closing          | Buffer closing          | buffer |
   'number' (integer), 'full_name' (string)

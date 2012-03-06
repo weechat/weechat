@@ -449,7 +449,9 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                           "line_data:0x%lx",
                           (long unsigned int)ptr_line_data);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
-                                             "buffer,date,displayed,prefix,message");
+                                             "buffer,date,date_printed,"
+                                             "displayed,highlight,prefix,"
+                                             "message");
                 relay_weechat_msg_send (ptr_client, msg, 0);
                 relay_weechat_msg_free (msg);
             }
