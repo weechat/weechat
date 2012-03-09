@@ -2394,7 +2394,9 @@ COMMAND_CALLBACK(input)
         else if (string_strcasecmp (argv[1], "redo") == 0)
             gui_input_redo (buffer);
         else if (string_strcasecmp (argv[1], "paste_start") == 0)
-            gui_key_paste_bracketed_start ();
+        {
+            /* do nothing here */
+        }
         else if (string_strcasecmp (argv[1], "paste_stop") == 0)
         {
             /* do nothing here */

@@ -583,10 +583,15 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
+* [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
+** description: `force end of bracketed paste after this delay (in seconds) if the control sequence for end of bracketed paste ("ESC[201~") was not received in time`
+** type: integer
+** values: 1 .. 60 (default value: `10`)
+
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
 ** description: `max number of lines for paste without asking user (-1 = disable this feature)`
 ** type: integer
-** values: -1 .. 2147483647 (default value: `3`)
+** values: -1 .. 2147483647 (default value: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
 ** description: `prefix for action messages`

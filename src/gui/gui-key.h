@@ -26,6 +26,10 @@ struct t_hashtable;
 
 #define GUI_KEY_GRAB_DELAY_DEFAULT 500
 
+#define GUI_KEY_BRACKETED_PASTE_START  "\x1B[200~"
+#define GUI_KEY_BRACKETED_PASTE_END    "\x1B[201~"
+#define GUI_KEY_BRACKETED_PASTE_LENGTH 6
+
 enum t_gui_key_context
 {
     GUI_KEY_CONTEXT_DEFAULT = 0,
@@ -110,10 +114,17 @@ extern void gui_key_free_all (struct t_gui_key **keys,
                               int *keys_count);
 extern void gui_key_buffer_reset ();
 extern void gui_key_buffer_add (unsigned char key);
+extern int gui_key_buffer_search (int start_index, int max_index,
+                                  const char *string);
+extern void gui_key_buffer_remove (int index, int number);
+extern void gui_key_paste_remove_newline ();
 extern void gui_key_paste_start ();
-extern void gui_key_paste_bracketed_start ();
 extern int gui_key_get_paste_lines ();
 extern int gui_key_paste_check (int bracketed_paste);
+extern void gui_key_paste_bracketed_timer_remove ();
+extern void gui_key_paste_bracketed_timer_add ();
+extern void gui_key_paste_bracketed_start ();
+extern void gui_key_paste_bracketed_stop ();
 extern void gui_key_paste_accept ();
 extern void gui_key_paste_cancel ();
 extern void gui_key_end ();

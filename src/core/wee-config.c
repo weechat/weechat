@@ -126,6 +126,7 @@ struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_nickmode;
 struct t_config_option *config_look_nickmode_empty;
 struct t_config_option *config_look_paste_bracketed;
+struct t_config_option *config_look_paste_bracketed_timer_delay;
 struct t_config_option *config_look_paste_max_lines;
 struct t_config_option *config_look_prefix[GUI_CHAT_NUM_PREFIXES];
 struct t_config_option *config_look_prefix_align;
@@ -1981,12 +1982,19 @@ config_weechat_init_options ()
            "text from typed-in text (\"ESC[200~\", followed by the pasted text, "
            "followed by \"ESC[201~\")"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_paste_bracketed, NULL, NULL, NULL);
+    config_look_paste_bracketed_timer_delay = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "paste_bracketed_timer_delay", "integer",
+        N_("force end of bracketed paste after this delay (in seconds) if the "
+           "control sequence for end of bracketed paste (\"ESC[201~\") was not "
+           "received in time"),
+        NULL, 1, 60, "10", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_paste_max_lines = config_file_new_option (
         weechat_config_file, ptr_section,
         "paste_max_lines", "integer",
         N_("max number of lines for paste without asking user "
            "(-1 = disable this feature)"),
-        NULL, -1, INT_MAX, "3", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, -1, INT_MAX, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_error", "string",
