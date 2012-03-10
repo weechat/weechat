@@ -297,6 +297,7 @@ gui_key_flush (int paste)
     static int length_key_str = 0;
     char key_temp[2], *key_utf, *input_old, *ptr_char, *next_char, *ptr_error;
     char utf_partial_char[16];
+    struct t_gui_buffer *old_buffer;
 
     /* if paste pending or bracketed paste detected, just return */
     if (gui_key_paste_pending || gui_key_paste_bracketed)
@@ -313,6 +314,7 @@ gui_key_flush (int paste)
     gui_key_last_activity_time = time (NULL);
     last_key_used = -1;
     undo_done = 0;
+    old_buffer = NULL;
     for (i = 0; i < gui_key_buffer_size; i++)
     {
         key = gui_key_buffer[i];
@@ -402,6 +404,7 @@ gui_key_flush (int paste)
                     strdup (gui_current_window->buffer->input_buffer) : strdup ("");
             else
                 input_old = NULL;
+            old_buffer = gui_current_window->buffer;
 
             if ((gui_key_pressed (key_str) != 0) && (insert_ok)
                 && (!gui_cursor_mode))
@@ -418,7 +421,8 @@ gui_key_flush (int paste)
             }
 
             /* incremental text search in buffer */
-            if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+            if ((old_buffer == gui_current_window->buffer)
+                && (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                 && ((input_old == NULL)
                     || (gui_current_window->buffer->input_buffer == NULL)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
