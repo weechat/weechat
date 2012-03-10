@@ -463,7 +463,7 @@ gui_key_flush (int paste)
         length_key_str = strlen (key_str);
 
         /* set last key used in buffer if combo buffer is empty */
-        if (gui_mouse_event_pending || !gui_key_combo_buffer[0])
+        if (gui_key_grab || gui_mouse_event_pending || !gui_key_combo_buffer[0])
             last_key_used = i;
     }
 
@@ -472,7 +472,7 @@ gui_key_flush (int paste)
     else if (last_key_used >= 0)
         gui_key_buffer_remove (0, last_key_used + 1);
 
-    if (!gui_mouse_event_pending)
+    if (!gui_key_grab && !gui_mouse_event_pending)
         gui_key_combo_buffer[0] = '\0';
 }
 
