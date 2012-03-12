@@ -29,6 +29,9 @@ struct t_irc_notify
     int check_away;                    /* check away status (with whois)    */
     /* current state of nick */
     int is_on_server;                  /* 1 if nick is currently on server  */
+                                       /* 0 if nick is not on server        */
+                                       /* -1 for unknown status (check is   */
+                                       /* in progress)                      */
                                        /* (using answer of ison command)    */
     char *away_message;                /* current away message, NULL if     */
                                        /* nick is not away (using answer of */
@@ -47,6 +50,7 @@ extern void irc_notify_set_server_option (struct t_irc_server *server);
 extern struct t_irc_notify *irc_notify_new (struct t_irc_server *server,
                                             const char *nick,
                                             int check_away);
+extern void irc_notify_check_now (struct t_irc_notify *notify);
 extern void irc_notify_new_for_server (struct t_irc_server *server);
 extern void irc_notify_new_for_all_servers ();
 extern void irc_notify_free (struct t_irc_server *server,

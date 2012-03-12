@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-09 10:32+0100\n"
+"POT-Creation-Date: 2012-03-12 07:47+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6058,6 +6058,11 @@ msgstr "%s%s: nejste připojen k serveru"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
 
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+#, fuzzy
+msgid "unknown"
+msgstr "(neznámý)"
+
 msgid "offline"
 msgstr "offline"
 
@@ -6077,10 +6082,22 @@ msgstr "Seznam notifikací pro všechny servery:"
 msgid "Notify list is empty on all servers"
 msgstr "Seznam notifikací na všech serverech je prázdný"
 
+#. TRANSLATORS: final "%s%s" is the server name
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is connected on %s%s"
+msgstr "%snotifikace: %s%s%s se připojil %s%s"
+
+#. TRANSLATORS: final "%s%s" is the server name
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s is offline on %s%s"
+msgstr "%snotifikace: %s%s%s se připojil %s%s"
+
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has joined %s%s"
 msgstr "%snotifikace: %s%s%s se připojil %s%s"
 
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has quit %s%s"
 msgstr "%snotifikace: %s%s%s odešel %s%s"

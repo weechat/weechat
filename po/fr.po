@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-09 10:32+0100\n"
-"PO-Revision-Date: 2012-03-09 10:33+0100\n"
+"POT-Creation-Date: 2012-03-12 07:47+0100\n"
+"PO-Revision-Date: 2012-03-11 13:40+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6360,6 +6360,10 @@ msgstr "%s%s: vous n'êtes pas connecté au serveur"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ce tampon n'est pas un canal !"
 
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+msgid "unknown"
+msgstr "inconnu"
+
 msgid "offline"
 msgstr "déconnecté"
 
@@ -6379,10 +6383,22 @@ msgstr "Liste de notifications pour tous les serveurs:"
 msgid "Notify list is empty on all servers"
 msgstr "La liste de notifications est vide sur tous les serveurs"
 
+#. TRANSLATORS: final "%s%s" is the server name
+#, c-format
+msgid "%snotify: %s%s%s is connected on %s%s"
+msgstr "%snotify: %s%s%s est connecté sur %s%s"
+
+#. TRANSLATORS: final "%s%s" is the server name
+#, c-format
+msgid "%snotify: %s%s%s is offline on %s%s"
+msgstr "%snotify: %s%s%s est déconnecté de %s%s"
+
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has joined %s%s"
 msgstr "%snotify: %s%s%s a rejoint %s%s"
 
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has quit %s%s"
 msgstr "%snotify: %s%s%s a quitté %s%s"

@@ -2930,6 +2930,7 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_PLUGIN_NAME,
                             IRC_COLOR_CHAT_NICK,
                             ptr_notify->nick);
+            irc_notify_check_now (ptr_notify);
         }
         else
         {

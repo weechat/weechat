@@ -193,7 +193,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
         new_notify->server = server;
         new_notify->nick = strdup (nick);
         new_notify->check_away = check_away;
-        new_notify->is_on_server = 0;
+        new_notify->is_on_server = -1;
         new_notify->away_message = NULL;
         new_notify->ison_received = 0;
 
@@ -208,6 +208,35 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
     }
 
     return new_notify;
+}
+
+/*
+ * irc_notify_check_now: check now ison/whois for a notify (called when a
+ *                       notify is added)
+ */
+
+void
+irc_notify_check_now (struct t_irc_notify *notify)
+{
+    if (notify->server->is_connected)
+    {
+        /* send the ISON for nick */
+        irc_redirect_new (notify->server, "ison", "notify", 1,
+                          NULL, 0, NULL);
+        irc_server_sendf (notify->server,
+                          IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "ISON :%s", notify->nick);
+
+        if (notify->check_away)
+        {
+            /* send the WHOIS for nick */
+            irc_redirect_new (notify->server, "whois", "notify", 1,
+                              notify->nick, 0, "301,401");
+            irc_server_sendf (notify->server,
+                              IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                              "WHOIS :%s", notify->nick);
+        }
+    }
 }
 
 /*
@@ -332,7 +361,8 @@ irc_notify_free_all (struct t_irc_server *server)
 void
 irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
 {
-    if (!notify->is_on_server && !notify->away_message)
+    if ((notify->is_on_server < 0)
+        || (!notify->is_on_server && !notify->away_message))
     {
         weechat_printf (buffer,
                         "  %s%s%s @ %s%s%s: %s%s",
@@ -342,7 +372,10 @@ irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
                         IRC_COLOR_CHAT_SERVER,
                         notify->server->name,
                         IRC_COLOR_RESET,
-                        IRC_COLOR_MESSAGE_QUIT,
+                        (notify->is_on_server < 0) ? "" : IRC_COLOR_MESSAGE_QUIT,
+                        (notify->is_on_server < 0) ?
+                        /* TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending) */
+                        _("unknown") :
                         _("offline"));
     }
     else
@@ -462,20 +495,28 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify,
     if (notify->is_on_server == is_on_server)
         return;
 
-    notify->is_on_server = is_on_server;
-
     weechat_printf_tags (notify->server->buffer,
                          irc_notify_get_tags (irc_config_look_notify_tags_ison),
-                         (notify->is_on_server) ?
-                         _("%snotify: %s%s%s has joined %s%s") :
-                         _("%snotify: %s%s%s has quit %s%s"),
+                         (notify->is_on_server < 0) ?
+                         ((is_on_server) ?
+                          /* TRANSLATORS: final "%s%s" is the server name */
+                          _("%snotify: %s%s%s is connected on %s%s") :
+                          /* TRANSLATORS: final "%s%s" is the server name */
+                          _("%snotify: %s%s%s is offline on %s%s")) :
+                         ((is_on_server) ?
+                          /* TRANSLATORS: final "%s%s" is the server name */
+                          _("%snotify: %s%s%s has joined %s%s") :
+                          /* TRANSLATORS: final "%s%s" is the server name */
+                          _("%snotify: %s%s%s has quit %s%s")),
                          weechat_prefix ("network"),
                          IRC_COLOR_CHAT_NICK,
                          notify->nick,
-                         (notify->is_on_server) ?
+                         (is_on_server) ?
                          IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT,
                          IRC_COLOR_CHAT_SERVER,
                          notify->server->name);
+
+    notify->is_on_server = is_on_server;
 }
 
 /*

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-09 10:32+0100\n"
+"POT-Creation-Date: 2012-03-12 07:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4875,6 +4875,10 @@ msgstr ""
 msgid "%s%s: this buffer is not a channel!"
 msgstr ""
 
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+msgid "unknown"
+msgstr ""
+
 msgid "offline"
 msgstr ""
 
@@ -4894,10 +4898,22 @@ msgstr ""
 msgid "Notify list is empty on all servers"
 msgstr ""
 
+#. TRANSLATORS: final "%s%s" is the server name
+#, c-format
+msgid "%snotify: %s%s%s is connected on %s%s"
+msgstr ""
+
+#. TRANSLATORS: final "%s%s" is the server name
+#, c-format
+msgid "%snotify: %s%s%s is offline on %s%s"
+msgstr ""
+
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has joined %s%s"
 msgstr ""
 
+#. TRANSLATORS: final "%s%s" is the server name
 #, c-format
 msgid "%snotify: %s%s%s has quit %s%s"
 msgstr ""
