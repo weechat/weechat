@@ -1396,10 +1396,9 @@ Per maggiori informazioni consultare http://www.oftc.net/oftc/NickServ/CertFP
 Autenticazione SASL
 ^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-WeeChat supports SASL authentication, using three mechanisms: "plain" (plain
-text password), "dh-blowfish" (crypted password) or "external" (client side SSL
-cert).
+WeeChat supporta l'autenticazione SASL, usando tre meccanismi: "plain" (password
+in chiaro), "dh-blowfish" (password cifrata)" o "external" (certificato SSL da
+lato client).
 
 Le opzioni nel server sono:
 
@@ -1429,7 +1428,7 @@ utenti e gruppi di migliorare la propria privacy e la sicurezza su Internet.
 Per prima cosa, assicurarsi che WeeChat sia compilato con
 <<dependencies,libgcrypt11-dev>> (se compilato da sorgenti); non è
 obbligatorio, ma "dh-blowfish" assicura una maggiore sicurezza rispetto al
-sistema di autenticazione con SASL.
+sistema di autenticazione "plain" (in chiaro) con SASL.
 
 Il primo passo consiste nell'installare TOR. Per Debian (e derivate):
 

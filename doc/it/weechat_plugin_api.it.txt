@@ -7410,35 +7410,30 @@ Argomenti:
   - |
   ignore rimosso
 
-// TRANSLATION MISSING
 | irc | irc_notify_join +
-  (_new in version 0.3.8_) |
-  string: server name + "," + nick |
-  a nick in notify list has joined server
+  (_novità nella versione 0.3.8_) |
+  string: nome server + "," + nick |
+  un nick nella lista notifiche è entrato sul server
 
-// TRANSLATION MISSING
 | irc | irc_notify_quit +
-  (_new in version 0.3.8_) |
-  string: server name + "," + nick |
-  a nick in notify list has quit server
+  (_novità nella versione 0.3.8_) |
+  string: nome server + "," + nick |
+  un nick nella lista notifiche è uscito dal server
 
-// TRANSLATION MISSING
 | irc | irc_notify_away +
-  (_new in version 0.3.8_) |
-  string: server name + "," + nick + "," + away message |
-  a nick in notify list is now away on server
+  (_novità nella versione 0.3.8_) |
+  string: nome server + "," + nick + "," + messaggio di assenza |
+  un nick nella lista notifiche è ora assente sul server
 
-// TRANSLATION MISSING
 | irc | irc_notify_still_away +
-  (_new in version 0.3.8_) |
-  string: server name + "," + nick + "," + away message |
-  a nick in notify list is still away on server (away message has changed)
+  (_novità nella versione 0.3.8_) |
+  string: nome server + "," + nick + "," + messaggio di assenza |
+  un nick nella lista notifiche è ancora assente sul server (messaggio di assenza cambiato)
 
-// TRANSLATION MISSING
 | irc | irc_notify_back +
-  (_new in version 0.3.8_) |
-  string: server name + "," + nick |
-  a nick in notify list is back (away status removed)
+  (_novità nella versione 0.3.8_) |
+  string: nome server + "," + nick |
+  un nick nella lista notifiche è tornato (messaggio di assenza rimosso)
 
 | logger | logger_start |
   puntatore: buffer |
