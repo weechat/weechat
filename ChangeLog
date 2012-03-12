@@ -13,6 +13,7 @@ Version 0.3.8 (under dev!)
   (task #11316)
 * core: fix display of wide chars on last column of chat area (patch #7733)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"
+* irc: add signals and tags in messages for irc notify (task #11887)
 * irc: check notify immediately when adding a nick to notify list, improve
   first notify message for a nick (bug #35731)
 * irc: fix display of color in hostname (join/part/quit messages)

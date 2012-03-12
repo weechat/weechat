@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-12 07:47+0100\n"
+"POT-Creation-Date: 2012-03-12 10:27+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
@@ -6151,24 +6151,20 @@ msgstr "全てのサーバの通知リスト:"
 msgid "Notify list is empty on all servers"
 msgstr "全てのサーバの通知リストは空です"
 
-#. TRANSLATORS: final "%s%s" is the server name
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is connected on %s%s"
+msgid "%snotify: %s%s%s is connected"
 msgstr "%s通知: %s%s%s が %s%s に参加"
 
-#. TRANSLATORS: final "%s%s" is the server name
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is offline on %s%s"
+msgid "%snotify: %s%s%s is offline"
 msgstr "%s通知: %s%s%s が %s%s に参加"
 
-#. TRANSLATORS: final "%s%s" is the server name
-#, c-format
-msgid "%snotify: %s%s%s has joined %s%s"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has joined"
 msgstr "%s通知: %s%s%s が %s%s に参加"
 
-#. TRANSLATORS: final "%s%s" is the server name
-#, c-format
-msgid "%snotify: %s%s%s has quit %s%s"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s has quit"
 msgstr "%s通知: %s%s%s が %s%s から終了"
 
 #, c-format

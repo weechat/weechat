@@ -7410,6 +7410,36 @@ Argomenti:
   - |
   ignore rimosso
 
+// TRANSLATION MISSING
+| irc | irc_notify_join +
+  (_new in version 0.3.8_) |
+  string: server name + "," + nick |
+  a nick in notify list has joined server
+
+// TRANSLATION MISSING
+| irc | irc_notify_quit +
+  (_new in version 0.3.8_) |
+  string: server name + "," + nick |
+  a nick in notify list has quit server
+
+// TRANSLATION MISSING
+| irc | irc_notify_away +
+  (_new in version 0.3.8_) |
+  string: server name + "," + nick + "," + away message |
+  a nick in notify list is now away on server
+
+// TRANSLATION MISSING
+| irc | irc_notify_still_away +
+  (_new in version 0.3.8_) |
+  string: server name + "," + nick + "," + away message |
+  a nick in notify list is still away on server (away message has changed)
+
+// TRANSLATION MISSING
+| irc | irc_notify_back +
+  (_new in version 0.3.8_) |
+  string: server name + "," + nick |
+  a nick in notify list is back (away status removed)
+
 | logger | logger_start |
   puntatore: buffer |
   avvia il logging per il buffer

@@ -7490,6 +7490,31 @@ Paramètres :
   - |
   ignore supprimé
 
+| irc | irc_notify_join +
+  (_nouveau dans la version 0.3.8_) |
+  chaîne: nom du serveur + "," + pseudo |
+  un pseudo dans la liste de notifications a rejoint le serveur
+
+| irc | irc_notify_quit +
+  (_nouveau dans la version 0.3.8_) |
+  chaîne: nom du serveur + "," + pseudo |
+  un pseudo dans la liste de notifications a quitté le serveur
+
+| irc | irc_notify_away +
+  (_nouveau dans la version 0.3.8_) |
+  chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
+  un pseudo dans la liste de notifications est maintenant absent sur le serveur
+
+| irc | irc_notify_still_away +
+  (_nouveau dans la version 0.3.8_) |
+  chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
+  un pseudo dans la liste de notifications est toujours absent sur le serveur (le message d'absence a changé)
+
+| irc | irc_notify_back +
+  (_nouveau dans la version 0.3.8_) |
+  chaîne: nom du serveur + "," + pseudo |
+  un pseudo dans la liste de notifications est de retour (statut d'absence supprimé)
+
 | logger | logger_start |
   pointeur : tampon |
   démarrage de l'enregistrement sur disque pour le tampon
