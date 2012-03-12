@@ -937,22 +937,44 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
+ * irc_nick_color_for_message: return WeeChat color code for a nick
+ */
+
+const char *
+irc_nick_color_for_message (struct t_irc_server *server,
+                            struct t_irc_nick *nick,
+                            const char *nickname)
+{
+    if (nick)
+        return nick->color;
+
+    if (nickname)
+    {
+        if (server
+            && (irc_server_strcasecmp (server, nickname, server->nick) == 0))
+        {
+            return IRC_COLOR_CHAT_NICK_SELF;
+        }
+        return irc_nick_find_color (nickname);
+    }
+
+    return IRC_COLOR_CHAT_NICK;
+}
+
+/*
  * irc_nick_color_for_server_message: return WeeChat color code for a nick
  *                                    (used in a server message)
  */
 
 const char *
-irc_nick_color_for_server_message (struct t_irc_nick *nick,
+irc_nick_color_for_server_message (struct t_irc_server *server,
+                                   struct t_irc_nick *nick,
                                    const char *nickname)
 {
-    if (weechat_config_boolean(irc_config_look_color_nicks_in_server_messages))
-    {
-        if (nick)
-            return nick->color;
-        if (nickname)
-            return irc_nick_find_color (nickname);
-    }
-    return IRC_COLOR_CHAT_NICK;
+    if (!weechat_config_boolean(irc_config_look_color_nicks_in_server_messages))
+        return IRC_COLOR_CHAT_NICK;
+
+    return irc_nick_color_for_message (server, nick, nickname);
 }
 
 /*
