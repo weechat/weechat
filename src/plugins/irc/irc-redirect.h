@@ -54,6 +54,7 @@ struct t_irc_redirect
     int timeout;                    /* timeout (in seconds)                  */
     char *command;                  /* command sent to server, which is      */
                                     /* redirected                            */
+    int assigned_to_command;        /* 1 if assigned to a command            */
     time_t start_time;              /* time when command is sent to server   */
                                     /* (this is begining of this redirect)   */
     struct t_hashtable *cmd_start;  /* command(s) starting redirection       */

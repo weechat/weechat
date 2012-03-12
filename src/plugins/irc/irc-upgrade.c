@@ -568,6 +568,7 @@ irc_upgrade_read_cb (void *data,
                         str = weechat_infolist_string (infolist, "command");
                         if (str)
                             ptr_redirect->command = strdup (str);
+                        ptr_redirect->assigned_to_command = weechat_infolist_integer (infolist, "assigned_to_command");
                         ptr_redirect->start_time = weechat_infolist_time (infolist, "start_time");
                         ptr_redirect->cmd_start_received = weechat_infolist_integer (infolist, "cmd_start_received");
                         ptr_redirect->cmd_stop_received = weechat_infolist_integer (infolist, "cmd_stop_received");

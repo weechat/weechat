@@ -1769,6 +1769,9 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                                          (new_msg) ? 1 : 0,
                                          tags_to_send,
                                          ptr_redirect);
+                /* mark redirect as "used" */
+                if (ptr_redirect)
+                    ptr_redirect->assigned_to_command = 1;
             }
             else
             {

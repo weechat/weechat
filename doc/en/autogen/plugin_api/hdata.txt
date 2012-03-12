@@ -78,6 +78,7 @@
   'string' (string) +
   'timeout' (integer) +
   'command' (string) +
+  'assigned_to_command' (integer) +
   'start_time' (time) +
   'cmd_start' (hashtable) +
   'cmd_stop' (hashtable) +

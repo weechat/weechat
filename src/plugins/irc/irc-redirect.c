@@ -458,6 +458,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
     new_redirect->string = (string) ? strdup (string) : NULL;
     new_redirect->timeout = timeout;
     new_redirect->command = NULL;
+    new_redirect->assigned_to_command = 0;
     new_redirect->start_time = 0;
     new_redirect->cmd_start = hash_cmd[0];
     new_redirect->cmd_stop = hash_cmd[1];
@@ -557,7 +558,7 @@ irc_redirect_search_available (struct t_irc_server *server)
     for (ptr_redirect = server->redirects; ptr_redirect;
          ptr_redirect = ptr_redirect->next_redirect)
     {
-        if (ptr_redirect->start_time == 0)
+        if (!ptr_redirect->assigned_to_command)
             return ptr_redirect;
     }
 
@@ -592,6 +593,7 @@ irc_redirect_init_command (struct t_irc_redirect *redirect,
     else
         redirect->command = NULL;
 
+    redirect->assigned_to_command = 1;
     redirect->start_time = time (NULL);
 
     if (weechat_irc_plugin->debug >= 2)
@@ -1013,6 +1015,7 @@ irc_redirect_hdata_redirect_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_redirect, string, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, timeout, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, command, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_redirect, assigned_to_command, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, start_time, TIME, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_start, HASHTABLE, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect, cmd_stop, HASHTABLE, NULL);
@@ -1098,6 +1101,8 @@ irc_redirect_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "command", redirect->command))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "assigned_to_command", redirect->assigned_to_command))
+        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", redirect->start_time))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "cmd_start", weechat_hashtable_get_string (redirect->cmd_start, "keys_values")))
@@ -1169,6 +1174,7 @@ irc_redirect_print_log (struct t_irc_server *server)
         weechat_log_printf ("       string. . . . . . . : '%s'",  ptr_redirect->string);
         weechat_log_printf ("       timeout . . . . . . : %d",    ptr_redirect->timeout);
         weechat_log_printf ("       command . . . . . . : '%s'",  ptr_redirect->command);
+        weechat_log_printf ("       assigned_to_command : %d",    ptr_redirect->assigned_to_command);
         weechat_log_printf ("       start_time. . . . . : %ld",   ptr_redirect->start_time);
         weechat_log_printf ("       cmd_start . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_redirect->cmd_start,
