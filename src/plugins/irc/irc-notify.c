@@ -32,6 +32,7 @@
 #include "irc-color.h"
 #include "irc-config.h"
 #include "irc-message.h"
+#include "irc-nick.h"
 #include "irc-redirect.h"
 #include "irc-server.h"
 
@@ -366,7 +367,7 @@ irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
     {
         weechat_printf (buffer,
                         "  %s%s%s @ %s%s%s: %s%s",
-                        IRC_COLOR_CHAT_NICK,
+                        irc_nick_color_for_server_message (NULL, notify->nick),
                         notify->nick,
                         IRC_COLOR_RESET,
                         IRC_COLOR_CHAT_SERVER,
@@ -382,7 +383,7 @@ irc_notify_display (struct t_gui_buffer *buffer, struct t_irc_notify *notify)
     {
         weechat_printf (buffer,
                         "  %s%s%s @ %s%s%s: %s%s %s%s%s%s%s%s",
-                        IRC_COLOR_CHAT_NICK,
+                        irc_nick_color_for_server_message (NULL, notify->nick),
                         notify->nick,
                         IRC_COLOR_RESET,
                         IRC_COLOR_CHAT_SERVER,
@@ -542,7 +543,7 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify,
                           _("%snotify: %s%s%s has joined") :
                           _("%snotify: %s%s%s has quit")),
                          weechat_prefix ("network"),
-                         IRC_COLOR_CHAT_NICK,
+                         irc_nick_color_for_server_message (NULL, notify->nick),
                          notify->nick,
                          (is_on_server) ?
                          IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT);
@@ -577,7 +578,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                                                   notify->nick),
                              _("%snotify: %s%s%s is now away: \"%s\""),
                              weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_NICK,
+                             irc_nick_color_for_server_message (NULL, notify->nick),
                              notify->nick,
                              IRC_COLOR_RESET,
                              away_message);
@@ -591,7 +592,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                                                   notify->nick),
                              _("%snotify: %s%s%s is back"),
                              weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_NICK,
+                             irc_nick_color_for_server_message (NULL, notify->nick),
                              notify->nick,
                              IRC_COLOR_RESET);
         irc_notify_send_signal (notify, "back", NULL);
@@ -604,7 +605,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
                                                   notify->nick),
                              _("%snotify: %s%s%s is still away: \"%s\""),
                              weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_NICK,
+                             irc_nick_color_for_server_message (NULL, notify->nick),
                              notify->nick,
                              IRC_COLOR_RESET,
                              away_message);
