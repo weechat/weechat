@@ -26,6 +26,7 @@
 #include "config.h"
 #endif
 
+#include <limits.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <unistd.h>
@@ -1911,7 +1912,7 @@ config_file_write_internal (struct t_config_file *config_file,
                             int default_options)
 {
     int filename_length, rc;
-    char *filename, *filename2;
+    char *filename, *filename2, resolved_path[PATH_MAX];
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
 
@@ -1938,6 +1939,21 @@ config_file_write_internal (struct t_config_file *config_file,
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     }
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
+
+    /* if filename is a symbolic link, use target as filename */
+    if (realpath (filename, resolved_path))
+    {
+        if (strcmp (filename, resolved_path) != 0)
+        {
+            free (filename);
+            filename = strdup (resolved_path);
+            if (!filename)
+            {
+                free (filename2);
+                return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
+            }
+        }
+    }
 
     log_printf (_("Writing configuration file %s %s"),
                 config_file->filename,
