@@ -32,7 +32,7 @@
 
 | weechat | date | Datum der WeeChat Kompilierung | -
 
-| weechat | dir_separator | Verzeichnis-Trennzeichen | -
+| weechat | dir_separator | Trennzeichen für Verzeichnis | -
 
 | weechat | filters_enabled | 1, falls Filter aktiviert sind | -
 
@@ -54,6 +54,6 @@
 
 | weechat | weechat_site_download | Download-Seite von WeeChat | -
 
-| weechat | weechat_upgrading | 1 falls WeeChat ein Upgrade durchführt (Befehl  `/upgrade`) | -
+| weechat | weechat_upgrading | 1 falls WeeChat ein Upgrade durchführt (Befehl `/upgrade`) | -
 
 |========================================

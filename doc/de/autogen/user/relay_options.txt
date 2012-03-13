@@ -49,7 +49,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** Beschreibung: `regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen (zwischen Groß- und Kleinschreibung nicht dabei nicht unterschieden. Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden) , Beispiel:  "^(123.45.67.89|192.160.*)$"`
+** Beschreibung: `regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen (zwischen Groß- und Kleinschreibung nicht dabei nicht unterschieden. Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden) , Beispiel: "^(123.45.67.89|192.160.*)$"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

@@ -54,7 +54,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
-** Beschreibung: `Eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen  '.1', '.2', ... hinzugefügt)`
+** Beschreibung: `Eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen '.1', '.2', ... hinzugefügt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -84,7 +84,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
-** Beschreibung: `öffnet automatisch den Übertragungs-Buffer falls eine neue Übertragung hinzugefügt wird`
+** Beschreibung: `öffnet automatisch den Buffer für Übertragungen falls eine neue Übertragung hinzugefügt wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -109,17 +109,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.network.port_range]] *xfer.network.port_range*
-** Beschreibung: `Schränkt den ausgehenden Datenversand bzw. Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen welche Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
+** Beschreibung: `schränkt den ausgehenden Datenversand bzw. die Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen welche Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
-** Beschreibung: `Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilo-Bytes pro Sekunde (0 = keine Begrenzung)`
+** Beschreibung: `Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilobytes pro Sekunde (0 = keine Begrenzung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
 * [[option_xfer.network.timeout]] *xfer.network.timeout*
-** Beschreibung: `Zeitüberschreitung bei Transfer-Anfrage (in Sekunden)`
+** Beschreibung: `Zeitüberschreitung bei Transferanfrage (in Sekunden)`
 ** Typ: integer
 ** Werte: 5 .. 2147483647 (Standardwert: `300`)
 

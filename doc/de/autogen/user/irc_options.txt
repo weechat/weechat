@@ -44,7 +44,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** Beschreibung: `Farben für Nick Prefix  für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format ist: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
+** Beschreibung: `Farben für Nick Prefix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format ist: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -159,22 +159,22 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; desweiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, daß diese Option keinen direkten Einfluß auf schon geöffnete Buffer nimmt. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** Beschreibung: `Eine durch Kommata getrennte Liste von Tags die bei einer Nachricht selbige hervorhebt (Highlight). (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
+** Beschreibung: `Eine durch Kommata getrennte Liste von Tags die eine Nachricht hervorheben soll (Highlight), falls die Nachricht einen entsprechenden Tag besitzt (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
@@ -224,7 +224,7 @@
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); lookup for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
+** Beschreibung: `Erzwingt für einen Nick eine spezielle Farbe. Die mittels Streuwertfunktion aus dem Nicknamen generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Bei der Schreibweise der Nicks wird sowohl nach Groß- und Kleinschreibung unterschieden und ebenso kann man die Nicks nur mit Kleinbuchstaben schreiben.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -374,7 +374,7 @@
 ** Werte: 0 .. 60 (Standardwert: `2`)
 
 * [[option_irc.server_default.anti_flood_prio_low]] *irc.server_default.anti_flood_prio_low*
-** Beschreibung: `Anti-Flood für weniger dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten, die zum IRC Server versendet wurden. Beispiel: automatische CTCP Antworten. (0 = Anti-Flood deaktivieren)`
+** Beschreibung: `Anti-Flood für weniger dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten, die zum IRC Server versendet wurden. Beispiel: automatische CTCP Antworten (0 = Anti-Flood deaktivieren).`
 ** Typ: integer
 ** Werte: 0 .. 60 (Standardwert: `2`)
 
@@ -484,7 +484,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for crypted password, "external" for authentication using client side SSL cert`
+** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort liegt in Klarschrift vor, "dh-blowfish" Passwort wird verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt`
 ** Typ: integer
 ** Werte: plain, dh-blowfish, external (Standardwert: `plain`)
 
@@ -494,7 +494,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_timeout]] *irc.server_default.sasl_timeout*
-** Beschreibung: `Zeitüberschreitung (in Sekunden) bis zum Abbruch der SASL Authentifizierung`
+** Beschreibung: `Zeitüberschreitung bis zum Abbruch der SASL Authentifizierung (in Sekunden)`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `15`)
 

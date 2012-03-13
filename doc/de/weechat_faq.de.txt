@@ -118,10 +118,10 @@ werden:
   meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat-curses`
 * prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
   dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
-// TRANSLATION MISSING
-* check the output of command `/charset` (on core buffer). You should see
-  'ISO-XXXXXX' or 'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or
-  other values, your locale is probably wrong (fix your $LANG).
+* überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
+  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz als Antwort erhalten. Falls Du
+  'ANSI_X3.4-1968' oder einen anderen Wert angezeigt bekommen solltest, ist Deine Einstellung der
+  locale möglicherweise falsch.
 * Einstellen des globalen decode Wertes, z.B.:
   `/set charset.default.decode "ISO-8859-15"`
 * Falls Du UTF-8 locale nutzt:

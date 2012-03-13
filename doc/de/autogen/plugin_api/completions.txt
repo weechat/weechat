@@ -80,7 +80,7 @@
 
 | weechat | config_options | Konfigurationsoptionen
 
-| weechat | cursor_areas | Bereiche  ("chat" oder Name einer Bar) in denen der Cursor frei bewegt werden kann
+| weechat | cursor_areas | Bereiche in denen der Cursor frei bewegt werden kann ("chat" oder Name einer Bar)
 
 | weechat | filename | Dateinamen
 

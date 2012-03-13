@@ -7,13 +7,13 @@ Message: zu sendende Nachricht
 ........................................
 
 [[command_xfer_xfer]]
-[command]*`xfer`* Transfer-Steuerung::
+[command]*`xfer`* Transferkontolle::
 ........................................
 /xfer  [list|listfull]
 
     list: zeigt Liste der Übertragungen
 listfull: zeigt eine ausführliche Liste der Übertragungen
 
-Ohne Angabe von Argumenten wird ein Buffer, mit Übertragungsliste, geöffnet.
+Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste geöffnet.
 ........................................
 

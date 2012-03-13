@@ -14,7 +14,7 @@ Einleitung
 ----------
 
 WeeChat (Wee Enhanced Environment for Chat) ist ein freier, schneller und
-schlanker Chat-Client der für viele Betriebssysteme entwickelt wird.
+schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 
 [[features]]
 Funktionen
@@ -22,8 +22,8 @@ Funktionen
 
 wesentliche Merkmale:
 
-* Multi-Protokoll fähig (IRC, Jabber)
-* Multi-Server Verbindungen (mittels SSL, IPv6, proxy)
+* mehrere Protokolle werden unterstützt (IRC, Jabber)
+* mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
 * IRC RFCs konform http://www.ietf.org/rfc/rfc1459.txt[1459],
@@ -45,7 +45,7 @@ Um WeeChat zu installieren wird folgendes benötigt:
 * ein laufendes GNU/Linux System (mit Kompilierungswerkzeugen für Quellpakete),
   oder ein kompatibles OS
 * 'root' Privilegien (um WeeChat im Systemverzeichnis zu installieren)
-* ncurses library
+* ncurses Bibliothek
 
 
 [[install]]
@@ -70,7 +70,7 @@ Binärpakete sind für folgende Distributionen erhältlich:
 zusätzliche Pakete können/sollten installiert werden. Zum Beispiel: weechat-plugins.
 
 Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung,
-wie Pakete zu installieren sind.
+wie Pakete installiert werden können.
 
 [[source_package]]
 Quellpakete
@@ -103,7 +103,7 @@ welche Pakete optional genutzt werden können.
 | tcl-dev                | ≥ 8.5       |          | tcl Erweiterung
 | guile-1.8-dev          |             |          | guile (scheme) Erweiterung
 | asciidoc               | ≥ 8.5.0     |          | erstellt Dokumentation (HTML Dateien)
-| source-highlight       |             |          | Syntax highlight für Quelltext in HTML Dokumentation
+| source-highlight       |             |          | Syntax Highlight für Quelltext in HTML Dokumentation
 |========================================
 
 [NOTE]
@@ -112,7 +112,7 @@ können für andere Distributionen abweichend sein. +
 ^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
 treten dabei Darstellungsfehler mit breiten Zeichen auf). +
 ^(3)^ WeeChat kann mit Python 3.x kompiliert werden. Es wird aber empfohlen die Python Version
-2.7 zu nutzen (alle Skripten sind funktionstüchtig unter Version 2.x, aber nicht unter Version 3.x).
+2.7 zu nutzen (alle Skripten sind unter Version 2.x lauffähig, aber nicht unter Version 3.x).
 
 [[compile_with_cmake]]
 Kompilieren mit cmake
@@ -183,7 +183,7 @@ Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_p
 Abstürze melden
 ~~~~~~~~~~~~~~~
 
-Falls es zu einem Absturz von WeeChat gekommen ist und Sie diesen Fehler melden wollen:
+Falls es zu einem Absturz von WeeChat gekommen ist und Sie diesen Fehler melden möchten:
 
 * kompilieren Sie WeeChat mit Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
 * aktivieren Sie 'core' Dateien auf Ihrem System
@@ -1385,20 +1385,19 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 SASL Authentifizierung
 ^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-WeeChat supports SASL authentication, using three mechanisms: "plain" (plain
-text password), "dh-blowfish" (crypted password) or "external" (client side SSL
-cert).
+WeeChat unterstützt drei mögliche Verfahren bei einer SASL Authentifikation:
+"plain" (Passwort liegt in Klarschrift vor), "dh-blowfish" (Passwort wird verschlüsselt)
+oder "external" (SSL Zertifikat welches auf Client Seite vorliegt)
 
 Optionen für Server sind:
 
 * 'sasl_mechanism': Mechanismus welcher genutzt werden soll ("plain",
   "dh-blowfish" oder "external")
-* 'sasl_timeout': Zeitüberschreitung (in Sekunden) für Authentifizierung
+* 'sasl_timeout': Zeitüberschreitung für Authentifizierung (in Sekunden)
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
 
-Soll "dh-blowfish" standardmäßig auf allen Servern genutzt werden:
+Soll "dh-blowfish" standardmäßig auf allen Servern angewandt werden:
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish

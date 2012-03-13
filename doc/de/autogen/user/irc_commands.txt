@@ -315,18 +315,18 @@ Message: zu sendende Nachricht
 
 Channel-Modi:
   channel: zu ändernder Channel (standardmäßig der erste Channel)
-  o: vergebe/nehme Operator Privilegien
+  o: vergebt oder entzieht Operator Privilegien
   p: privater Channel
   s: geheimer Channel
   i: geschlossener Channel (Zutritt nur mit Einladung)
   t: nur Operatoren dürfen das Thema setzen
-  n: keine Channeln-Nachrichten von außerhalb des Channels
+  n: keine Nachrichten von außerhalb des Channels zulassen
   m: moderierter Channel (schreiben nur mit Voice)
   l: maximale Anzahl an Usern im Channel festlegen
   b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
-  e: lege Ausnahmemaske fest
-  v: vergebe/nehme Voice (d.h. schreibrechte bei moderierten Channels)
-  k: lege ein Passwort für den Channel fest
+  e: legt Ausnahmemaske fest
+  v: vergibt oder entzieht Voice (d.h. Schreibrechte bei moderierten Channels)
+  k: legt ein Passwort für den Channel fest
 User-Modi:
   nick: zu ändernder Nickname
   i: User als unsichtbar kennzeichnen
@@ -337,9 +337,9 @@ User-Modi:
 Die Liste der hier dargestellten Modi ist nicht vollständig. Es sollte die Dokumentation des jeweiligen Servers zu Rate gezogen werden um alle verfügbaren Modi zu erfahren.
 
 Beispiele:
-  Schützt das Thema des Channels #weechat:
+  schützt das Thema des Channels #weechat:
     /mode #weechat +t
-  sich auf dem Server unsichtbar machen:
+  um sich auf dem Server unsichtbar machen:
     /mode nick +i
 ........................................
 
@@ -529,7 +529,7 @@ new_nick: neuer Nickname
 ........................................
 
 [[command_irc_sapart]]
-[command]*`sapart`* Zwingt einen User den/die Channel(s) zu verlassen::
+[command]*`sapart`* Zwingt einen User den oder die Channel(s) zu verlassen::
 ........................................
 /sapart  <nick> <channel>[,<channel>...]
 
@@ -538,7 +538,7 @@ channel: Name des Channels
 ........................................
 
 [[command_irc_saquit]]
-[command]*`saquit`* Zwingt einen User den Server zu verlassen, mit Begründung::
+[command]*`saquit`* Zwingt einen User den Server mit Begründung zu verlassen::
 ........................................
 /saquit  <nick> <reason>
 
@@ -555,7 +555,7 @@ reason: Grund der Abmeldung
          del|keep <server>
          deloutq|jump|raw
 
-    list: listet Server auf (Standardaufruf)
+    list: listet Server auf (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
 listfull: listet Server mit detaillierten Informationen über jeden einzelnen Server auf
      add: erstellt einen neuen Server
   server: Servername, dient der internen Nutzung und zur Darstellung

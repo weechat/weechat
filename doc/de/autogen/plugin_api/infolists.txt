@@ -16,7 +16,7 @@
 
 | irc | irc_server | Liste der IRC-Server | Server Pointer (optional) | Servername (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| logger | logger_buffer | Liste der protokollierten Buffer | Logger Pointer (optional) | -
+| logger | logger_buffer | Auflistung der protokollierten Buffer | Logger Pointer (optional) | -
 
 | lua | lua_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
@@ -34,15 +34,15 @@
 
 | weechat | bar | Auflistung der Bars | Bar Pointer (optional) | Bar Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| weechat | bar_item | Liste der Bar-Items | Bar Item Pointer (optional) | Bar-Item Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| weechat | bar_item | Auflistung der Bar-Items | Bar Item Pointer (optional) | Bar-Item Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| weechat | bar_window | Liste der Bar-Fenster | Bar-Fenster Pointer (optional) | -
+| weechat | bar_window | Auflistung der Bar-Fenster | Bar-Fenster Pointer (optional) | -
 
-| weechat | buffer | Liste der Buffer | Buffer Pointer (optional) | Name des Buffers (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| weechat | buffer | Auflistung der Buffer | Buffer Pointer (optional) | Name des Buffers (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | buffer_lines | Zeilen des Buffers | Buffer Pointer | -
 
-| weechat | filter | Liste der Filter | - | Name des Filters (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| weechat | filter | Auflistung der Filter | - | Name des Filters (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | history | Verlaufspeicher der Befehle | Buffer Pointer (falls nicht gesetzt, wird der globale Verlauf zurückgegeben) (optional) | -
 
@@ -54,13 +54,13 @@
 
 | weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 
-| weechat | option | Liste der Optionen | - | Name einer Option (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| weechat | option | Auflistung der Optionen | - | Name einer Option (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | url_options | Optionen für URL | - | -
 
-| weechat | window | Auflistung der Windows | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
+| weechat | window | Auflistung der Fenster | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
 
 | xfer | xfer | Transfer-Liste | Transfer-Pointer (optional) | -
 

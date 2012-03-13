@@ -1,5 +1,5 @@
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
-** Beschreibung: `Speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)`
+** Beschreibung: `speichert automatisch den Inhalt eines Buffers in eine Datei (sofern das Protokollieren für den Buffer nicht deaktiviert sein sollte)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -9,17 +9,17 @@
 ** Werte: 0 .. 3600 (Standardwert: `120`)
 
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
-** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, falls die Protokollierung gestartet oder beendet wird`
+** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zu/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
+** Beschreibung: `Standardmaske für Protokolldateien (Format: "Verzeichnis/zur/Datei" oder "Datei", ohne ein führendes "/", da die "Verzeichnis" Option genutzt wird um vollständige Verzeichnisstrukturen zu erstellen); lokale Buffer Variablen und Datumsspezifikationen (siehe: man strftime) sind zulässig`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$plugin.$name.weechatlog"`)
 
 * [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
-** Beschreibung: `Benutze ausschließlich Kleinschreibung für Protokoll-Dateien`
+** Beschreibung: `Protokolldateien werden ausschließlich in Kleinschreibung erstellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -39,7 +39,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%Y-%m-%d %H:%M:%S"`)
 
 * [[option_logger.look.backlog]] *logger.look.backlog*
-** Beschreibung: `maximale Anzahl der Zeilen die aus der Protokoll-Datei dargestellt werden sollen, wenn ein Buffer geöffnet wird (0 = kein Darstellung)`
+** Beschreibung: `maximale Anzahl der letzten Zeilen die aus der Protokolldatei dargestellt werden sollen, sobald ein Buffer geöffnet wird (0 = kein Darstellung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `20`)
 

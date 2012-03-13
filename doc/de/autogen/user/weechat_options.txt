@@ -194,22 +194,22 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `blue`)
 
 * [[option_weechat.color.status_count_highlight]] *weechat.color.status_count_highlight*
-** Beschreibung: `Farbe für die Anzahl der Highlight-Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
+** Beschreibung: `Farbe für die Anzahl der Highlight-Nachrichten die in der Hotlist (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `magenta`)
 
 * [[option_weechat.color.status_count_msg]] *weechat.color.status_count_msg*
-** Beschreibung: `Farbe für die Anzahl der Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
+** Beschreibung: `Farbe für die Anzahl der Nachrichten die in der Hotlist (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * [[option_weechat.color.status_count_other]] *weechat.color.status_count_other*
-** Beschreibung: `Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
+** Beschreibung: `Farbe für die Anzahl aller anderen Nachrichten die in der Hotlist (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.status_count_private]] *weechat.color.status_count_private*
-** Beschreibung: `Farbe für die Anzahl der privaten Nachrichten die in der Hotlist  (Statusbar) dargestellt werden.`
+** Beschreibung: `Farbe für die Anzahl der privaten Nachrichten die in der Hotlist (Statusbar) dargestellt werden.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
@@ -264,7 +264,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.completion.base_word_until_cursor]] *weechat.completion.base_word_until_cursor*
-** Beschreibung: `Ist diese Option aktiviert beginnt eine Vervollständigung an der aktuellen Position des Cursors; andernfalls beginnt eine Vervollständigung erst wenn ein Leerzeichen als Trennung zum nächsten Wort vorhanden ist`
+** Beschreibung: `Ist diese Option aktiviert beginnt eine Vervollständigung an der aktuellen Position des Cursors; andernfalls beginnt eine Vervollständigung erst sobald ein Leerzeichen als Trennung zum nächsten Wort vorhanden ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -324,7 +324,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** Beschreibung: `maximale Anzahl in Minuten wie Lange die Zeilen m Verlaufspeicher pro Buffer gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)`
+** Beschreibung: `maximale Anzahl, in Minuten, wie Lange die Zeilen im Verlaufspeicher, pro Buffer, gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
@@ -339,7 +339,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `100`)
 
 * [[option_weechat.history.max_visited_buffers]] *weechat.history.max_visited_buffers*
-** Beschreibung: `maximale Anzahl an besuchten Buffern welche im Speicher gehalten werden sollen`
+** Beschreibung: `maximale Anzahl an besuchten Buffern, welche im Speicher gehalten werden sollen`
 ** Typ: integer
 ** Werte: 0 .. 1000 (Standardwert: `50`)
 
@@ -429,7 +429,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.confirm_quit]] *weechat.look.confirm_quit*
-** Beschreibung: `ist diese Option aktiviert,  muss der "/quit" Befehl mit der Option "-yes" ausgeführt werden (siehe /help quit)`
+** Beschreibung: `ist diese Option aktiviert, muss der "/quit" Befehl mit der Option "-yes" ausgeführt werden (siehe /help quit)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -454,7 +454,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** Beschreibung: `Suchmuster (regulärer Ausdrück) welches genutzt werden soll um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"), das Suchmuster unterscheidet dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Beispiele:  "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** Beschreibung: `Suchmuster (regulärer Ausdrück) welches genutzt werden soll um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"), das Suchmuster unterscheidet dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Beispiele: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -579,17 +579,17 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** Beschreibung: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
+** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind.WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
-** Beschreibung: `force end of bracketed paste after this delay (in seconds) if the control sequence for end of bracketed paste ("ESC[201~") was not received in time`
+** Beschreibung: `erzwingt beim Einfügen von Steuersequenzen, nach einer vorgegeben Zeit (in Sekunden), dessen Ende sofern die Steuersequenz zum Beenden ("ESC[201~") nicht innerhalb dieser Zeitvorgabe empfangen wurde`
 ** Typ: integer
 ** Werte: 1 .. 60 (Standardwert: `10`)
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** Beschreibung: `max number of lines for paste without asking user (-1 = disable this feature)`
+** Beschreibung: `maximale Anzahl an Zeilen die eingefügt werden dürfen, ohne dass der Anwender gefragt wird (-1 = schaltet diese Funktion ab)`
 ** Typ: integer
 ** Werte: -1 .. 2147483647 (Standardwert: `1`)
 
@@ -729,12 +729,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"/etc/ssl/certs/ca-certificates.crt"`)
 
 * [[option_weechat.network.gnutls_handshake_timeout]] *weechat.network.gnutls_handshake_timeout*
-** Beschreibung: `Zeitüberschreitung (in Sekunden) für gnutls handshake`
+** Beschreibung: `Zeitüberschreitung für gnutls handshake (in Sekunden)`
 ** Typ: integer
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** Beschreibung: `Eine durch Kommata getrennte Liste der Erweiterungen die beim Programmstart automatisch geladen werden sollen, "*" lädt alle gefundenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
+** Beschreibung: `Eine durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden, um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 
@@ -744,7 +744,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.plugin.extension]] *weechat.plugin.extension*
-** Beschreibung: `Durch Kommata getrennte Liste von Dateinamenerweiterungen welche für die Erweiterungen genutzt werden sollen`
+** Beschreibung: `Durch Kommata getrennte Liste von Dateinamenserweiterungen, welche für die Erweiterungen genutzt werden sollen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `".so,.dll"`)
 
@@ -754,7 +754,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/plugins"`)
 
 * [[option_weechat.plugin.save_config_on_unload]] *weechat.plugin.save_config_on_unload*
-** Beschreibung: `Speichere Konfiguration falls Erweiterungen deinstalliert werden`
+** Beschreibung: `speichert Konfigurationen, falls Erweiterungen deinstalliert werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
