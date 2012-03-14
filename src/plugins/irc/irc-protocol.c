@@ -1450,9 +1450,9 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *pos_args;
+    char *pos_args, *pos_target;
     const char *remote_nick;
-    int nick_is_me;
+    int msg_op, msg_voice, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -1475,10 +1475,33 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 
     pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
 
-    /* receiver is a channel ? */
-    if (irc_channel_is_channel (server, argv[2]))
+    msg_op = 0;
+    msg_voice = 0;
+    pos_target = argv[2];
+    is_channel = irc_channel_is_channel (server, pos_target);
+    if (!is_channel)
     {
-        ptr_channel = irc_channel_search (server, argv[2]);
+        if (irc_channel_is_channel (server, pos_target + 1))
+        {
+            if (pos_target[0] == '@')
+            {
+                is_channel = 1;
+                pos_target++;
+                msg_op = 1;
+            }
+            else if (pos_target[0] == '+')
+            {
+                is_channel = 1;
+                pos_target++;
+                msg_voice = 1;
+            }
+        }
+    }
+
+    /* receiver is a channel ? */
+    if (is_channel)
+    {
+        ptr_channel = irc_channel_search (server, pos_target);
         if (ptr_channel)
         {
             /* CTCP to channel */
@@ -1497,15 +1520,37 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             if (ptr_nick && !ptr_nick->host)
                 ptr_nick->host = strdup (address);
 
-            weechat_printf_tags (ptr_channel->buffer,
-                                 irc_protocol_tags (command,
-                                                    "notify_message",
-                                                    nick),
-                                 "%s%s",
-                                 irc_nick_as_prefix (server, ptr_nick,
-                                                     (ptr_nick) ? NULL : nick,
-                                                     NULL),
-                                 pos_args);
+            if (msg_op || msg_voice)
+            {
+                /* message to channel ops/voiced (to "@#channel" or "+#channel") */
+                weechat_printf_tags (ptr_channel->buffer,
+                                     irc_protocol_tags (command,
+                                                        "notify_message",
+                                                        nick),
+                                     "%s%s%s%s(%s%s%s)%s: %s",
+                                     weechat_prefix ("network"),
+                                     _("Msg"),
+                                     (msg_op) ? "Op" : ((msg_voice) ? "Voice" : ""),
+                                     IRC_COLOR_CHAT_DELIMITERS,
+                                     irc_nick_color_for_message (server, ptr_nick, nick),
+                                     (nick && nick[0]) ? nick : "?",
+                                     IRC_COLOR_CHAT_DELIMITERS,
+                                     IRC_COLOR_RESET,
+                                     pos_args);
+            }
+            else
+            {
+                /* standard message (to "#channel") */
+                weechat_printf_tags (ptr_channel->buffer,
+                                     irc_protocol_tags (command,
+                                                        "notify_message",
+                                                        nick),
+                                     "%s%s",
+                                     irc_nick_as_prefix (server, ptr_nick,
+                                                         (ptr_nick) ? NULL : nick,
+                                                         NULL),
+                                     pos_args);
+            }
 
             irc_channel_nick_speaking_add (ptr_channel,
                                            nick,
@@ -1520,7 +1565,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     {
         nick_is_me = (irc_server_strcasecmp (server, server->nick, nick) == 0);
 
-        remote_nick = (nick_is_me) ? argv[2] : nick;
+        remote_nick = (nick_is_me) ? pos_target : nick;
 
         /* CTCP to user */
         if ((pos_args[0] == '\01')

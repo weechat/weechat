@@ -2499,7 +2499,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
     char **targets;
-    int num_targets, i, arg_target, arg_text;
+    int num_targets, i, arg_target, arg_text, is_channel, msg_op_voice;
     char *msg_pwd_hidden;
     char *string;
 
@@ -2561,16 +2561,51 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
             }
             else
             {
-                if (irc_channel_is_channel (ptr_server, targets[i]))
+                is_channel = 0;
+                ptr_channel = NULL;
+                msg_op_voice = 0;
+                if (((targets[i][0] == '@') || (targets[i][0] == '+'))
+                    && irc_channel_is_channel (ptr_server, targets[i] + 1))
                 {
-                    ptr_channel = irc_channel_search (ptr_server,
-                                                      targets[i]);
+                    ptr_channel = irc_channel_search (ptr_server, targets[i] + 1);
+                    is_channel = 1;
+                    msg_op_voice = 1;
+                }
+                else
+                {
+                    ptr_channel = irc_channel_search (ptr_server, targets[i]);
+                    if (ptr_channel)
+                        is_channel = 1;
+                }
+                if (is_channel)
+                {
                     if (ptr_channel)
                     {
                         string = irc_color_decode (argv_eol[arg_text],
                                                    weechat_config_boolean (irc_config_network_colors_receive));
-                        irc_input_user_message_display (ptr_channel->buffer,
-                                                        (string) ? string : argv_eol[arg_text]);
+                        if (msg_op_voice)
+                        {
+                            /*
+                             * message to channel ops/voiced
+                             * (to "@#channel" or "+#channel")
+                             */
+                            weechat_printf_tags (ptr_channel->buffer,
+                                                 "notify_none,no_highlight",
+                                                 "%s%s%s -> %s%s%s: %s",
+                                                 weechat_prefix ("network"),
+                                                 _("Msg"),
+                                                 IRC_COLOR_RESET,
+                                                 IRC_COLOR_CHAT_CHANNEL,
+                                                 targets[i],
+                                                 IRC_COLOR_RESET,
+                                                 (string) ? string : argv_eol[arg_text]);
+                        }
+                        else
+                        {
+                            /* standard message (to "#channel") */
+                            irc_input_user_message_display (ptr_channel->buffer,
+                                                            (string) ? string : argv_eol[arg_text]);
+                        }
                         if (string)
                             free (string);
                     }
