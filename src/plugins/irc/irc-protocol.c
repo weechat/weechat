@@ -3639,18 +3639,16 @@ IRC_PROTOCOL_CALLBACK(352)
             snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
     }
 
-    if (ptr_channel && (ptr_channel->checking_away > 0))
+    /* update away flag for nick */
+    if (ptr_channel && ptr_nick && pos_attr)
     {
-        if (ptr_nick && pos_attr)
-        {
-            /* (re)set away flag */
-            irc_nick_set_away (server, ptr_channel, ptr_nick,
-                               (pos_attr[0] == 'G') ? 1 : 0);
-        }
+        irc_nick_set_away (server, ptr_channel, ptr_nick,
+                           (pos_attr[0] == 'G') ? 1 : 0);
     }
-    else
+
+    /* display output of who (manual who from user) */
+    if (!ptr_channel || (ptr_channel->checking_away <= 0))
     {
-        /* display output of who (manual who from user) */
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
                                                               command, "who",
                                                               NULL),
