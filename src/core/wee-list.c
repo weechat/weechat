@@ -209,7 +209,7 @@ weelist_search_pos (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * weelist_casesearch: search data in a list (case unsensitive)
+ * weelist_casesearch: search data in a list (case insensitive)
  */
 
 struct t_weelist_item *
@@ -231,7 +231,7 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * weelist_casesearch_pos: search data in a list (case unsensitive), return
+ * weelist_casesearch_pos: search data in a list (case insensitive), return
  *                         position of item found, -1 if not found
  */
 
