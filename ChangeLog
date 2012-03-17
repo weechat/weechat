@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-dev, 2012-03-15
+v0.3.8-dev, 2012-03-17
 
 
 Version 0.3.8 (under dev!)
@@ -15,6 +15,8 @@ Version 0.3.8 (under dev!)
   (task #11316)
 * core: fix display of wide chars on last column of chat area (patch #7733)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"
+* irc: do not allow the creation of two servers with same name but different
+  case (fix error when writing file irc.conf) (bug #35840)
 * irc: update away flag for nicks on manual /who
 * irc: display privmsg messages to "@#channel" and "+#channel" in channel buffer
   (bug #35331)

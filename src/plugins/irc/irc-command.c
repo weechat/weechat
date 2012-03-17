@@ -3809,13 +3809,14 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server add");
         }
-        if (irc_server_search (argv[2]))
+        ptr_server2 = irc_server_casesearch (argv[2]);
+        if (ptr_server2)
         {
             weechat_printf (NULL,
                             _("%s%s: server \"%s\" already exists, "
                               "can't create it!"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            argv[2]);
+                            ptr_server2->name);
             return WEECHAT_RC_OK;
         }
         if (argv[2][0] == '#')
@@ -3875,13 +3876,14 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         }
 
         /* check if target name already exists */
-        if (irc_server_search (argv[3]))
+        ptr_server2 = irc_server_casesearch (argv[3]);
+        if (ptr_server2)
         {
             weechat_printf (NULL,
                             _("%s%s: server \"%s\" already exists for "
                               "\"%s\" command"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            argv[3], "server copy");
+                            ptr_server2->name, "server copy");
             return WEECHAT_RC_OK;
         }
 
@@ -3925,13 +3927,14 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         }
 
         /* check if target name already exists */
-        if (irc_server_search (argv[3]))
+        ptr_server2 = irc_server_casesearch (argv[3]);
+        if (ptr_server2)
         {
             weechat_printf (NULL,
                             _("%s%s: server \"%s\" already exists for "
                               "\"%s\" command"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            argv[3], "server rename");
+                            ptr_server2->name, "server rename");
             return WEECHAT_RC_OK;
         }
 

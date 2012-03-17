@@ -220,6 +220,8 @@ extern char *irc_server_option_string[];
 extern char *irc_server_option_default[];
 
 extern int irc_server_valid (struct t_irc_server *server);
+extern struct t_irc_server *irc_server_search (const char *server_name);
+extern struct t_irc_server *irc_server_casesearch (const char *server_name);
 extern int irc_server_search_option (const char *option_name);
 extern int irc_server_search_casemapping (const char *casemapping);
 extern int irc_server_strcasecmp (struct t_irc_server *server,
@@ -265,7 +267,6 @@ extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
                                              const char *tags,
                                              const char *format, ...);
-extern struct t_irc_server *irc_server_search (const char *server_name);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
 extern int irc_server_connect (struct t_irc_server *server);
