@@ -37,6 +37,7 @@ struct t_relay_irc_data
     struct t_hook *hook_signal_irc_in2;     /* signal "irc_in2"             */
     struct t_hook *hook_signal_irc_outtags; /* signal "irc_outtags"         */
     struct t_hook *hook_signal_irc_disc;    /* signal "irc_disconnected"    */
+    struct t_hook *hook_hsignal_irc_redir;  /* hsignal "irc_redirection_..."*/
 };
 
 extern void relay_irc_recv (struct t_relay_client *client,

@@ -100,6 +100,26 @@ relay_client_search_by_number (int number)
 }
 
 /*
+ * relay_client_search_by_id: search a client by id
+ */
+
+struct t_relay_client *
+relay_client_search_by_id (int id)
+{
+    struct t_relay_client *ptr_client;
+
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
+    {
+        if (ptr_client->id == id)
+            return ptr_client;
+    }
+
+    /* client not found */
+    return NULL;
+}
+
+/*
  * relay_client_recv_cb: read data from a client
  */
 

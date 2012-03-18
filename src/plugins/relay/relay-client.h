@@ -71,6 +71,7 @@ extern int relay_client_count;
 
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
+extern struct t_relay_client *relay_client_search_by_id (int id);
 extern int relay_client_recv_cb (void *arg_client, int fd);
 extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);
