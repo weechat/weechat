@@ -557,9 +557,19 @@ IRC_PROTOCOL_CALLBACK(join)
         }
     }
 
-    /* remove topic if joining new channel */
+    /* reset some variables if joining new channel */
     if (!ptr_channel->nicks)
+    {
         irc_channel_set_topic (ptr_channel, NULL);
+        if (ptr_channel->modes)
+        {
+            free (ptr_channel->modes);
+            ptr_channel->modes = NULL;
+        }
+        ptr_channel->limit = 0;
+        ptr_channel->names_received = 0;
+        ptr_channel->checking_away = 0;
+    }
 
     /* add nick in channel */
     ptr_nick = irc_nick_new (server, ptr_channel, nick, NULL, 0);
@@ -3929,9 +3939,12 @@ IRC_PROTOCOL_CALLBACK(366)
                              NG_("normal", "normals", num_normal),
                              IRC_COLOR_CHAT_DELIMITERS);
 
-        irc_command_mode_server (server, ptr_channel, NULL,
-                                 IRC_SERVER_SEND_OUTQ_PRIO_LOW);
-        irc_channel_check_away (server, ptr_channel);
+        if (!ptr_channel->names_received)
+        {
+            irc_command_mode_server (server, ptr_channel, NULL,
+                                     IRC_SERVER_SEND_OUTQ_PRIO_LOW);
+            irc_channel_check_away (server, ptr_channel);
+        }
     }
     else
     {
@@ -3946,6 +3959,9 @@ IRC_PROTOCOL_CALLBACK(366)
                              IRC_COLOR_RESET,
                              (argv[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
     }
+
+    if (ptr_channel)
+        ptr_channel->names_received = 1;
 
     return WEECHAT_RC_OK;
 }

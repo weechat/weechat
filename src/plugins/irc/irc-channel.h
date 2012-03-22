@@ -47,6 +47,7 @@ struct t_irc_channel
     char *modes;                       /* channel modes                     */
     int limit;                         /* user limit (0 is limit not set)   */
     char *key;                         /* channel key (NULL if no key set)  */
+    int names_received;                /* names received (message 366)      */
     int checking_away;                 /* = 1 if checking away with WHO cmd */
     char *away_message;                /* to display away only once in pv   */
     int has_quit_server;               /* =1 if nick has quit (pv only), to */

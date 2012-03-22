@@ -416,6 +416,7 @@ irc_upgrade_read_cb (void *data,
                         str = weechat_infolist_string (infolist, "key");
                         if (str)
                             irc_upgrade_current_channel->key = strdup (str);
+                        irc_upgrade_current_channel->names_received = weechat_infolist_integer (infolist, "names_received");
                         irc_upgrade_current_channel->checking_away = weechat_infolist_integer (infolist, "checking_away");
                         str = weechat_infolist_string (infolist, "away_message");
                         if (str)
