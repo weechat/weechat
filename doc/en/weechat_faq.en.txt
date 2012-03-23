@@ -265,6 +265,7 @@ remove alignment on nick:
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines time
 ----------------------------------------
 
 With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that

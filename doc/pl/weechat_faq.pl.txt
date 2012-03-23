@@ -267,6 +267,7 @@ na górę oraz usunąć wyrównanie nicków:
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines time
 ----------------------------------------
 
 W WeeChat ≥ 0.3.6 można włączyć opcję "eat_newline_glitch", dzięki której znaki

@@ -274,6 +274,7 @@ supprimer l'alignement sur les pseudos :
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines time
 ----------------------------------------
 
 Avec WeeChat ≥ 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour

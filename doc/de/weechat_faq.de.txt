@@ -277,6 +277,7 @@ die Ausrichtung der Nicknamen entfernen:
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines time
 ----------------------------------------
 
 Ab der WeeChat Version ≥ 0.3.6, kann die Option "eat_newline_glitch" aktiviert

@@ -273,6 +273,7 @@ l'allineamento sul nick:
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines time
 ----------------------------------------
 
 Con WeeChat ≥ 0.3.6, si può abilitare l'opzione "eat_newline_glitch", in
