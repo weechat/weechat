@@ -5446,6 +5446,7 @@ weechat_guile_api_module_init (void *data)
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
+    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_TIMEOUT", scm_from_int (WEECHAT_HOOK_CONNECT_TIMEOUT));
 
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_STRING", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_STRING));
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_INT", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_INT));
@@ -5486,6 +5487,7 @@ weechat_guile_api_module_init (void *data)
                   "weechat:WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR",
                   "weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR",
                   "weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR",
+                  "weechat:WEECHAT_HOOK_CONNECT_TIMEOUT",
                   "weechat:WEECHAT_HOOK_SIGNAL_STRING",
                   "weechat:WEECHAT_HOOK_SIGNAL_INT",
                   "weechat:WEECHAT_HOOK_SIGNAL_POINTER",

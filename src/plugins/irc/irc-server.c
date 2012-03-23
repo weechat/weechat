@@ -3022,6 +3022,20 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
             irc_server_close_connection (server);
             irc_server_reconnect_schedule (server);
             break;
+        case WEECHAT_HOOK_CONNECT_TIMEOUT:
+            weechat_printf (server->buffer,
+                            _("%s%s: timeout"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                error);
+            }
+            irc_server_close_connection (server);
+            irc_server_reconnect_schedule (server);
+            break;
     }
 
     return WEECHAT_RC_OK;

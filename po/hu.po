@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-12 10:27+0100\n"
+"POT-Creation-Date: 2012-03-23 18:09+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2571,6 +2571,12 @@ msgid ""
 msgstr ""
 "megjeleníthető parancsok maximális száma előzmények listázásakor ( 0 = "
 "korlátlan)"
+
+#, fuzzy
+msgid ""
+"timeout (in seconds) for connection to a remote host (made in a child "
+"process)"
+msgstr "SSL használata a a kapcsolathoz"
 
 #, fuzzy
 msgid ""
@@ -6169,6 +6175,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: not enough memory"
 msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"

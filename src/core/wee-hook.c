@@ -1763,6 +1763,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->child_read = -1;
     new_hook_connect->child_write = -1;
     new_hook_connect->child_pid = 0;
+    new_hook_connect->hook_child_timer = NULL;
     new_hook_connect->hook_fd = NULL;
     new_hook_connect->handshake_hook_fd = NULL;
     new_hook_connect->handshake_hook_timer = NULL;
@@ -3128,6 +3129,8 @@ unhook (struct t_hook *hook)
 #endif
                 if (HOOK_CONNECT(hook, local_hostname))
                     free (HOOK_CONNECT(hook, local_hostname));
+                if (HOOK_CONNECT(hook, hook_child_timer))
+                    unhook (HOOK_CONNECT(hook, hook_child_timer));
                 if (HOOK_CONNECT(hook, hook_fd))
                     unhook (HOOK_CONNECT(hook, hook_fd));
                 if (HOOK_CONNECT(hook, handshake_hook_fd))
@@ -3470,6 +3473,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                     if (!infolist_new_var_integer (ptr_item, "child_write", HOOK_CONNECT(ptr_hook, child_write)))
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "child_pid", HOOK_CONNECT(ptr_hook, child_pid)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "hook_child_timer", HOOK_CONNECT(ptr_hook, hook_child_timer)))
                         return 0;
                     if (!infolist_new_var_pointer (ptr_item, "hook_fd", HOOK_CONNECT(ptr_hook, hook_fd)))
                         return 0;
@@ -3870,6 +3875,7 @@ hook_print_log ()
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));
                         log_printf ("    child_write . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
                         log_printf ("    child_pid . . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_pid));
+                        log_printf ("    hook_child_timer. . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_child_timer));
                         log_printf ("    hook_fd . . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_fd));
                         log_printf ("    handshake_hook_fd . . : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_fd));
                         log_printf ("    handshake_hook_timer. : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_timer));

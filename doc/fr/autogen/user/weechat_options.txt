@@ -723,6 +723,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
+** description: `délai d'attente maximum (en secondes) pour la connexion à une machine distante (effectuée dans un processus fils)`
+** type: entier
+** valeurs: 1 .. 2147483647 (valeur par défaut: `60`)
+
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
 ** description: `fichier contenant les autorités de certification ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")`
 ** type: chaîne

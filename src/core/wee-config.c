@@ -227,6 +227,7 @@ struct t_config_option *config_history_display_default;
 
 /* config, network section */
 
+struct t_config_option *config_network_connection_timeout;
 struct t_config_option *config_network_gnutls_ca_file;
 struct t_config_option *config_network_gnutls_handshake_timeout;
 
@@ -2645,6 +2646,12 @@ config_weechat_init_options ()
         return 0;
     }
 
+    config_network_connection_timeout = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "connection_timeout", "integer",
+        N_("timeout (in seconds) for connection to a remote host (made in a "
+           "child process)"),
+        NULL, 1, INT_MAX, "60", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_network_gnutls_ca_file = config_file_new_option (
         weechat_config_file, ptr_section,
         "gnutls_ca_file", "string",

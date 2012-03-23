@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20120122-01"
+#define WEECHAT_PLUGIN_API_VERSION "20120323-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -137,6 +137,7 @@ struct timeval;
 #define WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR      6
 #define WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR 7
 #define WEECHAT_HOOK_CONNECT_MEMORY_ERROR           8
+#define WEECHAT_HOOK_CONNECT_TIMEOUT                9
 
 /* action for gnutls callback: verify or set certificate */
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT  0

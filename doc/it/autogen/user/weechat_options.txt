@@ -723,6 +723,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
+** descrizione: `timeout (in seconds) for connection to a remote host (made in a child process)`
+** tipo: intero
+** valori: 1 .. 2147483647 (valore predefinito: `60`)
+
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
 ** descrizione: `file contenente le autorità certificative ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
 ** tipo: stringa

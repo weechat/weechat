@@ -6331,6 +6331,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
     Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_TIMEOUT);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", Tcl_GetStringFromObj (objp, &i), 0);
 
     Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_STRING, -1);
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetStringFromObj (objp, &i), 0);

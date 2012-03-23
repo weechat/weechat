@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-12 10:27+0100\n"
-"PO-Revision-Date: 2012-03-12 10:28+0100\n"
+"POT-Creation-Date: 2012-03-23 18:09+0100\n"
+"PO-Revision-Date: 2012-03-23 13:29+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3104,6 +3104,13 @@ msgid ""
 msgstr ""
 "nombre maximum de commandes à afficher par défaut dans le listing "
 "d'historique (0 = sans limite)"
+
+msgid ""
+"timeout (in seconds) for connection to a remote host (made in a child "
+"process)"
+msgstr ""
+"délai d'attente maximum (en secondes) pour la connexion à une machine "
+"distante (effectuée dans un processus fils)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
@@ -6909,6 +6916,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: pas assez de mémoire"
+
+#, c-format
+msgid "%s%s: timeout"
+msgstr "%s%s: délai d'attente dépassé"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"

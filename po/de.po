@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-13 16:35+0100\n"
+"POT-Creation-Date: 2012-03-23 18:09+0100\n"
 "PO-Revision-Date: 2012-03-13 16:36+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3199,6 +3199,12 @@ msgid ""
 msgstr ""
 "Wert für die maximale Anzahl der angezeigten Befehle im Verlaufsspeicher, "
 "die mittels /history angezeigt werden (0: unbegrenzt)"
+
+#, fuzzy
+msgid ""
+"timeout (in seconds) for connection to a remote host (made in a child "
+"process)"
+msgstr "Zeitüberschreitung für gnutls handshake (in Sekunden)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
@@ -7085,6 +7091,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: Nicht genügend Speicher"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout"
+msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"

@@ -546,6 +546,7 @@ void weechat_python_init_module_weechat ()
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", PyLong_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", PyLong_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", PyLong_FromLong((long) WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_TIMEOUT", PyLong_FromLong((long) WEECHAT_HOOK_CONNECT_TIMEOUT));
 
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_STRING", PyUnicode_FromString(WEECHAT_HOOK_SIGNAL_STRING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyUnicode_FromString(WEECHAT_HOOK_SIGNAL_INT));

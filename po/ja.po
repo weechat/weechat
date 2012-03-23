@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-12 10:27+0100\n"
+"POT-Creation-Date: 2012-03-23 18:09+0100\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
@@ -2984,6 +2984,12 @@ msgid ""
 "unlimited)"
 msgstr ""
 "履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)"
+
+#, fuzzy
+msgid ""
+"timeout (in seconds) for connection to a remote host (made in a child "
+"process)"
+msgstr "gnutls ハンドシェイクのタイムアウト (秒単位)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
@@ -6671,6 +6677,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: not enough memory"
 msgstr "%s%s: メモリが足りません"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout"
+msgstr "%s%s: \"%s\" のタイムアウト %s"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"

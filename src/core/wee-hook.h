@@ -243,6 +243,7 @@ struct t_hook_connect
     int child_read;                    /* to read data in pipe from child   */
     int child_write;                   /* to write data in pipe for child   */
     pid_t child_pid;                   /* pid of child process (connecting) */
+    struct t_hook *hook_child_timer;   /* timer for child process timeout   */
     struct t_hook *hook_fd;            /* pointer to fd hook                */
     struct t_hook *handshake_hook_fd;  /* fd hook for handshake             */
     struct t_hook *handshake_hook_timer; /* timer for handshake timeout     */

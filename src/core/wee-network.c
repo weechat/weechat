@@ -767,6 +767,31 @@ network_connect_child (struct t_hook *hook_connect)
 }
 
 /*
+ * network_connect_child_timer_cb: timer for timeout of child process
+ */
+
+int
+network_connect_child_timer_cb (void *arg_hook_connect, int remaining_calls)
+{
+    struct t_hook *hook_connect;
+
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    hook_connect = (struct t_hook *)arg_hook_connect;
+
+    HOOK_CONNECT(hook_connect, hook_child_timer) = NULL;
+
+    (void) (HOOK_CONNECT(hook_connect, callback))
+        (hook_connect->callback_data,
+         WEECHAT_HOOK_CONNECT_TIMEOUT,
+         0, NULL, NULL);
+    unhook (hook_connect);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * network_connect_gnutls_handshake_fd_cb: callback for gnutls handshake
  *                                         (used to not block WeeChat if
  *                                         handshake takes some time to finish)
@@ -1098,6 +1123,11 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_pid) = pid;
     close (HOOK_CONNECT(hook_connect, child_write));
     HOOK_CONNECT(hook_connect, child_write) = -1;
+    HOOK_CONNECT(hook_connect, hook_child_timer) = hook_timer (hook_connect->plugin,
+                                                               CONFIG_INTEGER(config_network_connection_timeout) * 1000,
+                                                               0, 1,
+                                                               &network_connect_child_timer_cb,
+                                                               hook_connect);
     HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (hook_connect->plugin,
                                                    HOOK_CONNECT(hook_connect, child_read),
                                                    1, 0, 0,

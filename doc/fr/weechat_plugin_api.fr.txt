@@ -7196,6 +7196,7 @@ Paramètres :
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR' : erreur avec la
     "poignée de main" GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR' : mémoire insuffisante
+*** 'WEECHAT_HOOK_CONNECT_TIMEOUT' : temps maximum dépassé
 ** 'gnutls_rc' : valeur retour de 'gnutls_handshake()'
 ** 'const char *error' : valeur retour de 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address' : adresse IP trouvée
@@ -7246,6 +7247,9 @@ my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             /* ... */
             break;
+        case WEECHAT_HOOK_CONNECT_TIMEOUT:
+            /* ... */
+            break;
     }
     return WEECHAT_RC_OK;
 }
@@ -7285,6 +7289,8 @@ def my_connect_cb(data, status, gnutls_rc, error, ip_address):
     elif status == WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
+        # ...
+    elif status == WEECHAT_HOOK_CONNECT_TIMEOUT:
         # ...
     return weechat.WEECHAT_RC_OK
 

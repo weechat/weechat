@@ -6131,6 +6131,16 @@ weechat_lua_api_constant_weechat_hook_connect_memory_error (lua_State *L)
 }
 
 static int
+weechat_lua_api_constant_weechat_hook_connect_timeout (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+
+    lua_pushnumber (lua_current_interpreter, WEECHAT_HOOK_CONNECT_TIMEOUT);
+    return 1;
+}
+
+static int
 weechat_lua_api_constant_weechat_hook_signal_string (lua_State *L)
 {
     /* make C compiler happy */
@@ -6389,6 +6399,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", &weechat_lua_api_constant_weechat_hook_connect_gnutls_init_error },
     { "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", &weechat_lua_api_constant_weechat_hook_connect_gnutls_handshake_error },
     { "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", &weechat_lua_api_constant_weechat_hook_connect_memory_error },
+    { "WEECHAT_HOOK_CONNECT_TIMEOUT", &weechat_lua_api_constant_weechat_hook_connect_timeout },
 
     { "WEECHAT_HOOK_SIGNAL_STRING", &weechat_lua_api_constant_weechat_hook_signal_string },
     { "WEECHAT_HOOK_SIGNAL_INT", &weechat_lua_api_constant_weechat_hook_signal_int },

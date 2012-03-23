@@ -723,6 +723,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
+** Beschreibung: `timeout (in seconds) for connection to a remote host (made in a child process)`
+** Typ: integer
+** Werte: 1 .. 2147483647 (Standardwert: `60`)
+
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
 ** Beschreibung: `Datei beinhaltet die digitalen Zertifikate ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
