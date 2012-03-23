@@ -1539,7 +1539,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                                         nick),
                                      "%s%s%s%s(%s%s%s)%s: %s",
                                      weechat_prefix ("network"),
-                                     _("Msg"),
+                                     "Msg",
                                      (msg_op) ? "Op" : ((msg_voice) ? "Voice" : ""),
                                      IRC_COLOR_CHAT_DELIMITERS,
                                      irc_nick_color_for_message (server, ptr_nick, nick),
