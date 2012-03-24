@@ -10323,9 +10323,6 @@ Argomenti:
 * 'parent_group': puntatore al genitore del gruppo, NULL se il gruppo non ha genitore
   (lista nick radice)
 * 'name': nome del gruppo
-* 'visible':
-** '1': gruppi e sottogruppi/nick sono visibili
-** '0': gruppi e sottogruppi/nick sono nascosti
 * 'color': nome per l'opzione colore:
 ** nome opzione per WeeChat, ad esempio 'weechat.color.nicklist_group'
 ** colore con sfondo opzionale, ad esempio 'yellow' o 'yellow,red'
@@ -10333,6 +10330,9 @@ Argomenti:
 *** 'bar_fg': colore di primo piando per la barra
 *** 'bar_delim': colore dei delimitatori per la barra
 *** 'bar_bg': colore di sfondo per la barra
+* 'visible':
+** '1': gruppi e sottogruppi/nick sono visibili
+** '0': gruppi e sottogruppi/nick sono nascosti
 
 [NOTE]
 Il nome del gruppo può iniziare con uno o più numeri, seguiti da una pipe, e

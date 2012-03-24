@@ -10430,9 +10430,6 @@ Paramètres :
 * 'parent_group' : pointeur vers le parent du groupe, NULL si le groupe n'a pas
   de parent (racine de la liste des pseudos)
 * 'name' : nom du groupe
-* 'visible' :
-** '1' : le groupe et ses sous-groupes/pseudos sont visibles
-** '0' : le groupe et ses sous-groupes/pseudos sont cachés
 * 'color' : nom de l'option contenant la couleur :
 ** une option WeeChat, par exemple 'weechat.color.nicklist_group'
 ** une couleur avec un fond optionnel, par exemple 'yellow' ou 'yellow,red'
@@ -10440,6 +10437,9 @@ Paramètres :
 *** 'bar_fg' : couleur de texte pour la barre
 *** 'bar_delim' : couleur des délimiteurs pour la barre
 *** 'bar_bg' : couleur de fond pour la barre
+* 'visible' :
+** '1' : le groupe et ses sous-groupes/pseudos sont visibles
+** '0' : le groupe et ses sous-groupes/pseudos sont cachés
 
 [NOTE]
 Le nom du groupe peut commencer par un ou plusieurs chiffres, suivis d'un pipe
