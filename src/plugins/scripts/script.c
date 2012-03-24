@@ -84,30 +84,8 @@ script_config_cb (void *data, const char *option, const char *value)
  */
 
 void
-script_init (struct t_weechat_plugin *weechat_plugin,
-             int argc,
-             char *argv[],
-             int (*callback_command)(void *data,
-                                     struct t_gui_buffer *buffer,
-                                     int argc, char **argv,
-                                     char **argv_eol),
-             int (*callback_completion)(void *data, const char *completion_item,
-                                        struct t_gui_buffer *buffer,
-                                        struct t_gui_completion *completion),
-             struct t_infolist *(*callback_infolist)(void *data,
-                                                     const char *infolist_name,
-                                                     void *pointer,
-                                                     const char *arguments),
-             int (*callback_signal_debug_dump)(void *data, const char *signal,
-                                               const char *type_data,
-                                               void *signal_data),
-             int (*callback_signal_buffer_closed)(void *data, const char *signal,
-                                                  const char *type_data,
-                                                  void *signal_data),
-             int (*callback_signal_script_action)(void *data, const char *signal,
-                                                  const char *type_data,
-                                                  void *signal_data),
-             void (*callback_load_file)(void *data, const char *filename))
+script_init (struct t_weechat_plugin *weechat_plugin, int argc, char *argv[],
+             struct t_plugin_script_init *init)
 {
     char *string, *completion;
     char signal_name[128];
@@ -177,7 +155,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                              "Without argument, this command "
                              "lists all loaded scripts."),
                           completion,
-                          callback_command, NULL);
+                          init->callback_command, NULL);
     if (string)
         free (string);
     if (completion)
@@ -190,27 +168,30 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     {
         snprintf (string, length, "%s_script", weechat_plugin->name);
         weechat_hook_completion (string, N_("list of scripts"),
-                                 callback_completion, NULL);
+                                 init->callback_completion, NULL);
         weechat_hook_infolist (string, N_("list of scripts"),
                                N_("script pointer (optional)"),
                                N_("script name (can start or end with \"*\" as wildcard) (optional)"),
-                               callback_infolist, NULL);
+                               init->callback_infolist, NULL);
         free (string);
     }
 
     /* add signal for "debug_dump" */
-    weechat_hook_signal ("debug_dump", callback_signal_debug_dump, NULL);
+    weechat_hook_signal ("debug_dump", init->callback_signal_debug_dump, NULL);
 
     /* add signal for "buffer_closed" */
-    weechat_hook_signal ("buffer_closed", callback_signal_buffer_closed, NULL);
+    weechat_hook_signal ("buffer_closed",
+                         init->callback_signal_buffer_closed, NULL);
 
     /* add signal for a script action (install/remove) */
     snprintf (signal_name, sizeof (signal_name), "%s_script_install",
               weechat_plugin->name);
-    weechat_hook_signal (signal_name, callback_signal_script_action, NULL);
+    weechat_hook_signal (signal_name,
+                         init->callback_signal_script_action, NULL);
     snprintf (signal_name, sizeof (signal_name), "%s_script_remove",
               weechat_plugin->name);
-    weechat_hook_signal (signal_name, callback_signal_script_action, NULL);
+    weechat_hook_signal (signal_name,
+                         init->callback_signal_script_action, NULL);
 
     /* parse arguments */
     auto_load_scripts = 1;
@@ -226,7 +207,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     /* autoload scripts */
     if (auto_load_scripts)
     {
-        script_auto_load (weechat_plugin, callback_load_file);
+        script_auto_load (weechat_plugin, init->callback_load_file);
     }
 }
 

@@ -850,6 +850,8 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    struct t_plugin_script_init init;
+
     weechat_guile_plugin = plugin;
 
     guile_stdout = NULL;
@@ -862,17 +864,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     scm_c_use_module ("weechat");
     weechat_guile_catch (scm_gc_protect_object, (void *)guile_module_weechat);
 
+    init.callback_command = &weechat_guile_command_cb;
+    init.callback_completion = &weechat_guile_completion_cb;
+    init.callback_infolist = &weechat_guile_infolist_cb;
+    init.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
+    init.callback_signal_buffer_closed = &weechat_guile_signal_buffer_closed_cb;
+    init.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
+    init.callback_load_file = &weechat_guile_load_cb;
+
     guile_quiet = 1;
-    script_init (weechat_guile_plugin,
-                 argc,
-                 argv,
-                 &weechat_guile_command_cb,
-                 &weechat_guile_completion_cb,
-                 &weechat_guile_infolist_cb,
-                 &weechat_guile_signal_debug_dump_cb,
-                 &weechat_guile_signal_buffer_closed_cb,
-                 &weechat_guile_signal_script_action_cb,
-                 &weechat_guile_load_cb);
+    script_init (weechat_guile_plugin, argc, argv, &init);
     guile_quiet = 0;
 
     script_display_short_list (weechat_guile_plugin,

@@ -68,34 +68,32 @@ struct t_plugin_script
     struct t_plugin_script *next_script; /* link to next script             */
 };
 
+struct t_plugin_script_init
+{
+    int (*callback_command)(void *data, struct t_gui_buffer *buffer,
+                            int argc, char **argv, char **argv_eol);
+    int (*callback_completion)(void *data, const char *completion_item,
+                               struct t_gui_buffer *buffer,
+                               struct t_gui_completion *completion);
+    struct t_infolist *(*callback_infolist)(void *data,
+                                            const char *infolist_name,
+                                            void *pointer,
+                                            const char *arguments);
+    int (*callback_signal_debug_dump)(void *data, const char *signal,
+                                      const char *type_data,
+                                      void *signal_data);
+    int (*callback_signal_buffer_closed)(void *data, const char *signal,
+                                         const char *type_data,
+                                         void *signal_data);
+    int (*callback_signal_script_action)(void *data, const char *signal,
+                                         const char *type_data,
+                                         void *signal_data);
+    void (*callback_load_file)(void *data, const char *filename);
+};
+
 extern void script_init (struct t_weechat_plugin *weechat_plugin,
-                         int argc,
-                         char *argv[],
-                         int (*callback_command)(void *data,
-                                                 struct t_gui_buffer *buffer,
-                                                 int argc, char **argv,
-                                                 char **argv_eol),
-                         int (*callback_completion)(void *data,
-                                                    const char *completion_item,
-                                                    struct t_gui_buffer *buffer,
-                                                    struct t_gui_completion *completion),
-                         struct t_infolist *(*callback_infolist)(void *data,
-                                                                 const char *infolist_name,
-                                                                 void *pointer,
-                                                                 const char *arguments),
-                         int (*callback_signal_debug_dump)(void *data,
-                                                           const char *signal,
-                                                           const char *type_data,
-                                                           void *signal_data),
-                         int (*callback_signal_buffer_closed)(void *data,
-                                                              const char *signal,
-                                                              const char *type_data,
-                                                              void *signal_data),
-                         int (*callback_signal_script_action)(void *data,
-                                                              const char *signal,
-                                                              const char *type_data,
-                                                              void *signal_data),
-                         void (*callback_load_file)(void *data, const char *filename));
+                         int argc, char *argv[],
+                         struct t_plugin_script_init *init);
 extern int script_valid (struct t_plugin_script *scripts,
                          struct t_plugin_script *script);
 extern char *script_ptr2str (void *pointer);

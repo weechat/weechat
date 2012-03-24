@@ -968,6 +968,7 @@ weechat_ruby_signal_script_action_cb (void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    struct t_plugin_script_init init;
     int ruby_error;
     char *weechat_ruby_code =
         {
@@ -1069,17 +1070,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
+    init.callback_command = &weechat_ruby_command_cb;
+    init.callback_completion = &weechat_ruby_completion_cb;
+    init.callback_infolist = &weechat_ruby_infolist_cb;
+    init.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
+    init.callback_signal_buffer_closed = &weechat_ruby_signal_buffer_closed_cb;
+    init.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
+    init.callback_load_file = &weechat_ruby_load_cb;
+
     ruby_quiet = 1;
-    script_init (weechat_ruby_plugin,
-                 argc,
-                 argv,
-                 &weechat_ruby_command_cb,
-                 &weechat_ruby_completion_cb,
-                 &weechat_ruby_infolist_cb,
-                 &weechat_ruby_signal_debug_dump_cb,
-                 &weechat_ruby_signal_buffer_closed_cb,
-                 &weechat_ruby_signal_script_action_cb,
-                 &weechat_ruby_load_cb);
+    script_init (weechat_ruby_plugin, argc, argv, &init);
     ruby_quiet = 0;
 
     script_display_short_list (weechat_ruby_plugin,

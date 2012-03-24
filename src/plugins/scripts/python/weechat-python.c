@@ -1140,6 +1140,8 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    struct t_plugin_script_init init;
+
     weechat_python_plugin = plugin;
 
     /*
@@ -1182,17 +1184,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
+    init.callback_command = &weechat_python_command_cb;
+    init.callback_completion = &weechat_python_completion_cb;
+    init.callback_infolist = &weechat_python_infolist_cb;
+    init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
+    init.callback_signal_buffer_closed = &weechat_python_signal_buffer_closed_cb;
+    init.callback_signal_script_action = &weechat_python_signal_script_action_cb;
+    init.callback_load_file = &weechat_python_load_cb;
+
     python_quiet = 1;
-    script_init (weechat_python_plugin,
-                 argc,
-                 argv,
-                 &weechat_python_command_cb,
-                 &weechat_python_completion_cb,
-                 &weechat_python_infolist_cb,
-                 &weechat_python_signal_debug_dump_cb,
-                 &weechat_python_signal_buffer_closed_cb,
-                 &weechat_python_signal_script_action_cb,
-                 &weechat_python_load_cb);
+    script_init (weechat_python_plugin, argc, argv, &init);
     python_quiet = 0;
 
     script_display_short_list (weechat_python_plugin,
