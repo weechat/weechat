@@ -7,6 +7,7 @@ v0.3.8-dev, 2012-03-24
 Version 0.3.8 (under dev!)
 --------------------------
 
+* core: convert tabs to spaces in text pasted (bug #25028)
 * core: add a connection timeout for child process in hook_connect (bug #35966)
 * core: follow symbolic links when writing configuration files (.conf)
   (task #11779)

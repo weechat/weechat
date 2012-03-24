@@ -588,6 +588,9 @@ gui_key_read_cb (void *data, int fd)
             /* remove final newline (if needed) */
             gui_key_paste_remove_newline ();
 
+            /* replace tabs by spaces */
+            gui_key_paste_replace_tabs ();
+
             /* stop bracketed mode */
             gui_key_paste_bracketed_timer_remove ();
             gui_key_paste_bracketed_stop ();

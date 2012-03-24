@@ -1481,6 +1481,22 @@ gui_key_paste_remove_newline ()
 }
 
 /*
+ * gui_key_paste_replace_tabs: replace tabs by spaces in paste
+ */
+
+void
+gui_key_paste_replace_tabs ()
+{
+    int i;
+
+    for (i = 0; i < gui_key_buffer_size; i++)
+    {
+        if (gui_key_buffer[i] == '\t')
+            gui_key_buffer[i] = ' ';
+    }
+}
+
+/*
  * gui_key_paste_start: start paste of text
  */
 
@@ -1488,6 +1504,7 @@ void
 gui_key_paste_start ()
 {
     gui_key_paste_remove_newline ();
+    gui_key_paste_replace_tabs ();
     gui_key_paste_pending = 1;
     gui_input_paste_pending_signal ();
 }

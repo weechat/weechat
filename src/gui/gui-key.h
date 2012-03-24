@@ -118,6 +118,7 @@ extern int gui_key_buffer_search (int start_index, int max_index,
                                   const char *string);
 extern void gui_key_buffer_remove (int index, int number);
 extern void gui_key_paste_remove_newline ();
+extern void gui_key_paste_replace_tabs ();
 extern void gui_key_paste_start ();
 extern int gui_key_get_paste_lines ();
 extern int gui_key_paste_check (int bracketed_paste);
