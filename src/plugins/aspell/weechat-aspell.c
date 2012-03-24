@@ -679,7 +679,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         return NULL;
 
     /*
-     * for performance: return last stirng built if input string is the
+     * for performance: return last string built if input string is the
      * same (for example user just change cursor position, or input text is
      * refreshed with same content)
      */
