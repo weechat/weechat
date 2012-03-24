@@ -5882,6 +5882,34 @@ weechat_tcl_api_hdata_move (ClientData clientData, Tcl_Interp *interp,
 }
 
 /*
+ * weechat_tcl_api_hdata_char: get char value of a variable in structure
+ *                             using hdata
+ */
+
+static int
+weechat_tcl_api_hdata_char (ClientData clientData, Tcl_Interp *interp,
+                            int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    int result, i;
+
+    API_FUNC(1, "hdata_char", API_RETURN_INT(0));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+
+    result = (int)weechat_hdata_char (API_STR2PTR(hdata),
+                                      API_STR2PTR(pointer),
+                                      name);
+
+    API_RETURN_INT(result);
+}
+
+/*
  * weechat_tcl_api_hdata_integer: get integer value of a variable in structure
  *                                using hdata
  */
@@ -6517,6 +6545,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_get_list);
     API_DEF_FUNC(hdata_check_pointer);
     API_DEF_FUNC(hdata_move);
+    API_DEF_FUNC(hdata_char);
     API_DEF_FUNC(hdata_integer);
     API_DEF_FUNC(hdata_long);
     API_DEF_FUNC(hdata_string);

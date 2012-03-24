@@ -41,6 +41,7 @@ Version 0.3.8 (under dev!)
   (WeeChat protocol)
 * rmodifier: add option "release" in default rmodifier "nickserv" (used to hide
   passwords in command "/msg nickserv") (bug #35705)
+* tcl: add missing function "hdata_char" in API
 * tcl: fix pointer sent to function hook_signal_send when type of data is
   a pointer
 
