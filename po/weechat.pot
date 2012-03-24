@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-23 18:09+0100\n"
+"POT-Creation-Date: 2012-03-24 12:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6467,6 +6467,11 @@ msgid "script pointer (optional)"
 msgstr ""
 
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
 msgstr ""
 
 #, c-format

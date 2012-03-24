@@ -583,7 +583,7 @@ weechat_python_load (const char *filename)
         return 0;
     }
 
-    if ((weechat_python_plugin->debug >= 1) || !python_quiet)
+    if ((weechat_python_plugin->debug >= 2) || !python_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -767,7 +767,7 @@ weechat_python_unload (struct t_plugin_script *script)
     void *interpreter;
     PyThreadState *old_interpreter;
 
-    if ((weechat_python_plugin->debug >= 1) || !python_quiet)
+    if ((weechat_python_plugin->debug >= 2) || !python_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

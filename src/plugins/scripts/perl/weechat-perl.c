@@ -390,7 +390,7 @@ weechat_perl_load (const char *filename)
         return 0;
     }
 
-    if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+    if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -557,7 +557,7 @@ weechat_perl_unload (struct t_plugin_script *script)
     int *rc;
     void *interpreter;
 
-    if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+    if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

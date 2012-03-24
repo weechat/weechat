@@ -367,7 +367,7 @@ weechat_guile_load (const char *filename)
     char *filename2, *ptr_base_name, *base_name;
     SCM module;
 
-    if ((weechat_guile_plugin->debug >= 1) || !guile_quiet)
+    if ((weechat_guile_plugin->debug >= 2) || !guile_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -437,7 +437,7 @@ weechat_guile_unload (struct t_plugin_script *script)
 {
     int *rc;
 
-    if ((weechat_guile_plugin->debug >= 1) || !guile_quiet)
+    if ((weechat_guile_plugin->debug >= 2) || !guile_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

@@ -290,7 +290,7 @@ weechat_tcl_load (const char *filename)
         return 0;
     }
 
-    if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
+    if ((weechat_tcl_plugin->debug >= 2) || !tcl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -369,7 +369,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
     Tcl_Interp* interp;
     int *rc;
 
-    if ((weechat_tcl_plugin->debug >= 1) || !tcl_quiet)
+    if ((weechat_tcl_plugin->debug >= 2) || !tcl_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

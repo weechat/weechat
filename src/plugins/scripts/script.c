@@ -262,18 +262,39 @@ script_ptr2str (void *pointer)
  */
 
 void *
-script_str2ptr (const char *pointer_str)
+script_str2ptr (struct t_weechat_plugin *weechat_plugin,
+                const char *script_name, const char *function_name,
+                const char *str_pointer)
 {
     long unsigned int value;
     int rc;
+    struct t_gui_buffer *ptr_buffer;
 
-    if (!pointer_str || (pointer_str[0] != '0') || (pointer_str[1] != 'x'))
+    if (!str_pointer || !str_pointer[0])
         return NULL;
 
-    rc = sscanf (pointer_str + 2, "%lx", &value);
+    if ((str_pointer[0] != '0') || (str_pointer[1] != 'x'))
+        goto invalid;
+
+    rc = sscanf (str_pointer + 2, "%lx", &value);
     if ((rc != EOF) && (rc >= 1))
         return (void *)value;
 
+invalid:
+    if (weechat_plugin->debug >= 1)
+    {
+        ptr_buffer = weechat_buffer_search_main ();
+        if (ptr_buffer)
+        {
+            weechat_buffer_set (ptr_buffer, "print_hooks_enabled", "0");
+            weechat_printf (NULL,
+                            _("%s%s: warning, invalid pointer (\"%s\") for "
+                              "function \"%s\" (script: %s)"),
+                            weechat_prefix ("error"), weechat_plugin->name,
+                            str_pointer, function_name, script_name);
+            weechat_buffer_set (ptr_buffer, "print_hooks_enabled", "1");
+        }
+    }
     return NULL;
 }
 

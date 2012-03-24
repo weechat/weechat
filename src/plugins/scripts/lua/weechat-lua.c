@@ -251,7 +251,7 @@ weechat_lua_load (const char *filename)
         return 0;
     }
 
-    if ((weechat_lua_plugin->debug >= 1) || !lua_quiet)
+    if ((weechat_lua_plugin->debug >= 2) || !lua_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -385,7 +385,7 @@ weechat_lua_unload (struct t_plugin_script *script)
     int *rc;
     void *interpreter;
 
-    if ((weechat_lua_plugin->debug >= 1) || !lua_quiet)
+    if ((weechat_lua_plugin->debug >= 2) || !lua_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

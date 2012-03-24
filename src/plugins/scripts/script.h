@@ -97,7 +97,9 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
 extern int script_valid (struct t_plugin_script *scripts,
                          struct t_plugin_script *script);
 extern char *script_ptr2str (void *pointer);
-extern void *script_str2ptr (const char *pointer_str);
+extern void *script_str2ptr (struct t_weechat_plugin *weechat_plugin,
+                             const char *script_name, const char *function_name,
+                             const char *pointer_str);
 extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
                               void (*callback)(void *data, const char *filename));
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,

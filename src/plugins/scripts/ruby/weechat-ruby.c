@@ -485,7 +485,7 @@ weechat_ruby_load (const char *filename)
         return 0;
     }
 
-    if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
+    if ((weechat_ruby_plugin->debug >= 2) || !ruby_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: loading script \"%s\""),
@@ -621,7 +621,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
     int *rc;
     void *interpreter;
 
-    if ((weechat_ruby_plugin->debug >= 1) || !ruby_quiet)
+    if ((weechat_ruby_plugin->debug >= 2) || !ruby_quiet)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s: unloading script \"%s\""),

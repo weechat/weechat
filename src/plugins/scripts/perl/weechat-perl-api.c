@@ -52,6 +52,9 @@
                                       perl_function_name);              \
         __ret;                                                          \
     }
+#define API_STR2PTR(__string)                                           \
+    script_str2ptr (weechat_perl_plugin, PERL_CURRENT_SCRIPT_NAME,      \
+                    perl_function_name, __string)
 #define API_RETURN_OK XSRETURN_YES
 #define API_RETURN_ERROR XSRETURN_NO
 #define API_RETURN_EMPTY XSRETURN_EMPTY
@@ -139,7 +142,7 @@ XS (XS_weechat_api_register)
     if (perl_current_script)
     {
         perl_registered_script = perl_current_script;
-        if ((weechat_perl_plugin->debug >= 1) || !perl_quiet)
+        if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
         {
             weechat_printf (NULL,
                             weechat_gettext ("%s: registered script \"%s\", "
@@ -168,7 +171,7 @@ XS (XS_weechat_api_plugin_get_name)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_plugin_get_name (script_str2ptr (SvPV_nolen (ST (0)))); /* plugin */
+    result = weechat_plugin_get_name (API_STR2PTR(SvPV_nolen (ST (0)))); /* plugin */
 
     API_RETURN_STRING(result);
 }
@@ -515,10 +518,10 @@ XS (XS_weechat_api_list_add)
     where = SvPV_nolen (ST (2));
     user_data = SvPV_nolen (ST (3));
 
-    result = script_ptr2str (weechat_list_add (script_str2ptr (weelist),
+    result = script_ptr2str (weechat_list_add (API_STR2PTR(weelist),
                                                data,
                                                where,
-                                               script_str2ptr (user_data)));
+                                               API_STR2PTR(user_data)));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -539,7 +542,7 @@ XS (XS_weechat_api_list_search)
     weelist = SvPV_nolen (ST (0));
     data = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_list_search (script_str2ptr (weelist),
+    result = script_ptr2str (weechat_list_search (API_STR2PTR(weelist),
                                                   data));
 
     API_RETURN_STRING_FREE(result);
@@ -562,7 +565,7 @@ XS (XS_weechat_api_list_search_pos)
     weelist = SvPV_nolen (ST (0));
     data = SvPV_nolen (ST (1));
 
-    pos = weechat_list_search_pos (script_str2ptr (weelist), data);
+    pos = weechat_list_search_pos (API_STR2PTR(weelist), data);
 
     API_RETURN_INT(pos);
 }
@@ -583,7 +586,7 @@ XS (XS_weechat_api_list_casesearch)
     weelist = SvPV_nolen (ST (0));
     data = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_list_casesearch (script_str2ptr (weelist),
+    result = script_ptr2str (weechat_list_casesearch (API_STR2PTR(weelist),
                                                       data));
 
     API_RETURN_STRING_FREE(result);
@@ -607,7 +610,7 @@ XS (XS_weechat_api_list_casesearch_pos)
     weelist = SvPV_nolen (ST (0));
     data = SvPV_nolen (ST (1));
 
-    pos = weechat_list_casesearch_pos (script_str2ptr (weelist), data);
+    pos = weechat_list_casesearch_pos (API_STR2PTR(weelist), data);
 
     API_RETURN_INT(pos);
 }
@@ -625,7 +628,7 @@ XS (XS_weechat_api_list_get)
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = script_ptr2str (weechat_list_get (script_str2ptr (SvPV_nolen (ST (0))), /* weelist */
+    result = script_ptr2str (weechat_list_get (API_STR2PTR(SvPV_nolen (ST (0))), /* weelist */
                                                SvIV (ST (1)))); /* position */
 
     API_RETURN_STRING_FREE(result);
@@ -647,7 +650,7 @@ XS (XS_weechat_api_list_set)
     item = SvPV_nolen (ST (0));
     new_value = SvPV_nolen (ST (1));
 
-    weechat_list_set (script_str2ptr (item), new_value);
+    weechat_list_set (API_STR2PTR(item), new_value);
 
     API_RETURN_OK;
 }
@@ -665,7 +668,7 @@ XS (XS_weechat_api_list_next)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = script_ptr2str (weechat_list_next (script_str2ptr (SvPV_nolen (ST (0))))); /* item */
+    result = script_ptr2str (weechat_list_next (API_STR2PTR(SvPV_nolen (ST (0))))); /* item */
 
     API_RETURN_STRING_FREE(result);
 }
@@ -683,7 +686,7 @@ XS (XS_weechat_api_list_prev)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = script_ptr2str (weechat_list_prev (script_str2ptr (SvPV_nolen (ST (0))))); /* item */
+    result = script_ptr2str (weechat_list_prev (API_STR2PTR(SvPV_nolen (ST (0))))); /* item */
 
     API_RETURN_STRING_FREE(result);
 }
@@ -701,7 +704,7 @@ XS (XS_weechat_api_list_string)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_list_string (script_str2ptr (SvPV_nolen (ST (0)))); /* item */
+    result = weechat_list_string (API_STR2PTR(SvPV_nolen (ST (0)))); /* item */
 
     API_RETURN_STRING(result);
 }
@@ -719,7 +722,7 @@ XS (XS_weechat_api_list_size)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    size = weechat_list_size (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
+    size = weechat_list_size (API_STR2PTR(SvPV_nolen (ST (0)))); /* weelist */
 
     API_RETURN_INT(size);
 }
@@ -740,7 +743,8 @@ XS (XS_weechat_api_list_remove)
     weelist = SvPV_nolen (ST (0));
     item = SvPV_nolen (ST (1));
 
-    weechat_list_remove (script_str2ptr (weelist), script_str2ptr (item));
+    weechat_list_remove (API_STR2PTR(weelist),
+                         API_STR2PTR(item));
 
     API_RETURN_OK;
 }
@@ -757,7 +761,7 @@ XS (XS_weechat_api_list_remove_all)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_list_remove_all (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
+    weechat_list_remove_all (API_STR2PTR(SvPV_nolen (ST (0)))); /* weelist */
 
     API_RETURN_OK;
 }
@@ -774,7 +778,7 @@ XS (XS_weechat_api_list_free)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_list_free (script_str2ptr (SvPV_nolen (ST (0)))); /* weelist */
+    weechat_list_free (API_STR2PTR(SvPV_nolen (ST (0)))); /* weelist */
 
     API_RETURN_OK;
 }
@@ -1113,7 +1117,7 @@ XS (XS_weechat_api_config_new_section)
 
     result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
                                                             perl_current_script,
-                                                            script_str2ptr (cfg_file),
+                                                            API_STR2PTR(cfg_file),
                                                             name,
                                                             SvIV (ST (2)), /* user_can_add_options */
                                                             SvIV (ST (3)), /* user_can_delete_options */
@@ -1152,7 +1156,7 @@ XS (XS_weechat_api_config_search_section)
     config_file = SvPV_nolen (ST (0));
     section_name = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_config_search_section (script_str2ptr (config_file),
+    result = script_ptr2str (weechat_config_search_section (API_STR2PTR(config_file),
                                                             section_name));
 
     API_RETURN_STRING_FREE(result);
@@ -1301,8 +1305,8 @@ XS (XS_weechat_api_config_new_option)
 
     result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
                                                            perl_current_script,
-                                                           script_str2ptr (config_file),
-                                                           script_str2ptr (section),
+                                                           API_STR2PTR(config_file),
+                                                           API_STR2PTR(section),
                                                            name,
                                                            type,
                                                            description,
@@ -1342,8 +1346,8 @@ XS (XS_weechat_api_config_search_option)
     section = SvPV_nolen (ST (1));
     option_name = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_config_search_option (script_str2ptr (config_file),
-                                                           script_str2ptr (section),
+    result = script_ptr2str (weechat_config_search_option (API_STR2PTR(config_file),
+                                                           API_STR2PTR(section),
                                                            option_name));
 
     API_RETURN_STRING_FREE(result);
@@ -1383,7 +1387,7 @@ XS (XS_weechat_api_config_option_reset)
 
     option = SvPV_nolen (ST (0));
 
-    rc = weechat_config_option_reset (script_str2ptr (option),
+    rc = weechat_config_option_reset (API_STR2PTR(option),
                                       SvIV (ST (1))); /* run_callback */
 
     API_RETURN_INT(rc);
@@ -1406,7 +1410,7 @@ XS (XS_weechat_api_config_option_set)
     option = SvPV_nolen (ST (0));
     new_value = SvPV_nolen (ST (1));
 
-    rc = weechat_config_option_set (script_str2ptr (option),
+    rc = weechat_config_option_set (API_STR2PTR(option),
                                     new_value,
                                     SvIV (ST (2))); /* run_callback */
 
@@ -1429,7 +1433,7 @@ XS (XS_weechat_api_config_option_set_null)
 
     option = SvPV_nolen (ST (0));
 
-    rc = weechat_config_option_set_null (script_str2ptr (option),
+    rc = weechat_config_option_set_null (API_STR2PTR(option),
                                          SvIV (ST (1))); /* run_callback */
 
     API_RETURN_INT(rc);
@@ -1451,7 +1455,7 @@ XS (XS_weechat_api_config_option_unset)
 
     option = SvPV_nolen (ST (0));
 
-    rc = weechat_config_option_unset (script_str2ptr (option));
+    rc = weechat_config_option_unset (API_STR2PTR(option));
 
     API_RETURN_INT(rc);
 }
@@ -1472,7 +1476,7 @@ XS (XS_weechat_api_config_option_rename)
     option = SvPV_nolen (ST (0));
     new_name = SvPV_nolen (ST (1));
 
-    weechat_config_option_rename (script_str2ptr (option),
+    weechat_config_option_rename (API_STR2PTR(option),
                                   new_name);
 
     API_RETURN_OK;
@@ -1491,7 +1495,7 @@ XS (XS_weechat_api_config_option_is_null)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
-    value = weechat_config_option_is_null (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_option_is_null (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1510,7 +1514,7 @@ XS (XS_weechat_api_config_option_default_is_null)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
-    value = weechat_config_option_default_is_null (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_option_default_is_null (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1528,7 +1532,7 @@ XS (XS_weechat_api_config_boolean)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_config_boolean (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_boolean (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1546,7 +1550,7 @@ XS (XS_weechat_api_config_boolean_default)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_config_boolean_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_boolean_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1564,7 +1568,7 @@ XS (XS_weechat_api_config_integer)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_config_integer (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_integer (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1582,7 +1586,7 @@ XS (XS_weechat_api_config_integer_default)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_config_integer_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    value = weechat_config_integer_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_INT(value);
 }
@@ -1600,7 +1604,7 @@ XS (XS_weechat_api_config_string)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_config_string (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    result = weechat_config_string (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_STRING(result);
 }
@@ -1618,7 +1622,7 @@ XS (XS_weechat_api_config_string_default)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_config_string_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    result = weechat_config_string_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_STRING(result);
 }
@@ -1636,7 +1640,7 @@ XS (XS_weechat_api_config_color)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    result = weechat_config_color (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    result = weechat_config_color (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_STRING(result);
 }
@@ -1654,7 +1658,7 @@ XS (XS_weechat_api_config_color_default)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    result = weechat_config_color_default (script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+    result = weechat_config_color_default (API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_STRING(result);
 }
@@ -1675,8 +1679,8 @@ XS (XS_weechat_api_config_write_option)
     config_file = SvPV_nolen (ST (0));
     option = SvPV_nolen (ST (1));
 
-    weechat_config_write_option (script_str2ptr (config_file),
-                                 script_str2ptr (option));
+    weechat_config_write_option (API_STR2PTR(config_file),
+                                 API_STR2PTR(option));
 
     API_RETURN_OK;
 }
@@ -1698,7 +1702,7 @@ XS (XS_weechat_api_config_write_line)
     option_name = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    weechat_config_write_line (script_str2ptr (config_file), option_name,
+    weechat_config_write_line (API_STR2PTR(config_file), option_name,
                                "%s", value);
 
     API_RETURN_OK;
@@ -1717,7 +1721,7 @@ XS (XS_weechat_api_config_write)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
-    rc = weechat_config_write (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
+    rc = weechat_config_write (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
     API_RETURN_INT(rc);
 }
@@ -1735,7 +1739,7 @@ XS (XS_weechat_api_config_read)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
-    rc = weechat_config_read (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
+    rc = weechat_config_read (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
     API_RETURN_INT(rc);
 }
@@ -1753,7 +1757,7 @@ XS (XS_weechat_api_config_reload)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
-    rc = weechat_config_reload (script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
+    rc = weechat_config_reload (API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
     API_RETURN_INT(rc);
 }
@@ -1772,7 +1776,7 @@ XS (XS_weechat_api_config_option_free)
 
     script_api_config_option_free (weechat_perl_plugin,
                                    perl_current_script,
-                                   script_str2ptr (SvPV_nolen (ST (0)))); /* option */
+                                   API_STR2PTR(SvPV_nolen (ST (0)))); /* option */
 
     API_RETURN_OK;
 }
@@ -1792,7 +1796,7 @@ XS (XS_weechat_api_config_section_free_options)
 
     script_api_config_section_free_options (weechat_perl_plugin,
                                             perl_current_script,
-                                            script_str2ptr (SvPV_nolen (ST (0)))); /* section */
+                                            API_STR2PTR(SvPV_nolen (ST (0)))); /* section */
 
     API_RETURN_OK;
 }
@@ -1811,7 +1815,7 @@ XS (XS_weechat_api_config_section_free)
 
     script_api_config_section_free (weechat_perl_plugin,
                                     perl_current_script,
-                                    script_str2ptr (SvPV_nolen (ST (0)))); /* section */
+                                    API_STR2PTR(SvPV_nolen (ST (0)))); /* section */
 
     API_RETURN_OK;
 }
@@ -1830,7 +1834,7 @@ XS (XS_weechat_api_config_free)
 
     script_api_config_free (weechat_perl_plugin,
                             perl_current_script,
-                            script_str2ptr (SvPV_nolen (ST (0)))); /* config_file */
+                            API_STR2PTR(SvPV_nolen (ST (0)))); /* config_file */
 
     API_RETURN_OK;
 }
@@ -2071,7 +2075,7 @@ XS (XS_weechat_api_print)
 
     script_api_printf (weechat_perl_plugin,
                        perl_current_script,
-                       script_str2ptr (buffer),
+                       API_STR2PTR(buffer),
                        "%s", message);
 
     API_RETURN_OK;
@@ -2097,7 +2101,7 @@ XS (XS_weechat_api_print_date_tags)
 
     script_api_printf_date_tags (weechat_perl_plugin,
                                  perl_current_script,
-                                 script_str2ptr (buffer),
+                                 API_STR2PTR(buffer),
                                  SvIV (ST (1)),
                                  tags,
                                  "%s", message);
@@ -2123,7 +2127,7 @@ XS (XS_weechat_api_print_y)
 
     script_api_printf_y (weechat_perl_plugin,
                          perl_current_script,
-                         script_str2ptr (buffer),
+                         API_STR2PTR(buffer),
                          SvIV (ST (1)),
                          "%s", message);
 
@@ -2709,7 +2713,7 @@ XS (XS_weechat_api_hook_print)
 
     result = script_ptr2str (script_api_hook_print (weechat_perl_plugin,
                                                     perl_current_script,
-                                                    script_str2ptr (buffer),
+                                                    API_STR2PTR(buffer),
                                                     tags,
                                                     message,
                                                     SvIV (ST (3)), /* strip_colors */
@@ -2842,7 +2846,7 @@ XS (XS_weechat_api_hook_signal_send)
     {
         weechat_hook_signal_send (signal,
                                   type_data,
-                                  script_str2ptr (SvPV_nolen (ST (2)))); /* signal_data */
+                                  API_STR2PTR(SvPV_nolen (ST (2)))); /* signal_data */
         API_RETURN_OK;
     }
 
@@ -3100,7 +3104,7 @@ XS (XS_weechat_api_hook_completion_list_add)
     word = SvPV_nolen (ST (1));
     where = SvPV_nolen (ST (3));
 
-    weechat_hook_completion_list_add (script_str2ptr (completion),
+    weechat_hook_completion_list_add (API_STR2PTR(completion),
                                       word,
                                       SvIV (ST (2)), /* nick_completion */
                                       where);
@@ -3449,7 +3453,7 @@ XS (XS_weechat_api_unhook)
 
     script_api_unhook (weechat_perl_plugin,
                        perl_current_script,
-                       script_str2ptr (SvPV_nolen (ST (0)))); /* hook */
+                       API_STR2PTR(SvPV_nolen (ST (0)))); /* hook */
 
     API_RETURN_OK;
 }
@@ -3659,7 +3663,7 @@ XS (XS_weechat_api_buffer_clear)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_buffer_clear (script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
+    weechat_buffer_clear (API_STR2PTR(SvPV_nolen (ST (0)))); /* buffer */
 
     API_RETURN_OK;
 }
@@ -3678,7 +3682,7 @@ XS (XS_weechat_api_buffer_close)
 
     script_api_buffer_close (weechat_perl_plugin,
                              perl_current_script,
-                             script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
+                             API_STR2PTR(SvPV_nolen (ST (0)))); /* buffer */
 
     API_RETURN_OK;
 }
@@ -3695,8 +3699,8 @@ XS (XS_weechat_api_buffer_merge)
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_buffer_merge (script_str2ptr (SvPV_nolen (ST (0))), /* buffer */
-                          script_str2ptr (SvPV_nolen (ST (1)))); /* target_buffer */
+    weechat_buffer_merge (API_STR2PTR(SvPV_nolen (ST (0))), /* buffer */
+                          API_STR2PTR(SvPV_nolen (ST (1)))); /* target_buffer */
 
     API_RETURN_OK;
 }
@@ -3713,7 +3717,7 @@ XS (XS_weechat_api_buffer_unmerge)
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_buffer_unmerge (script_str2ptr (SvPV_nolen (ST (0))), /* buffer */
+    weechat_buffer_unmerge (API_STR2PTR(SvPV_nolen (ST (0))), /* buffer */
                             SvIV (ST (1))); /* number */
 
     API_RETURN_OK;
@@ -3736,7 +3740,7 @@ XS (XS_weechat_api_buffer_get_integer)
     buffer = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    value = weechat_buffer_get_integer (script_str2ptr (buffer), property);
+    value = weechat_buffer_get_integer (API_STR2PTR(buffer), property);
 
     API_RETURN_INT(value);
 }
@@ -3758,7 +3762,7 @@ XS (XS_weechat_api_buffer_get_string)
     buffer = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    result = weechat_buffer_get_string (script_str2ptr (buffer), property);
+    result = weechat_buffer_get_string (API_STR2PTR(buffer), property);
 
     API_RETURN_STRING(result);
 }
@@ -3779,7 +3783,7 @@ XS (XS_weechat_api_buffer_get_pointer)
     buffer = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+    result = script_ptr2str (weechat_buffer_get_pointer (API_STR2PTR(buffer),
                                                          property));
 
     API_RETURN_STRING_FREE(result);
@@ -3802,7 +3806,7 @@ XS (XS_weechat_api_buffer_set)
     property = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    weechat_buffer_set (script_str2ptr (buffer), property, value);
+    weechat_buffer_set (API_STR2PTR(buffer), property, value);
 
     API_RETURN_OK;
 }
@@ -3824,7 +3828,7 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
     buffer = SvPV_nolen (ST (0));
     string = SvPV_nolen (ST (1));
 
-    result = weechat_buffer_string_replace_local_var (script_str2ptr (buffer), string);
+    result = weechat_buffer_string_replace_local_var (API_STR2PTR(buffer), string);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -3846,7 +3850,7 @@ XS (XS_weechat_api_buffer_match_list)
     buffer = SvPV_nolen (ST (0));
     string = SvPV_nolen (ST (1));
 
-    value = weechat_buffer_match_list (script_str2ptr (buffer), string);
+    value = weechat_buffer_match_list (API_STR2PTR(buffer), string);
 
     API_RETURN_INT(value);
 }
@@ -3884,7 +3888,7 @@ XS (XS_weechat_api_window_search_with_buffer)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = script_ptr2str (weechat_window_search_with_buffer (script_str2ptr (SvPV_nolen (ST (0)))));
+    result = script_ptr2str (weechat_window_search_with_buffer (API_STR2PTR(SvPV_nolen (ST (0)))));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -3907,7 +3911,7 @@ XS (XS_weechat_api_window_get_integer)
     window = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    value = weechat_window_get_integer (script_str2ptr (window), property);
+    value = weechat_window_get_integer (API_STR2PTR(window), property);
 
     API_RETURN_INT(value);
 }
@@ -3929,7 +3933,7 @@ XS (XS_weechat_api_window_get_string)
     window = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    result = weechat_window_get_string (script_str2ptr (window), property);
+    result = weechat_window_get_string (API_STR2PTR(window), property);
 
     API_RETURN_STRING(result);
 }
@@ -3950,7 +3954,7 @@ XS (XS_weechat_api_window_get_pointer)
     window = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_window_get_pointer (script_str2ptr (window),
+    result = script_ptr2str (weechat_window_get_pointer (API_STR2PTR(window),
                                                          property));
 
     API_RETURN_STRING_FREE(result);
@@ -3991,8 +3995,8 @@ XS (XS_weechat_api_nicklist_add_group)
     name = SvPV_nolen (ST (2));
     color = SvPV_nolen (ST (3));
 
-    result = script_ptr2str (weechat_nicklist_add_group (script_str2ptr (buffer),
-                                                         script_str2ptr (parent_group),
+    result = script_ptr2str (weechat_nicklist_add_group (API_STR2PTR(buffer),
+                                                         API_STR2PTR(parent_group),
                                                          name,
                                                          color,
                                                          SvIV (ST (4)))); /* visible */
@@ -4017,8 +4021,8 @@ XS (XS_weechat_api_nicklist_search_group)
     from_group = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_nicklist_search_group (script_str2ptr (buffer),
-                                                            script_str2ptr (from_group),
+    result = script_ptr2str (weechat_nicklist_search_group (API_STR2PTR(buffer),
+                                                            API_STR2PTR(from_group),
                                                             name));
 
     API_RETURN_STRING_FREE(result);
@@ -4044,8 +4048,8 @@ XS (XS_weechat_api_nicklist_add_nick)
     prefix = SvPV_nolen (ST (4));
     prefix_color = SvPV_nolen (ST (5));
 
-    result = script_ptr2str (weechat_nicklist_add_nick (script_str2ptr (buffer),
-                                                        script_str2ptr (group),
+    result = script_ptr2str (weechat_nicklist_add_nick (API_STR2PTR(buffer),
+                                                        API_STR2PTR(group),
                                                         name,
                                                         color,
                                                         prefix,
@@ -4072,8 +4076,8 @@ XS (XS_weechat_api_nicklist_search_nick)
     from_group = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_nicklist_search_nick (script_str2ptr (buffer),
-                                                           script_str2ptr (from_group),
+    result = script_ptr2str (weechat_nicklist_search_nick (API_STR2PTR(buffer),
+                                                           API_STR2PTR(from_group),
                                                            name));
 
     API_RETURN_STRING_FREE(result);
@@ -4095,8 +4099,8 @@ XS (XS_weechat_api_nicklist_remove_group)
     buffer = SvPV_nolen (ST (0));
     group = SvPV_nolen (ST (1));
 
-    weechat_nicklist_remove_group (script_str2ptr (buffer),
-                                   script_str2ptr (group));
+    weechat_nicklist_remove_group (API_STR2PTR(buffer),
+                                   API_STR2PTR(group));
 
     API_RETURN_OK;
 }
@@ -4117,8 +4121,8 @@ XS (XS_weechat_api_nicklist_remove_nick)
     buffer = SvPV_nolen (ST (0));
     nick = SvPV_nolen (ST (1));
 
-    weechat_nicklist_remove_nick (script_str2ptr (buffer),
-                                  script_str2ptr (nick));
+    weechat_nicklist_remove_nick (API_STR2PTR(buffer),
+                                  API_STR2PTR(nick));
 
     API_RETURN_OK;
 }
@@ -4135,7 +4139,7 @@ XS (XS_weechat_api_nicklist_remove_all)
     if (items < 2)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_nicklist_remove_all (script_str2ptr (SvPV_nolen (ST (0)))); /* buffer */
+    weechat_nicklist_remove_all (API_STR2PTR(SvPV_nolen (ST (0)))); /* buffer */
 
     API_RETURN_OK;
 }
@@ -4158,8 +4162,8 @@ XS (XS_weechat_api_nicklist_group_get_integer)
     group = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    value = weechat_nicklist_group_get_integer (script_str2ptr (buffer),
-                                                script_str2ptr (group),
+    value = weechat_nicklist_group_get_integer (API_STR2PTR(buffer),
+                                                API_STR2PTR(group),
                                                 property);
 
     API_RETURN_INT(value);
@@ -4183,8 +4187,8 @@ XS (XS_weechat_api_nicklist_group_get_string)
     group = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    result = weechat_nicklist_group_get_string (script_str2ptr (buffer),
-                                                script_str2ptr (group),
+    result = weechat_nicklist_group_get_string (API_STR2PTR(buffer),
+                                                API_STR2PTR(group),
                                                 property);
 
     API_RETURN_STRING(result);
@@ -4207,8 +4211,8 @@ XS (XS_weechat_api_nicklist_group_get_pointer)
     group = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_nicklist_group_get_pointer (script_str2ptr (buffer),
-                                                                 script_str2ptr (group),
+    result = script_ptr2str (weechat_nicklist_group_get_pointer (API_STR2PTR(buffer),
+                                                                 API_STR2PTR(group),
                                                                  property));
 
     API_RETURN_STRING_FREE(result);
@@ -4232,8 +4236,8 @@ XS (XS_weechat_api_nicklist_group_set)
     property = SvPV_nolen (ST (2));
     value = SvPV_nolen (ST (3));
 
-    weechat_nicklist_group_set (script_str2ptr (buffer),
-                                script_str2ptr (group),
+    weechat_nicklist_group_set (API_STR2PTR(buffer),
+                                API_STR2PTR(group),
                                 property,
                                 value);
 
@@ -4258,8 +4262,8 @@ XS (XS_weechat_api_nicklist_nick_get_integer)
     nick = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    value = weechat_nicklist_nick_get_integer (script_str2ptr (buffer),
-                                               script_str2ptr (nick),
+    value = weechat_nicklist_nick_get_integer (API_STR2PTR(buffer),
+                                               API_STR2PTR(nick),
                                                property);
 
     API_RETURN_INT(value);
@@ -4283,8 +4287,8 @@ XS (XS_weechat_api_nicklist_nick_get_string)
     nick = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    result = weechat_nicklist_nick_get_string (script_str2ptr (buffer),
-                                               script_str2ptr (nick),
+    result = weechat_nicklist_nick_get_string (API_STR2PTR(buffer),
+                                               API_STR2PTR(nick),
                                                property);
 
     API_RETURN_STRING(result);
@@ -4307,8 +4311,8 @@ XS (XS_weechat_api_nicklist_nick_get_pointer)
     nick = SvPV_nolen (ST (1));
     property = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_nicklist_nick_get_pointer (script_str2ptr (buffer),
-                                                                script_str2ptr (nick),
+    result = script_ptr2str (weechat_nicklist_nick_get_pointer (API_STR2PTR(buffer),
+                                                                API_STR2PTR(nick),
                                                                 property));
 
     API_RETURN_STRING_FREE(result);
@@ -4332,8 +4336,8 @@ XS (XS_weechat_api_nicklist_nick_set)
     property = SvPV_nolen (ST (2));
     value = SvPV_nolen (ST (3));
 
-    weechat_nicklist_nick_set (script_str2ptr (buffer),
-                               script_str2ptr (nick),
+    weechat_nicklist_nick_set (API_STR2PTR(buffer),
+                               API_STR2PTR(nick),
                                property,
                                value);
 
@@ -4452,7 +4456,7 @@ XS (XS_weechat_api_bar_item_remove)
 
     script_api_bar_item_remove (weechat_perl_plugin,
                                 perl_current_script,
-                                script_str2ptr (SvPV_nolen (ST (0)))); /* item */
+                                API_STR2PTR(SvPV_nolen (ST (0)))); /* item */
 
     API_RETURN_OK;
 }
@@ -4542,7 +4546,7 @@ XS (XS_weechat_api_bar_set)
     property = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    weechat_bar_set (script_str2ptr (bar), property, value);
+    weechat_bar_set (API_STR2PTR(bar), property, value);
 
     API_RETURN_OK;
 }
@@ -4576,7 +4580,7 @@ XS (XS_weechat_api_bar_remove)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_bar_remove (script_str2ptr (SvPV_nolen (ST (0)))); /* bar */
+    weechat_bar_remove (API_STR2PTR(SvPV_nolen (ST (0)))); /* bar */
 
     API_RETURN_OK;
 }
@@ -4599,7 +4603,7 @@ XS (XS_weechat_api_command)
 
     script_api_command (weechat_perl_plugin,
                         perl_current_script,
-                        script_str2ptr (buffer),
+                        API_STR2PTR(buffer),
                         command);
 
     API_RETURN_OK;
@@ -4692,7 +4696,7 @@ XS (XS_weechat_api_infolist_new_item)
 
     infolist = SvPV_nolen (ST (0));
 
-    result = script_ptr2str (weechat_infolist_new_item (script_str2ptr (infolist)));
+    result = script_ptr2str (weechat_infolist_new_item (API_STR2PTR(infolist)));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -4713,7 +4717,7 @@ XS (XS_weechat_api_infolist_new_var_integer)
     infolist = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_infolist_new_var_integer (script_str2ptr (infolist),
+    result = script_ptr2str (weechat_infolist_new_var_integer (API_STR2PTR(infolist),
                                                                name,
                                                                SvIV (ST (2)))); /* value */
 
@@ -4737,7 +4741,7 @@ XS (XS_weechat_api_infolist_new_var_string)
     name = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (infolist),
+    result = script_ptr2str (weechat_infolist_new_var_string (API_STR2PTR(infolist),
                                                               name,
                                                               value));
 
@@ -4761,9 +4765,9 @@ XS (XS_weechat_api_infolist_new_var_pointer)
     name = SvPV_nolen (ST (1));
     value = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (infolist),
+    result = script_ptr2str (weechat_infolist_new_var_pointer (API_STR2PTR(infolist),
                                                                name,
-                                                               script_str2ptr (value)));
+                                                               API_STR2PTR(value)));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -4784,7 +4788,7 @@ XS (XS_weechat_api_infolist_new_var_time)
     infolist = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_infolist_new_var_time (script_str2ptr (infolist),
+    result = script_ptr2str (weechat_infolist_new_var_time (API_STR2PTR(infolist),
                                                             name,
                                                             SvIV (ST (2)))); /* value */
 
@@ -4809,7 +4813,7 @@ XS (XS_weechat_api_infolist_get)
     arguments = SvPV_nolen (ST (2));
 
     result = script_ptr2str (weechat_infolist_get (name,
-                                                   script_str2ptr (pointer),
+                                                   API_STR2PTR(pointer),
                                                    arguments));
 
     API_RETURN_STRING_FREE(result);
@@ -4828,7 +4832,7 @@ XS (XS_weechat_api_infolist_next)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_infolist_next (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
+    value = weechat_infolist_next (API_STR2PTR(SvPV_nolen (ST (0)))); /* infolist */
 
     API_RETURN_INT(value);
 }
@@ -4846,7 +4850,7 @@ XS (XS_weechat_api_infolist_prev)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
-    value = weechat_infolist_prev (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
+    value = weechat_infolist_prev (API_STR2PTR(SvPV_nolen (ST (0)))); /* infolist */
 
     API_RETURN_INT(value);
 }
@@ -4864,7 +4868,7 @@ XS (XS_weechat_api_infolist_reset_item_cursor)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_infolist_reset_item_cursor (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
+    weechat_infolist_reset_item_cursor (API_STR2PTR(SvPV_nolen (ST (0)))); /* infolist */
 
     API_RETURN_OK;
 }
@@ -4882,7 +4886,7 @@ XS (XS_weechat_api_infolist_fields)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_infolist_fields (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
+    result = weechat_infolist_fields (API_STR2PTR(SvPV_nolen (ST (0)))); /* infolist */
 
     API_RETURN_STRING(result);
 }
@@ -4904,7 +4908,7 @@ XS (XS_weechat_api_infolist_integer)
     infolist = SvPV_nolen (ST (0));
     variable = SvPV_nolen (ST (1));
 
-    value = weechat_infolist_integer (script_str2ptr (infolist), variable);
+    value = weechat_infolist_integer (API_STR2PTR(infolist), variable);
 
     API_RETURN_INT(value);
 }
@@ -4926,7 +4930,7 @@ XS (XS_weechat_api_infolist_string)
     infolist = SvPV_nolen (ST (0));
     variable = SvPV_nolen (ST (1));
 
-    result = weechat_infolist_string (script_str2ptr (infolist), variable);
+    result = weechat_infolist_string (API_STR2PTR(infolist), variable);
 
     API_RETURN_STRING(result);
 }
@@ -4948,7 +4952,7 @@ XS (XS_weechat_api_infolist_pointer)
     infolist = SvPV_nolen (ST (0));
     variable = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_infolist_pointer (script_str2ptr (infolist), variable));
+    result = script_ptr2str (weechat_infolist_pointer (API_STR2PTR(infolist), variable));
 
     API_RETURN_STRING_FREE(result);
 }
@@ -4972,7 +4976,7 @@ XS (XS_weechat_api_infolist_time)
     variable = SvPV_nolen (ST (1));
 
     timebuffer[0] = '\0';
-    time = weechat_infolist_time (script_str2ptr (infolist), variable);
+    time = weechat_infolist_time (API_STR2PTR(infolist), variable);
     date_tmp = localtime (&time);
     if (date_tmp)
         strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
@@ -4993,7 +4997,7 @@ XS (XS_weechat_api_infolist_free)
     if (items < 1)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_infolist_free (script_str2ptr (SvPV_nolen (ST (0)))); /* infolist */
+    weechat_infolist_free (API_STR2PTR(SvPV_nolen (ST (0)))); /* infolist */
 
     API_RETURN_OK;
 }
@@ -5035,7 +5039,7 @@ XS (XS_weechat_api_hdata_get_var_offset)
     hdata = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    value = weechat_hdata_get_var_offset (script_str2ptr (hdata), name);
+    value = weechat_hdata_get_var_offset (API_STR2PTR(hdata), name);
 
     API_RETURN_INT(value);
 }
@@ -5057,7 +5061,7 @@ XS (XS_weechat_api_hdata_get_var_type_string)
     hdata = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    result = weechat_hdata_get_var_type_string (script_str2ptr (hdata), name);
+    result = weechat_hdata_get_var_type_string (API_STR2PTR(hdata), name);
 
     API_RETURN_STRING(result);
 }
@@ -5079,7 +5083,7 @@ XS (XS_weechat_api_hdata_get_var_hdata)
     hdata = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    result = weechat_hdata_get_var_hdata (script_str2ptr (hdata), name);
+    result = weechat_hdata_get_var_hdata (API_STR2PTR(hdata), name);
 
     API_RETURN_STRING(result);
 }
@@ -5101,7 +5105,7 @@ XS (XS_weechat_api_hdata_get_list)
     hdata = SvPV_nolen (ST (0));
     name = SvPV_nolen (ST (1));
 
-    result = script_ptr2str (weechat_hdata_get_list (script_str2ptr (hdata),
+    result = script_ptr2str (weechat_hdata_get_list (API_STR2PTR(hdata),
                                                      name));
 
     API_RETURN_STRING_FREE(result);
@@ -5125,9 +5129,9 @@ XS (XS_weechat_api_hdata_check_pointer)
     list = SvPV_nolen (ST (1));
     pointer = SvPV_nolen (ST (2));
 
-    value = weechat_hdata_check_pointer (script_str2ptr (hdata),
-                                         script_str2ptr (list),
-                                         script_str2ptr (pointer));
+    value = weechat_hdata_check_pointer (API_STR2PTR(hdata),
+                                         API_STR2PTR(list),
+                                         API_STR2PTR(pointer));
 
     API_RETURN_INT(value);
 }
@@ -5150,8 +5154,8 @@ XS (XS_weechat_api_hdata_move)
     pointer = SvPV_nolen (ST (1));
     count = SvIV(ST (2));
 
-    result = script_ptr2str (weechat_hdata_move (script_str2ptr (hdata),
-                                                 script_str2ptr (pointer),
+    result = script_ptr2str (weechat_hdata_move (API_STR2PTR(hdata),
+                                                 API_STR2PTR(pointer),
                                                  count));
 
     API_RETURN_STRING_FREE(result);
@@ -5175,8 +5179,8 @@ XS (XS_weechat_api_hdata_char)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    value = (int)weechat_hdata_char (script_str2ptr (hdata),
-                                     script_str2ptr (pointer),
+    value = (int)weechat_hdata_char (API_STR2PTR(hdata),
+                                     API_STR2PTR(pointer),
                                      name);
 
     API_RETURN_INT(value);
@@ -5201,8 +5205,8 @@ XS (XS_weechat_api_hdata_integer)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    value = weechat_hdata_integer (script_str2ptr (hdata),
-                                   script_str2ptr (pointer),
+    value = weechat_hdata_integer (API_STR2PTR(hdata),
+                                   API_STR2PTR(pointer),
                                    name);
 
     API_RETURN_INT(value);
@@ -5226,8 +5230,8 @@ XS (XS_weechat_api_hdata_long)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    value = weechat_hdata_long (script_str2ptr (hdata),
-                                script_str2ptr (pointer),
+    value = weechat_hdata_long (API_STR2PTR(hdata),
+                                API_STR2PTR(pointer),
                                 name);
 
     API_RETURN_LONG(value);
@@ -5252,8 +5256,8 @@ XS (XS_weechat_api_hdata_string)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    result = weechat_hdata_string (script_str2ptr (hdata),
-                                   script_str2ptr (pointer),
+    result = weechat_hdata_string (API_STR2PTR(hdata),
+                                   API_STR2PTR(pointer),
                                    name);
 
     API_RETURN_STRING(result);
@@ -5278,8 +5282,8 @@ XS (XS_weechat_api_hdata_pointer)
     pointer = SvPV_nolen (ST (1));
     name = SvPV_nolen (ST (2));
 
-    result = script_ptr2str (weechat_hdata_pointer (script_str2ptr (hdata),
-                                                    script_str2ptr (pointer),
+    result = script_ptr2str (weechat_hdata_pointer (API_STR2PTR(hdata),
+                                                    API_STR2PTR(pointer),
                                                     name));
 
     API_RETURN_STRING_FREE(result);
@@ -5305,8 +5309,8 @@ XS (XS_weechat_api_hdata_time)
     name = SvPV_nolen (ST (2));
 
     timebuffer[0] = '\0';
-    time = weechat_hdata_time (script_str2ptr (hdata),
-                               script_str2ptr (pointer),
+    time = weechat_hdata_time (API_STR2PTR(hdata),
+                               API_STR2PTR(pointer),
                                name);
     date_tmp = localtime (&time);
     if (date_tmp)
@@ -5336,8 +5340,8 @@ XS (XS_weechat_api_hdata_hashtable)
     name = SvPV_nolen (ST (2));
 
     result_hash = weechat_perl_hashtable_to_hash (
-        weechat_hdata_hashtable (script_str2ptr (hdata),
-                                 script_str2ptr (pointer),
+        weechat_hdata_hashtable (API_STR2PTR(hdata),
+                                 API_STR2PTR(pointer),
                                  name));
 
     API_RETURN_OBJ(result_hash);
@@ -5360,7 +5364,7 @@ XS (XS_weechat_api_hdata_get_string)
     hdata = SvPV_nolen (ST (0));
     property = SvPV_nolen (ST (1));
 
-    result = weechat_hdata_get_string (script_str2ptr (hdata), property);
+    result = weechat_hdata_get_string (API_STR2PTR(hdata), property);
 
     API_RETURN_STRING(result);
 }
@@ -5403,9 +5407,9 @@ XS (XS_weechat_api_upgrade_write_object)
     upgrade_file = SvPV_nolen (ST (0));
     infolist = SvPV_nolen (ST (2));
 
-    rc = weechat_upgrade_write_object (script_str2ptr (upgrade_file),
+    rc = weechat_upgrade_write_object (API_STR2PTR(upgrade_file),
                                        SvIV (ST (1)), /* object_id */
-                                       script_str2ptr (infolist));
+                                       API_STR2PTR(infolist));
 
     API_RETURN_INT(rc);
 }
@@ -5479,7 +5483,7 @@ XS (XS_weechat_api_upgrade_read)
 
     rc = script_api_upgrade_read (weechat_perl_plugin,
                                   perl_current_script,
-                                  script_str2ptr (upgrade_file),
+                                  API_STR2PTR(upgrade_file),
                                   &weechat_perl_api_upgrade_read_cb,
                                   function,
                                   data);
@@ -5502,7 +5506,7 @@ XS (XS_weechat_api_upgrade_close)
 
     upgrade_file = SvPV_nolen (ST (0));
 
-    weechat_upgrade_close (script_str2ptr (upgrade_file));
+    weechat_upgrade_close (API_STR2PTR(upgrade_file));
 
     API_RETURN_OK;
 }
