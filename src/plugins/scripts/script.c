@@ -258,7 +258,7 @@ script_ptr2str (void *pointer)
 }
 
 /*
- * script_str2ptr: convert stirng to pointer for usage outside script
+ * script_str2ptr: convert string to pointer for usage outside script
  */
 
 void *
