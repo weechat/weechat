@@ -41,6 +41,8 @@ Version 0.3.8 (under dev!)
   (WeeChat protocol)
 * rmodifier: add option "release" in default rmodifier "nickserv" (used to hide
   passwords in command "/msg nickserv") (bug #35705)
+* tcl: fix pointer sent to function hook_signal_send when type of data is
+  a pointer
 
 Version 0.3.7 (2012-02-26)
 --------------------------

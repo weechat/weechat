@@ -3305,7 +3305,7 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
     {
         weechat_hook_signal_send (signal,
                                   type_data,
-                                  Tcl_GetStringFromObj (objv[3], &i)); /* signal_data */
+                                  API_STR2PTR(Tcl_GetStringFromObj (objv[3], &i))); /* signal_data */
         API_RETURN_OK;
     }
 
