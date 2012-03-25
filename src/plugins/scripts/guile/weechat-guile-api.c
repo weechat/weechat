@@ -2423,6 +2423,43 @@ weechat_guile_api_hook_process (SCM command, SCM timeout, SCM function,
 }
 
 /*
+ * weechat_guile_api_hook_process_hashtable: hook a process with options in a
+ *                                           hashtable
+ */
+
+SCM
+weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
+                                          SCM function, SCM data)
+{
+    char *result;
+    SCM return_value;
+    struct t_hashtable *c_options;
+
+    API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
+    if (!scm_is_string (command) || !scm_list_p (options)
+        || !scm_is_integer (timeout) || !scm_is_string (function)
+        || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_options = weechat_guile_alist_to_hashtable (options,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    result = script_ptr2str (script_api_hook_process_hashtable (weechat_guile_plugin,
+                                                                guile_current_script,
+                                                                scm_i_string_chars (command),
+                                                                c_options,
+                                                                scm_to_int (timeout),
+                                                                &weechat_guile_api_hook_process_cb,
+                                                                scm_i_string_chars (function),
+                                                                scm_i_string_chars (data)));
+
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_guile_api_hook_connect_cb: callback for connect hooked
  */
 
@@ -5308,6 +5345,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_timer, 5);
     API_DEF_FUNC(hook_fd, 6);
     API_DEF_FUNC(hook_process, 4);
+    API_DEF_FUNC(hook_process_hashtable, 5);
     API_DEF_FUNC(hook_connect, 8);
     API_DEF_FUNC(hook_print, 6);
     API_DEF_FUNC(hook_signal, 3);
