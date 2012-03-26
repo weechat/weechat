@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-24 12:52+0100\n"
+"POT-Creation-Date: 2012-03-26 13:41+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4042,8 +4042,8 @@ msgid "invite a nick on a channel"
 msgstr "пригласить ник на канал"
 
 #, fuzzy
-msgid "<nick> <channel>"
-msgstr "ник канал"
+msgid "<nick> [<nick>...] [<channel>]"
+msgstr "ник [ник ...]"
 
 #, fuzzy
 msgid ""
@@ -7865,6 +7865,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<nick> <channel>"
+#~ msgstr "ник канал"
 
 #, fuzzy
 #~ msgid "mechanism for SASL authentication"

@@ -1750,6 +1750,9 @@ int
 irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
+    int i, arg_last_nick;
+    char *ptr_channel_name;
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("invite", 1);
 
@@ -1759,8 +1762,26 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (argc > 2)
     {
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "INVITE %s %s", argv[1], argv[2]);
+        if (irc_channel_is_channel (ptr_server, argv[argc - 1]))
+        {
+            arg_last_nick = argc - 2;
+            ptr_channel_name = argv[argc - 1];
+        }
+        else
+        {
+            if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+            {
+                arg_last_nick = argc - 1;
+                ptr_channel_name = ptr_channel->name;
+            }
+            else
+                goto error;
+        }
+        for (i = 1; i <= arg_last_nick; i++)
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "INVITE %s %s", argv[i], ptr_channel_name);
+        }
     }
     else
     {
@@ -1771,17 +1792,16 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
                               argv[1], ptr_channel->name);
         }
         else
-        {
-            weechat_printf (ptr_server->buffer,
-                            _("%s%s: \"%s\" command can only be "
-                              "executed in a channel buffer"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            "invite");
-            return WEECHAT_RC_OK;
-        }
-
+            goto error;
     }
+    return WEECHAT_RC_OK;
 
+error:
+    weechat_printf (ptr_server->buffer,
+                    _("%s%s: \"%s\" command can only be "
+                      "executed in a channel buffer"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                    "invite");
     return WEECHAT_RC_OK;
 }
 
@@ -5024,7 +5044,7 @@ irc_command_init ()
                           NULL, &irc_command_info, NULL);
     weechat_hook_command ("invite",
                           N_("invite a nick on a channel"),
-                          N_("<nick> <channel>"),
+                          N_("<nick> [<nick>...] [<channel>]"),
                           N_("   nick: nick to invite\n"
                              "channel: channel to invite"),
                           "%(nicks) %(irc_server_channels)", &irc_command_invite, NULL);

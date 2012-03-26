@@ -194,7 +194,7 @@ target: server name
 [[command_irc_invite]]
 [command]*`invite`* invite a nick on a channel::
 ........................................
-/invite  <nick> <channel>
+/invite  <nick> [<nick>...] [<channel>]
 
    nick: nick to invite
 channel: channel to invite

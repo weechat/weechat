@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-24 12:52+0100\n"
+"POT-Creation-Date: 2012-03-26 13:41+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
@@ -4500,8 +4500,9 @@ msgstr "サーバに関する情報を入手"
 msgid "invite a nick on a channel"
 msgstr "チャンネルにニックネームを招待"
 
-msgid "<nick> <channel>"
-msgstr "<nick> <channel>"
+#, fuzzy
+msgid "<nick> [<nick>...] [<channel>]"
+msgstr "<nick> [<nick>...]"
 
 msgid ""
 "   nick: nick to invite\n"
@@ -8365,6 +8366,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<nick> <channel>"
 
 #~ msgid "mechanism for SASL authentication"
 #~ msgstr "SASL 認証メカニズム"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-24 12:52+0100\n"
+"POT-Creation-Date: 2012-03-26 13:41+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4613,8 +4613,9 @@ msgstr "obtener información describiendo al servidor"
 msgid "invite a nick on a channel"
 msgstr "invitar a un apodo a un canal"
 
-msgid "<nick> <channel>"
-msgstr "<apodo> <canal>"
+#, fuzzy
+msgid "<nick> [<nick>...] [<channel>]"
+msgstr "<apodo> [<apodo>...]"
 
 msgid ""
 "   nick: nick to invite\n"
@@ -8589,6 +8590,9 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<apodo> <canal>"
 
 #~ msgid "mechanism for SASL authentication"
 #~ msgstr "mecanismo para la autenticación SASL"

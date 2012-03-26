@@ -194,7 +194,7 @@ cible: nom du serveur
 [[command_irc_invite]]
 [command]*`invite`* inviter un pseudo sur un canal::
 ........................................
-/invite  <pseudo> <canal>
+/invite  <pseudo> [<pseudo>...] [<canal>]
 
 pseudo: pseudo à inviter
  canal: canal pour l'invitation

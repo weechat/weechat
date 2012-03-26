@@ -194,7 +194,7 @@ Ziel: Servername
 [[command_irc_invite]]
 [command]*`invite`* Jemanden in einen Channel einladen::
 ........................................
-/invite  <nick> <channel>
+/invite  <nick> [<nick>...] [<channel>]
 
    nick: Nick welcher eingeladen werden soll
 channel: Channel für den die Einladung gelten soll
