@@ -557,6 +557,14 @@ IRC_PROTOCOL_CALLBACK(join)
         }
     }
 
+    /*
+     * local join? clear nicklist to be sure it is empty (when using znc, after
+     * reconnection to network, we receive a JOIN for channel with existing
+     * nicks in irc plugin, so we need to clear the nicklist now)
+     */
+    if (local_join)
+        irc_nick_free_all (server, ptr_channel);
+
     /* reset some variables if joining new channel */
     if (!ptr_channel->nicks)
     {

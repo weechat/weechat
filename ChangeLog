@@ -20,6 +20,8 @@ Version 0.3.8 (under dev!)
   given to plugin API functions (warning displayed if debug for plugin is >= 1)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"
 * guile: add missing function "hook_process_hashtable" in API
+* irc: force the clear of nicklist when joining a channel (nicklist was not sync
+  after znc reconnection) (bug #36008)
 * irc: allow more than one nick in command /invite
 * irc: do not send command "MODE #channel" on manual /names (do it only when
   names are received on join of channel) (bug #35930)
