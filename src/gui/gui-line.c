@@ -84,6 +84,43 @@ gui_lines_free (struct t_gui_lines *lines)
 }
 
 /*
+ * gui_line_get_prefix_for_display: get prefix and its length (for display only)
+ *                                  if the prefix can be hidden (same nick as
+ *                                  previous message), and if the option is
+ *                                  enabled (not empty string), then this
+ *                                  this function will return empty prefix or
+ *                                  prefix from option
+ */
+
+void
+gui_line_get_prefix_for_display (struct t_gui_line *line,
+                                 char **prefix, int *length)
+{
+    if (line->data->prefix_same_nick
+        && CONFIG_STRING(config_look_prefix_same_nick)
+        && CONFIG_STRING(config_look_prefix_same_nick)[0])
+    {
+        /* same nick: return empty prefix or value from option */
+        if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
+        {
+            *prefix = gui_chat_prefix_empty;
+            *length = 0;
+        }
+        else
+        {
+            *prefix = CONFIG_STRING(config_look_prefix_same_nick);
+            *length = config_length_prefix_same_nick;
+        }
+    }
+    else
+    {
+        /* not same nick: return prefix from line */
+        *prefix = line->data->prefix;
+        *length = line->data->prefix_length;
+    }
+}
+
+/*
  * gui_line_get_align: get alignment for a line
  */
 
@@ -91,7 +128,8 @@ int
 gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
                     int with_suffix, int first_line)
 {
-    int length_time, length_buffer, length_suffix;
+    int length_time, length_buffer, length_suffix, prefix_length;
+    char *ptr_prefix;
 
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
@@ -141,10 +179,11 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return length_time + length_buffer;
     }
 
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {
-        return length_time + length_buffer + line->data->prefix_length
-            + ((line->data->prefix_length > 0) ? 1 : 0);
+        return length_time + length_buffer + prefix_length + ((prefix_length > 0) ? 1 : 0);
     }
 
     length_suffix = 0;
@@ -533,13 +572,16 @@ void
 gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 {
     struct t_gui_line *ptr_line;
+    char *ptr_prefix;
+    int prefix_length;
 
     lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     for (ptr_line = lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        if (ptr_line->data->prefix_length > lines->prefix_max_length)
-            lines->prefix_max_length = ptr_line->data->prefix_length;
+        gui_line_get_prefix_for_display (ptr_line, &ptr_prefix, &prefix_length);
+        if (prefix_length > lines->prefix_max_length)
+            lines->prefix_max_length = prefix_length;
     }
 }
 
@@ -551,6 +593,9 @@ void
 gui_line_add_to_list (struct t_gui_lines *lines,
                       struct t_gui_line *line)
 {
+    char *ptr_prefix;
+    int prefix_length;
+
     if (!lines->first_line)
         lines->first_line = line;
     else
@@ -559,8 +604,9 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     line->next_line = NULL;
     lines->last_line = line;
 
-    if (line->data->prefix_length > lines->prefix_max_length)
-        lines->prefix_max_length = line->data->prefix_length;
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+    if (prefix_length > lines->prefix_max_length)
+        lines->prefix_max_length = prefix_length;
 
     lines->lines_count++;
 }
@@ -577,7 +623,8 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
-    int i, update_prefix_max_length;
+    int i, update_prefix_max_length, prefix_length;
+    char *ptr_prefix;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -603,8 +650,9 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         }
     }
 
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
     update_prefix_max_length =
-        (line->data->prefix_length == lines->prefix_max_length);
+        (prefix_length == lines->prefix_max_length);
 
     /* move read marker if it was on line we are removing */
     if (lines->last_read_line == line)
@@ -794,7 +842,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line_data *new_line_data;
     struct t_gui_window *ptr_win;
     char *message_for_signal;
-    const char *nick;
+    const char *nick, *nick_previous;
     int notify_level, *max_notify_level, lines_removed;
     time_t current_time;
 
@@ -859,9 +907,17 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
 
+    /*
+     * check if prefix can be hidden: if nick is the same as previous message
+     * on this buffer
+     */
+    nick = gui_line_get_nick_tag (new_line);
+    nick_previous = (buffer->own_lines->last_line) ?
+        gui_line_get_nick_tag (buffer->own_lines->last_line) : NULL;
+    new_line->data->prefix_same_nick = (nick && nick_previous && (strcmp (nick, nick_previous) == 0)) ? 1 : 0;
+
     /* get notify level and max notify level for nick in buffer */
     notify_level = gui_line_get_notify_level (new_line);
-    nick = gui_line_get_nick_tag (new_line);
     max_notify_level = NULL;
     if (nick)
         max_notify_level = hashtable_get (buffer->hotlist_max_level_nicks, nick);
@@ -1312,6 +1368,8 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "displayed", line->data->displayed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "highlight", line->data->highlight))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "prefix_same_nick", line->data->prefix_same_nick))
         return 0;
     if (!infolist_new_var_string (ptr_item, "prefix", line->data->prefix))
         return 0;

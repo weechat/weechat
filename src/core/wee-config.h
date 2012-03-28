@@ -160,6 +160,7 @@ extern struct t_config_option *config_look_prefix_align_more;
 extern struct t_config_option *config_look_prefix_buffer_align;
 extern struct t_config_option *config_look_prefix_buffer_align_max;
 extern struct t_config_option *config_look_prefix_buffer_align_more;
+extern struct t_config_option *config_look_prefix_same_nick;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_read_marker_always_show;
@@ -253,6 +254,7 @@ extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
+extern int config_length_prefix_same_nick;
 extern regex_t *config_highlight_regex;
 extern char **config_highlight_tags;
 extern int config_num_highlight_tags;

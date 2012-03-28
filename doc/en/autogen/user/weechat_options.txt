@@ -653,6 +653,11 @@
 ** type: string
 ** values: any string (default value: `"<--"`)
 
+* [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
+** description: `prefix displayed for a message with same nick as previous message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_weechat.look.prefix_suffix]] *weechat.look.prefix_suffix*
 ** description: `string displayed after prefix`
 ** type: string

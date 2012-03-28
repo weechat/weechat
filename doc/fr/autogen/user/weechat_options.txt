@@ -653,6 +653,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"<--"`)
 
+* [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
+** description: `préfixe affiché pour un message avec le même pseudo que le précédent message: utiliser un espace " " pour cacher le préfixe, une autre chaîne pour l'afficher à la place du préfixe, ou une chaîne vide pour désactiver cette fonctionnalité (afficher le préfixe)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
 * [[option_weechat.look.prefix_suffix]] *weechat.look.prefix_suffix*
 ** description: `chaîne affichée après le préfixe`
 ** type: chaîne

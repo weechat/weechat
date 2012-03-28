@@ -559,9 +559,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int simulate)
 {
     char str_space[] = " ", str_plus[] = "+";
-    char *prefix_no_color, *prefix_highlighted;
+    char *prefix_no_color, *prefix_highlighted, *ptr_prefix;
     const char *short_name;
-    int i, length, length_allowed, num_spaces;
+    int i, length, length_allowed, num_spaces, prefix_length;
     struct t_gui_lines *mixed_lines;
 
     if (!simulate)
@@ -722,8 +722,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     }
 
     /* display prefix */
-    if (line->data->prefix
-        && (line->data->prefix[0]
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+    if (ptr_prefix
+        && (ptr_prefix[0]
             || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
     {
         if (!simulate)
@@ -743,7 +744,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         else
             length_allowed = window->buffer->lines->prefix_max_length;
 
-        num_spaces = length_allowed - line->data->prefix_length;
+        num_spaces = length_allowed - prefix_length;
 
         if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_RIGHT)
         {
@@ -759,7 +760,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         prefix_highlighted = NULL;
         if (line->data->highlight)
         {
-            prefix_no_color = gui_color_decode (line->data->prefix, NULL);
+            prefix_no_color = gui_color_decode (ptr_prefix, NULL);
             if (prefix_no_color)
             {
                 length = strlen (prefix_no_color) + 32;
@@ -807,12 +808,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             && (num_spaces < 0))
         {
             gui_chat_display_word (window, line,
-                                   (prefix_highlighted) ? prefix_highlighted : line->data->prefix,
+                                   (prefix_highlighted) ? prefix_highlighted : ptr_prefix,
                                    (prefix_highlighted) ?
                                    prefix_highlighted + gui_chat_string_real_pos (prefix_highlighted,
                                                                                   length_allowed) :
-                                   line->data->prefix + gui_chat_string_real_pos (line->data->prefix,
-                                                                                  length_allowed),
+                                   ptr_prefix + gui_chat_string_real_pos (ptr_prefix,
+                                                                          length_allowed),
                                    1, num_lines, count, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix));
@@ -820,7 +821,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         else
         {
             gui_chat_display_word (window, line,
-                                   (prefix_highlighted) ? prefix_highlighted : line->data->prefix,
+                                   (prefix_highlighted) ? prefix_highlighted : ptr_prefix,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix));
