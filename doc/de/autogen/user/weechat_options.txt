@@ -134,7 +134,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * [[option_weechat.color.chat_tags]] *weechat.color.chat_tags*
-** Beschreibung: `Textfarbe für die Anzeige der Tags nach der jeweiligen Nachricht (wird durch den Befehl "/debug tags" angezeigt)`
+** Beschreibung: `Textfarbe in der die Schlagwörter, die nach der jeweiligen Nachricht angezeigt werden, dargestellt werden sollen (wird durch den Befehl "/debug tags" angezeigt)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `red`)
 
@@ -729,7 +729,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
-** Beschreibung: `timeout (in seconds) for connection to a remote host (made in a child process)`
+** Beschreibung: `Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten Rechner (mittels einem Kindprozess)`
 ** Typ: integer
 ** Werte: 1 .. 2147483647 (Standardwert: `60`)
 

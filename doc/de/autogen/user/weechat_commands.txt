@@ -188,13 +188,13 @@ Beispiele:
 infolists: zeigt Information über die Infolists an
    memory: gibt Informationen über den genutzten Speicher aus
     mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
-     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
      term: gibt Informationen über das Terminal und verfügbare Farben aus
   windows: zeigt die Fensterstruktur an
 ........................................
 
 [[command_weechat_filter]]
-[command]*`filter`* Filterfunktion um Nachrichten in Buffern zu aus- oder einzublenden, dazu können Tags oder regulären Ausdrücken verwendet werden::
+[command]*`filter`* Filterfunktion um Nachrichten in Buffern aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden::
 ........................................
 /filter  list
          enable|disable|toggle [<name>]
@@ -214,7 +214,7 @@ disable: Filter deaktivieren
          - "*" anwenden auf alle Buffer
          - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
          - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
-   tags: durch Kommata  getrennte Liste mit Tags. Zum Beispiel: "irc_join,irc_part,irc_quit"
+   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
   regex: regulärer Ausdruck um in einer Zeile zu suchen
          - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
          - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)

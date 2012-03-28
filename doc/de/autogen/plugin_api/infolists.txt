@@ -62,6 +62,6 @@
 
 | weechat | window | Auflistung der Fenster | Fenster Pointer (optional) | "current" für aktuelles Fenster oder die Nummer eines Fensters (optional)
 
-| xfer | xfer | Transfer-Liste | Transfer-Pointer (optional) | -
+| xfer | xfer | Transferliste | Transferpointer (optional) | -
 
 |========================================

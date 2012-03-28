@@ -44,12 +44,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
-** Beschreibung: `Die Annahme einer Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
+** Beschreibung: `Eine Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
-** Beschreibung: `Die Annahme von Daten wird automatisch akzeptiert (Vorsicht!)`
+** Beschreibung: `Eine Datenübertragung wird automatisch angenommen (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -59,12 +59,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
-** Beschreibung: `Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung getrennt wurde`
+** Beschreibung: `Falls eine Verbindung getrennt wurde dann wird eine abgebrochene Übertragungen automatisch fortsetzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** Beschreibung: `Ein Leerzeichen wird in einen Unterstrich gewandelt wenn Daten versendet werden`
+** Beschreibung: `Beim Versenden von Dateien werden Leerzeichen im Dateinamen durch einen Unterstrich ersetzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -79,7 +79,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"~"`)
 
 * [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
-** Beschreibung: `Nutzt den Nick des Versenders als Präfix für Dateinamen, wenn Daten empfangen werden`
+** Beschreibung: `Beim Empfang von Dateien wird der Nickname des Versenders dem Dateinamen vorangestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -99,7 +99,7 @@
 ** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
 * [[option_xfer.network.fast_send]] *xfer.network.fast_send*
-** Beschreibung: `Wartet beim Versenden von Dateien nicht auf das Bestätigungssignal (ACK)`
+** Beschreibung: `Wartet beim Versenden von Dateien nicht auf ein Bestätigungssignal (ACK)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

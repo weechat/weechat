@@ -7,7 +7,7 @@ Message: zu sendende Nachricht
 ........................................
 
 [[command_xfer_xfer]]
-[command]*`xfer`* Transferkontolle::
+[command]*`xfer`* Kontrolle der Übertragung(en)::
 ........................................
 /xfer  [list|listfull]
 

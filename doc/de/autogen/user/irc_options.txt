@@ -174,7 +174,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** Beschreibung: `Eine durch Kommata getrennte Liste von Tags die eine Nachricht hervorheben soll (Highlight), falls die Nachricht einen entsprechenden Tag besitzt (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
+** Beschreibung: `Eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
@@ -254,12 +254,12 @@
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** Beschreibung: `Durch Kommata getrennte Liste von Tags die in der Nachricht von notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet (Rückgabe vom Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
+** Beschreibung: `Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet (Rückgabe vom Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** Beschreibung: `Durch Kommata getrennte Liste von Tags die in der Nachricht von notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
+** Beschreibung: `Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
@@ -279,7 +279,7 @@
 ** Werte: merge_with_core, merge_without_core, independent (Standardwert: `merge_with_core`)
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** Beschreibung: `Filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter im tag "irc_smart_filter" erstellt werden.`
+** Beschreibung: `Filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

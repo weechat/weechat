@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
-"PO-Revision-Date: 2012-03-13 16:36+0100\n"
+"POT-Creation-Date: 2012-03-28 18:08+0200\n"
+"PO-Revision-Date: 2012-03-27 22:46+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -263,7 +263,7 @@ msgstr "Debug-Modus für \"%s\" deaktiviert"
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
-msgstr "  %s[%s%s%s]%s Buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr "  %s[%s%s%s]%s Buffer: %s%s%s / Schlagwörter: %s / regex: %s %s"
 
 msgid "(disabled)"
 msgstr "(deaktiviert)"
@@ -299,8 +299,8 @@ msgstr "%sFehler: Filter \"%s\" existiert bereits"
 #, c-format
 msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
-"%sFehler: Für Filter muss ein tag oder ein regulärer Ausdruck spezifiziert "
-"werden"
+"%sFehler: Für Filter muss ein Schlagwort oder ein regulärer Ausdruck "
+"spezifiziert werden"
 
 #, c-format
 msgid "Filter \"%s\" added:"
@@ -1216,15 +1216,15 @@ msgstr ""
 "infolists: zeigt Information über die Infolists an\n"
 "   memory: gibt Informationen über den genutzten Speicher aus\n"
 "    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus\n"
-"     tags: zeigt für jede einzelne Zeile die dazugehörigen Tags an\n"
+"     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an\n"
 "     term: gibt Informationen über das Terminal und verfügbare Farben aus\n"
 "  windows: zeigt die Fensterstruktur an"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
-"Filterfunktion um Nachrichten in Buffern zu aus- oder einzublenden, dazu "
-"können Tags oder regulären Ausdrücken verwendet werden"
+"Filterfunktion um Nachrichten in Buffern aus- oder einzublenden, dazu können "
+"Schlagwörter oder reguläre Ausdrücke verwendet werden"
 
 msgid ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
@@ -1303,8 +1303,8 @@ msgstr ""
 "genutzt\n"
 "         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer "
 "auszuwählen\n"
-"   tags: durch Kommata  getrennte Liste mit Tags. Zum Beispiel: \"irc_join,"
-"irc_part,irc_quit\"\n"
+"   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "
+"\"irc_join,irc_part,irc_quit\"\n"
 "  regex: regulärer Ausdruck um in einer Zeile zu suchen\n"
 "         - das Präfix (z.B. Nick) wird mittels '\\t' von der Nachricht "
 "getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\\|' "
@@ -3036,8 +3036,9 @@ msgstr "Hintergrundfarbe in der das Lesezeichen angezeigt werden soll"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr ""
-"Textfarbe für die Anzeige der Tags nach der jeweiligen Nachricht (wird durch "
-"den Befehl \"/debug tags\" angezeigt)"
+"Textfarbe in der die Schlagwörter, die nach der jeweiligen Nachricht "
+"angezeigt werden, dargestellt werden sollen (wird durch den Befehl \"/debug "
+"tags\" angezeigt)"
 
 msgid "text color for marker on lines where text sought is found"
 msgstr "Farbe zur Hervorhebung des gesuchten Textes in einer Zeile"
@@ -3206,11 +3207,12 @@ msgstr ""
 "Wert für die maximale Anzahl der angezeigten Befehle im Verlaufsspeicher, "
 "die mittels /history angezeigt werden (0: unbegrenzt)"
 
-#, fuzzy
 msgid ""
 "timeout (in seconds) for connection to a remote host (made in a child "
 "process)"
-msgstr "Zeitüberschreitung für gnutls handshake (in Sekunden)"
+msgstr ""
+"Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten "
+"Rechner (mittels einem Kindprozess)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
@@ -4790,9 +4792,8 @@ msgstr "Information über den Server abfragen"
 msgid "invite a nick on a channel"
 msgstr "Jemanden in einen Channel einladen"
 
-#, fuzzy
 msgid "<nick> [<nick>...] [<channel>]"
-msgstr "<nick> [<nick>...]"
+msgstr "<nick> [<nick>...] [<channel>]"
 
 msgid ""
 "   nick: nick to invite\n"
@@ -6094,10 +6095,9 @@ msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
 msgstr ""
-"Eine durch Kommata getrennte Liste von Tags die eine Nachricht hervorheben "
-"soll (Highlight), falls die Nachricht einen entsprechenden Tag besitzt "
-"(normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen "
-"Nachrichten vom Server,..)"
+"Eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht "
+"hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede "
+"Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)"
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
@@ -6121,9 +6121,9 @@ msgid ""
 "joins or quits server (result of command ison), for example: "
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
-"Durch Kommata getrennte Liste von Tags die in der Nachricht von notify "
-"ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet "
-"(Rückgabe vom Befehl ison), zum Beispiel: \"notify_highlight\","
+"Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von "
+"notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder "
+"abmeldet (Rückgabe vom Befehl ison), zum Beispiel: \"notify_highlight\","
 "\"notify_message\" oder \"notify_private\""
 
 msgid ""
@@ -6131,10 +6131,10 @@ msgid ""
 "away status changes (result of command whois), for example: "
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
-"Durch Kommata getrennte Liste von Tags die in der Nachricht von notify "
-"ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom "
-"Befehl whois), zum Beispiel: \"notify_highlight\", \"notify_message\" oder "
-"\"notify_private\""
+"Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von "
+"notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt "
+"(Rückgabe vom Befehl whois), zum Beispiel: \"notify_highlight\", "
+"\"notify_message\" oder \"notify_private\""
 
 msgid "close buffer when /part is issued on a channel"
 msgstr "Schließt den Buffer wenn \"/part\" im Channel ausgeführt wird"
@@ -6152,8 +6152,8 @@ msgid ""
 "minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 "Filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im "
-"Channel inaktiv gewesen ist. Dazu muss ein Filter im tag \"irc_smart_filter"
-"\" erstellt werden."
+"Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "
+"\"irc_smart_filter\" erstellt werden."
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
@@ -7099,9 +7099,9 @@ msgstr ""
 msgid "%s%s: not enough memory"
 msgstr "%s%s: Nicht genügend Speicher"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: timeout"
-msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+msgstr "%s%s: Zeitüberschreitung"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -8374,10 +8374,11 @@ msgstr ""
 "Name des Skripts (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
 "(optional)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s%s: Fehlerhafte Argumente für die Funktion \"%s\" (Skript: %s)"
+msgstr ""
+"%s%s: Warnung, Pointer (\"%s\") ungültig für Funktion \"%s\" (Skript: %s)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -8612,7 +8613,7 @@ msgid "%s%s: can't find xfer for buffer \"%s\""
 msgstr "%s%s: Kann keinen Transfer für Buffer \"%s\" finden"
 
 msgid "Xfer list:"
-msgstr "Transfer-Liste:"
+msgstr "Übertragungsliste:"
 
 #, c-format
 msgid ""
@@ -8647,13 +8648,13 @@ msgid "no"
 msgstr "keine"
 
 msgid "No xfer"
-msgstr "Kein Transfer (xfer)"
+msgstr "keine Übertragung"
 
 msgid "send a CTCP action to remote host"
 msgstr "Sendet CTCP Aktion an entfernten Host"
 
 msgid "xfer control"
-msgstr "Transferkontolle"
+msgstr "Kontrolle der Übertragung(en)"
 
 msgid ""
 "    list: list xfer\n"
@@ -8706,7 +8707,7 @@ msgstr "Blockgröße für versendete Pakete (in Bytes)"
 
 msgid "does not wait for ACK when sending file"
 msgstr ""
-"Wartet beim Versenden von Dateien nicht auf das Bestätigungssignal (ACK)"
+"Wartet beim Versenden von Dateien nicht auf ein Bestätigungssignal (ACK)"
 
 msgid ""
 "restricts outgoing files/chats to use only ports in the given range (useful "
@@ -8750,13 +8751,13 @@ msgstr ""
 
 msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
-"Nutzt den Nick des Versenders als Präfix für Dateinamen, wenn Daten "
-"empfangen werden"
+"Beim Empfang von Dateien wird der Nickname des Versenders dem Dateinamen "
+"vorangestellt"
 
 msgid "convert spaces to underscores when sending files"
 msgstr ""
-"Ein Leerzeichen wird in einen Unterstrich gewandelt wenn Daten versendet "
-"werden"
+"Beim Versenden von Dateien werden Leerzeichen im Dateinamen durch einen "
+"Unterstrich ersetzt"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
@@ -8766,20 +8767,20 @@ msgstr ""
 msgid ""
 "automatically resume file transfer if connection with remote host is lost"
 msgstr ""
-"Abgebrochene Übertragungen automatisch fortsetzen, falls die Verbindung "
-"getrennt wurde"
+"Falls eine Verbindung getrennt wurde dann wird eine abgebrochene "
+"Übertragungen automatisch fortsetzt"
 
 msgid "automatically accept incoming files (use carefully!)"
-msgstr "Die Annahme von Daten wird automatisch akzeptiert (Vorsicht!)"
+msgstr "Eine Datenübertragung wird automatisch angenommen (Vorsicht!)"
 
 msgid "automatically accept chat requests (use carefully!)"
-msgstr "Die Annahme einer Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)"
+msgstr "Eine Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)"
 
 msgid "list of xfer"
-msgstr "Transfer-Liste"
+msgstr "Transferliste"
 
 msgid "xfer pointer (optional)"
-msgstr "Transfer-Pointer (optional)"
+msgstr "Transferpointer (optional)"
 
 #, c-format
 msgid "%s%s: unable to create pipe"
@@ -8795,7 +8796,7 @@ msgstr "%s%s: Der Block kann nicht an den Empfänger übertragen werden"
 
 #, c-format
 msgid "%s%s: unable to read ACK from receiver"
-msgstr "%s%s: Es wird keine Zustimmung (ACK) vom Empfänger empfangen"
+msgstr "%s%s: Die Zustimmung (ACK) des Empfängers kann nicht gelesen werden"
 
 #, c-format
 msgid "%s%s: unable to connect to sender"
@@ -8811,7 +8812,7 @@ msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 
 #, c-format
 msgid "%s%s: unable to fork"
-msgstr "%s%s: Kann nicht forken"
+msgstr "%s%s: Kann kein fork erstellen"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"
