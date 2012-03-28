@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 18:08+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-03-27 22:46+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7287,8 +7287,8 @@ msgstr "Protokollierung wurde nicht gestartet"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => Level %d"
 
-#, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+#, fuzzy, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "===\t========== Ende der Rückverfolgung (%d Zeilen) =========="
 
 msgid "logger plugin configuration"
@@ -7379,6 +7379,14 @@ msgid ""
 msgstr ""
 "maximale Anzahl der letzten Zeilen die aus der Protokolldatei dargestellt "
 "werden sollen, sobald ein Buffer geöffnet wird (0 = kein Darstellung)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "Farbe des Abwesenheit-Textes in der Eingabezeile"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "Farbe des eigenen Nicknamens in der Eingabezeile"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

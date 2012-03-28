@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5575,7 +5575,7 @@ msgid "%s: \"%s\" => level %d"
 msgstr ""
 
 #, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
 
 msgid "logger plugin configuration"
@@ -5625,6 +5625,12 @@ msgstr ""
 msgid ""
 "maximum number of lines to display from log file when creating new buffer (0 "
 "= no backlog)"
+msgstr ""
+
+msgid "color for backlog lines"
+msgstr ""
+
+msgid "color for line ending the backlog"
 msgstr ""
 
 msgid ""

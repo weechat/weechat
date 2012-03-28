@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7046,8 +7046,8 @@ msgstr "registro no iniciado"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => nivel %d"
 
-#, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+#, fuzzy, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "===\t========== Fin del último registro (%d líneas) =========="
 
 msgid "logger plugin configuration"
@@ -7134,6 +7134,14 @@ msgid ""
 msgstr ""
 "máximo número de líneas a mostrar del registro cuando se crea un buffer "
 "nuevo (0 = no mostrar nada)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "color para el texto \"ausente\" en al barra de entrada"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "color para el apodo en la barra de entrada"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

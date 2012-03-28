@@ -915,7 +915,7 @@ void
 logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
     struct t_logger_line *last_lines, *ptr_lines;
-    char *pos_message, *error;
+    char *pos_message, *pos_tab, *error;
     time_t datetime, time_now;
     struct tm tm_line;
     int num_lines;
@@ -947,25 +947,21 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
                 datetime = mktime (&tm_line);
             pos_message[0] = '\t';
         }
-        if (pos_message)
-        {
-            if (datetime != 0)
-            {
-                weechat_printf_date_tags (buffer, datetime,
-                                          "no_highlight,notify_none",
-                                          "%s", pos_message + 1);
-            }
-            else
-            {
-                weechat_printf_tags (buffer, "no_highlight,notify_none",
-                                     "%s", ptr_lines->data);
-            }
-        }
-        else
-        {
-            weechat_printf_tags (buffer, "no_highlight,notify_none",
-                                 "%s", ptr_lines->data);
-        }
+        pos_message = (pos_message && (datetime != 0)) ?
+            pos_message + 1 : ptr_lines->data;
+        pos_tab = strchr (pos_message, '\t');
+        if (pos_tab)
+            pos_tab[0] = '\0';
+        weechat_printf_date_tags (buffer, datetime,
+                                  "no_highlight,notify_none",
+                                  "%s%s%s%s%s",
+                                  weechat_color (weechat_config_string (logger_config_color_backlog_line)),
+                                  pos_message,
+                                  (pos_tab) ? "\t" : "",
+                                  (pos_tab) ? weechat_color (weechat_config_string (logger_config_color_backlog_line)) : "",
+                                  (pos_tab) ? pos_tab + 1 : "");
+        if (pos_tab)
+            pos_tab[0] = '\t';
         num_lines++;
         ptr_lines = ptr_lines->next_line;
     }
@@ -974,7 +970,9 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
     if (num_lines > 0)
     {
         weechat_printf_tags (buffer, "no_highlight,notify_none",
-                             _("===\t========== End of backlog (%d lines) =========="),
+                             _("%s===\t%s========== End of backlog (%d lines) =========="),
+                             weechat_color (weechat_config_string (logger_config_color_backlog_end)),
+                             weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                              num_lines);
         weechat_buffer_set (buffer, "unread", "");
     }

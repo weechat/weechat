@@ -39,6 +39,11 @@ int logger_config_loading = 0;
 
 struct t_config_option *logger_config_look_backlog;
 
+/* logger config, color section */
+
+struct t_config_option *logger_config_color_backlog_line;
+struct t_config_option *logger_config_color_backlog_end;
+
 /* logger config, file section */
 
 struct t_config_option *logger_config_file_auto_log;
@@ -377,6 +382,29 @@ logger_config_init ()
         N_("maximum number of lines to display from log file when creating "
            "new buffer (0 = no backlog)"),
         NULL, 0, INT_MAX, "20", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+
+    /* color */
+    ptr_section = weechat_config_new_section (logger_config_file, "color",
+                                              0, 0,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (logger_config_file);
+        return 0;
+    }
+
+    logger_config_color_backlog_line = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "backlog_line", "color",
+        N_("color for backlog lines"),
+        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_color_backlog_end = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "backlog_end", "color",
+        N_("color for line ending the backlog"),
+        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* file */
     ptr_section = weechat_config_new_section (logger_config_file, "file",

@@ -1,3 +1,13 @@
+* [[option_logger.color.backlog_end]] *logger.color.backlog_end*
+** description: `color for line ending the backlog`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
+
+* [[option_logger.color.backlog_line]] *logger.color.backlog_line*
+** description: `color for backlog lines`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
+
 * [[option_logger.file.auto_log]] *logger.file.auto_log*
 ** description: `automatically save content of buffers to files (unless a buffer disables log)`
 ** type: boolean

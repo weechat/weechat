@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6362,7 +6362,7 @@ msgid "%s: \"%s\" => level %d"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
 #, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
 
 #, fuzzy
@@ -6416,6 +6416,14 @@ msgid ""
 "= no backlog)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "távollevő felhasználók nevének színe"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "nevek színe"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

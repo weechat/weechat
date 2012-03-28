@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6388,7 +6388,7 @@ msgid "%s: \"%s\" => level %d"
 msgstr "Сокращение \"%s\" удалено\n"
 
 #, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr ""
 
 #, fuzzy
@@ -6441,6 +6441,14 @@ msgid ""
 "maximum number of lines to display from log file when creating new buffer (0 "
 "= no backlog)"
 msgstr "максимальное количество команд в истории (0 = не ограничено)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "цвет отошедших ников"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "цвет ников"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

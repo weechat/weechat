@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6994,8 +6994,8 @@ msgstr "log nie uruchomiony"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => poziom %d"
 
-#, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+#, fuzzy, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "===\t========== Koniec backloga (%d linii) =========="
 
 msgid "logger plugin configuration"
@@ -7078,6 +7078,14 @@ msgid ""
 msgstr ""
 "maksymalna ilość linii wyświetlana z logu podczas tworzenia nowego bufora (0 "
 "= bez historii)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "kolor elementu nieobecności"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "kolor nicka w pasku danych wejściowych"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

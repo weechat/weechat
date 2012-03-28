@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese\n"
@@ -6865,8 +6865,8 @@ msgstr "ログ保存が開始されていません"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => レベル %d"
 
-#, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+#, fuzzy, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "===\t========== バックログの最後 (%d 行) =========="
 
 msgid "logger plugin configuration"
@@ -6947,6 +6947,14 @@ msgid ""
 "= no backlog)"
 msgstr ""
 "新規バッファの作成時にログファイルから表示する行の最大数 (0 = バックログ無し)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "離席アイテムに使う色"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "インプットバーのニックネームに使う色"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"

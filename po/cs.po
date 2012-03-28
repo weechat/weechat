@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-03-28 15:03+0200\n"
+"POT-Creation-Date: 2012-03-28 21:44+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6802,8 +6802,8 @@ msgstr "logování nebylo spuštěno"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => úroveň %d"
 
-#, c-format
-msgid "===\t========== End of backlog (%d lines) =========="
+#, fuzzy, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "===\t========== Konec zpětného logu (%d řádků) =========="
 
 msgid "logger plugin configuration"
@@ -6886,6 +6886,14 @@ msgid ""
 msgstr ""
 "maximální počet řádek zobrazených z logovacího souboru při vytvořezí nového "
 "bufferu (0 = žádný zpětný log)"
+
+#, fuzzy
+msgid "color for backlog lines"
+msgstr "barva položek, které jsou pryč"
+
+#, fuzzy
+msgid "color for line ending the backlog"
+msgstr "barva přezdívky ve vstupním poli"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
