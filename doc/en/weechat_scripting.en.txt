@@ -99,7 +99,7 @@ Arguments:
 * 'version': string, script version
 * 'license': string, script license
 * 'description': string, short description of script
-* 'shutdown_function': string, name of function called when script is unloaded
+* 'shutdown_function': string, name of function called when script is unloaded (optional)
 * 'charset': string, script charset (optional, if your script is UTF-8, you
   can use blank value here, because UTF-8 is default charset)
 

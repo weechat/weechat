@@ -101,7 +101,7 @@ Argomenti:
 * 'license': stringa, licenza dello script
 * 'description': stringa, breve descrizione dello script
 * 'shutdown_function': stringa, nome della funzione chiamata quando lo script
-  viene scaricato
+  viene scaricato (opzionale)
 * 'charset': stringa, set caratteri dello script (opzionale, se il proprio script è in UTF-8,
   è possibile utilizzare un valore nullo qui, dato che UTF-8 è il set caratteri predefinito)
 
