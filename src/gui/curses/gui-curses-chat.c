@@ -835,7 +835,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                                      1, num_lines, count, lines_displayed,
                                                      simulate,
                                                      CONFIG_BOOLEAN(config_look_color_inactive_prefix));
-            if (chars_displayed < length_allowed)
+            if (!simulate && (chars_displayed < length_allowed))
                 extra_spaces = length_allowed - chars_displayed;
         }
         else
