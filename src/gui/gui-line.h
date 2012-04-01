@@ -91,6 +91,7 @@ extern int gui_line_has_highlight (struct t_gui_line *line);
 extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
                                                 struct t_gui_lines *lines);
 extern void gui_line_compute_prefix_max_length (struct t_gui_lines *lines);
+extern void gui_line_set_prefix_same_nick (struct t_gui_line *line);
 extern void gui_line_mixed_free_buffer (struct t_gui_buffer *buffer);
 extern void gui_line_mixed_free_all (struct t_gui_buffer *buffer);
 extern void gui_line_free (struct t_gui_buffer *buffer,

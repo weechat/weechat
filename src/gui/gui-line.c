@@ -586,6 +586,37 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 }
 
 /*
+ * gui_line_set_prefix_same_nick: set the "prefix_same_nick" flag in a line
+ */
+
+void
+gui_line_set_prefix_same_nick (struct t_gui_line *line)
+{
+    const char *nick, *nick_previous;
+    struct t_gui_line *prev_line;
+
+    /*
+     * check if prefix can be hidden: if nick is the same as previous message
+     * on this buffer
+     */
+    line->data->prefix_same_nick = 0;
+    if (line->data->displayed && !line->data->highlight)
+    {
+        nick = gui_line_get_nick_tag (line);
+        if (nick)
+        {
+            prev_line = gui_line_get_prev_displayed (line);
+            if (prev_line)
+            {
+                nick_previous = gui_line_get_nick_tag (prev_line);
+                if (nick_previous && (strcmp (nick, nick_previous) == 0))
+                    line->data->prefix_same_nick = 1;
+            }
+        }
+    }
+}
+
+/*
  * gui_line_add_to_list: add a line to a "t_gui_lines" structure
  */
 
@@ -604,6 +635,9 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     line->next_line = NULL;
     lines->last_line = line;
 
+    gui_line_set_prefix_same_nick (line);
+
+    /* adjust "prefix_max_length" if this prefix length is > max */
     gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
     if (prefix_length > lines->prefix_max_length)
         lines->prefix_max_length = prefix_length;
@@ -842,7 +876,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     struct t_gui_line_data *new_line_data;
     struct t_gui_window *ptr_win;
     char *message_for_signal;
-    const char *nick, *nick_previous;
+    const char *nick;
     int notify_level, *max_notify_level, lines_removed;
     time_t current_time;
 
@@ -907,18 +941,10 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
 
-    /*
-     * check if prefix can be hidden: if nick is the same as previous message
-     * on this buffer
-     */
-    nick = gui_line_get_nick_tag (new_line);
-    nick_previous = (buffer->own_lines->last_line) ?
-        gui_line_get_nick_tag (buffer->own_lines->last_line) : NULL;
-    new_line->data->prefix_same_nick = (nick && nick_previous && (strcmp (nick, nick_previous) == 0)) ? 1 : 0;
-
     /* get notify level and max notify level for nick in buffer */
     notify_level = gui_line_get_notify_level (new_line);
     max_notify_level = NULL;
+    nick = gui_line_get_nick_tag (new_line);
     if (nick)
         max_notify_level = hashtable_get (buffer->hotlist_max_level_nicks, nick);
     if (max_notify_level
