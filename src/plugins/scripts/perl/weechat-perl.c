@@ -1016,7 +1016,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     }
 #endif
 
-#if defined(PERL_SYS_TERM) && !defined(__FreeBSD__) && !defined(WIN32) && !defined(__CYGWIN__)
+#if defined(PERL_SYS_TERM) && !defined(__FreeBSD__) && !defined(WIN32) && !defined(__CYGWIN__) && !(defined(__APPLE__) && defined(__MACH__))
     /*
      * we call this function on all OS, but NOT on FreeBSD or Cygwin,
      * because it crashes with no reason (bug in Perl?)
