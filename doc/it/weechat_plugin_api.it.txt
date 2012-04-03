@@ -7114,7 +7114,6 @@ Argomenti:
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR': errore inizializzazione GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR': errore di handshake GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': memoria insufficiente
-// TRANSLATION MISSING
 *** 'WEECHAT_HOOK_CONNECT_TIMEOUT': timeout
 ** 'gnutls_rc': valore del risultato di 'gnutls_handshake()'
 ** 'const char *error': valore del risultato di 'gnutls_strerror(gnutls_rc)'
