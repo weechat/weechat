@@ -34,7 +34,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** descrizione: `riordina i colori mirc nei messaggi usando una tabella hash: le chiavi sono "fg,bg" come interi tra -1 (non specificato) e 15, i valori sono i numeri oppure i nomi dei colori di WeeChat (il formato è: "1,-1:colore1;2,7:colore2"), esempio: "1,-1":darkgray;1,2:white,blue" per riordinare dal nero su qualsiasi colore di sfondo a "darkgray" e dal nero su blu a "white,blue"; i colori predefiniti di WeeChat per i codici IRC: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
+** descrizione: `remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"1,-1:darkgray"`)
 
