@@ -3364,11 +3364,10 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
             free (message_without_colors);
         tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
                                                ",");
-        log_printf ("  tags: %s, displayed: %d, highlight: %d, prefix_same_nick: %d",
+        log_printf ("  tags: '%s', displayed: %d, highlight: %d",
                     (tags) ? tags : "(none)",
                     ptr_line->data->displayed,
-                    ptr_line->data->highlight,
-                    ptr_line->data->prefix_same_nick);
+                    ptr_line->data->highlight);
         if (tags)
             free (tags);
         snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date));
@@ -3554,13 +3553,12 @@ gui_buffer_print_log ()
             tags = string_build_with_split_string ((const char **)ptr_line->data->tags_array,
                                                    ",");
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
-                        "displayed:%d, highlight:%d, prefix_same_nick:%d, "
-                        "refresh_needed:%d, prefix:'%s'",
+                        "displayed:%d, highlight:%d, refresh_needed:%d, "
+                        "prefix:'%s'",
                         num, ptr_line->data->y, ptr_line->data->str_time,
                         (tags) ? tags  : "",
                         (int)(ptr_line->data->displayed),
                         (int)(ptr_line->data->highlight),
-                        (int)(ptr_line->data->prefix_same_nick),
                         (int)(ptr_line->data->refresh_needed),
                         ptr_line->data->prefix);
             log_printf ("                     data: '%s'",

@@ -201,49 +201,49 @@ infolists: mostra informazioni sulle liste info
          add <nome> <buffer>[,<buffer>...] <tag> <regex>]
          del <nome>|-all
 
-   list: elenca tutti i filtri
- enable: abilita filtri (i filtri sono abilitati di default)
-disable: disabilita filtri
- toggle: abilita/disabilita filtri
-   nome: nome del filtro
-    add: aggiunge un filtro
-    del: elimina un filtro
-   -all: elimina tutti i filtri
- buffer: elenco separato da virgole di buffer in cui il filtro è attivo:
-         - nome completo che include il plugin (esempio: "irc.freenode.#weechat)
-         - "*" indica tutti i buffer
-         - un nome preceduto da '!' viene escluso
-         - un nome può iniziare o terminare con '*' per includere più buffer
-    tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
-  regex: espressione regolare da cercare nella riga
-         - usare '\t' per separare il prefisso dal messaggio, caratteri speciali come "|" vanno preceduti dal carattere escape: '\|')
-         - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
+   list: list all filters
+ enable: enable filters (filters are enabled by default)
+disable: disable filters
+ toggle: toggle filters
+   name: filter name
+    add: add a filter
+    del: delete a filter
+   -all: delete all filters
+ buffer: comma separated list of buffers where filter is active:
+         - this is full name including plugin (example: "irc.freenode.#weechat")
+         - "*" means all buffers
+         - a name starting with '!' is excluded
+         - name can start or end with '*' to match many buffers
+   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+  regex: regular expression to search in line
+         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+         - two regular expressions are created: one for prefix and one for message
+         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
-         - vengono create due espressioni regolari: una per il prefisso e l'altra per il messaggio
-         - le espressioni regolari non sono sensibili alle maiuscole, possono iniziare con "(?-i)" per diventare sensibili alle maiuscole
+The default key alt+'=' toggles filtering on/off.
 
-Il tasto predefinito alt+'=' abilita/disabilita il filtro.
-
-Tag usati di frequente:
-  no_filter, no_highlight, no_log, log0..log9 (livello di log),
+Tags most commonly used:
+  no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx è il nick nel messaggio),
-  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-Per mostrare i tag per le righe nei buffer: /debug tags
+  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
+  irc_xxx (xxx is command name or number, see /server raw),
+  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+To see tags for lines in buffers: /debug tags
 
-Esempi:
-  usa il filtro intelligente IRC per tutti i buffer:
-     /filter add irc_smart * irc_smart_filter *
-  usa il filtro intelligente IRC su tutti i buffer tranne quelli che contengono "#weechat" nel nome:
-     /filter add irc_smart *,!*weechat* irc_smart_filter
-  filtra tutti i messaggi entrata/uscita/abbandono di IRC:
-     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filtra i nick visualizzati all'ingresso in un canale o con /names:
+Examples:
+  use IRC smart filter on all buffers:
+    /filter add irc_smart * irc_smart_filter *
+  use IRC smart filter on all buffers except those with "#weechat" in name:
+    /filter add irc_smart *,!*#weechat* irc_smart_filter *
+  filter all IRC join/part/quit messages:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
+  filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
-  filtra il nick "tizio" sul canale IRC #weechat:
-    /filter add tizio irc.freenode.#weechat nick_tizio *
-  filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
-    /filter add schifo irc.freenode.#weechat * weechat fa schifo
+  filter nick "toto" on IRC channel #weechat:
+    /filter add toto irc.freenode.#weechat nick_toto *
+  filter lines containing "weechat sucks" on IRC channel #weechat:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
 [[command_weechat_help]]

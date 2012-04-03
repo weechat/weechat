@@ -84,6 +84,58 @@ gui_lines_free (struct t_gui_lines *lines)
 }
 
 /*
+ * gui_line_prefix_is_same_nick_as_previous: return 1 if prefix on line is a
+ *                                           nick and is the same as nick on
+ *                                           previour line, otherwise 0
+ */
+
+int
+gui_line_prefix_is_same_nick_as_previous (struct t_gui_line *line)
+{
+    const char *nick, *nick_previous;
+    struct t_gui_line *prev_line;
+
+    /*
+     * if line is not displayed, has a highlight, or does not have a tag
+     * beginning with "prefix_nick" => display standard prefix
+     */
+    if (!line->data->displayed || line->data->highlight
+        || !gui_line_search_tag_starting_with (line, "prefix_nick"))
+        return 0;
+
+    /* no nick on line => display standard prefix */
+    nick = gui_line_get_nick_tag (line);
+    if (!nick)
+        return 0;
+
+    /*
+     * previous line is not found => display standard prefix
+     */
+    prev_line = gui_line_get_prev_displayed (line);
+    if (!prev_line)
+        return 0;
+
+    /* buffer is not the same as previous line => display standard prefix */
+    if (line->data->buffer != prev_line->data->buffer)
+        return 0;
+
+    /*
+     * previous line does not have a tag beginning with "prefix_nick"
+     * => display standard prefix
+     */
+    if (!gui_line_search_tag_starting_with (prev_line, "prefix_nick"))
+        return 0;
+
+    /* no nick on previous line => display standard prefix */
+    nick_previous = gui_line_get_nick_tag (prev_line);
+    if (!nick_previous)
+        return 0;
+
+    /* prefix can be hidden/replaced if nicks are equal */
+    return (strcmp (nick, nick_previous) == 0) ? 1 : 0;
+}
+
+/*
  * gui_line_get_prefix_for_display: get prefix and its length (for display only)
  *                                  if the prefix can be hidden (same nick as
  *                                  previous message), and if the option is
@@ -94,29 +146,50 @@ gui_lines_free (struct t_gui_lines *lines)
 
 void
 gui_line_get_prefix_for_display (struct t_gui_line *line,
-                                 char **prefix, int *length)
+                                 char **prefix, int *length,
+                                 char **color)
 {
-    if (line->data->prefix_same_nick
-        && CONFIG_STRING(config_look_prefix_same_nick)
-        && CONFIG_STRING(config_look_prefix_same_nick)[0])
+    const char *tag_prefix_nick;
+
+    if (CONFIG_STRING(config_look_prefix_same_nick)
+        && CONFIG_STRING(config_look_prefix_same_nick)[0]
+        && gui_line_prefix_is_same_nick_as_previous (line))
     {
         /* same nick: return empty prefix or value from option */
         if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
         {
-            *prefix = gui_chat_prefix_empty;
-            *length = 0;
+            if (prefix)
+                *prefix = gui_chat_prefix_empty;
+            if (length)
+                *length = 0;
+            if (color)
+                *color = NULL;
         }
         else
         {
-            *prefix = CONFIG_STRING(config_look_prefix_same_nick);
-            *length = config_length_prefix_same_nick;
+            if (prefix)
+                *prefix = CONFIG_STRING(config_look_prefix_same_nick);
+            if (length)
+                *length = config_length_prefix_same_nick;
+            if (color)
+            {
+                *color = NULL;
+                tag_prefix_nick = gui_line_search_tag_starting_with (line,
+                                                                     "prefix_nick_");
+                if (tag_prefix_nick)
+                    *color = (char *)(tag_prefix_nick + 12);
+            }
         }
     }
     else
     {
         /* not same nick: return prefix from line */
-        *prefix = line->data->prefix;
-        *length = line->data->prefix_length;
+        if (prefix)
+            *prefix = line->data->prefix;
+        if (length)
+            *length = line->data->prefix_length;
+        if (color)
+            *color = NULL;
     }
 }
 
@@ -129,7 +202,6 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
                     int with_suffix, int first_line)
 {
     int length_time, length_buffer, length_suffix, prefix_length;
-    char *ptr_prefix;
 
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
@@ -179,7 +251,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return length_time + length_buffer;
     }
 
-    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
 
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {
@@ -421,6 +493,31 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
 }
 
 /*
+ * gui_line_search_tag_starting_with: return pointer on tag starting with "tag",
+ *                                    NULL if such tag is not found
+ */
+
+const char *
+gui_line_search_tag_starting_with (struct t_gui_line *line, const char *tag)
+{
+    int i, length;
+
+    if (!line || !tag)
+        return NULL;
+
+    length = strlen (tag);
+
+    for (i = 0; i < line->data->tags_count; i++)
+    {
+        if (strncmp (line->data->tags_array[i], tag, length) == 0)
+            return line->data->tags_array[i];
+    }
+
+    /* tag not found */
+    return NULL;
+}
+
+/*
  * gui_line_get_nick_tag: get nick in tags: return "xxx" if tag "nick_xxx"
  *                        is found
  */
@@ -428,14 +525,13 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
 const char *
 gui_line_get_nick_tag (struct t_gui_line *line)
 {
-    int i;
+    const char *tag;
 
-    for (i = 0; i < line->data->tags_count; i++)
-    {
-        if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
-            return line->data->tags_array[i] + 5;
-    }
-    return NULL;
+    tag = gui_line_search_tag_starting_with (line, "nick_");
+    if (!tag)
+        return NULL;
+
+    return tag + 5;
 }
 
 /*
@@ -572,47 +668,15 @@ void
 gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 {
     struct t_gui_line *ptr_line;
-    char *ptr_prefix;
     int prefix_length;
 
     lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
     for (ptr_line = lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        gui_line_get_prefix_for_display (ptr_line, &ptr_prefix, &prefix_length);
+        gui_line_get_prefix_for_display (ptr_line, NULL, &prefix_length, NULL);
         if (prefix_length > lines->prefix_max_length)
             lines->prefix_max_length = prefix_length;
-    }
-}
-
-/*
- * gui_line_set_prefix_same_nick: set the "prefix_same_nick" flag in a line
- */
-
-void
-gui_line_set_prefix_same_nick (struct t_gui_line *line)
-{
-    const char *nick, *nick_previous;
-    struct t_gui_line *prev_line;
-
-    /*
-     * check if prefix can be hidden: if nick is the same as previous message
-     * on this buffer
-     */
-    line->data->prefix_same_nick = 0;
-    if (line->data->displayed && !line->data->highlight)
-    {
-        nick = gui_line_get_nick_tag (line);
-        if (nick)
-        {
-            prev_line = gui_line_get_prev_displayed (line);
-            if (prev_line)
-            {
-                nick_previous = gui_line_get_nick_tag (prev_line);
-                if (nick_previous && (strcmp (nick, nick_previous) == 0))
-                    line->data->prefix_same_nick = 1;
-            }
-        }
     }
 }
 
@@ -624,7 +688,6 @@ void
 gui_line_add_to_list (struct t_gui_lines *lines,
                       struct t_gui_line *line)
 {
-    char *ptr_prefix;
     int prefix_length;
 
     if (!lines->first_line)
@@ -635,10 +698,8 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     line->next_line = NULL;
     lines->last_line = line;
 
-    gui_line_set_prefix_same_nick (line);
-
     /* adjust "prefix_max_length" if this prefix length is > max */
-    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
     if (prefix_length > lines->prefix_max_length)
         lines->prefix_max_length = prefix_length;
 
@@ -658,7 +719,6 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
     int i, update_prefix_max_length, prefix_length;
-    char *ptr_prefix;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -684,7 +744,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         }
     }
 
-    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
     update_prefix_max_length =
         (prefix_length == lines->prefix_max_length);
 
@@ -1394,8 +1454,6 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "displayed", line->data->displayed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "highlight", line->data->highlight))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "prefix_same_nick", line->data->prefix_same_nick))
         return 0;
     if (!infolist_new_var_string (ptr_item, "prefix", line->data->prefix))
         return 0;

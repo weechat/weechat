@@ -37,8 +37,6 @@ struct t_gui_line_data
     char **tags_array;                 /* tags for line                     */
     char displayed;                    /* 1 if line is displayed            */
     char highlight;                    /* 1 if line has highlight           */
-    char prefix_same_nick;             /* 1 if prefix can be hidden         */
-                                       /* (same nick as previous message)   */
     char refresh_needed;               /* 1 if refresh asked (free buffer)  */
     char *prefix;                      /* prefix for line (may be NULL)     */
     int prefix_length;                 /* prefix length (on screen)         */
@@ -70,7 +68,8 @@ struct t_gui_lines
 extern struct t_gui_lines *gui_lines_alloc ();
 extern void gui_lines_free (struct t_gui_lines *lines);
 extern void gui_line_get_prefix_for_display (struct t_gui_line *line,
-                                             char **prefix, int *length);
+                                             char **prefix, int *length,
+                                             char **color);
 extern int gui_line_get_align (struct t_gui_buffer *buffer,
                                struct t_gui_line *line,
                                int with_suffix, int first_line);
@@ -86,6 +85,8 @@ extern int gui_line_match_regex (struct t_gui_line *line,
                                  regex_t *regex_message);
 extern int gui_line_match_tags (struct t_gui_line *line, int tags_count,
                                 char **tags_array);
+extern const char *gui_line_search_tag_starting_with (struct t_gui_line *line,
+                                                      const char *tag);
 extern const char *gui_line_get_nick_tag (struct t_gui_line *line);
 extern int gui_line_has_highlight (struct t_gui_line *line);
 extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,

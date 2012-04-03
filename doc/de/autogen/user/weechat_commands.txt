@@ -201,48 +201,48 @@ infolists: zeigt Information über die Infolists an
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: alle Filter auflisten
- enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
-disable: Filter deaktivieren
- toggle: Filter de-/aktivieren
-   name: Name des Filters
-    add: Filter hinzufügen
-    del: Filter entfernen
-   -all: entfernt alle Filter
- buffer: durch Kommata getrennte Liste von Buffern in denen der Filter aktiv sein soll:
-         - ist der vollständige Name eines Buffers inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
-         - "*" anwenden auf alle Buffer
-         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
-         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
-   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
-  regex: regulärer Ausdruck um in einer Zeile zu suchen
-         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
-         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
-         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
-         - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
+   list: list all filters
+ enable: enable filters (filters are enabled by default)
+disable: disable filters
+ toggle: toggle filters
+   name: filter name
+    add: add a filter
+    del: delete a filter
+   -all: delete all filters
+ buffer: comma separated list of buffers where filter is active:
+         - this is full name including plugin (example: "irc.freenode.#weechat")
+         - "*" means all buffers
+         - a name starting with '!' is excluded
+         - name can start or end with '*' to match many buffers
+   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+  regex: regular expression to search in line
+         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+         - two regular expressions are created: one for prefix and one for message
+         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
-Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.
+The default key alt+'=' toggles filtering on/off.
 
-Die am häufigsten gebrauchten Tags lauten:
-  no_filter, no_highlight, no_log, log0..log9 (log Level),
+Tags most commonly used:
+  no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx ist durch den Nicknamen zu ersetzen),
-  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw)
+  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
+  irc_xxx (xxx is command name or number, see /server raw),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen zu lassen.
+To see tags for lines in buffers: /debug tags
 
-Beispiele:
-  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
+Examples:
+  use IRC smart filter on all buffers:
     /filter add irc_smart * irc_smart_filter *
-  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
+  use IRC smart filter on all buffers except those with "#weechat" in name:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filtert alle IRC join/part/quit Nachrichten:
+  filter all IRC join/part/quit messages:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names:" angezeigt werden:
+  filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
-  filtert Nick "toto" im IRC Channel #weechat:
+  filter nick "toto" on IRC channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
+  filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 

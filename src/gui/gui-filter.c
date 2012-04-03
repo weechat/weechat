@@ -133,11 +133,9 @@ void
 gui_filter_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    int line_displayed, lines_hidden, prev_line_changed, line_changed;
+    int line_displayed, lines_hidden;
 
     lines_hidden = 0;
-    prev_line_changed = 0;
-    line_changed = 0;
 
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
 
@@ -154,19 +152,9 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
 
         /* force chat refresh if at least one line changed */
         if (ptr_line->data->displayed != line_displayed)
-        {
-            line_changed = 1;
             gui_buffer_ask_chat_refresh (buffer, 2);
-        }
-        else
-            line_changed = 0;
 
         ptr_line->data->displayed = line_displayed;
-
-        if (line_changed || prev_line_changed)
-            gui_line_set_prefix_same_nick (ptr_line);
-
-        prev_line_changed = line_changed;
 
         if (!line_displayed)
             lines_hidden = 1;

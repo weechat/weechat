@@ -575,8 +575,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int simulate)
 {
     char str_space[] = " ", str_plus[] = "+";
-    char *prefix_no_color, *prefix_highlighted, *ptr_prefix;
-    const char *short_name;
+    char *prefix_no_color, *prefix_highlighted, *ptr_prefix, *ptr_prefix2;
+    char *ptr_prefix_color;
+    const char *short_name, *str_color;
     int i, length, length_allowed, num_spaces, prefix_length, extra_spaces;
     int chars_displayed;
     struct t_gui_lines *mixed_lines;
@@ -738,8 +739,30 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         }
     }
 
+    /* get prefix for display */
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length,
+                                     &ptr_prefix_color);
+    if (ptr_prefix)
+    {
+        ptr_prefix2 = NULL;
+        if (ptr_prefix_color && ptr_prefix_color[0])
+        {
+            str_color = gui_color_get_custom (ptr_prefix_color);
+            if (str_color && str_color[0])
+            {
+                length = strlen (str_color) + strlen (ptr_prefix) + 1;
+                ptr_prefix2 = malloc (length);
+                if (ptr_prefix2)
+                {
+                    snprintf (ptr_prefix2, length, "%s%s",
+                              str_color, ptr_prefix);
+                }
+            }
+        }
+        ptr_prefix = (ptr_prefix2) ? ptr_prefix2 : strdup (ptr_prefix);
+    }
+
     /* display prefix */
-    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length);
     if (ptr_prefix
         && (ptr_prefix[0]
             || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
@@ -921,6 +944,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    lines_displayed, simulate, 0);
         }
     }
+    if (ptr_prefix)
+        free (ptr_prefix);
 }
 
 /*

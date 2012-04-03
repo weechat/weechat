@@ -226,7 +226,7 @@ The default key alt+'=' toggles filtering on/off.
 Tags most commonly used:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message),
+  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
   irc_xxx (xxx is command name or number, see /server raw),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 To see tags for lines in buffers: /debug tags

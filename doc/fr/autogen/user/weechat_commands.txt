@@ -226,7 +226,7 @@ La touche par défaut alt+'=' active/désactive le filtrage.
 Les tags les plus couramment utilisés:
   no_filter, no_highlight, no_log, log0..log9 (niveau de log),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx est le pseudo dans le message),
+  nick_xxx (xxx est le pseudo dans le message), prefix_nick_ccc (ccc est la couleur du pseudo),
   irc_xxx (xxx est un nom de commande ou nombre, voir /server raw),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
 Pour voir les tags des lignes affichées: /debug tags
