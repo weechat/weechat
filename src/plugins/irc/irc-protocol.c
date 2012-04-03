@@ -1468,7 +1468,7 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *pos_args, *pos_target;
+    char *pos_args, *pos_target, str_tags[256], *str_color;
     const char *remote_nick;
     int msg_op, msg_voice, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
@@ -1559,10 +1559,14 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             else
             {
                 /* standard message (to "#channel") */
+                str_color = irc_color_for_tags (irc_nick_find_color_name ((ptr_nick) ? ptr_nick->name : nick));
+                snprintf (str_tags, sizeof (str_tags),
+                          "notify_message,prefix_nick_%s",
+                          (str_color) ? str_color : "default");
+                if (str_color)
+                    free (str_color);
                 weechat_printf_tags (ptr_channel->buffer,
-                                     irc_protocol_tags (command,
-                                                        "notify_message",
-                                                        nick),
+                                     irc_protocol_tags (command, str_tags, nick),
                                      "%s%s",
                                      irc_nick_as_prefix (server, ptr_nick,
                                                          (ptr_nick) ? NULL : nick,
@@ -1615,12 +1619,24 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         }
         irc_channel_set_topic (ptr_channel, address);
 
+        if (nick_is_me)
+            str_color = irc_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_self")));
+        else
+        {
+            if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
+                str_color = irc_color_for_tags (irc_nick_find_color_name (nick));
+            else
+                str_color = irc_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_other")));
+        }
+        snprintf (str_tags, sizeof (str_tags),
+                  (nick_is_me) ?
+                  "notify_none,no_highlight,prefix_nick_%s" :
+                  "notify_private,prefix_nick_%s",
+                  (str_color) ? str_color : "default");
+        if (str_color)
+            free (str_color);
         weechat_printf_tags (ptr_channel->buffer,
-                             irc_protocol_tags (command,
-                                                (nick_is_me) ?
-                                                "notify_none,no_highlight" :
-                                                "notify_private",
-                                                nick),
+                             irc_protocol_tags (command, str_tags, nick),
                              "%s%s",
                              irc_nick_as_prefix (server, NULL, nick,
                                                  (nick_is_me) ?

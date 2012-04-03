@@ -45,7 +45,7 @@ void
 irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 {
     struct t_irc_nick *ptr_nick;
-    char *text_decoded;
+    char *text_decoded, str_tags[256], *str_color;
 
     text_decoded = irc_color_decode (text,
                                      weechat_config_boolean (irc_config_network_colors_send));
@@ -61,9 +61,15 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
                                         ptr_server->nick);
         }
 
+        str_color = irc_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_self")));
+        snprintf (str_tags, sizeof (str_tags),
+                  "notify_none,no_highlight,prefix_nick_%s",
+                  (str_color) ? str_color : "default");
+        if (str_color)
+            free (str_color);
         weechat_printf_tags (buffer,
                              irc_protocol_tags ("privmsg",
-                                                "notify_none,no_highlight",
+                                                str_tags,
                                                 (ptr_nick) ? ptr_nick->name : ptr_server->nick),
                              "%s%s",
                              irc_nick_as_prefix (ptr_server,

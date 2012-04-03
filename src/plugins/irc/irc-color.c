@@ -403,3 +403,17 @@ irc_color_modifier_cb (void *data, const char *modifier,
     /* unknown modifier */
     return NULL;
 }
+
+/*
+ * irc_color_for_tags: return color name for tags (replace "," by ":")
+ *                     Note: result must be freed after use
+ */
+
+char *
+irc_color_for_tags (const char *color)
+{
+    if (!color)
+        return NULL;
+
+    return weechat_string_replace (color, ",", ":");
+}
