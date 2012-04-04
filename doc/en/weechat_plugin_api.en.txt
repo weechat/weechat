@@ -6306,6 +6306,31 @@ Arguments:
 * 'tags': comma separated list of tags
 * 'message': message to display
 
+Tags commonly used (non-exhaustive list):
+
+[width="70%",cols="1m,4",options="header"]
+|========================================
+| Tag              | Description
+| no_filter        | Line can not be filtered
+| no_highlight     | No highlight is possible on line
+| no_log           | Line is not written in log file
+| log0 ... log9    | Level of log for line (see `/help logger`)
+| notify_none      | Buffer with line is not added to hotlist
+| notify_message   | Buffer with line is added to hotlist with level "message"
+| notify_private   | Buffer with line is added to hotlist with level "private"
+| notify_highlight | Buffer with line is added to hotlist with level "highlight"
+| nick_xxx         | Message is from nick "xxx"
+| prefix_nick_ccc  | Prefix is a nick with color "ccc"
+| irc_xxx          | IRC message "xxx" (can be a command or a 3-digits number)
+| irc_numeric      | IRC numeric message
+| irc_error        | Error from IRC server
+| irc_action       | Action from a nick (command `/me`)
+| irc_ctcp         | CTCP message
+| irc_ctcp_reply   | Reply to CTCP message
+| irc_smart_filter | IRC message that can be filtered with the "smart filter"
+| away_info        | Message with away info
+|========================================
+
 C example:
 
 [source,C]

@@ -7,6 +7,9 @@ div.sectionbody {
 h5 {
     font-size: 0.95em;
 }
+tt {
+    font-family: monospace;
+}
 span.command {
     background: #EEEEFF;
     border: solid 1px #BBBBDD;

@@ -6384,6 +6384,31 @@ Paramètres :
 * 'tags' : liste d'étiquettes ("tags") séparées par des virgules
 * 'message' : message à afficher
 
+Tags couramment utilisés (liste non exhaustive) :
+
+[width="70%",cols="1m,4",options="header"]
+|========================================
+| Tag              | Description
+| no_filter        | La ligne ne peut pas être filtrée
+| no_highlight     | Aucun highlight n'est possible sur cette ligne
+| no_log           | La ligne n'est pas écrite dans le fichier de log
+| log0 ... log9    | Niveau de log pour la ligne (voir `/help logger`)
+| notify_none      | Le tampon avec la ligne ne sera pas ajouté à la "hotlist"
+| notify_message   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "message"
+| notify_private   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "private"
+| notify_highlight | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "highlight"
+| nick_xxx         | Le message vient du pseudo "xxx"
+| prefix_nick_ccc  | Le préfixe est un pseudo avec la couleur "ccc"
+| irc_xxx          | Message IRC "xxx" (peut-être une commande ou un numérique sur 3 chiffres)
+| irc_numeric      | Message IRC numérique
+| irc_error        | Erreur du serveur IRC
+| irc_action       | Action d'un pseudo (commande `/me`)
+| irc_ctcp         | Message CTCP
+| irc_ctcp_reply   | Réponse à un message CTCP
+| irc_smart_filter | Message IRC qui peut être filtré avec le "smart filter" (filtre intelligent)
+| away_info        | Message avec une info d'absence
+|========================================
+
 Exemple en C :
 
 [source,C]
