@@ -2229,9 +2229,12 @@ IRC_PROTOCOL_CALLBACK(221)
                          (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
                          IRC_COLOR_CHAT_DELIMITERS);
 
-    irc_mode_user_set (server,
-                       (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
-                       1);
+    if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
+    {
+        irc_mode_user_set (server,
+                           (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3],
+                           1);
+    }
 
     return WEECHAT_RC_OK;
 }
