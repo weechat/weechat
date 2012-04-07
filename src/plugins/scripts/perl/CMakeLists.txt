@@ -23,6 +23,11 @@ weechat-perl-api.h)
 SET_TARGET_PROPERTIES(perl PROPERTIES PREFIX "")
 
 IF(PERL_FOUND)
+  IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    # remove "-arch xxx" on Mac OS X
+    STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_CFLAGS "${PERL_CFLAGS}")
+    STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_LFLAGS "${PERL_LFLAGS}")
+  ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   ADD_DEFINITIONS(${PERL_CFLAGS})
   INCLUDE_DIRECTORIES(${PERL_INCLUDE_PATH})
   # ugly hack to force linking against Dynaloader.a
