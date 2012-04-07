@@ -614,9 +614,9 @@
 ** values: 0 .. 128 (default value: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** description: `display '+' if prefix is truncated`
-** type: boolean
-** values: on, off (default value: `on`)
+** description: `char to display if prefix is truncated (must be exactly one char on screen)`
+** type: string
+** values: any string (default value: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** description: `prefix alignment for buffer name, when many buffers are merged with same number (none, left, right (default))`
@@ -629,9 +629,9 @@
 ** values: 0 .. 128 (default value: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** description: `display '+' if buffer name is truncated (when many buffers are merged with same number)`
-** type: boolean
-** values: on, off (default value: `on`)
+** description: `char to display if buffer name is truncated (when many buffers are merged with same number) (must be exactly one char on screen)`
+** type: string
+** values: any string (default value: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** description: `prefix for error messages`

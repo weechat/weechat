@@ -42,6 +42,7 @@
 #include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-network.h"
+#include "wee-utf8.h"
 #include "wee-util.h"
 #include "wee-list.h"
 #include "wee-proxy.h"
@@ -562,6 +563,39 @@ config_change_prefix_align_min (void *data, struct t_config_option *option)
 
     config_compute_prefix_max_length_all_buffers ();
     gui_window_ask_refresh (1);
+}
+
+/*
+ * config_check_prefix_align_more: check string "prefix align more" (must be
+ *                                 max one char wide on screen)
+ */
+
+int
+config_check_prefix_align_more (void *data, struct t_config_option *option,
+                                const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    return (utf8_strlen_screen (value) == 1) ? 1 : 0;
+}
+
+/*
+ * config_check_prefix_buffer_align_more: check string "prefix buffer align more"
+ *                                        (must be max one char wide on screen)
+ */
+
+int
+config_check_prefix_buffer_align_more (void *data,
+                                       struct t_config_option *option,
+                                       const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    return (utf8_strlen_screen (value) == 1) ? 1 : 0;
 }
 
 /*
@@ -2069,9 +2103,11 @@ config_weechat_init_options ()
         NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_prefix_align_min, NULL, NULL, NULL);
     config_look_prefix_align_more = config_file_new_option (
         weechat_config_file, ptr_section,
-        "prefix_align_more", "boolean",
-        N_("display '+' if prefix is truncated"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+        "prefix_align_more", "string",
+        N_("char to display if prefix is truncated (must be exactly one char "
+           "on screen)"),
+        NULL, 0, 0, "+", NULL, 0,
+        &config_check_prefix_align_more, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_buffer_align = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_buffer_align", "integer",
@@ -2086,10 +2122,11 @@ config_weechat_init_options ()
         NULL, 0, 128, "0", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_buffer_align_more = config_file_new_option (
         weechat_config_file, ptr_section,
-        "prefix_buffer_align_more", "boolean",
-        N_("display '+' if buffer name is truncated (when many buffers are "
-           "merged with same number)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+        "prefix_buffer_align_more", "string",
+        N_("char to display if buffer name is truncated (when many buffers are "
+           "merged with same number) (must be exactly one char on screen)"),
+        NULL, 0, 0, "+", NULL, 0,
+        &config_check_prefix_buffer_align_more, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_same_nick = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_same_nick", "string",

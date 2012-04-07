@@ -7,6 +7,8 @@ v0.3.8-dev, 2012-04-07
 Version 0.3.8 (under dev!)
 --------------------------
 
+* core: convert options weechat.look.prefix_align_more and
+  weechat.look.prefix_buffer_align_more from boolean to string (task #11197)
 * core: fix display bug with prefix when length is greater than max and prefix
   is ending with a wide char (bug #36032)
 * core: add option weechat.look.prefix_same_nick (hide or change prefix on

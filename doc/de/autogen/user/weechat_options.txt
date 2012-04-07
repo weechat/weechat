@@ -614,9 +614,9 @@
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** Beschreibung: `Anzeige eines '+' falls das Präfix abgeschnitten ist`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
+** Beschreibung: `char to display if prefix is truncated (must be exactly one char on screen)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** Beschreibung: `Einstellung des Präfix für den Buffer-Namen falls viele Buffer zu einem Buffer zusammengefügt wurden (keine = none, links = left, rechts = right (Standardwert))`
@@ -629,9 +629,9 @@
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** Beschreibung: `Stellt das Symbol '+' dar falls der Buffername gekürzt wurde (wenn mehrere Buffer zusammengefügt wurden und diese somit die selbe Nummer besitzen)`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
+** Beschreibung: `char to display if buffer name is truncated (when many buffers are merged with same number) (must be exactly one char on screen)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** Beschreibung: `Präfix für Fehlermeldungen`

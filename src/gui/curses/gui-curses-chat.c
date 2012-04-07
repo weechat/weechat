@@ -574,7 +574,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  int *lines_displayed,
                                  int simulate)
 {
-    char str_space[] = " ", str_plus[] = "+";
+    char str_space[] = " ";
     char *prefix_no_color, *prefix_highlighted, *ptr_prefix, *ptr_prefix2;
     char *ptr_prefix_color;
     const char *short_name, *str_color;
@@ -702,8 +702,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
             }
             gui_chat_display_word (window, line,
-                                   (CONFIG_BOOLEAN(config_look_prefix_buffer_align_more)) ?
-                                   str_plus : str_space,
+                                   CONFIG_STRING(config_look_prefix_buffer_align_more),
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer));
@@ -903,8 +902,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
             }
             gui_chat_display_word (window, line,
-                                   (CONFIG_BOOLEAN(config_look_prefix_align_more)) ?
-                                   str_plus : str_space,
+                                   CONFIG_STRING(config_look_prefix_align_more),
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix));

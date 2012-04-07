@@ -614,9 +614,9 @@
 ** valori: 0 .. 128 (valore predefinito: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** descrizione: `mostra '+' se il prefisso è troncato`
-** tipo: bool
-** valori: on, off (valore predefinito: `on`)
+** descrizione: `char to display if prefix is truncated (must be exactly one char on screen)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** descrizione: `prefisso di allineamento per il nome del buffer, quando più buffer vengono uniti con lo stesso numero (none (nessuno), left(sinistra), right(destra - predefinito)`
@@ -629,9 +629,9 @@
 ** valori: 0 .. 128 (valore predefinito: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** descrizione: `visualizza '+' se il nome del buffer è troncato (quando più buffer sono uniti con lo stesso numero)`
-** tipo: bool
-** valori: on, off (valore predefinito: `on`)
+** descrizione: `char to display if buffer name is truncated (when many buffers are merged with same number) (must be exactly one char on screen)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** descrizione: `prefisso per i messaggi di errore`
