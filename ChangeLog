@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-dev, 2012-04-07
+v0.3.8-dev, 2012-04-08
 
 
 Version 0.3.8 (under dev!)
@@ -26,6 +26,8 @@ Version 0.3.8 (under dev!)
   given to plugin API functions (warning displayed if debug for plugin is >= 1)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"
 * guile: add missing function "hook_process_hashtable" in API
+* irc: add option "-pending" for command /disconnect (cancel auto-reconnection
+  on servers currently reconnecting) (task #11985)
 * irc: set user modes only if target nick is self nick in message 221
   (patch #7754)
 * irc: force the clear of nicklist when joining a channel (nicklist was not sync

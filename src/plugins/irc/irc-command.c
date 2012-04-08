@@ -1461,6 +1461,19 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
         }
+        else if (weechat_strcasecmp (argv[1], "-pending") == 0)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (!ptr_server->is_connected
+                    && (ptr_server->reconnect_start != 0))
+                {
+                    if (!irc_command_disconnect_one_server (ptr_server, reason))
+                        disconnect_ok = 0;
+                }
+            }
+        }
         else
         {
             ptr_server = irc_server_search (argv[1]);
@@ -4994,11 +5007,13 @@ irc_command_init ()
                           NULL, &irc_command_die, NULL);
     weechat_hook_command ("disconnect",
                           N_("disconnect from one or all IRC servers"),
-                          N_("[<server>|-all [<reason>]]"),
-                          N_("server: server name to disconnect\n"
-                             "  -all: disconnect from all servers\n"
-                             "reason: reason for quit"),
-                          "%(irc_servers)|-all",
+                          N_("[<server>|-all|-pending [<reason>]]"),
+                          N_("  server: server name to disconnect\n"
+                             "    -all: disconnect from all servers\n"
+                             "-pending: cancel auto-reconnection on servers "
+                             "currently reconnecting\n"
+                             "  reason: reason for quit"),
+                          "%(irc_servers)|-all|-pending",
                           &irc_command_disconnect, NULL);
     weechat_hook_command ("halfop",
                           N_("give channel half-operator status to "
