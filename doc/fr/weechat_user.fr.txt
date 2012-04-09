@@ -2096,7 +2096,8 @@ Empaqueteurs::
 Traductions::
     Jiri Golembiovsky (GolemJ), soltys, Nils Görs (nils_2), rettub,
     Frank Zacharias, Pavel Shevchuk, Elián Hanisch (m4v), Voroskoi,
-    Marco Paolone, Ivan Sichmann Freitas, Lázaro A., Ryuunosuke Ayanokouzi
+    Marco Paolone, Ivan Sichmann Freitas, Lázaro A., Ryuunosuke Ayanokouzi,
+    Quico Noizeux
 
 Patchs::
     Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
