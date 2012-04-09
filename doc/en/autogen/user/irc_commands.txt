@@ -143,11 +143,12 @@ target: server name
 [[command_irc_disconnect]]
 [command]*`disconnect`* disconnect from one or all IRC servers::
 ........................................
-/disconnect  [<server>|-all [<reason>]]
+/disconnect  [<server>|-all|-pending [<reason>]]
 
-server: server name to disconnect
-  -all: disconnect from all servers
-reason: reason for quit
+  server: server name to disconnect
+    -all: disconnect from all servers
+-pending: cancel auto-reconnection on servers currently reconnecting
+  reason: reason for quit
 ........................................
 
 [[command_irc_halfop]]

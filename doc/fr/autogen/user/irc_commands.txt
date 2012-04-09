@@ -143,11 +143,12 @@ cible: nom du serveur
 [[command_irc_disconnect]]
 [command]*`disconnect`* se déconnecter d'un ou de tous les serveurs IRC::
 ........................................
-/disconnect  [<serveur>|-all [<raison>]]
+/disconnect  [<serveur>|-all|-pending [<raison>]]
 
-serveur: nom du serveur pour se déconecter
-   -all: se déconnecter de tous les serveurs
- raison: raison pour le quit
+ serveur: nom du serveur pour se déconecter
+    -all: se déconnecter de tous les serveurs
+-pending: annuler la reconnexion automatique sur les serveurs en cours de reconnexion
+  raison: raison pour le quit
 ........................................
 
 [[command_irc_halfop]]
