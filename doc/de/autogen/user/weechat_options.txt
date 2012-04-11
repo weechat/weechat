@@ -279,7 +279,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** Beschreibung: `Nach Nick-Vervollständigung anzufügende Zeichenfolge`
+** Beschreibung: `string inserted after nick completion (when nick is first word on command line)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `":"`)
 

@@ -279,7 +279,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** description: `string inserted after nick completion`
+** description: `string inserted after nick completion (when nick is first word on command line)`
 ** type: string
 ** values: any string (default value: `":"`)
 

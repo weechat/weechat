@@ -279,7 +279,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** description: `chaîne affichée après la complétion des pseudos`
+** description: `chaîne insérée après la complétion du pseudo (quand le pseudo est le premier mot sur la ligne de commande)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `":"`)
 

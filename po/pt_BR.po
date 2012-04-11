@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-04-08 10:09+0200\n"
+"POT-Creation-Date: 2012-04-11 22:23+0200\n"
 "PO-Revision-Date: 2012-02-26 09:16+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2950,10 +2950,13 @@ msgstr ""
 "adiciona espaço após a completação de apelido (quando o apelido não é a "
 "primeira palavra na linha de comando)"
 
-# Find a better translation to string
 #, fuzzy
-msgid "string inserted after nick completion"
-msgstr "string inserida após a completação de apelido"
+msgid ""
+"string inserted after nick completion (when nick is first word on command "
+"line)"
+msgstr ""
+"adiciona espaço após a completação de apelido (quando o apelido não é a "
+"primeira palavra na linha de comando)"
 
 msgid "complete only with first nick found"
 msgstr "completa apenas com o primeiro apelido encontrado"
@@ -7989,6 +7992,11 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+# Find a better translation to string
+#, fuzzy
+#~ msgid "string inserted after nick completion"
+#~ msgstr "string inserida após a completação de apelido"
 
 #~ msgid "display '+' if prefix is truncated"
 #~ msgstr "mostra '+' se o prefixo está truncado"
