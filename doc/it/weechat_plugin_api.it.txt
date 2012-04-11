@@ -8682,8 +8682,7 @@ Argomenti:
 
 Valore restituito:
 
-* stringa modificata, NULL se nessun cambiamento nella stringa è
-  stato effettuato dal modificatore(i).
+* stringa modificata, NULL in caso di errore
 
 Esempio in C:
 

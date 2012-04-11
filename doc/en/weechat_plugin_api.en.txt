@@ -8631,7 +8631,7 @@ Arguments:
 
 Return value:
 
-* string modified, NULL if no changes in string were made by modifier(s)
+* string modified, NULL if error occurred
 
 C example:
 

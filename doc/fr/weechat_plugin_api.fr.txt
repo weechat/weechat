@@ -8772,8 +8772,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne modifiée, NULL si aucun changement n'a été fait dans la chaîne par le
-  ou les "modifieurs"
+* chaîne modifiée, NULL en cas d'erreur
 
 Exemple en C :
 
