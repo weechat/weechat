@@ -93,8 +93,6 @@ gui_main_init ()
 
     gui_color_init ();
 
-    gui_ok = 1;
-
     /* build prefixes according to config */
     gui_chat_prefix_build ();
 

@@ -1301,24 +1301,170 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
 }
 
 /*
+ * gui_chat_draw_formatted_buffer: draw chat window for a formatted buffer
+ */
+
+void
+gui_chat_draw_formatted_buffer (struct t_gui_window *window)
+{
+    struct t_gui_line *ptr_line;
+    int line_pos, count, old_scrolling, old_lines_after;
+
+    /* display at position of scrolling */
+    if (window->scroll->start_line)
+    {
+        ptr_line = window->scroll->start_line;
+        line_pos = window->scroll->start_line_pos;
+    }
+    else
+    {
+        /* look for first line to display, starting from last line */
+        ptr_line = NULL;
+        line_pos = 0;
+        gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
+                                      (-1) * (window->win_chat_height - 1));
+    }
+
+    count = 0;
+
+    if (line_pos > 0)
+    {
+        /* display end of first line at top of screen */
+        count = gui_chat_display_line (window, ptr_line,
+                                       gui_chat_display_line (window,
+                                                              ptr_line,
+                                                              0, 1) -
+                                       line_pos, 0);
+        ptr_line = gui_line_get_next_displayed (ptr_line);
+        window->scroll->first_line_displayed = 0;
+    }
+    else
+        window->scroll->first_line_displayed =
+            (ptr_line == gui_line_get_first_displayed (window->buffer));
+
+    /* display lines */
+    while (ptr_line && (window->win_chat_cursor_y <= window->win_chat_height - 1))
+    {
+        count = gui_chat_display_line (window, ptr_line, 0, 0);
+        ptr_line = gui_line_get_next_displayed (ptr_line);
+    }
+
+    old_scrolling = window->scroll->scrolling;
+    old_lines_after = window->scroll->lines_after;
+
+    window->scroll->scrolling = (window->win_chat_cursor_y > window->win_chat_height - 1);
+
+    /* check if last line of buffer is entirely displayed and scrolling */
+    /* if so, disable scroll indicator */
+    if (!ptr_line && window->scroll->scrolling)
+    {
+        if ((count == gui_chat_display_line (window, gui_line_get_last_displayed (window->buffer), 0, 1))
+            || (count == window->win_chat_height))
+            window->scroll->scrolling = 0;
+    }
+
+    if (!window->scroll->scrolling
+        && (window->scroll->start_line == gui_line_get_first_displayed (window->buffer)))
+    {
+        window->scroll->start_line = NULL;
+        window->scroll->start_line_pos = 0;
+    }
+
+    window->scroll->lines_after = 0;
+    if (window->scroll->scrolling && ptr_line)
+    {
+        /* count number of lines after last line displayed */
+        while (ptr_line)
+        {
+            ptr_line = gui_line_get_next_displayed (ptr_line);
+            if (ptr_line)
+                window->scroll->lines_after++;
+        }
+        window->scroll->lines_after++;
+    }
+
+    if ((window->scroll->scrolling != old_scrolling)
+        || (window->scroll->lines_after != old_lines_after))
+    {
+        hook_signal_send ("window_scrolled",
+                          WEECHAT_HOOK_SIGNAL_POINTER, window);
+    }
+
+    if (!window->scroll->scrolling
+        && window->scroll->reset_allowed)
+    {
+        window->scroll->start_line = NULL;
+        window->scroll->start_line_pos = 0;
+    }
+
+    /* cursor is below end line of chat window? */
+    if (window->win_chat_cursor_y > window->win_chat_height - 1)
+    {
+        window->win_chat_cursor_x = 0;
+        window->win_chat_cursor_y = window->win_chat_height - 1;
+    }
+
+    window->scroll->reset_allowed = 0;
+}
+
+/*
+ *gui_chat_draw_free_buffer: draw chat window for a free buffer
+ */
+
+void
+gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
+{
+    struct t_gui_line *ptr_line;
+    int y_start, y_end, y;
+
+    ptr_line = (window->scroll->start_line) ?
+        window->scroll->start_line : window->buffer->lines->first_line;
+    if (ptr_line)
+    {
+        if (!ptr_line->data->displayed)
+            ptr_line = gui_line_get_next_displayed (ptr_line);
+        if (ptr_line)
+        {
+            y_start = (window->scroll->start_line) ? ptr_line->data->y : 0;
+            y_end = y_start + window->win_chat_height - 1;
+            while (ptr_line && (ptr_line->data->y <= y_end))
+            {
+                y = ptr_line->data->y - y_start;
+                if (y < window->coords_size)
+                {
+                    window->coords[y].line = ptr_line;
+                    window->coords[y].data = ptr_line->data->message;
+                }
+                if (ptr_line->data->refresh_needed || clear_chat)
+                {
+                    gui_chat_display_line_y (window, ptr_line,
+                                             y);
+                }
+                ptr_line = gui_line_get_next_displayed (ptr_line);
+            }
+        }
+    }
+}
+
+/*
  * gui_chat_draw: draw chat window for a buffer
  */
 
 void
-gui_chat_draw (struct t_gui_buffer *buffer, int erase)
+gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_line *ptr_line;
     char format_empty[32];
-    int i, line_pos, count, old_scrolling, old_lines_after;
-    int y_start, y_end, y;
+    int i;
 
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->buffer->number == buffer->number)
+        if ((ptr_win->buffer->number == buffer->number)
+            && (ptr_win->win_chat_x >= 0) && (ptr_win->win_chat_y >= 0))
         {
             gui_window_coords_alloc (ptr_win);
 
@@ -1327,7 +1473,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                                   GUI_COLOR_CHAT_INACTIVE_BUFFER,
                                   GUI_COLOR_CHAT);
 
-            if (erase)
+            if (clear_chat)
             {
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
@@ -1343,132 +1489,14 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             switch (ptr_win->buffer->type)
             {
                 case GUI_BUFFER_TYPE_FORMATTED:
-                    /* display at position of scrolling */
-                    if (ptr_win->scroll->start_line)
-                    {
-                        ptr_line = ptr_win->scroll->start_line;
-                        line_pos = ptr_win->scroll->start_line_pos;
-                    }
+                    /* min 2 lines for chat area */
+                    if (ptr_win->win_chat_height < 2)
+                        mvwprintw (GUI_WINDOW_OBJECTS(ptr_win)->win_chat, 0, 0, "...");
                     else
-                    {
-                        /* look for first line to display, starting from last line */
-                        ptr_line = NULL;
-                        line_pos = 0;
-                        gui_chat_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
-                                                      (-1) * (ptr_win->win_chat_height - 1));
-                    }
-
-                    count = 0;
-
-                    if (line_pos > 0)
-                    {
-                        /* display end of first line at top of screen */
-                        count = gui_chat_display_line (ptr_win, ptr_line,
-                                                       gui_chat_display_line (ptr_win,
-                                                                              ptr_line,
-                                                                              0, 1) -
-                                                       line_pos, 0);
-                        ptr_line = gui_line_get_next_displayed (ptr_line);
-                        ptr_win->scroll->first_line_displayed = 0;
-                    }
-                    else
-                        ptr_win->scroll->first_line_displayed =
-                            (ptr_line == gui_line_get_first_displayed (ptr_win->buffer));
-
-                    /* display lines */
-                    while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
-                    {
-                        count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
-                        ptr_line = gui_line_get_next_displayed (ptr_line);
-                    }
-
-                    old_scrolling = ptr_win->scroll->scrolling;
-                    old_lines_after = ptr_win->scroll->lines_after;
-
-                    ptr_win->scroll->scrolling = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
-
-                    /* check if last line of buffer is entirely displayed and scrolling */
-                    /* if so, disable scroll indicator */
-                    if (!ptr_line && ptr_win->scroll->scrolling)
-                    {
-                        if ((count == gui_chat_display_line (ptr_win, gui_line_get_last_displayed (ptr_win->buffer), 0, 1))
-                            || (count == ptr_win->win_chat_height))
-                            ptr_win->scroll->scrolling = 0;
-                    }
-
-                    if (!ptr_win->scroll->scrolling
-                        && (ptr_win->scroll->start_line == gui_line_get_first_displayed (ptr_win->buffer)))
-                    {
-                        ptr_win->scroll->start_line = NULL;
-                        ptr_win->scroll->start_line_pos = 0;
-                    }
-
-                    ptr_win->scroll->lines_after = 0;
-                    if (ptr_win->scroll->scrolling && ptr_line)
-                    {
-                        /* count number of lines after last line displayed */
-                        while (ptr_line)
-                        {
-                            ptr_line = gui_line_get_next_displayed (ptr_line);
-                            if (ptr_line)
-                                ptr_win->scroll->lines_after++;
-                        }
-                        ptr_win->scroll->lines_after++;
-                    }
-
-                    if ((ptr_win->scroll->scrolling != old_scrolling)
-                        || (ptr_win->scroll->lines_after != old_lines_after))
-                    {
-                        hook_signal_send ("window_scrolled",
-                                          WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
-                    }
-
-                    if (!ptr_win->scroll->scrolling
-                        && ptr_win->scroll->reset_allowed)
-                    {
-                        ptr_win->scroll->start_line = NULL;
-                        ptr_win->scroll->start_line_pos = 0;
-                    }
-
-                    /* cursor is below end line of chat window? */
-                    if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
-                    {
-                        ptr_win->win_chat_cursor_x = 0;
-                        ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
-                    }
-
-                    ptr_win->scroll->reset_allowed = 0;
-
+                        gui_chat_draw_formatted_buffer (ptr_win);
                     break;
                 case GUI_BUFFER_TYPE_FREE:
-                    /* display at position of scrolling */
-                    ptr_line = (ptr_win->scroll->start_line) ?
-                        ptr_win->scroll->start_line : buffer->lines->first_line;
-                    if (ptr_line)
-                    {
-                        if (!ptr_line->data->displayed)
-                            ptr_line = gui_line_get_next_displayed (ptr_line);
-                        if (ptr_line)
-                        {
-                            y_start = (ptr_win->scroll->start_line) ? ptr_line->data->y : 0;
-                            y_end = y_start + ptr_win->win_chat_height - 1;
-                            while (ptr_line && (ptr_line->data->y <= y_end))
-                            {
-                                y = ptr_line->data->y - y_start;
-                                if (y < ptr_win->coords_size)
-                                {
-                                    ptr_win->coords[y].line = ptr_line;
-                                    ptr_win->coords[y].data = ptr_line->data->message;
-                                }
-                                if (ptr_line->data->refresh_needed || erase)
-                                {
-                                    gui_chat_display_line_y (ptr_win, ptr_line,
-                                                             y);
-                                }
-                                ptr_line = gui_line_get_next_displayed (ptr_line);
-                            }
-                        }
-                    }
+                    gui_chat_draw_free_buffer (ptr_win, clear_chat);
                     break;
                 case GUI_BUFFER_NUM_TYPES:
                     break;
@@ -1489,19 +1517,4 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     }
 
     buffer->chat_refresh_needed = 0;
-}
-
-/*
- * gui_chat_draw_line: add a line to chat window for a buffer
- */
-
-void
-gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
-{
-    /*
-     * This function does nothing in Curses GUI,
-     * line will be displayed by gui_buffer_draw_chat()
-     */
-    (void) buffer;
-    (void) line;
 }

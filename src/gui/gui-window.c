@@ -58,8 +58,6 @@
 
 
 int gui_init_ok = 0;                            /* = 1 if GUI is initialized*/
-int gui_ok = 0;                                 /* = 1 if GUI is ok         */
-                                                /* (0 when size too small)  */
 int gui_window_refresh_needed = 0;              /* = 1 if refresh needed    */
                                                 /* = 2 for full refresh     */
 struct t_gui_window *gui_windows = NULL;        /* first window             */
@@ -963,7 +961,7 @@ gui_window_free (struct t_gui_window *window)
 void
 gui_window_switch_previous (struct t_gui_window *window)
 {
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     gui_window_switch ((window->prev_window) ?
@@ -977,7 +975,7 @@ gui_window_switch_previous (struct t_gui_window *window)
 void
 gui_window_switch_next (struct t_gui_window *window)
 {
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     gui_window_switch ((window->next_window) ?
@@ -993,7 +991,7 @@ gui_window_switch_by_number (int number)
 {
     struct t_gui_window *ptr_win;
 
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     ptr_win = gui_window_search_by_number (number);
@@ -1010,7 +1008,7 @@ gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 {
     struct t_gui_window *ptr_win;
 
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     ptr_win = (window->next_window) ? window->next_window : gui_windows;
@@ -1567,7 +1565,7 @@ gui_window_search_stop (struct t_gui_window *window)
 void
 gui_window_zoom (struct t_gui_window *window)
 {
-    if (!gui_ok)
+    if (!gui_init_ok)
         return;
 
     if (gui_window_layout_before_zoom)

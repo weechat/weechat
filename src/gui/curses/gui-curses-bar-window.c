@@ -104,41 +104,40 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
         GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = NULL;
     }
 
-    GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar = newwin (bar_window->height,
-                                                          bar_window->width,
-                                                          bar_window->y,
-                                                          bar_window->x);
-
-    if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
+    if ((bar_window->x >= 0) && (bar_window->y >= 0))
     {
-        switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
+        GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar = newwin (bar_window->height,
+                                                              bar_window->width,
+                                                              bar_window->y,
+                                                              bar_window->x);
+
+        if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
         {
-            case GUI_BAR_POSITION_BOTTOM:
-                GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = newwin (1,
-                                                                            bar_window->width,
-                                                                            bar_window->y - 1,
-                                                                            bar_window->x);
-                break;
-            case GUI_BAR_POSITION_TOP:
-                GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = newwin (1,
-                                                                            bar_window->width,
-                                                                            bar_window->y + bar_window->height,
-                                                                            bar_window->x);
-                break;
-            case GUI_BAR_POSITION_LEFT:
-                GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = newwin (bar_window->height,
-                                                                            1,
-                                                                            bar_window->y,
-                                                                            bar_window->x + bar_window->width);
-                break;
-            case GUI_BAR_POSITION_RIGHT:
-                GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator = newwin (bar_window->height,
-                                                                            1,
-                                                                            bar_window->y,
-                                                                            bar_window->x - 1);
-                break;
-            case GUI_BAR_NUM_POSITIONS:
-                break;
+            switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
+            {
+                case GUI_BAR_POSITION_BOTTOM:
+                    GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator =
+                        newwin (1, bar_window->width,
+                                bar_window->y - 1, bar_window->x);
+                    break;
+                case GUI_BAR_POSITION_TOP:
+                    GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator =
+                        newwin (1, bar_window->width,
+                                bar_window->y + bar_window->height, bar_window->x);
+                    break;
+                case GUI_BAR_POSITION_LEFT:
+                    GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator =
+                        newwin (bar_window->height, 1,
+                                bar_window->y, bar_window->x + bar_window->width);
+                    break;
+                case GUI_BAR_POSITION_RIGHT:
+                    GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator =
+                        newwin (bar_window->height, 1,
+                                bar_window->y, bar_window->x - 1);
+                    break;
+                case GUI_BAR_NUM_POSITIONS:
+                    break;
+            }
         }
     }
 }
@@ -401,6 +400,9 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int index_item, index_subitem, index_line;
 
     if (!gui_init_ok)
+        return;
+
+    if ((bar_window->x < 0) || (bar_window->y < 0))
         return;
 
     if (!str_start_input[0])

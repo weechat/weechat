@@ -437,7 +437,6 @@ gui_main_end (int clean_exit)
             gui_buffer_close (gui_buffers);
         }
 
-        gui_ok = 0;
         gui_init_ok = 0;
 
         /* delete global history */

@@ -275,8 +275,8 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
         if ((CONFIG_INTEGER(bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
             || (gui_bar_window_search_bar (ptr_window, bar)))
         {
-            if ((ptr_window->win_chat_width - sub_width < GUI_WINDOW_CHAT_MIN_WIDTH)
-                || (ptr_window->win_chat_height - sub_height < GUI_WINDOW_CHAT_MIN_HEIGHT))
+            if ((ptr_window->win_chat_width - sub_width < 1)
+                || (ptr_window->win_chat_height - sub_height < 1))
                 return 0;
         }
     }

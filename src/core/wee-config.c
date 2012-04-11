@@ -264,7 +264,7 @@ config_change_save_config_on_exit (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit))
+    if (gui_init_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit))
     {
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
@@ -313,7 +313,7 @@ config_change_buffer_content (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok)
+    if (gui_init_ok)
         gui_current_window->refresh_needed = 1;
 }
 
@@ -328,7 +328,7 @@ config_change_mouse (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok)
+    if (gui_init_ok)
     {
         if (CONFIG_BOOLEAN(config_look_mouse))
             gui_mouse_enable ();
@@ -364,7 +364,7 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
 
     gui_chat_time_length = gui_chat_get_time_length ();
     gui_chat_change_time_format ();
-    if (gui_ok)
+    if (gui_init_ok)
         gui_window_ask_refresh (1);
 }
 
@@ -417,7 +417,7 @@ config_change_eat_newline_glitch (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok)
+    if (gui_init_ok)
     {
         if (CONFIG_BOOLEAN(config_look_eat_newline_glitch))
         {
@@ -518,7 +518,7 @@ config_change_paste_bracketed (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok)
+    if (gui_init_ok)
         gui_window_set_bracketed_paste_mode (CONFIG_BOOLEAN(config_look_paste_bracketed));
 }
 
@@ -609,7 +609,7 @@ config_change_color (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (gui_ok)
+    if (gui_init_ok)
     {
         gui_color_init_weechat ();
         gui_window_ask_refresh (1);

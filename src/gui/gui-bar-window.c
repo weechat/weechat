@@ -361,6 +361,18 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
         case GUI_BAR_NUM_POSITIONS:
             break;
     }
+
+    /* bar window can not be displayed? (not enough space left) */
+    if ((bar_window->x < x1) || (bar_window->x > x2)
+        || (bar_window->y < y1) || (bar_window->y > y2)
+        || (bar_window->width < 1) || (bar_window->height < 1))
+    {
+        /* invalidate the bar window, it will not be displayed */
+        bar_window->x = -1;
+        bar_window->y = -1;
+        bar_window->width = 0;
+        bar_window->height = 0;
+    }
 }
 
 /*
@@ -1121,13 +1133,11 @@ gui_bar_window_get_max_size_in_window (struct t_gui_bar_window *bar_window,
         {
             case GUI_BAR_POSITION_BOTTOM:
             case GUI_BAR_POSITION_TOP:
-                max_size = (window->win_chat_height + bar_window->height) -
-                    GUI_WINDOW_CHAT_MIN_HEIGHT;
+                max_size = (window->win_chat_height + bar_window->height) - 1;
                 break;
             case GUI_BAR_POSITION_LEFT:
             case GUI_BAR_POSITION_RIGHT:
-                max_size = (window->win_chat_width + bar_window->width) -
-                    GUI_WINDOW_CHAT_MIN_HEIGHT;
+                max_size = (window->win_chat_width + bar_window->width) - 1;
                 break;
             case GUI_BAR_NUM_POSITIONS:
                 break;
