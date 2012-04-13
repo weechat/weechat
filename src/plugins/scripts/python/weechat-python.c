@@ -113,7 +113,7 @@ weechat_python_set_python2_bin ()
 {
     const char *dir_separator;
     char *path, **paths, bin[4096];
-    char *versions[] = { "2", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", NULL };
+    char *versions[] = { "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2", NULL };
     int num_paths, i, j, rc;
     struct stat stat_buf;
 
@@ -985,12 +985,24 @@ const char *
 weechat_python_info_cb (void *data, const char *info_name,
                         const char *arguments)
 {
+    int rc;
+    struct stat stat_buf;
+
     /* make C compiler happy */
     (void) data;
     (void) arguments;
 
     if (weechat_strcasecmp (info_name, "python2_bin") == 0)
     {
+        if (python2_bin && (strcmp (python2_bin, "python") != 0))
+        {
+            rc = stat (python2_bin, &stat_buf);
+            if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
+            {
+                free (python2_bin);
+                weechat_python_set_python2_bin ();
+            }
+        }
         return python2_bin;
     }
 
