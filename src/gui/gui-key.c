@@ -351,53 +351,6 @@ gui_key_get_expanded_name (const char *key)
 }
 
 /*
- * gui_key_score: compute a score key for sorting keys
- *                (high score == at the end of list)
- */
-
-int
-gui_key_score (struct t_gui_key *key)
-{
-    int score, bonus, area;
-
-    score = 0;
-    bonus = 8;
-
-    if (key->key[0] != '@')
-        return score;
-
-    /* basic score for key with area */
-    score |= 1 << bonus;
-    bonus--;
-
-    /* add score for each area type */
-    for (area = 0; area < 2; area++)
-    {
-        /* bonus if area type is "any" */
-        if (key->area_name[area]
-            && (key->area_type[area] == GUI_KEY_FOCUS_ANY))
-        {
-            score |= 1 << bonus;
-        }
-        bonus--;
-    }
-
-    /* add score for each area name */
-    for (area = 0; area < 2; area++)
-    {
-        /* bonus if area name is "*" */
-        if (key->area_name[area]
-            && (strcmp (key->area_name[area], "*") == 0))
-        {
-            score |= 1 << bonus;
-        }
-        bonus--;
-    }
-
-    return score;
-}
-
-/*
  * gui_key_find_pos: find position for a key (for sorting keys list)
  */
 
@@ -405,14 +358,12 @@ struct t_gui_key *
 gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
 {
     struct t_gui_key *ptr_key;
-    int score1, score2;
 
-    score1 = gui_key_score (key);
     for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        score2 = gui_key_score (ptr_key);
-        if ((score1 < score2)
-            || ((score1 == score2) && (strcmp (key->key, ptr_key->key) < 0)))
+        if ((key->score < ptr_key->score)
+            || ((key->score == ptr_key->score)
+                && (strcmp (key->key, ptr_key->key) < 0)))
         {
             return ptr_key;
         }
@@ -574,6 +525,56 @@ gui_key_set_areas (struct t_gui_key *key)
 }
 
 /*
+ * gui_key_set_score: compute a score key for sorting keys
+ *                    and set it in key
+ *                   (high score == at the end of list)
+ */
+
+void
+gui_key_set_score (struct t_gui_key *key)
+{
+    int score, bonus, area;
+
+    score = 0;
+    bonus = 8;
+
+    key->score = score;
+
+    if (key->key[0] != '@')
+        return;
+
+    /* basic score for key with area */
+    score |= 1 << bonus;
+    bonus--;
+
+    /* add score for each area type */
+    for (area = 0; area < 2; area++)
+    {
+        /* bonus if area type is "any" */
+        if (key->area_name[area]
+            && (key->area_type[area] == GUI_KEY_FOCUS_ANY))
+        {
+            score |= 1 << bonus;
+        }
+        bonus--;
+    }
+
+    /* add score for each area name */
+    for (area = 0; area < 2; area++)
+    {
+        /* bonus if area name is "*" */
+        if (key->area_name[area]
+            && (strcmp (key->area_name[area], "*") == 0))
+        {
+            score |= 1 << bonus;
+        }
+        bonus--;
+    }
+
+    key->score = score;
+}
+
+/*
  * gui_key_new: add a new key in keys list
  *              if buffer is not null, then key is specific to buffer
  *              otherwise it's general key (for most keys)
@@ -607,6 +608,7 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
             return NULL;
         }
         gui_key_set_areas (new_key);
+        gui_key_set_score (new_key);
 
         if (buffer)
         {
@@ -1721,6 +1723,7 @@ gui_key_hdata_key_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_key, area_name, POINTER, NULL);
         HDATA_VAR(struct t_gui_key, area_key, STRING, NULL);
         HDATA_VAR(struct t_gui_key, command, STRING, NULL);
+        HDATA_VAR(struct t_gui_key, score, INTEGER, NULL);
         HDATA_VAR(struct t_gui_key, prev_key, POINTER, hdata_name);
         HDATA_VAR(struct t_gui_key, next_key, POINTER, hdata_name);
         for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
@@ -1789,6 +1792,8 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
         return 0;
     if (!infolist_new_var_string (ptr_item, "command", key->command))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "score", key->score))
+        return 0;
 
     return 1;
 }
@@ -1814,6 +1819,7 @@ gui_key_print_log_key (struct t_gui_key *key, const char *prefix)
     }
     log_printf ("%s  area_key . . . . . : '%s'",  prefix, key->area_key);
     log_printf ("%s  command. . . . . . : '%s'",  prefix, key->command);
+    log_printf ("%s  score. . . . . . . : %d",    prefix, key->score);
     log_printf ("%s  prev_key . . . . . : 0x%lx", prefix, key->prev_key);
     log_printf ("%s  next_key . . . . . : 0x%lx", prefix, key->next_key);
 }
