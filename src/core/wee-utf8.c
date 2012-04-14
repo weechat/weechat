@@ -390,27 +390,39 @@ int
 utf8_strlen_screen (const char *string)
 {
     int length, num_char;
-    wchar_t *wstring;
+    wchar_t *alloc_wstring, *ptr_wstring, wstring[4+2];
 
-    if (!string)
+    if (!string || !string[0])
         return 0;
 
     if (!local_utf8)
         return utf8_strlen (string);
 
-    num_char = mbstowcs (NULL, string, 0) + 1;
-    wstring = malloc ((num_char + 1) * sizeof (wstring[0]));
-    if (!wstring)
-        return utf8_strlen (string);
+    alloc_wstring = NULL;
 
-    if (mbstowcs (wstring, string, num_char) == (size_t)(-1))
+    if (!string[1] || !string[2] || !string[3] || !string[4])
     {
-        free (wstring);
-        return utf8_strlen (string);
+        /* optimization for max 4 chars: no malloc */
+        num_char = 4 + 1;
+        ptr_wstring = wstring;
+    }
+    else
+    {
+        num_char = mbstowcs (NULL, string, 0) + 1;
+        alloc_wstring = malloc ((num_char + 1) * sizeof (alloc_wstring[0]));
+        if (!alloc_wstring)
+            return utf8_strlen (string);
+        ptr_wstring = alloc_wstring;
     }
 
-    length = wcswidth (wstring, num_char);
-    free (wstring);
+    if (mbstowcs (ptr_wstring, string, num_char) != (size_t)(-1))
+        length = wcswidth (ptr_wstring, num_char);
+    else
+        length = utf8_strlen (string);
+
+    if (alloc_wstring)
+        free (alloc_wstring);
+
     return length;
 }
 
