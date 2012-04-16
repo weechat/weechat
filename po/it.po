@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-04-11 22:23+0200\n"
-"PO-Revision-Date: 2012-02-26 09:16+0100\n"
+"POT-Creation-Date: 2012-04-16 13:45+0200\n"
+"PO-Revision-Date: 2012-04-15 17:41+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -1199,7 +1199,6 @@ msgstr ""
 "list || enable|disable|toggle [<nome>] || add <nome> <buffer>[,<buffer>...] "
 "<tag> <regex>] || del <nome>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1287,7 +1286,8 @@ msgstr ""
 "Tag usati di frequente:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (livello di log),\n"
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
-"  nick_xxx (xxx è il nick nel messaggio),\n"
+"  nick_xxx (xxx è il nick nel messaggio) prefix_nick_ccc (ccc è il colore "
+"del nick),\n"
 "  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   "
 "irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
@@ -1349,7 +1349,6 @@ msgstr "funzioni per la riga di comando"
 msgid "<action> [<arguments>]"
 msgstr "<azioni> [<argomenti>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1455,6 +1454,8 @@ msgstr ""
 "  switch_active_buffer: passa al successivo buffer incollato\n"
 "  switch_active_buffer_previous: passa al precedente buffer incollato\n"
 "  insert: inserisci testo nella riga di comando\n"
+"  paste_start: inizio testo da incollare (modalità \"bracketed paste\")\n"
+"  paste_stop: fine testo da incollare (modalità \"bracketed paste\")\n"
 "\n"
 "Questo comando viene usato dalla combinazioni tasti o dai plugin."
 
@@ -2652,17 +2653,24 @@ msgid ""
 "so that WeeChat can differentiate pasted text from typed-in text (\"ESC[200~"
 "\", followed by the pasted text, followed by \"ESC[201~\")"
 msgstr ""
+"abilita la modalità \"bracketed paste\" per il terminale (non supportata da "
+"tutti i terminali/multiplexer): in questa modalità, il testo incollato viene "
+"circondato da sequenze di controllo in modo che WeeChat possa differenziare "
+"il testo incollato dal testo digitato (\"ESC[200~\", seguito dal testo "
+"incollato, seguito da \"ESC[201~\")"
 
 msgid ""
 "force end of bracketed paste after this delay (in seconds) if the control "
 "sequence for end of bracketed paste (\"ESC[201~\") was not received in time"
 msgstr ""
+"forza la fine della modalità \"bracketed paste\" dopo questo ritardo (in "
+"secondi) se la sequenza di controllo per la fine del \"bracketed paste"
+"\" (\"ESC[201~\") non è stata ricevuta in tempo"
 
-#, fuzzy
 msgid ""
 "max number of lines for paste without asking user (-1 = disable this feature)"
 msgstr ""
-"numero massimo di righe da incollare senza conferma dell'utente (0 = "
+"numero massimo di righe da incollare senza conferma dell'utente (-1 = "
 "disabilita questa caratteristica)"
 
 msgid "prefix for error messages"
@@ -2692,6 +2700,8 @@ msgstr "dimensione minima per il prefisso"
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
 msgstr ""
+"carattere da mostrare se il prefisso è troncato (deve essere esattamente un "
+"carattere sullo schermo)"
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -2708,19 +2718,23 @@ msgstr ""
 "allineamento del prefisso per nome buffer, quando più buffer sono uniti con "
 "lo stesso numero (0 = nessuna dimensione massima)"
 
-#, fuzzy
 msgid ""
 "char to display if buffer name is truncated (when many buffers are merged "
 "with same number) (must be exactly one char on screen)"
 msgstr ""
-"visualizza '+' se il nome del buffer è troncato (quando più buffer sono "
-"uniti con lo stesso numero)"
+"carattere da mostrare se il nome del buffer è troncato (quando più buffer "
+"vengono uniti con lo stesso numero) (deve essere esattamente un carattere su "
+"schermo)"
 
 msgid ""
 "prefix displayed for a message with same nick as previous message: use a "
 "space \" \" to hide prefix, another string to display this string instead of "
 "prefix, or an empty string to disable feature (display prefix)"
 msgstr ""
+"prefisso mostrato per un messaggio con lo stesso nick del messaggio "
+"precedente: usare uno spazio \" \" per nascondere il prefisso, un'altra "
+"stringa per mostrare la stringa invece del prefisso, o una stringa vuota per "
+"disabilitare questa funzionalità (mostra prefisso)"
 
 msgid "string displayed after prefix"
 msgstr "stringa visualizzata dopo il prefisso"
@@ -3012,13 +3026,12 @@ msgstr ""
 "aggiungi uno spazio al completamento del nick (quando non è la prima parola "
 "sulla riga di comando)"
 
-#, fuzzy
 msgid ""
 "string inserted after nick completion (when nick is first word on command "
 "line)"
 msgstr ""
-"aggiungi uno spazio al completamento del nick (quando non è la prima parola "
-"sulla riga di comando)"
+"stringa inserita dopo il completamento del nick (quando il nick è la prima "
+"parola sulla riga di comando)"
 
 msgid "complete only with first nick found"
 msgstr "completa solo con il primo nick trovato"
@@ -3052,8 +3065,7 @@ msgstr ""
 
 msgid "display count for each partial completion in bar item"
 msgstr ""
-"visualizza contatore per ogni completamento parziale nella barra degli "
-"oggetti"
+"mostra contatore per ogni completamento parziale nella barra degli oggetti"
 
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
 msgstr ""
@@ -3080,18 +3092,19 @@ msgstr ""
 "numero massimo predefinito di comandi da visualizzare nella cronologia (0 = "
 "nessun limite)"
 
-#, fuzzy
 msgid ""
 "timeout (in seconds) for connection to a remote host (made in a child "
 "process)"
-msgstr "timeout (in secondi) per l'handshake di gnutls"
+msgstr ""
+"timeout (in secondi) per la connessione ad un host remoto (eseguita in un "
+"processo figlio)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
 "WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
 "file contenente le autorità certificative (\"%h\" sarà sostituito dalla home "
-"di WeeChat, \"~/.weechat come predefinita)"
+"di WeeChat, predefinita: \"~/.weechat)"
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "timeout (in secondi) per l'handshake di gnutls"
@@ -3511,11 +3524,11 @@ msgstr ""
 msgid "Bar \"%s\" updated"
 msgstr "Barra \"%s\" aggiornata"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
 msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
-msgstr[0] "%sIncollare %d righe? [ctrl-y] Sì [ctrl-n] No"
-msgstr[1] "%sIncollare %d righe? [ctrl-y] Sì [ctrl-n] No"
+msgstr[0] "%sIncollare %d riga? [ctrl-Y] Sì [ctrl-N] No"
+msgstr[1] "%sIncollare %d righe? [ctrl-Y] Sì [ctrl-N] No"
 
 msgid "Text search"
 msgstr "Ricerca testo"
@@ -4550,20 +4563,20 @@ msgstr "destinazione: nome server"
 msgid "disconnect from one or all IRC servers"
 msgstr "disconnette da uno o tutti i server IRC"
 
-#, fuzzy
 msgid "[<server>|-all|-pending [<reason>]]"
-msgstr "[<server>|-all [<motivo>]]"
+msgstr "[<server>|-all|-pending [<motivo>]]"
 
-#, fuzzy
 msgid ""
 "  server: server name to disconnect\n"
 "    -all: disconnect from all servers\n"
 "-pending: cancel auto-reconnection on servers currently reconnecting\n"
 "  reason: reason for quit"
 msgstr ""
-"server: nome del server da cui disconnettersi\n"
-"  -all: disconnette da tutti i server\n"
-"motivo: motivo per la disconnessione"
+"  server: nome del server da cui disconnettersi\n"
+"    -all: disconnette da tutti i server\n"
+"-pending: annulla la riconnessione automatica sui server in fase di "
+"riconnessione\n"
+"  motivo: motivo per la disconnessione"
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "concede lo stato di half-op del canale ad uno (o più) nick"
@@ -4624,9 +4637,8 @@ msgstr "ottieni informazioni sul server"
 msgid "invite a nick on a channel"
 msgstr "invita un nick su un canale"
 
-#, fuzzy
 msgid "<nick> [<nick>...] [<channel>]"
-msgstr "<nick> [<nick>...]"
+msgstr "<nick> [<nick>...] [<canale>]"
 
 msgid ""
 "   nick: nick to invite\n"
@@ -5560,6 +5572,9 @@ msgid ""
 "blowfish\" for crypted password, \"external\" for authentication using "
 "client side SSL cert"
 msgstr ""
+"meccanismo per l'autenticazione SASL: \"plain\" per le password in chiaro, "
+"\"dh-blowfish\" per le password cifrate, \"external\" per l'autenticazione "
+"con certificati SSL lato client"
 
 msgid "username for SASL authentication"
 msgstr "nome utente per l'autenticazione SASL"
@@ -5743,7 +5758,6 @@ msgstr "testo da visualizzare prima del nick nella finestra di chat"
 msgid "text to display after nick in chat window"
 msgstr "testo da visualizzare dopo il nick nella finestra di chat"
 
-#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
@@ -5752,7 +5766,9 @@ msgid ""
 msgstr ""
 "forza colore per alcuni nick: l'hash calcolato con il nick per trovare il "
 "colore non verrà usato per questi nick (il formato è: \"nick1:color1;nick2:"
-"color2\")"
+"color2\"); la ricerca dei nick è prima sensibile alle maiuscole, poi con le "
+"minuscole, per cui è possibile usare solo le minuscole per i nick in questa "
+"opzione"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -5975,7 +5991,6 @@ msgid "color for text in part/quit messages"
 msgstr "colore per il testo nei messaggi di uscita/abbandono"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
-#, fuzzy
 msgid ""
 "remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
 "integers between -1 (not specified) and 15, values are WeeChat color names "
@@ -5986,15 +6001,14 @@ msgid ""
 "lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, "
 "15:white"
 msgstr ""
-"riordina i colori mirc nei messaggi usando una tabella hash: le chiavi sono "
+"riassegna i colori mirc nei messaggi usando una tabella hash: le chiavi sono "
 "\"fg,bg\" come interi tra -1 (non specificato) e 15, i valori sono i numeri "
 "oppure i nomi dei colori di WeeChat (il formato è: \"1,-1:colore1;2,7:"
-"colore2\"), esempio: \"1,-1\":darkgray;1,2:white,blue\" per riordinare dal "
-"nero su qualsiasi colore di sfondo a \"darkgray\" e dal nero su blu a "
-"\"white,blue\"; i colori predefiniti di WeeChat per i codici IRC: 0:white, 1:"
-"black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: "
-"lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, "
-"15:white"
+"colore2\"), esempio: \"1,-1\":darkgray;1,2:white,blue\" per riassegnare dal "
+"nero a \"darkgray\" e dal nero su blu a \"white,blue\"; i colori predefiniti "
+"di WeeChat per i codici IRC: 0:white, 1:black, 2:blue, 3:green, 4:lightred, "
+"5:red, 6:magenta, 7:brown, 8:yellow, 9:lightgreen, 10:cyan, 11:lightcyan, 12:"
+"lightblue, 13:lightmagenta, 14:gray, 15:white"
 
 msgid ""
 "color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), "
@@ -6319,9 +6333,8 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: questo buffer non è un canale!"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
-#, fuzzy
 msgid "unknown"
-msgstr "(sconosciuto)"
+msgstr "sconosciuto"
 
 msgid "offline"
 msgstr "non in linea"
@@ -6342,21 +6355,21 @@ msgstr "La lista notifiche per tutti i server:"
 msgid "Notify list is empty on all servers"
 msgstr "La lista notifiche è vuota su tutti i server"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is connected"
-msgstr "%snotifica: %s%s%s è entrato in %s%s"
+msgstr "%snotifica: %s%s%s è connesso"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is offline"
-msgstr "%snotifica: %s%s%s è entrato in %s%s"
+msgstr "%snotifica: %s%s%s non è in linea"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has joined"
-msgstr "%snotifica: %s%s%s è entrato in %s%s"
+msgstr "%snotifica: %s%s%s è entrato"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has quit"
-msgstr "%snotifica: %s%s%s è uscito da %s%s"
+msgstr "%snotifica: %s%s%s si è disconnesso"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -6364,7 +6377,7 @@ msgstr "%snotifica: %s%s%s ora è assente: \"%s\""
 
 #, c-format
 msgid "%snotify: %s%s%s is back"
-msgstr "%snotifica: %s%s%s è rientrato"
+msgstr "%snotifica: %s%s%s è tornato"
 
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
@@ -6865,9 +6878,9 @@ msgstr ""
 msgid "%s%s: not enough memory"
 msgstr "%s%s: memoria non sufficiente"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: timeout"
-msgstr "%s%s: timeout per \"%s\" con %s"
+msgstr "%s%s: timeout"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -7045,9 +7058,9 @@ msgstr "log non iniziato"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => livello %d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "===\t========== Fine del backlog (%d righe) =========="
+msgstr "%s===\t%s========== Fine della cronologia (%d righe) =========="
 
 msgid "logger plugin configuration"
 msgstr "configurazione del plugin logger"
@@ -7131,15 +7144,13 @@ msgid ""
 "= no backlog)"
 msgstr ""
 "numero massimo di righe da visualizzare dal file di log alla creazione di un "
-"nuovo buffer (0 = nessun backlog)"
+"nuovo buffer (0 = nessuna cronologia)"
 
-#, fuzzy
 msgid "color for backlog lines"
-msgstr "colore per l'elemento assenza"
+msgstr "colore per la cronologia"
 
-#, fuzzy
 msgid "color for line ending the backlog"
-msgstr "colore per il nick nella riga di input"
+msgstr "colore per la riga finale nella cronologia"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
@@ -8118,10 +8129,12 @@ msgstr ""
 "nome script (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s%s: argomenti errati per la funzione \"%s\" (script: %s)"
+msgstr ""
+"%s%s: attenzione, puntatore (\"%s\") non valido per la funzione \"%s"
+"\" (script: %s)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -8593,11 +8606,11 @@ msgstr "Tipo"
 msgid "Constants"
 msgstr "Costanti"
 
-#~ msgid "string inserted after nick completion"
-#~ msgstr "stringa inserita dopo il completamento del nick"
-
 #~ msgid "display '+' if prefix is truncated"
 #~ msgstr "mostra '+' se il prefisso è troncato"
+
+#~ msgid "string inserted after nick completion"
+#~ msgstr "stringa inserita dopo il completamento del nick"
 
 #~ msgid "<nick> <channel>"
 #~ msgstr "<nick> <canale>"

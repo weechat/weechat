@@ -1,10 +1,10 @@
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
-** descrizione: `color for line ending the backlog`
+** descrizione: `colore per la riga finale nella cronologia`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** descrizione: `color for backlog lines`
+** descrizione: `colore per la cronologia`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
@@ -49,7 +49,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%Y-%m-%d %H:%M:%S"`)
 
 * [[option_logger.look.backlog]] *logger.look.backlog*
-** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessun backlog)`
+** descrizione: `numero massimo di righe da visualizzare dal file di log alla creazione di un nuovo buffer (0 = nessuna cronologia)`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `20`)
 

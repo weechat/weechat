@@ -201,49 +201,49 @@ infolists: mostra informazioni sulle liste info
          add <nome> <buffer>[,<buffer>...] <tag> <regex>]
          del <nome>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: elenca tutti i filtri
+ enable: abilita filtri (i filtri sono abilitati di default)
+disable: disabilita filtri
+ toggle: abilita/disabilita filtri
+   nome: nome del filtro
+    add: aggiunge un filtro
+    del: elimina un filtro
+   -all: elimina tutti i filtri
+ buffer: elenco separato da virgole di buffer in cui il filtro è attivo:
+         - nome completo che include il plugin (esempio: "irc.freenode.#weechat)
+         - "*" indica tutti i buffer
+         - un nome preceduto da '!' viene escluso
+         - un nome può iniziare o terminare con '*' per includere più buffer
+    tag: elenco di tag separati da virgole, per esempio: "irc_join,irc_part,irc_quit"
+  regex: espressione regolare da cercare nella riga
+         - usare '\t' per separare il prefisso dal messaggio, caratteri speciali come "|" vanno preceduti dal carattere escape: '\|')
+         - se l'espressione regolare inizia con '!', il risultato corrispondente viene invertito (usare '\!' per iniziare con '!')
 
-The default key alt+'=' toggles filtering on/off.
+         - vengono create due espressioni regolari: una per il prefisso e l'altra per il messaggio
+         - le espressioni regolari non sono sensibili alle maiuscole, possono iniziare con "(?-i)" per diventare sensibili alle maiuscole
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Il tasto predefinito alt+'=' abilita/disabilita il filtro.
+
+Tag usati di frequente:
+  no_filter, no_highlight, no_log, log0..log9 (livello di log),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+  nick_xxx (xxx è il nick nel messaggio) prefix_nick_ccc (ccc è il colore del nick),
+  irc_xxx (xxx è il nome comando o il numero, consultare /server raw),   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+Per mostrare i tag per le righe nei buffer: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
-    /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
-    /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
-    /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+Esempi:
+  usa il filtro intelligente IRC per tutti i buffer:
+     /filter add irc_smart * irc_smart_filter *
+  usa il filtro intelligente IRC su tutti i buffer tranne quelli che contengono "#weechat" nel nome:
+     /filter add irc_smart *,!*weechat* irc_smart_filter
+  filtra tutti i messaggi entrata/uscita/abbandono di IRC:
+     /filter add joinquit * irc_join,irc_part,irc_quit *
+  filtra i nick visualizzati all'ingresso in un canale o con /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
-    /filter add toto irc.freenode.#weechat nick_toto *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
-    /filter add sucks irc.freenode.#weechat * weechat sucks
+  filtra il nick "tizio" sul canale IRC #weechat:
+    /filter add tizio irc.freenode.#weechat nick_tizio *
+  filtra le righe contententi "weechat fa schifo" sul canale IRC #weechat:
+    /filter add schifo irc.freenode.#weechat * weechat fa schifo
 ........................................
 
 [[command_weechat_help]]
@@ -275,55 +275,55 @@ valore: numero delle voci nella cronologia da mostrare
 ........................................
 /input  <azioni> [<argomenti>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  insert: insert text in command line
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+elenco di azioni:
+  return: simula il tasto "invio"
+  complete_next: completa la parola con il completamento successivo
+  complete_previous: completa la parola con il completamento precedente
+  search_text: cerca testo nel buffer
+  search_switch_case: passa alla ricerca sensibile
+  search_previous: cerca la riga precedente
+  search_next: cerca la riga successiva
+  search_stop: ferma la ricerca
+  delete_previous_char: elimina carattere precedente
+  delete_next_char: elimina carattere successivo
+  delete_previous_word: elimina parola precedente
+  delete_next_word: elimina parola successiva
+  delete_beginning_of_line: elimina da inizio riga fino al cursore
+  delete_end_of_line: elimina dal cursore fino a fine riga
+  delete_line: elimina intera riga
+  clipboard_paste: incolla dagli appunti
+  transpose_chars: inverti l'ordine di due caratteri
+  undo: annulla l'ultima azione nella riga di comando
+  redo: rifai l'ultima azione nella riga di comando
+  move_beginning_of_line: sposta il cursore ad inizio riga
+  move_end_of_line: sposta il cursore a fine riga
+  move_previous_char: sposta cursore al carattere precedente
+  move_next_char: sposta cursore al carattere successivo
+  move_previous_word: sposta cursore alla parola precedente
+  move_next_word: sposta cursore alla parola successiva
+  history_previous: richiama il comando precedente nella cronologia del buffer corrente
+  history_next: richiama il comando successivo nella cronologia del buffer corrente
+  history_global_previous: richiama il comando precedente nella cronologia globale
+  history_global_next: richiama il comando successivo nella cronologia globale
+  jump_smart: passa al buffer successivo con attività
+  jump_last_buffer: passa all'ultimo buffer
+  jump_last_buffer_displayed: passa all'ultimo buffer mostrato (primadell'ultimo passaggio ad un buffer)
+  jump_previously_visited_buffer: passa al precedente buffer visualizzato
+  jump_next_visited_buffer: passa al successivo buffer visualizzato
+  hotlist_clear: elimina hotlist
+  grab_key: ottiene un tasto
+  grab_key_command: ottiene un tasto con il suo comando associato
+  grab_mouse: cattura il codice dell'evento del mouse
+  grab_mouse_area: cattura il codice dell'evento del mouse con l'area
+  set_unread: imposta il segnalibro non letto per tutti i buffer
+  set_unread_current_buffer: imposta il segnalibro non letto per il buffer corrente
+  switch_active_buffer: passa al successivo buffer incollato
+  switch_active_buffer_previous: passa al precedente buffer incollato
+  insert: inserisci testo nella riga di comando
+  paste_start: inizio testo da incollare (modalità "bracketed paste")
+  paste_stop: fine testo da incollare (modalità "bracketed paste")
 
-This command is used by key bindings or plugins.
+Questo comando viene usato dalla combinazioni tasti o dai plugin.
 ........................................
 
 [[command_weechat_key]]

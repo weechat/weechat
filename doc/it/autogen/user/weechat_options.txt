@@ -279,7 +279,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** descrizione: `string inserted after nick completion (when nick is first word on command line)`
+** descrizione: `stringa inserita dopo il completamento del nick (quando il nick è la prima parola sulla riga di comando)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `":"`)
 
@@ -309,7 +309,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.completion.partial_completion_count]] *weechat.completion.partial_completion_count*
-** descrizione: `visualizza contatore per ogni completamento parziale nella barra degli oggetti`
+** descrizione: `mostra contatore per ogni completamento parziale nella barra degli oggetti`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -579,17 +579,17 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** descrizione: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
+** descrizione: `abilita la modalità "bracketed paste" per il terminale (non supportata da tutti i terminali/multiplexer): in questa modalità, il testo incollato viene circondato da sequenze di controllo in modo che WeeChat possa differenziare il testo incollato dal testo digitato ("ESC[200~", seguito dal testo incollato, seguito da "ESC[201~")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
-** descrizione: `force end of bracketed paste after this delay (in seconds) if the control sequence for end of bracketed paste ("ESC[201~") was not received in time`
+** descrizione: `forza la fine della modalità "bracketed paste" dopo questo ritardo (in secondi) se la sequenza di controllo per la fine del "bracketed paste" ("ESC[201~") non è stata ricevuta in tempo`
 ** tipo: intero
 ** valori: 1 .. 60 (valore predefinito: `10`)
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** descrizione: `max number of lines for paste without asking user (-1 = disable this feature)`
+** descrizione: `numero massimo di righe da incollare senza conferma dell'utente (-1 = disabilita questa caratteristica)`
 ** tipo: intero
 ** valori: -1 .. 2147483647 (valore predefinito: `1`)
 
@@ -614,7 +614,7 @@
 ** valori: 0 .. 128 (valore predefinito: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** descrizione: `char to display if prefix is truncated (must be exactly one char on screen)`
+** descrizione: `carattere da mostrare se il prefisso è troncato (deve essere esattamente un carattere sullo schermo)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"+"`)
 
@@ -629,7 +629,7 @@
 ** valori: 0 .. 128 (valore predefinito: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** descrizione: `char to display if buffer name is truncated (when many buffers are merged with same number) (must be exactly one char on screen)`
+** descrizione: `carattere da mostrare se il nome del buffer è troncato (quando più buffer vengono uniti con lo stesso numero) (deve essere esattamente un carattere su schermo)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"+"`)
 
@@ -654,7 +654,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"<--"`)
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** descrizione: `prefix displayed for a message with same nick as previous message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)`
+** descrizione: `prefisso mostrato per un messaggio con lo stesso nick del messaggio precedente: usare uno spazio " " per nascondere il prefisso, un'altra stringa per mostrare la stringa invece del prefisso, o una stringa vuota per disabilitare questa funzionalità (mostra prefisso)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -729,12 +729,12 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
-** descrizione: `timeout (in seconds) for connection to a remote host (made in a child process)`
+** descrizione: `timeout (in secondi) per la connessione ad un host remoto (eseguita in un processo figlio)`
 ** tipo: intero
 ** valori: 1 .. 2147483647 (valore predefinito: `60`)
 
 * [[option_weechat.network.gnutls_ca_file]] *weechat.network.gnutls_ca_file*
-** descrizione: `file contenente le autorità certificative ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
+** descrizione: `file contenente le autorità certificative ("%h" sarà sostituito dalla home di WeeChat, predefinita: "~/.weechat)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"/etc/ssl/certs/ca-certificates.crt"`)
 

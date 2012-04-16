@@ -34,7 +34,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** descrizione: `remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
+** descrizione: `riassegna i colori mirc nei messaggi usando una tabella hash: le chiavi sono "fg,bg" come interi tra -1 (non specificato) e 15, i valori sono i numeri oppure i nomi dei colori di WeeChat (il formato è: "1,-1:colore1;2,7:colore2"), esempio: "1,-1":darkgray;1,2:white,blue" per riassegnare dal nero a "darkgray" e dal nero su blu a "white,blue"; i colori predefiniti di WeeChat per i codici IRC: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9:lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"1,-1:darkgray"`)
 
@@ -224,7 +224,7 @@
 ** valori: none, next, near_server (valore predefinito: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** descrizione: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); lookup for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
+** descrizione: `forza colore per alcuni nick: l'hash calcolato con il nick per trovare il colore non verrà usato per questi nick (il formato è: "nick1:color1;nick2:color2"); la ricerca dei nick è prima sensibile alle maiuscole, poi con le minuscole, per cui è possibile usare solo le minuscole per i nick in questa opzione`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -484,7 +484,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** descrizione: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for crypted password, "external" for authentication using client side SSL cert`
+** descrizione: `meccanismo per l'autenticazione SASL: "plain" per le password in chiaro, "dh-blowfish" per le password cifrate, "external" per l'autenticazione con certificati SSL lato client`
 ** tipo: intero
 ** valori: plain, dh-blowfish, external (valore predefinito: `plain`)
 
