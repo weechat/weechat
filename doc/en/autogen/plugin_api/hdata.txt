@@ -415,6 +415,7 @@
   'area_name' (pointer) +
   'area_key' (string) +
   'command' (string) +
+  'score' (integer) +
   'prev_key' (pointer, hdata: 'key') +
   'next_key' (pointer, hdata: 'key') |
   'gui_default_keys' +
