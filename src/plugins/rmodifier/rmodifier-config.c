@@ -41,6 +41,9 @@ char *rmodifier_config_default_list[][4] =
     { "nickserv", "history_add,input_text_display",
       "^(/(msg|quote) +nickserv +(id|identify|ghost \\S+|release \\S+) +)(.*)", "1,4*"
     },
+    { "server", "history_add,input_text_display",
+      "^(/(server|connect) .*-(sasl_)?password=)(\\S+)(.*)", "1,4*,5"
+    },
     { "oper", "history_add,input_text_display",
       "^(/oper +\\S+ +)(.*)", "1,2*"
     },
