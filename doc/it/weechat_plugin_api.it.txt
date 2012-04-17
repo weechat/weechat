@@ -6156,7 +6156,8 @@ Esempi:
 
 Valore restituito:
 
-* stringa con codice colore, o un codice "reset color" se il colore non è stato trovato
+// TRANSLATION MISSING
+* string with color code, or an empty string if color is not found
 
 Esempio in C:
 

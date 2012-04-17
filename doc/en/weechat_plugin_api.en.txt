@@ -6153,7 +6153,7 @@ Examples:
 
 Return value:
 
-* string with color code, or a "reset color" code if color is not found
+* string with color code, or an empty string if color is not found
 
 C example:
 

@@ -6224,8 +6224,8 @@ Exemples :
 
 Valeur de retour :
 
-* chaîne avec le code couleur, ou un code couleur de réinitialisation si la
-  couleur n'a pas été trouvée
+* chaîne avec le code couleur, ou une chaîne vide si la couleur n'a pas été
+  trouvée
 
 Exemple en C :
 
