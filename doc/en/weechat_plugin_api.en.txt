@@ -6560,17 +6560,21 @@ struct t_hook *my_command_hook =
                           NULL);
 ----------------------------------------
 
-For example, if command called is `/command abc def ghi`, then argv and
-argv_eol contain following values:
+For example, if command called is `/command abc def ghi`, then 'argv' and
+'argv_eol' have following values:
 
 * 'argv':
-** 'argv[0]' == "abc"
-** 'argv[1]' == "def"
-** 'argv[2]' == "ghi"
+** 'argv[0]' == "/command"
+** 'argv[1]' == "abc"
+** 'argv[2]' == "def"
+** 'argv[3]' == "ghi"
 * 'argv_eol':
-** 'argv_eol[0]' == "abc def ghi"
-** 'argv_eol[1]' == "def ghi"
-** 'argv_eol[2]' == "ghi"
+** 'argv_eol[0]' == "/command abc def ghi"
+** 'argv_eol[1]' == "abc def ghi"
+** 'argv_eol[2]' == "def ghi"
+** 'argv_eol[3]' == "ghi"
+
+For scripts, 'args' has value "abc def ghi".
 
 Script (Python):
 
