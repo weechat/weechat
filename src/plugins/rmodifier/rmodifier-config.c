@@ -47,6 +47,9 @@ char *rmodifier_config_default_list[][4] =
     { "oper", "history_add,input_text_display",
       "^(/oper +\\S+ +)(.*)", "1,2*"
     },
+    { "quote_pass", "history_add,input_text_display",
+      "^(/quote pass +)(.*)", "1,2*"
+    },
     { "set_pass", "history_add",
       "^(/set +\\S*password\\S* +)(.*)", "1,2*"
     },
