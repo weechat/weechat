@@ -208,7 +208,7 @@ weechat_tcl_exec (struct t_plugin_script *script,
                     break;
                 case 'i': /* integer */
                     Tcl_ListObjAppendElement (interp, cmdlist,
-                                              Tcl_NewStringObj (argv[i], -1));
+                                              Tcl_NewIntObj (*((int *)argv[i])));
                     break;
                 case 'h': /* hash */
                     Tcl_ListObjAppendElement (interp, cmdlist,

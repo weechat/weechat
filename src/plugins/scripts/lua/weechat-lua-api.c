@@ -2605,25 +2605,23 @@ weechat_lua_api_hook_process_cb (void *data,
 {
     struct t_script_callback *script_callback;
     void *func_argv[5];
-    char str_rc[32], empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' };
     int *rc, ret;
 
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        snprintf (str_rc, sizeof (str_rc), "%d", return_code);
-
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = (command) ? (char *)command : empty_arg;
-        func_argv[2] = str_rc;
+        func_argv[2] = &return_code;
         func_argv[3] = (out) ? (char *)out : empty_arg;
         func_argv[4] = (err) ? (char *)err : empty_arg;
 
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       "sssss", func_argv);
+                                       "ssiss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
