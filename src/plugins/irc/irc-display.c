@@ -44,7 +44,7 @@
 void
 irc_display_hide_password (char *string, int look_for_nickserv)
 {
-    char *pos_nickserv, *pos, *pos_pwd, *pos_space;
+    char *pos_nickserv, *pos, *pos_pwd;
     int char_size;
 
     pos = string;
@@ -61,18 +61,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
                 pos++;
             }
             if (strncmp (pos, "identify ", 9) == 0)
-            {
                 pos_pwd = pos + 9;
-                pos_space = strchr (pos_pwd, ' ');
-                if (pos_space)
-                {
-                    pos_pwd = pos_space + 1;
-                    while (pos_pwd[0] == ' ')
-                    {
-                        pos_pwd++;
-                    }
-                }
-            }
             else if (strncmp (pos, "register ", 9) == 0)
                 pos_pwd = pos + 9;
             else
@@ -82,18 +71,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
         {
             pos_pwd = strstr (pos, "identify ");
             if (pos_pwd)
-            {
                 pos_pwd += 9;
-                pos_space = strchr (pos_pwd, ' ');
-                if (pos_space)
-                {
-                    pos_pwd = pos_space + 1;
-                    while (pos_pwd[0] == ' ')
-                    {
-                        pos_pwd++;
-                    }
-                }
-            }
             else
             {
                 pos_pwd = strstr (pos, "register ");
@@ -111,7 +89,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
                 pos_pwd++;
             }
 
-            while (pos_pwd && pos_pwd[0] && (pos_pwd[0] != ' '))
+            while (pos_pwd && pos_pwd[0])
             {
                 char_size = weechat_utf8_char_size (pos_pwd);
                 if (char_size > 0)
