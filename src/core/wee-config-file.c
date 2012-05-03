@@ -2022,9 +2022,6 @@ config_file_write_internal (struct t_config_file *config_file,
     /* update file mode */
     chmod (filename2, 0600);
 
-    /* remove target file */
-    unlink (filename);
-
     /* rename temp file to target file */
     rc = rename (filename2, filename);
 
