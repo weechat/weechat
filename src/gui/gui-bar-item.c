@@ -1509,7 +1509,7 @@ gui_bar_item_focus_buffer_nicklist (void *data,
         hashtable_set (info, "nick", ptr_nick->name);
         hashtable_set (info, "prefix", ptr_nick->prefix);
     }
-    else
+    else if (ptr_group)
     {
         hashtable_set (info,
                        "group",
