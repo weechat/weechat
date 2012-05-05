@@ -5813,6 +5813,8 @@ command_init ()
                      "bound to key (for context \"default\")\n"
                      "   bindctxt: bind a command to a key or display command "
                      "bound to key, for given context\n"
+                     "    command: command (many commands can be separated by "
+                     "semicolons)\n"
                      "     unbind: remove a key binding (for context "
                      "\"default\")\n"
                      " unbindctxt: remove a key binding for given context\n"

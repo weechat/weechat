@@ -6,7 +6,7 @@
 complétion: complétion pour l'alias (optionnel, par défaut la complétion se fait avec la commande cible)
             note: vous pouvez utiliser %%commande pour utiliser la complétion d'une commande existante
      alias: nom de l'alias (peut démarrer ou se terminer par "*" pour une liste d'alias)
-  commande: nom de la commande avec les paramètres (plusieurs commandes peuvent être séparées par des point-virgules)
+  commande: nom de la commande avec les paramètres (plusieurs commandes peuvent être séparées par des points-virgules)
 
 Sans paramètre, cette commande liste tous les alias définis.
 

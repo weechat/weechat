@@ -339,43 +339,44 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
       resetall -yes [<context>]
       missing [<context>]
 
-       list: zeigt die aktuelle Tastenbelegungen an (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
-listdefault: zeigt die Standardeinstellung der Tastenbelegung an
-   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
-    context: Name des Kontextes ("default" oder "search")
-       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde (für Kontext  "default")
-   bindctxt: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde, dies trifft für Kontext definierte Tasten zu
-     unbind: hebt eine Tastenbelegung auf (für Kontext "default")
- unbindctxt: hebt eine Tastenbelegung für den angegebenen Kontext auf
-      reset: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt (für Kontext "default")
-  resetctxt: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt, dies trifft für den ausgewählten Kontext zu
-   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
-    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlussel". "area" kann folgende Werte habe:
-          *: jedweder Bereich des Bildschirms
-       chat: Chatbereich (für jeden Buffer)
-  chat(xxx): Chatbereich für einen Buffer mit dem Namen "xxx" (vollständiger Name mit Erweiterung. Beispiel: chat(perl.iset):)
-     bar(*): beliebige Bar
-   bar(xxx): Bar mit dem Namen "xxx"
-    item(*): beliebiges Bar-Item
-  item(xxx): Bar-Item mit Namen "xxx"
-Der zu nutzende Schlüssel kann mit '*' beginnen oder enden um mehrere unterschiedliche Mausereignisse auszuwählen.
-Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name".  Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
-Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+The key can start or end with '*' to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-Beispiele:
-  Mit der Tastenkombination "alt-x" wird die Nicklist-Bar an-und aus geschaltet:
+Examples:
+  key alt-x to toggle nicklist bar:
     /key bind meta-x /bar toggle nicklist
-  Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:
+  restore default binding for key alt-r:
     /key reset meta-r
-  "Tab"-Taste nutzen um im Kontext "search" die Suche innerhalb eines Buffers zu beenden:
+  key "tab" to stop search in buffer:
     /key bindctxt search ctrl-I /input search_stop
-  Auswahl eines Nicknamens mittels mittlerem Mausknopf zeigt zusätzliche Informationen zu dem Nick an:
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 

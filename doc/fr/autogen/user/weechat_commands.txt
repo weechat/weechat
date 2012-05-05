@@ -345,6 +345,7 @@ listdefault: afficher les touches par défaut
    contexte: nom du contexte ("default" ou "search")
        bind: associer une commande à une touche ou affiche la commande associée à la touche
    bindctxt: associer une commande à une touche ou affiche la commande associée à la touche pour le contexte donné
+   commande: commande (plusieurs commandes peuvent êtres séparées par des points-virgules)
      unbind: supprimer l'association à une touche
  unbindctxt: supprimer l'association à une touche pour le contexte donné
       reset: réinitialiser une touche à son association par défaut

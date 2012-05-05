@@ -339,43 +339,44 @@ Questo comando viene usato dalla combinazioni tasti o dai plugin.
       resetall -yes [<contesto>]
       missing [<contesto>]
 
-       list: elenca tutti i tasti correnti (senza argomento, viene visualizzata questa lista)
-listdefault: elenca i tasti predefiniti
-   listdiff: elenca le differenze tra tasti attuali e predefiniti (tasti aggiunti, ridefiniti o eliminati)
-   contesto: nome del contesto ("default" oppure "search")
-       bind: associa un comando ad un tasto o visualizza il comando associato al tasto (per il contesto "default")
-   bindctxt: associa un comando ad un tasto o mostra il comando associato al tasto, per il contesto fornito
-     unbind: rimuove una combinazione di tasti (per il contesto "default")
- unbindctxt: rimuove la combinazione tasti per il contesto fornito
-      reset: ripristina un tasto all'assegnazione predefinita
-  resetctxt: ripristina un tasto alla combinazione predefinita per il contesto fornito
-   resetall: ripristina le combinazioni ai valori predefiniti ed elimina TUTTE le combinazioni personalizzate (usare con cautela!)
-    missing: aggiunge tasti mancanti (usando le combinazioni predefinite), utile dopo l'installazione di una nuova versione di WeeChat
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-Al momento di associare un comando ad un tasto si raccomanda di usare il tasto alt+k (oppure Esc e k), e digitare il tasto da associare: il codice tasto verrà inserito nella riga di comando.
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-Per il contesto "mouse" (possibile anche nel contesto "cursor"), il formato del tasto è: "@area:tasto" oppure "@area1>area2:tasto" dove area può essere:
-          *: qualunque area sullo schermo
-       chat: area di chat (qualunque buffer)
-  chat(xxx): area di chat per il buffer con il nome "xxx" (nome completo includendo il plugin)
-     bar(*): qualunque barra
-   bar(xxx): barra "xxx"
-    item(*): qualunque elemento barra
-  item(xxx): elemento barra "xxx"
-Il tasto può iniziare o terminare con '*' per corrispondere a più eventi del mouse.
-Un valore speciale per questo comando con il formato "hsignal:nome" può essere usato per il contesto del mouse, e invierà hsignal "nome" con la tabella hash di focuse come argomento.
-Può essere usato un altro valore speciale "-" per disabilitare il tasto (verrà ignorato quando si cercano i tasti).
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+The key can start or end with '*' to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-Esempi:
-  il tasto alt-x per alternare la barra della nicklist:
+Examples:
+  key alt-x to toggle nicklist bar:
     /key bind meta-x /bar toggle nicklist
-  il tasto alt-r per passare al canale IRC #weechat:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  ripristinare la combinazione predefinita per il tasto alt-r:
+  restore default binding for key alt-r:
     /key reset meta-r
-  il tasto "tab" per fermare la ricerca nel buffer:
+  key "tab" to stop search in buffer:
     /key bindctxt search ctrl-I /input search_stop
-  il tasto centrale del mouse su un nick per ottenere le informazioni:
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
