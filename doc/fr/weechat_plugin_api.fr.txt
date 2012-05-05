@@ -12312,7 +12312,7 @@ Script (Python) :
 infolist = weechat.infolist_get(infolist_name, pointer, arguments)
 
 # exemple
-infolist = weechat.infolist_get("irc_server, "", "")
+infolist = weechat.infolist_get("irc_server", "", "")
 ----------------------------------------
 
 weechat_infolist_next
