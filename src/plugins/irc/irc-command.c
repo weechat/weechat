@@ -3763,9 +3763,9 @@ int
 irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    int i, detailed_list, one_server_found;
+    int i, detailed_list, one_server_found, length;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
-    char *server_name;
+    char *server_name, *message;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -4103,6 +4103,30 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
     {
         if (ptr_server && ptr_server->buffer)
             weechat_buffer_set (ptr_server->buffer, "display", "1");
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "fakerecv") == 0)
+    {
+        if (argc < 3)
+        {
+            IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server fakerecv");
+        }
+        IRC_COMMAND_CHECK_SERVER("server fakerecv", 1);
+        length = strlen (argv_eol[2]);
+        if (length > 0)
+        {
+            /* allocate length + 2 (CR-LF) + 1 (final '\0') */
+            message = malloc (length + 2 + 1);
+            if (message)
+            {
+                strcpy (message, argv_eol[2]);
+                strcat (message, "\r\n");
+                irc_server_msgq_add_buffer (ptr_server, message);
+                irc_server_msgq_flush ();
+                free (message);
+            }
+        }
         return WEECHAT_RC_OK;
     }
 

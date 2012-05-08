@@ -267,6 +267,9 @@ extern struct t_hashtable *irc_server_sendf (struct t_irc_server *server,
                                              int flags,
                                              const char *tags,
                                              const char *format, ...);
+extern void irc_server_msgq_add_buffer (struct t_irc_server *server,
+                                        const char *buffer);
+extern void irc_server_msgq_flush ();
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
 extern int irc_server_connect (struct t_irc_server *server);
