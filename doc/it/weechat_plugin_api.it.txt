@@ -9669,7 +9669,10 @@ Argomenti:
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
 ** 'full_name': nome completo del buffer ("plugin.nome") (_novità nella versione 0.3.7_)
-** 'short_name': nome breve del buffer
+// TRANSLATION MISSING
+** 'short_name': nome breve del buffer (note: used for display only and can be
+   changed by user, this must not be used to find name of buffer, use instead
+   'name', 'full_name' or local variable 'channel')
 ** 'title': titolo del buffer
 ** 'input': testo in ingresso
 ** 'text_search_input': input salvato prima della ricerca nel testo

@@ -9764,7 +9764,10 @@ Paramètres :
    principal WeeChat)
 ** 'name' : nom du tampon
 ** 'full_name' : nom complet du tampon ("extension.nom") (_nouveau dans la version 0.3.7_)
-** 'short_name' : nom court du tampon
+** 'short_name' : nom court du tampon (note: utilisé pour l'affichage seulement
+   et peut être changé par l'utilisateur, il ne doit pas être utilisé pour
+   trouver le nom du tampon, utlisez à la place 'name', 'full_name' ou bien la
+   variable locale 'channel')
 ** 'title' : titre du tampon
 ** 'input' : texte saisi
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte

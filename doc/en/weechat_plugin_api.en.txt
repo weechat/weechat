@@ -9603,7 +9603,9 @@ Arguments:
    buffer)
 ** 'name': name of buffer
 ** 'full_name': full name of buffer ("plugin.name") (_new in version 0.3.7_)
-** 'short_name': short name of buffer
+** 'short_name': short name of buffer (note: used for display only and can be
+   changed by user, this must not be used to find name of buffer, use instead
+   'name', 'full_name' or local variable 'channel')
 ** 'title': title of buffer
 ** 'input': input text
 ** 'text_search_input': input saved before text search
