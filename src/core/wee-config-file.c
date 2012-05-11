@@ -2081,7 +2081,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     char *filename;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char line[1024], *ptr_line, *ptr_line2, *pos, *pos2;
+    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2;
 
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
