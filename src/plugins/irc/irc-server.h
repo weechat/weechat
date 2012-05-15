@@ -169,6 +169,8 @@ struct t_irc_server
     int nick_max_length;            /* max lenth of nick (from msg 005)      */
     int casemapping;                /* casemapping from msg 005              */
     char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
+    char *chanmodes;                /* chanmodes from msg 005                */
+                                    /* (eg "beI,k,l,imnpstaqr")              */
     int reconnect_delay;            /* current reconnect delay (growing)     */
     time_t reconnect_start;         /* this time + delay = reconnect time    */
     time_t command_time;            /* this time + command_delay = time to   */
@@ -250,6 +252,7 @@ extern char irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
                                                  char prefix_char);
 extern char irc_server_get_prefix_char_for_mode (struct t_irc_server *server,
                                                  char mode);
+extern const char *irc_server_get_chanmodes (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_alloc (const char *name);
 extern struct t_irc_server *irc_server_alloc_with_url (const char *irc_url);
 extern void irc_server_apply_command_line_options (struct t_irc_server *server,

@@ -816,7 +816,6 @@ IRC_PROTOCOL_CALLBACK(mode)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
-    struct t_hashtable *hashtable;
 
     /*
      * MODE message looks like:
@@ -832,39 +831,7 @@ IRC_PROTOCOL_CALLBACK(mode)
     {
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
-        {
-            if (ptr_channel->modes)
-            {
-                if (irc_mode_channel_set (server, ptr_channel, pos_modes))
-                {
-                    hashtable = weechat_hashtable_new (8,
-                                                       WEECHAT_HASHTABLE_STRING,
-                                                       WEECHAT_HASHTABLE_STRING,
-                                                       NULL,
-                                                       NULL);
-                    if (hashtable)
-                    {
-                        weechat_hashtable_set (hashtable, "server", server->name);
-                        weechat_hashtable_set (hashtable, "pattern", "mode_channel");
-                        weechat_hashtable_set (hashtable, "signal", "mode");
-                        weechat_hashtable_set (hashtable, "string", ptr_channel->name);
-                        weechat_hook_hsignal_send ("irc_redirect_command", hashtable);
-                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
-                                          NULL, "MODE %s", ptr_channel->name);
-                        weechat_hashtable_free (hashtable);
-                    }
-                    else
-                    {
-                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW,
-                                          NULL, "MODE %s", ptr_channel->name);
-                    }
-                }
-            }
-            else
-            {
-                (void) irc_mode_channel_set (server, ptr_channel, pos_modes);
-            }
-        }
+            irc_mode_channel_set (server, ptr_channel, pos_modes);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
         weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
@@ -2165,6 +2132,21 @@ IRC_PROTOCOL_CALLBACK(005)
         if (server->chantypes)
             free (server->chantypes);
         server->chantypes = strdup (pos);
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save chanmodes */
+    pos = strstr (argv_eol[3], "CHANMODES=");
+    if (pos)
+    {
+        pos += 10;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        if (server->chanmodes)
+            free (server->chanmodes);
+        server->chanmodes = strdup (pos);
         if (pos2)
             pos2[0] = ' ';
     }
@@ -4406,69 +4388,6 @@ IRC_PROTOCOL_CALLBACK(sasl_end)
     if (!server->is_connected)
         irc_server_sendf (server, 0, NULL, "CAP END");
 
-    return WEECHAT_RC_OK;
-}
-
-/*
- * irc_protocol_redirection_mode_cb: callback for redirection of "mode" command
- */
-
-int
-irc_protocol_redirection_mode_cb (void *data, const char *signal,
-                                  struct t_hashtable *hashtable)
-{
-    const char *output, *server;
-    char **messages, *command, *arguments, **argv, **argv_eol;
-    int num_messages, argc, i;
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    output = weechat_hashtable_get (hashtable, "output");
-    server = weechat_hashtable_get (hashtable, "server");
-    if (!output || !server)
-        return WEECHAT_RC_OK;
-
-    ptr_server = irc_server_search (server);
-    if (!ptr_server)
-        return WEECHAT_RC_OK;
-
-    messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
-    if (messages)
-    {
-        for (i = 0; i < num_messages; i++)
-        {
-            irc_message_parse (ptr_server, messages[i], NULL, NULL,
-                               &command, NULL, &arguments);
-            if (command && (strcmp (command, "324") == 0) && arguments)
-            {
-                argv = weechat_string_split (arguments, " ", 0, 0, &argc);
-                argv_eol = weechat_string_split (arguments, " ", 1, 0, NULL);
-                if (argv && argv_eol && (argc >= 2))
-                {
-                    ptr_channel = irc_channel_search (ptr_server, argv[1]);
-                    if (ptr_channel)
-                    {
-                        irc_channel_set_modes (ptr_channel,
-                                               (argc >= 3) ? argv_eol[2] : NULL);
-                        if (argc >= 3)
-                        {
-                            irc_mode_channel_set (ptr_server, ptr_channel,
-                                                  ptr_channel->modes);
-                        }
-                    }
-                }
-                if (argv)
-                    weechat_string_free_split (argv);
-                if (argv_eol)
-                    weechat_string_free_split (argv_eol);
-            }
-        }
-        weechat_string_free_split (messages);
-    }
     return WEECHAT_RC_OK;
 }
 

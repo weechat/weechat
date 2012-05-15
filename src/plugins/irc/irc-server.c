@@ -100,6 +100,7 @@ char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
 
 char *irc_server_prefix_modes_default = "qaohvu";
 char *irc_server_prefix_chars_default = "~&@%+-";
+char *irc_server_chanmodes_default    = "beI,k,l";
 
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
                                                   /* sending a message       */
@@ -486,7 +487,7 @@ irc_server_get_nick_index (struct t_irc_server *server)
 /*
  * irc_server_get_isupport_value: return value of an item in "isupport" (copy
  *                                of IRC message 005)
- *                                if featureis found but has no value, empty
+ *                                if feature is found but has no value, empty
  *                                  string is returned
  *                                if feature is not found, NULL is returned
  */
@@ -711,6 +712,18 @@ irc_server_get_prefix_char_for_mode (struct t_irc_server *server, char mode)
 }
 
 /*
+ * irc_server_get_chanmodes: get chanmodes for server (return default chanmodes
+ *                           if chanmodes is not set)
+ */
+
+const char *
+irc_server_get_chanmodes (struct t_irc_server *server)
+{
+    return (server && server->chanmodes) ?
+        server->chanmodes : irc_server_chanmodes_default;
+}
+
+/*
  * irc_server_alloc: allocate a new server and add it to the servers queue
  */
 
@@ -776,6 +789,7 @@ irc_server_alloc (const char *name)
     new_server->nick_max_length = 0;
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     new_server->chantypes = NULL;
+    new_server->chanmodes = NULL;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -1237,6 +1251,8 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->prefix_chars);
     if (server->chantypes)
         free (server->chantypes);
+    if (server->chanmodes)
+        free (server->chanmodes);
     if (server->away_message)
         free (server->away_message);
     if (server->cmd_list_regexp)
@@ -4272,6 +4288,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_max_length, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, NULL);
@@ -4467,6 +4484,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "casemapping_string", irc_server_casemapping_string[server->casemapping]))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "chantypes", server->chantypes))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "chanmodes", server->chanmodes))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -4781,6 +4800,7 @@ irc_server_print_log ()
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
         weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
+        weechat_log_printf ("  chanmodes. . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);

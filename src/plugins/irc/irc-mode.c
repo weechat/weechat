@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -33,25 +34,246 @@
 
 
 /*
- * irc_mode_channel_set: set channel modes
- *                       return: 1 if channel modes are updated
- *                               0 if channel modes are NOT updated
- *                                 (no update or on nicks only)
+ * irc_mode_get_chanmode_type: get type of channel mode, which is a letter from
+ *                             'A' to 'D':
+ *                               A = Mode that adds or removes a nick or address to a list. Always has a parameter.
+ *                               B = Mode that changes a setting and always has a parameter.
+ *                               C = Mode that changes a setting and only has a parameter when set.
+ *                               D = Mode that changes a setting and never has a parameter.
+ *                             Example:
+ *                               CHANMODES=beI,k,l,imnpstaqr
+ *                               A = { b, e, I }
+ *                               B = { k }
+ *                               C = { l }
+ *                               D = { i, m, n, p, s, t, a, q, r }
+ *                             Note: Modes of type A return the list when there is no parameter present.
+ *                             Note: Some clients assumes that any mode not listed is of type D.
+ *                             Note: Modes in PREFIX are not listed but could be considered type B.
+ *                             More info: http://www.irc.org/tech_docs/005.html
  */
 
-int
-irc_mode_channel_set (struct t_irc_server *server,
-                      struct t_irc_channel *channel, const char *modes)
+char
+irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
 {
-    char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
-    int modes_count, channel_modes_updated, argc, current_arg;
+    char chanmode_type, *pos;
+    const char *chanmodes, *ptr_chanmodes;
+
+    chanmodes = irc_server_get_chanmodes (server);
+    pos = strchr (chanmodes, chanmode);
+    if (pos)
+    {
+        chanmode_type = 'A';
+        for (ptr_chanmodes = chanmodes; ptr_chanmodes < pos; ptr_chanmodes++)
+        {
+            if (ptr_chanmodes[0] == ',')
+            {
+                if (chanmode_type == 'D')
+                    break;
+                chanmode_type++;
+            }
+        }
+        return chanmode_type;
+    }
+
+    /* assume it is type 'B' if mode is not in chanmodes but in prefix */
+    if (irc_server_get_prefix_mode_index (server, chanmode) >= 0)
+        return 'B';
+
+    /* unknown mode, type 'D' by default */
+    return 'D';
+}
+
+/*
+ * irc_mode_channel_update: update channel modes using the mode and argument
+ *                          Example:
+ *                            if channel modes are "+tn" and that we have:
+ *                              - set_flag      = '+'
+ *                              - chanmode      = 'k'
+ *                              - chanmode_type = 'B'
+ *                              - argument      = 'password'
+ *                            then channel modes become:
+ *                              "+tnk password"
+ */
+
+void
+irc_mode_channel_update (struct t_irc_server *server,
+                         struct t_irc_channel *channel,
+                         char set_flag,
+                         char chanmode,
+                         const char *argument)
+{
+    char *pos_args, *str_modes, **argv, *pos, *ptr_arg;
+    char *new_modes, *new_args, str_mode[2], *str_temp;
+    int argc, current_arg, chanmode_found, length;
+
+    if (!channel->modes)
+        channel->modes = strdup ("+");
+    if (!channel->modes)
+        return;
+
+    argc = 0;
+    argv = NULL;
+    pos_args = strchr (channel->modes, ' ');
+    if (pos_args)
+    {
+        str_modes = weechat_strndup (channel->modes, pos_args - channel->modes);
+        if (!str_modes)
+            return;
+        pos_args++;
+        while (pos_args[0] == ' ')
+            pos_args++;
+        argv = weechat_string_split (pos_args, " ", 0, 0, &argc);
+    }
+    else
+    {
+        str_modes = strdup (channel->modes);
+        if (!str_modes)
+            return;
+    }
+
+    new_modes = malloc (strlen (channel->modes) + 1 + 1);
+    new_args = malloc (((pos_args) ? strlen (pos_args) : 0)
+                       + ((argument) ? 1 + strlen (argument) : 0) + 1);
+    if (new_modes && new_args)
+    {
+        new_modes[0] = '\0';
+        new_args[0] = '\0';
+
+        /* loop on current modes and build "new_modes" + "new_args" */
+        current_arg = 0;
+        chanmode_found = 0;
+        pos = str_modes;
+        while (pos && pos[0])
+        {
+            if ((pos[0] == '+') || (pos[0] == '-'))
+            {
+                str_mode[0] = pos[0];
+                str_mode[1] = '\0';
+                strcat (new_modes, str_mode);
+            }
+            else
+            {
+                ptr_arg = NULL;
+                switch (irc_mode_get_chanmode_type (server, pos[0]))
+                {
+                    case 'A': /* always argument */
+                    case 'B': /* always argument */
+                    case 'C': /* argumment if set */
+                        ptr_arg = (current_arg < argc) ?
+                            argv[current_arg] : NULL;
+                        break;
+                    case 'D': /* no argument */
+                        break;
+                }
+                if (ptr_arg)
+                    current_arg++;
+                if (pos[0] == chanmode)
+                {
+                    chanmode_found = 1;
+                    if (set_flag == '+')
+                    {
+                        str_mode[0] = pos[0];
+                        str_mode[1] = '\0';
+                        strcat (new_modes, str_mode);
+                        if (argument)
+                        {
+                            if (new_args[0])
+                                strcat (new_args, " ");
+                            strcat (new_args, argument);
+                        }
+                    }
+                }
+                else
+                {
+                    str_mode[0] = pos[0];
+                    str_mode[1] = '\0';
+                    strcat (new_modes, str_mode);
+                    if (ptr_arg)
+                    {
+                        if (new_args[0])
+                            strcat (new_args, " ");
+                        strcat (new_args, ptr_arg);
+                    }
+                }
+            }
+            pos++;
+        }
+        if (!chanmode_found)
+        {
+            /*
+             * chanmode was not in channel modes: if set_flag is '+', add
+             * it to channel modes
+             */
+            if (set_flag == '+')
+            {
+                if (argument)
+                {
+                    /* add mode with argument at the end of modes */
+                    str_mode[0] = chanmode;
+                    str_mode[1] = '\0';
+                    strcat (new_modes, str_mode);
+                    if (new_args[0])
+                        strcat (new_args, " ");
+                    strcat (new_args, argument);
+                }
+                else
+                {
+                    /* add mode without argument at the beginning of modes */
+                    pos = new_modes;
+                    while (pos[0] == '+')
+                        pos++;
+                    memmove (pos + 1, pos, strlen (pos) + 1);
+                    pos[0] = chanmode;
+                }
+            }
+        }
+        if (new_args[0])
+        {
+            length = strlen (new_modes) + 1 + strlen (new_args) + 1;
+            str_temp = malloc (length);
+            if (str_temp)
+            {
+                snprintf (str_temp, length, "%s %s", new_modes, new_args);
+                if (channel->modes)
+                    free (channel->modes);
+                channel->modes = strdup (str_temp);
+            }
+        }
+        else
+        {
+            if (channel->modes)
+                free (channel->modes);
+            channel->modes = strdup (new_modes);
+        }
+
+        free (new_modes);
+        free (new_args);
+    }
+
+    if (str_modes)
+        free (str_modes);
+    if (argv)
+        weechat_string_free_split (argv);
+}
+
+/*
+ * irc_mode_channel_set: set channel modes using CHANMODES (from message 005)
+ *                       and update channel modes if needed
+ */
+
+void
+irc_mode_channel_set (struct t_irc_server *server,
+                      struct t_irc_channel *channel,
+                      const char *modes)
+{
+    char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg, chanmode_type;
+    int argc, current_arg, update_channel_modes, channel_modes_updated;
     struct t_irc_nick *ptr_nick;
 
     if (!server || !channel || !modes)
-        return 0;
+        return;
 
     channel_modes_updated = 0;
-
     argc = 0;
     argv = NULL;
     pos_args = strchr (modes, ' ');
@@ -59,7 +281,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = weechat_strndup (modes, pos_args - modes);
         if (!str_modes)
-            return 0;
+            return;
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
@@ -69,22 +291,10 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = strdup (modes);
         if (!str_modes)
-            return 0;
+            return;
     }
 
-    /* count number of mode chars */
-    modes_count = 0;
-    pos = str_modes;
-    while (pos && pos[0])
-    {
-        if ((pos[0] != ':') && (pos[0] != ' ') && (pos[0] != '+')
-            && (pos[0] != '-'))
-        {
-            modes_count++;
-        }
-        pos++;
-    }
-    current_arg = argc - modes_count;
+    current_arg = 0;
 
     if (str_modes && str_modes[0])
     {
@@ -103,43 +313,60 @@ irc_mode_channel_set (struct t_irc_server *server,
                 case '-':
                     set_flag = '-';
                     break;
-                case 'b': /* ban (ignored) */
-                    current_arg++;
-                    break;
-                case 'k': /* channel key */
-                    if (channel->key)
-                    {
-                        free (channel->key);
-                        channel->key = NULL;
-                    }
-                    if (set_flag == '+')
-                    {
-                        ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
-                            argv[current_arg] : NULL;
-                        if (ptr_arg)
-                            channel->key = strdup (ptr_arg);
-                    }
-                    channel_modes_updated = 1;
-                    current_arg++;
-                    break;
-                case 'l': /* channel limit */
-                    if (set_flag == '-')
-                        channel->limit = 0;
-                    if (set_flag == '+')
-                    {
-                        ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
-                            argv[current_arg] : NULL;
-                        if (ptr_arg)
-                            channel->limit = atoi (ptr_arg);
-                    }
-                    channel_modes_updated = 1;
-                    current_arg++;
-                    break;
                 default:
-                    if (irc_server_get_prefix_mode_index (server, pos[0]) >= 0)
+                    update_channel_modes = 1;
+                    chanmode_type = irc_mode_get_chanmode_type (server, pos[0]);
+                    ptr_arg = NULL;
+                    switch (chanmode_type)
                     {
-                        ptr_arg = ((current_arg >= 0) && (current_arg < argc)) ?
-                            argv[current_arg] : NULL;
+                        case 'A': /* always argument */
+                            update_channel_modes = 0;
+                            ptr_arg = (current_arg < argc) ?
+                                argv[current_arg] : NULL;
+                            break;
+                        case 'B': /* always argument */
+                            ptr_arg = (current_arg < argc) ?
+                                argv[current_arg] : NULL;
+                            break;
+                        case 'C': /* argumment if set */
+                            ptr_arg = ((set_flag == '+') && (current_arg < argc)) ?
+                                argv[current_arg] : NULL;
+                            break;
+                        case 'D': /* no argument */
+                            break;
+                    }
+                    if (ptr_arg)
+                        current_arg++;
+
+                    if (pos[0] == 'k')
+                    {
+                        /* channel key */
+                        if (channel->key)
+                        {
+                            free (channel->key);
+                            channel->key = NULL;
+                        }
+                        if ((set_flag == '+') && ptr_arg)
+                        {
+                            channel->key = strdup (ptr_arg);
+                        }
+                    }
+                    else if (pos[0] == 'l')
+                    {
+                        /* channel limit */
+                        if (set_flag == '-')
+                            channel->limit = 0;
+                        if ((set_flag == '+') && ptr_arg)
+                        {
+                            channel->limit = atoi (ptr_arg);
+                        }
+                    }
+                    else if ((chanmode_type != 'A')
+                             && (irc_server_get_prefix_mode_index (server,
+                                                                   pos[0]) >= 0))
+                    {
+                        /* mode for nick */
+                        update_channel_modes = 0;
                         if (ptr_arg)
                         {
                             ptr_nick = irc_nick_search (server, channel,
@@ -151,9 +378,12 @@ irc_mode_channel_set (struct t_irc_server *server,
                             }
                         }
                     }
-                    else
+                    if (update_channel_modes)
+                    {
+                        irc_mode_channel_update (server, channel, set_flag,
+                                                 pos[0], ptr_arg);
                         channel_modes_updated = 1;
-                    current_arg++;
+                    }
                     break;
             }
             pos++;
@@ -165,9 +395,8 @@ irc_mode_channel_set (struct t_irc_server *server,
     if (argv)
         weechat_string_free_split (argv);
 
-    weechat_bar_item_update ("buffer_name");
-
-    return channel_modes_updated;
+    if (channel_modes_updated)
+        weechat_bar_item_update ("buffer_name");
 }
 
 /*

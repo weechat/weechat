@@ -23,9 +23,9 @@
 struct t_irc_server;
 struct t_irc_channel;
 
-extern int irc_mode_channel_set (struct t_irc_server *server,
-                                 struct t_irc_channel *channel,
-                                 const char *modes);
+extern void irc_mode_channel_set (struct t_irc_server *server,
+                                  struct t_irc_channel *channel,
+                                  const char *modes);
 extern void irc_mode_user_set (struct t_irc_server *server, const char *modes,
                                int reset_modes);
 

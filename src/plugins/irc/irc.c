@@ -185,10 +185,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_hsignal ("irc_redirect_pattern", &irc_redirect_pattern_hsignal_cb, NULL);
     weechat_hook_hsignal ("irc_redirect_command", &irc_redirect_command_hsignal_cb, NULL);
 
-    /* hook hsignal for redirection of "mode" output */
-    weechat_hook_hsignal ("irc_redirection_mode_mode_channel",
-                          &irc_protocol_redirection_mode_cb, NULL);
-
     /* modifiers */
     weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
     weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);

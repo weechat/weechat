@@ -377,6 +377,16 @@ irc_upgrade_read_cb (void *data,
                     str = weechat_infolist_string (infolist, "chantypes");
                     if (str)
                         irc_upgrade_current_server->chantypes = strdup (str);
+                    str = weechat_infolist_string (infolist, "chanmodes");
+                    if (str)
+                        irc_upgrade_current_server->chanmodes = strdup (str);
+                    else
+                    {
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "CHANMODES");
+                        if (str)
+                            irc_upgrade_current_server->chanmodes = strdup (str);
+                    }
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");
