@@ -72,6 +72,10 @@ extern int relay_weechat_protocol_signal_nicklist_cb (void *data,
                                                       const char *signal,
                                                       const char *type_data,
                                                       void *signal_data);
+extern int relay_weechat_protocol_signal_upgrade_cb (void *data,
+                                                     const char *signal,
+                                                     const char *type_data,
+                                                     void *signal_data);
 extern int relay_weechat_protocol_timer_nicklist_cb (void *data,
                                                      int remaining_calls);
 extern void relay_weechat_protocol_recv (struct t_relay_client *client,

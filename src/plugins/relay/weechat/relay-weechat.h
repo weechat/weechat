@@ -41,8 +41,9 @@ struct t_relay_weechat_data
     /* sync of buffers */
     struct t_hashtable *buffers_sync;  /* buffers synchronized (events      */
                                        /* received for these buffers)       */
-    struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_xxx"  */
-    struct t_hook *hook_signal_nicklist;  /* hook for signals "nicklist_xxx"*/
+    struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_*"    */
+    struct t_hook *hook_signal_nicklist;  /* hook for signals "nicklist_*"  */
+    struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
     struct t_hashtable *buffers_nicklist; /* send nicklist for these buffers*/
     struct t_hook *hook_timer_nicklist;   /* timer for sending nicklist     */
 };

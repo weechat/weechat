@@ -278,7 +278,6 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
     char cmd_hdata[64], str_signal[128];
 
     /* make C compiler happy */
-    (void) signal;
     (void) type_data;
 
     ptr_client = (struct t_relay_client *)data;
@@ -591,6 +590,43 @@ relay_weechat_protocol_signal_nicklist_cb (void *data, const char *signal,
         RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist) = NULL;
     }
     relay_weechat_hook_timer_nicklist (ptr_client);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * relay_weechat_protocol_signal_upgrade_cb: callback for "upgrade*" signals
+ */
+
+int
+relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
+                                          const char *type_data,
+                                          void *signal_data)
+{
+    struct t_relay_client *ptr_client;
+    struct t_relay_weechat_msg *msg;
+    char str_signal[128];
+
+    /* make C compiler happy */
+    (void) type_data;
+    (void) signal_data;
+
+    ptr_client = (struct t_relay_client *)data;
+    if (!ptr_client || !relay_client_valid (ptr_client))
+        return WEECHAT_RC_OK;
+
+    snprintf (str_signal, sizeof (str_signal), "_%s", signal);
+
+    if ((strcmp (signal, "upgrade") == 0)
+        || (strcmp (signal, "upgrade_ended") == 0))
+    {
+        msg = relay_weechat_msg_new (str_signal);
+        if (msg)
+        {
+            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_free (msg);
+        }
+    }
 
     return WEECHAT_RC_OK;
 }

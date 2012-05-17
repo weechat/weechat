@@ -70,6 +70,7 @@ Version 0.3.8 (under dev!)
   logger.color.backlog_line and logger.color.backlog_end (task #11966)
 * perl: fix compilation on OS X (bug #30701)
 * perl: fix crash on quit on OS X
+* relay: add signals "upgrade" and "upgrade_ended" in WeeChat protocol
 * relay: fix crash on /upgrade when client is connected using WeeChat protocol
 * relay: redirect some irc messages from clients to hide output (messages: mode,
   ison, list, names, topic, who, whois, whowas, time, userhost) (bug #33516)

@@ -81,6 +81,10 @@ relay_weechat_hook_signals (struct t_relay_client *client)
         weechat_hook_signal ("nicklist_*",
                              &relay_weechat_protocol_signal_nicklist_cb,
                              client);
+    RELAY_WEECHAT_DATA(client, hook_signal_upgrade) =
+        weechat_hook_signal ("upgrade*",
+                             &relay_weechat_protocol_signal_upgrade_cb,
+                             client);
 }
 
 /*
@@ -99,6 +103,11 @@ relay_weechat_unhook_signals (struct t_relay_client *client)
     {
         weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_nicklist));
         RELAY_WEECHAT_DATA(client, hook_signal_nicklist) = NULL;
+    }
+    if (RELAY_WEECHAT_DATA(client, hook_signal_upgrade))
+    {
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
+        RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
     }
 }
 
@@ -205,6 +214,7 @@ relay_weechat_alloc (struct t_relay_client *client)
                                    NULL);
         RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
         RELAY_WEECHAT_DATA(client, hook_signal_nicklist) = NULL;
+        RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
         RELAY_WEECHAT_DATA(client, buffers_nicklist) =
             weechat_hashtable_new (16,
                                    WEECHAT_HASHTABLE_STRING,
@@ -258,6 +268,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
         }
         RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
         RELAY_WEECHAT_DATA(client, hook_signal_nicklist) = NULL;
+        RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
         RELAY_WEECHAT_DATA(client, buffers_nicklist) =
             weechat_hashtable_new (16,
                                    WEECHAT_HASHTABLE_STRING,
@@ -304,6 +315,8 @@ relay_weechat_free (struct t_relay_client *client)
             weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_buffer));
         if (RELAY_WEECHAT_DATA(client, hook_signal_nicklist))
             weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_nicklist));
+        if (RELAY_WEECHAT_DATA(client, hook_signal_upgrade))
+            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         if (RELAY_WEECHAT_DATA(client, buffers_nicklist))
             weechat_hashtable_free (RELAY_WEECHAT_DATA(client, buffers_nicklist));
 
@@ -355,6 +368,7 @@ relay_weechat_print_log (struct t_relay_client *client)
                                                           "keys_values"));
         weechat_log_printf ("    hook_signal_buffer . . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_signal_buffer));
         weechat_log_printf ("    hook_signal_nicklist . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_signal_nicklist));
+        weechat_log_printf ("    hook_signal_upgrade. . : 0x%lx", RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         weechat_log_printf ("    buffers_nicklist . . . : 0x%lx (hashtable: '%s')",
                             RELAY_WEECHAT_DATA(client, buffers_nicklist),
                             weechat_hashtable_get_string (RELAY_WEECHAT_DATA(client, buffers_nicklist),
