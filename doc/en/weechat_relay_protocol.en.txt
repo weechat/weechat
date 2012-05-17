@@ -491,11 +491,13 @@ WeeChat reserved identifiers:
   'prefix' (string), 'prefix_color' (string) |
   Update nicklist
 
-| _upgrade                 | WeeChat is upgrading    | (empty) |
+| _upgrade                 | WeeChat is upgrading +
+  (_new in version 0.3.8_) | (empty) |
   (empty) |
   Desync from WeeChat (send command 'desync')
 
-| _upgrade_ended           | Upgrade of WeeChat done | (empty) |
+| _upgrade_ended           | Upgrade of WeeChat done +
+  (_new in version 0.3.8_) | (empty) |
   (empty) |
   Resync with WeeChat (resend all commands sent on startup after the 'init')
 |=====================================================
