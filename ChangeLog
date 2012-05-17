@@ -70,6 +70,8 @@ Version 0.3.8 (under dev!)
   logger.color.backlog_line and logger.color.backlog_end (task #11966)
 * perl: fix compilation on OS X (bug #30701)
 * perl: fix crash on quit on OS X
+* relay: keep spaces in beginning of "input" received from client (WeeChat
+  protocol)
 * relay: add signals "upgrade" and "upgrade_ended" in WeeChat protocol
 * relay: fix crash on /upgrade when client is connected using WeeChat protocol
 * relay: redirect some irc messages from clients to hide output (messages: mode,
