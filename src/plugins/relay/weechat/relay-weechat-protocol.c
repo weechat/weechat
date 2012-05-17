@@ -250,12 +250,17 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 {
     struct t_gui_buffer *ptr_buffer;
+    char *pos;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(2);
 
     ptr_buffer = relay_weechat_protocol_get_buffer (argv[0]);
     if (ptr_buffer)
-        weechat_command (ptr_buffer, argv_eol[1]);
+    {
+        pos = strchr (argv_eol[0], ' ');
+        if (pos)
+            weechat_command (ptr_buffer, pos + 1);
+    }
 
     return WEECHAT_RC_OK;
 }
