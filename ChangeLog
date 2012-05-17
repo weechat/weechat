@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-rc1, 2012-05-16
+v0.3.8-rc1, 2012-05-17
 
 
 Version 0.3.8 (under dev!)
@@ -70,6 +70,7 @@ Version 0.3.8 (under dev!)
   logger.color.backlog_line and logger.color.backlog_end (task #11966)
 * perl: fix compilation on OS X (bug #30701)
 * perl: fix crash on quit on OS X
+* relay: fix crash on /upgrade when client is connected using WeeChat protocol
 * relay: redirect some irc messages from clients to hide output (messages: mode,
   ison, list, names, topic, who, whois, whowas, time, userhost) (bug #33516)
 * relay: add "date_printed" and "highlight" in signal "_buffer_line_added"
