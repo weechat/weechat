@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-rc1, 2012-05-17
+v0.3.8-rc1, 2012-05-18
 
 
 Version 0.3.8 (under dev!)
@@ -27,6 +27,7 @@ Version 0.3.8 (under dev!)
   weechat.look.paste_bracketed and weechat.look.paste_bracketed_timer_delay
   (task #11316)
 * core: fix display of wide chars on last column of chat area (patch #7733)
+* doc: add japanese FAQ (patch #7781)
 * api: display warning in scripts when invalid pointers (malformed strings) are
   given to plugin API functions (warning displayed if debug for plugin is >= 1)
 * api: add list "gui_buffer_last_displayed" in hdata "buffer"

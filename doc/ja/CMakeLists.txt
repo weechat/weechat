@@ -17,6 +17,17 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# FAQ
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.ja.html
+  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.ja.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.ja.txt
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.ja.txt
+  COMMENT "Building weechat_faq.ja.html"
+)
+ADD_CUSTOM_TARGET(doc-faq-ja ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.ja.html)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.ja.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
 # quickstart
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.ja.html

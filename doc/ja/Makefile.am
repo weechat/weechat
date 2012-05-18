@@ -20,9 +20,15 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             weechat_faq.ja.txt \
              weechat_quickstart.ja.txt
 
-all-local: weechat_quickstart.ja.html
+all-local: weechat_faq.ja.html \
+		weechat_quickstart.ja.html
+
+# FAQ
+weechat_faq.ja.html: weechat_faq.ja.txt
+	$(ASCIIDOC) -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.ja.html $(abs_top_srcdir)/doc/ja/weechat_faq.ja.txt
 
 # quickstart
 weechat_quickstart.ja.html: weechat_quickstart.ja.txt
