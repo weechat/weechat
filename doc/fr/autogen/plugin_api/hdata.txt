@@ -140,6 +140,7 @@
   'nick_max_length' (integer) +
   'casemapping' (integer) +
   'chantypes' (string) +
+  'chanmodes' (string) +
   'reconnect_delay' (integer) +
   'reconnect_start' (time) +
   'command_time' (time) +
