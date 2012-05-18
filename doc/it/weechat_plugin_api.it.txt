@@ -6156,8 +6156,7 @@ Esempi:
 
 Valore restituito:
 
-// TRANSLATION MISSING
-* string with color code, or an empty string if color is not found
+* stringa con il codice colore, o una stringa vuota se non trovata
 
 Esempio in C:
 
@@ -6314,31 +6313,29 @@ Argomenti:
 * 'tags': lista di tag separati da virgole
 * 'message': messaggio da visualizzare
 
-// TRANSLATION MISSING
-Tags commonly used (non-exhaustive list):
+Tag usati di frequente (elenco non esaustivo):
 
-// TRANSLATION MISSING
 [width="70%",cols="1m,4",options="header"]
 |========================================
-| Tag              | Description
-| no_filter        | Line can not be filtered
-| no_highlight     | No highlight is possible on line
-| no_log           | Line is not written in log file
-| log0 ... log9    | Level of log for line (see `/help logger`)
-| notify_none      | Buffer with line is not added to hotlist
-| notify_message   | Buffer with line is added to hotlist with level "message"
-| notify_private   | Buffer with line is added to hotlist with level "private"
-| notify_highlight | Buffer with line is added to hotlist with level "highlight"
-| nick_xxx         | Message is from nick "xxx"
-| prefix_nick_ccc  | Prefix is a nick with color "ccc"
-| irc_xxx          | IRC message "xxx" (can be a command or a 3-digits number)
-| irc_numeric      | IRC numeric message
-| irc_error        | Error from IRC server
-| irc_action       | Action from a nick (command `/me`)
-| irc_ctcp         | CTCP message
-| irc_ctcp_reply   | Reply to CTCP message
-| irc_smart_filter | IRC message that can be filtered with the "smart filter"
-| away_info        | Message with away info
+| Tag              | Descrizione
+| no_filter        | La riga non può essere filtrata
+| no_highlight     | Evidenziazione non possibile sulla riga
+| no_log           | La riga non viene scritta nel file di log
+| log0 ... log9    | Livello di log per la riga (consultare `/help logger`)
+| notify_none      | Il buffer con la riga non viene aggiunto alla hotlist
+| notify_message   | Il buffer con la riga viene aggiunto alla hotlist con il livello "message"
+| notify_private   | Il buffer con la riga viene aggiunto alla hotlist con il livello "private"
+| notify_highlight | Il buffer con la riga viene aggiunto alla hotlist con il livello "higlight"
+| nick_xxx         | Il messaggio viene dal nick "xxx"
+| prefix_nick_ccc  | Il prefisso è un nick con il colore "ccc"
+| irc_xxx          | Messaggio IRC "xxx" (può essere un comando o un numero di 3 cifre)
+| irc_numeric      | Messaggio IRC numerico
+| irc_error        | Errore dal server IRC
+| irc_action       | Azione da un nic (comando `/me`)
+| irc_ctcp         | Messaggio CTCP
+| irc_ctcp_reply   | Risposta ad un messaggio CTCP
+| irc_smart_filter | Messaggio IRC filtrabile tramite lo "smart filter" (filtro intelligente)
+| away_info        | Messagio con informazioni sull'assenza
 |========================================
 
 Esempio in C:
@@ -6587,8 +6584,7 @@ Ad esempio, se il comando chiamato è `/comando abc def ghi`, allora
 ** 'argv_eol[2]' == "def ghi"
 ** 'argv_eol[3]' == "ghi"
 
-// TRANSLATION MISSING
-For scripts, 'args' has value "abc def ghi".
+Per gli script, 'args' ha valore "abc def ghi".
 
 Script (Python):
 
@@ -9669,10 +9665,9 @@ Argomenti:
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
 ** 'full_name': nome completo del buffer ("plugin.nome") (_novità nella versione 0.3.7_)
-// TRANSLATION MISSING
-** 'short_name': nome breve del buffer (note: used for display only and can be
-   changed by user, this must not be used to find name of buffer, use instead
-   'name', 'full_name' or local variable 'channel')
+** 'short_name': nome breve del buffer (nota: usato solo per il display e può
+   essere cambiato dall'utente, questo nome non va usato per trovare il nome del
+   buffer, utilizzare invece 'name', 'fullname' o la variabile locale 'channel')
 ** 'title': titolo del buffer
 ** 'input': testo in ingresso
 ** 'text_search_input': input salvato prima della ricerca nel testo

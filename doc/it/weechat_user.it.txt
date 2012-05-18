@@ -115,9 +115,8 @@ compilare WeeChat.
 potrebbero essere differenti in versioni e distribuzioni differenti. +
 ^(2)^ WeeChat può essere compilato con libncurses5-dev, ma *NON* è raccomandato
 (potrebbero verificarsi bug di visualizzazione). +
-// TRANSLATION MISSING
-^(3)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,
-but not with versions ≤ 2.6 or ≥ 3.0).
+^(3)^ La versione raccomandata di Python è la 2.7 (tutti gli script funzionano
+correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
 
 [[compile_with_cmake]]
 Compilazione con cmake
@@ -2075,7 +2074,7 @@ Sviluppatore principale::
 Contributori
 ~~~~~~~~~~~~
 
-Packagers::
+Packager::
     Emmanuel Bouthenot (kolter), Julien Louis (ptitlouis), Odin
 
 Traduzioni::
@@ -2084,7 +2083,7 @@ Traduzioni::
     Marco Paolone, Ivan Sichmann Freitas, Lázaro A., Ryuunosuke Ayanokouzi,
     Quico Noizeux
 
-Patches::
+Patch::
     Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
     JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller,
     Quentin Glidic (SardemFF7), Simon Kuhnle, Mateusz Poszwa
