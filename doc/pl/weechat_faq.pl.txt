@@ -582,7 +582,7 @@ Jeśli napewno chcesz filtrować wiadomości o statusie voice, możesz użyć te
 nie jest ona jednak doskonała (działa tylko jeśli pierwszy z modyfikowanych trybów to voice):
 
 ----------------------------------------
-/filter add hidevoices * irc_mode \(\+\|\-\)v
+/filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
 

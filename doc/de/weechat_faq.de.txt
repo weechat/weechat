@@ -604,7 +604,7 @@ werden. Allerdings ist diese Lösung nicht perfekt, da bei mehren Modi als erste
 der Voice Modus aufgeführt sein muss):
 
 ----------------------------------------
-/filter add hidevoices * irc_mode \(\+\|\-\)v
+/filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
 

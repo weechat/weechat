@@ -577,7 +577,7 @@ If you really want to filter voice messages, you can use this command, but this
 is not perfect (will work only if first mode changed is voice):
 
 ----------------------------------------
-/filter add hidevoices * irc_mode \(\+\|\-\)v
+/filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
 

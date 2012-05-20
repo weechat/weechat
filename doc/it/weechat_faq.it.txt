@@ -597,7 +597,7 @@ comando, ma non funzionerà perfettamente (funziona se la prima modalità
 modificata è il voice):
 
 ----------------------------------------
-/filter add hidevoices * irc_mode \(\+\|\-\)v
+/filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
 

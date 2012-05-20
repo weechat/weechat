@@ -601,7 +601,7 @@ commande, mais elle n'est pas parfaite (elle fonctionne seulement si le
 premier mode changé est voice) :
 
 ----------------------------------------
-/filter add hidevoices * irc_mode \(\+\|\-\)v
+/filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
 
