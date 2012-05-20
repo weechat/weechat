@@ -201,48 +201,48 @@ infolists: zeigt Information über die Infolists an
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
-  regex: regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: alle Filter auflisten
+ enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
+disable: Filter deaktivieren
+ toggle: Filter de-/aktivieren
+   name: Name des Filters
+    add: Filter hinzufügen
+    del: Filter entfernen
+   -all: entfernt alle Filter
+ buffer: durch Kommata getrennte Liste von Buffern in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffers inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+         - "*" anwenden auf alle Buffer
+         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
+   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
+  regex: regulärer Ausdruck um in einer Zeile zu suchen
+         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+         - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
 
-The default key alt+'=' toggles filtering on/off.
+Die Tastenvoreinstellung alt+'=' schaltet die Filterfunktion an/aus.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Schlagwörter lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw),
+  nick_xxx (xxx ist durch den Nicknamen zu ersetzen), prefix_nick_ccc (ccc ist die Farbe mit der der Nick dargestellt wird),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen zu lassen.
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names:" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ........................................
 
@@ -339,44 +339,44 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
       resetall -yes [<context>]
       missing [<context>]
 
-       list: list all current keys (without argument, this list is displayed)
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-    command: command (many commands can be separated by semicolons)
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: zeigt die aktuelle Tastenbelegungen an (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+listdefault: zeigt die Standardeinstellung der Tastenbelegung an
+   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
+    context: Name des Kontextes ("default" oder "search")
+       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde (für Kontext  "default")
+   bindctxt: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde, dies trifft für Kontext definierte Tasten zu
+    command: Befehl (mehrere Befehle werden durch ein Semikolon getrennt)
+     unbind: hebt eine Tastenbelegung auf (für Kontext "default")
+ unbindctxt: hebt eine Tastenbelegung für den angegebenen Kontext auf
+      reset: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt (für Kontext "default")
+  resetctxt: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt, dies trifft für den ausgewählten Kontext zu
+   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
+    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-The key can start or end with '*' to match many mouse events.
-A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
-Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlussel". "area" kann folgende Werte habe:
+          *: jedweder Bereich des Bildschirms
+       chat: Chatbereich (für jeden Buffer)
+  chat(xxx): Chatbereich für einen Buffer mit dem Namen "xxx" (vollständiger Name mit Erweiterung. Beispiel: chat(perl.iset):)
+     bar(*): beliebige Bar
+   bar(xxx): Bar mit dem Namen "xxx"
+    item(*): beliebiges Bar-Item
+  item(xxx): Bar-Item mit Namen "xxx"
+Der zu nutzende Schlüssel kann mit '*' beginnen oder enden um mehrere unterschiedliche Mausereignisse auszuwählen.
+Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name".  Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
+Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
 
-Examples:
-  key alt-x to toggle nicklist bar:
+Beispiele:
+  Mit der Tastenkombination "alt-x" wird die Nicklist-Bar an-und aus geschaltet:
     /key bind meta-x /bar toggle nicklist
-  key alt-r to jump to #weechat IRC channel:
+  Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:
     /key reset meta-r
-  key "tab" to stop search in buffer:
+  "Tab"-Taste nutzen um im Kontext "search" die Suche innerhalb eines Buffers zu beenden:
     /key bindctxt search ctrl-I /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  Auswahl eines Nicknamens mittels mittlerem Mausknopf zeigt zusätzliche Informationen zu dem Nick an:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 

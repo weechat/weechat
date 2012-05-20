@@ -111,9 +111,8 @@ welche Pakete optional genutzt werden können.
 können für andere Distributionen abweichend sein. +
 ^(2)^ WeeChat kann auch mit libncurses5-dev kompiliert werden. Dies wird aber *NICHT* empfohlen (es
 treten dabei Darstellungsfehler mit breiten Zeichen auf). +
-// TRANSLATION MISSING
-^(3)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,
-but not with versions ≤ 2.6 or ≥ 3.0).
+^(3)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
+aber nicht mit Version ≤ 2.6 oder ≥ 3.0).
 
 [[compile_with_cmake]]
 Kompilieren mit cmake

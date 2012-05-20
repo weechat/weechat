@@ -279,7 +279,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
-** Beschreibung: `string inserted after nick completion (when nick is first word on command line)`
+** Beschreibung: `Füge eine Zeichenkette hinter die Nick-Vervollständigung ein (sofern ein Nickname das erste Wort in der Kommandozeile ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `":"`)
 
@@ -394,12 +394,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.color_inactive_prefix]] *weechat.look.color_inactive_prefix*
-** Beschreibung: `nutzt eine andere Farbe um den inaktiven Prefix darzustellen (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
+** Beschreibung: `nutzt eine andere Farbe um den inaktiven Präfix darzustellen (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.color_inactive_prefix_buffer]] *weechat.look.color_inactive_prefix_buffer*
-** Beschreibung: `nutzt eine andere Farbe um den inaktiven BUffernamen im Prefix (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
+** Beschreibung: `nutzt eine andere Farbe um den inaktiven Buffernamen im Präfix (Fenster ist nicht das aktuelle Fenster oder die Zeile des zusammengefügten Buffers ist nicht aktiv)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -614,7 +614,7 @@
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** Beschreibung: `char to display if prefix is truncated (must be exactly one char on screen)`
+** Beschreibung: `Zeichen welches dargestellt werden soll, falls der Nickname abgeschnitten wird (es darf nur ein Zeichen genutzt werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
@@ -629,7 +629,7 @@
 ** Werte: 0 .. 128 (Standardwert: `0`)
 
 * [[option_weechat.look.prefix_buffer_align_more]] *weechat.look.prefix_buffer_align_more*
-** Beschreibung: `char to display if buffer name is truncated (when many buffers are merged with same number) (must be exactly one char on screen)`
+** Beschreibung: `Zeichen welches dargestellst werden soll falls der Buffername abgeschnitten wird (wenn mehrere Buffer zusammengefügt wurden und diese somit die selbe Nummer besitzen) (es darf nur ein Zeichen genutzt werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
@@ -654,7 +654,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"<--"`)
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** Beschreibung: `prefix displayed for a message with same nick as previous message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)`
+** Beschreibung: `setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen darf keine Zeichenkette angegeben werden.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

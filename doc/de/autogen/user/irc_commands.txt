@@ -145,10 +145,10 @@ Ziel: Servername
 ........................................
 /disconnect  [<server>|-all|-pending [<reason>]]
 
-  server: server name to disconnect
-    -all: disconnect from all servers
--pending: cancel auto-reconnection on servers currently reconnecting
-  reason: reason for quit
+server: Name des Servers zu dem die Verbindung getrennt werden soll
+  -all: Verbindung zu allen Servern trennen
+-pending: bricht eine  automatische Wiederverbindung für Server ab, zu denen gerade eine Wiederverbindung aufgebaut werden soll
+reason: Begründung der Trennung
 ........................................
 
 [[command_irc_halfop]]
