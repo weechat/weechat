@@ -20,10 +20,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.8-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-05-05 19:51+0200\n"
-"PO-Revision-Date: 2012-02-26 09:16+0100\n"
-"Last-Translator: \"AYANOKOUZI, Ryuunosuke\" <i38w7i3@yahoo.co.jp>\n"
-"Language-Team: Japanese\n"
+"POT-Creation-Date: 2012-05-18 09:10+0200\n"
+"PO-Revision-Date: 2012-05-20 23:24+0900\n"
+"Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
+"Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -782,7 +782,7 @@ msgstr "コンパイル日時"
 
 #, c-format
 msgid "Upgraded %d %s, first start: %s"
-msgstr "アップグレード日時 %d %s、最初の開始時間: %s"
+msgstr "アップグレード回数 %d %s、1 回目の起動日時: %s"
 
 #. TRANSLATORS: text is: "upgraded xx times"
 msgid "time"
@@ -1185,7 +1185,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1271,8 +1270,9 @@ msgstr ""
 "よく使われるタグ:\n"
 "  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
-"  nick_xxx (xxx is nick in message),\n"
-"  irc_xxx (xxx is command name or number, see /server raw),\n"
+"  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニック"
+"ネームの色)\n"
+"  irc_xxx (xxx はコマンド名又は番号、/server raw で確認),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "バッファ内でタグを見るには: /debug tags\n"
@@ -1332,7 +1332,6 @@ msgstr "コマンドライン関数"
 msgid "<action> [<arguments>]"
 msgstr "<action> [<arguments>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1389,8 +1388,8 @@ msgid ""
 msgstr ""
 "アクションリスト:\n"
 "  return: \"enter\" キーをシミュレート\n"
-"  complete_next: 次の補完候補の完全な単語\n"
-"  complete_previous: 一つ前の補完候補の完全な単語\n"
+"  complete_next: 次の補完候補で単語を補完\n"
+"  complete_previous: 一つ前の補完候補で単語を補完\n"
 "  search_text: バッファ内のテキストを検索\n"
 "  search_switch_case: 完全一致検索に変更\n"
 "  search_previous: 一つ前の行を検索\n"
@@ -1420,7 +1419,7 @@ msgstr ""
 "  jump_smart: 次のアクティブバッファに飛ぶ\n"
 "  jump_last_buffer: 最後のバッファに移動\n"
 "  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッ"
-"ファ移動の前)\n"
+"ファ移動の一つ前に表示されていたバッファ)\n"
 "  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動\n"
 "  jump_next_visited_buffer: 次に訪れたバッファに移動\n"
 "  hotlist_clear: ホットリストを消去\n"
@@ -1435,8 +1434,10 @@ msgstr ""
 "  switch_active_buffer: 次のマージされたバッファに移動\n"
 "  switch_active_buffer_previous: 一つ前のマージされたバッファに移動\n"
 "  insert: コマンドラインにテキストを挿入\n"
+"  paste_start: ペーストの開始 (括弧付きペーストモード)\n"
+"  paste_stop: ペーストの終了 (括弧付きペーストモード)\n"
 "\n"
-"このコマンドはキーバインドかプラグインから利用できます。"
+"これらのコマンドはキーバインドかプラグインで利用できます。"
 
 msgid "bind/unbind keys"
 msgstr "キーの割り当てと割り当て解除"
@@ -1452,7 +1453,6 @@ msgstr ""
 "<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
 "[<context>] || missing [<context>]"
 
-#, fuzzy
 msgid ""
 "       list: list all current keys (without argument, this list is "
 "displayed)\n"
@@ -1518,6 +1518,7 @@ msgstr ""
 "示 (\"default\" コンテキストに対する)\n"
 "   bindctxt: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表"
 "示 (指定されたコンテキストに対する)\n"
+"    command: コマンド (複数のコマンドはセミコロンで分けて書く)\n"
 "     unbind: キーバインドを削除 (\"default\" コンテキストに対する)\n"
 " unbindctxt: キーバインドを削除 (指定されたコンテキストに対する)\n"
 "      reset: キーをデフォルトの割り当てにリセットする (\"default\" コンテキス"
@@ -2254,7 +2255,7 @@ msgstr ""
 
 #, c-format
 msgid "\t\tDay changed to %s"
-msgstr "\t\t%s に日付が変わりました"
+msgstr "\t\t%s に日付変更"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "プラグイン (\"core\" は WeeChat コア) のデバッグレベル"
@@ -2604,16 +2605,21 @@ msgid ""
 "so that WeeChat can differentiate pasted text from typed-in text (\"ESC[200~"
 "\", followed by the pasted text, followed by \"ESC[201~\")"
 msgstr ""
+"端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可"
+"能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られ"
+"る。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別す"
+"る (\"ESC[200~\" 、ペーストされたテキスト、\"ESC[201~\")。"
 
 msgid ""
 "force end of bracketed paste after this delay (in seconds) if the control "
 "sequence for end of bracketed paste (\"ESC[201~\") was not received in time"
 msgstr ""
+"括弧付きペーストの終了を示すコントロールシーケンス (\"ESC[201~\") が入力され"
+"なかった場合に、括弧付きペーストを強制終了させるまでの待ち時間 (秒単位)"
 
-#, fuzzy
 msgid ""
 "max number of lines for paste without asking user (-1 = disable this feature)"
-msgstr "ユーザへの確認無しにペーストできる行数の最大値 (0 = この機能を無効化)"
+msgstr "ユーザへの確認無しにペーストする行数の最大値 (-1 = この機能を無効化)"
 
 msgid "prefix for error messages"
 msgstr "エラーメッセージのプレフィックス"
@@ -2642,6 +2648,8 @@ msgstr "プレフィックスサイズの最小値"
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
 msgstr ""
+"プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど1文"
+"字)"
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -2657,19 +2665,21 @@ msgstr ""
 "多くのバッファが同じ番号を持つようにマージされた場合の、バッファ名のサイズの"
 "最大値 (0 = 最大値の指定無し)"
 
-#, fuzzy
 msgid ""
 "char to display if buffer name is truncated (when many buffers are merged "
 "with same number) (must be exactly one char on screen)"
 msgstr ""
-"バッファ名が切り詰められた場合は '+' を表示 (多くのバッファが同じ番号を持つよ"
-"うにマージされた場合)"
+"バッファ名が切り詰められた場合に表示する文字 (多くのバッファが同じ番号を持つ"
+"ようにマージされた場合) (スクリーン上のちょうど1文字)"
 
 msgid ""
 "prefix displayed for a message with same nick as previous message: use a "
 "space \" \" to hide prefix, another string to display this string instead of "
 "prefix, or an empty string to disable feature (display prefix)"
 msgstr ""
+"同じニックネームからの連続したメッセージに前置するプレフィックス: 空白文字 "
+"\" \" の場合はプレフィックスを隠す、これ以外の文字列の場合はそれをプレフィッ"
+"クスとして用いる、空文字の場合はプレフィックス表示機能を使わない"
 
 msgid "string displayed after prefix"
 msgstr "プレフィックスの後ろに表示される文字列"
@@ -2941,13 +2951,12 @@ msgstr ""
 "ニックネーム補完の後に空白を追加 (コマンドラインの最初がニックネームでない場"
 "合は)"
 
-#, fuzzy
 msgid ""
 "string inserted after nick completion (when nick is first word on command "
 "line)"
 msgstr ""
-"ニックネーム補完の後に空白を追加 (コマンドラインの最初がニックネームでない場"
-"合は)"
+"ニックネーム補完の後に追加する文字列 (ニックネームがコマンドラインの最初にあ"
+"る場合)"
 
 msgid "complete only with first nick found"
 msgstr "最初に見つかったニックネームだけを補完"
@@ -3002,11 +3011,10 @@ msgid ""
 msgstr ""
 "履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)"
 
-#, fuzzy
 msgid ""
 "timeout (in seconds) for connection to a remote host (made in a child "
 "process)"
-msgstr "gnutls ハンドシェイクのタイムアウト (秒単位)"
+msgstr "リモートホストへの接続タイムアウト時間 (秒単位) (子プロセスが行う)"
 
 msgid ""
 "file containing the certificate authorities (\"%h\" will be replaced by "
@@ -3426,7 +3434,7 @@ msgstr ""
 msgid "Bar \"%s\" updated"
 msgstr "バー \"%s\" がアップデートされました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
 msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
 msgstr[0] "%s %d 行を貼り付けますか? [ctrl-Y] はい [ctrl-N] いいえ"
@@ -3933,7 +3941,7 @@ msgid "away"
 msgstr "離席"
 
 msgid "Lag"
-msgstr "遅延"
+msgstr "遅延時間"
 
 #, c-format
 msgid ""
@@ -4446,20 +4454,19 @@ msgstr "target: サーバ名"
 msgid "disconnect from one or all IRC servers"
 msgstr "一つか全ての IRC との接続を切断"
 
-#, fuzzy
 msgid "[<server>|-all|-pending [<reason>]]"
-msgstr "[<server>|-all [<reason>]]"
+msgstr "[<server>|-all|-pending [<reason>]]"
 
-#, fuzzy
 msgid ""
 "  server: server name to disconnect\n"
 "    -all: disconnect from all servers\n"
 "-pending: cancel auto-reconnection on servers currently reconnecting\n"
 "  reason: reason for quit"
 msgstr ""
-"server: 接続を切断するサーバ名\n"
-"  -all: 全てのサーバとの接続を切る\n"
-"reason: 終了の理由"
+"  server: 接続を切断するサーバ名\n"
+"    -all: 全てのサーバとの接続を切る\n"
+"-pending: 現在再接続試行中のサーバに対する自動再接続を止める\n"
+"  reason: 終了の理由"
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "ニックネームに half-operator 権を付与"
@@ -4520,9 +4527,8 @@ msgstr "サーバに関する情報を入手"
 msgid "invite a nick on a channel"
 msgstr "チャンネルにニックネームを招待"
 
-#, fuzzy
 msgid "<nick> [<nick>...] [<channel>]"
-msgstr "<nick> [<nick>...]"
+msgstr "<nick> [<nick>...] [<channel>]"
 
 msgid ""
 "   nick: nick to invite\n"
@@ -5442,6 +5448,8 @@ msgid ""
 "blowfish\" for crypted password, \"external\" for authentication using "
 "client side SSL cert"
 msgstr ""
+"SASL 認証メカニズム: \"plain\" は平文パスワード、\"dh-blowfish\" は暗号パス"
+"ワード、\"external\" はクライアントサイド SSL 証明書を利用した認証"
 
 msgid "username for SASL authentication"
 msgstr "SASL 認証用ユーザ名"
@@ -5619,7 +5627,6 @@ msgstr "チャットウィンドウ内でニックネーム前に表示するテ
 msgid "text to display after nick in chat window"
 msgstr "チャットウィンドウ内でニックネーム後に表示するテキスト"
 
-#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); "
@@ -5627,7 +5634,9 @@ msgid ""
 "only lower case for nicks in this option"
 msgstr ""
 "ニックネーム色を強制するニックネーム: ニックネームから計算されるハッシュを元"
-"にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\")"
+"にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\"); オプショ"
+"ンで指定された通りのニックネーム、これを小文字化したニックネームの順で検索を"
+"行う。そのため、このオプションのニックネーム部分には小文字を使うと良い。"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -5830,7 +5839,6 @@ msgid "color for text in part/quit messages"
 msgstr "退出/終了 メッセージの色"
 
 #. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
-#, fuzzy
 msgid ""
 "remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
 "integers between -1 (not specified) and 15, values are WeeChat color names "
@@ -5844,11 +5852,11 @@ msgstr ""
 "メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "
 "\"fg,bg\" で -1(指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 "
 "(フォーマットは: \"1,-1:color1;2,7:color2\")、例: \"1,-1:darkgray;1,2:white,"
-"blue\" は背景色が任意でテキスト色が黒のものを \"darkgray\" に、背景色が青でテ"
-"キスト色が黒のものを \"white,blue\" に変更; IRC コードに対するデフォルトの "
-"WeeChat 色は、0:白、1:黒、2:青、3:緑、4:ライトレッド、5:赤、6:赤紫、7:茶色、"
-"8:黄色、9:ライトグリーン、10:シアン、11:ライトシアン、12:ライトブルー、13:ラ"
-"イトマゼンタ、14:灰色、15:白"
+"blue\" はテキスト色が黒のものを \"darkgray\" に、背景色が青でテキスト色が黒の"
+"ものを \"white,blue\" に変更; IRC コードに対するデフォルトの WeeChat 色は、0:"
+"白、1:黒、2:青、3:緑、4:ライトレッド、5:赤、6:赤紫、7:茶色、8:黄色、9:ライト"
+"グリーン、10:シアン、11:ライトシアン、12:ライトブルー、13:ライトマゼンタ、14:"
+"灰色、15:白"
 
 msgid ""
 "color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), "
@@ -6156,9 +6164,8 @@ msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: このバッファはチャンネルではありません"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
-#, fuzzy
 msgid "unknown"
-msgstr "(未定義)"
+msgstr "不明"
 
 msgid "offline"
 msgstr "オフライン"
@@ -6179,21 +6186,21 @@ msgstr "全てのサーバの通知リスト:"
 msgid "Notify list is empty on all servers"
 msgstr "全てのサーバの通知リストは空です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is connected"
-msgstr "%s通知: %s%s%s が %s%s に参加"
+msgstr "%s通知: %s%s%s が接続しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s is offline"
-msgstr "%s通知: %s%s%s が %s%s に参加"
+msgstr "%s通知: %s%s%s はオフライン状態"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has joined"
-msgstr "%s通知: %s%s%s が %s%s に参加"
+msgstr "%s通知: %s%s%s が参加"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s has quit"
-msgstr "%s通知: %s%s%s が %s%s から終了"
+msgstr "%s通知: %s%s%s が終了"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -6270,11 +6277,11 @@ msgstr "%s%s%s%s%s に kill されました"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
-msgstr "%sモード %s%s %s[%s%s%s]%s by %s%s"
+msgstr "%1$s%9$s%10$s%8$s がモードを変更 %2$s%3$s %4$s[%5$s%6$s%7$s]%8$s"
 
 #, c-format
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "%sユーザモード %s[%s%s%s]%s by %s%s"
+msgstr "%1$s%7$s%8$s%6$s がユーザモードを変更 %2$s[%3$s%4$s%5$s]%6$s"
 
 #, c-format
 msgid "%sYou are now known as %s%s%s"
@@ -6332,7 +6339,7 @@ msgstr "%s%s%s%s のユーザモードは %s[%s%s%s] です"
 
 #, c-format
 msgid "%s%s[%s%s%s]%s is away: %s"
-msgstr "%s%s[%s%s%s]%s は離席状態: %s"
+msgstr "%s%s[%s%s%s]%s 離席状態: %s"
 
 #, c-format
 msgid "%sUsers online: %s%s"
@@ -6347,8 +6354,8 @@ msgid ""
 "%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
 "at: %s%s"
 msgstr ""
-"%s%s[%s%s%s]%s アイドル時間: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, "
-"サインオン時間: %s%s"
+"%s%s[%s%s%s]%s アイドル時間: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s、"
+"利用開始日時: %s%s"
 
 msgid "hour"
 msgid_plural "hours"
@@ -6358,8 +6365,8 @@ msgstr[0] "時間"
 msgid ""
 "%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
-"%s%s[%s%s%s]%s アイドル時間: %s%02d %s%s %s%02d %s%s %s%02d %s%s, サインオン"
-"時間: %s%s"
+"%s%s[%s%s%s]%s アイドル時間: %s%02d %s%s %s%02d %s%s %s%02d %s%s、利用開始日"
+"時: %s%s"
 
 #, c-format
 msgid "%sMode %s%s %s[%s%s%s]"
@@ -6372,12 +6379,12 @@ msgstr "%s%s%s%s の URL: %s"
 #. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel created on %s"
-msgstr "%sチャンネル作成時間 %s"
+msgstr "%sチャンネルの作成日時 %s"
 
 #. TRANSLATORS: "%s" after "created on" is a date
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
-msgstr "%sチャンネル %s%s%s は %s に作成されました"
+msgstr "%sチャンネル %s%s%s の作成日時 %s"
 
 #, c-format
 msgid "%sNo topic set for channel %s%s"
@@ -6390,7 +6397,7 @@ msgstr "%s%s%s%s のトピックは \"%s%s\" です"
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sトピックは %s%s%s%s%s%s%s%s%s が %s に設定しました"
+msgstr "%sトピックは %s%s%s%s%s%s%s%s%s が %s に設定"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -6400,7 +6407,7 @@ msgstr "%sトピックは %s に設定されました"
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%s%s%s%s のトピックは %s%s%s%s%s%s%s%s%s が %s に設定しました"
+msgstr "%s%s%s%s のトピックは %s%s%s%s%s%s%s%s%s が %s に設定"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -6625,7 +6632,7 @@ msgstr "%s: ラグが長いです、サーバとの接続を切断中..."
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s: サーバに再接続中 %d %s, %d %s"
+msgstr "%s: サーバに再接続中 %d %s、%d %s"
 
 #, c-format
 msgid "%s: reconnecting to server in %d %s"
@@ -6637,7 +6644,7 @@ msgstr "%s: アドレスの変更中 %s/%d"
 
 #, c-format
 msgid "%s: connected to %s/%d (%s)"
-msgstr "%s: %s/%d (%s) に接続しました"
+msgstr "%s: %s/%d (%s) に接続完了"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -6672,9 +6679,8 @@ msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
 "if used and if server address/port is allowed by proxy)"
 msgstr ""
-"%s%s: プロキシはサーバへの接続の確率に失敗しました (ユーザ名/パスワードを使っ"
-"ているならこれを確認、サーバのアドレス/ポートがプロキシに許可されているか確"
-"認)"
+"%s%s: プロキシを介したサーバへの接続に失敗 (ユーザ名/パスワードが正しいことを"
+"確認、プロキシがサーバのアドレス/ポートへの接続を許可していることを確認)"
 
 #, c-format
 msgid "%s%s: unable to set local hostname/IP"
@@ -6700,9 +6706,9 @@ msgstr ""
 msgid "%s%s: not enough memory"
 msgstr "%s%s: メモリが足りません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: timeout"
-msgstr "%s%s: \"%s\" のタイムアウト %s"
+msgstr "%s%s: タイムアウト"
 
 #, c-format
 msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -6710,18 +6716,18 @@ msgstr "gnutls: %d-ビット Diffie-Hellman 共有鍵交換を使って接続中
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
-msgstr "%sgnutls: ピアの証明書の確認中にエラー"
+msgstr "%sgnutls: ピア証明書の確認中にエラー"
 
 #, c-format
 msgid "%sgnutls: peer's certificate is NOT trusted"
-msgstr "%sgnutls: ピアの証明書は信頼できません"
+msgstr "%sgnutls: ピア証明書は信頼できません"
 
 msgid "gnutls: peer's certificate is trusted"
-msgstr "gnutls: ピアの証明書は信頼できます"
+msgstr "gnutls: ピア証明書は信頼できます"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
-msgstr "%sgnutls: ピア証明書の問題が不明です"
+msgstr "%sgnutls: ピア証明書に未知の問題"
 
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
@@ -6793,11 +6799,11 @@ msgstr ""
 
 #, c-format
 msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "%s: サーバ %s/%d%s%s に %s プロキシ %s/%d%s を通じて接続中..."
+msgstr "%s: サーバ %s/%d%s%s に %s プロキシ %s/%d%s で接続中..."
 
 #, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "サーバ %s/%d%s%s に %s プロキシ %s/%d%s を通じて接続中..."
+msgstr "サーバ %s/%d%s%s に %s プロキシ %s/%d%s で接続中..."
 
 #, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
@@ -6825,11 +6831,11 @@ msgstr "%s: サーバに再接続中..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
-msgstr "%s%s: サーバから切断されました"
+msgstr "%s%s: サーバから切断"
 
 #, c-format
 msgid "%s: disconnected from server"
-msgstr "%s: サーバから切断されました"
+msgstr "%s: サーバから切断"
 
 #, c-format
 msgid ""
@@ -6880,9 +6886,9 @@ msgstr "ログ保存が開始されていません"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => レベル %d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "===\t========== バックログの最後 (%d 行) =========="
+msgstr "%s===\t%s========== バックログの最後 (%d 行) =========="
 
 msgid "logger plugin configuration"
 msgstr "logger プラグイン設定"
@@ -6925,10 +6931,10 @@ msgstr ""
 "メッセージ (最も重要) .. 9 = 全てのメッセージ)\n"
 "disable: 現在のバッファのログ保存を無効化 (レベルを 0 に設定)\n"
 "\n"
-"オプション \"logger.level.*\" と \"logger.mask.*\" がレベル設定とあるバッファ"
-"か名前で始まるバッファのマスクに使われる\n"
+"オプション \"logger.level.*\" と \"logger.mask.*\" は任意のバッファに対するロ"
+"グレベルとログ保存先の設定を意味します。\n"
 "\n"
-"IRC プラグインで使われるのログレベル:\n"
+"IRC プラグインで使われるログレベル:\n"
 "  1: ユーザメッセージ、通知、プライベート\n"
 "  2: ニックネームの変更\n"
 "  3: サーバメッセージ\n"
@@ -6963,13 +6969,11 @@ msgid ""
 msgstr ""
 "新規バッファの作成時にログファイルから表示する行の最大数 (0 = バックログ無し)"
 
-#, fuzzy
 msgid "color for backlog lines"
-msgstr "離席アイテムに使う色"
+msgstr "バックログ行の色"
 
-#, fuzzy
 msgid "color for line ending the backlog"
-msgstr "インプットバーのニックネームに使う色"
+msgstr "バックログの最終行の色"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
@@ -7927,10 +7931,12 @@ msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "スクリプト名 (ワイルドカードとして \"*\" で始めるか終われる) (オプション)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
+msgstr ""
+"%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
+"%5$s)"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
