@@ -24,10 +24,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.56)
-AC_INIT(WeeChat, 0.3.8-rc1, flashcode@flashtux.org)
+AC_INIT(WeeChat, 0.3.8-rc2, flashcode@flashtux.org)
 AC_CONFIG_SRCDIR([src/core/weechat.c])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([weechat], [0.3.8-rc1])
+AM_INIT_AUTOMAKE([weechat], [0.3.8-rc2])
 LICENSE="GPL3"
 
 # Checks for programs
