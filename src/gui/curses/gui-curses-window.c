@@ -2333,6 +2333,8 @@ void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
     log_printf ("  window specific objects for Curses:");
-    log_printf ("    win_chat. . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_chat);
-    log_printf ("    win_separator . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_separator);
+    log_printf ("    win_chat. . . . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_chat);
+    log_printf ("    win_separator . . . . : 0x%lx", GUI_WINDOW_OBJECTS(window)->win_separator);
+    log_printf ("    first_line_with_prefix: 0x%lx", GUI_WINDOW_OBJECTS(window)->first_line_with_prefix);
+    log_printf ("    force_prefix_for_line : %d",    GUI_WINDOW_OBJECTS(window)->force_prefix_for_line);
 }
