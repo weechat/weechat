@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.8-rc2, 2012-05-22
+v0.3.8-rc2, 2012-05-30
 
 
 Version 0.3.8 (under dev!)
@@ -36,7 +36,7 @@ Version 0.3.8 (under dev!)
 * guile: fix crash on ARM when loading guile plugin (bug #36479)
 * guile: add missing function "hook_process_hashtable" in API
 * irc: update channel modes by using chanmodes from message 005 (do not send
-  extra command "MODES" to server), fix parsing of modes (bug #36215)
+  extra command "MODE" to server), fix parsing of modes (bug #36215)
 * irc: add option "fakerecv" for command /server to simulate a received IRC
   message (not documented, for debug only)
 * irc: hide everything after "identify" or "register" in messages to nickserv
