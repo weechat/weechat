@@ -110,10 +110,10 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
   większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat-curses`
 * sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodobniej potrzebujesz pakietu "weechat-plugins")
-// TRANSLATION MISSING
-* check the output of command `/charset` (on core buffer). You should see
-  'ISO-XXXXXX' or 'UTF-8' for terminal charset. If you see 'ANSI_X3.4-1968' or
-  other values, your locale is probably wrong (fix your $LANG).
+* sprawdź wyjście komendy `/charset` (w głównym buforze). Powinieneś zobaczyć
+  'ISO-XXXXXX' lub 'UTF-8' dla kodowania terminala. Jeśli widzisz 'ANSI_X3.4-1968'
+  lub inne wartości, twoje ustawienie dla locale najprawdopodobniej jest złe
+  (napraw swoje $LANG).
 * ustaw globalną wartość dekodowania, na przykład:
   `/set charset.default.decode "ISO-8859-2"`
 * jeśli korzystasz z UTF-8:
@@ -162,7 +162,7 @@ W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Jeśli samodzielnie skopilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarczanej
+Jeśli samodzielnie skompilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarczanej
 z systemem).
 
 Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą managera pakietów
@@ -401,8 +401,8 @@ poleceń.
 
 
 [[jump_to_buffer_11_or_higher]]
-Jakim skrótem można przejść do buforu 11 (lub o więszym numerze)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jakim skrótem można przejść do buforu 11 (lub o większym numerze)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Skrót to @k(A-)@k(j) i dwie cyfry, na przykład @k(A-)@k(j) później @k(1), @k(1)
 przejdzie do buforu 11.
@@ -596,7 +596,7 @@ Należy ustawić opcję 'irc.server_default.away_check' na wartość większą o
 Możesz ustawić opcję 'irc.server_default.away_check_max_nicks' w celu ustalenia
 sprawdzania nieobecności dla małych kanałów.
 
-Na przykład, aby sprawdzać nieonecność nicków co 5, dla kanałów z maksymalnie 25
+Na przykład, aby sprawdzać nieobecność nicków co 5, dla kanałów z maksymalnie 25
 osobami:
 
 ----------------------------------------
