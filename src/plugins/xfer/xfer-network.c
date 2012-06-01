@@ -319,7 +319,7 @@ int
 xfer_network_fd_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
-    int sock;
+    int sock, flags;
     struct sockaddr_in addr;
     socklen_t length;
 
@@ -351,7 +351,10 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 return WEECHAT_RC_OK;
             }
             xfer->sock = sock;
-            if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
+            flags = fcntl (xfer->sock, F_GETFL);
+            if (flags == -1)
+                flags = 0;
+            if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
@@ -390,7 +393,10 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 return WEECHAT_RC_OK;
             }
             xfer->sock = sock;
-            if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
+            flags = fcntl (xfer->sock, F_GETFL);
+            if (flags == -1)
+                flags = 0;
+            if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
@@ -450,6 +456,8 @@ xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
 int
 xfer_network_connect (struct t_xfer *xfer)
 {
+    int flags;
+
     if (xfer->type == XFER_TYPE_CHAT_SEND)
         xfer->status = XFER_STATUS_WAITING;
     else
@@ -465,11 +473,14 @@ xfer_network_connect (struct t_xfer *xfer)
     if (XFER_IS_SEND(xfer->type))
     {
         /* listen to socket */
-        if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
+        flags = fcntl (xfer->sock, F_GETFL);
+        if (flags == -1)
+            flags = 0;
+        if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
             return 0;
         if (listen (xfer->sock, 1) == -1)
             return 0;
-        if (fcntl (xfer->sock, F_SETFL, 0) == -1)
+        if (fcntl (xfer->sock, F_SETFL, flags) == -1)
             return 0;
 
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
@@ -490,7 +501,10 @@ xfer_network_connect (struct t_xfer *xfer)
     /* for chat receiving, connect to listening host */
     if (xfer->type == XFER_TYPE_CHAT_RECV)
     {
-        if (fcntl (xfer->sock, F_SETFL, O_NONBLOCK) == -1)
+        flags = fcntl (xfer->sock, F_GETFL);
+        if (flags == -1)
+            flags = 0;
+        if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
             return 0;
         weechat_network_connect_to (xfer->proxy, xfer->sock, xfer->address,
                                     xfer->port);
