@@ -1,0 +1,10 @@
+Document: weechat-faq-ja
+Title: WeeChat FAQ (Japanese)
+Author: Sebastien Helleu
+Abstract: This document answers frequently asked questions
+ about the WeeChat IRC client (Japanese version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_faq.ja.html
+Files: /usr/share/doc/weechat-doc/html/weechat_faq.ja.html
