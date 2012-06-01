@@ -958,6 +958,8 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                  */
                 HOOK_CONNECT(hook_connect, handshake_fd_flags) =
                     fcntl (HOOK_CONNECT(hook_connect, sock), F_GETFL);
+                if (HOOK_CONNECT(hook_connect, handshake_fd_flags) == -1)
+                    HOOK_CONNECT(hook_connect, handshake_fd_flags) = 0;
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                        HOOK_CONNECT(hook_connect, handshake_fd_flags) | O_NONBLOCK);
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
