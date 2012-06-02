@@ -74,7 +74,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
-** Beschreibung: `wechselt automatisch zum Channel-Buffer falls dieser automatisch betreten wurde (mittels der Server-Option "autojoin")`
+** Beschreibung: `wechselt automatisch zum Channel-Buffer falls dieser automatisch betreten wurde (mittels der Serveroption "autojoin")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -84,7 +84,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
-** Beschreibung: `nutzt in der Ausgabe von /names die Nickfarbe (oder bei der Auflistung der Nicks wenn man einen Channel betritt)`
+** Beschreibung: `nutzt in der Ausgabe von /names die Nickfarbe des jeweiligen Nicks (oder bei der Auflistung der Nicks wenn man einen Channel betritt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -94,17 +94,17 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.look.color_nicks_in_server_messages]] *irc.look.color_nicks_in_server_messages*
-** Beschreibung: `Nutze Nick-Farbe bei Nachrichten vom Server`
+** Beschreibung: `nutzt die Nickfarbe bei Nachrichten vom Server`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.color_pv_nick_like_channel]] *irc.look.color_pv_nick_like_channel*
-** Beschreibung: `Nutzt die selbe Farbe für die Darstellung des Nicks im Channel als auch Privat`
+** Beschreibung: `nutzt die selbe Farbe für die Darstellung des Nicks im Channel wie auch im privaten Buffer`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** Beschreibung: `Bei Abwesenheit und Rückkehr eine Nachricht anzeigen`
+** Beschreibung: `bei Abwesenheit und Rückkehr eine Nachricht anzeigen`
 ** Typ: integer
 ** Werte: off, local, channel (Standardwert: `local`)
 
@@ -119,7 +119,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
-** Beschreibung: `unbekannte CTCP Nachrichten werden angezeigt.`
+** Beschreibung: `unbekannte CTCP Nachrichten werden angezeigt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -139,42 +139,42 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
-** Beschreibung: `Zeige das alte Thema, falls das Thema des Channels geändert wurde`
+** Beschreibung: `Zeige das alte Thema an, falls das Thema des Channels geändert wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_pv_away_once]] *irc.look.display_pv_away_once*
-** Beschreibung: `In einer privaten Unterhaltung nur einmal eine Abwesenheitsnachricht anzeigen`
+** Beschreibung: `in einer privaten Unterhaltung nur einmal eine Abwesenheitsnachricht anzeigen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_pv_back]] *irc.look.display_pv_back*
-** Beschreibung: `Es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der User wieder zurück ist (falls der User sich beim Server abgemeldet hat)`
+** Beschreibung: `es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der User wieder zurück ist (falls der User sich beim Server abgemeldet hat)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
-** Beschreibung: `Von NickServ angezeigte Passwörter verstecken`
+** Beschreibung: `Passwörter verstecken die durch NickServ angezeigt werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in einem privaten Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `Durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** Beschreibung: `Eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
+** Beschreibung: `eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
@@ -184,12 +184,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes]] *irc.look.item_channel_modes*
-** Beschreibung: `Zeige die Channel-Modi mittels "buffer_name" in der Bar-Item an`
+** Beschreibung: `zeigt die Channel-Modi mittels "buffer_name" in der Bar-Item an`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** Beschreibung: `Unterdrückt Channel-Key falls die Modi in der Bar-Item mittels "buffer_name" dargestellt werden (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
+** Beschreibung: `unterdrückt Channel-Key falls die Modi in der Bar-Item mittels "buffer_name" dargestellt werden (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -199,32 +199,32 @@
 ** Werte: buffer_plugin, buffer_name (Standardwert: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** Beschreibung: `Zeige Nick-Modi in "input_prompt" Bar-Item`
+** Beschreibung: `zeigt Nick-Modi in "input_prompt" Bar-Item`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** Beschreibung: `Der Nick-Präfix wird in "input_prompt" Bar-Item angezeigt`
+** Beschreibung: `der Nick-Präfix wird in "input_prompt" Bar-Item angezeigt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
-** Beschreibung: `Standardbuffer der für Ausgaben genutzt werden soll falls ein privater Buffer nicht gefunden wird.`
+** Beschreibung: `Standardbuffer der für Ausgaben genutzt werden soll, falls ein privater Buffer nicht gefunden wird`
 ** Typ: integer
 ** Werte: current, server (Standardwert: `current`)
 
 * [[option_irc.look.new_channel_position]] *irc.look.new_channel_position*
-** Beschreibung: `Ein neu geöffneter Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
+** Beschreibung: `ein neu geöffneter Channel wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.new_pv_position]] *irc.look.new_pv_position*
-** Beschreibung: `Ein neuer privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
+** Beschreibung: `ein neuer privater Buffer wird auf eine Position gezwungen (none = standardmäßige Position (sollte der letzte Buffer in der Liste sein), next = aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer des jeweiligen Servers)`
 ** Typ: integer
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `Erzwingt für einen Nick eine spezielle Farbe. Die mittels Streuwertfunktion aus dem Nicknamen generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Bei der Schreibweise der Nicks wird sowohl nach Groß- und Kleinschreibung unterschieden und ebenso kann man die Nicks nur mit Kleinbuchstaben schreiben.`
+** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die mittels Streuwertfunktion aus dem Nicknamen generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Bei der Schreibweise der Nicks wird sowohl nach Groß- und Kleinschreibung unterschieden und ebenso kann man die Nicks nur mit Kleinbuchstaben schreiben.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -234,7 +234,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** Beschreibung: `Intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den letzten Nick, mit dem gesprochen wurde)`
+** Beschreibung: `intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den letzten Nick, mit dem gesprochen wurde)`
 ** Typ: integer
 ** Werte: off, speakers, speakers_highlights (Standardwert: `speakers`)
 
@@ -249,22 +249,22 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
-** Beschreibung: `Zeigt Notizen als private Nachricht an (wird die "auto" Option verwendet dann wird ein privater Buffer genutzt, falls vorhanden)`
+** Beschreibung: `zeigt Notizen als private Nachricht an (wird die "auto" Option verwendet dann wird ein privater Buffer genutzt, falls vorhanden)`
 ** Typ: integer
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** Beschreibung: `Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet (Rückgabe vom Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet (Rückgabe vom Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** Beschreibung: `Durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * [[option_irc.look.part_closes_buffer]] *irc.look.part_closes_buffer*
-** Beschreibung: `Schließt den Buffer wenn "/part" im Channel ausgeführt wird`
+** Beschreibung: `schließt den Buffer wenn "/part" im Channel ausgeführt wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -274,12 +274,12 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** Beschreibung: `Server-Buffer zusammenlegen`
+** Beschreibung: `Server-Buffer zusammenfügen`
 ** Typ: integer
 ** Werte: merge_with_core, merge_without_core, independent (Standardwert: `merge_with_core`)
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** Beschreibung: `Filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden.`
+** Beschreibung: `filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -319,22 +319,22 @@
 ** Werte: 0 .. 86400 (Standardwert: `1800`)
 
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
-** Beschreibung: `Falls deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert.`
+** Beschreibung: `wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.network.colors_send]] *irc.network.colors_send*
-** Beschreibung: `Erlaube Benutzern, spezielle Codes zu versenden (ctrl-c + Code und optional Farbe: b=fett, cxx=Farbe, cxx,yy=Farbe+Hintergrund, u=unterstrichen, r=invertiert)`
+** Beschreibung: `erlaubt Benutzern, spezielle Codes zu versenden (ctrl-c + Code und optional Farbe: b=fett, cxx=Farbe, cxx,yy=Farbe+Hintergrund, u=unterstrichen, r=invertiert)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.network.lag_check]] *irc.network.lag_check*
-** Beschreibung: `Intervall zwischen zwei Überprüfungen auf Verfügbarkeit (Lag) des Servers (in Sekunden, 0 = keine Überprüfung)`
+** Beschreibung: `Intervall zwischen zwei Überprüfungen auf Verfügbarkeit des Servers (in Sekunden, 0 = keine Überprüfung)`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `60`)
 
 * [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
-** Beschreibung: `Maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)`
+** Beschreibung: `maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)`
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: `0`)
 
@@ -359,7 +359,7 @@
 ** Werte: 1 .. 10080 (Standardwert: `5`)
 
 * [[option_irc.network.send_unknown_commands]] *irc.network.send_unknown_commands*
-** Beschreibung: `Sende unbekannte Befehle an den Server`
+** Beschreibung: `sendet unbekannte Befehle an den Server`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -374,7 +374,7 @@
 ** Werte: 0 .. 60 (Standardwert: `2`)
 
 * [[option_irc.server_default.anti_flood_prio_low]] *irc.server_default.anti_flood_prio_low*
-** Beschreibung: `Anti-Flood für weniger dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten, die zum IRC Server versendet wurden. Beispiel: automatische CTCP Antworten (0 = Anti-Flood deaktivieren).`
+** Beschreibung: `Anti-Flood für weniger dringliche Inhalte: Zeit in Sekunden zwischen zwei Benutzernachrichten die zum IRC Server versendet wurden. Beispiel: automatische CTCP Antworten (0 = Anti-Flood deaktivieren)`
 ** Typ: integer
 ** Werte: 0 .. 60 (Standardwert: `2`)
 
@@ -384,7 +384,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `Durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2")`
+** Beschreibung: `durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -399,12 +399,12 @@
 ** Werte: 1 .. 65535 (Standardwert: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** Beschreibung: `Channels automatisch betreten, falls man ge-kickt wurde.`
+** Beschreibung: `Channels automatisch betreten, falls man rausgeworfen wurde`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autorejoin_delay]] *irc.server_default.autorejoin_delay*
-** Beschreibung: `Wartezeit, in Sekunden, die verstreichen soll bevor man den Channel automatisch erneut betritt (nachdem man ge-kickt wurde)`
+** Beschreibung: `Wartezeit, in Sekunden, die verstreichen soll bevor man den Channel automatisch erneut betritt (nachdem man rausgeworfen wurde)`
 ** Typ: integer
 ** Werte: 0 .. 86400 (Standardwert: `30`)
 
@@ -424,7 +424,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** Beschreibung: `Enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon schreiben muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt`
+** Beschreibung: `enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon nutzen muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -434,7 +434,7 @@
 ** Werte: 0 .. 3600 (Standardwert: `0`)
 
 * [[option_irc.server_default.connection_timeout]] *irc.server_default.connection_timeout*
-** Beschreibung: `Wartezeit (in Sekunden) zwischen einer TCP Verbindung mit dem Server und des Empfanges der message 001. Falls die Wartezeit verstreichen sollte bevor die message 001 empfangen wurde dann wird WeeChat die Verbindung zum Server trennen.`
+** Beschreibung: `Wartezeit (in Sekunden) zwischen einer TCP Verbindung mit dem Server und des Empfanges der "message 001" Nachricht. Falls die Wartezeit verstreichen sollte bevor die "message 001" Nachricht empfangen wurde dann wird WeeChat die Verbindung zum Server trennen`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `60`)
 
@@ -484,7 +484,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort liegt in Klarschrift vor, "dh-blowfish" Passwort wird verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt`
+** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort liegt in Klartext vor, "dh-blowfish" Passwort wird verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt`
 ** Typ: integer
 ** Werte: plain, dh-blowfish, external (Standardwert: `plain`)
 

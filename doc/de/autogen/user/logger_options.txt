@@ -14,12 +14,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
-** Beschreibung: `Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert werden soll (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)`
+** Beschreibung: `Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert wird (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)`
 ** Typ: integer
 ** Werte: 0 .. 3600 (Standardwert: `120`)
 
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
-** Beschreibung: `Fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird`
+** Beschreibung: `fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

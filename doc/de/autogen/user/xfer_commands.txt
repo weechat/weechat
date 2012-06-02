@@ -1,9 +1,9 @@
 [[command_xfer_me]]
-[command]*`me`* Sendet CTCP Aktion an entfernten Host::
+[command]*`me`* sendet CTCP Aktion an entfernten Host::
 ........................................
 /me  <message>
 
-Message: zu sendende Nachricht
+message: zu sendende Nachricht
 ........................................
 
 [[command_xfer_xfer]]

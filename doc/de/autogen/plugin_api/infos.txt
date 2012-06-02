@@ -4,17 +4,17 @@
 
 | fifo | fifo_filename | Name der FIFO-Pipe | -
 
-| irc | irc_buffer | hole Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
+| irc | irc_buffer | holt Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
 
 | irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channelname für den Server ist | Server,Channel (Server ist optional)
 
 | irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | Nickname
 
-| irc | irc_nick | Aktuellen Nicknamen für den Server erhalten | Servername
+| irc | irc_nick | aktuellen Nicknamen für den Server erhalten | Servername
 
-| irc | irc_nick_color | Hole Farbe-Code des Nick | Nickname
+| irc | irc_nick_color | holt Farbe-Code des Nick | Nickname
 
-| irc | irc_nick_color_name | Hole Namen der Farbe des Nick | Nickname
+| irc | irc_nick_color_name | holt Namen der Farbe des Nick | Nickname
 
 | irc | irc_nick_from_host | Nicknamen des IRC-Hosts erhalten | IRC host (in der Form `:nick!name@server.com`)
 
@@ -22,7 +22,7 @@
 
 | irc | irc_server_isupport_value | Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message 005) | Server,Funktion
 
-| python | python2_bin | Pfad zum Python 2.x Interpreter | -
+| python | python2_bin | Pfad für Python 2.x Interpreter | -
 
 | weechat | charset_internal | Interner WeeChat Zeichensatz | -
 

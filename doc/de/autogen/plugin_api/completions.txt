@@ -6,7 +6,7 @@
 
 | alias | alias_value | Wert von Alias
 
-| aspell | aspell_langs | Liste der Unterstützten Übersetzungen (lang) für Aspell
+| aspell | aspell_langs | Liste der zu nutzenden Übersetzungen für Aspell
 
 | guile | guile_script | Liste der Skripten
 
@@ -18,7 +18,7 @@
 
 | irc | irc_channels | Channels auf allen IRC Servern
 
-| irc | irc_ignores_numbers | Anzahl für festgelegte /ignores
+| irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 
 | irc | irc_msg_part | Standardnachricht beim Verlassen (/part) eines IRC-Channels
 
@@ -46,9 +46,9 @@
 
 | python | python_script | Liste der Skripten
 
-| relay | relay_free_port | Erster freier Port für Relay-Erweiterung
+| relay | relay_free_port | erster freier Port für Relay-Erweiterung
 
-| relay | relay_protocol_name | Alle möglichen Protokoll.Namen der Relay-Erweiterung
+| relay | relay_protocol_name | alle möglichen Protokoll.Name der Relay-Erweiterung
 
 | relay | relay_relays | Protokoll.Name des aktuellen Relays von der Relay-Erweiterung
 
@@ -70,7 +70,7 @@
 
 | weechat | buffers_numbers | Anzahl der Buffer
 
-| weechat | buffers_plugins_names | Liste der Buffer (inkl. der Erweiterungen)
+| weechat | buffers_plugins_names | Liste der Buffer (inklusive der Erweiterungen)
 
 | weechat | commands | Befehle (WeeChat und Erweiterungen)
 
@@ -86,9 +86,9 @@
 
 | weechat | filters_names | Liste der Filter
 
-| weechat | infolists | Namem der ge-hook-ten Infolisten
+| weechat | infolists | Namen der gehookten Infolisten
 
-| weechat | infos | Namen der ge-hook-ten Infos
+| weechat | infos | Namen der gehookten Infos
 
 | weechat | keys_codes | Tastaturcodes
 

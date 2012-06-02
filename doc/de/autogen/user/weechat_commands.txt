@@ -139,12 +139,12 @@ Beispiele:
 ........................................
 /command  <plugin> <command>
 
-Erweiterung: Name der Erweiterung ('weechat' für interne WeeChat Befehle)
-     Befehl: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
+ plugin: Name der Erweiterung ('weechat' für interne WeeChat Befehle)
+command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
 ........................................
 
 [[command_weechat_cursor]]
-[command]*`cursor`* Cursor kann frei auf dem Bildschirm bewegt werden um Aktionen in bestimmten Arealen auszuführen::
+[command]*`cursor`* Cursor kann frei auf dem Bildschirm bewegt werden um Aktionen in bestimmten Bildschirmbereichen auszuführen::
 ........................................
 /cursor  go chat|<bar>|<x>,<y>
          move up|down|left|right|area_up|area_down|area_left|area_right

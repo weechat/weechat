@@ -9,8 +9,8 @@
 ........................................
 /demo_info  <info> [<arguments>]
 
-     Info: Information die dargestellt werden soll
-Argumente: optionale Argumente für Info
+     info: Information die dargestellt werden soll
+arguments: optionale Argumente für Info
 
 Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen angezeigt
 ........................................
@@ -20,8 +20,8 @@ Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen
 ........................................
 /demo_infolist  <infolist> [<arguments>]
 
- Infolist: Infoliste die dargestellt werden soll
-Argumente: optionale Argumente für Infoliste
+ infolist: Infoliste die dargestellt werden soll
+arguments: optionale Argumente für Infoliste
 
 Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen der Infoliste angezeigt
 ........................................
@@ -31,6 +31,6 @@ Wird der Befehl ohne Argumente aufgerufen werden alle verfügbaren Informationen
 ........................................
 /demo_printf  <text>
 
-Text: schreibt diesen Text
+text: schreibt diesen Text
 ........................................
 

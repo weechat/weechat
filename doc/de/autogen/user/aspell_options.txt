@@ -4,7 +4,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 
 * [[option_aspell.check.default_dict]] *aspell.check.default_dict*
-** Beschreibung: `Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde. Wird kein Wörterbuch angegeben dann ist Aspell in allen Buffer deaktiviert, für die nicht explizit ein Wörterbuch angegeben wurde.`
+** Beschreibung: `Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde. Wird kein Wörterbuch angegeben dann ist Aspell in allen Buffer deaktiviert, außer es wird für einen Buffer explizit ein Wörterbuch angegeben`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -24,7 +24,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `2`)
 
 * [[option_aspell.look.color]] *aspell.look.color*
-** Beschreibung: `In dieser Farbe wird ein Wort mit einem Rechtschreibfehler hervorgehoben`
+** Beschreibung: `Farbe in der ein Wort mit einem Rechtschreibfehler hervorgehoben werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 

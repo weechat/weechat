@@ -4,7 +4,7 @@
 
 | alias | alias | Liste der Alias | Alias Pointer (optional) | Alias Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | irc | irc_channel | Liste der Channels eines IRC-Servers | Channel Pointer (optional) | Server,Channel (Channel ist optional)
 
@@ -18,19 +18,19 @@
 
 | logger | logger_buffer | Auflistung der protokollierten Buffer | Logger Pointer (optional) | -
 
-| lua | lua_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| lua | lua_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| perl | perl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| perl | perl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| python | python_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| python | python_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | relay | relay | Liste der Relay-Clients | Relay Pointer (optional) | -
 
 | rmodifier | rmodifier | Liste der rmodifier | rmodifier Pointer (optional) | rmodifier Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| ruby | ruby_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| ruby | ruby_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| tcl | tcl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skripts (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| tcl | tcl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | bar | Auflistung der Bars | Bar Pointer (optional) | Bar Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 

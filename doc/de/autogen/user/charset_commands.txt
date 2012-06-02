@@ -1,5 +1,5 @@
 [[command_charset_charset]]
-[command]*`charset`* ändere Zeichensatz für aktuellen Buffer::
+[command]*`charset`* Ändert den Zeichensatz für aktuellen Buffer::
 ........................................
 /charset  decode|encode <charset>
           reset

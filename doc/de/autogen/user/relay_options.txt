@@ -39,7 +39,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
-** Beschreibung: `Öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird`
+** Beschreibung: `öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -64,7 +64,7 @@
 ** Werte: 0 .. 9 (Standardwert: `6`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
-** Beschreibung: `Maximale Anzahl an Clients die mit einem Port verbunden sein dürfen`
+** Beschreibung: `maximale Anzahl an Clients die mit einem Port verbunden sein dürfen`
 ** Typ: integer
 ** Werte: 1 .. 1024 (Standardwert: `5`)
 

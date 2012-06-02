@@ -39,32 +39,32 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_xfer.color.text_selected]] *xfer.color.text_selected*
-** Beschreibung: `Farbe der selektierten Transfer-Zeile`
+** Beschreibung: `Farbe der ausgewählten Transfer-Zeile`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
-** Beschreibung: `Eine Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
+** Beschreibung: `eine Chat-Anfrage wird automatisch akzeptiert (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
-** Beschreibung: `Eine Datenübertragung wird automatisch angenommen (Vorsicht!)`
+** Beschreibung: `eine Datenübertragung wird automatisch angenommen (Vorsicht!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
-** Beschreibung: `Eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen '.1', '.2', ... hinzugefügt)`
+** Beschreibung: `eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu vermeiden (dabei wird dem Dateinamen '.1', '.2', ... hinzugefügt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
-** Beschreibung: `Falls eine Verbindung getrennt wurde dann wird eine abgebrochene Übertragungen automatisch fortsetzt`
+** Beschreibung: `falls eine Verbindung getrennt wurde, dann wird eine abgebrochene Übertragungen automatisch fortsetzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** Beschreibung: `Beim Versenden von Dateien werden Leerzeichen im Dateinamen durch einen Unterstrich ersetzt`
+** Beschreibung: `beim Versenden von Dateien werden Leerzeichen im Dateinamen durch einen Unterstrich ersetzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -79,12 +79,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"~"`)
 
 * [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
-** Beschreibung: `Beim Empfang von Dateien wird der Nickname des Versenders dem Dateinamen vorangestellt`
+** Beschreibung: `beim Empfang von Dateien wird der Nickname des Versenders dem Dateinamen vorangestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
-** Beschreibung: `öffnet automatisch den Buffer für Übertragungen falls eine neue Übertragung hinzugefügt wird`
+** Beschreibung: `öffnet automatisch den Buffer für Übertragungen, falls eine neue Übertragung hinzugefügt wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -99,7 +99,7 @@
 ** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
 * [[option_xfer.network.fast_send]] *xfer.network.fast_send*
-** Beschreibung: `Wartet beim Versenden von Dateien nicht auf ein Bestätigungssignal (ACK)`
+** Beschreibung: `wartet beim Versenden von Dateien nicht auf ein Bestätigungssignal (ACK)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -114,7 +114,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
-** Beschreibung: `Begrenzung der Übertragungsgeschwindigkeit beim Versenden, in Kilobytes pro Sekunde (0 = keine Begrenzung)`
+** Beschreibung: `Begrenzt die Übertragungsgeschwindigkeit beim Versenden, in Kilobytes pro Sekunde (0 = keine Begrenzung)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 

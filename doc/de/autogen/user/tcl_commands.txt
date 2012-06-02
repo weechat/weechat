@@ -6,15 +6,15 @@
       autoload
       reload|unload [<name>]
 
-    list: installierte Erweiterungen werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Erweiterungen
-    load: installiert eine Erweiterung
-autoload: installiert automatisch alle Erweiterungen aus System- oder Benutzerverzeichnis
-  reload: eine Erweiterung wird erneut installiert (falls kein Name angegeben wird dann werden alle Erweiterungen entfernt und erneut installiert)
-  unload: deinstalliert eine oder alle Erweiterungen
-filename: Skript (Datei) das geladen werden soll
-    name: Name eines Skripts (Name welcher mit der "register" Funktion genutzt wird)
+    list: installierte Skripten werden aufgelistet
+listfull: detaillierte Auflistung aller installierten Skripten
+    load: installiert ein Skript
+autoload: installiert automatisch alle Skripten aus dem "autoload" Verzeichnis
+  reload: ein Skript wird erneut installiert (wird kein Name angegeben, dann werden alle Skripten entfernt und erneut installiert)
+  unload: deinstalliert ein Skript (wird kein Name angegeben, dann werden alle Skripten deinstalliert)
+filename: Skript (Datei) welches geladen werden soll
+    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
 
-Ohne Angabe eines Argumentes listet /plugin alle geladenen Erweiterungen auf.
+Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
 ........................................
 
