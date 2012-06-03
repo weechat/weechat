@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-05-05 19:51+0200\n"
+"POT-Creation-Date: 2012-06-03 09:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2692,6 +2692,13 @@ msgstr[1] ""
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
@@ -2719,13 +2726,6 @@ msgid "Executing command: \"%s\""
 msgstr ""
 
 msgid "Not enough memory for new line"
-msgstr ""
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
 msgstr ""
 
 #, c-format

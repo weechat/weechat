@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.8-dev\n"
+"Project-Id-Version: WeeChat 0.3.8\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-05-18 09:10+0200\n"
-"PO-Revision-Date: 2012-05-20 15:47+0200\n"
+"POT-Creation-Date: 2012-06-03 09:00+0200\n"
+"PO-Revision-Date: 2012-06-03 08:47+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -3573,6 +3573,13 @@ msgstr[1] "normali"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug disabilitato per la modalità cursore"
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug abilitato per il mouse (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug disabilitato per il mouse"
+
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Errore: memoria non sufficiente per aggiungere un buffer alla hotlist"
 
@@ -3601,13 +3608,6 @@ msgstr "Esecuzione comando: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug abilitato per il mouse (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug disabilitato per il mouse"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
