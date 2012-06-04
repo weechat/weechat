@@ -242,6 +242,8 @@ rmodifier_command_init ()
                              "listdefault: list default rmodifiers\n"
                              "        add: add a rmodifier\n"
                              "       name: name of rmodifier\n"
+                             "             note: the name can not start with "
+                             "\"#\"\n"
                              "  modifiers: comma separated list of modifiers\n"
                              "     groups: action on groups found: comma separated "
                              "list of groups (from 1 to 9) with optional \"*\" "

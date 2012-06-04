@@ -8,6 +8,7 @@ Version 0.3.9 (under dev!)
 --------------------------
 
 * alias: prohibit names beginning with "#" for aliases (bug #36584)
+* rmodifier: prohibit names beginning with "#" for rmodifiers
 
 Version 0.3.8 (2012-06-03)
 --------------------------

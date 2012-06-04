@@ -263,9 +263,11 @@ rmodifier_new (const char *name, const char *modifiers, const char *str_regex,
     struct t_rmodifier *new_rmodifier, *ptr_rmodifier;
     regex_t *regex;
 
-    if (!name || !name[0] || !modifiers || !modifiers[0]
+    if (!name || !name[0] || (name[0] == '#') || !modifiers || !modifiers[0]
         || !str_regex || !str_regex[0])
+    {
         return NULL;
+    }
 
     regex = malloc (sizeof (*regex));
     if (!regex)

@@ -10,6 +10,7 @@
 listdefault: lister les rmodifiers par défaut
         add: ajouter un rmodifier
        name: nom du rmodifier
+             note: le nom ne peut pas commencer par "#"
   modifiers: liste de modifiers (séparés par une virgule)
     groupes: action sur les groupes trouvés: liste de groupes (séparés par une virgule) (de 1 à 9) avec en option "*" après le nombre pour cacher le groupe
       regex: expression régulière (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
