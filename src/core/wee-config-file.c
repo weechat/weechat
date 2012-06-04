@@ -1805,6 +1805,27 @@ config_file_option_color_default (struct t_config_option *option)
 }
 
 /*
+ * config_file_option_escape: return "\" if name of option must be escaped,
+ *                            or empty string if option must not be escaped
+ *                            The option is escaped if it is begining with one
+ *                            of these chars: # [ \
+ */
+
+const char *
+config_file_option_escape (const char *name)
+{
+    static char str_escaped[2] = "\\", str_not_escaped[1] = { '\0' };
+
+    if (!name)
+        return str_escaped;
+
+    if ((name[0] == '#') || (name[0] == '[') || (name[0] == '\\'))
+        return str_escaped;
+
+    return str_not_escaped;
+}
+
+/*
  * config_file_write_option: write an option in a configuration file
  *                           return 1 if ok, 0 if error
  */
@@ -1825,28 +1846,33 @@ config_file_write_option (struct t_config_file *config_file,
         switch (option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                rc = string_iconv_fprintf (config_file->file, "%s = %s\n",
+                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
+                                           config_file_option_escape (option->name),
                                            option->name,
                                            (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
                                            "on" : "off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (option->string_values)
-                    rc = string_iconv_fprintf (config_file->file, "%s = %s\n",
+                    rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
+                                               config_file_option_escape (option->name),
                                                option->name,
                                                option->string_values[CONFIG_INTEGER(option)]);
                 else
-                    rc = string_iconv_fprintf (config_file->file, "%s = %d\n",
+                    rc = string_iconv_fprintf (config_file->file, "%s%s = %d\n",
+                                               config_file_option_escape (option->name),
                                                option->name,
                                                CONFIG_INTEGER(option));
                 break;
             case CONFIG_OPTION_TYPE_STRING:
-                rc = string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
+                rc = string_iconv_fprintf (config_file->file, "%s%s = \"%s\"\n",
+                                           config_file_option_escape (option->name),
                                            option->name,
                                            (char *)option->value);
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
-                rc = string_iconv_fprintf (config_file->file, "%s = %s\n",
+                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
+                                           config_file_option_escape (option->name),
                                            option->name,
                                            gui_color_get_name (CONFIG_COLOR(option)));
                 break;
@@ -1856,7 +1882,8 @@ config_file_write_option (struct t_config_file *config_file,
     }
     else
     {
-        rc = string_iconv_fprintf (config_file->file, "%s\n",
+        rc = string_iconv_fprintf (config_file->file, "%s%s\n",
+                                   config_file_option_escape (option->name),
                                    option->name);
     }
 
@@ -1885,7 +1912,8 @@ config_file_write_line (struct t_config_file *config_file,
         {
             if (vbuffer[0])
             {
-                rc = string_iconv_fprintf (config_file->file, "%s = %s\n",
+                rc = string_iconv_fprintf (config_file->file, "%s%s = %s\n",
+                                           config_file_option_escape (option_name),
                                            option_name, vbuffer);
                 free (vbuffer);
                 return rc;
@@ -2081,7 +2109,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     char *filename;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2;
+    char line[16384], *ptr_line, *ptr_line2, *pos, *pos2, *ptr_option_name;
 
     if (!config_file)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
@@ -2223,6 +2251,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         }
                     }
 
+                    ptr_option_name = (line[0] == '\\') ? line + 1 : line;
+
                     if (ptr_section && ptr_section->callback_read)
                     {
                         ptr_option = NULL;
@@ -2230,7 +2260,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             (ptr_section->callback_read_data,
                              config_file,
                              ptr_section,
-                             line,
+                             ptr_option_name,
                              (undefined_value) ? NULL : pos);
                     }
                     else
@@ -2238,7 +2268,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
                         ptr_option = config_file_search_option (config_file,
                                                                 ptr_section,
-                                                                line);
+                                                                ptr_option_name);
                         if (ptr_option)
                         {
                             rc = config_file_option_set (ptr_option,
@@ -2256,7 +2286,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                                     (ptr_section->callback_create_option_data,
                                      config_file,
                                      ptr_section,
-                                     line,
+                                     ptr_option_name,
                                      (undefined_value) ? NULL : pos);
                             }
                         }
