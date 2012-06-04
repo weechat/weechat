@@ -208,13 +208,6 @@ COMMAND_CALLBACK(bar)
     if (string_strcasecmp (argv[1], "add") == 0)
     {
         COMMAND_MIN_ARGS(8, "bar add");
-        if (argv[2][0] == '#')
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: name can not start with \"#\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
-        }
         pos_condition = strchr (argv[3], ',');
         if (pos_condition)
         {
@@ -1588,13 +1581,6 @@ COMMAND_CALLBACK(filter)
                                        _("%sError: filter \"%s\" already exists"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        argv[2]);
-            return WEECHAT_RC_OK;
-        }
-        if (argv[2][0] == '#')
-        {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: name can not start with \"#\""),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
         }
         if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))
@@ -3776,13 +3762,6 @@ COMMAND_CALLBACK(proxy)
     if (string_strcasecmp (argv[1], "add") == 0)
     {
         COMMAND_MIN_ARGS(6, "proxy add");
-        if (argv[2][0] == '#')
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: name can not start with \"#\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
-        }
         type = proxy_search_type (argv[3]);
         if (type < 0)
         {
