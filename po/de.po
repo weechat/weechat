@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-04 10:02+0200\n"
+"POT-Creation-Date: 2012-06-04 18:20+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -161,10 +161,6 @@ msgstr "  %s (Erweiterung: %s)"
 
 msgid "No bar item defined"
 msgstr "Es wurde kein Bar-Item festgelegt"
-
-#, c-format
-msgid "%sError: name can not start with \"#\""
-msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
 
 #, c-format
 msgid "%sNot enough memory"
@@ -3805,14 +3801,13 @@ msgstr "Einem Befehl wird ein Alias zugewiesen"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
 "            note: you can use %%command to use completion of an existing "
 "command\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
-"            note: the name can not start with \"#\"\n"
 "   command: command name with arguments (many commands can be separated by "
 "semicolons)\n"
 "\n"
@@ -4450,10 +4445,6 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr ""
 "%s%s: Der Server \"%s\" existiert bereits und kann daher nicht angelegt "
 "werden!"
-
-#, c-format
-msgid "%s%s: name can not start with \"#\""
-msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
 
 #, c-format
 msgid "%s%s: unable to create server"
@@ -8144,13 +8135,11 @@ msgstr ""
 "list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
 "all [<name>...] || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
 "        add: add a rmodifier\n"
 "       name: name of rmodifier\n"
-"             note: the name can not start with \"#\"\n"
 "  modifiers: comma separated list of modifiers\n"
 "     groups: action on groups found: comma separated list of groups (from 1 "
 "to 9) with optional \"*\" after number to hide group\n"
@@ -8905,6 +8894,12 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
 
 #~ msgid "string inserted after nick completion"
 #~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"

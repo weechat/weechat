@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-04 10:02+0200\n"
+"POT-Creation-Date: 2012-06-04 18:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,10 +112,6 @@ msgid "  %s (plugin: %s)"
 msgstr ""
 
 msgid "No bar item defined"
-msgstr ""
-
-#, c-format
-msgid "%sError: name can not start with \"#\""
 msgstr ""
 
 #, c-format
@@ -2775,7 +2771,6 @@ msgid ""
 "            note: you can use %%command to use completion of an existing "
 "command\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
-"            note: the name can not start with \"#\"\n"
 "   command: command name with arguments (many commands can be separated by "
 "semicolons)\n"
 "\n"
@@ -3304,10 +3299,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
-msgstr ""
-
-#, c-format
-msgid "%s%s: name can not start with \"#\""
 msgstr ""
 
 #, c-format
@@ -6270,7 +6261,6 @@ msgid ""
 "listdefault: list default rmodifiers\n"
 "        add: add a rmodifier\n"
 "       name: name of rmodifier\n"
-"             note: the name can not start with \"#\"\n"
 "  modifiers: comma separated list of modifiers\n"
 "     groups: action on groups found: comma separated list of groups (from 1 "
 "to 9) with optional \"*\" after number to hide group\n"

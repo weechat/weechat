@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-04 10:02+0200\n"
+"POT-Creation-Date: 2012-06-04 18:20+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -147,10 +147,6 @@ msgstr "  %s (プラグイン: %s)"
 
 msgid "No bar item defined"
 msgstr "バーアイテムが定義されていません"
-
-#, c-format
-msgid "%sError: name can not start with \"#\""
-msgstr "%sエラー: \"#\" で始まる名前は使えません"
 
 #, c-format
 msgid "%sNot enough memory"
@@ -3555,14 +3551,13 @@ msgstr "コマンドの別名を作成"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
 "            note: you can use %%command to use completion of an existing "
 "command\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
-"            note: the name can not start with \"#\"\n"
 "   command: command name with arguments (many commands can be separated by "
 "semicolons)\n"
 "\n"
@@ -4166,10 +4161,6 @@ msgstr "\"%s\" にマッチするサーバが見つかりません"
 #, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s%s: サーバ \"%s\" は既に存在しており、作成できません"
-
-#, c-format
-msgid "%s%s: name can not start with \"#\""
-msgstr "%s%s: \"#\" から始まる名前は使えません"
 
 #, c-format
 msgid "%s%s: unable to create server"
@@ -7670,13 +7661,11 @@ msgstr ""
 "list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
 "all [<name>...] || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
 "        add: add a rmodifier\n"
 "       name: name of rmodifier\n"
-"             note: the name can not start with \"#\"\n"
 "  modifiers: comma separated list of modifiers\n"
 "     groups: action on groups found: comma separated list of groups (from 1 "
 "to 9) with optional \"*\" after number to hide group\n"
@@ -8404,6 +8393,12 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sエラー: \"#\" で始まる名前は使えません"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: \"#\" から始まる名前は使えません"
 
 #~ msgid "string inserted after nick completion"
 #~ msgstr "ニックネーム補完の後に追加される文字列"
