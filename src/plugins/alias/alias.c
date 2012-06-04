@@ -566,7 +566,7 @@ alias_new (const char *name, const char *command, const char *completion)
 {
     struct t_alias *new_alias, *ptr_alias, *pos_alias;
 
-    if (!name || !name[0] || !command || !command[0])
+    if (!name || !name[0] || (name[0] == '#') || !command || !command[0])
         return NULL;
 
     while (weechat_string_is_command_char (name))
@@ -979,6 +979,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "completion of an existing command\n"
                              "     alias: name of alias (can start or end "
                              "with \"*\" for alias listing)\n"
+                             "            note: the name can not start with "
+                             "\"#\"\n"
                              "   command: command name with arguments (many "
                              "commands can be separated by semicolons)\n\n"
                              "Without argument, this command lists all "

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-03 09:00+0200\n"
-"PO-Revision-Date: 2012-06-03 09:49+0200\n"
+"POT-Creation-Date: 2012-06-04 09:57+0200\n"
+"PO-Revision-Date: 2012-06-04 09:58+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3616,13 +3616,6 @@ msgstr[1] "normaux"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug désactivé pour le mode curseur"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug activé pour la souris (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug désactivé pour la souris"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
 
@@ -3651,6 +3644,13 @@ msgstr "Lancement de la commande: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Pas assez de mémoire pour une nouvelle ligne"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug activé pour la souris (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug désactivé pour la souris"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -3699,6 +3699,7 @@ msgid ""
 "            note: you can use %%command to use completion of an existing "
 "command\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
+"            note: the name can not start with \"#\"\n"
 "   command: command name with arguments (many commands can be separated by "
 "semicolons)\n"
 "\n"
@@ -3732,6 +3733,7 @@ msgstr ""
 "complétion d'une commande existante\n"
 "     alias: nom de l'alias (peut démarrer ou se terminer par \"*\" pour une "
 "liste d'alias)\n"
+"            note: le nom ne peut pas commencer par \"#\"\n"
 "  commande: nom de la commande avec les paramètres (plusieurs commandes "
 "peuvent être séparées par des points-virgules)\n"
 "\n"

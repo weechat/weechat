@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-03 09:00+0200\n"
+"POT-Creation-Date: 2012-06-04 09:57+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,7 +29,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -3565,13 +3566,6 @@ msgstr[2] "normalnych"
 msgid "Debug disabled for cursor mode"
 msgstr "Debugowanie wyłączone dla trybu kursora"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debugowanie włączone dla myszy (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debugowanie wyłączone dla myszy"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Błąd: za mało pamięci, aby dodać bufor do hotlisty"
 
@@ -3600,6 +3594,13 @@ msgstr "Wykonuję komendę: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Za mało pamięci na nowy wiersz"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debugowanie włączone dla myszy (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debugowanie wyłączone dla myszy"
 
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
@@ -3641,13 +3642,14 @@ msgstr "tworzy alias do komendy"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <dopełnienie>] <alias> [<komenda> [;<komenda>...]]"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
 "            note: you can use %%command to use completion of an existing "
 "command\n"
 "     alias: name of alias (can start or end with \"*\" for alias listing)\n"
+"            note: the name can not start with \"#\"\n"
 "   command: command name with arguments (many commands can be separated by "
 "semicolons)\n"
 "\n"
