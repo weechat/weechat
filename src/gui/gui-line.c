@@ -650,6 +650,9 @@ gui_line_has_offline_nick (struct t_gui_line *line)
     {
         nick = gui_line_get_nick_tag (line);
         if (nick
+            && (line->data->buffer->nicklist_root
+                && (line->data->buffer->nicklist_root->nicks
+                    || line->data->buffer->nicklist_root->children))
             && !gui_nicklist_search_nick (line->data->buffer, NULL, nick))
         {
             return 1;
