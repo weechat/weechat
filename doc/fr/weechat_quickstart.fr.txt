@@ -245,7 +245,9 @@ WeeChat : http://www.weechat.org/scripts
 La manière la plus simple pour installer des scripts consiste à utiliser le
 script 'weeget.py' :
 
-. téléchargez et copiez 'weeget.py' dans ~/.weechat/python/autoload/
+. `mkdir -p ~/.weechat/python/autoload`
+. `cd ~/.weechat/python/autoload`
+. `wget http://weechat.org/files/scripts/weeget.py`
 . chargez le script : `/python autoload`
 . liste des scripts : `/weeget list` (pour l'aide: `/help weeget`)
 

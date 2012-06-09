@@ -250,8 +250,10 @@ Viele externe Erweiterungen/Skripten (der Mitarbeitenden) sind für WeeChat verf
 siehe: http://www.weechat.org/scripts
 
 Der einfachste Weg um Skripten zu installieren ist die Verwendung von 'weeget.py':
-werden
-. herunterladen und kopieren von 'weeget.py' nach ~/.weechat/python/autoload/
+
+. `mkdir -p ~/.weechat/python/autoload`
+. `cd ~/.weechat/python/autoload`
+. `wget http://weechat.org/files/scripts/weeget.py`
 . laden des  Skript: `/python autoload`
 . Liste der Skripten: `/weeget list` (Hilfe mit: `/help weeget`)
 

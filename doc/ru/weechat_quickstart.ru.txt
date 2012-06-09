@@ -230,7 +230,9 @@ WeeChat: http://www.weechat.org/scripts
 
 Простейший путь для установки скриптов - исползовать скрипт 'weeget.py':
 
-. скачайте и скопируйте 'weeget.py' в ~/.weechat/python/autoload/
+. `mkdir -p ~/.weechat/python/autoload`
+. `cd ~/.weechat/python/autoload`
+. `wget http://weechat.org/files/scripts/weeget.py`
 . подгрузить скрипт в Weechat: `/python autoload`
 . скачайте список скриптов: `/weeget list` (for help: `/help weeget`)
 
