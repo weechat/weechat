@@ -36,6 +36,7 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-config.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
@@ -393,6 +394,9 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     if (visible)
         buffer->nicklist_visible_count++;
 
+    if (CONFIG_BOOLEAN(config_look_color_nick_offline))
+        gui_buffer_ask_chat_refresh (buffer, 1);
+
     gui_nicklist_send_signal ("nicklist_nick_added", buffer, name);
 
     return new_nick;
@@ -440,6 +444,9 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     }
 
     free (nick);
+
+    if (CONFIG_BOOLEAN(config_look_color_nick_offline))
+        gui_buffer_ask_chat_refresh (buffer, 1);
 
     gui_nicklist_send_signal ("nicklist_nick_removed", buffer, nick_removed);
 
