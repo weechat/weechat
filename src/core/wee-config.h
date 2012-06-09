@@ -197,6 +197,8 @@ extern struct t_config_option *config_color_chat_nick;
 extern struct t_config_option *config_color_chat_nick_colors;
 extern struct t_config_option *config_color_chat_nick_self;
 extern struct t_config_option *config_color_chat_nick_offline;
+extern struct t_config_option *config_color_chat_nick_offline_highlight;
+extern struct t_config_option *config_color_chat_nick_offline_highlight_bg;
 extern struct t_config_option *config_color_chat_nick_other;
 extern struct t_config_option *config_color_chat_host;
 extern struct t_config_option *config_color_chat_delimiters;

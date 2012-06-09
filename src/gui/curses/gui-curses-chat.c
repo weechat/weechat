@@ -124,9 +124,13 @@ gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line,
     {
         color = color_inactive_buffer;
     }
-    else if (nick_offline)
+    else if (nick_offline == 1)
     {
         color = GUI_COLOR_CHAT_NICK_OFFLINE;
+    }
+    else if (nick_offline > 1)
+    {
+        color = GUI_COLOR_CHAT_NICK_OFFLINE_HIGHLIGHT;
     }
 
     if (reset_attributes)
@@ -854,7 +858,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
             if (!simulate)
             {
-                gui_chat_reset_style (window, line, nick_offline, 1,
+                gui_chat_reset_style (window, line, (nick_offline) ? 2 : 0, 1,
                                       GUI_COLOR_CHAT_INACTIVE_WINDOW,
                                       (CONFIG_BOOLEAN(config_look_color_inactive_buffer)
                                        && CONFIG_BOOLEAN(config_look_color_inactive_prefix)

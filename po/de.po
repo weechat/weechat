@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-08 22:05+0200\n"
+"POT-Creation-Date: 2012-06-09 13:19+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -2522,7 +2522,7 @@ msgstr ""
 "Buffers nicht die aktiv Zeile ist)"
 
 #, fuzzy
-msgid "use a different color for offline nick (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist any more)"
 msgstr ""
 "Textfarbe für Zeilen in einem inaktiven Fenster (betrifft das Fenster, "
 "welches nicht aktiv ist)"
@@ -3039,6 +3039,14 @@ msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster."
 #, fuzzy
 msgid "text color for offline nick (not in nicklist any more)"
 msgstr "Textfarbe von Nicknamen die Offline sind"
+
+#, fuzzy
+msgid "text color for offline nick with highlight"
+msgstr "Textfarbe von Nicknamen die Offline sind"
+
+#, fuzzy
+msgid "background color for offline nick with highlight"
+msgstr "Hintergrundfarbe für Highlight-Präfix"
 
 msgid "text color for other nick in private buffer"
 msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"

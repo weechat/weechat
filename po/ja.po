@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-08 22:05+0200\n"
+"POT-Creation-Date: 2012-06-09 13:19+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2385,7 +2385,7 @@ msgstr ""
 "行が未選択のマージバッファからの場合)"
 
 #, fuzzy
-msgid "use a different color for offline nick (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist any more)"
 msgstr ""
 "アクティブでないウィンドウでは行に異なる色を使用 (ウィンドウにフォーカスが無"
 "い場合)"
@@ -2840,6 +2840,14 @@ msgstr "チャットウィンドウ内のローカルニックネームのテキ
 #, fuzzy
 msgid "text color for offline nick (not in nicklist any more)"
 msgstr "オフラインのニックネームのテキスト色"
+
+#, fuzzy
+msgid "text color for offline nick with highlight"
+msgstr "オフラインのニックネームのテキスト色"
+
+#, fuzzy
+msgid "background color for offline nick with highlight"
+msgstr "ハイライトされたプレフィックスの背景色"
 
 msgid "text color for other nick in private buffer"
 msgstr "プライベートバッファ内の他のニックネームのテキスト色"

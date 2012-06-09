@@ -1417,6 +1417,7 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_CHAT_INACTIVE_BUFFER, CONFIG_COLOR(config_color_chat_inactive_buffer), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER, CONFIG_COLOR(config_color_chat_prefix_buffer_inactive_buffer), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_NICK_OFFLINE, CONFIG_COLOR(config_color_chat_nick_offline), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK_OFFLINE_HIGHLIGHT, CONFIG_COLOR(config_color_chat_nick_offline_highlight), CONFIG_COLOR(config_color_chat_nick_offline_highlight_bg));
 
     /*
      * define old nick colors for compatibility on /upgrade with previous

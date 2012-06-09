@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-08 22:05+0200\n"
+"POT-Creation-Date: 2012-06-09 13:19+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2302,7 +2302,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "use a different color for offline nick (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist any more)"
 msgstr ""
 "barva textu pro jméno bufferu (před prefixem, při spojení vice bufferů se "
 "stejným číslem)"
@@ -2749,6 +2749,14 @@ msgstr "barva textu pro lokální přezdívku v okně rozhovoru"
 #, fuzzy
 msgid "text color for offline nick (not in nicklist any more)"
 msgstr "barva textu pro nepřipojené přezdíveky"
+
+#, fuzzy
+msgid "text color for offline nick with highlight"
+msgstr "barva textu pro nepřipojené přezdíveky"
+
+#, fuzzy
+msgid "background color for offline nick with highlight"
+msgstr "barva pozadí pro zvýrazněný prefix"
 
 msgid "text color for other nick in private buffer"
 msgstr "barva textu pro jiné přezdívky v soukromém bufferu"

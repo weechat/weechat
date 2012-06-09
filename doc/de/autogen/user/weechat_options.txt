@@ -68,6 +68,16 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
+* [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
+** Beschreibung: `text color for offline nick with highlight`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
+
+* [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
+** Beschreibung: `background color for offline nick with highlight`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
+
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
 ** Beschreibung: `Farbe des anderen Nicknamens in einem privaten Buffer`
 ** Typ: Farbe
@@ -419,7 +429,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** Beschreibung: `use a different color for offline nick (not in nicklist any more)`
+** Beschreibung: `use a different color for offline nicks (not in nicklist any more)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

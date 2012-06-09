@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-08 22:05+0200\n"
+"POT-Creation-Date: 2012-06-09 13:19+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2431,7 +2431,7 @@ msgstr ""
 "ventana actual, o si la línea de un buffer fusionado no está seleccionado)"
 
 #, fuzzy
-msgid "use a different color for offline nick (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist any more)"
 msgstr ""
 "usar un diferente color para líneas en ventanas inactivas (cuando la ventana "
 "no es la ventana actual)"
@@ -2917,6 +2917,14 @@ msgstr "color para el apodo propio en la ventana de conversación"
 #, fuzzy
 msgid "text color for offline nick (not in nicklist any more)"
 msgstr "color para apodos desconectados"
+
+#, fuzzy
+msgid "text color for offline nick with highlight"
+msgstr "color para apodos desconectados"
+
+#, fuzzy
+msgid "background color for offline nick with highlight"
+msgstr "color de fondo para el prefijo con realce"
 
 msgid "text color for other nick in private buffer"
 msgstr "color para el otro apodo en una conversación privada"

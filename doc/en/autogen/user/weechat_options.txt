@@ -68,6 +68,16 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
 
+* [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
+** description: `text color for offline nick with highlight`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
+** description: `background color for offline nick with highlight`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
+
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
 ** description: `text color for other nick in private buffer`
 ** type: color
@@ -419,7 +429,7 @@
 ** values: on, off (default value: `off`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** description: `use a different color for offline nick (not in nicklist any more)`
+** description: `use a different color for offline nicks (not in nicklist any more)`
 ** type: boolean
 ** values: on, off (default value: `off`)
 

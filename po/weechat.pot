@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-08 22:05+0200\n"
+"POT-Creation-Date: 2012-06-09 13:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1744,7 +1744,7 @@ msgid ""
 "window, or if line is from a merged buffer not selected)"
 msgstr ""
 
-msgid "use a different color for offline nick (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist any more)"
 msgstr ""
 
 msgid ""
@@ -2100,6 +2100,12 @@ msgid "text color for local nick in chat window"
 msgstr ""
 
 msgid "text color for offline nick (not in nicklist any more)"
+msgstr ""
+
+msgid "text color for offline nick with highlight"
+msgstr ""
+
+msgid "background color for offline nick with highlight"
 msgstr ""
 
 msgid "text color for other nick in private buffer"
