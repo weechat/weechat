@@ -7359,7 +7359,7 @@ Paramètres :
 * 'tags' : seulement les messages avec ces étiquettes ("tags") (liste séparée
   par des virgules) seront interceptés (optionnel)
 * 'message' : seulement les messages contenant cette chaîne seront interceptés
-  (optionnel)
+  (optionnel, insensible à la casse)
 * 'strip_colors' : si 1, les couleurs seront supprimées du message affiché,
   avant d'appeler le "callback"
 * 'callback' : fonction appelée lorsqu'un message est affiché, paramètres et

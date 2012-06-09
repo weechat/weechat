@@ -7250,7 +7250,8 @@ Arguments:
 * 'buffer': buffer pointer, if NULL, messages from any buffer are caught
 * 'tags': only messages with these tags (comma separated list) will be caught
   (optional)
-* 'message': only messages with this string will be caught (optional)
+* 'message': only messages with this string will be caught (optional, case
+  insensitive)
 * 'strip_colors': if 1, colors will be stripped from message displayed, before
   calling callback
 * 'callback': function called when a message is printed, arguments and return

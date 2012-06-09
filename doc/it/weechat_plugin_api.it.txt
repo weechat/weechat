@@ -1064,14 +1064,18 @@ Argomenti:
 ** REG_ICASE
 ** REG_NEWLINE
 ** REG_NOSUB
+// TRANSLATION MISSING
 * 'flags': pointer value is set with flags used in regular expression (default
   flags + flags set in regular expression)
 
+// TRANSLATION MISSING
 Flags must be at beginning of regular expression. Format is:
 "(?eins-eins)string".
 
+// TRANSLATION MISSING
 Allowed flags are:
 
+// TRANSLATION MISSING
 * 'e': POSIX extended regular expression ('REG_EXTENDED')
 * 'i': case insensitive ('REG_ICASE')
 * 'n': match-any-character operators don't match a newline ('REG_NEWLINE')
@@ -1079,6 +1083,7 @@ Allowed flags are:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * pointer in 'regex', after flags
 
 Esempio in C:
@@ -1112,6 +1117,7 @@ int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 
 Argomenti:
 
+// TRANSLATION MISSING
 * 'preg': pointer to 'regex_t' structure
 * 'regex': regular expression
 * 'default_flags': combination of following values (see `man regcomp`):
@@ -1122,6 +1128,7 @@ Argomenti:
 
 Valore restituito:
 
+// TRANSLATION MISSING
 * same return code as function `regcomp` (0 if ok, other value for error,
   see `man regcomp`)
 
@@ -7275,7 +7282,8 @@ Argomenti:
   buffer
 * 'tags': verranno catturati solo messaggi con queste tag (elenco separato da virgole)
   (opzionale)
-* 'message': verranno catturati solo i messaggi con questa stringa (opzionale)
+* 'message': verranno catturati solo i messaggi con questa stringa (opzionale,
+  non sensibile alle maiuscole)
 * 'strip_colors': se 1, i colori verranno estratti dal messaggio visualizzato, prima
   di chiamare la callback
 * 'callback': funzione chiamata quando viene stampato un messaggio, argomenti e
@@ -12658,7 +12666,6 @@ alle liste info, ma ci sono alcune differenze:
 * può contenere informazioni differenti rispetto alle liste info: esso contiene
   solo dati raw in strutture (le liste info possono aggiungere alcuni dati extra
   per convenienza)
-
 ========================================
 
 Prototipo:
@@ -12867,7 +12874,6 @@ weechat_hdata_get_var_offset
 
 _Novità nella versione 0.3.6._
 
-Return offset of variable in hdata.
 Restituisce l'offset della variabile in hdata.
 
 Prototipo:
