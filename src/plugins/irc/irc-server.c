@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -2874,6 +2875,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
 {
     struct t_irc_server *server;
     const char *proxy;
+    int flags;
 
     server = (struct t_irc_server *)data;
 
@@ -2888,6 +2890,10 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
+            flags = fcntl (server->sock, F_GETFL);
+            if (flags == -1)
+                flags = 0;
+            fcntl (server->sock, F_SETFL, flags | O_NONBLOCK);
             weechat_printf (server->buffer,
                             _("%s: connected to %s/%d (%s)"),
                             IRC_PLUGIN_NAME,
