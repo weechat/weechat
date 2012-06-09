@@ -63,6 +63,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
+* [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
+** description: `couleur du texte pour les pseudos déconnectés (qui ne sont plus dans la liste de pseudos)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `darkgray`)
+
 * [[option_weechat.color.chat_nick_other]] *weechat.color.chat_nick_other*
 ** description: `couleur du texte pour l'autre pseudo dans le tampon privée`
 ** type: couleur
@@ -410,6 +415,11 @@
 
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** description: `utiliser une couleur différente pour les lignes dans une fenêtre inactive (quand la fenêtre n'est pas la fenêtre courante)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
+* [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
+** description: `utiliser une couleur différente pour les pseudos déconnectés (qui ne sont plus dans la liste de pseudos)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 

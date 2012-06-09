@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-04 18:20+0200\n"
+"POT-Creation-Date: 2012-06-08 22:05+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1982,6 +1982,9 @@ msgid ""
 "window, or if line is from a merged buffer not selected)"
 msgstr ""
 
+msgid "use a different color for offline nick (not in nicklist any more)"
+msgstr ""
+
 msgid ""
 "automatically reset table of color pairs when number of available pairs is "
 "lower or equal to this number (-1 = disable automatic reset, and then a "
@@ -2381,6 +2384,10 @@ msgstr "idő színe a beszédablakban"
 #, fuzzy
 msgid "text color for local nick in chat window"
 msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
+
+#, fuzzy
+msgid "text color for offline nick (not in nicklist any more)"
+msgstr "távollevő felhasználók nevének színe"
 
 #, fuzzy
 msgid "text color for other nick in private buffer"

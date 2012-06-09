@@ -790,7 +790,7 @@ All combinations are summarized in this table:
 
 Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'):
 
-[width="40%",cols="^1m,5",options="header"]
+[width="60%",cols="^1m,10",options="header"]
 |========================================
 | Code | Option
 | 00   | weechat.color.separator
@@ -827,15 +827,16 @@ Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'
 | 31   | weechat.color.chat_text_found
 | 32   | weechat.color.chat_value
 | 33   | weechat.color.chat_prefix_buffer
-| 34   | weechat.color.chat_tags
-| 35   | weechat.color.chat_inactive_window
-| 36   | weechat.color.chat_inactive_buffer
-| 37   | weechat.color.chat_prefix_buffer_inactive_buffer
+| 34   | weechat.color.chat_tags _(new in version 0.3.6)_
+| 35   | weechat.color.chat_inactive_window _(new in version 0.3.6)_
+| 36   | weechat.color.chat_inactive_buffer _(new in version 0.3.6)_
+| 37   | weechat.color.chat_prefix_buffer_inactive_buffer _(new in version 0.3.6)_
+| 38   | weechat.color.chat_nick_offline _(new in version 0.3.9)_
 |========================================
 
 WeeChat colors are:
 
-[width="40%",cols="^1m,5",options="header"]
+[width="40%",cols="^1m,6",options="header"]
 |========================================
 | Code | Color
 | 00   | default (terminal foreground/background)

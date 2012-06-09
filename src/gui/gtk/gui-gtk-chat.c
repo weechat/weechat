@@ -176,13 +176,15 @@ gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 char *
 gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                            const unsigned char *string, int apply_style,
-                           int apply_style_inactive)
+                           int apply_style_inactive,
+                           int nick_offline)
 {
     /* TODO: write this function for Gtk */
     (void) window;
     (void) line;
     (void) apply_style;
     (void) apply_style_inactive;
+    (void) nick_offline;
 
     return (char *)string;
 }

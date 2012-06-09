@@ -90,6 +90,7 @@ extern const char *gui_line_search_tag_starting_with (struct t_gui_line *line,
                                                       const char *tag);
 extern const char *gui_line_get_nick_tag (struct t_gui_line *line);
 extern int gui_line_has_highlight (struct t_gui_line *line);
+extern int gui_line_has_offline_nick (struct t_gui_line *line);
 extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
                                                 struct t_gui_lines *lines);
 extern void gui_line_compute_prefix_max_length (struct t_gui_lines *lines);

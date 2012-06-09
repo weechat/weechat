@@ -21,8 +21,12 @@
 #define __WEECHAT_GUI_COLOR_H 1
 
 /*
- * Color from options
- * (when changing something here, please update the Developer's guide)
+ * Color from configuration options.
+ * When changing some colors below:
+ * - always add to the end
+ * - never remove a color (mark it as obsolete if needed)
+ * - do not re-use an obsolete color
+ * - update the Developer's guide
  */
 
 enum t_gui_color_enum
@@ -70,6 +74,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_INACTIVE_WINDOW,
     GUI_COLOR_CHAT_INACTIVE_BUFFER,
     GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER,
+    GUI_COLOR_CHAT_NICK_OFFLINE,
 
     /* number of colors */
     GUI_COLOR_NUM_COLORS,

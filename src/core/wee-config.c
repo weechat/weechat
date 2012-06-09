@@ -93,6 +93,7 @@ struct t_config_option *config_look_color_inactive_time;
 struct t_config_option *config_look_color_inactive_prefix_buffer;
 struct t_config_option *config_look_color_inactive_prefix;
 struct t_config_option *config_look_color_inactive_message;
+struct t_config_option *config_look_color_nick_offline;
 struct t_config_option *config_look_color_pairs_auto_reset;
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
@@ -174,6 +175,7 @@ struct t_config_option *config_color_chat_channel;
 struct t_config_option *config_color_chat_nick;
 struct t_config_option *config_color_chat_nick_colors;
 struct t_config_option *config_color_chat_nick_self;
+struct t_config_option *config_color_chat_nick_offline;
 struct t_config_option *config_color_chat_nick_other;
 struct t_config_option *config_color_chat_host;
 struct t_config_option *config_color_chat_delimiters;
@@ -1827,6 +1829,11 @@ config_weechat_init_options ()
         N_("use a different color for inactive message (when window is not "
            "current window, or if line is from a merged buffer not selected)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_color_nick_offline = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_nick_offline", "boolean",
+        N_("use a different color for offline nick (not in nicklist any more)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_color_pairs_auto_reset = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_pairs_auto_reset", "integer",
@@ -2393,6 +2400,12 @@ config_weechat_init_options ()
         "chat_nick_self", "color",
         N_("text color for local nick in chat window"),
         NULL, GUI_COLOR_CHAT_NICK_SELF, 0, "white", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_nick_offline = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_nick_offline", "color",
+        N_("text color for offline nick (not in nicklist any more)"),
+        NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "darkgray", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_other = config_file_new_option (
         weechat_config_file, ptr_section,

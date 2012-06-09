@@ -45,6 +45,7 @@
 #include "gui-color.h"
 #include "gui-filter.h"
 #include "gui-hotlist.h"
+#include "gui-nicklist.h"
 #include "gui-window.h"
 
 
@@ -633,6 +634,29 @@ gui_line_has_highlight (struct t_gui_line *line)
     free (msg_no_color);
 
     return rc;
+}
+
+/*
+ * gui_line_has_offline_nick: return 1 if nick of line is offline
+ *                            (not in nicklist any more)
+ */
+
+int
+gui_line_has_offline_nick (struct t_gui_line *line)
+{
+    const char *nick;
+
+    if (line && gui_line_search_tag_starting_with (line, "prefix_nick"))
+    {
+        nick = gui_line_get_nick_tag (line);
+        if (nick
+            && !gui_nicklist_search_nick (line->data->buffer, NULL, nick))
+        {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 /*
