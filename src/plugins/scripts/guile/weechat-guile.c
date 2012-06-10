@@ -436,6 +436,7 @@ void
 weechat_guile_unload (struct t_plugin_script *script)
 {
     int *rc;
+    void *interpreter;
 
     if ((weechat_guile_plugin->debug >= 2) || !guile_quiet)
     {
@@ -452,7 +453,7 @@ weechat_guile_unload (struct t_plugin_script *script)
             free (rc);
     }
 
-    weechat_guile_catch (scm_gc_unprotect_object, script->interpreter);
+    interpreter = script->interpreter;
 
     if (guile_current_script == script)
         guile_current_script = (guile_current_script->prev_script) ?
@@ -460,6 +461,9 @@ weechat_guile_unload (struct t_plugin_script *script)
 
     script_remove (weechat_guile_plugin, &guile_scripts, &last_guile_script,
                    script);
+
+    if (interpreter)
+        weechat_guile_catch (scm_gc_unprotect_object, interpreter);
 }
 
 /*
