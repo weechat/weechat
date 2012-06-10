@@ -89,11 +89,11 @@ gui_window_objects_init (struct t_gui_window *window)
  */
 
 void
-gui_window_objects_free (struct t_gui_window *window, int free_separator)
+gui_window_objects_free (struct t_gui_window *window, int free_separators)
 {
     /* TODO: write this function for Gtk */
     (void) window;
-    (void) free_separator;
+    (void) free_separators;
 }
 
 /*
@@ -124,11 +124,11 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 }
 
 /*
- * gui_window_draw_separator: draw window separation
+ * gui_window_draw_separators: draw window separation
  */
 
 void
-gui_window_draw_separator (struct t_gui_window *window)
+gui_window_draw_separators (struct t_gui_window *window)
 {
     /* TODO: write this function for Gtk */
     /*if (window->win_separator)
@@ -561,8 +561,8 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
             gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
 
-            /* create & draw separator */
-            gui_window_draw_separator (gui_current_window);
+            /* create & draw separators */
+            gui_window_draw_separators (gui_current_window);
         }
     }
 

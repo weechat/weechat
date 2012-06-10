@@ -729,12 +729,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** Beschreibung: `das genutzte Zeichen wird verwendet um damit die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben dann zeichnet ncurses eine durchgezogene Linie. Dies kann allerdings bei einigen Terminals zu Fehlern führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
+** Beschreibung: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** Beschreibung: `das genutzte Zeichen wird verwendet um damit die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben dann zeichnet ncurses eine durchgezogene Linie. Wide Chars sind für diese Option NICHT erlaubt.`
+** Beschreibung: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -747,6 +747,16 @@
 ** Beschreibung: `Zeitstempel für das Datum. Der Zeitstempel wird in eine Zeichenkette umgewandelt und in Nachrichten dargestellt.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
+
+* [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
+** Beschreibung: `display an horizontal separator between windows`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
+* [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
+** Beschreibung: `display a vertical separator between windows`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** Beschreibung: `Zeitüberschreitung (in Sekunden) für eine Verbindung zu einem entfernten Rechner (mittels einem Kindprozess)`

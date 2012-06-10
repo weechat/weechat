@@ -176,6 +176,8 @@ extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
 extern struct t_config_option *config_look_set_title;
 extern struct t_config_option *config_look_time_format;
+extern struct t_config_option *config_look_window_separator_horizontal;
+extern struct t_config_option *config_look_window_separator_vertical;
 
 extern struct t_config_option *config_color_separator;
 extern struct t_config_option *config_color_bar_more;

@@ -48,7 +48,8 @@ struct t_gui_bar_window;
 struct t_gui_window_curses_objects
 {
     WINDOW *win_chat;               /* chat window (example: channel)       */
-    WINDOW *win_separator;          /* separation between 2 split (V) win   */
+    WINDOW *win_separator_horiz;    /* horizontal separator (optional)      */
+    WINDOW *win_separator_vertic;   /* vertical separator (optional)        */
     struct t_gui_line *first_line_with_prefix;
                                     /* first (full) line displayed with a   */
                                     /* prefix (for opt "prefix_same_nick")  */

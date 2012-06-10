@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-09 13:19+0200\n"
+"POT-Creation-Date: 2012-06-10 09:48+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2297,14 +2297,14 @@ msgid "alert user when text sought is not found in buffer"
 msgstr ""
 
 msgid ""
-"char used to draw horizontal separators around bars (empty value will draw a "
-"real line with ncurses, but may cause bugs with URL selection under some "
-"terminals), wide chars are NOT allowed here"
+"char used to draw horizontal separators around bars and windows (empty value "
+"will draw a real line with ncurses, but may cause bugs with URL selection "
+"under some terminals), wide chars are NOT allowed here"
 msgstr ""
 
 msgid ""
-"char used to draw vertical separators around bars (empty value will draw a "
-"real line with ncurses), wide chars are NOT allowed here"
+"char used to draw vertical separators around bars and windows (empty value "
+"will draw a real line with ncurses), wide chars are NOT allowed here"
 msgstr ""
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
@@ -2315,6 +2315,12 @@ msgstr ""
 #, fuzzy
 msgid "time format for dates converted to strings and displayed in messages"
 msgstr "отображение маркера даты при смене дня"
+
+msgid "display an horizontal separator between windows"
+msgstr ""
+
+msgid "display a vertical separator between windows"
+msgstr ""
 
 #, fuzzy
 msgid "background color for window separators (when split)"

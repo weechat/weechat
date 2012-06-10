@@ -729,12 +729,12 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
+** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres (une valeur vide tracera une vraie ligne avec ncurses), les caractères larges ne sont PAS autorisés ici`
+** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses), les caractères larges ne sont PAS autorisés ici`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -747,6 +747,16 @@
 ** description: `format de date/heure pour les dates converties en chaînes et affichées dans les messages`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T"`)
+
+* [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
+** description: `afficher un séparateur horizontal entre les fenêtres`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
+** description: `afficher un séparateur vertical entre les fenêtres`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** description: `délai d'attente maximum (en secondes) pour la connexion à une machine distante (effectuée dans un processus fils)`
