@@ -792,8 +792,11 @@ weechat_python_unload (struct t_plugin_script *script)
     script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
                    script);
 
-    PyThreadState_Swap (interpreter);
-    Py_EndInterpreter (interpreter);
+    if (interpreter)
+    {
+        PyThreadState_Swap (interpreter);
+        Py_EndInterpreter (interpreter);
+    }
 
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
