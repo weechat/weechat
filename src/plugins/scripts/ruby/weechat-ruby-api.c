@@ -91,6 +91,16 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     char *c_shutdown_func, *c_charset;
 
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (ruby_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                        ruby_registered_script->name);
+        API_RETURN_ERROR;
+    }
     ruby_current_script = NULL;
     ruby_registered_script = NULL;
     if (NIL_P (name) || NIL_P (author) || NIL_P (version)
@@ -116,7 +126,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
 
     if (script_search (weechat_ruby_plugin, ruby_scripts, c_name))
     {
-        /* error: another scripts already exists with this name! */
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "

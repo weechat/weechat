@@ -87,6 +87,16 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
                             SCM description, SCM shutdown_func, SCM charset)
 {
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (guile_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), GUILE_PLUGIN_NAME,
+                        guile_registered_script->name);
+        API_RETURN_ERROR;
+    }
     guile_current_script = NULL;
     guile_registered_script = NULL;
     if (!scm_is_string (name) || !scm_is_string (author)
@@ -98,7 +108,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
     if (script_search (weechat_guile_plugin, guile_scripts,
                        scm_i_string_chars (name)))
     {
-        /* error: another scripts already exists with this name! */
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "

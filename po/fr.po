@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 09:48+0200\n"
-"PO-Revision-Date: 2012-06-10 09:31+0200\n"
+"POT-Creation-Date: 2012-06-10 22:58+0200\n"
+"PO-Revision-Date: 2012-06-10 23:00+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -8010,6 +8010,10 @@ msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 "nom du rmodifier (peut démarrer ou se terminer par \"*\" comme caractère "
 "joker) (optionnel)"
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: script \"%s\" déjà enregistré (register ignoré)"
 
 #, c-format
 msgid ""

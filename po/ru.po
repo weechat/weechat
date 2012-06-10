@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 09:48+0200\n"
+"POT-Creation-Date: 2012-06-10 22:58+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7216,6 +7216,10 @@ msgstr "Сохраняю конфигурацию\n"
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
 #, c-format
 msgid ""

@@ -94,6 +94,16 @@ weechat_lua_api_register (lua_State *L)
     const char *shutdown_func, *charset;
 
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (lua_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME,
+                        lua_registered_script->name);
+        API_RETURN_ERROR;
+    }
     lua_current_script = NULL;
     lua_registered_script = NULL;
     if (lua_gettop (lua_current_interpreter) < 7)
@@ -109,6 +119,7 @@ weechat_lua_api_register (lua_State *L)
 
     if (script_search (weechat_lua_plugin, lua_scripts, name))
     {
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "

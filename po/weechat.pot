@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 09:48+0200\n"
+"POT-Creation-Date: 2012-06-10 22:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6311,6 +6311,10 @@ msgid "rmodifier pointer (optional)"
 msgstr ""
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr ""
 
 #, c-format

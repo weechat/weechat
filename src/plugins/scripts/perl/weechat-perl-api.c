@@ -107,6 +107,16 @@ XS (XS_weechat_api_register)
     (void) items;
 
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (perl_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), PERL_PLUGIN_NAME,
+                        perl_registered_script->name);
+        API_RETURN_ERROR;
+    }
     perl_current_script = NULL;
     perl_registered_script = NULL;
 
@@ -123,7 +133,7 @@ XS (XS_weechat_api_register)
 
     if (script_search (weechat_perl_plugin, perl_scripts, name))
     {
-        /* error: another script already exists with this name! */
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 09:48+0200\n"
+"POT-Creation-Date: 2012-06-10 22:58+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8225,6 +8225,12 @@ msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 "rmodifier Name (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
 "(optional)"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr ""
+"%s%s: Der Server \"%s\" existiert bereits und kann daher nicht angelegt "
+"werden!"
 
 #, c-format
 msgid ""

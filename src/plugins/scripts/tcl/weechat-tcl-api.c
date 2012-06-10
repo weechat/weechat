@@ -218,6 +218,16 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
     int i;
 
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (tcl_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), TCL_PLUGIN_NAME,
+                        tcl_registered_script->name);
+        API_RETURN_ERROR;
+    }
     tcl_current_script = NULL;
     tcl_registered_script = NULL;
 
@@ -234,7 +244,7 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
 
     if (script_search (weechat_tcl_plugin, tcl_scripts, name))
     {
-        /* error: another script already exists with this name! */
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "

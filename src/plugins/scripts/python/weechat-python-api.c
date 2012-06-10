@@ -90,6 +90,16 @@ weechat_python_api_register (PyObject *self, PyObject *args)
     char *charset;
 
     API_FUNC(0, "register", API_RETURN_ERROR);
+    if (python_registered_script)
+    {
+        /* script already registered */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: script \"%s\" already "
+                                         "registered (register ignored)"),
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME,
+                        python_registered_script->name);
+        API_RETURN_ERROR;
+    }
     python_current_script = NULL;
     python_registered_script = NULL;
     name = NULL;
@@ -105,7 +115,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
 
     if (script_search (weechat_python_plugin, python_scripts, name))
     {
-        /* error: another scripts already exists with this name! */
+        /* another script already exists with same name */
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
