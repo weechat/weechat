@@ -359,28 +359,29 @@ Example of terminal with WeeChat:
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel                                                 │
-│12:52:27    --> | flashy (n=flashcod@hellix.flashtux.org) has joined #test    │@ChanServ │
-│12:52:27     -- | Nicks #test: [@ChanServ @flashy +_FlashB0t joe mike]        │@flashy   │
-│12:52:27     -- | Channel #test: 5 nicks (2 ops, 0 halfop, 1 voice, 2 normal) │+_FlashB0t│
-│12:52:27     -- | Channel created on Tue Jan 27 06:30:17 2009                 │joe       │
-│12:54:15 flashy | hey!                                                        │mike      │
-│12:55:01    joe | hi flashy!                                                  │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Act: 4:#abc(2,5), 6]                         │
-│[flashy] hi joe!█                                                                        │
+│Welcome to #test, this is a test channel                                                 │ ◀ bar "title"
+│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test                 │@Flashy│
+│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]                             │@joe   │
+│12:52:27    -- | Channel #test: 4 nicks (2 ops, 0 halfop, 1 voice, 1 normal)     │+weebot│
+│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009                     │peter  │
+│12:54:15 peter | hey!                                                            │       │
+│12:55:01  @joe | hello                                                           │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ chat + bar "nicklist"
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ bar "status"
+│[@Flashy] hi peter!█                                                                     │ ◀ bar "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -406,7 +407,7 @@ Bar 'status' has following default items:
 | buffer_plugin         | [irc/freenode]        | plugin of current buffer (irc plugin can add IRC server name used by buffer)
 | buffer_number         | 3                     | current buffer number
 | buffer_name           | #test(+n)             | current buffer name (with channel modes for irc channels)
-| buffer_nicklist_count | {5}                   | number of nicks in nicklist
+| buffer_nicklist_count | {4}                   | number of nicks in nicklist
 | buffer_filter         | *                     | filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
 | lag                   | [Lag: 2.5]            | lag indicator, in seconds (hidden if lag is low)
 | hotlist               | [Act: 4:#abc(2,5), 6] | list of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
@@ -420,11 +421,165 @@ Bar 'input' has following default items:
 |========================================
 | Item             | Example                                    | Description
 | input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
-| input_prompt     | [flashy]                                   | input prompt (nick for irc plugin)
+| input_prompt     | [@Flashy]                                  | input prompt (nick for irc plugin)
 | away             | (away)                                     | away indicator
 | input_search     | [Text search]                              | text search indicator
-| input_text       | hi joe!                                    | input text
+| input_text       | hi peter!                                  | input text
 |========================================
+
+[[buffers_and_windows]]
+Buffers and windows
+~~~~~~~~~~~~~~~~~~~
+
+A 'buffer' is composed by a number, a name, lines displayed (and some other
+data).
+
+Examples of buffers:
+
+* core buffer (created by WeeChat on startup, can not be closed)
+* irc server (displays messages from server)
+* irc channel
+* irc private
+
+A 'window' is a screen area which displays a buffer. It is possible to split
+your screen into many windows.
+
+Each window displays one buffer. A buffer can be hidden (not displayed by a
+window) or displayed by one or more windows.
+
+Example of horizontal split (`/window splith`):
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #abc, channel about nothing!                                                  │
+│12:55:12     Max | hi                                                            │@Flashy│
+│12:55:20 @Flashy | hi Max!                                                       │Max    │
+│12:55:32     Max | how are you?                                                  │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ window #2
+│                                                                                 │       │   (buffer #4)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                                 │
+│[@Flashy]                                                                                │
+│─────────────────────────────────────────────────────────────────────────────────────────│
+│Welcome to #test, this is a test channel                                                 │
+│12:54:15 peter | hey!                                                            │@Flashy│
+│12:55:01  @joe | hello                                                           │@joe   │
+│                                                                                 │+weebot│
+│                                                                                 │peter  │
+│                                                                                 │       │ ◀ window #1
+│                                                                                 │       │   (buffer #3)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                                │
+│[@Flashy] hi peter!█                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Example of vertical split (`/window splitv`):
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel    │Welcome to #abc, channel about nothing!     │
+│12:54:15 peter | hey!               │@Flashy│12:55:12     Max | hi               │@Flashy│
+│12:55:01  @joe | hello              │@joe   │12:55:20 @Flashy | hi Max!          │Max    │
+│                                    │+weebot│12:55:32     Max | how are you?     │       │
+│                                    │peter  │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │[12:55] [6] [irc/freenode] 4:#abc(+n){2}    │
+│[@Flashy] hi peter!█                        │[@Flashy]                                   │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ window #1                                   ▲ window #2
+                  (buffer #3)                                   (buffer #4)
+........................................
+
+Example of vertical + horizontal splits:
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel    │Welcome to #def, another channel            │
+│12:54:15 peter | hey!               │@Flashy│12:55:42 @Flashy | hello world      │@Flashy│
+│12:55:01  @joe | hello              │@joe   │12:55:56    alex | hi Flashy        │alex   │
+│                                    │+weebot│                                    │       │
+│                                    │peter  │                                    │       │ ◀ window #3
+│                                    │       │                                    │       │   (buffer #5)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │[12:55] [6] [irc/freenode] 5:#def(+n){2}    │
+│                                    │       │[@Flashy]                                   │
+│                                    │       │────────────────────────────────────────────│
+│                                    │       │Welcome to #abc, channel about nothing!     │
+│                                    │       │12:55:12     Max | hi               │@Flashy│
+│                                    │       │12:55:20 @Flashy | hi Max!          │Max    │
+│                                    │       │12:55:32     Max | how are you?     │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │ ◀ window #2
+│                                    │       │                                    │       │   (buffer #4)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │ [12:55] [6] [irc/freenode] 4:#abc(+n){2}   │
+│[@Flashy] hi peter!█                        │ [@Flashy]                                  │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ window #1
+                  (buffer #3)
+........................................
+
+[[notify_levels]]
+Notify levels
+~~~~~~~~~~~~~
+
+Four levels are possible in messages displayed in buffers, from lower to higher:
+
+* 'low': message with low importance (for example irc join/part/quit)
+* 'message': message from a user
+* 'private': message in a private buffer
+* 'highlight': message with highlight
+
+Each buffer has a notify level, which is used to decide what messages will add
+buffer in hotlist.
+
+The default notify level can be set using option
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+default is 'all'.
+
+[width="50%",cols="3m,10",options="header"]
+|========================================
+| Notify level | Level of messages added to hotlist
+| none         | (none)
+| highlight    | 'highlight' + 'private'
+| message      | 'highlight' + 'private' + 'message'
+| all          | 'highlight' + 'private' + 'message' + 'low'
+|========================================
+
+Notify level can be defined for a set of buffers, for example all buffers of
+irc server "freenode":
+
+----------------------------------------
+/set weechat.notify.irc.freenode message
+----------------------------------------
+
+Set notify level 'highlight' on channel "#weechat" only:
+
+----------------------------------------
+/set weechat.notify.irc.freenode.#weechat highlight
+----------------------------------------
 
 [[key_bindings]]
 Default key bindings

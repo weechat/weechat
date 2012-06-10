@@ -367,28 +367,29 @@ Exemple de terminal avec WeeChat :
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Bienvenue sur #test, canal de test                                                       │
-│12:52:27    --> | flashy (n=flashcod@hellix.flashtux.org) a rejoint #test     │@ChanServ │
-│12:52:27     -- | Pseudos #test: [@ChanServ @flashy +_FlashB0t joe mike]      │@flashy   │
-│12:52:27     -- | Canal #test: 5 pseudos (2 ops, 0 halfop, 1 voice, 2 normal) │+_FlashB0t│
-│12:52:27     -- | Canal créé le Tue Jan 27 06:30:17 2009                      │joe       │
-│12:54:15 flashy | bonjour !                                                   │mike      │
-│12:55:01    joe | salut flashy !                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│                                                                              │          │
-│[12:55] [6] [irc/freenode] 3:#test(+n){5}* [Act: 4:#abc(2,5), 6]                         │
-│[flashy] salut joe !█                                                                    │
+│Bienvenue sur #test, canal de test                                                       │ ◀ barre "title"
+│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #test                  │@Flashy│
+│12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot]                           │@joe   │
+│12:52:27    -- | Canal #test: 4 pseudos (2 ops, 0 halfop, 1 voice, 1 normal)     │+weebot│
+│12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009                          │peter  │
+│12:54:15 peter | bonjour !                                                       │       │
+│12:55:01  @joe | salut                                                           │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ discussion + barre "nicklist"
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ barre "status"
+│[@Flashy] salut peter !█                                                                 │ ◀ barre "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -415,7 +416,7 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_plugin         | [irc/freenode]        | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
 | buffer_number         | 3                     | numéro du tampon courant
 | buffer_name           | #test(+n)             | nom du tampon courant (avec les modes du canal pour les canaux irc)
-| buffer_nicklist_count | {5}                   | nombre de pseudos dans la liste des pseudos
+| buffer_nicklist_count | {4}                   | nombre de pseudos dans la liste des pseudos
 | buffer_filter         | *                     | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
 | lag                   | [Lag: 2.5]            | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
 | hotlist               | [Act: 4:#abc(2,5), 6] | liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le buffer numéro 6)
@@ -429,11 +430,167 @@ La barre 'input' contient les objets (items) suivants par défaut :
 |========================================
 | Objet (item)     | Exemple                                       | Description
 | input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
-| input_prompt     | [flashy]                                      | prompt (pseudo pour l'extension irc)
+| input_prompt     | [@Flashy]                                     | prompt (pseudo pour l'extension irc)
 | away             | (absent)                                      | indicateur d'absence
 | input_search     | [Recherche texte]                             | indicateur de recherche de texte
-| input_text       | salut joe !                                   | texte entré
+| input_text       | salut peter !                                 | texte entré
 |========================================
+
+[[buffers_and_windows]]
+Tampons et fenêtres
+~~~~~~~~~~~~~~~~~~~
+
+Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
+(ainsi que d'autres données).
+
+Exemples de tampons :
+
+* tampon core (créé par WeeChat au démarrage, ne peut pas être fermé)
+* serveur irc (affiche les messages du serveur)
+* canal irc
+* privé irc
+
+Une fenêtre ('window') est une zone de l'écran affichant un tampon. Il est
+possible de découper l'écran horizontalement ou verticalement en plusieurs
+fenêtres.
+
+Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
+aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
+
+Exemple de découpage horizontal (`/window splith`) :
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Bienvenue sur #abc, canal sur rien !                                                     │
+│12:55:12     Max | bonjour                                                       │@Flashy│
+│12:55:20 @Flashy | salut Max !                                                   │Max    │
+│12:55:32     Max | ça va bien ?                                                  │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ fenêtre n°2
+│                                                                                 │       │   (tampon n°4)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                                 │
+│[@Flashy]                                                                                │
+│─────────────────────────────────────────────────────────────────────────────────────────│
+│Bienvenue sur #test, canal de test                                                       │
+│12:54:15 peter | ohé !                                                           │@Flashy│
+│12:55:01  @joe | salut                                                           │@joe   │
+│                                                                                 │+weebot│
+│                                                                                 │peter  │
+│                                                                                 │       │ ◀ fenêtre n°1
+│                                                                                 │       │   (tampon n°3)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                                │
+│[@Flashy] salut peter!█                                                                  │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Exemple de découpage vertical (`/window splitv`) :
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Bienvenue sur #test, canal de test          │Bienvenue sur #abc, canal sur rien !        │
+│12:54:15 peter | ohé !              │@Flashy│12:55:12     Max | bonjour          │@Flashy│
+│12:55:01  @joe | salut              │@joe   │12:55:20 @Flashy | salut Max !      │Max    │
+│                                    │+weebot│12:55:32     Max | ça va bien ?     │       │
+│                                    │peter  │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │[12:55] [6] [irc/freenode] 4:#abc(+n){2}    │
+│[@Flashy] salut peter!█                     │[@Flashy]                                   │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ fenêtre n°1                                ▲ fenêtre n°2
+                  (tampon n°3)                                 (tampon n°4)
+........................................
+
+Exemple de découpage vertical + horizontal :
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Bienvenue sur #test, canal de test          │Bienvenue sur #def, autre canal             │
+│12:54:15 peter | ohé !              │@Flashy│12:55:42 @Flashy | salut le monde   │@Flashy│
+│12:55:01  @joe | salut              │@joe   │12:55:56    alex | salut Flashy     │alex   │
+│                                    │+weebot│                                    │       │
+│                                    │peter  │                                    │       │ ◀ fenêtre n°3
+│                                    │       │                                    │       │   (tampon n°5)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │[12:55] [6] [irc/freenode] 5:#def(+n){2}    │
+│                                    │       │[@Flashy]                                   │
+│                                    │       │────────────────────────────────────────────│
+│                                    │       │Bienvenue sur #abc, canal sur rien !        │
+│                                    │       │12:55:12     Max | bonjour          │@Flashy│
+│                                    │       │12:55:20 @Flashy | salut Max !      │Max    │
+│                                    │       │12:55:32     Max | ça va bien ?     │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │ ◀ fenêtre n°2
+│                                    │       │                                    │       │   (tampon n°4)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │ [12:55] [6] [irc/freenode] 4:#abc(+n){2}   │
+│[@Flashy] salut peter !█                    │ [@Flashy]                                  │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ fenêtre n°1
+                  (tampon n°3)
+........................................
+
+[[notify_levels]]
+Niveaux de notification
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Quatre niveaux sont possibles dans les messages affichés dans les tampons, du
+moins important au plus important :
+
+* 'low' : message avec faible importance (par exemple un join/part/quit irc)
+* 'message' : message d'un utilisateur
+* 'private' : message dans un tampon privé
+* 'highlight' : message avec highlight
+
+Chaque tampon a un niveau de notification, qui est utilisé pour décider quels
+messages ajouteront le tampon dans la hotlist.
+
+Le niveau de notification par défaut peut être défini avec l'option
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+la valeur par défaut est 'all'.
+
+[width="50%",cols="3m,10",options="header"]
+|========================================
+| Niveau de notification | Niveau des messages ajoutés à la hotlist
+| none                   | (aucun)
+| highlight              | 'highlight' + 'private'
+| message                | 'highlight' + 'private' + 'message'
+| all                    | 'highlight' + 'private' + 'message' + 'low'
+|========================================
+
+Le niveau de notification peut être défini pour un ensemble de tampons, par
+exemple tous les tampons du serveur irc "freenode" :
+
+----------------------------------------
+/set weechat.notify.irc.freenode message
+----------------------------------------
+
+Définir le niveau de notification 'highlight' sur le canal "#weechat" seulement :
+
+----------------------------------------
+/set weechat.notify.irc.freenode.#weechat highlight
+----------------------------------------
 
 [[key_bindings]]
 Raccourcis clavier par défaut
