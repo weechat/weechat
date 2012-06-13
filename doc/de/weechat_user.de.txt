@@ -595,6 +595,13 @@ Set notify level 'highlight' on channel "#weechat" only:
 /set weechat.notify.irc.freenode.#weechat highlight
 ----------------------------------------
 
+// TRANSLATION MISSING
+The notify level for a buffer can be set with command `/buffer`:
+
+----------------------------------------
+/buffer notify highlight
+----------------------------------------
+
 [[key_bindings]]
 Standard Tastenbelegung
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -592,6 +592,13 @@ Définir le niveau de notification 'highlight' sur le canal "#weechat" seulement
 /set weechat.notify.irc.freenode.#weechat highlight
 ----------------------------------------
 
+Le niveau de notification pour un tampon peut aussi être défini avec la
+commande `/buffer` :
+
+----------------------------------------
+/buffer notify highlight
+----------------------------------------
+
 [[key_bindings]]
 Raccourcis clavier par défaut
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
