@@ -1556,13 +1556,13 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
             if (tree->split_horizontal)
             {
                 separator = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)) ? 1 : 0;
-                size1 = (height * tree->split_pct) / 100;
+                size1 = ((height - separator) * tree->split_pct) / 100;
                 size2 = height - size1 - separator;
-                if (gui_window_auto_resize (tree->child1, x, y + size2 + separator,
-                                            width, size1, simulate) < 0)
+                if (gui_window_auto_resize (tree->child1, x, y + size1 + separator,
+                                            width, size2, simulate) < 0)
                     return -1;
                 if (gui_window_auto_resize (tree->child2, x, y,
-                                            width, size2, simulate) < 0)
+                                            width, size1, simulate) < 0)
                     return -1;
             }
             else
@@ -1660,7 +1660,7 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
 
     separator = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)) ? 1 : 0;
 
-    height1 = (window->win_height * percentage) / 100;
+    height1 = ((window->win_height - separator) * percentage) / 100;
     height2 = window->win_height - height1 - separator;
 
     if ((height1 >= 2) && (height2 >= 2)
@@ -1670,13 +1670,13 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
                                      window->win_x,
                                      window->win_y,
                                      window->win_width,
-                                     height2,
+                                     height1,
                                      100, percentage);
         if (new_window)
         {
             /* reduce old window height (bottom window) */
-            window->win_y = new_window->win_y + new_window->win_height + separator;
-            window->win_height = height1;
+            window->win_y = new_window->win_y + new_window->win_height;
+            window->win_height = height2;
             window->win_height_pct = 100 - percentage;
 
             /* assign same buffer for new window (top window) */
