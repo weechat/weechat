@@ -144,7 +144,7 @@ Version 0.3.1.1 (2010-01-31)
 
 This version fixes crashs with SSL connection and purge of old DCC chats.
 
-All users of version 0.2.2 should upgrade to this version.
+All users of version 0.3.1 should upgrade to this version.
 
 Version 0.3.1 (2010-01-23)
 --------------------------
