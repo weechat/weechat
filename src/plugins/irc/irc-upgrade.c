@@ -240,6 +240,7 @@ irc_upgrade_set_buffer_callbacks ()
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
+    const char *type;
 
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
@@ -251,6 +252,12 @@ irc_upgrade_set_buffer_callbacks ()
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
                 weechat_buffer_set_pointer (ptr_buffer, "close_callback", &irc_buffer_close_cb);
                 weechat_buffer_set_pointer (ptr_buffer, "input_callback", &irc_input_data_cb);
+                type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
+                if (type && (strcmp (type, "channel") == 0))
+                {
+                    weechat_buffer_set_pointer (ptr_buffer, "nickcmp_callback",
+                                                &irc_buffer_nickcmp_cb);
+                }
                 if (strcmp (weechat_infolist_string (infolist, "name"),
                             IRC_RAW_BUFFER_NAME) == 0)
                 {

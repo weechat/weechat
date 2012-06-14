@@ -161,6 +161,29 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
+ * irc_buffer_nickcmp_cb: callback for comparing nick in nicklist
+ *                        (called when searching a nick in nicklist)
+ *                        Return (according to casemapping of irc server):
+ *                           0 if nick1 == nick2
+ *                          -1 if nick1 < nick2
+ *                          +1 if nick1 > nick2
+ */
+
+int
+irc_buffer_nickcmp_cb (void *data,
+                       struct t_gui_buffer *buffer,
+                       const char *nick1,
+                       const char *nick2)
+{
+    IRC_BUFFER_GET_SERVER(buffer);
+
+    /* make C compiler happy */
+    (void) data;
+
+    return irc_server_strcasecmp (ptr_server, nick1, nick2);
+}
+
+/*
  * irc_buffer_search_first_for_all_servers: search first server buffer that
  *                                          will be used to merge all IRC
  *                                          server buffers

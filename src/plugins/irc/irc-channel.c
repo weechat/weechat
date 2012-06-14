@@ -226,6 +226,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         {
             weechat_buffer_set (new_buffer, "nicklist", "1");
             weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
+            weechat_buffer_set_pointer (new_buffer, "nickcmp_callback",
+                                        &irc_buffer_nickcmp_cb);
         }
 
         /* set highlights settings on channel buffer */
