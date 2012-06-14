@@ -7,6 +7,8 @@ v0.3.9-dev, 2012-06-14
 Version 0.3.9 (under dev!)
 --------------------------
 
+Important release notes:
+
 * an horizontal separator has been added between split windows, and two options
   have been added to toggle separators (both are enabled by default):
 ** 'weechat.look.window_separator_horizontal'
