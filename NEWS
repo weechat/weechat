@@ -1,29 +1,33 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-06-03
+v0.3.9-dev, 2012-06-14
 
 
 Version 0.3.9 (under dev!)
 --------------------------
 
-No release note.
+* an horizontal separator has been added between split windows, and two options
+  have been added to toggle separators (both are enabled by default):
+** 'weechat.look.window_separator_horizontal'
+** 'weechat.look.window_separator_vertical'
 
 Version 0.3.8 (2012-06-03)
 --------------------------
 
 Important release notes:
 
-* options weechat.look.prefix_align_more and weechat.look.prefix_buffer_align_more
-  have been converted from type boolean to string:
+* options 'weechat.look.prefix_align_more' and
+  'weechat.look.prefix_buffer_align_more' have been converted from type boolean
+  to string:
 ** if the value was on (default), new value is "+" and you can now customize
    this char
 ** if the value was off, you have to set " " (string with one space)
-* option weechat.look.paste_max_lines can now be used with value 0 to detect
+* option 'weechat.look.paste_max_lines' can now be used with value 0 to detect
   paste with one line (only if terminal "bracketed paste mode" is enabled when
   option 'weechat.look.paste_bracketed' is on); so now the value -1 is used
   to disable paste detection: if your value was 0, you should set it to -1:
-** `weechat.look.paste_max_lines -1`
+** `/set weechat.look.paste_max_lines -1`
 * rmodifier "nickserv" has a new default regex which includes option "release"
   for command "/msg nickserv". If you never added/changed rmodifiers, you can
   just reset all rmodifiers (command: `/rmodifier default -yes`).
