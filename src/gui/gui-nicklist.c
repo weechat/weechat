@@ -345,8 +345,19 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (strcmp (ptr_nick->name, name) == 0)
-            return ptr_nick;
+        if (buffer->nickcmp_callback)
+        {
+            if ((buffer->nickcmp_callback) (buffer->nickcmp_callback_data,
+                                            buffer,
+                                            ptr_nick->name,
+                                            name) == 0)
+                return ptr_nick;
+        }
+        else
+        {
+            if (strcmp (ptr_nick->name, name) == 0)
+                return ptr_nick;
+        }
     }
 
     /* search nick in child groups */

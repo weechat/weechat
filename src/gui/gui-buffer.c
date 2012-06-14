@@ -494,6 +494,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->nicklist_max_length = 0;
         new_buffer->nicklist_display_groups = 1;
         new_buffer->nicklist_visible_count = 0;
+        new_buffer->nickcmp_callback = NULL;
+        new_buffer->nickcmp_callback_data = NULL;
         gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
 
         /* input */
@@ -1677,6 +1679,14 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "close_callback_data") == 0)
     {
         buffer->close_callback_data = pointer;
+    }
+    else if (string_strcasecmp (property, "nickcmp_callback") == 0)
+    {
+        buffer->nickcmp_callback = pointer;
+    }
+    else if (string_strcasecmp (property, "nickcmp_callback_data") == 0)
+    {
+        buffer->nickcmp_callback_data = pointer;
     }
     else if (string_strcasecmp (property, "input_callback") == 0)
     {
@@ -3114,6 +3124,8 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, nicklist_max_length, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_display_groups, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nickcmp_callback, POINTER, NULL);
+        HDATA_VAR(struct t_gui_buffer, nickcmp_callback_data, POINTER, NULL);
         HDATA_VAR(struct t_gui_buffer, input, INTEGER, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback, POINTER, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER, NULL);
@@ -3464,6 +3476,8 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_max_length . . : %d",    ptr_buffer->nicklist_max_length);
         log_printf ("  nicklist_display_groups : %d",    ptr_buffer->nicklist_display_groups);
         log_printf ("  nicklist_visible_count. : %d",    ptr_buffer->nicklist_visible_count);
+        log_printf ("  nickcmp_callback. . . . : 0x%lx", ptr_buffer->nickcmp_callback);
+        log_printf ("  nickcmp_callback_data . : 0x%lx", ptr_buffer->nickcmp_callback_data);
         log_printf ("  input . . . . . . . . . : %d",    ptr_buffer->input);
         log_printf ("  input_callback. . . . . : 0x%lx", ptr_buffer->input_callback);
         log_printf ("  input_callback_data . . : 0x%lx", ptr_buffer->input_callback_data);

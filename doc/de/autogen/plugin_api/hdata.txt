@@ -252,6 +252,8 @@
   'nicklist_max_length' (integer) +
   'nicklist_display_groups' (integer) +
   'nicklist_visible_count' (integer) +
+  'nickcmp_callback' (pointer) +
+  'nickcmp_callback_data' (pointer) +
   'input' (integer) +
   'input_callback' (pointer) +
   'input_callback_data' (pointer) +

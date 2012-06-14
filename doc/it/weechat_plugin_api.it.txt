@@ -9958,6 +9958,24 @@ Argomenti:
 ** 'close_callback_data': set close callback data
 ** 'input_callback': set input callback function
 ** 'input_callback_data': set input callback data
+// TRANSLATION MISSING
+** 'nickcmp_callback': set nick comparison callback function (this callback is
+   called when searching nick in nicklist) (_novità nella versione 0.3.9_)
+// TRANSLATION MISSING
+** 'nickcmp_callback_data': set nick comparison callback data
+   (_novità nella versione 0.3.9_)
+
+// TRANSLATION MISSING
+Prototypes for callbacks:
+
+[source,C]
+----------------------------------------
+int close_callback (void *data, struct t_gui_buffer *buffer);
+
+int input_callback (void *data, struct t_gui_buffer *buffer, const char *input_data);
+
+int nickcmp_callback (void *data, struct t_gui_buffer *buffer, const char *nick1, const char *nick2);
+----------------------------------------
 
 Esempio in C:
 
