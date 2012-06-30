@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 22:58+0200\n"
+"POT-Creation-Date: 2012-06-30 14:13+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5141,6 +5141,11 @@ msgstr "helyi idő lekérdezése a szerverről"
 #, fuzzy
 msgid "use same nick color for channel and private"
 msgstr "másik fél nevének színe privát beszélgetésben"
+
+msgid ""
+"time format used in answer to message CTCP TIME (see man strftime for date/"
+"time specifiers)"
+msgstr ""
 
 #, fuzzy
 msgid "merge server buffers"

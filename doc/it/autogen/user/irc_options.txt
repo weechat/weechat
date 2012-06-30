@@ -103,6 +103,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
+** descrizione: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T %z"`)
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** descrizione: `visualizza messaggio al cambio dello stato di assenza`
 ** tipo: intero

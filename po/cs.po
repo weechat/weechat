@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-10 22:58+0200\n"
+"POT-Creation-Date: 2012-06-30 14:13+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5546,6 +5546,14 @@ msgstr "použít barvu přezdívky ve zprávách ze serveru"
 
 msgid "use same nick color for channel and private"
 msgstr "použít stejnou barvu přezdívky pro kanál a soukromý rozhovor"
+
+#, fuzzy
+msgid ""
+"time format used in answer to message CTCP TIME (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
+"data/času)"
 
 msgid "merge server buffers"
 msgstr "spojit buffery serverů"

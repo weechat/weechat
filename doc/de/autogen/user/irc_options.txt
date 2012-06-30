@@ -103,6 +103,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
+** Beschreibung: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T %z"`)
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** Beschreibung: `bei Abwesenheit und Rückkehr eine Nachricht anzeigen`
 ** Typ: integer

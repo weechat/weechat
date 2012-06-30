@@ -103,6 +103,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
+** description: `format de date/heure utilisé pour la réponse au message CTCP TIME (voir man strftime pour le format de date/heure)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T %z"`)
+
 * [[option_irc.look.display_away]] *irc.look.display_away*
 ** description: `affiche un message pour l'absence/le retour`
 ** type: entier

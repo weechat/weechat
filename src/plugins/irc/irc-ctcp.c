@@ -27,6 +27,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
+#include <locale.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -330,6 +331,7 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     char *res, *temp;
     const char *info;
     time_t now;
+    struct tm *local_time;
     char buf[1024];
     struct utsname *buf_uname;
 
@@ -390,8 +392,12 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 
     /* time */
     now = time (NULL);
-    snprintf (buf, sizeof (buf), "%s", ctime (&now));
-    buf[strlen (buf) - 1] = '\0';
+    local_time = localtime (&now);
+    setlocale (LC_ALL, "C");
+    strftime (buf, sizeof (buf),
+              weechat_config_string (irc_config_look_ctcp_time_format),
+              local_time);
+    setlocale (LC_ALL, "");
     temp = weechat_string_replace (res, "$time", buf);
     free (res);
     if (!temp)

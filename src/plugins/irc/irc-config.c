@@ -56,6 +56,7 @@ struct t_config_option *irc_config_look_color_nicks_in_names;
 struct t_config_option *irc_config_look_color_nicks_in_nicklist;
 struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
+struct t_config_option *irc_config_look_ctcp_time_format;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
@@ -2049,6 +2050,12 @@ irc_config_init ()
         N_("use same nick color for channel and private"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
+    irc_config_look_ctcp_time_format = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "ctcp_time_format", "string",
+        N_("time format used in answer to message CTCP TIME (see man strftime "
+           "for date/time specifiers)"),
+        NULL, 0, 0, "%a, %d %b %Y %T %z", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
         "server_buffer", "integer",

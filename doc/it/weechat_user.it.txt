@@ -1741,7 +1741,7 @@ automaticamente da WeeChat quando si risponde alle CTCP
 | $osinfo      | informazioni sull'OS                | Linux 2.6.31 / i686
 | $site        | sito di WeeChat                     | http://www.weechat.org
 | $download    | sito di WeeChat, pagina di download | http://www.weechat.org/download
-| $time        | data/ora correnti                   | Sun Sep 13 15:48:31 2009
+| $time        | data/ora correnti                   | Sun, 13 Sep 2009 15:48:31 +0200
 | $username    | nome utente sul server IRC          | nick
 | $realname    | nome reale sul server IRC           | Mio nome
 |=======================================

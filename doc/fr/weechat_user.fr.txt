@@ -1742,7 +1742,7 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 | $osinfo      | information sur l'OS              | Linux 2.6.31 / i686
 | $site        | site WeeChat                      | http://www.weechat.org
 | $download    | site WeeChat, page téléchargement | http://www.weechat.org/download
-| $time        | date/heure courante               | Sun Sep 13 15:48:31 2009
+| $time        | date/heure courante               | Sun, 13 Sep 2009 15:48:31 +0200
 | $username    | nom d'utilisateur sur le serveur  | pseudo
 | $realname    | nom réel sur le serveur           | Mon nom
 |========================================
