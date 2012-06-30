@@ -85,8 +85,8 @@ Core
 
 WeeChat "core" reside in following directories:
 
-* 'src/core': core functions (for data manipulation)
-* 'src/gui': functions about interface (buffers, windows, ...)
+* 'src/core/': core functions (for data manipulation)
+* 'src/gui/': functions about interface (buffers, windows, ...)
 
 [width="100%",cols="1l,5",options="header"]
 |========================================
@@ -932,7 +932,36 @@ Git repository
 Git repository is at this URL: http://git.savannah.gnu.org/gitweb/?p=weechat.git
 
 Any patch for bug or new feature must be done on master branch, preferred format
-is a patch made with `git diff` or `git-format-patch`, sent by e-mail.
+is a patch made with `git diff` or `git format-patch`, sent by e-mail.
+
+Format of commit message is the following:
+
+----------------------------------------
+component: fix a problem (bug #12345)
+----------------------------------------
+
+Where 'component' is one of following:
+
+* WeeChat core: 'core' (files in directory 'src/' except doc and plugins)
+* documentation files: 'doc' (files in directory 'doc/')
+* name of a plugin: 'irc', 'python', 'relay', ... (files in directory 'src/plugins/')
+
+Some rules to follow:
+
+* use only english
+* use infinitive form of verb
+* if commit is related to something in tracker (bug, task, patch), write it
+  in parenthesis after the message (format: bug #12345, task #12345, patch #12345)
+
+Examples of commit messages:
+
+----------------------------------------
+core: add callback "nickcmp" for nick comparison in buffers
+irc: fix freeze when reading on socket with SSL enabled (bug #35097)
+ruby: add detection of ruby version 1.9.3 in cmake
+python: fix crash when unloading a script without pointer to interpreter
+core: update japanese translations (patch #7783)
+----------------------------------------
 
 [[translations]]
 Translations
