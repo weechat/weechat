@@ -826,9 +826,9 @@ einen Tastenkurzbefehl zu legen. Zum Beispiel soll über den Tastenkurzbefehl
 /key bind meta-x /mouse toggle 10
 ----------------------------------------
 
-Ist die Mausunterstützung aktiviert kann man mittels gedrückter "Shift"-Taste (Umschalttaste)
+Ist die Mausunterstützung aktiviert kann man mittels gedrückter @k(-S-)-Taste (Umschalttaste)
 Text im Terminal markieren oder einfügen, als ob die Mausunterstützung deaktiviert sei (bei
-einigen Terminals muss die "Alt"-Taste anstelle der "Shift"-Taste gedrückt werden.
+einigen Terminals muss die @k(-A-)-Taste anstelle der @k(-S-)-Taste gedrückt werden).
 
 [NOTE]
 Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die 'WeeChat FAQ' gelesen werden.

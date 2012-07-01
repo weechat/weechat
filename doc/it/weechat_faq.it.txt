@@ -494,6 +494,17 @@ Bisogna utilizzare un terminale che supporti le coordinate UTF-8 per il mouse,
 come rxvt-unicode.
 
 
+// TRANSLATION MISSING
+[[mouse_select_paste]]
+How can I select or paste text in terminal when mouse is enabled in WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
+@k(-S-) per selezionare o cliccare nel terminale, come se il mouse fosse
+disabilitato (in alcuni terminali come iTerm, bisogna usare @k(-A-) invece di
+@k(-S-)).
+
+
 [[irc]]
 IRC
 ---

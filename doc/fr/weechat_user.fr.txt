@@ -826,9 +826,9 @@ secondes :
 ----------------------------------------
 
 Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
-"shift" pour sélectionner ou cliquer dans le terminal, comme si la souris était
-désactivée (sous certains terminaux comme iTerm, vous devez utiliser "alt" au
-lieu de "shift").
+@k(-S-) pour sélectionner ou cliquer dans le terminal, comme si la souris était
+désactivée (sous certains terminaux comme iTerm, vous devez utiliser @k(-A-) au
+lieu de @k(-S-)).
 
 [NOTE]
 Pour tout problème avec la souris, merci de consulter la 'FAQ WeeChat'.

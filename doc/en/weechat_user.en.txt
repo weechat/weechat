@@ -809,9 +809,9 @@ key @k(A-)@k(x) to disable mouse for 10 seconds:
 /key bind meta-x /mouse toggle 10
 ----------------------------------------
 
-When mouse is enabled in WeeChat, you can use "shift" modifier to select or
+When mouse is enabled in WeeChat, you can use @k(-S-) modifier to select or
 click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use "alt" instead of "shift").
+you have to use @k(-A-) instead of @k(-S-)).
 
 [NOTE]
 For any problem with mouse, please look at 'WeeChat FAQ'.

@@ -500,6 +500,16 @@ Dann muss man einen Terminl nutzen der eine Unterstützung von UTF-8 Koordinaten
 bietet, zum Beispiel rxvt-unicode.
 
 
+// TRANSLATION MISSING
+[[mouse_select_paste]]
+How can I select or paste text in terminal when mouse is enabled in WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ist die Mausunterstützung aktiviert kann man mittels gedrückter @k(-S-)-Taste (Umschalttaste)
+Text im Terminal markieren oder einfügen, als ob die Mausunterstützung deaktiviert sei (bei
+einigen Terminals muss die @k(-A-)-Taste anstelle der @k(-S-)-Taste gedrückt werden).
+
+
 [[irc]]
 IRC
 ---

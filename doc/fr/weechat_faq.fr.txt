@@ -497,6 +497,16 @@ Vous devriez utiliser un terminal qui supporte les coordonnées UTF-8 pour la
 souris, comme rxvt-unicode.
 
 
+[[mouse_select_paste]]
+Comment puis-je sélectionner ou coller du texte quand la souris est activée dans WeeChat ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
+@k(-S-) pour sélectionner ou cliquer dans le terminal, comme si la souris était
+désactivée (sous certains terminaux comme iTerm, vous devez utiliser @k(-A-) au
+lieu de @k(-S-)).
+
+
 [[irc]]
 IRC
 ---
