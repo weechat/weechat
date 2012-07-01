@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-06-30
+v0.3.9-dev, 2012-07-01
 
 
 Version 0.3.9 (under dev!)
@@ -18,6 +18,8 @@ Version 0.3.9 (under dev!)
   (bug #36584)
 * guile: fix crash when unloading a script without pointer to interpreter
 * guile: fix path of guile include dirs in cmake build (patch #7790)
+* irc: fix parsing of user modes (ignore everything after first space)
+  (bug #36756)
 * irc: add option irc.look.ctcp_time_format to customize reply to CTCP TIME
   (task #12150)
 * irc: fix freeze when reading on socket with SSL enabled (bug #35097)

@@ -473,6 +473,7 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
                    int reset_modes)
 {
     char set_flag;
+    int end;
 
     if (reset_modes)
     {
@@ -483,12 +484,15 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
         }
     }
     set_flag = '+';
+    end = 0;
     while (modes && modes[0])
     {
         switch (modes[0])
         {
-            case ':':
             case ' ':
+                end = 1;
+                break;
+            case ':':
                 break;
             case '+':
                 set_flag = '+';
@@ -503,6 +507,8 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
                     irc_mode_user_remove (server, modes[0]);
                 break;
         }
+        if (end)
+            break;
         modes++;
     }
     weechat_bar_item_update ("input_prompt");
