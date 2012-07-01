@@ -273,9 +273,11 @@ Plugins
 |       xfer-upgrade.c              | Save/restore xfer data when upgrading WeeChat
 |========================================
 
-[[documentation]]
-Documentation
-~~~~~~~~~~~~~
+[[documentation_translations]]
+Documentation / translations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation files:
 
 [width="100%",cols="1l,5",options="header"]
 |========================================
@@ -298,10 +300,6 @@ Documentation
 |          user/                      | Files auto-built for user's guide
 |          plugin_api/                | Files auto-built for plugin API
 |========================================
-
-[[translations]]
-Translations
-~~~~~~~~~~~~
 
 Translations for WeeChat and plugins are done with gettext, files are in 'po/' directory:
 
