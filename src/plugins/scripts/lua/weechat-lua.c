@@ -261,7 +261,7 @@ weechat_lua_load (const char *filename)
     lua_current_script = NULL;
     lua_registered_script = NULL;
 
-    lua_current_interpreter = lua_open ();
+    lua_current_interpreter = luaL_newstate();
 
     if (lua_current_interpreter == NULL)
     {
