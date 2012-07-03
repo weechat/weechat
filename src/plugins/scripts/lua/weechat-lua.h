@@ -44,5 +44,7 @@ extern struct t_hashtable *weechat_lua_tohashtable (lua_State *interpreter,
 extern void *weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                                const char *function,
                                const char *format, void **argv);
+extern void weechat_lua_register_lib(lua_State *L, const char *libname,
+                                     const luaL_Reg *l);
 
 #endif /* __WEECHAT_LUA_H */

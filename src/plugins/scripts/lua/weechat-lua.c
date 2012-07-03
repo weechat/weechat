@@ -226,6 +226,28 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
 }
 
 /*
+ * weechat_lua_register_lib: register a library to use inside Lua script
+ */
+
+void weechat_lua_register_lib (lua_State *L, const char *libname,
+                               const luaL_Reg *l)
+{
+#if LUA_VERSION_NUM >= 502
+    if (libname)
+    {
+        lua_newtable (L);
+        luaL_setfuncs (L, l, 0);
+        lua_pushvalue (L, -1);
+        lua_setglobal (L, libname);
+    }
+    else
+        luaL_setfuncs (L, l, 0);
+#else
+    luaL_register (L, libname, l);
+#endif
+}
+
+/*
  * weechat_lua_load: load a Lua script
  */
 
@@ -284,7 +306,7 @@ weechat_lua_load (const char *filename)
     luaopen_debug (lua_current_interpreter);
 #endif
 
-    luaL_openlib (lua_current_interpreter, "weechat", weechat_lua_api_funcs, 0);
+    weechat_lua_register_lib (lua_current_interpreter, "weechat", weechat_lua_api_funcs);
 
 #ifdef LUA_VERSION_NUM
     if (luaL_dostring (lua_current_interpreter, weechat_lua_code) != 0)
