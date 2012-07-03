@@ -6186,7 +6186,7 @@ weechat_lua_api_constant_weechat_hook_signal_pointer (lua_State *L)
  * Lua subroutines
  */
 
-const struct luaL_reg weechat_lua_api_funcs[] = {
+const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(register),
     API_DEF_FUNC(plugin_get_name),
     API_DEF_FUNC(charset_set),
