@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-01
+v0.3.9-dev, 2012-07-03
 
 
 Version 0.3.9 (under dev!)
@@ -24,6 +24,7 @@ Version 0.3.9 (under dev!)
   (task #12150)
 * irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 * irc: reallow names beginning with "#" for servers
+* lua: support of lua 5.2
 * lua: fix crash when unloading a script without pointer to interpreter
 * python: fix crash when unloading a script without pointer to interpreter
 * ruby: detect ruby version 1.9.3 in cmake and autotools
