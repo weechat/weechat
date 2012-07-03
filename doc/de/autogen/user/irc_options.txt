@@ -104,7 +104,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
-** Beschreibung: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** Beschreibung: `Format für die Zeitanzeige die bei einer CTCP TIME Anfrage zurückgesendet wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T %z"`)
 

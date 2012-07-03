@@ -64,17 +64,17 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** Beschreibung: `text color for offline nick (not in nicklist any more)`
+** Beschreibung: `Textfarbe für Nicks im Buffer die Offline sind (dies betrifft Nicks, die nicht in der Nickliste vorhanden sind!)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** Beschreibung: `text color for offline nick with highlight`
+** Beschreibung: `Textfarbe für Highlight Nachrichten von Nicks die nicht mehr Online sind`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** Beschreibung: `background color for offline nick with highlight`
+** Beschreibung: `Hintergrundfarbe für Highlight Nachrichten von Nicks die nicht mehr Online sind`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
@@ -389,7 +389,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** Beschreibung: `Format für die Zeitanzeige welche in jeder Zeile eines Buffers dargestellt wird (siehe man strftime für Datum/Zeit Platzhalter). Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen, zum Beispiel eine französische Uhr: "${lightblue}%H${white}%M${lightred}%S"`
+** Beschreibung: `Format für die Zeitanzeige welche in jeder Zeile eines Buffers dargestellt wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit). Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen, zum Beispiel eine französische Uhr: "${lightblue}%H${white}%M${lightred}%S"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
@@ -429,7 +429,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** Beschreibung: `use a different color for offline nicks (not in nicklist any more)`
+** Beschreibung: `Nicks die Offline sind werden im Buffer in einer anderen Farbe dargestellt (dies betrifft Nicks, die nicht in der Nickliste vorhanden sind!)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -564,7 +564,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** Beschreibung: `Format für die Zeitanzeige, "time", in der Bar-Item (siehe man strftime für Datum/Zeit Platzhalter)`
+** Beschreibung: `Format für die Zeitanzeige, "time", in der Bar-Item (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
 
@@ -729,12 +729,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** Beschreibung: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** Beschreibung: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Wide Chars sind für diese Option NICHT erlaubt.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -749,12 +749,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
-** Beschreibung: `display an horizontal separator between windows`
+** Beschreibung: `ist die Option aktiviert dann wird eine horizontale Trennlinie zwischen Fenstern gezeichnet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
-** Beschreibung: `display a vertical separator between windows`
+** Beschreibung: `ist die Option aktiviert dann wird eine vertikale Trennlinie zwischen Fenstern gezeichnet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
