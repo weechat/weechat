@@ -180,8 +180,8 @@ Darüber hinaus ist es unter OS X ratsam WeeChat mittels des Homebrew package ma
 Ich habe von "Buffern" und "Fenstern" gehört - Worin besteht der Unterschied?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ein 'Buffer' besteht aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
-werden (und noch anderen Daten).
+Ein 'Buffer' besitzt einen Namen und es wird ihm eine 'Buffer'-Nummer zugeordnet.
+In einem 'Buffer' werden Textzeilen angezeigt (und noch anderen Daten).
 
 Ein 'Fenster' ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
@@ -500,14 +500,13 @@ Dann muss man einen Terminl nutzen der eine Unterstützung von UTF-8 Koordinaten
 bietet, zum Beispiel rxvt-unicode.
 
 
-// TRANSLATION MISSING
 [[mouse_select_paste]]
-How can I select or paste text in terminal when mouse is enabled in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich bei aktivierter Mausunterstützung im Terminal einen Text markieren oder einfügen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ist die Mausunterstützung aktiviert kann man mittels gedrückter @k(-S-)-Taste (Umschalttaste)
-Text im Terminal markieren oder einfügen, als ob die Mausunterstützung deaktiviert sei (bei
-einigen Terminals muss die @k(-A-)-Taste anstelle der @k(-S-)-Taste gedrückt werden).
+einen Text im Terminal markieren oder einfügen, als sei die Mausunterstützung deaktiviert.
+(bei einigen Terminals muss die @k(-A-)-Taste anstelle der @k(-S-)-Taste gedrückt werden).
 
 
 [[irc]]
