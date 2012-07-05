@@ -48,12 +48,17 @@ struct t_gui_buffer *aspell_buffer_spellers = NULL;
 char *aspell_last_modifier_string = NULL; /* last str. received by modifier */
 char *aspell_last_modifier_result = NULL; /* last str. built by modifier    */
 
-/* aspell supported langs (updated on of 2008-10-17) */
+/*
+ * aspell supported langs, updated on 2012-07-05
+ * URL: ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
+ */
+
 struct t_aspell_code aspell_langs_avail[] =
 {
     { "af",     "Afrikaans" },
     { "am",     "Amharic" },
     { "ar",     "Arabic" },
+    { "ast",    "Asturian" },
     { "az",     "Azerbaijani" },
     { "be",     "Belarusian" },
     { "bg",     "Bulgarian" },
@@ -79,6 +84,7 @@ struct t_aspell_code aspell_langs_avail[] =
     { "ga",     "Irish" },
     { "gd",     "Scottish Gaelic" },
     { "gl",     "Galician" },
+    { "grc",    "Ancient Greek" },
     { "gu",     "Gujarati" },
     { "gv",     "Manx Gaelic" },
     { "he",     "Hebrew" },
@@ -87,12 +93,15 @@ struct t_aspell_code aspell_langs_avail[] =
     { "hr",     "Croatian" },
     { "hsb",    "Upper Sorbian" },
     { "hu",     "Hungarian" },
+    { "hus",    "Huastec" },
     { "hy",     "Armenian" },
     { "ia",     "Interlingua" },
     { "id",     "Indonesian" },
     { "is",     "Icelandic" },
     { "it",     "Italian" },
+    { "kn",     "Kannada" },
     { "ku",     "Kurdi" },
+    { "ky",     "Kirghiz" },
     { "la",     "Latin" },
     { "lt",     "Lithuanian" },
     { "lv",     "Latvian" },
