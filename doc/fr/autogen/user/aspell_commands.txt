@@ -1,19 +1,26 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* configuration de l'extension aspell::
 ........................................
-/aspell  dictlist
-         enable <langue>
-         disable
+/aspell  enable|disable|toggle
+         listdict
+         setdict <langue>
+         deldict
          addword [<langue>] <mot>
 
-dictlist: afficher les dictionnaires installés
-  enable: activer aspell sur le tampon courant
- disable: désactiver aspell sur le tampon courant
+  enable: activer aspell
+ disable: désactiver aspell
+  toggle: activer/désactiver aspell
+listdict: afficher les dictionnaires installés
+ setdict: définir le dictionnaire pour le tampon courant
+ deldict: supprimer le dictionnaire utilisé sur le tampon courant
  addword: ajouter un mot dans le dictionnaire personnel aspell
 
 Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes (voir /set aspell.check.commands).
 
 Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par exemple :
   /set aspell.check.default_dict "en"
+  /aspell enable
+
+La touche par défaut pour activer/désactiver aspell est alt-s.
 ........................................
 

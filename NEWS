@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-06-14
+v0.3.9-dev, 2012-07-05
 
 
 Version 0.3.9 (under dev!)
@@ -9,10 +9,19 @@ Version 0.3.9 (under dev!)
 
 Important release notes:
 
+* changes in options for command `/aspell`:
+** new option `enable`: enable aspell
+** new option `disable`: disable aspell
+** new option `toggle`: toggle aspell
+** option `enable` renamed to `setdict` (set dictionary for current buffer)
+** option `disable` renamed to `deldict` (delete dictionary used on current buffer)
+** option `dictlist` renamed to `listdict` (show installed dictionaries)
 * an horizontal separator has been added between split windows, and two options
   have been added to toggle separators (both are enabled by default):
 ** 'weechat.look.window_separator_horizontal'
 ** 'weechat.look.window_separator_vertical'
+* new keys were added, use command `/key missing` to add them or `/key listdiff`
+  to see differences between your current keys and WeeChat default keys
 
 Version 0.3.8 (2012-06-03)
 --------------------------

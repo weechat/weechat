@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-06-30 14:13+0200\n"
+"POT-Creation-Date: 2012-07-05 15:54+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3691,6 +3691,32 @@ msgstr "%s: 単語 \"%s\" を個人辞書に追加"
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr "%s%s: 単語の個人辞書への登録に失敗"
 
+#, fuzzy
+msgid "Aspell is enabled"
+msgstr "マウスを有効化しました"
+
+#, fuzzy
+msgid "Aspell is disabled"
+msgstr "マウスを無効化しました"
+
+#, fuzzy, c-format
+msgid "Default dictionary: %s"
+msgstr "デフォルト色:"
+
+msgid "(not set)"
+msgstr ""
+
+msgid "Specific dictionaries on buffers:"
+msgstr ""
+
+#, fuzzy
+msgid "Aspell enabled"
+msgstr "マウスを有効化しました"
+
+#, fuzzy
+msgid "Aspell disabled"
+msgstr "マウスを無効化しました"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s: このバッファ上には単語を追加する辞書がありません"
@@ -3705,20 +3731,31 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "aspell プラグイン設定"
 
-msgid "dictlist || enable <lang> || disable || addword [<lang>] <word>"
+#, fuzzy
+msgid ""
+"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
+"[<lang>] <word>"
 msgstr "dictlist || enable <lang> || disable || addword [<lang>] <word>"
 
+#, fuzzy
 msgid ""
-"dictlist: show installed dictionaries\n"
-"  enable: enable aspell on current buffer\n"
-" disable: disable aspell on current buffer\n"
-" addword: add a word in your personal aspell dictionary\n"
+"  enable: enable aspell\n"
+" disable: disable aspell\n"
+"  toggle: toggle aspell\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands "
 "(see /set aspell.check.commands).\n"
 "\n"
-"To enable aspell on all buffers, use option \"default_dict\", for example:\n"
-"  /set aspell.check.default_dict \"en\""
+"To enable aspell on all buffers, use option \"default_dict\", then enable "
+"aspell, for example:\n"
+"  /set aspell.check.default_dict \"en\"\n"
+"  /aspell enable\n"
+"\n"
+"Default key to toggle aspell is alt-s."
 msgstr ""
 "dictlist: インストール済み辞書を表示\n"
 "  enable: 現在のバッファで aspell を有効化\n"
@@ -3774,6 +3811,10 @@ msgstr ""
 
 msgid "check words during text search in buffer"
 msgstr "バッファ内のテキスト検索中に単語チェックを行う"
+
+#, fuzzy
+msgid "enable aspell check for command line"
+msgstr "コマンドライン関数"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "

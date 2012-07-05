@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-03 11:33+0200\n"
+"POT-Creation-Date: 2012-07-05 15:54+0200\n"
 "PO-Revision-Date: 2012-06-30 14:28+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3951,6 +3951,32 @@ msgid "%s%s: failed to add word to personal dictionary"
 msgstr ""
 "%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden."
 
+#, fuzzy
+msgid "Aspell is enabled"
+msgstr "Maus ist aktiviert"
+
+#, fuzzy
+msgid "Aspell is disabled"
+msgstr "Maus ist deaktiviert"
+
+#, fuzzy, c-format
+msgid "Default dictionary: %s"
+msgstr "Standardfarben:"
+
+msgid "(not set)"
+msgstr ""
+
+msgid "Specific dictionaries on buffers:"
+msgstr ""
+
+#, fuzzy
+msgid "Aspell enabled"
+msgstr "Maus ist aktiviert"
+
+#, fuzzy
+msgid "Aspell disabled"
+msgstr "Maus ist deaktiviert"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr ""
@@ -3968,20 +3994,31 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "Konfiguration für Aspell-Erweiterung"
 
-msgid "dictlist || enable <lang> || disable || addword [<lang>] <word>"
+#, fuzzy
+msgid ""
+"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
+"[<lang>] <word>"
 msgstr "dictlist || enable <lang> || disable || addword [<lang>] <word>"
 
+#, fuzzy
 msgid ""
-"dictlist: show installed dictionaries\n"
-"  enable: enable aspell on current buffer\n"
-" disable: disable aspell on current buffer\n"
-" addword: add a word in your personal aspell dictionary\n"
+"  enable: enable aspell\n"
+" disable: disable aspell\n"
+"  toggle: toggle aspell\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal aspell dictionary\n"
 "\n"
 "Input line beginning with a '/' is not checked, except for some commands "
 "(see /set aspell.check.commands).\n"
 "\n"
-"To enable aspell on all buffers, use option \"default_dict\", for example:\n"
-"  /set aspell.check.default_dict \"en\""
+"To enable aspell on all buffers, use option \"default_dict\", then enable "
+"aspell, for example:\n"
+"  /set aspell.check.default_dict \"en\"\n"
+"  /aspell enable\n"
+"\n"
+"Default key to toggle aspell is alt-s."
 msgstr ""
 "dictlist: listet installierte Wörterbücher auf\n"
 "  enable: aktiviert Aspell in aktuellem Buffer [lang = Wörterbuch)\n"
@@ -4043,6 +4080,10 @@ msgstr ""
 
 msgid "check words during text search in buffer"
 msgstr "Überprüfe Wörter während im Buffer nach einem Text gesucht wird"
+
+#, fuzzy
+msgid "enable aspell check for command line"
+msgstr "Funktionen für die Befehlszeile"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "

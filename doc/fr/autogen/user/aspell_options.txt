@@ -13,6 +13,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_aspell.check.enabled]] *aspell.check.enabled*
+** description: `activer la vérification aspell pour la ligne de commande`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** description: `vérification orthographique des mots en temps réel (plus lent, désactivé par défaut: les mots sont vérifiés seulement s'il y a un délimiteur après)`
 ** type: booléen

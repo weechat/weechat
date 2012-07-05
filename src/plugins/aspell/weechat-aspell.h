@@ -33,6 +33,7 @@ struct t_aspell_code
 };
 
 extern struct t_weechat_plugin *weechat_aspell_plugin;
+extern int aspell_enabled;
 
 extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
 

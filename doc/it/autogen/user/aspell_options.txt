@@ -13,6 +13,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* [[option_aspell.check.enabled]] *aspell.check.enabled*
+** descrizione: `enable aspell check for command line`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** descrizione: `controllo ortografico in tempo reale (più lento, disabilitato per default: le parole vengono controllate solo se seguite da un delimitatore)`
 ** tipo: bool

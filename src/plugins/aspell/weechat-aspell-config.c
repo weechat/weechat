@@ -44,6 +44,7 @@ struct t_config_option *weechat_aspell_config_look_color;
 struct t_config_option *weechat_aspell_config_check_commands;
 struct t_config_option *weechat_aspell_config_check_default_dict;
 struct t_config_option *weechat_aspell_config_check_during_search;
+struct t_config_option *weechat_aspell_config_check_enabled;
 struct t_config_option *weechat_aspell_config_check_real_time;
 struct t_config_option *weechat_aspell_config_check_word_min_length;
 
@@ -113,6 +114,22 @@ weechat_aspell_config_change_default_dict (void *data,
     (void) option;
 
     weechat_aspell_create_spellers (weechat_current_buffer ());
+}
+
+/*
+ * weechat_aspell_config_change_enabled: called when aspell state is changed
+ */
+
+void
+weechat_aspell_config_change_enabled (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    aspell_enabled = weechat_config_boolean (option);
+
+    /* refresh input */
+    weechat_bar_item_update ("input_text");
 }
 
 /*
@@ -423,6 +440,12 @@ weechat_aspell_config_init ()
         "during_search", "boolean",
         N_("check words during text search in buffer"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_check_enabled = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "enabled", "boolean",
+        N_("enable aspell check for command line"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, &weechat_aspell_config_change_enabled, NULL, NULL, NULL);
     weechat_aspell_config_check_real_time = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "real_time", "boolean",

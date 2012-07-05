@@ -13,6 +13,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
+* [[option_aspell.check.enabled]] *aspell.check.enabled*
+** Beschreibung: `enable aspell check for command line`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_aspell.check.real_time]] *aspell.check.real_time*
 ** Beschreibung: `Eine Korrektur findet während der Texteingabe statt (da dies langsamer ist, ist diese Funktion standardmäßig deaktiviert. Wörter werden erst überprüft sobald ein Leerzeichen dem vorangegangenen Wort folgt)`
 ** Typ: boolesch
