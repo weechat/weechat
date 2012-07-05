@@ -7051,7 +7051,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      NULL,
                                                      NULL);
-if (hashtable)
+if (options)
 {
     weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://www.weechat.org/",
