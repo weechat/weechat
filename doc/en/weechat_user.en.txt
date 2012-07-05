@@ -642,6 +642,7 @@ Keys for command line
 | @k(A-)@k(d)         | Delete next word in command line (deleted string is copied to clipboard) | /input delete_next_word
 | @k(A-)@k(k)         | Grab a key and insert its code (and command bound if key exists) in command line | /input grab_key_command
 | @k(A-)@k(r)         | Delete entire command line | /input delete_line
+| @k(A-)@k(s)         | Toggle aspell | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]

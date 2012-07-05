@@ -665,6 +665,8 @@ Tasti per la riga di comando
 | @k(A-)@k(d)         | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_next_word
 | @k(A-)@k(k)         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | /input grab_key_command
 | @k(A-)@k(r)         | Elimina l'intera riga di comando | /input delete_line
+// TRANSLATION MISSING
+| @k(A-)@k(s)         | Toggle aspell | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]

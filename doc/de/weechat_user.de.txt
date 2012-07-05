@@ -657,6 +657,8 @@ Tastenbefehle für die Befehlszeile
 | @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | /input delete_next_word
 | @k(A-)@k(k)         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | /input grab_key_command
 | @k(A-)@k(r)         | komplette Eingabezeile löschen| /input delete_line
+// TRANSLATION MISSING
+| @k(A-)@k(s)         | Toggle aspell | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]

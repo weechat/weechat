@@ -138,6 +138,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-j,m-s     */ "meta-jmeta-s",       "/server jump");
         BIND(/* m-h         */ "meta-h",             "/input hotlist_clear");
         BIND(/* m-k         */ "meta-k",             "/input grab_key_command");
+        BIND(/* m-s         */ "meta-s",             "/mute aspell toggle");
         BIND(/* m-u         */ "meta-u",             "/window scroll_unread");
         BIND(/* ^S^U        */ "ctrl-Sctrl-U",       "/input set_unread");
         BIND(/* ^Cb         */ "ctrl-Cb",            "/input insert \\x02");

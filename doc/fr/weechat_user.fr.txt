@@ -654,6 +654,7 @@ Touches pour la ligne de commande
 | @k(A-)@k(d)         | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers) | /input delete_next_word
 | @k(A-)@k(k)         | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | /input grab_key_command
 | @k(A-)@k(r)         | Effacer entièrement la ligne de commande | /input delete_line
+| @k(A-)@k(s)         | Activer/désactiver aspell | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]
