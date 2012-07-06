@@ -4,7 +4,8 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 
 [NOTE]
-Ce document est écrit pour les versions de WeeChat ≥ 0.3.0.
+Ce document est écrit pour les versions de WeeChat ≥ 0.3.0 mais devrait être
+utilisé de préférence avec la dernière version stable de WeeChat.
 
 
 Général

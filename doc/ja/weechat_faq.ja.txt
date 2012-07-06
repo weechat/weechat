@@ -2,8 +2,10 @@
 Sébastien Helleu <flashcode@flashtux.org>
 
 
+// TRANSLATION MISSING
 [NOTE]
-この文書は WeeChat バージョン ≥ 0.3.0 向けに書かれました。
+This document is written for WeeChat versions ≥ 0.3.0 but should preferrably be
+used with latest stable version of WeeChat.
 
 
 [[general]]

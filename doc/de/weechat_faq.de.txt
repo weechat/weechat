@@ -3,8 +3,10 @@ WeeChat FAQ (häufig gestellte Fragen)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
+// TRANSLATION MISSING
 [NOTE]
-Diese Dokumentation beschreibt ausschließlich WeeChat Versionen ≥ 0.3.0.
+This document is written for WeeChat versions ≥ 0.3.0 but should preferrably be
+used with latest stable version of WeeChat.
 
 
 [[general]]
