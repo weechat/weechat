@@ -741,10 +741,9 @@ You can try following tips to consume less memory:
 * do not load some plugins if you don't use them, for example: aspell, fifo,
   logger, perl, python, ruby, lua, tcl, xfer (used for DCC)
 * load only scripts that you really need
-* reduce value of option 'weechat.history.max_lines' (number of lines saved in
-  memory for each buffer)
-* reduce value of option 'weechat.history.max_commands' (number of user commands
-  saved in memory)
+* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
+  of option 'weechat.history.max_buffer_lines_minutes'
+* reduce value of option 'weechat.history.max_commands'
 
 
 [[development]]

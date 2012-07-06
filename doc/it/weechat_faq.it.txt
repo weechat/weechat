@@ -763,10 +763,10 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, fifo,
   logger, perl, python, ruby, lua, tcl, xfer (usato per DCC)
 * caricare solo gli script veramente necessari
-* ridurre il valore dell'opzione 'weechat.history.max_lines' (numero di righe
-  salvate in memoria per ogni buffer)
-* ridurre il valore dell'opzione 'weechat.history.max_commands' (numero di
-  comandi utente salvati in memoria)
+// TRANSLATION MISSING
+* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
+  of option 'weechat.history.max_buffer_lines_minutes'
+* ridurre il valore dell'opzione 'weechat.history.max_commands'
 
 
 [[development]]

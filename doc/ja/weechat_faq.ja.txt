@@ -696,10 +696,10 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 使わないプラグインのロードを禁止する、例えば: aspell、fifo、
   logger、perl、python、ruby、lua、tcl、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
-* 'weechat.history.max_lines' オプションの値を減らす
-  (それぞれのバッファでメモリ内に保存される行数)
-* 'weechat.history.max_commands' オプションの値を減らす
-  (メモリに保存されるユーザコマンドの数)
+// TRANSLATION MISSING
+* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
+  of option 'weechat.history.max_buffer_lines_minutes'
+* reduce value of option 'weechat.history.max_commands'
 
 
 [[development]]

@@ -746,10 +746,10 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 * nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python,
   ruby, lua, tcl, xfer (używana do DCC)
 * ładować tylko naprawdę używane skrypty
-* zmniejszyć wartość opcji 'weechat.history.max_lines' (ilość linii trzymanych
-  w pamięci dla każdego bufora)
-* zmniejszyć wartość opcji 'weechat.history.max_commands' (ilość komend
-  użytkownika trzymanych w pamięci)
+// TRANSLATION MISSING
+* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
+  of option 'weechat.history.max_buffer_lines_minutes'
+* zmniejszyć wartość opcji 'weechat.history.max_commands'
 
 
 [[development]]

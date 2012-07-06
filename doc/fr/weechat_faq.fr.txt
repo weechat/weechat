@@ -770,10 +770,9 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
   aspell, fifo, logger, perl, python, ruby, lua, tcl, xfer (utilisé pour les
   DCC)
 * charger uniquement les scripts dont vous avez vraiment besoin
-* réduire la valeur de l'option 'weechat.history.max_lines' (nombre de lignes
-  sauvées en mémoire pour chaque tampon)
-* réduire la valeur de l'option 'weechat.history.max_commands' (nombre de
-  commandes utilisateur sauvées en mémoire)
+* réduire la valeur de l'option 'weechat.history.max_buffer_lines_number' ou
+  affecter une valeur à l'option 'weechat.history.max_buffer_lines_minutes'
+* réduire la valeur de l'option 'weechat.history.max_commands'
 
 
 [[development]]
