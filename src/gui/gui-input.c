@@ -1264,9 +1264,16 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
         {
             if (gui_hotlist_initial_buffer)
             {
-                gui_window_switch_to_buffer (window,
-                                             gui_hotlist_initial_buffer, 1);
-                gui_window_scroll_bottom (window);
+                if (CONFIG_BOOLEAN(config_look_jump_smart_back_to_buffer))
+                {
+                    gui_window_switch_to_buffer (window,
+                                                 gui_hotlist_initial_buffer, 1);
+                    gui_window_scroll_bottom (window);
+                }
+                gui_hotlist_initial_buffer = NULL;
+            }
+            else
+            {
                 gui_hotlist_initial_buffer = NULL;
             }
         }

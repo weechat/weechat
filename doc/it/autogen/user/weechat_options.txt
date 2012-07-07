@@ -578,6 +578,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
+** descrizione: `jump back to initial buffer after reaching end of hotlist`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** descrizione: `abilita il supporto del mouse`
 ** tipo: bool

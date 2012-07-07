@@ -7,6 +7,8 @@ v0.3.9-dev, 2012-07-07
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: add option weechat.look.jump_smart_back_to_buffer (jump back to initial
+  buffer after reaching end of hotlist, on by default, which is old behaviour)
 * core: add default key alt+"s" (toggle aspell)
 * core: add cmake option "MANDIR" (bug #36776)
 * core: add callback "nickcmp" in buffers

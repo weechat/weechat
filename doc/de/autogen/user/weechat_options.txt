@@ -578,6 +578,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
+** Beschreibung: `jump back to initial buffer after reaching end of hotlist`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** Beschreibung: `Mausunterstützung einschalten`
 ** Typ: boolesch

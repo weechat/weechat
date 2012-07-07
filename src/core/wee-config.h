@@ -146,6 +146,7 @@ extern struct t_config_option *config_look_item_time_format;
 extern struct t_config_option *config_look_item_buffer_filter;
 extern struct t_config_option *config_look_jump_current_to_previous_buffer;
 extern struct t_config_option *config_look_jump_previous_buffer_when_closing;
+extern struct t_config_option *config_look_jump_smart_back_to_buffer;
 extern struct t_config_option *config_look_mouse;
 extern struct t_config_option *config_look_mouse_timer_delay;
 extern struct t_config_option *config_look_nickmode;

@@ -578,6 +578,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
+** description: `retourner au tampon initial après avoir atteint la fin de la hotlist`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** description: `activer le support de la souris`
 ** type: booléen
