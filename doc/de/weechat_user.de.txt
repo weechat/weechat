@@ -405,7 +405,9 @@ Die 'status'-Bar besitzt als Standardeinträge:
 | buffer_count          | [6]                   | Anzahl der geöffneten Buffer
 | buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
 | buffer_number         | 3                     | aktuelle Nummer des Buffers
-| buffer_name           | #test(+n)             | Name des aktuellen Buffers (mit Channel-Modi für IRC-Channels)
+| buffer_name           | #test                 | Name des aktuellen Buffers
+// TRANSLATION MISSING
+| buffer_modes          | +n                    | IRC channel modes
 | buffer_nicklist_count | {4}                   | Anzahl der Nicks in Nickliste
 | buffer_filter         | *                     | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
 | lag                   | [Lag: 2.5]            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
@@ -418,12 +420,12 @@ In der 'input' Bar lautet die Standardeinstellung:
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Item             | Beispiel                                    | Beschreibung
-| input_paste      | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
-| input_prompt     | [@Flashy]                                   | input prompt (Nickname für den IRC)
-| away             | (away)                                      | Abwesenheitsanzeige
-| input_search     | [Text search]                               | Textsuche
-| input_text       | hi peter!                                   | Text der eingegeben wird
+| Item         | Beispiel                                    | Beschreibung
+| input_paste  | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
+| input_prompt | [@Flashy]                                   | input prompt (Nickname für den IRC)
+| away         | (away)                                      | Abwesenheitsanzeige
+| input_search | [Text search]                               | Textsuche
+| input_text   | hi peter!                                   | Text der eingegeben wird
 |========================================
 
 // TRANSLATION MISSING
@@ -971,23 +973,23 @@ Farbtabelle für @k(C-)@k(c) , @k(c):
 
 [width="50%",cols="^1m,3,3",options="header"]
 |========================================
-| Code | IRC           | WeeChat (curses)
-| 00   | weiß          | white
-| 01   | schwarz       | black
-| 02   | dunkelblau    | blue
-| 03   | dunkelgrün    | green
-| 04   | hellrot       | lightred
-| 05   | dunkelrot     | red
-| 06   | magenta       | magenta
-| 07   | orange        | brown
-| 08   | gelb          | yellow
-| 09   | hellgrün      | lightgreen
-| 10   | türkis        | cyan
-| 11   | hell türkis   | lightcyan
-| 12   | hellblau      | lightblue
-| 13   | hell magenta  | lightmagenta
-| 14   | grau          | gray
-| 15   | hellgrau      | white
+| Code | IRC          | WeeChat (curses)
+| 00   | weiß         | white
+| 01   | schwarz      | black
+| 02   | dunkelblau   | blue
+| 03   | dunkelgrün   | green
+| 04   | hellrot      | lightred
+| 05   | dunkelrot    | red
+| 06   | magenta      | magenta
+| 07   | orange       | brown
+| 08   | gelb         | yellow
+| 09   | hellgrün     | lightgreen
+| 10   | türkis       | cyan
+| 11   | hell türkis  | lightcyan
+| 12   | hellblau     | lightblue
+| 13   | hell magenta | lightmagenta
+| 14   | grau         | gray
+| 15   | hellgrau     | white
 |========================================
 
 Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in fett und hellblau
@@ -1725,29 +1727,29 @@ mit dem entsprechenden Wert ersetzt:
 
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| Platzhalter  | Beschreibung                | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten    | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | WeeChat Version             | 0.3.0
-| $compilation | Datum der Kompilierung      | Sep 13 2009
-| $osinfo      | Info über das genutzte OS   | Linux 2.6.31 / i686
-| $site        | WeeChat Seite               | http://www.weechat.org
-| $download    | WeeChat, download Seite     | http://www.weechat.org/download
-| $time        | aktuelle Uhrzeit/Datum      | Sun, 13 Sep 2009 15:48:31 +0200
-| $username    | Username beim IRC Server    | Nick
-| $realname    | Realname beim IRC Server    | mein Name
+| Platzhalter  | Beschreibung              | Wert/Beispiel
+| $clientinfo  | Liste der CTCP Antworten  | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat Version           | 0.3.0
+| $compilation | Datum der Kompilierung    | Sep 13 2009
+| $osinfo      | Info über das genutzte OS | Linux 2.6.31 / i686
+| $site        | WeeChat Seite             | http://www.weechat.org
+| $download    | WeeChat, download Seite   | http://www.weechat.org/download
+| $time        | aktuelle Uhrzeit/Datum    | Sun, 13 Sep 2009 15:48:31 +0200
+| $username    | Username beim IRC Server  | Nick
+| $realname    | Realname beim IRC Server  | mein Name
 |========================================
 
 Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP         | Antwortformat                   | Beispiel
-| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER       | WeeChat $version                | WeeChat 0.3.0
-| SOURCE       | $download                       | http://www.weechat.org/download
-| TIME         | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO     | $username ($realname)           | Nick (mein Name)
-| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Antwortformat                   | Beispiel
+| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $version                | WeeChat 0.3.0
+| SOURCE     | $download                       | http://www.weechat.org/download
+| TIME       | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO   | $username ($realname)           | Nick (mein Name)
+| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
 
 [[irc_target_buffer]]

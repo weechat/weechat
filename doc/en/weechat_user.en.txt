@@ -406,7 +406,8 @@ Bar 'status' has following default items:
 | buffer_count          | [6]                   | number of opened buffers
 | buffer_plugin         | [irc/freenode]        | plugin of current buffer (irc plugin can add IRC server name used by buffer)
 | buffer_number         | 3                     | current buffer number
-| buffer_name           | #test(+n)             | current buffer name (with channel modes for irc channels)
+| buffer_name           | #test                 | current buffer name
+| buffer_modes          | +n                    | IRC channel modes
 | buffer_nicklist_count | {4}                   | number of nicks in nicklist
 | buffer_filter         | *                     | filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
 | lag                   | [Lag: 2.5]            | lag indicator, in seconds (hidden if lag is low)
@@ -419,12 +420,12 @@ Bar 'input' has following default items:
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Item             | Example                                    | Description
-| input_paste      | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
-| input_prompt     | [@Flashy]                                  | input prompt (nick for irc plugin)
-| away             | (away)                                     | away indicator
-| input_search     | [Text search]                              | text search indicator
-| input_text       | hi peter!                                  | input text
+| Item         | Example                                    | Description
+| input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
+| input_prompt | [@Flashy]                                  | input prompt (nick for irc plugin)
+| away         | (away)                                     | away indicator
+| input_search | [Text search]                              | text search indicator
+| input_text   | hi peter!                                  | input text
 |========================================
 
 [[buffers_and_windows]]
@@ -1703,13 +1704,13 @@ If CTCP options are not defined (by default), CTCP replies are:
 
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP         | Reply format                    | Example
-| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER       | WeeChat $version                | WeeChat 0.3.0
-| SOURCE       | $download                       | http://www.weechat.org/download
-| TIME         | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO     | $username ($realname)           | nick (My name)
-| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Reply format                    | Example
+| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $version                | WeeChat 0.3.0
+| SOURCE     | $download                       | http://www.weechat.org/download
+| TIME       | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO   | $username ($realname)           | nick (My name)
+| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
 
 [[irc_target_buffer]]

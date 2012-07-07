@@ -396,7 +396,7 @@ irc_mode_channel_set (struct t_irc_server *server,
         weechat_string_free_split (argv);
 
     if (channel_modes_updated)
-        weechat_bar_item_update ("buffer_name");
+        weechat_bar_item_update ("buffer_modes");
 }
 
 /*

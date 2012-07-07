@@ -188,13 +188,8 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
-* [[option_irc.look.item_channel_modes]] *irc.look.item_channel_modes*
-** description: `display channel modes in "buffer_name" bar item`
-** type: boolean
-** values: on, off (default value: `on`)
-
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** description: `hide channel key if modes are displayed in "buffer_name" bar item (this will hide all channel modes arguments if mode +k is set on channel)`
+** description: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
 ** type: boolean
 ** values: on, off (default value: `off`)
 

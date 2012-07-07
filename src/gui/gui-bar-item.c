@@ -61,8 +61,8 @@ struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
   "buffer_count", "buffer_plugin", "buffer_number", "buffer_name",
-  "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number"
+  "buffer_modes", "buffer_filter", "buffer_nicklist_count", "scroll",
+  "hotlist", "completion", "buffer_title", "buffer_nicklist", "window_number"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -71,8 +71,8 @@ char *gui_bar_items_default_for_bars[][2] =
     "buffer_title" },
   { GUI_BAR_DEFAULT_NAME_STATUS,
     "[time],[buffer_count],[buffer_plugin],buffer_number+:+"
-    "buffer_name+{buffer_nicklist_count}+buffer_filter,[lag],[hotlist],"
-    "completion,scroll" },
+    "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_filter,[lag],"
+    "[hotlist],completion,scroll" },
   { GUI_BAR_DEFAULT_NAME_NICKLIST,
     "buffer_nicklist" },
   { NULL,
@@ -920,6 +920,25 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_buffer_modes: default item for modes of buffer
+ *                                    Note: this bar item is empty for WeeChat
+ *                                    cote, this is used only by plugins like
+ *                                    irc to display channel modes
+ */
+
+char *
+gui_bar_item_default_buffer_modes (void *data, struct t_gui_bar_item *item,
+                                   struct t_gui_window *window)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+
+    return NULL;
+}
+
+/*
  * gui_bar_item_default_buffer_filter: default item for buffer filter
  */
 
@@ -1687,6 +1706,13 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook_signal ("buffer_moved",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
+
+    /* buffer modes */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES],
+                      &gui_bar_item_default_buffer_modes, NULL);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
 
     /* buffer filter */
     gui_bar_item_new (NULL,

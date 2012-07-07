@@ -101,7 +101,6 @@ extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_display_pv_away_once;
 extern struct t_config_option *irc_config_look_display_pv_back;
 extern struct t_config_option *irc_config_look_item_away_message;
-extern struct t_config_option *irc_config_look_item_channel_modes;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 extern struct t_config_option *irc_config_look_item_nick_modes;
 extern struct t_config_option *irc_config_look_item_nick_prefix;

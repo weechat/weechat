@@ -76,7 +76,6 @@ struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
 struct t_config_option *irc_config_look_item_away_message;
-struct t_config_option *irc_config_look_item_channel_modes;
 struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
@@ -334,22 +333,6 @@ irc_config_change_look_item_away_message (void *data,
 }
 
 /*
- * irc_config_change_look_item_channel_modes: called when the "display
- *                                            channel modes" option is changed
- */
-
-void
-irc_config_change_look_item_channel_modes (void *data,
-                                           struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    weechat_bar_item_update ("buffer_name");
-}
-
-/*
  * irc_config_change_look_item_channel_modes_hide_key: called when the
  *                                                     "display channel modes
  *                                                     hide key" option is
@@ -364,7 +347,7 @@ irc_config_change_look_item_channel_modes_hide_key (void *data,
     (void) data;
     (void) option;
 
-    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("buffer_modes");
 }
 
 /*
@@ -566,19 +549,19 @@ irc_config_change_color_item_away (void *data,
 }
 
 /*
- * irc_config_change_color_item_buffer_name: called when the color of buffer
- *                                           name is changed
+ * irc_config_change_color_item_buffer_modes: called when the color of buffer
+ *                                            modes is changed
  */
 
 void
-irc_config_change_color_item_buffer_name (void *data,
-                                          struct t_config_option *option)
+irc_config_change_color_item_buffer_modes (void *data,
+                                           struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
     (void) option;
 
-    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("buffer_modes");
 }
 
 /*
@@ -2181,18 +2164,11 @@ irc_config_init ()
         N_("display server away message in away bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_look_item_away_message, NULL, NULL, NULL);
-    irc_config_look_item_channel_modes = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "item_channel_modes", "boolean",
-        N_("display channel modes in \"buffer_name\" bar item"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_item_channel_modes, NULL, NULL, NULL);
     irc_config_look_item_channel_modes_hide_key = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_channel_modes_hide_key", "boolean",
-        N_("hide channel key if modes are displayed in \"buffer_name\" bar "
-           "item (this will hide all channel modes arguments if mode +k is "
-           "set on channel)"),
+        N_("hide channel key in channel modes (this will hide all channel modes "
+           "arguments if mode +k is set on channel)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &irc_config_change_look_item_channel_modes_hide_key, NULL, NULL, NULL);
     irc_config_look_item_nick_modes = weechat_config_new_option (
@@ -2428,7 +2404,7 @@ irc_config_init ()
         "item_channel_modes", "color",
         N_("color for channel modes, near channel name"),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
-        &irc_config_change_color_item_buffer_name, NULL, NULL, NULL);
+        &irc_config_change_color_item_buffer_modes, NULL, NULL, NULL);
     irc_config_color_item_lag_counting = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_lag_counting", "color",

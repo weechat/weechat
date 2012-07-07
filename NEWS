@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-05
+v0.3.9-dev, 2012-07-07
 
 
 Version 0.3.9 (under dev!)
@@ -9,10 +9,16 @@ Version 0.3.9 (under dev!)
 
 Important release notes:
 
+* new bar item has been added: 'buffer_modes' and irc option
+  'irc.look.item_channel_modes' has been removed; to display irc channel modes
+  in status bar (after channel name), you have to manually add the new item
+  'buffer_modes' (this is now used by default in status bar items), default
+  value for status bar items becomes:
+** `/set weechat.bar.status.items "[time],[buffer_count],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_filter,[lag],[hotlist],completion,scroll"`
 * changes in options for command `/aspell`:
 ** new option `enable`: enable aspell
 ** new option `disable`: disable aspell
-** new option `toggle`: toggle aspell
+** new option `toggle`: toggle aspell (new default key: alt+"s")
 ** option `enable` renamed to `setdict` (set dictionary for current buffer)
 ** option `disable` renamed to `deldict` (delete dictionary used on current buffer)
 ** option `dictlist` renamed to `listdict` (show installed dictionaries)
@@ -52,8 +58,8 @@ Version 0.3.7 (2012-02-26)
 Important release notes:
 
 * option `scroll_unread` has been moved from command `/input` to `/window`,
-  therefore default command of key alt-u has been updated. To bind key with new
-  default value:
+  therefore default command of key alt+"u" has been updated. To bind key with
+  new default value:
 ** `/key bind meta-u /window scroll_unread`
 * extended regex is used in filters and irc ignore, so some chars that
   needed escape in past do not need any more (for example `[0-9]\+` becomes
@@ -231,7 +237,7 @@ Important release notes:
 ** new keys for scrolling topic: F9/F10
 ** key F10 was used for `infobar_clear` in previous WeeChat versions,
    you have to manually rebind this key (except for new WeeChat users):
-*** `/key <press alt-k then F10> scroll_topic_right` (which gives something
+*** `/key <press alt+"k" then F10> scroll_topic_right` (which gives something
     like: `/key meta2-21~ scroll_topic_right`).
 
 Version 0.2.1 (2006-10-01)
@@ -274,12 +280,12 @@ Important release notes:
    '%h' is replaced by WeeChat home (default: '~/.weechat', may be overriden
    by new command line arg `--dir`).
 * after installing 0.1.8 (or with `/upgrade`), issue both commands (if you
-  didn't redefine these keys (alt-home/end):
+  didn't redefine these keys (alt+{home|end}):
 ** `/key unbind meta-meta2-1~`
 ** `/key unbind meta-meta2-4~`
 ** then launch again WeeChat (or issue `/upgrade`).
-* Keys alt-home/end were used for nicklist scroll, they're now replaced by
-  alt-F11/F12.
+* Keys alt+{home|end} were used for nicklist scroll, they're now replaced by
+  alt+{F11|F12}.
 
 Version 0.1.7 (2006-01-14)
 --------------------------

@@ -409,30 +409,32 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
-| Elemento                   | Esempio               | Descrizione
-| time                       | [12:55]               | ora
-| buffer_count               | [6]                   | numero di buffer aperti
-| buffer_plugin              | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
-| buffer_number              | 3                     | numero del buffer corrente
-| buffer_name                | #test(+n)             | nome del buffer attivo (con le modalità canale per i canali irc)
-| buffer_nicklist_count      | {4}                   | numero di nick nella lista nick
-| buffer_filter              | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
-| lag                        | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-| hotlist                    | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 eventi e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
-| completion                 | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
-| scroll                     | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
+| Elemento              | Esempio               | Descrizione
+| time                  | [12:55]               | ora
+| buffer_count          | [6]                   | numero di buffer aperti
+| buffer_plugin         | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
+| buffer_number         | 3                     | numero del buffer corrente
+| buffer_name           | #test                 | nome del buffer attivo
+// TRANSLATION MISSING
+| buffer_modes          | +n                    | IRC channel modes
+| buffer_nicklist_count | {4}                   | numero di nick nella lista nick
+| buffer_filter         | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
+| lag                   | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
+| hotlist               | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 eventi e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
+| completion            | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
+| scroll                | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
 
 La barra 'input' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Elemento         | Esempio                                       | Descrizione
-| input_paste      | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
-| input_prompt     | [@Flashy]                                     | prompt per l'input (nick per il plugin irc)
-| away             | (assente)                                     | indicatore di assenza
-| input_search     | [Ricerca testo]                               | indicatore di ricerca testo
-| input_text       | ciao peter!                                   | testo in input
+| Elemento     | Esempio                                       | Descrizione
+| input_paste  | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
+| input_prompt | [@Flashy]                                     | prompt per l'input (nick per il plugin irc)
+| away         | (assente)                                     | indicatore di assenza
+| input_search | [Ricerca testo]                               | indicatore di ricerca testo
+| input_text   | ciao peter!                                   | testo in input
 |========================================
 
 // TRANSLATION MISSING
@@ -783,27 +785,27 @@ evento del mouse.
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Tasto      | Azione           | Zona       | Descrizione | Comando
-| ◾◽◽        | -                | chat       | Passa alla finestra | /window ${_window_number}
-| ◾◽◽        | sinistra         | chat       | Passa al buffer precedente | /window ${_window_number};/buffer +1
-| ◾◽◽        | destra           | chat       | Passa al buffer successivo | /window ${_window_number};/buffer +1
-| ◾◽◽        | sinistra (lungo) | chat       | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽        | destra (lungo)   | chat       | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
-| rotella ⇑  | -                | chat       | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
-| rotella ⇓  | -                | chat       | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
-| ◾◽◽        | su               | lista nick | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽        | giù              | lista nick | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽        | up (lungo)       | lista nick | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
-| ◾◽◽        | giù (lungo)      | lista nick | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
-| ◾◽◽        | -                | lista nick | Apre una query con un nick | /window ${_window_number};/query ${nick}
-| ◽◽◾        | -                | lista nick | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
-| ◾◽◽        | sinistra         | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽        | sinistra (lungo) | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾        | sinistra         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾        | -                | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
-| rotella ⇑  | -                | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| rotella ⇓  | -                | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽        | -                | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
+| Tasto     | Azione           | Zona       | Descrizione | Comando
+| ◾◽◽       | -                | chat       | Passa alla finestra | /window ${_window_number}
+| ◾◽◽       | sinistra         | chat       | Passa al buffer precedente | /window ${_window_number};/buffer +1
+| ◾◽◽       | destra           | chat       | Passa al buffer successivo | /window ${_window_number};/buffer +1
+| ◾◽◽       | sinistra (lungo) | chat       | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽       | destra (lungo)   | chat       | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
+| rotella ⇑ | -                | chat       | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
+| rotella ⇓ | -                | chat       | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
+| ◾◽◽       | su               | lista nick | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽       | giù              | lista nick | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽       | up (lungo)       | lista nick | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
+| ◾◽◽       | giù (lungo)      | lista nick | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
+| ◾◽◽       | -                | lista nick | Apre una query con un nick | /window ${_window_number};/query ${nick}
+| ◽◽◾       | -                | lista nick | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
+| ◾◽◽       | sinistra         | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽       | sinistra (lungo) | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾       | sinistra         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾       | -                | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
+| rotella ⇑ | -                | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| rotella ⇓ | -                | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽       | -                | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -1753,13 +1755,13 @@ le risposte CTCP sono:
 
 [width="100%",cols="^2,4l,8l",options="header"]
 |=======================================
-| CTCP         | Formato risposta                | Esempio
-| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER       | WeeChat $version                | WeeChat 0.3.0
-| SOURCE       | $download                       | http://www.weechat.org/download
-| TIME         | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO     | $username ($realname)           | nick (Mio nome)
-| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Formato risposta                | Esempio
+| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $version                | WeeChat 0.3.0
+| SOURCE     | $download                       | http://www.weechat.org/download
+| TIME       | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO   | $username ($realname)           | nick (Mio nome)
+| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |=======================================
 
 [[irc_target_buffer]]

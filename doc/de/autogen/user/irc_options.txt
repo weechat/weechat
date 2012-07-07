@@ -188,13 +188,8 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* [[option_irc.look.item_channel_modes]] *irc.look.item_channel_modes*
-** Beschreibung: `zeigt die Channel-Modi mittels "buffer_name" in der Bar-Item an`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
-
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** Beschreibung: `unterdrückt Channel-Key falls die Modi in der Bar-Item mittels "buffer_name" dargestellt werden (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
+** Beschreibung: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

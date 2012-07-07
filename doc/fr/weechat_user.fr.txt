@@ -415,7 +415,8 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_count          | [6]                   | nombre de tampons ouverts
 | buffer_plugin         | [irc/freenode]        | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
 | buffer_number         | 3                     | numéro du tampon courant
-| buffer_name           | #test(+n)             | nom du tampon courant (avec les modes du canal pour les canaux irc)
+| buffer_name           | #test                 | nom du tampon courant
+| buffer_modes          | +n                    | modes du canal IRC
 | buffer_nicklist_count | {4}                   | nombre de pseudos dans la liste des pseudos
 | buffer_filter         | *                     | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
 | lag                   | [Lag: 2.5]            | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
@@ -428,12 +429,12 @@ La barre 'input' contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
-| Objet (item)     | Exemple                                       | Description
-| input_paste      | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
-| input_prompt     | [@Flashy]                                     | prompt (pseudo pour l'extension irc)
-| away             | (absent)                                      | indicateur d'absence
-| input_search     | [Recherche texte]                             | indicateur de recherche de texte
-| input_text       | salut peter !                                 | texte entré
+| Objet (item) | Exemple                                       | Description
+| input_paste  | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
+| input_prompt | [@Flashy]                                     | prompt (pseudo pour l'extension irc)
+| away         | (absent)                                      | indicateur d'absence
+| input_search | [Recherche texte]                             | indicateur de recherche de texte
+| input_text   | salut peter !                                 | texte entré
 |========================================
 
 [[buffers_and_windows]]
@@ -1752,13 +1753,13 @@ Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont
 
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP         | Format de réponse               | Exemple
-| CLIENTINFO   | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER       | WeeChat $version                | WeeChat 0.3.0
-| SOURCE       | $download                       | http://www.weechat.org/download
-| TIME         | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO     | $username ($realname)           | pseudo (Mon nom)
-| VERSION      | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Format de réponse               | Exemple
+| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $version                | WeeChat 0.3.0
+| SOURCE     | $download                       | http://www.weechat.org/download
+| TIME       | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO   | $username ($realname)           | pseudo (Mon nom)
+| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
 |========================================
 
 [[irc_target_buffer]]
