@@ -734,6 +734,7 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -773,6 +774,7 @@ script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -811,6 +813,7 @@ script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -849,6 +852,7 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -895,6 +899,7 @@ script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugin,
         script_callback_remove (script, new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     new_script_callback->hook = new_hook;
 
@@ -961,6 +966,7 @@ script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1005,6 +1011,7 @@ script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1043,6 +1050,7 @@ script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1080,6 +1088,7 @@ script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1117,6 +1126,7 @@ script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1158,6 +1168,7 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1196,6 +1207,7 @@ script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1237,6 +1249,7 @@ script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1281,6 +1294,7 @@ script_api_hook_info_hashtable (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1325,6 +1339,7 @@ script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;
@@ -1362,6 +1377,7 @@ script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
         free (new_script_callback);
         return NULL;
     }
+    weechat_hook_set (new_hook, "subplugin", script->name);
 
     script_callback_init (new_script_callback, script, function, data);
     new_script_callback->hook = new_hook;

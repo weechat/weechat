@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20120323-01"
+#define WEECHAT_PLUGIN_API_VERSION "20120709-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -647,6 +647,8 @@ struct t_weechat_plugin
                                   struct t_hashtable *(*callback)(void *data,
                                                                   struct t_hashtable *info),
                                   void *callback_data);
+    void (*hook_set) (struct t_hook *hook, const char *property,
+                      const char *value);
     void (*unhook) (struct t_hook *hook);
     void (*unhook_all) (struct t_weechat_plugin *plugin);
 
@@ -1381,6 +1383,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_hook_focus(__area, __callback, __data)                  \
     weechat_plugin->hook_focus(weechat_plugin, __area, __callback,      \
                                __data)
+#define weechat_hook_set(__hook, __property, __value)                   \
+    weechat_plugin->hook_set(__hook, __property, __value)
 #define weechat_unhook(__hook)                                          \
     weechat_plugin->unhook( __hook)
 #define weechat_unhook_all()                                            \

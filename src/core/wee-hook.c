@@ -309,6 +309,7 @@ hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
                 int type, int priority, void *callback_data)
 {
     hook->plugin = plugin;
+    hook->subplugin = NULL;
     hook->type = type;
     hook->deleted = 0;
     hook->running = 0;
@@ -3012,6 +3013,21 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
 }
 
 /*
+ * hook_set: set a hook property (string)
+ */
+
+void
+hook_set (struct t_hook *hook, const char *property, const char *value)
+{
+    if (string_strcasecmp (property, "subplugin") == 0)
+    {
+        if (hook->subplugin)
+            free(hook->subplugin);
+        hook->subplugin = strdup (value);
+    }
+}
+
+/*
  * unhook: unhook something
  */
 
@@ -3037,6 +3053,8 @@ unhook (struct t_hook *hook)
     }
 
     /* free data */
+    if (hook->subplugin)
+        free (hook->subplugin);
     if (hook->hook_data)
     {
         switch (hook->type)
@@ -3326,6 +3344,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
         if (!infolist_new_var_string (ptr_item, "plugin_name",
                                       (ptr_hook->plugin) ?
                                       ptr_hook->plugin->name : NULL))
+            return 0;
+        if (!infolist_new_var_string (ptr_item, "subplugin", ptr_hook->subplugin))
             return 0;
         if (!infolist_new_var_string (ptr_item, "type", hook_type_string[ptr_hook->type]))
             return 0;
@@ -3744,11 +3764,12 @@ hook_print_log ()
             log_printf ("[hook (addr:0x%lx)]", ptr_hook);
             log_printf ("  plugin. . . . . . . . . : 0x%lx ('%s')",
                         ptr_hook->plugin, plugin_get_name (ptr_hook->plugin));
+            log_printf ("  subplugin . . . . . . . : '%s'",  ptr_hook->subplugin);
+            log_printf ("  type. . . . . . . . . . : %d (%s)",
+                        ptr_hook->type, hook_type_string[ptr_hook->type]);
             log_printf ("  deleted . . . . . . . . : %d",    ptr_hook->deleted);
             log_printf ("  running . . . . . . . . : %d",    ptr_hook->running);
             log_printf ("  priority. . . . . . . . : %d",    ptr_hook->priority);
-            log_printf ("  type. . . . . . . . . . : %d (%s)",
-                        ptr_hook->type, hook_type_string[ptr_hook->type]);
             log_printf ("  callback_data . . . . . : 0x%lx", ptr_hook->callback_data);
             switch (ptr_hook->type)
             {

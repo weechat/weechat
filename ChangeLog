@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-07
+v0.3.9-dev, 2012-07-09
 
 
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: add function "hook_set" in plugin API, add "subplugin" in hooks (set by
+  script plugins), display subplugin in /help on commands (task #12049)
 * core: add option weechat.look.jump_smart_back_to_buffer (jump back to initial
   buffer after reaching end of hotlist, on by default, which is old behaviour)
 * core: add default key alt+"s" (toggle aspell)

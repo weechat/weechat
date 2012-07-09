@@ -9234,6 +9234,49 @@ def my_focus_nicklist_cb(data, info):
 hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 ----------------------------------------
 
+weechat_hook_set
+^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.9._
+
+Affecte une valeur à une propriété d'un hook.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void weechat_hook_set (struct t_hook *hook, const char *property,
+                       const char *value);
+----------------------------------------
+
+Paramètres :
+
+* 'hook' : quelque chose d'accroché avec "weechat_hook_xxx()"
+* 'property' et 'value' : nom de la propriété, avec sa valeur :
+
+[width="100%",cols="^2,4,8",options="header"]
+|========================================
+| Nom | Valeur | Description
+
+| subplugin | toute chaîne |
+  nom de la sous-extension (couramment un nom de script, qui est affiché dans
+  `/help commande` pour un hook de type 'command')
+|========================================
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hook *my_command_hook =
+    weechat_hook_command ("abcd", "description",
+                          "args", "description args",
+                          "", &my_command_cb, NULL);
+weechat_hook_set (my_command_hook, "subplugin", "test");
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 weechat_unhook
 ^^^^^^^^^^^^^^
 

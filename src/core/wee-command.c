@@ -1926,10 +1926,18 @@ COMMAND_CALLBACK(help)
                 else
                 {
                     gui_chat_printf (NULL,
-                                     "%s[%s%s%s]  %s/%s  %s%s",
+                                     "%s[%s%s%s%s%s%s%s]  %s/%s  %s%s",
                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                      GUI_COLOR(GUI_COLOR_CHAT),
                                      plugin_get_name (ptr_hook->plugin),
+                                     (ptr_hook->subplugin && ptr_hook->subplugin[0]) ?
+                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
+                                     (ptr_hook->subplugin && ptr_hook->subplugin[0]) ?
+                                     "/" : "",
+                                     (ptr_hook->subplugin && ptr_hook->subplugin[0]) ?
+                                     GUI_COLOR(GUI_COLOR_CHAT) : "",
+                                     (ptr_hook->subplugin && ptr_hook->subplugin[0]) ?
+                                     ptr_hook->subplugin : "",
                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                      GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                      HOOK_COMMAND(ptr_hook, command),

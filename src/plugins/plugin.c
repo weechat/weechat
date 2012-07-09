@@ -654,6 +654,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hook_infolist = &hook_infolist;
         new_plugin->hook_hdata = &hook_hdata;
         new_plugin->hook_focus = &hook_focus;
+        new_plugin->hook_set = &hook_set;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
 

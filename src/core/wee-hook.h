@@ -103,6 +103,10 @@ struct t_hook
     /* data common to all hooks */
     struct t_weechat_plugin *plugin;   /* plugin which created this hook    */
                                        /* (NULL for hook created by WeeChat)*/
+    char *subplugin;                   /* subplugin which created this hook */
+                                       /* (commonly a script name, NULL for */
+                                       /* hook created by WeeChat or by     */
+                                       /* plugin itself)                    */
     enum t_hook_type type;             /* hook type                         */
     int deleted;                       /* hook marked for deletion ?        */
     int running;                       /* 1 if hook is currently running    */
@@ -562,6 +566,8 @@ extern struct t_hook *hook_focus (struct t_weechat_plugin *plugin,
                                   void *callback_data);
 extern struct t_hashtable *hook_focus_get_data (struct t_hashtable *hashtable_focus1,
                                                 struct t_hashtable *hashtable_focus2);
+extern void hook_set (struct t_hook *hook, const char *property,
+                      const char *value);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();
