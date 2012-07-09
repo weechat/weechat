@@ -1633,9 +1633,9 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_default_input_prompt, NULL);
-    gui_bar_item_hook_signal ("buffer_localvar_*",
-                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
+    gui_bar_item_hook_signal ("buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
 
     /* input search */
@@ -1651,9 +1651,9 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_default_input_text, NULL);
-    gui_bar_item_hook_signal ("input_text_*",
-                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
     gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+    gui_bar_item_hook_signal ("input_text_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
 
     /* time */
@@ -1718,6 +1718,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       &gui_bar_item_default_buffer_filter, NULL);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("buffer_lines_hidden",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("filters_*",
@@ -1736,6 +1738,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
                       &gui_bar_item_default_scroll, NULL);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     gui_bar_item_hook_signal ("window_scrolled",
                               gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
 
@@ -1761,9 +1765,9 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
                       &gui_bar_item_default_buffer_title, NULL);
-    gui_bar_item_hook_signal ("buffer_title_changed",
-                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
     gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
+    gui_bar_item_hook_signal ("buffer_title_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
 
     /* buffer nicklist */
