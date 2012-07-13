@@ -306,36 +306,39 @@ Running WeeChat
 Command line arguments:
 
 -a, --no-connect::
-    Disable auto-connect to servers when WeeChat is starting
+    Disable auto-connect to servers when WeeChat is starting.
 
 -c, --colors::
-    Display default colors in terminal
+    Display default colors in terminal.
 
 -d, --dir 'path'::
     Set path as home for WeeChat (used for configuration files, logs, user
     plugins and scripts), default value is '~/.weechat' (note: directory is
-    created if not found by WeeChat)
+    created if not found by WeeChat).
 
 -h, --help::
-    Display help
+    Display help.
 
 -k, --keys::
-    Display WeeChat default keys
+    Display WeeChat default keys.
 
 -l, --license::
-    Display WeeChat license
+    Display WeeChat license.
 
 -p, --no-plugin::
-    Disable plugins auto-load
+    Disable plugins auto-load.
+
+-r, --run-command::
+    Run command(s) after startup (many commands can be separated by semicolons).
 
 -s, --no-script::
-    Disable scripts auto-load
+    Disable scripts auto-load.
 
 -v, --version::
-    Display WeeChat version
+    Display WeeChat version.
 
 plugin:option::
-    Option for plugin (see doc for each plugin)
+    Option for plugin (see doc for each plugin).
 
 To start WeeChat, issue this command:
 

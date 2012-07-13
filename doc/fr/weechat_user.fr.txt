@@ -313,37 +313,41 @@ Lancer WeeChat
 Paramètres de ligne de commande :
 
 -a, --no-connect::
-    Supprimer la connexion automatique aux serveurs lors du démarrage
+    Supprimer la connexion automatique aux serveurs lors du démarrage.
 
 -c, --colors::
-    Afficher les couleurs par défaut du terminal
+    Afficher les couleurs par défaut du terminal.
 
 -d, --dir 'path'::
     Définir le répertoire comme étant la base de WeeChat
     (utilisé pour les fichiers de configuration, logs, extensions
     et scripts de l'utilisateur), la valeur par défaut est '~/.weechat' (note :
-    le répertoire est créé s'il n'est pas trouvé par WeeChat)
+    le répertoire est créé s'il n'est pas trouvé par WeeChat).
 
 -h, --help::
-    Afficher l'aide
+    Afficher l'aide.
 
 -k, --keys::
-    Afficher les touches par défaut de WeeChat
+    Afficher les touches par défaut de WeeChat.
 
 -l, --license::
-    Afficher la licence de WeeChat
+    Afficher la licence de WeeChat.
 
 -p, --no-plugin::
-    Supprimer le chargement automatique des extensions au démarrage
+    Supprimer le chargement automatique des extensions au démarrage.
+
+-r, --run-command::
+    Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
+    être séparées par des points-virgules).
 
 -s, --no-script::
-    Supprimer le chargement automatique des scripts au démarrage
+    Supprimer le chargement automatique des scripts au démarrage.
 
 -v, --version::
-    Afficher la version de WeeChat
+    Afficher la version de WeeChat.
 
 plugin:option::
-    Option pour l'extension (voir la documentation de chaque extension)
+    Option pour l'extension (voir la documentation de chaque extension).
 
 Pour lancer WeeChat, tapez cette commande :
 

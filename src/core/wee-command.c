@@ -6214,23 +6214,18 @@ command_init ()
 }
 
 /*
- * command_startup: execute command at startup
+ * command_exec_list: execute command list
  */
 
 void
-command_startup (int plugins_loaded)
+command_exec_list (const char *command_list)
 {
-    char *command, **commands, **ptr_cmd;
+    char **commands, **ptr_cmd;
     struct t_gui_buffer *weechat_buffer;
 
-    if (plugins_loaded)
-        command = CONFIG_STRING(config_startup_command_after_plugins);
-    else
-        command = CONFIG_STRING(config_startup_command_before_plugins);
-
-    if (command && command[0])
+    if (command_list && command_list[0])
     {
-        commands = string_split_command (command, ';');
+        commands = string_split_command (command_list, ';');
         if (commands)
         {
             weechat_buffer = gui_buffer_search_main ();
@@ -6241,4 +6236,20 @@ command_startup (int plugins_loaded)
             string_free_split_command (commands);
         }
     }
+}
+
+/*
+ * command_startup: execute command at startup
+ */
+
+void
+command_startup (int plugins_loaded)
+{
+    if (plugins_loaded)
+    {
+        command_exec_list(CONFIG_STRING(config_startup_command_after_plugins));
+        command_exec_list(weechat_startup_commands);
+    }
+    else
+        command_exec_list(CONFIG_STRING(config_startup_command_before_plugins));
 }

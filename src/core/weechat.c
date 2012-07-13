@@ -91,6 +91,7 @@ int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
 int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
                                        /* (useful when using valgrind)      */
+char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 
 
 /*
@@ -136,22 +137,24 @@ weechat_display_usage (char *exec_name)
                           exec_name, exec_name);
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
-                          _("  -a, --no-connect  disable auto-connect to servers at startup\n"
-                            "  -c, --colors      display default colors in terminal\n"
-                            "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
-                            "  -h, --help        this help\n"
-                            "  -k, --keys        display WeeChat default keys\n"
-                            "  -l, --license     display WeeChat license\n"
-                            "  -p, --no-plugin   don't load any plugin at startup\n"
-                            "  -s, --no-script   don't load any script at startup\n"
-                            "  -v, --version     display WeeChat version\n"
-                            "  plugin:option     option for plugin\n"
-                            "                    for example, irc plugin can connect\n"
-                            "                    to server with url like:\n"
-                            "                    irc[6][s]://[nickname[:password]@]"
+                          _("  -a, --no-connect   disable auto-connect to servers at startup\n"
+                            "  -c, --colors       display default colors in terminal\n"
+                            "  -d, --dir <path>   set WeeChat home directory (default: ~/.weechat)\n"
+                            "  -h, --help         this help\n"
+                            "  -k, --keys         display WeeChat default keys\n"
+                            "  -l, --license      display WeeChat license\n"
+                            "  -p, --no-plugin    don't load any plugin at startup\n"
+                            "  -r, --run-command  run command(s) after startup\n"
+                            "                     (many commands can be separated by semicolons)\n"
+                            "  -s, --no-script    don't load any script at startup\n"
+                            "  -v, --version      display WeeChat version\n"
+                            "  plugin:option      option for plugin\n"
+                            "                     for example, irc plugin can connect\n"
+                            "                     to server with url like:\n"
+                            "                     irc[6][s]://[nickname[:password]@]"
                             "irc.example.org[:port][/#channel1][,#channel2[...]]\n"
-                            "                    (look at plugins documentation for more information\n"
-                            "                    about possible options)\n"));
+                            "                     (look at plugins documentation for more information\n"
+                            "                     about possible options)\n"));
     string_iconv_fprintf(stdout, "\n");
 }
 
@@ -223,7 +226,7 @@ weechat_parse_args (int argc, char *argv[])
                 string_iconv_fprintf (stderr,
                                       _("Error: missing argument for \"%s\" "
                                         "option\n"),
-                                      "--dir");
+                                      argv[i]);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
         }
@@ -261,6 +264,20 @@ weechat_parse_args (int argc, char *argv[])
                  || (strcmp (argv[i], "--no-plugin") == 0))
         {
             weechat_auto_load_plugins = 0;
+        }
+        else if ((strcmp (argv[i], "-r") == 0)
+                 || (strcmp (argv[i], "--run-command") == 0))
+        {
+            if (i + 1 < argc)
+                weechat_startup_commands = strdup (argv[++i]);
+            else
+            {
+                string_iconv_fprintf (stderr,
+                                      _("Error: missing argument for \"%s\" "
+                                        "option\n"),
+                                      argv[i]);
+                weechat_shutdown (EXIT_FAILURE, 0);
+            }
         }
         else if (strcmp (argv[i], "--upgrade") == 0)
         {
@@ -466,7 +483,7 @@ main (int argc, char *argv[])
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);
-    command_startup (1);                /* command executed after plugins   */
+    command_startup (1);                /* commands executed after plugins  */
     if (!weechat_upgrading)
         gui_layout_window_apply (gui_layout_windows, -1); /* apply win layout */
     if (weechat_upgrading)

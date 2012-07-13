@@ -305,7 +305,7 @@ WeeChat starten
 Befehlszeile:
 
 -a, --no-connect::
-    deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat
+    deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat.
 
 -c, --colors::
     Zeigt die Standardfarben im Terminal an.
@@ -316,25 +316,29 @@ Befehlszeile:
     Sollte das Verzeichnis nicht existieren wird es beim Start angelegt.
 
 -h, --help::
-    zeigt einen Hilfstext an
+    zeigt einen Hilfstext an.
 
 -k, --keys::
-    zeigt die Standard-Tastaturbelegung an
+    zeigt die Standard-Tastaturbelegung an.
 
 -l, --license::
-    zeigt die Lizenz von WeeChat an
+    zeigt die Lizenz von WeeChat an.
 
 -p, --no-plugin::
-    unterbindet das Laden der Erweiterungen beim Programmstart
+    unterbindet das Laden der Erweiterungen beim Programmstart.
+
+// TRANSLATION MISSING
+-r, --run-command::
+    Run command(s) after startup (many commands can be separated by semicolons).
 
 -s, --no-script::
-    Skripten werden beim Programmstart nicht geladen
+    Skripten werden beim Programmstart nicht geladen.
 
 -v, --version::
-    zeigt die Version von WeeChat an
+    zeigt die Version von WeeChat an.
 
 plugin:option::
-    Option für Erweiterung (siehe Dokumentation für weitere Einzelheiten)
+    Option für Erweiterung (siehe Dokumentation für weitere Einzelheiten).
 
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 

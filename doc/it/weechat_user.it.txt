@@ -314,36 +314,41 @@ Esecuzione di WeeChat
 Argomenti a riga di comando:
 
 -a, --no-connect::
-    Disabilita la connessione automatica ai server all'avvio di WeeChat
+    Disabilita la connessione automatica ai server all'avvio di WeeChat.
 
 -c, --colors::
-    Mostra i colori prefefiniti nel terminale
+    Mostra i colori prefefiniti nel terminale.
 
+// TRANSLATION MISSING
 -d, --dir 'path'::
     Imposta una cartella come home per WeeChat (utilizzata per i file di
     configurazione, log, plugin e script dell'utente), il valore predefinito
-    è ~/.weechat
+    è ~/.weechat (note: directory is created if not found by WeeChat).
 
 -h, --help::
-    Mostra l'aiuto
+    Mostra l'aiuto.
 
 -k, --keys::
-    Mostra i tasti predefiniti di WeeChat
+    Mostra i tasti predefiniti di WeeChat.
 
 -l, --license::
-    Mostra la licenza di WeeChat
+    Mostra la licenza di WeeChat.
 
 -p, --no-plugin::
-    Disabilita il caricamento automatico dei plugin
+    Disabilita il caricamento automatico dei plugin.
+
+// TRANSLATION MISSING
+-r, --run-command::
+    Run command(s) after startup (many commands can be separated by semicolons).
 
 -s, --no-script::
-    Disabilita il caricamento automatico dei script
+    Disabilita il caricamento automatico dei script.
 
 -v, --version::
-    Mostra la versione di WeeChat
+    Mostra la versione di WeeChat.
 
 plugin:option::
-    Opzione per il plugin (consultare la documentazione per ogni plugin)
+    Opzione per il plugin (consultare la documentazione per ogni plugin).
 
 Per avviare WeeChat, digitare questo comando:
 
