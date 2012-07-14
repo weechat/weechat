@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-13 10:55+0200\n"
-"PO-Revision-Date: 2012-07-13 10:57+0200\n"
+"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"PO-Revision-Date: 2012-07-14 10:46+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -3988,6 +3988,16 @@ msgstr ""
 #, c-format
 msgid "%s%s: not enough memory to create new speller"
 msgstr "%s%s: pas assez de mémoire pour créer un nouveau speller"
+
+#, c-format
+msgid ""
+"%s%s: UTF-8 is now allowed in charset options (it is internal and default "
+"charset: default encode is UTF-8 and decode of UTF-8 is OK even if you "
+"specify another charset to decode)"
+msgstr ""
+"%s%s: UTF-8 n'est pas autorisé dans les options de charset (c'est le charset "
+"interne et par défaut: l'encodage par défaut est UTF-8 et le décodage "
+"d'UTF-8 est OK même si vous spécifiez un autre charset à décoder)"
 
 #, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
