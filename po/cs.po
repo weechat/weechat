@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6598,8 +6598,8 @@ msgstr ""
 "%s%s: posílám data na server: prázdný buffer (prosím oznamte problém "
 "vývojářům)"
 
-#, c-format
-msgid "%s%s: sending data to server: %d %s"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s%s: posílám data na server: %d %s"
 
 msgid "(message dropped)"
@@ -7393,6 +7393,14 @@ msgid "disconnected"
 msgstr "odpojen"
 
 #, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+#, fuzzy, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr "%s: nový klient od %s%s%s na portu %d (id: %d, přesměrovávám %s.%s)"
 
@@ -7618,14 +7626,6 @@ msgstr "%s%s: nedostatek paměti pro poslouchání na portu"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: chyba při zasílání dat na klienta: %s"
-
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: chyba při zasílání dat na klienta %s"
 
 #, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
@@ -8430,6 +8430,13 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: sending data to client error %d: %d %s"
+#~ msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+#~ msgid "%s%s: error sending data to client: %s"
+#~ msgstr "%s%s: chyba při zasílání dat na klienta: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "zobrazit módy kanálu v položce pole \"buffer_name\""

@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -171,7 +172,7 @@ relay_server_sock_cb (void *data, int fd)
     struct t_relay_server *server;
     struct sockaddr_in client_addr;
     socklen_t client_length;
-    int client_fd;
+    int client_fd, flags;
     char ipv4_address[INET_ADDRSTRLEN + 1], *ptr_address;
 
     /* make C compiler happy */
@@ -222,6 +223,13 @@ relay_server_sock_cb (void *data, int fd)
         return WEECHAT_RC_OK;
     }
 
+    /* set non-blocking mode for socket */
+    flags = fcntl (client_fd, F_GETFL);
+    if (flags == -1)
+        flags = 0;
+    fcntl (client_fd, F_SETFL, flags | O_NONBLOCK);
+
+    /* add the client */
     relay_client_new (client_fd, ptr_address, server);
 
     return WEECHAT_RC_OK;

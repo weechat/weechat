@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
 "PO-Revision-Date: 2012-06-30 14:28+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7101,8 +7101,8 @@ msgstr ""
 "%s%s: sende Daten an Server: leerer Buffer (bitte melden Sie das Problem den "
 "Entwicklern)"
 
-#, c-format
-msgid "%s%s: sending data to server: %d %s"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s%s: sende Daten an Server: %d %s"
 
 msgid "(message dropped)"
@@ -7909,6 +7909,14 @@ msgstr "Authentifizierung fehlgeschlagen"
 msgid "disconnected"
 msgstr "unterbrochen"
 
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s%s: lese Daten von Socket: Fehler %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
+
 #, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
@@ -8146,14 +8154,6 @@ msgstr "%s%s: Nicht genug Speicher um an einem neuen Port zu lauschen"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: Nicht genug Speicher vorhanden um Nachricht zu parsen"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
@@ -8988,6 +8988,13 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#, fuzzy
+#~ msgid "%s%s: sending data to client error %d: %d %s"
+#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
+
+#~ msgid "%s%s: error sending data to client: %s"
+#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"

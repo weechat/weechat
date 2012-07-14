@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6674,8 +6674,8 @@ msgid ""
 msgstr ""
 "%s%s: サーバにデータを送信中: 空バッファ (開発者に問題を報告してください)"
 
-#, c-format
-msgid "%s%s: sending data to server: %d %s"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s%s: サーバにデータを送信中: %d %s"
 
 msgid "(message dropped)"
@@ -7442,6 +7442,14 @@ msgstr "認証失敗"
 msgid "disconnected"
 msgstr "切断されました"
 
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s%s: ソケットからデータを読み取り中: エラー %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s%s: クライアント %d (%s) へのデータ送信中にエラー"
+
 #, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr "%s: %s%s%s ポート %d での新規クライアント (id: %d、リレー: %s%s%s)"
@@ -7672,14 +7680,6 @@ msgstr "%s%s: 新しいポートをリッスンするためのメモリ不足"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: メッセージ解析用のメモリが足りません"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: クライアントへのデータ送信中にエラー: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: クライアント %d (%s) へのデータ送信中にエラー"
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
@@ -8483,6 +8483,13 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "%s%s: sending data to client error %d: %d %s"
+#~ msgstr "%s%s: クライアント %d (%s) へのデータ送信中にエラー"
+
+#~ msgid "%s%s: error sending data to client: %s"
+#~ msgstr "%s%s: クライアントへのデータ送信中にエラー: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "\"buffer_name\" バーアイテムにチャンネルモードを表示"

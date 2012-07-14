@@ -1183,6 +1183,8 @@ irc_server_outqueue_free (struct t_irc_server *server,
     if (outqueue->tags)
         free (outqueue->tags);
     free (outqueue);
+
+    /* set new head */
     server->outqueue[priority] = new_outqueue;
 }
 
@@ -1561,7 +1563,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
         if (server->ssl_connected)
         {
             weechat_printf (server->buffer,
-                            _("%s%s: sending data to server: %d %s"),
+                            _("%s%s: sending data to server: error %d %s"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             rc,
                             gnutls_strerror (rc));
@@ -1570,7 +1572,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 #endif
         {
             weechat_printf (server->buffer,
-                            _("%s%s: sending data to server: %d %s"),
+                            _("%s%s: sending data to server: error %d %s"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             errno,
                             strerror (errno));

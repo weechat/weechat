@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6181,7 +6181,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: sending data to server: %d %s"
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
 
 msgid "(message dropped)"
@@ -6942,6 +6942,14 @@ msgstr "Неудача"
 msgid "disconnected"
 msgstr "подключен"
 
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
 #, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr ""
@@ -7154,14 +7162,6 @@ msgstr "%s недостаточно памяти для нового DCC\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s недостаточно памяти для полученного сообщения\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s ошибка при отправке данных IRC серверу\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s ошибка при отправке данных IRC серверу\n"
 
 #, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
@@ -7960,6 +7960,14 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: sending data to client error %d: %d %s"
+#~ msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy
+#~ msgid "%s%s: error sending data to client: %s"
+#~ msgstr "%s ошибка при отправке данных IRC серверу\n"
 
 #, fuzzy
 #~ msgid "%sError: name can not start with \"#\""

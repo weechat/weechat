@@ -136,22 +136,20 @@ end:
  * relay_irc_sendf: send formatted data to client
  */
 
-int
+void
 relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
 {
-    int length, num_sent, total_sent, number;
+    int length, number;
     char *pos, hash_key[32], *message;
     const char *str_message;
     struct t_hashtable *hashtable_in, *hashtable_out;
 
     if (!client)
-        return 0;
+        return;
 
     weechat_va_format (format);
     if (!vbuffer)
-        return 0;
-
-    total_sent = 0;
+        return;
 
     pos = strchr (vbuffer, '\r');
     if (pos)
@@ -186,16 +184,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
                 if (message)
                 {
                     snprintf (message, length, "%s\r\n", str_message);
-                    num_sent = send (client->sock, message, strlen (message), 0);
-                    if (num_sent >= 0)
-                        total_sent += num_sent;
-                    else
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: error sending data to client: %s"),
-                                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                        strerror (errno));
-                    }
+                    relay_client_send (client, message, strlen (message));
                     free (message);
                 }
                 number++;
@@ -205,13 +194,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
         weechat_hashtable_free (hashtable_in);
     }
 
-    client->bytes_sent += total_sent;
-
     free (vbuffer);
-
-    relay_buffer_refresh (NULL);
-
-    return total_sent;
 }
 
 /*

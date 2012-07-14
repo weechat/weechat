@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -909,12 +908,10 @@ relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
 
 void
 relay_weechat_msg_send (struct t_relay_client *client,
-                        struct t_relay_weechat_msg *msg,
-                        int display_in_raw_buffer)
+                        struct t_relay_weechat_msg *msg)
 {
     uint32_t size32;
     char compression;
-    int num_sent;
 #ifdef HAVE_ZLIB
     int rc;
     Bytef *dest;
@@ -942,31 +939,17 @@ relay_weechat_msg_send (struct t_relay_client *client,
                 memcpy (dest, &size32, 4);
                 dest[4] = 1;
 
-                /* send compressed data */
-                num_sent = send (client->sock, dest, dest_size + 5, 0);
-
                 /* display message in raw buffer */
-                if (display_in_raw_buffer)
-                {
-                    relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                                     "obj: %d/%d bytes (%d%%, %ldms), id: %s",
-                                     (int)dest_size + 5,
-                                     msg->data_size,
-                                     100 - ((((int)dest_size + 5) * 100) / msg->data_size),
-                                     time_diff,
-                                     msg->id);
-                    if (num_sent < 0)
-                    {
-                        relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                                         "error: %s", strerror (errno));
-                    }
-                }
+                relay_raw_print (client, RELAY_RAW_FLAG_SEND,
+                                 "obj: %d/%d bytes (%d%%, %ldms), id: %s",
+                                 (int)dest_size + 5,
+                                 msg->data_size,
+                                 100 - ((((int)dest_size + 5) * 100) / msg->data_size),
+                                 time_diff,
+                                 msg->id);
 
-                if (num_sent > 0)
-                {
-                    client->bytes_sent += num_sent;
-                    relay_buffer_refresh (NULL);
-                }
+                /* send compressed data */
+                relay_client_send (client, (const char *)dest, dest_size + 5);
 
                 free (dest);
                 return;
@@ -982,26 +965,12 @@ relay_weechat_msg_send (struct t_relay_client *client,
     compression = 0;
     relay_weechat_msg_set_bytes (msg, 4, &compression, 1);
 
-    /* send uncompressed data */
-    num_sent = send (client->sock, msg->data, msg->data_size, 0);
-
     /* display message in raw buffer */
-    if (display_in_raw_buffer)
-    {
-        relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                         "obj: %d bytes", msg->data_size);
-        if (num_sent < 0)
-        {
-            relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                             "error: %s", strerror (errno));
-        }
-    }
+    relay_raw_print (client, RELAY_RAW_FLAG_SEND,
+                     "obj: %d bytes", msg->data_size);
 
-    if (num_sent > 0)
-    {
-        client->bytes_sent += num_sent;
-        relay_buffer_refresh (NULL);
-    }
+    /* send uncompressed data */
+    relay_client_send (client, msg->data, msg->data_size);
 }
 
 /*
@@ -1017,47 +986,4 @@ relay_weechat_msg_free (struct t_relay_weechat_msg *msg)
         free (msg->data);
 
     free (msg);
-}
-
-/*
- * relay_weechat_sendf: send formatted data to client
- */
-
-int
-relay_weechat_sendf (struct t_relay_client *client, const char *format, ...)
-{
-    char str_length[8];
-    int length_vbuffer, num_sent, total_sent;
-
-    if (!client)
-        return 0;
-
-    weechat_va_format (format);
-    if (!vbuffer)
-        return 0;
-    length_vbuffer = strlen (vbuffer);
-
-    total_sent = 0;
-
-    snprintf (str_length, sizeof (str_length), "%07d", length_vbuffer);
-
-    num_sent = send (client->sock, str_length, 7, 0);
-    client->bytes_sent += 7;
-    total_sent += num_sent;
-    if (num_sent >= 0)
-    {
-        num_sent = send (client->sock, vbuffer, length_vbuffer, 0);
-        client->bytes_sent += length_vbuffer;
-        total_sent += num_sent;
-    }
-
-    if (num_sent < 0)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error sending data to client %d (%s)"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        client->id, strerror (errno));
-    }
-
-    return total_sent;
 }

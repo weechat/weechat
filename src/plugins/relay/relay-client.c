@@ -155,7 +155,250 @@ relay_client_recv_cb (void *arg_client, int fd)
     }
     else
     {
-        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        if ((num_read == 0)
+            || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
+        {
+            weechat_printf (NULL,
+                            _("%s%s: reading data on socket for client %d: "
+                              "error %d %s"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            client->id,
+                            errno,
+                            (num_read == 0) ? _("(connection closed by peer)") :
+                            strerror (errno));
+            relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * relay_client_outqueue_add: add a message in out queue
+ */
+
+void
+relay_client_outqueue_add (struct t_relay_client *client, const char *data,
+                           int data_size)
+{
+    struct t_relay_client_outqueue *new_outqueue;
+
+    if (!client || !data || (data_size <= 0))
+        return;
+
+    new_outqueue = malloc (sizeof (*new_outqueue));
+    if (new_outqueue)
+    {
+        new_outqueue->data = malloc (data_size);
+        if (!new_outqueue->data)
+        {
+            free (new_outqueue);
+            return;
+        }
+        memcpy (new_outqueue->data, data, data_size);
+        new_outqueue->data_size = data_size;
+
+        new_outqueue->prev_outqueue = client->last_outqueue;
+        new_outqueue->next_outqueue = NULL;
+        if (client->outqueue)
+            client->last_outqueue->next_outqueue = new_outqueue;
+        else
+            client->outqueue = new_outqueue;
+        client->last_outqueue = new_outqueue;
+    }
+}
+
+/*
+ * relay_client_outqueue_free: free a message in out queue
+ */
+
+void
+relay_client_outqueue_free (struct t_relay_client *client,
+                            struct t_relay_client_outqueue *outqueue)
+{
+    struct t_relay_client_outqueue *new_outqueue;
+
+    /* remove outqueue message */
+    if (client->last_outqueue == outqueue)
+        client->last_outqueue = outqueue->prev_outqueue;
+    if (outqueue->prev_outqueue)
+    {
+        (outqueue->prev_outqueue)->next_outqueue = outqueue->next_outqueue;
+        new_outqueue = client->outqueue;
+    }
+    else
+        new_outqueue = outqueue->next_outqueue;
+
+    if (outqueue->next_outqueue)
+        (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
+
+    /* free data */
+    if (outqueue->data)
+        free (outqueue->data);
+    free (outqueue);
+
+    /* set new head */
+    client->outqueue = new_outqueue;
+}
+
+/*
+ * relay_client_outqueue_free_all: free all outqueued messages
+ */
+
+void
+relay_client_outqueue_free_all (struct t_relay_client *client)
+{
+    while (client->outqueue)
+    {
+        relay_client_outqueue_free (client, client->outqueue);
+    }
+}
+
+/*
+ * relay_client_send: send data to client (add in outqueue if it's impossible
+ *                    to send now)
+ *                    return number of bytes sent to client
+ */
+
+int
+relay_client_send (struct t_relay_client *client, const char *data,
+                   int data_size)
+{
+    int num_sent;
+
+    if (client->sock < 0)
+        return -1;
+
+    num_sent = -1;
+
+    /*
+     * if outqueue is not empty, add to outqueue
+     * (because message must be sent *after* messages already in outqueue)
+     */
+    if (client->outqueue)
+    {
+        relay_client_outqueue_add (client, data, data_size);
+    }
+    else
+    {
+        num_sent = send (client->sock, data, data_size, 0);
+        if (num_sent >= 0)
+        {
+            if (num_sent > 0)
+            {
+                client->bytes_sent += num_sent;
+                relay_buffer_refresh (NULL);
+            }
+            if (num_sent < data_size)
+            {
+                /* some data was not sent, add it to outqueue */
+                relay_client_outqueue_add (client, data + num_sent,
+                                           data_size - num_sent);
+            }
+        }
+        else if (num_sent < 0)
+        {
+            if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+            {
+                /* add message to queue (will be sent later) */
+                relay_client_outqueue_add (client, data, data_size);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: sending data to client %d: error %d %s"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                client->id,
+                                errno, strerror (errno));
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+            }
+        }
+    }
+
+    return num_sent;
+}
+
+/*
+ * relay_client_timer_cb: timer called each second to perform some operations
+ *                        on clients
+ */
+
+int
+relay_client_timer_cb (void *data, int remaining_calls)
+{
+    struct t_relay_client *ptr_client;
+    int num_sent;
+    char *buf;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
+    {
+        if (ptr_client->sock >= 0)
+        {
+            while (ptr_client->outqueue)
+            {
+                num_sent = send (ptr_client->sock, ptr_client->outqueue->data,
+                                 ptr_client->outqueue->data_size, 0);
+                if (num_sent >= 0)
+                {
+                    if (num_sent > 0)
+                    {
+                        ptr_client->bytes_sent += num_sent;
+                        relay_buffer_refresh (NULL);
+                    }
+                    if (num_sent == ptr_client->outqueue->data_size)
+                    {
+                        /* whole data sent, remove outqueue */
+                        relay_client_outqueue_free (ptr_client,
+                                                    ptr_client->outqueue);
+                    }
+                    else
+                    {
+                        /*
+                         * some data was not sent, update outqueue and stop
+                         * sending data from outqueue
+                         */
+                        if (num_sent > 0)
+                        {
+                            buf = malloc (ptr_client->outqueue->data_size - num_sent);
+                            if (buf)
+                            {
+                                memcpy (buf,
+                                        ptr_client->outqueue->data + num_sent,
+                                        ptr_client->outqueue->data_size - num_sent);
+                                free (ptr_client->outqueue->data);
+                                ptr_client->outqueue->data = buf;
+                                ptr_client->outqueue->data_size = ptr_client->outqueue->data_size - num_sent;
+                            }
+                        }
+                        break;
+                    }
+                }
+                else if (num_sent < 0)
+                {
+                    if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+                    {
+                        /* we will retry later this client's queue */
+                        break;
+                    }
+                    else
+                    {
+                        weechat_printf (NULL,
+                                        _("%s%s: sending data to client %d: error %d %s"),
+                                        weechat_prefix ("error"),
+                                        RELAY_PLUGIN_NAME,
+                                        ptr_client->id,
+                                        errno, strerror (errno));
+                        relay_client_set_status (ptr_client,
+                                                 RELAY_STATUS_DISCONNECTED);
+                    }
+                }
+            }
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -199,6 +442,9 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
+
+        new_client->outqueue = NULL;
+        new_client->last_outqueue = NULL;
 
         new_client->prev_client = NULL;
         new_client->next_client = relay_clients;
@@ -258,6 +504,8 @@ relay_client_set_status (struct t_relay_client *client,
     if (RELAY_CLIENT_HAS_ENDED(client))
     {
         client->end_time = time (NULL);
+
+        relay_client_outqueue_free_all (client);
 
         if (client->hook_fd)
         {
@@ -360,6 +608,7 @@ relay_client_free (struct t_relay_client *client)
                 break;
         }
     }
+    relay_client_outqueue_free_all (client);
 
     free (client);
 
@@ -525,6 +774,8 @@ relay_client_print_log ()
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
+        weechat_log_printf ("  outqueue. . . . . . . : 0x%lx", ptr_client->outqueue);
+        weechat_log_printf ("  last_outqueue . . . . : 0x%lx", ptr_client->last_outqueue);
         weechat_log_printf ("  prev_client . . . . . : 0x%lx", ptr_client->prev_client);
         weechat_log_printf ("  next_client . . . . . : 0x%lx", ptr_client->next_client);
     }

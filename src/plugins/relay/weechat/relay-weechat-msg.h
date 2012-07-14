@@ -74,8 +74,7 @@ extern void relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
 extern void relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
                                             struct t_gui_buffer *buffer);
 extern void relay_weechat_msg_send (struct t_relay_client *client,
-                                    struct t_relay_weechat_msg *msg,
-                                    int display_in_raw_buffer);
+                                    struct t_relay_weechat_msg *msg);
 extern void relay_weechat_msg_free (struct t_relay_weechat_msg *msg);
 
 #endif /* __WEECHAT_RELAY_WEECHAT_MSG_H */

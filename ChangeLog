@@ -40,11 +40,14 @@ Version 0.3.9 (under dev!)
   (bug #36756)
 * irc: add option irc.look.ctcp_time_format to customize reply to CTCP TIME
   (task #12150)
-* irc: fix freeze when reading on socket with SSL enabled (bug #35097)
+* irc: fix freeze when reading on socket with SSL enabled (use non-blocking
+  sockets) (bug #35097)
 * irc: reallow names beginning with "#" for servers
 * lua: support of lua 5.2
 * lua: fix crash when unloading a script without pointer to interpreter
 * python: fix crash when unloading a script without pointer to interpreter
+* relay: fix freeze when writing on relay socket (use non-blocking sockets in
+  relay for irc and weechat protocols) (bug #36655)
 * ruby: detect ruby version 1.9.3 in cmake and autotools
 * scripts: ignore call to "register" (with a warning) if script is already
   registered

@@ -50,6 +50,8 @@ int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
 char *relay_protocol_string[] =        /* strings for protocols             */
 { "weechat", "irc" };
 
+struct t_hook *relay_hook_timer = NULL;
+
 
 /*
  * relay_protocol_search: search a protocol by name
@@ -172,6 +174,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (upgrading)
         relay_upgrade_load ();
 
+    relay_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
+                                           &relay_client_timer_cb, NULL);
+
     return WEECHAT_RC_OK;
 }
 
@@ -184,6 +189,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+
+    if (relay_hook_timer)
+        weechat_unhook (relay_hook_timer);
 
     relay_config_write ();
 

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
-"PO-Revision-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
+"PO-Revision-Date: 2012-07-14 16:28+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6910,7 +6910,7 @@ msgstr ""
 "problème aux développeurs)"
 
 #, c-format
-msgid "%s%s: sending data to server: %d %s"
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s%s: envoi de données au serveur: erreur %d %s"
 
 msgid "(message dropped)"
@@ -7703,6 +7703,14 @@ msgid "disconnected"
 msgstr "déconnecté"
 
 #, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s%s: lecture de données sur la socket pour le client %d: erreur %d %s"
+
+#, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s%s: envoi de données au client %d: erreur %d %s"
+
+#, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s%s%s)"
 
@@ -7937,14 +7945,6 @@ msgstr "%s%s: pas assez de mémoire pour écouter sur le nouveau port"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: mémoire insuffisante pour analyser le message"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: erreur d'envoi de données au client: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: erreur d'envoi de données au client %d (%s)"
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"

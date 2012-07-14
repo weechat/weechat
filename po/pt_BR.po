@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 10:46+0200\n"
+"POT-Creation-Date: 2012-07-14 22:39+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6299,8 +6299,8 @@ msgstr ""
 "%s%s: enviando dados ao servidor: buffer vazio (por favor, reporte o "
 "problema aos desenvolvedores)"
 
-#, c-format
-msgid "%s%s: sending data to server: %d %s"
+#, fuzzy, c-format
+msgid "%s%s: sending data to server: error %d %s"
 msgstr "%s%s: enviando dados ao servidor: %d %s"
 
 msgid "(message dropped)"
@@ -7057,6 +7057,14 @@ msgid "disconnected"
 msgstr "desconectado"
 
 #, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgstr "%s%s: lendo dados no socket: erro %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %d: error %d %s"
+msgstr "%s%s: erro ao enviar dados ao cliente %d (%s)"
+
+#, fuzzy, c-format
 msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 msgstr "%s: novo cliente de %s%s%s na porta %d (id: %d, relaying: %s.%s)"
 
@@ -7267,14 +7275,6 @@ msgstr "%s%s: memória insuficiente para escutar na nova porta"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: memória insuficiente para interpretar mensagem"
-
-#, c-format
-msgid "%s%s: error sending data to client: %s"
-msgstr "%s%s: erro ao enviar dados ao cliente: %s"
-
-#, c-format
-msgid "%s%s: error sending data to client %d (%s)"
-msgstr "%s%s: erro ao enviar dados ao cliente %d (%s)"
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %d"
@@ -8070,6 +8070,13 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: sending data to client error %d: %d %s"
+#~ msgstr "%s%s: erro ao enviar dados ao cliente %d (%s)"
+
+#~ msgid "%s%s: error sending data to client: %s"
+#~ msgstr "%s%s: erro ao enviar dados ao cliente: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "exibir modos do canal no item da barra \"buffer_name\""

@@ -145,7 +145,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
     {
         relay_weechat_msg_add_hdata (msg, argv[0],
                                      (argc > 1) ? argv_eol[1] : NULL);
-        relay_weechat_msg_send (client, msg, 1);
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 
@@ -171,7 +171,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INFO);
         relay_weechat_msg_add_string (msg, argv[0]);
         relay_weechat_msg_add_string (msg, info);
-        relay_weechat_msg_send (client, msg, 1);
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 
@@ -205,7 +205,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
                 args = argv_eol[2];
         }
         relay_weechat_msg_add_infolist (msg, argv[0], (void *)value, args);
-        relay_weechat_msg_send (client, msg, 1);
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 
@@ -236,7 +236,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
     if (msg)
     {
         relay_weechat_msg_add_nicklist (msg, ptr_buffer);
-        relay_weechat_msg_send (client, msg, 1);
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 
@@ -306,7 +306,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                                          "number,full_name,short_name,"
                                          "nicklist,title,local_variables,"
                                          "prev_buffer,next_buffer");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -323,7 +323,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                       "buffer:0x%lx", (long unsigned int)ptr_buffer);
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,type");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -341,7 +341,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,"
                                          "prev_buffer,next_buffer");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -360,7 +360,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,"
                                          "prev_buffer,next_buffer");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -378,7 +378,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,short_name,"
                                          "local_variables");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -395,7 +395,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                       "buffer:0x%lx", (long unsigned int)ptr_buffer);
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,title");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -412,7 +412,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                       "buffer:0x%lx", (long unsigned int)ptr_buffer);
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name,local_variables");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -436,7 +436,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
 
         ptr_buffer = weechat_hdata_pointer (ptr_hdata_line_data, ptr_line_data,
                                             "buffer");
-        if (!ptr_buffer)
+        if (!ptr_buffer || (relay_raw_buffer && (ptr_buffer == relay_raw_buffer)))
             return WEECHAT_RC_OK;
 
         /* check if buffer is synchronized (== able to receive events) */
@@ -456,7 +456,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                                              "buffer,date,date_printed,"
                                              "displayed,highlight,prefix,"
                                              "message");
-                relay_weechat_msg_send (ptr_client, msg, 0);
+                relay_weechat_msg_send (ptr_client, msg);
                 relay_weechat_msg_free (msg);
             }
         }
@@ -476,7 +476,7 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
                                       cmd_hdata + 7);
             relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                          "number,full_name");
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -523,7 +523,7 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
                 if (msg)
                 {
                     relay_weechat_msg_add_nicklist (msg, (struct t_gui_buffer *)buffer);
-                    relay_weechat_msg_send (ptr_client, msg, 1);
+                    relay_weechat_msg_send (ptr_client, msg);
                     relay_weechat_msg_free (msg);
                 }
             }
@@ -628,7 +628,7 @@ relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
         msg = relay_weechat_msg_new (str_signal);
         if (msg)
         {
-            relay_weechat_msg_send (ptr_client, msg, 0);
+            relay_weechat_msg_send (ptr_client, msg);
             relay_weechat_msg_free (msg);
         }
     }
@@ -828,7 +828,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
         relay_weechat_msg_add_pointer (msg, &msg);
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
         relay_weechat_msg_add_time (msg, 1321993456);
-        relay_weechat_msg_send (client, msg, 1);
+        relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }
 
