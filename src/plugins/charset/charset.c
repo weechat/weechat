@@ -87,7 +87,7 @@ charset_is_allowed (const char *charset)
         || weechat_strcasestr (charset, "utf8"))
     {
         weechat_printf (NULL,
-                        _("%s%s: UTF-8 is now allowed in charset options (it "
+                        _("%s%s: UTF-8 is not allowed in charset options (it "
                           "is internal and default charset: default encode "
                           "is UTF-8 and decode of UTF-8 is OK even if you "
                           "specify another charset to decode)"),
