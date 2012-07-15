@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 23:00+0200\n"
+"POT-Creation-Date: 2012-07-15 09:18+0200\n"
 "PO-Revision-Date: 2012-06-30 14:28+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -6094,8 +6094,10 @@ msgstr ""
 "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
 "letzten Nick, mit dem gesprochen wurde)"
 
-msgid "display message when (un)marking as away"
-msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
+msgid ""
+"display message when (un)marking as away (off: do not display/send anything, "
+"local: display locally, channel: send action to channels)"
+msgstr ""
 
 msgid "display CTCP message even if it is blocked"
 msgstr "CTCP Nachrichten werden angezeigt, obwohl sie unterdrückt werden"
@@ -8988,6 +8990,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
 
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"

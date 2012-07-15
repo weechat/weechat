@@ -2102,7 +2102,8 @@ irc_config_init ()
     irc_config_look_display_away = weechat_config_new_option (
         irc_config_file, ptr_section,
         "display_away", "integer",
-        N_("display message when (un)marking as away"),
+        N_("display message when (un)marking as away (off: do not display/send "
+           "anything, local: display locally, channel: send action to channels)"),
         "off|local|channel", 0, 0, "local", NULL, 0, NULL, NULL, NULL, NULL,
         NULL, NULL);
     irc_config_look_display_ctcp_blocked = weechat_config_new_option (

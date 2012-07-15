@@ -109,7 +109,7 @@
 ** values: any string (default value: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** description: `display message when (un)marking as away`
+** description: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
 ** type: integer
 ** values: off, local, channel (default value: `local`)
 

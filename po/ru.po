@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 23:00+0200\n"
+"POT-Creation-Date: 2012-07-15 09:18+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5255,8 +5255,10 @@ msgstr ""
 msgid "smart completion for nicks (completes first with last speakers)"
 msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
-msgid "display message when (un)marking as away"
-msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
+msgid ""
+"display message when (un)marking as away (off: do not display/send anything, "
+"local: display locally, channel: send action to channels)"
+msgstr ""
 
 msgid "display CTCP message even if it is blocked"
 msgstr ""
@@ -7960,6 +7962,9 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
 
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"

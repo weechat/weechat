@@ -109,7 +109,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** descrizione: `visualizza messaggio al cambio dello stato di assenza`
+** descrizione: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
 ** tipo: intero
 ** valori: off, local, channel (valore predefinito: `local`)
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-14 23:00+0200\n"
+"POT-Creation-Date: 2012-07-15 09:18+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -5731,8 +5731,10 @@ msgstr ""
 msgid "smart completion for nicks (completes first with last speakers)"
 msgstr "ニックネームのスマート補完 (最新の会話から優先して補完)"
 
-msgid "display message when (un)marking as away"
-msgstr "離席(着席)状態の場合はメッセージを表示"
+msgid ""
+"display message when (un)marking as away (off: do not display/send anything, "
+"local: display locally, channel: send action to channels)"
+msgstr ""
 
 msgid "display CTCP message even if it is blocked"
 msgstr "ブロックした場合でも CTCP メッセージを表示"
@@ -8483,6 +8485,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "離席(着席)状態の場合はメッセージを表示"
 
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"

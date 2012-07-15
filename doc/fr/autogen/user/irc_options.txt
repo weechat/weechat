@@ -109,7 +109,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** description: `affiche un message pour l'absence/le retour`
+** description: `afficher un message pour l'absence/retour (off: ne rien afficher/envoyer, local: afficher en local, channel: envoyer l'action aux canaux)`
 ** type: entier
 ** valeurs: off, local, channel (valeur par défaut: `local`)
 
