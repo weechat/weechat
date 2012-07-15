@@ -2793,6 +2793,7 @@ void
 irc_server_login (struct t_irc_server *server)
 {
     const char *password, *username, *realname, *capabilities;
+    char *username2;
 
     password = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD);
     username = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME);
@@ -2817,14 +2818,16 @@ irc_server_login (struct t_irc_server *server)
         irc_server_sendf (server, 0, NULL, "CAP LS");
     }
 
+    username2 = (username && username[0]) ?
+        weechat_string_replace (username, " ", "_") : strdup ("weechat");
     irc_server_sendf (server, 0, NULL,
                       "NICK %s\n"
-                      "USER %s %s %s :%s",
+                      "USER %s 0 * :%s",
                       server->nick,
-                      (username && username[0]) ? username : "weechat",
-                      (username && username[0]) ? username : "weechat",
-                      server->current_address,
-                      (realname && realname[0]) ? realname : ((username && username[0]) ? username : "weechat"));
+                      (username2) ? username2 : "weechat",
+                      (realname && realname[0]) ? realname : ((username2) ? username2 : "weechat"));
+    if (username2)
+        free (username2);
 
     if (server->hook_timer_connection)
         weechat_unhook (server->hook_timer_connection);
