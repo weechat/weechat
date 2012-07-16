@@ -214,6 +214,9 @@ relay_upgrade_read_cb (void *data,
                             break;
                     }
 
+                    new_client->outqueue = NULL;
+                    new_client->last_outqueue = NULL;
+
                     new_client->prev_client = NULL;
                     new_client->next_client = relay_clients;
                     if (relay_clients)
