@@ -521,6 +521,8 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
   nombre: nombre de fois que la commande sera exécutée
 commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 
+Toutes les commandes sont exécutées sur le tampon où la commande a été lancée.
+
 Exemple:
   faire défiler de 2 pages vers le haut:
     /repeat 2 /window page_up
