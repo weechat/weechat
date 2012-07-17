@@ -1423,8 +1423,8 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_buffer_line_add_to_infolist: add a buffer line in an infolist
- *                                  return 1 if ok, 0 if error
+ * gui_line_add_to_infolist: add a line in an infolist
+ *                           return 1 if ok, 0 if error
  */
 
 int
