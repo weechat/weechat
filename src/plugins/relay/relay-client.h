@@ -90,6 +90,7 @@ extern int relay_client_send (struct t_relay_client *client, const char *data,
 extern int relay_client_timer_cb (void *data, int remaining_calls);
 extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);
+extern struct t_relay_client *relay_client_new_with_infolist (struct t_infolist *infolist);
 extern void relay_client_set_status (struct t_relay_client *client,
                                      enum t_relay_status status);
 extern void relay_client_free (struct t_relay_client *client);

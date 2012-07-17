@@ -492,6 +492,75 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 }
 
 /*
+ * relay_client_new_with_infolist: create a new client using an infolist
+ */
+
+struct t_relay_client *
+relay_client_new_with_infolist (struct t_infolist *infolist)
+{
+    struct t_relay_client *new_client;
+    const char *str;
+
+    new_client = malloc (sizeof (*new_client));
+    if (new_client)
+    {
+        new_client->id = weechat_infolist_integer (infolist, "id");
+        new_client->sock = weechat_infolist_integer (infolist, "sock");
+        new_client->address = strdup (weechat_infolist_string (infolist, "address"));
+        new_client->status = weechat_infolist_integer (infolist, "status");
+        new_client->protocol = weechat_infolist_integer (infolist, "protocol");
+        str = weechat_infolist_string (infolist, "protocol_args");
+        new_client->protocol_args = (str) ? strdup (str) : NULL;
+        new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
+        new_client->start_time = weechat_infolist_time (infolist, "start_time");
+        new_client->end_time = weechat_infolist_time (infolist, "end_time");
+        if (new_client->sock >= 0)
+        {
+            new_client->hook_fd = weechat_hook_fd (new_client->sock,
+                                                   1, 0, 0,
+                                                   &relay_client_recv_cb,
+                                                   new_client);
+        }
+        else
+            new_client->hook_fd = NULL;
+        new_client->last_activity = weechat_infolist_time (infolist, "last_activity");
+        sscanf (weechat_infolist_string (infolist, "bytes_recv"),
+                "%lu", &(new_client->bytes_recv));
+        sscanf (weechat_infolist_string (infolist, "bytes_sent"),
+                "%lu", &(new_client->bytes_sent));
+
+        switch (new_client->protocol)
+        {
+            case RELAY_PROTOCOL_WEECHAT:
+                relay_weechat_alloc_with_infolist (new_client,
+                                                   infolist);
+                break;
+            case RELAY_PROTOCOL_IRC:
+                relay_irc_alloc_with_infolist (new_client,
+                                               infolist);
+                break;
+            case RELAY_NUM_PROTOCOLS:
+                break;
+        }
+
+        new_client->outqueue = NULL;
+        new_client->last_outqueue = NULL;
+
+        new_client->prev_client = NULL;
+        new_client->next_client = relay_clients;
+        if (relay_clients)
+            relay_clients->prev_client = new_client;
+        else
+            last_relay_client = new_client;
+        relay_clients = new_client;
+
+        relay_client_count++;
+    }
+
+    return new_client;
+}
+
+/*
  * relay_client_set_status: set status for a client
  */
 
