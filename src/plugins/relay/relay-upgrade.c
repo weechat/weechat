@@ -30,8 +30,6 @@
 #include "relay-upgrade.h"
 #include "relay-buffer.h"
 #include "relay-client.h"
-#include "irc/relay-irc.h"
-#include "weechat/relay-weechat.h"
 #include "relay-raw.h"
 
 
