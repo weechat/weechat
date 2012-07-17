@@ -6,10 +6,6 @@ Sébastien Helleu <flashcode@flashtux.org>
 This document is the specification of WeeChat relay protocol: the protocol used
 to relay WeeChat data to clients, which are mostly remote interfaces.
 
-[WARNING]
-This document is a *DRAFT*. +
-The protocol is under heavy development and is *NOT READY* for usage. Stay tuned!
-
 
 [[introduction]]
 Introduction
