@@ -34,7 +34,7 @@ IF(PYTHON_FOUND)
 ENDIF(PYTHON_FOUND)
 
 FIND_PROGRAM(PYTHON_EXECUTABLE
-  NAMES python python2.7 python2.6 python2.5 python2.4 python2.3 python2.2
+  NAMES python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python
   PATHS /usr/bin /usr/local/bin /usr/pkg/bin
   )
 
@@ -65,7 +65,7 @@ IF(PYTHON_EXECUTABLE)
     )
 
   FIND_LIBRARY(PYTHON_LIBRARY
-    NAMES python python2.7 python2.6 python2.5 python2.4 python2.3 python2.2
+    NAMES python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python
     PATHS ${PYTHON_POSSIBLE_LIB_PATH}
     )
 

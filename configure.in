@@ -459,7 +459,7 @@ fi
 PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
-    AC_PATH_PROGS(PYTHON, python python2.7 python2.6 python2.5 python2.4 python2.3 python2.2)
+    AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python)
     if test -z $PYTHON ; then
         AC_MSG_WARN([
 *** Python must be installed on your system but python interpreter couldn't be found in path.

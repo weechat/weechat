@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-15
+v0.3.9-dev, 2012-07-17
 
 
 Version 0.3.9 (under dev!)
@@ -46,6 +46,8 @@ Version 0.3.9 (under dev!)
 * irc: reallow names beginning with "#" for servers
 * lua: support of lua 5.2
 * lua: fix crash when unloading a script without pointer to interpreter
+* python: fix detection of python (first try "python2.x" and then "python")
+  (bug #36835)
 * python: fix crash when unloading a script without pointer to interpreter
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
   relay for irc and weechat protocols) (bug #36655)
