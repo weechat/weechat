@@ -27,11 +27,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdarg.h>
 #include <libgen.h>
 #include <sys/ioctl.h>
+#include <sys/termios.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
