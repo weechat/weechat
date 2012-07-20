@@ -336,8 +336,9 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                                   void *pointer,
                                   char **list_keys)
 {
-    int num_added, i, count, count_all, type;
-    char *pos, *pos2, *str_count, *error;
+    int num_added, i, j, count, count_all, var_type, array_size, max_array_size;
+    int length;
+    char *pos, *pos2, *str_count, *error, *name;
     void *sub_pointer;
     struct t_hdata *sub_hdata;
     const char *sub_hdata_name;
@@ -414,53 +415,96 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
             }
             for (i = 0; list_keys[i]; i++)
             {
-                type = weechat_hdata_get_var_type (hdata, list_keys[i]);
-                if ((type >= 0) && (type != WEECHAT_HDATA_OTHER))
+                var_type = weechat_hdata_get_var_type (hdata, list_keys[i]);
+                if ((var_type >= 0) && (var_type != WEECHAT_HDATA_OTHER))
                 {
-                    switch (type)
+                    max_array_size = 1;
+                    array_size = weechat_hdata_get_var_array_size (hdata,
+                                                                   pointer,
+                                                                   list_keys[i]);
+                    if (array_size >= 0)
                     {
-                        case WEECHAT_HDATA_CHAR:
-                            relay_weechat_msg_add_char (msg,
-                                                        weechat_hdata_char (hdata,
-                                                                            pointer,
-                                                                            list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_INTEGER:
-                            relay_weechat_msg_add_int (msg,
-                                                       weechat_hdata_integer (hdata,
-                                                                              pointer,
-                                                                              list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_LONG:
-                            relay_weechat_msg_add_long (msg,
-                                                        weechat_hdata_long (hdata,
-                                                                            pointer,
-                                                                            list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_STRING:
-                            relay_weechat_msg_add_string (msg,
-                                                          weechat_hdata_string (hdata,
-                                                                                pointer,
-                                                                                list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_POINTER:
-                            relay_weechat_msg_add_pointer (msg,
-                                                           weechat_hdata_pointer (hdata,
-                                                                                  pointer,
-                                                                                  list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_TIME:
-                            relay_weechat_msg_add_time (msg,
-                                                        weechat_hdata_time (hdata,
-                                                                            pointer,
-                                                                            list_keys[i]));
-                            break;
-                        case WEECHAT_HDATA_HASHTABLE:
-                            relay_weechat_msg_add_hashtable (msg,
-                                                             weechat_hdata_hashtable (hdata,
+                        switch (var_type)
+                        {
+                            case WEECHAT_HDATA_CHAR:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_CHAR);
+                                break;
+                            case WEECHAT_HDATA_INTEGER:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
+                                break;
+                            case WEECHAT_HDATA_LONG:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
+                                break;
+                            case WEECHAT_HDATA_STRING:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
+                                break;
+                            case WEECHAT_HDATA_POINTER:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
+                                break;
+                            case WEECHAT_HDATA_TIME:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
+                                break;
+                            case WEECHAT_HDATA_HASHTABLE:
+                                relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
+                                break;
+                        }
+                        relay_weechat_msg_add_int (msg, array_size);
+                        max_array_size = array_size;
+                    }
+                    length = 16 + strlen (list_keys[i]) + 1;
+                    name = malloc (length);
+                    if (name)
+                    {
+                        for (j = 0; j < max_array_size; j++)
+                        {
+                            snprintf (name, length, "%d|%s", j, list_keys[i]);
+                            switch (var_type)
+                            {
+                                case WEECHAT_HDATA_CHAR:
+                                    relay_weechat_msg_add_char (msg,
+                                                                weechat_hdata_char (hdata,
+                                                                                    pointer,
+                                                                                    name));
+                                    break;
+                                case WEECHAT_HDATA_INTEGER:
+                                    relay_weechat_msg_add_int (msg,
+                                                               weechat_hdata_integer (hdata,
                                                                                       pointer,
-                                                                                      list_keys[i]));
-                            break;
+                                                                                      name));
+                                    break;
+                                case WEECHAT_HDATA_LONG:
+                                    relay_weechat_msg_add_long (msg,
+                                                                weechat_hdata_long (hdata,
+                                                                                    pointer,
+                                                                                    name));
+                                    break;
+                                case WEECHAT_HDATA_STRING:
+                                    relay_weechat_msg_add_string (msg,
+                                                                  weechat_hdata_string (hdata,
+                                                                                        pointer,
+                                                                                        name));
+                                    break;
+                                case WEECHAT_HDATA_POINTER:
+                                    relay_weechat_msg_add_pointer (msg,
+                                                                   weechat_hdata_pointer (hdata,
+                                                                                          pointer,
+                                                                                          name));
+                                    break;
+                                case WEECHAT_HDATA_TIME:
+                                    relay_weechat_msg_add_time (msg,
+                                                                weechat_hdata_time (hdata,
+                                                                                    pointer,
+                                                                                    name));
+                                    break;
+                                case WEECHAT_HDATA_HASHTABLE:
+                                    relay_weechat_msg_add_hashtable (msg,
+                                                                     weechat_hdata_hashtable (hdata,
+                                                                                              pointer,
+                                                                                              name));
+                                    break;
+                            }
+                        }
+                        free (name);
                     }
                 }
             }
@@ -507,7 +551,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     struct t_hdata *ptr_hdata_head, *ptr_hdata;
     char *hdata_head, *pos, **list_keys, *keys_types, **list_path;
     char *path_returned;
-    const char *hdata_name;
+    const char *hdata_name, *array_size;
     void *pointer, **path_pointers;
     long unsigned int value;
     int num_keys, num_path, i, type, pos_count, count, rc;
@@ -604,29 +648,37 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                 strcat (keys_types, ",");
             strcat (keys_types, list_keys[i]);
             strcat (keys_types, ":");
-            switch (type)
+            array_size = weechat_hdata_get_var_array_size_string (ptr_hdata,
+                                                                  NULL,
+                                                                  list_keys[i]);
+            if (array_size)
+                strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_ARRAY);
+            else
             {
-                case WEECHAT_HDATA_CHAR:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_CHAR);
-                    break;
-                case WEECHAT_HDATA_INTEGER:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_INT);
-                    break;
-                case WEECHAT_HDATA_LONG:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_LONG);
-                    break;
-                case WEECHAT_HDATA_STRING:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_STRING);
-                    break;
-                case WEECHAT_HDATA_POINTER:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_POINTER);
-                    break;
-                case WEECHAT_HDATA_TIME:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_TIME);
-                    break;
-                case WEECHAT_HDATA_HASHTABLE:
-                    strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
-                    break;
+                switch (type)
+                {
+                    case WEECHAT_HDATA_CHAR:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_CHAR);
+                        break;
+                    case WEECHAT_HDATA_INTEGER:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_INT);
+                        break;
+                    case WEECHAT_HDATA_LONG:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_LONG);
+                        break;
+                    case WEECHAT_HDATA_STRING:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_STRING);
+                        break;
+                    case WEECHAT_HDATA_POINTER:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_POINTER);
+                        break;
+                    case WEECHAT_HDATA_TIME:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_TIME);
+                        break;
+                    case WEECHAT_HDATA_HASHTABLE:
+                        strcat (keys_types, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
+                        break;
+                }
             }
         }
     }

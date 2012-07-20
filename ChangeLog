@@ -50,6 +50,7 @@ Version 0.3.9 (under dev!)
 * python: fix detection of python (first try "python2.x" and then "python")
   (bug #36835)
 * python: fix crash when unloading a script without pointer to interpreter
+* relay: add object type "arr" (array) in WeeChat protocol
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
   relay for irc and weechat protocols) (bug #36655)
 * ruby: detect ruby version 1.9.3 in cmake and autotools

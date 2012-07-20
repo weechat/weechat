@@ -808,26 +808,62 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
     msg = relay_weechat_msg_new (id);
     if (msg)
     {
+        /* char */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_CHAR);
         relay_weechat_msg_add_char (msg, 'A');
+
+        /* integer */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
         relay_weechat_msg_add_int (msg, 123456);
+
+        /* long */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
         relay_weechat_msg_add_long (msg, 1234567890L);
+
+        /* string */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
         relay_weechat_msg_add_string (msg, "a string");
+
+        /* empty string */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
         relay_weechat_msg_add_string (msg, "");
+
+        /* NULL string */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
         relay_weechat_msg_add_string (msg, NULL);
+
+        /* buffer */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_BUFFER);
         relay_weechat_msg_add_buffer (msg, "buffer", 6);
+
+        /* NULL buffer */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_BUFFER);
         relay_weechat_msg_add_buffer (msg, NULL, 0);
+
+        /* pointer */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
         relay_weechat_msg_add_pointer (msg, &msg);
+
+        /* time */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
         relay_weechat_msg_add_time (msg, 1321993456);
+
+        /* array of strings: { "abc", "de" } */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_ARRAY);
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
+        relay_weechat_msg_add_int (msg, 2);
+        relay_weechat_msg_add_string (msg, "abc");
+        relay_weechat_msg_add_string (msg, "de");
+
+        /* array of integers: { 123, 456, 789 } */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_ARRAY);
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
+        relay_weechat_msg_add_int (msg, 3);
+        relay_weechat_msg_add_int (msg, 123);
+        relay_weechat_msg_add_int (msg, 456);
+        relay_weechat_msg_add_int (msg, 789);
+
+        /* send message */
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }

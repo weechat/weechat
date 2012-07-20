@@ -34,6 +34,7 @@
 #define RELAY_WEECHAT_MSG_OBJ_HDATA     "hda"
 #define RELAY_WEECHAT_MSG_OBJ_INFO      "inf"
 #define RELAY_WEECHAT_MSG_OBJ_INFOLIST  "inl"
+#define RELAY_WEECHAT_MSG_OBJ_ARRAY     "arr"
 
 struct t_relay_weechat_msg
 {
