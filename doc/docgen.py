@@ -210,13 +210,17 @@ def get_hdata():
                     (key, value) = item.split(':')
                     var_type = int(value) >> 16
                     var_offset = int(value) & 0xFFFF
+                    var_array_size = weechat.hdata_get_var_array_size_string(ptr_hdata, '', key)
+                    if var_array_size:
+                        var_array_size = ', array_size: \'%s\'' % var_array_size
                     var_hdata = weechat.hdata_get_var_hdata(ptr_hdata, key)
                     if var_hdata:
                         var_hdata = ', hdata: \'%s\'' % var_hdata
                     hdata2.append({'offset': var_offset,
-                                   'text': '\'%s\' (%s%s)' % (key,
-                                                              weechat.hdata_get_var_type_string(ptr_hdata, key),
-                                                              var_hdata)})
+                                   'text': '\'%s\' (%s%s%s)' % (key,
+                                                                weechat.hdata_get_var_type_string(ptr_hdata, key),
+                                                                var_array_size,
+                                                                var_hdata)})
                 hdata2 = sorted(hdata2, key=itemgetter('offset'))
                 for item in hdata2:
                     if variables:

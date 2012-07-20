@@ -18,7 +18,7 @@
  */
 
 /*
- * wee-hdata.c: direct access to WeeChat data using hashtables (for C plugins)
+ * wee-hdata.c: direct access to WeeChat data using hashtables
  */
 
 #ifdef HAVE_CONFIG_H
@@ -60,13 +60,18 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
     if (new_hdata)
     {
         new_hdata->plugin = plugin;
+        new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
+        new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
         new_hdata->hash_var = hashtable_new (8,
                                              WEECHAT_HASHTABLE_STRING,
                                              WEECHAT_HASHTABLE_INTEGER,
                                              NULL,
                                              NULL);
-        new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
-        new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
+        new_hdata->hash_var_array_size = hashtable_new (8,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL,
+                                                        NULL);
         new_hdata->hash_var_hdata = hashtable_new (8,
                                                    WEECHAT_HASHTABLE_STRING,
                                                    WEECHAT_HASHTABLE_STRING,
@@ -89,7 +94,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
 
 void
 hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
-               const char *hdata_name)
+               const char *array_size, const char *hdata_name)
 {
     int value;
 
@@ -97,6 +102,8 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
     {
         value = (type << 16) | (offset & 0xFFFF);
         hashtable_set (hdata->hash_var, name, &value);
+        if (array_size && array_size[0])
+            hashtable_set (hdata->hash_var_array_size, name, array_size);
         if (hdata_name && hdata_name[0])
             hashtable_set (hdata->hash_var_hdata, name, hdata_name);
     }
@@ -166,6 +173,119 @@ hdata_get_var_type_string (struct t_hdata *hdata, const char *name)
         if (ptr_value)
             return hdata_type_string[(*ptr_value) >> 16];
     }
+
+    return NULL;
+}
+
+/*
+ * hdata_get_var_array_size: get array size for variable (if variable is an
+ *                           array)
+ *                           return -1 if if variable is not an array
+ *                           (or if error)
+ */
+
+int
+hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
+                          const char *name)
+{
+    const char *ptr_size;
+    char *error;
+    long value;
+    int i, type, offset;
+    void *ptr_value;
+
+    if (hdata && name)
+    {
+        ptr_size = hashtable_get (hdata->hash_var_array_size, name);
+        if (ptr_size)
+        {
+            if (strcmp (ptr_size, "*") == 0)
+            {
+                /*
+                 * automatic size: look for NULL in array
+                 * (this automatic size is possible only with pointers, so with
+                 * types: string, pointer, hashtable)
+                 */
+                type = hdata_get_var_type (hdata, name);
+                if ((type == WEECHAT_HDATA_STRING)
+                    || (type == WEECHAT_HDATA_POINTER)
+                    || (type == WEECHAT_HDATA_HASHTABLE))
+                {
+                    offset = hdata_get_var_offset (hdata, name);
+                    if (offset >= 0)
+                    {
+                        if (!(*((void **)(pointer + offset))))
+                            return 0;
+                        i = 0;
+                        while (1)
+                        {
+                            switch (type)
+                            {
+                                case WEECHAT_HDATA_STRING:
+                                    ptr_value = (*((char ***)(pointer + offset)))[i];
+                                    break;
+                                case WEECHAT_HDATA_POINTER:
+                                    ptr_value = (*((void ***)(pointer + offset)))[i];
+                                    break;
+                                case WEECHAT_HDATA_HASHTABLE:
+                                    ptr_value = (*((struct t_hashtable ***)(pointer + offset)))[i];
+                                    break;
+                            }
+                            if (!ptr_value)
+                                break;
+                            i++;
+                        }
+                        return i;
+                    }
+                }
+            }
+            else
+            {
+                /* fixed size: the size can be a name of variable or integer */
+                if (hdata_get_var_offset (hdata, ptr_size) >= 0)
+                {
+                    /* size is the name of a variable in hdata, read it */
+                    offset = hdata_get_var_offset (hdata, ptr_size);
+                    switch (hdata_get_var_type (hdata, ptr_size))
+                    {
+                        case WEECHAT_HDATA_CHAR:
+                            return (int)(*((char *)(pointer + offset)));
+                        case WEECHAT_HDATA_INTEGER:
+                            return *((int *)(pointer + offset));
+                        case WEECHAT_HDATA_LONG:
+                            return (int)(*((long *)(pointer + offset)));
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    /* check if the size is a valid integer */
+                    error = NULL;
+                    value = strtol (ptr_size, &error, 10);
+                    if (error && !error[0])
+                        return (int)value;
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+/*
+ * hdata_get_var_array_size_string: get array size for variable as string
+ */
+
+const char *
+hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
+                                 const char *name)
+{
+    /* make C compiler happy */
+    (void) pointer;
+
+    if (hdata && name)
+        return (const char *)hashtable_get (hdata->hash_var_array_size, name);
 
     return NULL;
 }
@@ -290,19 +410,71 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
 }
 
 /*
+ * hdata_get_index_and_name: extract index from name of variable
+ *                           A name can contain index with this format:
+ *                           "N|name" (where N is an integer >= 0)
+ *                           "index" is set to N, "ptr_name" points to start
+ *                           of name in string (after the "|" if found)
+ */
+
+void
+hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
+{
+    char *pos, *str_index, *error;
+    long number;
+
+    if (index)
+        *index = 0;
+    if (ptr_name)
+        *ptr_name = name;
+
+    if (!name)
+        return;
+
+    pos = strchr (name, '|');
+    if (pos)
+    {
+        str_index = string_strndup (name, pos - name);
+        if (str_index)
+        {
+            error = NULL;
+            number = strtol (str_index, &error, 10);
+            if (error && !error[0])
+            {
+                if (index)
+                    *index = number;
+                if (ptr_name)
+                    *ptr_name = pos + 1;
+            }
+            free (str_index);
+        }
+    }
+}
+
+/*
  * hdata_char: get char value of a variable in structure using hdata
  */
 
 char
 hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((char *)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((char **)(pointer + offset)))[index];
+            }
+            else
+                return *((char *)(pointer + offset));
+        }
     }
 
     return '\0';
@@ -315,13 +487,23 @@ hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 int
 hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((int *)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((int **)(pointer + offset)))[index];
+            }
+            else
+                return *((int *)(pointer + offset));
+        }
     }
 
     return 0;
@@ -334,13 +516,23 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 long
 hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((long *)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((long **)(pointer + offset)))[index];
+            }
+            else
+                return *((long *)(pointer + offset));
+        }
     }
 
     return 0;
@@ -353,13 +545,23 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 const char *
 hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((char **)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((char ***)(pointer + offset)))[index];
+            }
+            else
+                return *((char **)(pointer + offset));
+        }
     }
 
     return NULL;
@@ -372,13 +574,23 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 void *
 hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((void **)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((void ***)(pointer + offset)))[index];
+            }
+            else
+                return *((void **)(pointer + offset));
+        }
     }
 
     return NULL;
@@ -391,13 +603,23 @@ hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 time_t
 hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((time_t *)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((time_t **)(pointer + offset)))[index];
+            }
+            else
+                return *((time_t *)(pointer + offset));
+        }
     }
 
     return 0;
@@ -410,13 +632,23 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 struct t_hashtable *
 hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset;
+    int offset, index;
+    const char *ptr_name;
 
-    if (hdata && pointer)
+    if (hdata && pointer && name)
     {
-        offset = hdata_get_var_offset (hdata, name);
+        hdata_get_index_and_name (name, &index, &ptr_name);
+        offset = hdata_get_var_offset (hdata, ptr_name);
         if (offset >= 0)
-            return *((struct t_hashtable **)(pointer + offset));
+        {
+            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
+            {
+                if (*((void **)(pointer + offset)))
+                    return (*((struct t_hashtable ***)(pointer + offset)))[index];
+            }
+            else
+                return *((struct t_hashtable **)(pointer + offset));
+        }
     }
 
     return NULL;
@@ -441,6 +673,12 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
             return hdata->var_prev;
         else if (string_strcasecmp (property, "var_next") == 0)
             return hdata->var_next;
+        else if (string_strcasecmp (property, "var_array_size_keys") == 0)
+            return hashtable_get_string (hdata->hash_var_array_size, "keys");
+        else if (string_strcasecmp (property, "var_array_size_values") == 0)
+            return hashtable_get_string (hdata->hash_var_array_size, "values");
+        else if (string_strcasecmp (property, "var_array_size_keys_values") == 0)
+            return hashtable_get_string (hdata->hash_var_array_size, "keys_values");
         else if (string_strcasecmp (property, "var_hdata_keys") == 0)
             return hashtable_get_string (hdata->hash_var_hdata, "keys");
         else if (string_strcasecmp (property, "var_hdata_values") == 0)
@@ -471,6 +709,8 @@ hdata_free (struct t_hdata *hdata)
         free (hdata->var_prev);
     if (hdata->var_next)
         free (hdata->var_next);
+    if (hdata->hash_var_array_size)
+        hashtable_free (hdata->hash_var_array_size);
     if (hdata->hash_var_hdata)
         hashtable_free (hdata->hash_var_hdata);
     if (hdata->hash_list)
@@ -556,11 +796,14 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
     log_printf ("");
     log_printf ("[hdata (addr:0x%lx, name:'%s')]", ptr_hdata, (const char *)key);
     log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_hdata->plugin);
+    log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
+    log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
     log_printf ("  hash_var . . . . . . . : 0x%lx (hashtable: '%s')",
                 ptr_hdata->hash_var,
                 hashtable_get_string (ptr_hdata->hash_var, "keys_values"));
-    log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
-    log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
+    log_printf ("  hash_var_array_size. . : 0x%lx (hashtable: '%s')",
+                ptr_hdata->hash_var_array_size,
+                hashtable_get_string (ptr_hdata->hash_var_array_size, "keys_values"));
     log_printf ("  hash_var_hdata . . . . : 0x%lx (hashtable: '%s')",
                 ptr_hdata->hash_var_hdata,
                 hashtable_get_string (ptr_hdata->hash_var_hdata, "keys_values"));

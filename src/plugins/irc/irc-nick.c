@@ -1010,14 +1010,14 @@ irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick");
     if (hdata)
     {
-        WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER, hdata_name);
-        WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, host, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefixes, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prefix, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, away, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, color, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, prev_nick, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_nick, next_nick, POINTER, NULL, hdata_name);
     }
     return hdata;
 }

@@ -321,13 +321,13 @@ irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
     hdata = weechat_hdata_new (hdata_name, "prev_ignore", "next_ignore");
     if (hdata)
     {
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, number, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, mask, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, regex_mask, POINTER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, server, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, channel, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, prev_ignore, POINTER, hdata_name);
-        WEECHAT_HDATA_VAR(struct t_irc_ignore, next_ignore, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, number, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, mask, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, regex_mask, POINTER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, server, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, channel, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, prev_ignore, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_ignore, next_ignore, POINTER, NULL, hdata_name);
         WEECHAT_HDATA_LIST(irc_ignore_list);
         WEECHAT_HDATA_LIST(last_irc_ignore);
     }

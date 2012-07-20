@@ -230,9 +230,9 @@ gui_history_hdata_history_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history");
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_history, text, STRING, NULL);
-        HDATA_VAR(struct t_gui_history, prev_history, POINTER, hdata_name);
-        HDATA_VAR(struct t_gui_history, next_history, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_history, text, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_history, prev_history, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_history, next_history, POINTER, NULL, hdata_name);
     }
     return hdata;
 }

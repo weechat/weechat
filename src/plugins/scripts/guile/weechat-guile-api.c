@@ -4852,6 +4852,51 @@ weechat_guile_api_hdata_get_var_type_string (SCM hdata, SCM name)
 }
 
 /*
+ * weechat_guile_api_hdata_get_var_array_size: get array size for variable in
+ *                                             hdata
+ */
+
+SCM
+weechat_guile_api_hdata_get_var_array_size (SCM hdata, SCM pointer, SCM name)
+{
+    int value;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    if (!scm_is_string (hdata) || !scm_is_string (pointer)
+        || !scm_is_string (name))
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    value = weechat_hdata_get_var_array_size (API_STR2PTR(scm_i_string_chars (hdata)),
+                                              API_STR2PTR(scm_i_string_chars (pointer)),
+                                              scm_i_string_chars (name));
+
+    API_RETURN_INT(value);
+}
+
+/*
+ * weechat_guile_api_hdata_get_var_array_size_string: get array size for variable
+ *                                                    in hdata (as string)
+ */
+
+SCM
+weechat_guile_api_hdata_get_var_array_size_string (SCM hdata, SCM pointer,
+                                                    SCM name)
+{
+    const char *result;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    if (!scm_is_string (hdata) || !scm_is_string (pointer)
+        || !scm_is_string (name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(scm_i_string_chars (hdata)),
+                                                      API_STR2PTR(scm_i_string_chars (pointer)),
+                                                      scm_i_string_chars (name));
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat_guile_api_hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -5433,6 +5478,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_get, 1);
     API_DEF_FUNC(hdata_get_var_offset, 2);
     API_DEF_FUNC(hdata_get_var_type_string, 2);
+    API_DEF_FUNC(hdata_get_var_array_size, 3);
+    API_DEF_FUNC(hdata_get_var_array_size_string, 3);
     API_DEF_FUNC(hdata_get_var_hdata, 2);
     API_DEF_FUNC(hdata_get_list, 2);
     API_DEF_FUNC(hdata_check_pointer, 3);

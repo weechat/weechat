@@ -112,8 +112,8 @@
   'reloading_from_config' (integer) +
   'reloaded_from_config' (integer) +
   'addresses_count' (integer) +
-  'addresses_array' (pointer) +
-  'ports_array' (pointer) +
+  'addresses_array' (string, array_size: 'addresses_count') +
+  'ports_array' (integer, array_size: 'addresses_count') +
   'index_current_address' (integer) +
   'current_address' (string) +
   'current_ip' (string) +
@@ -130,7 +130,7 @@
   'tls_cert_key' (other) +
   'unterminated_message' (string) +
   'nicks_count' (integer) +
-  'nicks_array' (pointer) +
+  'nicks_array' (string, array_size: 'nicks_count') +
   'nick_first_tried' (integer) +
   'nick' (string) +
   'nick_modes' (string) +
@@ -176,7 +176,7 @@
   'name' (string) +
   'options' (pointer) +
   'conditions_count' (integer) +
-  'conditions_array' (pointer) +
+  'conditions_array' (string, array_size: 'conditions_count') +
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +
@@ -283,7 +283,7 @@
   'highlight_regex_compiled' (pointer) +
   'highlight_tags' (string) +
   'highlight_tags_count' (integer) +
-  'highlight_tags_array' (pointer) +
+  'highlight_tags_array' (string, array_size: 'highlight_tags_count') +
   'hotlist_max_level_nicks' (hashtable) +
   'keys' (pointer, hdata: 'key') +
   'last_key' (pointer, hdata: 'key') +
@@ -344,7 +344,7 @@
   'name' (string) +
   'type' (integer) +
   'description' (string) +
-  'string_values' (pointer) +
+  'string_values' (string, array_size: '*') +
   'min' (integer) +
   'max' (integer) +
   'default_value' (pointer) +
@@ -390,7 +390,7 @@
   'buffers' (pointer) +
   'tags' (string) +
   'tags_count' (integer) +
-  'tags_array' (pointer) +
+  'tags_array' (string, array_size: 'tags_count') +
   'regex' (string) +
   'regex_prefix' (pointer) +
   'regex_message' (pointer) +
@@ -451,7 +451,7 @@
   'date_printed' (time) +
   'str_time' (string) +
   'tags_count' (integer) +
-  'tags_array' (pointer) +
+  'tags_array' (string, array_size: 'tags_count') +
   'displayed' (char) +
   'highlight' (char) +
   'refresh_needed' (char) +

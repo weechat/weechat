@@ -6041,6 +6041,67 @@ weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
 }
 
 /*
+ * weechat_ruby_api_hdata_get_var_array_size: get array size for variable in hdata
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_var_array_size (VALUE class, VALUE hdata, VALUE pointer,
+                                           VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    int value;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+
+    value = weechat_hdata_get_var_array_size (API_STR2PTR(c_hdata),
+                                              API_STR2PTR(c_pointer),
+                                              c_name);
+
+    API_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_hdata_get_var_array_size_string: get array size for variable
+ *                                                   in hdata (as string)
+ */
+
+static VALUE
+weechat_ruby_api_hdata_get_var_array_size_string (VALUE class, VALUE hdata,
+                                                  VALUE pointer, VALUE name)
+{
+    char *c_hdata, *c_pointer, *c_name;
+    const char *result;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (name, T_STRING);
+
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_name = StringValuePtr (name);
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(c_hdata),
+                                                      API_STR2PTR(c_pointer),
+                                                      c_name);
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat_ruby_api_hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -6782,6 +6843,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hdata_get, 1);
     API_DEF_FUNC(hdata_get_var_offset, 2);
     API_DEF_FUNC(hdata_get_var_type_string, 2);
+    API_DEF_FUNC(hdata_get_var_array_size, 3);
+    API_DEF_FUNC(hdata_get_var_array_size_string, 3);
     API_DEF_FUNC(hdata_get_var_hdata, 2);
     API_DEF_FUNC(hdata_get_list, 2);
     API_DEF_FUNC(hdata_check_pointer, 3);

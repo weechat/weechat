@@ -5265,6 +5265,57 @@ weechat_python_api_hdata_get_var_type_string (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hdata_get_var_array_size: get array size for variable in
+ *                                              hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_var_array_size (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer, *name;
+    int value;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    value = weechat_hdata_get_var_array_size (API_STR2PTR(hdata),
+                                              API_STR2PTR(pointer),
+                                              name);
+
+    API_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_hdata_get_var_array_size_string: get array size for variable
+ *                                                     in hdata (as string)
+ */
+
+static PyObject *
+weechat_python_api_hdata_get_var_array_size_string (PyObject *self,
+                                                    PyObject *args)
+{
+    char *hdata, *pointer, *name;
+    const char *result;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    hdata = NULL;
+    pointer = NULL;
+    name = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(hdata),
+                                                      API_STR2PTR(pointer),
+                                                      name);
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat_python_api_hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -5872,6 +5923,8 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hdata_get),
     API_DEF_FUNC(hdata_get_var_offset),
     API_DEF_FUNC(hdata_get_var_type_string),
+    API_DEF_FUNC(hdata_get_var_array_size),
+    API_DEF_FUNC(hdata_get_var_array_size_string),
     API_DEF_FUNC(hdata_get_var_hdata),
     API_DEF_FUNC(hdata_get_list),
     API_DEF_FUNC(hdata_check_pointer),

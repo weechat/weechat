@@ -966,14 +966,14 @@ irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
     hdata = weechat_hdata_new (hdata_name, "prev_notify", "next_notify");
     if (hdata)
     {
-        WEECHAT_HDATA_VAR(struct t_irc_notify, server, POINTER, "irc_server");
-        WEECHAT_HDATA_VAR(struct t_irc_notify, nick, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, check_away, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, is_on_server, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, away_message, STRING, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, ison_received, INTEGER, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, prev_notify, POINTER, hdata_name);
-        WEECHAT_HDATA_VAR(struct t_irc_notify, next_notify, POINTER, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, server, POINTER, NULL, "irc_server");
+        WEECHAT_HDATA_VAR(struct t_irc_notify, nick, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, check_away, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, is_on_server, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, away_message, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, ison_received, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, prev_notify, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_irc_notify, next_notify, POINTER, NULL, hdata_name);
     }
     return hdata;
 }

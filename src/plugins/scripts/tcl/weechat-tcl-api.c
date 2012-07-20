@@ -5784,6 +5784,65 @@ weechat_tcl_api_hdata_get_var_type_string (ClientData clientData,
 }
 
 /*
+ * weechat_tcl_api_hdata_get_var_array_size: get array_size for variable in
+ *                                           hdata
+ */
+
+static int
+weechat_tcl_api_hdata_get_var_array_size (ClientData clientData,
+                                          Tcl_Interp *interp,
+                                          int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    int result, i;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+
+    result = weechat_hdata_get_var_array_size (API_STR2PTR(hdata),
+                                               API_STR2PTR(pointer),
+                                               name);
+
+    API_RETURN_INT(result);
+}
+
+/*
+ * weechat_tcl_api_hdata_get_var_array_size_string: get array size for variable
+ *                                                  in hdata (as string)
+ */
+
+static int
+weechat_tcl_api_hdata_get_var_array_size_string (ClientData clientData,
+                                                 Tcl_Interp *interp,
+                                                 int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *name;
+    const char *result;
+    int i;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    name = Tcl_GetStringFromObj (objv[3], &i);
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(hdata),
+                                                      API_STR2PTR(pointer),
+                                                      name);
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat_tcl_api_hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -6549,6 +6608,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_get);
     API_DEF_FUNC(hdata_get_var_offset);
     API_DEF_FUNC(hdata_get_var_type_string);
+    API_DEF_FUNC(hdata_get_var_array_size);
+    API_DEF_FUNC(hdata_get_var_array_size_string);
     API_DEF_FUNC(hdata_get_var_hdata);
     API_DEF_FUNC(hdata_get_list);
     API_DEF_FUNC(hdata_check_pointer);

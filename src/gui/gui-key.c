@@ -1718,14 +1718,14 @@ gui_key_hdata_key_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, "prev_key", "next_key");
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_key, key, STRING, NULL);
-        HDATA_VAR(struct t_gui_key, area_type, POINTER, NULL);
-        HDATA_VAR(struct t_gui_key, area_name, POINTER, NULL);
-        HDATA_VAR(struct t_gui_key, area_key, STRING, NULL);
-        HDATA_VAR(struct t_gui_key, command, STRING, NULL);
-        HDATA_VAR(struct t_gui_key, score, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_key, prev_key, POINTER, hdata_name);
-        HDATA_VAR(struct t_gui_key, next_key, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_key, key, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, area_type, POINTER, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, area_name, POINTER, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, area_key, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, command, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, score, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_key, prev_key, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_key, next_key, POINTER, NULL, hdata_name);
         for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
         {
             snprintf (str_list, sizeof (str_list),

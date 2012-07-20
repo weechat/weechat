@@ -5340,6 +5340,57 @@ weechat_lua_api_hdata_get_var_type_string (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hdata_get_var_array_size: get array size for variable in
+ *                                           hdata
+ */
+
+static int
+weechat_lua_api_hdata_get_var_array_size (lua_State *L)
+{
+    const char *hdata, *pointer, *name;
+    int value;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+
+    value = weechat_hdata_get_var_array_size (API_STR2PTR(hdata),
+                                              API_STR2PTR(pointer),
+                                              name);
+
+    API_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_hdata_get_var_array_size_string: get array size for variable
+ *                                                  in hdata (as string)
+ */
+
+static int
+weechat_lua_api_hdata_get_var_array_size_string (lua_State *L)
+{
+    const char *hdata, *pointer, *name, *result;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -1);
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(hdata),
+                                                      API_STR2PTR(pointer),
+                                                      name);
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat_lua_api_hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -6352,6 +6403,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hdata_get),
     API_DEF_FUNC(hdata_get_var_offset),
     API_DEF_FUNC(hdata_get_var_type_string),
+    API_DEF_FUNC(hdata_get_var_array_size),
+    API_DEF_FUNC(hdata_get_var_array_size_string),
     API_DEF_FUNC(hdata_get_var_hdata),
     API_DEF_FUNC(hdata_get_list),
     API_DEF_FUNC(hdata_check_pointer),

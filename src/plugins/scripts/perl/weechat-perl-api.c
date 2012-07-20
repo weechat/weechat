@@ -5075,6 +5075,57 @@ XS (XS_weechat_api_hdata_get_var_type_string)
 }
 
 /*
+ * weechat::hdata_get_var_array_size: get array size for variable in hdata
+ */
+
+XS (XS_weechat_api_hdata_get_var_array_size)
+{
+    char *hdata, *pointer, *name;
+    int value;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(-1));
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+
+    value = weechat_hdata_get_var_array_size (API_STR2PTR(hdata),
+                                              API_STR2PTR(pointer),
+                                              name);
+
+    API_RETURN_INT(value);
+}
+
+/*
+ * weechat::hdata_get_var_array_size_string: get array size for variable in
+ *                                           hdata (as string)
+ */
+
+XS (XS_weechat_api_hdata_get_var_array_size_string)
+{
+    const char *result;
+    char *hdata, *pointer, *name;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    name = SvPV_nolen (ST (2));
+
+    result = weechat_hdata_get_var_array_size_string (API_STR2PTR(hdata),
+                                                      API_STR2PTR(pointer),
+                                                      name);
+
+    API_RETURN_STRING(result);
+}
+
+/*
  * weechat::hdata_get_var_hdata: get hdata for variable in hdata
  */
 
@@ -5696,6 +5747,8 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hdata_get);
     API_DEF_FUNC(hdata_get_var_offset);
     API_DEF_FUNC(hdata_get_var_type_string);
+    API_DEF_FUNC(hdata_get_var_array_size);
+    API_DEF_FUNC(hdata_get_var_array_size_string);
     API_DEF_FUNC(hdata_get_var_hdata);
     API_DEF_FUNC(hdata_get_list);
     API_DEF_FUNC(hdata_check_pointer);

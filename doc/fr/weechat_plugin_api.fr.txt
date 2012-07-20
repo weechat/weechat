@@ -12870,7 +12870,7 @@ Prototype :
 [source,C]
 ----------------------------------------
 void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
-                            const char *hdata_name);
+                            const char *array_size, const char *hdata_name);
 ----------------------------------------
 
 Paramètres :
@@ -12885,7 +12885,16 @@ Paramètres :
 ** WEECHAT_HDATA_STRING
 ** WEECHAT_HDATA_POINTER
 ** WEECHAT_HDATA_TIME
+** WEECHAT_HDATA_HASHTABLE
 ** WEECHAT_HDATA_OTHER
+* 'array_size' : non NULL seulement si la variable est un tableau, et peut être :
+  (_nouveau dans la version 0.3.9_)
+** nom d'une variable du hdata : cette variable sera utilisée comme taille de
+   tableau (taille dynamique pour le tableau)
+** entier (sous forme de chaîne) : taille fixe pour le tableau
+** '*' : taille automatique : la taille est calculée en examinant les valeurs,
+   lorsque le premier NULL est trouvé (seulement pour le type string, pointer ou
+   hashtable)
 * 'hdata_name' : nom d'un hdata (si c'est un pointeur vers une structure qui a un
   hdata)
 
@@ -12897,7 +12906,9 @@ struct t_myplugin_list
 {
     char *name;
     struct t_gui_buffer *buffer;
-    int count;
+    int tags_count;
+    char **tags_array;
+    char **string_split;
     struct t_myplugin_list *prev;
     struct t_myplugin_list *next;
 };
@@ -12905,22 +12916,26 @@ struct t_myplugin_list
 /* ... */
 
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
-weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL);
-weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL);
-weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER, NULL);
-weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, "myplugin_list");
-weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, "myplugin_list");
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL, NULL);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_count", offsetof (struct t_myplugin_list, tags_count), WEECHAT_HDATA_INTEGER, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, "tags_count", NULL);
+weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, "*", NULL);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 ----------------------------------------
 
 La macro "WEECHAT_HDATA_VAR" peut être utilisée pour raccourcir le code :
 
 [source,C]
 ----------------------------------------
-WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, count, INTEGER, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, "myplugin_list");
-WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, "myplugin_list");
+WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_count, INTEGER, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_array, STRING, "tags_count", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, string_split, STRING, "*", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, NULL, "myplugin_list");
+WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, NULL, "myplugin_list");
 ----------------------------------------
 
 [NOTE]
@@ -12954,22 +12969,24 @@ struct t_myplugin_list
 {
     char *name;
     struct t_gui_buffer *buffer;
-    int count;
+    int tags_count;
+    char **tags_array;
+    char **string_split;
     struct t_myplugin_list *prev;
     struct t_myplugin_list *next;
 };
 
-struct t_myplugin_list *buffers = NULL;
-struct t_myplugin_list *last_buffer = NULL;
-
 /* ... */
 
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
-weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING);
-weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "count", offsetof (struct t_myplugin_list, count), WEECHAT_HDATA_INTEGER);
-weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER);
-weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER);
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL, NULL);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_count", offsetof (struct t_myplugin_list, tags_count), WEECHAT_HDATA_INTEGER, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, "tags_count", NULL);
+weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, "*", NULL);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
+
 weechat_hdata_new_list (hdata, "buffers", &buffers);
 weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
 ----------------------------------------
@@ -13070,7 +13087,7 @@ Script (Python) :
 offset = weechat.hdata_get_var_offset(hdata, name)
 
 # exemple
-offset = weechat.hdata_get(hdata, "name")
+offset = weechat.hdata_get_var_offset(hdata, "name")
 ----------------------------------------
 
 weechat_hdata_get_var_type
@@ -13119,6 +13136,9 @@ switch (type)
         /* ... */
         break;
     case WEECHAT_HDATA_TIME:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_HASHTABLE:
         /* ... */
         break;
     case WEECHAT_HDATA_OTHER:
@@ -13172,6 +13192,94 @@ type = weechat.hdata_get_var_type_string(hdata, name)
 
 # exemple
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
+----------------------------------------
+
+weechat_hdata_get_var_array_size
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.9._
+
+Retourne la taille du tableau pour la variable dans le hdata.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_hdata_get_var_array_size (struct t_hdata *hdata, void *pointer, const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* taille du tableau pour la variable, -1 si la variable n'est pas un tableau ou
+  en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+int array_size = weechat_hdata_get_var_array_size (hdata, pointer, "name");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+array_size = weechat.hdata_get_var_array_size(hdata, pointer, name)
+
+# exemple
+array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
+----------------------------------------
+
+weechat_hdata_get_var_array_size_string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.9._
+
+Retourne la taille du tableau pour la variable dans le hdata (sous forme de
+chaîne).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+const char *weechat_hdata_get_var_count_array_size (struct t_hdata *hdata, void *pointer,
+                                                    const char *name);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* taille du tableau pour la variable sous forme de chaîne, -1 si la variable
+  n'est pas un tableau ou en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+const char *array_size = weechat_hdata_get_var_array_size_string (hdata, pointer, "name");
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, name)
+
+# exemple
+array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 ----------------------------------------
 
 weechat_hdata_get_var_hdata
@@ -13469,7 +13577,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "char")
+* 'name' : nom de la variable (doit être de type "char"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13512,7 +13622,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "integer")
+* 'name' : nom de la variable (doit être de type "integer"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13559,7 +13671,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "long")
+* 'name' : nom de la variable (doit être de type "long"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13602,7 +13716,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "string")
+* 'name' : nom de la variable (doit être de type "string"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13649,7 +13765,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "pointeur")
+* 'name' : nom de la variable (doit être de type "pointeur"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13696,7 +13814,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "time")
+* 'name' : nom de la variable (doit être de type "time"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 
@@ -13768,7 +13888,9 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "hashtable")
+* 'name' : nom de la variable (doit être de type "hashtable"); pour les tableaux,
+  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
+  par exemple: "2|name"
 
 Valeur de retour :
 

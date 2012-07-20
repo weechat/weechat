@@ -1217,25 +1217,25 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_completion, buffer, POINTER, "buffer");
-        HDATA_VAR(struct t_gui_completion, context, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, base_command, STRING, NULL);
-        HDATA_VAR(struct t_gui_completion, base_command_arg_index, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, base_word, STRING, NULL);
-        HDATA_VAR(struct t_gui_completion, base_word_pos, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, position, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, args, STRING, NULL);
-        HDATA_VAR(struct t_gui_completion, direction, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, add_space, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, completion_list, POINTER, NULL);
-        HDATA_VAR(struct t_gui_completion, word_found, STRING, NULL);
-        HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, position_replace, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, diff_size, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, diff_length, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER, "completion_partial");
-        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER, "completion_partial");
+        HDATA_VAR(struct t_gui_completion, buffer, POINTER, NULL, "buffer");
+        HDATA_VAR(struct t_gui_completion, context, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, base_command, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, base_command_arg_index, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, base_word, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, base_word_pos, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, position, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, args, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, direction, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, add_space, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, completion_list, POINTER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, word_found, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, position_replace, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, diff_size, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, diff_length, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, partial_completion_list, POINTER, NULL, "completion_partial");
+        HDATA_VAR(struct t_gui_completion, last_partial_completion, POINTER, NULL, "completion_partial");
     }
     return hdata;
 }
@@ -1256,10 +1256,10 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item");
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_completion_partial, word, STRING, NULL);
-        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER, NULL);
-        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER, hdata_name);
-        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER, hdata_name);
+        HDATA_VAR(struct t_gui_completion_partial, word, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion_partial, count, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion_partial, prev_item, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_completion_partial, next_item, POINTER, NULL, hdata_name);
     }
     return hdata;
 }

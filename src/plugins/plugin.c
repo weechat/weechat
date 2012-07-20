@@ -740,6 +740,8 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hdata_get_var_offset = &hdata_get_var_offset;
         new_plugin->hdata_get_var_type = &hdata_get_var_type;
         new_plugin->hdata_get_var_type_string = &hdata_get_var_type_string;
+        new_plugin->hdata_get_var_array_size = &hdata_get_var_array_size;
+        new_plugin->hdata_get_var_array_size_string = &hdata_get_var_array_size_string;
         new_plugin->hdata_get_var_hdata = &hdata_get_var_hdata;
         new_plugin->hdata_get_var = &hdata_get_var;
         new_plugin->hdata_get_var_at_offset = &hdata_get_var_at_offset;
@@ -1211,17 +1213,17 @@ plugin_hdata_plugin_cb (void *data, const char *hdata_name)
     hdata = hdata_new (NULL, hdata_name, "prev_plugin", "next_plugin");
     if (hdata)
     {
-        HDATA_VAR(struct t_weechat_plugin, filename, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, handle, POINTER, NULL);
-        HDATA_VAR(struct t_weechat_plugin, name, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, description, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, author, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, version, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, license, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, charset, STRING, NULL);
-        HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, NULL);
-        HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, hdata_name);
-        HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, hdata_name);
+        HDATA_VAR(struct t_weechat_plugin, filename, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, handle, POINTER, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, name, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, description, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, author, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, version, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, license, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, charset, STRING, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, NULL, hdata_name);
         HDATA_LIST(weechat_plugins);
         HDATA_LIST(last_weechat_plugin);
     }
