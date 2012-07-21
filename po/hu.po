@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-15 09:18+0200\n"
+"POT-Creation-Date: 2012-07-21 17:23+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6768,6 +6768,9 @@ msgstr ""
 #, fuzzy
 msgid "history of commands in buffer"
 msgstr "%s belső parancsok:\n"
+
+msgid "hotlist"
+msgstr ""
 
 #, fuzzy
 msgid "structure with undo for input line"

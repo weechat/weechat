@@ -32,6 +32,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hashtable.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -458,6 +459,34 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 
     if (hotlist_changed)
         gui_hotlist_changed_signal ();
+}
+
+/*
+ * gui_hotlist_hdata_hotlist_cb: return hdata for hotlist
+ */
+
+struct t_hdata *
+gui_hotlist_hdata_hotlist_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, "prev_hotlist", "next_hotlist");
+    if (hdata)
+    {
+        HDATA_VAR(struct t_gui_hotlist, priority, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_sec, TIME, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_usec, LONG, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, buffer, POINTER, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, count, INTEGER, GUI_HOTLIST_NUM_PRIORITIES_STR, NULL);
+        HDATA_VAR(struct t_gui_hotlist, prev_hotlist, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_hotlist, next_hotlist, POINTER, NULL, hdata_name);
+        HDATA_LIST(gui_hotlist);
+        HDATA_LIST(last_gui_hotlist);
+    }
+    return hdata;
 }
 
 /*

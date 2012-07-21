@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-15 09:18+0200\n"
+"POT-Creation-Date: 2012-07-21 17:23+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7302,6 +7302,9 @@ msgstr "フィルタ"
 
 msgid "history of commands in buffer"
 msgstr "バッファのコマンド履歴"
+
+msgid "hotlist"
+msgstr ""
 
 msgid "structure with undo for input line"
 msgstr "入力行をアンドゥする構造"

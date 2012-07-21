@@ -405,6 +405,17 @@
   'prev_history' (pointer, hdata: 'history') |
   -
 
+| weechat | hotlist | hotlist |
+  'priority' (integer) +
+  'creation_time.tv_sec' (time) +
+  'creation_time.tv_usec' (long) +
+  'buffer' (pointer) +
+  'count' (integer, array_size: '4') +
+  'prev_hotlist' (pointer, hdata: 'hotlist') +
+  'next_hotlist' (pointer, hdata: 'hotlist') |
+  'gui_hotlist' +
+  'last_gui_hotlist'
+
 | weechat | input_undo | Struktur der Rücknahmen für die Befehlszeile |
   'data' (string) +
   'pos' (integer) +

@@ -29,6 +29,7 @@ enum t_gui_hotlist_priority
     /* number of priorities */
     GUI_HOTLIST_NUM_PRIORITIES,
 };
+#define GUI_HOTLIST_NUM_PRIORITIES_STR "4"
 
 #define GUI_HOTLIST_MIN 0
 #define GUI_HOTLIST_MAX (GUI_HOTLIST_NUM_PRIORITIES - 1)
@@ -59,6 +60,8 @@ extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
 extern void gui_hotlist_resort ();
 extern void gui_hotlist_clear ();
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);
+extern struct t_hdata *gui_hotlist_hdata_hotlist_cb (void *data,
+                                                     const char *hdata_name);
 extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_hotlist *hotlist);
 extern void gui_hotlist_print_log ();

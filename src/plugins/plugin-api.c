@@ -1129,6 +1129,8 @@ plugin_api_init ()
                 &gui_filter_hdata_filter_cb, NULL);
     hook_hdata (NULL, "history", N_("history of commands in buffer"),
                 &gui_history_hdata_history_cb, NULL);
+    hook_hdata (NULL, "hotlist", N_("hotlist"),
+                &gui_hotlist_hdata_hotlist_cb, NULL);
     hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),
                 &gui_buffer_hdata_input_undo_cb, NULL);
     hook_hdata (NULL, "key", N_("a key (keyboard shortcut)"),

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-15 09:18+0200\n"
+"POT-Creation-Date: 2012-07-21 17:23+0200\n"
 "PO-Revision-Date: 2012-06-30 14:28+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7763,6 +7763,9 @@ msgstr "Filter"
 
 msgid "history of commands in buffer"
 msgstr "Verlaufspeicher von Befehlen in einem Buffer"
+
+msgid "hotlist"
+msgstr ""
 
 msgid "structure with undo for input line"
 msgstr "Struktur der Rücknahmen für die Befehlszeile"
