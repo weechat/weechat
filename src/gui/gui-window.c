@@ -1354,6 +1354,8 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
                 }
                 ptr_line = ptr_line->prev_line;
             }
+            /* no previous highlight, scroll to bottom */
+            gui_window_scroll_bottom (window);
         }
     }
 }
@@ -1387,6 +1389,8 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
                 }
                 ptr_line = ptr_line->next_line;
             }
+            /* no next highlight, scroll to bottom */
+            gui_window_scroll_bottom (window);
         }
     }
 }
