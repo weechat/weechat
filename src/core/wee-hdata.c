@@ -499,7 +499,7 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
             if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
             {
                 if (*((void **)(pointer + offset)))
-                    return (*((int **)(pointer + offset)))[index];
+                    return ((int *)(pointer + offset))[index];
             }
             else
                 return *((int *)(pointer + offset));
@@ -528,7 +528,7 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
             if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
             {
                 if (*((void **)(pointer + offset)))
-                    return (*((long **)(pointer + offset)))[index];
+                    return ((long *)(pointer + offset))[index];
             }
             else
                 return *((long *)(pointer + offset));
@@ -615,7 +615,7 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
             if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
             {
                 if (*((void **)(pointer + offset)))
-                    return (*((time_t **)(pointer + offset)))[index];
+                    return ((time_t *)(pointer + offset))[index];
             }
             else
                 return *((time_t *)(pointer + offset));
