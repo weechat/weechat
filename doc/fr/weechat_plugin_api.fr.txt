@@ -4426,7 +4426,8 @@ Prototype :
 void weechat_config_search_with_string (const char *option_name,
                                         struct t_config_file **config_file,
                                         struct t_config_section **section,
-                                        struct t_config_option **option);
+                                        struct t_config_option **option,
+                                        char **pos_option_name);
 ----------------------------------------
 
 Paramètres :
@@ -4439,6 +4440,8 @@ Paramètres :
   pointeur vers la section de l'option trouvée
 * 'option' : pointeur vers un pointeur sur une option, sera alimenté avec le
   pointeur vers l'option trouvée
+* 'pos_option_name' : pointeur vers un pointeur sur une chaîne, sera alimenté
+  avec le pointeur vers le nom de l'option trouvée
 
 Exemple en C :
 
@@ -4447,11 +4450,13 @@ Exemple en C :
 struct t_config_file *ptr_config_file;
 struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
+char *option_name;
 
 weechat_config_search_with_string ("fichier.section.option",
                                    &ptr_config_file,
                                    &ptr_section,
-                                   &ptr_option);
+                                   &ptr_option,
+                                   &option_name);
 if (ptr_option)
 {
     /* option trouvée */

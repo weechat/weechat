@@ -4375,7 +4375,8 @@ Prototype:
 void weechat_config_search_with_string (const char *option_name,
                                         struct t_config_file **config_file,
                                         struct t_config_section **section,
-                                        struct t_config_option **option);
+                                        struct t_config_option **option,
+                                        char **pos_option_name);
 ----------------------------------------
 
 Arguments:
@@ -4387,6 +4388,8 @@ Arguments:
   found
 * 'option': pointer to an option pointer, will be set to option pointer, if
   found
+* 'pos_option_name': pointer to a string pointer, will be set to pointer to
+  name of option, if found
 
 C example:
 
@@ -4395,11 +4398,13 @@ C example:
 struct t_config_file *ptr_config_file;
 struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
+char *option_name;
 
 weechat_config_search_with_string ("file.section.option",
                                    &ptr_config_file,
                                    &ptr_section,
-                                   &ptr_option);
+                                   &ptr_option,
+                                   &option_name);
 if (ptr_option)
 {
     /* option found */
