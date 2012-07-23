@@ -1417,10 +1417,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     {
         while (weechat_infolist_next (infolist))
         {
-            weechat_config_search_with_string (weechat_infolist_string (infolist,
-                                                                        "full_name"),
-                                               NULL, NULL, &ptr_option,
-                                               NULL);
+            ptr_option = weechat_config_get (weechat_infolist_string (infolist,
+                                                                      "full_name"));
             if (ptr_option)
             {
                 option_name = weechat_infolist_string (infolist, "option_name");
