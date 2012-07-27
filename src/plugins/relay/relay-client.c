@@ -625,7 +625,9 @@ struct t_relay_client *
 relay_client_new (int sock, const char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
+#ifdef HAVE_GNUTLS
     struct t_config_option *ptr_option;
+#endif
 
     new_client = malloc (sizeof (*new_client));
     if (new_client)

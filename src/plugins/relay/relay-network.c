@@ -53,10 +53,9 @@ gnutls_dh_params_t relay_gnutls_dh_params;
 void
 relay_network_set_ssl_cert_key (int verbose)
 {
-    int ret;
-
 #ifdef HAVE_GNUTLS
     char *certkey_path, *certkey_path2;
+    int ret;
 
     gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
@@ -100,6 +99,9 @@ relay_network_set_ssl_cert_key (int verbose)
         }
         free (certkey_path);
     }
+#else
+    /* make C compiler happy */
+    (void) verbose;
 #endif
 }
 
