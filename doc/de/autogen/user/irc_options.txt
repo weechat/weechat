@@ -109,7 +109,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** Beschreibung: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
+** Beschreibung: `zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht wird lokal angezeigt, channel: sendet eine Nachricht an die Channels)`
 ** Typ: integer
 ** Werte: off, local, channel (Standardwert: `local`)
 
@@ -189,7 +189,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** Beschreibung: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
+** Beschreibung: `unterdrückt Channel-Key im Channel Modus (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

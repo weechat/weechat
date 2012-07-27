@@ -7,20 +7,20 @@
          deldict
          addword [<lang>] <word>
 
-  enable: enable aspell
- disable: disable aspell
-  toggle: toggle aspell
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer
- deldict: delete dictionary used on current buffer
- addword: add a word in personal aspell dictionary
+  enable: Aspell wird aktiviert
+ disable: Aspell wird deaktiviert
+  toggle: Aspell Funktionalität umschalten
+listdict: die, auf dem System, installierten Wörterbücher werden aufgelistet
+ setdict: Wörterbuch für den aktuellen Buffer einstellen
+ deldict: Wörterbuch für den aktuellen Buffer entfernen
+ addword: fügt ein Wort in das persönliche Wörterbuch von Aspell hinzu
 
-Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
+Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set aspell.check.commands).
 
-To enable aspell on all buffers, use option "default_dict", then enable aspell, for example:
-  /set aspell.check.default_dict "en"
+Um Aspell auf alle Buffer anzuwenden sollte die Option "default_dict" genutzt und Aspell aktiviert werden:
+  /set aspell.check.default_dict "de_DE-neu"
   /aspell enable
 
-Default key to toggle aspell is alt-s.
+Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet alt-s.
 ........................................
 

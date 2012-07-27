@@ -579,7 +579,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
-** Beschreibung: `jump back to initial buffer after reaching end of hotlist`
+** Beschreibung: `springt zurück zum Ausgangsbuffer, falls keine weiteren Einträge in der Hotlist vorhanden sind`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

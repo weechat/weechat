@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2012-07-27 17:42+0200\n"
-"PO-Revision-Date: 2012-07-27 12:15+0200\n"
+"PO-Revision-Date: 2012-07-22 23:37+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -51,7 +51,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect   disable auto-connect to servers at startup\n"
 "  -c, --colors       display default colors in terminal\n"
@@ -82,6 +81,8 @@ msgstr ""
 "  -l, --license     zeigt die Lizenz von WeeChat an\n"
 "  -p, --no-plugin   unterbindet das Laden der Erweiterungen, beim "
 "Programmstart\n"
+"  -r, --run-command führt einen oder mehrere Befehle nach dem Start aus\n"
+"                    (mehrere Befehle werden durch ein Semikolon getrennt)\n"
 "  -s, --no-script   Skripten werden beim Programmstart nicht geladen\n"
 "  -v, --version     zeigt die Version von WeeChat an\n"
 "  plugin:option     Option für Erweiterung\n"
@@ -2752,6 +2753,8 @@ msgstr ""
 
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr ""
+"springt zurück zum Ausgangsbuffer, falls keine weiteren Einträge in der "
+"Hotlist vorhanden sind"
 
 msgid "enable mouse support"
 msgstr "Mausunterstützung einschalten"
@@ -3957,31 +3960,27 @@ msgid "%s%s: failed to add word to personal dictionary"
 msgstr ""
 "%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden."
 
-#, fuzzy
 msgid "Aspell is enabled"
-msgstr "Maus ist aktiviert"
+msgstr "Aspell ist aktiviert"
 
-#, fuzzy
 msgid "Aspell is disabled"
-msgstr "Maus ist deaktiviert"
+msgstr "Aspell ist deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Default dictionary: %s"
-msgstr "Standardfarben:"
+msgstr "Standardwörterbuch: %s"
 
 msgid "(not set)"
-msgstr ""
+msgstr "(keines definiert)"
 
 msgid "Specific dictionaries on buffers:"
-msgstr ""
+msgstr "Wörterbücher, die für die einzelnen Buffer eingestellt sind:"
 
-#, fuzzy
 msgid "Aspell enabled"
-msgstr "Maus ist aktiviert"
+msgstr "Aspell wurde aktiviert"
 
-#, fuzzy
 msgid "Aspell disabled"
-msgstr "Maus ist deaktiviert"
+msgstr "Aspell wurde deaktiviert"
 
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
@@ -4000,13 +3999,13 @@ msgstr ""
 msgid "aspell plugin configuration"
 msgstr "Konfiguration für Aspell-Erweiterung"
 
-#, fuzzy
 msgid ""
 "enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
 "[<lang>] <word>"
-msgstr "dictlist || enable <lang> || disable || addword [<lang>] <word>"
+msgstr ""
+"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
+"[<lang>] <word>"
 
-#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
@@ -4026,17 +4025,25 @@ msgid ""
 "\n"
 "Default key to toggle aspell is alt-s."
 msgstr ""
-"dictlist: listet installierte Wörterbücher auf\n"
-"  enable: aktiviert Aspell in aktuellem Buffer [lang = Wörterbuch)\n"
-" disable: deaktiviert Aspell in aktuellem Buffer\n"
+"  enable: Aspell wird aktiviert\n"
+" disable: Aspell wird deaktiviert\n"
+"  toggle: Aspell Funktionalität umschalten\n"
+"listdict: die, auf dem System, installierten Wörterbücher werden "
+"aufgelistet\n"
+" setdict: Wörterbuch für den aktuellen Buffer einstellen\n"
+" deldict: Wörterbuch für den aktuellen Buffer entfernen\n"
 " addword: fügt ein Wort in das persönliche Wörterbuch von Aspell hinzu\n"
 "\n"
 "Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind "
 "einige Befehle (siehe /set aspell.check.commands).\n"
 "\n"
-"Um in allen Buffern Aspell anzuwenden sollte man die Option \"default_dict\" "
-"nutzen , als Beispiel:\n"
-"  /set aspell.check.default_dict \"de_DE-neu\""
+"Um Aspell auf alle Buffer anzuwenden sollte die Option \"default_dict\" "
+"genutzt und Aspell aktiviert werden:\n"
+"  /set aspell.check.default_dict \"de_DE-neu\"\n"
+"  /aspell enable\n"
+"\n"
+"Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet "
+"alt-s."
 
 msgid "list of supported langs for aspell"
 msgstr "Liste der zu nutzenden Übersetzungen für Aspell"
@@ -4087,9 +4094,8 @@ msgstr ""
 msgid "check words during text search in buffer"
 msgstr "Überprüfe Wörter während im Buffer nach einem Text gesucht wird"
 
-#, fuzzy
 msgid "enable aspell check for command line"
-msgstr "Funktionen für die Befehlszeile"
+msgstr "Aspell wird für die Eingabezeile aktiviert"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "
@@ -4119,6 +4125,10 @@ msgid ""
 "charset: default encode is UTF-8 and decode of UTF-8 is OK even if you "
 "specify another charset to decode)"
 msgstr ""
+"%s%s: UTF-8 ist in den Charset-Optionen nicht erlaubt (dies ist der interne "
+"und Standard-Charset: UTF-8 dient zur Kodierung und zur Dekodierung kann "
+"UTF-8 genutzt werden, auch wenn man einen anderen Zeichensatz zur "
+"Dekodierung eingestellt hat)"
 
 #, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
@@ -6101,6 +6111,9 @@ msgid ""
 "display message when (un)marking as away (off: do not display/send anything, "
 "local: display locally, channel: send action to channels)"
 msgstr ""
+"zeigt eine Nachricht an, sobald der Abwesenheitsstatus ein- bzw. "
+"ausgeschaltet wird (off: zeigt/sendet keine Nachricht, local: eine Nachricht "
+"wird lokal angezeigt, channel: sendet eine Nachricht an die Channels)"
 
 msgid "display CTCP message even if it is blocked"
 msgstr "CTCP Nachrichten werden angezeigt, obwohl sie unterdrückt werden"
@@ -6135,14 +6148,12 @@ msgstr ""
 msgid "display server away message in away bar item"
 msgstr "Abwesenheitsnachricht in der Away-Bar-Item anzeigen"
 
-#, fuzzy
 msgid ""
 "hide channel key in channel modes (this will hide all channel modes "
 "arguments if mode +k is set on channel)"
 msgstr ""
-"unterdrückt Channel-Key falls die Modi in der Bar-Item mittels \"buffer_name"
-"\" dargestellt werden (diese Option unterdrückt alle Channel-Modi falls der "
-"Modus für den Channel auf +k gesetzt wurde)"
+"unterdrückt Channel-Key im Channel Modus (diese Option unterdrückt alle "
+"Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "zeigt Nick-Modi in \"input_prompt\" Bar-Item"
@@ -7106,9 +7117,9 @@ msgstr ""
 "%s%s: sende Daten an Server: leerer Buffer (bitte melden Sie das Problem den "
 "Entwicklern)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: sending data to server: error %d %s"
-msgstr "%s%s: sende Daten an Server: %d %s"
+msgstr "%s%s: sende Daten an Server: Fehler %d %s"
 
 msgid "(message dropped)"
 msgstr "(Nachricht verworfen)"
@@ -7768,7 +7779,7 @@ msgid "history of commands in buffer"
 msgstr "Verlaufspeicher von Befehlen in einem Buffer"
 
 msgid "hotlist"
-msgstr ""
+msgstr "Hotliste"
 
 msgid "structure with undo for input line"
 msgstr "Struktur der Rücknahmen für die Befehlszeile"
@@ -7929,7 +7940,7 @@ msgstr "unterbrochen"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
-msgstr "%s%s: lese Daten von Socket: Fehler %d %s"
+msgstr "%s%s: lese Daten von Socket für Client %d: Fehler %d %s"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
@@ -7937,11 +7948,11 @@ msgstr "%s%s: TLS Handshake fehlgeschlagen"
 
 #, fuzzy, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
-msgstr "%s%s: lese Daten von Socket: Fehler %d %s"
+msgstr "%s%s: lese Daten von Socket für Client %d: Fehler %d %s"
 
 #, fuzzy, c-format
 msgid "%s%s: sending data to client %s%s%s: error %d %s"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
+msgstr "%s%s: sende Daten an Client %d: Fehler %d %s"
 
 #, c-format
 msgid ""
@@ -7989,7 +8000,7 @@ msgstr "Keinen Client für Relay"
 
 #, fuzzy
 msgid "No connected client for relay"
-msgstr "Clients für Relay:"
+msgstr "Keinen Client für Relay"
 
 msgid "Listening on ports:"
 msgstr "Lausche an Ports:"
@@ -8071,7 +8082,7 @@ msgstr ""
 "  IRC Proxy für Server \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
 "  weechat protocol:\n"
-"    /relay add weechat 9000"
+"    /relay add weechat 8001"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "alle möglichen Protokoll.Name der Relay-Erweiterung"
@@ -9078,8 +9089,7 @@ msgstr "Konstanten"
 #~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
 #~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
 
-#, fuzzy
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
 #~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
 
 #~ msgid "text color"
@@ -9094,12 +9104,11 @@ msgstr "Konstanten"
 #~ msgid "display message when (un)marking as away"
 #~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
 
-#, fuzzy
-#~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
-
 #~ msgid "%s%s: error sending data to client: %s"
 #~ msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
+
+#~ msgid "%s%s: error sending data to client %d (%s)"
+#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"

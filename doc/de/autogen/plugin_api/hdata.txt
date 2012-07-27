@@ -405,7 +405,7 @@
   'prev_history' (pointer, hdata: 'history') |
   -
 
-| weechat | hotlist | hotlist |
+| weechat | hotlist | Hotliste |
   'priority' (integer) +
   'creation_time.tv_sec' (time) +
   'creation_time.tv_usec' (long) +

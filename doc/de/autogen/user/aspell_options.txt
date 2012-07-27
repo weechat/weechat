@@ -14,7 +14,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** Beschreibung: `enable aspell check for command line`
+** Beschreibung: `Aspell wird für die Eingabezeile aktiviert`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
