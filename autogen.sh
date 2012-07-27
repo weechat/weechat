@@ -23,8 +23,6 @@
 ###
 ### common stuff
 ###
-OK="\\033[70G[\\033[1;32mOK\\033[1;00m]"
-FAIL="\\033[70G[\\033[1;31mFAILED\\033[1;00m]"
 
 AUTOGEN_LOG=autogen.log
 
@@ -40,12 +38,12 @@ err ()
 
 run ()
 {
-    echo -n "Running \"$@\""
+    echo -n "Running \"$@\"..."
     eval $@ >$AUTOGEN_LOG 2>&1
     if [ $? = 0 ] ; then
-        echo -e $OK
+        echo " OK"
     else
-        echo -e $FAIL
+        echo " FAILED"
         err
     fi
 }
