@@ -113,16 +113,14 @@ void
 relay_network_init ()
 {
 #ifdef HAVE_GNUTLS
-    int bits;
 
     /* credentials */
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
     relay_network_set_ssl_cert_key (0);
 
     /* Diffie-Hellman parameters */
-    bits = gnutls_sec_param_to_pk_bits (GNUTLS_PK_DH, GNUTLS_SEC_PARAM_LOW);
     gnutls_dh_params_init (&relay_gnutls_dh_params);
-    gnutls_dh_params_generate2 (relay_gnutls_dh_params, bits);
+    gnutls_dh_params_generate2 (relay_gnutls_dh_params, 1024);
     gnutls_certificate_set_dh_params (relay_gnutls_x509_cred, relay_gnutls_dh_params);
 
     /* priority */
