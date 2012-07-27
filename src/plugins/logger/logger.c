@@ -34,6 +34,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <fcntl.h>
 #include <time.h>
 
@@ -916,14 +917,23 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
     const char *charset;
     struct t_logger_line *last_lines, *ptr_lines;
-    char *pos_message, *pos_tab, *error, *message;
+    char *pos_message, *pos_tab, *error, *message, text_time[256], *text_time2;
+    struct timeval tv_time;
+    struct tm *local_time;
     time_t datetime, time_now;
     struct tm tm_line;
-    int num_lines;
+    int num_lines, old_mday, old_mon, old_year;
 
     charset = weechat_info_get ("charset_terminal", "");
 
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
+
+    gettimeofday (&tv_time, NULL);
+    local_time = localtime (&tv_time.tv_sec);
+    old_mday = local_time->tm_mday;
+    old_mon = local_time->tm_mon;
+    old_year = local_time->tm_year;
+
     num_lines = 0;
     last_lines = logger_tail_file (filename, lines);
     ptr_lines = last_lines;
@@ -947,7 +957,27 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
                               weechat_config_string (logger_config_file_time_format),
                               &tm_line);
             if (error && !error[0] && (tm_line.tm_year > 0))
+            {
                 datetime = mktime (&tm_line);
+                if ((tm_line.tm_mday != old_mday)
+                    || (tm_line.tm_mon != old_mon)
+                    || (tm_line.tm_year != old_year))
+                {
+                    strftime (text_time, sizeof (text_time),
+                              weechat_config_string (weechat_config_get ("weechat.look.day_change_time_format")),
+                              &tm_line);
+                    text_time2 = weechat_iconv_to_internal (NULL, text_time);
+                    weechat_printf_tags (buffer,
+                                         "no_highlight,notify_none",
+                                         _("\t\tDay changed to %s"),
+                                         (text_time2) ? text_time2 : text_time);
+                    if (text_time2)
+                        free (text_time2);
+                    old_mday = tm_line.tm_mday;
+                    old_mon = tm_line.tm_mon;
+                    old_year = tm_line.tm_year;
+                }
+            }
             pos_message[0] = '\t';
         }
         pos_message = (pos_message && (datetime != 0)) ?
