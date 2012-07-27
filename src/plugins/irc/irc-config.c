@@ -2096,7 +2096,9 @@ irc_config_init ()
     irc_config_look_nick_completion_smart = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_completion_smart", "integer",
-        N_("smart completion for nicks (completes first with last speakers)"),
+        N_("smart completion for nicks (completes first with last speakers): "
+           "speakers = all speakers (including highlights), "
+           "speakers_highlights = only speakers with highlight"),
         "off|speakers|speakers_highlights", 0, 0, "speakers", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_display_away = weechat_config_new_option (

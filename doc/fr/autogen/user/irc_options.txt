@@ -234,7 +234,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** description: `complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)`
+** description: `complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment): speakers = tous ceux qui ont parlé (incluant les highlights), speakers_highlights = seulement ceux qui ont parlé avec un highlight`
 ** type: entier
 ** valeurs: off, speakers, speakers_highlights (valeur par défaut: `speakers`)
 

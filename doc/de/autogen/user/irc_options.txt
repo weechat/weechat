@@ -234,7 +234,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** Beschreibung: `intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den letzten Nick, mit dem gesprochen wurde)`
+** Beschreibung: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
 ** Typ: integer
 ** Werte: off, speakers, speakers_highlights (Standardwert: `speakers`)
 

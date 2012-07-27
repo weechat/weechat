@@ -234,7 +234,7 @@
 ** values: any string (default value: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** description: `smart completion for nicks (completes first with last speakers)`
+** description: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
 ** type: integer
 ** values: off, speakers, speakers_highlights (default value: `speakers`)
 

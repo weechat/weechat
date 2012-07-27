@@ -234,7 +234,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** descrizione: `completamento intelligente per i nick (usando prima chi ha parlato per ultimo)`
+** descrizione: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
 ** tipo: intero
 ** valori: off, speakers, speakers_highlights (valore predefinito: `speakers`)
 
