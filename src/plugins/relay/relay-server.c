@@ -53,10 +53,16 @@ struct t_relay_server *last_relay_server = NULL;
 
 void
 relay_server_get_protocol_args (const char *protocol_and_args,
-                                char **protocol, char **protocol_args)
+                                int *ssl, char **protocol, char **protocol_args)
 {
     char *pos;
 
+    *ssl = 0;
+    if (strncmp (protocol_and_args, "ssl.", 4) == 0)
+    {
+        *ssl = 1;
+        protocol_and_args += 4;
+    }
     pos = strchr (protocol_and_args, '.');
     if (pos)
     {
@@ -78,11 +84,12 @@ relay_server_get_protocol_args (const char *protocol_and_args,
 struct t_relay_server *
 relay_server_search (const char *protocol_and_args)
 {
+    int ssl;
     char *protocol, *protocol_args;
     struct t_relay_server *ptr_server;
 
     relay_server_get_protocol_args (protocol_and_args,
-                                    &protocol, &protocol_args);
+                                    &ssl, &protocol, &protocol_args);
 
     ptr_server = NULL;
 
@@ -91,7 +98,8 @@ relay_server_search (const char *protocol_and_args)
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if (strcmp (protocol, relay_protocol_string[ptr_server->protocol]) == 0)
+            if ((ptr_server->ssl == ssl)
+                && (strcmp (protocol, relay_protocol_string[ptr_server->protocol]) == 0))
             {
                 if (!protocol_args && !ptr_server->protocol_args)
                     break;
@@ -172,7 +180,7 @@ relay_server_sock_cb (void *data, int fd)
     struct t_relay_server *server;
     struct sockaddr_in client_addr;
     socklen_t client_length;
-    int client_fd, flags;
+    int client_fd, flags, set;
     char ipv4_address[INET_ADDRSTRLEN + 1], *ptr_address;
 
     /* make C compiler happy */
@@ -228,6 +236,19 @@ relay_server_sock_cb (void *data, int fd)
     if (flags == -1)
         flags = 0;
     fcntl (client_fd, F_SETFL, flags | O_NONBLOCK);
+
+    /* set socket option SO_REUSEADDR */
+    set = 1;
+    if (setsockopt (client_fd, SOL_SOCKET, SO_REUSEADDR,
+                    (void *) &set, sizeof (set)) < 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot set socket option "
+                          "\"SO_REUSEADDR\""),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        close (client_fd);
+        return WEECHAT_RC_OK;
+    }
 
     /* add the client */
     relay_client_new (client_fd, ptr_address, server);
@@ -313,12 +334,13 @@ relay_server_create_socket (struct t_relay_server *server)
     listen (server->sock, max_clients);
 
     weechat_printf (NULL,
-                    _("%s: listening on port %d (relay: %s%s%s, max %d clients)"),
+                    _("%s: listening on port %d (relay: %s%s%s,%s max %d clients)"),
                     RELAY_PLUGIN_NAME,
                     server->port,
                     relay_protocol_string[server->protocol],
                     (server->protocol_args) ? "." : "",
                     (server->protocol_args) ? server->protocol_args : "",
+                    (server->ssl) ? " SSL," : "",
                     max_clients);
 
     server->hook_fd = weechat_hook_fd (server->sock,
@@ -338,7 +360,7 @@ relay_server_create_socket (struct t_relay_server *server)
 struct t_relay_server *
 relay_server_new (enum t_relay_protocol protocol,
                   const char *protocol_args,
-                  int port)
+                  int port, int ssl)
 {
     struct t_relay_server *new_server;
 
@@ -357,6 +379,7 @@ relay_server_new (enum t_relay_protocol protocol,
         new_server->protocol_args =
             (protocol_args) ? strdup (protocol_args) : NULL;
         new_server->port = port;
+        new_server->ssl = ssl;
         new_server->sock = -1;
         new_server->hook_fd = NULL;
         new_server->start_time = 0;
@@ -469,6 +492,7 @@ relay_server_print_log ()
                             relay_protocol_string[ptr_server->protocol]);
         weechat_log_printf ("  protocol_args . . . : '%s'",  ptr_server->protocol_args);
         weechat_log_printf ("  port. . . . . . . . : %d",    ptr_server->port);
+        weechat_log_printf ("  ssl . . . . . . . . : %d",    ptr_server->ssl);
         weechat_log_printf ("  sock. . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . : 0x%lx", ptr_server->hook_fd);
         weechat_log_printf ("  start_time. . . . . : %ld",   ptr_server->start_time);

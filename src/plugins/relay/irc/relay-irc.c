@@ -221,9 +221,11 @@ relay_irc_signal_irc_in2_cb (void *data, const char *signal,
 
     if (weechat_relay_plugin->debug >= 2)
     {
-        weechat_printf (NULL, "%s: irc_in2: client: %s, data: %s",
+        weechat_printf (NULL, "%s: irc_in2: client: %s%s%s, data: %s",
                         RELAY_PLUGIN_NAME,
-                        client->protocol_args,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
                         ptr_msg);
     }
 
@@ -344,9 +346,11 @@ relay_irc_signal_irc_outtags_cb (void *data, const char *signal,
 
     if (weechat_relay_plugin->debug >= 2)
     {
-        weechat_printf (NULL, "%s: irc_out: client: %s, message: %s",
+        weechat_printf (NULL, "%s: irc_out: client: %s%s%s, message: %s",
                         RELAY_PLUGIN_NAME,
-                        client->protocol_args,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
                         message);
     }
 
@@ -757,8 +761,12 @@ relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
     /* display debug message */
     if (weechat_relay_plugin->debug >= 2)
     {
-        weechat_printf (NULL, "%s: recv from client %d: \"%s\"",
-                        RELAY_PLUGIN_NAME, client->id, data);
+        weechat_printf (NULL, "%s: recv from client %s%s%s: \"%s\"",
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        data);
     }
 
     /* display message in raw buffer */

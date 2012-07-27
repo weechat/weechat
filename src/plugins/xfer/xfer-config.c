@@ -148,19 +148,19 @@ xfer_config_init ()
     xfer_config_color_text = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text", "color",
-        N_("text color"),
+        N_("text color in xfer buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_text_bg = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text_bg", "color",
-        N_("background color"),
+        N_("background color in xfer buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_text_selected = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text_selected", "color",
-        N_("text color of selected xfer line"),
+        N_("text color of selected line in xfer buffer"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (

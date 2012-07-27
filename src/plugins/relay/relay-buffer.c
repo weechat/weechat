@@ -47,7 +47,7 @@ void
 relay_buffer_refresh (const char *hotlist)
 {
     struct t_relay_client *ptr_client, *client_selected;
-    char str_color[256], status[64], date_start[128], date_end[128];
+    char str_color[256], str_status[64], str_date_start[128], str_date_end[128];
     char *str_recv, *str_sent;
     int i, length, line;
     struct tm *date_tmp;
@@ -84,62 +84,60 @@ relay_buffer_refresh (const char *hotlist)
                       weechat_config_string (relay_config_color_text),
                       weechat_config_string (relay_config_color_text_bg));
 
-            snprintf (status, sizeof (status),
+            snprintf (str_status, sizeof (str_status),
                       "%s", _(relay_client_status_string[ptr_client->status]));
-            length = weechat_utf8_strlen_screen (status);
+            length = weechat_utf8_strlen_screen (str_status);
             if (length < 20)
             {
                 for (i = 0; i < 20 - length; i++)
                 {
-                    strcat (status, " ");
+                    strcat (str_status, " ");
                 }
             }
 
-            date_start[0] = '\0';
+            str_date_start[0] = '\0';
             date_tmp = localtime (&(ptr_client->start_time));
             if (date_tmp)
             {
-                strftime (date_start, sizeof (date_start),
+                strftime (str_date_start, sizeof (str_date_start),
                           "%a, %d %b %Y %H:%M:%S", date_tmp);
             }
-            date_end[0] = '\0';
+            str_date_end[0] = '-';
+            str_date_end[1] = '\0';
             if (ptr_client->end_time > 0)
             {
                 date_tmp = localtime (&(ptr_client->end_time));
                 if (date_tmp)
                 {
-                    strftime (date_end, sizeof (date_end),
+                    strftime (str_date_end, sizeof (str_date_end),
                               "%a, %d %b %Y %H:%M:%S", date_tmp);
                 }
             }
 
-            /* first line with status and start time */
-            weechat_printf_y (relay_buffer, (line * 2) + 2,
-                              _("%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"),
-                              weechat_color(str_color),
-                              (line == relay_buffer_selected_line) ?
-                              "*** " : "    ",
-                              weechat_color(weechat_config_string (relay_config_color_status[ptr_client->status])),
-                              status,
-                              weechat_color ("reset"),
-                              weechat_color (str_color),
-                              ptr_client->address,
-                              date_start,
-                              (ptr_client->end_time > 0) ? ", " : "",
-                              (ptr_client->end_time > 0) ? _("ended on: ") : "",
-                              (ptr_client->end_time > 0) ? date_end : "");
-
-            /* second line with protocol and bytes recv/sent */
             str_recv = weechat_string_format_size (ptr_client->bytes_recv);
             str_sent = weechat_string_format_size (ptr_client->bytes_sent);
-            weechat_printf_y (relay_buffer, (line * 2) + 3,
-                              _("%s%-26s id: %d, protocol: %s, received: %s, sent: %s"),
+
+            /* first line with status, description and bytes recv/sent */
+            weechat_printf_y (relay_buffer, (line * 2) + 2,
+                              _("%s%s[%s%s%s%s] %s, received: %s, sent: %s"),
                               weechat_color(str_color),
-                              " ",
-                              ptr_client->id,
-                              relay_protocol_string[ptr_client->protocol],
+                              (line == relay_buffer_selected_line) ? "*** " : "    ",
+                              weechat_color(weechat_config_string (relay_config_color_status[ptr_client->status])),
+                              str_status,
+                              weechat_color ("reset"),
+                              weechat_color (str_color),
+                              ptr_client->desc,
                               (str_recv) ? str_recv : "?",
                               (str_sent) ? str_sent : "?");
+
+            /* second line with start/end time */
+            weechat_printf_y (relay_buffer, (line * 2) + 3,
+                              _("%s%-26s started on: %s, ended on: %s"),
+                              weechat_color(str_color),
+                              " ",
+                              str_date_start,
+                              str_date_end);
+
             if (str_recv)
                 free (str_recv);
             if (str_sent)

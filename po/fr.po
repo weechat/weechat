@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-21 17:23+0200\n"
-"PO-Revision-Date: 2012-07-21 17:23+0200\n"
+"POT-Creation-Date: 2012-07-27 17:42+0200\n"
+"PO-Revision-Date: 2012-07-27 17:21+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -4182,6 +4182,7 @@ msgstr ""
 "les serveurs connectés via SSL"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5668,10 +5669,10 @@ msgid "use SSL for server communication"
 msgstr "utiliser SSL pour la communication avec le serveur"
 
 msgid ""
-"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"SSL certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
-"fichier de certificat ssl utilisé pour identifier automatiquement votre "
+"fichier de certificat SSL utilisé pour identifier automatiquement votre "
 "pseudo (\"%h\" sera remplacé par le répertoire de base WeeChat, par défaut: "
 "\"~/.weechat\")"
 
@@ -5688,8 +5689,8 @@ msgstr ""
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "taille de clé utilisée pour l'échange de clé Diffie-Hellman"
 
-msgid "check that the ssl connection is fully trusted"
-msgstr "vérifier que la connexion ssl est entièrement de confiance"
+msgid "check that the SSL connection is fully trusted"
+msgstr "vérifier que la connexion SSL est entièrement de confiance"
 
 msgid "password for server"
 msgstr "mot de passe pour le serveur"
@@ -7687,18 +7688,28 @@ msgid "  [Q] Close this buffer"
 msgstr "  [Q] Fermer ce tampon"
 
 #, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
-msgstr "%s%s[%s%s%s%s] %s (démarré le: %s%s%s%s)"
-
-msgid "ended on: "
-msgstr "terminé le: "
+msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
+msgstr "%s%s[%s%s%s%s] %s, reçu: %s, envoyé: %s"
 
 #, c-format
-msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s id: %d, protocole: %s, reçu: %s, envoyé: %s"
+msgid "%s%-26s started on: %s, ended on: %s"
+msgstr "%s%-26s démarré le: %s, terminé le: %s"
 
 msgid "List of clients for relay"
 msgstr "Liste des clients pour le relai"
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via SSL"
+msgstr ""
+"%s%s: déconnexion du client %s%s%s car la mise à jour ne peut pas "
+"fonctionner avec les clients connectés via SSL"
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] "client"
+msgstr[1] "clients"
 
 msgid "connecting"
 msgstr "connexion"
@@ -7713,46 +7724,73 @@ msgid "disconnected"
 msgstr "déconnecté"
 
 #, c-format
-msgid "%s%s: reading data on socket for client %d: error %d %s"
-msgstr "%s%s: lecture de données sur la socket pour le client %d: erreur %d %s"
+msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgstr ""
+"%s%s: la poignée de main (handshake) de TLS a échoué pour le client %s%s%s: "
+"erreur %d %s"
 
 #, c-format
-msgid "%s%s: sending data to client %d: error %d %s"
-msgstr "%s%s: envoi de données au client %d: erreur %d %s"
+msgid "%s%s: TLS handshake timeout for client %s%s%s"
+msgstr ""
+"%s%s: délai maximum dépassé pour la poignée de main (handshake) de TLS pour "
+"le client %s%s%s"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
-msgstr "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s%s%s)"
+msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
+msgstr ""
+"%s%s: lecture de données sur la socket pour le client %s%s%s: erreur %d %s"
+
+#, c-format
+msgid "%s%s: sending data to client %s%s%s: error %d %s"
+msgstr "%s%s: envoi de données au client %s%s%s: erreur %d %s"
+
+#, c-format
+msgid ""
+"%s%s: warning: no SSL certificate/key found (option relay.network."
+"ssl_cert_key)"
+msgstr ""
+"%s%s: attention: pas de certificat/clé SSL trouvés (option relay.network."
+"ssl_cert_key)"
+
+#, c-format
+msgid "%s: new client on port %d: %s%s%s"
+msgstr "%s: nouveau client sur le port %d: %s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: pas assez de mémoire pour un nouveau client"
 
 #, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
-msgstr "%s%s: l'authentification a échoué avec le client %s%s%s (%s%s%s)"
+msgid "%s%s: authentication failed with client %s%s%s"
+msgstr "%s%s: l'authentification a échoué avec le client %s%s%s"
 
 #, c-format
-msgid "%s: disconnected from client %s%s%s (%s%s%s)"
-msgstr "%s: déconnecté du client %s%s%s (%s%s%s)"
+msgid "%s: disconnected from client %s%s%s"
+msgstr "%s: déconnecté du client %s%s%s"
 
 msgid "Clients for relay:"
 msgstr "Clients pour le relai:"
 
-#, c-format
-msgid ""
-"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
-"recv, %lu sent"
-msgstr ""
-"  id: %d, %s%s%s (%s%s%s), démarré le: %s, dernière activité: %s, octets: "
-"%lu reçus, %lu envoyés"
+msgid "Connected clients for relay:"
+msgstr "Clients connectés pour le relai:"
 
 #, c-format
-msgid "  id: %d, %s%s%s, started on: %s"
-msgstr "  id: %d, %s%s%s, démarré le: %s"
+msgid ""
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"sent"
+msgstr ""
+"  %s%s%s (%s%s%s), démarré le: %s, dernière activité: %s, octets: %lu reçus, "
+"%lu envoyés"
+
+#, c-format
+msgid "  %s%s%s (%s%s%s), started on: %s"
+msgstr "  %s%s%s (%s%s%s), démarré le: %s"
 
 msgid "No client for relay"
 msgstr "Pas de client pour le relai"
+
+msgid "No connected client for relay"
+msgstr "Pas de client connecté pour le relai"
 
 msgid "Listening on ports:"
 msgstr "Ecoute sur les ports:"
@@ -7781,10 +7819,10 @@ msgstr "contrôle du relai"
 
 msgid ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw"
+"|| raw || sslcertkey"
 msgstr ""
 "list|listfull|listrelay || add <protocole.nom> <port> || del <protocole.nom> "
-"|| raw"
+"|| raw || sslcertkey"
 
 msgid ""
 "         list: list relay clients (only active relays)\n"
@@ -7795,16 +7833,23 @@ msgid ""
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
+"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
 "Examples:\n"
 "  irc proxy, for server \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
+"  irc proxy, for server \"freenode\", with SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
 "  weechat protocol:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000\n"
+"  weechat protocol with SSL:\n"
+"    /relay add ssl.weechat 9001"
 msgstr ""
 "         list: lister les clients pour le relai\n"
 "     listfull: lister les clients pour le relai (verbeux)\n"
@@ -7814,8 +7859,12 @@ msgstr ""
 "protocole.nom: protocole et nom à relayer:\n"
 "                 - protocole \"irc\": le nom est le serveur à partager\n"
 "                 - protocole \"weechat\" (le nom n'est pas utilisé)\n"
+"               Note: le protocole peut être préfixé par \"ssl.\" pour "
+"activer le SSL\n"
 "         port: port utilisé pour le relai\n"
 "          raw: ouvrir le tampon avec les données brutes Relay\n"
+"   sslcertkey: définir le certificat/clé SSL en utilisant le chemin de "
+"l'option relay.network.ssl_cert_key\n"
 "\n"
 "Sans paramètre, cette commande ouvre le tampon avec la liste des clients "
 "pour le relai.\n"
@@ -7823,8 +7872,12 @@ msgstr ""
 "Exemples:\n"
 "  proxy irc, pour le serveur \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
+"  proxy irc, pour le serveur \"freenode\", avec SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
 "  protocole weechat:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000\n"
+"  protocole weechat avec SSL:\n"
+"    /relay add ssl.weechat 9001"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "tous les protocole.nom possible pour l'extension relay"
@@ -7838,6 +7891,12 @@ msgstr "premier port libre pour l'extension relay"
 #, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: erreur: le port \"%d\" est déjà utilisé"
+
+#, c-format
+msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
+msgstr ""
+"%s%s: impossible d'utiliser SSL car WeeChat n'a pas été construit avec le "
+"support GnuTLS"
 
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
@@ -7860,14 +7919,17 @@ msgstr ""
 "ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau "
 "client est ajouté à la liste"
 
-msgid "text color"
-msgstr "couleur du texte"
+msgid "text color for client description"
+msgstr "couleur du texte pour la description du client"
 
-msgid "background color"
-msgstr "couleur du fond"
+msgid "text color in relay buffer"
+msgstr "couleur du texte dans le tampon relay"
 
-msgid "text color of selected client line"
-msgstr "couleur du texte pour la ligne client sélectionnée"
+msgid "background color in relay buffer"
+msgstr "couleur du fond dans le tampon relay"
+
+msgid "text color of selected line in relay buffer"
+msgstr "couleur du texte pour la ligne sélectionnée dans le tampon relay"
 
 msgid "text color for \"connecting\" status"
 msgstr "couleur du texte pour le statut \"connexion\""
@@ -7919,11 +7981,25 @@ msgstr ""
 "mot de passe requis par les clients pour accéder à ce relai (une valeur vide "
 "indique que le mot de passe n'est pas nécessaire)"
 
+msgid ""
+"file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+"fichier avec le certificat et la clé privée SSL (pour servir les clients "
+"avec SSL)"
+
 msgid "list of relay clients"
 msgstr "liste des clients pour le relai"
 
 msgid "relay pointer (optional)"
 msgstr "pointeur vers le relay (optionnel)"
+
+#, c-format
+msgid "%s: SSL certificate and key have been set"
+msgstr "%s: certificat et clé SSL ont été définis"
+
+#, c-format
+msgid "%s%s: unable to initialize priority for SSL"
+msgstr "%s%s: impossible d'initialiser la priorité pour SSL"
 
 msgid "Relay raw messages"
 msgstr "Messages bruts Relay"
@@ -7945,8 +8021,8 @@ msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s%s%s)"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
-msgstr "%s: écoute sur le port %d (relai: %s%s%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
+msgstr "%s: écoute sur le port %d (relai: %s%s%s,%s max %d clients)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -7957,15 +8033,15 @@ msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: mémoire insuffisante pour analyser le message"
 
 #, c-format
-msgid "%s%s: failed to execute command \"%s\" for client %d"
-msgstr "%s%s: echec d'exécution de la commamde \"%s\" pour le client %d"
+msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgstr "%s%s: echec d'exécution de la commamde \"%s\" pour le client %s%s%s"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %d for command \"%s"
+"%s%s: too few arguments received from client %s%s%s for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: trop peu de paramètres reçus du client %d pour la commande \"%s"
+"%s%s: trop peu de paramètres reçus du client %s%s%s pour la commande \"%s"
 "\" (reçu: %d paramètres, attendu: au moins %d)"
 
 #, c-format
@@ -8598,8 +8674,14 @@ msgstr ""
 "taille de la barre de progression, en caractères (si 0, la barre de "
 "progression est désactivée)"
 
-msgid "text color of selected xfer line"
-msgstr "couleur du texte pour la ligne xfer sélectionnée"
+msgid "text color in xfer buffer"
+msgstr "couleur du texte dans le tampon xfer"
+
+msgid "background color in xfer buffer"
+msgstr "couleur du fond dans le tampon xfer"
+
+msgid "text color of selected line in xfer buffer"
+msgstr "couleur du texte pour la ligne sélectionnée dans le tampon xfer"
 
 msgid "text color for \"waiting\" status"
 msgstr "couleur du texte pour le statut \"en attente\""
@@ -8779,3 +8861,22 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "ended on: "
+#~ msgstr "terminé le: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s id: %d, protocole: %s, reçu: %s, envoyé: %s"
+
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
+#~ msgstr ""
+#~ "%s: nouveau client de %s%s%s sur le port %d (id: %d, relai: %s%s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "couleur du texte"
+
+#~ msgid "background color"
+#~ msgstr "couleur du fond"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "couleur du texte pour la ligne xfer sélectionnée"

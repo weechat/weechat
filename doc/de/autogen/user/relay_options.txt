@@ -1,3 +1,8 @@
+* [[option_relay.color.client]] *relay.color.client*
+** Beschreibung: `text color for client description`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
+
 * [[option_relay.color.status_active]] *relay.color.status_active*
 ** Beschreibung: `Textfarbe für Status: "Verbindung hergestellt"`
 ** Typ: Farbe
@@ -24,17 +29,17 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * [[option_relay.color.text]] *relay.color.text*
-** Beschreibung: `Textfarbe`
+** Beschreibung: `text color in relay buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_relay.color.text_bg]] *relay.color.text_bg*
-** Beschreibung: `Hintergrundfarbe`
+** Beschreibung: `background color in relay buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_relay.color.text_selected]] *relay.color.text_selected*
-** Beschreibung: `Textfarbe für selektierten Client-Linie`
+** Beschreibung: `text color of selected line in relay buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
@@ -72,4 +77,9 @@
 ** Beschreibung: `Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten (kein Eintrag bedeutet dass kein Passwort benötigt wird)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
+** Beschreibung: `file with SSL certificate and private key (for serving clients with SSL)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/relay.pem"`)
 

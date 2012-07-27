@@ -20,6 +20,10 @@
 #ifndef __WEECHAT_RELAY_CLIENT_H
 #define __WEECHAT_RELAY_CLIENT_H 1
 
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
+
 struct t_relay_server;
 
 /* relay status */
@@ -56,7 +60,13 @@ struct t_relay_client_outqueue
 struct t_relay_client
 {
     int id;                            /* unique id (diff. for each client) */
+    char *desc;                        /* description, used for display     */
     int sock;                          /* socket for connection             */
+    int ssl;                           /* 1 if SSL is enabled               */
+#ifdef HAVE_GNUTLS
+    gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
+    struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
+#endif
     char *address;                     /* string with IP address            */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */

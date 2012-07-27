@@ -30,6 +30,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-network.h"
 #include "relay-raw.h"
 #include "relay-server.h"
 
@@ -42,70 +43,80 @@ void
 relay_command_client_list (int full)
 {
     struct t_relay_client *ptr_client;
-    int i;
     char date_start[128], date_activity[128];
     struct tm *date_tmp;
+    int num_found;
 
-    if (relay_clients)
+    num_found = 0;
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
     {
-        weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Clients for relay:"));
-        i = 1;
-        for (ptr_client = relay_clients; ptr_client;
-             ptr_client = ptr_client->next_client)
+        if (!full && RELAY_CLIENT_HAS_ENDED(ptr_client))
+            continue;
+
+        if (num_found == 0)
         {
-            date_start[0] = '\0';
-            date_tmp = localtime (&(ptr_client->start_time));
-            if (date_tmp)
-            {
-                strftime (date_start, sizeof (date_start),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
-            }
+            weechat_printf (NULL, "");
+            weechat_printf (NULL,
+                            (full) ?
+                            _("Clients for relay:") :
+                            _("Connected clients for relay:"));
+        }
+        num_found++;
 
-            date_activity[0] = '\0';
-            date_tmp = localtime (&(ptr_client->last_activity));
-            if (date_tmp)
-            {
-                strftime (date_activity, sizeof (date_activity),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
-            }
+        date_start[0] = '\0';
+        date_tmp = localtime (&(ptr_client->start_time));
+        if (date_tmp)
+        {
+            strftime (date_start, sizeof (date_start),
+                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+        }
 
-            if (full)
-            {
-                weechat_printf (NULL,
-                                _("  id: %d, %s%s%s (%s%s%s), "
-                                  "started on: %s, last activity: %s, "
-                                  "bytes: %lu recv, %lu sent"),
-                                ptr_client->id,
-                                RELAY_COLOR_CHAT_HOST,
-                                ptr_client->address,
-                                RELAY_COLOR_CHAT,
-                                RELAY_COLOR_CHAT_BUFFER,
-                                relay_client_status_string[ptr_client->status],
-                                RELAY_COLOR_CHAT,
-                                date_start,
-                                date_activity,
-                                ptr_client->bytes_recv,
-                                ptr_client->bytes_sent);
-            }
-            else
-            {
-                if (!RELAY_CLIENT_HAS_ENDED(ptr_client))
-                {
-                    weechat_printf (NULL,
-                                    _("  id: %d, %s%s%s, started on: %s"),
-                                    ptr_client->id,
-                                    RELAY_COLOR_CHAT_HOST,
-                                    ptr_client->address,
-                                    RELAY_COLOR_CHAT,
-                                    date_start);
-                }
-            }
-            i++;
+        date_activity[0] = '\0';
+        date_tmp = localtime (&(ptr_client->last_activity));
+        if (date_tmp)
+        {
+            strftime (date_activity, sizeof (date_activity),
+                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+        }
+
+        if (full)
+        {
+            weechat_printf (NULL,
+                            _("  %s%s%s (%s%s%s), started on: %s, last activity: %s, "
+                              "bytes: %lu recv, %lu sent"),
+                            RELAY_COLOR_CHAT_CLIENT,
+                            ptr_client->desc,
+                            RELAY_COLOR_CHAT,
+                            weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
+                            relay_client_status_string[ptr_client->status],
+                            RELAY_COLOR_CHAT,
+                            date_start,
+                            date_activity,
+                            ptr_client->bytes_recv,
+                            ptr_client->bytes_sent);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("  %s%s%s (%s%s%s), started on: %s"),
+                            RELAY_COLOR_CHAT_CLIENT,
+                            ptr_client->desc,
+                            RELAY_COLOR_CHAT,
+                            weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
+                            relay_client_status_string[ptr_client->status],
+                            RELAY_COLOR_CHAT,
+                            date_start);
         }
     }
-    else
-        weechat_printf (NULL, _("No client for relay"));
+
+    if (num_found == 0)
+    {
+        weechat_printf (NULL,
+                        (full) ?
+                        _("No client for relay") :
+                        _("No connected client for relay"));
+    }
 }
 
 /*
@@ -259,6 +270,11 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             relay_raw_open (1);
             return WEECHAT_RC_OK;
         }
+        if (weechat_strcasecmp (argv[1], "sslcertkey") == 0)
+        {
+            relay_network_set_ssl_cert_key (1);
+            return WEECHAT_RC_OK;
+        }
     }
 
     if (!relay_buffer)
@@ -300,7 +316,8 @@ relay_command_init ()
                           N_("list|listfull|listrelay"
                              " || add <protocol.name> <port>"
                              " || del <protocol.name>"
-                             " || raw"),
+                             " || raw"
+                             " || sslcertkey"),
                           N_("         list: list relay clients (only active "
                              "relays)\n"
                              "     listfull: list relay clients (verbose, all "
@@ -313,20 +330,29 @@ relay_command_init ()
                              "server to share\n"
                              "                 - protocol \"weechat\" (name is "
                              "not used)\n"
+                             "               Note: the protocol can be prefixed "
+                             "by \"ssl.\" to enable SSL\n"
                              "         port: port used for relay\n"
-                             "          raw: open buffer with raw Relay data\n\n"
+                             "          raw: open buffer with raw Relay data\n"
+                             "   sslcertkey: set SSL certificate/key using path "
+                             "in option relay.network.ssl_cert_key\n\n"
                              "Without argument, this command opens buffer "
                              "with list of relay clients.\n\n"
                              "Examples:\n"
                              "  irc proxy, for server \"freenode\":\n"
                              "    /relay add irc.freenode 8000\n"
+                             "  irc proxy, for server \"freenode\", with SSL:\n"
+                             "    /relay add ssl.irc.freenode 8001\n"
                              "  weechat protocol:\n"
-                             "    /relay add weechat 8001"),
+                             "    /relay add weechat 9000\n"
+                             "  weechat protocol with SSL:\n"
+                             "    /relay add ssl.weechat 9001"),
                           "list %(relay_relays)"
                           " || listfull %(relay_relays)"
                           " || listrelay"
                           " || add %(relay_protocol_name) %(relay_free_port)"
                           " || del %(relay_relays)"
-                          " || raw",
+                          " || raw"
+                          " || sslcertkey",
                           &relay_command_relay, NULL);
 }

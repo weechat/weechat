@@ -5,6 +5,7 @@
         add <protocole.nom> <port>
         del <protocole.nom>
         raw
+        sslcertkey
 
          list: lister les clients pour le relai
      listfull: lister les clients pour le relai (verbeux)
@@ -14,15 +15,21 @@
 protocole.nom: protocole et nom à relayer:
                  - protocole "irc": le nom est le serveur à partager
                  - protocole "weechat" (le nom n'est pas utilisé)
+               Note: le protocole peut être préfixé par "ssl." pour activer le SSL
          port: port utilisé pour le relai
           raw: ouvrir le tampon avec les données brutes Relay
+   sslcertkey: définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des clients pour le relai.
 
 Exemples:
   proxy irc, pour le serveur "freenode":
     /relay add irc.freenode 8000
+  proxy irc, pour le serveur "freenode", avec SSL:
+    /relay add ssl.irc.freenode 8001
   protocole weechat:
-    /relay add weechat 8001
+    /relay add weechat 9000
+  protocole weechat avec SSL:
+    /relay add ssl.weechat 9001
 ........................................
 

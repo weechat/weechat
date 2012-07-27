@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-21 17:23+0200\n"
-"PO-Revision-Date: 2012-06-03 09:49+0200\n"
+"POT-Creation-Date: 2012-07-27 17:42+0200\n"
+"PO-Revision-Date: 2012-07-27 12:16+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -4139,6 +4139,7 @@ msgstr ""
 "con servidores conectados a través de SSL"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5619,8 +5620,9 @@ msgstr "usar el protocolo IPv6 para la comunicación con el servidor"
 msgid "use SSL for server communication"
 msgstr "usar SSL para la comunicación con el servidor"
 
+#, fuzzy
 msgid ""
-"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"SSL certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
 "archivo con el certificado ssl para identificar tu apodo automáticamente "
@@ -5640,7 +5642,8 @@ msgstr ""
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "tamaño de la llave usada durante Diffie-Hellman Key Exchange"
 
-msgid "check that the ssl connection is fully trusted"
+#, fuzzy
+msgid "check that the SSL connection is fully trusted"
 msgstr "verificar que la conexión SSL es confiable completamente"
 
 msgid "password for server"
@@ -7628,19 +7631,29 @@ msgstr "  [P] Purgar terminados"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Cerrar este buffer"
 
-#, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
 msgstr "%s%s[%s%s%s%s] %s (empezó en: %s%s%s%s)"
 
-msgid "ended on: "
-msgstr "terminado en: "
-
 #, c-format
-msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s id: %d, protocolo: %s, recibido: %s, enviado: %s"
+msgid "%s%-26s started on: %s, ended on: %s"
+msgstr ""
 
 msgid "List of clients for relay"
 msgstr "Lista de clientes a retransmitir"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via SSL"
+msgstr ""
+"%s%s: desconectando del servidor porque la actualización no puede funcionar "
+"con servidores conectados a través de SSL"
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "connecting"
 msgstr "conectando"
@@ -7655,48 +7668,68 @@ msgid "disconnected"
 msgstr "desconectado"
 
 #, fuzzy, c-format
-msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
 msgstr "%s%s: leyendo datos del socket: error %d %s"
 
 #, fuzzy, c-format
-msgid "%s%s: sending data to client %d: error %d %s"
+msgid "%s%s: TLS handshake timeout for client %s%s%s"
+msgstr "%s%s: el saludo TLS ha fallado"
+
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
+msgstr "%s%s: leyendo datos del socket: error %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %s%s%s: error %d %s"
 msgstr "%s%s: error al enviar datos al cliente %d (%s)"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+msgid ""
+"%s%s: warning: no SSL certificate/key found (option relay.network."
+"ssl_cert_key)"
 msgstr ""
-"%s: nuevo cliente desde %s%s%s en el puerto %d (id: %d, retransmitiendo: %s%s"
-"%s)"
+
+#, fuzzy, c-format
+msgid "%s: new client on port %d: %s%s%s"
+msgstr "%s%s: no se puede aceptar el cliente en el puerto %d (%s%s%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: no hay memoria suficiente para el nuevo cliente"
 
-#, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s: authentication failed with client %s%s%s"
 msgstr "%s%s: la autenticación falló con el cliente %s%s%s (%s%s%s)"
 
-#, c-format
-msgid "%s: disconnected from client %s%s%s (%s%s%s)"
+#, fuzzy, c-format
+msgid "%s: disconnected from client %s%s%s"
 msgstr "%s: desconectado del cliente %s%s%s (%s%s%s)"
 
 msgid "Clients for relay:"
 msgstr "Clientes para retransmitir:"
 
-#, c-format
+#, fuzzy
+msgid "Connected clients for relay:"
+msgstr "Clientes para retransmitir:"
+
+#, fuzzy, c-format
 msgid ""
-"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
-"recv, %lu sent"
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"sent"
 msgstr ""
 "  id: %d, %s%s%s (%s%s%s), iniciado en: %s, última actividad: %s, bytes: %lu "
 "recibidos, %lu enviados"
 
-#, c-format
-msgid "  id: %d, %s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  %s%s%s (%s%s%s), started on: %s"
 msgstr "  id: %d, %s%s%s, iniciado en: %s"
 
 msgid "No client for relay"
 msgstr "Ningún cliente para retransmitir"
+
+#, fuzzy
+msgid "No connected client for relay"
+msgstr "Clientes para retransmitir:"
 
 msgid "Listening on ports:"
 msgstr "Escuchando en los puertos:"
@@ -7723,13 +7756,15 @@ msgstr "%s%s: repetidor \"%s\" no encontrado"
 msgid "relay control"
 msgstr "control de retransmisión"
 
+#, fuzzy
 msgid ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw"
+"|| raw || sslcertkey"
 msgstr ""
 "list|listfull|listrelay || add <protocolo.nombre> <puerto> || del <protocolo."
 "nombre> || raw"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -7739,16 +7774,23 @@ msgid ""
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
+"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
 "Examples:\n"
 "  irc proxy, for server \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
+"  irc proxy, for server \"freenode\", with SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
 "  weechat protocol:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000\n"
+"  weechat protocol with SSL:\n"
+"    /relay add ssl.weechat 9001"
 msgstr ""
 "     list: lista clientes a retransmitir (solo retransmisiones activas)\n"
 " listfull: lista clientes a retransmitir (detallado, todas las "
@@ -7770,7 +7812,7 @@ msgstr ""
 "  irc proxy, para el servidor \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
 "  protocolo weechat:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "todos los posibles protocolo.nombre para el plugin relay"
@@ -7784,6 +7826,12 @@ msgstr "primer puerto libre para el plugin relay"
 #, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: error: puerto \"%d\" ya está en uso"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
+msgstr ""
+"%s%s: no es posible conectarse con SSL debido a que WeeChat no fue compilado "
+"con soporte GnuTLS"
 
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
@@ -7806,13 +7854,20 @@ msgstr ""
 "abrir automáticamente el buffer de retransmisiones cuando un cliente nuevo "
 "se conecta"
 
-msgid "text color"
-msgstr "color del texto"
+#, fuzzy
+msgid "text color for client description"
+msgstr "color para los delimitadores de la hora"
 
-msgid "background color"
-msgstr "color de fondo"
+#, fuzzy
+msgid "text color in relay buffer"
+msgstr "color para los nombres de los buffers"
 
-msgid "text color of selected client line"
+#, fuzzy
+msgid "background color in relay buffer"
+msgstr "color de fondo para el marcador de datos sin leer"
+
+#, fuzzy
+msgid "text color of selected line in relay buffer"
 msgstr "color para el cliente seleccionado"
 
 msgid "text color for \"connecting\" status"
@@ -7864,11 +7919,23 @@ msgstr ""
 "los clientes requieren una clave para acceder este repetidor (sin valor "
 "significa que no se requiere clave)"
 
+msgid ""
+"file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
 msgid "list of relay clients"
 msgstr "Lista de clientes en el repetidor"
 
 msgid "relay pointer (optional)"
 msgstr "puntero del retransmisor (opcional)"
+
+#, fuzzy, c-format
+msgid "%s: SSL certificate and key have been set"
+msgstr "%sgnutls: el certificado ha sido revocado"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize priority for SSL"
+msgstr "%s%s: no ha sido posible inicializar %s"
 
 msgid "Relay raw messages"
 msgstr "Retransmitir mensajes en bruto"
@@ -7889,8 +7956,8 @@ msgstr "%s%s: dirección IP \"%s\" no permitida por el repetidor"
 msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s%s: error con \"bind\" en el puerto %d (%s%s%s)"
 
-#, c-format
-msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
 msgstr "%s: escuchando en el puerto %d (repetidor: %s%s%s, max %d clientes)"
 
 #, c-format
@@ -7901,13 +7968,13 @@ msgstr "%s%s: no hay memoria suficiente para escuchar en un nuevo puerto"
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: memoria insuficiente para analizar el mensaje"
 
-#, c-format
-msgid "%s%s: failed to execute command \"%s\" for client %d"
+#, fuzzy, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "%s%s: falló la ejecución del comando \"%s\" por el cliente %d"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: too few arguments received from client %d for command \"%s"
+"%s%s: too few arguments received from client %s%s%s for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 "%s%s: muy pocos argumentos recibidos del cliente %d para el comando \"%s"
@@ -8542,8 +8609,17 @@ msgstr ""
 "tamaño de la barra de progreso, en caracteres (si es 0, la barra es "
 "desactivada)"
 
-msgid "text color of selected xfer line"
-msgstr "color de texto para la línea seleccionada en xfer"
+#, fuzzy
+msgid "text color in xfer buffer"
+msgstr "color para los nombres de los buffers"
+
+#, fuzzy
+msgid "background color in xfer buffer"
+msgstr "color de fondo para el área de conversación"
+
+#, fuzzy
+msgid "text color of selected line in xfer buffer"
+msgstr "color para el cliente seleccionado"
 
 msgid "text color for \"waiting\" status"
 msgstr "color de texto para el estado \"esperando\""
@@ -8720,6 +8796,27 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "ended on: "
+#~ msgstr "terminado en: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s id: %d, protocolo: %s, recibido: %s, enviado: %s"
+
+#, fuzzy
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
+#~ msgstr ""
+#~ "%s: nuevo cliente desde %s%s%s en el puerto %d (id: %d, retransmitiendo: "
+#~ "%s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "color del texto"
+
+#~ msgid "background color"
+#~ msgstr "color de fondo"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "color de texto para la línea seleccionada en xfer"
 
 #~ msgid "display message when (un)marking as away"
 #~ msgstr "mostrar mensaje cuando se cambie el estado de ausente"

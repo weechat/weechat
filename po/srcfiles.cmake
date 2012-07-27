@@ -190,6 +190,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/relay.h
 ./src/plugins/relay/relay-info.c
 ./src/plugins/relay/relay-info.h
+./src/plugins/relay/relay-network.c
+./src/plugins/relay/relay-network.h
 ./src/plugins/relay/relay-raw.c
 ./src/plugins/relay/relay-raw.h
 ./src/plugins/relay/relay-server.c

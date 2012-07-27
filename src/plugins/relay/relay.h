@@ -40,6 +40,7 @@ enum t_relay_protocol
 #define RELAY_COLOR_CHAT weechat_color("chat")
 #define RELAY_COLOR_CHAT_HOST weechat_color("chat_host")
 #define RELAY_COLOR_CHAT_BUFFER weechat_color("chat_buffer")
+#define RELAY_COLOR_CHAT_CLIENT weechat_color(weechat_config_string(relay_config_color_client))
 
 extern char *relay_protocol_string[];
 

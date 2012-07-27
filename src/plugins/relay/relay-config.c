@@ -30,6 +30,7 @@
 #include "relay-config.h"
 #include "relay-client.h"
 #include "relay-buffer.h"
+#include "relay-network.h"
 #include "relay-server.h"
 
 
@@ -43,6 +44,7 @@ struct t_config_option *relay_config_look_raw_messages;
 
 /* relay config, color section */
 
+struct t_config_option *relay_config_color_client;
 struct t_config_option *relay_config_color_text;
 struct t_config_option *relay_config_color_text_bg;
 struct t_config_option *relay_config_color_text_selected;
@@ -55,6 +57,7 @@ struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_compression_level;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
+struct t_config_option *relay_config_network_ssl_cert_key;
 
 /* other */
 
@@ -139,6 +142,22 @@ relay_config_change_network_bind_address_cb (void *data,
 }
 
 /*
+ * relay_config_change_network_ssl_cert_key: called when ssl_cert_key is changed
+ */
+
+void
+relay_config_change_network_ssl_cert_key (void *data,
+                                          struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (relay_network_init_ok)
+        relay_network_set_ssl_cert_key (1);
+}
+
+/*
  * relay_config_change_port_cb: callback called when relay port option is
  *                              modified
  */
@@ -219,7 +238,7 @@ relay_config_create_option_port (void *data,
                                  const char *option_name,
                                  const char *value)
 {
-    int rc, protocol_number;
+    int rc, protocol_number, ssl;
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
@@ -229,38 +248,52 @@ relay_config_create_option_port (void *data,
 
     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
-    relay_server_get_protocol_args (option_name,
-                                    &protocol, &protocol_args);
-
     protocol_number = -1;
     port = -1;
 
-    if (protocol)
-        protocol_number = relay_protocol_search (protocol);
+    relay_server_get_protocol_args (option_name,
+                                    &ssl, &protocol, &protocol_args);
 
-    if (protocol_number < 0)
+#ifndef HAVE_GNUTLS
+    if (ssl)
     {
-        weechat_printf (NULL, _("%s%s: error: unknown protocol \"%s\""),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME, protocol);
+        weechat_printf (NULL,
+                        _("%s%s: cannot use SSL because WeeChat was not built "
+                          "with GnuTLS support"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
+#endif
 
-    if ((protocol_number == RELAY_PROTOCOL_WEECHAT) && protocol_args)
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        weechat_printf (NULL, _("%s%s: error: name is not allowed for protocol "
-                                "\"%s\""),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME, protocol);
-        rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    }
-    else if ((protocol_number == RELAY_PROTOCOL_IRC) && !protocol_args)
-    {
-        weechat_printf (NULL, _("%s%s: error: name is not required for protocol "
-                                "\"%s\""),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME, protocol);
-        rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        if (protocol)
+            protocol_number = relay_protocol_search (protocol);
+
+        if (protocol_number < 0)
+        {
+            weechat_printf (NULL, _("%s%s: error: unknown protocol \"%s\""),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME, protocol);
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
+
+        if ((protocol_number == RELAY_PROTOCOL_WEECHAT) && protocol_args)
+        {
+            weechat_printf (NULL, _("%s%s: error: name is not allowed for "
+                                    "protocol \"%s\""),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME, protocol);
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
+        else if ((protocol_number == RELAY_PROTOCOL_IRC) && !protocol_args)
+        {
+            weechat_printf (NULL, _("%s%s: error: name is not required for "
+                                    "protocol \"%s\""),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME, protocol);
+            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+        }
     }
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
@@ -290,7 +323,7 @@ relay_config_create_option_port (void *data,
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        if (relay_server_new (protocol_number, protocol_args, port))
+        if (relay_server_new (protocol_number, protocol_args, port, ssl))
         {
             /* create config option */
             weechat_config_new_option (
@@ -376,22 +409,28 @@ relay_config_init ()
         return 0;
     }
 
+    relay_config_color_client = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "client", "color",
+        N_("text color for client description"),
+        NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_color_text = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text", "color",
-        N_("text color"),
+        N_("text color in relay buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_text_bg = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_bg", "color",
-        N_("background color"),
+        N_("background color in relay buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_text_selected = weechat_config_new_option (
         relay_config_file, ptr_section,
         "text_selected", "color",
-        N_("text color of selected client line"),
+        N_("text color of selected line in relay buffer"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
@@ -472,6 +511,13 @@ relay_config_init ()
         N_("password required by clients to access this relay (empty value "
             "means no password required)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_network_ssl_cert_key = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "ssl_cert_key", "string",
+        N_("file with SSL certificate and private key (for serving clients "
+           "with SSL)"),
+        NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0, NULL, NULL,
+        &relay_config_change_network_ssl_cert_key, NULL, NULL, NULL);
 
     ptr_section = weechat_config_new_section (relay_config_file, "port",
                                               1, 1,

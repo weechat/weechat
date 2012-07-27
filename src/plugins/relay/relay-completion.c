@@ -41,7 +41,7 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
                                    struct t_gui_completion *completion)
 {
     struct t_infolist *infolist;
-    char protocol_name[256];
+    char protocol_name[512];
 
     /* make C compiler happy */
     (void) data;
@@ -57,11 +57,17 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
                       weechat_infolist_string (infolist, "name"));
             weechat_hook_completion_list_add (completion, protocol_name,
                                               0, WEECHAT_LIST_POS_SORT);
+            snprintf (protocol_name, sizeof (protocol_name), "ssl.irc.%s",
+                      weechat_infolist_string (infolist, "name"));
+            weechat_hook_completion_list_add (completion, protocol_name,
+                                              0, WEECHAT_LIST_POS_SORT);
         }
         weechat_infolist_free (infolist);
     }
 
     weechat_hook_completion_list_add (completion, "weechat",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "ssl.weechat",
                                       0, WEECHAT_LIST_POS_SORT);
 
     return WEECHAT_RC_OK;
@@ -78,7 +84,7 @@ relay_completion_relays_cb (void *data, const char *completion_item,
                             struct t_gui_completion *completion)
 {
     struct t_relay_server *ptr_server;
-    char protocol_name[256];
+    char protocol_name[512];
 
     /* make C compiler happy */
     (void) data;
@@ -88,7 +94,8 @@ relay_completion_relays_cb (void *data, const char *completion_item,
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        snprintf (protocol_name, sizeof (protocol_name), "%s%s%s",
+        snprintf (protocol_name, sizeof (protocol_name), "%s%s%s%s",
+                  (ptr_server->ssl) ? "ssl." : "",
                   relay_protocol_string[ptr_server->protocol],
                   (ptr_server->protocol_args) ? "." : "",
                   (ptr_server->protocol_args) ? ptr_server->protocol_args : "");

@@ -1543,7 +1543,7 @@ Premier exemple : se connecter à oftc en vérifiant le certificat
 * Importer le certificat sous le shell :
 
 ----------------------------------------
-$ mkdir ~/.weechat/ssl
+$ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
@@ -1563,8 +1563,9 @@ Second exemple : se connecter à oftc en utilisant CertFP
 * Créer le certificat sous le shell :
 
 ----------------------------------------
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
-$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----------------------------------------
 
 * Sous WeeChat, avec le serveur "oftc" déjà créé :
@@ -2104,6 +2105,38 @@ Par exemple :
 
 Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
 distante (comme QWeeChat), en utilisant le mot de passe "mypass".
+
+[[relay_ssl]]
+Relai avec SSL
+^^^^^^^^^^^^^^
+
+Vous pouvez utiliser SSL en créant un certificat et clé privée et en utilisant
+le préfixe "ssl." dans le nom du protocole.
+
+Le fichier par défaut pour le certificat/clé est '~/.weechat/ssl/relay.pem'
+(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+
+Vous pouvez créer le certificat et la clé privée avec les commandes suivantes :
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----------------------------------------
+
+Si WeeChat tourne déjà, vous pouvez recharger le certificat et clé privée avec la
+commande :
+
+----------------------------------------
+/relay sslcertkey
+----------------------------------------
+
+Et ajoutez le relai avec SSL, par exemple :
+
+----------------------------------------
+/relay add ssl.irc.freenode 8001
+/relay add ssl.weechat 9001
+----------------------------------------
 
 [[rmodifier_plugin]]
 Extension Rmodifier

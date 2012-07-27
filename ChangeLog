@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-21
+v0.3.9-dev, 2012-07-27
 
 
 Version 0.3.9 (under dev!)
@@ -53,6 +53,9 @@ Version 0.3.9 (under dev!)
 * python: fix detection of python (first try "python2.x" and then "python")
   (bug #36835)
 * python: fix crash when unloading a script without pointer to interpreter
+* relay: add support of SSL (for irc and weechat protocols), new option
+  relay.network.ssl_cert_key (task #12044)
+* relay: add option relay.color.client
 * relay: add object type "arr" (array) in WeeChat protocol
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
   relay for irc and weechat protocols) (bug #36655)

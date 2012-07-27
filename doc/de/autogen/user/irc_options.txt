@@ -509,7 +509,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** Beschreibung: `Datei für ssl Zertifikat um automatisch den eigenen Nick zu identifizieren ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
+** Beschreibung: `SSL certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -524,7 +524,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
-** Beschreibung: `Überprüfe ob die SSL-Verbindung vertrauenswürdig ist`
+** Beschreibung: `check that the SSL connection is fully trusted`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

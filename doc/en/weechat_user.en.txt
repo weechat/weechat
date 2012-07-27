@@ -1497,7 +1497,7 @@ First example: connect to oftc and check certificate
 * Import certificate in shell:
 
 ----------------------------------------
-$ mkdir ~/.weechat/ssl
+$ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
@@ -1516,8 +1516,9 @@ Second example: connect to oftc using CertFP
 * Create certificate in shell:
 
 ----------------------------------------
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
-$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----------------------------------------
 
 * In WeeChat, with "oftc" server already created:
@@ -2047,6 +2048,38 @@ For example:
 
 Now you can connect on port 9000 with a remote interface (like QWeeChat),
 using password "mypass".
+
+[[relay_ssl]]
+Relay with SSL
+^^^^^^^^^^^^^^
+
+You can use SSL by creating a certificate and private key, and by using prefix
+"ssl." in the name of protocol.
+
+The default file for certificate/key is '~/.weechat/ssl/relay.pem'
+(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+
+You can create a certificate and private key with following commands:
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----------------------------------------
+
+If WeeChat is already running, you can reload the certificate and private key
+with command:
+
+----------------------------------------
+/relay sslcertkey
+----------------------------------------
+
+And then add relay with SSL, for example:
+
+----------------------------------------
+/relay add ssl.irc.freenode 8001
+/relay add ssl.weechat 9001
+----------------------------------------
 
 [[rmodifier_plugin]]
 Rmodifier plugin

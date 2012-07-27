@@ -5,24 +5,31 @@
         add <protocol.name> <port>
         del <protocol.name>
         raw
+        sslcertkey
 
-         list: Auflistung der Relay-Clients (nur aktive Relays)
-     listfull: detaillierte Auflistung der Relay-Clients (alle Relays)
-    listrelay: Auflistung der Relays (Name und Port)
-          add: fügt ein Relay, für ein Protokoll + Name, hinzu
-          del: entfernt Relay für ein Protokoll + Name
-protocol.name: Protokoll und Name des Relay:
-                 - Protokoll "irc": und der Name des Servers welcher geteilt werden soll
-                 - Protokoll "weechat" (Name wird nicht unterstützt)
-         port: Port den das Relay nutzen soll
-          raw: öffnet Buffer mit RAW-Relay Daten
+         list: list relay clients (only active relays)
+     listfull: list relay clients (verbose, all relays)
+    listrelay: list relays (name and port)
+          add: add relay for a protocol + name
+          del: remove relay for a protocol + name
+protocol.name: protocol and name to relay:
+                 - protocol "irc": name is the server to share
+                 - protocol "weechat" (name is not used)
+               Note: the protocol can be prefixed by "ssl." to enable SSL
+         port: port used for relay
+          raw: open buffer with raw Relay data
+   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
-Ohne Angabe von Argumenten werden alle Relay-Clients in einem neuen Buffer dargestellt.
+Without argument, this command opens buffer with list of relay clients.
 
-Beispiel:
-  IRC Proxy für Server "freenode":
+Examples:
+  irc proxy, for server "freenode":
     /relay add irc.freenode 8000
+  irc proxy, for server "freenode", with SSL:
+    /relay add ssl.irc.freenode 8001
   weechat protocol:
-    /relay add weechat 8001
+    /relay add weechat 9000
+  weechat protocol with SSL:
+    /relay add ssl.weechat 9001
 ........................................
 

@@ -221,6 +221,7 @@ Plugins
 |       relay-completion.c          | Relay completions
 |       relay-config.c              | Relay config options
 |       relay-info.c                | Info and infolists from relay plugin
+|       relay-network.c             | Network functions for relay
 |       relay-raw.c                 | Relay raw buffer
 |       relay-server.c              | Relay server
 |       relay-upgrade.c             | Save/restore relay data when upgrading WeeChat

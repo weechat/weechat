@@ -20,12 +20,17 @@
 #ifndef __WEECHAT_RELAY_SERVER_H
 #define __WEECHAT_RELAY_SERVER_H 1
 
+#ifdef HAVE_GNUTLS
+#define RELAY_SERVER_GNUTLS_DH_BITS 1024
+#endif
+
 struct t_relay_server
 {
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     int port;                          /* listening on this port            */
+    int ssl;                           /* 1 if SSL is enabled               */
     int sock;                          /* socket for connection             */
     struct t_hook *hook_fd;            /* hook for socket                   */
     time_t start_time;                 /* start time                        */
@@ -37,6 +42,7 @@ extern struct t_relay_server *relay_servers;
 extern struct t_relay_server *last_relay_server;
 
 extern void relay_server_get_protocol_args (const char *protocol_and_string,
+                                            int *ssl,
                                             char **protocol,
                                             char **protocol_args);
 extern struct t_relay_server *relay_server_search (const char *protocol_and_args);
@@ -45,7 +51,7 @@ extern void relay_server_close_socket (struct t_relay_server *server);
 extern int relay_server_create_socket (struct t_relay_server *server);
 extern struct t_relay_server *relay_server_new (enum t_relay_protocol protocol,
                                                 const char *protocol_args,
-                                                int port);
+                                                int port, int ssl);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();

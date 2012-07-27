@@ -31,6 +31,10 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
+
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-client.h"
@@ -38,6 +42,7 @@
 #include "weechat/relay-weechat.h"
 #include "relay-config.h"
 #include "relay-buffer.h"
+#include "relay-network.h"
 #include "relay-server.h"
 
 
@@ -120,6 +125,95 @@ relay_client_search_by_id (int id)
 }
 
 /*
+ * relay_client_set_desc: set description for client
+ */
+
+void
+relay_client_set_desc (struct t_relay_client *client)
+{
+    char desc[512];
+
+    if (client->desc)
+        free (client->desc);
+
+    snprintf (desc, sizeof (desc),
+              "%d/%s%s%s%s/%s",
+              client->id,
+              (client->ssl) ? "ssl." : "",
+              relay_protocol_string[client->protocol],
+              (client->protocol_args) ? "." : "",
+              (client->protocol_args) ? client->protocol_args : "",
+              client->address);
+
+    client->desc = strdup (desc);
+}
+
+/*
+ * relay_client_handshake_timer_cb: timer called to do the handshake with the
+ *                                  client (for SSL connection only)
+ */
+
+#ifdef HAVE_GNUTLS
+int
+relay_client_handshake_timer_cb (void *data, int remaining_calls)
+{
+    struct t_relay_client *client;
+    int rc;
+
+    client = (struct t_relay_client *)data;
+
+    rc = gnutls_handshake (client->gnutls_sess);
+
+    if (rc == GNUTLS_E_SUCCESS)
+    {
+        /* handshake ok, set status to "connected" */
+        weechat_unhook (client->hook_timer_handshake);
+        client->hook_timer_handshake = NULL;
+        relay_client_set_status (client, RELAY_STATUS_CONNECTED);
+        return WEECHAT_RC_OK;
+    }
+
+    if (gnutls_error_is_fatal (rc))
+    {
+        /* handshake error, disconnect client */
+        weechat_printf (NULL,
+                        _("%s%s: TLS handshake failed for client %s%s%s: "
+                          "error %d %s"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        rc,
+                        gnutls_strerror (rc));
+        weechat_unhook (client->hook_timer_handshake);
+        client->hook_timer_handshake = NULL;
+        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        return WEECHAT_RC_OK;
+    }
+
+    if (remaining_calls == 0)
+    {
+        /* handshake timeout, disconnect client */
+        weechat_printf (NULL,
+                        _("%s%s: TLS handshake timeout for client %s%s%s"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT);
+        weechat_unhook (client->hook_timer_handshake);
+        client->hook_timer_handshake = NULL;
+        relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+        return WEECHAT_RC_OK;
+    }
+
+    /* handshake in progress, we will try again on next call to timer */
+    return WEECHAT_RC_OK;
+}
+#endif
+
+/*
  * relay_client_recv_cb: read data from a client
  */
 
@@ -135,7 +229,17 @@ relay_client_recv_cb (void *arg_client, int fd)
 
     client = (struct t_relay_client *)arg_client;
 
-    num_read = recv (client->sock, buffer, sizeof (buffer) - 1, 0);
+    if (client->status != RELAY_STATUS_CONNECTED)
+        return WEECHAT_RC_OK;
+
+#ifdef HAVE_GNUTLS
+    if (client->ssl)
+        num_read = gnutls_record_recv (client->gnutls_sess, buffer,
+                                       sizeof (buffer) - 1);
+    else
+#endif
+        num_read = recv (client->sock, buffer, sizeof (buffer) - 1, 0);
+
     if (num_read > 0)
     {
         client->bytes_recv += num_read;
@@ -155,18 +259,43 @@ relay_client_recv_cb (void *arg_client, int fd)
     }
     else
     {
-        if ((num_read == 0)
-            || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
+#ifdef HAVE_GNUTLS
+        if (client->ssl)
         {
-            weechat_printf (NULL,
-                            _("%s%s: reading data on socket for client %d: "
-                              "error %d %s"),
-                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                            client->id,
-                            errno,
-                            (num_read == 0) ? _("(connection closed by peer)") :
-                            strerror (errno));
-            relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+            if ((num_read == 0)
+                || ((num_read != GNUTLS_E_AGAIN) && (num_read != GNUTLS_E_INTERRUPTED)))
+            {
+                weechat_printf (NULL,
+                                _("%s%s: reading data on socket for client %s%s%s: "
+                                  "error %d %s"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                RELAY_COLOR_CHAT_CLIENT,
+                                client->desc,
+                                RELAY_COLOR_CHAT,
+                                num_read,
+                                (num_read == 0) ? _("(connection closed by peer)") :
+                                gnutls_strerror (num_read));
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+            }
+        }
+        else
+#endif
+        {
+            if ((num_read == 0)
+                || ((errno != EAGAIN) && (errno != EWOULDBLOCK)))
+            {
+                weechat_printf (NULL,
+                                _("%s%s: reading data on socket for client %s%s%s: "
+                                  "error %d %s"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                RELAY_COLOR_CHAT_CLIENT,
+                                client->desc,
+                                RELAY_COLOR_CHAT,
+                                errno,
+                                (num_read == 0) ? _("(connection closed by peer)") :
+                                strerror (errno));
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+            }
         }
     }
 
@@ -281,7 +410,13 @@ relay_client_send (struct t_relay_client *client, const char *data,
     }
     else
     {
-        num_sent = send (client->sock, data, data_size, 0);
+#ifdef HAVE_GNUTLS
+        if (client->ssl)
+            num_sent = gnutls_record_send (client->gnutls_sess, data, data_size);
+        else
+#endif
+            num_sent = send (client->sock, data, data_size, 0);
+
         if (num_sent >= 0)
         {
             if (num_sent > 0)
@@ -298,19 +433,52 @@ relay_client_send (struct t_relay_client *client, const char *data,
         }
         else if (num_sent < 0)
         {
-            if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+#ifdef HAVE_GNUTLS
+            if (client->ssl)
             {
-                /* add message to queue (will be sent later) */
-                relay_client_outqueue_add (client, data, data_size);
+                if ((num_sent == GNUTLS_E_AGAIN)
+                    || (num_sent == GNUTLS_E_INTERRUPTED))
+                {
+                    /* add message to queue (will be sent later) */
+                    relay_client_outqueue_add (client, data, data_size);
+                }
+                else
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: sending data to client %s%s%s: "
+                                      "error %d %s"),
+                                    weechat_prefix ("error"),
+                                    RELAY_PLUGIN_NAME,
+                                    RELAY_COLOR_CHAT_CLIENT,
+                                    client->desc,
+                                    RELAY_COLOR_CHAT,
+                                    num_sent,
+                                    gnutls_strerror (num_sent));
+                    relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                }
             }
             else
+#endif
             {
-                weechat_printf (NULL,
-                                _("%s%s: sending data to client %d: error %d %s"),
-                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                client->id,
-                                errno, strerror (errno));
-                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+                {
+                    /* add message to queue (will be sent later) */
+                    relay_client_outqueue_add (client, data, data_size);
+                }
+                else
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: sending data to client %s%s%s: "
+                                      "error %d %s"),
+                                    weechat_prefix ("error"),
+                                    RELAY_PLUGIN_NAME,
+                                    RELAY_COLOR_CHAT_CLIENT,
+                                    client->desc,
+                                    RELAY_COLOR_CHAT,
+                                    errno,
+                                    strerror (errno));
+                    relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                }
             }
         }
     }
@@ -341,8 +509,20 @@ relay_client_timer_cb (void *data, int remaining_calls)
         {
             while (ptr_client->outqueue)
             {
-                num_sent = send (ptr_client->sock, ptr_client->outqueue->data,
-                                 ptr_client->outqueue->data_size, 0);
+#ifdef HAVE_GNUTLS
+                if (ptr_client->ssl)
+                {
+                    num_sent = gnutls_record_send (ptr_client->gnutls_sess,
+                                                   ptr_client->outqueue->data,
+                                                   ptr_client->outqueue->data_size);
+                }
+                else
+#endif
+                {
+                    num_sent = send (ptr_client->sock,
+                                     ptr_client->outqueue->data,
+                                     ptr_client->outqueue->data_size, 0);
+                }
                 if (num_sent >= 0)
                 {
                     if (num_sent > 0)
@@ -380,21 +560,54 @@ relay_client_timer_cb (void *data, int remaining_calls)
                 }
                 else if (num_sent < 0)
                 {
-                    if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+#ifdef HAVE_GNUTLS
+                    if (ptr_client->ssl)
                     {
-                        /* we will retry later this client's queue */
-                        break;
+                        if ((num_sent == GNUTLS_E_AGAIN)
+                            || (num_sent == GNUTLS_E_INTERRUPTED))
+                        {
+                            /* we will retry later this client's queue */
+                            break;
+                        }
+                        else
+                        {
+                            weechat_printf (NULL,
+                                            _("%s%s: sending data to client %s%s%s: "
+                                              "error %d %s"),
+                                            weechat_prefix ("error"),
+                                            RELAY_PLUGIN_NAME,
+                                            RELAY_COLOR_CHAT_CLIENT,
+                                            ptr_client->desc,
+                                            RELAY_COLOR_CHAT,
+                                            num_sent,
+                                            gnutls_strerror (num_sent));
+                            relay_client_set_status (ptr_client,
+                                                     RELAY_STATUS_DISCONNECTED);
+                        }
                     }
                     else
+#endif
                     {
-                        weechat_printf (NULL,
-                                        _("%s%s: sending data to client %d: error %d %s"),
-                                        weechat_prefix ("error"),
-                                        RELAY_PLUGIN_NAME,
-                                        ptr_client->id,
-                                        errno, strerror (errno));
-                        relay_client_set_status (ptr_client,
-                                                 RELAY_STATUS_DISCONNECTED);
+                        if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+                        {
+                            /* we will retry later this client's queue */
+                            break;
+                        }
+                        else
+                        {
+                            weechat_printf (NULL,
+                                            _("%s%s: sending data to client %s%s%s: "
+                                              "error %d %s"),
+                                            weechat_prefix ("error"),
+                                            RELAY_PLUGIN_NAME,
+                                            RELAY_COLOR_CHAT_CLIENT,
+                                            ptr_client->desc,
+                                            RELAY_COLOR_CHAT,
+                                            errno,
+                                            strerror (errno));
+                            relay_client_set_status (ptr_client,
+                                                     RELAY_STATUS_DISCONNECTED);
+                        }
                     }
                 }
             }
@@ -412,12 +625,18 @@ struct t_relay_client *
 relay_client_new (int sock, const char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
+    struct t_config_option *ptr_option;
 
     new_client = malloc (sizeof (*new_client));
     if (new_client)
     {
         new_client->id = (relay_clients) ? relay_clients->id + 1 : 1;
+        new_client->desc = NULL;
         new_client->sock = sock;
+        new_client->ssl = server->ssl;
+#ifdef HAVE_GNUTLS
+        new_client->hook_timer_handshake = NULL;
+#endif
         new_client->address = strdup ((address) ? address : "?");
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
@@ -429,6 +648,36 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->last_activity = new_client->start_time;
         new_client->bytes_recv = 0;
         new_client->bytes_sent = 0;
+
+        relay_client_set_desc (new_client);
+
+#ifdef HAVE_GNUTLS
+        if (new_client->ssl)
+        {
+            if (!relay_network_init_ssl_cert_key_ok)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: warning: no SSL certificate/key found "
+                                  "(option relay.network.ssl_cert_key)"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+            }
+            new_client->status = RELAY_STATUS_CONNECTING;
+            gnutls_init (&(new_client->gnutls_sess), GNUTLS_SERVER);
+            if (relay_gnutls_priority_cache)
+                gnutls_priority_set (new_client->gnutls_sess, *relay_gnutls_priority_cache);
+            gnutls_credentials_set (new_client->gnutls_sess, GNUTLS_CRD_CERTIFICATE, relay_gnutls_x509_cred);
+            gnutls_certificate_server_set_request (new_client->gnutls_sess, GNUTLS_CERT_IGNORE);
+            gnutls_transport_set_ptr (new_client->gnutls_sess,
+                                      (gnutls_transport_ptr) ((ptrdiff_t) new_client->sock));
+            ptr_option = weechat_config_get ("weechat.network.gnutls_handshake_timeout");
+            new_client->hook_timer_handshake = weechat_hook_timer (1000 / 10,
+                                                                   0,
+                                                                   (ptr_option) ?
+                                                                   weechat_config_integer (ptr_option) * 10 : 30 * 10,
+                                                                   &relay_client_handshake_timer_cb,
+                                                                   new_client);
+        }
+#endif
 
         new_client->protocol_data = NULL;
         switch (new_client->protocol)
@@ -455,16 +704,12 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         relay_clients = new_client;
 
         weechat_printf (NULL,
-                        _("%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"),
+                        _("%s: new client on port %d: %s%s%s"),
                         RELAY_PLUGIN_NAME,
-                        RELAY_COLOR_CHAT_HOST,
-                        new_client->address,
-                        RELAY_COLOR_CHAT,
                         server->port,
-                        new_client->id,
-                        relay_protocol_string[new_client->protocol],
-                        (new_client->protocol_args) ? "." : "",
-                        (new_client->protocol_args) ? new_client->protocol_args : "");
+                        RELAY_COLOR_CHAT_CLIENT,
+                        new_client->desc,
+                        RELAY_COLOR_CHAT);
 
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
@@ -505,6 +750,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
     if (new_client)
     {
         new_client->id = weechat_infolist_integer (infolist, "id");
+        new_client->desc = NULL;
         new_client->sock = weechat_infolist_integer (infolist, "sock");
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         new_client->status = weechat_infolist_integer (infolist, "status");
@@ -528,6 +774,12 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
                 "%lu", &(new_client->bytes_recv));
         sscanf (weechat_infolist_string (infolist, "bytes_sent"),
                 "%lu", &(new_client->bytes_sent));
+
+        str = weechat_infolist_string (infolist, "desc");
+        if (str)
+            new_client->desc = strdup (str);
+        else
+            relay_client_set_desc (new_client);
 
         switch (new_client->protocol)
         {
@@ -596,26 +848,20 @@ relay_client_set_status (struct t_relay_client *client,
         {
             case RELAY_STATUS_AUTH_FAILED:
                 weechat_printf (NULL,
-                                _("%s%s: authentication failed with client %s%s%s (%s%s%s)"),
+                                _("%s%s: authentication failed with client %s%s%s"),
                                 weechat_prefix ("error"),
                                 RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_HOST,
-                                client->address,
-                                RELAY_COLOR_CHAT,
-                                relay_protocol_string[client->protocol],
-                                (client->protocol_args) ? "." : "",
-                                (client->protocol_args) ? client->protocol_args : "");
+                                RELAY_COLOR_CHAT_CLIENT,
+                                client->desc,
+                                RELAY_COLOR_CHAT);
                 break;
             case RELAY_STATUS_DISCONNECTED:
                 weechat_printf (NULL,
-                                _("%s: disconnected from client %s%s%s (%s%s%s)"),
+                                _("%s: disconnected from client %s%s%s"),
                                 RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_HOST,
-                                client->address,
-                                RELAY_COLOR_CHAT,
-                                relay_protocol_string[client->protocol],
-                                (client->protocol_args) ? "." : "",
-                                (client->protocol_args) ? client->protocol_args : "");
+                                RELAY_COLOR_CHAT_CLIENT,
+                                client->desc,
+                                RELAY_COLOR_CHAT);
                 break;
             default:
                 break;
@@ -623,8 +869,16 @@ relay_client_set_status (struct t_relay_client *client,
 
         if (client->sock >= 0)
         {
+#ifdef HAVE_GNUTLS
+            if (client->ssl)
+                gnutls_bye (client->gnutls_sess, GNUTLS_SHUT_WR);
+#endif
             close (client->sock);
             client->sock = -1;
+#ifdef HAVE_GNUTLS
+            if (client->ssl)
+                gnutls_deinit (client->gnutls_sess);
+#endif
         }
     }
 
@@ -661,6 +915,10 @@ relay_client_free (struct t_relay_client *client)
         free (client->address);
     if (client->protocol_args)
         free (client->protocol_args);
+#ifdef HAVE_GNUTLS
+    if (client->hook_timer_handshake)
+        weechat_unhook (client->hook_timer_handshake);
+#endif
     if (client->hook_fd)
         weechat_unhook (client->hook_fd);
     if (client->protocol_data)
@@ -754,8 +1012,16 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 
     if (!weechat_infolist_new_var_integer (ptr_item, "id", client->id))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "desc", client->desc))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sock", client->sock))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl", client->ssl))
+        return 0;
+#ifdef HAVE_GNUTLS
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
+        return 0;
+#endif
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
@@ -815,7 +1081,13 @@ relay_client_print_log ()
         weechat_log_printf ("");
         weechat_log_printf ("[relay client (addr:0x%lx)]", ptr_client);
         weechat_log_printf ("  id. . . . . . . . . . : %d",   ptr_client->id);
+        weechat_log_printf ("  desc. . . . . . . . . : '%s'", ptr_client->desc);
         weechat_log_printf ("  sock. . . . . . . . . : %d",   ptr_client->sock);
+        weechat_log_printf ("  ssl . . . . . . . . . : %d",   ptr_client->ssl);
+#ifdef HAVE_GNUTLS
+        weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
+        weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
+#endif
         weechat_log_printf ("  address . . . . . . . : '%s'", ptr_client->address);
         weechat_log_printf ("  status. . . . . . . . : %d (%s)",
                             ptr_client->status,

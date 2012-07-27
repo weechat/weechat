@@ -30,15 +30,18 @@ extern struct t_config_section *relay_config_section_port;
 extern struct t_config_option *relay_config_look_auto_open_buffer;
 extern struct t_config_option *relay_config_look_raw_messages;
 
+extern struct t_config_option *relay_config_color_client;
 extern struct t_config_option *relay_config_color_text;
 extern struct t_config_option *relay_config_color_text_bg;
 extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_color_status[];
 
+extern struct t_config_option *relay_config_network_allowed_ips;
 extern struct t_config_option *relay_config_network_bind_address;
+extern struct t_config_option *relay_config_network_compression_level;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
-extern struct t_config_option *relay_config_network_compression_level;
+extern struct t_config_option *relay_config_network_ssl_cert_key;
 
 extern regex_t *relay_config_regex_allowed_ips;
 

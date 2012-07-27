@@ -1543,7 +1543,7 @@ Primo esempio: connessione a otfc e verifica del certificato
 * Importare certificati nella shell:
 
 ----------------------------------------
-$ mkdir ~/.weechat/ssl
+$ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
 ----------------------------------------
 
@@ -1562,8 +1562,9 @@ Secondo esempio: connessione a otfc con CertFP
 * Creare un certificato nella shell:
 
 ----------------------------------------
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.key -x509 -days 365 -out nick.cer
-$ cat nick.cer nick.key > ~/.weechat/ssl/nick.pem
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----------------------------------------
 
 * In WeeChat, con il server "otfc" già creato:
@@ -2107,6 +2108,39 @@ Ad esempio:
 
 Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota
 (come QWeeChat) usando la password "miapass".
+
+// TRANSLATION MISSING
+[[relay_ssl]]
+Relay with SSL
+^^^^^^^^^^^^^^
+
+You can use SSL by creating a certificate and private key, and by using prefix
+"ssl." in the name of protocol.
+
+The default file for certificate/key is '~/.weechat/ssl/relay.pem'
+(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+
+You can create a certificate and private key with following commands:
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----------------------------------------
+
+If WeeChat is already running, you can reload the certificate and private key
+with command:
+
+----------------------------------------
+/relay sslcertkey
+----------------------------------------
+
+And then add relay with SSL, for example:
+
+----------------------------------------
+/relay add ssl.irc.freenode 8001
+/relay add ssl.weechat 9001
+----------------------------------------
 
 [[rmodifier_plugin]]
 Plugin Rmodifier

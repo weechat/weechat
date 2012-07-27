@@ -45,6 +45,8 @@ relay_la_SOURCES = relay.c \
                    relay-config.h \
                    relay-info.c \
                    relay-info.h \
+                   relay-network.c \
+                   relay-network.h \
                    relay-raw.c \
                    relay-raw.h \
                    relay-server.c \

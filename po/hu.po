@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-21 17:23+0200\n"
+"POT-Creation-Date: 2012-07-27 17:42+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3566,6 +3566,7 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5004,7 +5005,7 @@ msgstr "SSL használata a a kapcsolathoz"
 
 #, fuzzy
 msgid ""
-"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"SSL certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
@@ -5019,7 +5020,7 @@ msgstr ""
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
 
-msgid "check that the ssl connection is fully trusted"
+msgid "check that the SSL connection is fully trusted"
 msgstr ""
 
 #, fuzzy
@@ -6895,18 +6896,26 @@ msgid "  [Q] Close this buffer"
 msgstr "  [Q] DCC nézet bezárása"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
+msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
 msgstr "%s%s%s távol: %s\n"
 
-msgid "ended on: "
+#, c-format
+msgid "%s%-26s started on: %s, ended on: %s"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "DCC: fájl %s%s%s"
 
 msgid "List of clients for relay"
 msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via SSL"
+msgstr ""
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "connecting"
@@ -6925,44 +6934,65 @@ msgid "disconnected"
 msgstr "csatlakozva"
 
 #, fuzzy, c-format
-msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
 #, fuzzy, c-format
-msgid "%s%s: sending data to client %d: error %d %s"
+msgid "%s%s: TLS handshake timeout for client %s%s%s"
+msgstr "%s gnutls kézfogás sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %s%s%s: error %d %s"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
 #, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+msgid ""
+"%s%s: warning: no SSL certificate/key found (option relay.network."
+"ssl_cert_key)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: new client on port %d: %s%s%s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
+msgid "%s%s: authentication failed with client %s%s%s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client %s%s%s (%s%s%s)"
+msgid "%s: disconnected from client %s%s%s"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 msgid "Clients for relay:"
 msgstr ""
 
+msgid "Connected clients for relay:"
+msgstr ""
+
 #, c-format
 msgid ""
-"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
-"recv, %lu sent"
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"sent"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "  id: %d, %s%s%s, started on: %s"
+msgid "  %s%s%s (%s%s%s), started on: %s"
 msgstr "Szoba létrehozva: %s"
 
 msgid "No client for relay"
 msgstr ""
+
+#, fuzzy
+msgid "No connected client for relay"
+msgstr "Nincs szerver.\n"
 
 #, fuzzy
 msgid "Listening on ports:"
@@ -6993,7 +7023,7 @@ msgstr ""
 
 msgid ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw"
+"|| raw || sslcertkey"
 msgstr ""
 
 msgid ""
@@ -7005,16 +7035,23 @@ msgid ""
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
+"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
 "Examples:\n"
 "  irc proxy, for server \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
+"  irc proxy, for server \"freenode\", with SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
 "  weechat protocol:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000\n"
+"  weechat protocol with SSL:\n"
+"    /relay add ssl.weechat 9001"
 msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
@@ -7030,6 +7067,12 @@ msgstr "Aliaszok listája:\n"
 #, fuzzy, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
+msgstr ""
+"%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
+"támogatás nélkül lett fordítva\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
@@ -7051,15 +7094,19 @@ msgid "auto open relay buffer when a new client is connecting"
 msgstr ""
 
 #, fuzzy
-msgid "text color"
-msgstr "üzenetek színe"
+msgid "text color for client description"
+msgstr "információs pult határolóinak színe"
 
 #, fuzzy
-msgid "background color"
-msgstr "nevek háttere"
+msgid "text color in relay buffer"
+msgstr "szerver nevének színe"
 
 #, fuzzy
-msgid "text color of selected client line"
+msgid "background color in relay buffer"
+msgstr "olvasatlan adat jelölő háttere"
+
+#, fuzzy
+msgid "text color of selected line in relay buffer"
 msgstr "szerver nevének színe"
 
 #, fuzzy
@@ -7106,12 +7153,24 @@ msgid ""
 "password required)"
 msgstr ""
 
+msgid ""
+"file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
 #, fuzzy
 msgid "list of relay clients"
 msgstr "Aliaszok listája:\n"
 
 msgid "relay pointer (optional)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: SSL certificate and key have been set"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize priority for SSL"
+msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
 #, fuzzy
 msgid "Relay raw messages"
@@ -7134,7 +7193,7 @@ msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, c-format
-msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -7146,12 +7205,12 @@ msgid "%s%s: not enough memory for parsing message"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
 
 #, fuzzy, c-format
-msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %d for command \"%s"
+"%s%s: too few arguments received from client %s%s%s for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 
@@ -7759,7 +7818,15 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
 #, fuzzy
-msgid "text color of selected xfer line"
+msgid "text color in xfer buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "background color in xfer buffer"
+msgstr "nevek háttere"
+
+#, fuzzy
+msgid "text color of selected line in xfer buffer"
 msgstr "szerver nevének színe"
 
 #, fuzzy
@@ -7947,6 +8014,22 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "DCC: fájl %s%s%s"
+
+#, fuzzy
+#~ msgid "text color"
+#~ msgstr "üzenetek színe"
+
+#, fuzzy
+#~ msgid "background color"
+#~ msgstr "nevek háttere"
+
+#, fuzzy
+#~ msgid "text color of selected xfer line"
+#~ msgstr "szerver nevének színe"
 
 #~ msgid "display message when (un)marking as away"
 #~ msgstr "üzenet mutatása távollétkor/visszatéréskor"

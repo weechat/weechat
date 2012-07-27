@@ -129,14 +129,14 @@ network_init ()
 void
 network_end ()
 {
-#ifdef HAVE_GNUTLS
     if (network_init_ok)
     {
-        network_init_ok = 0;
+#ifdef HAVE_GNUTLS
         gnutls_certificate_free_credentials (gnutls_xcred);
         gnutls_global_deinit();
-    }
 #endif
+        network_init_ok = 0;
+    }
 }
 
 /*
@@ -963,7 +963,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                        HOOK_CONNECT(hook_connect, handshake_fd_flags) | O_NONBLOCK);
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                          (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
+                                          (gnutls_transport_ptr) ((ptrdiff_t) HOOK_CONNECT(hook_connect, sock)));
                 if (HOOK_CONNECT (hook_connect, gnutls_dhkey_size) > 0)
                 {
                     gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),

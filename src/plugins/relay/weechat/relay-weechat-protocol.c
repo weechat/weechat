@@ -918,8 +918,12 @@ relay_weechat_protocol_recv (struct t_relay_client *client, char *data)
     /* display debug message */
     if (weechat_relay_plugin->debug >= 2)
     {
-        weechat_printf (NULL, "%s: recv from client %d: \"%s\"",
-                        RELAY_PLUGIN_NAME, client->id, data);
+        weechat_printf (NULL, "%s: recv from client %s%s%s: \"%s\"",
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        data);
     }
 
     /* display message in raw buffer */
@@ -996,9 +1000,13 @@ relay_weechat_protocol_recv (struct t_relay_client *client, char *data)
                 {
                     weechat_printf (NULL,
                                     _("%s%s: failed to execute command \"%s\" "
-                                      "for client %d"),
+                                      "for client %s%s%s"),
                                     weechat_prefix ("error"),
-                                    RELAY_PLUGIN_NAME, command, client->id);
+                                    RELAY_PLUGIN_NAME,
+                                    command,
+                                    RELAY_COLOR_CHAT_CLIENT,
+                                    client->desc,
+                                    RELAY_COLOR_CHAT);
                 }
             }
             break;

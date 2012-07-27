@@ -2,27 +2,34 @@
 [command]*`relay`* controllo relay::
 ........................................
 /relay  list|listfull|listrelay
-        add <protocollo.nome> <porta>
-        del <protocollo.nome>
+        add <protocol.name> <port>
+        del <protocol.name>
         raw
+        sslcertkey
 
-           list: elenca i client relay (solo quelli attivi)
-       listfull: elenca i client relay (dettagliato, tutti i relay)
-      listrelay: elenca i relay (nome e porta)
-            add: aggiungi relay per un protocollo + nome
-            del: rimuovi relay per un protocollo + nome
-protocollo.nome: protocollo e nome con cui effettuare il relay
-                   - protocollo "irc": il nome è il server da condividere
-		    - protocollo "weechat" (il nome non viene usato)
-          porta: porta usata per il relay
-            raw: apre il buffer con dati raw Relay
+         list: list relay clients (only active relays)
+     listfull: list relay clients (verbose, all relays)
+    listrelay: list relays (name and port)
+          add: add relay for a protocol + name
+          del: remove relay for a protocol + name
+protocol.name: protocol and name to relay:
+                 - protocol "irc": name is the server to share
+                 - protocol "weechat" (name is not used)
+               Note: the protocol can be prefixed by "ssl." to enable SSL
+         port: port used for relay
+          raw: open buffer with raw Relay data
+   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
-Senza argomento, il comando apre i buffer con l'elenco dei client relay.
+Without argument, this command opens buffer with list of relay clients.
 
-Esempio:
-  proxy irc, per il server "freenode":
+Examples:
+  irc proxy, for server "freenode":
     /relay add irc.freenode 8000
-  protocollo weechat:
-    /relay add weechat 8001
+  irc proxy, for server "freenode", with SSL:
+    /relay add ssl.irc.freenode 8001
+  weechat protocol:
+    /relay add weechat 9000
+  weechat protocol with SSL:
+    /relay add ssl.weechat 9001
 ........................................
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-07-21 17:23+0200\n"
+"POT-Creation-Date: 2012-07-27 17:42+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3942,6 +3942,7 @@ msgstr ""
 "připojené přes SSL"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -5407,8 +5408,9 @@ msgstr "použít protokol IPv6 pro komunikaci se serverem"
 msgid "use SSL for server communication"
 msgstr "použít SSL pro komunikaci se serverem"
 
+#, fuzzy
 msgid ""
-"ssl certificate file used to automatically identify your nick (\"%h\" will "
+"SSL certificate file used to automatically identify your nick (\"%h\" will "
 "be replaced by WeeChat home, \"~/.weechat\" by default)"
 msgstr ""
 "soubor ssl certifikátu pro automatickou identifikaci přezdívky (\"%h\" bude "
@@ -5427,7 +5429,8 @@ msgstr ""
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "velikost klíče použitého při použití výměny klíčů Diffie Hellman"
 
-msgid "check that the ssl connection is fully trusted"
+#, fuzzy
+msgid "check that the SSL connection is fully trusted"
 msgstr "ověřit, že je ssl spojení zcela důvěryhodné"
 
 msgid "password for server"
@@ -7371,19 +7374,30 @@ msgstr "  [P] Pročistit ukončené"
 msgid "  [Q] Close this buffer"
 msgstr "  [Q] Zavřít tento buffer"
 
-#, c-format
-msgid "%s%s[%s%s%s%s] %s (started on: %s%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
 msgstr "%s%s[%s%s%s%s] %s (spuštěn: %s%s%s%s)"
 
-msgid "ended on: "
-msgstr "končí: "
-
 #, c-format
-msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-msgstr "%s%-26s id: %d, protokol: %s, obdrženo: %s, posláno: %s"
+msgid "%s%-26s started on: %s, ended on: %s"
+msgstr ""
 
 msgid "List of clients for relay"
 msgstr "Seznam klientů pro přenos"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via SSL"
+msgstr ""
+"%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
+"připojené přes SSL"
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 msgid "connecting"
 msgstr "připojuji"
@@ -7398,46 +7412,68 @@ msgid "disconnected"
 msgstr "odpojen"
 
 #, fuzzy, c-format
-msgid "%s%s: reading data on socket for client %d: error %d %s"
+msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
 msgstr "%s%s: čtu data ze soketu: chyba %d %s"
 
 #, fuzzy, c-format
-msgid "%s%s: sending data to client %d: error %d %s"
-msgstr "%s%s: chyba při zasílání dat na klienta %s"
+msgid "%s%s: TLS handshake timeout for client %s%s%s"
+msgstr "%s%s: TLS handshake selhal"
 
 #, fuzzy, c-format
-msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
-msgstr "%s: nový klient od %s%s%s na portu %d (id: %d, přesměrovávám %s.%s)"
+msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy, c-format
+msgid "%s%s: sending data to client %s%s%s: error %d %s"
+msgstr "%s%s: chyba při zasílání dat na klienta %s"
+
+#, c-format
+msgid ""
+"%s%s: warning: no SSL certificate/key found (option relay.network."
+"ssl_cert_key)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: new client on port %d: %s%s%s"
+msgstr "%s%s: nemohu akceptovat klienta na portu %d (%s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: nedostatek paměti pro nového klienta"
 
 #, fuzzy, c-format
-msgid "%s%s: authentication failed with client %s%s%s (%s%s%s)"
+msgid "%s%s: authentication failed with client %s%s%s"
 msgstr "%s%s: selhala autentizace s klientem %s%s%s (%s.%s)"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from client %s%s%s (%s%s%s)"
+msgid "%s: disconnected from client %s%s%s"
 msgstr "%s: odpojen od klienta %s%s%s (%s.%s)"
 
 msgid "Clients for relay:"
 msgstr "Klienti pro přenos:"
 
-#, c-format
+#, fuzzy
+msgid "Connected clients for relay:"
+msgstr "Klienti pro přenos:"
+
+#, fuzzy, c-format
 msgid ""
-"  id: %d, %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu "
-"recv, %lu sent"
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"sent"
 msgstr ""
 "  id: %d, %s%s%s (%s%s%s), spuštěn v: %s, poslední aktivita: %s, bytů: %lu "
 "přijato, %lu odebráno"
 
-#, c-format
-msgid "  id: %d, %s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  %s%s%s (%s%s%s), started on: %s"
 msgstr "  id: %d, %s%s%s, spuštěno v: %s"
 
 msgid "No client for relay"
 msgstr "Žádný klient pro přesměrování"
+
+#, fuzzy
+msgid "No connected client for relay"
+msgstr "Klienti pro přenos:"
 
 msgid "Listening on ports:"
 msgstr "Poslouchám na portech:"
@@ -7464,9 +7500,10 @@ msgstr "%s%s: přesměrování \"%s\" nenalezeno"
 msgid "relay control"
 msgstr "ovládání přesměrování"
 
+#, fuzzy
 msgid ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw"
+"|| raw || sslcertkey"
 msgstr ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
 "|| raw"
@@ -7481,16 +7518,23 @@ msgid ""
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
+"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
 "\n"
 "Without argument, this command opens buffer with list of relay clients.\n"
 "\n"
 "Examples:\n"
 "  irc proxy, for server \"freenode\":\n"
 "    /relay add irc.freenode 8000\n"
+"  irc proxy, for server \"freenode\", with SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
 "  weechat protocol:\n"
-"    /relay add weechat 8001"
+"    /relay add weechat 9000\n"
+"  weechat protocol with SSL:\n"
+"    /relay add ssl.weechat 9001"
 msgstr ""
 "         list: seznam klientů přesměrování (pouze aktivní přesměrování)\n"
 "     listfull: seznam klientů přesměrování (užvaněný, všechny přesměrování)\n"
@@ -7523,6 +7567,12 @@ msgstr "první volný port pro plugin přesměrování"
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: chyba: port \"%d\" je již používán"
 
+#, fuzzy, c-format
+msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
+msgstr ""
+"%s%s: nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s "
+"podporou GNUtls"
+
 #, c-format
 msgid "%s%s: error: unknown protocol \"%s\""
 msgstr "%s%s: chyba: neznámý protokol \"%s\""
@@ -7542,13 +7592,20 @@ msgstr "%s%s: chyba: přesměrování pro\"%s\" již existuje"
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automaticky otevřít buffer přesměrování, když připojuje nový klient"
 
-msgid "text color"
-msgstr "barva textu"
+#, fuzzy
+msgid "text color for client description"
+msgstr "barva textu děličů času"
 
-msgid "background color"
-msgstr "barva pozadí"
+#, fuzzy
+msgid "text color in relay buffer"
+msgstr "barva textu pro jeméno bufferu"
 
-msgid "text color of selected client line"
+#, fuzzy
+msgid "background color in relay buffer"
+msgstr "barva pozadí pro značku nepřečtených dat"
+
+#, fuzzy
+msgid "text color of selected line in relay buffer"
 msgstr "barva textu řádku vybraného klienta"
 
 msgid "text color for \"connecting\" status"
@@ -7595,11 +7652,23 @@ msgstr ""
 "heslo vyžadované klienty pro přístup k tomuto přesměrováni (prázdná hodnota "
 "značí, že heslo není vyžadováno)"
 
+msgid ""
+"file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
 msgid "list of relay clients"
 msgstr "seznam klientů přesměrování"
 
 msgid "relay pointer (optional)"
 msgstr "ukazatel přesměrování (volitelné)"
+
+#, fuzzy, c-format
+msgid "%s: SSL certificate and key have been set"
+msgstr "%sgnutls: certifikát byl zrušen"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize priority for SSL"
+msgstr "%s%s: nemohu inicializovat %s"
 
 msgid "Relay raw messages"
 msgstr "Přeposílat čisté zprávy"
@@ -7621,7 +7690,7 @@ msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
 msgstr "%s%s: chyba s \"bind\" na portu %d (%s.%s)"
 
 #, fuzzy, c-format
-msgid "%s: listening on port %d (relay: %s%s%s, max %d clients)"
+msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
 msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klientů)"
 
 #, c-format
@@ -7633,12 +7702,12 @@ msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
 
 #, fuzzy, c-format
-msgid "%s%s: failed to execute command \"%s\" for client %d"
+msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "%s%s: selhalo parsování příkazu \"%s\" (prosím oznamte to vývojárům):"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: too few arguments received from client %d for command \"%s"
+"%s%s: too few arguments received from client %s%s%s for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 "%s%s: přijato příliš málo argumentů od IRC serveru pro příkaz \"%s"
@@ -8258,8 +8327,17 @@ msgstr ""
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr "velikost ukazatele průběhu ve znacích (0 pro vypnutí ukazatele)"
 
-msgid "text color of selected xfer line"
-msgstr "barva textu pro vybraný xfer řádek"
+#, fuzzy
+msgid "text color in xfer buffer"
+msgstr "barva textu pro jeméno bufferu"
+
+#, fuzzy
+msgid "background color in xfer buffer"
+msgstr "barva pozadí pro rozhovor"
+
+#, fuzzy
+msgid "text color of selected line in xfer buffer"
+msgstr "barva textu řádku vybraného klienta"
 
 msgid "text color for \"waiting\" status"
 msgstr "barva textu pro status \"čekám\""
@@ -8435,6 +8513,25 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "ended on: "
+#~ msgstr "končí: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s id: %d, protokol: %s, obdrženo: %s, posláno: %s"
+
+#, fuzzy
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
+#~ msgstr "%s: nový klient od %s%s%s na portu %d (id: %d, přesměrovávám %s.%s)"
+
+#~ msgid "text color"
+#~ msgstr "barva textu"
+
+#~ msgid "background color"
+#~ msgstr "barva pozadí"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "barva textu pro vybraný xfer řádek"
 
 #~ msgid "display message when (un)marking as away"
 #~ msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
