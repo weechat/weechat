@@ -1633,6 +1633,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_default_input_prompt, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     gui_bar_item_hook_signal ("buffer_localvar_*",
@@ -1642,6 +1644,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                       &gui_bar_item_default_input_search, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
     gui_bar_item_hook_signal ("input_search",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
     gui_bar_item_hook_signal ("input_text_changed",
@@ -1651,6 +1655,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_default_input_text, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
     gui_bar_item_hook_signal ("input_text_*",
@@ -1676,6 +1682,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       &gui_bar_item_default_buffer_plugin, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     gui_bar_item_hook_signal ("buffer_renamed",
@@ -1685,6 +1693,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER],
                       &gui_bar_item_default_buffer_number, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NUMBER]);
     gui_bar_item_hook_signal ("buffer_moved",
@@ -1700,6 +1710,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       &gui_bar_item_default_buffer_name, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook_signal ("buffer_renamed",
@@ -1711,6 +1723,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES],
                       &gui_bar_item_default_buffer_modes, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
 
@@ -1718,6 +1732,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       &gui_bar_item_default_buffer_filter, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("buffer_lines_hidden",
@@ -1729,6 +1745,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       &gui_bar_item_default_buffer_nicklist_count, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     gui_bar_item_hook_signal ("nicklist_*",
@@ -1738,6 +1756,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
                       &gui_bar_item_default_scroll, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     gui_bar_item_hook_signal ("window_scrolled",
@@ -1765,6 +1785,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
                       &gui_bar_item_default_buffer_title, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
     gui_bar_item_hook_signal ("buffer_title_changed",
@@ -1776,6 +1798,8 @@ gui_bar_item_init ()
                       &gui_bar_item_default_buffer_nicklist, NULL);
     gui_bar_item_hook_signal ("nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
     snprintf (name, sizeof (name), "2000|%s",
@@ -1786,6 +1810,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER],
                       &gui_bar_item_default_window_number, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
     gui_bar_item_hook_signal ("window_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_WINDOW_NUMBER]);
 }
