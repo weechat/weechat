@@ -63,6 +63,7 @@ Examples:
 /buffer  list
          clear [<number>|<name>|-merged|-all]
          move|merge <number>
+         swap <number1>|<name1> [<number2>|<name2>]
          unmerge [<number>|-all]
          close [<n1>[-<n2>]|<name>]
          notify <level>
@@ -74,6 +75,7 @@ Examples:
     list: list buffers (without argument, this list is displayed)
    clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
     move: move buffer in the list (may be relative, for example -1)
+    swap: swap two buffers (swap with current buffer if only one number/name given)
    merge: merge current buffer to another buffer (chat area will be mix of both buffers)
           (by default ctrl-x switches between merged buffers)
  unmerge: unmerge buffer from other buffers which have same number
@@ -98,6 +100,10 @@ Examples:
     /buffer clear
   move buffer to number 5:
     /buffer move 5
+  swap buffer 1 with 3:
+    /buffer swap 1 3
+  swap buffer #weechat with current buffer:
+    /buffer swap #weechat
   merge with core buffer:
     /buffer merge 1
   unmerge buffer:

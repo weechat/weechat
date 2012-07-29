@@ -501,7 +501,7 @@ command_buffer_display_localvar (void *data,
 
 COMMAND_CALLBACK(buffer)
 {
-    struct t_gui_buffer *ptr_buffer, *weechat_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_buffer2, *weechat_buffer;
     long number, number1, number2;
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, target_buffer, error_main_buffer, num_buffers;
@@ -618,6 +618,55 @@ COMMAND_CALLBACK(buffer)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
         }
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* swap buffers */
+    if (string_strcasecmp (argv[1], "swap") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "buffer swap");
+
+        ptr_buffer = NULL;
+        ptr_buffer2 = NULL;
+
+        /* first buffer for swap */
+        number = strtol (argv[2], &error, 10);
+        if (error && !error[0])
+            ptr_buffer = gui_buffer_search_by_number (number);
+        else
+        {
+            ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
+            if (!ptr_buffer)
+                ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv[2]);
+        }
+
+        /* second buffer for swap */
+        if (argc > 3)
+        {
+            number = strtol (argv[3], &error, 10);
+            if (error && !error[0])
+                ptr_buffer2 = gui_buffer_search_by_number (number);
+            else
+            {
+                ptr_buffer2 = gui_buffer_search_by_full_name (argv[3]);
+                if (!ptr_buffer2)
+                    ptr_buffer2 = gui_buffer_search_by_partial_name (NULL, argv[3]);
+            }
+        }
+        else
+            ptr_buffer2 = buffer;
+
+        if (!ptr_buffer || !ptr_buffer2)
+        {
+            /* invalid buffer name/number */
+            gui_chat_printf (NULL,
+                             _("%sError: buffer not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
+
+        gui_buffer_swap (ptr_buffer, ptr_buffer2);
 
         return WEECHAT_RC_OK;
     }
@@ -5439,6 +5488,7 @@ command_init ()
                   N_("list"
                      " || clear [<number>|<name>|-merged|-all]"
                      " || move|merge <number>"
+                     " || swap <number1>|<name1> [<number2>|<name2>]"
                      " || unmerge [<number>|-all]"
                      " || close [<n1>[-<n2>]|<name>]"
                      " || notify <level>"
@@ -5453,6 +5503,8 @@ command_init ()
                      "nothing for current buffer)\n"
                      "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
+                     "    swap: swap two buffers (swap with current buffer if "
+                     "only one number/name given)\n"
                      "   merge: merge current buffer to another buffer (chat "
                      "area will be mix of both buffers)\n"
                      "          (by default ctrl-x switches between merged "
@@ -5482,6 +5534,10 @@ command_init ()
                      "    /buffer clear\n"
                      "  move buffer to number 5:\n"
                      "    /buffer move 5\n"
+                     "  swap buffer 1 with 3:\n"
+                     "    /buffer swap 1 3\n"
+                     "  swap buffer #weechat with current buffer:\n"
+                     "    /buffer swap #weechat\n"
                      "  merge with core buffer:\n"
                      "    /buffer merge 1\n"
                      "  unmerge buffer:\n"
@@ -5496,6 +5552,7 @@ command_init ()
                      "    /buffer +1"),
                   "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names)"
                   " || move %(buffers_numbers)"
+                  " || swap %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
                   " || unmerge %(buffers_numbers)|-all"
                   " || close %(buffers_plugins_names)"

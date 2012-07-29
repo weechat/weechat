@@ -63,6 +63,7 @@ Exemples:
 /buffer  list
          clear [<nombre>|<nom>|-merged|-all]
          move|merge <nombre>
+         swap <nombre1>|<nom1> [<nombre2>|<nom2>]
          unmerge [<nombre>|-all]
          close [<n1>[-<n2>]|<nom>]
          notify <niveau>
@@ -74,6 +75,7 @@ Exemples:
     list: lister les tampons ouverts (sans paramètre, cette liste est affichée)
    clear: effacer le contenu du tampon (un numéro pour un tampon, -merged pour les tampons mélangés, -all pour tous les tampons, ou rien pour le tampon courant)
     move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
+    swap: échanger deux tampons (échanger avec le tampon courant si un seul numéro/nom donné)
    merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
           (par défaut ctrl-x bascule entre les tampons mélangés)
  unmerge: détacher le tampon courant des autres tampons portant le même numéro
@@ -98,6 +100,10 @@ Exemples:
     /buffer clear
   déplacer le tampon vers le numéro 5:
     /buffer move 5
+  échanger le tampon 1 avec le 3:
+    /buffer swap 1 3
+  échanger le tampon #weechat avec le tampon courant:
+    /buffer swap #weechat
   mélanger avec le tampon core:
     /buffer merge 1
   détacher le tampon:

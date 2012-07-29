@@ -61,54 +61,60 @@ Esempi:
 [command]*`buffer`* gestione buffer::
 ........................................
 /buffer  list
-         clear [<numero>|<nome>|-merged|-all]
-         move|merge <numero>
-         unmerge [<numero>|-all]
-         close [<n1>[-<n2>]|<nome>]
-         notify <livello>
+         clear [<number>|<name>|-merged|-all]
+         move|merge <number>
+         swap <number1>|<name1> [<number2>|<name2>]
+         unmerge [<number>|-all]
+         close [<n1>[-<n2>]|<name>]
+         notify <level>
          localvar
-         set <proprietà> <valore>
-         get <proprietà>
-         <number>|<nome>
+         set <property> <value>
+         get <property>
+         <number>|<name>
 
-    list: elenca i buffer (senza argomento viene mostrata questa lista)
-   clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer incollati, -all per tutti i buffer o nessun parametro per quello corrente)
-    move: sposta il buffer nella lista (può essere relativo, ad esempio -1)
-   merge: unisce il buffer corrente ad un altro (l'area di chat risulterà un mix di entrambi)
-          (la combinazione predefinita ctrl-x alterna tra i buffer incollati)
- unmerge: stacca il buffer dagli altri che hanno lo stesso numero
-   close: chiude buffer (numero/serie oppure nome sono opzionali)
-  notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer deve essere aggiunto alla hotlist oppure no:
-               none: mai
-          highlight: solo per gli eventi
-            message: messaggi dagli utenti + eventi
-                all: tutti i messaggi
-              reset: ripristina al valore predefinito (tutto)
-localvar: visualizza le variabili locali per il buffer corrente
-     set: imposta una proprietà per il buffer corrente
-     get: mostra una proprietà del buffer corrente
-  numero: passa al buffer per numero, prefisso possibile:
-          '+': passaggio relativo, aggiunge un numero a quello corrente
-          '-': passaggio relativo, sottrae un numero a quello corrente
-          '*': passa al numero, usando l'opzione "weechat.look.jump_current_to_previous_buffer"
-    nome: passa al buffer tramite nome (parziale)
+    list: list buffers (without argument, this list is displayed)
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1)
+    swap: swap two buffers (swap with current buffer if only one number/name given)
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+   close: close buffer (number/range or name is optional)
+  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+localvar: display local variables for current buffer
+     set: set a property for current buffer
+     get: display a property of current buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+    name: jump to buffer by (partial) name
 
 Examples:
-  pulisce il buffer corrente:
+  clear current buffer:
     /buffer clear
-  sposta il buffer al numero 5:
+  move buffer to number 5:
     /buffer move 5
-  unisce con il buffer core:
+  swap buffer 1 with 3:
+    /buffer swap 1 3
+  swap buffer #weechat with current buffer:
+    /buffer swap #weechat
+  merge with core buffer:
     /buffer merge 1
-  stacca il buffer:
+  unmerge buffer:
     /buffer unmerge
-  chiude il buffer corrente:
+  close current buffer:
     /buffer close
-  chiude i buffer da 5 a 7:
+  close buffers 5 to 7:
     /buffer close 5-7
-  passa a #weechat:
+  jump to #weechat:
     /buffer #weechat
-  passa al buffer successivo:
+  jump to next buffer:
     /buffer +1
 ........................................
 

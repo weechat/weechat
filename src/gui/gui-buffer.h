@@ -279,6 +279,8 @@ extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
+extern void gui_buffer_swap (struct t_gui_buffer *buffer1,
+                             struct t_gui_buffer *buffer2);
 extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);

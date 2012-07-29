@@ -2495,6 +2495,37 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 }
 
 /*
+ * gui_buffer_swap: swap two buffers
+ */
+
+void
+gui_buffer_swap (struct t_gui_buffer *buffer1, struct t_gui_buffer *buffer2)
+{
+    struct t_gui_buffer *ptr_buffer1, *ptr_buffer2;
+    int number1, number2;
+
+    if (!buffer1 || !buffer2)
+        return;
+
+    /* store pointers and numbers, with number1 < number2 */
+    ptr_buffer1 = (buffer1->number < buffer2->number) ? buffer1 : buffer2;
+    ptr_buffer2 = (buffer1->number < buffer2->number) ? buffer2 : buffer1;
+    number1 = ptr_buffer1->number;
+    number2 = ptr_buffer2->number;
+
+    /* swap buffer with itself? nothing to do! */
+    if (number1 == number2)
+        return;
+
+    /* move number2 before number1 */
+    gui_buffer_move_to_number (ptr_buffer2, number1);
+
+    /* move number1 before number2 */
+    if (number2 > number1 + 1)
+        gui_buffer_move_to_number (ptr_buffer1, number2);
+}
+
+/*
  * gui_buffer_merge: merge a buffer to another buffer
  */
 

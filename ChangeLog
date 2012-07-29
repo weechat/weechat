@@ -7,6 +7,7 @@ v0.3.9-dev, 2012-07-29
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: add option "swap" for command /buffer (task #11373)
 * core: fix names of cache variables in configure.in (bug #36971)
 * core: scroll to bottom of window after reaching first or last highlight with
   keys alt+"p" / alt+"n"
