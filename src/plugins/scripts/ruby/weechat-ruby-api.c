@@ -4106,7 +4106,7 @@ weechat_ruby_api_unhook_all (VALUE class)
 {
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (ruby_current_script);
+    script_api_unhook_all (weechat_ruby_plugin, ruby_current_script);
 
     API_RETURN_OK;
 }

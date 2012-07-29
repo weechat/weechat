@@ -3981,7 +3981,7 @@ weechat_tcl_api_unhook_all (ClientData clientData, Tcl_Interp *interp,
 
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (tcl_current_script);
+    script_api_unhook_all (weechat_tcl_plugin, tcl_current_script);
 
     API_RETURN_OK;
 }

@@ -3365,7 +3365,7 @@ weechat_guile_api_unhook_all ()
 {
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (guile_current_script);
+    script_api_unhook_all (weechat_guile_plugin, guile_current_script);
 
     API_RETURN_OK;
 }

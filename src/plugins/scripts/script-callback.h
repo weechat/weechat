@@ -36,14 +36,9 @@ struct t_script_callback
     struct t_script_callback *next_callback; /* link to previous callback   */
 };
 
-extern struct t_script_callback *script_callback_alloc ();
-extern void script_callback_init (struct t_script_callback *script_callback,
-                                  struct t_plugin_script *script,
-                                  const char *function,
-                                  const char *data);
-extern void script_callback_add (struct t_plugin_script *script,
-                                 struct t_script_callback *callback);
-extern void script_callback_free_data (struct t_script_callback *script_callback);
+extern struct t_script_callback *script_callback_add (struct t_plugin_script *script,
+                                                      const char *function,
+                                                      const char *data);
 extern void script_callback_remove (struct t_plugin_script *script,
                                     struct t_script_callback *script_callback);
 extern void script_callback_remove_all (struct t_plugin_script *script);

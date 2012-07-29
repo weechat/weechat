@@ -298,7 +298,8 @@ extern struct t_hook *script_api_hook_focus (struct t_weechat_plugin *weechat_pl
 extern void script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_hook *hook);
-extern void script_api_unhook_all (struct t_plugin_script *script);
+extern void script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
+                                   struct t_plugin_script *script);
 extern struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                                                    struct t_plugin_script *script,
                                                    const char *name,

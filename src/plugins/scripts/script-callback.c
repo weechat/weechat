@@ -59,36 +59,37 @@ script_callback_alloc ()
 }
 
 /*
- * script_callback_init: initialize callback with script, function and data
+ * script_callback_add: allocate a new callback, initialize it
+ *                      (script/function/data) and add it to list
+ *                      return pointer to new callback or NULL if error
  */
 
-void
-script_callback_init (struct t_script_callback *script_callback,
-                      struct t_plugin_script *script,
-                      const char *function,
-                      const char *data)
-{
-    if (script_callback)
-    {
-        script_callback->script = script;
-        script_callback->function = (function) ? strdup (function) : NULL;
-        script_callback->data = (data) ? strdup (data) : NULL;
-    }
-}
-
-/*
- * script_callback_add: add a callback to list
- */
-
-void
+struct t_script_callback *
 script_callback_add (struct t_plugin_script *script,
-                     struct t_script_callback *callback)
+                     const char *function,
+                     const char *data)
 {
+    struct t_script_callback *script_cb;
+    if (!script)
+        return NULL;
+
+    script_cb = script_callback_alloc ();
+    if (!script_cb)
+        return NULL;
+
+    /* initialize callback */
+    script_cb->script = script;
+    script_cb->function = (function) ? strdup (function) : NULL;
+    script_cb->data = (data) ? strdup (data) : NULL;
+
+    /* add callback to list */
     if (script->callbacks)
-        script->callbacks->prev_callback = callback;
-    callback->prev_callback = NULL;
-    callback->next_callback = script->callbacks;
-    script->callbacks = callback;
+        script->callbacks->prev_callback = script_cb;
+    script_cb->prev_callback = NULL;
+    script_cb->next_callback = script->callbacks;
+    script->callbacks = script_cb;
+
+    return script_cb;
 }
 
 /*
@@ -100,7 +101,7 @@ script_callback_free_data (struct t_script_callback *script_callback)
 {
     if (script_callback->function)
         free (script_callback->function);
-        if (script_callback->data)
+    if (script_callback->data)
         free (script_callback->data);
 }
 

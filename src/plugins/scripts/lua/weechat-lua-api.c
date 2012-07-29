@@ -3666,7 +3666,7 @@ weechat_lua_api_unhook_all (lua_State *L)
 {
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (lua_current_script);
+    script_api_unhook_all (weechat_lua_plugin, lua_current_script);
 
     API_RETURN_OK;
 }

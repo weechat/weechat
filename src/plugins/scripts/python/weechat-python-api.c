@@ -3626,7 +3626,7 @@ weechat_python_api_unhook_all (PyObject *self, PyObject *args)
 
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (python_current_script);
+    script_api_unhook_all (weechat_python_plugin, python_current_script);
 
     API_RETURN_OK;
 }

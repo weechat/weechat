@@ -3480,7 +3480,7 @@ XS (XS_weechat_api_unhook_all)
 
     API_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
-    script_api_unhook_all (perl_current_script);
+    script_api_unhook_all (weechat_perl_plugin, perl_current_script);
 
     API_RETURN_OK;
 }
