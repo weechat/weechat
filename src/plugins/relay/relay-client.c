@@ -626,6 +626,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
 #ifdef HAVE_GNUTLS
+    int bits;
     struct t_config_option *ptr_option;
 #endif
 
@@ -664,6 +665,29 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                                 weechat_prefix ("error"), RELAY_PLUGIN_NAME);
             }
             new_client->status = RELAY_STATUS_CONNECTING;
+            /*
+             * set Diffie-Hellman parameters on first SSL connection from a
+             * client (done only one time)
+             */
+            if (!relay_gnutls_dh_params)
+            {
+                relay_gnutls_dh_params = malloc (sizeof (*relay_gnutls_dh_params));
+                if (relay_gnutls_dh_params)
+                {
+                    gnutls_dh_params_init (relay_gnutls_dh_params);
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020c00
+                    /* for gnutls >= 2.12.0 */
+                    bits = gnutls_sec_param_to_pk_bits (GNUTLS_PK_DH,
+                                                        GNUTLS_SEC_PARAM_LOW);
+#else
+                    /* default for old gnutls */
+                    bits = 1024;
+#endif
+                    gnutls_dh_params_generate2 (*relay_gnutls_dh_params, bits);
+                    gnutls_certificate_set_dh_params (relay_gnutls_x509_cred,
+                                                      *relay_gnutls_dh_params);
+                }
+            }
             gnutls_init (&(new_client->gnutls_sess), GNUTLS_SERVER);
             if (relay_gnutls_priority_cache)
                 gnutls_priority_set (new_client->gnutls_sess, *relay_gnutls_priority_cache);

@@ -38,8 +38,8 @@ int relay_network_init_ssl_cert_key_ok = 0;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials_t relay_gnutls_x509_cred;
-gnutls_priority_t *relay_gnutls_priority_cache;
-gnutls_dh_params_t relay_gnutls_dh_params;
+gnutls_priority_t *relay_gnutls_priority_cache = NULL;
+gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 #endif
 
 
@@ -118,11 +118,6 @@ relay_network_init ()
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
     relay_network_set_ssl_cert_key (0);
 
-    /* Diffie-Hellman parameters */
-    gnutls_dh_params_init (&relay_gnutls_dh_params);
-    gnutls_dh_params_generate2 (relay_gnutls_dh_params, 1024);
-    gnutls_certificate_set_dh_params (relay_gnutls_x509_cred, relay_gnutls_dh_params);
-
     /* priority */
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
     if (relay_gnutls_priority_cache)
@@ -155,6 +150,13 @@ relay_network_end ()
         {
             gnutls_priority_deinit (*relay_gnutls_priority_cache);
             free (relay_gnutls_priority_cache);
+            relay_gnutls_priority_cache = NULL;
+        }
+        if (relay_gnutls_dh_params)
+        {
+            gnutls_dh_params_deinit (*relay_gnutls_dh_params);
+            free (relay_gnutls_dh_params);
+            relay_gnutls_dh_params = NULL;
         }
         gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
 #endif
