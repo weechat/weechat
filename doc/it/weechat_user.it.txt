@@ -45,7 +45,7 @@ Per poter installare WeeChat, è necessario:
 
 * un sistema GNU/Linux in esecuzione (con gli strumenti di
   compilazione per i sorgenti), oppure OS compatibile
-* privilegi di 'root' (per installare WeeChat in una cartella di
+* privilegi di 'root' (per installare WeeChat in una directory di
   sistema)
 * librerie ncurses
 
@@ -63,7 +63,7 @@ I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 * Debian (o qualunque distribuzione compatibile):
   `apt-get install weechat-curses`
 * Mandriva/RedHat (o qualunque distribuzione compatibile con RPM):
-  `rpm -i /percorso/per/weechat-x.y.z-1.i386.rpm`
+  `rpm -i /path/per/weechat-x.y.z-1.i386.rpm`
 * Gentoo: `emerge weechat`
 * Arch Linux: `pacman -S weechat`
 * Fedora Core: `yum install weechat`
@@ -122,7 +122,7 @@ correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
 Compilazione con cmake
 ^^^^^^^^^^^^^^^^^^^^^^
 
-* Installazione nelle cartelle di sistema (richiede privilegi di 'root'):
+* Installazione nelle directory di sistema (richiede privilegi di 'root'):
 
 ----------------------------------------
 $ mkdir build
@@ -132,12 +132,12 @@ $ make
 % make install    (come root)
 ----------------------------------------
 
-* Installazione in una cartella personalizzata:
+* Installazione in una directory personalizzata:
 
 ----------------------------------------
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/percorso/della/cartella
+$ cmake .. -DPREFIX=/path/della/directory
 $ make
 $ make install
 ----------------------------------------
@@ -146,7 +146,7 @@ $ make install
 Compilazione con autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Installazione nelle cartelle di sistema (richiede privilegi di 'root'):
+* Installazione nelle directory di sistema (richiede privilegi di 'root'):
 
 ----------------------------------------
 $ ./configure
@@ -154,7 +154,7 @@ $ make
 % make install    (come root)
 ----------------------------------------
 
-* Installazione in una cartella personalizzata:
+* Installazione in una directory personalizzata:
 
 ----------------------------------------
 $ ./configure --prefix=/path/to/directory
@@ -235,8 +235,8 @@ Ottenere un backtrace con gdb
 
 In caso di errore di WeeChat, il sistema creerà un file 'core' oppure 'core.12345'
 ('12345' è l'id del processo).
-Questo file viene creato nella cartella in cui è in esecuzione WeeChat (e
-*non* la cartella dove WeeChat è installato!).
+Questo file viene creato nella directory in cui è in esecuzione WeeChat (e
+*non* la directory dove WeeChat è installato!).
 
 Ad esempio, se 'weechat-curses' è installato in '/usr/bin/' ed il file 'core'
 si trova in '/home/xxx/', allora eseguire gdb con questo comando:
@@ -247,7 +247,7 @@ gdb /usr/bin/weechat-curses /home/xxx/core
 
 [NOTE]
 Se è stato installato il pacchetto binario 'weechat-dbg' (ad esempio in Debian), è
-possibile usare questo percorso per il binario di WeeChat:
+possibile usare questo path per il binario di WeeChat:
 '/usr/lib/debug/usr/bin/weechat-curses'
 
 All'interno di gdb, usare il comando `bt full` per visualizzare
@@ -319,11 +319,10 @@ Argomenti a riga di comando:
 -c, --colors::
     Mostra i colori prefefiniti nel terminale.
 
-// TRANSLATION MISSING
 -d, --dir 'path'::
-    Imposta una cartella come home per WeeChat (utilizzata per i file di
+    Imposta una directory come home per WeeChat (utilizzata per i file di
     configurazione, log, plugin e script dell'utente), il valore predefinito
-    è ~/.weechat (note: directory is created if not found by WeeChat).
+    è ~/.weechat (nota: directory viene creata se non trovata da WeeChat).
 
 -h, --help::
     Mostra l'aiuto.
@@ -337,9 +336,9 @@ Argomenti a riga di comando:
 -p, --no-plugin::
     Disabilita il caricamento automatico dei plugin.
 
-// TRANSLATION MISSING
 -r, --run-command::
-    Run command(s) after startup (many commands can be separated by semicolons).
+    Esegue un comando(i) dopo l'avvio (più comandi possono essere separati da
+    punto e virgola).
 
 -s, --no-script::
     Disabilita il caricamento automatico dei script.
@@ -357,7 +356,7 @@ $ weechat-curses
 ----------------------------------------
 
 Alla prima esecuzione di WeeChat, viene creato un file di configurazione
-predefinito. Il file di configurazione viene creato nella cartella:
+predefinito. Il file di configurazione viene creato nella directory:
 '~/.weechat/weechat.conf'.
 
 È possibile modificare questo file per configurare WeeChat a seconda delle
@@ -420,12 +419,11 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 | buffer_plugin         | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
 | buffer_number         | 3                     | numero del buffer corrente
 | buffer_name           | #test                 | nome del buffer attivo
-// TRANSLATION MISSING
-| buffer_modes          | +n                    | IRC channel modes
+| buffer_modes          | +n                    | modalità canale IRC
 | buffer_nicklist_count | {4}                   | numero di nick nella lista nick
 | buffer_filter         | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
 | lag                   | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-| hotlist               | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 eventi e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
+| hotlist               | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
 | completion            | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
 | scroll                | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
@@ -442,31 +440,27 @@ La barra 'input' ha i seguenti elementi predefiniti:
 | input_text   | ciao peter!                                   | testo in input
 |========================================
 
-// TRANSLATION MISSING
 [[buffers_and_windows]]
-Buffers and windows
-~~~~~~~~~~~~~~~~~~~
+Buffer e finestre
+~~~~~~~~~~~~~~~~~
 
 Un 'buffer' è composto da un numero, un nome, delle righe visualizzate (e
-qualche altro dato).
+altri dati).
 
-// TRANSLATION MISSING
-Examples of buffers:
+Esempi di buffer:
 
-// TRANSLATION MISSING
-* core buffer (created by WeeChat on startup, can not be closed)
-* irc server (displays messages from server)
-* irc channel
-* irc private
+* buffer core (creato by WeeChat all'avvio, non può essere chiuso)
+* server irc (mostra i messaggi dal server)
+* canale irc
+* query irc
 
-Una 'finestra' (o window) è un'aread dello schermo in cui viene visualizzato
+Una 'finestra' (o window) è un'area dello schermo in cui viene visualizzato
 un buffer. È possibile dividere lo schermo in più finestre.
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
 da una finestra) o visualizzato da una o più finestre.
 
-// TRANSLATION MISSING
-Example of horizontal split (`/window splith`):
+Esempio di split orizzontale (`/window splith`):
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -496,8 +490,7 @@ Example of horizontal split (`/window splith`):
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-// TRANSLATION MISSING
-Example of vertical split (`/window splitv`):
+Esempio di split verticale (`/window splitv`):
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -529,8 +522,7 @@ Example of vertical split (`/window splitv`):
                   (buffer #3)                                   (buffer #4)
 ........................................
 
-// TRANSLATION MISSING
-Example of vertical + horizontal splits:
+Esempio di split orizzontale + verticale:
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -562,56 +554,49 @@ Example of vertical + horizontal splits:
                   (buffer #3)
 ........................................
 
-// TRANSLATION MISSING
 [[notify_levels]]
-Notify levels
-~~~~~~~~~~~~~
+Livelli di notifica
+~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Four levels are possible in messages displayed in buffers, from lower to higher:
+Sono possibili quattro livelli per i messaggi mostrati nei buffer, dal più basso
+al più alto:
 
-// TRANSLATION MISSING
-* 'low': message with low importance (for example irc join/part/quit)
-* 'message': message from a user
-* 'private': message in a private buffer
-* 'highlight': message with highlight
+* 'low': messaggio di bassa importanza (ad esempio entrata/uscita/disconnessione
+  di irc)
+* 'message': messaggio da un utente
+* 'private': messaggio in un buffer privato
+* 'highlight': messaggio con notifica
 
-// TRANSLATION MISSING
-Each buffer has a notify level, which is used to decide what messages will add
-buffer in hotlist.
+Ogni buffer ha un livello di notifica, che viene usato per decidere quale
+messaggio il buffer andrà ad aggiungere nella hotlist.
 
-// TRANSLATION MISSING
-The default notify level can be set using option
+Il livello predefinito di notifica può essere impostato usando l'opzione
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-default is 'all'.
+il valore predefinito è 'all'.
 
-// TRANSLATION MISSING
 [width="50%",cols="3m,10",options="header"]
 |========================================
-| Notify level | Level of messages added to hotlist
-| none         | (none)
-| highlight    | 'highlight' + 'private'
-| message      | 'highlight' + 'private' + 'message'
-| all          | 'highlight' + 'private' + 'message' + 'low'
+| Livello di notifica | Livello del messaggio aggiunto alla hotlist
+| none                | (nessuno)
+| highlight           | 'highlight' + 'private'
+| message             | 'highlight' + 'private' + 'message'
+| all                 | 'highlight' + 'private' + 'message' + 'low'
 |========================================
 
-// TRANSLATION MISSING
-Notify level can be defined for a set of buffers, for example all buffers for
-irc server "freenode":
+Il livello di notifica può essere definito per un set di buffer, ad esempio
+tutti i buffer per il server irc "freenode":
 
 ----------------------------------------
 /set weechat.notify.irc.freenode message
 ----------------------------------------
 
-// TRANSLATION MISSING
-Set notify level 'highlight' on channel "#weechat" only:
+Imposta il livello di notifica 'highlight' solo sul canale '#weechat':
 
 ----------------------------------------
 /set weechat.notify.irc.freenode.#weechat highlight
 ----------------------------------------
 
-// TRANSLATION MISSING
-The notify level for a buffer can be set with command `/buffer`:
+Il livello di notifica per un buffer può essere impostato con il comando `/buffer`:
 
 ----------------------------------------
 /buffer notify highlight
@@ -672,8 +657,7 @@ Tasti per la riga di comando
 | @k(A-)@k(d)         | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | /input delete_next_word
 | @k(A-)@k(k)         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | /input grab_key_command
 | @k(A-)@k(r)         | Elimina l'intera riga di comando | /input delete_line
-// TRANSLATION MISSING
-| @k(A-)@k(s)         | Toggle aspell | /mute aspell toggle
+| @k(A-)@k(s)         | Abilita/disabilita aspell | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]
@@ -708,7 +692,7 @@ Tasti per buffer / finestre
 | @k(F12)                   | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist * +100%
 | @k(A-)@k(F11)             | Sposta all'inizio della lista nick | /bar scroll nicklist * b
 | @k(A-)@k(F12)             | Sposta alla fine della lista nick | /bar scroll nicklist * e
-| @k(A-)@k(a)               | Passa al buffer successivo con attività (con priorità: evento, messaggio, altro) | /input jump_smart
+| @k(A-)@k(a)               | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro) | /input jump_smart
 | @k(A-)@k(h)               | Pulisce hotlist (notifica di attività su altri buffer) | /input hotlist_clear
 | @k(A-)@k(j) , @k(A-)@k(l) | Passa all'ultimo buffer | /input jump_last_buffer
 | @k(A-)@k(j) , @k(A-)@k(r) | Passa al buffer raw IRC | /server raw
@@ -716,8 +700,8 @@ Tasti per buffer / finestre
 | @k(A-)@k(0...9)           | Passa al buffer numero (0 = 10) | /buffer *N
 | @k(A-)@k(j) , @k(01...99) | Passa al buffer numero | /buffer NN
 | @k(A-)@k(m)               | Abilita/disabilita | /mouse toggle
-| @k(A-)@k(n)               | Scorre fino all'evento successivo | /window scroll_next_highlight
-| @k(A-)@k(p)               | Scorre fino all'evento precedente | /window scroll_previous_highlight
+| @k(A-)@k(n)               | Scorre fino alla notifica successiva | /window scroll_next_highlight
+| @k(A-)@k(p)               | Scorre fino alla notifica precedente | /window scroll_previous_highlight
 | @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | /window scroll_unread
 | @k(A-)@k(w) , @k(A-)@k(↑) | Passa alla finestra in alto | /window up
 | @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | /window down
@@ -1517,7 +1501,7 @@ maniera predefinita che la connessione sia completamente fidata.
 Esistono alcune opzioni per controllare la connessione SSL:
 
 weechat.network.gnutls_ca_file::
-    percorso del file con il certificato delle autorità (predefinito: "%h/ssl/CAs.pem")
+    path del file con il certificato delle autorità (predefinito: "%h/ssl/CAs.pem")
 
 irc.server.xxx.ssl_cert::
     file del certificato SSL usato per identificare automaticamente il proprio
@@ -2022,7 +2006,7 @@ Si avranno i seguenti file:
 File di log IRC per server e canale
 +++++++++++++++++++++++++++++++++++
 
-Se si desidera avere una cartella per il server IRC ed una per il canale
+Se si desidera avere una directory per il server IRC ed una per il canale
 al suo interno:
 
 ----------------------------------------
@@ -2109,18 +2093,17 @@ Ad esempio:
 Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota
 (come QWeeChat) usando la password "miapass".
 
-// TRANSLATION MISSING
 [[relay_ssl]]
-Relay with SSL
-^^^^^^^^^^^^^^
+Relay con SSL
+^^^^^^^^^^^^^
 
-You can use SSL by creating a certificate and private key, and by using prefix
-"ssl." in the name of protocol.
+È possibile usare SSL creando un certificato e una chiave privata, e usando il
+prefisso "ssl." nel nome del protocollo.
 
-The default file for certificate/key is '~/.weechat/ssl/relay.pem'
-(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+Il file predefinito per il certificato/chiave è '~/.weechat/ssl/relay.pem'
+(opzione <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
 
-You can create a certificate and private key with following commands:
+È possibile creare un certificato e una chiave privata con i seguenti comandi:
 
 ----------------------------------------
 $ mkdir -p ~/.weechat/ssl
@@ -2128,14 +2111,14 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----------------------------------------
 
-If WeeChat is already running, you can reload the certificate and private key
-with command:
+Se WeeChat è già in esecuzione, è possibile ricaricare il certificato e la
+chiave privata con il comando:
 
 ----------------------------------------
 /relay sslcertkey
 ----------------------------------------
 
-And then add relay with SSL, for example:
+E poi aggiungere il relay con SSL, ad esempio:
 
 ----------------------------------------
 /relay add ssl.irc.freenode 8001

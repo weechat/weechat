@@ -3,10 +3,9 @@ FAQ di WeeChat (Domande Frequenti)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
-// TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions ≥ 0.3.0 but should preferrably be
-used with latest stable version of WeeChat.
+Questo documento è stato scritto per le versioni di WeeChat ≥ 0.3.0, ma dovrebbe
+essere usato preferibilmente con l'ultima versione stabile di WeeChat.
 
 
 [[general]]
@@ -45,7 +44,7 @@ Alcune caratteristiche (versione ≥ 0.3.x):
 * elenco di buffer (script buffers.pl)
 * proxy IRC
 * redirezione dei comandi IRC
-* ricerca incrementale nei buffer, passaggio rapido agli eventi importanti
+* ricerca incrementale nei buffer, passaggio rapido alle notifiche
 * pipe FIFO per il controllo remoto
 * doppio set caratteri (codifica/decodifica)
 * sviluppato da zero (non è basato su altri client)
@@ -110,7 +109,7 @@ Non riesco a vedere alcuni caratteri con gli accenti, cosa posso fare?
 soluzione tra quelle elencate:
 
 * verificare che weechat-curses abbia un link con libncursesw (attenzione:
-  necessario su molte distribuzioni ma non tutte): `ldd /percorso/di/weechat-curses`
+  necessario su molte distribuzioni ma non tutte): `ldd /path/di/weechat-curses`
 * verificare che il plugin "charset" sia caricato con il comando `plugin` (se non
   lo è, probabilmente è necessario il pacchetto "weechat-plugins")
 * verificare l'output del comando `/charset` (sul buffer core). Dovrebbero essere
@@ -370,7 +369,7 @@ Come posso cercare testo nel buffer (come /lastlog con irssi)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il tasto predefinito è @k(C-)@k(r) (il comando è: `/input search-text`).
-E per passare agli eventi: @k(A-)@k(p)/@k(n).
+E per passare alle notifiche: @k(A-)@k(p)/@k(n).
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).
@@ -496,10 +495,9 @@ Bisogna utilizzare un terminale che supporti le coordinate UTF-8 per il mouse,
 come rxvt-unicode.
 
 
-// TRANSLATION MISSING
 [[mouse_select_paste]]
-How can I select or paste text in terminal when mouse is enabled in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso selezionare o incollare del testo nel terminale quando il mouse è abilitato in WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
 @k(-S-) per selezionare o cliccare nel terminale, come se il mouse fosse
@@ -646,7 +644,7 @@ Come posso essere avvisato quando qualcuno mi cerca in un canale?
 Per 'launcher.pl', bisogna impostare il comando:
 
 ----------------------------------------
-/set plugins.var.perl.launcher.signal.weechat_highlight "/percorso/del/comando argomenti"
+/set plugins.var.perl.launcher.signal.weechat_highlight "/path/del/comando argomenti"
 ----------------------------------------
 
 Altri script correlati: http://www.weechat.org/scripts/stable/tag/notify/
@@ -738,7 +736,7 @@ Come posso caricare gli script Perl/Python/Ruby/Lua/Tcl? Sono compatibili con gl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Si possono utilizzare i comandi `/perl`, `/python`, `/ruby`, `/lua` and `/tcl`
-per caricare gli script (il percorso predefinito per gli script è '~/.weechat/<linguaggio>/').
+per caricare gli script (il path predefinito per gli script è '~/.weechat/<linguaggio>/').
 
 Gli script non sono compatibili con altri client IRC.
 
@@ -765,9 +763,8 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, fifo,
   logger, perl, python, ruby, lua, tcl, xfer (usato per DCC)
 * caricare solo gli script veramente necessari
-// TRANSLATION MISSING
-* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
-  of option 'weechat.history.max_buffer_lines_minutes'
+* ridurre il valore dell'opzione 'weechat.history.max_buffer_lines_number'  oppure
+  impostare il valore dell'opzione 'weechat.history.max_buffer_lines_minutes'
 * ridurre il valore dell'opzione 'weechat.history.max_commands'
 
 
@@ -808,7 +805,7 @@ Cannot find new threads: generic error
 ----------------------------------------
 
 Per correggerlo, è possibile eseguire gdb con questo comando (sostituire il
-percorso di libpthread e WeeChat con i percorsi del proprio sistema):
+path di libpthread e WeeChat con i path del proprio sistema):
 
 ----------------------------------------
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses

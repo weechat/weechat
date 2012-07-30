@@ -59,7 +59,7 @@ conservato in un deposito GIT.
 Ottenere e compilare i sorgenti
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Per prima cosa creare una cartella, per esempio 'weechat-git':
+Per prima cosa creare una directory, per esempio 'weechat-git':
 
 ---------------------
 $ mkdir ~/weechat-git
@@ -73,7 +73,7 @@ $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
 --------------------------------------------
 
-NOTA: In seguito, si può eseguire "`git pull`" in questa cartella per
+NOTA: In seguito, si può eseguire "`git pull`" in questa directory per
 ricevere gli ultimi aggiornamenti.
 
 Altrimenti si può scaricare ed estrarre il pacchetto 'devel':
@@ -119,7 +119,7 @@ A seconda della distribuzione Linux:
 Eseguire WeeChat
 ----------------
 
-Si raccomanda di avviare WeeChat con un'altra cartella (diversa dalla versione
+Si raccomanda di avviare WeeChat con un'altra directory (diversa dalla versione
 stabile), con l'opzione `--dir`.
 
 Il comando è:

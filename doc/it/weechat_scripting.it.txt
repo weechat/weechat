@@ -175,7 +175,7 @@ Il comando da utilizzare, in base al linguaggio:
 /guile load guile/script.scm
 ----------------------------------------
 
-È possibile creare un link nella cartella 'linguaggio/autoload' per caricare
+È possibile creare un link nella directory 'linguaggio/autoload' per caricare
 automaticamente gli script all'avvio di WeeChat.
 
 Ad esempio con Python:
@@ -199,7 +199,7 @@ un plugin è un file binario compilato e caricato con il comando
 un plugin come 'python' con il comando `python`.
 
 Quando il proprio script 'test.py' chiama una funzione delle API di
-Weechat, il percorso è simile a questo:
+Weechat, il path è simile a questo:
 
 ........................................
        (script API)                           (C API)
@@ -208,7 +208,7 @@ test.py  ------->  python plugin (python.so)  ------->  core di WeeChat
 ........................................
 
 Quando WeeChat chiama una callback nel proprio script 'test.py', è
-l'opposto del percorso precedente:
+l'opposto del path precedente:
 
 ........................................
               (C API)                            (script API)
@@ -295,7 +295,7 @@ Elenco di funzioni nelle API per gli script:
   string_match, string_has_highlight, string_has_highlight_regex,
   string_mask_to_regex, string_remove_color, string_is_command_char,
   string_input_for_buffer
-| cartelle               |
+| directory              |
   mkdir_home, mkdir, mkdir_parents
 | liste ordinate         |
   list_new, list_add, list_search, list_search_pos, list_casesearch,
@@ -877,7 +877,7 @@ Altre informazioni
 
 [source,python]
 ----------------------------------------
-# la cartella home di WeeChat, ad esempio: "/home/xxxx/.weechat"
+# la directory home di WeeChat, ad esempio: "/home/xxxx/.weechat"
 weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
 
 # inattività della tastiera
