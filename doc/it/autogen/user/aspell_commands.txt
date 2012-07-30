@@ -3,24 +3,24 @@
 ........................................
 /aspell  enable|disable|toggle
          listdict
-         setdict <lang>
+         setdict <lingua>
          deldict
-         addword [<lang>] <word>
+         addword [<lingua>] <word>
 
-  enable: enable aspell
- disable: disable aspell
-  toggle: toggle aspell
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer
- deldict: delete dictionary used on current buffer
- addword: add a word in personal aspell dictionary
+  enable: abilita aspell
+ disable: disabilita aspell
+  toggle: abilita/disabilita aspell
+listdict: mostra i dizionari installati
+ setdict: imposta dizionario per il buffer corrente
+ deldict: elimina dizionario usato per il buffer corrente
+ addword: aggiunge una parola nel dizionario personale aspell
 
-Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
+La riga di input che comincia con '/' non viene controllata, tranne che per alcuni comandi (consultare /set aspell.check.commands).
 
-To enable aspell on all buffers, use option "default_dict", then enable aspell, for example:
-  /set aspell.check.default_dict "en"
+Per abilitare aspell su tutti i buffer, usare l'opzione "default_dict", poi abilita aspell, ad esempio:
+  /set aspell.check.default_dict "it"
   /aspell enable
 
-Default key to toggle aspell is alt-s.
+Il tasto predefinito per (dis)abilitare aspell è alt-s.
 ........................................
 

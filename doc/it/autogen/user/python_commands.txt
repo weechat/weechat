@@ -9,7 +9,7 @@
      list: elenca i plugin caricati
  listfull: elenca i plugin caricati (dettagliato)
      load: carica un plugin
- autoload: carica automaticamente i plugin nella cartella utente o di sistema
+ autoload: carica automaticamente i plugin nella directory utente o di sistema
    reload: ricarica un plugin (se non specificato, scarica i plugin e li ricarica automaticamente)
    unload: scarica uno o tutti i plugin
 nome_file: (file) script da caricare

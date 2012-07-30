@@ -14,7 +14,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** descrizione: `enable aspell check for command line`
+** descrizione: `abilita il controllo aspell per la riga di comando`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 

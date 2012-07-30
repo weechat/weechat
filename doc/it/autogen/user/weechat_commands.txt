@@ -8,7 +8,7 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 ........................................
 
 [[command_weechat_bar]]
-[command]*`bar`* gestione barre::
+[command]*`bar`* gestione delle barre::
 ........................................
 /bar  list|listfull|listitems
       add <nome> <tipo>[,<cond1>[,<cond2>...]] <posizione> <dimensione> <separatore> <item1>[,<item2>...]
@@ -58,63 +58,63 @@ Esempi:
 ........................................
 
 [[command_weechat_buffer]]
-[command]*`buffer`* gestione buffer::
+[command]*`buffer`* gestione dei buffer::
 ........................................
 /buffer  list
-         clear [<number>|<name>|-merged|-all]
-         move|merge <number>
-         swap <number1>|<name1> [<number2>|<name2>]
-         unmerge [<number>|-all]
-         close [<n1>[-<n2>]|<name>]
-         notify <level>
+         clear [<numero>|<nome>|-merged|-all]
+         move|merge <numero>
+         swap <numero1>|<nome1> [<numero2>|<nome2>]
+         unmerge [<numero>|-all]
+         close [<n1>[-<n2>]|<nome>]
+         notify <livello>
          localvar
-         set <property> <value>
-         get <property>
-         <number>|<name>
+         set <proprietà> <valore>
+         get <proprietà>
+         <numero>|<nome>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-    name: jump to buffer by (partial) name
+    list: elenca i buffer (senza argomento viene mostrata questa lista)
+   clear: pulisce il contenuto del buffer (numero per un buffer, -merged per i buffer incollati, -all per tutti i buffer o nessun parametro per quello corrente)
+    move: sposta il buffer nella lista (può essere relativo, ad esempio -1)
+    swap: scambia due buffer (scambia con il buffer corrente se viene specificato solo il nome/numero)
+   merge: unisce il buffer corrente ad un altro (l'area di chat risulterà un mix di entrambi)
+          (la combinazione predefinita ctrl-x alterna tra i buffer incollati)
+ unmerge: stacca il buffer dagli altri che hanno lo stesso numero
+   close: chiude buffer (numero/serie oppure nome sono opzionali)
+  notify: imposta il livello di notifica per il buffer corrente: questo livello determina se il buffer deve essere aggiunto alla hotlist oppure no:
+               none: mai
+          highlight: solo per le notifiche
+            message: messaggi dagli utenti + notifiche
+                all: tutti i messaggi
+              reset: ripristina al valore predefinito (tutto)
+localvar: visualizza le variabili locali per il buffer corrente
+     set: imposta una proprietà per il buffer corrente
+     get: mostra una proprietà del buffer corrente
+  numero: passa al buffer per numero, prefisso possibile:
+          '+': passaggio relativo, aggiunge un numero a quello corrente
+          '-': passaggio relativo, sottrae un numero a quello corrente
+          '*': passa al numero, usando l'opzione "weechat.look.jump_current_to_previous_buffer"
+    nome: passa al buffer tramite nome (parziale)
 
-Examples:
-  clear current buffer:
+Esempi:
+  pulisce il buffer corrente:
     /buffer clear
-  move buffer to number 5:
+  sposta il buffer al numero 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  scambia il buffer 1 con il 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  scambia il buffer #weechat con quello corrente:
     /buffer swap #weechat
-  merge with core buffer:
+  unisce con il buffer core:
     /buffer merge 1
-  unmerge buffer:
+  stacca il buffer:
     /buffer unmerge
-  close current buffer:
+  chiude il buffer corrente:
     /buffer close
-  close buffers 5 to 7:
+  chiude i buffer da 5 a 7:
     /buffer close 5-7
-  jump to #weechat:
+  passa a #weechat:
     /buffer #weechat
-  jump to next buffer:
+  passa al buffer successivo:
     /buffer +1
 ........................................
 
@@ -158,7 +158,7 @@ comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trov
 
   go: sposta il cursore su un'area di chat, una barra (usando il nome della barra) o le coordinate "x.y"
 move: sposta il cursore con direzione
-stop: ferma la modalità cursore
+stop: interrompe la modalità cursore
 
 Senza argomenti, il comando abilita/disabilita la modalità cursore
 
@@ -289,7 +289,7 @@ elenco di azioni:
   search_switch_case: passa alla ricerca sensibile
   search_previous: cerca la riga precedente
   search_next: cerca la riga successiva
-  search_stop: ferma la ricerca
+  search_stop: interrompe la ricerca
   delete_previous_char: elimina carattere precedente
   delete_next_char: elimina carattere successivo
   delete_previous_word: elimina parola precedente
@@ -380,7 +380,7 @@ Esempi:
     /key bind meta-r /buffer #weechat
   ripristinare la combinazione predefinita per il tasto alt-r:
     /key reset meta-r
-  il tasto "tab" per fermare la ricerca nel buffer:
+  il tasto "tab" per interrompere la ricerca nel buffer:
     /key bindctxt search ctrl-I /input search_stop
   il tasto centrale del mouse su un nick per ottenere le informazioni:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
@@ -455,7 +455,7 @@ Esempi:
      list: elenca i plugin caricati
  listfull: elenca i plugin caricati (dettagliato)
      load: carica un plugin
- autoload: carica automaticamente un plugin nella cartella di sistema o utente
+ autoload: carica automaticamente un plugin nella directory di sistema o utente
    reload: ricarica un plugin (se non specificato, scarica e poi ricarica tutti i plugin)
    unload: scarica un plugin (se non specificato, scarica tutti i plugin
  nomefile: plugin (file) da caricare
@@ -466,7 +466,7 @@ Senza argomento, questo comando elenca i plugin caricati.
 ........................................
 
 [[command_weechat_proxy]]
-[command]*`proxy`* gestione proxy::
+[command]*`proxy`* gestione dei proxy::
 ........................................
 /proxy  list
         add <nome> <tipo> <indirizzo> <porta> [<nomeutente> [<password>]]
@@ -561,9 +561,9 @@ Il nuovo valore può essere, a seconda del tipo di variabile:
 Per tutti i tipi, è possibile usare null per rimuovere il valore dell'opzione (valore non definito). Ciò funziona solo per alcune variabili speciali dei plugin.
 
 Esempi:
-  mostra le opzioni relative agli eventi:
+  mostra le opzioni relative alle notifiche:
     /set *highlight*
-  aggiunge una parola all'evento:
+  aggiunge una parola alle notifiche:
     /set weechat.look.highlight "word"
 ........................................
 
@@ -586,9 +586,9 @@ Esempi:
 [[command_weechat_upgrade]]
 [command]*`upgrade`* aggiorna WeeChat senza disconnettere dai server::
 ........................................
-/upgrade  [<percorso_del_binario>]
+/upgrade  [<path_del_binario>]
 
-percorso_del_binario: percorso del binario di WeeChat (di default è il corrente)
+path_del_binario: path del binario di WeeChat (di default è il corrente)
 
 Questo comando aggiorna e ricarica una sessione di WeeChat in esecuzione. Il nuovo binario di WeeChat deve essere stato compilato o installato con un gestore pacchetti prima di eseguire questo comando.
 
@@ -644,7 +644,7 @@ Esempi:
 ........................................
 
 [[command_weechat_window]]
-[command]*`window`* gestione finestre::
+[command]*`window`* gestione delle finestre::
 ........................................
 /window  list
          -1|+1|b#|up|down|left|right [-window <numero>]
@@ -684,8 +684,8 @@ Esempi:
   scroll_down: scorre di alcune righe in basso
    scroll_top: scorre fino all'inizio del buffer
 scroll_bottom: scorre fino alla fine del buffer buffer
-scroll_previous_highlight: passa all'evento precedente
-    scroll_next_highlight: passa all'evento successivo
+scroll_previous_highlight: passa alla notifica precedente
+    scroll_next_highlight: passa alla notifica successiva
     	     scroll_unread: passa al segnalibro non letto
          swap: scambia i buffer di due finestra (con direzione opzionale per la finestra di destinazione)
          zoom: ingrandimento sulla finestra

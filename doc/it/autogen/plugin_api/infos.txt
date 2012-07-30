@@ -22,7 +22,7 @@
 
 | irc | irc_server_isupport_value | valore della caratteristica, se supportata dal servre (dal messaggio IRC 005) | server,caratteristica
 
-| python | python2_bin | percorso per l'interprete python 2.x | -
+| python | python2_bin | path per l'interprete python 2.x | -
 
 | weechat | charset_internal | set caratteri interno di WeeChat | -
 
@@ -32,7 +32,7 @@
 
 | weechat | date | data di compilazione di WeeChat | -
 
-| weechat | dir_separator | separatore cartella | -
+| weechat | dir_separator | separatore directory | -
 
 | weechat | filters_enabled | 1 se i filtri sono abilitati | -
 
@@ -42,13 +42,13 @@
 
 | weechat | version_number | versione di WeeChat (come numero) | -
 
-| weechat | weechat_dir | cartella WeeChat | -
+| weechat | weechat_dir | directory WeeChat | -
 
-| weechat | weechat_libdir | cartella "lib" di WeeChat | -
+| weechat | weechat_libdir | directory "lib" di WeeChat | -
 
-| weechat | weechat_localedir | cartella "locale" di WeeChat | -
+| weechat | weechat_localedir | directory "locale" di WeeChat | -
 
-| weechat | weechat_sharedir | cartella "share" di WeeChat | -
+| weechat | weechat_sharedir | directory "share" di WeeChat | -
 
 | weechat | weechat_site | sito di WeeChat | -
 

@@ -24,7 +24,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_logger.file.mask]] *logger.file.mask*
-** descrizione: `mask del nome file predefinito per i file di log (il formato è "cartella/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è usata per costruire il percorso completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
+** descrizione: `mask del nome file predefinito per i file di log (il formato è "directory/per/file" oppure "file", senza la prima "/" perché l'opzione "path" è usata per costruire il path completo del file); sono ammesse le variabili del buffer locale; sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$plugin.$name.weechatlog"`)
 
@@ -34,12 +34,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_logger.file.path]] *logger.file.path*
-** descrizione: `percorso per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla cartella home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)`
+** descrizione: `path per i file di log di WeeChat: "%h" all'inizio della stringa viene sostituito dalla directory home di WeeChat (predefinita è "~/.weechat); sono ammessi gli specificatori di data (consultare man strftime)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/logs/"`)
 
 * [[option_logger.file.replacement_char]] *logger.file.replacement_char*
-** descrizione: `carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di cartella)`
+** descrizione: `carattere di sostituzione per i caratteri speciali nei nomi dei file salvati con la mask (come il delimitatore di directory)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"_"`)
 

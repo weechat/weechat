@@ -62,6 +62,6 @@
 
 | weechat | window | elenco delle finestre | puntatore alla finestra (opzionale) | "current" per la finestra corrente o un numero della finestra (opzionale)
 
-| xfer | xfer | lista di xfer | puntatore a xfer (opzionale) | -
+| xfer | xfer | elenco di xfer | puntatore a xfer (opzionale) | -
 
 |========================================

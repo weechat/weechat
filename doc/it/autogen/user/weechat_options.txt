@@ -29,12 +29,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * [[option_weechat.color.chat_highlight]] *weechat.color.chat_highlight*
-** descrizione: `colore del testo per il prefisso di evento`
+** descrizione: `colore del testo per il prefisso di notifica`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * [[option_weechat.color.chat_highlight_bg]] *weechat.color.chat_highlight_bg*
-** descrizione: `colore di sfondo per il prefisso di evento`
+** descrizione: `colore di sfondo per il prefisso di notifica`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `magenta`)
 
@@ -64,17 +64,17 @@
 ** valori: qualsiasi stringa (valore predefinito: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** descrizione: `text color for offline nick (not in nicklist any more)`
+** descrizione: `colore del testo per i nick non in linea (non più in lista nick)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** descrizione: `text color for offline nick with highlight`
+** descrizione: `colore del testo per i nick non in linea con highlight`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** descrizione: `background color for offline nick with highlight`
+** descrizione: `colore di sfondo per i nick non in linea con highlight`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
@@ -209,7 +209,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `blue`)
 
 * [[option_weechat.color.status_count_highlight]] *weechat.color.status_count_highlight*
-** descrizione: `colore del testo per il conteggio dei messaggi evento nella hotlist (barra di stato)`
+** descrizione: `colore del testo per il conteggio dei messaggi di notifica nella hotlist (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `magenta`)
 
@@ -229,7 +229,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * [[option_weechat.color.status_data_highlight]] *weechat.color.status_data_highlight*
-** descrizione: `colore del testo per il buffer con evento (barra di stato)`
+** descrizione: `colore del testo per il buffer con notifica (barra di stato)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightmagenta`)
 
@@ -384,7 +384,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"--"`)
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
-** descrizione: `livello predefinito di notifica per i buffer (usato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), message=messaggi+eventi, highlight=solo eventi, none=non viene mai visualizzato nella hotlist`
+** descrizione: `livello predefinito di notifica per i buffer (usato per comunicare a WeeChat se il buffer deve essere visualizzato nella hotlist oppure no, a seconda dell'importanza del messaggio): all: tutti i messaggi (predefinito), message=messaggi+notifiche, highlight=solo notifiche, none=non viene mai visualizzato nella hotlist`
 ** tipo: intero
 ** valori: none, highlight, message, all (valore predefinito: `all`)
 
@@ -429,7 +429,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** descrizione: `use a different color for offline nicks (not in nicklist any more)`
+** descrizione: `usa un colore diverso per i nick non in linea (non più in lista nick)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -469,17 +469,17 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** descrizione: `elenco separato da virgole di parole da evidenziare; confronto non sensibile alle maiuscole (usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole), le parole possono iniziare o terminare con "*" per la corrispondenza parziale; ad esempio: "test,(?-i)*tizio*,flash*"`
+** descrizione: `elenco separato da virgole di parole da notificare; confronto non sensibile alle maiuscole (usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole), le parole possono iniziare o terminare con "*" per la corrispondenza parziale; ad esempio: "test,(?-i)*tizio*,flash*"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** descrizione: `espressione regolare usata per verificare se un messaggio contiene un evento oppure no, almeno una corrispondenza nella stringa deve essere circondata da caratteri :(alfanumerici, "-", "_" or "|"), l'espressione regolare non è sensibile alle maiuscole (usare "(?-i)" all'inizio per renderla sensibile alle maiuscole), ad esempio: "flashcode|flashy", "(?-i)Flashcode|flashy"`
+** descrizione: `espressione regolare usata per verificare se un messaggio contiene una notifica oppure no, almeno una corrispondenza nella stringa deve essere racchiusa da caratteri :(alfanumerici, "-", "_" or "|"), l'espressione regolare non è sensibile alle maiuscole (usare "(?-i)" all'inizio per renderla sensibile alle maiuscole), ad esempio: "flashcode|flashy", "(?-i)Flashcode|flashy"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** descrizione: `elenco separato da virgole di tag da evidenziare (confronto non sensibile alle maiuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
+** descrizione: `elenco separato da virgole di tag da notificare (confronto non sensibile alle maiuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -514,7 +514,7 @@
 ** valori: 0 .. 32 (valore predefinito: `0`)
 
 * [[option_weechat.look.hotlist_names_level]] *weechat.look.hotlist_names_level*
-** descrizione: `livello per la visualizzazione dei nomi nella hotlist (combinazione di: 1=entrata/uscita, 2=messaggio, 4=privato, 8=evento, per esempio: 12=privato+evento)`
+** descrizione: `livello per la visualizzazione dei nomi nella hotlist (combinazione di: 1=entrata/uscita, 2=messaggio, 4=privato, 8=notifica, per esempio: 12=privato+notifica)`
 ** tipo: intero
 ** valori: 1 .. 15 (valore predefinito: `12`)
 
@@ -579,7 +579,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
-** descrizione: `jump back to initial buffer after reaching end of hotlist`
+** descrizione: `torna al buffer iniziale dopo aver raggiunto la fine della hotlist`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -604,7 +604,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** descrizione: `abilita la modalità "bracketed paste" per il terminale (non supportata da tutti i terminali/multiplexer): in questa modalità, il testo incollato viene circondato da sequenze di controllo in modo che WeeChat possa differenziare il testo incollato dal testo digitato ("ESC[200~", seguito dal testo incollato, seguito da "ESC[201~")`
+** descrizione: `abilita la modalità "bracketed paste" per il terminale (non supportata da tutti i terminali/multiplexer): in questa modalità, il testo incollato viene racchiuso da sequenze di controllo in modo che WeeChat possa differenziare il testo incollato dal testo digitato ("ESC[200~", seguito dal testo incollato, seguito da "ESC[201~")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -734,12 +734,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** descrizione: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
+** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre e alle finestre (un valore vuoto disegnerà una riga reale con ncurses, ma può causare bug con la selezione dell'URL in alcuni terminali), i caratteri wide qui NON sono consentiti`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** descrizione: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** descrizione: `carattere usato per disegnare i separatori verticali intorno alle barre e alle finestre (un valore vuoto disegnerà una riga reale con ncurses), i caratteri wide qui NON sono consentiti`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -749,17 +749,17 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** descrizione: `formato dell'ora per le date convertite a stringhe e visualizzate nei messaggi`
+** descrizione: `formato dell'ora per le date convertite a stringhe e mostrate nei messaggi`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
-** descrizione: `display an horizontal separator between windows`
+** descrizione: `mostra un separatore orizzontale tra le finestre`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
-** descrizione: `display a vertical separator between windows`
+** descrizione: `mostra un separatore verticale tra le finestre`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -794,7 +794,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** descrizione: `percorso per la ricerca dei plugin ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
+** descrizione: `path per la ricerca dei plugin ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/plugins"`)
 

@@ -1,5 +1,5 @@
 [[command_irc_admin]]
-[command]*`admin`* informazioni sull'amministratore del server::
+[command]*`admin`* trova informazioni sull'amministratore del server::
 ........................................
 /admin  [<destinazione>]
 
@@ -115,19 +115,19 @@ Esempi:
 ........................................
 
 [[command_irc_dehalfop]]
-[command]*`dehalfop`* rimuove lo stato di half-op del canale da uno (o più) nick::
+[command]*`dehalfop`* revoca lo stato di half-op del canale da uno o più nick::
 ........................................
 /dehalfop  <nick> [<nick>...]
 ........................................
 
 [[command_irc_deop]]
-[command]*`deop`* rimuove lo stato di operatore del canale da uno (o più) nick::
+[command]*`deop`* revoca lo stato di operatore del canale da uno o più nick::
 ........................................
 /deop  <nick> [<nick>...]
 ........................................
 
 [[command_irc_devoice]]
-[command]*`devoice`* rimuove voce da uno (o più) nick::
+[command]*`devoice`* revoca il voice da uno o più nick::
 ........................................
 /devoice  <nick> [<nick>...]
 ........................................
@@ -152,7 +152,7 @@ destinazione: nome server
 ........................................
 
 [[command_irc_halfop]]
-[command]*`halfop`* concede lo stato di half-op del canale ad uno (o più) nick::
+[command]*`halfop`* concede lo stato di half-op del canale ad uno o più nick::
 ........................................
 /halfop  <nick> [<nick>...]
 ........................................
@@ -316,7 +316,7 @@ messaggio: messaggio da inviare
 
 modalità canale:
   canale: nome canale da modificare (quello attivo è il predefinito)
-  o: concede/nega i privilegi di operatore del canale
+  o: concede/revoca i privilegi di operatore del canale
   p: flag: canale privato
   s: flag: canale segreto
   i: flag: canale a solo invito
@@ -414,7 +414,7 @@ Esempi:
 ........................................
 
 [[command_irc_op]]
-[command]*`op`* concede lo stato di operatore del canale ad uno (o più) nick::
+[command]*`op`* concede lo stato di operatore del canale ad uno o più nick::
 ........................................
 /op  <nick> [<nick>...]
 ........................................
@@ -475,7 +475,7 @@ server: invia a questo server (nome interno)
 ........................................
 
 [[command_irc_reconnect]]
-[command]*`reconnect`* riconnette a uno (o più) server::
+[command]*`reconnect`* riconnette a uno o più server::
 ........................................
 /reconnect  <server> [<server>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
@@ -658,7 +658,7 @@ argomento: nuovo argomento per il canale
 ........................................
 
 [[command_irc_trace]]
-[command]*`trace`* trova il percorso del server specifico::
+[command]*`trace`* trova il path del server specifico::
 ........................................
 /trace  [<destinazione>]
 
@@ -700,7 +700,7 @@ server: nome server
 ........................................
 
 [[command_irc_voice]]
-[command]*`voice`* concede il voice ad uno (o più) utenti::
+[command]*`voice`* concede il voice ad uno o più utenti::
 ........................................
 /voice  <nick> [<nick>...]
 ........................................
@@ -732,7 +732,7 @@ mask: solo l'informazione corrispondente al mask
 ........................................
 
 [[command_irc_whois]]
-[command]*`whois`* richiedi informazioni su uno (o più) utenti::
+[command]*`whois`* richiedi informazioni su uno o più utenti::
 ........................................
 /whois  [<server>] <nick>[,<nick>...]
 

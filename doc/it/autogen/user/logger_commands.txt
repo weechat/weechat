@@ -28,7 +28,7 @@ Esempi:
     /set logger.level.irc 3
   disabilita logging per il buffer principale di WeeChat:
     /set logger.level.core.weechat 0
-  usa una cartella per il server IRC e un file per ogni canale al suo interno:
+  usa una directory per il server IRC e un file per ogni canale al suo interno:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ........................................
 

@@ -44,7 +44,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voce, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
+** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voice, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -104,12 +104,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
-** descrizione: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** descrizione: `formato dell'ora in risposta al messaggio CTCP TIME (consultare man strftime per gli specificatori data/ora)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** descrizione: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
+** descrizione: `mostra messaggio quando (non) si risulta assenti (off: non mostra/invia nulla, local: mostra localmente, channel: invia azioni ai canali)`
 ** tipo: intero
 ** valori: off, local, channel (valore predefinito: `local`)
 
@@ -154,7 +154,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.display_pv_back]] *irc.look.display_pv_back*
-** descrizione: `visualizza un messaggio in privato quando l'utente è tornato (dopo l'uscita dal server)`
+** descrizione: `mostra un messaggio in privato quando l'utente è tornato (dopo l'uscita dal server)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -164,22 +164,22 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** descrizione: `elenco separato da virgole di parole da evidenziare nei buffer dei canali (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita l'evidenziatore predefinito sul nick, esempi: "$nick", "(?-i)$nick"`
+** descrizione: `elenco separato da virgole di parole da notificare nei buffer dei canali (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita la notifica predefinita sul nick, esempi: "$nick", "(?-i)$nick"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** descrizione: `elenco separato da virgole di parole da evidenziare nei buffer privati (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita l'evidenziatore predefinito sul nick, esempi: "$nick", "(?-i)$nick"`
+** descrizione: `elenco separato da virgole di parole da notificare nei buffer privati (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita la notifica predefinita sul nick, esempi: "$nick", "(?-i)$nick"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** descrizione: `elenco separato da virgole di parole da evidenziare nei buffer dei server (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita l'evidenziatore predefinito sul nick, esempi: "$nick", "(?-i)$nick"`
+** descrizione: `elenco separato da virgole di parole da notificare nei buffer dei server (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita la notifica predefinita sul nick, esempi: "$nick", "(?-i)$nick"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"$nick"`)
 
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** descrizione: `elenco separato da liste di tag per i messaggi che potrebbero generare eventi (di solito qualsiasi messaggio da altri utenti, non quelli dal server...)`
+** descrizione: `elenco separato da liste di tag per i messaggi che potrebbero generare notifiche (di solito qualsiasi messaggio da altri utenti, non quelli dal server...)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg,irc_notice"`)
 
@@ -189,7 +189,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** descrizione: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
+** descrizione: `nasconde la chiave del canale (l'opzione nasconde gli argomenti di tutte le modalità canale se +k è impostato sul canale)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -229,12 +229,12 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
-** descrizione: `caratteri usati per fermare il calcolo del colore con le lettere del nick (almeno un carattere al di fuori di questa lista deve essere nella lista prima di fermarlo) (esempio: nick "|nick|away" con "|" nei caratteri restituisce il colore del nick "|nick")`
+** descrizione: `caratteri usati per interrompere il calcolo del colore con le lettere del nick (almeno un carattere al di fuori di questa lista deve essere nella lista prima di interromperlo) (esempio: nick "|nick|away" con "|" nei caratteri restituisce il colore del nick "|nick")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** descrizione: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
+** descrizione: `completamento intelligente per i nick (completa il primo con gli ultimi a parlare sul canale): speakers = tutti i nick (notifiche comprese), speakers_highlight = solo i nick con le notifiche`
 ** tipo: intero
 ** valori: off, speakers, speakers_highlights (valore predefinito: `speakers`)
 
@@ -509,7 +509,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** descrizione: `SSL certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** descrizione: `file del certificato SSL usato per identificare automaticamente il proprio nick ("%h" sarà sostituito dalla home di WeeChat, "~/.weechat come predefinita)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -524,7 +524,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"NORMAL"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
-** descrizione: `check that the SSL connection is fully trusted`
+** descrizione: `verifica che la connessione SSL sia totalmente fidata`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
