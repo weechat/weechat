@@ -24,7 +24,7 @@ ENDIF(NCURSES_FOUND)
 FIND_PATH(NCURSES_INCLUDE_PATH
   NAMES ncurses.h curses.h
   PATHS /usr/include/ncursesw /usr/include/ncurses /usr/include
-  /usr/local/include/ncursesw /usr/local/include/ncuses /usr/local/include
+  /usr/local/include/ncursesw /usr/local/include/ncurses /usr/local/include
   /usr/pkg/include/ncursesw /usr/pkg/include/ncurses /usr/pkg/include
 )
 
