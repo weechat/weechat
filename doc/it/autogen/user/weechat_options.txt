@@ -823,3 +823,8 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
+** descrizione: `set resource limits for WeeChat process, format is: "res1:limit1,res2:limit2"; resource name is the end of constant (RLIMIT_XXX) in lower case (see man setrlimit for values); limit -1 means "unlimited"; example: set unlimited size for core file and max 1GB of virtual memory: "core:-1,as:1000000000"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+

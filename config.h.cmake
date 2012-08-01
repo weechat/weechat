@@ -15,6 +15,7 @@
 #cmakedefine HAVE_REGEX_H
 #cmakedefine HAVE_WCHAR_H
 #cmakedefine HAVE_SYS_FILE_H
+#cmakedefine HAVE_SYS_RESOURCE_H
 #cmakedefine HAVE_FLOCK
 #cmakedefine HAVE_LANGINFO_CODESET
 #cmakedefine HAVE_STRNDUP

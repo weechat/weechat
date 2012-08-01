@@ -30,6 +30,10 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/time.h>
+#ifdef HAVE_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
 #include <unistd.h>
 #include <dirent.h>
 #include <signal.h>
@@ -39,9 +43,180 @@
 #include "weechat.h"
 #include "wee-util.h"
 #include "wee-config.h"
+#include "wee-log.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
+#include "../gui/gui-chat.h"
+#include "../gui/gui-window.h"
 
+
+#ifdef HAVE_SYS_RESOURCE_H
+struct t_rlimit_resource rlimit_resource[] =
+{
+#ifdef RLIMIT_AS
+    { "as", RLIMIT_AS },
+#endif
+#ifdef RLIMIT_CORE
+    { "core", RLIMIT_CORE },
+#endif
+#ifdef RLIMIT_CPU
+    { "cpu", RLIMIT_CPU },
+#endif
+#ifdef RLIMIT_DATA
+    { "data", RLIMIT_DATA },
+#endif
+#ifdef RLIMIT_FSIZE
+    { "fsize", RLIMIT_FSIZE },
+#endif
+#ifdef RLIMIT_LOCKS
+    { "locks", RLIMIT_LOCKS },
+#endif
+#ifdef RLIMIT_MEMLOCK
+    { "memlock", RLIMIT_MEMLOCK },
+#endif
+#ifdef RLIMIT_MSGQUEUE
+    { "msgqueue", RLIMIT_MSGQUEUE },
+#endif
+#ifdef RLIMIT_NICE
+    { "nice", RLIMIT_NICE },
+#endif
+#ifdef RLIMIT_NOFILE
+    { "nofile", RLIMIT_NOFILE },
+#endif
+#ifdef RLIMIT_NPROC
+    { "nproc", RLIMIT_NPROC },
+#endif
+#ifdef RLIMIT_RSS
+    { "rss", RLIMIT_RSS },
+#endif
+#ifdef RLIMIT_RTPRIO
+    { "rtprio", RLIMIT_RTPRIO },
+#endif
+#ifdef RLIMIT_RTTIME
+    { "rttime", RLIMIT_RTTIME },
+#endif
+#ifdef RLIMIT_SIGPENDING
+    { "sigpending", RLIMIT_SIGPENDING },
+#endif
+#ifdef RLIMIT_STACK
+    { "stack", RLIMIT_STACK },
+#endif
+    { NULL, 0 },
+};
+#endif /* HAVE_SYS_RESOURCE_H */
+
+
+/*
+ * util_setrlimit_resource: set resource limit
+ */
+
+#ifdef HAVE_SYS_RESOURCE_H
+void
+util_setrlimit_resource (const char *resource_name, long limit)
+{
+    int i;
+    struct rlimit rlim;
+    char str_limit[64];
+
+    if (!resource_name)
+        return;
+
+    if (limit == -1)
+        snprintf (str_limit, sizeof (str_limit), "unlimited");
+    else
+        snprintf (str_limit, sizeof (str_limit), "%ld", limit);
+
+    for (i = 0; rlimit_resource[i].name; i++)
+    {
+        if (strcmp (rlimit_resource[i].name, resource_name) == 0)
+        {
+            if (limit < -1)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: invalid limit for resource \"%s\": "
+                                   "%s (must be >= -1)"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 resource_name, str_limit);
+                return;
+            }
+            rlim.rlim_cur = (limit >= 0) ? (rlim_t)limit : RLIM_INFINITY;
+            rlim.rlim_max = rlim.rlim_cur;
+            if (setrlimit (rlimit_resource[i].resource, &rlim) == 0)
+            {
+                log_printf (_("Limit for resource \"%s\" has been set to %s"),
+                            resource_name, str_limit);
+                if (gui_init_ok)
+                {
+                    gui_chat_printf (NULL,
+                                     _("Limit for resource \"%s\" has been set "
+                                       "to %s"),
+                                     resource_name, str_limit);
+                }
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to set resource limit "
+                                   "\"%s\" to %s: error %d %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 resource_name, str_limit,
+                                 errno, strerror (errno));
+            }
+            return;
+        }
+    }
+
+    gui_chat_printf (NULL,
+                     _("%sError: unknown resource limit \"%s\" (see /help "
+                       "weechat.startup.sys_rlimit)"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     resource_name);
+}
+#endif
+
+/*
+ * util_setrlimit: set resource limits using value of option
+ *                 "weechat.startup.sys_rlimit"
+ */
+
+void
+util_setrlimit ()
+{
+#ifdef HAVE_SYS_RESOURCE_H
+    char **items, *pos, *error;
+    int num_items, i;
+    long number;
+
+    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",", 0, 0,
+                          &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], ':');
+            if (pos)
+            {
+                pos[0] = '\0';
+                error = NULL;
+                number = strtol (pos + 1, &error, 10);
+                if (error && !error[0])
+                {
+                    util_setrlimit_resource (items[i], number);
+                }
+                else
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sError: invalid limit for resource "
+                                       "\"%s\": %s (must be >= -1)"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     items[i], pos + 1);
+                }
+            }
+        }
+        string_free_split (items);
+    }
+#endif
+}
 
 /*
  * util_timeval_cmp: compare two timeval structures

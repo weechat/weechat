@@ -213,7 +213,15 @@ Si vous avez installé un paquet binaire, alors installez le paquet
 Fichiers core
 ^^^^^^^^^^^^^
 
-Pour activer les fichiers 'core', vous devez utiliser la commande `ulimit`.
+Pour activer les fichiers 'core', vous pouvez utiliser l'option
+<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
+
+----------------------------------------
+/set weechat.startup.sys_rlimit "core:-1"
+----------------------------------------
+
+Pour WeeChat ≤ 0.3.8 ou si vous voulez activer les fichiers core avant que
+WeeChat ne démarre, vous pouvez utiliser la commande `ulimit`.
 
 Par exemple sous Linux avec le shell 'bash', ajoutez cette ligne dans votre
 `~/.bashrc`:

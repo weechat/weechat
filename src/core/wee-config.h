@@ -102,6 +102,7 @@ extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
 extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;
+extern struct t_config_option *config_startup_sys_rlimit;
 
 extern struct t_config_option *config_look_align_end_of_lines;
 extern struct t_config_option *config_look_bar_more_left;

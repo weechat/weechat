@@ -76,6 +76,7 @@ struct t_config_option *config_startup_command_after_plugins;
 struct t_config_option *config_startup_command_before_plugins;
 struct t_config_option *config_startup_display_logo;
 struct t_config_option *config_startup_display_version;
+struct t_config_option *config_startup_sys_rlimit;
 
 /* config, look & feel section */
 
@@ -259,6 +260,21 @@ int config_num_highlight_tags = 0;
 char **config_plugin_extensions = NULL;
 int config_num_plugin_extensions = 0;
 
+
+/*
+ * config_change_sys_rlimit: called when the system resource limits is changed
+ */
+
+void
+config_change_sys_rlimit (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (gui_init_ok)
+        util_setrlimit ();
+}
 
 /*
  * config_change_save_config_on_exit: called when "save_config_on_exit" flag is changed
@@ -746,6 +762,8 @@ void
 config_weechat_init_after_read ()
 {
     int i;
+
+    util_setrlimit ();
 
     gui_buffer_notify_set_all ();
 
@@ -1729,6 +1747,16 @@ config_weechat_init_options ()
         "display_version", "boolean",
         N_("display WeeChat version at startup"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_startup_sys_rlimit = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sys_rlimit", "string",
+        N_("set resource limits for WeeChat process, format is: "
+           "\"res1:limit1,res2:limit2\"; resource name is the end of constant "
+           "(RLIMIT_XXX) in lower case (see man setrlimit for values); limit "
+           "-1 means \"unlimited\"; example: set unlimited size for core file "
+           "and max 1GB of virtual memory: \"core:-1,as:1000000000\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &config_change_sys_rlimit, NULL, NULL, NULL);
 
     /* look */
     ptr_section = config_file_new_section (weechat_config_file, "look",

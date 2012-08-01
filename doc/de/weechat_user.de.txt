@@ -207,7 +207,17 @@ Wird ein Binärpaket genutzt dann muss zusätzlich das Paket 'weechat-dbg' insta
 Core Dateien
 ^^^^^^^^^^^^
 
-Um 'core' Dateien zu aktivieren muss der `ulimit` Befehl genutzt werden.
+// TRANSLATION MISSING
+To enable 'core' files, you can use option
+<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
+
+----------------------------------------
+/set weechat.startup.sys_rlimit "core:-1"
+----------------------------------------
+
+// TRANSLATION MISSING
+For WeeChat ≤ 0.3.8 or if you want to enable core files even before WeeChat
+starts, you can use `ulimit` command.
 
 Zum Beispiel muss unter Linux in einer 'bash' Shell folgender Befehl in die `~/.bashrc`
 Datei eingetragen werden:

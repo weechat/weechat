@@ -823,3 +823,8 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
+** description: `définir les limites de ressource pour le processus WeeChat, le format est: "res1:limite1,res2:limite2"; le nom de ressource est la fin de la constante (RLIMIT_XXX) en minuscules (voir man setrlimit pour les valeurs); une limite de -1 siginifie "illimitée"; exemple: définir une taille illimitée pour le fichier core et max 1 Go de mémoire virtuelle: "core:-1,as:1000000000"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+

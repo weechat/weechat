@@ -20,6 +20,15 @@
 #ifndef __WEECHAT_UTIL_H
 #define __WEECHAT_UTIL_H 1
 
+#ifdef HAVE_SYS_RESOURCE_H
+struct t_rlimit_resource
+{
+    char *name;                        /* name of resource                  */
+    int resource;                      /* value of resource                 */
+};
+#endif /* HAVE_SYS_RESOURCE_H */
+
+extern void util_setrlimit ();
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long interval);

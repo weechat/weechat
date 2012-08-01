@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-30
+v0.3.9-dev, 2012-08-01
 
 
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: add option weechat.startup.sys_rlimit to set system resource limits for
+  WeeChat process
 * core: add option "swap" for command /buffer (task #11373)
 * core: fix names of cache variables in configure.in (bug #36971)
 * core: scroll to bottom of window after reaching first or last highlight with
