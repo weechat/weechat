@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 08:54+0200\n"
+"POT-Creation-Date: 2012-08-02 22:48+0200\n"
 "PO-Revision-Date: 2012-07-22 23:37+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4343,8 +4343,8 @@ msgstr "%s%s: Fehler: ungültiger Text von Pipe empfangen"
 msgid "%s%s: error, buffer not found for pipe data"
 msgstr "%s%s: Fehler: Buffer für PIPE-Daten nicht gefunden"
 
-#, c-format
-msgid "%s%s: error reading pipe, closing it"
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr ""
 "%s%s: Fehler beim Lesen der Pipe. Pipe wird aufgrund des Fehlers geschlossen"
 

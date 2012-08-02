@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 08:54+0200\n"
+"POT-Creation-Date: 2012-08-02 22:48+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4012,9 +4012,9 @@ msgstr ""
 msgid "%s%s: error, buffer not found for pipe data"
 msgstr ""
 
-#, c-format
-msgid "%s%s: error reading pipe, closing it"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s%s: erro ao enviar dados ao cliente: %s"
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
@@ -8272,9 +8272,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"
 #~ msgstr "%s%s: erro ao enviar dados ao cliente %d (%s)"
-
-#~ msgid "%s%s: error sending data to client: %s"
-#~ msgstr "%s%s: erro ao enviar dados ao cliente: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "exibir modos do canal no item da barra \"buffer_name\""

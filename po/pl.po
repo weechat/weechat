@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 08:54+0200\n"
+"POT-Creation-Date: 2012-08-02 22:48+0200\n"
 "PO-Revision-Date: 2012-07-27 12:16+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4149,8 +4149,8 @@ msgstr "%s%s: błąd, otrzymano niewłaściwy tekst ze strumienia"
 msgid "%s%s: error, buffer not found for pipe data"
 msgstr "%s%s: błąd, nie znaleziono buforu dla danych ze strumienia"
 
-#, c-format
-msgid "%s%s: error reading pipe, closing it"
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: błąd odczytu ze strumienia, zamykam go"
 
 #, c-format

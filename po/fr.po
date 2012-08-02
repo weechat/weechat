@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 08:54+0200\n"
-"PO-Revision-Date: 2012-08-02 08:55+0200\n"
+"POT-Creation-Date: 2012-08-02 22:48+0200\n"
+"PO-Revision-Date: 2012-08-02 22:50+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -4225,8 +4225,8 @@ msgid "%s%s: error, buffer not found for pipe data"
 msgstr "%s%s: erreur, tampon non trouvé pour les données du tube"
 
 #, c-format
-msgid "%s%s: error reading pipe, closing it"
-msgstr "%s%s: erreur en lecture du tube, fermeture"
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s%s: erreur en lecture du tube (%d %s), fermeture"
 
 #, c-format
 msgid "%s%s: error opening file, closing it"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 08:54+0200\n"
+"POT-Creation-Date: 2012-08-02 22:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3184,7 +3184,7 @@ msgid "%s%s: error, buffer not found for pipe data"
 msgstr ""
 
 #, c-format
-msgid "%s%s: error reading pipe, closing it"
+msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr ""
 
 #, c-format

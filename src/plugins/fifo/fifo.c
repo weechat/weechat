@@ -30,6 +30,7 @@
 #include <dirent.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #include "../weechat-plugin.h"
 #include "fifo.h"
@@ -369,9 +370,13 @@ fifo_read ()
     {
         if (num_read < 0)
         {
+            if (errno == EAGAIN)
+                return WEECHAT_RC_OK;
+
             weechat_printf (NULL,
-                            _("%s%s: error reading pipe, closing it"),
-                            weechat_prefix ("error"), FIFO_PLUGIN_NAME);
+                            _("%s%s: error reading pipe (%d %s), closing it"),
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME,
+                            errno, strerror (errno));
             fifo_remove ();
         }
         else
