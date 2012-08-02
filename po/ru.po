@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-01 08:57+0200\n"
+"POT-Creation-Date: 2012-08-02 08:54+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3189,6 +3189,10 @@ msgstr ""
 msgid "Debug disabled for mouse"
 msgstr ""
 
+#, fuzzy
+msgid "Alias commands"
+msgstr "Внутренние команды %s:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
@@ -3305,6 +3309,9 @@ msgid "alias pointer (optional)"
 msgstr "настроить параметры конфигурации"
 
 msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -3450,6 +3457,10 @@ msgstr ""
 msgid "%s%s: not enough memory to create new speller"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
+#, fuzzy
+msgid "Charset conversions"
+msgstr "слоган WeeChat"
+
 #, c-format
 msgid ""
 "%s%s: UTF-8 is not allowed in charset options (it is internal and default "
@@ -3496,6 +3507,10 @@ msgid ""
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
 msgstr ""
+
+#, fuzzy
+msgid "Demo plugin"
+msgstr "  (нет pluginа)\n"
 
 msgid "demo message without prefix"
 msgstr ""
@@ -3580,6 +3595,10 @@ msgid ""
 "Without argument, this command displays list of available infolists"
 msgstr ""
 
+#, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
+
 #, fuzzy, c-format
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -3623,6 +3642,9 @@ msgid "away"
 msgstr ""
 
 msgid "Lag"
+msgstr ""
+
+msgid "IRC (Internet Relay Chat) protocol"
 msgstr ""
 
 #, c-format
@@ -6459,6 +6481,10 @@ msgstr "Отключен от сервера!\n"
 msgid "%s: disconnected from server"
 msgstr "Отключен от сервера!\n"
 
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "перезагрузить конфигурационный файл сервера"
+
 #, c-format
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
@@ -6967,6 +6993,9 @@ msgstr ""
 msgid "List of clients for relay"
 msgstr ""
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -7276,6 +7305,10 @@ msgid ""
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 
+#, fuzzy
+msgid "String modifier with regular expressions"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -7387,6 +7420,9 @@ msgstr ""
 msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
 msgstr ""
@@ -7425,6 +7461,10 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "Список сокращений:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
@@ -7448,6 +7488,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "Список сокращений:\n"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -7481,6 +7525,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 msgid "%s%s: unable to initialize %s"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
 
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "Список сокращений:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to initialize WeeChat module"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
@@ -7507,6 +7555,10 @@ msgstr "%s не могу создать сервер\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to free interpreter"
 msgstr "%s не могу создать сервер\n"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
 msgid "%s%s: stdout/stderr: %s%s"
@@ -7644,6 +7696,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy
+msgid "Support of tcl scripts"
+msgstr "Список сокращений:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
@@ -7671,6 +7727,10 @@ msgstr "осталось"
 #, fuzzy
 msgid "Xfer list"
 msgstr "очистить хотлист"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "начинает DCC (передачу файла или чат) или закрывает чат"
 
 #, fuzzy
 msgid "waiting"
@@ -8071,6 +8131,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Regex modifier"
+#~ msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy
 #~ msgid "smart completion for nicks (completes first with last speakers)"

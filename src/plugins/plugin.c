@@ -1258,6 +1258,10 @@ plugin_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "description", plugin->description))
         return 0;
+    if (!infolist_new_var_string (ptr_item, "description_nls",
+                                  (plugin->description && plugin->description[0]) ?
+                                  _(plugin->description) : ""))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "author", plugin->author))
         return 0;
     if (!infolist_new_var_string (ptr_item, "version", plugin->version))

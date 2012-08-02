@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-01 08:57+0200\n"
+"POT-Creation-Date: 2012-08-02 08:54+0200\n"
 "PO-Revision-Date: 2012-07-27 12:16+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3582,6 +3582,10 @@ msgstr "マウス (%s) のデバッグを有効化"
 msgid "Debug disabled for mouse"
 msgstr "マウスのデバッグを無効化"
 
+#, fuzzy
+msgid "Alias commands"
+msgstr "weechat コマンド"
+
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: エラー、別名 \"%s\" の呼び出し中に循環参照を検知"
@@ -3714,6 +3718,9 @@ msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "別名の名前 (ワイルドカードとして \"*\" で始めるか終わるかできます) (オプショ"
 "ン)"
+
+msgid "Spell checker for input (with Aspell)"
+msgstr ""
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -3880,6 +3887,10 @@ msgstr "%s: 警告: 辞書 \"%s\" がこのシステム上では利用できま�
 msgid "%s%s: not enough memory to create new speller"
 msgstr "%s%s: 新しい speller を作る十分なメモリがありません"
 
+#, fuzzy
+msgid "Charset conversions"
+msgstr "WeeChat のバージョン"
+
 #, c-format
 msgid ""
 "%s%s: UTF-8 is not allowed in charset options (it is internal and default "
@@ -3929,6 +3940,10 @@ msgstr ""
 " encode: エンコード文字集合を変更\n"
 "charset: 現在のバッファの新しい文字集合\n"
 "  reset: 現在のバッファの文字集合をリセット"
+
+#, fuzzy
+msgid "Demo plugin"
+msgstr "プラグイン"
 
 msgid "demo message without prefix"
 msgstr "プレフィックス無しのデモメッセージ"
@@ -4013,6 +4028,10 @@ msgstr ""
 "\n"
 "引数のない場合、利用可能な infolist のリストを表示"
 
+#, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s%s: リモート操作用のパイプを作成できません (%s)"
+
 #, c-format
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: 古い fifo パイプ \"%s\" の削除中"
@@ -4057,6 +4076,9 @@ msgstr "離席"
 
 msgid "Lag"
 msgstr "遅延時間"
+
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -6962,6 +6984,10 @@ msgstr "%s%s: サーバから切断"
 msgid "%s: disconnected from server"
 msgstr "%s: サーバから切断"
 
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "設定ファイル"
+
 #, c-format
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
@@ -7477,6 +7503,9 @@ msgstr ""
 msgid "List of clients for relay"
 msgstr "中継するクライアントのリスト"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -7807,6 +7836,10 @@ msgstr ""
 "%s%s: クライアント %d から受け付けたコマンド \"%s\" に対する引数が足りません "
 "(受信: %d 個の引数、必要: 少なくとも %d 個)"
 
+#, fuzzy
+msgid "String modifier with regular expressions"
+msgstr "正規表現で modifier 文字列を変更"
+
 #, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
 msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
@@ -7936,6 +7969,9 @@ msgstr ""
 msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されました"
 
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
 msgstr "%s: 標準出力/標準エラー: %s%s"
@@ -7974,6 +8010,10 @@ msgstr "%s%s: スクリプト \"%s\" はロードされていません"
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s%s: コマンド \"%s\" のオプションが未定義です"
 
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "スクリプトのリスト"
+
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: 関数 \"%s\" を実行できません"
@@ -7997,6 +8037,10 @@ msgstr "%s%s: ファイル \"%s\" をロードできません"
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "スクリプトのリスト"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -8030,6 +8074,10 @@ msgstr "%s%s: ファイル \"%s\" のロード中の未定義のエラー"
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: %s の初期化に失敗"
 
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "スクリプトのリスト"
+
 #, c-format
 msgid "%s%s: unable to initialize WeeChat module"
 msgstr "%s%s: WeeChat モジュールを初期化に失敗"
@@ -8056,6 +8104,10 @@ msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
 #, c-format
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: インタプリタの開放に失敗"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "スクリプトのリスト"
 
 #, c-format
 msgid "%s%s: stdout/stderr: %s%s"
@@ -8197,6 +8249,10 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
 
+#, fuzzy
+msgid "Support of tcl scripts"
+msgstr "スクリプトのリスト"
+
 #, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "%s%s: 関数 \"%s\" を実行できません: %s"
@@ -8223,6 +8279,10 @@ msgstr "ETA"
 
 msgid "Xfer list"
 msgstr "Xfer リスト"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "DCC の開始 (ファイル転送かダイレクトチャット)"
 
 msgid "waiting"
 msgstr "待ち状態"
@@ -8606,6 +8666,10 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "Regex modifier"
+#~ msgstr "デフォルトの rmodifier:"
 
 #~ msgid "smart completion for nicks (completes first with last speakers)"
 #~ msgstr "ニックネームのスマート補完 (最新の会話から優先して補完)"

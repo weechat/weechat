@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-01 08:57+0200\n"
+"POT-Creation-Date: 2012-08-02 08:54+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3158,6 +3158,10 @@ msgstr ""
 msgid "Debug disabled for mouse"
 msgstr ""
 
+#, fuzzy
+msgid "Alias commands"
+msgstr "%s belső parancsok:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
@@ -3275,6 +3279,9 @@ msgid "alias pointer (optional)"
 msgstr "konfigurációs paraméterek beállítása"
 
 msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -3420,6 +3427,10 @@ msgstr ""
 msgid "%s%s: not enough memory to create new speller"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
+#, fuzzy
+msgid "Charset conversions"
+msgstr "WeeChat szlogen"
+
 #, c-format
 msgid ""
 "%s%s: UTF-8 is not allowed in charset options (it is internal and default "
@@ -3466,6 +3477,10 @@ msgid ""
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
 msgstr ""
+
+#, fuzzy
+msgid "Demo plugin"
+msgstr "  (nem található bővítőmodul)\n"
 
 msgid "demo message without prefix"
 msgstr ""
@@ -3550,6 +3565,10 @@ msgid ""
 "Without argument, this command displays list of available infolists"
 msgstr ""
 
+#, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
+
 #, fuzzy, c-format
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -3593,6 +3612,9 @@ msgid "away"
 msgstr ""
 
 msgid "Lag"
+msgstr ""
+
+msgid "IRC (Internet Relay Chat) protocol"
 msgstr ""
 
 #, c-format
@@ -6434,6 +6456,10 @@ msgstr "Lekapcsolódott a szerverről!\n"
 msgid "%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
 #, c-format
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
@@ -6944,6 +6970,9 @@ msgstr ""
 msgid "List of clients for relay"
 msgstr ""
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -7252,6 +7281,10 @@ msgid ""
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
 
+#, fuzzy
+msgid "String modifier with regular expressions"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -7364,6 +7397,9 @@ msgstr ""
 msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
 msgstr ""
@@ -7402,6 +7438,10 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
@@ -7425,6 +7465,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "Aliaszok listája:\n"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -7458,6 +7502,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgid "%s%s: unable to initialize %s"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to initialize WeeChat module"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
@@ -7484,6 +7532,10 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to free interpreter"
 msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
 msgid "%s%s: stdout/stderr: %s%s"
@@ -7621,6 +7673,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, fuzzy
+msgid "Support of tcl scripts"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
@@ -7648,6 +7704,10 @@ msgstr "ETA"
 #, fuzzy
 msgid "Xfer list"
 msgstr "hotlist törlése"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
 
 #, fuzzy
 msgid "waiting"
@@ -8052,6 +8112,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Regex modifier"
+#~ msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
 #, fuzzy
 #~ msgid "smart completion for nicks (completes first with last speakers)"

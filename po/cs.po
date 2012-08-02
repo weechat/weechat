@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-01 08:57+0200\n"
+"POT-Creation-Date: 2012-08-02 08:54+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3498,6 +3498,10 @@ msgstr "Ladění vypnuto pro \"%s\""
 msgid "Debug disabled for mouse"
 msgstr "Ladění vypnuto pro \"%s\""
 
+#, fuzzy
+msgid "Alias commands"
+msgstr "příkazy weechat"
+
 #, c-format
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
@@ -3628,6 +3632,9 @@ msgstr "ukazatel aliasu (volitelné)"
 msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "jméno aliasu (může začínat nebo končit \"*\" jako zástupný znak) (volitelné)"
+
+msgid "Spell checker for input (with Aspell)"
+msgstr ""
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -3791,6 +3798,10 @@ msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
 msgid "%s%s: not enough memory to create new speller"
 msgstr "%s%s: nedostatek paměti pro vytvoření kontroly pravopisu"
 
+#, fuzzy
+msgid "Charset conversions"
+msgstr "verze WeeChat"
+
 #, c-format
 msgid ""
 "%s%s: UTF-8 is not allowed in charset options (it is internal and default "
@@ -3840,6 +3851,10 @@ msgstr ""
 " encode: změní kódovací znakovou sadu\n"
 "charset: nová znaková sada pro aktuální buffer\n"
 "  reset: resetovat znakové sady aktuálního bufferu"
+
+#, fuzzy
+msgid "Demo plugin"
+msgstr "Plugin"
 
 msgid "demo message without prefix"
 msgstr "demo zpráva bez prefixu"
@@ -3924,6 +3939,10 @@ msgstr ""
 "\n"
 "Spuštění příkazu bez argumetů zobrazí seznam dostupných infolistů"
 
+#, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
+
 #, c-format
 msgid "%s: removing old fifo pipe \"%s\""
 msgstr "%s: odstraňuji starou fifo rouru \"%s\""
@@ -3968,6 +3987,9 @@ msgstr "pryč"
 
 msgid "Lag"
 msgstr "Lag"
+
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -6883,6 +6905,10 @@ msgstr "%s%s: odpojen od serveru"
 msgid "%s: disconnected from server"
 msgstr "%s: odpojen od serveru"
 
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "konfigurační soubory"
+
 #, c-format
 msgid ""
 "%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
@@ -7424,6 +7450,9 @@ msgstr ""
 msgid "List of clients for relay"
 msgstr "Seznam klientů pro přenos"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
@@ -7752,6 +7781,10 @@ msgstr ""
 "%s%s: přijato příliš málo argumentů od IRC serveru pro příkaz \"%s"
 "\" (obdrženo: %d argumentů, očekáváno: alespoň %d)"
 
+#, fuzzy
+msgid "String modifier with regular expressions"
+msgstr "změnit řetězce modifikátorů pomocí regulárních výrazů"
+
 #, c-format
 msgid "%s%s: error compiling regular expression \"%s\""
 msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
@@ -7883,6 +7916,9 @@ msgstr ""
 msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
 
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
 #, c-format
 msgid "%s: stdout/stderr: %s%s"
 msgstr "%s: stdout/stderr: %s%s"
@@ -7920,6 +7956,10 @@ msgstr "%s%s: skript \"%s\" nenačten"
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s%s: neznámá volba pro příkaz \"%s\""
 
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "seznam skriptů"
+
 #, c-format
 msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: nemůžu spustit funkci \"%s\""
@@ -7943,6 +7983,10 @@ msgstr "%s%s: nemůžu načíst soubor \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "seznam skriptů"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return one valid value (%d)"
@@ -7976,6 +8020,10 @@ msgstr "%s%s: neznámá chyba při načítání souboru \"%s\""
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: nemohu inicializovat %s"
 
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "seznam skriptů"
+
 #, c-format
 msgid "%s%s: unable to initialize WeeChat module"
 msgstr "%s%s: nemohu inicialiyovat modul WeeChat"
@@ -8002,6 +8050,10 @@ msgstr "%s%s: nemohu získat aktuální status interpretru"
 #, c-format
 msgid "%s%s: unable to free interpreter"
 msgstr "%s%s: nemohu uvolnit interpreter"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "seznam skriptů"
 
 #, c-format
 msgid "%s%s: stdout/stderr: %s%s"
@@ -8141,6 +8193,10 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
 
+#, fuzzy
+msgid "Support of tcl scripts"
+msgstr "seznam skriptů"
+
 #, c-format
 msgid "%s%s: unable to run function \"%s\": %s"
 msgstr "%s%s: nemůžu spustit funkci \"%s\": %s"
@@ -8167,6 +8223,10 @@ msgstr "ETA"
 
 msgid "Xfer list"
 msgstr "seznam Xfer"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "spustit DCC (přenos souboru nebo rozhovor)"
 
 msgid "waiting"
 msgstr "čekám"
@@ -8552,6 +8612,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Regex modifier"
+#~ msgstr "Výchozí rmodifikátory:"
 
 #~ msgid "smart completion for nicks (completes first with last speakers)"
 #~ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"

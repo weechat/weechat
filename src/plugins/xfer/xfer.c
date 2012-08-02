@@ -45,8 +45,7 @@
 
 
 WEECHAT_PLUGIN_NAME(XFER_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION("Xfer (file transfer and direct chat) plugin for "
-                           "WeeChat");
+WEECHAT_PLUGIN_DESCRIPTION(N_("DCC file transfer and direct chat"));
 WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);

@@ -3383,7 +3383,7 @@ command_plugin_list (const char *name, int full)
                                  ptr_plugin->version,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT),
-                                 ptr_plugin->description,
+                                 (ptr_plugin->description && ptr_plugin->description[0]) ? _(ptr_plugin->description) : "",
                                  ptr_plugin->filename);
 
                 /* second line of plugin info */
@@ -3626,7 +3626,7 @@ command_plugin_list (const char *name, int full)
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_plugin->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
-                                 ptr_plugin->description);
+                                 (ptr_plugin->description && ptr_plugin->description[0]) ? _(ptr_plugin->description) : "");
             }
         }
     }

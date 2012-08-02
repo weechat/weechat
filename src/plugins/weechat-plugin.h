@@ -911,11 +911,15 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #ifndef __WEECHAT_H
 #ifndef _
 #define _(string) weechat_plugin->gettext(string)
+#endif /* _ */
+#ifndef N_
 #define N_(string) (string)
+#endif /* N_ */
+#ifndef NG_
 #define NG_(single,plural,number)                                       \
     weechat_plugin->ngettext(single, plural, number)
-#endif
-#endif
+#endif /* NG_ */
+#endif /* __WEECHAT_H */
 #define weechat_gettext(string) weechat_plugin->gettext(string)
 #define weechat_ngettext(single,plural,number)                          \
     weechat_plugin->ngettext(single, plural, number)
