@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_CALLBACK_H
-#define __WEECHAT_SCRIPT_CALLBACK_H 1
+#ifndef __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H
+#define __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H 1
 
 struct t_script_callback
 {
@@ -36,13 +36,13 @@ struct t_script_callback
     struct t_script_callback *next_callback; /* link to previous callback   */
 };
 
-extern struct t_script_callback *script_callback_add (struct t_plugin_script *script,
-                                                      const char *function,
-                                                      const char *data);
-extern void script_callback_remove (struct t_plugin_script *script,
-                                    struct t_script_callback *script_callback);
-extern void script_callback_remove_all (struct t_plugin_script *script);
-extern void script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
-                                       struct t_script_callback *script_callback);
+extern struct t_script_callback *plugin_script_callback_add (struct t_plugin_script *script,
+                                                             const char *function,
+                                                             const char *data);
+extern void plugin_script_callback_remove (struct t_plugin_script *script,
+                                           struct t_script_callback *script_callback);
+extern void plugin_script_callback_remove_all (struct t_plugin_script *script);
+extern void plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
+                                              struct t_script_callback *script_callback);
 
-#endif /* __WEECHAT_SCRIPT_CALLBACK_H */
+#endif /* __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H */

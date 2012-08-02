@@ -62,13 +62,12 @@ The main WeeChat directories are:
 |       logger/    | Logger plugin (write messages displayed to files)
 |       relay/     | Relay plugin (irc proxy + relay for remote interfaces)
 |       rmodifier/ | Rmodifier plugin (alter modifier strings with regular expressions)
-|       scripts/   | Script plugins
-|          python/ | Python scripting API
-|          perl/   | Perl scripting API
-|          ruby/   | Ruby scripting API
-|          lua/    | Lua scripting API
-|          tcl/    | Tcl scripting API
-|          guile/  | Guile (scheme) scripting API
+|       python/    | Python scripting API
+|       perl/      | Perl scripting API
+|       ruby/      | Ruby scripting API
+|       lua/       | Lua scripting API
+|       tcl/       | Tcl scripting API
+|       guile/     | Guile (scheme) scripting API
 |       xfer/      | Xfer (IRC DCC file/chat)
 | doc/             | Documentation
 | po/              | Translations files (gettext)
@@ -165,6 +164,9 @@ Plugins
 |    plugin.c                       | Plugins management (load/unload dynamic C libraries)
 |    plugin-api.c                   | Extra functions for plugin API (wrapper around WeeChat core functions)
 |    plugin-config.c                | Plugin configuration options (file plugins.conf)
+|    plugin-script.c                | Common functions used by script plugins
+|    plugin-script-api.c            | Script API functions: wrappers around some plugin API functions
+|    plugin-script-callback.c       | Callback management for scripts
 |    weechat-plugin.h               | Header designed to be distributed with WeeChat plugins, in order to compile them
 |    alias/                         | Alias plugin
 |       alias.c                     | Main alias functions
@@ -181,6 +183,9 @@ Plugins
 |    fifo/                          | Fifo plugin
 |       fifo.c                      | Main fifo functions
 |       fifo-info.c                 | Info and infolists from fifo plugin
+|    guile/                         | Guile (scheme) plugin
+|       weechat-guile.c             | Main guile functions (load/unload scripts, execute guile code)
+|       weechat-guile-api.c         | Guile scripting API functions
 |    irc/                           | IRC (Internet Relay Chat) plugin
 |       irc.c                       | Main IRC functions
 |       irc-bar-item.c              | IRC bar items
@@ -213,6 +218,15 @@ Plugins
 |       logger-config.c             | Logger config options
 |       logger-info.c               | Info and infolists from logger plugin
 |       logger-tail.c               | Return last lines of a file
+|    lua/                           | Lua plugin
+|       weechat-lua.c               | Main lua functions (load/unload scripts, execute lua code)
+|       weechat-lua-api.c           | Lua scripting API functions
+|    perl/                          | Perl plugin
+|       weechat-perl.c              | Main perl functions (load/unload scripts, execute perl code)
+|       weechat-perl-api.c          | Perl scripting API functions
+|    python/                        | Python plugin
+|       weechat-python.c            | Main python functions (load/unload scripts, execute python code)
+|       weechat-python-api.c        | Python scripting API functions
 |    relay/                         | Relay plugin (IRC proxy and relay for remote interfaces)
 |       relay.c                     | Main relay functions
 |       relay-buffer.c              | Relay buffer
@@ -238,28 +252,12 @@ Plugins
 |       rmodifier-config.c          | Rmodifier config options
 |       rmodifier-debug.c           | Rmodifier debug functions
 |       rmodifier-info.c            | Info and infolists from rmodifier plugin
-|    scripts/                       | Scripting API
-|       script.c                    | Common functions used by script plugins
-|       script-api.c                | Script API functions: wrappers around some plugin API functions
-|       script-callback.c           | Callback management for scripts
-|       python/                     | Python plugin
-|          weechat-python.c         | Main python functions (load/unload scripts, execute python code)
-|          weechat-python-api.c     | Python scripting API functions
-|       perl/                       | Perl plugin
-|          weechat-perl.c           | Main perl functions (load/unload scripts, execute perl code)
-|          weechat-perl-api.c       | Perl scripting API functions
-|       ruby/                       | Ruby plugin
-|          weechat-ruby.c           | Main ruby functions (load/unload scripts, execute ruby code)
-|          weechat-ruby-api.c       | Ruby scripting API functions
-|       lua/                        | Lua plugin
-|          weechat-lua.c            | Main lua functions (load/unload scripts, execute lua code)
-|          weechat-lua-api.c        | Lua scripting API functions
-|       tcl/                        | Tcl plugin
-|          weechat-tcl.c            | Main tcl functions (load/unload scripts, execute tcl code)
-|          weechat-tcl-api.c        | Tcl scripting API functions
-|       guile/                      | Guile (scheme) plugin
-|          weechat-guile.c          | Main guile functions (load/unload scripts, execute guile code)
-|          weechat-guile-api.c      | Guile scripting API functions
+|    ruby/                          | Ruby plugin
+|       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code)
+|       weechat-ruby-api.c          | Ruby scripting API functions
+|    tcl/                           | Tcl plugin
+|       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code)
+|       weechat-tcl-api.c           | Tcl scripting API functions
 |    xfer/                          | Xfer plugin (IRC DCC file/chat)
 |       xfer.c                      | Main xfer functions
 |       xfer-buffer.c               | Xfer buffer
@@ -587,14 +585,13 @@ Examples:
 
 [width="100%",cols="1l,5",options="header"]
 |========================================
-| Directory                   | Files
-| src/core/                   | weechat.c, wee-backtrace.c, wee-command.c, ...
-| src/gui/                    | gui-bar.c, gui-bar-item.c, gui-bar-window.c, ...
-| src/gui/curses/             | gui-curses-bar.c, gui-curses-bar-window.c, gui-curses-chat.c, ...
-| src/plugins/                | plugin.c, plugin-api.c, plugin-config.c, ...
-| src/plugins/irc/            | irc.c, irc-bar-item.c, irc-buffer.c, ...
-| src/plugins/scripts/        | script.c, script-api.c, script-callback.c, ...
-| src/plugins/scripts/python/ | weechat-python.c, weechat-python-api.c, ...
+| Directory           | Files
+| src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
+| src/gui/            | gui-bar.c, gui-bar-item.c, gui-bar-window.c, ...
+| src/gui/curses/     | gui-curses-bar.c, gui-curses-bar-window.c, gui-curses-chat.c, ...
+| src/plugins/        | plugin.c, plugin-api.c, plugin-config.c, plugin-script.c, ...
+| src/plugins/irc/    | irc.c, irc-bar-item.c, irc-buffer.c, ...
+| src/plugins/python/ | weechat-python.c, weechat-python-api.c, ...
 |========================================
 
 The headers of C files have same name as file, for example 'wee-command.h' for
@@ -992,7 +989,7 @@ $ msg_check_lines.py xx.po
 The `msgfmt` will perform checks on message catalog and display errors, like bad
 use of format specifiers in strings.
 
-The scripts msg_check_lines.py (http://www.weechat.org/files/temp/po/msg_check_lines.py)
+The script msg_check_lines.py (http://www.weechat.org/files/temp/po/msg_check_lines.py)
 will check number of lines in translated strings (which must be the same as
 string in english).
 

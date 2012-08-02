@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
-# Copyright (C) 2006-2012 Sebastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -18,18 +17,15 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(lua MODULE weechat-lua.c weechat-lua.h weechat-lua-api.c
-weechat-lua-api.h)
+ADD_LIBRARY(guile MODULE weechat-guile.c weechat-guile.h
+weechat-guile-api.c weechat-guile-api.h)
 
-SET_TARGET_PROPERTIES(lua PROPERTIES PREFIX "")
+SET_TARGET_PROPERTIES(guile PROPERTIES PREFIX "")
 
-IF(LUA_FOUND)
-  INCLUDE_DIRECTORIES(${LUA_INCLUDE_PATH} )
-  IF(LUA_LIBRARY AND LUALIB_LIBRARY)
-    TARGET_LINK_LIBRARIES(lua ${LUA_LIBRARY} ${LUALIB_LIBRARY} weechat_scripts)
-  ELSE(LUA_LIBRARY AND LUALIB_LIBRARY)
-    TARGET_LINK_LIBRARIES(lua ${LUA_LIBRARY} weechat_scripts)
-  ENDIF(LUA_LIBRARY AND LUALIB_LIBRARY)
-ENDIF(LUA_FOUND)
+IF(GUILE_FOUND)
+  INCLUDE_DIRECTORIES(${GUILE_INCLUDE_DIRS})
+  SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${GUILE_LFLAGS}")
+  TARGET_LINK_LIBRARIES(guile ${GUILE_LIBRARY} weechat_plugins_scripts)
+ENDIF(GUILE_FOUND)
 
-INSTALL(TARGETS lua LIBRARY DESTINATION ${LIBDIR}/plugins)
+INSTALL(TARGETS guile LIBRARY DESTINATION ${LIBDIR}/plugins)

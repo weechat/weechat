@@ -25,17 +25,17 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "../weechat-plugin.h"
-#include "script.h"
-#include "script-callback.h"
+#include "weechat-plugin.h"
+#include "plugin-script.h"
+#include "plugin-script-callback.h"
 
 
 /*
- * script_callback_alloc: allocate a new callback and initializes it
+ * plugin_script_callback_alloc: allocate a new callback and initializes it
  */
 
 struct t_script_callback *
-script_callback_alloc ()
+plugin_script_callback_alloc ()
 {
     struct t_script_callback *new_script_callback;
 
@@ -59,21 +59,21 @@ script_callback_alloc ()
 }
 
 /*
- * script_callback_add: allocate a new callback, initialize it
- *                      (script/function/data) and add it to list
- *                      return pointer to new callback or NULL if error
+ * plugin_script_callback_add: allocate a new callback, initialize it
+ *                             (script/function/data) and add it to list
+ *                             return pointer to new callback or NULL if error
  */
 
 struct t_script_callback *
-script_callback_add (struct t_plugin_script *script,
-                     const char *function,
-                     const char *data)
+plugin_script_callback_add (struct t_plugin_script *script,
+                            const char *function,
+                            const char *data)
 {
     struct t_script_callback *script_cb;
     if (!script)
         return NULL;
 
-    script_cb = script_callback_alloc ();
+    script_cb = plugin_script_callback_alloc ();
     if (!script_cb)
         return NULL;
 
@@ -93,11 +93,11 @@ script_callback_add (struct t_plugin_script *script,
 }
 
 /*
- * script_callback_free_data: free data of a script callback
+ * plugin_script_callback_free_data: free data of a script callback
  */
 
 void
-script_callback_free_data (struct t_script_callback *script_callback)
+plugin_script_callback_free_data (struct t_script_callback *script_callback)
 {
     if (script_callback->function)
         free (script_callback->function);
@@ -106,12 +106,12 @@ script_callback_free_data (struct t_script_callback *script_callback)
 }
 
 /*
- * script_callback_remove: remove a callback from a script
+ * plugin_script_callback_remove: remove a callback from a script
  */
 
 void
-script_callback_remove (struct t_plugin_script *script,
-                        struct t_script_callback *script_callback)
+plugin_script_callback_remove (struct t_plugin_script *script,
+                               struct t_script_callback *script_callback)
 {
     /* remove callback from list */
     if (script_callback->prev_callback)
@@ -123,31 +123,31 @@ script_callback_remove (struct t_plugin_script *script,
     if (script->callbacks == script_callback)
         script->callbacks = script_callback->next_callback;
 
-    script_callback_free_data (script_callback);
+    plugin_script_callback_free_data (script_callback);
 
     free (script_callback);
 }
 
 /*
- * script_callback_remove_all: remove all callbacks from a script
+ * plugin_script_callback_remove_all: remove all callbacks from a script
  */
 
 void
-script_callback_remove_all (struct t_plugin_script *script)
+plugin_script_callback_remove_all (struct t_plugin_script *script)
 {
     while (script->callbacks)
     {
-        script_callback_remove (script, script->callbacks);
+        plugin_script_callback_remove (script, script->callbacks);
     }
 }
 
 /*
- * script_callback_print_log: print callback infos in log (usually for crash dump)
+ * plugin_script_callback_print_log: print callback infos in log (usually for crash dump)
  */
 
 void
-script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
-                           struct t_script_callback *script_callback)
+plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
+                                  struct t_script_callback *script_callback)
 {
     weechat_log_printf ("");
     weechat_log_printf ("  [callback (addr:0x%lx)]",       script_callback);

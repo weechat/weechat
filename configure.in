@@ -1108,13 +1108,12 @@ AC_OUTPUT([Makefile
            src/plugins/logger/Makefile
            src/plugins/relay/Makefile
            src/plugins/rmodifier/Makefile
-           src/plugins/scripts/Makefile
-           src/plugins/scripts/perl/Makefile
-           src/plugins/scripts/python/Makefile
-           src/plugins/scripts/ruby/Makefile
-           src/plugins/scripts/lua/Makefile
-           src/plugins/scripts/tcl/Makefile
-           src/plugins/scripts/guile/Makefile
+           src/plugins/perl/Makefile
+           src/plugins/python/Makefile
+           src/plugins/ruby/Makefile
+           src/plugins/lua/Makefile
+           src/plugins/tcl/Makefile
+           src/plugins/guile/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile

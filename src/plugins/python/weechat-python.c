@@ -29,8 +29,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "../../weechat-plugin.h"
-#include "../script.h"
+#include "../weechat-plugin.h"
+#include "../plugin-script.h"
 #include "weechat-python.h"
 #include "weechat-python-api.h"
 
@@ -695,9 +695,9 @@ weechat_python_load (const char *filename)
         /* if script was registered, remove it from list */
         if (python_current_script != NULL)
         {
-            script_remove (weechat_python_plugin,
-                           &python_scripts, &last_python_script,
-                           python_current_script);
+            plugin_script_remove (weechat_python_plugin,
+                                  &python_scripts, &last_python_script,
+                                  python_current_script);
         }
 
         Py_EndInterpreter (python_current_interpreter);
@@ -734,11 +734,11 @@ weechat_python_load (const char *filename)
      * set input/close callbacks for buffers created by this script
      * (to restore callbacks after upgrade)
      */
-    script_set_buffer_callbacks (weechat_python_plugin,
-                                 python_scripts,
-                                 python_current_script,
-                                 &weechat_python_api_buffer_input_data_cb,
-                                 &weechat_python_api_buffer_close_cb);
+    plugin_script_set_buffer_callbacks (weechat_python_plugin,
+                                        python_scripts,
+                                        python_current_script,
+                                        &weechat_python_api_buffer_input_data_cb,
+                                        &weechat_python_api_buffer_close_cb);
 
     return 1;
 }
@@ -789,8 +789,8 @@ weechat_python_unload (struct t_plugin_script *script)
         python_current_script = (python_current_script->prev_script) ?
             python_current_script->prev_script : python_current_script->next_script;
 
-    script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
-                   script);
+    plugin_script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
+                          script);
 
     if (interpreter)
     {
@@ -811,7 +811,7 @@ weechat_python_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = script_search (weechat_python_plugin, python_scripts, name);
+    ptr_script = plugin_script_search (weechat_python_plugin, python_scripts, name);
     if (ptr_script)
     {
         weechat_python_unload (ptr_script);
@@ -850,7 +850,7 @@ weechat_python_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = script_search (weechat_python_plugin, python_scripts, name);
+    ptr_script = plugin_script_search (weechat_python_plugin, python_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);
@@ -888,29 +888,29 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
 
     if (argc == 1)
     {
-        script_display_list (weechat_python_plugin, python_scripts,
-                             NULL, 0);
+        plugin_script_display_list (weechat_python_plugin, python_scripts,
+                                    NULL, 0);
     }
     else if (argc == 2)
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
         {
-            script_display_list (weechat_python_plugin, python_scripts,
-                                 NULL, 0);
+            plugin_script_display_list (weechat_python_plugin, python_scripts,
+                                        NULL, 0);
         }
         else if (weechat_strcasecmp (argv[1], "listfull") == 0)
         {
-            script_display_list (weechat_python_plugin, python_scripts,
-                                 NULL, 1);
+            plugin_script_display_list (weechat_python_plugin, python_scripts,
+                                        NULL, 1);
         }
         else if (weechat_strcasecmp (argv[1], "autoload") == 0)
         {
-            script_auto_load (weechat_python_plugin, &weechat_python_load_cb);
+            plugin_script_auto_load (weechat_python_plugin, &weechat_python_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
             weechat_python_unload_all ();
-            script_auto_load (weechat_python_plugin, &weechat_python_load_cb);
+            plugin_script_auto_load (weechat_python_plugin, &weechat_python_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {
@@ -921,19 +921,19 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
         {
-            script_display_list (weechat_python_plugin, python_scripts,
-                                 argv_eol[2], 0);
+            plugin_script_display_list (weechat_python_plugin, python_scripts,
+                                        argv_eol[2], 0);
         }
         else if (weechat_strcasecmp (argv[1], "listfull") == 0)
         {
-            script_display_list (weechat_python_plugin, python_scripts,
-                                 argv_eol[2], 1);
+            plugin_script_display_list (weechat_python_plugin, python_scripts,
+                                        argv_eol[2], 1);
         }
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Python script */
-            path_script = script_search_path (weechat_python_plugin,
-                                              argv_eol[2]);
+            path_script = plugin_script_search_path (weechat_python_plugin,
+                                                     argv_eol[2]);
             weechat_python_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -975,7 +975,7 @@ weechat_python_completion_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    script_completion (weechat_python_plugin, completion, python_scripts);
+    plugin_script_completion (weechat_python_plugin, completion, python_scripts);
 
     return WEECHAT_RC_OK;
 }
@@ -1028,9 +1028,9 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
 
     if (weechat_strcasecmp (infolist_name, "python_script") == 0)
     {
-        return script_infolist_list_scripts (weechat_python_plugin,
-                                             python_scripts, pointer,
-                                             arguments);
+        return plugin_script_infolist_list_scripts (weechat_python_plugin,
+                                                    python_scripts, pointer,
+                                                    arguments);
     }
 
     return NULL;
@@ -1053,7 +1053,7 @@ weechat_python_signal_debug_dump_cb (void *data, const char *signal,
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, PYTHON_PLUGIN_NAME) == 0))
     {
-        script_print_log (weechat_python_plugin, python_scripts);
+        plugin_script_print_log (weechat_python_plugin, python_scripts);
     }
 
     return WEECHAT_RC_OK;
@@ -1075,7 +1075,7 @@ weechat_python_signal_buffer_closed_cb (void *data, const char *signal,
     (void) type_data;
 
     if (signal_data)
-        script_remove_buffer_callbacks (python_scripts, signal_data);
+        plugin_script_remove_buffer_callbacks (python_scripts, signal_data);
 
     return WEECHAT_RC_OK;
 }
@@ -1094,18 +1094,18 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
     {
         if (data == &python_action_install_list)
         {
-            script_action_install (weechat_python_plugin,
-                                   python_scripts,
-                                   &weechat_python_unload,
-                                   &weechat_python_load,
-                                   &python_action_install_list);
+            plugin_script_action_install (weechat_python_plugin,
+                                          python_scripts,
+                                          &weechat_python_unload,
+                                          &weechat_python_load,
+                                          &python_action_install_list);
         }
         else if (data == &python_action_remove_list)
         {
-            script_action_remove (weechat_python_plugin,
-                                  python_scripts,
-                                  &weechat_python_unload,
-                                  &python_action_remove_list);
+            plugin_script_action_remove (weechat_python_plugin,
+                                         python_scripts,
+                                         &weechat_python_unload,
+                                         &python_action_remove_list);
         }
     }
 
@@ -1129,16 +1129,16 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
     {
         if (strcmp (signal, "python_script_install") == 0)
         {
-            script_action_add (&python_action_install_list,
-                               (const char *)signal_data);
+            plugin_script_action_add (&python_action_install_list,
+                                      (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
                                 &python_action_install_list);
         }
         else if (strcmp (signal, "python_script_remove") == 0)
         {
-            script_action_add (&python_action_remove_list,
-                               (const char *)signal_data);
+            plugin_script_action_add (&python_action_remove_list,
+                                      (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
                                 &python_action_remove_list);
@@ -1208,11 +1208,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_load_file = &weechat_python_load_cb;
 
     python_quiet = 1;
-    script_init (weechat_python_plugin, argc, argv, &init);
+    plugin_script_init (weechat_python_plugin, argc, argv, &init);
     python_quiet = 0;
 
-    script_display_short_list (weechat_python_plugin,
-                               python_scripts);
+    plugin_script_display_short_list (weechat_python_plugin,
+                                      python_scripts);
 
     /* init ok */
     return WEECHAT_RC_OK;
@@ -1227,7 +1227,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     python_quiet = 1;
-    script_end (plugin, &python_scripts, &weechat_python_unload_all);
+    plugin_script_end (plugin, &python_scripts, &weechat_python_unload_all);
     python_quiet = 0;
 
     /* free Python interpreter */

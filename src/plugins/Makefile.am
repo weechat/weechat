@@ -30,6 +30,15 @@ lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
                                 plugin-config.c \
                                 plugin-config.h
 
+noinst_LTLIBRARIES = lib_weechat_plugins_scripts.la
+
+lib_weechat_plugins_scripts_la_SOURCES = plugin-script.c \
+                                         plugin-script.h \
+                                         plugin-script-callback.c \
+                                         plugin-script-callback.h \
+                                         plugin-script-api.c \
+                                         plugin-script-api.h
+
 if PLUGIN_ALIAS
 alias_dir = alias
 endif
@@ -66,37 +75,38 @@ if PLUGIN_RMODIFIER
 rmodifier_dir = rmodifier
 endif
 
-if PLUGIN_PERL
-script_dir = scripts
-endif
-
-if PLUGIN_PYTHON
-script_dir = scripts
-endif
-
-if PLUGIN_RUBY
-script_dir = scripts
-endif
-
-if PLUGIN_LUA
-script_dir = scripts
-endif
-
-if PLUGIN_TCL
-script_dir = scripts
-endif
-
-if PLUGIN_GUILE
-script_dir = scripts
-endif
-
 if PLUGIN_XFER
 xfer_dir = xfer
 endif
 
+if PLUGIN_PERL
+perl_dir = perl
+endif
+
+if PLUGIN_PYTHON
+python_dir = python
+endif
+
+if PLUGIN_RUBY
+ruby_dir = ruby
+endif
+
+if PLUGIN_LUA
+lua_dir = lua
+endif
+
+if PLUGIN_TCL
+tcl_dir = tcl
+endif
+
+if PLUGIN_GUILE
+guile_dir = guile
+endif
+
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
             $(irc_dir) $(logger_dir) $(relay_dir) $(rmodifier_dir) \
-            $(script_dir) $(xfer_dir)
+            $(xfer_dir) $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) \
+            $(tcl_dir) $(guile_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

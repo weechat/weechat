@@ -33,8 +33,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "../../weechat-plugin.h"
-#include "../script.h"
+#include "../weechat-plugin.h"
+#include "../plugin-script.h"
 #include "weechat-ruby.h"
 #include "weechat-ruby-api.h"
 
@@ -564,9 +564,9 @@ weechat_ruby_load (const char *filename)
 
         if (ruby_current_script != NULL)
         {
-            script_remove (weechat_ruby_plugin,
-                           &ruby_scripts, &last_ruby_script,
-                           ruby_current_script);
+            plugin_script_remove (weechat_ruby_plugin,
+                                  &ruby_scripts, &last_ruby_script,
+                                  ruby_current_script);
         }
 
         return 0;
@@ -589,11 +589,11 @@ weechat_ruby_load (const char *filename)
      * set input/close callbacks for buffers created by this script
      * (to restore callbacks after upgrade)
      */
-    script_set_buffer_callbacks (weechat_ruby_plugin,
-                                 ruby_scripts,
-                                 ruby_current_script,
-                                 &weechat_ruby_api_buffer_input_data_cb,
-                                 &weechat_ruby_api_buffer_close_cb);
+    plugin_script_set_buffer_callbacks (weechat_ruby_plugin,
+                                        ruby_scripts,
+                                        ruby_current_script,
+                                        &weechat_ruby_api_buffer_input_data_cb,
+                                        &weechat_ruby_api_buffer_close_cb);
 
     return 1;
 }
@@ -644,8 +644,8 @@ weechat_ruby_unload (struct t_plugin_script *script)
         ruby_current_script = (ruby_current_script->prev_script) ?
             ruby_current_script->prev_script : ruby_current_script->next_script;
 
-    script_remove (weechat_ruby_plugin, &ruby_scripts, &last_ruby_script,
-                   script);
+    plugin_script_remove (weechat_ruby_plugin, &ruby_scripts, &last_ruby_script,
+                          script);
 
     if (interpreter)
         rb_gc_unregister_address (interpreter);
@@ -660,7 +660,7 @@ weechat_ruby_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
 
-    ptr_script = script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
     if (ptr_script)
     {
         weechat_ruby_unload (ptr_script);
@@ -686,7 +686,7 @@ weechat_ruby_reload_name (const char *name)
     struct t_plugin_script *ptr_script;
     char *filename;
 
-    ptr_script = script_search (weechat_ruby_plugin, ruby_scripts, name);
+    ptr_script = plugin_script_search (weechat_ruby_plugin, ruby_scripts, name);
     if (ptr_script)
     {
         filename = strdup (ptr_script->filename);
@@ -737,29 +737,29 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
 
     if (argc == 1)
     {
-        script_display_list (weechat_ruby_plugin, ruby_scripts,
-                             NULL, 0);
+        plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                    NULL, 0);
     }
     else if (argc == 2)
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
         {
-            script_display_list (weechat_ruby_plugin, ruby_scripts,
-                                 NULL, 0);
+            plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                        NULL, 0);
         }
         else if (weechat_strcasecmp (argv[1], "listfull") == 0)
         {
-            script_display_list (weechat_ruby_plugin, ruby_scripts,
-                                 NULL, 1);
+            plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                        NULL, 1);
         }
         else if (weechat_strcasecmp (argv[1], "autoload") == 0)
         {
-            script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
+            plugin_script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
             weechat_ruby_unload_all ();
-            script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
+            plugin_script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {
@@ -770,19 +770,19 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
     {
         if (weechat_strcasecmp (argv[1], "list") == 0)
         {
-            script_display_list (weechat_ruby_plugin, ruby_scripts,
-                                 argv_eol[2], 0);
+            plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                        argv_eol[2], 0);
         }
         else if (weechat_strcasecmp (argv[1], "listfull") == 0)
         {
-            script_display_list (weechat_ruby_plugin, ruby_scripts,
-                                 argv_eol[2], 1);
+            plugin_script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                        argv_eol[2], 1);
         }
         else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Ruby script */
-            path_script = script_search_path (weechat_ruby_plugin,
-                                              argv_eol[2]);
+            path_script = plugin_script_search_path (weechat_ruby_plugin,
+                                                     argv_eol[2]);
             weechat_ruby_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -823,7 +823,7 @@ weechat_ruby_completion_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    script_completion (weechat_ruby_plugin, completion, ruby_scripts);
+    plugin_script_completion (weechat_ruby_plugin, completion, ruby_scripts);
 
     return WEECHAT_RC_OK;
 }
@@ -844,9 +844,9 @@ weechat_ruby_infolist_cb (void *data, const char *infolist_name,
 
     if (weechat_strcasecmp (infolist_name, "ruby_script") == 0)
     {
-        return script_infolist_list_scripts (weechat_ruby_plugin,
-                                             ruby_scripts, pointer,
-                                             arguments);
+        return plugin_script_infolist_list_scripts (weechat_ruby_plugin,
+                                                    ruby_scripts, pointer,
+                                                    arguments);
     }
 
     return NULL;
@@ -868,7 +868,7 @@ weechat_ruby_signal_debug_dump_cb (void *data, const char *signal,
     if (!signal_data
         || (weechat_strcasecmp ((char *)signal_data, RUBY_PLUGIN_NAME) == 0))
     {
-        script_print_log (weechat_ruby_plugin, ruby_scripts);
+        plugin_script_print_log (weechat_ruby_plugin, ruby_scripts);
     }
 
     return WEECHAT_RC_OK;
@@ -888,7 +888,7 @@ weechat_ruby_signal_buffer_closed_cb (void *data, const char *signal,
     (void) type_data;
 
     if (signal_data)
-        script_remove_buffer_callbacks (ruby_scripts, signal_data);
+        plugin_script_remove_buffer_callbacks (ruby_scripts, signal_data);
 
     return WEECHAT_RC_OK;
 }
@@ -907,18 +907,18 @@ weechat_ruby_timer_action_cb (void *data, int remaining_calls)
     {
         if (data == &ruby_action_install_list)
         {
-            script_action_install (weechat_ruby_plugin,
-                                   ruby_scripts,
-                                   &weechat_ruby_unload,
-                                   &weechat_ruby_load,
-                                   &ruby_action_install_list);
+            plugin_script_action_install (weechat_ruby_plugin,
+                                          ruby_scripts,
+                                          &weechat_ruby_unload,
+                                          &weechat_ruby_load,
+                                          &ruby_action_install_list);
         }
         else if (data == &ruby_action_remove_list)
         {
-            script_action_remove (weechat_ruby_plugin,
-                                  ruby_scripts,
-                                  &weechat_ruby_unload,
-                                  &ruby_action_remove_list);
+            plugin_script_action_remove (weechat_ruby_plugin,
+                                         ruby_scripts,
+                                         &weechat_ruby_unload,
+                                         &ruby_action_remove_list);
         }
     }
 
@@ -942,16 +942,16 @@ weechat_ruby_signal_script_action_cb (void *data, const char *signal,
     {
         if (strcmp (signal, "ruby_script_install") == 0)
         {
-            script_action_add (&ruby_action_install_list,
-                               (const char *)signal_data);
+            plugin_script_action_add (&ruby_action_install_list,
+                                      (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_ruby_timer_action_cb,
                                 &ruby_action_install_list);
         }
         else if (strcmp (signal, "ruby_script_remove") == 0)
         {
-            script_action_add (&ruby_action_remove_list,
-                               (const char *)signal_data);
+            plugin_script_action_add (&ruby_action_remove_list,
+                                      (const char *)signal_data);
             weechat_hook_timer (1, 0, 1,
                                 &weechat_ruby_timer_action_cb,
                                 &ruby_action_remove_list);
@@ -1079,11 +1079,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_load_file = &weechat_ruby_load_cb;
 
     ruby_quiet = 1;
-    script_init (weechat_ruby_plugin, argc, argv, &init);
+    plugin_script_init (weechat_ruby_plugin, argc, argv, &init);
     ruby_quiet = 0;
 
-    script_display_short_list (weechat_ruby_plugin,
-                               ruby_scripts);
+    plugin_script_display_short_list (weechat_ruby_plugin,
+                                      ruby_scripts);
 
     /* init ok */
     return WEECHAT_RC_OK;
@@ -1098,7 +1098,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     ruby_quiet = 1;
-    script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
+    plugin_script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
     ruby_quiet = 0;
 
     /*
