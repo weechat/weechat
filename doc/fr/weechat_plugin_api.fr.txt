@@ -304,7 +304,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
-weechat_charset_set (plugin, "iso-8859-1");
+weechat_charset_set ("iso-8859-1");
 ----------------------------------------
 
 Script (Python) :
@@ -343,7 +343,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
-char *str = weechat_iconv_to_internal (plugin, "iso-8859-1", "chaîne iso : é à");
+char *str = weechat_iconv_to_internal ("iso-8859-1", "chaîne iso : é à");
 /* ... */
 free (str);
 ----------------------------------------
