@@ -3,10 +3,9 @@ WeeChat FAQ (häufig gestellte Fragen)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
-// TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
-used with latest stable version of WeeChat.
+Diese Dokumentation bezieht sich auf die WeeChat Version ≥ 0.3.0. Es sollte aber
+vorzugsweise immer die aktuell veröffentlichte Version von WeeChat genutzt werden.
 
 
 [[general]]
@@ -778,10 +777,10 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
   weniger Speicherlecks besitzt, als eine vorherige Version)
 * lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Fifo,
   Logger, Perl, Python, Ruby, Lua, Tcl, Xfer (wird für DCC benötigst)
-* lade nur Skripten die Du auch benutzt
-// TRANSLATION MISSING
-* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
-  of option 'weechat.history.max_buffer_lines_minutes'
+* installiere ausschließlich Skripten die Du auch nutzt
+* der Wert der Option 'weechat.history.max_buffer_lines_number' sollte möglichst
+  niedrig eingestellt werden oder die Option 'weechat.history.max_buffer_lines_minutes'
+  verwendet werden.
 * nutze einen kleineren Wert für die Option 'weechat.history.max_commands'
 
 

@@ -34,7 +34,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** Beschreibung: `ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "fg,bg" als Ganzzahl zwischen -1 (nicht angegeben) und 15. Als Wert ist der Farbname oder die Farbnummer von WeeChat möglich (Format ist: "1,-1:Farbe1;2,7:Farbe2"), Beispiel: "1,-1:darkgray;1,2:white,blue" ersetzt Schwarz durch "darkgray" und Schwarz auf Blau durch "white,blue"; Tabelle der Stardard-IRC-Farben von WeeChat: 0:weiß, 1:schwarz, 2:blau, 3:grün, 4:hellrot, 5:rot, 6:violett, 7:braun, 8:gelb, 9: hell-grün, 10:türkis, 11:hell-türkis, 12:hellblau, 13:hell-violett, 14:grau, 15:weiß`
+** Beschreibung: `ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "fg,bg" als Ganzzahl zwischen -1 (nicht angegeben) und 15. Als Wert ist der Farbname oder die Farbnummer von WeeChat möglich (Format: "1,-1:Farbe1;2,7:Farbe2"), Beispiel: "1,-1:darkgray;1,2:white,blue" ersetzt Schwarz durch "darkgray" und Schwarz auf Blau durch "white,blue"; Tabelle der Stardard-IRC-Farben von WeeChat: 0:weiß, 1:schwarz, 2:blau, 3:grün, 4:hellrot, 5:rot, 6:violett, 7:braun, 8:gelb, 9: hell-grün, 10:türkis, 11:hell-türkis, 12:hellblau, 13:hell-violett, 14:grau, 15:weiß`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"1,-1:darkgray"`)
 
@@ -44,7 +44,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format ist: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
+** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -234,7 +234,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** Beschreibung: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
+** Beschreibung: `intelligente Vervollständigung für Nicks (es wird zuerst mit den letzten Rednern vervollständigt): speakers = alle Redner (einschließlich Highlights), speakers_highlight = nur Redner die eine Highlight Nachricht geschrieben haben`
 ** Typ: integer
 ** Werte: off, speakers, speakers_highlights (Standardwert: `speakers`)
 
@@ -289,17 +289,17 @@
 ** Werte: 1 .. 10080 (Standardwert: `5`)
 
 * [[option_irc.look.smart_filter_join]] *irc.look.smart_filter_join*
-** Beschreibung: `aktiviert einen Filter für "join" Nachrichten`
+** Beschreibung: `aktiviert einen intelligenten Filter für "join" Nachrichten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** Beschreibung: `aktiviert einen Filter für Nachrichten von einem "Nick"`
+** Beschreibung: `aktiviert einen intelligenten Filter für Nachrichten von einem "Nick"`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
-** Beschreibung: `aktiviert einen Filter für "part" und "quit" Nachrichten`
+** Beschreibung: `aktiviert einen intelligenten Filter für "part" und "quit" Nachrichten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -509,7 +509,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** Beschreibung: `SSL certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** Beschreibung: `Datei für SSL Zertifikat um automatisch den eigenen Nick zu identifizieren ("%h" wird durch das WeeChat Verzeichnis ersetzt, Standardverzeichnis: "~/.weechat")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -524,7 +524,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"NORMAL"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
-** Beschreibung: `check that the SSL connection is fully trusted`
+** Beschreibung: `Überprüft ob die SSL-Verbindung vertrauenswürdig ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

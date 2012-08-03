@@ -744,7 +744,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.set_title]] *weechat.look.set_title*
-** Beschreibung: `setzt den Fenstertitels (oder Terminal-Titel im Curses-GUI), mit Name und Version`
+** Beschreibung: `setzt den Fenstertitel (oder Terminal-Titel im Curses-GUI), mit Name und Version`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -824,7 +824,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** Beschreibung: `set resource limits for WeeChat process, format is: "res1:limit1,res2:limit2"; resource name is the end of constant (RLIMIT_XXX) in lower case (see man setrlimit for values); limit -1 means "unlimited"; example: set unlimited size for core file and max 1GB of virtual memory: "core:-1,as:1000000000"`
+** Beschreibung: `setzt Ressourcenbeschränkungen für den WeeChat Prozess. (Format: "res1:limit1,res2:limit2"; Ressourcenname ist das Ende der Konstanten (RLIMIT_XXX) in Kleinbuchstaben (siehe man setrlimit für Werte); limit -1 bedeutet "unbegrenzt"; Beispiele: für die Core-Datei wird eine unbegrenzte Dateigröße bestimmt und die virtuelle Speicherkapazität auf maximal 1GB festgelegt: "core:-1,as:1000000000"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

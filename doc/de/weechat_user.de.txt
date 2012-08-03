@@ -207,17 +207,15 @@ Wird ein Binärpaket genutzt dann muss zusätzlich das Paket 'weechat-dbg' insta
 Core Dateien
 ^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-To enable 'core' files, you can use option
+Um 'core' Dateien zu aktivieren kann folgende Option genutzt werden:
 <<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
 
 ----------------------------------------
 /set weechat.startup.sys_rlimit "core:-1"
 ----------------------------------------
 
-// TRANSLATION MISSING
-For WeeChat ≤ 0.3.8 or if you want to enable core files even before WeeChat
-starts, you can use `ulimit` command.
+Wird eine WeeChat Version ≤ 0.3.8 verwendet oder man möchte die 'core' Dateien
+aktivieren, bevor WeeChat gestaret wird, wird der Befehl `ulimit` benötigt.
 
 Zum Beispiel muss unter Linux in einer 'bash' Shell folgender Befehl in die `~/.bashrc`
 Datei eingetragen werden:
@@ -337,9 +335,9 @@ Befehlszeile:
 -p, --no-plugin::
     unterbindet das Laden der Erweiterungen beim Programmstart.
 
-// TRANSLATION MISSING
 -r, --run-command::
-    Run command(s) after startup (many commands can be separated by semicolons).
+    startet einen oder mehrere Befehle, nachdem WeeChat gestartet wurde
+    (mehrere Befehle müssen durch Kommata voneinander getrennt werden).
 
 -s, --no-script::
     Skripten werden beim Programmstart nicht geladen.
@@ -420,8 +418,7 @@ Die 'status'-Bar besitzt als Standardeinträge:
 | buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
 | buffer_number         | 3                     | aktuelle Nummer des Buffers
 | buffer_name           | #test                 | Name des aktuellen Buffers
-// TRANSLATION MISSING
-| buffer_modes          | +n                    | IRC channel modes
+| buffer_modes          | +n                    | IRC Channel-Modi
 | buffer_nicklist_count | {4}                   | Anzahl der Nicks in Nickliste
 | buffer_filter         | *                     | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
 | lag                   | [Lag: 2.5]            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
@@ -442,22 +439,19 @@ In der 'input' Bar lautet die Standardeinstellung:
 | input_text   | hi peter!                                   | Text der eingegeben wird
 |========================================
 
-// TRANSLATION MISSING
 [[buffers_and_windows]]
-Buffers and windows
-~~~~~~~~~~~~~~~~~~~
+Buffer und Fenster
+~~~~~~~~~~~~~~~~~~
 
 Ein 'Buffer' besteht aus einer Nummer, besitzt einem Namen, hat Zeilen die angezeigt
 werden (und noch anderen Daten).
 
-// TRANSLATION MISSING
-Examples of buffers:
+Beispiele von Buffern:
 
-// TRANSLATION MISSING
-* core buffer (created by WeeChat on startup, can not be closed)
-* irc server (displays messages from server)
-* irc channel
-* irc private
+* Core Buffer (wird durch WeeChat beim Starten erstellt und kann nicht geschlossen werden!)
+* IRC Server  (hier werden die Nachrichten ausgegeben, die der Server verschickt)
+* IRC Channel
+* IRC Privat  (wird auch Query-Buffer genannt)
 
 Ein 'Fenster' ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
@@ -466,8 +460,7 @@ Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
 
-// TRANSLATION MISSING
-Example of horizontal split (`/window splith`):
+Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -476,8 +469,8 @@ Example of horizontal split (`/window splith`):
 │12:55:20 @Flashy | hi Max!                                                       │Max    │
 │12:55:32     Max | how are you?                                                  │       │
 │                                                                                 │       │
-│                                                                                 │       │ ◀ window #2
-│                                                                                 │       │   (buffer #4)
+│                                                                                 │       │ ◀ Fenster #2
+│                                                                                 │       │   (Buffer #4)
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                                 │
@@ -488,8 +481,8 @@ Example of horizontal split (`/window splith`):
 │12:55:01  @joe | hello                                                           │@joe   │
 │                                                                                 │+weebot│
 │                                                                                 │peter  │
-│                                                                                 │       │ ◀ window #1
-│                                                                                 │       │   (buffer #3)
+│                                                                                 │       │ ◀ Fenster #1
+│                                                                                 │       │   (Buffer #3)
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}                                                │
@@ -497,8 +490,7 @@ Example of horizontal split (`/window splith`):
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-// TRANSLATION MISSING
-Example of vertical split (`/window splitv`):
+Beispiele für eine vertikale Fensteraufteilung (`/window splitv`):
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -526,12 +518,11 @@ Example of vertical split (`/window splitv`):
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}   │[12:55] [6] [irc/freenode] 4:#abc(+n){2}    │
 │[@Flashy] hi peter!█                        │[@Flashy]                                   │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
-                ▲ window #1                                   ▲ window #2
-                  (buffer #3)                                   (buffer #4)
+                ▲ Fenster #1                                   ▲ Fenster #2
+                  (Buffer #3)                                   (Buffer #4)
 ........................................
 
-// TRANSLATION MISSING
-Example of vertical + horizontal splits:
+Beispiele für eine vertikale und horizontale Fensteraufteilung:
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -539,8 +530,8 @@ Example of vertical + horizontal splits:
 │12:54:15 peter | hey!               │@Flashy│12:55:42 @Flashy | hello world      │@Flashy│
 │12:55:01  @joe | hello              │@joe   │12:55:56    alex | hi Flashy        │alex   │
 │                                    │+weebot│                                    │       │
-│                                    │peter  │                                    │       │ ◀ window #3
-│                                    │       │                                    │       │   (buffer #5)
+│                                    │peter  │                                    │       │ ◀ Fenster #3
+│                                    │       │                                    │       │   (Buffer #5)
 │                                    │       │                                    │       │
 │                                    │       │                                    │       │
 │                                    │       │                                    │       │
@@ -552,67 +543,63 @@ Example of vertical + horizontal splits:
 │                                    │       │12:55:20 @Flashy | hi Max!          │Max    │
 │                                    │       │12:55:32     Max | how are you?     │       │
 │                                    │       │                                    │       │
-│                                    │       │                                    │       │ ◀ window #2
-│                                    │       │                                    │       │   (buffer #4)
+│                                    │       │                                    │       │ ◀ Fenster #2
+│                                    │       │                                    │       │   (Buffer #4)
 │                                    │       │                                    │       │
 │                                    │       │                                    │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}   │ [12:55] [6] [irc/freenode] 4:#abc(+n){2}   │
 │[@Flashy] hi peter!█                        │ [@Flashy]                                  │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
-                ▲ window #1
-                  (buffer #3)
+                ▲ Fenster #1
+                  (Buffer #3)
 ........................................
 
-// TRANSLATION MISSING
 [[notify_levels]]
-Notify levels
-~~~~~~~~~~~~~
+Benachrichtigungsstufen
+~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Four levels are possible in messages displayed in buffers, from lower to higher:
+Es gibt vier Benachrichtigungsstufen für Nachrichten, welche in Buffern dargestellt
+werden. Nachfolgend eine Liste, sortiert von niedrig nach hoch:
 
-// TRANSLATION MISSING
-* 'low': message with low importance (for example irc join/part/quit)
-* 'message': message from a user
-* 'private': message in a private buffer
-* 'highlight': message with highlight
+*       'low': Nachricht mit einer geringen Wertigkeit (zum Beispiel: IRC join/part/quit)
+*   'message': Nachricht von einem User
+*   'private': Nachricht in einem privaten Buffer
+* 'highlight': wenn es sich um eine 'highlight' Nachricht handelt
 
-// TRANSLATION MISSING
-Each buffer has a notify level, which is used to decide what messages will add
-buffer in hotlist.
+Jeder Buffer besitzt eine Benachrichtigungsstufe, um festzulegen, bei welchen Nachrichten
+der entsprechende Buffer in der Hotlist angezeigt werden soll.
 
-// TRANSLATION MISSING
+Der Wert für die Benachrichtigungsstufe kann mittels folgender Option festgelegt
+werden:
 The default notify level can be set using option
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
-default is 'all'.
+Der Standardwert ist 'all'.
 
-// TRANSLATION MISSING
 [width="50%",cols="3m,10",options="header"]
 |========================================
-| Notify level | Level of messages added to hotlist
-| none         | (none)
-| highlight    | 'highlight' + 'private'
-| message      | 'highlight' + 'private' + 'message'
-| all          | 'highlight' + 'private' + 'message' + 'low'
+| Benachrichtigungsstufe | Welche Nachrichten Berücksichtigung in der Hotlist finden
+| none                   | (keine)
+| highlight              | 'highlight' + 'private Nachrichten'
+| message                | 'highlight' + 'private Nachrichten' + 'normale Nachrichten'
+| all                    | 'highlight' + 'private Nachrichten' + 'normal Nachrichten' + 'Nachrichten mit einer niedrigen Priorität'
 |========================================
 
-// TRANSLATION MISSING
-Notify level can be defined for a set of buffers, for example all buffers for
-irc server "freenode":
+Benachrichtigungsstufen können für mehrere Buffer definiert werden, zum Beispiel
+für alle Buffer des IRC Servers "freenode":
 
 ----------------------------------------
 /set weechat.notify.irc.freenode message
 ----------------------------------------
 
-// TRANSLATION MISSING
-Set notify level 'highlight' on channel "#weechat" only:
+Setzt die Benachrichtigungsstufe, ausschließlich für den Channel "#weechat",
+auf die Stufe 'highlight':
 
 ----------------------------------------
 /set weechat.notify.irc.freenode.#weechat highlight
 ----------------------------------------
 
-// TRANSLATION MISSING
-The notify level for a buffer can be set with command `/buffer`:
+Die Benachrichtigungsstufe für einen Buffer kann mittels dem `/buffer`
+Befehl festgelegt werden:
 
 ----------------------------------------
 /buffer notify highlight
@@ -673,8 +660,7 @@ Tastenbefehle für die Befehlszeile
 | @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | /input delete_next_word
 | @k(A-)@k(k)         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | /input grab_key_command
 | @k(A-)@k(r)         | komplette Eingabezeile löschen| /input delete_line
-// TRANSLATION MISSING
-| @k(A-)@k(s)         | Toggle aspell | /mute aspell toggle
+| @k(A-)@k(s)         | schaltet die Aspell Funktion an/aus | /mute aspell toggle
 |========================================
 
 [[key_bindings_buffers_windows]]
@@ -2107,18 +2093,19 @@ Zum Beispiel:
 Nun kann man über den Port 9000 mittels einer Oberfläche (wie QWeeChat)
 und dem Passwort "meinPasswort" eine Verbindung zu WeeChat herstellen.
 
-// TRANSLATION MISSING
 [[relay_ssl]]
-Relay with SSL
-^^^^^^^^^^^^^^
+Relay-Verbindung mittels SSL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can use SSL by creating a certificate and private key, and by using prefix
-"ssl." in the name of protocol.
+Man kann SSL mittels eines selbst erstellten Zertifikates und eines privaten
+Schlüssels nutzen. Um SSL für die Verbindung zu aktivieren stellt man dem
+Protokollnamen ein "ssl" voran.
 
-The default file for certificate/key is '~/.weechat/ssl/relay.pem'
+Die Standarddatei für Zertifikate/Schlüssel ist '~/.weechat/ssl/relay.pem'
 (option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
 
-You can create a certificate and private key with following commands:
+Ein Zertifikat und einen privaten Schlüssel kann man mit folgenden Befehlen
+erstellen:
 
 ----------------------------------------
 $ mkdir -p ~/.weechat/ssl
@@ -2126,14 +2113,14 @@ $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----------------------------------------
 
-If WeeChat is already running, you can reload the certificate and private key
-with command:
+Sollte WeeChat schon gestartet worden sein, kann man das Zertifikat und der private
+Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 
 ----------------------------------------
 /relay sslcertkey
 ----------------------------------------
 
-And then add relay with SSL, for example:
+um dann die Relay-Verbindung, mit SSL Verschlüsselung, anzulegen:
 
 ----------------------------------------
 /relay add ssl.irc.freenode 8001
