@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H
 #define __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H 1
 
-struct t_script_callback
+struct t_plugin_script_cb
 {
     void *script;                            /* pointer to script           */
     char *function;                          /* script function called      */
@@ -32,17 +32,17 @@ struct t_script_callback
     struct t_gui_buffer *buffer;             /* not NULL for buffer         */
     struct t_gui_bar_item *bar_item;         /* not NULL for bar item       */
     struct t_upgrade_file *upgrade_file;     /* not NULL for upgrade file   */
-    struct t_script_callback *prev_callback; /* link to next callback       */
-    struct t_script_callback *next_callback; /* link to previous callback   */
+    struct t_plugin_script_cb *prev_callback; /* link to next callback      */
+    struct t_plugin_script_cb *next_callback; /* link to previous callback  */
 };
 
-extern struct t_script_callback *plugin_script_callback_add (struct t_plugin_script *script,
-                                                             const char *function,
-                                                             const char *data);
+extern struct t_plugin_script_cb *plugin_script_callback_add (struct t_plugin_script *script,
+                                                              const char *function,
+                                                              const char *data);
 extern void plugin_script_callback_remove (struct t_plugin_script *script,
-                                           struct t_script_callback *script_callback);
+                                           struct t_plugin_script_cb *script_callback);
 extern void plugin_script_callback_remove_all (struct t_plugin_script *script);
 extern void plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
-                                              struct t_script_callback *script_callback);
+                                              struct t_plugin_script_cb *script_callback);
 
 #endif /* __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H */

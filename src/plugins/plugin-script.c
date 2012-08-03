@@ -604,8 +604,8 @@ plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
     const char *script_name, *str_script_input_cb, *str_script_input_cb_data;
     const char *str_script_close_cb, *str_script_close_cb_data;
     struct t_plugin_script *ptr_script;
-    struct t_script_callback *script_cb_input;
-    struct t_script_callback *script_cb_close;
+    struct t_plugin_script_cb *script_cb_input;
+    struct t_plugin_script_cb *script_cb_close;
 
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
@@ -681,7 +681,7 @@ plugin_script_remove_buffer_callbacks (struct t_plugin_script *scripts,
                                        struct t_gui_buffer *buffer)
 {
     struct t_plugin_script *ptr_script;
-    struct t_script_callback *ptr_script_cb, *next_script_cb;
+    struct t_plugin_script_cb *ptr_script_cb, *next_script_cb;
 
     for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
@@ -716,7 +716,7 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
                       struct t_plugin_script **last_script,
                       struct t_plugin_script *script)
 {
-    struct t_script_callback *ptr_script_cb, *ptr_script_cb2;
+    struct t_plugin_script_cb *ptr_script_cb, *ptr_script_cb2;
 
     script->unloading = 1;
 
@@ -1314,7 +1314,7 @@ plugin_script_print_log (struct t_weechat_plugin *weechat_plugin,
                          struct t_plugin_script *scripts)
 {
     struct t_plugin_script *ptr_script;
-    struct t_script_callback *ptr_script_cb;
+    struct t_plugin_script_cb *ptr_script_cb;
 
     weechat_log_printf ("");
     weechat_log_printf ("***** \"%s\" plugin dump *****",

@@ -34,10 +34,10 @@
  * plugin_script_callback_alloc: allocate a new callback and initializes it
  */
 
-struct t_script_callback *
+struct t_plugin_script_cb *
 plugin_script_callback_alloc ()
 {
-    struct t_script_callback *new_script_callback;
+    struct t_plugin_script_cb *new_script_callback;
 
     new_script_callback = malloc (sizeof (*new_script_callback));
     if (new_script_callback)
@@ -64,12 +64,12 @@ plugin_script_callback_alloc ()
  *                             return pointer to new callback or NULL if error
  */
 
-struct t_script_callback *
+struct t_plugin_script_cb *
 plugin_script_callback_add (struct t_plugin_script *script,
                             const char *function,
                             const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     if (!script)
         return NULL;
 
@@ -97,7 +97,7 @@ plugin_script_callback_add (struct t_plugin_script *script,
  */
 
 void
-plugin_script_callback_free_data (struct t_script_callback *script_callback)
+plugin_script_callback_free_data (struct t_plugin_script_cb *script_callback)
 {
     if (script_callback->function)
         free (script_callback->function);
@@ -111,7 +111,7 @@ plugin_script_callback_free_data (struct t_script_callback *script_callback)
 
 void
 plugin_script_callback_remove (struct t_plugin_script *script,
-                               struct t_script_callback *script_callback)
+                               struct t_plugin_script_cb *script_callback)
 {
     /* remove callback from list */
     if (script_callback->prev_callback)
@@ -147,7 +147,7 @@ plugin_script_callback_remove_all (struct t_plugin_script *script)
 
 void
 plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
-                                  struct t_script_callback *script_callback)
+                                  struct t_plugin_script_cb *script_callback)
 {
     weechat_log_printf ("");
     weechat_log_printf ("  [callback (addr:0x%lx)]",       script_callback);

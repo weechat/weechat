@@ -60,7 +60,7 @@ plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
                               const char *function,
                               const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_config_file *new_config_file;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -121,9 +121,9 @@ plugin_script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
                                       const char *function_delete_option,
                                       const char *data_delete_option)
 {
-    struct t_script_callback *script_cb_read, *script_cb_write;
-    struct t_script_callback *script_cb_write_default, *script_cb_create_option;
-    struct t_script_callback *script_cb_delete_option;
+    struct t_plugin_script_cb *script_cb_read, *script_cb_write;
+    struct t_plugin_script_cb *script_cb_write_default, *script_cb_create_option;
+    struct t_plugin_script_cb *script_cb_delete_option;
     struct t_config_section *new_section;
 
     script_cb_read = plugin_script_callback_add (script, function_read, data_read);
@@ -216,8 +216,8 @@ plugin_script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
                                      const char *function_delete,
                                      const char *data_delete)
 {
-    struct t_script_callback *script_cb_check_value, *script_cb_change;
-    struct t_script_callback *script_cb_delete;
+    struct t_plugin_script_cb *script_cb_check_value, *script_cb_change;
+    struct t_plugin_script_cb *script_cb_delete;
     struct t_config_option *new_option;
 
     script_cb_check_value = plugin_script_callback_add (script, function_check_value, data_check_value);
@@ -275,7 +275,7 @@ plugin_script_api_config_option_free (struct t_weechat_plugin *weechat_plugin,
                                       struct t_plugin_script *script,
                                       struct t_config_option *option)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !option)
         return;
@@ -304,7 +304,7 @@ plugin_script_api_config_section_free_options (struct t_weechat_plugin *weechat_
                                                struct t_plugin_script *script,
                                                struct t_config_section *section)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !section)
         return;
@@ -333,7 +333,7 @@ plugin_script_api_config_section_free (struct t_weechat_plugin *weechat_plugin,
                                        struct t_plugin_script *script,
                                        struct t_config_section *section)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !section)
         return;
@@ -361,7 +361,7 @@ plugin_script_api_config_free (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_config_file *config_file)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !config_file)
         return;
@@ -499,7 +499,7 @@ plugin_script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -535,7 +535,7 @@ plugin_script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
                                     const char *function,
                                     const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -569,7 +569,7 @@ plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                               const char *function,
                               const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -603,7 +603,7 @@ plugin_script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                            const char *function,
                            const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -642,7 +642,7 @@ plugin_script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugi
                                           const char *function,
                                           const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -705,7 +705,7 @@ plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -748,7 +748,7 @@ plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                               const char *function,
                               const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -783,7 +783,7 @@ plugin_script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
                                const char *function,
                                const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -816,7 +816,7 @@ plugin_script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -849,7 +849,7 @@ plugin_script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
                                const char *function,
                                const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -885,7 +885,7 @@ plugin_script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                                    const char *function,
                                    const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -920,7 +920,7 @@ plugin_script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
                                  const char *function,
                                  const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -956,7 +956,7 @@ plugin_script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
                              const char *function,
                              const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -994,7 +994,7 @@ plugin_script_api_hook_info_hashtable (struct t_weechat_plugin *weechat_plugin,
                                        const char *function,
                                        const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -1035,7 +1035,7 @@ plugin_script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
                                  const char *function,
                                  const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -1070,7 +1070,7 @@ plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
                               const char *function,
                               const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_hook *new_hook;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -1098,7 +1098,7 @@ plugin_script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                           struct t_plugin_script *script,
                           struct t_hook *hook)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !hook)
         return;
@@ -1125,7 +1125,7 @@ void
 plugin_script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     ptr_script_cb = script->callbacks;
     while (ptr_script_cb)
@@ -1160,8 +1160,8 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                               const char *function_close,
                               const char *data_close)
 {
-    struct t_script_callback *script_cb_input;
-    struct t_script_callback *script_cb_close;
+    struct t_plugin_script_cb *script_cb_input;
+    struct t_plugin_script_cb *script_cb_close;
     struct t_gui_buffer *new_buffer;
 
     script_cb_input = plugin_script_callback_add (script, function_input, data_input);
@@ -1210,7 +1210,7 @@ plugin_script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 struct t_gui_buffer *buffer)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !buffer)
         return;
@@ -1243,7 +1243,7 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     struct t_gui_bar_item *new_item;
 
     script_cb = plugin_script_callback_add (script, function, data);
@@ -1270,7 +1270,7 @@ plugin_script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
                                    struct t_plugin_script *script,
                                    struct t_gui_bar_item *item)
 {
-    struct t_script_callback *ptr_script_cb, *next_callback;
+    struct t_plugin_script_cb *ptr_script_cb, *next_callback;
 
     if (!weechat_plugin || !script || !item)
         return;
@@ -1461,7 +1461,7 @@ plugin_script_api_upgrade_read (struct t_weechat_plugin *weechat_plugin,
                                 const char *function,
                                 const char *data)
 {
-    struct t_script_callback *script_cb;
+    struct t_plugin_script_cb *script_cb;
     int rc;
 
     if (!function || !function[0])
