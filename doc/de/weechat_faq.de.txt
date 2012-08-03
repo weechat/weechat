@@ -5,7 +5,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 // TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions ≥ 0.3.0 but should preferrably be
+This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
 used with latest stable version of WeeChat.
 
 
