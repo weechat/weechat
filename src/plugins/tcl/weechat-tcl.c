@@ -575,6 +575,21 @@ weechat_tcl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_tcl_hdata_cb: callback for hdata
+ */
+
+struct t_hdata *
+weechat_tcl_hdata_cb (void *data, const char *hdata_name)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return plugin_script_hdata_script (weechat_plugin,
+                                       &tcl_scripts, &last_tcl_script,
+                                       hdata_name);
+}
+
+/*
  * weechat_tcl_infolist_cb: callback for infolist
  */
 
@@ -720,6 +735,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     init.callback_command = &weechat_tcl_command_cb;
     init.callback_completion = &weechat_tcl_completion_cb;
+    init.callback_hdata = &weechat_tcl_hdata_cb;
     init.callback_infolist = &weechat_tcl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
     init.callback_signal_buffer_closed = &weechat_tcl_signal_buffer_closed_cb;

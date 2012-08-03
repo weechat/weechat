@@ -1013,6 +1013,21 @@ weechat_python_info_cb (void *data, const char *info_name,
 }
 
 /*
+ * weechat_python_hdata_cb: callback for hdata
+ */
+
+struct t_hdata *
+weechat_python_hdata_cb (void *data, const char *hdata_name)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return plugin_script_hdata_script (weechat_plugin,
+                                       &python_scripts, &last_python_script,
+                                       hdata_name);
+}
+
+/*
  * weechat_python_infolist_cb: callback for infolist
  */
 
@@ -1201,6 +1216,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     init.callback_command = &weechat_python_command_cb;
     init.callback_completion = &weechat_python_completion_cb;
+    init.callback_hdata = &weechat_python_hdata_cb;
     init.callback_infolist = &weechat_python_infolist_cb;
     init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
     init.callback_signal_buffer_closed = &weechat_python_signal_buffer_closed_cb;

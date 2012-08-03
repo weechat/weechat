@@ -2,6 +2,23 @@
 |========================================
 | Plugin | Nome | Descrizione | Variabili | Liste
 
+| guile | guile_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'guile_script') +
+  'next_script' (pointer, hdata: 'guile_script') |
+  '*last_script' +
+  '*scripts'
+
 | irc | irc_channel | canale irc |
   'type' (integer) +
   'name' (string) +
@@ -171,6 +188,91 @@
   'next_server' (pointer, hdata: 'irc_server') |
   'irc_servers' +
   'last_irc_server'
+
+| lua | lua_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'lua_script') +
+  'next_script' (pointer, hdata: 'lua_script') |
+  '*last_script' +
+  '*scripts'
+
+| perl | perl_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'perl_script') +
+  'next_script' (pointer, hdata: 'perl_script') |
+  '*last_script' +
+  '*scripts'
+
+| python | python_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'python_script') +
+  'next_script' (pointer, hdata: 'python_script') |
+  '*last_script' +
+  '*scripts'
+
+| ruby | ruby_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'ruby_script') +
+  'next_script' (pointer, hdata: 'ruby_script') |
+  '*last_script' +
+  '*scripts'
+
+| tcl | tcl_script | elenco degli script |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'tcl_script') +
+  'next_script' (pointer, hdata: 'tcl_script') |
+  '*last_script' +
+  '*scripts'
 
 | weechat | bar | barra |
   'name' (string) +

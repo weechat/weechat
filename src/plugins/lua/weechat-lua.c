@@ -616,6 +616,21 @@ weechat_lua_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_lua_hdata_cb: callback for hdata
+ */
+
+struct t_hdata *
+weechat_lua_hdata_cb (void *data, const char *hdata_name)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return plugin_script_hdata_script (weechat_plugin,
+                                       &lua_scripts, &last_lua_script,
+                                       hdata_name);
+}
+
+/*
  * weechat_lua_infolist_cb: callback for infolist
  */
 
@@ -761,6 +776,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     init.callback_command = &weechat_lua_command_cb;
     init.callback_completion = &weechat_lua_completion_cb;
+    init.callback_hdata = &weechat_lua_hdata_cb;
     init.callback_infolist = &weechat_lua_infolist_cb;
     init.callback_signal_debug_dump = &weechat_lua_signal_debug_dump_cb;
     init.callback_signal_buffer_closed = &weechat_lua_signal_buffer_closed_cb;

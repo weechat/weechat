@@ -74,6 +74,8 @@ struct t_plugin_script_init
     int (*callback_completion)(void *data, const char *completion_item,
                                struct t_gui_buffer *buffer,
                                struct t_gui_completion *completion);
+    struct t_hdata *(*callback_hdata)(void *data,
+                                      const char *hdata_name);
     struct t_infolist *(*callback_infolist)(void *data,
                                             const char *infolist_name,
                                             void *pointer,
@@ -146,6 +148,10 @@ extern void plugin_script_display_list (struct t_weechat_plugin *weechat_plugin,
                                         const char *name, int full);
 extern void plugin_script_display_short_list (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script *scripts);
+extern struct t_hdata *plugin_script_hdata_script (struct t_weechat_plugin *weechat_plugin,
+                                                   struct t_plugin_script **scripts,
+                                                   struct t_plugin_script **last_script,
+                                                   const char *hdata_name);
 extern int plugin_script_add_to_infolist (struct t_weechat_plugin *weechat_plugin,
                                           struct t_infolist *infolist,
                                           struct t_plugin_script *script);

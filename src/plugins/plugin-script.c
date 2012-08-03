@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
@@ -162,7 +163,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     if (completion)
         free (completion);
 
-    /* add completion and infolist */
+    /* add completion, hdata and infolist */
     length = strlen (weechat_plugin->name) + 16;
     string = malloc (length);
     if (string)
@@ -170,6 +171,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
         snprintf (string, length, "%s_script", weechat_plugin->name);
         weechat_hook_completion (string, N_("list of scripts"),
                                  init->callback_completion, NULL);
+        weechat_hook_hdata (string, N_("list of scripts"),
+                            init->callback_hdata, NULL);
         weechat_hook_infolist (string, N_("list of scripts"),
                                N_("script pointer (optional)"),
                                N_("script name (can start or end with \"*\" as wildcard) (optional)"),
@@ -1145,6 +1148,40 @@ plugin_script_display_short_list (struct t_weechat_plugin *weechat_plugin,
             free (buf);
         }
     }
+}
+
+/*
+ * plugin_script_hdata_script: return hdata for script
+ */
+
+struct t_hdata *
+plugin_script_hdata_script (struct t_weechat_plugin *weechat_plugin,
+                            struct t_plugin_script **scripts,
+                            struct t_plugin_script **last_script,
+                            const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script");
+    if (hdata)
+    {
+        WEECHAT_HDATA_VAR(struct t_plugin_script, filename, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, interpreter, POINTER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, name, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, author, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, version, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, license, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, description, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, shutdown_func, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, charset, STRING, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, callbacks, POINTER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, unloading, INTEGER, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, prev_script, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_plugin_script, next_script, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_LIST(*scripts);
+        WEECHAT_HDATA_LIST(*last_script);
+    }
+    return hdata;
 }
 
 /*

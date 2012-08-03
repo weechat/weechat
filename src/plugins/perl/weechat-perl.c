@@ -779,6 +779,21 @@ weechat_perl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_perl_hdata_cb: callback for hdata
+ */
+
+struct t_hdata *
+weechat_perl_hdata_cb (void *data, const char *hdata_name)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    return plugin_script_hdata_script (weechat_plugin,
+                                       &perl_scripts, &last_perl_script,
+                                       hdata_name);
+}
+
+/*
  * weechat_perl_infolist_cb: callback for infolist
  */
 
@@ -974,6 +989,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     init.callback_command = &weechat_perl_command_cb;
     init.callback_completion = &weechat_perl_completion_cb;
+    init.callback_hdata = &weechat_perl_hdata_cb;
     init.callback_infolist = &weechat_perl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_perl_signal_debug_dump_cb;
     init.callback_signal_buffer_closed = &weechat_perl_signal_buffer_closed_cb;
