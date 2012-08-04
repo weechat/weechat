@@ -93,8 +93,9 @@ compile WeeChat.
 | libcurl4-gnutls-dev    |             | *yes*    | URL transfer
 | gettext                |             |          | internationalization (translation of messages; base language is english)
 | libgcrypt11-dev        |             |          | SASL authentication with IRC server using DH-BLOWFISH mechanism
-| libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin (weechat protocol)
 | ca-certificates        |             |          | certificates for SSL connections
+| zlib1g-dev             |             |          | compression of packets in relay plugin (weechat protocol)
 | libaspell-dev          |             |          | aspell plugin
 | python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
 | libperl-dev            |             |          | perl plugin

@@ -93,8 +93,11 @@ welche Pakete optional genutzt werden können.
 | libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | libgcrypt11-dev        |             |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
-| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server
+// TRANSLATION MISSING
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, support of SSL in relay plugin (weechat protocol)
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
+// TRANSLATION MISSING
+| zlib1g-dev             |             |          | compression of packets in relay plugin (weechat protocol)
 | libaspell-dev          |             |          | aspell Erweiterung
 | python-dev             | ≥ 2.5 ^(3)^ |          | python Erweiterung
 | libperl-dev            |             |          | perl Erweiterung
