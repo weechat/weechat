@@ -94,7 +94,7 @@ welche Pakete optional genutzt werden können.
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | libgcrypt11-dev        |             |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
 // TRANSLATION MISSING
-| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, support of SSL in relay plugin (weechat protocol)
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, support of SSL in relay plugin
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
 // TRANSLATION MISSING
 | zlib1g-dev             |             |          | compression of packets in relay plugin (weechat protocol)

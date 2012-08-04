@@ -98,7 +98,7 @@ compilare WeeChat.
 | gettext                |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | libgcrypt11-dev        |             |           | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
 // TRANSLATION MISSING
-| libgnutls-dev          | ≥ 2.2.0     |           | connessione SSL al server IRC, support of SSL in relay plugin (weechat protocol)
+| libgnutls-dev          | ≥ 2.2.0     |           | connessione SSL al server IRC, support of SSL in relay plugin
 | ca-certificates        |             |           | certificati per le connessioni SSL
 // TRANSLATION MISSING
 | zlib1g-dev             |             |           | compression of packets in relay plugin (weechat protocol)

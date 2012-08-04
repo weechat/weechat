@@ -95,7 +95,7 @@ compiler WeeChat.
 | libcurl4-gnutls-dev    |             | *oui*  | transfert d'URL
 | gettext                |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
 | libgcrypt11-dev        |             |        | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
-| libgnutls-dev          | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay (protocole weechat)
+| libgnutls-dev          | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
 | ca-certificates        |             |        | certificats pour les connexions SSL
 // TRANSLATION MISSING
 | zlib1g-dev             |             |        | compression des paquets dans l'extension relay (protocole weechat)
