@@ -2569,6 +2569,38 @@ weechat_printf (NULL, "date: %s",
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+weechat_util_version_number
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.3.9._
+
+Convertit une chaîne avec la version WeeChat en nombre.
+
+Prototype :
+
+[source,C]
+----------------------------------------
+int weechat_util_version_number (const char *version);
+----------------------------------------
+
+Paramètres :
+
+* 'version' : version WeeChat sous forme de chaîne (exemple: "0.3.9" ou
+  "0.3.9-dev")
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+version_number = weechat_util_version_number ("0.3.8");     /* == 0x00030800 */
+version_number = weechat_util_version_number ("0.3.9-dev"); /* == 0x00030900 */
+version_number = weechat_util_version_number ("0.3.9-rc1"); /* == 0x00030900 */
+version_number = weechat_util_version_number ("0.3.9");     /* == 0x00030900 */
+----------------------------------------
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 [[sorted_lists]]
 Listes triées
 ~~~~~~~~~~~~~

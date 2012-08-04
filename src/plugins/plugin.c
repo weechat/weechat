@@ -550,6 +550,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->util_timeval_diff = &util_timeval_diff;
         new_plugin->util_timeval_add = &util_timeval_add;
         new_plugin->util_get_time_string = &util_get_time_string;
+        new_plugin->util_version_number = &util_version_number;
 
         new_plugin->list_new = &weelist_new;
         new_plugin->list_add = &weelist_add;

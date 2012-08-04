@@ -46,7 +46,7 @@ struct timeval;
  */
 
 /* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20120720-01"
+#define WEECHAT_PLUGIN_API_VERSION "20120804-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -279,6 +279,7 @@ struct t_weechat_plugin
     long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*util_timeval_add) (struct timeval *tv, long interval);
     char *(*util_get_time_string) (const time_t *date);
+    int (*util_version_number) (const char *version);
 
     /* sorted lists */
     struct t_weelist *(*list_new) ();
@@ -1052,6 +1053,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->util_timeval_add(__time, __interval)
 #define weechat_util_get_time_string(__date)                            \
     weechat_plugin->util_get_time_string(__date)
+#define weechat_util_version_number(__version)                          \
+    weechat_plugin->util_version_number(__version)
 
 /* sorted list */
 #define weechat_list_new()                                              \
