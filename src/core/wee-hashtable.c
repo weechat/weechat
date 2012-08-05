@@ -375,7 +375,7 @@ hashtable_get_item (struct t_hashtable *hashtable, const void *key,
     unsigned int key_hash;
     struct t_hashtable_item *ptr_item;
 
-    if (!hashtable)
+    if (!hashtable || !key)
         return NULL;
 
     key_hash = hashtable->callback_hash_key (hashtable, key);
