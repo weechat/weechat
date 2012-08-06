@@ -516,9 +516,10 @@ network_connect_child (struct t_hook *hook_connect)
 {
     struct t_proxy *ptr_proxy;
     struct addrinfo hints, *res, *res_local, *ptr_res;
-    char status_str[2], *ptr_address, *status_ok_with_address;
+    char status_str[2], *ptr_address, *status_with_string;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
-    char status_ok_without_address[1 + 5 + 1];
+    char status_without_string[1 + 5 + 1];
+    const char *error;
     int rc, length, num_written;
 
     res = NULL;
@@ -534,9 +535,10 @@ network_connect_child (struct t_hook *hook_connect)
         if (!ptr_proxy)
         {
             /* proxy not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             return;
         }
@@ -549,21 +551,47 @@ network_connect_child (struct t_hook *hook_connect)
         hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6])) ?
             AF_INET6 : AF_INET;
         hints.ai_socktype = SOCK_STREAM;
-        if (getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]), NULL, &hints, &res) !=0)
+        rc = getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]), NULL, &hints, &res);
+        if (rc != 0)
         {
             /* address not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+            status_with_string = NULL;
+            error = gai_strerror (rc);
+            if (error)
+            {
+                length = 1 + 5 + strlen (error) + 1;
+                status_with_string = malloc (length);
+                if (status_with_string)
+                {
+                    snprintf (status_with_string, length, "%c%05d%s",
+                              '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+                              (int)strlen (error), error);
+                }
+            }
+            if (status_with_string)
+            {
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_with_string, strlen (status_with_string));
+            }
+            else
+            {
+                snprintf (status_without_string, sizeof (status_without_string),
+                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_without_string, strlen (status_without_string));
+            }
+            if (status_with_string)
+                free (status_with_string);
             (void) num_written;
             return;
         }
         if (!res)
         {
             /* adddress not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             return;
         }
@@ -571,9 +599,10 @@ network_connect_child (struct t_hook *hook_connect)
             || ((!CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]) && (res->ai_family != AF_INET))))
         {
             /* IP address not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             freeaddrinfo (res);
             return;
@@ -589,9 +618,10 @@ network_connect_child (struct t_hook *hook_connect)
                      res->ai_addr, res->ai_addrlen) != 0)
         {
             /* connection refused */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             freeaddrinfo (res);
             return;
@@ -603,9 +633,10 @@ network_connect_child (struct t_hook *hook_connect)
                                  HOOK_CONNECT(hook_connect, port)))
         {
             /* proxy fails to connect to peer */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             freeaddrinfo (res);
             return;
@@ -624,16 +655,52 @@ network_connect_child (struct t_hook *hook_connect)
             hints.ai_socktype = SOCK_STREAM;
             rc = getaddrinfo (HOOK_CONNECT(hook_connect, local_hostname),
                               NULL, &hints, &res_local);
-            if ((rc != 0) || !res_local
-                || (HOOK_CONNECT(hook_connect, ipv6)
-                    && (res_local->ai_family != AF_INET6))
-                || ((!HOOK_CONNECT(hook_connect, ipv6)
-                     && (res_local->ai_family != AF_INET))))
+            if (rc != 0)
             {
                 /* fails to set local hostname/IP */
-                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                status_with_string = NULL;
+                error = gai_strerror (rc);
+                if (error)
+                {
+                    length = 1 + 5 + strlen (error) + 1;
+                    status_with_string = malloc (length);
+                    if (status_with_string)
+                    {
+                        snprintf (status_with_string, length, "%c%05d%s",
+                                  '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
+                                  (int)strlen (error), error);
+                    }
+                }
+                if (status_with_string)
+                {
+                    num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                         status_with_string, strlen (status_with_string));
+                }
+                else
+                {
+                    snprintf (status_without_string, sizeof (status_without_string),
+                              "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
+                    num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                         status_without_string, strlen (status_without_string));
+                }
+                if (status_with_string)
+                    free (status_with_string);
+                (void) num_written;
+                if (res_local)
+                    freeaddrinfo (res_local);
+                return;
+            }
+            else if (!res_local
+                     || (HOOK_CONNECT(hook_connect, ipv6)
+                         && (res_local->ai_family != AF_INET6))
+                     || ((!HOOK_CONNECT(hook_connect, ipv6)
+                          && (res_local->ai_family != AF_INET))))
+            {
+                /* fails to set local hostname/IP */
+                snprintf (status_without_string, sizeof (status_without_string),
+                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
                 num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_str, 1);
+                                     status_without_string, strlen (status_without_string));
                 (void) num_written;
                 if (res_local)
                     freeaddrinfo (res_local);
@@ -643,9 +710,10 @@ network_connect_child (struct t_hook *hook_connect)
                       res_local->ai_addr, res_local->ai_addrlen) < 0)
             {
                 /* fails to set local hostname/IP */
-                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                snprintf (status_without_string, sizeof (status_without_string),
+                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
                 num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_str, 1);
+                                     status_without_string, strlen (status_without_string));
                 (void) num_written;
                 if (res_local)
                     freeaddrinfo (res_local);
@@ -659,12 +727,49 @@ network_connect_child (struct t_hook *hook_connect)
         hints.ai_socktype = SOCK_STREAM;
         rc = getaddrinfo (HOOK_CONNECT(hook_connect, address),
                           NULL, &hints, &res);
-        if ((rc != 0) || !res)
+        if (rc != 0)
+        {
+            status_with_string = NULL;
+            error = gai_strerror (rc);
+            if (error)
+            {
+                length = 1 + 5 + strlen (error) + 1;
+                status_with_string = malloc (length);
+                if (status_with_string)
+                {
+                    snprintf (status_with_string, length, "%c%05d%s",
+                              '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+                              (int)strlen (error), error);
+                }
+            }
+            if (status_with_string)
+            {
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_with_string, strlen (status_with_string));
+            }
+            else
+            {
+                snprintf (status_without_string, sizeof (status_without_string),
+                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+                num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                     status_without_string, strlen (status_without_string));
+            }
+            if (status_with_string)
+                free (status_with_string);
+            (void) num_written;
+            if (res)
+                freeaddrinfo (res);
+            if (res_local)
+                freeaddrinfo (res_local);
+            return;
+        }
+        else if (!res)
         {
             /* address not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_str, 1);
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
             if (res)
                 freeaddrinfo (res);
@@ -704,7 +809,7 @@ network_connect_child (struct t_hook *hook_connect)
 
     if (status_str[0] == '0' + WEECHAT_HOOK_CONNECT_OK)
     {
-        status_ok_with_address = NULL;
+        status_with_string = NULL;
         ptr_address = NULL;
         if (HOOK_CONNECT(hook_connect, ipv6))
         {
@@ -729,34 +834,36 @@ network_connect_child (struct t_hook *hook_connect)
         if (ptr_address)
         {
             length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
-            status_ok_with_address = malloc (length);
-            if (status_ok_with_address)
+            status_with_string = malloc (length);
+            if (status_with_string)
             {
-                snprintf (status_ok_with_address, length, "%s%05d%s",
+                snprintf (status_with_string, length, "%s%05d%s",
                           status_str, (int)strlen (ptr_address), ptr_address);
             }
         }
 
-        if (status_ok_with_address)
+        if (status_with_string)
         {
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_ok_with_address, strlen (status_ok_with_address));
+                                 status_with_string, strlen (status_with_string));
             (void) num_written;
-            free (status_ok_with_address);
+            free (status_with_string);
         }
         else
         {
-            snprintf (status_ok_without_address, sizeof (status_ok_without_address),
-                      "%s%05d", status_str, 0);
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%s00000", status_str);
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_ok_without_address, strlen (status_ok_without_address));
+                                 status_without_string, strlen (status_without_string));
             (void) num_written;
         }
     }
     else
     {
+        snprintf (status_without_string, sizeof (status_without_string),
+                  "%s00000", status_str);
         num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                             status_str, 1);
+                             status_without_string, strlen (status_without_string));
         (void) num_written;
     }
 
@@ -905,9 +1012,9 @@ int
 network_connect_child_read_cb (void *arg_hook_connect, int fd)
 {
     struct t_hook *hook_connect;
-    char buffer[1], buf_size_ip[6], *ip_address, *error;
+    char buffer[1], buf_size[6], *cb_error, *cb_ip_address, *error;
     int num_read;
-    long size_ip;
+    long size_msg;
 #ifdef HAVE_GNUTLS
     int rc, direction;
 #endif
@@ -917,7 +1024,8 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 
     hook_connect = (struct t_hook *)arg_hook_connect;
 
-    ip_address = NULL;
+    cb_error = NULL;
+    cb_ip_address = NULL;
 
     num_read = read (HOOK_CONNECT(hook_connect, child_read),
                      buffer, sizeof (buffer));
@@ -925,26 +1033,27 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     {
         if (buffer[0] - '0' == WEECHAT_HOOK_CONNECT_OK)
         {
-            buf_size_ip[5] = '\0';
+            /* connection ok, read IP address */
+            buf_size[5] = '\0';
             num_read = read (HOOK_CONNECT(hook_connect, child_read),
-                             buf_size_ip, 5);
+                             buf_size, 5);
             if (num_read == 5)
             {
                 error = NULL;
-                size_ip = strtol (buf_size_ip, &error, 10);
-                if (error && !error[0])
+                size_msg = strtol (buf_size, &error, 10);
+                if (error && !error[0] && (size_msg > 0))
                 {
-                    ip_address = malloc (size_ip + 1);
-                    if (ip_address)
+                    cb_ip_address = malloc (size_msg + 1);
+                    if (cb_ip_address)
                     {
                         num_read = read (HOOK_CONNECT(hook_connect, child_read),
-                                         ip_address, size_ip);
-                        if (num_read == size_ip)
-                            ip_address[size_ip] = '\0';
+                                         cb_ip_address, size_msg);
+                        if (num_read == size_msg)
+                            cb_ip_address[size_msg] = '\0';
                         else
                         {
-                            free (ip_address);
-                            ip_address = NULL;
+                            free (cb_ip_address);
+                            cb_ip_address = NULL;
                         }
                     }
                 }
@@ -980,7 +1089,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                     unhook (HOOK_CONNECT(hook_connect, hook_fd));
                     HOOK_CONNECT(hook_connect, hook_fd) = NULL;
                     direction = gnutls_record_get_direction (*HOOK_CONNECT(hook_connect, gnutls_sess));
-                    HOOK_CONNECT(hook_connect, handshake_ip_address) = ip_address;
+                    HOOK_CONNECT(hook_connect, handshake_ip_address) = cb_ip_address;
                     HOOK_CONNECT(hook_connect, handshake_hook_fd) =
                         hook_fd (hook_connect->plugin,
                                  HOOK_CONNECT(hook_connect, sock),
@@ -1002,10 +1111,10 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
                          rc,
                          gnutls_strerror (rc),
-                         ip_address);
+                         cb_ip_address);
                     unhook (hook_connect);
-                    if (ip_address)
-                        free (ip_address);
+                    if (cb_ip_address)
+                        free (cb_ip_address);
                     return WEECHAT_RC_OK;
                 }
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
@@ -1023,23 +1132,54 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
                          rc,
                          "Error in the certificate.",
-                         ip_address);
+                         cb_ip_address);
                     unhook (hook_connect);
-                    if (ip_address)
-                        free (ip_address);
+                    if (cb_ip_address)
+                        free (cb_ip_address);
                     return WEECHAT_RC_OK;
                 }
 #endif
             }
 #endif
         }
+        else
+        {
+            /* connection error, read error */
+            buf_size[5] = '\0';
+            num_read = read (HOOK_CONNECT(hook_connect, child_read),
+                             buf_size, 5);
+            if (num_read == 5)
+            {
+                error = NULL;
+                size_msg = strtol (buf_size, &error, 10);
+                if (error && !error[0] && (size_msg > 0))
+                {
+                    cb_error = malloc (size_msg + 1);
+                    if (cb_error)
+                    {
+                        num_read = read (HOOK_CONNECT(hook_connect, child_read),
+                                         cb_error, size_msg);
+                        if (num_read == size_msg)
+                            cb_error[size_msg] = '\0';
+                        else
+                        {
+                            free (cb_error);
+                            cb_error = NULL;
+                        }
+                    }
+                }
+            }
+        }
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data, buffer[0] - '0', 0, NULL, ip_address);
+            (hook_connect->callback_data, buffer[0] - '0', 0,
+             cb_error, cb_ip_address);
         unhook (hook_connect);
     }
 
-    if (ip_address)
-        free (ip_address);
+    if (cb_error)
+        free (cb_error);
+    if (cb_ip_address)
+        free (cb_ip_address);
 
     return WEECHAT_RC_OK;
 }
