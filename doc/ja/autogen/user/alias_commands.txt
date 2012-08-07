@@ -1,0 +1,34 @@
+[[command_alias_alias]]
+[command]*`alias`* コマンドの別名を作成::
+........................................
+/alias  [-completion <completion>] <alias> [<command> [;<command>...]]
+
+completion: 別名の補完 (オプション、デフォルトではターゲットコマンドを伴って補完される)
+            注意: %%command で存在するコマンドの補完を利用可能
+     alias: 別名の名前 ("*" で始めるか終われば別名をリストアップ)
+   command: 引数を含めたコマンド名 (セミコロンで分割すれば複数のコマンドを指定できる)
+
+引数無しでは、定義済み別名をリストアップ。
+
+注意: command の中では、特殊変数の置換が行われる:
+        $n: 'n' 番目の引数 (1 から 9)
+       $-m: 1 から 'm' 番目の引数
+       $n-: 'n' 番目から最後の引数
+      $n-m: 'n' から 'm' 番目の引数
+        $*: 全ての引数
+        $~: 最後の引数
+     $nick: 現在のニックネーム
+  $channel: 現在のチャンネル
+   $server: 現在のサーバ
+
+別名を削除するには /unalias コマンドを使ってください:
+
+例:
+  /split をウィンドウを水平方向に分割する別名と定義:
+    /alias split /window splith
+  /hello を #weechat を除く全てのチャンネルで "hello" と発言する別名と定義:
+    /alias hello /allchan -exclude=#weechat msg * hello
+  /forcejoin を /sajoin の補完候補を使い IRC コマンド "forcejoin" を送信する別名と定義:
+    /alias -completion %%sajoin forcejoin /quote forcejoin
+........................................
+

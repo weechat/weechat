@@ -1,0 +1,36 @@
+[[command_demo_demo_buffer]]
+[command]*`demo_buffer`* 新しいバッファを開く::
+........................................
+/demo_buffer  <name>
+........................................
+
+[[command_demo_demo_info]]
+[command]*`demo_info`* 情報を取得して表示::
+........................................
+/demo_info  <info> [<arguments>]
+
+     info: 表示する情報
+arguments: 情報のオプション引数
+
+引数のない場合、利用可能な情報のリストを表示
+........................................
+
+[[command_demo_demo_infolist]]
+[command]*`demo_infolist`* infolist を取得して表示::
+........................................
+/demo_infolist  <infolist> [<arguments>]
+
+ infolist: 表示する infolist
+arguments: infolist のオプション引数
+
+引数のない場合、利用可能な infolist のリストを表示
+........................................
+
+[[command_demo_demo_printf]]
+[command]*`demo_printf`* 現在のバッファにいつかメッセージを表示::
+........................................
+/demo_printf  <text>
+
+text: このテキストを書き込み
+........................................
+

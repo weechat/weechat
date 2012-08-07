@@ -1,0 +1,85 @@
+* [[option_relay.color.client]] *relay.color.client*
+** 説明: `text color for client description`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
+
+* [[option_relay.color.status_active]] *relay.color.status_active*
+** 説明: `"接続済み" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightblue`)
+
+* [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
+** 説明: `"認証失敗" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+
+* [[option_relay.color.status_connecting]] *relay.color.status_connecting*
+** 説明: `"接続中" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
+** 説明: `"接続切断" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+
+* [[option_relay.color.status_waiting_auth]] *relay.color.status_waiting_auth*
+** 説明: `"認証待ち" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `brown`)
+
+* [[option_relay.color.text]] *relay.color.text*
+** 説明: `text color in relay buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_relay.color.text_bg]] *relay.color.text_bg*
+** 説明: `background color in relay buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_relay.color.text_selected]] *relay.color.text_selected*
+** 説明: `text color of selected line in relay buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
+** 説明: `新しいクライアントが接続したらリレーバッファを自動的に開く`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_relay.look.raw_messages]] *relay.look.raw_messages*
+** 説明: `生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データバッファを開いたときに表示されるメッセージ)`
+** タイプ: 整数
+** 値: 0 .. 65535 (デフォルト値: `256`)
+
+* [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
+** 説明: `リレーに使用する IP アドレスの正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り)、例: "^(123.45.67.89|192.160.*)$"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_relay.network.bind_address]] *relay.network.bind_address*
+** 説明: `割り当てるアドレス (空の場合、全てのインターフェイスからの接続を受け付ける、"127.0.0.1" を使えばローカルマシンからの接続のみ許可)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_relay.network.compression_level]] *relay.network.compression_level*
+** 説明: `WeeChat プロトコルでクライアントに送信するパケットの圧縮レベル (0 = 圧縮しない、1 = 低圧縮 ... 9 = 高圧縮)`
+** タイプ: 整数
+** 値: 0 .. 9 (デフォルト値: `6`)
+
+* [[option_relay.network.max_clients]] *relay.network.max_clients*
+** 説明: `ポートに接続するクライアントの最大数`
+** タイプ: 整数
+** 値: 1 .. 1024 (デフォルト値: `5`)
+
+* [[option_relay.network.password]] *relay.network.password*
+** 説明: `このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
+** 説明: `file with SSL certificate and private key (for serving clients with SSL)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%h/ssl/relay.pem"`)
+

@@ -1,0 +1,707 @@
+[[command_weechat_away]]
+[command]*`away`* 離席状態を変更しました::
+........................................
+/away  [-all] [<message>]
+
+   -all: 全ての接続済みサーバに対して離席状態を変更
+message: 離席メッセージ (メッセージが無い場合は、離席状態を解除)
+........................................
+
+[[command_weechat_bar]]
+[command]*`bar`* バーの管理::
+........................................
+/bar  list|listfull|listitems
+      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      default [input|title|status|nicklist]
+      del <name>|-all
+      set <name> <option> <value>
+      hide|show|toggle <name>
+      scroll <name> <window> <scroll_value>
+
+         list: 全てのバーをリストアップ
+     listfull: 全てのバーをリストアップ (詳細)
+    listitems: 全てのバーアイテムをリストアップ
+          add: 新しいバーを追加
+         name: バーの名称 (ユニークな)
+         type:   root: 外側のウィンドウ、
+               window: 内側のウィンドウ、任意の状態を取れる (以下を参照)
+    cond1,...: バーの表示状態 (タイプが "window" のバー以外は無効):
+                 active: アクティブウィンドウに表示
+               inactive: 非アクティブウィンドウに表示
+               nicklist: ニックネームリストを持つウィンドウに表示
+               表示状態の指定が無ければ、バーは常に表示されます。
+     position: bottom、top、left、right
+         size: バーのサイズ (文字数で指定)
+    separator: 1 はセパレータ (線) を使用、0 または指定無しはセパレータ無し
+    item1,...: バーのアイテム (アイテムはコンマ (アイテム間にスペース) または "+" (アイテム間にスペース無し) で区切ります)
+      default: デフォルトバーを作成 (バーの名前が無ければ全てのデフォルトバーが作成されます)
+          del: バーを削除 (-all を付ければ全てのバーを削除)
+          set: バー属性に値を設定
+       option: 変更するオプション (オプション一覧は /set weechat.bar.<barname>.* を参照)
+        value: オプションの新しい値
+         hide: バーを隠す
+         show: 隠されたバーを表示
+       toggle: バーの非表示/表示を切り替え
+       scroll: バーをスクロール
+       window: ウィンドウ番号 (現在のウィンドウかルートバーを指定するには '*' を使う)
+ scroll_value: スクロールする量: 'x' または 'y' (任意)の後に、'+' か '-' か 'b' (最初) か 'e' (最後)の後に、値 (+/- を付けて)、任意で % (スクロールする幅/高さの割合、% が無ければ値は文字数と解釈されます)
+
+例:
+  時間、バー番号 + 名前、補完候補からなるバーを作成:
+    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  バーを隠す:
+    /bar hide mybar
+  現在のバッファに対応したニックネームリストを10行分、下方向にスクロール:
+    /bar scroll nicklist * y+10
+  現在のバッファに対応したニックネームリストを最後までスクロール:
+    /bar scroll nicklist * ye
+........................................
+
+[[command_weechat_buffer]]
+[command]*`buffer`* バッファを管理::
+........................................
+/buffer  list
+         clear [<number>|<name>|-merged|-all]
+         move|merge <number>
+         swap <number1>|<name1> [<number2>|<name2>]
+         unmerge [<number>|-all]
+         close [<n1>[-<n2>]|<name>]
+         notify <level>
+         localvar
+         set <property> <value>
+         get <property>
+         <number>|<name>
+
+    list: list buffers (without argument, this list is displayed)
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1)
+    swap: swap two buffers (swap with current buffer if only one number/name given)
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+   close: close buffer (number/range or name is optional)
+  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+localvar: display local variables for current buffer
+     set: set a property for current buffer
+     get: display a property of current buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+    name: jump to buffer by (partial) name
+
+Examples:
+  clear current buffer:
+    /buffer clear
+  move buffer to number 5:
+    /buffer move 5
+  swap buffer 1 with 3:
+    /buffer swap 1 3
+  swap buffer #weechat with current buffer:
+    /buffer swap #weechat
+  merge with core buffer:
+    /buffer merge 1
+  unmerge buffer:
+    /buffer unmerge
+  close current buffer:
+    /buffer close
+  close buffers 5 to 7:
+    /buffer close 5-7
+  jump to #weechat:
+    /buffer #weechat
+  jump to next buffer:
+    /buffer +1
+........................................
+
+[[command_weechat_color]]
+[command]*`color`* 色の別名を定義し、カラーパレットを表示する::
+........................................
+/color  alias <color> <name>
+        unalias <color>
+        reset
+
+  alias: ある色に別名を追加
+unalias: 別名の削除
+  color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)
+   name: カラーの別名 (例えば: "orange")
+  reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ以上のカラーペアが利用できない場合に必要、オプション weechat.look.color_pairs_auto_reset を参照)
+
+引数無しの場合、コマンドは新しいバッファに色を表示します。
+
+例:
+  色番号 214 に対応する別名 "orange" を追加:
+    /color alias 214 orange
+  色番号 214 を削除:
+    /color unalias 214
+........................................
+
+[[command_weechat_command]]
+[command]*`command`* WeeChat 自身かプラグインのコマンドを起動::
+........................................
+/command  <plugin> <command>
+
+ plugin: プラグインの名前 ('weechat' は WeeChat の内部コマンドを意味します)
+command: 実行するコマンド (コマンドの最初に '/' が無い場合、'/' が自動的に追加されます)
+........................................
+
+[[command_weechat_cursor]]
+[command]*`cursor`* スクリーン上のあるエリアに対するアクションを実行するためにカーソルを自由に移動::
+........................................
+/cursor  go chat|<bar>|<x>,<y>
+         move up|down|left|right|area_up|area_down|area_left|area_right
+         stop
+
+  go: チャットエリア、バー (バーの名前を使った場合)、座標 "x,y" にカーソルを移動
+move: 方向を指定してカーソルを移動
+stop: カーソルモードを終了
+
+引数が無ければ、カーソルモードを切り替えます。
+
+マウスが有効化されていた場合 (/help mouse を参照)、現在のところデフォルトではセンタークリックでカーソルモードが開始されます。
+
+例:
+  ニックネームリストに移動:
+    /cursor go nicklist
+  x=10、y=5 の位置に移動:
+    /cursor go 10,5
+........................................
+
+[[command_weechat_debug]]
+[command]*`debug`* coreやプラグインのデバッグ管理::
+........................................
+/debug  list
+        set <plugin> <level>
+        dump [<plugin>]
+        buffer|color|infolists|memory|tags|term|windows
+        mouse|cursor [verbose]
+        hdata [free]
+
+     list: デバッグレベルの設定されたプラグインをリストアップ
+      set: プラグインのデバッグレベルを設定
+   plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
+    level: プラグインのデバッグレベル (0 はデバッグの無効化)
+     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
+   buffer: ログファイルに16進値でバッファ内容をダンプ
+    color: 現在の色ペアに関する情報を表示
+   cursor: カーソルモードのデバッグを切り替え
+    hdata: hdata に関する情報を表示 (free を付ければ: メモリから全ての hdata を削除)
+    hooks: フックに関する情報を表示
+infolists: infolist に関する情報を表示
+   memory: メモリ使用量に関する情報を表示
+    mouse: マウスのデバックを切り替え
+     tags: 行のタグを表示
+     term: ターミナルに関する情報を表示
+  windows: ウィンドウツリーの情報を表示
+........................................
+
+[[command_weechat_filter]]
+[command]*`filter`* タグか正規表現に基づいてバッファのメッセージの非表示/表示を行う::
+........................................
+/filter  list
+         enable|disable|toggle [<name>]
+         add <name> <buffer>[,<buffer>...] <tags> <regex>
+         del <name>|-all
+
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前
+    add: フィルタを追加
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - 多くのバッファにマッチさせるためには名前を '*' から始めるか終わらせてください
+   tags: タグのコンマ区切りリスト、例えば: "irc_join,irc_part,irc_quit"
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
+
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
+
+よく使われるタグ:
+  no_filter, no_highlight, no_log, log0..log9 (log level),
+  notify_none, notify_message, notify_private, notify_highlight,
+  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニックネームの色)
+  irc_xxx (xxx はコマンド名又は番号、/server raw で確認),
+  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
+バッファ内でタグを見るには: /debug tags
+
+例:
+  全てのバッファで IRC スマートフィルタを使用:
+    /filter add irc_smart * irc_smart_filter *
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
+    /filter add irc_smart *,!*#weechat* irc_smart_filter *
+  全ての IRC join/part/quit メッセージをフィルタ:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
+    /filter add nicks * irc_366 *
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
+    /filter add toto irc.freenode.#weechat nick_toto *
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
+    /filter add sucks irc.freenode.#weechat * weechat sucks
+........................................
+
+[[command_weechat_help]]
+[command]*`help`* コマンドとオプションに関するヘルプを表示::
+........................................
+/help  -list|-listfull [<plugin> [<plugin>...]]
+       <command>
+       <option>
+
+    -list: プラグイン毎にコマンドをリストアップ (引数が無ければ、このリストを表示)
+-listfull: プラグイン毎に説明付きでコマンドをリストアップ
+   plugin: このプラグインに関するコマンドをリストアップ
+  command: コマンドの名前
+   option: オプションの名前 (リストを見るには /set を使用)
+........................................
+
+[[command_weechat_history]]
+[command]*`history`* バッファコマンド履歴を表示::
+........................................
+/history  clear
+          <value>
+
+clear: 履歴の削除
+value: 表示する履歴エントリの数
+........................................
+
+[[command_weechat_input]]
+[command]*`input`* コマンドライン関数::
+........................................
+/input  <action> [<arguments>]
+
+アクションリスト:
+  return: "enter" キーをシミュレート
+  complete_next: 次の補完候補で単語を補完
+  complete_previous: 一つ前の補完候補で単語を補完
+  search_text: バッファ内のテキストを検索
+  search_switch_case: 完全一致検索に変更
+  search_previous: 一つ前の行を検索
+  search_next: 次の行を検索
+  search_stop: 検索を終了
+  delete_previous_char: 一つ前の文字を削除
+  delete_next_char: 次の文字を削除
+  delete_previous_word: 一つ前の単語を削除
+  delete_next_word: 次の単語を削除
+  delete_beginning_of_line: 行の最初からカーソル位置までを削除
+  delete_end_of_line: カーソルから行の最後までを削除
+  delete_line: 行を削除
+  clipboard_paste: クリップボードから貼り付け
+  transpose_chars: 2 つの文字を入れ替え
+  undo: 最新のコマンドラインアクションまで元に戻す
+  redo: 最新のコマンドラインアクションまでやり直す
+  move_beginning_of_line: カーソルを行頭に移動
+  move_end_of_line: カーソルを行末まで移動
+  move_previous_char: カーソルを一つ前の文字に移動
+  move_next_char: カーソルを次の文字に移動
+  move_previous_word: カーソルを一つ前の単語に移動
+  move_next_word: カーソルを次の単語に移動
+  history_previous: 現在のバッファ履歴のひとつ前のコマンドを再呼び出し
+  history_next: 現在のバッファ履歴の次のコマンドを再呼び出し
+  history_global_previous: グローバル履歴の一つ前のコマンドを再呼び出し
+  history_global_next: グローバル履歴の次のコマンドを再呼び出し
+  jump_smart: 次のアクティブバッファに飛ぶ
+  jump_last_buffer: 最後のバッファに移動
+  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
+  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
+  jump_next_visited_buffer: 次に訪れたバッファに移動
+  hotlist_clear: ホットリストを消去
+  grab_key: キーを横取りする (オプション引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_key_command: あるコマンドに関連してキーを横取りする (オプション引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_mouse: grab マウスイベントコードを横取り
+  grab_mouse_area: 範囲指定のマウスイベントコードを横取り
+  set_unread: 全てのバッファに対して未読マーカーを設定
+  set_unread_current_buffer: 現在のバッファに対して未読マーカーを設定
+  switch_active_buffer: 次のマージされたバッファに移動
+  switch_active_buffer_previous: 一つ前のマージされたバッファに移動
+  insert: コマンドラインにテキストを挿入
+  paste_start: ペーストの開始 (括弧付きペーストモード)
+  paste_stop: ペーストの終了 (括弧付きペーストモード)
+
+これらのコマンドはキーバインドかプラグインで利用できます。
+........................................
+
+[[command_weechat_key]]
+[command]*`key`* キーの割り当てと割り当て解除::
+........................................
+/key  list|listdefault|listdiff [<context>]
+      bind <key> [<command> [<args>]]
+      bindctxt <context> <key> [<command> [<args>]]
+      unbind <key>
+      unbindctxt <context> <key>
+      reset <key>
+      resetctxt <context> <key>
+      resetall -yes [<context>]
+      missing [<context>]
+
+       list: 現在のキーをリストアップ (引数無しの場合、このリストが表示されます)
+listdefault: デフォルトキーをリストアップ
+   listdiff: デフォルトと現在のキーの違いをリストアップ (追加、再定義、削除されたキー)
+    context: コンテキストの名前 ("default" または "search")
+       bind: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 ("default" コンテキストに対する)
+   bindctxt: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 (指定されたコンテキストに対する)
+    command: コマンド (複数のコマンドはセミコロンで分けて書く)
+     unbind: キーバインドを削除 ("default" コンテキストに対する)
+ unbindctxt: キーバインドを削除 (指定されたコンテキストに対する)
+      reset: キーをデフォルトの割り当てにリセットする ("default" コンテキストに対する)
+  resetctxt: キーをデフォルトの割り当てにリセットする (指定されたコンテキストに対する)
+   resetall: デフォルトの割り当てにリストアし、全ての個人的な設定を削除 (注意して使用!)
+    missing: 未割り当てのキーを追加 (デフォルトの割り当てに無い)、新しい WeeChat バージョンをインストールした後に便利
+
+キーにコマンドを割り当てる場合、alt+k (または Esc の後に k) した後に、割り当てたいキーを押すことをお勧めします: これはコマンドラインにキーコードを入力することになります。
+
+"mouse" コンテント ("cursor" コンテキストの一部) に対しては、キーは以下のフォーマット: "@area:key" または "@area1>area2:key"。 ここで、area は以下の値を取れます:
+          *: スクリーン上の任意のエリア
+       chat: チャットエリア (任意のバッファ)
+  chat(xxx): 名前 "xxx" を持つチャットエリア (プラグイン含む完全な名前)
+     bar(*): 任意のバー
+   bar(xxx): バー "xxx"
+    item(*): 任意のバーアイテム
+  item(xxx): バーアイテム "xxx"
+多くのマウスイベントにマッチさせるには '*' で開始または終了するキーを使います。
+"hsignal:name" というフォーマットのコマンドに対する特別な値はマウスコンテキストに使えます、これはフォーカスハッシュテーブルを引数にして hsignal "name" を送ります。
+その他の特別な値 "-" はキーを無効化するために利用されます。(これはキーの探索時には無視されます)
+
+例:
+  alt-x キーをニックネームリストバーに割り当てる:
+    /key bind meta-x /bar toggle nicklist
+  alt-r キーを #weechat IRC チャンネルへの移動に割り当てる:
+    /key bind meta-r /buffer #weechat
+  alt-r キーの割り当てをデフォルトに戻す:
+    /key reset meta-r
+  "tab" キーをバッファ検索の終了に割り当てる:
+    /key bindctxt search ctrl-I /input search_stop
+  ニック上でのマウスのセンターボタンをニックネームの情報取得に割り当てる:
+    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
+........................................
+
+[[command_weechat_layout]]
+[command]*`layout`* バッファとウィンドウのレイアウトを保存/適用/リセット::
+........................................
+/layout  save [buffers|windows]
+         apply [buffers|windows]
+         reset [buffers|windows]
+
+   save: 現在のレイアウトを保存
+  apply: 保存されたレイアウトを適用
+  reset: 保存されたレイアウトを削除
+buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
+windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
+
+引数無しでは、保存されたレイアウトを表示します。
+........................................
+
+[[command_weechat_mouse]]
+[command]*`mouse`* マウス操作::
+........................................
+/mouse  enable|disable|toggle [<delay>]
+
+ enable: マウスの有効化
+disable: マウスの無効化
+ toggle: マウスの有効無効の切り替え
+  delay: 初期マウス状態がリストアされてからの遅延時間 (秒単位) (一時的にマウスを無効化するときに便利)
+
+マウス状態はオプション "weechat.look.mouse" に保存されます。
+
+例:
+  マウスの有効化:
+    /mouse enable
+  5 秒間マウスの有効無効を切り替え:
+    /mouse toggle 5
+........................................
+
+[[command_weechat_mute]]
+[command]*`mute`* 静かにコマンドを実行::
+........................................
+/mute  [-current | -buffer <name> | -all] command
+
+-current: 現在のバッファへの出力を禁止
+ -buffer: 指定したバッファへの出力を禁止
+    name: 完全なバッファの名前 (例: "irc.server.freenode"、"irc.freenode.#weechat")
+    -all: 全てのバッファへの出力を禁止
+ command: 静かに実行するコマンド (最初に '/' が無い場合は自動的に追加されます)
+
+ターゲット (-current、-buffer、-all) が指定されなかった場合、デフォルトでは WeeChat コアバッファへの出力のみが抑制されます。
+
+例:
+  save を行う:
+    /mute save
+  現在の IRC チャンネルへのメッセージ:
+    /mute -current msg * hi!
+  #weechat チャンネルへのメッセージ:
+    /mute -buffer irc.freenode.#weechat msg #weechat hi!
+........................................
+
+[[command_weechat_plugin]]
+[command]*`plugin`* プラグインを表示/ロード/アンロード::
+........................................
+/plugin  list|listfull [<name>]
+         load <filename> [<arguments>]
+         autoload [<arguments>]
+         reload [<name> [<arguments>]]
+         unload [<name>]
+
+     list: ロードされたプラグインをリストアップ
+ listfull: ロードされたプラグインをリストアップ (詳細)
+     load: プラグインをロード
+ autoload: システムかユーザディレクトリ指定の自動ロードプラグインをロード
+   reload: プラグインを再ロード (名前が指定されない場合は、全てのプラグインをアンロードし、プラグインを自動ロード)
+   unload: プラグインのアンロード (名前が指定されない場合は、全てのプラグインをアンロード)
+ filename: ロードするプラグイン (ファイル)
+     name: プラグイン名
+arguments: ロードするプラグインに与える引数
+
+引数無しでは、ロードされたプラグインをリストアップ。
+........................................
+
+[[command_weechat_proxy]]
+[command]*`proxy`* プロキシの管理::
+........................................
+/proxy  list
+        add <name> <type> <address> <port> [<username> [<password>]]
+        del <name>|-all
+        set <name> <option> <value>
+
+    list: 全てのプロキシをリストアップ
+     add: 新しいプロキシを追加
+    name: プロキシの名前 (一意的な)
+    type: http、socks4、socks5
+ address: IP アドレスまたはホスト名
+    port: ポート
+username: ユーザ名 (任意)
+password: パスワード (任意)
+     del: プロキシの削除 (-all を付ければ全てのプロキシを削除)
+     set: プロキシのプロパティを設定
+  option: 変更するオプション (オプションリストを見るには、/set weechat.proxy.<proxyname>.*)
+   value: オプションに設定する新しい値
+
+例:
+  ローカルホストの 8888 番ポートで動いている http プロキシを作成:
+    /proxy add local http 127.0.0.1 8888
+  IPv6 プロトコルを使う http プロキシを作成:
+    /proxy add local http 127.0.0.1 8888
+    /proxy set local ipv6 on
+  ユーザ名とパスワードが必要な socks5 プロキシを作成:
+    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
+  プロキシを削除:
+    /proxy del myproxy
+........................................
+
+[[command_weechat_quit]]
+[command]*`quit`* WeeChat を終了::
+........................................
+/quit  [-yes] [<arguments>]
+
+     -yes: weechat.look.confirm_quit オプションが有効な場合に必要
+arguments: "quit" シグナルと共に送られるテキスト
+           (例えば irc プラグインはサーバに quit メッセージを送る際にこのテキストを使います)
+........................................
+
+[[command_weechat_reload]]
+[command]*`reload`* ディスクから設定ファイルを再読み込み::
+........................................
+/reload  [<file> [<file>...]]
+
+file: 再読み込みする設定ファイル (拡張子 ".conf" は不要)
+
+引数無しでは、全てのファイル (WeeChat とプラグイン) が再読み込みされます。
+........................................
+
+[[command_weechat_repeat]]
+[command]*`repeat`* 複数回コマンドを実行::
+........................................
+/repeat  [-interval <delay>] <count> <command>
+
+  delay: コマンドの実行間隔 (ミリ秒単位)
+  count: コマンドの実行回数
+command: 実行するコマンド (最初に '/' が無い場合は自動的に追加されます)
+
+全てのコマンドはこのコマンドが発行されたバッファで実行されます。
+
+例:
+  2 ページ分上方向にスクロール:
+    /repeat 2 /window page_up
+........................................
+
+[[command_weechat_save]]
+[command]*`save`* ディスクに設定ファイルを保存::
+........................................
+/save  [<file> [<file>...]]
+
+file: 保存する設定ファイル (拡張子 ".conf" は不要)
+
+引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。
+........................................
+
+[[command_weechat_set]]
+[command]*`set`* 設定オプションのセット::
+........................................
+/set  [<option> [<value>]]
+
+option: オプションの名前 (多くのオプションをリストアップするには、'*' で始めるか終わるかしてください)
+ value: オプションに対する新しい値
+
+新しいオプションは以下の変数型に従います:
+  boolean: on、off、toggle
+  integer: 番号、++番号、--番号
+  string : 任意の文字列 (空文字列は "")
+  color  : 色の名前、++色番号、--色番号
+
+どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
+
+例:
+  ハイライトに関するオプションを表示:
+    /set *highlight*
+  highlight に単語を追加:
+    /set weechat.look.highlight "word"
+........................................
+
+[[command_weechat_unset]]
+[command]*`unset`* 設定オプションをセット/リセット::
+........................................
+/unset  <option>
+
+option: オプションの名前 ("*" で始めるか終わるかすれば大量のオプションをリセットできます、注意して使用!)
+
+オプションの種類によって (一般的なオプションを) リセットまたは (サーバなどの任意な設定を) 削除が行われます。
+
+例:
+  オプションのリセット:
+    /unset weechat.look.item_time_format
+  全ての色関連オプションをリセット:
+    /unset weechat.color.*
+........................................
+
+[[command_weechat_upgrade]]
+[command]*`upgrade`* サーバとの接続を維持して WeeChat をアップグレード::
+........................................
+/upgrade  [<path_to_binary>]
+
+path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
+
+このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
+
+注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
+
+アップグレードは 4 つの手順を踏みます:
+  1. コアとプラグイン (バッファ、履歴、...) のセッションをファイルに保存
+  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込まれます)
+  3. WeeChat 設定を保存 (weechat.conf)
+  4. 新しい WeeChat バイナリを実行してセッションをリロード。
+........................................
+
+[[command_weechat_uptime]]
+[command]*`uptime`* WeeChat 連続稼働時間の表示::
+........................................
+/uptime  [-o | -ol]
+
+ -o: 連続稼働時間を現在のバッファの入力に送る (英語で)
+-ol: 連続稼働時間を現在のバッファの入力に送る (翻訳済み)
+........................................
+
+[[command_weechat_version]]
+[command]*`version`* WeeChat のバージョンとコンパイル日時を表示::
+........................................
+/version  [-o | -ol]
+
+ -o: バージョンを現在のバッファの入力に送る (英語で)
+-ol: バージョンを現在のバッファの入力に送る (翻訳済み)
+........................................
+
+[[command_weechat_wait]]
+[command]*`wait`* コマンドの実行を予約::
+........................................
+/wait  <number>[<unit>] <command>
+
+ number: 遅延時間 (整数)
+   unit: オプション、値は:
+           ms: ミリ秒
+            s: 秒 (デフォルト)
+            m: 分
+            h: 時
+command: 実行するコマンド (コマンドが '/' で始まらない場合はバッファに送信するテキスト)
+
+注意: コマンドは /wait が実行されたバッファで実行されます (バッファが見つからない場合 (例えばコマンド実行前にバッファが閉じられた場合) は、コマンドは WeeChat コアバッファで実行されます)。
+
+例:
+  10 秒後にチャンネルに入る:
+    /wait 10 /join #test
+  15 分後に離席状態に変更:
+    /wait 15m /away -all I'm away
+  2 分後に 'hello' と発言:
+    /wait 2m hello
+........................................
+
+[[command_weechat_window]]
+[command]*`window`* ウィンドウのマージ::
+........................................
+/window  list
+         -1|+1|b#|up|down|left|right [-window <number>]
+         <number>
+         splith|splitv [-window <number>] [<pct>]
+         resize [-window <number>] [+/-]<pct>
+         balance
+         merge [-window <number>] [all]
+         page_up|page_down [-window <number>]
+         refresh
+         scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
+         scroll_horiz [-window <number>] [+/-]<value>[%]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
+         swap [-window <number>] [up|down|left|right]
+         zoom[-window <number>]
+
+         list: 開けられたウィンドウのリストアップ (引数無しの場合、このリストが表示されます)
+           -1: 前のウィンドウに移動
+           +1: 次のウィンドウに移動
+           b#: バッファ番号 # のウィンドウに移動
+           up: 現在のウィンドウの上のウィンドウに移動
+         down: 現在のウィンドウの下のウィンドウに移動
+         left: 左のウィンドウに移動
+        right: 右のウィンドウに移動
+       number: ウィンドウ番号 (/window list を参照)
+       splith: 現在のウィンドウを水平分割
+       splitv: 現在のウィンドウを垂直分割
+       resize: ウィンドウサイズの変更、新しいサイズは親ウィンドウの <pct> パーセントで指定
+      balance: 全てのウィンドウのサイズを均等にする
+        merge: ウィンドウを他のものをマージする (all = 一つのウィンドウにまとめる)
+      page_up: 1 ページ分上方向にスクロール
+    page_down: 1 ページ分下方向にスクロール
+      refresh: スクリーンのリフレッシュ
+       scroll: 指定行数 (+/-N) か指定期間 (s=秒、m=分、h=時間、d=日、M=月、y=年) スクロール
+ scroll_horiz: 指定列数 (+/-N) かウィンドウサイズの割合で水平方向にスクロール (フリーコンテンツを含むバッファ以外は無効)
+    scroll_up: 数行分上方向にスクロール
+  scroll_down: 数行分下方向にスクロール
+   scroll_top: バッファの一番上にスクロール
+scroll_bottom: バッファの一番下にスクロール
+scroll_previous_highlight: 一つ前のハイライトにスクロール
+scroll_next_highlight: 次のハイライトにスクロール
+scroll_unread: 未読マーカにスクロール
+         swap: 2 つのウィンドウのバッファを入れ替え (ターゲットウィンドウの方向が引数)
+         zoom: ウィンドウを拡大
+
+splith と splitv に関しては、pct は新しいウィンドウのパーセンテージで、現在のウィンドウサイズに対する割合で計算されます。例えば、25 は size = current_size / 4 の新しいウィンドウを作成します。
+
+例:
+  バッファ #1 を表示しているウィンドウに移動:
+    /window b1
+  2 行分上方向にスクロール:
+    /window scroll -2
+  2 日分上方向にスクロール:
+    /window scroll -2d
+  今日の最初にスクロール:
+    /window scroll -d
+  ウィンドウ #2 を拡大:
+    /window zoom -window 2
+........................................
+

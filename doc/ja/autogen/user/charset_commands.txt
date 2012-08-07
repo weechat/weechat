@@ -1,0 +1,12 @@
+[[command_charset_charset]]
+[command]*`charset`* 現在のバッファの文字集合を変更::
+........................................
+/charset  decode|encode <charset>
+          reset
+
+ decode: デコード文字集合を変更
+ encode: エンコード文字集合を変更
+charset: 現在のバッファの新しい文字集合
+  reset: 現在のバッファの文字集合をリセット
+........................................
+

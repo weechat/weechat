@@ -1,0 +1,678 @@
+[width="100%",cols="^1,^2,5,5,5",options="header"]
+|========================================
+| プラグイン | 名前 | 説明 | 変数 | リスト
+
+| guile | guile_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'guile_script') +
+  'next_script' (pointer, hdata: 'guile_script') |
+  'last_script' +
+  'scripts'
+
+| irc | irc_channel | irc チャンネル |
+  'type' (integer) +
+  'name' (string) +
+  'topic' (string) +
+  'modes' (string) +
+  'limit' (integer) +
+  'key' (string) +
+  'names_received' (integer) +
+  'checking_away' (integer) +
+  'away_message' (string) +
+  'has_quit_server' (integer) +
+  'cycle' (integer) +
+  'part' (integer) +
+  'nick_completion_reset' (integer) +
+  'pv_remote_nick_color' (string) +
+  'hook_autorejoin' (pointer) +
+  'nicks_count' (integer) +
+  'nicks' (pointer, hdata: 'irc_nick') +
+  'last_nick' (pointer, hdata: 'irc_nick') +
+  'nicks_speaking' (pointer) +
+  'nicks_speaking_time' (pointer, hdata: 'irc_channel_speaking') +
+  'last_nick_speaking_time' (pointer, hdata: 'irc_channel_speaking') +
+  'buffer' (pointer, hdata: 'buffer') +
+  'buffer_as_string' (string) +
+  'prev_channel' (pointer, hdata: 'irc_channel') +
+  'next_channel' (pointer, hdata: 'irc_channel') |
+  -
+
+| irc | irc_channel_speaking | irc 会話中チャンネル |
+  'nick' (string) +
+  'time_last_message' (time) +
+  'prev_nick' (pointer, hdata: 'irc_channel_speaking') +
+  'next_nick' (pointer, hdata: 'irc_channel_speaking') |
+  -
+
+| irc | irc_ignore | irc 無視 |
+  'number' (integer) +
+  'mask' (string) +
+  'regex_mask' (pointer) +
+  'server' (string) +
+  'channel' (string) +
+  'prev_ignore' (pointer, hdata: 'irc_ignore') +
+  'next_ignore' (pointer, hdata: 'irc_ignore') |
+  'irc_ignore_list' +
+  'last_irc_ignore'
+
+| irc | irc_nick | irc ニックネーム |
+  'name' (string) +
+  'host' (string) +
+  'prefixes' (string) +
+  'prefix' (string) +
+  'away' (integer) +
+  'color' (string) +
+  'prev_nick' (pointer, hdata: 'irc_nick') +
+  'next_nick' (pointer, hdata: 'irc_nick') |
+  -
+
+| irc | irc_notify | irc 通知 |
+  'server' (pointer, hdata: 'irc_server') +
+  'nick' (string) +
+  'check_away' (integer) +
+  'is_on_server' (integer) +
+  'away_message' (string) +
+  'ison_received' (integer) +
+  'prev_notify' (pointer, hdata: 'irc_notify') +
+  'next_notify' (pointer, hdata: 'irc_notify') |
+  -
+
+| irc | irc_redirect | irc リダイレクト |
+  'server' (pointer, hdata: 'irc_server') +
+  'pattern' (string) +
+  'signal' (string) +
+  'count' (integer) +
+  'current_count' (integer) +
+  'string' (string) +
+  'timeout' (integer) +
+  'command' (string) +
+  'assigned_to_command' (integer) +
+  'start_time' (time) +
+  'cmd_start' (hashtable) +
+  'cmd_stop' (hashtable) +
+  'cmd_extra' (hashtable) +
+  'cmd_start_received' (integer) +
+  'cmd_stop_received' (integer) +
+  'cmd_filter' (hashtable) +
+  'output' (string) +
+  'output_size' (integer) +
+  'prev_redirect' (pointer, hdata: 'irc_redirect') +
+  'next_redirect' (pointer, hdata: 'irc_redirect') |
+  -
+
+| irc | irc_redirect_pattern | irc リダイレクトパターン |
+  'name' (string) +
+  'temp_pattern' (integer) +
+  'timeout' (integer) +
+  'cmd_start' (string) +
+  'cmd_stop' (string) +
+  'cmd_extra' (string) +
+  'prev_redirect' (pointer, hdata: 'irc_redirect_pattern') +
+  'next_redirect' (pointer, hdata: 'irc_redirect_pattern') |
+  'irc_redirect_patterns' +
+  'last_irc_redirect_pattern'
+
+| irc | irc_server | irc サーバ |
+  'name' (string) +
+  'options' (pointer) +
+  'temp_server' (integer) +
+  'reloading_from_config' (integer) +
+  'reloaded_from_config' (integer) +
+  'addresses_count' (integer) +
+  'addresses_array' (string, array_size: 'addresses_count') +
+  'ports_array' (integer, array_size: 'addresses_count') +
+  'index_current_address' (integer) +
+  'current_address' (string) +
+  'current_ip' (string) +
+  'current_port' (integer) +
+  'sock' (integer) +
+  'hook_connect' (pointer, hdata: 'hook') +
+  'hook_fd' (pointer, hdata: 'hook') +
+  'hook_timer_connection' (pointer, hdata: 'hook') +
+  'hook_timer_sasl' (pointer, hdata: 'hook') +
+  'is_connected' (integer) +
+  'ssl_connected' (integer) +
+  'gnutls_sess' (other) +
+  'tls_cert' (other) +
+  'tls_cert_key' (other) +
+  'unterminated_message' (string) +
+  'nicks_count' (integer) +
+  'nicks_array' (string, array_size: 'nicks_count') +
+  'nick_first_tried' (integer) +
+  'nick' (string) +
+  'nick_modes' (string) +
+  'isupport' (string) +
+  'prefix_modes' (string) +
+  'prefix_chars' (string) +
+  'nick_max_length' (integer) +
+  'casemapping' (integer) +
+  'chantypes' (string) +
+  'chanmodes' (string) +
+  'reconnect_delay' (integer) +
+  'reconnect_start' (time) +
+  'command_time' (time) +
+  'reconnect_join' (integer) +
+  'disable_autojoin' (integer) +
+  'is_away' (integer) +
+  'away_message' (string) +
+  'away_time' (time) +
+  'lag' (integer) +
+  'lag_check_time' (other) +
+  'lag_next_check' (time) +
+  'lag_last_refresh' (time) +
+  'cmd_list_regexp' (pointer) +
+  'last_user_message' (time) +
+  'last_away_check' (time) +
+  'outqueue' (pointer) +
+  'last_outqueue' (pointer) +
+  'redirects' (pointer, hdata: 'irc_redirect') +
+  'last_redirect' (pointer, hdata: 'irc_redirect') +
+  'notify_list' (pointer, hdata: 'irc_notify') +
+  'last_notify' (pointer, hdata: 'irc_notify') +
+  'manual_joins' (hashtable) +
+  'buffer' (pointer, hdata: 'buffer') +
+  'buffer_as_string' (string) +
+  'channels' (pointer, hdata: 'irc_channel') +
+  'last_channel' (pointer, hdata: 'irc_channel') +
+  'prev_server' (pointer, hdata: 'irc_server') +
+  'next_server' (pointer, hdata: 'irc_server') |
+  'irc_servers' +
+  'last_irc_server'
+
+| lua | lua_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'lua_script') +
+  'next_script' (pointer, hdata: 'lua_script') |
+  'last_script' +
+  'scripts'
+
+| perl | perl_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'perl_script') +
+  'next_script' (pointer, hdata: 'perl_script') |
+  'last_script' +
+  'scripts'
+
+| python | python_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'python_script') +
+  'next_script' (pointer, hdata: 'python_script') |
+  'last_script' +
+  'scripts'
+
+| ruby | ruby_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'ruby_script') +
+  'next_script' (pointer, hdata: 'ruby_script') |
+  'last_script' +
+  'scripts'
+
+| tcl | tcl_script | スクリプトのリスト |
+  'filename' (string) +
+  'interpreter' (pointer) +
+  'name' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'shutdown_func' (string) +
+  'charset' (string) +
+  'callbacks' (pointer) +
+  'unloading' (integer) +
+  'prev_script' (pointer, hdata: 'tcl_script') +
+  'next_script' (pointer, hdata: 'tcl_script') |
+  'last_script' +
+  'scripts'
+
+| weechat | bar | バー |
+  'name' (string) +
+  'options' (pointer) +
+  'conditions_count' (integer) +
+  'conditions_array' (string, array_size: 'conditions_count') +
+  'items_count' (integer) +
+  'items_subcount' (pointer) +
+  'items_array' (pointer) +
+  'items_prefix' (pointer) +
+  'items_name' (pointer) +
+  'items_suffix' (pointer) +
+  'bar_window' (pointer, hdata: 'bar_window') +
+  'bar_refresh_needed' (integer) +
+  'prev_bar' (pointer, hdata: 'bar') +
+  'next_bar' (pointer, hdata: 'bar') |
+  'gui_bars' +
+  'last_gui_bar'
+
+| weechat | bar_item | バーアイテム |
+  'plugin' (pointer, hdata: 'plugin') +
+  'name' (string) +
+  'build_callback' (pointer) +
+  'build_callback_data' (pointer) +
+  'prev_item' (pointer, hdata: 'bar_item') +
+  'next_item' (pointer, hdata: 'bar_item') |
+  'gui_bar_items' +
+  'last_gui_bar_item'
+
+| weechat | bar_window | バーウィンドウ |
+  'bar' (pointer, hdata: 'bar') +
+  'x' (integer) +
+  'y' (integer) +
+  'width' (integer) +
+  'height' (integer) +
+  'scroll_x' (integer) +
+  'scroll_y' (integer) +
+  'cursor_x' (integer) +
+  'cursor_y' (integer) +
+  'current_size' (integer) +
+  'items_count' (integer) +
+  'items_subcount' (pointer) +
+  'items_content' (pointer) +
+  'items_num_lines' (pointer) +
+  'items_refresh_needed' (pointer) +
+  'screen_col_size' (integer) +
+  'coords_count' (integer) +
+  'coords' (pointer) +
+  'gui_objects' (pointer) +
+  'prev_bar_window' (pointer, hdata: 'bar_window') +
+  'next_bar_window' (pointer, hdata: 'bar_window') |
+  -
+
+| weechat | buffer | バッファ |
+  'plugin' (pointer, hdata: 'plugin') +
+  'plugin_name_for_upgrade' (string) +
+  'number' (integer) +
+  'layout_number' (integer) +
+  'layout_number_merge_order' (integer) +
+  'name' (string) +
+  'full_name' (string) +
+  'short_name' (string) +
+  'type' (integer) +
+  'notify' (integer) +
+  'num_displayed' (integer) +
+  'active' (integer) +
+  'print_hooks_enabled' (integer) +
+  'close_callback' (pointer) +
+  'close_callback_data' (pointer) +
+  'title' (string) +
+  'own_lines' (pointer, hdata: 'lines') +
+  'mixed_lines' (pointer, hdata: 'lines') +
+  'lines' (pointer, hdata: 'lines') +
+  'time_for_each_line' (integer) +
+  'chat_refresh_needed' (integer) +
+  'nicklist' (integer) +
+  'nicklist_case_sensitive' (integer) +
+  'nicklist_root' (pointer, hdata: 'nick_group') +
+  'nicklist_max_length' (integer) +
+  'nicklist_display_groups' (integer) +
+  'nicklist_visible_count' (integer) +
+  'nickcmp_callback' (pointer) +
+  'nickcmp_callback_data' (pointer) +
+  'input' (integer) +
+  'input_callback' (pointer) +
+  'input_callback_data' (pointer) +
+  'input_get_unknown_commands' (integer) +
+  'input_buffer' (string) +
+  'input_buffer_alloc' (integer) +
+  'input_buffer_size' (integer) +
+  'input_buffer_length' (integer) +
+  'input_buffer_pos' (integer) +
+  'input_buffer_1st_display' (integer) +
+  'input_undo_snap' (pointer, hdata: 'input_undo') +
+  'input_undo' (pointer, hdata: 'input_undo') +
+  'last_input_undo' (pointer, hdata: 'input_undo') +
+  'ptr_input_undo' (pointer, hdata: 'input_undo') +
+  'input_undo_count' (integer) +
+  'completion' (pointer, hdata: 'completion') +
+  'history' (pointer, hdata: 'history') +
+  'last_history' (pointer, hdata: 'history') +
+  'ptr_history' (pointer, hdata: 'history') +
+  'num_history' (integer) +
+  'text_search' (integer) +
+  'text_search_exact' (integer) +
+  'text_search_found' (integer) +
+  'text_search_input' (string) +
+  'highlight_words' (string) +
+  'highlight_regex' (string) +
+  'highlight_regex_compiled' (pointer) +
+  'highlight_tags' (string) +
+  'highlight_tags_count' (integer) +
+  'highlight_tags_array' (string, array_size: 'highlight_tags_count') +
+  'hotlist_max_level_nicks' (hashtable) +
+  'keys' (pointer, hdata: 'key') +
+  'last_key' (pointer, hdata: 'key') +
+  'keys_count' (integer) +
+  'local_variables' (hashtable) +
+  'prev_buffer' (pointer, hdata: 'buffer') +
+  'next_buffer' (pointer, hdata: 'buffer') |
+  'gui_buffer_last_displayed' +
+  'gui_buffers' +
+  'last_gui_buffer'
+
+| weechat | completion | 補完する構造 |
+  'buffer' (pointer, hdata: 'buffer') +
+  'context' (integer) +
+  'base_command' (string) +
+  'base_command_arg_index' (integer) +
+  'base_word' (string) +
+  'base_word_pos' (integer) +
+  'position' (integer) +
+  'args' (string) +
+  'direction' (integer) +
+  'add_space' (integer) +
+  'force_partial_completion' (integer) +
+  'completion_list' (pointer) +
+  'word_found' (string) +
+  'word_found_is_nick' (integer) +
+  'position_replace' (integer) +
+  'diff_size' (integer) +
+  'diff_length' (integer) +
+  'partial_completion_list' (pointer, hdata: 'completion_partial') +
+  'last_partial_completion' (pointer, hdata: 'completion_partial') |
+  -
+
+| weechat | completion_partial | 部分補完する構造 |
+  'word' (string) +
+  'count' (integer) +
+  'prev_item' (pointer, hdata: 'completion_partial') +
+  'next_item' (pointer, hdata: 'completion_partial') |
+  -
+
+| weechat | config_file | 設定ファイル |
+  'plugin' (pointer, hdata: 'plugin') +
+  'name' (string) +
+  'filename' (string) +
+  'file' (pointer) +
+  'callback_reload' (pointer) +
+  'callback_reload_data' (pointer) +
+  'sections' (pointer, hdata: 'config_section') +
+  'last_section' (pointer, hdata: 'config_section') +
+  'prev_config' (pointer, hdata: 'config_file') +
+  'next_config' (pointer, hdata: 'config_file') |
+  'config_files' +
+  'last_config_file'
+
+| weechat | config_option | 設定オプション |
+  'config_file' (pointer, hdata: 'config_file') +
+  'section' (pointer, hdata: 'config_section') +
+  'name' (string) +
+  'type' (integer) +
+  'description' (string) +
+  'string_values' (string, array_size: '*') +
+  'min' (integer) +
+  'max' (integer) +
+  'default_value' (pointer) +
+  'value' (pointer) +
+  'null_value_allowed' (integer) +
+  'callback_check_value' (pointer) +
+  'callback_check_value_data' (pointer) +
+  'callback_change' (pointer) +
+  'callback_change_data' (pointer) +
+  'callback_delete' (pointer) +
+  'callback_delete_data' (pointer) +
+  'loaded' (integer) +
+  'prev_option' (pointer, hdata: 'config_option') +
+  'next_option' (pointer, hdata: 'config_option') |
+  -
+
+| weechat | config_section | 設定セクション |
+  'config_file' (pointer, hdata: 'config_file') +
+  'name' (string) +
+  'user_can_add_options' (integer) +
+  'user_can_delete_options' (integer) +
+  'callback_read' (pointer) +
+  'callback_read_data' (pointer) +
+  'callback_write' (pointer) +
+  'callback_write_data' (pointer) +
+  'callback_write_default' (pointer) +
+  'callback_write_default_data' (pointer) +
+  'callback_create_option' (pointer) +
+  'callback_create_option_data' (pointer) +
+  'callback_delete_option' (pointer) +
+  'callback_delete_option_data' (pointer) +
+  'options' (pointer, hdata: 'config_option') +
+  'last_option' (pointer, hdata: 'config_option') +
+  'prev_section' (pointer, hdata: 'config_section') +
+  'next_section' (pointer, hdata: 'config_section') |
+  -
+
+| weechat | filter | フィルタ |
+  'enabled' (integer) +
+  'name' (string) +
+  'buffer_name' (string) +
+  'num_buffers' (integer) +
+  'buffers' (pointer) +
+  'tags' (string) +
+  'tags_count' (integer) +
+  'tags_array' (string, array_size: 'tags_count') +
+  'regex' (string) +
+  'regex_prefix' (pointer) +
+  'regex_message' (pointer) +
+  'prev_filter' (pointer, hdata: 'filter') +
+  'next_filter' (pointer, hdata: 'filter') |
+  'gui_filters' +
+  'last_gui_filter'
+
+| weechat | history | バッファのコマンド履歴 |
+  'text' (string) +
+  'next_history' (pointer, hdata: 'history') +
+  'prev_history' (pointer, hdata: 'history') |
+  -
+
+| weechat | hotlist | hotlist |
+  'priority' (integer) +
+  'creation_time.tv_sec' (time) +
+  'creation_time.tv_usec' (long) +
+  'buffer' (pointer) +
+  'count' (integer, array_size: '4') +
+  'prev_hotlist' (pointer, hdata: 'hotlist') +
+  'next_hotlist' (pointer, hdata: 'hotlist') |
+  'gui_hotlist' +
+  'last_gui_hotlist'
+
+| weechat | input_undo | 入力行をアンドゥする構造 |
+  'data' (string) +
+  'pos' (integer) +
+  'prev_undo' (pointer, hdata: 'input_undo') +
+  'next_undo' (pointer, hdata: 'input_undo') |
+  -
+
+| weechat | key | キー (キーボードショートカット) |
+  'key' (string) +
+  'area_type' (pointer) +
+  'area_name' (pointer) +
+  'area_key' (string) +
+  'command' (string) +
+  'score' (integer) +
+  'prev_key' (pointer, hdata: 'key') +
+  'next_key' (pointer, hdata: 'key') |
+  'gui_default_keys' +
+  'gui_default_keys_cursor' +
+  'gui_default_keys_mouse' +
+  'gui_default_keys_search' +
+  'gui_keys' +
+  'gui_keys_cursor' +
+  'gui_keys_mouse' +
+  'gui_keys_search' +
+  'last_gui_default_key' +
+  'last_gui_default_key_cursor' +
+  'last_gui_default_key_mouse' +
+  'last_gui_default_key_search' +
+  'last_gui_key' +
+  'last_gui_key_cursor' +
+  'last_gui_key_mouse' +
+  'last_gui_key_search'
+
+| weechat | line | 1 行の構造 |
+  'data' (pointer, hdata: 'line_data') +
+  'prev_line' (pointer, hdata: 'line') +
+  'next_line' (pointer, hdata: 'line') |
+  -
+
+| weechat | line_data | 1 行データ構造 |
+  'buffer' (pointer, hdata: 'buffer') +
+  'y' (integer) +
+  'date' (time) +
+  'date_printed' (time) +
+  'str_time' (string) +
+  'tags_count' (integer) +
+  'tags_array' (string, array_size: 'tags_count') +
+  'displayed' (char) +
+  'highlight' (char) +
+  'refresh_needed' (char) +
+  'prefix' (string) +
+  'prefix_length' (integer) +
+  'message' (string) |
+  -
+
+| weechat | lines | 行を持つ構造 |
+  'first_line' (pointer, hdata: 'line') +
+  'last_line' (pointer, hdata: 'line') +
+  'last_read_line' (pointer, hdata: 'line') +
+  'lines_count' (integer) +
+  'first_line_not_read' (integer) +
+  'lines_hidden' (integer) +
+  'buffer_max_length' (integer) +
+  'prefix_max_length' (integer) |
+  -
+
+| weechat | nick | ニックネームリストにあるニックネーム |
+  'group' (pointer, hdata: 'nick_group') +
+  'name' (string) +
+  'color' (string) +
+  'prefix' (string) +
+  'prefix_color' (string) +
+  'visible' (integer) +
+  'prev_nick' (pointer, hdata: 'nick') +
+  'next_nick' (pointer, hdata: 'nick') |
+  -
+
+| weechat | nick_group | ニックネームリストにあるグループ |
+  'name' (string) +
+  'color' (string) +
+  'visible' (integer) +
+  'level' (integer) +
+  'parent' (pointer, hdata: 'nick_group') +
+  'children' (pointer, hdata: 'nick_group') +
+  'last_child' (pointer, hdata: 'nick_group') +
+  'nicks' (pointer, hdata: 'nick') +
+  'last_nick' (pointer, hdata: 'nick') +
+  'prev_group' (pointer, hdata: 'nick_group') +
+  'next_group' (pointer, hdata: 'nick_group') |
+  -
+
+| weechat | plugin | プラグイン |
+  'filename' (string) +
+  'handle' (pointer) +
+  'name' (string) +
+  'description' (string) +
+  'author' (string) +
+  'version' (string) +
+  'license' (string) +
+  'charset' (string) +
+  'debug' (integer) +
+  'prev_plugin' (pointer, hdata: 'plugin') +
+  'next_plugin' (pointer, hdata: 'plugin') |
+  'last_weechat_plugin' +
+  'weechat_plugins'
+
+| weechat | window | ウィンドウ |
+  'number' (integer) +
+  'win_x' (integer) +
+  'win_y' (integer) +
+  'win_width' (integer) +
+  'win_height' (integer) +
+  'win_width_pct' (integer) +
+  'win_height_pct' (integer) +
+  'win_chat_x' (integer) +
+  'win_chat_y' (integer) +
+  'win_chat_width' (integer) +
+  'win_chat_height' (integer) +
+  'win_chat_cursor_x' (integer) +
+  'win_chat_cursor_y' (integer) +
+  'bar_windows' (pointer, hdata: 'bar_window') +
+  'last_bar_window' (pointer, hdata: 'bar_window') +
+  'refresh_needed' (integer) +
+  'gui_objects' (pointer) +
+  'buffer' (pointer, hdata: 'buffer') +
+  'layout_plugin_name' (string) +
+  'layout_buffer_name' (string) +
+  'scroll' (pointer, hdata: 'window_scroll') +
+  'ptr_tree' (pointer, hdata: 'window_tree') +
+  'prev_window' (pointer, hdata: 'window') +
+  'next_window' (pointer, hdata: 'window') |
+  'gui_current_window' +
+  'gui_windows' +
+  'last_gui_window'
+
+| weechat | window_scroll | ウィンドウ内のスクロール情報 |
+  'buffer' (pointer, hdata: 'buffer') +
+  'first_line_displayed' (integer) +
+  'start_line' (pointer, hdata: 'line') +
+  'start_line_pos' (integer) +
+  'scrolling' (integer) +
+  'start_col' (integer) +
+  'lines_after' (integer) +
+  'reset_allowed' (integer) +
+  'prev_scroll' (pointer, hdata: 'window_scroll') +
+  'next_scroll' (pointer, hdata: 'window_scroll') |
+  -
+
+| weechat | window_tree | ウィンドウツリー |
+  'parent_node' (pointer, hdata: 'window_tree') +
+  'split_pct' (integer) +
+  'split_horizontal' (integer) +
+  'child1' (pointer, hdata: 'window_tree') +
+  'child2' (pointer, hdata: 'window_tree') +
+  'window' (pointer, hdata: 'window') |
+  'gui_windows_tree'
+
+|========================================

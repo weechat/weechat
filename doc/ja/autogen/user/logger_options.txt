@@ -1,0 +1,55 @@
+* [[option_logger.color.backlog_end]] *logger.color.backlog_end*
+** 説明: `バックログの最終行の色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
+
+* [[option_logger.color.backlog_line]] *logger.color.backlog_line*
+** 説明: `バックログ行の色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
+
+* [[option_logger.file.auto_log]] *logger.file.auto_log*
+** 説明: `バッファの内容をファイルに自動的に保存 (バッファのログ保存が無効化されていない限り)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_logger.file.flush_delay]] *logger.file.flush_delay*
+** 説明: `ログファイルをフラッシュする間隔の秒数 (0 = 行が表示されたらすぐにログファイルに書き込み)`
+** タイプ: 整数
+** 値: 0 .. 3600 (デフォルト値: `120`)
+
+* [[option_logger.file.info_lines]] *logger.file.info_lines*
+** 説明: `バッファのログ保存の開始時と終了時にログファイルへ情報行を書き込む`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_logger.file.mask]] *logger.file.mask*
+** 説明: `ログファイルのデフォルトファイル名マスク (フォーマットは "directory/to/file" または "file"、最初に "/" が無ければ "path" オプションがファイルへの完全なパスを作るために使われる); ローカルバッファ変数が使える; 日付指定子を使える (strftime の man を参照)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"$plugin.$name.weechatlog"`)
+
+* [[option_logger.file.name_lower_case]] *logger.file.name_lower_case*
+** 説明: `ログファイル名に小文字だけを使う`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_logger.file.path]] *logger.file.path*
+** 説明: `WeeChat ログファイルのパス; 文字列最初の "%h" は WeeChat ホーム (デフォルトでは "~/.weechat") に置換; 日付指定子を使える (strftime の man を参照)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%h/logs/"`)
+
+* [[option_logger.file.replacement_char]] *logger.file.replacement_char*
+** 説明: `マスクと一緒に使われたときのファイル名に含まれる特殊文字に対応する置換文字 (ディレクトリ区切りのようなもの)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"_"`)
+
+* [[option_logger.file.time_format]] *logger.file.time_format*
+** 説明: `ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%Y-%m-%d %H:%M:%S"`)
+
+* [[option_logger.look.backlog]] *logger.look.backlog*
+** 説明: `新規バッファの作成時にログファイルから表示する行の最大数 (0 = バックログ無し)`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `20`)
+

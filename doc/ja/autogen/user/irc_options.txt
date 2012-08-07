@@ -1,0 +1,535 @@
+* [[option_irc.color.input_nick]] *irc.color.input_nick*
+** 説明: `インプットバーのニックネームに使う色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightcyan`)
+
+* [[option_irc.color.item_away]] *irc.color.item_away*
+** 説明: `離席アイテムに使う色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
+** 説明: `チャンネル名付近のチャンネルモードに使う色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
+** 説明: `カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加する)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
+** 説明: `pong がサーバから返った場合の、遅延インジケータの色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_irc.color.message_join]] *irc.color.message_join*
+** 説明: `参加メッセージの色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
+
+* [[option_irc.color.message_quit]] *irc.color.message_quit*
+** 説明: `退出/終了 メッセージの色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `red`)
+
+* [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
+** 説明: `メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1(指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 (フォーマットは: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0:白、1:黒、2:青、3:緑、4:ライトレッド、5:赤、6:赤紫、7:茶色、8:黄色、9:ライトグリーン、10:シアン、11:ライトシアン、12:ライトブルー、13:ライトマゼンタ、14:灰色、15:白`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"1,-1:darkgray"`)
+
+* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
+** 説明: `ニックネームプレフィックスの色 (プレフィックスとはニックネームの前に表示されたカスタム文字列)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
+
+* [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
+** 説明: `モード文字を用いたニックネームプレフィックスの色 (o=オペレータ、h=halfop、v=発言、..)、フォーマット: "o:color1;h:color2;v:color3" (モードが見つからない場合、WeeChat はサーバから受け取ったモードの次のものを試す ("PREFIX"); モードが見つからなかった場合は、特殊なモード "*" がデフォルト色として使えます)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
+
+* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
+** 説明: `ニックネームサフィックスの色 (サフィックスとはニックネームの後に表示されたカスタム文字列)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
+
+* [[option_irc.color.notice]] *irc.color.notice*
+** 説明: `notices に含まれるテキスト "Notice" の色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
+
+* [[option_irc.color.reason_quit]] *irc.color.reason_quit*
+** 説明: `退出/終了メッセージに含まれる理由の色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_irc.color.topic_new]] *irc.color.topic_new*
+** 説明: `新しいチャンネルトピックの色 (トピックが変更されたとき)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_irc.color.topic_old]] *irc.color.topic_old*
+** 説明: `古いチャンネルトピックの色 (トピックが変更されたとき)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
+
+* [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
+** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.buffer_switch_join]] *irc.look.buffer_switch_join*
+** 説明: `手動で参加した場合に、自動的にチャンネルバッファを移動 (/join コマンドを実行したとき)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
+** 説明: `/names の出力にニックネーム色を使用 (又はチャンネル参加時に表示されるニックネームのリスト)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.look.color_nicks_in_nicklist]] *irc.look.color_nicks_in_nicklist*
+** 説明: `ニックネームリストでニックネーム色を利用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.look.color_nicks_in_server_messages]] *irc.look.color_nicks_in_server_messages*
+** 説明: `サーバからのメッセージにニックネーム色を利用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.color_pv_nick_like_channel]] *irc.look.color_pv_nick_like_channel*
+** 説明: `チャンネルとプライベートバッファで同じニックネーム色を利用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
+** 説明: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y %T %z"`)
+
+* [[option_irc.look.display_away]] *irc.look.display_away*
+** 説明: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
+** タイプ: 整数
+** 値: off, local, channel (デフォルト値: `local`)
+
+* [[option_irc.look.display_ctcp_blocked]] *irc.look.display_ctcp_blocked*
+** 説明: `ブロックした場合でも CTCP メッセージを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_ctcp_reply]] *irc.look.display_ctcp_reply*
+** 説明: `WeeChat が返信した CTCP メッセージを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_ctcp_unknown]] *irc.look.display_ctcp_unknown*
+** 説明: `解釈できない CTCP の場合も CTCP メッセージを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_host_join]] *irc.look.display_host_join*
+** 説明: `参加メッセージにホスト名を表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_host_join_local]] *irc.look.display_host_join_local*
+** 説明: `ローカルクライアントからの参加メッセージにホスト名を表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_host_quit]] *irc.look.display_host_quit*
+** 説明: `退出/終了 メッセージにホスト名を表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
+** 説明: `チャンネルトピックが変更された場合に、古いトピックを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_pv_away_once]] *irc.look.display_pv_away_once*
+** 説明: `プライベートでは離席状態の変更を 1 回以上表示しない`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.display_pv_back]] *irc.look.display_pv_back*
+** 説明: `ユーザが戻ったら、プライベートウィンドウにメッセージを表示 (サーバとの切断を挟んで)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
+** 説明: `nickserv が表示するパスワードを隠す`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
+** 説明: `現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"$nick"`)
+
+* [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
+** 説明: `プライベートバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"$nick"`)
+
+* [[option_irc.look.highlight_server]] *irc.look.highlight_server*
+** 説明: `サーババッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"$nick"`)
+
+* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
+** 説明: `ハイライトされるメッセージにつけられたタグのコンマ区切りリスト (通例、他のユーザからの任意のメッセージ、サーバメッセージをのぞく、...)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"irc_privmsg,irc_notice"`)
+
+* [[option_irc.look.item_away_message]] *irc.look.item_away_message*
+** 説明: `サーバの離席メッセージを離席バーアイテムに表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
+** 説明: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.look.item_display_server]] *irc.look.item_display_server*
+** 説明: `IRC サーバが表示されるバーアイテムの名前 (ステータスバー用)`
+** タイプ: 整数
+** 値: buffer_plugin, buffer_name (デフォルト値: `buffer_plugin`)
+
+* [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
+** 説明: `"input_prompt" バーアイテムではニックネームモードを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
+** 説明: `"input_prompt" バーアイテムではニックネームプレフィックスを表示`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
+** 説明: `ターゲットがプライベートでプライベートバッファが見つからない場合の msgbuffer オプション用のデフォルトのターゲットバッファ`
+** タイプ: 整数
+** 値: current, server (デフォルト値: `current`)
+
+* [[option_irc.look.new_channel_position]] *irc.look.new_channel_position*
+** 説明: `バッファリスト内で新しいチャンネルの位置を固定 (none = デフォルトの位置 (一番後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サーバの一番後ろのチャンネル/プライベートバッファ)`
+** タイプ: 整数
+** 値: none, next, near_server (デフォルト値: `none`)
+
+* [[option_irc.look.new_pv_position]] *irc.look.new_pv_position*
+** 説明: `バッファリスト内で新しいプライベートバッファの位置を固定 (none = デフォルトの位置 (一番後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サーバの一番後ろのチャンネル/プライベートバッファ)`
+** タイプ: 整数
+** 値: none, next, near_server (デフォルト値: `none`)
+
+* [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
+** 説明: `ニックネーム色を強制するニックネーム: ニックネームから計算されるハッシュを元にした色を利用しない (フォーマット: "nick1:color1;nick2:color2"); オプションで指定された通りのニックネーム、これを小文字化したニックネームの順で検索を行う。そのため、このオプションのニックネーム部分には小文字を使うと良い。`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
+** 説明: `ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になる)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"_|["`)
+
+* [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
+** 説明: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
+** タイプ: 整数
+** 値: off, speakers, speakers_highlights (デフォルト値: `speakers`)
+
+* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
+** 説明: `チャットウィンドウ内でニックネーム前に表示するテキスト`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
+** 説明: `チャットウィンドウ内でニックネーム後に表示するテキスト`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
+** 説明: `notice をプライベートメッセージとして表示 (auto の場合、プライベートバッファが見つかればそれを使用する)`
+** タイプ: 整数
+** 値: auto, never, always (デフォルト値: `auto`)
+
+* [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
+** 説明: `ニックネームが参加またはサーバから切断したときの (ison コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_highlight"、"notify_message"、"notify_private"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
+
+* [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
+** 説明: `ニックネームの離席状態に変化があった場合の (whois コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_highlight"、"notify_message"、"notify_private"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
+
+* [[option_irc.look.part_closes_buffer]] *irc.look.part_closes_buffer*
+** 説明: `/part を実行した場合にバッファを閉じる`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.look.raw_messages]] *irc.look.raw_messages*
+** 説明: `生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データバッファを開いたときに表示されるメッセージ)`
+** タイプ: 整数
+** 値: 0 .. 65535 (デフォルト値: `256`)
+
+* [[option_irc.look.server_buffer]] *irc.look.server_buffer*
+** 説明: `サーババッファをマージ`
+** タイプ: 整数
+** 値: merge_with_core, merge_without_core, independent (デフォルト値: `merge_with_core`)
+
+* [[option_irc.look.smart_filter]] *irc.look.smart_filter*
+** 説明: `チャンネルで何分か会話のないニックネームの参加/退出/終了/ニックネームメッセージをフィルタする ("irc_smart_filter" タグのフィルタを作らなければいけません)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
+** 説明: `参加/退出/終了 メッセージのフィルタリングを遅らせる (秒単位)`
+** タイプ: 整数
+** 値: 1 .. 10080 (デフォルト値: `5`)
+
+* [[option_irc.look.smart_filter_join]] *irc.look.smart_filter_join*
+** 説明: `"join" メッセージのスマートフィルタを有効化`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
+** 説明: `"nick" メッセージのスマートフィルタを有効化`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.smart_filter_quit]] *irc.look.smart_filter_quit*
+** 説明: `"part" と "quit" メッセージのスマートフィルタを有効化`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.look.topic_strip_colors]] *irc.look.topic_strip_colors*
+** 説明: `トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
+** 説明: `サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、..)`
+** タイプ: 整数
+** 値: 1 .. 100 (デフォルト値: `2`)
+
+* [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
+** 説明: `サーバへの自動接続の遅延時間の最大値 (秒単位、0 = 制限無し)`
+** タイプ: 整数
+** 値: 0 .. 86400 (デフォルト値: `1800`)
+
+* [[option_irc.network.colors_receive]] *irc.network.colors_receive*
+** 説明: `オフの場合、到着メッセージに含まれる色コードを無視`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.network.colors_send]] *irc.network.colors_send*
+** 説明: `特別なコードを使ってユーザが色を送信することを許可 (ctrl-c + 色コードとオプション色: b=太字、cxx=テキスト色、cxx,yy=テキスト色+背景色、u=下線、r=反転)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.network.lag_check]] *irc.network.lag_check*
+** 説明: `遅延の確認間のインターバル (秒単位、0 = 確認しない)`
+** タイプ: 整数
+** 値: 0 .. 604800 (デフォルト値: `60`)
+
+* [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
+** 説明: `長い遅延の後は再接続 (分単位、0 = 再接続しない)`
+** タイプ: 整数
+** 値: 0 .. 10080 (デフォルト値: `0`)
+
+* [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
+** 説明: `表示する最短の遅延 (ミリ秒単位)`
+** タイプ: 整数
+** 値: 0 .. 86400000 (デフォルト値: `500`)
+
+* [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
+** 説明: `遅延時間が増加する場合、遅延アイテムの 2 回のリフレッシュの間のインターバル (秒単位)`
+** タイプ: 整数
+** 値: 1 .. 3600 (デフォルト値: `1`)
+
+* [[option_irc.network.notify_check_ison]] *irc.network.notify_check_ison*
+** 説明: `IRC コマンド "ison" による通知の 2 回のチェックの間のインターバル (分単位)`
+** タイプ: 整数
+** 値: 1 .. 10080 (デフォルト値: `1`)
+
+* [[option_irc.network.notify_check_whois]] *irc.network.notify_check_whois*
+** 説明: `IRC コマンド "whois" による通知の 2 回のチェックの間のインターバル (分単位)`
+** タイプ: 整数
+** 値: 1 .. 10080 (デフォルト値: `5`)
+
+* [[option_irc.network.send_unknown_commands]] *irc.network.send_unknown_commands*
+** 説明: `未定義のコマンドをサーバに送信`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.server_default.addresses]] *irc.server_default.addresses*
+** 説明: `サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切り)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.anti_flood_prio_high]] *irc.server_default.anti_flood_prio_high*
+** 説明: `高優先度キュー用のアンチフロード: ユーザメッセージかコマンドを IRC サーバに送信する場合の遅延秒 (0 = アンチフロード無効)`
+** タイプ: 整数
+** 値: 0 .. 60 (デフォルト値: `2`)
+
+* [[option_irc.server_default.anti_flood_prio_low]] *irc.server_default.anti_flood_prio_low*
+** 説明: `低優先度キュー用のアンチフロード: ユーザメッセージかコマンドを IRC サーバに送信する場合の遅延秒 (自動 CTCP 応答等のメッセージ) (0 = アンチフロード無効)`
+** タイプ: 整数
+** 値: 0 .. 60 (デフォルト値: `2`)
+
+* [[option_irc.server_default.autoconnect]] *irc.server_default.autoconnect*
+** 説明: `WeeChat の起動時に自動的にサーバに接続`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
+** 説明: `サーバに接続した際に参加するチャンネルのコンマ区切りリスト(例: "#chan1,#chan2,#chan3 key1,key2")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.autoreconnect]] *irc.server_default.autoreconnect*
+** 説明: `接続が切れたときに自動的に再接続`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.server_default.autoreconnect_delay]] *irc.server_default.autoreconnect_delay*
+** 説明: `サーバへの再接続の際の遅延 (秒単位) 時間`
+** タイプ: 整数
+** 値: 1 .. 65535 (デフォルト値: `10`)
+
+* [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
+** 説明: `キックされた後に自動的に再度参加`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.server_default.autorejoin_delay]] *irc.server_default.autorejoin_delay*
+** 説明: `自動再参加前の遅延時間 (秒単位) (キック後)`
+** タイプ: 整数
+** 値: 0 .. 86400 (デフォルト値: `30`)
+
+* [[option_irc.server_default.away_check]] *irc.server_default.away_check*
+** 説明: `2 つの away チェック間のインターバル (分、0 = チェックしない)`
+** タイプ: 整数
+** 値: 0 .. 10080 (デフォルト値: `0`)
+
+* [[option_irc.server_default.away_check_max_nicks]] *irc.server_default.away_check_max_nicks*
+** 説明: `大きなニックネーム番号を持つニックネームに対しては、away 確認を行わない (0 = 制限無し)`
+** タイプ: 整数
+** 値: 0 .. 1000000 (デフォルト値: `25`)
+
+* [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
+** 説明: `サーバで利用可能ならば有効化する、クライアント能力のコンマ区切りリスト (例: "multi-prefix,extended-join")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.command]] *irc.server_default.command*
+** 説明: `サーバに接続した際に実行するコマンド (";" で分けて 複数のコマンドを列挙、セミコロンは "\;" とする、特殊変数 $nick、$channel、$server はそれぞれの値に置換される)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
+** 説明: `コマンド実行後の遅延時間 (秒単位) (例: 認証のために少し待つ)`
+** タイプ: 整数
+** 値: 0 .. 3600 (デフォルト値: `0`)
+
+* [[option_irc.server_default.connection_timeout]] *irc.server_default.connection_timeout*
+** 説明: `サーバとの TCP 接続と 001 メッセージ受信間のタイムアウト (秒単位)、001 メッセージ受信前にタイムアウト時間を経過した場合は、WeeChat はサーバとの接続を切断`
+** タイプ: 整数
+** 値: 1 .. 3600 (デフォルト値: `60`)
+
+* [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
+** 説明: `デフォルトの退出メッセージ (チャンネルから出る際の) ("%v" は WeeChat バージョンで置換)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"WeeChat %v"`)
+
+* [[option_irc.server_default.default_msg_quit]] *irc.server_default.default_msg_quit*
+** 説明: `デフォルトの終了メッセージ (サーバとの接続を切る際の) ("%v" は WeeChat バージョンで置換)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"WeeChat %v"`)
+
+* [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
+** 説明: `サーバとの通信に IPv6 を利用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.server_default.local_hostname]] *irc.server_default.local_hostname*
+** 説明: `サーバで使用するカスタムホスト名/IP アドレス (任意、空の場合はローカルホスト名が使われる)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.nicks]] *irc.server_default.nicks*
+** 説明: `サーバで使用するニックネーム (コンマ区切り)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.notify]] *irc.server_default.notify*
+** 説明: `サーバの通知リスト (これを変更する場合は、/notify コマンドを使うこと)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.password]] *irc.server_default.password*
+** 説明: `サーバのパスワード`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.proxy]] *irc.server_default.proxy*
+** 説明: `このサーバに使われるプロキシ (オプション)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.realname]] *irc.server_default.realname*
+** 説明: `サーバで使用するリアルネーム`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
+** 説明: `SASL 認証メカニズム: "plain" は平文パスワード、"dh-blowfish" は暗号パスワード、"external" はクライアントサイド SSL 証明書を利用した認証`
+** タイプ: 整数
+** 値: plain, dh-blowfish, external (デフォルト値: `plain`)
+
+* [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
+** 説明: `SASL 認証用パスワード`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.sasl_timeout]] *irc.server_default.sasl_timeout*
+** 説明: `SASL 認証を諦める前のタイムアウト (秒単位)`
+** タイプ: 整数
+** 値: 1 .. 3600 (デフォルト値: `15`)
+
+* [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
+** 説明: `SASL 認証用ユーザ名`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.ssl]] *irc.server_default.ssl*
+** 説明: `サーバとの通信に SSL を利用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
+** 説明: `SSL certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.server_default.ssl_dhkey_size]] *irc.server_default.ssl_dhkey_size*
+** 説明: `Diffie-Hellman 鍵交換で使われる鍵長`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `2048`)
+
+* [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
+** 説明: `gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"NORMAL"`)
+
+* [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
+** 説明: `check that the SSL connection is fully trusted`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_irc.server_default.username]] *irc.server_default.username*
+** 説明: `サーバで使用するユーザ名`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+

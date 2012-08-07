@@ -1,0 +1,35 @@
+* [[option_aspell.check.commands]] *aspell.check.commands*
+** 説明: `スペルチェックを有効化するコマンドのコンマ区切りリスト (これ以外のコマンドではスペルチェックは無効)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
+
+* [[option_aspell.check.default_dict]] *aspell.check.default_dict*
+** 説明: `バッファに辞書が定義されていない場合に使用されるデフォルト辞書 (又は辞書のコンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いて aspell を利用しない)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_aspell.check.during_search]] *aspell.check.during_search*
+** 説明: `バッファ内のテキスト検索中に単語チェックを行う`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_aspell.check.enabled]] *aspell.check.enabled*
+** 説明: `enable aspell check for command line`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_aspell.check.real_time]] *aspell.check.real_time*
+** 説明: `単語のリアルタイムスペルチェック (遅い、デフォルトでは無効: 単語は区切りの後にだけチェックされる)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
+** 説明: `スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `2`)
+
+* [[option_aspell.look.color]] *aspell.look.color*
+** 説明: `スペルミスのある単語に付ける色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+

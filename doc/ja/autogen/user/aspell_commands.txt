@@ -1,0 +1,26 @@
+[[command_aspell_aspell]]
+[command]*`aspell`* aspell プラグイン設定::
+........................................
+/aspell  enable|disable|toggle
+         listdict
+         setdict <lang>
+         deldict
+         addword [<lang>] <word>
+
+  enable: enable aspell
+ disable: disable aspell
+  toggle: toggle aspell
+listdict: show installed dictionaries
+ setdict: set dictionary for current buffer
+ deldict: delete dictionary used on current buffer
+ addword: add a word in personal aspell dictionary
+
+Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
+
+To enable aspell on all buffers, use option "default_dict", then enable aspell, for example:
+  /set aspell.check.default_dict "en"
+  /aspell enable
+
+Default key to toggle aspell is alt-s.
+........................................
+

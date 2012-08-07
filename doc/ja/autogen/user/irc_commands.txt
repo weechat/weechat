@@ -1,0 +1,752 @@
+[[command_irc_admin]]
+[command]*`admin`* サーバ管理者に関する情報を探す::
+........................................
+/admin  [<target>]
+
+target: server
+........................................
+
+[[command_irc_allchan]]
+[command]*`allchan`* 全てのサーバ、全てのチャンネルに対してコマンドを実行::
+........................................
+/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
+
+ -current: 現在のサーバ上のチャンネルに対してコマンドを実行
+ -exclude: いくつかのチャンネルを除外 (複数のチャンネルを除外するには '*' をチャンネル名の最初と最後につける)
+  command: 実行するコマンド
+arguments: コマンドの引数
+
+例:
+  全てのチャンネルに対して '/me is testing' を実行:
+    /allchan me is testing
+  #weechat 以外の全てのチャンネルで 'hello' と発言:
+    /allchan -exclude=#weechat msg * hello
+  #weechat と #linux で始まるチャンネルを除いが全てのチャンネルで 'hello' と発言:
+    /allchan -exclude=#weechat,#linux* msg * hello
+........................................
+
+[[command_irc_allserv]]
+[command]*`allserv`* 全ての接続済みサーバでコマンドを実行::
+........................................
+/allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
+
+ -exclude: いくつかのサーバを除外 (複数のサーバを除外するには '*' をサーバ名の最初と最後につける)
+  command: 実行するコマンド
+arguments: コマンドの引数
+
+例:
+  全てのサーバでニックネーム変更:
+    /allserv nick newnick
+  全てのサーバで離席状態を変更:
+    /allserv away I'm away
+........................................
+
+[[command_irc_ban]]
+[command]*`ban`* ニックネームかホスト名の禁止::
+........................................
+/ban  [<channel>] [<nick> [<nick>...]]
+
+channel: 禁止対象チャンネル
+   nick: 禁止するユーザ名かホスト名
+
+引数無しの場合は、現在のチャンネルの禁止リストを表示。
+........................................
+
+[[command_irc_connect]]
+[command]*`connect`* IRC サーバに接続::
+........................................
+/connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
+          -all|-open [-nojoin] [-switch]
+
+    server: サーバ名、これは:
+            - 内部サーバ名 (/server add で作成されたもの、利用推奨)
+            - ホスト名/ポート番号、又は IP アドレス/ポート番号 (これは一時的サーバを作る)、デフォルトのポート番号は 6667
+            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: サーバに関するオプション (ブール型オプションでは、value は無視される)
+  nooption: ブール型オプションを 'off' にする (例: -nossl)
+      -all: 設定された全てのサーバに接続
+     -open: 現在接続されていないがオープンされているサーバに接続
+   -nojoin: チャンネルに入らない (autojoin が有効化されていても)
+   -switch: 次のサーバアドレスに移動
+
+例:
+  /connect freenode
+  /connect irc.oftc.net/6667
+  /connect irc6.oftc.net/6667 -ipv6
+  /connect irc6.oftc.net/6697 -ipv6 -ssl
+  /connect my.server.org/6697 -ssl -password=test
+  /connect irc://nick@irc.oftc.net/#channel
+  /connect -switch
+........................................
+
+[[command_irc_ctcp]]
+[command]*`ctcp`* CTCP メッセージを送信 (Client-To-Client Protocol)::
+........................................
+/ctcp  <target> <type> [<arguments>]
+
+ target: CTCP を送信するニックネーム又はチャンネル名
+   type: CTCP タイプ (例: "version"、"ping"、..)
+arguments: CTCP の引数
+........................................
+
+[[command_irc_cycle]]
+[command]*`cycle`* チャンネルから退出し再度入る::
+........................................
+/cycle  [<channel>[,<channel>...]] [<message>]
+
+channel: チャンネル名
+message: 退出メッセージ (他のユーザに対する)
+........................................
+
+[[command_irc_dcc]]
+[command]*`dcc`* DCC の開始 (ファイル転送かダイレクトチャット)::
+........................................
+/dcc  chat <nick>
+      send <nick> <file>
+
+nick: チャットかファイル転送をするニックネーム
+file: ファイルネーム (ローカルホスト上の)
+
+例:
+  "toto" とチャット:
+    /dcc chat toto
+  ファイル "/home/foo/bar.txt" を ニックネーム "toto" に送信:
+    /dcc send toto /home/foo/bar.txt
+........................................
+
+[[command_irc_dehalfop]]
+[command]*`dehalfop`* ニックネームから half-operator 権を剥奪::
+........................................
+/dehalfop  <nick> [<nick>...]
+........................................
+
+[[command_irc_deop]]
+[command]*`deop`* ニックネームからチャンネルオペレータ権を剥奪::
+........................................
+/deop  <nick> [<nick>...]
+........................................
+
+[[command_irc_devoice]]
+[command]*`devoice`* ニックネームから発言権を剥奪::
+........................................
+/devoice  <nick> [<nick>...]
+........................................
+
+[[command_irc_die]]
+[command]*`die`* サーバのシャットダウン::
+........................................
+/die  [<target>]
+
+target: サーバ名
+........................................
+
+[[command_irc_disconnect]]
+[command]*`disconnect`* 一つか全ての IRC との接続を切断::
+........................................
+/disconnect  [<server>|-all|-pending [<reason>]]
+
+  server: 接続を切断するサーバ名
+    -all: 全てのサーバとの接続を切る
+-pending: 現在再接続試行中のサーバに対する自動再接続を止める
+  reason: 終了の理由
+........................................
+
+[[command_irc_halfop]]
+[command]*`halfop`* ニックネームに half-operator 権を付与::
+........................................
+/halfop  <nick> [<nick>...]
+........................................
+
+[[command_irc_ignore]]
+[command]*`ignore`* サーバかチャンネルからニックネーム/ホスト名を無視::
+........................................
+/ignore  list
+         add [re:]<nick> [<server> [<channel>]]
+         del <number>|-all
+
+     list: 無視エントリをリストアップ
+      add: 無視エントリを追加
+     nick: ニックネーム又はホスト名 ("re:" で正規表現を使える、"*" は一つ以上の文字にマッチ)
+      del: 無視エントリの削除
+   number: 削除する無視エントリ番号 (番号はリストを参照)
+     -all: 全ての無視エントリを削除
+   server: 無視設定を有効にする内部サーバ名
+  channel: 無視設定を有効にするチャンネル名
+
+注意: 正規表現で大文字小文字を区別するには "(?-i)" を最初につけてください。
+
+例:
+  全てのサーバ上のニックネーム "toto" を無視:
+    /ignore add toto
+  freenode サーバ上のホスト名 "toto@domain.com" を無視:
+    /ignore add toto@domain.com freenode
+  freenode サーバの #weechat チャンネル上のホスト名 "toto*@*.domain.com" を無視:
+    /ignore add toto*@*.domain.com freenode #weechat
+........................................
+
+[[command_irc_info]]
+[command]*`info`* サーバに関する情報を入手::
+........................................
+/info  [<target>]
+
+target: サーバ名
+........................................
+
+[[command_irc_invite]]
+[command]*`invite`* チャンネルにニックネームを招待::
+........................................
+/invite  <nick> [<nick>...] [<channel>]
+
+   nick: 招待するニックネーム
+channel: 招待先のチャンネル
+........................................
+
+[[command_irc_ison]]
+[command]*`ison`* ニックネームが IRC 上にいるか確認::
+........................................
+/ison  <nick> [<nick>...]
+
+nick: nick
+........................................
+
+[[command_irc_join]]
+[command]*`join`* チャンネルに参加::
+........................................
+/join  [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
+
+ server: 送信先サーバ (内部サーバ名)
+channel: 参加するチャンネルの名前
+    key: チャンネルに参加するためのキー (キーが必要なチャンネルは最初に置くこと)
+
+例:
+  /join #weechat
+  /join #protectedchan,#weechat key
+  /join -server freenode #weechat
+........................................
+
+[[command_irc_kick]]
+[command]*`kick`* チャンネルからユーザを強制的に削除::
+........................................
+/kick  [<channel>] <nick> [<reason>]
+
+channel: ユーザの居るチャンネル
+   nick: キックするニックネーム
+ reason: キック理由
+........................................
+
+[[command_irc_kickban]]
+[command]*`kickban`* チャンネルからニックネームをキックして参加を禁止::
+........................................
+/kickban  [<channel>] <nick> [<reason>]
+
+channel: ユーザの居るチャンネル
+   nick: キックと参加禁止にするニックネーム
+ reason: キック理由
+
+キックと参加禁止にマスクを使える場合、"*" のマスク展開後にマッチするニックネームがこれらの対象になる。
+
+例:
+  "*!*@host.com" を参加禁止して "toto" をキック:
+    /kickban toto!*@host.com
+........................................
+
+[[command_irc_kill]]
+[command]*`kill`* クライアント - サーバの接続を閉じる::
+........................................
+/kill  <nick> <reason>
+
+  nick: kill するニックネーム
+reason: kill の理由
+........................................
+
+[[command_irc_links]]
+[command]*`links`* このクエリに応答するサーバが知っている全てのサーバ名をリストアップ::
+........................................
+/links  [[<server>] <server_mask>]
+
+     server: このクエリに応答するべきサーバ
+server_mask: このマスクにマッチするサーバのリスト
+........................................
+
+[[command_irc_list]]
+[command]*`list`* チャンネルとトピックをリストアップ::
+........................................
+/list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
+
+channel: リストアップするチャンネル名
+ server: サーバ名
+  regex: 結果をフィルタする正規表現 (大文字小文字は区別しない、"(?-i)" で始めれば区別する)
+
+例:
+  サーバ上の全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
+    /list
+  #weechat チャンネルをリストアップ:
+    /list #weechat
+  "#weechat" で始まる全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
+    /list -re #weechat.*
+........................................
+
+[[command_irc_lusers]]
+[command]*`lusers`* IRC ネットワークのサイズに関する統計を入手::
+........................................
+/lusers  [<mask> [<target>]]
+
+  mask: このマスクにマッチするサーバ
+target: リクエストを送信するサーバ
+........................................
+
+[[command_irc_map]]
+[command]*`map`* IRC ネットワークのグラフィカルマップを表示::
+........................................
+........................................
+
+[[command_irc_me]]
+[command]*`me`* 現在のチャンネルに CTCP action を送信::
+........................................
+/me  <message>
+
+message: 送信メッセージ
+........................................
+
+[[command_irc_mode]]
+[command]*`mode`* チャンネルかユーザのモードを変更::
+........................................
+/mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
+       <nick> [+|-]i|s|w|o
+
+チャンネルモード:
+  channel: 変更するチャンネル名 (デフォルトは現在のチャンネル)
+  o: チャンネルオペレータ権の付与/剥奪
+  p: プライベートチャンネルフラグ
+  s: 秘密チャンネルフラグ
+  i: 招待専用チャンネルフラグ
+  t: チャンネルトピックの変更をオペレータだけに許可するフラグ
+  n: チャンネルに参加していないクライアントからのメッセージの送信を禁止
+  m: 司会付きチャンネル
+  l: クライアント数の制限値を設定
+  b: ユーザの入室禁止マスクを設定
+  e: 入室禁止の除外マスクを設定
+  v: 司会付きチャンネルで発言権を付与/剥奪
+  k: チャンネルキーを設定 (パスワード)
+ユーザモード:
+  nick: 変更するユーザ名
+  i: ユーザを不可視状態にする
+  s: ユーザがサーバ notices を受け取る状態にする
+  w: ユーザが wallops を受け取る状態にする
+  o: オペレータフラグ
+
+上のモードのリストは完全なものではない、設定可能なモードを確認するために、サーバに関するドキュメントを読むこと。
+
+例:
+  #weechat チャンネルのトピックを保護:
+    /mode #weechat +t
+  サーバ上で不可視にする:
+    /mode nick +i
+........................................
+
+[[command_irc_motd]]
+[command]*`motd`* "今日のメッセージ" を取得::
+........................................
+/motd  [<target>]
+
+target: サーバ名
+........................................
+
+[[command_irc_msg]]
+[command]*`msg`* ニックネームかチャンネルにメッセージを送る::
+........................................
+/msg  [-server <server>] <target>[,<target>...] <text>
+
+server: このサーバに送信 (内部サーバ名)
+target: ニックネーム又はチャンネル名 (マスクを使えるかもしれない、'*' = 現在のチャンネル)
+  text: 送信するテキスト
+........................................
+
+[[command_irc_names]]
+[command]*`names`* チャンネルに参加しているニックネームをリストアップ::
+........................................
+/names  [<channel>[,<channel>...]]
+
+channel: チャンネル名
+........................................
+
+[[command_irc_nick]]
+[command]*`nick`* 現在のニックネームを変更::
+........................................
+/nick  [-all] <nick>
+
+-all: 全ての接続済みサーバで新しいニックネームを設定
+nick: 新しいニックネーム
+........................................
+
+[[command_irc_notice]]
+[command]*`notice`* ユーザに notice メッセージを送信::
+........................................
+/notice  [-server <server>] <target> <text>
+
+server: このサーバに送信 (内部サーバ名)
+target: ニックネーム又はチャンネル
+  text: 送信するテキスト
+........................................
+
+[[command_irc_notify]]
+[command]*`notify`* サーバ上のニックネームに対して接続か離籍状態の通知を追加する::
+........................................
+/notify  add <nick> [<server> [-away]]
+         del <nick>|-all [<server>]
+
+   add: 通知の追加
+  nick: ニックネーム
+server: 内部サーバ名 (デフォルトでは現在のサーバ)
+ -away: 離席メッセージが変更されたときに通知 (ニックネームの whois を行う)
+   del: 通知を削除
+  -all: 全ての通知を削除
+
+引数無しの場合は、現在のサーバに関する通知設定を表示します (コアバッファで実行された場合は全てのサーバに関する設定)。
+
+例:
+  "toto" が現在のサーバに接続/切断した場合に通知:
+    /notify add toto
+  "toto" が freenode サーバに接続/切断した場合に通知:
+    /notify add toto freenode
+  "toto" が freenode サーバに戻るか離席状態になった場合に通知:
+    /notify add toto freenode -away
+........................................
+
+[[command_irc_op]]
+[command]*`op`* ニックネームにオペレータ権を付与::
+........................................
+/op  <nick> [<nick>...]
+........................................
+
+[[command_irc_oper]]
+[command]*`oper`* オペレータ権を入手::
+........................................
+/oper  <user> <password>
+
+    user: ユーザ
+password: パスワード
+........................................
+
+[[command_irc_part]]
+[command]*`part`* チャンネルから退出::
+........................................
+/part  [<channel>[,<channel>...]] [<message>]
+
+channel: 退出するチャンネル名
+message: 退出メッセージ (他のユーザに対して)
+........................................
+
+[[command_irc_ping]]
+[command]*`ping`* サーバにピンを送信::
+........................................
+/ping  <server1> [<server2>]
+
+server1: サーバ
+server2: このサーバにピンを転送
+........................................
+
+[[command_irc_pong]]
+[command]*`pong`* ピンメッセージに応答::
+........................................
+/pong  <daemon> [<daemon2>]
+
+ daemon: ピンメッセージに応答したデーモン
+daemon2: メッセージをデーモンに転送
+........................................
+
+[[command_irc_query]]
+[command]*`query`* ニックネーム宛にプライベートメッセージを送信::
+........................................
+/query  [-server <server>] <nick> [<text>]
+
+server: 送信先サーバ (内部サーバ名)
+  nick: プライベート会話を行うニックネーム
+  text: 送信テキスト
+........................................
+
+[[command_irc_quote]]
+[command]*`quote`* パースせずにサーバ宛に生データを送信::
+........................................
+/quote  [-server <server>] <data>
+
+server: 送信先サーバ (内部サーバ名)
+  data: 送信する生データ
+........................................
+
+[[command_irc_reconnect]]
+[command]*`reconnect`* サーバに再接続::
+........................................
+/reconnect  <server> [<server>...] [-nojoin] [-switch]
+            -all [-nojoin] [-switch]
+
+ server: 再接続するサーバ名
+   -all: 全てのサーバに再接続
+-nojoin: チャンネルに参加しない (autojoin がサーバで有効化されていても)
+-switch: 次のサーバアドレスに移動
+........................................
+
+[[command_irc_rehash]]
+[command]*`rehash`* サーバに設定ファイルの読み込みを指示::
+........................................
+/rehash  [<option>]
+
+option: 追加オプション、いくつかのサーバ用
+........................................
+
+[[command_irc_restart]]
+[command]*`restart`* サーバに再起動を指示::
+........................................
+/restart  [<target>]
+
+target: サーバ名
+........................................
+
+[[command_irc_sajoin]]
+[command]*`sajoin`* ユーザがチャンネルへ参加することを強制::
+........................................
+/sajoin  <nick> <channel>[,<channel>...]
+
+   nick: ニックネーム
+channel: チャンネル名
+........................................
+
+[[command_irc_samode]]
+[command]*`samode`* チャンネルモードを変更、オペレータ権無しに::
+........................................
+/samode  <channel> <mode>
+
+channel: チャンネル名
+   mode: チャンネルモード
+........................................
+
+[[command_irc_sanick]]
+[command]*`sanick`* 強制的にユーザのニックネームを変更::
+........................................
+/sanick  <nick> <new_nick>
+
+    nick: ニックネーム
+new_nick: 新しいニックネーム
+........................................
+
+[[command_irc_sapart]]
+[command]*`sapart`* 強制的にユーザをチャンネルから退出::
+........................................
+/sapart  <nick> <channel>[,<channel>...]
+
+   nick: ニックネーム
+channel: チャンネル名
+........................................
+
+[[command_irc_saquit]]
+[command]*`saquit`* ある理由で強制的にユーザをサーバから切断::
+........................................
+/saquit  <nick> <reason>
+
+  nick: ニックネーム
+reason: 理由
+........................................
+
+[[command_irc_server]]
+[command]*`server`* IRC サーバのリストアップ、追加、削除::
+........................................
+/server  list|listfull [<server>]
+         add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
+         copy|rename <server> <new_name>
+         del|keep <server>
+         deloutq|jump|raw
+
+    list: サーバをリストアップ (引数無しでは、リストが表示される)
+listfull: 詳細情報を含めてサーバをリストアップ
+     add: 新しいサーバを作成
+  server: サーバ名、内部的な利用と表示に利用
+hostname: サーバのホスト名か IP アドレス、ポート番号はオプション (デフォルト: 6667)、複数のアドレスはコンマで区切る
+    temp: 一時的なサーバを作成 (保存されない)
+  option: サーバのオプションを設定 (ブールオプションでは値が無視される)
+nooption: ブールオプションを 'off' に設定 (例えば: -nossl)
+    copy: サーバを複製
+  rename: サーバをリネーム
+    keep: 設定ファイルにサーバを保存 (一時的なサーバ用)
+     del: サーバを削除
+ deloutq: 全てのサーバにメッセージの削除を要求 (WeeChat が送信している全てのメッセージ)
+    jump: サーババッファに移動
+     raw: 生 IRC データを表示するバッファを開く
+
+例:
+  /server listfull
+  /server add oftc irc.oftc.net/6697 -ssl -autoconnect
+  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
+  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+  /server add freenode3 irc.freenode.net -password=mypass
+  /server copy oftc oftcbis
+  /server rename oftc newoftc
+  /server del freenode
+  /server deloutq
+........................................
+
+[[command_irc_service]]
+[command]*`service`* 新しいサービスを登録::
+........................................
+/service  <nick> <reserved> <distribution> <type> <reserved> <info>
+
+distribution: サービスの可視性
+        type: 将来のために予約
+........................................
+
+[[command_irc_servlist]]
+[command]*`servlist`* 現在ネットワークに接続されたサービスをリストアップ::
+........................................
+/servlist  [<mask> [<type>]]
+
+mask: マスクにマッチするサービスだけをリストアップ
+type: タイプにマッチするサービスだけをリストアップ
+........................................
+
+[[command_irc_squery]]
+[command]*`squery`* サービスにメッセージを配送::
+........................................
+/squery  <service> <text>
+
+service: サービス名
+   text: 送信テキスト
+........................................
+
+[[command_irc_squit]]
+[command]*`squit`* サーバリンクを切断::
+........................................
+/squit  <server> <comment>
+
+ server: サーバ名
+comment: 切断コメント
+........................................
+
+[[command_irc_stats]]
+[command]*`stats`* サーバに関するクエリ統計::
+........................................
+/stats  [<query> [<server>]]
+
+ query: c/h/i/k/l/m/o/y/u (RFC1459 を参照)
+server: サーバ名
+........................................
+
+[[command_irc_summon]]
+[command]*`summon`* IRC サーバを実行中のホストにいるユーザ宛てに、IRC に参加することを要請するメッセージを送信::
+........................................
+/summon  <user> [<target> [<channel>]]
+
+   user: ユーザ名
+ target: サーバ名
+channel: チャンネル名
+........................................
+
+[[command_irc_time]]
+[command]*`time`* サーバのローカル時間を要求::
+........................................
+/time  [<target>]
+
+target: 時間を要求するサーバを指定
+........................................
+
+[[command_irc_topic]]
+[command]*`topic`* チャンネルトピックの取得/設定::
+........................................
+/topic  [<channel>] [<topic>|-delete]
+
+channel: チャンネル名
+  topic: チャンネルに設定する新しいトピック
+-delete: チャンネルトピックを削除
+........................................
+
+[[command_irc_trace]]
+[command]*`trace`* 指定されたサーバへのルートを探す::
+........................................
+/trace  [<target>]
+
+target: server
+........................................
+
+[[command_irc_unban]]
+[command]*`unban`* ニックネームかホストの禁止設定を解除::
+........................................
+/unban  [<channel>] <nick> [<nick>...]
+
+channel: 禁止設定を解除するチャンネル
+   nick: 禁止設定を解除するユーザかホスト
+........................................
+
+[[command_irc_userhost]]
+[command]*`userhost`* ニックネームに関する情報のリストを返す::
+........................................
+/userhost  <nick> [<nick>...]
+
+nick: nick
+........................................
+
+[[command_irc_users]]
+[command]*`users`* サーバにログインしているユーザのリスト::
+........................................
+/users  [<target>]
+
+target: server
+........................................
+
+[[command_irc_version]]
+[command]*`version`* ニックネームかサーバのバージョン情報を取得 (現在のサーバか指定したサーバ)::
+........................................
+/version  [<server>|<nick>]
+
+server: サーバ名
+  nick: ニックネーム
+........................................
+
+[[command_irc_voice]]
+[command]*`voice`* ニックネームに発言権を付与::
+........................................
+/voice  <nick> [<nick>...]
+........................................
+
+[[command_irc_wallchops]]
+[command]*`wallchops`* チャンネルオペレータに notice を送信::
+........................................
+/wallchops  [<channel>] <text>
+
+channel: チャンネル名
+   text: 送信テキスト
+........................................
+
+[[command_irc_wallops]]
+[command]*`wallops`* ユーザモードに 'w' を設定した全ての接続済みユーザ宛てにメッセージを送信::
+........................................
+/wallops  <text>
+
+text: 送信テキスト
+........................................
+
+[[command_irc_who]]
+[command]*`who`* 情報のリストを返すクエリを生成::
+........................................
+/who  [<mask> [o]]
+
+mask: マスクにマッチする情報
+   o: マスクにマッチするオペレータだけを返す
+........................................
+
+[[command_irc_whois]]
+[command]*`whois`* ユーザに関する情報を要求::
+........................................
+/whois  [<server>] <nick>[,<nick>...]
+
+server: サーバ名
+  nick: ニックネーム (マスクが使えるかも)
+........................................
+
+[[command_irc_whowas]]
+[command]*`whowas`* 既に存在しないニックネームに関する情報を要求::
+........................................
+/whowas  <nick>[,<nick>...] [<count> [<target>]]
+
+  nick: 検索するニックネーム
+ count: リプライの個数 (負の値で完全な検索)
+target: マスクに一致するものだけを返す
+........................................
+

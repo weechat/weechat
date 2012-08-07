@@ -1,0 +1,59 @@
+[width="100%",cols="^1,^2,6,6",options="header"]
+|========================================
+| プラグイン | 名前 | 説明 | 引数
+
+| fifo | fifo_filename | FIFO パイプの名前 | -
+
+| irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick はオプション)
+
+| irc | irc_is_channel | 文字列がサーバの有効な IRC チャンネル名なら 1 | サーバ、チャンネル (サーバはオプション)
+
+| irc | irc_is_nick | 文字列が有効な IRC ニックネームなら 1 | ニックネーム
+
+| irc | irc_nick | あるサーバの現在のニックネームを取得 | サーバ名
+
+| irc | irc_nick_color | ニックネームの色コードを取得 | ニックネーム
+
+| irc | irc_nick_color_name | ニックネームの色名を取得 | ニックネーム
+
+| irc | irc_nick_from_host | IRC ホストからニックネームを取得 | IRC ホスト (例: `:nick!name@server.com`)
+
+| irc | irc_server_isupport | サーバがこの機能がサポートする場合は 1 (IRC メッセージ 005 を使う) | server,feature
+
+| irc | irc_server_isupport_value | サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う) | server,feature
+
+| python | python2_bin | python 2.x インタプリタへのパス | -
+
+| weechat | charset_internal | WeeChat 内部文字集合 | -
+
+| weechat | charset_terminal | ターミナルの文字集合 | -
+
+| weechat | cursor_mode | カーソルモードが有効の場合 1 | -
+
+| weechat | date | WeeChat のコンパイル日 | -
+
+| weechat | dir_separator | ディレクトリ区切り | -
+
+| weechat | filters_enabled | フィルタが有効の場合 1 | -
+
+| weechat | inactivity | キーボード未使用時間 (秒) | -
+
+| weechat | version | WeeChat のバージョン | -
+
+| weechat | version_number | WeeChat のバージョン (数字) | -
+
+| weechat | weechat_dir | WeeChat ディレクトリ | -
+
+| weechat | weechat_libdir | WeeChat "lib" ディレクトリ | -
+
+| weechat | weechat_localedir | WeeChat "locale" ディレクトリ | -
+
+| weechat | weechat_sharedir | WeeChat "share" ディレクトリ | -
+
+| weechat | weechat_site | WeeChat サイト | -
+
+| weechat | weechat_site_download | WeeChat サイト、ダウンロードページ | -
+
+| weechat | weechat_upgrading | WeeChat がアップグレード中は 1 (コマンド `/upgrade`) | -
+
+|========================================

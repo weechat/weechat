@@ -1,0 +1,125 @@
+* [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
+** 説明: `"中止" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+
+* [[option_xfer.color.status_active]] *xfer.color.status_active*
+** 説明: `"アクティブ" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightblue`)
+
+* [[option_xfer.color.status_connecting]] *xfer.color.status_connecting*
+** 説明: `"接続中" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_xfer.color.status_done]] *xfer.color.status_done*
+** 説明: `"終了" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightgreen`)
+
+* [[option_xfer.color.status_failed]] *xfer.color.status_failed*
+** 説明: `"失敗" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+
+* [[option_xfer.color.status_waiting]] *xfer.color.status_waiting*
+** 説明: `"接続待ち" 状態のテキスト色`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightcyan`)
+
+* [[option_xfer.color.text]] *xfer.color.text*
+** 説明: `text color in xfer buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_xfer.color.text_bg]] *xfer.color.text_bg*
+** 説明: `background color in xfer buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_xfer.color.text_selected]] *xfer.color.text_selected*
+** 説明: `text color of selected line in xfer buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
+** 説明: `チャット要求を自動的に許可 (注意して使用!)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
+** 説明: `ファイルを自動的に受信 (注意して使用!)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
+* [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
+** 説明: `既に存在する場合、受信ファイルをリネームする (".1"、".2"、...を追加)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
+** 説明: `リモートホストとの接続が切れた場合、自動的にファイル転送をリジュームする`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
+** 説明: `ファイルの送信時にスペースをアンダースコアに変換`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.file.download_path]] *xfer.file.download_path*
+** 説明: `受信ファイルを書き込むパス ("%h" は WeeChat ホームに置換される、デフォルトは "~/.weechat")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%h/xfer"`)
+
+* [[option_xfer.file.upload_path]] *xfer.file.upload_path*
+** 説明: `ファイル送信の際に読み込むファイルのパス (ユーザがパスを指定しなかった場合) ("%h" は WeeChat ホームに置換される、デフォルトは "~/.weechat")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"~"`)
+
+* [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
+** 説明: `ファイルを受信する際にローカルファイル名のプレフィックスとしてリモートニックネームを使用`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
+** 説明: `新しい xfer がリストに追加されたら xfer バッファを自動的に開く`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.look.progress_bar_size]] *xfer.look.progress_bar_size*
+** 説明: `プログレスバーのサイズ、文字数単位 (0 の場合、プログレスバーを使わない)`
+** タイプ: 整数
+** 値: 0 .. 256 (デフォルト値: `20`)
+
+* [[option_xfer.network.blocksize]] *xfer.network.blocksize*
+** 説明: `送信パケットのブロックサイズ、バイト単位`
+** タイプ: 整数
+** 値: 1024 .. 102400 (デフォルト値: `65536`)
+
+* [[option_xfer.network.fast_send]] *xfer.network.fast_send*
+** 説明: `ファイル送信時に肯定応答を待たない`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_xfer.network.own_ip]] *xfer.network.own_ip*
+** 説明: `ファイル/チャットの送信に使う IP か DNS アドレス (空の場合、ローカルインターフェイス IP を使う)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_xfer.network.port_range]] *xfer.network.port_range*
+** 説明: `ファイル/チャットを送信する際に、与えられた範囲のポートを使う (NAT で便利) ことを強制 (構文: 単一のポートを指定する場合は 5000 等、ポート範囲の場合は 5000-5015 等、空は任意のポートを意味する、1024 以下のポート番号は root 以外使えないため、1024 以上のポート番号を使うことを推奨)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
+** 説明: `ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `0`)
+
+* [[option_xfer.network.timeout]] *xfer.network.timeout*
+** 説明: `xfer 要求のタイムアウト (秒単位)`
+** タイプ: 整数
+** 値: 5 .. 2147483647 (デフォルト値: `300`)
+

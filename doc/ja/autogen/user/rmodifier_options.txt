@@ -1,0 +1,5 @@
+* [[option_rmodifier.look.hide_char]] *rmodifier.look.hide_char*
+** 説明: `文字列の一部を隠すための文字`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"*"`)
+

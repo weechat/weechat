@@ -1,0 +1,10 @@
+* [[option_charset.default.decode]] *charset.default.decode*
+** 説明: `グローバルデコード文字集合`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"iso-8859-1"`)
+
+* [[option_charset.default.encode]] *charset.default.encode*
+** 説明: `グローバルエンコード文字集合`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+

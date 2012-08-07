@@ -1,0 +1,2175 @@
+= WeeChat ユーザーズガイド =
+Sébastien Helleu <flashcode@flashtux.org>
+
+
+このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
+
+この文書の最新版は以下のページにあります:
+http://www.weechat.org/doc
+
+
+[[introduction]]
+== イントロダクション ==
+
+WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライアントです。
+高速で軽量、多くのオペレーティングシステムで動くように設計されています。
+
+[[features]]
+=== 特徴 ===
+
+主な特徴:
+
+* マルチプロトコル (IRC、Jabber)
+* 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
+* コンパクト、高速、軽量
+* プラグインとスクリプトでカスタマイズや拡張が可能
+* IRC の RFC に準拠 http://www.ietf.org/rfc/rfc1459.txt[1459]、
+  http://www.ietf.org/rfc/rfc2810.txt[2810]、
+  http://www.ietf.org/rfc/rfc2811.txt[2811]、
+  http://www.ietf.org/rfc/rfc2812.txt[2812]、
+  http://www.ietf.org/rfc/rfc2813.txt[2813]。
+* マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
+* 完全な GPL、フリーソフトウェア
+
+WeeChat のホームページ: http://www.weechat.org/
+
+[[pre-requisites]]
+=== 事前に必要なもの ===
+
+WeeChat をインストールするには、以下のものが必要です:
+
+* GNU/Linux が稼動しているシステム (ソースパッケージを使う場合は、
+  コンパイラツールも必要)、又は互換 OS
+* 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
+* ncurses ライブラリ
+
+
+[[install]]
+== インストール方法 ==
+
+[[binary_packages]]
+=== バイナリパッケージ ===
+
+多くのディストリビューションではバイナリパッケージが利用できます。例えば:
+
+* Debian (または Debian 互換ディストリビューション):
+  `apt-get install weechat-curses`
+* Mandriva/RedHat (または RPM 互換ディストリビューション):
+  `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
+* Gentoo: `emerge weechat`
+* Arch Linux: `pacman -S weechat`
+* Fedora Core: `yum install weechat`
+* Sourcemage: `cast weechat`
+
+例えば weechat-plugins 等の追加パッケージを使うとより便利になるかもしれません。
+
+その他のディストリビューションでは、
+インストール説明マニュアルを参照してください。
+
+[[source_package]]
+=== ソースパッケージ ===
+
+WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
+
+[[dependencies]]
+==== 依存関係 ====
+
+以下の表は WeeChat
+のコンパイルに必須または任意で必要なパッケージのリストです。
+
+[width="100%",cols="5,^3,^3,13",options="header"]
+|========================================
+| パッケージ ^(1)^       | バージョン  | 必須     | 機能
+| cmake                  |             | *yes*    | ビルド (autotools でも可能ですが、cmake を推奨します)
+| libncursesw5-dev ^(2)^ |             | *yes*    | ncurses インターフェイス
+| libcurl4-gnutls-dev    |             | *yes*    | URL 転送
+| gettext                |             |          | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| libgcrypt11-dev        |             |          | DH-BLOWFISH メカニズムを用いた IRC サーバ用の SASL 認証
+| libgnutls-dev          | ≥ 2.2.0     |          | IRC サーバへの SSL 接続
+| ca-certificates        |             |          | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| zlib1g-dev             |             |          | relay プラグインでパケットを圧縮 (weechat プロトコル)
+| libaspell-dev          |             |          | aspell プラグイン
+| python-dev             | ≥ 2.5 ^(3)^ |          | python プラグイン
+| libperl-dev            |             |          | perl プラグイン
+| ruby1.8-dev            |             |          | ruby プラグイン
+| liblua5.1-0-dev        |             |          | lua プラグイン
+| tcl-dev                | ≥ 8.5       |          | tcl プラグイン
+| guile-1.8-dev          |             |          | guile (scheme) プラグイン
+| asciidoc               | ≥ 8.5.0     |          | 文書の生成 (HTML ファイル)
+| source-highlight       |             |          | HTML 文書に含まれるソースコードのシンタックスハイライト
+|========================================
+
+[NOTE]
+^(1)^ Debian GNU/Linux ディストリビューションにおけるパッケージ名です。
+他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。+
+^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨*されません*
+(ワイドキャラクタの表示にバグを生じるでしょう)。+
+^(3)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
+で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
+
+[[compile_with_cmake]]
+==== cmake によるコンパイル ====
+
+* システムディレクトリにインストールする場合 ('root' 特権が必要です):
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+% make install    (as root)
+----------------------------------------
+
+* 任意のディレクトリにインストールする場合:
+
+----------------------------------------
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=/path/to/directory
+$ make
+$ make install
+----------------------------------------
+
+[[compile_with_autotools]]
+==== autotools によるコンパイル ====
+
+* システムディレクトリにインストールする場合 ('root' 特権が必要です):
+
+----------------------------------------
+$ ./configure
+$ make
+% make install    (as root)
+----------------------------------------
+
+* 任意のディレクトリにインストールする場合:
+
+----------------------------------------
+$ ./configure --prefix=/path/to/directory
+$ make
+$ make install
+----------------------------------------
+
+[[git_sources]]
+==== Git ソース ====
+
+警告: GIT ソースを用いる方法は上級者向けです。コンパイルに失敗したり、
+不安定な可能性があります。警告しましたよ!
+
+GIT ソースを入手するには、以下のコマンドを使ってください:
+
+----------------------------------------
+$ git clone git://git.sv.gnu.org/weechat.git
+----------------------------------------
+
+autotools (cmake ではなく) を使う場合は、以下のスクリプトを実行してください:
+
+----------------------------------------
+$ ./autogen.sh
+----------------------------------------
+
+その後は、ソースパッケージの説明に従ってください
+(<<source_package,ソースパッケージ>>を参照)。
+
+[[report_crashes]]
+==== クラッシュレポート ====
+
+WeeChat がクラッシュした場合、または WeeChat
+をクラッシュさせる操作を報告する場合、以下の手順に従ってください:
+
+* デバッグを有効化してコンパイル (またはデバック情報を含んだバイナリパッケージをインストール)
+* システムの 'core' ファイルを有効化
+* gdb のインストール
+
+[[debug_info]]
+==== デバッグ情報 ====
+
+cmake でコンパイルする場合:
+
+----------------------------------------
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+----------------------------------------
+
+autotools でコンパイルする場合は、デバックはデフォルトで有効化されています(`--with-debug=1`)。
+
+バイナリパッケージをインストールする場合は、'weechat-dbg' パッケージをインストールしてください。
+
+[[core_files]]
+==== Core ファイル ====
+
+'core' ファイルを有効化するには、<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>
+オプションを使ってください:
+
+----------------------------------------
+/set weechat.startup.sys_rlimit "core:-1"
+----------------------------------------
+
+WeeChat バージョン 0.3.8 以下または WeeChat の実行前に core
+ファイルを有効化したい場合には、`ulimit` コマンドを使ってください。
+
+Linux で 'bash' シェルを使っている場合、以下の内容を `~/.bashrc` に追加してください:
+
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
+
+サイズを指定する場合は:
+
+----------------------------------------
+ulimit -c 200000
+----------------------------------------
+
+[[gdb_backtrace]]
+==== gdb でバックトレースを得る ====
+
+WeeChat がクラッシュすると、'core' または 'core.12345' ファイルが作られます
+('12345' はプロセス番号です)。
+このファイルは WeeChat を起動したディレクトリに作られます (これは
+WeeChat がインストールされているディレクトリでは*ありません*!)。
+
+例えば、'weechat-curses' が '/usr/bin/' にインストールされ、'core' ファイルが
+'/home/xxx/' にある場合、以下のコマンドで gdb を起動してください:
+
+----------------------------------------
+gdb /usr/bin/weechat-curses /home/xxx/core
+----------------------------------------
+
+[NOTE]
+バイナリパッケージ 'weechat-dbg' をインストールした場合 (例えば Debian で)、WeeChat
+バイナリへのパスは '/usr/lib/debug/usr/bin/weechat-curses' のようになります。
+
+gdb の中で `bt full` コマンドを実行するとバックトレースが表示されます。
+以下のような出力が得られるはずです:
+
+----------------------------------------
+(gdb) set logging file /tmp/crash.txt
+(gdb) set logging on
+Copying output to /tmp/crash.txt.
+(gdb) bt full
+#0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
+#1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6
+#2  0x0000000000437f66 in weechat_shutdown (return_code=1, crash=1) at /some_path/src/core/weechat.c:351
+#3  <signal handler called>
+#4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90, remaining_calls=<value optimized out>)
+    at /some_path/src/core/wee-hook.c:1364
+        hook_process = 0x254eb90
+        status = <value optimized out>
+#5  0x000000000044cc7d in hook_timer_exec () at /some_path/src/core/wee-hook.c:1025
+        tv_time = {tv_sec = 1272693881, tv_usec = 212665}
+        ptr_hook = 0x2811f40
+        next_hook = 0x0
+#6  0x000000000041b5b0 in gui_main_loop () at /some_path/src/gui/curses/gui-curses-main.c:319
+        hook_fd_keyboard = 0x173b600
+        tv_timeout = {tv_sec = 0, tv_usec = 0}
+        read_fds = {fds_bits = {0 <repeats 16 times>}}
+        write_fds = {fds_bits = {0 <repeats 16 times>}}
+        except_fds = {fds_bits = {0 <repeats 16 times>}}
+        max_fd = <value optimized out>
+----------------------------------------
+
+このバックトレースを開発者に報告し、
+クラッシュを引き起こした動作を伝えてください。
+
+お手伝いに感謝します!
+
+[[debug_running_weechat]]
+==== 起動した WeeChat のデバッグ ====
+
+起動している WeeChat をデバッグするには (例えば WeeChat がフリーズしているような場合)、gdb
+の引数にプロセス番号を与えて起動します ('12345' は weechat-curses プロセスの PID に変更してください):
+
+----------------------------------------
+gdb /usr/bin/weechat-curses 12345
+----------------------------------------
+
+クラッシュが起きた場合と同様に、`bt full` コマンドを使ってください:
+
+----------------------------------------
+(gdb) bt full
+----------------------------------------
+
+
+[[usage]]
+== 使い方 ==
+
+[[running_weechat]]
+=== WeeChat の起動 ===
+
+コマンドライン引数:
+
+-a, --no-connect::
+    WeeChat の起動時にサーバへの自動接続を行わない
+
+-c, --colors::
+    ターミナルにデフォルトカラーを表示
+
+-d, --dir 'path'::
+    WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
+    ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat'。
+    (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
+
+-h, --help::
+    ヘルプを表示
+
+-k, --keys::
+    WeeChat の デフォルトキーを表示
+
+-l, --license::
+    WeeChat ライセンスを表示
+
+-p, --no-plugin::
+    プラグインの自動ロードを止める
+
+-r, --run-command::
+    起動後にコマンドを実行 (複数のコマンドを指定するにはセミコロンで各コマンドを区切る)
+
+-s, --no-script::
+    スクリプトの自動ロードを止める
+
+-v, --version::
+    WeeChat のバージョンを表示
+
+plugin:option::
+    プラグインに渡すオプション (各プラグインのドキュメントを参照)
+
+WeeChat を起動させるには、以下コマンドを実行:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
+
+初めて WeeChat を起動する場合、デフォルトのオプションで設定ファイルが作成されます。
+このデフォルト設定ファイルは
+'~/.weechat/weechat.conf' です。
+
+WeeChat を設定するにはこのファイルを編集するか、
+WeeChat 内で `/set` コマンドにパラメータを付けて設定します
+(<<weechat_commands,WeeChat コマンド>>を参照)。
+
+[[screen_layout]]
+=== スクリーンレイアウト ===
+
+WeeChat を起動したターミナルの例:
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                                                 │ ◀ タイトル ("title") バー
+│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test                 │@Flashy│
+│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]                             │@joe   │
+│12:52:27    -- | Channel #test: 4 nicks (2 ops, 0 halfop, 1 voice, 1 normal)     │+weebot│
+│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009                     │peter  │
+│12:54:15 peter | hey!                                                            │       │
+│12:55:01  @joe | hello                                                           │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ チャット + ニックネームリスト ("nicklist") バー
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ 状態 ("status") バー
+│[@Flashy] hi peter!█                                                                     │ ◀ 入力 ("input") バー
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+スクリーンは以下のエリアから成ります:
+
+* チャットログが表示されるチャットエリア (スクリーンの真ん中)、それぞれの行は:
+** 時刻
+** プレフィックス ("|" の前)
+** メッセージ ("|" の後)
+* チャットエリアの周りにあるバー、デフォルトバーは:
+** タイトル ('title') バー、チャットエリアの上
+** 状態 ('status') バー、チャットエリアの下
+** 入力 ('input') バー、状態バーの下
+** ニックネームリスト ('nicklist') バー、右端
+
+状態 ('status') バーは以下の初期値を持っています:
+
+[width="100%",cols="^3,^3l,10",options="header"]
+|========================================
+| アイテム              | 例                    | 説明
+| time                  | [12:55]               | 時刻
+| buffer_count          | [6]                   | 開いているバッファの数
+| buffer_plugin         | [irc/freenode]        | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
+| buffer_number         | 3                     | 現在のバッファの番号
+| buffer_name           | #test                 | 現在のバッファの名前
+| buffer_modes          | +n                    | IRC チャンネルモード
+| buffer_nicklist_count | {4}                   | ニックネームリスト中のニックネームの数
+| buffer_filter         | *                     | フィルタ表示: `*` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
+| lag                   | [Lag: 2.5]            | 遅延秒表示 (遅延が短い場合は非表示)
+| hotlist               | [Act: 4:#abc(2,5), 6] | 変化のあったバッファのリスト (未読メッセージ) (例では、'#abc' に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)
+| completion            | abc(2) def(5)         | 補完候補の単語リスト、各単語に対して適応される補完候補の数を含む。
+| scroll                | -MORE(50)-            | スクロール表示、最後の行が表示されてから追加された行数を含む。
+|========================================
+
+入力 ('input') バーは以下の初期値を持っています:
+
+[width="100%",cols="^3,^6l,8",options="header"]
+|========================================
+| アイテム     | 例                                         | 説明
+| input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | 行をペーストする場合にユーザへ行われる質問
+| input_prompt | [@Flashy]                                  | 入力プロンプト (irc プラグインの場合はニックネーム)
+| away         | (away)                                     | 離席状態表示
+| input_search | [Text search]                              | テキスト検索表示
+| input_text   | hi peter!                                  | 入力テキスト
+|========================================
+
+[[buffers_and_windows]]
+=== バッファとウィンドウ ===
+
+'バッファ' は番号、名前、表示された行
+(とその他の情報) で構成されています。
+
+バッファの例:
+
+* コアバッファ (動時にy WeeChat が作成、閉じることはできない)
+* irc サーバ (サーバからのメッセージを表示)
+* irc チャンネル
+* irc プライベート
+
+'window' はバッファを表示するスクリーンエリアのことです。
+スクリーンを複数のウィンドウに分割することができます。
+
+それぞれのウィンドウは 1 つのバッファを表示します。バッファは隠したり
+(ウィンドウに表示しない)、複数のウィンドウに表示することできます。
+
+水平方向分割の例 (`/window splith`):
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #abc, channel about nothing!                                                  │
+│12:55:12     Max | hi                                                            │@Flashy│
+│12:55:20 @Flashy | hi Max!                                                       │Max    │
+│12:55:32     Max | how are you?                                                  │       │
+│                                                                                 │       │
+│                                                                                 │       │ ◀ ウィンドウ #2
+│                                                                                 │       │   (バッファ #4)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                                 │
+│[@Flashy]                                                                                │
+│─────────────────────────────────────────────────────────────────────────────────────────│
+│Welcome to #test, this is a test channel                                                 │
+│12:54:15 peter | hey!                                                            │@Flashy│
+│12:55:01  @joe | hello                                                           │@joe   │
+│                                                                                 │+weebot│
+│                                                                                 │peter  │
+│                                                                                 │       │ ◀ ウィンドウ #1
+│                                                                                 │       │   (バッファ #3)
+│                                                                                 │       │
+│                                                                                 │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                                │
+│[@Flashy] hi peter!█                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+垂直方向分割の例 (`/window splitv`):
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel    │Welcome to #abc, channel about nothing!     │
+│12:54:15 peter | hey!               │@Flashy│12:55:12     Max | hi               │@Flashy│
+│12:55:01  @joe | hello              │@joe   │12:55:20 @Flashy | hi Max!          │Max    │
+│                                    │+weebot│12:55:32     Max | how are you?     │       │
+│                                    │peter  │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │[12:55] [6] [irc/freenode] 4:#abc(+n){2}    │
+│[@Flashy] hi peter!█                        │[@Flashy]                                   │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ ウィンドウ #1                               ▲ ウィンドウ #2
+                  (バッファ #3)                                 (バッファ #4)
+........................................
+
+垂直方向 + 水平方向分割の例:
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel    │Welcome to #def, another channel            │
+│12:54:15 peter | hey!               │@Flashy│12:55:42 @Flashy | hello world      │@Flashy│
+│12:55:01  @joe | hello              │@joe   │12:55:56    alex | hi Flashy        │alex   │
+│                                    │+weebot│                                    │       │
+│                                    │peter  │                                    │       │ ◀ ウィンドウ #3
+│                                    │       │                                    │       │   (バッファ #5)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│                                    │       │[12:55] [6] [irc/freenode] 5:#def(+n){2}    │
+│                                    │       │[@Flashy]                                   │
+│                                    │       │────────────────────────────────────────────│
+│                                    │       │Welcome to #abc, channel about nothing!     │
+│                                    │       │12:55:12     Max | hi               │@Flashy│
+│                                    │       │12:55:20 @Flashy | hi Max!          │Max    │
+│                                    │       │12:55:32     Max | how are you?     │       │
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │ ◀ ウィンドウ #2
+│                                    │       │                                    │       │   (バッファ #4)
+│                                    │       │                                    │       │
+│                                    │       │                                    │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │ [12:55] [6] [irc/freenode] 4:#abc(+n){2}   │
+│[@Flashy] hi peter!█                        │ [@Flashy]                                  │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+                ▲ ウィンドウ #1
+                  (バッファ #3)
+........................................
+
+[[notify_levels]]
+=== 通知レベル ===
+
+バッファに表示された各メッセージには 4 つのレベルが設定されています。レベルの低いものから順に:
+
+* 'low': 重要性の低いメッセージ (例えば irc の参加/退出/終了メッセージ)
+* 'message': ユーザからのメッセージ
+* 'private': プライベートバッファのメッセージ
+* 'highlight': ハイライトされたメッセージ
+
+それぞれのバッファには通知レベルが設定されており、
+通知レベルに対応するメッセージの数がホットリストに表示されます。
+
+デフォルトの通知レベルは
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>> オプションで指定し、
+デフォルトは 'all' です。
+
+[width="50%",cols="3m,10",options="header"]
+|========================================
+| 通知レベル   | ホットリストに追加されるメッセージのレベル
+| none         | (無効)
+| highlight    | 'highlight' + 'private'
+| message      | 'highlight' + 'private' + 'message'
+| all          | 'highlight' + 'private' + 'message' + 'low'
+|========================================
+
+通知レベルはバッファグループに対して設定することも可能で、例えば
+irc サーバ "freenode" に含まれる全てのバッファに対して設定する場合:
+
+----------------------------------------
+/set weechat.notify.irc.freenode message
+----------------------------------------
+
+"#weechat" チャンネルだけに対して、通知レベルを 'highlight' に設定する場合:
+
+----------------------------------------
+/set weechat.notify.irc.freenode.#weechat highlight
+----------------------------------------
+
+`/buffer` コマンドで、あるバッファに対する通知レベルを設定できます:
+
+----------------------------------------
+/buffer notify highlight
+----------------------------------------
+
+[[key_bindings]]
+=== デフォルトのキー割り当て ===
+
+// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
+
+[[key_bindings_command_line]]
+==== コマンドライン用のキー ====
+
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+|========================================
+| キー                | 説明  | コマンド
+| @k(←)            .2+| コマンドラインで前の文字に移動 .2+| /input move_previous_char
+| @k(C-)@k(b)
+| @k(→)            .2+| コマンドラインで次の文字に移動 .2+| /input move_next_char
+| @k(C-)@k(f)
+| @k(C-)@k(←)      .2+| コマンドラインで前の単語に移動 .2+| /input move_previous_word
+| @k(A-)@k(b)
+| @k(C-)@k(→)      .2+| コマンドラインで次の単語に移動 .2+| /input move_next_word
+| @k(A-)@k(f)
+| @k(Home)         .2+| コマンドラインで行頭に移動 .2+| /input move_beginning_of_line
+| @k(C-)@k(a)
+| @k(End)          .2+| コマンドラインで行末に移動 .2+| /input move_end_of_line
+| @k(C-)@k(e)
+| @k(C-)@k(c) , @k(b) | テキストを太字化するコードの挿入 | /input insert \x02
+| @k(C-)@k(c) , @k(c) | テキストに色をつけるコードの挿入 | /input insert \x03
+| @k(C-)@k(c) , @k(i) | テキストをイタリック体にするコードの挿入 | /input insert \x1D
+| @k(C-)@k(c) , @k(o) | テキスト色のリセットを行うコードの挿入 | /input insert \x0F
+| @k(C-)@k(c) , @k(r) | テキスト色の反転を行うコードの挿入 | /input insert \x12
+| @k(C-)@k(c) , @k(u) | テキストに下線を引くコードの挿入 | /input insert \x15
+| @k(Del)          .2+| コマンドラインで次の文字を削除 .2+| /input delete_next_char
+| @k(C-)@k(d)
+| @k(Backsp.)      .2+| コマンドラインで前の文字を削除 .2+| /input delete_previous_char
+| @k(C-)@k(h)
+| @k(C-)@k(k)         | コマンドラインでカーソルより後の文字列を削除 (削除された文字列はクリップボードに保存) | /input delete_end_of_line
+| @k(C-)@k(r)         | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | /input search_text
+| @k(C-)@k(t)         | 文字の入れ替え | /input transpose_chars
+| @k(C-)@k(u)         | コマンドラインでカーソルより前の文字列を削除 (削除された文字列はクリップボードに保存) | /input delete_beginning_of_line
+| @k(C-)@k(w)         | コマンドラインで前の単語を削除 (削除された文字列はクリップボードに保存) | /input delete_previous_word
+| @k(C-)@k(y)         | クリップボードの内容を貼り付け | /input clipboard_paste
+| @k(C-)@k(_)         | コマンドラインの最後の動作をやり直す | /input undo
+| @k(A-)@k(_)         | コマンドラインの最後の動作を取り消す | /input redo
+| @k(Tab)             | コマンドやニックネームを補完 (再度 @k(Tab) することで次の補完候補を表示) | /input complete_next
+| @k(S-)@k(Tab)       | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | /input complete_previous
+| @k(Enter)        .3+| コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) .3+| /input return
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+| @k(↑)               | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | /input history_previous
+| @k(↓)               | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | /input history_next
+| @k(C-)@k(↑)         | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | /input history_global_previous
+| @k(C-)@k(↓)         | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | /input history_global_next
+| @k(A-)@k(d)         | コマンドラインで次の単語を削除 (削除された文字列はクリップボードに保存) | /input delete_next_word
+| @k(A-)@k(k)         | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | /input grab_key_command
+| @k(A-)@k(r)         | コマンドラインへの入力をすべて削除 | /input delete_line
+| @k(A-)@k(s)         | aspell の有効無効を切り替え | /mute aspell toggle
+|========================================
+
+[[key_bindings_buffers_windows]]
+==== バッファ / ウィンドウ用のキー ====
+
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+|========================================
+| キー                      | 説明 | コマンド
+| @k(C-)@k(l)               | 全ウィンドウを再描画 | /window refresh
+| @k(C-)@k(s) , @k(C-)@k(u) | すべてのバッファに未読マークをセット | /input set_unread
+| @k(C-)@k(x)               | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | /input switch_active_buffer
+| @k(PgUp)                  | バッファ履歴を 1 ページ分上方向にスクロール | /window page_up
+| @k(PgDn)                  | バッファ履歴を 1 ページ分下方向にスクロール | /window page_down
+| @k(A-)@k(PgUp)            | バッファ履歴を数行分上方向にスクロール | /window scroll_up
+| @k(A-)@k(PgDn)            | バッファ履歴を数行分下方向にスクロール | /window scroll_down
+| @k(A-)@k(Home)            | バッファ履歴を最初までスクロール | /window scroll_top
+| @k(A-)@k(End)             | バッファ履歴を最後までスクロール | /window scroll_bottom
+| @k(A-)@k(←)            .4+| 前のバッファに移動 .4+| /buffer -1
+| @k(A-)@k(↑)
+| @k(C-)@k(p)
+| @k(F5)
+| @k(A-)@k(→)            .4+| 後のバッファに移動 .4+| /buffer +1
+| @k(A-)@k(↓)
+| @k(C-)@k(n)
+| @k(F6)
+| @k(F7)                    | ウィンドウを前に移動 | /window -1
+| @k(F8)                    | ウィンドウを後に移動 | /window +1
+| @k(F9)                    | バッファタイトルを左方向にスクロール | /bar scroll title * -30%
+| @k(F10)                   | バッファタイトルを右方向にスクロール | /bar scroll title * +30%
+| @k(F11)                   | ニックネームリストを上方向にスクロール | /bar scroll nicklist * -100%
+| @k(F12)                   | ニックネームリストを下方向にスクロール | /bar scroll nicklist * +100%
+| @k(A-)@k(F11)             | ニックネームリストを一番上にスクロール | /bar scroll nicklist * b
+| @k(A-)@k(F12)             | ニックネームリストを一番下にスクロール | /bar scroll nicklist * e
+| @k(A-)@k(a)               | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | /input jump_smart
+| @k(A-)@k(h)               | ホットリスト (他のバッファにあった変更通知リスト) を消去 | /input hotlist_clear
+| @k(A-)@k(j) , @k(A-)@k(l) | 最後のバッファに移動 | /input jump_last_buffer
+| @k(A-)@k(j) , @k(A-)@k(r) | IRC 生バッファに移動 | /server raw
+| @k(A-)@k(j) , @k(A-)@k(s) | IRC サーババッファに移動 | /server jump
+| @k(A-)@k(0...9)           | 番号のバッファに移動 (0 = 10) | /buffer *N
+| @k(A-)@k(j) , @k(01...99) | 番号のバッファに移動 | /buffer NN
+| @k(A-)@k(m)               | マウスの有効無効を切り替え | /mouse toggle
+| @k(A-)@k(n)               | 次のハイライトまでスクロール | /window scroll_next_highlight
+| @k(A-)@k(p)               | 前のハイライトまでスクロール | /window scroll_previous_highlight
+| @k(A-)@k(u)               | バッファを最初の未読行までスクロール | /window scroll_unread
+| @k(A-)@k(w) , @k(A-)@k(↑) | 上のウィンドウに移動 | /window up
+| @k(A-)@k(w) , @k(A-)@k(↓) | 下のウィンドウに移動 | /window down
+| @k(A-)@k(w) , @k(A-)@k(←) | 左のウィンドウに移動 | /window left
+| @k(A-)@k(w) , @k(A-)@k(→) | 右のウィンドウに移動 | /window right
+| @k(A-)@k(w) , @k(A-)@k(b) | すべてのウィンドウサイズを均等に | /window balance
+| @k(A-)@k(w) , @k(A-)@k(s) | 2 つのウィンドウを入れ替え | /window swap
+| @k(A-)@k(z)               | 現在のウィンドウを最大化 (再度 @k(A-)@k(z) することで: 最初のウィンドウ状態に戻す、最大化前の状態) | /window zoom
+| @k(A-)@k(<)               | バッファ訪問履歴で前のバッファに移動 | /input jump_previously_visited_buffer
+| @k(A-)@k(>)               | バッファ訪問履歴で次のバッファに移動 | /input jump_next_visited_buffer
+| @k(A-)@k(/)               | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | /input jump_last_buffer_displayed
+| @k(A-)@k(=)               | フィルタの有効無効を切り替え | /filter toggle
+|========================================
+
+[[key_bindings_search_context]]
+==== "検索" モード用のキー ====
+
+以下のキーは "検索" モード (バッファ内のテキスト検索用に
+@k(C-)@k(r) が押された状態) でのみ有効です。
+
+[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+|========================================
+| キー         | 説明 | コマンド
+| @k(C-)@k(r)  | 大文字小文字を区別して検索 | /input search_switch_case
+| @k(↑)        | 前のキーワードで検索 | /input search_previous
+| @k(↓)        | 次のキーワードで検索 | /input search_next
+| @k(Enter) .3+| 検索を終了 .3+| /input search_stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+|========================================
+
+[[key_bindings_cursor_context]]
+==== "カーソル" モード用のキー ====
+
+以下のキーは "カーソル" モード (スクリーン上でカーソルを自由に動かせる状態) でのみ有効です。
+
+[width="100%",cols="^.^3,^.^3,.^10,.^8l",options="header"]
+|========================================
+| キー         | エリア   | 説明 | コマンド
+| @k(↑)        | -        | カーソルを上の行に移動 | /cursor move up
+| @k(↓)        | -        | カーソルを下の行に移動 | /cursor move down
+| @k(←)        | -        | カーソルを左の列に移動 | /cursor move left
+| @k(→)        | -        | カーソルを右の列に移動 | /cursor move right
+| @k(A-)@k(↑)  | -        | カーソルを上のエリアに移動 | /cursor move area_up
+| @k(A-)@k(↓)  | -        | カーソルを下のエリアに移動 | /cursor move area_down
+| @k(A-)@k(←)  | -        | カーソルを左のエリアに移動 | /cursor move area_left
+| @k(A-)@k(→)  | -        | カーソルを右のエリアに移動 | /cursor move area_right
+| @k(m)        | チャット | メッセージを引用 | hsignal:chat_quote_message;/cursor stop
+| @k(q)        | チャット | プレフィックスとメッセージを引用 | hsignal:chat_quote_prefix_message;/cursor stop
+| @k(Q)        | チャット | 時間、プレフィックス、メッセージを引用 | hsignal:chat_quote_time_prefix_message;/cursor stop
+| @k(b)        | ニックネームリスト | ニックネームをバンする | /window ${_window_number};/ban ${nick}
+| @k(k)        | ニックネームリスト | ニックネームをキックする | /window ${_window_number};/kick ${nick}
+| @k(K)        | ニックネームリスト | ニックネームをバンとキックする | /window ${_window_number};/kickban ${nick}
+| @k(q)        | ニックネームリスト | ニックネームに対するクエリを開く | /window ${_window_number};/query ${nick};/cursor stop
+| @k(w)        | ニックネームリスト | ニックネームに対して whois を行う | /window ${_window_number};/whois ${nick}
+| @k(Enter) .3+| -     .3+| カーソルモードを終了 .3+| /cursor stop
+| @k(C-)@k(j)
+| @k(C-)@k(m)
+|========================================
+
+[[key_bindings_mouse_context]]
+==== "マウス" モード用のキー ====
+
+以下のキーは "マウス" モード (マウスイベントが発生したとき) でのみ有効です。
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
+|========================================
+| ボタン  | ジェスチャー | エリア   | 説明 | コマンド
+| ◾◽◽     | -            | チャット | ウィンドウに移動 | /window ${_window_number}
+| ◾◽◽     | 左           | チャット | 前のバッファに移動 | /window ${_window_number};/buffer +1
+| ◾◽◽     | 右           | チャット | 次のバッファに移動 | /window ${_window_number};/buffer +1
+| ◾◽◽     | 左 (長く)    | チャット | 最初のバッファに移動 | /window ${_window_number};/buffer 1
+| ◾◽◽     | 右 (長く)    | チャット | 最後のバッファに移動 | /window ${_window_number};/input jump_last_buffer
+| ホイール ⇑ | -            | チャット | バッファ履歴を上方向にスクロール | /window scroll_up -window ${_window_number}
+| ホイール ⇓ | -            | チャット | バッファ履歴を下方向にスクロール | /window scroll_down -window ${_window_number}
+| ◾◽◽     | 上           | ニックネームリスト | ニックネームリストを 1 ページ分上方向にスクロール | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽     | 下           | ニックネームリスト | ニックネームリストを 1 ページ分下方向にスクロール | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽     | 上 (長く)    | ニックネームリスト | ニックネームリストの最初に移動 | /bar scroll nicklist ${_window_number} b
+| ◾◽◽     | 下 (長く)    | ニックネームリスト | ニックネームリストの最後に移動 | /bar scroll nicklist ${_window_number} e
+| ◾◽◽     | -            | ニックネームリスト | ニックネームに対するクエリを開く | /window ${_window_number};/query ${nick}
+| ◽◽◾     | -            | ニックネームリスト | ニックネームに対する whois を行う | /window ${_window_number};/whois ${nick}
+| ◾◽◽     | 左           | ニックネームリスト | ニックネームをキックする | /window ${_window_number};/kick ${nick}
+| ◾◽◽     | 左 (長く)    | ニックネームリスト | ニックネームをキックとバンする | /window ${_window_number};/kickban ${nick}
+| ◽◽◾     | 左           | ニックネームリスト | ニックネームをバンする | /window ${_window_number};/ban ${nick}
+| ◽◽◾     | -            | 入力     | マウスイベントを奪ってコマンドラインにコードを入力 | /input grab_mouse_area
+| ホイール ⇑ | -            | 任意のバー | バーを -10% スクロール | /bar scroll ${_bar_name} ${_window_number} -20%
+| ホイール ⇓ | -            | 任意のバー | バーを +10% スクロール | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽     | -            | 任意の場所 | この場所でカーソルモードを開始 | /cursor go ${_x},${_y}
+|========================================
+
+[[mouse]]
+=== マウスサポート ===
+
+WeeChat はマウスクリックとマウスジェスチャーをサポートしています。
+ローカル端末と screen/tmux の有無にかかわらず ssh 接続経由で利用可能です。
+
+[[mouse_enable]]
+==== マウスの有効化 ====
+
+起動時にマウスを有効化するには:
+
+----------------------------------------
+/set weechat.look.mouse on
+----------------------------------------
+
+マウスを有効化するには @k(A-)@k(m) を押すか、以下のコマンドを使います:
+
+----------------------------------------
+/mouse enable
+----------------------------------------
+
+キーにマウスの一時的な無効化を割り当てることができます。 例えば、
+@k(A-)@k(x) キーにマウスを 10 秒間無効化する機能を割り当てるには:
+
+----------------------------------------
+/key bind meta-x /mouse toggle 10
+----------------------------------------
+
+WeeChat でマウスが有効化されている場合、@k(-S-)
+修飾キーで選択やクリックができます。これでマウスが無効化されている場合と同じ作業が行えます
+(iTerm 等の端末では @k(-S-) の代わりに @k(-A-) を使ってください)。
+
+[NOTE]
+マウスに関するトラブルがあれば 'WeeChat FAQ' を参照してください。
+
+[[mouse_bind_events]]
+==== コマンドに対してマウスイベントを割り当てる ====
+
+WeeChat はデフォルトマウスイベントの多くを定義しています
+(<<key_bindings_mouse_context,"マウス" モード用のキー>>を参照)。
+
+`/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
+(詳しい方法は <<command_weechat_key,/key コマンド>>を参照)。
+
+イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
+を利用できます。異なるイベントは "-" で分割してください。
+
+修飾キーリスト:
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| 修飾キー | 説明
+| ctrl     | @k(-C-) キー
+| alt      | @k(-A-) キー
+| ctrl-alt | @k(-C-) と @k(-A-) キー
+|========================================
+
+ボタン/ホイールのリスト:
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| ボタン/ホイール     | 説明
+| button1             | 左ボタンクリック
+| button2             | 右ボタンクリック
+| button3             | 中ボタンクリック (多くの場合ホイールクリック)
+| button4 ... button9 | その他のボタンクリック
+| wheelup             | ホイール (上方向)
+| wheeldown           | ホイール (下方向)
+|========================================
+
+ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| ジェスチャー       | 距離
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|========================================
+
+イベントの表記例:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+"mouse" イベントにキーを割り当てる場合、イベント名の最初または最後に `*`
+を使うことで複数のイベントにマッチさせることができます。例えば
+`button1-gesture-*` は左クリックを利用したすべてのジェスチャーにマッチします。
+
+[TIP]
+`/input grab_mouse` コマンドの後にマウスを動かすことでコマンドラインにマウスイベントが入力されます。
+これにより対応するイベントを確認できます。
+
+[[command_line]]
+=== コマンドライン ===
+
+WeeChat コマンドライン (ウィンドウの一番下にあります)
+はコマンドの実行やバッファにテキストを送信するために利用します。
+
+[[command_line_syntax]]
+==== 文法 ====
+
+コマンドは "/" 文字で始まり、コマンドの名前を続けます。
+例えば、すべてのオプションを表示するには:
+
+----------------------------------------
+/set
+----------------------------------------
+
+"/" が最初に無い場合、そのテキストはバッファに送信されます。例えば、'hello'
+というテキストをバッファに送信するには:
+
+----------------------------------------
+hello
+----------------------------------------
+
+"/" 文字から始まるテキストを送信したい場合、は 2 重に "/" をつけます。例えば、'/set'
+というテキストを現在のバッファに送信するには:
+
+----------------------------------------
+//set
+----------------------------------------
+
+[[command_line_colors]]
+=== 色コード ===
+
+IRC 等のプラグインでは、以下の色コードと属性を利用できます
+(@k(C-)@k(c) の後に、オプションとともに以下のキーを押してください):
+
+@k(C-)@k(c) , @k(b)::
+    テキストを太字に
+
+@k(C-)@k(c) , @k(c) , @k(xx)::
+    テキスト表示色を `xx` に (以下の色リストを参照)
+
+@k(C-)@k(c) , @k(c) , @k(xx,yy)::
+    テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
+
+@k(C-)@k(c) , @k(o)::
+    テキスト表示色と属性をリセット
+
+@k(C-)@k(c) , @k(r)::
+    テキストを反転 (テキスト表示色と背景色の入れ替え)
+
+@k(C-)@k(c) , @k(u)::
+    テキストに下線を引く
+
+[NOTE]
+同じコードで (色コードを入力せずに @k(C-)@k(c) , @k(c)
+を使うことで) 属性をキャンセルすることができます。
+
+@k(C-)@k(c) , @k(c) 用の色コード:
+
+[width="50%",cols="^1m,3,3",options="header"]
+|========================================
+| コード | IRC           | WeeChat (curses)
+| 00   | 白              | white
+| 01   | 黒              | black
+| 02   | 暗い青          | blue
+| 03   | 暗い緑          | green
+| 04   | 明るい赤        | lightred
+| 05   | 暗い赤          | red
+| 06   | 赤紫            | magenta
+| 07   | 橙色            | brown
+| 08   | 黄色            | yellow
+| 09   | 明るい緑色      | lightgreen
+| 10   | 青緑            | cyan
+| 11   | 明るい青緑色    | lightcyan
+| 12   | 明るい青        | lightblue
+| 13   | 明るい赤紫色    | lightmagenta
+| 14   | 灰色            | gray
+| 15   | 明るい灰色      | white
+|========================================
+
+例: "こんにちは皆さん!" の "こんにちは" を太字の明るい青、"皆さん"
+を下線付きの明るい赤に表示したい場合:
+
+----------------------------------------
+^Cc12^Cbこんにちは^Cb^Cc04^Cu皆さん^Cu^Cc!
+----------------------------------------
+
+[NOTE]
+irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
+を使ってこれらの色を別の色に対応付けることができます。
+
+[[colors]]
+=== 色 ===
+
+WeeChat ではバーやチャットエリアにおけるテキスト表示に 256 個の色ペアを利用できます
+(この機能を利用するには WeeChat が実行されているターミナルが 256 色表示に対応している必要があります)。
+
+'TERM' 環境変数の値によって、WeeChat
+で利用できる色と色ペアに以下の制限があります:
+
+[width="50%",cols="8,>2,>2",options="header"]
+|========================================
+| $TERM                                 | 色     | ペア ^(1)^
+| "rxvt-unicode", "xterm",...           |     88 |         256
+| "rxvt-256color", "xterm-256color",... |    256 |       32767
+| "screen"                              |      8 |          64
+| "screen-256color"                     |    256 |       32767
+|========================================
+
+[NOTE]
+^(1)^ 端末が 256 ペア以上の表示をサポートしていても、WeeChat
+では ncurses の制限により 256 ペア以上の表示は行えません。
+
+`weechat-curses --colors` を実行するか、`/color` コマンドをin WeeChat
+の中で実行することで、色表示の制限を確認できます。
+
+256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
+
+* screen の中: 'screen-256color'
+* screen の外: 'xterm-256color'、'rxvt-256color'、'putty-256color'、...
+
+[NOTE]
+'TERM' 環境変数の値に上の値を設定するには、"ncurses-term"
+パッケージをインストールする必要があるかもしれません。
+
+screen を使っている場合、'~/.screenrc' に以下の内容を追加してください:
+
+----------------------------------------
+term screen-256color
+----------------------------------------
+
+'TERM' 環境変数に間違った値が設定された状態で WeeChat を起動しても、あわてないでください!
+'shell.py' スクリプトを使えば WeeChat を再起動せずに環境変数の値を変更できます。
+
+----------------------------------------
+/shell setenv TERM=screen-256color
+/upgrade
+----------------------------------------
+
+[[colors_basic]]
+==== 基本色 ====
+
+WeeChat における基本色とは:
+
+[width="50%",cols="^3m,8",options="header"]
+|========================================
+| 名前         | 色
+| default      | デフォルトの端末色 (背景色を透過色とする)
+| black        | 黒
+| darkgray     | 暗い灰色
+| red          | 暗い赤
+| lightred     | 明るい赤
+| green        | 暗い緑色
+| lightgreen   | 明るい緑色
+| brown        | 茶色
+| yellow       | 黄色
+| blue         | 暗い青
+| lightblue    | 明るい青
+| magenta      | 暗い赤紫色
+| lightmagenta | 明るい赤紫色
+| cyan         | 暗い青緑色
+| lightcyan    | 明るい青緑色
+| gray         | 灰色
+| white        | 白
+|========================================
+
+[[colors_extended]]
+==== 拡張色 ====
+
+WeeChat はスクリーンに色が表示された時点で色ペアを動的に割り当てます
+(バッファとバーを表示する時点で)。
+
+基本色に加えて、1 番
+から端末の対応状況に依存する番号までの色番号を利用できます。
+
+`/color` コマンドで現在の色と色制限を確認できます。@k(A-)@k(c)
+をタイプすることで、一時的に端末色を選択された色に変更できます。
+
+例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:
+
+----------------------------------------
+/set weechat.color.chat_time 214
+----------------------------------------
+
+ステータスバーの色を非常に暗い緑色にしたい場合:
+
+----------------------------------------
+/set weechat.bar.status.color_bg 22
+----------------------------------------
+
+[[colors_aliases]]
+==== 別名 ====
+
+`/color alias` コマンドを使えば色の別名を追加できます。
+追加後は任意の色関連オプションで別名を使えます。
+
+例:
+
+----------------------------------------
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----------------------------------------
+
+[[colors_attributes]]
+==== 属性 ====
+
+色に対していくつかの属性を付加することができます。1
+つ以上の属性を色名又は色番号の前に付加できます:
+
+* `*` : テキストを太字に
+* `!` : テキストを反転
+* `_` : テキストに下線を引く
+* `|` : 属性を保持:
+  色を変えた際に太字/反転/下線属性をリセットしない
+
+例えば、自分自身のニックネームの表示色を白にして、下線を引きたい場合:
+
+----------------------------------------
+/set weechat.color.chat_nick_self _white
+----------------------------------------
+
+ステータスバーの時刻の表示色を橙色にして、下線を引いて、太字にしたい場合:
+
+----------------------------------------
+/set weechat.color.status_time *_214
+----------------------------------------
+
+デフォルト端末色 (-1) に対して属性を設定したい場合、端末色番号の最大値よりも大きな値を利用してください。
+例えば、WeeChat における色番号の最大値は 99999 です。
+
+端末の表示色に太字の属性を付加する例:
+
+----------------------------------------
+/set weechat.color.status_time *99999
+----------------------------------------
+
+[[weechat_options]]
+=== WeeChat オプション (weechat.conf) ===
+
+include::autogen/user/weechat_options.txt[]
+
+[[weechat_commands]]
+=== WeeChat コマンド ===
+
+include::autogen/user/weechat_commands.txt[]
+
+
+[[plugins]]
+== プラグイン ==
+
+API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、'WeeChat
+プラグイン API リファレンス' 又は 'WeeChat スクリプト製作ガイド' を参照してください。
+
+[[plugins_in_weechat]]
+=== WeeChat におけるプラグイン ===
+
+プラグインとは動的ライブラリのことで、C 言語で書かれてコンパイルされています。
+プラグインは WeeChat によって読み込まれます。
+GNU/Linux の場合、プラグインファイルは ".so" という拡張子を持ち、Windows の場合、".dll" です。
+
+見つかったプラグインは WeeChat の起動時に自動的に読み込まれます。WeeChat
+の起動時にプラグインを読み込むか否かは選択可能です。
+
+'プラグイン' と 'スクリプト' の違いを明らかにすることは重要です:
+'プラグイン' とは `/plugin` コマンドで読み込まれるコンパイル済みバイナリファイルです。これに対して、
+'スクリプト' とは `/python` 等のコマンドで 'python'
+等のプラグインとともに読み込まれるテキストファイルです。
+
+`/plugin` コマンドを使うことで、プラグインのロード/アンロード、
+ロード済みプラグインの表示を行うことができます。
+あるプラグインをアンロードした場合、
+アンロードしたプラグインが作成したバッファはすべて自動的に閉じられます。
+
+プラグインをロード、アンロード、ロード済みプラグインを表示する例:
+
+----------------------------------------
+/plugin load irc
+/plugin unload irc
+/plugin list
+----------------------------------------
+
+デフォルトプラグインのリスト:
+
+[width="50%",cols="^1,5",options="header"]
+|========================================
+| プラグイン | 説明
+| alias     | コマンドの別名を定義
+| aspell    | コマンドラインのスペルチェック
+| charset   | バッファの文字コードに従ってデコード/エンコード
+| demo      | デモプラグイン (デフォルトではコンパイルされません)
+| fifo      | 外部から WeeChat にコマンドを送信するための FIFO パイプ
+| irc       | IRC チャットプロトコル
+| logger    | バッファの内容をファイルに保存
+| relay     | ネットワーク経由でデータを中継 (IRC プロキシ)
+| rmodifier | 正規表現を用いた文字列の置換
+| python    | Python スクリプト API
+| perl      | Perl スクリプト API
+| ruby      | Ruby スクリプト API
+| lua       | Lua スクリプト API
+| tcl       | Tcl スクリプト API
+| guile     | Guile (scheme) スクリプト API
+| xfer      | ファイル転送とダイレクトチャット
+|========================================
+
+[[alias_plugin]]
+=== Alias プラグイン ===
+
+Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
+だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
+
+[[alias_commands]]
+==== コマンド ====
+
+include::autogen/user/alias_commands.txt[]
+
+[[aspell_plugin]]
+=== Aspell プラグイン ===
+
+Aspell プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。
+バッファごとに異なる言語に対するスペルチェックを実行できます。
+
+[[aspell_options]]
+==== オプション (aspell.conf) ====
+
+include::autogen/user/aspell_options.txt[]
+
+[[aspell_commands]]
+==== コマンド ====
+
+include::autogen/user/aspell_commands.txt[]
+
+[[aspell_speller_options]]
+==== Speller オプション ====
+
+Speller オプションは aspell 設定の "option"
+セクションにあるオプションを追加して定義します。
+
+ここで利用するオプション名は aspell 設定オプションと同じものです。
+オプションのリストはシェルで以下のコマンドを実行することで確認できます:
+
+----------------------------------------
+$ aspell config
+----------------------------------------
+
+例えば、"ignore-case" オプションを有効化するには:
+
+----------------------------------------
+/set aspell.option.ignore-case "true"
+----------------------------------------
+
+
+[[charset_plugin]]
+=== Charset プラグイン ===
+
+Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
+
+デコード/エンコード用にデフォルトの文字コードが設定されていますが、
+それぞれのバッファ (バッファグループ) に対して個別に文字コードを設定することもできます。
+
+このプラグインの導入は任意ですが、導入を推奨します:
+このプラグインがロードされていない場合、WeeChat が読み書きできるデータは UTF-8 データのみになります。
+
+Charset プラグインは WeeChat によって自動的にロードされるべきです。
+プラグインがロードされていることを確認するには、以下のようにしてください:
+
+----------------------------------------
+/charset
+----------------------------------------
+
+コマンドが見つからない場合、以下のコマンドでプラグインをロードしてください:
+
+----------------------------------------
+/plugin load charset
+----------------------------------------
+
+プラグインが見つからない場合、文字コードサポートを有効化した状態で
+WeeChat を再コンパイルしてください。
+
+Charset プラグインがロードされた場合、端末文字コードと内部文字コードが表示されます。
+端末文字コードはロケールに依存し、内部文字コードは UTF-8 です。
+
+例:
+
+........................................
+charset: terminal: ISO-8859-15, internal: UTF-8
+........................................
+
+[[charset_options]]
+==== オプション (charset.conf) ====
+
+include::autogen/user/charset_options.txt[]
+
+[[charset_commands]]
+==== コマンド ====
+
+include::autogen/user/charset_commands.txt[]
+
+[[charset_set]]
+==== 文字コードの設定 ====
+
+グローバルデコード文字コードとエンコード文字コードを設定するには、`/set` コマンドを使ってください。
+
+例:
+
+----------------------------------------
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----------------------------------------
+
+グローバルデコード文字コードが設定されていない場合 (例えば Charset
+プラグインを始めてロードした場合)、これは自動的に端末の文字コードか
+(UTF-8 でなければ) 、デフォルトの 'ISO-8859-1' に設定されます。
+
+デフォルトのエンコード文字コードはありません。従って、内部文字コード
+(UTF-8) が使われます。
+
+IRC サーバの文字コードを設定するには、サーババッファで `/charset` コマンドを使ってください。
+文字コードのみを引数として与えた場合、この文字コードがデコードとエンコードに利用されます。
+
+例:
+
+----------------------------------------
+/charset ISO-8859-15
+----------------------------------------
+
+これは以下と等価です:
+
+----------------------------------------
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----------------------------------------
+
+IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、
+サーバの文字コード設定と同様のコマンドをチャンネル (またはプライベートメッセージ) バッファで使ってください。
+
+すべての文字コード設定を確認するには、以下のコマンドを利用してください:
+
+----------------------------------------
+/set charset.*
+----------------------------------------
+
+[[charset_troubleshooting]]
+==== トラブルシューティング ====
+
+文字コードに関する問題があれば、'WeeChat FAQ' を参照してください。
+
+[[fifo_plugin]]
+=== Fifo プラグイン ===
+
+外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("plugins.var.fifo.fifo"
+オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
+
+FIFO パイプは '~/.weechat/' の下にあり、'weechat_fifo_xxxx'
+のような名前になっています ('xxxx' は実行中の WeeChat のプロセス ID (PID) です)。
+
+FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
+
+........................................
+  plugin.buffer *テキストまたはコマンド
+  *テキストまたはコマンド
+........................................
+
+例:
+
+* IRC サーバ freenode のニックネームを "newnick" に変更する:
+
+----------------------------------------
+$ echo 'irc.server.freenode */nick newnick' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* IRC の #weechat チャンネルに対してテキストを送信:
+
+----------------------------------------
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* 現在のバッファに対してテキストを送信:
+
+----------------------------------------
+$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+* Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
+  (複数のコマンドは "\n" で分割してください):
+
+----------------------------------------
+$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
+----------------------------------------
+
+実行中の WeeChat
+すべてに対してコマンドを送信するスクリプトは以下のように書けます。例えば:
+
+[source,shell]
+----------------------------------------
+#!/bin/sh
+if [ $# -eq 1 ]; then
+    for fifo in ~/.weechat/weechat_fifo_*
+    do
+        echo -e "$1" >$fifo
+    done
+fi
+----------------------------------------
+
+このスクリプトを "auto_weechat_command" というファイル名で保存した場合、以下のように実行できます:
+
+----------------------------------------
+$ ./auto_weechat_command 'irc.freenode.#weechat *hello'
+----------------------------------------
+
+[[irc_plugin]]
+=== IRC プラグイン ===
+
+IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
+
+マルチサーバに対応し、DCC チャットとファイル転送 (xfer プラグインを使います。
+<<xfer_plugin,Xfer プラグイン>> を参照) を含む全ての IRC コマンドをサポートしています。
+
+[[irc_command_line_options]]
+==== コマンドラインオプション ====
+
+以下のように 1 つ以上の IRC サーバに対応する URL を引数として与えることができます:
+
+----------------------------------------
+irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
+----------------------------------------
+
+'nono' というニックネームを使って 'irc.freenode.net' ホストのデフォルトポート (6667)
+で稼働中の IRC サーバ上の '#weechat' と '#toto' チャンネルに参加する例:
+
+----------------------------------------
+$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+----------------------------------------
+
+[[irc_options]]
+==== オプション (irc.conf) ====
+
+include::autogen/user/irc_options.txt[]
+
+[[irc_commands]]
+==== コマンド ====
+
+include::autogen/user/irc_commands.txt[]
+
+[[irc_ssl_certificates]]
+==== SSL 証明書 ====
+
+SSL を使って IRC サーバに接続する場合、WeeChat
+はデフォルトで接続が完全に信頼できるものかどうかを確認します。
+
+以下のオプションで SSL 接続を設定します:
+
+weechat.network.gnutls_ca_file::
+    認証局ファイルへのパス (デフォルト: "%h/ssl/CAs.pem")
+
+irc.server.xxx.ssl_cert::
+    自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば
+    oftc サーバにおける CertFP の場合、以下を確認してください)
+
+irc.server.xxx.ssl_dhkey_size::
+    Diffie-Hellman キー交換の際に利用される鍵サイズ (デフォルト:
+    2048)
+
+irc.server.xxx.ssl_verify::
+    SSL 接続が完全に信頼できることの確認を行う (デフォルトで有効)
+
+[NOTE]
+"ssl_verify" オプションはデフォルトで有効です、したがって厳密な確認が行われ、0.3.1
+より前のバージョンでは信頼性の確認に成功していたものが失敗する場合もあります。
+
+[[irc_connect_oftc_with_certificate]]
+===== 最初の例: oftc に接続して、証明書を確認 =====
+
+* シェルを使って証明書をインポート:
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+----------------------------------------
+
+注意: CAs.pem ファイル中で複数の証明書を連結することもできます。
+
+* WeeChat で "oftc" サーバがすでに設定済みであれば:
+
+----------------------------------------
+/connect oftc
+----------------------------------------
+
+[[irc_connect_oftc_with_certfp]]
+===== 2 番目の例: CertFP を使って oftc に接続 =====
+
+* シェルで証明書を作成:
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+----------------------------------------
+
+* WeeChat で "oftc" サーバがすでに設定済みであれば:
+
+----------------------------------------
+/set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----------------------------------------
+
+より詳しい情報は http://www.oftc.net/oftc/NickServ/CertFP を確認してください。
+
+[[irc_sasl_authentication]]
+==== SASL 認証 ====
+
+WeeChat は SASL 認証をサポートしています。認証アルゴリズムは "plain"
+(平文パスワード)、"dh-blowfish" (暗号化パスワード)、"external"
+(クライアント側 SSL 証明書) の 3 つです。
+
+サーバオプション:
+
+* 'sasl_mechanism': 利用する認証メカニズム ("plain"、"dh-blowfish"、"external")
+* 'sasl_timeout': 認証時のタイムアウト (秒単位)
+* 'sasl_username': ユーザ名 (ニックネーム)
+* 'sasl_password': パスワード
+
+"dh-blowfish" メカニズムをデフォルトで全てのサーバに対して利用する場合:
+
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+----------------------------------------
+
+[NOTE]
+"dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
+WeeChat のコンパイル時に必要です (<<dependencies,依存関係>> を参照)。
+
+[[irc_tor_freenode]]
+==== TOR/SASL を使って Freenode に接続する場合 ====
+
+SSL に加えて、Freenode サーバは TOR (https://www.torproject.org/)
+経由の接続をサポートしています。TOR とはバーチャルトンネルのネットワークで、
+これを使うことで個人やグループがインターネット利用に伴うプライバシーとセキュリティを向上させることができます。
+
+最初に、WeeChat が <<dependencies,libgcrypt11-dev>> を有効化してコンパイルされていることを確認してください
+(ソースからビルドしている場合); これは必須ではありませんが、SASL を "plain" 認証メカニズムで利用するよりも
+"dh-blowfish" のほうが強固なセキュリティになります。
+
+最初に、TOR をインストールしてください。Debian (とその派生ディストリビューション) の場合:
+
+----------------------------------------
+$ sudo apt-get install tor
+----------------------------------------
+
+WeeChat で TOR サービスを使った socks5 プロキシを作成してください
+(ホスト名/IP アドレス、ポート番号は TOR の設定に依存します):
+
+----------------------------------------
+/proxy add tor socks5 127.0.0.1 9050
+----------------------------------------
+
+次に新しいサーバを作成してください。例えば:
+
+----------------------------------------
+/server add freenode-tor p4fsi4ockecnea7l.onion
+----------------------------------------
+
+TOR プロキシを設定:
+
+----------------------------------------
+/set irc.server.freenode-tor.proxy "tor"
+----------------------------------------
+
+SASL 認証を設定:
+
+----------------------------------------
+/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
+/set irc.server.freenode-tor.sasl_username "your_nickname"
+/set irc.server.freenode-tor.sasl_password "your_password"
+----------------------------------------
+
+最後に、サーバに接続してください:
+
+----------------------------------------
+/connect freenode-tor
+----------------------------------------
+
+Freenode と TOR に関するより詳しい情報: http://freenode.net/irc_servers.shtml#tor
+
+[[irc_smart_filter_join_part_quit]]
+==== 参加/退出/終了メッセージに対するスマートフィルタ ====
+
+チャンネル内での発言が過去 X
+分間なかった場合に参加/退出/終了メッセージをフィルタリングするスマートフィルタが利用できます。
+
+スマートフィルタはデフォルトで有効化されていますが、
+バッファ内のメッセージを隠すにはフィルタを追加する必要があります。例えば:
+
+----------------------------------------
+/filter add irc_smart * irc_smart_filter *
+----------------------------------------
+
+特定のチャンネルのみ、またはある名前で始まるチャンネルに対してフィルタを作成することもできます。
+(`/help filter` を参照):
+
+----------------------------------------
+/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+----------------------------------------
+
+以下のコマンドで参加メッセージだけ、又は退出/終了メッセージだけを隠すこともできます:
+
+----------------------------------------
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----------------------------------------
+
+遅延時間 (分単位) を設定することもできます:
+
+----------------------------------------
+/set irc.look.smart_filter_delay 5
+----------------------------------------
+
+過去 5 分間あるニックネームからの発言が無かった場合、
+このニックネームに対する参加または退出/終了メッセージがチャンネルから隠されます。
+
+[[irc_ctcp_replies]]
+==== CTCP 応答 ====
+
+CTCP 応答をカスタマイズしたり、いくつかの CTCP
+要求をブロック (無応答) することができます。
+
+例えば、CTCP "VERSION" 要求に対する応答をカスタマイズするには、以下のコマンドを使ってください:
+
+----------------------------------------
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----------------------------------------
+
+CTCP "VERSION" 要求をブロックする (要求に対する応答を行わない)
+には、空文字列を設定してください:
+
+----------------------------------------
+/set irc.ctcp.version ""
+----------------------------------------
+
+未定義の CTCP 要求に対する応答もカスタマイズできます。例えば
+CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
+
+----------------------------------------
+/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
+----------------------------------------
+
+特定のサーバに対して CTCP 応答をカスタマイズするには、CTCP
+名の前に内部サーバ名をつけてください:
+
+----------------------------------------
+/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+----------------------------------------
+
+標準の CTCP 応答を復元するには、オプションを削除してください:
+
+----------------------------------------
+/unset irc.ctcp.version
+----------------------------------------
+
+以下のコードを設定値に含めることが可能です。これらのコードは
+CTCP 応答時に自動的に WeeChat によって展開されます:
+
+[width="100%",cols="^2l,4,8l",options="header"]
+|========================================
+| コード       | 説明                                     | 値/例
+| $clientinfo  | サポートしている CTCP オプションのリスト | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat バージョン                       | 0.3.0
+| $compilation | WeeChat コンパイル日時                   | Sep 13 2009
+| $osinfo      | info about OS に関する情報               | Linux 2.6.31 / i686
+| $site        | WeeChat ウェブサイト                     | http://www.weechat.org
+| $download    | WeeChat ウェブサイトのダウンロードページ | http://www.weechat.org/download
+| $time        | 現在の日時                               | Sun Sep 13 15:48:31 2009
+| $username    | IRC サーバのユーザネーム                 | nick
+| $realname    | IRC サーバのリアルネーム                 | My name
+|========================================
+
+CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
+
+[width="100%",cols="^2,4l,8l",options="header"]
+|========================================
+| CTCP       | 応答フォーマット                | 例
+| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $version                | WeeChat 0.3.0
+| SOURCE     | $download                       | http://www.weechat.org/download
+| TIME       | $time                           | Sun Sep 13 15:48:31 2009
+| USERINFO   | $username ($realname)           | nick (My name)
+| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+|========================================
+
+[[irc_target_buffer]]
+==== IRC メッセージのターゲットバッファ ====
+
+`irc.msgbuffer.*` オプションを使えば、IRC メッセージに対するターゲットバッファ
+(メッセージを表示するバッファ) をカスタマイズすることができます。
+
+一部の IRC メッセージ (以下のリストを参照) に対して、以下の値を設定できます:
+
+current::
+    現在のバッファ (IRC バッファまたはサーババッファの場合のデフォルト)
+
+private::
+    ニックネームに対するプライベートバッファ、見つからない場合は現在のバッファまたはサーババッファ
+    ('irc.look.msgbuffer_fallback' オプションに依存)
+
+server::
+    サーババッファ
+
+weechat::
+    WeeChat "core" バッファ
+
+オプションが設定されていない (デフォルトの) 場合、WeeChat
+は適当なバッファを選びます。通常ではサーバまたはチャンネルバッファです。
+
+カスタマイズできる一部の IRC メッセージ、別名のリストは以下です:
+
+[width="60%",cols="^1m,^3m,8",options="header"]
+|========================================
+| メッセージ | 別名       | 説明
+| error   |               | エラー
+| invite  |               | チャンネルへの招待
+| join    |               | 参加
+| kick    |               | キック
+| kill    |               | キル
+| mode    |               | モード
+| notice  |               | notice
+| part    |               | 退出
+| quit    |               | 終了
+| topic   |               | トピック
+| wallops |               | IRC オペレータメッセージ
+|         | ctcp          | ctcp (プライベートまたは notice メッセージ内の、送信または受信メッセージ)
+| 221     |               | ユーザモード文字列
+| 275     | whois         | whois (セキュアな接続)
+| 301     | whois         | whois (離席状態)
+| 303     |               | サーバへの接続状態
+| 305     | unaway        | 着席状態
+| 306     | away          | 離席状態
+| 307     | whois         | whois (登録済みニックネーム)
+| 310     | whois         | whois (ヘルプモード)
+| 311     | whois         | whois (ユーザ)
+| 312     | whois         | whois (サーバ)
+| 313     | whois         | whois (オペレータ)
+| 314     | whowas        | whowas
+| 315     | who           | who (終了)
+| 317     | whois         | whois (アイドル状態)
+| 318     | whois         | whois (終了)
+| 319     | whois         | whois (チャンネル)
+| 320     | whois         | whois (身元確認済みユーザ)
+| 321     | list          | list (開始)
+| 322     | list          | list (チャンネル)
+| 323     | list          | list (終了)
+| 326     | whois         | whois (オペレータ権限を持っているユーザ)
+| 327     | whois         | whois (ホスト)
+| 328     |               | チャンネルの URL
+| 329     |               | チャンネル作成日時
+| 330     | whois         | whois (ログイン時の名前)
+| 331     |               | トピックが未設定のチャンネル
+| 332     |               | チャンネルのトピック
+| 333     |               | トピックに関する情報
+| 335     | whois         | whois (ボットが有効化されているか)
+| 338     | whois         | whois (ホスト)
+| 341     |               | 招待中
+| 343     | whois         | whois (オペレータ)
+| 344     | reop          | チャンネルオペレータを復活
+| 345     | reop          | チャンネルオペレータを復活 (終了)
+| 346     | invitelist    | 招待リスト
+| 347     | invitelist    | 招待リスト (終了)
+| 348     | exceptionlist | 除外リスト
+| 349     | exceptionlist | 除外リスト (終了)
+| 351     |               | サーババージョン
+| 352     | who           | who
+| 353     | names         | チャンネル内ユーザのリスト
+| 366     | names         | チャンネル内ユーザのリストの終了
+| 367     | banlist       | 禁止リスト
+| 368     | banlist       | 禁止リストの終了
+| 369     | whowas        | whowas (終了)
+| 378     | whois         | whois (接続元)
+| 379     | whois         | whois (モード)
+| 432     |               | erroneous ニックネーム
+| 433     |               | ニックネームが使用されています
+| 438     |               | ニックネームを変更する権限がありません
+| 671     | whois         | whois (セキュアな接続)
+| 901     |               | ログインに成功
+|========================================
+
+その他の数値コマンドも同様にカスタマイズできます。
+
+サーバ名を前につけることで、特定のサーバに対して設定することができます
+(例: `freenode.whois`)。
+
+例:
+
+* `/whois` の結果をプライベートバッファに表示:
+
+----------------------------------------
+/set irc.msgbuffer.whois private
+----------------------------------------
+
+* whois に対する設定をデフォルトに戻す (サーババッファに表示):
+
+----------------------------------------
+/unset irc.msgbuffer.whois
+----------------------------------------
+
+* "freenode" サーバの場合、招待メッセージを現在のバッファに表示:
+
+----------------------------------------
+/set irc.msgbuffer.freenode.invite current
+----------------------------------------
+
+* "303" (ison) メッセージを WeeChat "core" バッファに表示:
+
+----------------------------------------
+/set irc.msgbuffer.303 weechat
+----------------------------------------
+
+[[logger_plugin]]
+=== Logger プラグイン ===
+
+Logger プラグインを使うことで、バッファの内容をファイルに保存できます。
+保存形式とその方法をオプションで設定できます。
+
+[[logger_options]]
+==== オプション (logger.conf) ====
+
+include::autogen/user/logger_options.txt[]
+
+[[logger_commands]]
+==== コマンド ====
+
+include::autogen/user/logger_commands.txt[]
+
+[[logger_log_levels]]
+==== ログレベル ====
+
+ログ保存はそれぞれのバッファに対して設定されたログレベルに従って行われます。デフォルトのレベルは 9
+(バッファに表示されたメッセージをすべて保存) です。
+特定のバッファやバッファグループに対して個別にログレベルを設定できます。
+
+設定可能なレベルは 0 から 9 です。0 は "保存しない"、9
+は "すべてのメッセージを保存" を意味します。
+
+それぞれのプラグインでレベルの意味が変わります。
+IRC プラグインに対しては以下のレベルが利用されます:
+
+* レベル 1: ユーザからのメッセージ (チャンネルまたはプライベート)
+* レベル 2: ニックネームの変更 (自身と他のユーザ)
+* レベル 3: 任意のサーバメッセージ (参加/退出/終了メッセージを除く)
+* レベル 4: 参加/退出/終了メッセージ
+
+従って、IRC チャンネルに対してレベル 3 を設定した場合、WeeChat
+は参加/退出/終了メッセージを除いて全てのメッセージを保存します。
+
+例:
+
+* IRC チャンネル #weechat に対してレベル 3 を設定:
+
+----------------------------------------
+/set logger.level.irc.freenode.#weechat 3
+----------------------------------------
+
+* freenode サーババッファに対してレベル 3 を設定:
+
+----------------------------------------
+/set logger.level.irc.server.freenode 3
+----------------------------------------
+
+* freenode サーバの全てのチャンネルに対してレベル 3 を設定:
+
+----------------------------------------
+/set logger.level.irc.freenode 3
+----------------------------------------
+
+* 全ての IRC バッファに対してレベル 2 を設定:
+
+----------------------------------------
+/set logger.level.irc 2
+----------------------------------------
+
+[[logger_filenames_masks]]
+==== ファイル名マスク ====
+
+バッファに対し個別にファイル名マスクを設定することができます、
+ファイル名にはローカルバッファ変数が利用されます。現在のバッファに設定されたローカル変数を確認するには:
+
+----------------------------------------
+/buffer localvar
+----------------------------------------
+
+例えば "irc.freenode.#weechat" バッファの場合、WeeChat
+は以下の順番でオプションに設定されたファイル名マスクを検索します:
+
+----------------------------------------
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----------------------------------------
+
+特定の IRC サーバ ("logger.mask.irc.freenode") またはプラグイン
+("logger.mask.irc") のグループに対して共通のマスクを適用できます。
+
+[[logger_files_by_date]]
+===== ログファイルに日付を利用する =====
+
+ログファイルに日付を使うには、マスクに日時/時間指定子を利用できます
+(フォーマットに関しては `man strftime` を参照してください)。例えば:
+
+----------------------------------------
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----------------------------------------
+
+以下のファイルが作成されます:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+........................................
+
+[[logger_irc_files_by_server_channel]]
+===== IRC ログファイルにサーバとチャンネル名を利用する =====
+
+IRC サーバ名を使ったディレクトリに、チャンネル名を使ったファイルを作成する場合:
+
+----------------------------------------
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----------------------------------------
+
+以下のファイルが作成されます:
+
+........................................
+~/.weechat/
+    |--- logs/
+        |--- irc/
+            |--- freenode/
+            |       freenode.weechatlog
+            |       #weechat.weechatlog
+            |       #mychan.weechatlog
+            |--- oftc/
+            |       oftc.weechatlog
+            |       #chan1.weechatlog
+            |       #chan2.weechatlog
+........................................
+
+[[relay_plugin]]
+=== Relay プラグイン ===
+
+Relay プラグインはネットワークを介して異なるプロトコルを用いてデータを中継するために利用します:
+
+* 'irc': IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
+  クライアントで共有するために用います。
+* 'weechat': WeeChat の表示にリモートインターフェイス
+  (例えば QWeeChat) を使う場合に利用されるプロトコル
+
+[[relay_options]]
+==== オプション (relay.conf) ====
+
+include::autogen/user/relay_options.txt[]
+
+[[relay_commands]]
+==== コマンド ====
+
+include::autogen/user/relay_commands.txt[]
+
+[[relay_irc_proxy]]
+==== IRC プロキシ ====
+
+Relay プラグインは IRC プロキシにもなります。IRC サーバ用にポートを設定して、
+クライアントからの接続に必要なパスワードを設定することができます。
+
+例:
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add irc.freenode 8000
+----------------------------------------
+
+この後、適当な IRC クライアント (WeeChat、xchat、irssi、..) を使って 8000
+番ポートに対して、サーバパスワード "mypass" で接続することができます。
+
+クライアントの数を制限することも可能です:
+
+----------------------------------------
+/set relay.network.max_clients 1
+----------------------------------------
+
+[[relay_weechat_protocol]]
+==== WeeChat プロトコル ====
+
+Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
+
+例:
+
+----------------------------------------
+/set relay.network.password "mypass"
+/relay add weechat 9000
+----------------------------------------
+
+この後、リモートインターフェイス (QWeeChat 等) を使って 9000
+番ポートに対して、パスワード "mypass" で接続することができます。
+
+[[relay_ssl]]
+==== SSL 経由のリレー ====
+
+証明書と秘密鍵を作り、プロトコル名の最初に "ssl." を付けることで
+SSL 経由でリレーを利用することができます。
+
+証明書/秘密鍵ファイルへのデフォルトパスは '~/.weechat/ssl/relay.pem' です
+(option <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>)。
+
+以下のコマンドを使って証明書と秘密鍵ファイルを作成します:
+
+----------------------------------------
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----------------------------------------
+
+WeeChat が既に起動している場合、
+以下のコマンドで証明書と秘密鍵を再読み込みできます:
+
+----------------------------------------
+/relay sslcertkey
+----------------------------------------
+
+この後に SSL 経由のリレーを追加します、例えば:
+
+----------------------------------------
+/relay add ssl.irc.freenode 8001
+/relay add ssl.weechat 9001
+----------------------------------------
+
+[[rmodifier_plugin]]
+=== Rmodifier プラグイン ===
+
+Rmodifier プラグインは正規表現を使って文字列を置換します。
+パスワードの入力時やに入力文字列を隠すことや WeeChat
+がパスワードを保存しないようにすることが典型的な利用ケースです。
+例えば、パスワード文字列を `*` で置き換えることができます。
+
+[[rmodifier_options]]
+==== オプション (rmodifier.conf) ====
+
+include::autogen/user/rmodifier_options.txt[]
+
+[[rmodifier_commands]]
+==== コマンド ====
+
+include::autogen/user/rmodifier_commands.txt[]
+
+[[rmodifier_creation]]
+==== Rmodifier の作成 ====
+
+rmodifier は 3 つの要素からなります:
+
+. 1 つ以上の "修飾子"
+. 文字列のマッチングと "グループ" 分けを行う正規表現
+. "グループ"
+  化された文字列に対するアクションを指定する文字列
+
+WeeChat またはプラグインが利用する修飾子の完全なリストは 'WeeChat プラグイン
+API リファレンス' の 'weechat_hook_modifier' 関数を参照してください。
+
+グループ化されたそれぞれの文字列に対して、以下のアクションが可能です:
+
+* 文字列に変更を加えない (グループ番号を指定)
+* 文字列を隠すために全ての文字を置換する (グループ番号 + `*` で指定)
+* 文字列を削除 (グループ番号を指定しない場合)
+
+`/oper` コマンドに対するデフォルト rmodifier の例:
+
+* 修飾子: `history_add,input_text_display`
+** `history_add`: WeeChat がコマンドを履歴に保存する際に呼び出される
+** `input_text_display`: コマンドラインを変更する際に呼び出される
+   (入力テキストが表示されたときにのみ適用、コマンドラインの内容には適用されない)
+* 正規表現: `^(/oper +\S+ +)(.*)`
+* グループに対するアクション: `1,2*`
+
+修飾子 "history_add" や "input_text_display" が呼び出されるたびに、
+正規表現が確認されます。文字列にマッチした場合、
+文字列はグループに対して定義されたアクションを使って置換されます。
+
+この例では、グループ番号 1 はそのまま、グループ番号 2 に含まれる全ての文字を設定済みの文字
+(オプション 'rmodifier.look.hide_char') で置換します。
+
+コマンドラインに `/oper nick password` のような文字列が含まれる場合、
+`/oper nick ********` のように表示されます。
+
+[[scripts_plugins]]
+=== Scripts プラグイン ===
+
+WeeChat は 6 種類のスクリプトプラグインを備えています: Python、Perl、Ruby、Lua、Tcl、Guile
+(scheme)。
+これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
+
+スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は、
+'WeeChat スクリプト製作ガイド' を参照してください。
+
+WeeChat 用のスクリプトは以下のページから入手できます: http://www.weechat.org/scripts
+
+[[python_commands]]
+==== Python コマンド ====
+
+include::autogen/user/python_commands.txt[]
+
+[[perl_commands]]
+==== Perl コマンド ====
+
+include::autogen/user/perl_commands.txt[]
+
+[[ruby_commands]]
+==== Ruby コマンド ====
+
+include::autogen/user/ruby_commands.txt[]
+
+[[lua_commands]]
+==== Lua コマンド ====
+
+include::autogen/user/lua_commands.txt[]
+
+[[tcl_commands]]
+==== Tcl コマンド ====
+
+include::autogen/user/tcl_commands.txt[]
+
+[[guile_commands]]
+==== Guile コマンド ====
+
+include::autogen/user/guile_commands.txt[]
+
+[[xfer_plugin]]
+=== Xfer プラグイン ===
+
+Xfer プラグインの機能:
+
+* ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
+  例えば IRC プラグイン経由の "DCC チャット"
+* ファイル転送、例えば IRC プラグイン経由の "DCC"
+
+[[xfer_options]]
+==== オプション (xfer.conf) ====
+
+include::autogen/user/xfer_options.txt[]
+
+[[xfer_commands]]
+==== コマンド ====
+
+include::autogen/user/xfer_commands.txt[]
+
+
+[[authors]]
+== 作者 ==
+
+[[developers]]
+=== 開発者 ===
+
+主任開発者::
+    Sébastien Helleu (FlashCode)
+
+[[contributors]]
+=== 貢献者 ===
+
+パッケージ化::
+    Emmanuel Bouthenot (kolter)、Julien Louis (ptitlouis)、Odin
+
+翻訳::
+    Jiri Golembiovsky (GolemJ)、soltys、Nils Görs (nils_2)、rettub、
+    Frank Zacharias、Pavel Shevchuk、Elián Hanisch (m4v)、Voroskoi、
+    Marco Paolone、Ivan Sichmann Freitas、Lázaro A.、Ryuunosuke Ayanokouzi、
+    Quico Noizeux
+
+パッチ::
+    Dmitry Kobylin、Rudolf Polzer、Jim Ramsay、Pistos、Gwenn、Dominik Honnef、
+    JD Horelick、Stefano Pigozzi、Gu1ll4um3r0m41n、Kyle Fuller、
+    Quentin Glidic (SardemFF7)、Simon Kuhnle、Mateusz Poszwa、Peter Boström、
+    Arvydas Sidorenko
+
+
+[[support]]
+== サポート ==
+
+サポートを依頼する前に、WeeChat に付属するドキュメントと FAQ を読んでください。
+(ドキュメントとはこの文書のことで、ここまでの全ての内容を読んでいないのであれば、
+読み直してください!)。
+
+サポートを得る方法:
+
+* IRC: サーバ 'irc.freenode.net'、チャンネル '#weechat' (英語) と
+  '#weechat-fr' (フランス語)
+* WeeChat フォーラム: http://forums.flashtux.org/
+* メーリングリスト:
+** 購読: http://mail.nongnu.org/mailman/listinfo/weechat-support
+** weechat-support@nongnu.org 宛にメールを送信
+** アーカイブ: http://mail.nongnu.org/archive/html/weechat-support
