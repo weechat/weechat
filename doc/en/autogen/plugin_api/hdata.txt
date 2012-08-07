@@ -16,8 +16,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'guile_script') +
   'next_script' (pointer, hdata: 'guile_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | irc | irc_channel | irc channel |
   'type' (integer) +
@@ -203,8 +203,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'lua_script') +
   'next_script' (pointer, hdata: 'lua_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | perl | perl_script | list of scripts |
   'filename' (string) +
@@ -220,8 +220,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'perl_script') +
   'next_script' (pointer, hdata: 'perl_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | python | python_script | list of scripts |
   'filename' (string) +
@@ -237,8 +237,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'python_script') +
   'next_script' (pointer, hdata: 'python_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | ruby | ruby_script | list of scripts |
   'filename' (string) +
@@ -254,8 +254,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'ruby_script') +
   'next_script' (pointer, hdata: 'ruby_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | tcl | tcl_script | list of scripts |
   'filename' (string) +
@@ -271,8 +271,8 @@
   'unloading' (integer) +
   'prev_script' (pointer, hdata: 'tcl_script') +
   'next_script' (pointer, hdata: 'tcl_script') |
-  '*last_script' +
-  '*scripts'
+  'last_script' +
+  'scripts'
 
 | weechat | bar | bar |
   'name' (string) +
