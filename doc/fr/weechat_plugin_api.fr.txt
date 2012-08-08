@@ -11958,6 +11958,10 @@ weechat_network_pass_proxy
 
 Etablit une connexion/authentification avec un proxy.
 
+[IMPORTANT]
+Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
+appelée sans un processus issu d'un "fork", pour ne pas bloquer WeeChat.
+
 Prototype :
 
 [source,C]
@@ -12000,6 +12004,10 @@ weechat_network_connect_to
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Etablit une connexion à une machine distante.
+
+[IMPORTANT]
+Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
+appelée sans un processus issu d'un "fork", pour ne pas bloquer WeeChat.
 
 Prototype :
 

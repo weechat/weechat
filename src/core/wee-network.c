@@ -140,10 +140,72 @@ network_end ()
 }
 
 /*
+ * network_send_with_retry: send data on a socket with retry
+ *                          return number of bytes sent, or -1 if error
+ *                          Note: this function is blocking, it must be called
+ *                          only in a forked process
+ */
+
+int
+network_send_with_retry (int sock, const void *buffer, int length, int flags)
+{
+    int total_sent, num_sent;
+
+    total_sent = 0;
+
+    num_sent = send (sock, buffer, length, flags);
+    if (num_sent > 0)
+        total_sent += num_sent;
+
+    while (total_sent < length)
+    {
+        if ((num_sent == -1) && (errno != EAGAIN) && (errno != EWOULDBLOCK))
+            return total_sent;
+        usleep (100);
+        num_sent = send (sock, buffer + total_sent, length - total_sent, flags);
+        if (num_sent > 0)
+            total_sent += num_sent;
+    }
+    return total_sent;
+}
+
+/*
+ * network_recv_with_retry: receive data on a socket with retry
+ *                          return number of bytes received, or -1 if error
+ *                          Note: this function is blocking, it must be called
+ *                          only in a forked process
+ */
+
+int
+network_recv_with_retry (int sock, void *buffer, int length, int flags)
+{
+    int total_recv, num_recv;
+
+    total_recv = 0;
+
+    num_recv = recv (sock, buffer, length, flags);
+    if (num_recv > 0)
+        total_recv += num_recv;
+
+    while (num_recv == -1)
+    {
+        if ((errno != EAGAIN) && (errno != EWOULDBLOCK))
+            return total_recv;
+        usleep (100);
+        num_recv = recv (sock, buffer + total_recv, length - total_recv, flags);
+        if (num_recv > 0)
+            total_recv += num_recv;
+    }
+    return total_recv;
+}
+
+/*
  * network_pass_httpproxy: establish connection/authentification to an
  *                         http proxy
  *                         return 1 if connection is ok
  *                                0 if error
+ *                         Note: this function is blocking, it must be called
+ *                         only in a forked process
  */
 
 int
@@ -151,7 +213,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                         int port)
 {
     char buffer[256], authbuf[128], authbuf_base64[512];
-    int n, m;
+    int length;
 
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
@@ -162,25 +224,23 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                   (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])) ?
                   CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]) : "");
         string_encode_base64 (authbuf, strlen (authbuf), authbuf_base64);
-        n = snprintf (buffer, sizeof (buffer),
-                      "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
-                      address, port, authbuf_base64);
+        length = snprintf (buffer, sizeof (buffer),
+                           "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: "
+                           "Basic %s\r\n\r\n",
+                           address, port, authbuf_base64);
     }
     else
     {
         /* no authentification */
-        n = snprintf (buffer, sizeof (buffer),
-                      "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
+        length = snprintf (buffer, sizeof (buffer),
+                           "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
 
-    m = send (sock, buffer, n, 0);
-    if (n != m)
+    if (network_send_with_retry (sock, buffer, length, 0) != length)
         return 0;
 
-    n = recv (sock, buffer, sizeof (buffer), 0);
-
     /* success result must be like: "HTTP/1.0 200 OK" */
-    if (n < 12)
+    if (network_recv_with_retry (sock, buffer, sizeof (buffer), 0) < 12)
         return 0;
 
     if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
@@ -239,6 +299,8 @@ network_resolve (const char *hostname, char *ip, int *version)
  *                           socks4 proxy
  *                           return 1 if connection is ok
  *                                  0 if error
+ *                           Note: this function is blocking, it must be called
+ *                           only in a forked process
  */
 
 int
@@ -250,6 +312,7 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     struct t_network_socks4 socks4;
     unsigned char buffer[24];
     char ip_addr[NI_MAXHOST];
+    int length;
 
     socks4.version = 4;
     socks4.method = 1;
@@ -259,8 +322,12 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     strncpy (socks4.user, CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
              sizeof (socks4.user) - 1);
 
-    send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
-    recv (sock, buffer, sizeof (buffer), 0);
+    length = 8 + strlen (socks4.user) + 1;
+    if (network_send_with_retry (sock, (char *) &socks4, length, 0) != length)
+        return 0;
+
+    if (network_recv_with_retry (sock, buffer, sizeof (buffer), 0) < 2)
+        return 0;
 
     /* connection ok */
     if ((buffer[0] == 0) && (buffer[1] == 90))
@@ -275,6 +342,8 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
  *                           socks5 proxy
  *                           return 1 if connection is ok
  *                                  0 if error
+ *                           Note: this function is blocking, it must be called
+ *                           only in a forked process
  */
 
 int
@@ -300,9 +369,11 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     else
         socks5.method = 0; /* without authentication */
 
-    send (sock, (char *) &socks5, sizeof(socks5), 0);
+    if (network_send_with_retry (sock, (char *) &socks5, sizeof (socks5), 0) < (int)sizeof (socks5))
+        return 0;
+
     /* server socks5 must respond with 2 bytes */
-    if (recv (sock, buffer, 2, 0) != 2)
+    if (network_recv_with_retry (sock, buffer, 2, 0) < 2)
         return 0;
 
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
@@ -330,10 +401,11 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
         memcpy (buffer + 3 + username_len,
                 CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]), password_len);
 
-        send (sock, buffer, 3 + username_len + password_len, 0);
+        if (network_send_with_retry (sock, buffer, 3 + username_len + password_len, 0) < 3 + username_len + password_len)
+            return 0;
 
         /* server socks5 must respond with 2 bytes */
-        if (recv (sock, buffer, 2, 0) != 2)
+        if (network_recv_with_retry (sock, buffer, 2, 0) < 2)
             return 0;
 
         /* buffer[1] = auth state, must be 0 for success */
@@ -366,11 +438,15 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     memcpy (addr_buffer + 5, address, addr_len); /* server address */
     *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
 
-    send (sock, addr_buffer, addr_buffer_len, 0);
+    if (network_send_with_retry (sock, addr_buffer, addr_buffer_len, 0) < addr_buffer_len)
+    {
+        free (addr_buffer);
+        return 0;
+    }
     free (addr_buffer);
 
     /* dialog with proxy server */
-    if (recv (sock, buffer, 4, 0) != 4)
+    if (network_recv_with_retry (sock, buffer, 4, 0) < 4)
         return 0;
 
     if (!((buffer[0] == 5) && (buffer[1] == 0)))
@@ -385,7 +461,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
              * server socks return server bound address and port
              * address of 4 bytes and port of 2 bytes (= 6 bytes)
              */
-            if (recv (sock, buffer, 6, 0) != 6)
+            if (network_recv_with_retry (sock, buffer, 6, 0) < 6)
                 return 0;
             break;
         case 3:
@@ -394,11 +470,11 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
              * server socks return server bound address and port
              */
             /* read address length */
-            if (recv (sock, buffer, 1, 0) != 1)
+            if (network_recv_with_retry (sock, buffer, 1, 0) < 1)
                 return 0;
             addr_len = buffer[0];
             /* read address + port = addr_len + 2 */
-            if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
+            if (network_recv_with_retry (sock, buffer, addr_len + 2, 0) < addr_len + 2)
                 return 0;
             break;
         case 4:
@@ -407,7 +483,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
              * server socks return server bound address and port
              * address of 16 bytes and port of 2 bytes (= 18 bytes)
              */
-            if (recv (sock, buffer, 18, 0) != 18)
+            if (network_recv_with_retry (sock, buffer, 18, 0) < 18)
                 return 0;
             break;
         default:
@@ -422,6 +498,8 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
  * network_pass_proxy: establish connection/authentification to a proxy
  *                     return 1 if connection is ok
  *                            0 if error
+ *                     Note: this function is blocking, it must be called
+ *                     only in a forked process
  */
 
 int
@@ -452,9 +530,54 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 }
 
 /*
+ * network_connect: connect to a remote host and wait for connection if socket
+ *                  is non blocking
+ *                  return 1 if connect is ok, 0 if connect failed
+ *                  Note: this function is blocking, it must be called
+ *                  only in a forked process
+ */
+
+int
+network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
+{
+    fd_set write_fds;
+    int ready, value;
+    socklen_t len;
+
+    if (connect (sock, addr, addrlen) == 0)
+        return 1;
+
+    if (errno != EINPROGRESS)
+        return 0;
+
+    /* for non-blocking sockets, the connect() may fail with EINPROGRESS,
+     * if this happens, we wait for writability on socket and check
+     * the option SO_ERROR, which is 0 if connect is ok (see man connect)
+     */
+    while (1)
+    {
+        FD_ZERO (&write_fds);
+        FD_SET (sock, &write_fds);
+        ready = select (sock + 1, NULL, &write_fds, NULL, NULL);
+        if (ready > 0)
+        {
+            len = sizeof (value);
+            if (getsockopt (sock, SOL_SOCKET, SO_ERROR, &value, &len) == 0)
+            {
+                return (value == 0) ? 1 : 0;
+            }
+        }
+    }
+
+    return 0;
+}
+
+/*
  * network_connect_to: connect to a remote host
  *                     return 1 if connection is ok
  *                            0 if error
+ *                     Note: this function is blocking, it must be called
+ *                     only in a forked process
  */
 
 int
@@ -465,7 +588,6 @@ network_connect_to (const char *proxy, int sock,
     struct sockaddr_in addr;
     struct hostent *hostent;
     char *ip4;
-    int ret;
 
     ptr_proxy = NULL;
     if (proxy && proxy[0])
@@ -488,8 +610,7 @@ network_connect_to (const char *proxy, int sock,
         if (!hostent)
             return 0;
         memcpy(&(addr.sin_addr), *(hostent->h_addr_list), sizeof(struct in_addr));
-        ret = connect (sock, (struct sockaddr *) &addr, sizeof (addr));
-        if ((ret == -1) && (errno != EINPROGRESS))
+        if (!network_connect (sock, (struct sockaddr *) &addr, sizeof (addr)))
             return 0;
         if (!network_pass_proxy (proxy, sock, ip4, port))
             return 0;
@@ -500,10 +621,10 @@ network_connect_to (const char *proxy, int sock,
         addr.sin_port = htons (port);
         addr.sin_family = AF_INET;
         addr.sin_addr.s_addr = htonl (address);
-        ret = connect (sock, (struct sockaddr *) &addr, sizeof (addr));
-        if ((ret == -1) && (errno != EINPROGRESS))
+        if (!network_connect (sock, (struct sockaddr *) &addr, sizeof (addr)))
             return 0;
     }
+
     return 1;
 }
 
@@ -614,8 +735,8 @@ network_connect_child (struct t_hook *hook_connect)
             ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
 
         /* connect to peer */
-        if (connect (HOOK_CONNECT(hook_connect, sock),
-                     res->ai_addr, res->ai_addrlen) != 0)
+        if (!network_connect (HOOK_CONNECT(hook_connect, sock),
+                              res->ai_addr, res->ai_addrlen))
         {
             /* connection refused */
             snprintf (status_without_string, sizeof (status_without_string),
@@ -796,8 +917,8 @@ network_connect_child (struct t_hook *hook_connect)
                 ((struct sockaddr_in *)(ptr_res->ai_addr))->sin_port =
                     htons (HOOK_CONNECT(hook_connect, port));
 
-            if (connect (HOOK_CONNECT(hook_connect, sock),
-                         ptr_res->ai_addr, ptr_res->ai_addrlen) == 0)
+            if (network_connect (HOOK_CONNECT(hook_connect, sock),
+                                 ptr_res->ai_addr, ptr_res->ai_addrlen))
             {
                 status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
                 break;
@@ -1073,7 +1194,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                        HOOK_CONNECT(hook_connect, handshake_fd_flags) | O_NONBLOCK);
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                           (gnutls_transport_ptr) ((ptrdiff_t) HOOK_CONNECT(hook_connect, sock)));
-                if (HOOK_CONNECT (hook_connect, gnutls_dhkey_size) > 0)
+                if (HOOK_CONNECT(hook_connect, gnutls_dhkey_size) > 0)
                 {
                     gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                               (unsigned int) HOOK_CONNECT(hook_connect, gnutls_dhkey_size));
