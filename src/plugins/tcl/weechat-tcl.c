@@ -343,6 +343,9 @@ weechat_tcl_load (const char *filename)
                                         &weechat_tcl_api_buffer_input_data_cb,
                                         &weechat_tcl_api_buffer_close_cb);
 
+    weechat_hook_signal_send ("tcl_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
+                              tcl_current_script->filename);
+
     return 1;
 }
 
@@ -368,6 +371,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
 {
     Tcl_Interp* interp;
     int *rc;
+    char *filename;
 
     if ((weechat_tcl_plugin->debug >= 2) || !tcl_quiet)
     {
@@ -386,6 +390,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
             free (rc);
     }
 
+    filename = strdup (script->filename);
     interp = (Tcl_Interp*)script->interpreter;
 
     if (tcl_current_script == script)
@@ -395,6 +400,11 @@ weechat_tcl_unload (struct t_plugin_script *script)
     plugin_script_remove (weechat_tcl_plugin, &tcl_scripts, &last_tcl_script, script);
 
     Tcl_DeleteInterp(interp);
+
+    weechat_hook_signal_send ("tcl_script_unloaded",
+                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    if (filename)
+        free (filename);
 }
 
 /*

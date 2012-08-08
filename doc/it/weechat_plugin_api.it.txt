@@ -7407,6 +7407,30 @@ Argomenti:
 |========================================
 | Plugin | Segnale | Argomenti | Descrizione
 
+// TRANSLATION MISSING
+| guile | guile_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  scheme script loaded
+
+// TRANSLATION MISSING
+| guile | guile_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  scheme script unloaded
+
+// TRANSLATION MISSING
+| guile | guile_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.scm,/path/to/script2.scm") |
+  scheme script(s) installed
+
+// TRANSLATION MISSING
+| guile | guile_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.scm,script2.scm") |
+  scheme script(s) removed
+
 | irc | xxx,irc_in_yyy ^(1)^ |
   string: messaggio |
   messaggio irc dal server (prima di essere utilizzato
@@ -7528,6 +7552,126 @@ Argomenti:
 | logger | logger_backlog |
   puntatore: buffer |
   visualizza log precedenti per il buffer
+
+// TRANSLATION MISSING
+| lua | lua_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  lua script loaded
+
+// TRANSLATION MISSING
+| lua | lua_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  lua script unloaded
+
+// TRANSLATION MISSING
+| lua | lua_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.lua,/path/to/script2.lua") |
+  lua script(s) installed
+
+// TRANSLATION MISSING
+| lua | lua_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.lua,script2.lua") |
+  lua script(s) removed
+
+// TRANSLATION MISSING
+| perl | perl_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  perl script loaded
+
+// TRANSLATION MISSING
+| perl | perl_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  perl script unloaded
+
+// TRANSLATION MISSING
+| perl | perl_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.pl,/path/to/script2.pl") |
+  perl script(s) installed
+
+// TRANSLATION MISSING
+| perl | perl_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.pl,script2.pl") |
+  perl script(s) removed
+
+// TRANSLATION MISSING
+| python | python_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  python script loaded
+
+// TRANSLATION MISSING
+| python | python_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  python script unloaded
+
+// TRANSLATION MISSING
+| python | python_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.py,/path/to/script2.py") |
+  python script(s) installed
+
+// TRANSLATION MISSING
+| python | python_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.py,script2.py") |
+  python script(s) removed
+
+// TRANSLATION MISSING
+| ruby | ruby_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  ruby script loaded
+
+// TRANSLATION MISSING
+| ruby | ruby_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  ruby script unloaded
+
+// TRANSLATION MISSING
+| ruby | ruby_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.rb,/path/to/script2.rb") |
+  ruby script(s) installed
+
+// TRANSLATION MISSING
+| ruby | ruby_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.rb,script2.rb") |
+  ruby script(s) removed
+
+// TRANSLATION MISSING
+| tcl | tcl_script_loaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  tcl script loaded
+
+// TRANSLATION MISSING
+| tcl | tcl_script_unloaded +
+  (_novità nella versione 0.3.9_) |
+  string: path to script |
+  tcl script unloaded
+
+// TRANSLATION MISSING
+| tcl | tcl_script_installed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.tcl,/path/to/script2.tcl") |
+  tcl script(s) installed
+
+// TRANSLATION MISSING
+| tcl | tcl_script_removed +
+  (_novità nella versione 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.tcl,script2.tcl") |
+  tcl script(s) removed
 
 | weechat | buffer_closing |
   puntatore: buffer |

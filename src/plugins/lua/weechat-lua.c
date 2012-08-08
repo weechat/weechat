@@ -383,6 +383,9 @@ weechat_lua_load (const char *filename)
                                         &weechat_lua_api_buffer_input_data_cb,
                                         &weechat_lua_api_buffer_close_cb);
 
+    weechat_hook_signal_send ("lua_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
+                              lua_current_script->filename);
+
     return 1;
 }
 
@@ -408,6 +411,7 @@ weechat_lua_unload (struct t_plugin_script *script)
 {
     int *rc;
     void *interpreter;
+    char *filename;
 
     if ((weechat_lua_plugin->debug >= 2) || !lua_quiet)
     {
@@ -426,6 +430,7 @@ weechat_lua_unload (struct t_plugin_script *script)
             free (rc);
     }
 
+    filename = strdup (script->filename);
     interpreter = script->interpreter;
 
     if (lua_current_script == script)
@@ -436,6 +441,11 @@ weechat_lua_unload (struct t_plugin_script *script)
 
     if (interpreter)
         lua_close (interpreter);
+
+    weechat_hook_signal_send ("lua_script_unloaded",
+                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    if (filename)
+        free (filename);
 }
 
 /*

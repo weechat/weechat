@@ -7481,6 +7481,26 @@ Paramètres :
 |========================================
 | Extension | Signal | Paramètres | Description
 
+| guile | guile_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script scheme chargé
+
+| guile | guile_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script scheme déchargé
+
+| guile | guile_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.scm,/chemin/vers/script2.scm") |
+  script(s) scheme installé(s)
+
+| guile | guile_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.scm,script2.scm") |
+  script(s) scheme supprimé(s)
+
 | irc | xxx,irc_in_yyy ^(1)^ |
   chaîne : message |
   message irc du serveur (avant utilisation par l'extension irc,
@@ -7598,6 +7618,106 @@ Paramètres :
 | logger | logger_backlog |
   pointeur : tampon |
   affichage du backlog pour le tampon
+
+| lua | lua_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script lua chargé
+
+| lua | lua_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script lua déchargé
+
+| lua | lua_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.lua,/chemin/vers/script2.lua") |
+  script(s) lua installé(s)
+
+| lua | lua_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.lua,script2.lua") |
+  script(s) lua supprimé(s)
+
+| perl | perl_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script perl chargé
+
+| perl | perl_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script perl déchargé
+
+| perl | perl_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.pl,/chemin/vers/script2.pl") |
+  script(s) perl installé(s)
+
+| perl | perl_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.pl,script2.pl") |
+  script(s) perl supprimé(s)
+
+| python | python_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script python chargé
+
+| python | python_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script python déchargé
+
+| python | python_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.py,/chemin/vers/script2.py") |
+  script(s) python installé(s)
+
+| python | python_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.py,script2.py") |
+  script(s) python supprimé(s)
+
+| ruby | ruby_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script ruby chargé
+
+| ruby | ruby_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script ruby déchargé
+
+| ruby | ruby_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.rb,/chemin/vers/script2.rb") |
+  script(s) ruby installé(s)
+
+| ruby | ruby_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.rb,script2.rb") |
+  script(s) ruby supprimé(s)
+
+| tcl | tcl_script_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script tcl chargé
+
+| tcl | tcl_script_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: chemin vers le script |
+  script tcl déchargé
+
+| tcl | tcl_script_installed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.tcl,/chemin/vers/script2.tcl") |
+  script(s) tcl installé(s)
+
+| tcl | tcl_script_removed +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.tcl,script2.tcl") |
+  script(s) tcl supprimé(s)
 
 | weechat | buffer_closing |
   pointeur : tampon |

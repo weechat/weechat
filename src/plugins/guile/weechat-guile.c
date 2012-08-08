@@ -412,6 +412,9 @@ weechat_guile_load (const char *filename)
                                         &weechat_guile_api_buffer_input_data_cb,
                                         &weechat_guile_api_buffer_close_cb);
 
+    weechat_hook_signal_send ("guile_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
+                              guile_current_script->filename);
+
     return 1;
 }
 
@@ -437,6 +440,7 @@ weechat_guile_unload (struct t_plugin_script *script)
 {
     int *rc;
     void *interpreter;
+    char *filename;
 
     if ((weechat_guile_plugin->debug >= 2) || !guile_quiet)
     {
@@ -453,6 +457,7 @@ weechat_guile_unload (struct t_plugin_script *script)
             free (rc);
     }
 
+    filename = strdup (script->filename);
     interpreter = script->interpreter;
 
     if (guile_current_script == script)
@@ -464,6 +469,11 @@ weechat_guile_unload (struct t_plugin_script *script)
 
     if (interpreter)
         weechat_guile_catch (scm_gc_unprotect_object, interpreter);
+
+    weechat_hook_signal_send ("guile_script_unloaded",
+                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    if (filename)
+        free (filename);
 }
 
 /*

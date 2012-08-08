@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-08-07
+v0.3.9-dev, 2012-08-08
 
 
 Version 0.3.9 (under dev!)
@@ -73,6 +73,7 @@ Version 0.3.9 (under dev!)
 * relay: fix freeze when writing on relay socket (use non-blocking sockets in
   relay for irc and weechat protocols) (bug #36655)
 * ruby: detect ruby version 1.9.3 in cmake and autotools
+* scripts: add signals for scripts loaded/unloaded/installed/removed
 * scripts: add hdata with list of scripts for each language
 * scripts: fix deletion of configuration files when script is unloaded
   (bug #36977)

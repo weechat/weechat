@@ -7371,6 +7371,26 @@ Arguments:
 |========================================
 | Plugin | Signal | Arguments | Description
 
+| guile | guile_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  scheme script loaded
+
+| guile | guile_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  scheme script unloaded
+
+| guile | guile_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.scm,/path/to/script2.scm") |
+  scheme script(s) installed
+
+| guile | guile_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.scm,script2.scm") |
+  scheme script(s) removed
+
 | irc | xxx,irc_in_yyy ^(1)^ |
   string: message |
   irc message from server (before irc plugin uses it,
@@ -7488,6 +7508,106 @@ Arguments:
 | logger | logger_backlog |
   pointer: buffer |
   display backlog for buffer
+
+| lua | lua_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  lua script loaded
+
+| lua | lua_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  lua script unloaded
+
+| lua | lua_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.lua,/path/to/script2.lua") |
+  lua script(s) installed
+
+| lua | lua_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.lua,script2.lua") |
+  lua script(s) removed
+
+| perl | perl_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  perl script loaded
+
+| perl | perl_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  perl script unloaded
+
+| perl | perl_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.pl,/path/to/script2.pl") |
+  perl script(s) installed
+
+| perl | perl_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.pl,script2.pl") |
+  perl script(s) removed
+
+| python | python_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  python script loaded
+
+| python | python_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  python script unloaded
+
+| python | python_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.py,/path/to/script2.py") |
+  python script(s) installed
+
+| python | python_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.py,script2.py") |
+  python script(s) removed
+
+| ruby | ruby_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  ruby script loaded
+
+| ruby | ruby_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  ruby script unloaded
+
+| ruby | ruby_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.rb,/path/to/script2.rb") |
+  ruby script(s) installed
+
+| ruby | ruby_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.rb,script2.rb") |
+  ruby script(s) removed
+
+| tcl | tcl_script_loaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  tcl script loaded
+
+| tcl | tcl_script_unloaded +
+  (_new in version 0.3.9_) |
+  string: path to script |
+  tcl script unloaded
+
+| tcl | tcl_script_installed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of paths to scripts installed (example: "/path/to/script1.tcl,/path/to/script2.tcl") |
+  tcl script(s) installed
+
+| tcl | tcl_script_removed +
+  (_new in version 0.3.9_) |
+  string: comma-separated list of scripts removed (example: "script1.tcl,script2.tcl") |
+  tcl script(s) removed
 
 | weechat | buffer_closing |
   pointer: buffer |

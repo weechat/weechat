@@ -531,6 +531,9 @@ weechat_perl_load (const char *filename)
                                         &weechat_perl_api_buffer_input_data_cb,
                                         &weechat_perl_api_buffer_close_cb);
 
+    weechat_hook_signal_send ("perl_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
+                              perl_current_script->filename);
+
     return 1;
 }
 
@@ -556,6 +559,7 @@ weechat_perl_unload (struct t_plugin_script *script)
 {
     int *rc;
     void *interpreter;
+    char *filename;
 
     if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
     {
@@ -580,11 +584,14 @@ weechat_perl_unload (struct t_plugin_script *script)
             free (rc);
     }
 
+    filename = strdup (script->filename);
     interpreter = script->interpreter;
 
     if (perl_current_script == script)
+    {
         perl_current_script = (perl_current_script->prev_script) ?
             perl_current_script->prev_script : perl_current_script->next_script;
+    }
 
     plugin_script_remove (weechat_perl_plugin, &perl_scripts, &last_perl_script,
                           script);
@@ -599,6 +606,11 @@ weechat_perl_unload (struct t_plugin_script *script)
     if (interpreter)
         free (interpreter);
 #endif
+
+    weechat_hook_signal_send ("perl_script_unloaded",
+                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    if (filename)
+        free (filename);
 }
 
 /*
