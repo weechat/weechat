@@ -2878,7 +2878,6 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
 {
     struct t_irc_server *server;
     const char *proxy;
-    int flags;
 
     server = (struct t_irc_server *)data;
 
@@ -2893,10 +2892,6 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
-            flags = fcntl (server->sock, F_GETFL);
-            if (flags == -1)
-                flags = 0;
-            fcntl (server->sock, F_SETFL, flags | O_NONBLOCK);
             weechat_printf (server->buffer,
                             _("%s: connected to %s/%d (%s)"),
                             IRC_PLUGIN_NAME,
@@ -3462,7 +3457,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 int
 irc_server_connect (struct t_irc_server *server)
 {
-    int set, length;
+    int set, length, flags;
     char *option_name;
     struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *proxy, *str_proxy_type, *str_proxy_address;
@@ -3672,6 +3667,12 @@ irc_server_connect (struct t_irc_server *server)
                           "\"SO_KEEPALIVE\""),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME);
     }
+
+    /* set flag O_NONBLOCK on socket */
+    flags = fcntl (server->sock, F_GETFL);
+    if (flags == -1)
+        flags = 0;
+    fcntl (server->sock, F_SETFL, flags | O_NONBLOCK);
 
     /* init SSL if asked and connect */
     server->ssl_connected = 0;
