@@ -2,10 +2,9 @@
 Sébastien Helleu <flashcode@flashtux.org>
 
 
-// TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
-used with latest stable version of WeeChat.
+この文書は WeeChat バージョン 0.3.0 以上向けに書かれたものですが、
+最新安定版の WeeChat に対しても利用できます。
 
 
 [[general]]
@@ -450,14 +449,11 @@ $ printf '\033[?1002l'
 例えば rxvt-unicode 等です。
 
 
-// TRANSLATION MISSING
 [[mouse_select_paste]]
-How can I select or paste text in terminal when mouse is enabled in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== WeeChat でマウスが利用可能な場合、ターミナルのテキストを選択したり、貼り付けるにはどうすれば良いですか。 ===
 
-When mouse is enabled in WeeChat, you can use @k(-S-) modifier to select or
-click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use @k(-A-) instead of @k(-S-)).
+WeeChat でマウスが利用可能な場合、@k(-S-) キーを押しながらターミナルをクリックして選択してください、
+マウスが無効化されます (例えば iTerm 等の場合、@k(-S-) の代わりに @k(-A-) を使ってください)。
 
 
 [[irc]]
@@ -698,10 +694,9 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 使わないプラグインのロードを禁止する、例えば: aspell、fifo、
   logger、perl、python、ruby、lua、tcl、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
-// TRANSLATION MISSING
-* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
-  of option 'weechat.history.max_buffer_lines_minutes'
-* reduce value of option 'weechat.history.max_commands'
+* 'weechat.history.max_buffer_lines_number' オプションの値を減らすか、
+  'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
+* 'weechat.history.max_commands' オプションの値を減らしてください。
 
 
 [[development]]

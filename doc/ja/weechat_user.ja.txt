@@ -304,7 +304,7 @@ gdb /usr/bin/weechat-curses 12345
 
 -d, --dir 'path'::
     WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
-    ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat'。
+    ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat' 。
     (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
 
 -h, --help::
@@ -990,7 +990,7 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
 
 * screen の中: 'screen-256color'
-* screen の外: 'xterm-256color'、'rxvt-256color'、'putty-256color'、...
+* screen の外: 'xterm-256color' 、'rxvt-256color' 、'putty-256color' 、...
 
 [NOTE]
 'TERM' 環境変数の値に上の値を設定するには、"ncurses-term"
@@ -2166,7 +2166,7 @@ include::autogen/user/xfer_commands.txt[]
 
 サポートを得る方法:
 
-* IRC: サーバ 'irc.freenode.net'、チャンネル '#weechat' (英語) と
+* IRC: サーバ 'irc.freenode.net' 、チャンネル '#weechat' (英語) と
   '#weechat-fr' (フランス語)
 * WeeChat フォーラム: http://forums.flashtux.org/
 * メーリングリスト:
