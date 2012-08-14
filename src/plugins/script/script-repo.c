@@ -21,9 +21,7 @@
  * script-repo.c: download and read repository file (plugins.xml.gz)
  */
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE 1
-#endif
+#define _XOPEN_SOURCE 700
 
 #include <stdlib.h>
 #include <unistd.h>
