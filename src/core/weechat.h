@@ -108,6 +108,8 @@ extern int weechat_quit;
 extern char *weechat_home;
 extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
+extern int weechat_no_gnutls;
+extern int weechat_no_gcrypt;
 extern char *weechat_startup_commands;
 
 extern void weechat_shutdown (int return_code, int crash);

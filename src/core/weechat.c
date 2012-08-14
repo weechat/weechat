@@ -90,7 +90,11 @@ char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
 int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
-                                       /* (useful when using valgrind)      */
+                                       /* (useful with valgrind)            */
+int weechat_no_gnutls = 0;             /* remove init/deinit of gnutls      */
+                                       /* (useful with valgrind/electric-f.)*/
+int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
+                                       /* (useful with valgrind)            */
 char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 
 
@@ -253,12 +257,32 @@ weechat_parse_args (int argc, char *argv[])
         else if (strcmp (argv[i], "--no-dlclose") == 0)
         {
             /*
-             * tools like valgrind work better when dlclose() is not done
-             * after plugins are unloaded, they can display stack for plugins,
-             * otherwise you'll see "???" in stack for functions of unloaded
-             * plugins -- this option should not be used for other purposes!
+             * Valgrind works better when dlclose() is not done after plugins
+             * are unloaded, it can display stack for plugins,* otherwise
+             * you'll see "???" in stack for functions of unloaded plugins.
+             * This option disables the call to dlclose(),
+             * it must NOT be used for other purposes!
              */
             weechat_plugin_no_dlclose = 1;
+        }
+        else if (strcmp (argv[i], "--no-gnutls") == 0)
+        {
+            /*
+             * Electric-fence is not working fine when gnutls loads
+             * certificates and valgrind reports many memory errors with gnutls.
+             * This option disables the init/deinit of gnutls,
+             * it must NOT be used for other purposes!
+             */
+            weechat_no_gnutls = 1;
+        }
+        else if (strcmp (argv[i], "--no-gcrypt") == 0)
+        {
+            /*
+             * Valgrind reports many memory errors with gcrypt.
+             * This option disables the init/deinit of gcrypt,
+             * it must NOT be used for other purposes!
+             */
+            weechat_no_gcrypt = 1;
         }
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))

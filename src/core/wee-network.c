@@ -72,6 +72,9 @@ network_set_gnutls_ca_file ()
 #ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
 
+    if (weechat_no_gnutls)
+        return;
+
     ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
     if (ca_path)
     {
@@ -95,30 +98,38 @@ void
 network_init ()
 {
 #ifdef HAVE_GNUTLS
-    gnutls_global_init ();
-    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+    if (!weechat_no_gnutls)
+    {
+        gnutls_global_init ();
+        gnutls_certificate_allocate_credentials (&gnutls_xcred);
 
-    network_set_gnutls_ca_file ();
+        network_set_gnutls_ca_file ();
 #if LIBGNUTLS_VERSION_NUMBER >= 0x02090a
-    /* for gnutls >= 2.9.10 */
-    gnutls_certificate_set_verify_function (gnutls_xcred,
-                                            &hook_connect_gnutls_verify_certificates);
+        /* for gnutls >= 2.9.10 */
+        gnutls_certificate_set_verify_function (gnutls_xcred,
+                                                &hook_connect_gnutls_verify_certificates);
 #endif
 #if LIBGNUTLS_VERSION_NUMBER >= 0x020b00
-    /* for gnutls >= 2.11.0 */
-    gnutls_certificate_set_retrieve_function (gnutls_xcred,
-                                              &hook_connect_gnutls_set_certificates);
+        /* for gnutls >= 2.11.0 */
+        gnutls_certificate_set_retrieve_function (gnutls_xcred,
+                                                  &hook_connect_gnutls_set_certificates);
 #else
-    /* for gnutls < 2.11.0 */
-    gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
-                                                     &hook_connect_gnutls_set_certificates);
+        /* for gnutls < 2.11.0 */
+        gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
+                                                         &hook_connect_gnutls_set_certificates);
 #endif
-#endif
+    }
+#endif /* HAVE_GNUTLS */
+
 #ifdef HAVE_GCRYPT
-    gcry_check_version (GCRYPT_VERSION);
-    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-    gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
-#endif
+    if (!weechat_no_gcrypt)
+    {
+        gcry_check_version (GCRYPT_VERSION);
+        gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+        gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+    }
+#endif /* HAVE_GCRYPT */
+
     network_init_ok = 1;
 }
 
@@ -132,8 +143,11 @@ network_end ()
     if (network_init_ok)
     {
 #ifdef HAVE_GNUTLS
-        gnutls_certificate_free_credentials (gnutls_xcred);
-        gnutls_global_deinit();
+        if (!weechat_no_gnutls)
+        {
+            gnutls_certificate_free_credentials (gnutls_xcred);
+            gnutls_global_deinit();
+        }
 #endif
         network_init_ok = 0;
     }
