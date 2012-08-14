@@ -2441,6 +2441,9 @@ config_file_option_free (struct t_config_option *option)
 
     ptr_section = option->section;
 
+    /* free data */
+    config_file_option_free_data (option);
+
     /* remove option from section */
     if (ptr_section)
     {
@@ -2457,9 +2460,6 @@ config_file_option_free (struct t_config_option *option)
             (option->next_option)->prev_option = option->prev_option;
         ptr_section->options = new_options;
     }
-
-    /* free data */
-    config_file_option_free_data (option);
 
     free (option);
 }
@@ -2495,7 +2495,12 @@ config_file_section_free (struct t_config_section *section)
 
     ptr_config = section->config_file;
 
-    /* remove section */
+    /* free data */
+    config_file_section_free_options (section);
+    if (section->name)
+        free (section->name);
+
+    /* remove section from list */
     if (ptr_config->last_section == section)
         ptr_config->last_section = section->prev_section;
     if (section->prev_section)
@@ -2508,11 +2513,6 @@ config_file_section_free (struct t_config_section *section)
 
     if (section->next_section)
         (section->next_section)->prev_section = section->prev_section;
-
-    /* free data */
-    config_file_section_free_options (section);
-    if (section->name)
-        free (section->name);
 
     free (section);
 
@@ -2531,7 +2531,17 @@ config_file_free (struct t_config_file *config_file)
     if (!config_file)
         return;
 
-    /* remove configuration file */
+    /* free data */
+    while (config_file->sections)
+    {
+        config_file_section_free (config_file->sections);
+    }
+    if (config_file->name)
+        free (config_file->name);
+    if (config_file->filename)
+        free (config_file->filename);
+
+    /* remove configuration file from list */
     if (last_config_file == config_file)
         last_config_file = config_file->prev_config;
     if (config_file->prev_config)
@@ -2544,16 +2554,6 @@ config_file_free (struct t_config_file *config_file)
 
     if (config_file->next_config)
         (config_file->next_config)->prev_config = config_file->prev_config;
-
-    /* free data */
-    while (config_file->sections)
-    {
-        config_file_section_free (config_file->sections);
-    }
-    if (config_file->name)
-        free (config_file->name);
-    if (config_file->filename)
-        free (config_file->filename);
 
     free (config_file);
 
