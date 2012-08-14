@@ -1,0 +1,155 @@
+* [[option_script.color.status_held]] *script.color.status_held*
+** 説明: `color for status "held" ("H")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.status_installed]] *script.color.status_installed*
+** 説明: `color for status "installed" ("i")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightcyan`)
+
+* [[option_script.color.status_obsolete]] *script.color.status_obsolete*
+** 説明: `color for status "obsolete" ("N")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightmagenta`)
+
+* [[option_script.color.status_popular]] *script.color.status_popular*
+** 説明: `color for status "popular" ("*")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_script.color.status_running]] *script.color.status_running*
+** 説明: `color for status "running" ("r")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightgreen`)
+
+* [[option_script.color.status_unknown]] *script.color.status_unknown*
+** 説明: `color for status "unknown" ("?")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightred`)
+
+* [[option_script.color.text]] *script.color.text*
+** 説明: `text color in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_bg]] *script.color.text_bg*
+** 説明: `background color in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
+** 説明: `background color for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `red`)
+
+* [[option_script.color.text_date]] *script.color.text_date*
+** 説明: `text color of dates in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_date_selected]] *script.color.text_date_selected*
+** 説明: `text color of dates for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.text_delimiters]] *script.color.text_delimiters*
+** 説明: `text color of delimiters in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
+
+* [[option_script.color.text_description]] *script.color.text_description*
+** 説明: `text color of description in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_description_selected]] *script.color.text_description_selected*
+** 説明: `text color of description for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.text_extension]] *script.color.text_extension*
+** 説明: `text color of extension in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
+** 説明: `text color of extension for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.text_name]] *script.color.text_name*
+** 説明: `text color of script name in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
+
+* [[option_script.color.text_name_selected]] *script.color.text_name_selected*
+** 説明: `text color of script name for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightcyan`)
+
+* [[option_script.color.text_selected]] *script.color.text_selected*
+** 説明: `text color for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.text_tags]] *script.color.text_tags*
+** 説明: `text color of tags in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `brown`)
+
+* [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
+** 説明: `text color of tags for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_script.color.text_version]] *script.color.text_version*
+** 説明: `text color of version in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `magenta`)
+
+* [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
+** 説明: `text color of version loaded in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
+
+* [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
+** 説明: `text color of version loaded for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_script.color.text_version_selected]] *script.color.text_version_selected*
+** 説明: `text color of version for selected line in script buffer`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightmagenta`)
+
+* [[option_script.look.columns]] *script.look.columns*
+** 説明: `format of columns displayed in script buffer: following column identifiers are replaced by their value: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%s %n %V %v %u | %d | %t"`)
+
+* [[option_script.look.sort]] *script.look.sort*
+** 説明: `default sort keys for scripts: comma-separated list of identifiers: a=author, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"p,n"`)
+
+* [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
+** 説明: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
+** タイプ: 整数
+** 値: -1 .. 525600 (デフォルト値: `60`)
+
+* [[option_script.scripts.dir]] *script.scripts.dir*
+** 説明: `local cache directory for scripts`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%h/script"`)
+
+* [[option_script.scripts.hold]] *script.scripts.hold*
+** 説明: `scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_script.scripts.url]] *script.scripts.url*
+** 説明: `URL for file with list of scripts`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"http://www.weechat.org/files/plugins.xml.gz"`)
+

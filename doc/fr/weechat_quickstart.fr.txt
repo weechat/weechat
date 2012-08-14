@@ -234,22 +234,11 @@ Les extensions sont automatiquement chargées lorsqu'elles sont trouvées
 (merci de regarder la documentation WeeChat pour charger/décharger des
 extensions ou des scripts).
 
-Des extensions permettent d'utiliser des scripts dans WeeChat (dans
-différent langages comme Perl, Python, Ruby, Lua et Tcl). Ces extensions
-doivent être chargées avec la commande `/plugin` et elles fournissent des
-commandes telles que `/perl`, utilisées pour charger les scripts.
+De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat :
+http://www.weechat.org/scripts
 
-Plusieurs extensions/scripts (de contributeurs) sont disponibles pour
-WeeChat : http://www.weechat.org/scripts
-
-La manière la plus simple pour installer des scripts consiste à utiliser le
-script 'weeget.py' :
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. chargez le script : `/python autoload`
-. liste des scripts : `/weeget list` (pour l'aide: `/help weeget`)
+Vous pouvez gérer les scripts dans WeeChat avec la commande `/script` (voir
+`/help script` pour plus d'info).
 
 
 [[more_doc]]

@@ -241,21 +241,12 @@ erhältlich (z.B. weechat-plugins).
 Erweiterungen werden -sofern welche gefunden worden sind- automatisch geladen (Bitte beachte
 die Dokumentation zum Laden/Entladen von Erweiterungen oder Skripten).
 
-Einige Erweiterungen ermöglichen die Verwendung von Skripten in WeeChat (unterstützte
-Sprachen sind Perl, Python, Ruby, Lua und TCL). Diese Erweiterungen müssen mit dem
-Befehl `/plugin` geladen werden und verfügen ihrerseits über Befehle wie z.B.
-`/perl` um Perl-Skripten zu laden.
+Viele externe Skripten (der Mitarbeitenden) sind für WeeChat verfügbar, siehe:
+http://www.weechat.org/scripts
 
-Viele externe Erweiterungen/Skripten (der Mitarbeitenden) sind für WeeChat verfügbar,
-siehe: http://www.weechat.org/scripts
-
-Der einfachste Weg um Skripten zu installieren ist die Verwendung von 'weeget.py':
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. laden des  Skript: `/python autoload`
-. Liste der Skripten: `/weeget list` (Hilfe mit: `/help weeget`)
+// TRANSLATION MISSING
+You can manage scripts in WeeChat with command `/script` (see `/help script`
+for more info).
 
 
 [[more_doc]]

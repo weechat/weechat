@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 22:48+0200\n"
-"PO-Revision-Date: 2012-08-02 22:50+0200\n"
+"POT-Creation-Date: 2012-08-14 18:26+0200\n"
+"PO-Revision-Date: 2012-08-14 18:26+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6629,14 +6629,6 @@ msgid "%s%s: client capability, enabled: %s"
 msgstr "%s%s: client capability, activé: %s"
 
 #, c-format
-msgid ""
-"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-"WeeChat was not built with libgcrypt support"
-msgstr ""
-"%s%s: impossible de s'authentifier avec SASL et le mécanisme DH-BLOWFISH car "
-"WeeChat n'a pas été construit avec le support libgcrypt"
-
-#, c-format
 msgid "%s%s: client capability, refused: %s"
 msgstr "%s%s: client capability, refusé: %s"
 
@@ -8365,66 +8357,6 @@ msgstr "%s%s: erreur inconnue en chargement du fichier \"%s\""
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: impossible d'initialiser %s"
 
-msgid "Support of python scripts"
-msgstr "Support des scripts python"
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s%s: impossible d'initialiser le module WeeChat"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: impossible de rediriger stdout"
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: impossible de rediriger stderr"
-
-msgid "path to python 2.x interpreter"
-msgstr "chemin vers l'interpréteur python 2.x"
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s%s: impossible de lancer l'interpréteur global"
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s%s: impossible de lire l'état courant de l'interpréteur"
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s%s: impossible de libérer l'interpréteur"
-
-msgid "Support of ruby scripts"
-msgstr "Support des scripts ruby"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: unable to read file \"%s\""
-msgstr "%s%s: impossible de lire le fichier \"%s\""
-
-#, c-format
-msgid "%s%s: error while loading file \"%s\""
-msgstr "%s%s: erreur en chargement du fichier \"%s\""
-
-#, c-format
-msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr ""
-"%s%s: la fonction \"weechat_init\" est manquante dans le fichier \"%s\""
-
-#, c-format
-msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr ""
-"%s%s: impossible d'évaluer la fonction \"weechat_init\" dans le fichier \"%s"
-"\""
-
-#, c-format
-msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr "%s%s: impossible d'évaluer le code ruby interne WeeChat"
-
 msgid "list/load/unload scripts"
 msgstr "lister/charger/décharger des scripts"
 
@@ -8543,6 +8475,456 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\" (script: %s)"
+
+msgid "Support of python scripts"
+msgstr "Support des scripts python"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: impossible d'initialiser le module WeeChat"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: impossible de rediriger stdout"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: impossible de rediriger stderr"
+
+msgid "path to python 2.x interpreter"
+msgstr "chemin vers l'interpréteur python 2.x"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: impossible de lancer l'interpréteur global"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: impossible de lire l'état courant de l'interpréteur"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: impossible de libérer l'interpréteur"
+
+msgid "Support of ruby scripts"
+msgstr "Support des scripts ruby"
+
+#, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%s%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "%s%s: impossible de lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "%s%s: erreur en chargement du fichier \"%s\""
+
+#, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr ""
+"%s%s: la fonction \"weechat_init\" est manquante dans le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr ""
+"%s%s: impossible d'évaluer la fonction \"weechat_init\" dans le fichier \"%s"
+"\""
+
+#, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s%s: impossible d'évaluer le code ruby interne WeeChat"
+
+msgid "Scripts manager"
+msgstr "Gestionnaire de scripts"
+
+msgid "Scripts loaded:"
+msgstr "Scripts chargés:"
+
+#, c-format
+msgid "%s: unknown language for script \"%s\""
+msgstr "%s: langage inconnu pour le script \"%s\""
+
+#, c-format
+msgid "%s%s: error downloading script \"%s\": %s"
+msgstr "%s%s: erreur de téléchargement du script \"%s\": %s"
+
+#, c-format
+msgid "%s: downloading script \"%s\"..."
+msgstr "%s: téléchargement du script \"%s\"..."
+
+#, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s: le script \"%s\" n'est pas installé"
+
+#, c-format
+msgid "%s: script \"%s\" is held"
+msgstr "%s: le script \"%s\" est figé"
+
+#, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: script \"%s\" non trouvé"
+
+#, c-format
+msgid "%s: script \"%s\" not held any more"
+msgstr "%s: le script \"%s\" n'est plus figé"
+
+#, c-format
+msgid "%s: script \"%s\" held"
+msgstr "%s: script \"%s\" figé"
+
+#, c-format
+msgid "%s: script \"%s\" is already installed and up-to-date"
+msgstr "%s: le script \"%s\" est déjà installé et à jour"
+
+#, c-format
+msgid "%s: all scripts are up-to-date"
+msgstr "%s: tous les scripts sont à jour"
+
+msgid "Script"
+msgstr "Script"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "License"
+msgstr "Licence"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Tags"
+msgstr "Etiquettes"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Date added"
+msgstr "Date d'ajout"
+
+msgid "Date updated"
+msgstr "Date de mise à jour"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "MD5"
+msgstr "MD5"
+
+msgid "Requires"
+msgstr "Requiert"
+
+msgid "Min WeeChat"
+msgstr "WeeChat mini"
+
+msgid "Max WeeChat"
+msgstr "WeeChat maxi"
+
+msgid "popular"
+msgstr "populaire"
+
+msgid "installed"
+msgstr "installé"
+
+msgid "held"
+msgstr "figé"
+
+msgid "running"
+msgstr "chargé"
+
+msgid "obsolete"
+msgstr "obsolète"
+
+#, c-format
+msgid "alt+d=back to list"
+msgstr "alt+d=retour à la liste"
+
+#, c-format
+msgid ""
+"%d/%d scripts (filter: %s) | Sort: %s | alt+i=install r=remove l=load "
+"u=unload h=(un)hold d=show detail | Input: 'q'=close 'r'=refresh 's:x,"
+"y'=sort 'words'=filter '*'=reset filter"
+msgstr ""
+"%d/%d scripts (filtre: %s) | Tri: %s | alt+i=installer r=supprimer l=charger "
+"u=décharger h=(dé)figer d=afficher détail | Entrée: 'q'=fermer "
+"'r'=rafraîchir 's:x,y'=trier 'words'=filtrer '*'=réinit filtre"
+
+msgid "Scripts"
+msgstr "Scripts"
+
+msgid "WeeChat scripts manager"
+msgstr "Gestionnaire de scripts WeeChat"
+
+msgid ""
+"list || show <script> || load|unload <script> [<script>...] || install|"
+"remove|hold <script> [<script>...] || upgrade || update"
+msgstr ""
+"list || show <script> || load|unload <script> [<script>...] || install|"
+"remove|hold <script> [<script>...] || upgrade || update"
+
+msgid ""
+"    list: list loaded scripts (all languages)\n"
+"    show: show detailed info about a script\n"
+"    load: load script(s)\n"
+"  unload: unload script(s)\n"
+" install: install/upgrade script(s)\n"
+"  remove: remove script(s)\n"
+"    hold: hold/unhold script(s) (a script held will not be upgraded any more "
+"and cannot be removed)\n"
+" upgrade: upgrade all installed scripts which are obsolete (new version "
+"available)\n"
+"  update: update local scripts cache\n"
+"\n"
+"Without argument, this command opens a buffer with list of scripts.\n"
+"\n"
+"On script buffer, the possible status for each script are:\n"
+"  * i H r N\n"
+"  | | | | |\n"
+"  | | | | obsolete (new version available)\n"
+"  | | | running (loaded)\n"
+"  | | held\n"
+"  | installed\n"
+"  popular script\n"
+"\n"
+"Keys on script buffer:\n"
+"  alt+i    install script\n"
+"  alt+r    remove script\n"
+"  alt+l    load script\n"
+"  alt+u    unload script\n"
+"  alt+h    (un)hold script\n"
+"\n"
+"Input allowed on script buffer:\n"
+"  q        close buffer\n"
+"  r        refresh buffer\n"
+"  s:x,y    sort buffer using keys x and y (see /help script.look.sort)\n"
+"  s:       reset sort (use default sort)\n"
+"  word(s)  filter scripts: search word(s) in scripts (description, "
+"tags, ...)\n"
+"  *        remove filter"
+msgstr ""
+"    list: lister les scripts chargés (tous les langages)\n"
+"    show: afficher des infos détaillées sur le script\n"
+"    load: charger un ou plusieurs scripts\n"
+"  unload: décharger un ou plusieurs scripts\n"
+" install: installer/mettre à jour un ou plusieurs scripts\n"
+"  remove: supprimer un ou plusieurs scripts\n"
+"    hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus "
+"mis à jour et ne peut pas être supprimé)\n"
+" upgrade: mettre à jour les scripts obsolètes (avec nouvelle version "
+"disponible)\n"
+"  update: mettre à jour le cache local des scripts\n"
+"\n"
+"Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.\n"
+"\n"
+"Sur le tampon des scripts, les statuts pour chaque script sont :\n"
+"  * i H r N\n"
+"  | | | | |\n"
+"  | | | | obsolète (nouvelle version disponible)\n"
+"  | | | chargé\n"
+"  | | figé\n"
+"  | installé\n"
+"  script populaire\n"
+"\n"
+"Les touches sur le tampon des scripts :\n"
+"  alt+i    installer le script\n"
+"  alt+r    supprimer le script\n"
+"  alt+l    charger le script\n"
+"  alt+u    décharger le script\n"
+"  alt+h    (dé)figer le script\n"
+"\n"
+"Entrée autorisée sur le tampon des scripts :\n"
+"  q        fermer le tampon\n"
+"  r        rafraîchir le tampon\n"
+"  s:x,y    trier le tampon en utilisant les clés x et y (voir /help script."
+"look.sort)\n"
+"  s:       réinitialiser le tri (utiliser le tri par défaut)\n"
+"  word(s)  filtrer les scripts: recherche du/des mot(s) dans les scripts "
+"(description, étiquettes, ...)\n"
+"  *        supprimer le filtre"
+
+msgid "list of scripts in repository"
+msgstr "liste des scripts du repository"
+
+msgid "list of scripts installed (from repository)"
+msgstr "liste des scripts installés (du repository)"
+
+msgid "files in script directories"
+msgstr "fichiers dans les répertoires de script"
+
+msgid ""
+"format of columns displayed in script buffer: following column identifiers "
+"are replaced by their value: %a=author, %d=description, %D=date added, "
+"%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
+"%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
+"loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+"format des colonnes affichées dans le tampon des scripts: les identifiants "
+"de colonne suivants sont remplacés par leur valeur: %a=auteur, "
+"%d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, "
+"%n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, "
+"%u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, "
+"%W=max_weechat"
+
+msgid ""
+"default sort keys for scripts: comma-separated list of identifiers: "
+"a=author, d=date added, e=extension, i=installed, l=language, n=name, "
+"o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can be used "
+"before identifier to reverse order; example: \"i,u\": installed scripts "
+"first, sorted by update date"
+msgstr ""
+"tri par défaut des scripts: liste d'identifiants séparés par des virgules: "
+"a=auteur, d=date d'ajour, e=extension, i=installé, l=langage, n=nom, "
+"o=obsolète, p=populaire, r=chargé, u=date de mise à jour; le caractère \"-\" "
+"peut être utilisé avant l'identifiant pour inverser l'ordre; exemple: \"i,u"
+"\": scripts installés en premier, triés par date de mise à jour"
+
+msgid "color for status \"popular\" (\"*\")"
+msgstr "couleur du statut \"populaire\" (\"*\")"
+
+msgid "color for status \"installed\" (\"i\")"
+msgstr "couleur du statut \"installé\" (\"i\")"
+
+msgid "color for status \"held\" (\"H\")"
+msgstr "couleur du statut \"figé\" (\"H\")"
+
+msgid "color for status \"running\" (\"r\")"
+msgstr "couleur du statut \"chargé\" (\"r\")"
+
+msgid "color for status \"obsolete\" (\"N\")"
+msgstr "couleur du statut \"obsolète\" (\"N\")"
+
+msgid "color for status \"unknown\" (\"?\")"
+msgstr "couleur du statut \"inconnu\" (\"?\")"
+
+msgid "text color in script buffer"
+msgstr "couleur du texte dans le tampon script"
+
+msgid "text color of dates in script buffer"
+msgstr "couleur du texte pour les dates dans le tampon script"
+
+msgid "text color of delimiters in script buffer"
+msgstr "couleur du texte pour les délimiteurs dans le tampon script"
+
+msgid "text color of description in script buffer"
+msgstr "couleur du texte pour la description dans le tampon script"
+
+msgid "text color of extension in script buffer"
+msgstr "couleur du texte pour l'extension dans le tampon script"
+
+msgid "text color of script name in script buffer"
+msgstr "couleur du texte pour le nom du script dans le tampon script"
+
+msgid "text color of tags in script buffer"
+msgstr "couleur du texte pour les étiquettes dans le tampon script"
+
+msgid "text color of version in script buffer"
+msgstr "couleur du texte pour la version dans le tampon script"
+
+msgid "text color of version loaded in script buffer"
+msgstr "couleur du texte pour la version chargée dans le tampon script"
+
+msgid "background color in script buffer"
+msgstr "couleur du fond dans le tampon script"
+
+msgid "text color for selected line in script buffer"
+msgstr "couleur du texte pour la ligne sélectionnée dans le tampon script"
+
+msgid "text color of dates for selected line in script buffer"
+msgstr ""
+"couleur du texte pour les dates de la ligne sélectionnée dans le tampon "
+"script"
+
+msgid "text color of description for selected line in script buffer"
+msgstr ""
+"couleur du texte pour la description de la ligne sélectionnée dans le tampon "
+"script"
+
+msgid "text color of extension for selected line in script buffer"
+msgstr ""
+"couleur du texte pour l'extension de la ligne sélectionnée dans le tampon "
+"script"
+
+msgid "text color of script name for selected line in script buffer"
+msgstr ""
+"couleur du texte pour le nom du script de la ligne sélectionnée dans le "
+"tampon script"
+
+msgid "text color of tags for selected line in script buffer"
+msgstr ""
+"couleur du texte pour les étiquettes de la ligne sélectionnée dans le tampon "
+"script"
+
+msgid "text color of version for selected line in script buffer"
+msgstr ""
+"couleur du texte pour la version de la ligne sélectionnée dans le tampon "
+"script"
+
+msgid "text color of version loaded for selected line in script buffer"
+msgstr ""
+"couleur du texte pour la version chargée de la ligne sélectionnée dans le "
+"tampon script"
+
+msgid "background color for selected line in script buffer"
+msgstr "couleur du fond pour la ligne sélectionnée dans le tampon script"
+
+msgid ""
+"local cache expiration time, in minutes (-1 = never expires, 0 = always "
+"expire)"
+msgstr ""
+"temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = "
+"expire toujours)"
+
+msgid "local cache directory for scripts"
+msgstr "répertoire du cache local pour les scripts"
+
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
+msgstr ""
+"scripts à \"figer\": liste de scripts séparés par des virgules qui ne seront "
+"jamais mis à jour et ne peuvent pas être supprimés, par exemple: \"buffers."
+"pl,iset.pl\""
+
+msgid "URL for file with list of scripts"
+msgstr "URL pour le fichier avec la liste des scripts"
+
+msgid ""
+"script name with extension (can start or end with \"*\" as wildcard) "
+"(optional)"
+msgstr ""
+"nom du script avec extension (peut démarrer ou se terminer par \"*\" comme "
+"joker) (optionnel)"
+
+msgid "scripts from repository"
+msgstr "scripts du repository"
+
+#, c-format
+msgid "%s%s: error reading list of scripts"
+msgstr "%s%s: erreur de lecture de la liste des scripts"
+
+#, c-format
+msgid "%s: %d scripts for WeeChat %s"
+msgstr "%s: %d scripts pour WeeChat %s"
+
+#, c-format
+msgid ""
+"%s%s: list of scripts is empty (repository file is broken, or download has "
+"failed)"
+msgstr ""
+"%s%s: la liste des scripts est vide (le fichier du repository est cassé, ou "
+"bien le téléchargement a échoué)"
+
+#, c-format
+msgid "%s%s: error downloading list of scripts: %s"
+msgstr "%s%s: erreur de téléchargement de la liste des scripts: %s"
+
+#, c-format
+msgid "%s: downloading list of scripts..."
+msgstr "%s: téléchargement de la liste des scripts..."
 
 msgid "Support of tcl scripts"
 msgstr "Support des scripts tcl"
@@ -8940,9 +9322,6 @@ msgstr "Extension"
 msgid "Name"
 msgstr "Nom"
 
-msgid "Description"
-msgstr "Description"
-
 msgid "Arguments"
 msgstr "Paramètres"
 
@@ -8969,6 +9348,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid "Regex modifier"
-#~ msgstr "Modifieur avec expressions régulières"

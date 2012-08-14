@@ -1,0 +1,47 @@
+[[command_script_script]]
+[command]*`script`* Gestionnaire de scripts WeeChat::
+........................................
+/script  list
+         show <script>
+         load|unload <script> [<script>...]
+         install|remove|hold <script> [<script>...]
+         upgrade
+         update
+
+    list: lister les scripts chargés (tous les langages)
+    show: afficher des infos détaillées sur le script
+    load: charger un ou plusieurs scripts
+  unload: décharger un ou plusieurs scripts
+ install: installer/mettre à jour un ou plusieurs scripts
+  remove: supprimer un ou plusieurs scripts
+    hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
+ upgrade: mettre à jour les scripts obsolètes (avec nouvelle version disponible)
+  update: mettre à jour le cache local des scripts
+
+Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
+
+Sur le tampon des scripts, les statuts pour chaque script sont :
+  * i H r N
+  | | | | |
+  | | | | obsolète (nouvelle version disponible)
+  | | | chargé
+  | | figé
+  | installé
+  script populaire
+
+Les touches sur le tampon des scripts :
+  alt+i    installer le script
+  alt+r    supprimer le script
+  alt+l    charger le script
+  alt+u    décharger le script
+  alt+h    (dé)figer le script
+
+Entrée autorisée sur le tampon des scripts :
+  q        fermer le tampon
+  r        rafraîchir le tampon
+  s:x,y    trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
+  s:       réinitialiser le tri (utiliser le tri par défaut)
+  word(s)  filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
+  *        supprimer le filtre
+........................................
+

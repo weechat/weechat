@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 22:48+0200\n"
+"POT-Creation-Date: 2012-08-14 18:26+0200\n"
 "PO-Revision-Date: 2012-07-27 12:16+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6517,14 +6517,6 @@ msgid "%s%s: client capability, enabled: %s"
 msgstr "%s%s: możliwości klienta, włączone: %s"
 
 #, c-format
-msgid ""
-"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-"WeeChat was not built with libgcrypt support"
-msgstr ""
-"%s%s: nie można uwierzytelnić za pomocą SASL oraz mechanizmu DH-BLOWFISH, "
-"ponieważ WeeChat został skompilowany bez wsparcia dla libgcrypt"
-
-#, c-format
 msgid "%s%s: client capability, refused: %s"
 msgstr "%s%s: możliwości klienta, odrzucone: %s"
 
@@ -8214,65 +8206,6 @@ msgstr "%s%s: nieznany błąd podczas ładowania pliku \"%s\""
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: nie można zainicjować %s"
 
-#, fuzzy
-msgid "Support of python scripts"
-msgstr "lista skryptów"
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s%s: nie można zainicjować modułu WeeChat"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: nie można przekierować wyjścia"
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: nie można przekierować wyjścia błędu"
-
-msgid "path to python 2.x interpreter"
-msgstr "ścieżka do interpretera pythona 2.x"
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s%s: nie można uruchomić globalnego interpretera"
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s%s: nie można pobrać obecnego stanu interpretera"
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s%s: nie można zwolnić interpretera"
-
-#, fuzzy
-msgid "Support of ruby scripts"
-msgstr "lista skryptów"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: unable to read file \"%s\""
-msgstr "%s%s: nie można odczytać pliku \"%s\""
-
-#, c-format
-msgid "%s%s: error while loading file \"%s\""
-msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
-
-#, c-format
-msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr "%s%s: funkcja \"weechat_init\" nie znaleziona w pliku \"%s\""
-
-#, c-format
-msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "%s%s: nie można dokonać oceny funkcji \"weechat_init\" w pliku \"%s\""
-
-#, c-format
-msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr "%s%s: nie można ocenić wewnętrznego kodu ruby w WeeChat"
-
 msgid "list/load/unload scripts"
 msgstr "list/load/unload skrypt"
 
@@ -8388,6 +8321,406 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: nieprawidłowe argumenty dla funkcji \"%s\" (skrypt: %s)"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "lista skryptów"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: nie można zainicjować modułu WeeChat"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: nie można przekierować wyjścia"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: nie można przekierować wyjścia błędu"
+
+msgid "path to python 2.x interpreter"
+msgstr "ścieżka do interpretera pythona 2.x"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: nie można uruchomić globalnego interpretera"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: nie można pobrać obecnego stanu interpretera"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: nie można zwolnić interpretera"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "lista skryptów"
+
+#, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%s%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "%s%s: nie można odczytać pliku \"%s\""
+
+#, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
+
+#, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr "%s%s: funkcja \"weechat_init\" nie znaleziona w pliku \"%s\""
+
+#, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr "%s%s: nie można dokonać oceny funkcji \"weechat_init\" w pliku \"%s\""
+
+#, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s%s: nie można ocenić wewnętrznego kodu ruby w WeeChat"
+
+msgid "Scripts manager"
+msgstr ""
+
+#, fuzzy
+msgid "Scripts loaded:"
+msgstr "załadowano skrypt %s:"
+
+#, fuzzy, c-format
+msgid "%s: unknown language for script \"%s\""
+msgstr "%s: wyładowuję skrypt \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading script \"%s\": %s"
+msgstr "%s: wyładowuję skrypt \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: downloading script \"%s\"..."
+msgstr "%s: wyładowuję skrypt \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s%s: skrypt \"%s\" nie załadowany"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is held"
+msgstr "%s: skrypt \"%s\" wyładowano"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s%s: nie znaleziono skryptu \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not held any more"
+msgstr "%s%s: skrypt \"%s\" nie załadowany"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" held"
+msgstr "%s: skrypt \"%s\" wyładowano"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is already installed and up-to-date"
+msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go utworzyć!"
+
+#, fuzzy, c-format
+msgid "%s: all scripts are up-to-date"
+msgstr "%s: skryptów wyładowano"
+
+msgid "Script"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "Tags"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Date added"
+msgstr ""
+
+#, fuzzy
+msgid "Date updated"
+msgstr "Uaktualniono pasek \"%s\""
+
+msgid "URL"
+msgstr ""
+
+msgid "MD5"
+msgstr ""
+
+msgid "Requires"
+msgstr ""
+
+#, fuzzy
+msgid "Min WeeChat"
+msgstr "zakończ WeeChat"
+
+#, fuzzy
+msgid "Max WeeChat"
+msgstr "zakończ WeeChat"
+
+msgid "popular"
+msgstr ""
+
+msgid "installed"
+msgstr ""
+
+msgid "held"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "obsolete"
+msgstr ""
+
+#, c-format
+msgid "alt+d=back to list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%d/%d scripts (filter: %s) | Sort: %s | alt+i=install r=remove l=load "
+"u=unload h=(un)hold d=show detail | Input: 'q'=close 'r'=refresh 's:x,"
+"y'=sort 'words'=filter '*'=reset filter"
+msgstr ""
+
+msgid "Scripts"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat scripts manager"
+msgstr "Strona WeeChat"
+
+msgid ""
+"list || show <script> || load|unload <script> [<script>...] || install|"
+"remove|hold <script> [<script>...] || upgrade || update"
+msgstr ""
+
+msgid ""
+"    list: list loaded scripts (all languages)\n"
+"    show: show detailed info about a script\n"
+"    load: load script(s)\n"
+"  unload: unload script(s)\n"
+" install: install/upgrade script(s)\n"
+"  remove: remove script(s)\n"
+"    hold: hold/unhold script(s) (a script held will not be upgraded any more "
+"and cannot be removed)\n"
+" upgrade: upgrade all installed scripts which are obsolete (new version "
+"available)\n"
+"  update: update local scripts cache\n"
+"\n"
+"Without argument, this command opens a buffer with list of scripts.\n"
+"\n"
+"On script buffer, the possible status for each script are:\n"
+"  * i H r N\n"
+"  | | | | |\n"
+"  | | | | obsolete (new version available)\n"
+"  | | | running (loaded)\n"
+"  | | held\n"
+"  | installed\n"
+"  popular script\n"
+"\n"
+"Keys on script buffer:\n"
+"  alt+i    install script\n"
+"  alt+r    remove script\n"
+"  alt+l    load script\n"
+"  alt+u    unload script\n"
+"  alt+h    (un)hold script\n"
+"\n"
+"Input allowed on script buffer:\n"
+"  q        close buffer\n"
+"  r        refresh buffer\n"
+"  s:x,y    sort buffer using keys x and y (see /help script.look.sort)\n"
+"  s:       reset sort (use default sort)\n"
+"  word(s)  filter scripts: search word(s) in scripts (description, "
+"tags, ...)\n"
+"  *        remove filter"
+msgstr ""
+
+#, fuzzy
+msgid "list of scripts in repository"
+msgstr "lista skryptów"
+
+msgid "list of scripts installed (from repository)"
+msgstr ""
+
+msgid "files in script directories"
+msgstr ""
+
+msgid ""
+"format of columns displayed in script buffer: following column identifiers "
+"are replaced by their value: %a=author, %d=description, %D=date added, "
+"%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
+"%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
+"loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid ""
+"default sort keys for scripts: comma-separated list of identifiers: "
+"a=author, d=date added, e=extension, i=installed, l=language, n=name, "
+"o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can be used "
+"before identifier to reverse order; example: \"i,u\": installed scripts "
+"first, sorted by update date"
+msgstr ""
+
+#, fuzzy
+msgid "color for status \"popular\" (\"*\")"
+msgstr "kolor czasu (pasek statusu)"
+
+msgid "color for status \"installed\" (\"i\")"
+msgstr ""
+
+msgid "color for status \"held\" (\"H\")"
+msgstr ""
+
+msgid "color for status \"running\" (\"r\")"
+msgstr ""
+
+msgid "color for status \"obsolete\" (\"N\")"
+msgstr ""
+
+msgid "color for status \"unknown\" (\"?\")"
+msgstr ""
+
+#, fuzzy
+msgid "text color in script buffer"
+msgstr "kolor nazw buforów"
+
+#, fuzzy
+msgid "text color of dates in script buffer"
+msgstr "kolor innego nicka w prywatnym buforze"
+
+#, fuzzy
+msgid "text color of delimiters in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of description in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of extension in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of script name in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of tags in script buffer"
+msgstr "kolor nazw buforów"
+
+#, fuzzy
+msgid "text color of version in script buffer"
+msgstr "kolor innego nicka w prywatnym buforze"
+
+#, fuzzy
+msgid "text color of version loaded in script buffer"
+msgstr "kolor innego nicka w prywatnym buforze"
+
+#, fuzzy
+msgid "background color in script buffer"
+msgstr "kolor tła czatu"
+
+#, fuzzy
+msgid "text color for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of dates for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of description for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of extension for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of script name for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of tags for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of version for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "text color of version loaded for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+#, fuzzy
+msgid "background color for selected line in script buffer"
+msgstr "kolor tekstu zaznaczonej linii klienta"
+
+msgid ""
+"local cache expiration time, in minutes (-1 = never expires, 0 = always "
+"expire)"
+msgstr ""
+
+msgid "local cache directory for scripts"
+msgstr ""
+
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
+msgstr ""
+
+#, fuzzy
+msgid "URL for file with list of scripts"
+msgstr "lista skryptów"
+
+#, fuzzy
+msgid ""
+"script name with extension (can start or end with \"*\" as wildcard) "
+"(optional)"
+msgstr "nazwa skryptu (może się zaczynać lub kończyć \"*\") (opcjonalne)"
+
+#, fuzzy
+msgid "scripts from repository"
+msgstr "lista skryptów"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading list of scripts"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta: %s"
+
+#, fuzzy, c-format
+msgid "%s: %d scripts for WeeChat %s"
+msgstr "%s: usunięto skrypt: %s"
+
+#, c-format
+msgid ""
+"%s%s: list of scripts is empty (repository file is broken, or download has "
+"failed)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading list of scripts: %s"
+msgstr "%s%s: błąd podczas wysyłania danych do klienta: %s"
+
+#, fuzzy, c-format
+msgid "%s: downloading list of scripts..."
+msgstr "%s: wyładowuję skrypt \"%s\""
 
 #, fuzzy
 msgid "Support of tcl scripts"
@@ -8777,9 +9110,6 @@ msgstr "Wtyczka"
 msgid "Name"
 msgstr "Nazwa"
 
-msgid "Description"
-msgstr "Opis"
-
 msgid "Arguments"
 msgstr "Argumenty"
 
@@ -8806,6 +9136,17 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#, fuzzy
+#~ msgid "%s: downloading \"%s\"..."
+#~ msgstr "%s: wyładowuję skrypt \"%s\""
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s: nie można uwierzytelnić za pomocą SASL oraz mechanizmu DH-BLOWFISH, "
+#~ "ponieważ WeeChat został skompilowany bez wsparcia dla libgcrypt"
 
 #, fuzzy
 #~ msgid "Regex modifier"
@@ -8840,9 +9181,6 @@ msgstr "Stałe"
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"
 #~ msgstr "%s%s: błąd podczas wysyłania danych do klienta %d (%s)"
-
-#~ msgid "%s%s: error sending data to client: %s"
-#~ msgstr "%s%s: błąd podczas wysyłania danych do klienta: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""

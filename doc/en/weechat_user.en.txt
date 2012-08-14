@@ -91,11 +91,11 @@ compile WeeChat.
 | cmake                  |             | *yes*    | build (autotools still possible, but cmake is recommended)
 | libncursesw5-dev ^(2)^ |             | *yes*    | ncurses interface
 | libcurl4-gnutls-dev    |             | *yes*    | URL transfer
-| gettext                |             |          | internationalization (translation of messages; base language is english)
-| libgcrypt11-dev        |             |          | SASL authentication with IRC server using DH-BLOWFISH mechanism
+| zlib1g-dev             |             | *yes*    | compression of packets in relay plugin (weechat protocol), script plugin
+| libgcrypt11-dev        |             | *yes*    | SASL authentication with IRC server using DH-BLOWFISH mechanism, script plugin
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
+| gettext                |             |          | internationalization (translation of messages; base language is english)
 | ca-certificates        |             |          | certificates for SSL connections
-| zlib1g-dev             |             |          | compression of packets in relay plugin (weechat protocol)
 | libaspell-dev          |             |          | aspell plugin
 | python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
 | libperl-dev            |             |          | perl plugin
@@ -770,27 +770,29 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Button  | Gesture      | Area     | Description | Command
-| ◾◽◽     | -            | chat     | Switch to window | /window ${_window_number}
-| ◾◽◽     | left         | chat     | Switch to previous buffer | /window ${_window_number};/buffer +1
-| ◾◽◽     | right        | chat     | Switch to next buffer | /window ${_window_number};/buffer +1
-| ◾◽◽     | left (long)  | chat     | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽     | right (long) | chat     | Switch to last buffer | /window ${_window_number};/input jump_last_buffer
-| wheel ⇑ | -            | chat     | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
-| wheel ⇓ | -            | chat     | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
-| ◾◽◽     | up           | nicklist | Scroll up one page in nicklist | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽     | down         | nicklist | Scroll down one page in nicklist | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽     | up (long)    | nicklist | Go to the beginning of nicklist | /bar scroll nicklist ${_window_number} b
-| ◾◽◽     | down (long)  | nicklist | Go to the end of nicklist | /bar scroll nicklist ${_window_number} e
-| ◾◽◽     | -            | nicklist | Open query with nick | /window ${_window_number};/query ${nick}
-| ◽◽◾     | -            | nicklist | Do a whois on nick | /window ${_window_number};/whois ${nick}
-| ◾◽◽     | left         | nicklist | Kick nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽     | left (long)  | nicklist | Kick and ban nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾     | left         | nicklist | Ban nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾     | -            | input    | Grab a mouse event and insert its code in command line | /input grab_mouse_area
-| wheel ⇑ | -            | any bar  | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| wheel ⇓ | -            | any bar  | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽     | -            | anywhere | Start cursor mode at this point | /cursor go ${_x},${_y}
+| Button  | Gesture      | Area                 | Description | Command
+| ◾◽◽     | -            | chat                 | Switch to window | /window ${_window_number}
+| ◾◽◽     | left         | chat                 | Switch to previous buffer | /window ${_window_number};/buffer +1
+| ◾◽◽     | right        | chat                 | Switch to next buffer | /window ${_window_number};/buffer +1
+| ◾◽◽     | left (long)  | chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽     | right (long) | chat                 | Switch to last buffer | /window ${_window_number};/input jump_last_buffer
+| wheel ⇑ | -            | chat                 | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
+| wheel ⇓ | -            | chat                 | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
+| wheel ⇑ | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
+| wheel ⇓ | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| ◾◽◽     | up           | nicklist             | Scroll up one page in nicklist | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽     | down         | nicklist             | Scroll down one page in nicklist | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽     | up (long)    | nicklist             | Go to the beginning of nicklist | /bar scroll nicklist ${_window_number} b
+| ◾◽◽     | down (long)  | nicklist             | Go to the end of nicklist | /bar scroll nicklist ${_window_number} e
+| ◾◽◽     | -            | nicklist             | Open query with nick | /window ${_window_number};/query ${nick}
+| ◽◽◾     | -            | nicklist             | Do a whois on nick | /window ${_window_number};/whois ${nick}
+| ◾◽◽     | left         | nicklist             | Kick nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽     | left (long)  | nicklist             | Kick and ban nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾     | left         | nicklist             | Ban nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾     | -            | input                | Grab a mouse event and insert its code in command line | /input grab_mouse_area
+| wheel ⇑ | -            | any bar              | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| wheel ⇓ | -            | any bar              | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽     | -            | anywhere             | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -2158,10 +2160,24 @@ WeeChat provides 6 scripting plugins: Python, Perl, Ruby, Lua, Tcl and Guile
 (scheme).
 These plugins can load, execute and unload scripts for these languages.
 
+Another plugin called "script" is a scripts manager and is used to load/unload
+scripts of any language, and install/remove scripts of WeeChat scripts
+repository, which are visible at this URL: http://www.weechat.org/scripts
+
 For more information about how to write scripts, or WeeChat API for
 scripts, please read 'WeeChat Scripting Guide'.
 
-You can find some scripts for WeeChat here: http://www.weechat.org/scripts
+[[script_options]]
+Script options (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+Script commands
+^^^^^^^^^^^^^^^
+
+include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
 Python commands

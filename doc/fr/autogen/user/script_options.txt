@@ -1,0 +1,155 @@
+* [[option_script.color.status_held]] *script.color.status_held*
+** description: `couleur du statut "figé" ("H")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.status_installed]] *script.color.status_installed*
+** description: `couleur du statut "installé" ("i")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightcyan`)
+
+* [[option_script.color.status_obsolete]] *script.color.status_obsolete*
+** description: `couleur du statut "obsolète" ("N")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightmagenta`)
+
+* [[option_script.color.status_popular]] *script.color.status_popular*
+** description: `couleur du statut "populaire" ("*")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
+
+* [[option_script.color.status_running]] *script.color.status_running*
+** description: `couleur du statut "chargé" ("r")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightgreen`)
+
+* [[option_script.color.status_unknown]] *script.color.status_unknown*
+** description: `couleur du statut "inconnu" ("?")`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
+
+* [[option_script.color.text]] *script.color.text*
+** description: `couleur du texte dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_bg]] *script.color.text_bg*
+** description: `couleur du fond dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
+** description: `couleur du fond pour la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `red`)
+
+* [[option_script.color.text_date]] *script.color.text_date*
+** description: `couleur du texte pour les dates dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_date_selected]] *script.color.text_date_selected*
+** description: `couleur du texte pour les dates de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.text_delimiters]] *script.color.text_delimiters*
+** description: `couleur du texte pour les délimiteurs dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `darkgray`)
+
+* [[option_script.color.text_description]] *script.color.text_description*
+** description: `couleur du texte pour la description dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_description_selected]] *script.color.text_description_selected*
+** description: `couleur du texte pour la description de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.text_extension]] *script.color.text_extension*
+** description: `couleur du texte pour l'extension dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
+** description: `couleur du texte pour l'extension de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.text_name]] *script.color.text_name*
+** description: `couleur du texte pour le nom du script dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
+
+* [[option_script.color.text_name_selected]] *script.color.text_name_selected*
+** description: `couleur du texte pour le nom du script de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightcyan`)
+
+* [[option_script.color.text_selected]] *script.color.text_selected*
+** description: `couleur du texte pour la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.text_tags]] *script.color.text_tags*
+** description: `couleur du texte pour les étiquettes dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `brown`)
+
+* [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
+** description: `couleur du texte pour les étiquettes de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
+
+* [[option_script.color.text_version]] *script.color.text_version*
+** description: `couleur du texte pour la version dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `magenta`)
+
+* [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
+** description: `couleur du texte pour la version chargée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
+
+* [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
+** description: `couleur du texte pour la version chargée de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_script.color.text_version_selected]] *script.color.text_version_selected*
+** description: `couleur du texte pour la version de la ligne sélectionnée dans le tampon script`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightmagenta`)
+
+* [[option_script.look.columns]] *script.look.columns*
+** description: `format des colonnes affichées dans le tampon des scripts: les identifiants de colonne suivants sont remplacés par leur valeur: %a=auteur, %d=description, %D=date d'ajout, %e=extension, %l=langage, %L=licence, %n=nom avec extension, %N=nom, %r=dépendances, %s=statuts, %t=étiquettes, %u=date de mise à jour, %v=version, %V=version chargée, %w=min_weechat, %W=max_weechat`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"%s %n %V %v %u | %d | %t"`)
+
+* [[option_script.look.sort]] *script.look.sort*
+** description: `tri par défaut des scripts: liste d'identifiants séparés par des virgules: a=auteur, d=date d'ajour, e=extension, i=installé, l=langage, n=nom, o=obsolète, p=populaire, r=chargé, u=date de mise à jour; le caractère "-" peut être utilisé avant l'identifiant pour inverser l'ordre; exemple: "i,u": scripts installés en premier, triés par date de mise à jour`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"p,n"`)
+
+* [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
+** description: `temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = expire toujours)`
+** type: entier
+** valeurs: -1 .. 525600 (valeur par défaut: `60`)
+
+* [[option_script.scripts.dir]] *script.scripts.dir*
+** description: `répertoire du cache local pour les scripts`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"%h/script"`)
+
+* [[option_script.scripts.hold]] *script.scripts.hold*
+** description: `scripts à "figer": liste de scripts séparés par des virgules qui ne seront jamais mis à jour et ne peuvent pas être supprimés, par exemple: "buffers.pl,iset.pl"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_script.scripts.url]] *script.scripts.url*
+** description: `URL pour le fichier avec la liste des scripts`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"http://www.weechat.org/files/plugins.xml.gz"`)
+

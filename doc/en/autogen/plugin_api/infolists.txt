@@ -30,6 +30,8 @@
 
 | ruby | ruby_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
+| script | script_script | list of scripts | script pointer (optional) | script name with extension (can start or end with "*" as wildcard) (optional)
+
 | tcl | tcl_script | list of scripts | script pointer (optional) | script name (can start or end with "*" as wildcard) (optional)
 
 | weechat | bar | list of bars | bar pointer (optional) | bar name (can start or end with "*" as wildcard) (optional)

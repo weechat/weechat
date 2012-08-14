@@ -37,13 +37,10 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <errno.h>
+#include <gcrypt.h>
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
-
-#ifdef HAVE_GCRYPT
-#include <gcrypt.h>
 #endif
 
 #include "weechat.h"
@@ -121,14 +118,12 @@ network_init ()
     }
 #endif /* HAVE_GNUTLS */
 
-#ifdef HAVE_GCRYPT
     if (!weechat_no_gcrypt)
     {
         gcry_check_version (GCRYPT_VERSION);
         gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
         gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
     }
-#endif /* HAVE_GCRYPT */
 
     network_init_ok = 1;
 }

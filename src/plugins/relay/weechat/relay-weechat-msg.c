@@ -30,10 +30,7 @@
 #include <sys/time.h>
 #include <errno.h>
 #include <arpa/inet.h>
-
-#ifdef HAVE_ZLIB
 #include <zlib.h>
-#endif
 
 #include "../../weechat-plugin.h"
 #include "../relay.h"
@@ -964,7 +961,6 @@ relay_weechat_msg_send (struct t_relay_client *client,
 {
     uint32_t size32;
     char compression;
-#ifdef HAVE_ZLIB
     int rc;
     Bytef *dest;
     uLongf dest_size;
@@ -1009,7 +1005,8 @@ relay_weechat_msg_send (struct t_relay_client *client,
             free (dest);
         }
     }
-#endif
+
+    /* compression with zlib failed (or not asked), send uncompressed message */
 
     /* set size and compression flag */
     size32 = htonl ((uint32_t)msg->data_size);

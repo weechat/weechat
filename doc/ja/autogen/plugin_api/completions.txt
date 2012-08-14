@@ -56,6 +56,12 @@
 
 | ruby | ruby_script | スクリプトのリスト
 
+| script | script_files | files in script directories
+
+| script | script_scripts | list of scripts in repository
+
+| script | script_scripts_installed | list of scripts installed (from repository)
+
 | tcl | tcl_script | スクリプトのリスト
 
 | weechat | bars_names | バーの名前

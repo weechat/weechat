@@ -93,12 +93,11 @@ compiler WeeChat.
 | cmake                  |             | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
 | libncursesw5-dev ^(2)^ |             | *oui*  | interface ncurses
 | libcurl4-gnutls-dev    |             | *oui*  | transfert d'URL
-| gettext                |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
-| libgcrypt11-dev        |             |        | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH
+| zlib1g-dev             |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
+| libgcrypt11-dev        |             | *oui*  | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH, extension script
 | libgnutls-dev          | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
+| gettext                |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
 | ca-certificates        |             |        | certificats pour les connexions SSL
-// TRANSLATION MISSING
-| zlib1g-dev             |             |        | compression des paquets dans l'extension relay (protocole weechat)
 | libaspell-dev          |             |        | extension aspell
 | python-dev             | ≥ 2.5 ^(3)^ |        | extension python
 | libperl-dev            |             |        | extension perl
@@ -786,27 +785,29 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Bouton     | Geste        | Zone              | Description | Commande
-| ◾◽◽        | -            | chat              | Aller à la fenêtre | /window ${_window_number}
-| ◾◽◽        | left         | chat              | Aller au tampon précédent | /window ${_window_number};/buffer +1
-| ◾◽◽        | right        | chat              | Aller au tampon suivant | /window ${_window_number};/buffer +1
-| ◾◽◽        | left (long)  | chat              | Aller au premier tampon | /window ${_window_number};/buffer 1
-| ◾◽◽        | right (long) | chat              | Aller au dernier tampon | /window ${_window_number};/input jump_last_buffer
-| roulette ⇑ | -            | chat              | Monter de quelques lignes dans l'historique du tampon | /window scroll_up -window ${_window_number}
-| roulette ⇓ | -            | chat              | Descendre de quelques lignes dans l'historique du tampon | /window scroll_down -window ${_window_number}
-| ◾◽◽        | up           | liste des pseudos | Monter d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽        | down         | liste des pseudos | Descendre d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽        | up (long)    | liste des pseudos | Aller au début de la liste des pseudos | /bar scroll nicklist ${_window_number} b
-| ◾◽◽        | down (long)  | liste des pseudos | Aller à la fin de la liste des pseudos | /bar scroll nicklist ${_window_number} e
-| ◾◽◽        | -            | liste des pseudos | Ouvrir une discussion avec le pseudo | /window ${_window_number};/query ${nick}
-| ◽◽◾        | -            | liste des pseudos | Effectuer un whois sur le pseudo | /window ${_window_number};/whois ${nick}
-| ◾◽◽        | left         | liste des pseudos | Retirer par la force le pseudo | /window ${_window_number};/kick ${nick}
-| ◾◽◽        | left (long)  | liste des pseudos | Retirer par la force et bannir le pseudo | /window ${_window_number};/kickban ${nick}
-| ◽◽◾        | left         | liste des pseudos | Bannir le pseudo | /window ${_window_number};/ban ${nick}
-| ◽◽◾        | -            | ligne de commande | Capturer un évènement de la souris et insérer son code sur la ligne de commande | /input grab_mouse_area
-| roulette ⇑ | -            | toute barre       | Faire défiler la barre de -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| roulette ⇓ | -            | toute barre       | Faire défiler la barre de +10% | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽        | -            | n'importe où      | Démarrer le mode curseur ("cursor") à ce point | /cursor go ${_x},${_y}
+| Bouton     | Geste        | Zone                 | Description | Commande
+| ◾◽◽        | -            | chat                 | Aller à la fenêtre | /window ${_window_number}
+| ◾◽◽        | left         | chat                 | Aller au tampon précédent | /window ${_window_number};/buffer +1
+| ◾◽◽        | right        | chat                 | Aller au tampon suivant | /window ${_window_number};/buffer +1
+| ◾◽◽        | left (long)  | chat                 | Aller au premier tampon | /window ${_window_number};/buffer 1
+| ◾◽◽        | right (long) | chat                 | Aller au dernier tampon | /window ${_window_number};/input jump_last_buffer
+| roulette ⇑ | -            | chat                 | Monter de quelques lignes dans l'historique du tampon | /window scroll_up -window ${_window_number}
+| roulette ⇓ | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | /window scroll_down -window ${_window_number}
+| roulette ⇑ | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | /script up 5
+| roulette ⇓ | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script | /script down 5
+| ◾◽◽        | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽        | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽        | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos | /bar scroll nicklist ${_window_number} b
+| ◾◽◽        | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos | /bar scroll nicklist ${_window_number} e
+| ◾◽◽        | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo | /window ${_window_number};/query ${nick}
+| ◽◽◾        | -            | liste des pseudos    | Effectuer un whois sur le pseudo | /window ${_window_number};/whois ${nick}
+| ◾◽◽        | left         | liste des pseudos    | Retirer par la force le pseudo | /window ${_window_number};/kick ${nick}
+| ◾◽◽        | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo | /window ${_window_number};/kickban ${nick}
+| ◽◽◾        | left         | liste des pseudos    | Bannir le pseudo | /window ${_window_number};/ban ${nick}
+| ◽◽◾        | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande | /input grab_mouse_area
+| roulette ⇑ | -            | toute barre          | Faire défiler la barre de -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| roulette ⇓ | -            | toute barre          | Faire défiler la barre de +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽        | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -2222,11 +2223,25 @@ Guile (scheme).
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
+Une autre extension appelée "script" est un gestionnaire de scripts et est
+utilisé pour charger/décharger des scripts pour n'importe quel langage, et
+installer/supprimer des scripts du repository WeeChat, qui sont visibles à cette
+URL: http://www.weechat.org/scripts
+
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.
 
-Vous pouvez trouver des scripts pour WeeChat ici :
-http://www.weechat.org/scripts
+[[script_options]]
+Options Script (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+Commandes Script
+^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
 Commandes Python

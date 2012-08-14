@@ -218,20 +218,13 @@ Debianのようにいくつかのディストリビューションでは、プ�
 見つかったプラグインは自動的に読み込まれます(プラグイン／スクリプトの読み込み
 有効／無効はWeeChatのドキュメントを参照してください)。
 
-いくつかのプラグインによって、WeeChatでスクリプト(Perl、Python、Ruby、Lua、Tclなど多くの
-言語)を使うことができるようになります。これらのプラグインは `/plugin`
-コマンドで読み込む必要があり、 `/perl` のようなコマンドが提供されます。
+// TRANSLATION MISSING
+Many external scripts (from contributors) are available for WeeChat:
+http://www.weechat.org/scripts
 
-WeeChatには(ユーザから提供された)多くの外部プラグイン／スクリプトが用意
-されています: http://www.weechat.org/scripts
-
-スクリプト 'weeget.py' をインストールする簡単な方法:
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. スクリプトを読み込む: `/python autoload`
-. 一覧機能を使う: `/weeget list` (ヘルプ: `/help weeget`)
+// TRANSLATION MISSING
+You can manage scripts in WeeChat with command `/script` (see `/help script`
+for more info).
 
 
 [[more_doc]]

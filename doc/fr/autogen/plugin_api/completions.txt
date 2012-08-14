@@ -56,6 +56,12 @@
 
 | ruby | ruby_script | liste des scripts
 
+| script | script_files | fichiers dans les répertoires de script
+
+| script | script_scripts | liste des scripts du repository
+
+| script | script_scripts_installed | liste des scripts installés (du repository)
+
 | tcl | tcl_script | liste des scripts
 
 | weechat | bars_names | noms des barres

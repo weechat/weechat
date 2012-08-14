@@ -26,10 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
-
-#ifdef HAVE_GCRYPT
 #include <gcrypt.h>
-#endif
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -91,7 +88,6 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                                 const char *sasl_username,
                                 const char *sasl_password)
 {
-#ifdef HAVE_GCRYPT
     char *data, *answer, *ptr_answer, *answer_base64;
     unsigned char *ptr_data, *secret_bin, *public_bin;
     unsigned char *password_clear, *password_crypted;
@@ -245,12 +241,4 @@ end:
         gcry_mpi_release (secret_mpi);
 
     return answer_base64;
-#else
-    /* make C compiler happy */
-    (void) data_base64;
-    (void) sasl_username;
-    (void) sasl_password;
-
-    return NULL;
-#endif
 }

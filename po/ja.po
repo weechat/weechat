@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 22:48+0200\n"
+"POT-Creation-Date: 2012-08-14 18:26+0200\n"
 "PO-Revision-Date: 2012-07-27 12:16+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6383,14 +6383,6 @@ msgid "%s%s: client capability, enabled: %s"
 msgstr "%s%s: クライアント能力、有効化: %s"
 
 #, c-format
-msgid ""
-"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-"WeeChat was not built with libgcrypt support"
-msgstr ""
-"%s%s: WeeChat が libgcrypt をサポートしてビルドされていないので、SASL と DH-"
-"BLOWFISH メカニズムの組み合わせでは認証出来ません"
-
-#, c-format
 msgid "%s%s: client capability, refused: %s"
 msgstr "%s%s: クライアント能力、拒否されました: %s"
 
@@ -8074,65 +8066,6 @@ msgstr "%s%s: ファイル \"%s\" のロード中の未定義のエラー"
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: %s の初期化に失敗"
 
-#, fuzzy
-msgid "Support of python scripts"
-msgstr "スクリプトのリスト"
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s%s: WeeChat モジュールを初期化に失敗"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: 標準入力のリダイレクトに失敗"
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: 標準エラーのリダイレクトに失敗"
-
-msgid "path to python 2.x interpreter"
-msgstr "python 2.x インタプリタへのパス"
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s%s: グローバルインタプリタの起動に失敗"
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s%s: インタプリタの開放に失敗"
-
-#, fuzzy
-msgid "Support of ruby scripts"
-msgstr "スクリプトのリスト"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: 標準入力/標準エラー: %s%s"
-
-#, c-format
-msgid "%s%s: unable to read file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を読み込めません"
-
-#, c-format
-msgid "%s%s: error while loading file \"%s\""
-msgstr "%s%s: ファイル \"%s\" の読み込み中にエラー"
-
-#, c-format
-msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr "%s%s: 関数 \"weechat_init\" がファイル \"%s\" の中に見つかりません"
-
-#, c-format
-msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "%s%s: ファイル \"%s\" 内の関数 \"weechat_init\" を評価できません"
-
-#, c-format
-msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr "%s%s: WeeChat ruby 内部コードを評価できません"
-
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"
 
@@ -8248,6 +8181,407 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "スクリプトのリスト"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: WeeChat モジュールを初期化に失敗"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: 標準入力のリダイレクトに失敗"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: 標準エラーのリダイレクトに失敗"
+
+msgid "path to python 2.x interpreter"
+msgstr "python 2.x インタプリタへのパス"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: グローバルインタプリタの起動に失敗"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: インタプリタの開放に失敗"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "スクリプトのリスト"
+
+#, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%s%s: 標準入力/標準エラー: %s%s"
+
+#, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を読み込めません"
+
+#, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "%s%s: ファイル \"%s\" の読み込み中にエラー"
+
+#, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr "%s%s: 関数 \"weechat_init\" がファイル \"%s\" の中に見つかりません"
+
+#, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr "%s%s: ファイル \"%s\" 内の関数 \"weechat_init\" を評価できません"
+
+#, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s%s: WeeChat ruby 内部コードを評価できません"
+
+msgid "Scripts manager"
+msgstr ""
+
+#, fuzzy
+msgid "Scripts loaded:"
+msgstr "ロードされた %s スクリプト:"
+
+#, fuzzy, c-format
+msgid "%s: unknown language for script \"%s\""
+msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading script \"%s\": %s"
+msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#, fuzzy, c-format
+msgid "%s: downloading script \"%s\"..."
+msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s%s: スクリプト \"%s\" はロードされていません"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is held"
+msgstr "%s: スクリプト \"%s\" がアンロードされました"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s%s: スクリプト \"%s\" が見つかりません"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not held any more"
+msgstr "%s%s: スクリプト \"%s\" はロードされていません"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" held"
+msgstr "%s: スクリプト \"%s\" がアンロードされました"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is already installed and up-to-date"
+msgstr "%s%s: サーバ \"%s\" は既に存在しており、作成できません"
+
+#, fuzzy, c-format
+msgid "%s: all scripts are up-to-date"
+msgstr "%s: スクリプトがロードされました"
+
+msgid "Script"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Tags"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Date added"
+msgstr ""
+
+#, fuzzy
+msgid "Date updated"
+msgstr "バー \"%s\" がアップデートされました"
+
+msgid "URL"
+msgstr ""
+
+msgid "MD5"
+msgstr ""
+
+msgid "Requires"
+msgstr ""
+
+#, fuzzy
+msgid "Min WeeChat"
+msgstr "WeeChat を終了"
+
+#, fuzzy
+msgid "Max WeeChat"
+msgstr "WeeChat を終了"
+
+msgid "popular"
+msgstr ""
+
+msgid "installed"
+msgstr ""
+
+msgid "held"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "obsolete"
+msgstr ""
+
+#, c-format
+msgid "alt+d=back to list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%d/%d scripts (filter: %s) | Sort: %s | alt+i=install r=remove l=load "
+"u=unload h=(un)hold d=show detail | Input: 'q'=close 'r'=refresh 's:x,"
+"y'=sort 'words'=filter '*'=reset filter"
+msgstr ""
+
+msgid "Scripts"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat scripts manager"
+msgstr "WeeChat サイト"
+
+msgid ""
+"list || show <script> || load|unload <script> [<script>...] || install|"
+"remove|hold <script> [<script>...] || upgrade || update"
+msgstr ""
+
+msgid ""
+"    list: list loaded scripts (all languages)\n"
+"    show: show detailed info about a script\n"
+"    load: load script(s)\n"
+"  unload: unload script(s)\n"
+" install: install/upgrade script(s)\n"
+"  remove: remove script(s)\n"
+"    hold: hold/unhold script(s) (a script held will not be upgraded any more "
+"and cannot be removed)\n"
+" upgrade: upgrade all installed scripts which are obsolete (new version "
+"available)\n"
+"  update: update local scripts cache\n"
+"\n"
+"Without argument, this command opens a buffer with list of scripts.\n"
+"\n"
+"On script buffer, the possible status for each script are:\n"
+"  * i H r N\n"
+"  | | | | |\n"
+"  | | | | obsolete (new version available)\n"
+"  | | | running (loaded)\n"
+"  | | held\n"
+"  | installed\n"
+"  popular script\n"
+"\n"
+"Keys on script buffer:\n"
+"  alt+i    install script\n"
+"  alt+r    remove script\n"
+"  alt+l    load script\n"
+"  alt+u    unload script\n"
+"  alt+h    (un)hold script\n"
+"\n"
+"Input allowed on script buffer:\n"
+"  q        close buffer\n"
+"  r        refresh buffer\n"
+"  s:x,y    sort buffer using keys x and y (see /help script.look.sort)\n"
+"  s:       reset sort (use default sort)\n"
+"  word(s)  filter scripts: search word(s) in scripts (description, "
+"tags, ...)\n"
+"  *        remove filter"
+msgstr ""
+
+#, fuzzy
+msgid "list of scripts in repository"
+msgstr "スクリプトのリスト"
+
+msgid "list of scripts installed (from repository)"
+msgstr ""
+
+msgid "files in script directories"
+msgstr ""
+
+msgid ""
+"format of columns displayed in script buffer: following column identifiers "
+"are replaced by their value: %a=author, %d=description, %D=date added, "
+"%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
+"%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
+"loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid ""
+"default sort keys for scripts: comma-separated list of identifiers: "
+"a=author, d=date added, e=extension, i=installed, l=language, n=name, "
+"o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can be used "
+"before identifier to reverse order; example: \"i,u\": installed scripts "
+"first, sorted by update date"
+msgstr ""
+
+#, fuzzy
+msgid "color for status \"popular\" (\"*\")"
+msgstr "時間のテキスト色 (ステータスバー)"
+
+msgid "color for status \"installed\" (\"i\")"
+msgstr ""
+
+msgid "color for status \"held\" (\"H\")"
+msgstr ""
+
+msgid "color for status \"running\" (\"r\")"
+msgstr ""
+
+msgid "color for status \"obsolete\" (\"N\")"
+msgstr ""
+
+msgid "color for status \"unknown\" (\"?\")"
+msgstr ""
+
+#, fuzzy
+msgid "text color in script buffer"
+msgstr "バッファ名のテキスト色"
+
+#, fuzzy
+msgid "text color of dates in script buffer"
+msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+
+#, fuzzy
+msgid "text color of delimiters in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of description in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of extension in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of script name in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of tags in script buffer"
+msgstr "バッファ名のテキスト色"
+
+#, fuzzy
+msgid "text color of version in script buffer"
+msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+
+#, fuzzy
+msgid "text color of version loaded in script buffer"
+msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+
+#, fuzzy
+msgid "background color in script buffer"
+msgstr "チャットの背景色"
+
+#, fuzzy
+msgid "text color for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of dates for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of description for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of extension for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of script name for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of tags for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of version for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "text color of version loaded for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+#, fuzzy
+msgid "background color for selected line in script buffer"
+msgstr "選択されたクライアント行のテキスト色"
+
+msgid ""
+"local cache expiration time, in minutes (-1 = never expires, 0 = always "
+"expire)"
+msgstr ""
+
+msgid "local cache directory for scripts"
+msgstr ""
+
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
+msgstr ""
+
+#, fuzzy
+msgid "URL for file with list of scripts"
+msgstr "スクリプトのリスト"
+
+#, fuzzy
+msgid ""
+"script name with extension (can start or end with \"*\" as wildcard) "
+"(optional)"
+msgstr ""
+"スクリプト名 (ワイルドカードとして \"*\" で始めるか終われる) (オプション)"
+
+#, fuzzy
+msgid "scripts from repository"
+msgstr "スクリプトのリスト"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading list of scripts"
+msgstr "%s%s: クライアントへのデータ送信中にエラー: %s"
+
+#, fuzzy, c-format
+msgid "%s: %d scripts for WeeChat %s"
+msgstr "%s: スクリプトが削除されました: %s"
+
+#, c-format
+msgid ""
+"%s%s: list of scripts is empty (repository file is broken, or download has "
+"failed)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading list of scripts: %s"
+msgstr "%s%s: クライアントへのデータ送信中にエラー: %s"
+
+#, fuzzy, c-format
+msgid "%s: downloading list of scripts..."
+msgstr "%s: スクリプト \"%s\" のアンロード中"
 
 #, fuzzy
 msgid "Support of tcl scripts"
@@ -8637,9 +8971,6 @@ msgstr "プラグイン"
 msgid "Name"
 msgstr "名前"
 
-msgid "Description"
-msgstr "説明"
-
 msgid "Arguments"
 msgstr "引数"
 
@@ -8666,6 +8997,17 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "%s: downloading \"%s\"..."
+#~ msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s: WeeChat が libgcrypt をサポートしてビルドされていないので、SASL と "
+#~ "DH-BLOWFISH メカニズムの組み合わせでは認証出来ません"
 
 #, fuzzy
 #~ msgid "Regex modifier"
@@ -8699,9 +9041,6 @@ msgstr "定数"
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"
 #~ msgstr "%s%s: クライアント %d (%s) へのデータ送信中にエラー"
-
-#~ msgid "%s%s: error sending data to client: %s"
-#~ msgstr "%s%s: クライアントへのデータ送信中にエラー: %s"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "\"buffer_name\" バーアイテムにチャンネルモードを表示"

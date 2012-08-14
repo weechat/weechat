@@ -222,20 +222,12 @@ Wtyczki są automatycznie ładowane, kiedy zostaną wykryte (proszę spojrzeć d
 dokumentacji WeeChat, aby się dowiedzieć jak ładować/wyładowywać wtyczki lub
 skrypty).
 
-Niektóre wtyczki pozwalają na używanie skryptów w WeeChat (w wielu językach jak Perl,
-Python, Ruby, Lua oraz Tcl). Te wtyczki muszą być załadowane za pomocą komendy
-`/plugin`, dostarczają one komendy jak `/perl`, używane do ładowania skryptów.
+Wiele zewnętrznych skryptów (od społeczności) jest dostępnych dla WeeChat:
+http://www.weechat.org/scripts
 
-Wiele zewnętrznych wtyczek/skryptów (od społeczności) jest dostępnych dla
-WeeChat: http://www.weechat.org/scripts
-
-Najprostszym sposobem na instalowanie skryptów jest użycie skryptu 'weeget.py':
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. załaduj skrypt: `/python autoload`
-. lista skryptów: `/weeget list` (dla pomocy: `/help weeget`)
+// TRANSLATION MISSING
+You can manage scripts in WeeChat with command `/script` (see `/help script`
+for more info).
 
 
 [[more_doc]]

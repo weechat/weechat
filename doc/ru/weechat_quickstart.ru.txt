@@ -221,20 +221,12 @@ WeeChat использует стандартные значения для вс
 Плагины автоматические загружаются если они найдены (пожалуйста,
 посмотрите документацию о load/unload плагинов или скиптов)
 
-Некоторые плагины, позволяют использовать скрипты на других языках
-(Perl, Python, Lua, Ruby, Tcl). Эти плагины должны быть загружены командой
-`/plugin`. Они добавляют такие команды как `/perl` для загрузки скриптов.
+Много пользовательских плагинов доступно для WeeChat:
+http://www.weechat.org/scripts
 
-Много пользовательских скриптов/плагинов доступно для
-WeeChat: http://www.weechat.org/scripts
-
-Простейший путь для установки скриптов - исползовать скрипт 'weeget.py':
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. подгрузить скрипт в Weechat: `/python autoload`
-. скачайте список скриптов: `/weeget list` (for help: `/help weeget`)
+// TRANSLATION MISSING
+You can manage scripts in WeeChat with command `/script` (see `/help script`
+for more info).
 
 
 [[more_doc]]

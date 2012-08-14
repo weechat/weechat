@@ -1,0 +1,155 @@
+* [[option_script.color.status_held]] *script.color.status_held*
+** description: `color for status "held" ("H")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.status_installed]] *script.color.status_installed*
+** description: `color for status "installed" ("i")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightcyan`)
+
+* [[option_script.color.status_obsolete]] *script.color.status_obsolete*
+** description: `color for status "obsolete" ("N")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightmagenta`)
+
+* [[option_script.color.status_popular]] *script.color.status_popular*
+** description: `color for status "popular" ("*")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `yellow`)
+
+* [[option_script.color.status_running]] *script.color.status_running*
+** description: `color for status "running" ("r")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightgreen`)
+
+* [[option_script.color.status_unknown]] *script.color.status_unknown*
+** description: `color for status "unknown" ("?")`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightred`)
+
+* [[option_script.color.text]] *script.color.text*
+** description: `text color in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_bg]] *script.color.text_bg*
+** description: `background color in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
+** description: `background color for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `red`)
+
+* [[option_script.color.text_date]] *script.color.text_date*
+** description: `text color of dates in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_date_selected]] *script.color.text_date_selected*
+** description: `text color of dates for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.text_delimiters]] *script.color.text_delimiters*
+** description: `text color of delimiters in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `darkgray`)
+
+* [[option_script.color.text_description]] *script.color.text_description*
+** description: `text color of description in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_description_selected]] *script.color.text_description_selected*
+** description: `text color of description for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.text_extension]] *script.color.text_extension*
+** description: `text color of extension in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
+** description: `text color of extension for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.text_name]] *script.color.text_name*
+** description: `text color of script name in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `cyan`)
+
+* [[option_script.color.text_name_selected]] *script.color.text_name_selected*
+** description: `text color of script name for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightcyan`)
+
+* [[option_script.color.text_selected]] *script.color.text_selected*
+** description: `text color for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.text_tags]] *script.color.text_tags*
+** description: `text color of tags in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `brown`)
+
+* [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
+** description: `text color of tags for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `yellow`)
+
+* [[option_script.color.text_version]] *script.color.text_version*
+** description: `text color of version in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `magenta`)
+
+* [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
+** description: `text color of version loaded in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `default`)
+
+* [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
+** description: `text color of version loaded for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_script.color.text_version_selected]] *script.color.text_version_selected*
+** description: `text color of version for selected line in script buffer`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `lightmagenta`)
+
+* [[option_script.look.columns]] *script.look.columns*
+** description: `format of columns displayed in script buffer: following column identifiers are replaced by their value: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)`
+** type: string
+** values: any string (default value: `"%s %n %V %v %u | %d | %t"`)
+
+* [[option_script.look.sort]] *script.look.sort*
+** description: `default sort keys for scripts: comma-separated list of identifiers: a=author, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
+** type: string
+** values: any string (default value: `"p,n"`)
+
+* [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
+** description: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
+** type: integer
+** values: -1 .. 525600 (default value: `60`)
+
+* [[option_script.scripts.dir]] *script.scripts.dir*
+** description: `local cache directory for scripts`
+** type: string
+** values: any string (default value: `"%h/script"`)
+
+* [[option_script.scripts.hold]] *script.scripts.hold*
+** description: `scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"`
+** type: string
+** values: any string (default value: `""`)
+
+* [[option_script.scripts.url]] *script.scripts.url*
+** description: `URL for file with list of scripts`
+** type: string
+** values: any string (default value: `"http://www.weechat.org/files/plugins.xml.gz"`)
+

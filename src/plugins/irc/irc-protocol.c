@@ -331,19 +331,8 @@ IRC_PROTOCOL_CALLBACK(cap)
                                                   IRC_SERVER_OPTION_SASL_MECHANISM))
                 {
                     case IRC_SASL_MECHANISM_DH_BLOWFISH:
-#ifdef HAVE_GCRYPT
                         irc_server_sendf (server, 0, NULL,
                                           "AUTHENTICATE DH-BLOWFISH");
-#else
-                        weechat_printf (server->buffer,
-                                        _("%s%s: cannot authenticate with SASL "
-                                          "and mechanism DH-BLOWFISH because "
-                                          "WeeChat was not built with "
-                                          "libgcrypt support"),
-                                        weechat_prefix ("error"),
-                                        IRC_PLUGIN_NAME);
-                        irc_server_sendf (server, 0, NULL, "CAP END");
-#endif
                         break;
                     case IRC_SASL_MECHANISM_EXTERNAL:
                         irc_server_sendf (server, 0, NULL,

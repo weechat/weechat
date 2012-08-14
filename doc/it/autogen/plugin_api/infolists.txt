@@ -30,6 +30,8 @@
 
 | ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
+| script | script_script | elenco degli script | puntatore allo script (opzionale) | script name with extension (can start or end with "*" as wildcard) (optional)
+
 | tcl | tcl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | weechat | bar | elenco delle barre | puntatore alla barra (opzionale) | nome barra (può iniziare o terminare con "*" come carattere jolly (opzionale)

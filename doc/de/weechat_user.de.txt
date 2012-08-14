@@ -91,13 +91,14 @@ welche Pakete optional genutzt werden können.
 | cmake                  |             | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
 | libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
 | libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
-| gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
-| libgcrypt11-dev        |             |          | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode
+// TRANSLATION MISSING
+| zlib1g-dev             |             | *ja*     | compression of packets in relay plugin (weechat protocol), script plugin
+// TRANSLATION MISSING
+| libgcrypt11-dev        |             | *ja*     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode, script plugin
 // TRANSLATION MISSING
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, support of SSL in relay plugin
+| gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
-// TRANSLATION MISSING
-| zlib1g-dev             |             |          | compression of packets in relay plugin (weechat protocol)
 | libaspell-dev          |             |          | aspell Erweiterung
 | python-dev             | ≥ 2.5 ^(3)^ |          | python Erweiterung
 | libperl-dev            |             |          | perl Erweiterung
@@ -776,29 +777,32 @@ Tasten für "mouse"-Kontext
 
 Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt worden ist.
 
+// TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Maustaste | Mausgeste    | Bereich   | Beschreibung | Befehl
-| ◾◽◽       | -            | Chat      | wechselt zum Fenster | /window ${_window_number}
-| ◾◽◽       | links        | Chat      | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽       | rechts       | Chat      | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽       | links(lang)  | Chat      | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽       | rechts(lang) | Chat      | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
-| Mausrad ⇑ | -            | Chat      | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
-| Mausrad ⇓ | -            | Chat      | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
-| ◾◽◽       | hoch         | Nickliste | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽       | runter       | Nickliste | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽       | hoch(lang)   | Nickliste | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
-| ◾◽◽       | runter(lang) | Nickliste | springt zum Ende der Nickliste | /bar scroll nicklist ${_window_number} e
-| ◾◽◽       | -            | Nickliste | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick}
-| ◽◽◾       | -            | Nickliste | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
-| ◾◽◽       | links        | Nickliste | kickt Nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽       | links(lang)  | Nickliste | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾       | links        | Nickliste | verbannt Nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾       | -            | Input     | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | /input grab_mouse_area
-| Mausrad ⇑ | -            | jede Bar  | blättert Bar um 10% nach oben | /bar scroll ${_bar_name} ${_window_number} -20%
-| Mausrad ⇓ | -            | jede Bar  | blättert Bar um 10% nach unten | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽       | -            | überall   | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
+| Maustaste | Mausgeste    | Bereich              | Beschreibung | Befehl
+| ◾◽◽       | -            | Chat                 | wechselt zum Fenster | /window ${_window_number}
+| ◾◽◽       | links        | Chat                 | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
+| ◾◽◽       | rechts       | Chat                 | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
+| ◾◽◽       | links(lang)  | Chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽       | rechts(lang) | Chat                 | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
+| Mausrad ⇑ | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
+| Mausrad ⇓ | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
+| Mausrad ⇑ | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
+| Mausrad ⇓ | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| ◾◽◽       | hoch         | Nickliste            | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽       | runter       | Nickliste            | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽       | hoch(lang)   | Nickliste            | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
+| ◾◽◽       | runter(lang) | Nickliste            | springt zum Ende der Nickliste | /bar scroll nicklist ${_window_number} e
+| ◾◽◽       | -            | Nickliste            | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick}
+| ◽◽◾       | -            | Nickliste            | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
+| ◾◽◽       | links        | Nickliste            | kickt Nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽       | links(lang)  | Nickliste            | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾       | links        | Nickliste            | verbannt Nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾       | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | /input grab_mouse_area
+| Mausrad ⇑ | -            | jede Bar             | blättert Bar um 10% nach oben | /bar scroll ${_bar_name} ${_window_number} -20%
+| Mausrad ⇓ | -            | jede Bar             | blättert Bar um 10% nach unten | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽       | -            | überall              | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -2200,10 +2204,26 @@ WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl un
 Diese Erweiterungen können für die jeweilige Sprache die Skripten laden, ausführen und
 entfernen.
 
+// TRANSLATION MISSING
+Another plugin called "script" is a scripts manager and is used to load/unload
+scripts of any language, and install/remove scripts of WeeChat scripts
+repository, which are visible at this URL: http://www.weechat.org/scripts
+
 Sollten Sie Interesse daran haben wie man Skripten für WeeChat erstellt dann lesen Sie
 bitte die 'WeeChat Scripting Guide'.
 
-Skripten für WeeChat finden Sie auf: http://www.weechat.org/scripts
+// TRANSLATION MISSING
+[[script_options]]
+Script options (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+Script Befehle
+^^^^^^^^^^^^^^
+
+include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
 Python Befehle

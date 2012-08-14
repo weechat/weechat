@@ -201,11 +201,7 @@ relay_weechat_alloc (struct t_relay_client *client)
     if (client->protocol_data)
     {
         RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
-#ifdef HAVE_ZLIB
         RELAY_WEECHAT_DATA(client, compression) = 1;
-#else
-        RELAY_WEECHAT_DATA(client, compression) = 0;
-#endif
         RELAY_WEECHAT_DATA(client, buffers_sync) =
             weechat_hashtable_new (16,
                                    WEECHAT_HASHTABLE_STRING,

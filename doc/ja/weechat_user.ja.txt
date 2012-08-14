@@ -83,11 +83,13 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | cmake                  |             | *yes*    | ビルド (autotools でも可能ですが、cmake を推奨します)
 | libncursesw5-dev ^(2)^ |             | *yes*    | ncurses インターフェイス
 | libcurl4-gnutls-dev    |             | *yes*    | URL 転送
-| gettext                |             |          | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| libgcrypt11-dev        |             |          | DH-BLOWFISH メカニズムを用いた IRC サーバ用の SASL 認証
+// TRANSLATION MISSING
+| zlib1g-dev             |             | *yes*    | relay プラグインでパケットを圧縮 (weechat プロトコル), script plugin
+// TRANSLATION MISSING
+| libgcrypt11-dev        |             | *yes*    | DH-BLOWFISH メカニズムを用いた IRC サーバ用の SASL 認証, script plugin
 | libgnutls-dev          | ≥ 2.2.0     |          | IRC サーバへの SSL 接続
+| gettext                |             |          | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates        |             |          | SSL 接続に必要な証明書、relay プラグインで SSL サポート
-| zlib1g-dev             |             |          | relay プラグインでパケットを圧縮 (weechat プロトコル)
 | libaspell-dev          |             |          | aspell プラグイン
 | python-dev             | ≥ 2.5 ^(3)^ |          | python プラグイン
 | libperl-dev            |             |          | perl プラグイン
@@ -741,29 +743,32 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 
 以下のキーは "マウス" モード (マウスイベントが発生したとき) でのみ有効です。
 
+// TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| ボタン  | ジェスチャー | エリア   | 説明 | コマンド
-| ◾◽◽     | -            | チャット | ウィンドウに移動 | /window ${_window_number}
-| ◾◽◽     | 左           | チャット | 前のバッファに移動 | /window ${_window_number};/buffer +1
-| ◾◽◽     | 右           | チャット | 次のバッファに移動 | /window ${_window_number};/buffer +1
-| ◾◽◽     | 左 (長く)    | チャット | 最初のバッファに移動 | /window ${_window_number};/buffer 1
-| ◾◽◽     | 右 (長く)    | チャット | 最後のバッファに移動 | /window ${_window_number};/input jump_last_buffer
-| ホイール ⇑ | -            | チャット | バッファ履歴を上方向にスクロール | /window scroll_up -window ${_window_number}
-| ホイール ⇓ | -            | チャット | バッファ履歴を下方向にスクロール | /window scroll_down -window ${_window_number}
-| ◾◽◽     | 上           | ニックネームリスト | ニックネームリストを 1 ページ分上方向にスクロール | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽     | 下           | ニックネームリスト | ニックネームリストを 1 ページ分下方向にスクロール | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽     | 上 (長く)    | ニックネームリスト | ニックネームリストの最初に移動 | /bar scroll nicklist ${_window_number} b
-| ◾◽◽     | 下 (長く)    | ニックネームリスト | ニックネームリストの最後に移動 | /bar scroll nicklist ${_window_number} e
-| ◾◽◽     | -            | ニックネームリスト | ニックネームに対するクエリを開く | /window ${_window_number};/query ${nick}
-| ◽◽◾     | -            | ニックネームリスト | ニックネームに対する whois を行う | /window ${_window_number};/whois ${nick}
-| ◾◽◽     | 左           | ニックネームリスト | ニックネームをキックする | /window ${_window_number};/kick ${nick}
-| ◾◽◽     | 左 (長く)    | ニックネームリスト | ニックネームをキックとバンする | /window ${_window_number};/kickban ${nick}
-| ◽◽◾     | 左           | ニックネームリスト | ニックネームをバンする | /window ${_window_number};/ban ${nick}
-| ◽◽◾     | -            | 入力     | マウスイベントを奪ってコマンドラインにコードを入力 | /input grab_mouse_area
-| ホイール ⇑ | -            | 任意のバー | バーを -10% スクロール | /bar scroll ${_bar_name} ${_window_number} -20%
-| ホイール ⇓ | -            | 任意のバー | バーを +10% スクロール | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽     | -            | 任意の場所 | この場所でカーソルモードを開始 | /cursor go ${_x},${_y}
+| ボタン     | ジェスチャー | エリア               | 説明 | コマンド
+| ◾◽◽        | -            | チャット             | ウィンドウに移動 | /window ${_window_number}
+| ◾◽◽        | 左           | チャット             | 前のバッファに移動 | /window ${_window_number};/buffer +1
+| ◾◽◽        | 右           | チャット             | 次のバッファに移動 | /window ${_window_number};/buffer +1
+| ◾◽◽        | 左 (長く)    | チャット             | 最初のバッファに移動 | /window ${_window_number};/buffer 1
+| ◾◽◽        | 右 (長く)    | チャット             | 最後のバッファに移動 | /window ${_window_number};/input jump_last_buffer
+| ホイール ⇑ | -            | チャット             | バッファ履歴を上方向にスクロール | /window scroll_up -window ${_window_number}
+| ホイール ⇓ | -            | チャット             | バッファ履歴を下方向にスクロール | /window scroll_down -window ${_window_number}
+| ホイール ⇑ | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
+| ホイール ⇓ | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| ◾◽◽        | 上           | ニックネームリスト   | ニックネームリストを 1 ページ分上方向にスクロール | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽        | 下           | ニックネームリスト   | ニックネームリストを 1 ページ分下方向にスクロール | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽        | 上 (長く)    | ニックネームリスト   | ニックネームリストの最初に移動 | /bar scroll nicklist ${_window_number} b
+| ◾◽◽        | 下 (長く)    | ニックネームリスト   | ニックネームリストの最後に移動 | /bar scroll nicklist ${_window_number} e
+| ◾◽◽        | -            | ニックネームリスト   | ニックネームに対するクエリを開く | /window ${_window_number};/query ${nick}
+| ◽◽◾        | -            | ニックネームリスト   | ニックネームに対する whois を行う | /window ${_window_number};/whois ${nick}
+| ◾◽◽        | 左           | ニックネームリスト   | ニックネームをキックする | /window ${_window_number};/kick ${nick}
+| ◾◽◽        | 左 (長く)    | ニックネームリスト   | ニックネームをキックとバンする | /window ${_window_number};/kickban ${nick}
+| ◽◽◾        | 左           | ニックネームリスト   | ニックネームをバンする | /window ${_window_number};/ban ${nick}
+| ◽◽◾        | -            | 入力                 | マウスイベントを奪ってコマンドラインにコードを入力 | /input grab_mouse_area
+| ホイール ⇑ | -            | 任意のバー           | バーを -10% スクロール | /bar scroll ${_bar_name} ${_window_number} -20%
+| ホイール ⇓ | -            | 任意のバー           | バーを +10% スクロール | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽        | -            | 任意の場所           | この場所でカーソルモードを開始 | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -2074,10 +2079,25 @@ WeeChat は 6 種類のスクリプトプラグインを備えています: Pyth
 (scheme)。
 これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
+// TRANSLATION MISSING
+Another plugin called "script" is a scripts manager and is used to load/unload
+scripts of any language, and install/remove scripts of WeeChat scripts
+repository, which are visible at this URL: http://www.weechat.org/scripts
+
 スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は、
 'WeeChat スクリプト製作ガイド' を参照してください。
 
-WeeChat 用のスクリプトは以下のページから入手できます: http://www.weechat.org/scripts
+// TRANSLATION MISSING
+[[script_options]]
+Script options (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+==== Script コマンド ====
+
+include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
 ==== Python コマンド ====

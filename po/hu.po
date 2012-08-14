@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-02 22:48+0200\n"
+"POT-Creation-Date: 2012-08-14 18:26+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5866,14 +5866,6 @@ msgid "%s%s: client capability, enabled: %s"
 msgstr ""
 
 #, fuzzy, c-format
-msgid ""
-"%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-"WeeChat was not built with libgcrypt support"
-msgstr ""
-"%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
-"támogatás nélkül lett fordítva\n"
-
-#, fuzzy, c-format
 msgid "%s%s: client capability, refused: %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
@@ -7503,65 +7495,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
 #, fuzzy
-msgid "Support of python scripts"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-msgid "path to python 2.x interpreter"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy
-msgid "Support of ruby scripts"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%sSzerver: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to read file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error while loading file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy
 msgid "list/load/unload scripts"
 msgstr "modulok listázása/betöltése/eltávolítása"
 
@@ -7672,6 +7605,406 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+msgid "path to python 2.x interpreter"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy
+msgid "Support of ruby scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%sSzerver: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+msgid "Scripts manager"
+msgstr ""
+
+#, fuzzy
+msgid "Scripts loaded:"
+msgstr "FIFO cső bezárva\n"
+
+#, fuzzy, c-format
+msgid "%s: unknown language for script \"%s\""
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading script \"%s\": %s"
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s: downloading script \"%s\"..."
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is held"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not held any more"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" held"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is already installed and up-to-date"
+msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
+
+#, fuzzy, c-format
+msgid "%s: all scripts are up-to-date"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+msgid "Script"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . leírás : %s\n"
+
+msgid "Tags"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Date added"
+msgstr ""
+
+#, fuzzy
+msgid "Date updated"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+msgid "URL"
+msgstr ""
+
+msgid "MD5"
+msgstr ""
+
+msgid "Requires"
+msgstr ""
+
+#, fuzzy
+msgid "Min WeeChat"
+msgstr "WeeChat szlogen"
+
+#, fuzzy
+msgid "Max WeeChat"
+msgstr "WeeChat szlogen"
+
+msgid "popular"
+msgstr ""
+
+msgid "installed"
+msgstr ""
+
+msgid "held"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "obsolete"
+msgstr ""
+
+#, c-format
+msgid "alt+d=back to list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%d/%d scripts (filter: %s) | Sort: %s | alt+i=install r=remove l=load "
+"u=unload h=(un)hold d=show detail | Input: 'q'=close 'r'=refresh 's:x,"
+"y'=sort 'words'=filter '*'=reset filter"
+msgstr ""
+
+msgid "Scripts"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat scripts manager"
+msgstr "WeeChat szlogen"
+
+msgid ""
+"list || show <script> || load|unload <script> [<script>...] || install|"
+"remove|hold <script> [<script>...] || upgrade || update"
+msgstr ""
+
+msgid ""
+"    list: list loaded scripts (all languages)\n"
+"    show: show detailed info about a script\n"
+"    load: load script(s)\n"
+"  unload: unload script(s)\n"
+" install: install/upgrade script(s)\n"
+"  remove: remove script(s)\n"
+"    hold: hold/unhold script(s) (a script held will not be upgraded any more "
+"and cannot be removed)\n"
+" upgrade: upgrade all installed scripts which are obsolete (new version "
+"available)\n"
+"  update: update local scripts cache\n"
+"\n"
+"Without argument, this command opens a buffer with list of scripts.\n"
+"\n"
+"On script buffer, the possible status for each script are:\n"
+"  * i H r N\n"
+"  | | | | |\n"
+"  | | | | obsolete (new version available)\n"
+"  | | | running (loaded)\n"
+"  | | held\n"
+"  | installed\n"
+"  popular script\n"
+"\n"
+"Keys on script buffer:\n"
+"  alt+i    install script\n"
+"  alt+r    remove script\n"
+"  alt+l    load script\n"
+"  alt+u    unload script\n"
+"  alt+h    (un)hold script\n"
+"\n"
+"Input allowed on script buffer:\n"
+"  q        close buffer\n"
+"  r        refresh buffer\n"
+"  s:x,y    sort buffer using keys x and y (see /help script.look.sort)\n"
+"  s:       reset sort (use default sort)\n"
+"  word(s)  filter scripts: search word(s) in scripts (description, "
+"tags, ...)\n"
+"  *        remove filter"
+msgstr ""
+
+#, fuzzy
+msgid "list of scripts in repository"
+msgstr "Aliaszok listája:\n"
+
+msgid "list of scripts installed (from repository)"
+msgstr ""
+
+msgid "files in script directories"
+msgstr ""
+
+msgid ""
+"format of columns displayed in script buffer: following column identifiers "
+"are replaced by their value: %a=author, %d=description, %D=date added, "
+"%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
+"%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
+"loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid ""
+"default sort keys for scripts: comma-separated list of identifiers: "
+"a=author, d=date added, e=extension, i=installed, l=language, n=name, "
+"o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can be used "
+"before identifier to reverse order; example: \"i,u\": installed scripts "
+"first, sorted by update date"
+msgstr ""
+
+#, fuzzy
+msgid "color for status \"popular\" (\"*\")"
+msgstr "státuszsor színe"
+
+msgid "color for status \"installed\" (\"i\")"
+msgstr ""
+
+msgid "color for status \"held\" (\"H\")"
+msgstr ""
+
+msgid "color for status \"running\" (\"r\")"
+msgstr ""
+
+msgid "color for status \"obsolete\" (\"N\")"
+msgstr ""
+
+msgid "color for status \"unknown\" (\"?\")"
+msgstr ""
+
+#, fuzzy
+msgid "text color in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of dates in script buffer"
+msgstr "másik fél nevének színe privát beszélgetésben"
+
+#, fuzzy
+msgid "text color of delimiters in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of description in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of extension in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of script name in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of tags in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of version in script buffer"
+msgstr "másik fél nevének színe privát beszélgetésben"
+
+#, fuzzy
+msgid "text color of version loaded in script buffer"
+msgstr "másik fél nevének színe privát beszélgetésben"
+
+#, fuzzy
+msgid "background color in script buffer"
+msgstr "nevek háttere"
+
+#, fuzzy
+msgid "text color for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of dates for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of description for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of extension for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of script name for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of tags for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of version for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color of version loaded for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "background color for selected line in script buffer"
+msgstr "szerver nevének színe"
+
+msgid ""
+"local cache expiration time, in minutes (-1 = never expires, 0 = always "
+"expire)"
+msgstr ""
+
+msgid "local cache directory for scripts"
+msgstr ""
+
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
+msgstr ""
+
+#, fuzzy
+msgid "URL for file with list of scripts"
+msgstr "Aliaszok listája:\n"
+
+msgid ""
+"script name with extension (can start or end with \"*\" as wildcard) "
+"(optional)"
+msgstr ""
+
+#, fuzzy
+msgid "scripts from repository"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading list of scripts"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%s: %d scripts for WeeChat %s"
+msgstr "nincs a szobában"
+
+#, c-format
+msgid ""
+"%s%s: list of scripts is empty (repository file is broken, or download has "
+"failed)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error downloading list of scripts: %s"
+msgstr "%s adatküldési hiba az IRC szerveren\n"
+
+#, fuzzy, c-format
+msgid "%s: downloading list of scripts..."
+msgstr "folyamat: \"%s\" szerver betöltése\n"
 
 #, fuzzy
 msgid "Support of tcl scripts"
@@ -8080,10 +8413,6 @@ msgid "Name"
 msgstr ""
 
 #, fuzzy
-msgid "Description"
-msgstr "  . leírás : %s\n"
-
-#, fuzzy
 msgid "Arguments"
 msgstr "fogadó típusa [paraméterek]"
 
@@ -8114,6 +8443,18 @@ msgid "Constants"
 msgstr ""
 
 #, fuzzy
+#~ msgid "%s: downloading \"%s\"..."
+#~ msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
+#~ "támogatás nélkül lett fordítva\n"
+
+#, fuzzy
 #~ msgid "Regex modifier"
 #~ msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
@@ -8142,10 +8483,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s adatküldési hiba az IRC szerveren\n"
-
-#, fuzzy
-#~ msgid "%s%s: error sending data to client: %s"
 #~ msgstr "%s adatküldési hiba az IRC szerveren\n"
 
 #, fuzzy

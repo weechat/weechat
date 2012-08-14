@@ -30,6 +30,8 @@
 
 | ruby | ruby_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
+| script | script_script | liste des scripts | pointeur vers le script (optionnel) | nom du script avec extension (peut démarrer ou se terminer par "*" comme joker) (optionnel)
+
 | tcl | tcl_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
 | weechat | bar | liste des barres | pointeur vers la barre (optionnel) | nom de barre (peut démarrer ou se terminer par "*" comme joker) (optionnel)

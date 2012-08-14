@@ -240,22 +240,12 @@ Los plugins se cargan de manera automática cuando son encontrados por WeeChat
 (por favor, refierase a la documentación de WeeChat para ver como cargar/descargar
 plugins y scripts).
 
-Algunos plugins, permiten usar scripts en WeeChat (en muchos lenguajes
-como Perl, Python, Ruby, Lua y Tcl). Estos plugins deben ser cargados con
-el comando `/plugin` los mismos proveen comandos como `/perl`, usados
-para cargar scripts en este lenguaje.
+Muchos scripts externos (de contribuidores) están disponibles para WeeChat en:
+http://www.weechat.org/scripts
 
-Muchos plugins/scripts externos (de contribuidores) están disponibles
-para WeeChat en: http://www.weechat.org/scripts
-
-Una manera fácil de instalar scripts es usar un script llamado
-'weeget.py'
-
-. `mkdir -p ~/.weechat/python/autoload`
-. `cd ~/.weechat/python/autoload`
-. `wget http://weechat.org/files/scripts/weeget.py`
-. carga script: `/python autoload`
-. lista los scripts: `/weeget list` (ayuda: `/help weeget`)
+// TRANSLATION MISSING
+You can manage scripts in WeeChat with command `/script` (see `/help script`
+for more info).
 
 
 [[more_doc]]

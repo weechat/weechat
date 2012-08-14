@@ -257,6 +257,33 @@
   'last_script' +
   'scripts'
 
+| script | script_script | scripts from repository |
+  'name' (string) +
+  'name_with_extension' (string) +
+  'language' (integer) +
+  'author' (string) +
+  'mail' (string) +
+  'version' (string) +
+  'license' (string) +
+  'description' (string) +
+  'tags' (string) +
+  'requirements' (string) +
+  'min_weechat' (string) +
+  'max_weechat' (string) +
+  'md5sum' (string) +
+  'url' (string) +
+  'popularity' (integer) +
+  'date_added' (time) +
+  'date_updated' (time) +
+  'status' (integer) +
+  'version_loaded' (string) +
+  'displayed' (integer) +
+  'install_order' (integer) +
+  'prev_script' (pointer, hdata: 'script_script') +
+  'next_script' (pointer, hdata: 'script_script') |
+  'last_repo_script' +
+  'repo_scripts'
+
 | tcl | tcl_script | elenco degli script |
   'filename' (string) +
   'interpreter' (pointer) +

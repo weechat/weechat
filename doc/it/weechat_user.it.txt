@@ -95,13 +95,14 @@ compilare WeeChat.
 | cmake                  |             | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
 | libncursesw5-dev ^(2)^ |             | *sì*      | interfaccia ncurses
 | libcurl4-gnutls-dev    |             | *sì*      | trasferimento URL
-| gettext                |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| libgcrypt11-dev        |             |           | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH
+// TRANSLATION MISSING
+| zlib1g-dev             |             | *sì*      | compression of packets in relay plugin (weechat protocol), script plugin
+// TRANSLATION MISSING
+| libgcrypt11-dev        |             | *sì*      | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH, script plugin
 // TRANSLATION MISSING
 | libgnutls-dev          | ≥ 2.2.0     |           | connessione SSL al server IRC, support of SSL in relay plugin
+| gettext                |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
 | ca-certificates        |             |           | certificati per le connessioni SSL
-// TRANSLATION MISSING
-| zlib1g-dev             |             |           | compression of packets in relay plugin (weechat protocol)
 | libaspell-dev          |             |           | plugin aspell
 | python-dev             | ≥ 2.5 ^(3)^ |           | plugin python
 | libperl-dev            |             |           | plugin perl
@@ -785,29 +786,32 @@ Tasti per il contesto "mouse"
 Questi tasti sono usati nel contesto "mouse", ovvero quando si verifica un
 evento del mouse.
 
+// TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Tasto     | Azione           | Zona       | Descrizione | Comando
-| ◾◽◽       | -                | chat       | Passa alla finestra | /window ${_window_number}
-| ◾◽◽       | sinistra         | chat       | Passa al buffer precedente | /window ${_window_number};/buffer +1
-| ◾◽◽       | destra           | chat       | Passa al buffer successivo | /window ${_window_number};/buffer +1
-| ◾◽◽       | sinistra (lungo) | chat       | Switch to first buffer | /window ${_window_number};/buffer 1
-| ◾◽◽       | destra (lungo)   | chat       | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
-| rotella ⇑ | -                | chat       | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
-| rotella ⇓ | -                | chat       | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
-| ◾◽◽       | su               | lista nick | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽       | giù              | lista nick | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽       | up (lungo)       | lista nick | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
-| ◾◽◽       | giù (lungo)      | lista nick | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
-| ◾◽◽       | -                | lista nick | Apre una query con un nick | /window ${_window_number};/query ${nick}
-| ◽◽◾       | -                | lista nick | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
-| ◾◽◽       | sinistra         | lista nick | Kick di un nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽       | sinistra (lungo) | lista nick | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾       | sinistra         | lista nick | Ban di un nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾       | -                | input      | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
-| rotella ⇑ | -                | ogni barra | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| rotella ⇓ | -                | ogni barra | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽       | -                | ovunque    | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
+| Tasto     | Azione           | Zona                 | Descrizione | Comando
+| ◾◽◽       | -                | chat                 | Passa alla finestra | /window ${_window_number}
+| ◾◽◽       | sinistra         | chat                 | Passa al buffer precedente | /window ${_window_number};/buffer +1
+| ◾◽◽       | destra           | chat                 | Passa al buffer successivo | /window ${_window_number};/buffer +1
+| ◾◽◽       | sinistra (lungo) | chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽       | destra (lungo)   | chat                 | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
+| rotella ⇑ | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
+| rotella ⇓ | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
+| rotella ⇑ | -                | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
+| rotella ⇓ | -                | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| ◾◽◽       | su               | lista nick           | Scorre di una pagina in alto nella lista nick | /bar scroll nicklist ${_window_number} -100%
+| ◾◽◽       | giù              | lista nick           | Scorre di una pagina in basso nella lista nick | /bar scroll nicklist ${_window_number} +100%
+| ◾◽◽       | up (lungo)       | lista nick           | Sposta all'inizio della lista nick | /bar scroll nicklist ${_window_number} b
+| ◾◽◽       | giù (lungo)      | lista nick           | Sposta alla fine della lista nick | /bar scroll nicklist ${_window_number} e
+| ◾◽◽       | -                | lista nick           | Apre una query con un nick | /window ${_window_number};/query ${nick}
+| ◽◽◾       | -                | lista nick           | Effettua un whois su un nick | /window ${_window_number};/whois ${nick}
+| ◾◽◽       | sinistra         | lista nick           | Kick di un nick | /window ${_window_number};/kick ${nick}
+| ◾◽◽       | sinistra (lungo) | lista nick           | Kick e ban di un nick | /window ${_window_number};/kickban ${nick}
+| ◽◽◾       | sinistra         | lista nick           | Ban di un nick | /window ${_window_number};/ban ${nick}
+| ◽◽◾       | -                | input                | Cattura un evento del mouse e inserisce il codice nella riga di comando | /input grab_mouse_area
+| rotella ⇑ | -                | ogni barra           | Scorre la barra del -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| rotella ⇓ | -                | ogni barra           | Scorre la barra del +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ◽◾◽       | -                | ovunque              | Avvia la modalità cursore in questo punto | /cursor go ${_x},${_y}
 |========================================
 
 [[mouse]]
@@ -2210,10 +2214,26 @@ WeeChat fornisce 6 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
 Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
+// TRANSLATION MISSING
+Another plugin called "script" is a scripts manager and is used to load/unload
+scripts of any language, and install/remove scripts of WeeChat scripts
+repository, which are visible at this URL: http://www.weechat.org/scripts
+
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
 per gli script, consultare la 'Guida allo Scripting di WeeChat'.
 
-È possibile trovare alcuni script qui: http://www.weechat.org/scripts
+// TRANSLATION MISSING
+[[script_options]]
+Script options (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+Comandi Script
+^^^^^^^^^^^^^^
+
+include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
 Comandi Python
