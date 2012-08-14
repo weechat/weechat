@@ -1,5 +1,5 @@
 * [[option_relay.color.client]] *relay.color.client*
-** 説明: `text color for client description`
+** 説明: `クライアント説明用のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
 
@@ -29,17 +29,17 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `brown`)
 
 * [[option_relay.color.text]] *relay.color.text*
-** 説明: `text color in relay buffer`
+** 説明: `リレーバッファ内のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
 
 * [[option_relay.color.text_bg]] *relay.color.text_bg*
-** 説明: `background color in relay buffer`
+** 説明: `リレーバッファ内の背景色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
 
 * [[option_relay.color.text_selected]] *relay.color.text_selected*
-** 説明: `text color of selected line in relay buffer`
+** 説明: `リレーバッファ内の選択行のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
@@ -79,7 +79,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
-** 説明: `file with SSL certificate and private key (for serving clients with SSL)`
+** 説明: `SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/ssl/relay.pem"`)
 

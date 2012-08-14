@@ -14,7 +14,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_aspell.check.enabled]] *aspell.check.enabled*
-** 説明: `enable aspell check for command line`
+** 説明: `コマンドラインで aspell を利用する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

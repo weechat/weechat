@@ -104,12 +104,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
-** 説明: `time format used in answer to message CTCP TIME (see man strftime for date/time specifiers)`
+** 説明: `CTCP TIME メッセージに対する応答に利用される時間フォーマット (日付/時間指定子は strftime の man を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** 説明: `display message when (un)marking as away (off: do not display/send anything, local: display locally, channel: send action to channels)`
+** 説明: `離席状態が変更されたらメッセージを表示 (off: 何も表示/送信しない、local: ローカルに表示、channel: チャンネルにアクションを送信)`
 ** タイプ: 整数
 ** 値: off, local, channel (デフォルト値: `local`)
 
@@ -189,7 +189,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** 説明: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
+** 説明: `チャンネルモードに含まれるチャンネルキーを隠す (チャンネルにモード +k が設定されていた場合、全てのチャンネルモード引数を隠す)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -234,7 +234,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** 説明: `smart completion for nicks (completes first with last speakers): speakers = all speakers (including highlights), speakers_highlights = only speakers with highlight`
+** 説明: `ニックネームのスマート補完 (発言日時の新しいものから順にニックネームを補完): speakers = すべてのニックネーム (ハイライトされたニックネームを含む)、speakers_highlights = ハイライトされたニックネームのみ`
 ** タイプ: 整数
 ** 値: off, speakers, speakers_highlights (デフォルト値: `speakers`)
 
@@ -509,7 +509,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** 説明: `SSL certificate file used to automatically identify your nick ("%h" will be replaced by WeeChat home, "~/.weechat" by default)`
+** 説明: `自動的にニックネームの身元確認を行うために使われる SSL 証明書ファイル ("%h" は WeeChat ホームで置換、デフォルトは "~/.weechat")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -524,7 +524,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"NORMAL"`)
 
 * [[option_irc.server_default.ssl_verify]] *irc.server_default.ssl_verify*
-** 説明: `check that the SSL connection is fully trusted`
+** 説明: `SSL 接続が完全に信頼できることを確認`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

@@ -1,5 +1,5 @@
 [[command_weechat_away]]
-[command]*`away`* 離席状態を変更しました::
+[command]*`away`* 離席、着席の切り替え::
 ........................................
 /away  [-all] [<message>]
 
@@ -58,7 +58,7 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
 ........................................
 
 [[command_weechat_buffer]]
-[command]*`buffer`* バッファを管理::
+[command]*`buffer`* バッファの管理::
 ........................................
 /buffer  list
          clear [<number>|<name>|-merged|-all]
@@ -72,54 +72,54 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|<name>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1)
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   merge: 現在のバッファを他のバッファにマージ (2つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+   close: バッファを閉じる (番号/範囲または名前のオプションを受け付けます)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
 ........................................
 
 [[command_weechat_color]]
-[command]*`color`* 色の別名を定義し、カラーパレットを表示する::
+[command]*`color`* 色の別名の定義と、カラーパレットの表示::
 ........................................
 /color  alias <color> <name>
         unalias <color>
@@ -141,7 +141,7 @@ unalias: 別名の削除
 ........................................
 
 [[command_weechat_command]]
-[command]*`command`* WeeChat 自身かプラグインのコマンドを起動::
+[command]*`command`* WeeChat かプラグインのコマンドを起動::
 ........................................
 /command  <plugin> <command>
 
@@ -150,7 +150,7 @@ command: 実行するコマンド (コマンドの最初に '/' が無い場合�
 ........................................
 
 [[command_weechat_cursor]]
-[command]*`cursor`* スクリーン上のあるエリアに対するアクションを実行するためにカーソルを自由に移動::
+[command]*`cursor`* カーソルを移動してアクションを実行するエリアを指定::
 ........................................
 /cursor  go chat|<bar>|<x>,<y>
          move up|down|left|right|area_up|area_down|area_left|area_right
@@ -172,7 +172,7 @@ stop: カーソルモードを終了
 ........................................
 
 [[command_weechat_debug]]
-[command]*`debug`* coreやプラグインのデバッグ管理::
+[command]*`debug`* core やプラグインのデバッグ管理::
 ........................................
 /debug  list
         set <plugin> <level>
@@ -200,7 +200,7 @@ infolists: infolist に関する情報を表示
 ........................................
 
 [[command_weechat_filter]]
-[command]*`filter`* タグか正規表現に基づいてバッファのメッセージの非表示/表示を行う::
+[command]*`filter`* タグか正規表現に基づくバッファメッセージの非表示/表示::
 ........................................
 /filter  list
          enable|disable|toggle [<name>]
@@ -444,7 +444,7 @@ disable: マウスの無効化
 ........................................
 
 [[command_weechat_plugin]]
-[command]*`plugin`* プラグインを表示/ロード/アンロード::
+[command]*`plugin`* プラグインの表示/ロード/アンロード::
 ........................................
 /plugin  list|listfull [<name>]
          load <filename> [<arguments>]
@@ -499,7 +499,7 @@ password: パスワード (任意)
 ........................................
 
 [[command_weechat_quit]]
-[command]*`quit`* WeeChat を終了::
+[command]*`quit`* WeeChat の終了::
 ........................................
 /quit  [-yes] [<arguments>]
 
@@ -535,7 +535,7 @@ command: 実行するコマンド (最初に '/' が無い場合は自動的に�
 ........................................
 
 [[command_weechat_save]]
-[command]*`save`* ディスクに設定ファイルを保存::
+[command]*`save`* 設定をファイルに保存::
 ........................................
 /save  [<file> [<file>...]]
 
@@ -545,7 +545,7 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
 ........................................
 
 [[command_weechat_set]]
-[command]*`set`* 設定オプションのセット::
+[command]*`set`* オプションの設定::
 ........................................
 /set  [<option> [<value>]]
 
@@ -568,7 +568,7 @@ option: オプションの名前 (多くのオプションをリストアップ�
 ........................................
 
 [[command_weechat_unset]]
-[command]*`unset`* 設定オプションをセット/リセット::
+[command]*`unset`* オプションのアンセット/リセット::
 ........................................
 /unset  <option>
 
@@ -644,7 +644,7 @@ command: 実行するコマンド (コマンドが '/' で始まらない場合�
 ........................................
 
 [[command_weechat_window]]
-[command]*`window`* ウィンドウのマージ::
+[command]*`window`* ウィンドウの操作::
 ........................................
 /window  list
          -1|+1|b#|up|down|left|right [-window <number>]

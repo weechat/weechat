@@ -64,17 +64,17 @@
 ** 値: 未制約文字列 (デフォルト値: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
 * [[option_weechat.color.chat_nick_offline]] *weechat.color.chat_nick_offline*
-** 説明: `text color for offline nick (not in nicklist any more)`
+** 説明: `オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
 
 * [[option_weechat.color.chat_nick_offline_highlight]] *weechat.color.chat_nick_offline_highlight*
-** 説明: `text color for offline nick with highlight`
+** 説明: `ハイライトされたオフラインのニックネームのテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `default`)
 
 * [[option_weechat.color.chat_nick_offline_highlight_bg]] *weechat.color.chat_nick_offline_highlight_bg*
-** 説明: `background color for offline nick with highlight`
+** 説明: `ハイライトされたオフラインのニックネームの背景色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `darkgray`)
 
@@ -429,7 +429,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
-** 説明: `use a different color for offline nicks (not in nicklist any more)`
+** 説明: `オフライン状態のニックネームに異なる色を使用 (ニックネームリストにも表示しない)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -579,7 +579,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
-** 説明: `jump back to initial buffer after reaching end of hotlist`
+** 説明: `ホットリストの最後に到達したら最初のバッファに移動する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -734,12 +734,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** 説明: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals), wide chars are NOT allowed here`
+** 説明: `バーとウィンドウ周囲の水平セパレータの描画に使われる文字 (空の場合は ncurses の実行が描画されるが、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある)、ワイドキャラクタは使えない`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** 説明: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses), wide chars are NOT allowed here`
+** 説明: `バーとウィンドウ周囲の垂直セパレータの描画に使われる文字 (空の場合は ncurses の実行が描画されるが、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある)、ワイドキャラクタは使えない`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -754,12 +754,12 @@
 ** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
-** 説明: `display an horizontal separator between windows`
+** 説明: `ウィンドウ間に水平セパレータを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.window_separator_vertical]] *weechat.look.window_separator_vertical*
-** 説明: `display a vertical separator between windows`
+** 説明: `ウィンドウ間に垂直セパレータを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -824,7 +824,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** 説明: `set resource limits for WeeChat process, format is: "res1:limit1,res2:limit2"; resource name is the end of constant (RLIMIT_XXX) in lower case (see man setrlimit for values); limit -1 means "unlimited"; example: set unlimited size for core file and max 1GB of virtual memory: "core:-1,as:1000000000"`
+** 説明: `WeeChat プロセスのリソースを制限する、フォーマット: "res1:limit1,res2:limit2"; リソース名は定数 (RLIMIT_XXX) の最後の語を小文字で (値は man setrlimit を参照) 記述; 値の -1 は "無制限" の意; 例: core ファイルのサイズ制限を無制限に仮想メモリを 1GB に制限: "core:-1,as:1000000000"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
