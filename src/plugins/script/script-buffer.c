@@ -200,6 +200,7 @@ script_buffer_display_line_script (int line, struct t_repo_script *script)
                     break;
                 case 's': /* status */
                     snprintf (str_item, sizeof (str_item),
+                              "%s",
                               script_repo_get_status_for_display (script,
                                                                   "*iHrN", 0));
                     break;
@@ -494,6 +495,7 @@ script_buffer_refresh (int clear)
     if (script_buffer_detail_script)
     {
         snprintf (str_title, sizeof (str_title),
+                  "%s",
                   _("alt+d=back to list"));
     }
     else
