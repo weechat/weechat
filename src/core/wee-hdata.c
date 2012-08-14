@@ -219,6 +219,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
                         i = 0;
                         while (1)
                         {
+                            ptr_value = NULL;
                             switch (type)
                             {
                                 case WEECHAT_HDATA_STRING:
