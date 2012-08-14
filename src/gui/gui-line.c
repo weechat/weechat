@@ -1048,11 +1048,13 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     else
         new_line->data->highlight = gui_line_has_highlight (new_line);
 
+    /* check if line is filtered or not */
+    new_line->data->displayed = gui_filter_check_line (new_line);
+
     /* add line to lines list */
     gui_line_add_to_list (buffer->own_lines, new_line);
 
-    /* check if line is filtered or not */
-    new_line->data->displayed = gui_filter_check_line (new_line);
+    /* update hotlist and/or send signals for line */
     if (new_line->data->displayed)
     {
         if (new_line->data->highlight)
