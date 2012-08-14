@@ -279,5 +279,6 @@ extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_write ();
+extern void config_weechat_free ();
 
 #endif /* __WEECHAT_CONFIG_H */

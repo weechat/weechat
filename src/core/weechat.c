@@ -521,6 +521,7 @@ main (int argc, char *argv[])
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
     gui_main_end (1);                   /* shut down WeeChat GUI            */
     proxy_free_all ();                  /* free all proxies                 */
+    config_weechat_free ();             /* free weechat.conf and vars       */
     config_file_free_all ();            /* free all configuration files     */
     gui_key_end ();                     /* remove all keys                  */
     unhook_all ();                      /* remove all hooks                 */

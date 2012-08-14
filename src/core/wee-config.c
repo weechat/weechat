@@ -3021,3 +3021,34 @@ config_weechat_write ()
 {
     return config_file_write (weechat_config_file);
 }
+
+/*
+ * config_weechat_free: free WeeChat configuration file and vars
+ */
+
+void
+config_weechat_free ()
+{
+    config_file_free (weechat_config_file);
+
+    if (config_highlight_regex)
+    {
+        regfree (config_highlight_regex);
+        free (config_highlight_regex);
+        config_highlight_regex = NULL;
+    }
+
+    if (config_highlight_tags)
+    {
+        string_free_split (config_highlight_tags);
+        config_highlight_tags = NULL;
+        config_num_highlight_tags = 0;
+    }
+
+    if (config_plugin_extensions)
+    {
+        string_free_split (config_plugin_extensions);
+        config_plugin_extensions = NULL;
+        config_num_plugin_extensions = 0;
+    }
+}
