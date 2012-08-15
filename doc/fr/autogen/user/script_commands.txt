@@ -21,11 +21,12 @@
 Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
 
 Sur le tampon des scripts, les statuts pour chaque script sont :
-  * i H r N
-  | | | | |
-  | | | | obsolète (nouvelle version disponible)
-  | | | chargé
-  | | figé
+  * i a H r N
+  | | | | | |
+  | | | | | obsolète (nouvelle version disponible)
+  | | | | chargé
+  | | | figé
+  | | chargé auto
   | installé
   script populaire
 

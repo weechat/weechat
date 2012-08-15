@@ -29,6 +29,7 @@ extern struct t_config_option *script_config_look_sort;
 
 extern struct t_config_option *script_config_color_status_popular;
 extern struct t_config_option *script_config_color_status_installed;
+extern struct t_config_option *script_config_color_status_autoloaded;
 extern struct t_config_option *script_config_color_status_held;
 extern struct t_config_option *script_config_color_status_running;
 extern struct t_config_option *script_config_color_status_obsolete;

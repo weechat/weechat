@@ -1,3 +1,8 @@
+* [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
+** 説明: `color for status "autoloaded" ("a")`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
+
 * [[option_script.color.status_held]] *script.color.status_held*
 ** 説明: `color for status "held" ("H")`
 ** タイプ: 色
@@ -129,7 +134,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"%s %n %V %v %u | %d | %t"`)
 
 * [[option_script.look.sort]] *script.look.sort*
-** 説明: `default sort keys for scripts: comma-separated list of identifiers: a=author, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
+** 説明: `default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"p,n"`)
 

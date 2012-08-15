@@ -21,11 +21,12 @@
 Without argument, this command opens a buffer with list of scripts.
 
 On script buffer, the possible status for each script are:
-  * i H r N
-  | | | | |
-  | | | | obsolete (new version available)
-  | | | running (loaded)
-  | | held
+  * i a H r N
+  | | | | | |
+  | | | | | obsolete (new version available)
+  | | | | running (loaded)
+  | | | held
+  | | autoloaded
   | installed
   popular script
 

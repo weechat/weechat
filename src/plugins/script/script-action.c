@@ -69,7 +69,7 @@ script_action_list ()
             ptr_name = weechat_hdata_string (hdata, ptr_script, "name");
             weechat_printf (NULL, " %s %s%s%s.%s %s%s %s(%s%s%s)",
                             script_repo_get_status_for_display (script_repo_search_by_name (ptr_name),
-                                                                "*?HN", 0),
+                                                                "*?iaHN", 0),
                             weechat_color (weechat_config_string (script_config_color_text_name)),
                             ptr_name,
                             weechat_color (weechat_config_string (script_config_color_text_extension)),

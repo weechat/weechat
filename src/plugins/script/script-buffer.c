@@ -202,7 +202,7 @@ script_buffer_display_line_script (int line, struct t_repo_script *script)
                     snprintf (str_item, sizeof (str_item),
                               "%s",
                               script_repo_get_status_for_display (script,
-                                                                  "*iHrN", 0));
+                                                                  "*iaHrN", 0));
                     break;
                 case 't': /* tags */
                     if (script->tags)
@@ -416,19 +416,26 @@ script_buffer_display_detail_script (struct t_repo_script *script)
     else
     {
         weechat_printf_y (script_buffer, line + 1,
-                          "%s: %s%s (%s%s%s%s%s%s%s%s%s%s )",
+                          "%s: %s%s (%s%s%s%s%s%s%s%s%s%s%s%s )",
                           script_buffer_detail_label (_(labels[line]), max_length),
-                          script_repo_get_status_for_display (script, "*iHrN", 1),
+                          script_repo_get_status_for_display (script, "*iaHrN", 1),
                           weechat_color ("chat"),
                           (script->popularity > 0) ? " " : "",
                           (script->popularity > 0) ? _("popular") : "",
                           (script->status & SCRIPT_STATUS_INSTALLED) ? " " : "",
+                          /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
                           (script->status & SCRIPT_STATUS_INSTALLED) ? _("installed") : "",
+                          (script->status & SCRIPT_STATUS_AUTOLOADED) ? " " : "",
+                          /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                          (script->status & SCRIPT_STATUS_AUTOLOADED) ? _("autoloaded") : "",
                           (script->status & SCRIPT_STATUS_HELD) ? " " : "",
+                          /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
                           (script->status & SCRIPT_STATUS_HELD) ? _("held") : "",
                           (script->status & SCRIPT_STATUS_RUNNING) ? " " : "",
+                          /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
                           (script->status & SCRIPT_STATUS_RUNNING) ? _("running") : "",
                           (script->status & SCRIPT_STATUS_NEW_VERSION) ? " " : "",
+                          /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
                           (script->status & SCRIPT_STATUS_NEW_VERSION) ? _("obsolete") : "");
     }
     line++;

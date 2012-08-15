@@ -22,9 +22,10 @@
 
 /* status for script */
 #define SCRIPT_STATUS_INSTALLED   1
-#define SCRIPT_STATUS_HELD        2
-#define SCRIPT_STATUS_RUNNING     4
-#define SCRIPT_STATUS_NEW_VERSION 8
+#define SCRIPT_STATUS_AUTOLOADED  2
+#define SCRIPT_STATUS_HELD        4
+#define SCRIPT_STATUS_RUNNING     8
+#define SCRIPT_STATUS_NEW_VERSION 16
 
 struct t_repo_script
 {

@@ -1,3 +1,8 @@
+* [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
+** Beschreibung: `color for status "autoloaded" ("a")`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
+
 * [[option_script.color.status_held]] *script.color.status_held*
 ** Beschreibung: `color for status "held" ("H")`
 ** Typ: Farbe
@@ -129,7 +134,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%s %n %V %v %u | %d | %t"`)
 
 * [[option_script.look.sort]] *script.look.sort*
-** Beschreibung: `default sort keys for scripts: comma-separated list of identifiers: a=author, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
+** Beschreibung: `default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"p,n"`)
 

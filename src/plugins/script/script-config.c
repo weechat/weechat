@@ -46,6 +46,7 @@ struct t_config_option *script_config_look_sort;
 
 struct t_config_option *script_config_color_status_popular;
 struct t_config_option *script_config_color_status_installed;
+struct t_config_option *script_config_color_status_autoloaded;
 struct t_config_option *script_config_color_status_held;
 struct t_config_option *script_config_color_status_running;
 struct t_config_option *script_config_color_status_obsolete;
@@ -343,10 +344,11 @@ script_config_init ()
         script_config_file, ptr_section,
         "sort", "string",
         N_("default sort keys for scripts: comma-separated list of identifiers: "
-           "a=author, d=date added, e=extension, i=installed, l=language, "
-           "n=name, o=obsolete, p=popularity, r=running, u=date updated; char "
-           "\"-\" can be used before identifier to reverse order; example: "
-           "\"i,u\": installed scripts first, sorted by update date"),
+           "a=author, A=autoloaded, d=date added, e=extension, i=installed, "
+           "l=language, n=name, o=obsolete, p=popularity, r=running, "
+           "u=date updated; char \"-\" can be used before identifier to reverse "
+           "order; example: \"i,u\": installed scripts first, sorted by update "
+           "date"),
         NULL, 0, 0, "p,n", NULL, 0,
         NULL, NULL, &script_config_change_sort_cb, NULL, NULL, NULL);
 
@@ -373,6 +375,12 @@ script_config_init ()
         "status_installed", "color",
         N_("color for status \"installed\" (\"i\")"),
         NULL, 0, 0, "lightcyan", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_status_autoloaded = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "status_autoloaded", "color",
+        N_("color for status \"autoloaded\" (\"a\")"),
+        NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_status_held = weechat_config_new_option (
         script_config_file, ptr_section,

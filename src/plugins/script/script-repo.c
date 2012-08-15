@@ -149,7 +149,7 @@ script_repo_search_by_name_ext (const char *name_with_extension)
 /*
  * script_repo_get_status_for_display: get status for display
  *                                     list is the codes of status to display
- *                                     (exemple: "*iHrN" for all status)
+ *                                     (exemple: "*iaHrN" for all status)
  */
 
 const char *
@@ -177,6 +177,10 @@ script_repo_get_status_for_display (struct t_repo_script *script,
             case 'i':
                 strcat (str_status, weechat_color (weechat_config_string (script_config_color_status_installed)));
                 strcat (str_status, (script && (script->status & SCRIPT_STATUS_INSTALLED)) ? "i" : str_space);
+                break;
+            case 'a':
+                strcat (str_status, weechat_color (weechat_config_string (script_config_color_status_autoloaded)));
+                strcat (str_status, (script && (script->status & SCRIPT_STATUS_AUTOLOADED)) ? "a" : str_space);
                 break;
             case '?':
                 strcat (str_status, weechat_color (weechat_config_string (script_config_color_status_unknown)));
@@ -264,6 +268,14 @@ script_repo_compare_scripts (struct t_repo_script *script1,
                 break;
             case 'a': /* author */
                 cmp = strcmp (script1->author, script2->author);
+                break;
+            case 'A': /* status autoloaded */
+                if ((script1->status & SCRIPT_STATUS_AUTOLOADED)
+                    && !(script2->status & SCRIPT_STATUS_AUTOLOADED))
+                    cmp = -1;
+                else if (!(script1->status & SCRIPT_STATUS_AUTOLOADED)
+                         && (script2->status & SCRIPT_STATUS_AUTOLOADED))
+                    cmp = 1;
                 break;
             case 'd': /* date added */
                 if (script1->date_added > script2->date_added)
@@ -638,6 +650,7 @@ script_repo_update_status (struct t_repo_script *script)
         if (stat (filename, &st) == 0)
         {
             script->status |= SCRIPT_STATUS_INSTALLED;
+            script->status |= SCRIPT_STATUS_AUTOLOADED;
             md5sum = script_repo_md5sum_file (filename);
         }
         else
@@ -1352,9 +1365,10 @@ script_repo_print_log ()
         weechat_log_printf ("  popularity. . . . . . : %d",    ptr_script->popularity);
         weechat_log_printf ("  date_added. . . . . . : %ld",   ptr_script->date_added);
         weechat_log_printf ("  date_updated. . . . . : %ld",   ptr_script->date_updated);
-        weechat_log_printf ("  status. . . . . . . . : %d (%s%s%s%s )",
+        weechat_log_printf ("  status. . . . . . . . : %d (%s%s%s%s%s )",
                             ptr_script->status,
                             (ptr_script->status & SCRIPT_STATUS_INSTALLED) ? " installed": "",
+                            (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ? " autoloaded": "",
                             (ptr_script->status & SCRIPT_STATUS_HELD) ? " held": "",
                             (ptr_script->status & SCRIPT_STATUS_RUNNING) ? " running": "",
                             (ptr_script->status & SCRIPT_STATUS_NEW_VERSION) ? " new_version": "");

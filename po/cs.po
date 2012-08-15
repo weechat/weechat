@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-14 18:26+0200\n"
+"POT-Creation-Date: 2012-08-15 09:17+0200\n"
 "PO-Revision-Date: 2012-06-03 09:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8280,19 +8280,26 @@ msgstr "ukončit WeeChat"
 msgid "popular"
 msgstr ""
 
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "installed"
 msgstr ""
 
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "autoloaded"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "held"
 msgstr ""
 
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "running"
 msgstr ""
 
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "obsolete"
 msgstr ""
 
-#, c-format
 msgid "alt+d=back to list"
 msgstr ""
 
@@ -8331,11 +8338,12 @@ msgid ""
 "Without argument, this command opens a buffer with list of scripts.\n"
 "\n"
 "On script buffer, the possible status for each script are:\n"
-"  * i H r N\n"
-"  | | | | |\n"
-"  | | | | obsolete (new version available)\n"
-"  | | | running (loaded)\n"
-"  | | held\n"
+"  * i a H r N\n"
+"  | | | | | |\n"
+"  | | | | | obsolete (new version available)\n"
+"  | | | | running (loaded)\n"
+"  | | | held\n"
+"  | | autoloaded\n"
 "  | installed\n"
 "  popular script\n"
 "\n"
@@ -8376,10 +8384,10 @@ msgstr ""
 
 msgid ""
 "default sort keys for scripts: comma-separated list of identifiers: "
-"a=author, d=date added, e=extension, i=installed, l=language, n=name, "
-"o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can be used "
-"before identifier to reverse order; example: \"i,u\": installed scripts "
-"first, sorted by update date"
+"a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, "
+"n=name, o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can "
+"be used before identifier to reverse order; example: \"i,u\": installed "
+"scripts first, sorted by update date"
 msgstr ""
 
 #, fuzzy
@@ -8388,6 +8396,10 @@ msgstr "barva textu pro čas (stavový řádek)"
 
 msgid "color for status \"installed\" (\"i\")"
 msgstr ""
+
+#, fuzzy
+msgid "color for status \"autoloaded\" (\"a\")"
+msgstr "barva textu pro čas (stavový řádek)"
 
 msgid "color for status \"held\" (\"H\")"
 msgstr ""
