@@ -1946,6 +1946,7 @@ COMMAND_CALLBACK(help)
             command_found = 1;
             gui_chat_printf (NULL, "");
             length = utf8_strlen_screen (plugin_get_name (ptr_hook->plugin)) +
+                ((ptr_hook->subplugin && ptr_hook->subplugin[0]) ? utf8_strlen_screen (ptr_hook->subplugin) + 1 : 0) +
                 utf8_strlen_screen (HOOK_COMMAND(ptr_hook, command)) + 7;
             snprintf (str_format, sizeof (str_format),
                       "%%-%ds%%s", length);
