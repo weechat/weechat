@@ -816,11 +816,13 @@ script_repo_file_read (int quiet)
 {
     char *filename, *ptr_line, line[4096], *pos, *pos2, *pos3;
     char *name, *value1, *value2, *value3, *value, *error;
-    const char *version;
+    char *locale, *locale_language;
+    const char *version, *ptr_locale, *ptr_desc;
     gzFile file;
     struct t_repo_script *script;
     int version_number, version_ok, script_ok, length;
     struct tm tm_script;
+    struct t_hashtable *descriptions;
 
     script_get_loaded_scripts ();
 
@@ -866,6 +868,39 @@ script_repo_file_read (int quiet)
         return 0;
     }
 
+    /*
+     * get locale and locale_languages
+     * example: if LANG=fr_FR.UTF-8, result is:
+     *   locale          = "fr_FR"
+     *   locale_language = "fr"
+     */
+    locale = NULL;
+    locale_language = NULL;
+    ptr_locale = weechat_info_get ("locale", NULL);
+    if (ptr_locale)
+    {
+        pos = strchr (ptr_locale, '.');
+        if (pos)
+            locale = weechat_strndup (ptr_locale, pos - ptr_locale);
+        else
+            locale = strdup (ptr_locale);
+    }
+    if (locale)
+    {
+        pos = strchr (locale, '_');
+        if (pos)
+            locale_language = weechat_strndup (locale, pos - locale);
+        else
+            locale_language = strdup (locale);
+    }
+
+    descriptions = weechat_hashtable_new (8,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          NULL,
+                                          NULL);
+
+    /* read plugins.xml.gz */
     while (!gzeof (file))
     {
         ptr_line = gzgets (file, line, sizeof (line) - 1);
@@ -874,6 +909,7 @@ script_repo_file_read (int quiet)
             if (strstr (ptr_line, "<plugin id="))
             {
                 script = script_repo_alloc ();
+                weechat_hashtable_remove_all (descriptions);
             }
             else if (strstr (ptr_line, "</plugin>"))
             {
@@ -895,20 +931,43 @@ script_repo_file_read (int quiet)
                         }
                         if (version_ok)
                         {
-                            length = strlen (script->name) + 1 +
-                                strlen (script_extension[script->language]) + 1;
-                            script->name_with_extension = malloc (length);
-                            if (script->name_with_extension)
+                            ptr_desc = NULL;
+                            if (weechat_config_boolean (script_config_look_translate_description))
                             {
-                                snprintf (script->name_with_extension,
-                                          length,
-                                          "%s.%s",
-                                          script->name,
-                                          script_extension[script->language]);
+                                /* try translated description (format "fr_FR") */
+                                ptr_desc = weechat_hashtable_get (descriptions,
+                                                                  locale);
+                                if (!ptr_desc)
+                                {
+                                    /* try translated description (format "fr") */
+                                    ptr_desc = weechat_hashtable_get (descriptions,
+                                                                      locale_language);
+                                }
                             }
-                            script_repo_update_status (script);
-                            script_repo_add (script);
-                            script_ok = 1;
+                            if (!ptr_desc)
+                            {
+                                /* default description (english) */
+                                ptr_desc = weechat_hashtable_get (descriptions,
+                                                                  "en");
+                            }
+                            if (ptr_desc)
+                            {
+                                script->description = strdup (ptr_desc);
+                                length = strlen (script->name) + 1 +
+                                    strlen (script_extension[script->language]) + 1;
+                                script->name_with_extension = malloc (length);
+                                if (script->name_with_extension)
+                                {
+                                    snprintf (script->name_with_extension,
+                                              length,
+                                              "%s.%s",
+                                              script->name,
+                                              script_extension[script->language]);
+                                }
+                                script_repo_update_status (script);
+                                script_repo_add (script);
+                                script_ok = 1;
+                            }
                         }
                     }
                     if (!script_ok)
@@ -948,8 +1007,17 @@ script_repo_file_read (int quiet)
                                     script->version = strdup (value);
                                 else if (strcmp (name, "license") == 0)
                                     script->license = strdup (value);
-                                else if (strcmp (name, "desc_en") == 0)
-                                    script->description = strdup (value);
+                                else if (strncmp (name, "desc_", 5) == 0)
+                                {
+                                    /*
+                                     * store translated description in hashtable
+                                     * (will be used later, by choosing
+                                     * appropriate language according to locale)
+                                     */
+                                    weechat_hashtable_set (descriptions,
+                                                           name + 5,
+                                                           value);
+                                }
                                 else if (strcmp (name, "tags") == 0)
                                     script->tags = strdup (value);
                                 else if (strcmp (name, "requirements") == 0)
@@ -1033,6 +1101,13 @@ script_repo_file_read (int quiet)
                         weechat_prefix ("error"),
                         SCRIPT_PLUGIN_NAME);
     }
+
+    if (locale)
+        free (locale);
+    if (locale_language)
+        free (locale_language);
+    if (descriptions)
+        weechat_hashtable_free (descriptions);
 
     return 1;
 }

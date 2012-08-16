@@ -138,6 +138,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"p,n"`)
 
+* [[option_script.look.translate_description]] *script.look.translate_description*
+** description: `traduire la description des scripts (si une traduction est disponible dans votre langue, sinon la version anglaise est utilisée)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = expire toujours)`
 ** type: entier

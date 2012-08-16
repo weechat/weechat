@@ -41,6 +41,7 @@ struct t_config_section *script_config_section_scripts = NULL;
 
 struct t_config_option *script_config_look_columns;
 struct t_config_option *script_config_look_sort;
+struct t_config_option *script_config_look_translate_description;
 
 /* script config, color section */
 
@@ -155,8 +156,8 @@ script_config_get_script_download_filename (struct t_repo_script *script)
 }
 
 /*
- * script_config_refresh_cb: callback called when user changes xfer option that
- *                           needs a refresh of script list
+ * script_config_refresh_cb: callback called when script buffer needs to be
+ *                           refreshed
  */
 
 void
@@ -171,12 +172,12 @@ script_config_refresh_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * script_config_change_sort_cb: callback called when default sort keys are
- *                               changed
+ * script_config_reload_scripts_cb: callback called list of scripts must be
+ *                                  reloaded from file (plugins.xml.gz)
  */
 
 void
-script_config_change_sort_cb (void *data, struct t_config_option *option)
+script_config_reload_scripts_cb (void *data, struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -350,7 +351,14 @@ script_config_init ()
            "order; example: \"i,u\": installed scripts first, sorted by update "
            "date"),
         NULL, 0, 0, "p,n", NULL, 0,
-        NULL, NULL, &script_config_change_sort_cb, NULL, NULL, NULL);
+        NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
+    script_config_look_translate_description = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "translate_description", "boolean",
+        N_("translate description of scripts (if translation is available in "
+           "your language, otherwise english version is used)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (script_config_file, "color",

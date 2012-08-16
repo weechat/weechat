@@ -138,6 +138,11 @@
 ** type: string
 ** values: any string (default value: `"p,n"`)
 
+* [[option_script.look.translate_description]] *script.look.translate_description*
+** description: `translate description of scripts (if translation is available in your language, otherwise english version is used)`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
 ** type: integer
