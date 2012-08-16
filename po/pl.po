@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-15 09:17+0200\n"
-"PO-Revision-Date: 2012-07-27 12:16+0200\n"
+"POT-Creation-Date: 2012-08-16 12:01+0200\n"
+"PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -7350,6 +7350,10 @@ msgstr "kodowanie terminala"
 msgid "WeeChat internal charset"
 msgstr "wewnętrzne kodowanie WeeChat"
 
+#, fuzzy
+msgid "locale used for translating messages"
+msgstr "przedrostek informacji o akcjach"
+
 msgid "keyboard inactivity (seconds)"
 msgstr "brak aktywności klawiatury (sekundy)"
 
@@ -9148,69 +9152,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#, fuzzy
-#~ msgid "%s: downloading \"%s\"..."
-#~ msgstr "%s: wyładowuję skrypt \"%s\""
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s: nie można uwierzytelnić za pomocą SASL oraz mechanizmu DH-BLOWFISH, "
-#~ "ponieważ WeeChat został skompilowany bez wsparcia dla libgcrypt"
-
-#, fuzzy
-#~ msgid "Regex modifier"
-#~ msgstr "Domyślne rmodifiery:"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr ""
-#~ "inteligentne dopełnianie nicków (dopełnia najpierw z ostatnim aktywnym)"
-
-#~ msgid "ended on: "
-#~ msgstr "zakończono: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s id: %d,  protokół: %s, odebrano: %s, wysłano: %s"
-
-#, fuzzy
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
-#~ msgstr "%s: nowy klient z %s%s%s na porcie %d (id: %d, przekazuję: %s%s%s)"
-
-#~ msgid "text color"
-#~ msgstr "kolor tekstu"
-
-#~ msgid "background color"
-#~ msgstr "kolor tła"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "kolor zaznaczenia linii xfer"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "wyświetla wiadomość, kiedy stajemy się/przestajemy być nieobecni"
-
-#, fuzzy
-#~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s%s: błąd podczas wysyłania danych do klienta %d (%s)"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "wyświetl atrybuty kanału w elemencie paska \"buffer_name\""
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sBłąd: nazwa nie może się zaczynać od \"#\""
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: nazwa nie może się zaczynać od \"#\""
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "ciąg wstawiany po dopełnionym nicku"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "wyświetl '+', jeśli przedrostek jest obcięty"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<nick> <kanał>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "mechanizm uwierzytelniania SASL"

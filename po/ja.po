@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-15 09:17+0200\n"
-"PO-Revision-Date: 2012-08-08 17:35+0900\n"
+"POT-Creation-Date: 2012-08-16 12:01+0200\n"
+"PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -7218,6 +7218,10 @@ msgstr "ターミナルの文字集合"
 msgid "WeeChat internal charset"
 msgstr "WeeChat 内部文字集合"
 
+#, fuzzy
+msgid "locale used for translating messages"
+msgstr "アクションメッセージのプレフィックス"
+
 msgid "keyboard inactivity (seconds)"
 msgstr "キーボード未使用時間 (秒)"
 
@@ -9009,64 +9013,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s: WeeChat が libgcrypt をサポートしてビルドされていないので、SASL と "
-#~ "DH-BLOWFISH メカニズムの組み合わせでは認証出来ません"
-
-#, fuzzy
-#~ msgid "Regex modifier"
-#~ msgstr "デフォルトの rmodifier:"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr "ニックネームのスマート補完 (最新の会話から優先して補完)"
-
-#~ msgid "ended on: "
-#~ msgstr "終了日時: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s id: %d、プロトコル: %s、受信: %s、送信: %s"
-
-#, fuzzy
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
-#~ msgstr "%s: %s%s%s ポート %d での新規クライアント (id: %d、リレー: %s%s%s)"
-
-#~ msgid "text color"
-#~ msgstr "テキスト色"
-
-#~ msgid "background color"
-#~ msgstr "背景色"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "xfer の選択行の色"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "離席(着席)状態の場合はメッセージを表示"
-
-#, fuzzy
-#~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s%s: クライアント %d (%s) へのデータ送信中にエラー"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "\"buffer_name\" バーアイテムにチャンネルモードを表示"
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sエラー: \"#\" で始まる名前は使えません"
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: \"#\" から始まる名前は使えません"
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "ニックネーム補完の後に追加される文字列"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "プレフィックスが切り詰められた場合は '+' を表示"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<nick> <channel>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "SASL 認証メカニズム"

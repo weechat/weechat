@@ -38,6 +38,8 @@
 
 | weechat | inactivity | キーボード未使用時間 (秒) | -
 
+| weechat | locale | locale used for translating messages | -
+
 | weechat | version | WeeChat のバージョン | -
 
 | weechat | version_number | WeeChat のバージョン (数字) | -

@@ -38,6 +38,8 @@
 
 | weechat | inactivity | inattività della tastiera (secondi) | -
 
+| weechat | locale | locale used for translating messages | -
+
 | weechat | version | versione di WeeChat | -
 
 | weechat | version_number | versione di WeeChat (come numero) | -

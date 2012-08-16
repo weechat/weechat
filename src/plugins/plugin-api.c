@@ -34,6 +34,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <locale.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -353,6 +354,10 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     else if (string_strcasecmp (info_name, "charset_internal") == 0)
     {
         return WEECHAT_INTERNAL_CHARSET;
+    }
+    else if (string_strcasecmp (info_name, "locale") == 0)
+    {
+        return setlocale (LC_MESSAGES, NULL);
     }
     else if (string_strcasecmp (info_name, "inactivity") == 0)
     {
@@ -1032,6 +1037,8 @@ plugin_api_init ()
     hook_info (NULL, "charset_terminal", N_("terminal charset"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "charset_internal", N_("WeeChat internal charset"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "locale", N_("locale used for translating messages"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "inactivity", N_("keyboard inactivity (seconds)"), NULL,
                &plugin_api_info_get_internal, NULL);

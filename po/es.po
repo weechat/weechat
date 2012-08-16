@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-15 09:17+0200\n"
-"PO-Revision-Date: 2012-07-27 12:16+0200\n"
+"POT-Creation-Date: 2012-08-16 12:01+0200\n"
+"PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Spanish\n"
@@ -7410,6 +7410,10 @@ msgstr "set de caracteres de la terminal"
 msgid "WeeChat internal charset"
 msgstr "set de caracteres interno de WeeChat"
 
+#, fuzzy
+msgid "locale used for translating messages"
+msgstr "prefijo para mensajes de acción"
+
 msgid "keyboard inactivity (seconds)"
 msgstr "inactividad del teclado (segundos)"
 
@@ -9239,72 +9243,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#, fuzzy
-#~ msgid "%s: downloading \"%s\"..."
-#~ msgstr "%s: descargando el script \"%s\""
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s: no es posible autenticarse con SASL y el mecanismo DH-BLOWFISH "
-#~ "debido a que WeeChat no fue compilado con soporte libgcrypt"
-
-#, fuzzy
-#~ msgid "Regex modifier"
-#~ msgstr "Modificadores regulares predeterminados"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr ""
-#~ "autocompletar inteligente para apodos (completa primero con los últimos "
-#~ "que hablaron)"
-
-#~ msgid "ended on: "
-#~ msgstr "terminado en: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s id: %d, protocolo: %s, recibido: %s, enviado: %s"
-
-#, fuzzy
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
-#~ msgstr ""
-#~ "%s: nuevo cliente desde %s%s%s en el puerto %d (id: %d, retransmitiendo: "
-#~ "%s%s%s)"
-
-#~ msgid "text color"
-#~ msgstr "color del texto"
-
-#~ msgid "background color"
-#~ msgstr "color de fondo"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "color de texto para la línea seleccionada en xfer"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "mostrar mensaje cuando se cambie el estado de ausente"
-
-#, fuzzy
-#~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s%s: error al enviar datos al cliente %d (%s)"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "mostrar los modos del canal en el elemento de barra \"buffer_name\""
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sError: el nombre no puede empezar con \"#\""
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: nombre no puede empezar con \"#\""
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "cadena insertada después de auto-completar un apodo"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "mostrar '+' si el prefijo ha sido truncado"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<apodo> <canal>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "mecanismo para la autenticación SASL"

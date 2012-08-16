@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-15 09:17+0200\n"
-"PO-Revision-Date: 2012-06-03 09:49+0200\n"
+"POT-Creation-Date: 2012-08-16 12:01+0200\n"
+"PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -7139,6 +7139,10 @@ msgstr "znaková sada terminálu"
 msgid "WeeChat internal charset"
 msgstr "interní znaková sada WeeChat"
 
+#, fuzzy
+msgid "locale used for translating messages"
+msgstr "prefix pro zprávy akcí"
+
 msgid "keyboard inactivity (seconds)"
 msgstr "nečinnost klávesnice (sekundy)"
 
@@ -8956,68 +8960,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s: downloading \"%s\"..."
-#~ msgstr "%s: odebírám skript \"%s\""
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s: nemohu se autentizovat pomocí SASL a mechanismu DH-BLOWFISH, protže "
-#~ "WeeChat nebyl sestaven s podporou libcrypt"
-
-#, fuzzy
-#~ msgid "Regex modifier"
-#~ msgstr "Výchozí rmodifikátory:"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako první)"
-
-#~ msgid "ended on: "
-#~ msgstr "končí: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s id: %d, protokol: %s, obdrženo: %s, posláno: %s"
-
-#, fuzzy
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s%s)"
-#~ msgstr "%s: nový klient od %s%s%s na portu %d (id: %d, přesměrovávám %s.%s)"
-
-#~ msgid "text color"
-#~ msgstr "barva textu"
-
-#~ msgid "background color"
-#~ msgstr "barva pozadí"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "barva textu pro vybraný xfer řádek"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
-
-#, fuzzy
-#~ msgid "%s%s: sending data to client error %d: %d %s"
-#~ msgstr "%s%s: chyba při zasílání dat na klienta %s"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "zobrazit módy kanálu v položce pole \"buffer_name\""
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sChyba: jméno nemůže začínat na \"#\""
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: jméno nemůže začínat na \"#\""
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "řetězec vložený za přezdívku po doplnění"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "zobrazit '+' pokud je prefix zkrácen"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<přezdívka> <kanál>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "mechanismu pro SASL autentizaci"

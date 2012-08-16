@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-15 09:17+0200\n"
-"PO-Revision-Date: 2012-08-03 09:46+0100\n"
+"POT-Creation-Date: 2012-08-16 12:01+0200\n"
+"PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -7688,6 +7688,10 @@ msgstr "Terminal Zeichensatz"
 msgid "WeeChat internal charset"
 msgstr "Interner WeeChat Zeichensatz"
 
+#, fuzzy
+msgid "locale used for translating messages"
+msgstr "Präfix für Action-Nachrichten"
+
 msgid "keyboard inactivity (seconds)"
 msgstr "Inaktivität der Tastatur (Sekunden)"
 
@@ -9539,64 +9543,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-#, fuzzy
-#~ msgid "%s: downloading \"%s\"..."
-#~ msgstr "%s: Deinstalliere das Skript \"%s\""
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
-#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr ""
-#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
-#~ "letzten Nick, mit dem gesprochen wurde)"
-
-#~ msgid "ended on: "
-#~ msgstr "geendet am: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
-
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
-#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
-
-#~ msgid "text color"
-#~ msgstr "Textfarbe"
-
-#~ msgid "background color"
-#~ msgstr "Hintergrundfarbe"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
-
-#~ msgid "%s%s: error sending data to client %d (%s)"
-#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<nick> <channel>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "Vorrichtung zur SASL Authentifizierung"
