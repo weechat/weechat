@@ -6,5 +6,6 @@ usr/lib/weechat/plugins/python.so
 usr/lib/weechat/plugins/ruby.so
 usr/lib/weechat/plugins/lua.so
 usr/lib/weechat/plugins/tcl.so
+usr/lib/weechat/plugins/script.so
 usr/lib/weechat/plugins/relay.so
 usr/lib/weechat/plugins/rmodifier.so

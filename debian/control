@@ -29,6 +29,7 @@ Description: Fast, light and extensible chat client
   - incremental text search
   - dynamic filtering of buffer content
   - Perl, Python, Ruby, Lua, Tcl and Scheme scripting
+  - scripts manager
   - spell checking
   - highly customizable and extensible
   - and much more!
@@ -53,6 +54,7 @@ Description: Fast, light and extensible chat client - console client
   - incremental text search
   - dynamic filtering of buffer content
   - Perl, Python, Ruby, Lua, Tcl and Scheme scripting
+  - scripts manager
   - spell checking
   - highly customizable and extensible
   - and much more!
@@ -83,6 +85,7 @@ Description: Fast, light and extensible chat client - plugins
  This package provides some plugins to enhance WeeChat. It currently
  ships the following plugins:
   - Perl, Python, Ruby, Lua, Tcl and Scheme scripting
+  - scripts manager
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
   - IRC proxy
