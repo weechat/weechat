@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-16 12:18+0200\n"
+"POT-Creation-Date: 2012-08-17 08:43+0200\n"
 "PO-Revision-Date: 2012-08-16 12:02+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7832,6 +7832,10 @@ msgid "%s: unknown language for script \"%s\""
 msgstr "%s: descarregando script \"%s\""
 
 #, fuzzy, c-format
+msgid "%s: script \"%s\" is not loaded"
+msgstr "%s%s: script \"%s\" não carregado"
+
+#, fuzzy, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s: descarregando script \"%s\""
 
@@ -7852,12 +7856,8 @@ msgid "%s: script \"%s\" not found"
 msgstr "%s%s: script \"%s\" não encontrado"
 
 #, fuzzy, c-format
-msgid "%s: script \"%s\" not held any more"
+msgid "%s: script \"%s\" is not held any more"
 msgstr "%s%s: script \"%s\" não carregado"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" held"
-msgstr "%s: script \"%s\" descarregado"
 
 #, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
@@ -7953,8 +7953,8 @@ msgid "WeeChat scripts manager"
 msgstr "site do WeeChat"
 
 msgid ""
-"list || show <script> || load|unload <script> [<script>...] || install|"
-"remove|hold <script> [<script>...] || upgrade || update"
+"list || show <script> || load|unload|reload <script> [<script>...] || "
+"install|remove|hold <script> [<script>...] || upgrade || update"
 msgstr ""
 
 msgid ""
@@ -7962,6 +7962,7 @@ msgid ""
 "    show: show detailed info about a script\n"
 "    load: load script(s)\n"
 "  unload: unload script(s)\n"
+"  reload: reload script(s)\n"
 " install: install/upgrade script(s)\n"
 "  remove: remove script(s)\n"
 "    hold: hold/unhold script(s) (a script held will not be upgraded any more "
@@ -7996,7 +7997,14 @@ msgid ""
 "  s:       reset sort (use default sort)\n"
 "  word(s)  filter scripts: search word(s) in scripts (description, "
 "tags, ...)\n"
-"  *        remove filter"
+"  *        remove filter\n"
+"\n"
+"Examples:\n"
+"  /script install iset.pl buffers.pl\n"
+"  /script remove iset.pl\n"
+"  /script hold urlserver.py\n"
+"  /script reload urlserver\n"
+"  /script upgrade"
 msgstr ""
 
 #, fuzzy
@@ -8603,3 +8611,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: script \"%s\" descarregado"

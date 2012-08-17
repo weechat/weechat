@@ -3,7 +3,7 @@
 ........................................
 /script  list
          show <script>
-         load|unload <script> [<script>...]
+         load|unload|reload <script> [<script>...]
          install|remove|hold <script> [<script>...]
          upgrade
          update
@@ -12,6 +12,7 @@
     show: show detailed info about a script
     load: load script(s)
   unload: unload script(s)
+  reload: reload script(s)
  install: install/upgrade script(s)
   remove: remove script(s)
     hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
@@ -44,5 +45,12 @@ Input allowed on script buffer:
   s:       reset sort (use default sort)
   word(s)  filter scripts: search word(s) in scripts (description, tags, ...)
   *        remove filter
+
+Examples:
+  /script install iset.pl buffers.pl
+  /script remove iset.pl
+  /script hold urlserver.py
+  /script reload urlserver
+  /script upgrade
 ........................................
 

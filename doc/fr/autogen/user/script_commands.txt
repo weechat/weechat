@@ -3,7 +3,7 @@
 ........................................
 /script  list
          show <script>
-         load|unload <script> [<script>...]
+         load|unload|reload <script> [<script>...]
          install|remove|hold <script> [<script>...]
          upgrade
          update
@@ -12,6 +12,7 @@
     show: afficher des infos détaillées sur le script
     load: charger un ou plusieurs scripts
   unload: décharger un ou plusieurs scripts
+  reload: recharger un ou plusieurs scripts
  install: installer/mettre à jour un ou plusieurs scripts
   remove: supprimer un ou plusieurs scripts
     hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
@@ -44,5 +45,12 @@ Entrée autorisée sur le tampon des scripts :
   s:       réinitialiser le tri (utiliser le tri par défaut)
   word(s)  filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
   *        supprimer le filtre
+
+Exemples:
+  /script install iset.pl buffers.pl
+  /script remove iset.pl
+  /script hold urlserver.py
+  /script reload urlserver
+  /script upgrade
 ........................................
 

@@ -109,7 +109,8 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
     }
 
     if ((weechat_strcasecmp (argv[1], "load") == 0)
-        || (weechat_strcasecmp (argv[1], "unload") == 0))
+        || (weechat_strcasecmp (argv[1], "unload") == 0)
+        || (weechat_strcasecmp (argv[1], "reload") == 0))
     {
         script_command_action (buffer,
                                argv[1],
@@ -214,13 +215,14 @@ script_command_init ()
     weechat_hook_command ("script",
                           N_("WeeChat scripts manager"),
                           N_("list || show <script>"
-                             " || load|unload <script> [<script>...]"
+                             " || load|unload|reload <script> [<script>...]"
                              " || install|remove|hold <script> [<script>...]"
                              " || upgrade || update"),
                           N_("    list: list loaded scripts (all languages)\n"
                              "    show: show detailed info about a script\n"
                              "    load: load script(s)\n"
                              "  unload: unload script(s)\n"
+                             "  reload: reload script(s)\n"
                              " install: install/upgrade script(s)\n"
                              "  remove: remove script(s)\n"
                              "    hold: hold/unhold script(s) (a script held "
@@ -255,16 +257,25 @@ script_command_init ()
                              "  s:       reset sort (use default sort)\n"
                              "  word(s)  filter scripts: search word(s) in "
                              "scripts (description, tags, ...)\n"
-                             "  *        remove filter"),
+                             "  *        remove filter\n\n"
+                             "Examples:\n"
+                             "  /script install iset.pl buffers.pl\n"
+                             "  /script remove iset.pl\n"
+                             "  /script hold urlserver.py\n"
+                             "  /script reload urlserver\n"
+                             "  /script upgrade"),
                           "list"
                           " || show %(script_scripts)"
-                          " || load %(script_files)"
+                          " || load %(script_files)|%*"
                           " || unload %(python_script)|%(perl_script)|"
                           "%(ruby_script)|%(tcl_script)|%(lua_script)|"
-                          "%(guile_script)"
+                          "%(guile_script)|%*"
+                          " || reload %(python_script)|%(perl_script)|"
+                          "%(ruby_script)|%(tcl_script)|%(lua_script)|"
+                          "%(guile_script)|%*"
                           " || install %(script_scripts)|%*"
                           " || remove %(script_scripts_installed)|%*"
-                          " || hold %(script_scripts)"
+                          " || hold %(script_scripts)|%*"
                           " || update"
                           " || upgrade",
                           &script_command_script, NULL);

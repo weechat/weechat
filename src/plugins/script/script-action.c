@@ -96,7 +96,7 @@ script_action_list ()
  */
 
 void
-script_action_load (const char *name)
+script_action_load (const char *name, int quiet)
 {
     char *pos, str_command[1024];
     int language;
@@ -107,9 +107,12 @@ script_action_load (const char *name)
         language = script_language_search_by_extension (pos + 1);
     if (language < 0)
     {
-        weechat_printf (NULL,
-                        _("%s: unknown language for script \"%s\""),
-                        SCRIPT_PLUGIN_NAME, name);
+        if (!quiet)
+        {
+            weechat_printf (NULL,
+                            _("%s: unknown language for script \"%s\""),
+                            SCRIPT_PLUGIN_NAME, name);
+        }
         return;
     }
 
@@ -126,7 +129,7 @@ script_action_load (const char *name)
  */
 
 void
-script_action_unload (const char *name)
+script_action_unload (const char *name, int quiet)
 {
     char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
     const char *ptr_filename, *ptr_registered_name;
@@ -142,9 +145,12 @@ script_action_unload (const char *name)
         language = script_language_search_by_extension (pos + 1);
         if (language < 0)
         {
-            weechat_printf (NULL,
-                            _("%s: unknown language for script \"%s\""),
-                            SCRIPT_PLUGIN_NAME, name);
+            if (!quiet)
+            {
+                weechat_printf (NULL,
+                                _("%s: unknown language for script \"%s\""),
+                                SCRIPT_PLUGIN_NAME, name);
+            }
             return;
         }
         /*
@@ -212,6 +218,117 @@ script_action_unload (const char *name)
                 ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
             }
         }
+    }
+
+    if (!quiet)
+    {
+        weechat_printf (NULL,
+                        _("%s: script \"%s\" is not loaded"),
+                        SCRIPT_PLUGIN_NAME, name);
+    }
+}
+
+/*
+ * script_action_reload: reload a script
+ */
+
+void
+script_action_reload (const char *name, int quiet)
+{
+    char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
+    const char *ptr_filename, *ptr_registered_name;
+    int language, found, i;
+    struct t_hdata *hdata;
+    void *ptr_script;
+
+    language = -1;
+    pos = strrchr (name, '.');
+    if (pos)
+    {
+        /* reload script by using name + extension (example: "iset.pl") */
+        language = script_language_search_by_extension (pos + 1);
+        if (language < 0)
+        {
+            if (!quiet)
+            {
+                weechat_printf (NULL,
+                                _("%s: unknown language for script \"%s\""),
+                                SCRIPT_PLUGIN_NAME, name);
+            }
+            return;
+        }
+        /*
+         * search registered name of script using name with extension,
+         * for example with "iset.pl" we should find "iset"
+         */
+        snprintf (hdata_name, sizeof (hdata_name),
+                  "%s_script", script_language[language]);
+        hdata = weechat_hdata_get (hdata_name);
+        ptr_script = weechat_hdata_get_list (hdata, "scripts");
+        while (ptr_script)
+        {
+            found = 0;
+            ptr_filename = weechat_hdata_string (hdata, ptr_script, "filename");
+            if (ptr_filename)
+            {
+                filename = strdup (ptr_filename);
+                if (filename)
+                {
+                    ptr_base_name = basename (filename);
+                    if (strcmp (ptr_base_name, name) == 0)
+                        found = 1;
+                    free (filename);
+                }
+            }
+            if (found)
+            {
+                ptr_registered_name = weechat_hdata_string (hdata, ptr_script,
+                                                            "name");
+                if (ptr_registered_name)
+                {
+                    snprintf (str_command, sizeof (str_command),
+                              "/%s reload %s",
+                              script_language[language],
+                              ptr_registered_name);
+                    weechat_command (NULL, str_command);
+                }
+                return;
+            }
+            ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
+        }
+    }
+    else
+    {
+        /* reload script by using name (example: "iset") */
+        for (i = 0; script_language[i]; i++)
+        {
+            snprintf (hdata_name, sizeof (hdata_name),
+                      "%s_script", script_language[i]);
+            hdata = weechat_hdata_get (hdata_name);
+            ptr_script = weechat_hdata_get_list (hdata, "scripts");
+            while (ptr_script)
+            {
+                ptr_registered_name = weechat_hdata_string (hdata, ptr_script,
+                                                            "name");
+                if (strcmp (ptr_registered_name, name) == 0)
+                {
+                    snprintf (str_command, sizeof (str_command),
+                              "/%s reload %s",
+                              script_language[i],
+                              name);
+                    weechat_command (NULL, str_command);
+                    return;
+                }
+                ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
+            }
+        }
+    }
+
+    if (!quiet)
+    {
+        weechat_printf (NULL,
+                        _("%s: script \"%s\" is not loaded"),
+                        SCRIPT_PLUGIN_NAME, name);
     }
 }
 
@@ -411,7 +528,7 @@ script_action_hold (const char *name, int quiet)
             if (!quiet)
             {
                 weechat_printf (NULL,
-                                _("%s: script \"%s\" not "
+                                _("%s: script \"%s\" is not "
                                   "held any more"),
                                 SCRIPT_PLUGIN_NAME, name);
             }
@@ -422,7 +539,7 @@ script_action_hold (const char *name, int quiet)
             if (!quiet)
             {
                 weechat_printf (NULL,
-                                _("%s: script \"%s\" held"),
+                                _("%s: script \"%s\" is held"),
                                 SCRIPT_PLUGIN_NAME, name);
             }
         }
@@ -538,14 +655,21 @@ script_action_run ()
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_load (argv[j]);
+                        script_action_load (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "unload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_unload (argv[j]);
+                        script_action_unload (argv[j], quiet);
+                    }
+                }
+                else if (weechat_strcasecmp (argv[0], "reload") == 0)
+                {
+                    for (j = 1; j < argc; j++)
+                    {
+                        script_action_reload (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "install") == 0)

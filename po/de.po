@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-16 12:18+0200\n"
+"POT-Creation-Date: 2012-08-17 08:43+0200\n"
 "PO-Revision-Date: 2012-08-16 12:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8773,6 +8773,10 @@ msgid "%s: unknown language for script \"%s\""
 msgstr "%s: Deinstalliere das Skript \"%s\""
 
 #, fuzzy, c-format
+msgid "%s: script \"%s\" is not loaded"
+msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+
+#, fuzzy, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s: Deinstalliere das Skript \"%s\""
 
@@ -8793,12 +8797,8 @@ msgid "%s: script \"%s\" not found"
 msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
 
 #, fuzzy, c-format
-msgid "%s: script \"%s\" not held any more"
+msgid "%s: script \"%s\" is not held any more"
 msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" held"
-msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
@@ -8896,8 +8896,8 @@ msgid "WeeChat scripts manager"
 msgstr "WeeChat Seite"
 
 msgid ""
-"list || show <script> || load|unload <script> [<script>...] || install|"
-"remove|hold <script> [<script>...] || upgrade || update"
+"list || show <script> || load|unload|reload <script> [<script>...] || "
+"install|remove|hold <script> [<script>...] || upgrade || update"
 msgstr ""
 
 msgid ""
@@ -8905,6 +8905,7 @@ msgid ""
 "    show: show detailed info about a script\n"
 "    load: load script(s)\n"
 "  unload: unload script(s)\n"
+"  reload: reload script(s)\n"
 " install: install/upgrade script(s)\n"
 "  remove: remove script(s)\n"
 "    hold: hold/unhold script(s) (a script held will not be upgraded any more "
@@ -8939,7 +8940,14 @@ msgid ""
 "  s:       reset sort (use default sort)\n"
 "  word(s)  filter scripts: search word(s) in scripts (description, "
 "tags, ...)\n"
-"  *        remove filter"
+"  *        remove filter\n"
+"\n"
+"Examples:\n"
+"  /script install iset.pl buffers.pl\n"
+"  /script remove iset.pl\n"
+"  /script hold urlserver.py\n"
+"  /script reload urlserver\n"
+"  /script upgrade"
 msgstr ""
 
 #, fuzzy
@@ -9548,3 +9556,7 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#, fuzzy
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
