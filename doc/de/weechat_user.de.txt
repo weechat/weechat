@@ -802,8 +802,8 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ◾◽◽     | links(lang)  | Nickliste            | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
 | ◽◽◾     | links        | Nickliste            | verbannt Nick | /window ${_window_number};/ban ${nick}
 | ◽◽◾     | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | /input grab_mouse_area
-| ⇑       | -            | jede Bar             | blättert Bar um 10% nach oben | /bar scroll ${_bar_name} ${_window_number} -20%
-| ⇓       | -            | jede Bar             | blättert Bar um 10% nach unten | /bar scroll ${_bar_name} ${_window_number} +20%
+| ⇑       | -            | jede Bar             | blättert Bar um 20% nach oben | /bar scroll ${_bar_name} ${_window_number} -20%
+| ⇓       | -            | jede Bar             | blättert Bar um 20% nach unten | /bar scroll ${_bar_name} ${_window_number} +20%
 | ◽◾◽     | -            | überall              | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
 |========================================
 

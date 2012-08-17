@@ -768,8 +768,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | ◾◽◽     | 左 (長く)    | ニックネームリスト   | ニックネームをキックとバンする | /window ${_window_number};/kickban ${nick}
 | ◽◽◾     | 左           | ニックネームリスト   | ニックネームをバンする | /window ${_window_number};/ban ${nick}
 | ◽◽◾     | -            | 入力                 | マウスイベントを奪ってコマンドラインにコードを入力 | /input grab_mouse_area
-| ⇑       | -            | 任意のバー           | バーを -10% スクロール | /bar scroll ${_bar_name} ${_window_number} -20%
-| ⇓       | -            | 任意のバー           | バーを +10% スクロール | /bar scroll ${_bar_name} ${_window_number} +20%
+| ⇑       | -            | 任意のバー           | バーを -20% スクロール | /bar scroll ${_bar_name} ${_window_number} -20%
+| ⇓       | -            | 任意のバー           | バーを +20% スクロール | /bar scroll ${_bar_name} ${_window_number} +20%
 | ◽◾◽     | -            | 任意の場所           | この場所でカーソルモードを開始 | /cursor go ${_x},${_y}
 |========================================
 
