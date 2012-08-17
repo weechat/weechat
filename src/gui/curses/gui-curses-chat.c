@@ -502,6 +502,12 @@ gui_chat_display_word (struct t_gui_window *window,
                 if (!simulate)
                 {
                     wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
+                    /*
+                     * for unknown reason, the wattr_set function sometimes
+                     * fails to set the color pair under FreeBSD, so we force
+                     * it again with wcolor_set
+                     */
+                    wcolor_set (GUI_WINDOW_OBJECTS(window)->win_chat, pair, NULL);
                     gui_window_restore_style ();
                 }
             }
