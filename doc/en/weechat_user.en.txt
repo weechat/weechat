@@ -770,16 +770,18 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
-| Button  | Gesture      | Area                 | Description | Command
+| Button ^(1)^ | Gesture | Area | Description | Command
 | ◾◽◽     | -            | chat                 | Switch to window | /window ${_window_number}
 | ◾◽◽     | left         | chat                 | Switch to previous buffer | /window ${_window_number};/buffer +1
 | ◾◽◽     | right        | chat                 | Switch to next buffer | /window ${_window_number};/buffer +1
 | ◾◽◽     | left (long)  | chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
 | ◾◽◽     | right (long) | chat                 | Switch to last buffer | /window ${_window_number};/input jump_last_buffer
-| wheel ⇑ | -            | chat                 | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
-| wheel ⇓ | -            | chat                 | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
-| wheel ⇑ | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
-| wheel ⇓ | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| ⇑       | -            | chat                 | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
+| ⇓       | -            | chat                 | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
+| ⇑       | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
+| ⇓       | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
+| @k(C-)⇑ | -            | chat                 | Scroll horizontally to the left | /window scroll_horiz -window ${_window_number} -10%
+| @k(C-)⇓ | -            | chat                 | Scroll horizontally to the right | /window scroll_horiz -window ${_window_number} +10%
 | ◾◽◽     | up           | nicklist             | Scroll up one page in nicklist | /bar scroll nicklist ${_window_number} -100%
 | ◾◽◽     | down         | nicklist             | Scroll down one page in nicklist | /bar scroll nicklist ${_window_number} +100%
 | ◾◽◽     | up (long)    | nicklist             | Go to the beginning of nicklist | /bar scroll nicklist ${_window_number} b
@@ -790,10 +792,13 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 | ◾◽◽     | left (long)  | nicklist             | Kick and ban nick | /window ${_window_number};/kickban ${nick}
 | ◽◽◾     | left         | nicklist             | Ban nick | /window ${_window_number};/ban ${nick}
 | ◽◽◾     | -            | input                | Grab a mouse event and insert its code in command line | /input grab_mouse_area
-| wheel ⇑ | -            | any bar              | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -20%
-| wheel ⇓ | -            | any bar              | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +20%
+| ⇑       | -            | any bar              | Scroll bar by -10% | /bar scroll ${_bar_name} ${_window_number} -20%
+| ⇓       | -            | any bar              | Scroll bar by +10% | /bar scroll ${_bar_name} ${_window_number} +20%
 | ◽◾◽     | -            | anywhere             | Start cursor mode at this point | /cursor go ${_x},${_y}
 |========================================
+
+[NOTE]
+^(1)^ "⇑" and "⇓" are wheel up and down.
 
 [[mouse]]
 Mouse support

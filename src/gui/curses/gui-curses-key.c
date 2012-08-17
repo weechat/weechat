@@ -268,6 +268,8 @@ gui_key_default_bindings (int context)
         BIND("@chat:wheeldown",                  "/window scroll_down -window ${_window_number}");
         BIND("@chat(script.scripts):wheelup",    "/script up 5");
         BIND("@chat(script.scripts):wheeldown",  "/script down 5");
+        BIND("@chat:ctrl-wheelup",               "/window scroll_horiz -window ${_window_number} -10%");
+        BIND("@chat:ctrl-wheeldown",             "/window scroll_horiz -window ${_window_number} +10%");
         /* mouse events on nicklist */
         BIND("@bar(nicklist):button1-gesture-up",                "/bar scroll nicklist ${_window_number} -100%");
         BIND("@bar(nicklist):button1-gesture-down",              "/bar scroll nicklist ${_window_number} +100%");

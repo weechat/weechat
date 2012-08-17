@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-08-16
+v0.3.9-dev, 2012-08-17
 
 
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: add mouse bindings ctrl+wheel up/down to scroll horizontally buffers
+  with free content
 * core: return error string to callback of hook_connect if getaddrinfo fails in
   child process
 * core: add option weechat.startup.sys_rlimit to set system resource limits for
