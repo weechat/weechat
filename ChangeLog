@@ -7,6 +7,8 @@ v0.3.9-dev, 2012-08-17
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: fix display of "bar more down" char when text is truncated by size_max
+  in bars with vertical filling (bug #37054)
 * core: fix color of long lines (displayed on more than one line on screen)
   under FreeBSD (bug #36999)
 * core: add mouse bindings ctrl+wheel up/down to scroll horizontally buffers

@@ -347,7 +347,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         if (*x + size_on_screen > bar_window->width)
                         {
                             if (filling == GUI_BAR_FILLING_VERTICAL)
-                                return 0;
+                                return 1;
                             if (*y >= bar_window->height - 1)
                                 return 0;
                             *x = 0;
