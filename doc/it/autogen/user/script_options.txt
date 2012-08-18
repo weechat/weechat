@@ -143,6 +143,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_script.look.use_keys]] *script.look.use_keys*
+** descrizione: `use keys alt+X in script buffer to do actions on scripts (alt+i = install, alt+r = remove, ...); if disabled, only the input is allowed: i, r, ...`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** descrizione: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
 ** tipo: intero

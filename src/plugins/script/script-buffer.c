@@ -509,9 +509,9 @@ script_buffer_refresh (int clear)
     {
         snprintf (str_title, sizeof (str_title),
                   _("%d/%d scripts (filter: %s) | Sort: %s | "
-                    "alt+i=install r=remove l=load u=unload h=(un)hold "
-                    "d=show detail | Input: 'q'=close 'r'=refresh 's:x,y'=sort "
-                    "'words'=filter '*'=reset filter"),
+                    "Alt+key/input: i=install r=remove l=load L=reload "
+                    "u=unload h=(un)hold d=show detail | Input: q=close "
+                    "$=refresh s:x,y=sort words=filter *=reset filter"),
                   script_repo_count_displayed,
                   script_repo_count,
                   (script_repo_filter) ? script_repo_filter : "*",
@@ -701,16 +701,28 @@ int
 script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                         const char *input_data)
 {
+    char *actions[][2] = { { "l", "load"    },
+                           { "u", "unload"  },
+                           { "L", "reload"  },
+                           { "i", "install" },
+                           { "r", "remove"  },
+                           { "h", "hold"    },
+                           { "d", "show"    },
+                           { NULL, NULL     } };
+    char str_command[64];
+    int i;
+
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
 
+    /* close buffer */
     if (strcmp (input_data, "q") == 0)
     {
         weechat_buffer_close (buffer);
         return WEECHAT_RC_OK;
     }
 
+    /* change sort keys on buffer */
     if (strncmp (input_data, "s:", 2) == 0)
     {
         if (input_data[2])
@@ -720,7 +732,8 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    if (strcmp (input_data, "r") == 0)
+    /* refresh buffer */
+    if (strcmp (input_data, "$") == 0)
     {
         script_get_loaded_scripts ();
         script_repo_remove_all ();
@@ -729,6 +742,19 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
+    /* execute action on a script */
+    for (i = 0; actions[i][0]; i++)
+    {
+        if (strcmp (input_data, actions[i][0]) == 0)
+        {
+            snprintf (str_command, sizeof (str_command),
+                      "/script %s", actions[i][1]);
+            weechat_command (buffer, str_command);
+            return WEECHAT_RC_OK;
+        }
+    }
+
+    /* filter scripts with given text */
     script_repo_filter_scripts (input_data);
 
     return WEECHAT_RC_OK;
@@ -772,6 +798,42 @@ script_buffer_set_callbacks ()
 }
 
 /*
+ * script_buffer_set_keys: set keys on script buffer
+ */
+
+void
+script_buffer_set_keys ()
+{
+    char *keys[][2] = { { "meta-l",  "load"    },
+                        { "meta-u",  "unload"  },
+                        { "meta-L",  "reload"  },
+                        { "meta-i",  "install" },
+                        { "meta-r",  "remove"  },
+                        { "meta-h",  "hold"    },
+                        { "meta-d",  "show"    },
+                        { NULL,     NULL       } };
+    char str_key[64], str_command[64];
+    int i;
+
+    weechat_buffer_set (script_buffer, "key_bind_meta2-A", "/script up");
+    weechat_buffer_set (script_buffer, "key_bind_meta2-B", "/script down");
+    for (i = 0; keys[i][0]; i++)
+    {
+        if (weechat_config_boolean (script_config_look_use_keys))
+        {
+            snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
+            snprintf (str_command, sizeof (str_command), "/script %s", keys[i][1]);
+            weechat_buffer_set (script_buffer, str_key, str_command);
+        }
+        else
+        {
+            snprintf (str_key, sizeof (str_key), "key_unbind_%s", keys[i][0]);
+            weechat_buffer_set (script_buffer, str_key, "");
+        }
+    }
+}
+
+/*
  * script_buffer_open: open script buffer (to display list of scripts)
  */
 
@@ -790,14 +852,7 @@ script_buffer_open ()
 
         weechat_buffer_set (script_buffer, "type", "free");
         weechat_buffer_set (script_buffer, "title", _("Scripts"));
-        weechat_buffer_set (script_buffer, "key_bind_meta2-A", "/script up");
-        weechat_buffer_set (script_buffer, "key_bind_meta2-B", "/script down");
-        weechat_buffer_set (script_buffer, "key_bind_meta-l", "/script load");
-        weechat_buffer_set (script_buffer, "key_bind_meta-u", "/script unload");
-        weechat_buffer_set (script_buffer, "key_bind_meta-i", "/script install");
-        weechat_buffer_set (script_buffer, "key_bind_meta-r", "/script remove");
-        weechat_buffer_set (script_buffer, "key_bind_meta-h", "/script hold");
-        weechat_buffer_set (script_buffer, "key_bind_meta-d", "/script show");
+        script_buffer_set_keys ();
         weechat_buffer_set (script_buffer, "localvar_set_type", "script");
 
         script_buffer_selected_line = 0;

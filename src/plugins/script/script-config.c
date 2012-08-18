@@ -42,6 +42,7 @@ struct t_config_section *script_config_section_scripts = NULL;
 struct t_config_option *script_config_look_columns;
 struct t_config_option *script_config_look_sort;
 struct t_config_option *script_config_look_translate_description;
+struct t_config_option *script_config_look_use_keys;
 
 /* script config, color section */
 
@@ -189,6 +190,22 @@ script_config_reload_scripts_cb (void *data, struct t_config_option *option)
         script_repo_file_read (1);
         script_buffer_refresh (1);
     }
+}
+
+/*
+ * script_config_change_use_keys_cb: callback called when option "use_keys" is
+ *                                   changed
+ */
+
+void
+script_config_change_use_keys_cb (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (script_buffer)
+        script_buffer_set_keys ();
 }
 
 /*
@@ -359,6 +376,14 @@ script_config_init ()
            "your language, otherwise english version is used)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
+    script_config_look_use_keys = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "use_keys", "boolean",
+        N_("use keys alt+X in script buffer to do actions on scripts (alt+i = "
+           "install, alt+r = remove, ...); if disabled, only the input is "
+           "allowed: i, r, ..."),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, &script_config_change_use_keys_cb, NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (script_config_file, "color",

@@ -143,6 +143,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_script.look.use_keys]] *script.look.use_keys*
+** 説明: `use keys alt+X in script buffer to do actions on scripts (alt+i = install, alt+r = remove, ...); if disabled, only the input is allowed: i, r, ...`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** 説明: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
 ** タイプ: 整数

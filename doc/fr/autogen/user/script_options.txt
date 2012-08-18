@@ -143,6 +143,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_script.look.use_keys]] *script.look.use_keys*
+** description: `utiliser les touches alt+X sur le tampon script pour effectuer les actions sur les scripts (alt+i = installed, alt+r = supprimer, ...); si désactivé, seule l'entrée est autorisée: i, r, ...`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = expire toujours)`
 ** type: entier

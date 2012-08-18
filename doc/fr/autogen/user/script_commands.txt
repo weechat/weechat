@@ -34,19 +34,21 @@ Sur le tampon des scripts, les statuts pour chaque script sont :
   script populaire
 
 Les touches sur le tampon des scripts :
-  alt+i    installer le script
-  alt+r    supprimer le script
-  alt+l    charger le script
-  alt+u    décharger le script
-  alt+h    (dé)figer le script
+  alt+i  installer le script
+  alt+r  supprimer le script
+  alt+l  charger le script
+  alt+L  recharger le script
+  alt+u  décharger le script
+  alt+h  (dé)figer le script
 
 Entrée autorisée sur le tampon des scripts :
-  q        fermer le tampon
-  r        rafraîchir le tampon
-  s:x,y    trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
-  s:       réinitialiser le tri (utiliser le tri par défaut)
-  word(s)  filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
-  *        supprimer le filtre
+  i/r/l/L/u/h  action sur le script (identique aux touches ci-dessus)
+  q            fermer le tampon
+  $            rafraîchir le tampon
+  s:x,y        trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
+  s:           réinitialiser le tri (utiliser le tri par défaut)
+  word(s)      filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
+  *            supprimer le filtre
 
 Exemples:
   /script search url

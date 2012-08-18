@@ -34,19 +34,21 @@ On script buffer, the possible status for each script are:
   popular script
 
 Keys on script buffer:
-  alt+i    install script
-  alt+r    remove script
-  alt+l    load script
-  alt+u    unload script
-  alt+h    (un)hold script
+  alt+i  install script
+  alt+r  remove script
+  alt+l  load script
+  alt+L  reload script
+  alt+u  unload script
+  alt+h  (un)hold script
 
 Input allowed on script buffer:
-  q        close buffer
-  r        refresh buffer
-  s:x,y    sort buffer using keys x and y (see /help script.look.sort)
-  s:       reset sort (use default sort)
-  word(s)  filter scripts: search word(s) in scripts (description, tags, ...)
-  *        remove filter
+  i/r/l/L/u/h  action on script (same as keys above)
+  q            close buffer
+  $            refresh buffer
+  s:x,y        sort buffer using keys x and y (see /help script.look.sort)
+  s:           reset sort (use default sort)
+  word(s)      filter scripts: search word(s) in scripts (description, tags, ...)
+  *            remove filter
 
 Examples:
   /script search url
