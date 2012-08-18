@@ -2,6 +2,7 @@
 [command]*`script`* Gestionnaire de scripts WeeChat::
 ........................................
 /script  list
+         search <texte>
          show <script>
          load|unload|reload <script> [<script>...]
          install|remove|hold <script> [<script>...]
@@ -9,6 +10,7 @@
          update
 
     list: lister les scripts chargés (tous les langages)
+  search: chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
     show: afficher des infos détaillées sur le script
     load: charger un ou plusieurs scripts
   unload: décharger un ou plusieurs scripts
@@ -47,6 +49,7 @@ Entrée autorisée sur le tampon des scripts :
   *        supprimer le filtre
 
 Exemples:
+  /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl
   /script hold urlserver.py

@@ -174,6 +174,48 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
 }
 
 /*
+ * script_completion_tags_cb: callback for completion with tags from scripts in
+ *                            repository
+ */
+
+int
+script_completion_tags_cb (void *data, const char *completion_item,
+                           struct t_gui_buffer *buffer,
+                           struct t_gui_completion *completion)
+{
+    struct t_repo_script *ptr_script;
+    char **list_tags;
+    int num_tags, i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_script = repo_scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        if (ptr_script->tags)
+        {
+            list_tags = weechat_string_split (ptr_script->tags, ",", 0, 0,
+                                              &num_tags);
+            if (list_tags)
+            {
+                for (i = 0; i < num_tags; i++)
+                {
+                    weechat_hook_completion_list_add (completion,
+                                                      list_tags[i],
+                                                      0, WEECHAT_LIST_POS_SORT);
+                }
+                weechat_string_free_split (list_tags);
+            }
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * script_completion_init: init completion for script plugin
  */
 
@@ -189,4 +231,7 @@ script_completion_init ()
     weechat_hook_completion ("script_files",
                              N_("files in script directories"),
                              &script_completion_scripts_files_cb, NULL);
+    weechat_hook_completion ("script_tags",
+                             N_("tags of scripts in repository"),
+                             &script_completion_tags_cb, NULL);
 }

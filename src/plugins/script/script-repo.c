@@ -728,6 +728,115 @@ script_repo_update_status_all ()
 }
 
 /*
+ * script_repo_set_filter: set filter for scripts
+ */
+
+void
+script_repo_set_filter (const char *filter)
+{
+    if (script_repo_filter)
+        free (script_repo_filter);
+    script_repo_filter = (filter) ? strdup (filter) : NULL;
+}
+
+/*
+ * script_repo_match_filter: return 1 if script is matching filter string,
+ *                           otherwise 0
+ */
+
+int
+script_repo_match_filter (struct t_repo_script *script)
+{
+    char **words, **tags;
+    int num_words, num_tags, has_tag, match, i, j;
+
+    if (!script_repo_filter || strcmp (script_repo_filter, "*") == 0)
+        return 1;
+
+    words = weechat_string_split (script_repo_filter, " ", 0, 0, &num_words);
+    tags = weechat_string_split ((script->tags) ? script->tags : "", ",", 0, 0,
+                                 &num_tags);
+    if (words)
+    {
+        for (i = 0; i < num_words; i++)
+        {
+            has_tag = 0;
+            if (tags)
+            {
+                for (j = 0; j < num_tags; j++)
+                {
+                    if (weechat_strcasecmp (tags[j], words[i]) == 0)
+                    {
+                        has_tag = 1;
+                        break;
+                    }
+                }
+            }
+            if (!has_tag)
+            {
+                match = 0;
+                if (script->name_with_extension
+                    && weechat_strcasestr (script->name_with_extension, words[i]))
+                    match = 1;
+
+                if (!match && script->description
+                    && weechat_strcasestr (script->description, words[i]))
+                    match = 1;
+
+                if (!match && script->license
+                    && weechat_strcasestr (script->license, words[i]))
+                    match = 1;
+
+                if (!match && script->author
+                    && weechat_strcasestr (script->author, words[i]))
+                    match = 1;
+
+                if (!match)
+                {
+                    weechat_string_free_split (words);
+                    weechat_string_free_split (tags);
+                    return 0;
+                }
+            }
+        }
+    }
+
+    if (words)
+        weechat_string_free_split (words);
+    if (tags)
+        weechat_string_free_split (tags);
+
+    return 1;
+}
+
+/*
+ * script_repo_filter_scripts: filter scripts (search string in
+ *                             name/description/tags) and mark scripts found as
+ *                             "displayed" (0 in displayed for non-matching
+ *                             scripts)
+ */
+
+void
+script_repo_filter_scripts (const char *search)
+{
+    struct t_repo_script *ptr_script;
+
+    script_repo_set_filter (search);
+
+    script_repo_count_displayed = 0;
+
+    for (ptr_script = repo_scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        ptr_script->displayed = (script_repo_match_filter (ptr_script));
+        if (ptr_script->displayed)
+            script_repo_count_displayed++;
+    }
+
+    script_buffer_refresh (1);
+}
+
+/*
  * script_repo_file_exists: return 1 if repository file (plugins.xml.gz) exists
  *                          otherwise 0
  */
@@ -838,12 +947,6 @@ script_repo_file_read (int quiet)
     }
     else
         weechat_hashtable_remove_all (script_repo_max_length_field);
-
-    if (script_repo_filter)
-    {
-        free (script_repo_filter);
-        script_repo_filter = NULL;
-    }
 
     version = weechat_info_get ("version", NULL);
     version_number = weechat_util_version_number (version);
@@ -965,6 +1068,7 @@ script_repo_file_read (int quiet)
                                               script_extension[script->language]);
                                 }
                                 script_repo_update_status (script);
+                                script->displayed = (script_repo_match_filter (script));
                                 script_repo_add (script);
                                 script_ok = 1;
                             }
@@ -1200,105 +1304,6 @@ script_repo_file_update (int quiet)
     }
 
     free (filename);
-}
-
-/*
- * script_repo_match_search: return 1 if script is matching search string,
- *                           otherwise 0
- */
-
-int
-script_repo_match_search (struct t_repo_script *script, const char *search)
-{
-    char **words, **tags;
-    int num_words, num_tags, has_tag, match, i, j;
-
-    if (strcmp (search, "*") == 0)
-        return 1;
-
-    words = weechat_string_split (search, " ", 0, 0, &num_words);
-    tags = weechat_string_split ((script->tags) ? script->tags : "", ",", 0, 0,
-                                 &num_tags);
-    if (words)
-    {
-        for (i = 0; i < num_words; i++)
-        {
-            has_tag = 0;
-            if (tags)
-            {
-                for (j = 0; j < num_tags; j++)
-                {
-                    if (weechat_strcasecmp (tags[j], words[i]) == 0)
-                    {
-                        has_tag = 1;
-                        break;
-                    }
-                }
-            }
-            if (!has_tag)
-            {
-                match = 0;
-                if (script->name_with_extension
-                    && weechat_strcasestr (script->name_with_extension, words[i]))
-                    match = 1;
-
-                if (!match && script->description
-                    && weechat_strcasestr (script->description, words[i]))
-                    match = 1;
-
-                if (!match && script->license
-                    && weechat_strcasestr (script->license, words[i]))
-                    match = 1;
-
-                if (!match && script->author
-                    && weechat_strcasestr (script->author, words[i]))
-                    match = 1;
-
-                if (!match)
-                {
-                    weechat_string_free_split (words);
-                    weechat_string_free_split (tags);
-                    return 0;
-                }
-            }
-        }
-    }
-
-    if (words)
-        weechat_string_free_split (words);
-    if (tags)
-        weechat_string_free_split (tags);
-
-    return 1;
-}
-
-/*
- * script_repo_filter_scripts: filter scripts (search string in
- *                             name/description/tags) and mark scripts found as
- *                             "displayed" (0 in displayed for non-matching
- *                             scripts)
- */
-
-void
-script_repo_filter_scripts (const char *search)
-{
-    struct t_repo_script *ptr_script;
-
-    if (script_repo_filter)
-        free (script_repo_filter);
-    script_repo_filter = strdup (search);
-
-    script_repo_count_displayed = 0;
-
-    for (ptr_script = repo_scripts; ptr_script;
-         ptr_script = ptr_script->next_script)
-    {
-        ptr_script->displayed = (script_repo_match_search (ptr_script, search));
-        if (ptr_script->displayed)
-            script_repo_count_displayed++;
-    }
-
-    script_buffer_refresh (1);
 }
 
 /*

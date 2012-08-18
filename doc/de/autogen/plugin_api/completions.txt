@@ -62,6 +62,8 @@
 
 | script | script_scripts_installed | list of scripts installed (from repository)
 
+| script | script_tags | tags of scripts in repository
+
 | tcl | tcl_script | Liste der Skripten
 
 | weechat | bars_names | Namen der Infobars

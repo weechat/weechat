@@ -2,6 +2,7 @@
 [command]*`script`* WeeChat scripts manager::
 ........................................
 /script  list
+         search <text>
          show <script>
          load|unload|reload <script> [<script>...]
          install|remove|hold <script> [<script>...]
@@ -9,6 +10,7 @@
          update
 
     list: list loaded scripts (all languages)
+  search: search scripts by tags or text and display result on scripts buffer
     show: show detailed info about a script
     load: load script(s)
   unload: unload script(s)
@@ -47,6 +49,7 @@ Input allowed on script buffer:
   *        remove filter
 
 Examples:
+  /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl
   /script hold urlserver.py
