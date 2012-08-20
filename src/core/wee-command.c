@@ -2093,9 +2093,9 @@ COMMAND_CALLBACK(help)
                         i = 0;
                         while (ptr_option->string_values[i])
                         {
-                            strcat (string, "'");
+                            strcat (string, "\"");
                             strcat (string, ptr_option->string_values[i]);
-                            strcat (string, "'");
+                            strcat (string, "\"");
                             if (ptr_option->string_values[i + 1])
                                 strcat (string, ", ");
                             i++;
