@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-20 13:33+0200\n"
-"PO-Revision-Date: 2012-08-16 12:01+0200\n"
+"POT-Creation-Date: 2012-08-20 18:22+0200\n"
+"PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -2679,12 +2679,6 @@ msgid ""
 msgstr ""
 "odstęp (w milisekundach) przechwytywania zdarzeń myszy: WeeChat zawsze "
 "poczeka ten czas przed obsługą zdarzenia"
-
-msgid "display nick mode ((half)op/voice) before each nick"
-msgstr "wyświetl atrybut nicku ((half)op/voice) przed każdym nickiem"
-
-msgid "display space if nick mode is not (half)op/voice"
-msgstr "wyświetl spację jeśli atrybut nick nie ma atrybutu"
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -5884,6 +5878,18 @@ msgstr "teks wyświetlany przed nickiem w oknie rozmowy"
 
 msgid "text to display after nick in chat window"
 msgstr "teks wyświetlany za nickiem w oknie rozmowy"
+
+msgid ""
+"display nick mode (op, voice, ...) before nick (none = never, prefix = in "
+"prefix only (default), action = in action messages only, both = prefix + "
+"action messages)"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"display a space if nick mode is enabled but nick has no mode (not op, "
+"voice, ...)"
+msgstr "wyświetl spację jeśli atrybut nick nie ma atrybutu"
 
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
@@ -9186,7 +9192,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#, fuzzy
-#~ msgid "%s: script \"%s\" held"
-#~ msgstr "%s: skrypt \"%s\" wyładowano"

@@ -879,51 +879,75 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * irc_nick_as_prefix: return string with nick to display as prefix on buffer
- *                     (string will end by a tab)
+ * irc_nick_mode_for_display: get nick mode for display (color + mode)
+ *                            if prefix == 1, return string for display in
+ *                            prefix, otherwise return string for display in
+ *                            action message (/me)
  */
 
-char *
-irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
-                    const char *nickname, const char *force_color)
+const char *
+irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
+                           int prefix)
 {
-    static char result[256];
-    char prefix[2];
+    static char result[32];
+    char str_prefix[2];
+    int nick_mode;
     const char *str_prefix_color;
 
-    prefix[0] = (nick) ? nick->prefix[0] : '\0';
-    prefix[1] = '\0';
-    if (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode")))
+    str_prefix[0] = (nick) ? nick->prefix[0] : '\0';
+    str_prefix[1] = '\0';
+
+    nick_mode = weechat_config_integer (irc_config_look_nick_mode);
+    if ((nick_mode == IRC_CONFIG_LOOK_NICK_MODE_BOTH)
+        || (prefix && (nick_mode == IRC_CONFIG_LOOK_NICK_MODE_PREFIX))
+        || (!prefix && (nick_mode == IRC_CONFIG_LOOK_NICK_MODE_ACTION)))
     {
         if (nick)
         {
-            if ((prefix[0] == ' ')
-                && !weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty")))
-                prefix[0] = '\0';
+            if ((str_prefix[0] == ' ')
+                && (!prefix || !weechat_config_boolean (irc_config_look_nick_mode_empty)))
+            {
+                str_prefix[0] = '\0';
+            }
             str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server, nick));
         }
         else
         {
-            prefix[0] = (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty"))) ?
+            str_prefix[0] = (prefix && weechat_config_boolean (irc_config_look_nick_mode_empty)) ?
                 ' ' : '\0';
             str_prefix_color = IRC_COLOR_RESET;
         }
     }
     else
     {
-        prefix[0] = '\0';
+        str_prefix[0] = '\0';
         str_prefix_color = IRC_COLOR_RESET;
     }
 
-    snprintf (result, sizeof (result), "%s%s%s%s%s%s%s%s\t",
+    snprintf (result, sizeof (result), "%s%s", str_prefix_color, str_prefix);
+
+    return result;
+}
+
+/*
+ * irc_nick_as_prefix: return string with nick to display as prefix on buffer
+ *                     (string will end by a tab)
+ */
+
+const char *
+irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
+                    const char *nickname, const char *force_color)
+{
+    static char result[256];
+
+    snprintf (result, sizeof (result), "%s%s%s%s%s%s%s\t",
               (weechat_config_string (irc_config_look_nick_prefix)
                && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
               IRC_COLOR_NICK_PREFIX : "",
               (weechat_config_string (irc_config_look_nick_prefix)
                && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
               weechat_config_string (irc_config_look_nick_prefix) : "",
-              str_prefix_color,
-              prefix,
+              irc_nick_mode_for_display (server, nick, 1),
               (force_color) ? force_color : ((nick) ? nick->color : ((nickname) ? irc_nick_find_color (nickname) : IRC_COLOR_CHAT_NICK)),
               (nick) ? nick->name : nickname,
               (weechat_config_string (irc_config_look_nick_suffix)

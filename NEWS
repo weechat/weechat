@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-07-07
+v0.3.9-dev, 2012-08-20
 
 
 Version 0.3.9 (under dev!)
@@ -9,6 +9,10 @@ Version 0.3.9 (under dev!)
 
 Important release notes:
 
+** options moved from core (weechat.conf) to irc plugin (irc.conf):
+*** 'weechat.look.nickmode' moved to 'irc.look.nick_mode' (new type: integer
+    with values: none/prefix/action/both)
+*** 'weechat.look.nickmode_empty' moved to 'irc.look.nick_mode_empty'
 * new bar item has been added: 'buffer_modes' and irc option
   'irc.look.item_channel_modes' has been removed; to display irc channel modes
   in status bar (after channel name), you have to manually add the new item

@@ -55,6 +55,9 @@ Version 0.3.9 (under dev!)
 * fifo: ignore read failing with error EAGAIN (bug #37019)
 * guile: fix crash when unloading a script without pointer to interpreter
 * guile: fix path of guile include dirs in cmake build (patch #7790)
+* irc: move options from core to irc plugin: weechat.look.nickmode to
+  irc.look.nick_mode (new type: integer with values: none/prefix/action/both)
+  and weechat.look.nickmode_empty to irc.look.nick_mode_empty
 * irc: fix bug with prefix chars which are in chanmodes with a type different
   from "B" (bug #36996)
 * irc: fix format of message "USER" (according to RFC 2812) (bug #36825)

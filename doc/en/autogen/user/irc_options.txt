@@ -238,6 +238,16 @@
 ** type: integer
 ** values: off, speakers, speakers_highlights (default value: `speakers`)
 
+* [[option_irc.look.nick_mode]] *irc.look.nick_mode*
+** description: `display nick mode (op, voice, ...) before nick (none = never, prefix = in prefix only (default), action = in action messages only, both = prefix + action messages)`
+** type: integer
+** values: none, prefix, action, both (default value: `prefix`)
+
+* [[option_irc.look.nick_mode_empty]] *irc.look.nick_mode_empty*
+** description: `display a space if nick mode is enabled but nick has no mode (not op, voice, ...)`
+** type: boolean
+** values: on, off (default value: `off`)
+
 * [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
 ** description: `text to display before nick in chat window`
 ** type: string

@@ -593,16 +593,6 @@
 ** tipo: intero
 ** valori: 1 .. 10000 (valore predefinito: `100`)
 
-* [[option_weechat.look.nickmode]] *weechat.look.nickmode*
-** descrizione: `mostra modalità nick ((half)op/voice) prima di ogni nick`
-** tipo: bool
-** valori: on, off (valore predefinito: `on`)
-
-* [[option_weechat.look.nickmode_empty]] *weechat.look.nickmode_empty*
-** descrizione: `mostra spazio se il nick non è in modalità (half)op/voice`
-** tipo: bool
-** valori: on, off (valore predefinito: `off`)
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** descrizione: `abilita la modalità "bracketed paste" per il terminale (non supportata da tutti i terminali/multiplexer): in questa modalità, il testo incollato viene racchiuso da sequenze di controllo in modo che WeeChat possa differenziare il testo incollato dal testo digitato ("ESC[200~", seguito dal testo incollato, seguito da "ESC[201~")`
 ** tipo: bool

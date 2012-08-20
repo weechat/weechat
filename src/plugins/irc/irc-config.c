@@ -62,6 +62,8 @@ struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
 struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
+struct t_config_option *irc_config_look_nick_mode;
+struct t_config_option *irc_config_look_nick_mode_empty;
 struct t_config_option *irc_config_look_nick_color_force;
 struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_nick_completion_smart;
@@ -2074,6 +2076,21 @@ irc_config_init ()
         "nick_suffix", "string",
         N_("text to display after nick in chat window"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_nick_mode = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_mode", "integer",
+        N_("display nick mode (op, voice, ...) before nick (none = never, "
+           "prefix = in prefix only (default), action = in action messages "
+           "only, both = prefix + action messages)"),
+        "none|prefix|action|both", 0, 0, "prefix",
+        NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_nick_mode_empty = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_mode_empty", "boolean",
+        N_("display a space if nick mode is enabled but nick has no mode (not "
+           "op, voice, ...)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_nick_color_force = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_color_force", "string",

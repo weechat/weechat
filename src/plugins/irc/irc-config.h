@@ -55,6 +55,14 @@ enum t_irc_config_look_notice_as_pv
     IRC_CONFIG_LOOK_NOTICE_AS_PV_ALWAYS,
 };
 
+enum t_irc_config_look_nick_mode
+{
+    IRC_CONFIG_LOOK_NICK_MODE_NONE = 0,
+    IRC_CONFIG_LOOK_NICK_MODE_PREFIX,
+    IRC_CONFIG_LOOK_NICK_MODE_ACTION,
+    IRC_CONFIG_LOOK_NICK_MODE_BOTH,
+};
+
 enum t_irc_config_nick_completion
 {
     IRC_CONFIG_NICK_COMPLETION_SMART_OFF = 0,
@@ -87,6 +95,8 @@ extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;
+extern struct t_config_option *irc_config_look_nick_mode;
+extern struct t_config_option *irc_config_look_nick_mode_empty;
 extern struct t_config_option *irc_config_look_nick_color_force;
 extern struct t_config_option *irc_config_look_nick_color_stop_chars;
 extern struct t_config_option *irc_config_look_nick_completion_smart;

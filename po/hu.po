@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-20 13:33+0200\n"
-"PO-Revision-Date: 2012-08-16 12:01+0200\n"
+"POT-Creation-Date: 2012-08-20 18:22+0200\n"
+"PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -2172,12 +2172,6 @@ msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
 "before processing event"
 msgstr ""
-
-msgid "display nick mode ((half)op/voice) before each nick"
-msgstr "a felhasználó módjának ((fél)operátor/voice) mutatása a név előtt"
-
-msgid "display space if nick mode is not (half)op/voice"
-msgstr "szóköz megjelenítése, ha a mód nem (fél)operátor/voice"
 
 msgid ""
 "enable terminal \"bracketed paste mode\" (not supported in all terminals/"
@@ -5278,6 +5272,18 @@ msgstr "a név előtt megjelenítendő szöveg a beszédablakban"
 
 msgid "text to display after nick in chat window"
 msgstr "a név után megjelenítendő szöveg a beszédablakban"
+
+msgid ""
+"display nick mode (op, voice, ...) before nick (none = never, prefix = in "
+"prefix only (default), action = in action messages only, both = prefix + "
+"action messages)"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"display a space if nick mode is enabled but nick has no mode (not op, "
+"voice, ...)"
+msgstr "szóköz megjelenítése, ha a mód nem (fél)operátor/voice"
 
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
@@ -8491,7 +8497,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s: script \"%s\" held"
-#~ msgstr "A \"%s\" modul eltávolítva.\n"

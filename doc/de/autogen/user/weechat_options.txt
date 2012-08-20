@@ -593,16 +593,6 @@
 ** Typ: integer
 ** Werte: 1 .. 10000 (Standardwert: `100`)
 
-* [[option_weechat.look.nickmode]] *weechat.look.nickmode*
-** Beschreibung: `vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) angezeigt`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
-
-* [[option_weechat.look.nickmode_empty]] *weechat.look.nickmode_empty*
-** Beschreibung: `Leerzeichen statt des Nickmode nutzen, wenn kein Nickmode ((half)op/voice [@%+]) vorhanden ist`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
 ** Typ: boolesch

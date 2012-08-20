@@ -593,16 +593,6 @@
 ** タイプ: 整数
 ** 値: 1 .. 10000 (デフォルト値: `100`)
 
-* [[option_weechat.look.nickmode]] *weechat.look.nickmode*
-** 説明: `それぞれのニックネームの前にニックモード ((half)op/voice) を表示`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `on`)
-
-* [[option_weechat.look.nickmode_empty]] *weechat.look.nickmode_empty*
-** 説明: `ニックモードが (half)op/voice でなければ空白を表示`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
-
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** 説明: `端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られる。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~" 、ペーストされたテキスト、"ESC[201~")。`
 ** タイプ: ブール

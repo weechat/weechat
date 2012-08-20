@@ -344,19 +344,23 @@ irc_command_me_channel_display (struct t_irc_server *server,
                                 const char *arguments)
 {
     char *string;
+    struct t_irc_nick *ptr_nick;
 
     string = (arguments && arguments[0]) ?
         irc_color_decode (arguments,
                           weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
+    ptr_nick = irc_nick_search (server, channel, server->nick);
     weechat_printf_tags (channel->buffer,
                          irc_protocol_tags ("privmsg",
                                             "irc_action,notify_none,no_highlight",
                                             server->nick),
-                         "%s%s%s%s %s",
+                         "%s%s%s%s%s%s%s",
                          weechat_prefix ("action"),
+                         irc_nick_mode_for_display (server, ptr_nick, 0),
                          IRC_COLOR_CHAT_NICK_SELF,
                          server->nick,
-                         IRC_COLOR_RESET,
+                         (string) ? IRC_COLOR_RESET : "",
+                         (string) ? " " : "",
                          (string) ? string : "");
     if (string)
         free (string);

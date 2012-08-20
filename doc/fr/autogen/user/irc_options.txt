@@ -238,6 +238,16 @@
 ** type: entier
 ** valeurs: off, speakers, speakers_highlights (valeur par défaut: `speakers`)
 
+* [[option_irc.look.nick_mode]] *irc.look.nick_mode*
+** description: `afficher le mode du pseudo (op, voice, ...) avant le pseudo (none = jamais, prefix = dans le préfixe seulement, action = dans les messages d'action seulement, both = préfixe + messages d'actions)`
+** type: entier
+** valeurs: none, prefix, action, both (valeur par défaut: `prefix`)
+
+* [[option_irc.look.nick_mode_empty]] *irc.look.nick_mode_empty*
+** description: `afficher un espace si le mode du pseudo est activé mais que le pseudo n'a pas de mode (pas op, voice, ...)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
 ** description: `texte à afficher avant le pseudo dans la fenêtre de discussion`
 ** type: chaîne

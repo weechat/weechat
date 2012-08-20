@@ -85,10 +85,13 @@ extern void irc_nick_count (struct t_irc_server *server,
 extern void irc_nick_set_away (struct t_irc_server *server,
                                struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);
-extern char *irc_nick_as_prefix (struct t_irc_server *server,
-                                 struct t_irc_nick *nick,
-                                 const char *nickname,
-                                 const char *force_color);
+extern const char *irc_nick_mode_for_display (struct t_irc_server *server,
+                                              struct t_irc_nick *nick,
+                                              int prefix);
+extern const char *irc_nick_as_prefix (struct t_irc_server *server,
+                                       struct t_irc_nick *nick,
+                                       const char *nickname,
+                                       const char *force_color);
 extern const char *irc_nick_color_for_message (struct t_irc_server *server,
                                                struct t_irc_nick *nick,
                                                const char *nickname);
