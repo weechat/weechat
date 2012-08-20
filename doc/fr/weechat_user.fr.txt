@@ -791,6 +791,8 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 | ◾◽◽     | right        | chat                 | Aller au tampon suivant | /window ${_window_number};/buffer +1
 | ◾◽◽     | left (long)  | chat                 | Aller au premier tampon | /window ${_window_number};/buffer 1
 | ◾◽◽     | right (long) | chat                 | Aller au dernier tampon | /window ${_window_number};/input jump_last_buffer
+| ◾◽◽     | -            | chat (tampon script) | Sélectionner la ligne dans le tampon script | /script go ${_chat_line_y}
+| ◽◽◾     | -            | chat (tampon script) | Installer/supprimer un script | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}
 | ⇑       | -            | chat                 | Monter de quelques lignes dans l'historique du tampon | /window scroll_up -window ${_window_number}
 | ⇓       | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | /window scroll_down -window ${_window_number}
 | ⇑       | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | /script up 5

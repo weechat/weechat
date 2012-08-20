@@ -776,6 +776,8 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 | ◾◽◽     | right        | chat                 | Switch to next buffer | /window ${_window_number};/buffer +1
 | ◾◽◽     | left (long)  | chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
 | ◾◽◽     | right (long) | chat                 | Switch to last buffer | /window ${_window_number};/input jump_last_buffer
+| ◾◽◽     | -            | chat (script buffer) | Select line in script buffer | /script go ${_chat_line_y}
+| ◽◽◾     | -            | chat (script buffer) | Install/remove script | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}
 | ⇑       | -            | chat                 | Scroll up a few lines in buffer history | /window scroll_up -window ${_window_number}
 | ⇓       | -            | chat                 | Scroll down a few lines in buffer history | /window scroll_down -window ${_window_number}
 | ⇑       | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5

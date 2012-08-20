@@ -743,7 +743,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 
 以下のキーは "マウス" モード (マウスイベントが発生したとき) でのみ有効です。
 
-// TRANSLATION MISSING (4)
+// TRANSLATION MISSING (6)
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | ボタン^(1)^ | ジェスチャー| エリア| 説明 | コマンド
@@ -752,6 +752,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | ◾◽◽     | 右           | チャット             | 次のバッファに移動 | /window ${_window_number};/buffer +1
 | ◾◽◽     | 左 (長く)    | チャット             | 最初のバッファに移動 | /window ${_window_number};/buffer 1
 | ◾◽◽     | 右 (長く)    | チャット             | 最後のバッファに移動 | /window ${_window_number};/input jump_last_buffer
+| ◾◽◽     | -            | chat (script buffer) | Select line in script buffer | /script go ${_chat_line_y}
+| ◽◽◾     | -            | chat (script buffer) | Install/remove script | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}
 | ⇑       | -            | チャット             | バッファ履歴を上方向にスクロール | /window scroll_up -window ${_window_number}
 | ⇓       | -            | チャット             | バッファ履歴を下方向にスクロール | /window scroll_down -window ${_window_number}
 | ⇑       | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5

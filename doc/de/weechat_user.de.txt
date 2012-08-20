@@ -777,7 +777,7 @@ Tasten für "mouse"-Kontext
 
 Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt worden ist.
 
-// TRANSLATION MISSING (4)
+// TRANSLATION MISSING (6)
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | Maustaste ^(1)^ | Mausgeste | Bereich | Beschreibung | Befehl
@@ -786,6 +786,8 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ◾◽◽     | rechts       | Chat                 | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
 | ◾◽◽     | links(lang)  | Chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
 | ◾◽◽     | rechts(lang) | Chat                 | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
+| ◾◽◽     | -            | chat (script buffer) | Select line in script buffer | /script go ${_chat_line_y}
+| ◽◽◾     | -            | chat (script buffer) | Install/remove script | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}
 | ⇑       | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
 | ⇓       | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
 | ⇑       | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5

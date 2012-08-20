@@ -222,6 +222,83 @@ script_signal_script_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
+ * script_focus_chat_cb: callback called when a mouse action occurs in chat area
+ */
+
+struct t_hashtable *
+script_focus_chat_cb (void *data, struct t_hashtable *info)
+{
+    const char *buffer;
+    int rc;
+    long unsigned int value;
+    struct t_gui_buffer *ptr_buffer;
+    long x;
+    char *error, str_date[64];
+    struct t_repo_script *ptr_script;
+    struct tm *tm;
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (!script_buffer)
+        return info;
+
+    buffer = weechat_hashtable_get (info, "_buffer");
+    if (!buffer)
+        return info;
+
+    rc = sscanf (buffer, "%lx", &value);
+    if ((rc == EOF) || (rc == 0))
+        return info;
+
+    ptr_buffer = (struct t_gui_buffer *)value;
+
+    if (!ptr_buffer || (ptr_buffer != script_buffer))
+        return info;
+
+    if (script_buffer_detail_script)
+        ptr_script = script_buffer_detail_script;
+    else
+    {
+        error = NULL;
+        x = strtol (weechat_hashtable_get (info, "_chat_line_y"), &error, 10);
+        if (!error || error[0])
+            return info;
+
+        if (x < 0)
+            return info;
+
+        ptr_script = script_repo_search_displayed_by_number (x);
+        if (!ptr_script)
+            return info;
+    }
+
+    weechat_hashtable_set (info, "script_name", ptr_script->name);
+    weechat_hashtable_set (info, "script_name_with_extension", ptr_script->name_with_extension);
+    weechat_hashtable_set (info, "script_language", script_language[ptr_script->language]);
+    weechat_hashtable_set (info, "script_author",ptr_script->author);
+    weechat_hashtable_set (info, "script_mail", ptr_script->mail);
+    weechat_hashtable_set (info, "script_version", ptr_script->version);
+    weechat_hashtable_set (info, "script_license", ptr_script->license);
+    weechat_hashtable_set (info, "script_description", ptr_script->description);
+    weechat_hashtable_set (info, "script_tags", ptr_script->tags);
+    weechat_hashtable_set (info, "script_requirements", ptr_script->requirements);
+    weechat_hashtable_set (info, "script_min_weechat", ptr_script->min_weechat);
+    weechat_hashtable_set (info, "script_max_weechat", ptr_script->max_weechat);
+    weechat_hashtable_set (info, "script_md5sum", ptr_script->md5sum);
+    weechat_hashtable_set (info, "script_url", ptr_script->url);
+    tm = localtime (&ptr_script->date_added);
+    strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm);
+    weechat_hashtable_set (info, "script_date_added", str_date);
+    tm = localtime (&ptr_script->date_updated);
+    strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm);
+    weechat_hashtable_set (info, "script_date_updated", str_date);
+    weechat_hashtable_set (info, "script_version_loaded", ptr_script->version_loaded);
+
+    return info;
+}
+
+/*
  * weechat_plugin_init: initialize script plugin
  */
 
@@ -251,6 +328,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_dump", &script_debug_dump_cb, NULL);
     weechat_hook_signal ("window_scrolled", &script_buffer_window_scrolled_cb, NULL);
     weechat_hook_signal ("*_script_*", &script_signal_script_cb, NULL);
+
+    weechat_hook_focus ("chat", &script_focus_chat_cb, NULL);
 
     if (script_repo_file_exists ())
     {

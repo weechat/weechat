@@ -40,15 +40,34 @@
 
 void
 script_command_action (struct t_gui_buffer *buffer, const char *action,
-                       const char *action_with_args, int need_repository)
+                       const char *arguments, int need_repository)
 {
     struct t_repo_script *ptr_script;
     char str_action[4096];
+    long value;
+    char *error;
 
-    if (action_with_args)
+    if (arguments)
     {
         /* action with arguments on command line */
-        script_action_schedule (action_with_args, need_repository, 0);
+        error = NULL;
+        value = strtol (arguments, &error, 10);
+        if (error && !error[0])
+        {
+            ptr_script = script_repo_search_displayed_by_number (value);
+            if (ptr_script)
+            {
+                snprintf (str_action, sizeof (str_action),
+                          "%s %s", action, ptr_script->name_with_extension);
+                script_action_schedule (str_action, need_repository, 0);
+            }
+        }
+        else
+        {
+            snprintf (str_action, sizeof (str_action),
+                      "%s %s", action, arguments);
+            script_action_schedule (str_action, need_repository, 0);
+        }
     }
     else if (script_buffer && (buffer == script_buffer))
     {
@@ -102,6 +121,20 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcasecmp (argv[1], "go") == 0)
+    {
+        if ((argc > 2) && script_buffer && !script_buffer_detail_script)
+        {
+            error = NULL;
+            value = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                script_buffer_set_current_line (value);
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcasecmp (argv[1], "search") == 0)
     {
         if (repo_scripts)
@@ -124,19 +157,20 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
     {
         script_command_action (buffer,
                                argv[1],
-                               (argc > 2) ? argv_eol[1] : NULL,
+                               (argc > 2) ? argv_eol[2] : NULL,
                                0);
         return WEECHAT_RC_OK;
     }
 
     if ((weechat_strcasecmp (argv[1], "install") == 0)
         || (weechat_strcasecmp (argv[1], "remove") == 0)
+        || (weechat_strcasecmp (argv[1], "installremove") == 0)
         || (weechat_strcasecmp (argv[1], "hold") == 0)
         || (weechat_strcasecmp (argv[1], "show") == 0))
     {
         script_command_action (buffer,
                                argv[1],
-                               (argc > 2) ? argv_eol[1] : NULL,
+                               (argc > 2) ? argv_eol[2] : NULL,
                                1);
         return WEECHAT_RC_OK;
     }
@@ -272,6 +306,10 @@ script_command_init ()
                              "  word(s)      filter scripts: search word(s) in "
                              "scripts (description, tags, ...)\n"
                              "  *            remove filter\n\n"
+                             "Mouse actions on script buffer:\n"
+                             "  wheel         scroll list\n"
+                             "  left button   select script\n"
+                             "  right button  install/remove script\n\n"
                              "Examples:\n"
                              "  /script search url\n"
                              "  /script install iset.pl buffers.pl\n"

@@ -786,7 +786,7 @@ Tasti per il contesto "mouse"
 Questi tasti sono usati nel contesto "mouse", ovvero quando si verifica un
 evento del mouse.
 
-// TRANSLATION MISSING (4)
+// TRANSLATION MISSING (6)
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | Tasto ^(1)^ | Azione | Zona | Descrizione | Comando
@@ -795,6 +795,8 @@ evento del mouse.
 | ◾◽◽     | destra           | chat                 | Passa al buffer successivo | /window ${_window_number};/buffer +1
 | ◾◽◽     | sinistra (lungo) | chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
 | ◾◽◽     | destra (lungo)   | chat                 | Passa all'ultimo buffer | /window ${_window_number};/input jump_last_buffer
+| ◾◽◽     | -                | chat (script buffer) | Select line in script buffer | /script go ${_chat_line_y}
+| ◽◽◾     | -                | chat (script buffer) | Install/remove script | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}
 | ⇑       | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up -window ${_window_number}
 | ⇓       | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer | /window scroll_down -window ${_window_number}
 | ⇑       | -                | chat (script buffer) | Move 5 lines up in script buffer | /script up 5

@@ -471,7 +471,7 @@ script_action_install ()
  */
 
 void
-script_action_remove (const char *name)
+script_action_remove (const char *name, int quiet)
 {
     struct t_repo_script *ptr_script;
     char str_signal[256];
@@ -481,15 +481,21 @@ script_action_remove (const char *name)
     {
         if (!(ptr_script->status & SCRIPT_STATUS_INSTALLED))
         {
-            weechat_printf (NULL,
-                            _("%s: script \"%s\" is not installed"),
-                            SCRIPT_PLUGIN_NAME, name);
+            if (!quiet)
+            {
+                weechat_printf (NULL,
+                                _("%s: script \"%s\" is not installed"),
+                                SCRIPT_PLUGIN_NAME, name);
+            }
         }
         else if (ptr_script->status & SCRIPT_STATUS_HELD)
         {
-            weechat_printf (NULL,
-                            _("%s: script \"%s\" is held"),
-                            SCRIPT_PLUGIN_NAME, name);
+            if (!quiet)
+            {
+                weechat_printf (NULL,
+                                _("%s: script \"%s\" is held"),
+                                SCRIPT_PLUGIN_NAME, name);
+            }
         }
         else
         {
@@ -503,9 +509,12 @@ script_action_remove (const char *name)
     }
     else
     {
-        weechat_printf (NULL,
-                        _("%s: script \"%s\" not found"),
-                        SCRIPT_PLUGIN_NAME, name);
+        if (!quiet)
+        {
+            weechat_printf (NULL,
+                            _("%s: script \"%s\" not found"),
+                            SCRIPT_PLUGIN_NAME, name);
+        }
     }
 }
 
@@ -714,8 +723,42 @@ script_action_run ()
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_remove (argv[j]);
+                        script_action_remove (argv[j], quiet);
                     }
+                }
+                else if (weechat_strcasecmp (argv[0], "installremove") == 0)
+                {
+                    script_found = 0;
+                    for (j = 1; j < argc; j++)
+                    {
+                        ptr_script = script_repo_search_by_name_ext (argv[j]);
+                        if (ptr_script)
+                        {
+                            if (ptr_script->status & SCRIPT_STATUS_HELD)
+                            {
+                                weechat_printf (NULL,
+                                                _("%s: script \"%s\" is held"),
+                                                SCRIPT_PLUGIN_NAME, argv[j]);
+                            }
+                            else if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
+                            {
+                                script_action_remove (argv[j], quiet);
+                            }
+                            else
+                            {
+                                script_found++;
+                                ptr_script->install_order = script_found;
+                            }
+                        }
+                        else
+                        {
+                            weechat_printf (NULL,
+                                            _("%s: script \"%s\" not found"),
+                                            SCRIPT_PLUGIN_NAME, argv[j]);
+                        }
+                    }
+                    if (script_found)
+                        script_action_install ();
                 }
                 else if (weechat_strcasecmp (argv[0], "hold") == 0)
                 {

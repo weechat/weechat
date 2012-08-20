@@ -23,7 +23,7 @@
 
 Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
 
-Sur le tampon des scripts, les statuts pour chaque script sont :
+Sur le tampon des scripts, les statuts pour chaque script sont:
   * i a H r N
   | | | | | |
   | | | | | obsolète (nouvelle version disponible)
@@ -33,7 +33,7 @@ Sur le tampon des scripts, les statuts pour chaque script sont :
   | installé
   script populaire
 
-Les touches sur le tampon des scripts :
+Les touches sur le tampon des scripts:
   alt+i  installer le script
   alt+r  supprimer le script
   alt+l  charger le script
@@ -41,7 +41,7 @@ Les touches sur le tampon des scripts :
   alt+u  décharger le script
   alt+h  (dé)figer le script
 
-Entrée autorisée sur le tampon des scripts :
+Entrée autorisée sur le tampon des scripts:
   i/r/l/L/u/h  action sur le script (identique aux touches ci-dessus)
   q            fermer le tampon
   $            rafraîchir le tampon
@@ -49,6 +49,11 @@ Entrée autorisée sur le tampon des scripts :
   s:           réinitialiser le tri (utiliser le tri par défaut)
   word(s)      filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
   *            supprimer le filtre
+
+Actions de la souris sur le tampon des scripts:
+  roulette       faire défiler la liste
+  bouton gauche  sélectionner le script
+  bouton droit   installer/supprimer le script
 
 Exemples:
   /script search url

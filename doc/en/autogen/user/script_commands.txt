@@ -50,6 +50,11 @@ Input allowed on script buffer:
   word(s)      filter scripts: search word(s) in scripts (description, tags, ...)
   *            remove filter
 
+Mouse actions on script buffer:
+  wheel         scroll list
+  left button   select script
+  right button  install/remove script
+
 Examples:
   /script search url
   /script install iset.pl buffers.pl

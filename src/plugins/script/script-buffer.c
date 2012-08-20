@@ -511,7 +511,8 @@ script_buffer_refresh (int clear)
                   _("%d/%d scripts (filter: %s) | Sort: %s | "
                     "Alt+key/input: i=install r=remove l=load L=reload "
                     "u=unload h=(un)hold d=show detail | Input: q=close "
-                    "$=refresh s:x,y=sort words=filter *=reset filter"),
+                    "$=refresh s:x,y=sort words=filter *=reset filter | "
+                    "Mouse: left=select right=install/remove"),
                   script_repo_count_displayed,
                   script_repo_count,
                   (script_repo_filter) ? script_repo_filter : "*",
@@ -549,13 +550,16 @@ script_buffer_set_current_line (int line)
 {
     int old_line;
 
-    old_line = script_buffer_selected_line;
-    script_buffer_selected_line = line;
+    if ((line >= 0) && (line < script_repo_count_displayed))
+    {
+        old_line = script_buffer_selected_line;
+        script_buffer_selected_line = line;
 
-    script_buffer_display_line_script (old_line,
-                                       script_repo_search_displayed_by_number (old_line));
-    script_buffer_display_line_script (script_buffer_selected_line,
-                                       script_repo_search_displayed_by_number (script_buffer_selected_line));
+        script_buffer_display_line_script (old_line,
+                                           script_repo_search_displayed_by_number (old_line));
+        script_buffer_display_line_script (script_buffer_selected_line,
+                                           script_repo_search_displayed_by_number (script_buffer_selected_line));
+    }
 }
 
 /*
