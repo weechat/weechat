@@ -34,30 +34,25 @@ IF(PYTHON_FOUND)
 ENDIF(PYTHON_FOUND)
 
 FIND_PROGRAM(PYTHON_EXECUTABLE
-  NAMES python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python
+  NAMES python2.7 python2.6 python2.5 python
   PATHS /usr/bin /usr/local/bin /usr/pkg/bin
   )
 
 IF(PYTHON_EXECUTABLE)
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('CONFINCLUDEPY'))"
+    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('CONFINCLUDEPY'))"
     OUTPUT_VARIABLE PYTHON_INC_DIR
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('LIBPL'))"
+    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LIBPL'))"
     OUTPUT_VARIABLE PYTHON_POSSIBLE_LIB_PATH
     )
 
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import *; print(get_config_var('LINKFORSHARED'))"
+    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LINKFORSHARED'))"
     OUTPUT_VARIABLE PYTHON_LFLAGS
     )
-
-  # remove the new lines from the output by replacing them with empty strings
-  STRING(REPLACE "\n" "" PYTHON_INC_DIR "${PYTHON_INC_DIR}")
-  STRING(REPLACE "\n" "" PYTHON_POSSIBLE_LIB_PATH "${PYTHON_POSSIBLE_LIB_PATH}")
-  STRING(REPLACE "\n" "" PYTHON_LFLAGS "${PYTHON_LFLAGS}")
 
   FIND_PATH(PYTHON_INCLUDE_PATH
     NAMES Python.h
@@ -65,12 +60,24 @@ IF(PYTHON_EXECUTABLE)
     )
 
   FIND_LIBRARY(PYTHON_LIBRARY
-    NAMES python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python
+    NAMES python2.7 python2.6 python2.5 python
     PATHS ${PYTHON_POSSIBLE_LIB_PATH}
     )
 
   IF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
-    SET(PYTHON_FOUND TRUE)
+    EXECUTE_PROCESS(
+      COMMAND ${PYTHON_EXECUTABLE} -c "import sys; sys.stdout.write(sys.version[:3])"
+      OUTPUT_VARIABLE PYTHON_VERSION
+      )
+    EXECUTE_PROCESS(
+      COMMAND ${PYTHON_EXECUTABLE} -c "import sys; sys.stdout.write(str(sys.version_info < (2,5)))"
+      OUTPUT_VARIABLE PYTHON_OLD_VERSION
+      )
+    IF(${PYTHON_OLD_VERSION} STREQUAL "True")
+      MESSAGE("Python >= 2.5 is needed to build python plugin, version found: ${PYTHON_VERSION}")
+    ELSE()
+      SET(PYTHON_FOUND TRUE)
+    ENDIF(${PYTHON_OLD_VERSION} STREQUAL "True")
   ENDIF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
 
   MARK_AS_ADVANCED(

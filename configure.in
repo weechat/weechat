@@ -465,7 +465,7 @@ fi
 PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
-    AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python)
+    AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python)
     if test -z $PYTHON ; then
         AC_MSG_WARN([
 *** Python must be installed on your system but python interpreter couldn't be found in path.
@@ -474,41 +474,49 @@ if test "x$enable_python" = "xyes" ; then
         enable_python="no"
         not_found="$not_found python"
     else
-        PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; print "%s" % sys.prefix'`
-        PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[:3]]'`
-        PYTHON_INCLUDE=`$PYTHON -c "import distutils.sysconfig,string; print distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
-
-        AC_MSG_CHECKING(for Python header files)
-        if test -r "$PYTHON_INCLUDE/Python.h"; then
-            PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
-            AC_MSG_RESULT(found)
-            PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
-            PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
-            AC_MSG_CHECKING(for Python library)
-            if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
-               PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
-               AC_MSG_RESULT(found)
-            elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
-               PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
-               AC_MSG_RESULT(found)
-            elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
-               PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
-               AC_MSG_RESULT(found)
-            else
-                AC_MSG_WARN([
+        PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; sys.stdout.write("%s" % sys.prefix)'`
+        PYTHON_VERSION=`$PYTHON -c 'import sys; sys.stdout.write(sys.version[[:3]])'`
+        PYTHON_INCLUDE=`$PYTHON -c "import sys, distutils.sysconfig, string; sys.stdout.write(distutils.sysconfig.get_config_var('CONFINCLUDEPY'))"`
+        PYTHON_OLD_VERSION=`$PYTHON -c "import sys; sys.stdout.write(str(sys.version_info < (2,5)))"`
+        if test "x$PYTHON_OLD_VERSION" = "xTrue" ; then
+            AC_MSG_WARN([
+*** Python >= 2.5 is needed to build Python plugin, version found: $PYTHON_VERSION.
+*** WeeChat will be built without Python support.])
+            enable_python="no"
+            not_found="$not_found python"
+        else
+            AC_MSG_CHECKING(for Python header files)
+            if test -r "$PYTHON_INCLUDE/Python.h"; then
+                PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
+                AC_MSG_RESULT(found)
+                PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
+                PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
+                AC_MSG_CHECKING(for Python library)
+                if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
+                   PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+                   AC_MSG_RESULT(found)
+                elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
+                   PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+                   AC_MSG_RESULT(found)
+                elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
+                   PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
+                   AC_MSG_RESULT(found)
+                else
+                    AC_MSG_WARN([
 *** Python library couldn't be found on your system.
 *** Try to install it with your software package manager.
+*** WeeChat will be built without Python support.])
+                    enable_python="no"
+                    not_found="$not_found python"
+                fi
+            else
+                AC_MSG_WARN([
+*** Python header files couldn't be found on your system.
+*** Try to install them with your software package manager.
 *** WeeChat will be built without Python support.])
                 enable_python="no"
                 not_found="$not_found python"
             fi
-        else
-            AC_MSG_WARN([
-*** Python header files couldn't be found on your system.
-*** Try to install them with your software package manager.
-*** WeeChat will be built without Python support.])
-            enable_python="no"
-            not_found="$not_found python"
         fi
     fi
 else
