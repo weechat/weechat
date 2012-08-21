@@ -122,6 +122,8 @@ script_action_list_input (int send_to_buffer)
             if (buf[0])
                 strcat (buf, ", ");
             strcat (buf, weechat_hdata_string (hdata, ptr_script, "name"));
+            strcat (buf, ".");
+            strcat (buf, script_extension[i]);
             strcat (buf, " ");
             strcat (buf, weechat_hdata_string (hdata, ptr_script, "version"));
             length = strlen (buf);
