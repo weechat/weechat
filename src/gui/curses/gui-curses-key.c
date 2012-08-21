@@ -261,7 +261,7 @@ gui_key_default_bindings (int context)
         /* mouse events on chat area */
         BIND("@chat:button1",                    "/window ${_window_number}");
         BIND("@chat(script.scripts):button1",    "/script go ${_chat_line_y}");
-        BIND("@chat(script.scripts):button2",    "/script go ${_chat_line_y};/script installremove ${script_name_with_extension}");
+        BIND("@chat(script.scripts):button2",    "/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}");
         BIND("@chat:button1-gesture-left",       "/window ${_window_number};/buffer -1");
         BIND("@chat:button1-gesture-right",      "/window ${_window_number};/buffer +1");
         BIND("@chat:button1-gesture-left-long",  "/window ${_window_number};/buffer 1");

@@ -2,19 +2,20 @@
 [command]*`tcl`* auflisten/installieren/deinstallieren von Skripten::
 ........................................
 /tcl  list|listfull [<name>]
-      load <filename>
+      load [-q] <filename>
       autoload
-      reload|unload [<name>]
+      reload|unload [-q] [<name>]
 
-    list: installierte Skripten werden aufgelistet
-listfull: detaillierte Auflistung aller installierten Skripten
-    load: installiert ein Skript
-autoload: installiert automatisch alle Skripten aus dem "autoload" Verzeichnis
-  reload: ein Skript wird erneut installiert (wird kein Name angegeben, dann werden alle Skripten entfernt und erneut installiert)
-  unload: deinstalliert ein Skript (wird kein Name angegeben, dann werden alle Skripten deinstalliert)
-filename: Skript (Datei) welches geladen werden soll
-    name: Name eines Skriptes (der Name der in der "register" Funktion der Skript-API genutzt wird)
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
 
-Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
+Without argument, this command lists all loaded scripts.
 ........................................
 

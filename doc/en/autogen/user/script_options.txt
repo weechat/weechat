@@ -133,6 +133,11 @@
 ** type: string
 ** values: any string (default value: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.quiet_actions]] *script.look.quiet_actions*
+** description: `quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_script.look.sort]] *script.look.sort*
 ** description: `default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
 ** type: string

@@ -2,9 +2,9 @@
 [command]*`tcl`* lister/charger/décharger des scripts::
 ........................................
 /tcl  list|listfull [<nom>]
-      load <fichier>
+      load [-q] <fichier>
       autoload
-      reload|unload [<nom>]
+      reload|unload [-q] [<nom>]
 
     list: lister les scripts chargés
 listfull: lister les scripts chargés (verbeux)
@@ -14,6 +14,7 @@ autoload: charger tous les scripts dans le répertoire "autoload"
   unload: décharger un script (si pas de nom donné, décharger tous les scripts)
  fichier: script (fichier) à charger
      nom: nom de script (nom utilisé dans l'appel à la fonction "register")
+      -q: mode silencieux: ne pas afficher de messages
 
 Sans paramètre, cette commande liste les scripts chargés.
 ........................................

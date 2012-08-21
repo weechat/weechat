@@ -2,19 +2,20 @@
 [command]*`lua`* スクリプトをリストアップ/ロード/アンロード::
 ........................................
 /lua  list|listfull [<name>]
-      load <filename>
+      load [-q] <filename>
       autoload
-      reload|unload [<name>]
+      reload|unload [-q] [<name>]
 
-    list: ロード済みスクリプトをリストアップ
-listfull: ロード済みスクリプトをリストアップ (詳細)
-    load: スクリプトをロード
-autoload: "autoload" ディレクトリに含まれる全てのスクリプトをロード
-  reload: スクリプトのリロード (名前を指定しなかった場合、全てのスクリプトをアンロードし、"autoload" ディレクトリに含まれる全てのスクリプトをロード)
-  unload: スクリプトのアンロード (名前を指定しなかった場合、全てのスクリプトをアンロード)
-filename: ロードするスクリプト (ファイル)
-    name: スクリプト名 (名前は "register" 関数を呼び出すために使われる)
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
 
-引数無しの場合、全てのロード済みスクリプトをリストアップする。
+Without argument, this command lists all loaded scripts.
 ........................................
 

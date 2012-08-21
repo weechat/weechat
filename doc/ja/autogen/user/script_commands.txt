@@ -5,21 +5,23 @@
          search <text>
          show <script>
          load|unload|reload <script> [<script>...]
-         install|remove|hold <script> [<script>...]
+         install|remove|installremove|hold [-q] <script> [<script>...]
          upgrade
          update
 
-    list: list loaded scripts (all languages)
-  search: search scripts by tags or text and display result on scripts buffer
-    show: show detailed info about a script
-    load: load script(s)
-  unload: unload script(s)
-  reload: reload script(s)
- install: install/upgrade script(s)
-  remove: remove script(s)
-    hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
- upgrade: upgrade all installed scripts which are obsolete (new version available)
-  update: update local scripts cache
+         list: list loaded scripts (all languages)
+       search: search scripts by tags or text and display result on scripts buffer
+         show: show detailed info about a script
+         load: load script(s)
+       unload: unload script(s)
+       reload: reload script(s)
+      install: install/upgrade script(s)
+       remove: remove script(s)
+installremove: install or remove script(s), depending on current state
+         hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
+           -q: quiet mode: do not display messages
+      upgrade: upgrade all installed scripts which are obsolete (new version available)
+       update: update local scripts cache
 
 Without argument, this command opens a buffer with list of scripts.
 

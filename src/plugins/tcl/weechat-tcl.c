@@ -420,9 +420,12 @@ weechat_tcl_unload_name (const char *name)
     if (ptr_script)
     {
         weechat_tcl_unload (ptr_script);
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: script \"%s\" unloaded"),
-                        TCL_PLUGIN_NAME, name);
+        if (!tcl_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            TCL_PLUGIN_NAME, name);
+        }
     }
     else
     {
@@ -462,9 +465,12 @@ weechat_tcl_reload_name (const char *name)
         if (filename)
         {
             weechat_tcl_unload (ptr_script);
-            weechat_printf (NULL,
-                            weechat_gettext ("%s: script \"%s\" unloaded"),
-                            TCL_PLUGIN_NAME, name);
+            if (!tcl_quiet)
+            {
+                weechat_printf (NULL,
+                                weechat_gettext ("%s: script \"%s\" unloaded"),
+                                TCL_PLUGIN_NAME, name);
+            }
             weechat_tcl_load (filename);
             free (filename);
         }
@@ -485,7 +491,7 @@ int
 weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
-    char *path_script;
+    char *ptr_name, *path_script;
 
     /* make C compiler happy */
     (void) data;
@@ -534,24 +540,40 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             plugin_script_display_list (weechat_tcl_plugin, tcl_scripts,
                                         argv_eol[2], 1);
         }
-        else if (weechat_strcasecmp (argv[1], "load") == 0)
+        else if ((weechat_strcasecmp (argv[1], "load") == 0)
+                 || (weechat_strcasecmp (argv[1], "reload") == 0)
+                 || (weechat_strcasecmp (argv[1], "unload") == 0))
         {
-            /* load Tcl script */
-            path_script = plugin_script_search_path (weechat_tcl_plugin,
-                                                     argv_eol[2]);
-            weechat_tcl_load ((path_script) ? path_script : argv_eol[2]);
-            if (path_script)
-                free (path_script);
-        }
-        else if (weechat_strcasecmp (argv[1], "reload") == 0)
-        {
-            /* reload one Tcl script */
-            weechat_tcl_reload_name (argv_eol[2]);
-        }
-        else if (weechat_strcasecmp (argv[1], "unload") == 0)
-        {
-            /* unload Tcl script */
-            weechat_tcl_unload_name (argv_eol[2]);
+            ptr_name = argv_eol[2];
+            if (strncmp (ptr_name, "-q ", 3) == 0)
+            {
+                tcl_quiet = 1;
+                ptr_name += 3;
+                while (ptr_name[0] == ' ')
+                {
+                    ptr_name++;
+                }
+            }
+            if (weechat_strcasecmp (argv[1], "load") == 0)
+            {
+                /* load Tcl script */
+                path_script = plugin_script_search_path (weechat_tcl_plugin,
+                                                         ptr_name);
+                weechat_tcl_load ((path_script) ? path_script : ptr_name);
+                if (path_script)
+                    free (path_script);
+            }
+            else if (weechat_strcasecmp (argv[1], "reload") == 0)
+            {
+                /* reload one Tcl script */
+                weechat_tcl_reload_name (ptr_name);
+            }
+            else if (weechat_strcasecmp (argv[1], "unload") == 0)
+            {
+                /* unload Tcl script */
+                weechat_tcl_unload_name (ptr_name);
+            }
+            tcl_quiet = 0;
         }
         else
         {
@@ -682,6 +704,7 @@ weechat_tcl_timer_action_cb (void *data, int remaining_calls)
                                           tcl_scripts,
                                           &weechat_tcl_unload,
                                           &weechat_tcl_load,
+                                          &tcl_quiet,
                                           &tcl_action_install_list);
         }
         else if (data == &tcl_action_remove_list)
@@ -689,6 +712,7 @@ weechat_tcl_timer_action_cb (void *data, int remaining_calls)
             plugin_script_action_remove (weechat_tcl_plugin,
                                          tcl_scripts,
                                          &weechat_tcl_unload,
+                                         &tcl_quiet,
                                          &tcl_action_remove_list);
         }
     }

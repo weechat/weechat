@@ -25,6 +25,7 @@
 struct t_repo_script;
 
 extern struct t_config_option *script_config_look_columns;
+extern struct t_config_option *script_config_look_quiet_actions;
 extern struct t_config_option *script_config_look_sort;
 extern struct t_config_option *script_config_look_translate_description;
 extern struct t_config_option *script_config_look_use_keys;

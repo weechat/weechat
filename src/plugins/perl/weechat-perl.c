@@ -626,9 +626,12 @@ weechat_perl_unload_name (const char *name)
     if (ptr_script)
     {
         weechat_perl_unload (ptr_script);
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: script \"%s\" unloaded"),
-                        PERL_PLUGIN_NAME, name);
+        if (!perl_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            PERL_PLUGIN_NAME, name);
+        }
     }
     else
     {
@@ -668,9 +671,12 @@ weechat_perl_reload_name (const char *name)
         if (filename)
         {
             weechat_perl_unload (ptr_script);
-            weechat_printf (NULL,
-                            weechat_gettext ("%s: script \"%s\" unloaded"),
-                            PERL_PLUGIN_NAME, name);
+            if (!perl_quiet)
+            {
+                weechat_printf (NULL,
+                                weechat_gettext ("%s: script \"%s\" unloaded"),
+                                PERL_PLUGIN_NAME, name);
+            }
             weechat_perl_load (filename);
             free (filename);
         }
@@ -691,7 +697,7 @@ int
 weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
-    char *path_script;
+    char *ptr_name, *path_script;
 
     /* make C compiler happy */
     (void) data;
@@ -740,24 +746,40 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             plugin_script_display_list (weechat_perl_plugin, perl_scripts,
                                         argv_eol[2], 1);
         }
-        else if (weechat_strcasecmp (argv[1], "load") == 0)
+        else if ((weechat_strcasecmp (argv[1], "load") == 0)
+                 || (weechat_strcasecmp (argv[1], "reload") == 0)
+                 || (weechat_strcasecmp (argv[1], "unload") == 0))
         {
-            /* load Perl script */
-            path_script = plugin_script_search_path (weechat_perl_plugin,
-                                                     argv_eol[2]);
-            weechat_perl_load ((path_script) ? path_script : argv_eol[2]);
-            if (path_script)
-                free (path_script);
-        }
-        else if (weechat_strcasecmp (argv[1], "reload") == 0)
-        {
-            /* reload one Perl script */
-            weechat_perl_reload_name (argv_eol[2]);
-        }
-        else if (weechat_strcasecmp (argv[1], "unload") == 0)
-        {
-            /* unload Perl script */
-            weechat_perl_unload_name (argv_eol[2]);
+            ptr_name = argv_eol[2];
+            if (strncmp (ptr_name, "-q ", 3) == 0)
+            {
+                perl_quiet = 1;
+                ptr_name += 3;
+                while (ptr_name[0] == ' ')
+                {
+                    ptr_name++;
+                }
+            }
+            if (weechat_strcasecmp (argv[1], "load") == 0)
+            {
+                /* load Perl script */
+                path_script = plugin_script_search_path (weechat_perl_plugin,
+                                                         ptr_name);
+                weechat_perl_load ((path_script) ? path_script : ptr_name);
+                if (path_script)
+                    free (path_script);
+            }
+            else if (weechat_strcasecmp (argv[1], "reload") == 0)
+            {
+                /* reload one Perl script */
+                weechat_perl_reload_name (ptr_name);
+            }
+            else if (weechat_strcasecmp (argv[1], "unload") == 0)
+            {
+                /* unload Perl script */
+                weechat_perl_unload_name (ptr_name);
+            }
+            perl_quiet = 0;
         }
         else
         {
@@ -888,6 +910,7 @@ weechat_perl_timer_action_cb (void *data, int remaining_calls)
                                           perl_scripts,
                                           &weechat_perl_unload,
                                           &weechat_perl_load,
+                                          &perl_quiet,
                                           &perl_action_install_list);
         }
         else if (data == &perl_action_remove_list)
@@ -895,6 +918,7 @@ weechat_perl_timer_action_cb (void *data, int remaining_calls)
             plugin_script_action_remove (weechat_perl_plugin,
                                          perl_scripts,
                                          &weechat_perl_unload,
+                                         &perl_quiet,
                                          &perl_action_remove_list);
         }
     }

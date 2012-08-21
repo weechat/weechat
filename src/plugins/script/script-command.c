@@ -46,10 +46,21 @@ script_command_action (struct t_gui_buffer *buffer, const char *action,
     char str_action[4096];
     long value;
     char *error;
+    int quiet;
 
     if (arguments)
     {
         /* action with arguments on command line */
+        quiet = 0;
+        if (strncmp (arguments, "-q ", 3) == 0)
+        {
+            quiet = 1;
+            arguments += 3;
+            while (arguments[0] == ' ')
+            {
+                arguments++;
+            }
+        }
         error = NULL;
         value = strtol (arguments, &error, 10);
         if (error && !error[0])
@@ -58,15 +69,21 @@ script_command_action (struct t_gui_buffer *buffer, const char *action,
             if (ptr_script)
             {
                 snprintf (str_action, sizeof (str_action),
-                          "%s %s", action, ptr_script->name_with_extension);
-                script_action_schedule (str_action, need_repository, 0);
+                          "%s%s %s",
+                          (quiet) ? "-q " : "",
+                          action,
+                          ptr_script->name_with_extension);
+                script_action_schedule (str_action, need_repository, quiet);
             }
         }
         else
         {
             snprintf (str_action, sizeof (str_action),
-                      "%s %s", action, arguments);
-            script_action_schedule (str_action, need_repository, 0);
+                      "%s%s %s",
+                      (quiet) ? "-q " : "",
+                      action,
+                      arguments);
+            script_action_schedule (str_action, need_repository, quiet);
         }
     }
     else if (script_buffer && (buffer == script_buffer))
@@ -260,23 +277,26 @@ script_command_init ()
                           N_("WeeChat scripts manager"),
                           N_("list || search <text> || show <script>"
                              " || load|unload|reload <script> [<script>...]"
-                             " || install|remove|hold <script> [<script>...]"
+                             " || install|remove|installremove|hold [-q] <script> [<script>...]"
                              " || upgrade || update"),
-                          N_("    list: list loaded scripts (all languages)\n"
-                             "  search: search scripts by tags or text and "
+                          N_("         list: list loaded scripts (all languages)\n"
+                             "       search: search scripts by tags or text and "
                              "display result on scripts buffer\n"
-                             "    show: show detailed info about a script\n"
-                             "    load: load script(s)\n"
-                             "  unload: unload script(s)\n"
-                             "  reload: reload script(s)\n"
-                             " install: install/upgrade script(s)\n"
-                             "  remove: remove script(s)\n"
-                             "    hold: hold/unhold script(s) (a script held "
+                             "         show: show detailed info about a script\n"
+                             "         load: load script(s)\n"
+                             "       unload: unload script(s)\n"
+                             "       reload: reload script(s)\n"
+                             "      install: install/upgrade script(s)\n"
+                             "       remove: remove script(s)\n"
+                             "installremove: install or remove script(s), "
+                             "depending on current state\n"
+                             "         hold: hold/unhold script(s) (a script held "
                              "will not be upgraded any more and cannot be "
                              "removed)\n"
-                             " upgrade: upgrade all installed scripts which "
+                             "           -q: quiet mode: do not display messages\n"
+                             "      upgrade: upgrade all installed scripts which "
                              "are obsolete (new version available)\n"
-                             "  update: update local scripts cache\n\n"
+                             "       update: update local scripts cache\n\n"
                              "Without argument, this command opens a buffer "
                              "with list of scripts.\n\n"
                              "On script buffer, the possible status for each "
@@ -329,6 +349,7 @@ script_command_init ()
                           "%(guile_script)|%*"
                           " || install %(script_scripts)|%*"
                           " || remove %(script_scripts_installed)|%*"
+                          " || installremove %(script_scripts)|%*"
                           " || hold %(script_scripts)|%*"
                           " || update"
                           " || upgrade",

@@ -1,20 +1,21 @@
 [[command_guile_guile]]
 [command]*`guile`* elenca/carica/scarica script::
 ........................................
-/guile  list|listfull [<nome>]
-        load <nomefile>
+/guile  list|listfull [<name>]
+        load [-q] <filename>
         autoload
-        reload|unload [<nome>]
+        reload|unload [-q] [<name>]
 
-     list: elenca i plugin caricati
- listfull: elenca i plugin caricati (dettagliato)
-     load: carica un plugin
- autoload: carica automaticamente i plugin nella directory utente o di sistema
-   reload: ricarica un plugin (se non specificato, scarica i plugin e li ricarica automaticamente)
-   unload: scarica uno o tutti i plugin
-nome_file: (file) script da caricare
-     nome: il nome di uno script (usato nella chiamata alla funzione "register")
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
 
-Senza argomento, questo comando elenca tutti i plugin caricati.
+Without argument, this command lists all loaded scripts.
 ........................................
 

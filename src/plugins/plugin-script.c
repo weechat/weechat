@@ -138,9 +138,9 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     weechat_hook_command (weechat_plugin->name,
                           N_("list/load/unload scripts"),
                           N_("list|listfull [<name>]"
-                             " || load <filename>"
+                             " || load [-q] <filename>"
                              " || autoload"
-                             " || reload|unload [<name>]"),
+                             " || reload|unload [-q] [<name>]"),
                           N_("    list: list loaded scripts\n"
                              "listfull: list loaded scripts (verbose)\n"
                              "    load: load a script\n"
@@ -153,7 +153,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                              "unload all scripts)\n"
                              "filename: script (file) to load\n"
                              "    name: a script name (name used in call to "
-                             "\"register\" function)\n\n"
+                             "\"register\" function)\n"
+                             "      -q: quiet mode: do not display messages\n\n"
                              "Without argument, this command "
                              "lists all loaded scripts."),
                           completion,
@@ -862,6 +863,7 @@ plugin_script_action_add (char **action_list, const char *name)
 void
 plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
                            const char *name,
+                           int quiet,
                            int display_error_if_no_script_removed)
 {
     int num_found, i;
@@ -878,9 +880,12 @@ plugin_script_remove_file (struct t_weechat_plugin *weechat_plugin,
         num_found++;
         if (unlink (path_script) == 0)
         {
-            weechat_printf (NULL, _("%s: script removed: %s"),
-                            weechat_plugin->name,
-                            path_script);
+            if (!quiet)
+            {
+                weechat_printf (NULL, _("%s: script removed: %s"),
+                                weechat_plugin->name,
+                                path_script);
+            }
         }
         else
         {
@@ -923,10 +928,11 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts,
                               void (*script_unload)(struct t_plugin_script *script),
                               int (*script_load)(const char *filename),
+                              int *quiet,
                               char **list)
 {
     char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
-    char *symlink_path, str_signal[128];
+    char *symlink_path, str_signal[128], *ptr_list;
     const char *dir_home, *dir_separator;
     int argc, i, length, rc;
     struct t_plugin_script *ptr_script;
@@ -934,7 +940,15 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
     if (!*list)
         return;
 
-    argv = weechat_string_split (*list, ",", 0, 0, &argc);
+    ptr_list = *list;
+    *quiet = 0;
+    if (strncmp (ptr_list, "-q ", 3) == 0)
+    {
+        *quiet = 1;
+        ptr_list += 3;
+    }
+
+    argv = weechat_string_split (ptr_list, ",", 0, 0, &argc);
     if (argv)
     {
         for (i = 0; i < argc; i++)
@@ -953,7 +967,8 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                         (*script_unload) (ptr_script);
 
                     /* remove script file(s) */
-                    plugin_script_remove_file (weechat_plugin, base_name, 0);
+                    plugin_script_remove_file (weechat_plugin, base_name,
+                                               *quiet, 0);
 
                     /* move file from install dir to language dir */
                     dir_home = weechat_info_get ("weechat_dir", "");
@@ -1016,10 +1031,12 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
         weechat_string_free_split (argv);
     }
 
+    *quiet = 0;
+
     snprintf (str_signal, sizeof (str_signal),
               "%s_script_installed", weechat_plugin->name);
     weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                              *list);
+                              ptr_list);
 
     free (*list);
     *list = NULL;
@@ -1036,16 +1053,25 @@ void
 plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
                              struct t_plugin_script *scripts,
                              void (*script_unload)(struct t_plugin_script *script),
+                             int *quiet,
                              char **list)
 {
-    char **argv, str_signal[128];
+    char **argv, str_signal[128], *ptr_list;
     int argc, i;
     struct t_plugin_script *ptr_script;
 
     if (!*list)
         return;
 
-    argv = weechat_string_split (*list, ",", 0, 0, &argc);
+    ptr_list = *list;
+    *quiet = 0;
+    if (strncmp (ptr_list, "-q ", 3) == 0)
+    {
+        *quiet = 1;
+        ptr_list += 3;
+    }
+
+    argv = weechat_string_split (ptr_list, ",", 0, 0, &argc);
     if (argv)
     {
         for (i = 0; i < argc; i++)
@@ -1056,15 +1082,17 @@ plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
                 (*script_unload) (ptr_script);
 
             /* remove script file(s) */
-            plugin_script_remove_file (weechat_plugin, argv[i], 1);
+            plugin_script_remove_file (weechat_plugin, argv[i], *quiet, 1);
         }
         weechat_string_free_split (argv);
     }
 
+    *quiet = 0;
+
     snprintf (str_signal, sizeof (str_signal),
               "%s_script_removed", weechat_plugin->name);
     weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                              *list);
+                              ptr_list);
 
     free (*list);
     *list = NULL;

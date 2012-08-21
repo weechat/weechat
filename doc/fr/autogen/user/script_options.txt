@@ -133,6 +133,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.quiet_actions]] *script.look.quiet_actions*
+** description: `actions silencieuses sur le tampon script: ne pas afficher de messages sur le tampon "core" quand les scripts sont installés/supprimés/chargés/déchargés (seules les erreurs sont affichées)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_script.look.sort]] *script.look.sort*
 ** description: `tri par défaut des scripts: liste d'identifiants séparés par des virgules: a=auteur, A=chargé auto, d=date d'ajout, e=extension, i=installé, l=langage, n=nom, o=obsolète, p=populaire, r=chargé, u=date de mise à jour; le caractère "-" peut être utilisé avant l'identifiant pour inverser l'ordre; exemple: "i,u": scripts installés en premier, triés par date de mise à jour`
 ** type: chaîne

@@ -40,6 +40,7 @@ struct t_config_section *script_config_section_scripts = NULL;
 /* script config, look section */
 
 struct t_config_option *script_config_look_columns;
+struct t_config_option *script_config_look_quiet_actions;
 struct t_config_option *script_config_look_sort;
 struct t_config_option *script_config_look_translate_description;
 struct t_config_option *script_config_look_use_keys;
@@ -358,6 +359,14 @@ script_config_init ()
            "%W=max_weechat)"),
         NULL, 0, 0, "%s %n %V %v %u | %d | %t", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_look_quiet_actions = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "quiet_actions", "boolean",
+        N_("quiet actions on script buffer: do not display messages on core "
+           "buffer when scripts are installed/removed/loaded/unloaded (only "
+           "errors are displayed)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_sort = weechat_config_new_option (
         script_config_file, ptr_section,
         "sort", "string",

@@ -2,9 +2,9 @@
 [command]*`guile`* list/load/unload scripts::
 ........................................
 /guile  list|listfull [<name>]
-        load <filename>
+        load [-q] <filename>
         autoload
-        reload|unload [<name>]
+        reload|unload [-q] [<name>]
 
     list: list loaded scripts
 listfull: list loaded scripts (verbose)
@@ -14,6 +14,7 @@ autoload: load all scripts in "autoload" directory
   unload: unload a script (if no name given, unload all scripts)
 filename: script (file) to load
     name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
 
 Without argument, this command lists all loaded scripts.
 ........................................
