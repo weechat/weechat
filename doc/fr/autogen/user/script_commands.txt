@@ -1,7 +1,7 @@
 [[command_script_script]]
 [command]*`script`* Gestionnaire de scripts WeeChat::
 ........................................
-/script  list
+/script  list [-o|-i]
          search <texte>
          show <script>
          load|unload|reload <script> [<script>...]
@@ -10,6 +10,8 @@
          update
 
          list: lister les scripts chargés (tous les langages)
+           -o: envoyer la liste des scripts chargés au tampon
+           -i: copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon)
        search: chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
          show: afficher des infos détaillées sur le script
          load: charger un ou plusieurs scripts

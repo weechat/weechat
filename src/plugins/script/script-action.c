@@ -92,6 +92,63 @@ script_action_list ()
 }
 
 /*
+ * script_action_list_input: list loaded scripts (all languages) in input
+ *                           (send it to buffer if send_to_buffer == 1)
+ */
+
+void
+script_action_list_input (int send_to_buffer)
+{
+    int i, length;
+    char hdata_name[128], *buf, str_pos[16];
+    struct t_hdata *hdata;
+    void *ptr_script;
+
+    buf = malloc (16384);
+    if (!buf)
+        return;
+
+    buf[0] = '\0';
+    length = 0;
+
+    for (i = 0; script_language[i]; i++)
+    {
+        snprintf (hdata_name, sizeof (hdata_name),
+                  "%s_script", script_language[i]);
+        hdata = weechat_hdata_get (hdata_name);
+        ptr_script = weechat_hdata_get_list (hdata, "scripts");
+        while (ptr_script)
+        {
+            if (buf[0])
+                strcat (buf, ", ");
+            strcat (buf, weechat_hdata_string (hdata, ptr_script, "name"));
+            strcat (buf, " ");
+            strcat (buf, weechat_hdata_string (hdata, ptr_script, "version"));
+            length = strlen (buf);
+            if (length > 16384 - 64)
+            {
+                strcat (buf, "...");
+                length += 3;
+                break;
+            }
+            ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
+        }
+    }
+
+    if (buf[0])
+    {
+        if (send_to_buffer)
+            weechat_command (weechat_current_buffer (), buf);
+        else
+        {
+            weechat_buffer_set (weechat_current_buffer (), "input", buf);
+            snprintf (str_pos, sizeof (str_pos), "%d", length);
+            weechat_buffer_set (weechat_current_buffer (), "input_pos", str_pos);
+        }
+    }
+}
+
+/*
  * script_action_load: load a script
  */
 
@@ -687,7 +744,17 @@ script_action_run ()
                 }
                 else if (weechat_strcasecmp (argv[0], "list") == 0)
                 {
-                    script_action_list ();
+                    if (argc > 1)
+                    {
+                        if (weechat_strcasecmp (argv[1], "-i") == 0)
+                            script_action_list_input (0);
+                        else if (weechat_strcasecmp (argv[1], "-o") == 0)
+                            script_action_list_input (1);
+                        else
+                            script_action_list ();
+                    }
+                    else
+                        script_action_list ();
                 }
                 else if (weechat_strcasecmp (argv[0], "load") == 0)
                 {

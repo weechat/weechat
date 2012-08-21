@@ -164,7 +164,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "list") == 0)
     {
-        script_action_schedule ("list", 1, 0);
+        script_action_schedule (argv_eol[1], 1, 0);
         return WEECHAT_RC_OK;
     }
 
@@ -275,11 +275,14 @@ script_command_init ()
 {
     weechat_hook_command ("script",
                           N_("WeeChat scripts manager"),
-                          N_("list || search <text> || show <script>"
+                          N_("list [-o|-i] || search <text> || show <script>"
                              " || load|unload|reload <script> [<script>...]"
                              " || install|remove|installremove|hold [-q] <script> [<script>...]"
                              " || upgrade || update"),
                           N_("         list: list loaded scripts (all languages)\n"
+                             "           -o: send list of loaded scripts to buffer\n"
+                             "           -i: copy list of loaded scripts in "
+                             "command line (for sending to buffer)\n"
                              "       search: search scripts by tags or text and "
                              "display result on scripts buffer\n"
                              "         show: show detailed info about a script\n"
@@ -337,7 +340,7 @@ script_command_init ()
                              "  /script hold urlserver.py\n"
                              "  /script reload urlserver\n"
                              "  /script upgrade"),
-                          "list"
+                          "list -o|-i"
                           " || search %(script_tags)"
                           " || show %(script_scripts)"
                           " || load %(script_files)|%*"
