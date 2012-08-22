@@ -53,7 +53,7 @@
 import sys, socket, select, time, random, string, re
 
 NAME    = 'weercd'
-VERSION = '0.4'
+VERSION = '0.5'
 
 options = {
     'host'       : ['',      'Host for socket bind'],
@@ -62,6 +62,7 @@ options = {
     'action'     : ['flood', 'Action of server: "flood" = flood client, "user" = send custom messages to client'],
     'wait'       : ['0',     'Time to wait before flooding client (float, in seconds)'],
     'sleep'      : ['0',     'Sleep for select, delay between 2 messages sent to client (float, in seconds)'],
+    'nickused'   : ['0',     'Send 433 (nickname already in use) this number of times before accepting nick'],
     'maxchans'   : ['5',     'Max channels to join'],
     'maxnicks'   : ['100',   'Max nicks per channel'],
     'usernotices': ['on',    'Send notices to user (on/off)'],
@@ -136,6 +137,7 @@ class Client:
         self.incount, self.outcount, self.inbytes, self.outbytes = 0, 0, 0, 0
         self.quit, self.endmsg, self.endexcept = False, '', None
         self.sleep = float(getoption('sleep'))
+        self.nickused = int(getoption('nickused'))
         self.maxchans = int(getoption('maxchans'))
         self.maxnicks = int(getoption('maxnicks'))
         self.usernotices = (getoption('usernotices') == 'on')
@@ -199,8 +201,13 @@ class Client:
     def connect(self):
         """Tell client that connection is ok."""
         try:
+            count = self.nickused
             while self.nick == '':
                 self.read(0.1)
+                if self.nick and count > 0:
+                    self.send(':%s 433 * %s :Nickname is already in use.' % (NAME, self.nick))
+                    self.nick = ''
+                    count -= 1
             self.send(':%s 001 %s :Welcome to the WeeChat IRC flood server' % (NAME, self.nick))
             self.send(':%s 002 %s :Your host is %s, running version %s' % (NAME, self.nick, NAME, VERSION))
             self.send(':%s 003 %s :Are you solid like a rock?' % (NAME, self.nick))
