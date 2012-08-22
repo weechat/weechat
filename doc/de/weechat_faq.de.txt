@@ -228,6 +228,28 @@ um die Ausrichtung für Nicks zu entfernen:
 ----------------------------------------
 
 
+// TRANSLATION MISSING
+[[input_bar_size]]
+How to use command line with more than one line?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The option 'size' in input bar can be set to a value higher than 1 (for fixed
+size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
+set the max size (0 = no limit).
+
+Example with dynamic size:
+
+----------------------------------------
+/set weechat.bar.input.size 0
+----------------------------------------
+
+Max size of 2:
+
+----------------------------------------
+/set weechat.bar.input.size_max 2
+----------------------------------------
+
+
 [[one_input_root_bar]]
 Ist es möglich nur eine Eingabezeile für alle Fenster zu nutzen (auch falls diese geteilt sind)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

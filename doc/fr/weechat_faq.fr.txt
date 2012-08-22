@@ -224,6 +224,28 @@ Pour supprimer l'alignement sur les pseudos :
 ----------------------------------------
 
 
+[[input_bar_size]]
+Comment utiliser une ligne de commande sur plusieurs lignes ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+L'option 'size' dans la barre input peut être définie à une valeur supérieure
+à 1 (pour une taille fixe, la taille par défaut est 1) ou 0 pour une taille
+dynamique, et alors l'option 'size_max' définira la taille maxi (0 = pas de
+limite).
+
+Exemple avec une taille dynamique :
+
+----------------------------------------
+/set weechat.bar.input.size 0
+----------------------------------------
+
+Taille maxi de 2 :
+
+----------------------------------------
+/set weechat.bar.input.size_max 2
+----------------------------------------
+
+
 [[one_input_root_bar]]
 Est-il possible d'avoir une seule bar input pour toutes les fenêtres (après un découpage) ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
