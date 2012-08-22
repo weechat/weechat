@@ -7,6 +7,7 @@ v0.3.9-dev, 2012-08-22
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: display spaces at the end of messages in chat area (bug #37024)
 * core: fix infinite loop in display when chat area has width of 1 with
   a bar displayed on the right (nicklist by default) (bug #37089)
 * core: fix display of "bar more down" char when text is truncated by size_max

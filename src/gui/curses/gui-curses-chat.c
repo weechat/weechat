@@ -1119,15 +1119,22 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 
             ptr_end_offset = ptr_data + word_end_offset;
 
+            /* if message ends with spaces, display them */
+            if ((word_length == 0) && (word_length_with_spaces > 0)
+                && !ptr_data[word_end_offset + 1])
+            {
+                word_length = word_length_with_spaces;
+            }
+
             if (word_length > 0)
             {
-                /* spaces + word too long for current line but ok for next line */
                 line_align = gui_line_get_align (window->buffer, line, 1,
                                                  (lines_displayed == 0) ? 1 : 0,
                                                  GUI_WINDOW_OBJECTS(window)->force_prefix_for_line);
                 if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
                     && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {
+                    /* spaces + word too long for current line but ok for next line */
                     gui_chat_display_new_line (window, num_lines, count,
                                                &lines_displayed, simulate);
                     /* apply styles before jumping to start of word */

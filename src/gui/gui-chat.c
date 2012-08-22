@@ -306,7 +306,10 @@ gui_chat_get_word_info (struct t_gui_window *window,
                 else
                 {
                     if (leading_spaces)
+                    {
                         (*word_length_with_spaces)++;
+                        *word_end_offset = next_char2 - start_data - 1;
+                    }
                     else
                     {
                         *word_end_offset = next_char - start_data - 1;
