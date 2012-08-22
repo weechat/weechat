@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-21 21:36+0200\n"
+"POT-Creation-Date: 2012-08-22 19:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6778,8 +6778,8 @@ msgstr ""
 "%s%s: wszystkie zadeklarowane nicki są już w użyciu lub są niewłaściwe, "
 "zamykam połączenie z serwerem"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
 msgstr "%s%s: nick \"%s\" jest nieprawidłowy, próbuje nicku #%d (\"%s\")"
 
 #, c-format
@@ -6790,12 +6790,12 @@ msgstr ""
 "%s%s: wszystkie zadeklarowane nicki są w użyciu, zamykam połączenie z "
 "serwerem"
 
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr "%s: nick \"%s\" jest już używany, próbuje nick #%d (\"%s\")"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: nick \"%s\" jest niedostępny, próbuje nicku #%d (\"%s\")"
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-21 21:36+0200\n"
+"POT-Creation-Date: 2012-08-22 19:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6560,8 +6560,8 @@ msgstr ""
 "%s%s: všechny deklarované přezdívky jsou již používány nebo nevalidní, "
 "zavírám spojení se serverem"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
 msgstr ""
 "%s%s: přezdívka \"%s\" je nevalidní, zkouším přezdívku číslo %d (\"%s\")"
 
@@ -6573,13 +6573,13 @@ msgstr ""
 "%s%s: všechny deklarované přezdívky jsou již používány, zavírám spojení se "
 "serverem"
 
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším přezdívku číslo %d (\"%s\")"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: přezdívka \"%s\" je nedostupná, zkouším přezdívku číslo %d (\"%s\")"
 

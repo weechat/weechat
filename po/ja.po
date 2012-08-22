@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-21 21:36+0200\n"
+"POT-Creation-Date: 2012-08-22 19:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6645,8 +6645,8 @@ msgstr ""
 "%s%s: 全ての設定されたニックネームは既に利用されているか、無効です、サーバと"
 "の接続を閉じています"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
 msgstr ""
 "%s%s: ニックネームは \"%s\" 無効です、ニックネーム #%d (\"%s\") を試行してい"
 "ます"
@@ -6659,14 +6659,14 @@ msgstr ""
 "%s%s: 全ての設定されたニックネームは既に利用されています、サーバとの接続を閉"
 "じています"
 
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 "%s: ニックネーム \"%s\" は既に使われています、ニックネーム #%d (\"%s\") を試"
 "行しています"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: ニックネーム \"%s\" は無効です、ニックネーム #%d (\"%s\") を試行してい"
 "ます"

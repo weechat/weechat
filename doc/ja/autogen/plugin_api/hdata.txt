@@ -149,6 +149,7 @@
   'nicks_count' (integer) +
   'nicks_array' (string, array_size: 'nicks_count') +
   'nick_first_tried' (integer) +
+  'nick_alternate_number' (integer) +
   'nick' (string) +
   'nick_modes' (string) +
   'isupport' (string) +

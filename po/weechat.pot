@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-21 21:36+0200\n"
+"POT-Creation-Date: 2012-08-22 19:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5332,7 +5332,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
 msgstr ""
 
 #, c-format
@@ -5342,11 +5342,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 
 #, c-format

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-21 21:36+0200\n"
+"POT-Creation-Date: 2012-08-22 19:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7085,8 +7085,8 @@ msgstr ""
 "%s%s: alle voreingestellten Nicknamen sind bereits in Verwendung oder "
 "ungültig, Verbindung wird getrennt!"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
 msgstr "%s%s: der Nickname \"%s\" ist ungültig, versuche Nickname #%d (\"%s\")"
 
 #, c-format
@@ -7097,14 +7097,14 @@ msgstr ""
 "%s%s: alle voreingestellten Nicknamen werden zur Zeit schon genutzt. "
 "Verbindung wird getrennt"
 
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 "%s: der Nickname \"%s\" wird bereits verwendet. Versuche nun #%d (\"%s\") "
 "als neuen Nicknamen zu nutzen"
 
-#, c-format
-msgid "%s%s: nickname \"%s\" is unavailable, trying nickname #%d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: der Nickname \"%s\" ist nicht verfügbar. Versuche nun den Nicknamen #"
 "%d (\"%s\")"

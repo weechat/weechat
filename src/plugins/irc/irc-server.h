@@ -161,6 +161,8 @@ struct t_irc_server
     char **nicks_array;             /* nicknames (after split)               */
     int nick_first_tried;           /* first nick tried in list of nicks     */
                                     /* when (re-)connecting to server        */
+    int nick_alternate_number;      /* number used to build alternate nicks  */
+                                    /* (nick____1, nick____2, ...)           */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
@@ -237,7 +239,7 @@ extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
-extern int irc_server_get_nick_index (struct t_irc_server *server);
+extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
 extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
                                                   const char *feature);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
