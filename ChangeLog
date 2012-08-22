@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-dev, 2012-08-17
+v0.3.9-dev, 2012-08-22
 
 
 Version 0.3.9 (under dev!)
 --------------------------
 
+* core: fix infinite loop in display when chat area has width of 1 with
+  a bar displayed on the right (nicklist by default) (bug #37089)
 * core: fix display of "bar more down" char when text is truncated by size_max
   in bars with vertical filling (bug #37054)
 * core: fix color of long lines (displayed on more than one line on screen)
