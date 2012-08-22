@@ -4642,7 +4642,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         else
             dup_irc_message = NULL;
         argv = weechat_string_split (dup_irc_message, " ", 0, 0, &argc);
-        argv_eol = weechat_string_split (dup_irc_message, " ", 1, 0, NULL);
+        argv_eol = weechat_string_split (dup_irc_message, " ", 2, 0, NULL);
 
         return_code = (int) (cmd_recv_func) (server,
                                              nick, address_color, host_color,
