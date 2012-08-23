@@ -104,7 +104,11 @@ script_buffer_display_line_script (int line, struct t_repo_script *script)
                         num_spaces = max_length - weechat_utf8_strlen_screen (script->description);
                         snprintf (str_item, sizeof (str_item),
                                   "%s%s",
-                                  weechat_color ((line == script_buffer_selected_line) ? "white" : "249"),
+                                  weechat_color (
+                                      weechat_config_string (
+                                          (line == script_buffer_selected_line) ?
+                                          script_config_color_text_description_selected :
+                                          script_config_color_text_description)),
                                   script->description);
                     }
                     break;
