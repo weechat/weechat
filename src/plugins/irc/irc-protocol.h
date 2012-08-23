@@ -74,6 +74,7 @@ struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
     int decode_color;               /* decode color before calling function  */
+    int keep_trailing_spaces;       /* keep trailing spaces in message       */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
