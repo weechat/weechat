@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-22 19:19+0200\n"
+"POT-Creation-Date: 2012-08-23 22:01+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7209,8 +7209,8 @@ msgstr "%s%s: lese Daten von Socket: Fehler %d %s"
 msgid "(connection closed by peer)"
 msgstr "(Verbindung wurde durch Peer getrennt)"
 
-#, c-format
-msgid "%s: disconnecting from server..."
+#, fuzzy, c-format
+msgid "%s%s: disconnecting from server..."
 msgstr "%s: Trennung vom Server..."
 
 #, c-format
@@ -7222,24 +7222,24 @@ msgstr ""
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
-#, c-format
-msgid "%s: lag is high, disconnecting from server..."
+#, fuzzy, c-format
+msgid "%s%s: lag is high, disconnecting from server..."
 msgstr "%s: Verzögerung ist zu hoch, die Verbindung wird getrennt..."
 
-#, c-format
-msgid "%s: reconnecting to server in %d %s, %d %s"
+#, fuzzy, c-format
+msgid "%s%s: reconnecting to server in %d %s, %d %s"
 msgstr "%s: Verbinde erneut zum Server in %d %s, %d %s"
 
-#, c-format
-msgid "%s: reconnecting to server in %d %s"
+#, fuzzy, c-format
+msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Verbinde erneut zum Server in %d %s"
 
 #, c-format
 msgid "%s: switching address to %s/%d"
 msgstr "%s: Adresse wechseln zu %s/%d"
 
-#, c-format
-msgid "%s: connected to %s/%d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: connected to %s/%d (%s)"
 msgstr "%s: Verbindung zu %s/%d (%s) hergestellt"
 
 #, c-format
@@ -7400,17 +7400,13 @@ msgstr ""
 "%s%s SSL-Verbindung nicht möglich da WeeChat nicht mit GNUtls-Support "
 "kompiliert wurde"
 
-#, c-format
-msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+#, fuzzy, c-format
+msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: Verbinden zum Server  %s/%d%s%s via %s Proxy %s/%d%s..."
 
 #, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "Verbinden zum Server  %s/%d%s%s via %s Proxy %s/%d%s..."
-
-#, c-format
-msgid "%s: connecting to server %s/%d%s%s..."
-msgstr "%s: Verbinden zum Server %s/%d%s%s..."
 
 #, c-format
 msgid "%s%s: connecting to server %s/%d%s%s..."
@@ -7428,17 +7424,13 @@ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
 
-#, c-format
-msgid "%s: reconnecting to server..."
+#, fuzzy, c-format
+msgid "%s%s: reconnecting to server..."
 msgstr "%s: Neuverbinden zum Server..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: Vom Server getrennt!"
-
-#, c-format
-msgid "%s: disconnected from server"
-msgstr "%s: Vom Server getrennt!"
 
 msgid "Log buffers to files"
 msgstr "sichert Buffer in eine Datei"
@@ -9594,3 +9586,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
+
+#~ msgid "%s: disconnected from server"
+#~ msgstr "%s: Vom Server getrennt!"

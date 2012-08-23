@@ -2501,7 +2501,8 @@ irc_server_recv_cb (void *data, int fd)
                                 (num_read == 0) ? _("(connection closed by peer)") :
                                 gnutls_strerror (num_read));
                 weechat_printf (server->buffer,
-                                _("%s: disconnecting from server..."),
+                                _("%s%s: disconnecting from server..."),
+                                weechat_prefix ("network"),
                                 IRC_PLUGIN_NAME);
                 irc_server_disconnect (server, !server->is_connected, 1);
             }
@@ -2519,7 +2520,8 @@ irc_server_recv_cb (void *data, int fd)
                                 (num_read == 0) ? _("(connection closed by peer)") :
                                 strerror (errno));
                 weechat_printf (server->buffer,
-                                _("%s: disconnecting from server..."),
+                                _("%s%s: disconnecting from server..."),
+                                weechat_prefix ("network"),
                                 IRC_PLUGIN_NAME);
                 irc_server_disconnect (server, !server->is_connected, 1);
             }
@@ -2707,8 +2709,9 @@ irc_server_timer_cb (void *data, int remaining_calls)
                         && (ptr_server->lag / 1000 > weechat_config_integer (irc_config_network_lag_disconnect) * 60))
                     {
                         weechat_printf (ptr_server->buffer,
-                                        _("%s: lag is high, disconnecting "
+                                        _("%s%s: lag is high, disconnecting "
                                           "from server..."),
+                                        weechat_prefix ("network"),
                                         IRC_PLUGIN_NAME);
                         irc_server_disconnect (ptr_server, 0, 1);
                     }
@@ -2847,7 +2850,8 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
         if ((minutes > 0) && (seconds > 0))
         {
             weechat_printf (server->buffer,
-                            _("%s: reconnecting to server in %d %s, %d %s"),
+                            _("%s%s: reconnecting to server in %d %s, %d %s"),
+                            weechat_prefix ("network"),
                             IRC_PLUGIN_NAME,
                             minutes,
                             NG_("minute", "minutes", minutes),
@@ -2857,7 +2861,8 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
         else if (minutes > 0)
         {
             weechat_printf (server->buffer,
-                            _("%s: reconnecting to server in %d %s"),
+                            _("%s%s: reconnecting to server in %d %s"),
+                            weechat_prefix ("network"),
                             IRC_PLUGIN_NAME,
                             minutes,
                             NG_("minute", "minutes", minutes));
@@ -2865,7 +2870,8 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
         else
         {
             weechat_printf (server->buffer,
-                            _("%s: reconnecting to server in %d %s"),
+                            _("%s%s: reconnecting to server in %d %s"),
+                            weechat_prefix ("network"),
                             IRC_PLUGIN_NAME,
                             seconds,
                             NG_("second", "seconds", seconds));
@@ -2990,7 +2996,8 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
             weechat_printf (server->buffer,
-                            _("%s: connected to %s/%d (%s)"),
+                            _("%s%s: connected to %s/%d (%s)"),
+                            weechat_prefix ("network"),
                             IRC_PLUGIN_NAME,
                             server->current_address,
                             server->current_port,
@@ -3671,8 +3678,9 @@ irc_server_connect (struct t_irc_server *server)
     if (proxy_type)
     {
         weechat_printf (server->buffer,
-                        _("%s: connecting to server %s/%d%s%s via %s "
+                        _("%s%s: connecting to server %s/%d%s%s via %s "
                           "proxy %s/%d%s..."),
+                        weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         server->current_address,
                         server->current_port,
@@ -3700,7 +3708,8 @@ irc_server_connect (struct t_irc_server *server)
     else
     {
         weechat_printf (server->buffer,
-                        _("%s: connecting to server %s/%d%s%s..."),
+                        _("%s%s: connecting to server %s/%d%s%s..."),
+                        weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         server->current_address,
                         server->current_port,
@@ -3815,7 +3824,8 @@ void
 irc_server_reconnect (struct t_irc_server *server)
 {
     weechat_printf (server->buffer,
-                    _("%s: reconnecting to server..."),
+                    _("%s%s: reconnecting to server..."),
+                    weechat_prefix ("network"),
                     IRC_PLUGIN_NAME);
 
     server->reconnect_start = 0;
@@ -3878,7 +3888,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
             }
             weechat_printf (ptr_channel->buffer,
                             _("%s%s: disconnected from server"),
-                            "",
+                            weechat_prefix ("network"),
                             IRC_PLUGIN_NAME);
         }
     }
@@ -3888,7 +3898,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     if (server->buffer)
     {
         weechat_printf (server->buffer,
-                        _("%s: disconnected from server"),
+                        _("%s%s: disconnected from server"),
+                        weechat_prefix ("network"),
                         IRC_PLUGIN_NAME);
     }
 
