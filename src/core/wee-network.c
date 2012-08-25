@@ -657,6 +657,8 @@ network_connect_child (struct t_hook *hook_connect)
 
     status_str[1] = '\0';
 
+    ptr_address = NULL;
+
     ptr_proxy = NULL;
     if (HOOK_CONNECT(hook_connect, proxy)
         && HOOK_CONNECT(hook_connect, proxy)[0])
@@ -930,6 +932,26 @@ network_connect_child (struct t_hook *hook_connect)
                                  ptr_res->ai_addr, ptr_res->ai_addrlen))
             {
                 status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
+                if (HOOK_CONNECT(hook_connect, ipv6))
+                {
+                    if (inet_ntop (AF_INET6,
+                                   &((struct sockaddr_in6 *)(ptr_res->ai_addr))->sin6_addr,
+                                   ipv6_address,
+                                   INET6_ADDRSTRLEN))
+                    {
+                        ptr_address = ipv6_address;
+                    }
+                }
+                else
+                {
+                    if (inet_ntop (AF_INET,
+                                   &((struct sockaddr_in *)(ptr_res->ai_addr))->sin_addr,
+                                   ipv4_address,
+                                   INET_ADDRSTRLEN))
+                    {
+                        ptr_address = ipv4_address;
+                    }
+                }
                 break;
             }
             else
@@ -940,27 +962,6 @@ network_connect_child (struct t_hook *hook_connect)
     if (status_str[0] == '0' + WEECHAT_HOOK_CONNECT_OK)
     {
         status_with_string = NULL;
-        ptr_address = NULL;
-        if (HOOK_CONNECT(hook_connect, ipv6))
-        {
-            if (inet_ntop (AF_INET6,
-                           &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr,
-                           ipv6_address,
-                           INET6_ADDRSTRLEN))
-            {
-                ptr_address = ipv6_address;
-            }
-        }
-        else
-        {
-            if (inet_ntop (AF_INET,
-                           &((struct sockaddr_in *)(res->ai_addr))->sin_addr,
-                           ipv4_address,
-                           INET_ADDRSTRLEN))
-            {
-                ptr_address = ipv4_address;
-            }
-        }
         if (ptr_address)
         {
             length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
