@@ -971,20 +971,21 @@ gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_group", "next_group");
+    hdata = hdata_new (NULL, hdata_name, "prev_group", "next_group",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_nick_group, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick_group, color, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick_group, visible, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick_group, level, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick_group, parent, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_nick_group, children, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_nick_group, last_child, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_nick_group, nicks, POINTER, NULL, "nick");
-        HDATA_VAR(struct t_gui_nick_group, last_nick, POINTER, NULL, "nick");
-        HDATA_VAR(struct t_gui_nick_group, prev_group, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_nick_group, next_group, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick_group, color, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick_group, visible, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick_group, level, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick_group, parent, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, children, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, last_child, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, nicks, POINTER, 0, NULL, "nick");
+        HDATA_VAR(struct t_gui_nick_group, last_nick, POINTER, 0, NULL, "nick");
+        HDATA_VAR(struct t_gui_nick_group, prev_group, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick_group, next_group, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }
@@ -1001,17 +1002,18 @@ gui_nicklist_hdata_nick_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_nick", "next_nick");
+    hdata = hdata_new (NULL, hdata_name, "prev_nick", "next_nick",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_nick, group, POINTER, NULL, "nick_group");
-        HDATA_VAR(struct t_gui_nick, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick, color, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick, prefix, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick, prefix_color, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick, visible, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_nick, prev_nick, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_nick, next_nick, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick, group, POINTER, 0, NULL, "nick_group");
+        HDATA_VAR(struct t_gui_nick, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick, color, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick, prefix, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick, prefix_color, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick, visible, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_nick, prev_nick, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_nick, next_nick, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }

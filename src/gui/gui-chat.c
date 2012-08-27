@@ -339,6 +339,9 @@ gui_chat_get_time_string (time_t date)
     int i, time_first_digit, time_last_digit, last_color;
     struct tm *local_time;
 
+    if (date == 0)
+        return NULL;
+
     if (!CONFIG_STRING(config_look_buffer_time_format)
         || !CONFIG_STRING(config_look_buffer_time_format)[0])
         return NULL;

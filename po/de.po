@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-23 22:01+0200\n"
+"POT-Creation-Date: 2012-08-25 19:27+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -9574,6 +9574,9 @@ msgstr "Pointer"
 
 msgid "Variables"
 msgstr "Variablen"
+
+msgid "Update allowed"
+msgstr ""
 
 msgid "Lists"
 msgstr "Listen"

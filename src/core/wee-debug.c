@@ -310,15 +310,16 @@ debug_hdata_hash_var_map_cb (void *data,
                              const void *key, const void *value)
 {
     struct t_weelist *list;
+    struct t_hdata_var *var;
     char str_offset[16];
 
     /* make C compiler happy */
     (void) hashtable;
 
     list = (struct t_weelist *)data;
+    var = (struct t_hdata_var *)value;
 
-    snprintf (str_offset, sizeof (str_offset),
-              "%12d", (*((int *)value)) & 0xFFFF);
+    snprintf (str_offset, sizeof (str_offset), "%12d", var->offset);
     weelist_add (list, str_offset, WEECHAT_LIST_POS_SORT, (void *)key);
 }
 
@@ -350,9 +351,9 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
                     const void *key, const void *value)
 {
     struct t_hdata *ptr_hdata;
+    struct t_hdata_var *ptr_var;
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
-    void *ptr_value;
 
     /* make C compiler happy */
     (void) data;
@@ -379,14 +380,19 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
     for (ptr_item = list->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
-        ptr_value = hashtable_get (ptr_hdata->hash_var, ptr_item->user_data);
-        if (ptr_value)
+        ptr_var = hashtable_get (ptr_hdata->hash_var, ptr_item->user_data);
+        if (ptr_var)
         {
             gui_chat_printf (NULL,
-                             "    %04d -> %s (%s)",
-                             (*((int *)ptr_value)) & 0xFFFF,
+                             "    %04d -> %s (%s%s%s%s%s%s)",
+                             ptr_var->offset,
                              (char *)ptr_item->user_data,
-                             hdata_type_string[(*((int *)ptr_value)) >> 16]);
+                             hdata_type_string[(int)ptr_var->type],
+                             (ptr_var->update_allowed) ? ", R/W" : "",
+                             (ptr_var->array_size) ? ", array size: " : "",
+                             (ptr_var->array_size) ? ptr_var->array_size : "",
+                             (ptr_var->hdata_name) ? ", hdata: " : "",
+                             (ptr_var->hdata_name) ? ptr_var->hdata_name : "");
         }
     }
     weelist_free (list);

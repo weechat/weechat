@@ -5102,7 +5102,6 @@ weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
 {
     char timebuffer[64], *result;
     time_t time;
-    struct tm *date_tmp;
     SCM return_value;
 
     API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
@@ -5113,9 +5112,7 @@ weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
     time = weechat_hdata_time (API_STR2PTR(scm_i_string_chars (hdata)),
                                API_STR2PTR(scm_i_string_chars (pointer)),
                                scm_i_string_chars (name));
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -5142,6 +5139,33 @@ weechat_guile_api_hdata_hashtable (SCM hdata, SCM pointer, SCM name)
                                  scm_i_string_chars (name)));
 
     return result_alist;
+}
+
+/*
+ * weechat_guile_api_hdata_update: update data in a hdata
+ */
+
+SCM
+weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
+{
+    struct t_hashtable *c_hashtable;
+    int value;
+
+    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    if (!scm_is_string (hdata) || !scm_is_string (pointer) || !scm_list_p (hashtable))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    c_hashtable = weechat_guile_alist_to_hashtable (hashtable,
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    value = weechat_hdata_update (API_STR2PTR(scm_i_string_chars (hdata)),
+                                  API_STR2PTR(scm_i_string_chars (pointer)),
+                                  c_hashtable);
+
+    if (c_hashtable)
+        weechat_hashtable_free (c_hashtable);
+
+    API_RETURN_INT(value);
 }
 
 /*
@@ -5494,6 +5518,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_pointer, 3);
     API_DEF_FUNC(hdata_time, 3);
     API_DEF_FUNC(hdata_hashtable, 3);
+    API_DEF_FUNC(hdata_update, 3);
     API_DEF_FUNC(hdata_get_string, 2);
     API_DEF_FUNC(upgrade_new, 2);
     API_DEF_FUNC(upgrade_write_object, 3);

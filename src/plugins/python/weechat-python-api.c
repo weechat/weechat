@@ -388,7 +388,7 @@ weechat_python_api_string_remove_color (PyObject *self, PyObject *args)
     char *string, *replacement, *result;
     PyObject *return_value;
 
-    API_FUNC(1, "string_remove_color2", API_RETURN_EMPTY);
+    API_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
     string = NULL;
     replacement = NULL;
     if (!PyArg_ParseTuple (args, "ss", &string, &replacement))
@@ -2075,6 +2075,7 @@ weechat_python_api_key_bind (PyObject *self, PyObject *args)
 
     API_FUNC(1, "key_bind", API_RETURN_INT(0));
     context = NULL;
+    dict = NULL;
     if (!PyArg_ParseTuple (args, "sO", &context, &dict))
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -2641,6 +2642,7 @@ weechat_python_api_hook_process_hashtable (PyObject *self, PyObject *args)
 
     API_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     command = NULL;
+    dict = NULL;
     options = NULL;
     timeout = 0;
     function = NULL;
@@ -3066,6 +3068,7 @@ weechat_python_api_hook_hsignal_send (PyObject *self, PyObject *args)
 
     API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
     signal = NULL;
+    dict = NULL;
     if (!PyArg_ParseTuple (args, "sO", &signal, &dict))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4829,6 +4832,7 @@ weechat_python_api_info_get_hashtable (PyObject *self, PyObject *args)
 
     API_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
     info_name = NULL;
+    dict = NULL;
     if (!PyArg_ParseTuple (args, "sO", &info_name, &dict))
         API_WRONG_ARGS(API_RETURN_EMPTY);
     hashtable = weechat_python_dict_to_hashtable (dict,
@@ -5543,10 +5547,8 @@ weechat_python_api_hdata_pointer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_hdata_time (PyObject *self, PyObject *args)
 {
-    char *hdata, *pointer, *name, timebuffer[64], *result;
+    char *hdata, *pointer, *name;
     time_t time;
-    struct tm *date_tmp;
-    PyObject *return_value;
 
     API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
     hdata = NULL;
@@ -5555,16 +5557,11 @@ weechat_python_api_hdata_time (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "sss", &hdata, &pointer, &name))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    timebuffer[0] = '\0';
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 /*
@@ -5591,6 +5588,37 @@ weechat_python_api_hdata_hashtable (PyObject *self, PyObject *args)
                                  name));
 
     return result_dict;
+}
+
+/*
+ * weechat_python_api_hdata_update: updata data in a hdata
+ */
+
+static PyObject *
+weechat_python_api_hdata_update (PyObject *self, PyObject *args)
+{
+    char *hdata, *pointer;
+    struct t_hashtable *hashtable;
+    PyObject *dict;
+    int value;
+
+    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    hdata = NULL;
+    pointer = NULL;
+    dict = NULL;
+    if (!PyArg_ParseTuple (args, "ssO", &hdata, &pointer, &dict))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+    hashtable = weechat_python_dict_to_hashtable (dict,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    value = weechat_hdata_update (API_STR2PTR(hdata),
+                                  API_STR2PTR(pointer),
+                                  hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+
+    API_RETURN_INT(value);
 }
 
 /*
@@ -5939,6 +5967,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),
     API_DEF_FUNC(hdata_hashtable),
+    API_DEF_FUNC(hdata_update),
     API_DEF_FUNC(hdata_get_string),
     API_DEF_FUNC(upgrade_new),
     API_DEF_FUNC(upgrade_write_object),

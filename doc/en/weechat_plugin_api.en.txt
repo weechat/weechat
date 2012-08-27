@@ -12760,7 +12760,7 @@ something in memory pointed by hdata variables.
 weechat_hdata_new
 ^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.6._
+_New in version 0.3.6, updated in 0.3.9._
 
 Create a new hdata.
 
@@ -12779,7 +12779,13 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next);
+struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next,
+                                   int delete_allowed,
+                                   int (*callback_update)(void *data,
+                                                          struct t_hdata *hdata,
+                                                          void *pointer,
+                                                          struct t_hashtable *hashtable),
+                                   void *callback_update_data);
 ----------------------------------------
 
 Arguments:
@@ -12789,6 +12795,17 @@ Arguments:
   element in list (may be NULL if no such variable is available)
 * 'var_next': name of variable in structure which is a pointer to next
   element in list (may be NULL if no such variable is available)
+* 'delete_allowed': 1 if delete of structure is allowed, otherwise 0
+  (_new in version 0.3.9_)
+* 'callback_update': callback to update data in hdata, can be NULL if no update
+  is allowed (_new in version 0.3.9_), arguments and return value:
+** 'void *data': pointer
+** 'struct t_hdata *hdata': pointer to hdata
+** 'struct t_hashtable *hashtable': hashtable with variables to update
+   (see <<_weechat_hdata_update,weechat_hdata_update>>)
+** return value: number of variables updated
+* 'callback_update_data': pointer given to update callback when it is called by
+  WeeChat (_new in version 0.3.9_)
 
 Return value:
 
@@ -12798,7 +12815,7 @@ C example:
 
 [source,C]
 ----------------------------------------
-struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, &callback_update, NULL);
 ----------------------------------------
 
 [NOTE]
@@ -12807,7 +12824,7 @@ This function is not available in scripting API.
 weechat_hdata_new_var
 ^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.6._
+_New in version 0.3.6, updated in 0.3.9._
 
 Create a new variable in hdata.
 
@@ -12816,7 +12833,7 @@ Prototype:
 [source,C]
 ----------------------------------------
 void weechat_hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
-                            const char *array_size, const char *hdata_name);
+                            int update_allowed, const char *array_size, const char *hdata_name);
 ----------------------------------------
 
 Arguments:
@@ -12833,6 +12850,8 @@ Arguments:
 ** WEECHAT_HDATA_TIME
 ** WEECHAT_HDATA_HASHTABLE
 ** WEECHAT_HDATA_OTHER
+* 'update_allowed': 1 if update of variable is allowed, otherwise 0
+  (_new in version 0.3.9_)
 * 'array_size': not NULL only if a variable is an array, and it can be:
   (_new in version 0.3.9_)
 ** name of variable in hdata: this variable will be used as size of array
@@ -12860,26 +12879,26 @@ struct t_myplugin_list
 /* ... */
 
 struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next");
-weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, NULL, NULL);
-weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, NULL, NULL);
-weechat_hdata_new_var (hdata, "tags_count", offsetof (struct t_myplugin_list, tags_count), WEECHAT_HDATA_INTEGER, NULL, NULL);
-weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, "tags_count", NULL);
-weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, "*", NULL);
-weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
-weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
+weechat_hdata_new_var (hdata, "name", offsetof (struct t_myplugin_list, name), WEECHAT_HDATA_STRING, 0, NULL, NULL);
+weechat_hdata_new_var (hdata, "buffer", offsetof (struct t_myplugin_list, buffer), WEECHAT_HDATA_POINTER, 0, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_count", offsetof (struct t_myplugin_list, tags_count), WEECHAT_HDATA_INTEGER, 0, NULL, NULL);
+weechat_hdata_new_var (hdata, "tags_array", offsetof (struct t_myplugin_list, tags_array), WEECHAT_HDATA_STRING, 0, "tags_count", NULL);
+weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, string_split), WEECHAT_HDATA_STRING, 0, "*", NULL);
+weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, 0, NULL, "myplugin_list");
+weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, 0, NULL, "myplugin_list");
 ----------------------------------------
 
 The macro "WEECHAT_HDATA_VAR" can be used to shorten code:
 
 [source,C]
 ----------------------------------------
-WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, NULL, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, NULL, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_count, INTEGER, NULL, NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_array, STRING, "tags_count", NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, string_split, STRING, "*", NULL);
-WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, NULL, "myplugin_list");
-WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, NULL, "myplugin_list");
+WEECHAT_HDATA_VAR(struct t_myplugin_list, name, STRING, 0, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, buffer, POINTER, 0, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_count, INTEGER, 0, NULL, NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, tags_array, STRING, 0, "tags_count", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, string_split, STRING, 0, "*", NULL);
+WEECHAT_HDATA_VAR(struct t_myplugin_list, prev, POINTER, 0, NULL, "myplugin_list");
+WEECHAT_HDATA_VAR(struct t_myplugin_list, next, POINTER, 0, NULL, "myplugin_list");
 ----------------------------------------
 
 [NOTE]
@@ -13783,18 +13802,15 @@ Script (Python):
 value = weechat.hdata_time(hdata, pointer, name)
 
 # example
-hdata = weechat.hdata_get("buffer")
-ptr = weechat.buffer_search_main()
-ptr = weechat.hdata_pointer(hdata, ptr, "lines")
+buf = weechat.buffer_search_main()
+ptr = weechat.hdata_pointer(weechat.hdata_get("buffer"), buf, "lines")
 if ptr:
-    hdata = weechat.hdata_get("lines")
-    ptr = weechat.hdata_pointer(hdata, ptr, "first_line")
+    ptr = weechat.hdata_pointer(weechat.hdata_get("lines"), ptr, "first_line")
     if ptr:
-        hdata = weechat.hdata_get("line")
-        ptr = weechat.hdata_pointer(hdata, ptr, "data")
+        ptr = weechat.hdata_pointer(weechat.hdata_get("line"), ptr, "data")
         if ptr:
-            hdata = weechat.hdata_get("line_data")
-            weechat.prnt("", "time of last line displayed = %s" % weechat.hdata_time(hdata, ptr, "date"))
+            date = weechat.hdata_time(weechat.hdata_get("line_data"), ptr, "date")
+            weechat.prnt("", "time of first line displayed = %s" % time.strftime("%F %T", time.localtime(int(date))))
 ----------------------------------------
 
 weechat_hdata_hashtable
@@ -13847,6 +13863,132 @@ hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
 weechat.prnt("", "local variables in core buffer:")
 for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
+----------------------------------------
+
+weechat_hdata_set
+^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.9._
+
+Set new value for variable in a hdata.
+
+[NOTE]
+This function can be called only in an update callback
+(see <<_weechat_hdata_new,weechat_hdata_new>> and
+<<_weechat_hdata_update,weechat_hdata_update>>), if the variable can be updated.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hdata_set (struct t_hdata *hdata, void *pointer, const char *name, const char *value);
+----------------------------------------
+
+Arguments:
+
+* 'hdata': hdata pointer
+* 'pointer': pointer to WeeChat/plugin object
+* 'name': variable name (types allowed: char, integer, long, string, pointer,
+  time)
+* 'value': new value for variable
+
+Return value:
+
+* 1 if ok, 0 if error
+
+C example:
+
+[source,C]
+----------------------------------------
+weechat_hdata_set (hdata, pointer, "message", "test");
+----------------------------------------
+
+[NOTE]
+This function is not available in scripting API.
+
+weechat_hdata_update
+^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.3.9._
+
+Update data in a hdata.
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_hdata_update (struct t_hdata *hdata, void *pointer, struct t_hashtable *hashtable);
+----------------------------------------
+
+Arguments:
+
+* 'hdata': hdata pointer
+* 'pointer': pointer to WeeChat/plugin object
+* 'hashtable': variables to update: keys are name of variables, values are new
+  values for variables (keys and values are string), some special keys are
+  allowed:
+** key '__delete_allowed' (with any value): return 1 if delete is allowed for
+   structure, otherwise 0
+** key '__update_allowed', value is name of a variable: return 1 if update is
+   allowed for this variable, otherwise 0
+** key '__delete' (with any value): delete structure (if allowed)
+
+Return value:
+
+* number of variables updated
+
+C example:
+
+[source,C]
+----------------------------------------
+/* subtract one hour on last message displayed in current buffer */
+
+struct t_gui_lines *own_lines;
+struct t_gui_line *line;
+struct t_gui_line_data  *line_data;
+struct t_hdata *hdata;
+struct t_hashtable *hashtable;
+char str_date[64];
+
+own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"), weechat_current_buffer (), "own_lines");
+if (own_lines)
+{
+    line = weechat_hdata_pointer (weechat_hdata_get ("lines"), own_lines, "last_line");
+    if (line)
+    {
+        line_data = weechat_hdata_pointer (weechat_hdata_get ("line"), line, "data");
+        hdata = weechat_hdata_get ("line_data");
+        hashtable = weechat_hashtable_new (8,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL,
+                                           NULL);
+        if (hashtable)
+        {
+            snprintf (str_date, sizeof (str_date), "%ld", ((long int)weechat_hdata_time (hdata, line_data, "date")) - 3600);
+            weechat_hashtable_set (hashtable, "date", str_date);
+            weechat_hdata_update (hdata, line_data, hashtable);
+            weechat_hashtable_free (hashtable);
+        }
+    }
+}
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+count = weechat.hdata_update(hdata, pointer, hashtable)
+
+# example: subtract one hour on last message displayed in current buffer
+own_lines = weechat.hdata_pointer(weechat.hdata_get('buffer'), weechat.current_buffer(), 'own_lines')
+if own_lines:
+    line = weechat.hdata_pointer(weechat.hdata_get('lines'), own_lines, 'last_line')
+    if line:
+        line_data = weechat.hdata_pointer(weechat.hdata_get('line'), line, 'data')
+        hdata = weechat.hdata_get('line_data')
+        weechat.hdata_update(hdata, line_data, { 'date': str(weechat.hdata_time(hdata, line_data, 'date') - 3600) })
 ----------------------------------------
 
 weechat_hdata_get_string

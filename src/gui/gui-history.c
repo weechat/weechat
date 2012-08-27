@@ -227,12 +227,13 @@ gui_history_hdata_history_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history");
+    hdata = hdata_new (NULL, hdata_name, "prev_history", "next_history",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_history, text, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_history, prev_history, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_history, next_history, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_history, text, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_history, prev_history, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_history, next_history, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-23 22:01+0200\n"
+"POT-Creation-Date: 2012-08-25 19:27+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9185,6 +9185,9 @@ msgstr "Wskaźnik"
 
 msgid "Variables"
 msgstr "Zmienne"
+
+msgid "Update allowed"
+msgstr ""
 
 msgid "Lists"
 msgstr "Listy"

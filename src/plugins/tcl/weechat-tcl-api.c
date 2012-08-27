@@ -6103,7 +6103,6 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     time_t time;
-    struct tm *date_tmp;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     int i;
 
@@ -6119,9 +6118,7 @@ weechat_tcl_api_hdata_time (ClientData clientData, Tcl_Interp *interp,
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -6155,6 +6152,38 @@ weechat_tcl_api_hdata_hashtable (ClientData clientData, Tcl_Interp *interp,
                                  name));
 
     API_RETURN_OBJ(result_dict);
+}
+
+/*
+ * weechat_tcl_api_hdata_update: update data in a hdata
+ */
+
+static int
+weechat_tcl_api_hdata_update (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer;
+    struct t_hashtable *hashtable;
+    int i, value;
+
+    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    hashtable = weechat_tcl_dict_to_hashtable (interp, objv[3],
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    value = weechat_hdata_update (API_STR2PTR(hdata),
+                                  API_STR2PTR(pointer),
+                                  hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+
+    API_RETURN_INT(value);
 }
 
 /*
@@ -6624,6 +6653,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);
     API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_update);
     API_DEF_FUNC(hdata_get_string);
     API_DEF_FUNC(upgrade_new);
     API_DEF_FUNC(upgrade_write_object);

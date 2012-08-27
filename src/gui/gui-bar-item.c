@@ -1852,15 +1852,16 @@ gui_bar_item_hdata_bar_item_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item");
+    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_bar_item, plugin, POINTER, NULL, "plugin");
-        HDATA_VAR(struct t_gui_bar_item, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar_item, build_callback, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_bar_item, next_item, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_bar_item, plugin, POINTER, 0, NULL, "plugin");
+        HDATA_VAR(struct t_gui_bar_item, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_item, build_callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_bar_item, next_item, POINTER, 0, NULL, hdata_name);
         HDATA_LIST(gui_bar_items);
         HDATA_LIST(last_gui_bar_item);
     }

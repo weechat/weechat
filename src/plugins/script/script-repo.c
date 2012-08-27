@@ -1318,32 +1318,33 @@ script_repo_hdata_script_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script");
+    hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script",
+                               0, NULL, NULL);
     if (hdata)
     {
-        WEECHAT_HDATA_VAR(struct t_repo_script, name, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, name_with_extension, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, language, INTEGER, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, author, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, mail, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, version, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, license, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, description, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, tags, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, requirements, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, min_weechat, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, max_weechat, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, md5sum, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, url, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, popularity, INTEGER, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, date_added, TIME, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, date_updated, TIME, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, status, INTEGER, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, version_loaded, STRING, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, displayed, INTEGER, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, install_order, INTEGER, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, prev_script, POINTER, NULL, hdata_name);
-        WEECHAT_HDATA_VAR(struct t_repo_script, next_script, POINTER, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_repo_script, name, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, name_with_extension, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, language, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, author, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, mail, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, version, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, license, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, description, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, tags, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, requirements, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, min_weechat, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, max_weechat, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, md5sum, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, url, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, popularity, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, date_added, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, date_updated, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, status, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, version_loaded, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, displayed, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, install_order, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_repo_script, prev_script, POINTER, 0, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_repo_script, next_script, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_LIST(repo_scripts);
         WEECHAT_HDATA_LIST(last_repo_script);
     }

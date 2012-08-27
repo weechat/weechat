@@ -5627,7 +5627,6 @@ weechat_lua_api_hdata_time (lua_State *L)
 {
     const char *hdata, *pointer, *name;
     time_t time;
-    struct tm *date_tmp;
     char timebuffer[64], *result;
 
     API_FUNC(1, "hdata_time", API_RETURN_EMPTY);
@@ -5642,9 +5641,7 @@ weechat_lua_api_hdata_time (lua_State *L)
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -5674,6 +5671,36 @@ weechat_lua_api_hdata_hashtable (lua_State *L)
                                                         name));
 
     return 1;
+}
+
+/*
+ * weechat_lua_api_hdata_update: update data in a hdata
+ */
+
+static int
+weechat_lua_api_hdata_update (lua_State *L)
+{
+    const char *hdata, *pointer;
+    struct t_hashtable *hashtable;
+    int value;
+
+    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    value = weechat_hdata_update (API_STR2PTR(hdata),
+                                  API_STR2PTR(pointer),
+                                  hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+
+    API_RETURN_INT(value);
 }
 
 /*
@@ -6419,6 +6446,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),
     API_DEF_FUNC(hdata_hashtable),
+    API_DEF_FUNC(hdata_update),
     API_DEF_FUNC(hdata_get_string),
     API_DEF_FUNC(upgrade_new),
     API_DEF_FUNC(upgrade_write_object),

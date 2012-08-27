@@ -5358,7 +5358,6 @@ XS (XS_weechat_api_hdata_pointer)
 XS (XS_weechat_api_hdata_time)
 {
     time_t time;
-    struct tm *date_tmp;
     char timebuffer[64], *result, *hdata, *pointer, *name;
     dXSARGS;
 
@@ -5374,9 +5373,7 @@ XS (XS_weechat_api_hdata_time)
     time = weechat_hdata_time (API_STR2PTR(hdata),
                                API_STR2PTR(pointer),
                                name);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)time);
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);
@@ -5407,6 +5404,36 @@ XS (XS_weechat_api_hdata_hashtable)
                                  name));
 
     API_RETURN_OBJ(result_hash);
+}
+
+/*
+ * weechat::hdata_update: update data in a hdata
+ */
+
+XS (XS_weechat_api_hdata_update)
+{
+    char *hdata, *pointer;
+    struct t_hashtable *hashtable;
+    int value;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_update", API_RETURN_INT(0));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    hashtable = weechat_perl_hash_to_hashtable (ST (2),
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+
+    value = weechat_hdata_update (API_STR2PTR(hdata),
+                                  API_STR2PTR(pointer),
+                                  hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+
+    API_RETURN_INT(value);
 }
 
 /*
@@ -5763,6 +5790,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);
     API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_update);
     API_DEF_FUNC(hdata_get_string);
     API_DEF_FUNC(upgrade_new);
     API_DEF_FUNC(upgrade_write_object);

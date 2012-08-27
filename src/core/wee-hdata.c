@@ -44,12 +44,43 @@ char *hdata_type_string[8] =
 
 
 /*
+ * hdata_free_var: free a hdata variable
+ */
+
+void
+hdata_free_var (struct t_hashtable *hashtable,
+                const void *key, void *value)
+{
+    struct t_hdata_var *var;
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    var = (struct t_hdata_var *)value;
+    if (var)
+    {
+        if (var->array_size)
+            free (var->array_size);
+        if (var->hdata_name)
+            free (var->hdata_name);
+        free (var);
+    }
+}
+
+/*
  * hdata_new: create a new hdata
  */
 
 struct t_hdata *
 hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
-           const char *var_prev, const char *var_next)
+           const char *var_prev, const char *var_next,
+           int delete_allowed,
+           int (*callback_update)(void *data,
+                                  struct t_hdata *hdata,
+                                  void *pointer,
+                                  struct t_hashtable *hashtable),
+           void *callback_update_data)
 {
     struct t_hdata *new_hdata;
 
@@ -62,27 +93,24 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
         new_hdata->plugin = plugin;
         new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
         new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
-        new_hdata->hash_var = hashtable_new (8,
+        new_hdata->hash_var = hashtable_new (16,
                                              WEECHAT_HASHTABLE_STRING,
-                                             WEECHAT_HASHTABLE_INTEGER,
+                                             WEECHAT_HASHTABLE_POINTER,
                                              NULL,
                                              NULL);
-        new_hdata->hash_var_array_size = hashtable_new (8,
-                                                        WEECHAT_HASHTABLE_STRING,
-                                                        WEECHAT_HASHTABLE_STRING,
-                                                        NULL,
-                                                        NULL);
-        new_hdata->hash_var_hdata = hashtable_new (8,
-                                                   WEECHAT_HASHTABLE_STRING,
-                                                   WEECHAT_HASHTABLE_STRING,
-                                                   NULL,
-                                                   NULL);
-        new_hdata->hash_list = hashtable_new (8,
+        hashtable_set_pointer (new_hdata->hash_var,
+                               "callback_free_value",
+                               &hdata_free_var);
+        new_hdata->hash_list = hashtable_new (16,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
                                               NULL,
                                               NULL);
         hashtable_set (weechat_hdata, hdata_name, new_hdata);
+        new_hdata->delete_allowed = delete_allowed;
+        new_hdata->callback_update = callback_update;
+        new_hdata->callback_update_data = callback_update_data;
+        new_hdata->update_pending = 0;
     }
 
     return new_hdata;
@@ -94,18 +122,23 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
 
 void
 hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
-               const char *array_size, const char *hdata_name)
+               int update_allowed, const char *array_size,
+               const char *hdata_name)
 {
-    int value;
+    struct t_hdata_var *var;
 
-    if (hdata && name)
+    if (!hdata || !name)
+        return;
+
+    var = malloc (sizeof (*var));
+    if (var)
     {
-        value = (type << 16) | (offset & 0xFFFF);
-        hashtable_set (hdata->hash_var, name, &value);
-        if (array_size && array_size[0])
-            hashtable_set (hdata->hash_var_array_size, name, array_size);
-        if (hdata_name && hdata_name[0])
-            hashtable_set (hdata->hash_var_hdata, name, hdata_name);
+        var->offset = offset;
+        var->type = type;
+        var->update_allowed = update_allowed;
+        var->array_size = (array_size && array_size[0]) ? strdup (array_size) : NULL;
+        var->hdata_name = (hdata_name && hdata_name[0]) ? strdup (hdata_name) : NULL;
+        hashtable_set (hdata->hash_var, name, var);
     }
 }
 
@@ -116,8 +149,10 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
 void
 hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer)
 {
-    if (hdata && name)
-        hashtable_set (hdata->hash_list, name, pointer);
+    if (!hdata || !name)
+        return;
+
+    hashtable_set (hdata->hash_list, name, pointer);
 }
 
 /*
@@ -127,14 +162,14 @@ hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer)
 int
 hdata_get_var_offset (struct t_hdata *hdata, const char *name)
 {
-    int *ptr_value;
+    struct t_hdata_var *var;
 
-    if (hdata && name)
-    {
-        ptr_value = hashtable_get (hdata->hash_var, name);
-        if (ptr_value)
-            return (*ptr_value) & 0xFFFF;
-    }
+    if (!hdata || !name)
+        return -1;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (var)
+        return var->offset;
 
     return -1;
 }
@@ -146,14 +181,14 @@ hdata_get_var_offset (struct t_hdata *hdata, const char *name)
 int
 hdata_get_var_type (struct t_hdata *hdata, const char *name)
 {
-    int *ptr_value;
+    struct t_hdata_var *var;
 
-    if (hdata && name)
-    {
-        ptr_value = hashtable_get (hdata->hash_var, name);
-        if (ptr_value)
-            return (*ptr_value) >> 16;
-    }
+    if (!hdata || !name)
+        return -1;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (var)
+        return var->type;
 
     return -1;
 }
@@ -165,14 +200,14 @@ hdata_get_var_type (struct t_hdata *hdata, const char *name)
 const char *
 hdata_get_var_type_string (struct t_hdata *hdata, const char *name)
 {
-    int *ptr_value;
+    struct t_hdata_var *var;
 
-    if (hdata && name)
-    {
-        ptr_value = hashtable_get (hdata->hash_var, name);
-        if (ptr_value)
-            return hdata_type_string[(*ptr_value) >> 16];
-    }
+    if (!hdata || !name)
+        return NULL;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (var)
+        return hdata_type_string[(int)var->type];
 
     return NULL;
 }
@@ -188,86 +223,86 @@ int
 hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
                           const char *name)
 {
+    struct t_hdata_var *var;
     const char *ptr_size;
     char *error;
     long value;
-    int i, type, offset;
+    int i, offset;
     void *ptr_value;
 
-    if (hdata && name)
+    if (!hdata || !name)
+        return -1;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (!var)
+        return -1;
+
+    ptr_size = var->array_size;
+    if (!ptr_size)
+        return -1;
+
+    if (strcmp (ptr_size, "*") == 0)
     {
-        ptr_size = hashtable_get (hdata->hash_var_array_size, name);
-        if (ptr_size)
+        /*
+         * automatic size: look for NULL in array
+         * (this automatic size is possible only with pointers, so with
+         * types: string, pointer, hashtable)
+         */
+        if ((var->type == WEECHAT_HDATA_STRING)
+            || (var->type == WEECHAT_HDATA_POINTER)
+            || (var->type == WEECHAT_HDATA_HASHTABLE))
         {
-            if (strcmp (ptr_size, "*") == 0)
+            if (!(*((void **)(pointer + var->offset))))
+                return 0;
+            i = 0;
+            while (1)
             {
-                /*
-                 * automatic size: look for NULL in array
-                 * (this automatic size is possible only with pointers, so with
-                 * types: string, pointer, hashtable)
-                 */
-                type = hdata_get_var_type (hdata, name);
-                if ((type == WEECHAT_HDATA_STRING)
-                    || (type == WEECHAT_HDATA_POINTER)
-                    || (type == WEECHAT_HDATA_HASHTABLE))
+                ptr_value = NULL;
+                switch (var->type)
                 {
-                    offset = hdata_get_var_offset (hdata, name);
-                    if (offset >= 0)
-                    {
-                        if (!(*((void **)(pointer + offset))))
-                            return 0;
-                        i = 0;
-                        while (1)
-                        {
-                            ptr_value = NULL;
-                            switch (type)
-                            {
-                                case WEECHAT_HDATA_STRING:
-                                    ptr_value = (*((char ***)(pointer + offset)))[i];
-                                    break;
-                                case WEECHAT_HDATA_POINTER:
-                                    ptr_value = (*((void ***)(pointer + offset)))[i];
-                                    break;
-                                case WEECHAT_HDATA_HASHTABLE:
-                                    ptr_value = (*((struct t_hashtable ***)(pointer + offset)))[i];
-                                    break;
-                            }
-                            if (!ptr_value)
-                                break;
-                            i++;
-                        }
-                        return i;
-                    }
+                    case WEECHAT_HDATA_STRING:
+                        ptr_value = (*((char ***)(pointer + var->offset)))[i];
+                        break;
+                    case WEECHAT_HDATA_POINTER:
+                        ptr_value = (*((void ***)(pointer + var->offset)))[i];
+                        break;
+                    case WEECHAT_HDATA_HASHTABLE:
+                        ptr_value = (*((struct t_hashtable ***)(pointer + var->offset)))[i];
+                        break;
                 }
+                if (!ptr_value)
+                    break;
+                i++;
             }
-            else
+            return i;
+        }
+    }
+    else
+    {
+        /* fixed size: the size can be a name of variable or integer */
+        offset = hdata_get_var_offset (hdata, ptr_size);
+        if (offset >= 0)
+        {
+            /* size is the name of a variable in hdata, read it */
+            switch (hdata_get_var_type (hdata, ptr_size))
             {
-                /* fixed size: the size can be a name of variable or integer */
-                if (hdata_get_var_offset (hdata, ptr_size) >= 0)
-                {
-                    /* size is the name of a variable in hdata, read it */
-                    offset = hdata_get_var_offset (hdata, ptr_size);
-                    switch (hdata_get_var_type (hdata, ptr_size))
-                    {
-                        case WEECHAT_HDATA_CHAR:
-                            return (int)(*((char *)(pointer + offset)));
-                        case WEECHAT_HDATA_INTEGER:
-                            return *((int *)(pointer + offset));
-                        case WEECHAT_HDATA_LONG:
-                            return (int)(*((long *)(pointer + offset)));
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    /* check if the size is a valid integer */
-                    error = NULL;
-                    value = strtol (ptr_size, &error, 10);
-                    if (error && !error[0])
-                        return (int)value;
-                }
+                case WEECHAT_HDATA_CHAR:
+                    return (int)(*((char *)(pointer + offset)));
+                case WEECHAT_HDATA_INTEGER:
+                    return *((int *)(pointer + offset));
+                case WEECHAT_HDATA_LONG:
+                    return (int)(*((long *)(pointer + offset)));
+                default:
+                    break;
             }
+        }
+        else
+        {
+            /* check if the size is a valid integer */
+            error = NULL;
+            value = strtol (ptr_size, &error, 10);
+            if (error && !error[0])
+                return (int)value;
         }
     }
 
@@ -282,11 +317,17 @@ const char *
 hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
                                  const char *name)
 {
+    struct t_hdata_var *var;
+
     /* make C compiler happy */
     (void) pointer;
 
-    if (hdata && name)
-        return (const char *)hashtable_get (hdata->hash_var_array_size, name);
+    if (!hdata || !name)
+        return NULL;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (var)
+        return (const char *)var->array_size;
 
     return NULL;
 }
@@ -299,8 +340,14 @@ hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
 const char *
 hdata_get_var_hdata (struct t_hdata *hdata, const char *name)
 {
-    if (hdata && name)
-        return (const char *)hashtable_get (hdata->hash_var_hdata, name);
+    struct t_hdata_var *var;
+
+    if (!hdata || !name)
+        return NULL;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (var)
+        return (const char *)var->hdata_name;
 
     return NULL;
 }
@@ -314,12 +361,12 @@ hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name)
 {
     int offset;
 
-    if (hdata && pointer)
-    {
-        offset = hdata_get_var_offset (hdata, name);
-        if (offset >= 0)
-            return pointer + offset;
-    }
+    if (!hdata || !pointer)
+        return NULL;
+
+    offset = hdata_get_var_offset (hdata, name);
+    if (offset >= 0)
+        return pointer + offset;
 
     return NULL;
 }
@@ -332,10 +379,10 @@ hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name)
 void *
 hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset)
 {
-    if (hdata && pointer)
-        return pointer + offset;
+    if (!hdata || !pointer)
+        return NULL;
 
-    return NULL;
+    return pointer + offset;
 }
 
 /*
@@ -347,12 +394,12 @@ hdata_get_list (struct t_hdata *hdata, const char *name)
 {
     void *ptr_value;
 
-    if (hdata && name)
-    {
-        ptr_value = hashtable_get (hdata->hash_list, name);
-        if (ptr_value)
-            return *((void **)ptr_value);
-    }
+    if (!hdata || !name)
+        return NULL;
+
+    ptr_value = hashtable_get (hdata->hash_list, name);
+    if (ptr_value)
+        return *((void **)ptr_value);
 
     return NULL;
 }
@@ -368,17 +415,17 @@ hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
 {
     void *ptr_current;
 
-    if (hdata && list && pointer)
+    if (!hdata || !list || !pointer)
+        return 0;
+
+    if (pointer == list)
+        return 1;
+    ptr_current = list;
+    while (ptr_current)
     {
-        if (pointer == list)
+        ptr_current = hdata_move (hdata, ptr_current, 1);
+        if (ptr_current && (ptr_current == pointer))
             return 1;
-        ptr_current = list;
-        while (ptr_current)
-        {
-            ptr_current = hdata_move (hdata, ptr_current, 1);
-            if (ptr_current && (ptr_current == pointer))
-                return 1;
-        }
     }
 
     return 0;
@@ -394,17 +441,17 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
     char *ptr_var;
     int i, abs_count;
 
-    if (hdata && pointer && (count != 0))
-    {
-        ptr_var = (count < 0) ? hdata->var_prev : hdata->var_next;
-        abs_count = abs(count);
+    if (!hdata || !pointer || (count == 0))
+        return NULL;
 
-        for (i = 0; i < abs_count; i++)
-        {
-            pointer = hdata_pointer (hdata, pointer, ptr_var);
-            if (pointer)
-                return pointer;
-        }
+    ptr_var = (count < 0) ? hdata->var_prev : hdata->var_next;
+    abs_count = abs(count);
+
+    for (i = 0; i < abs_count; i++)
+    {
+        pointer = hdata_pointer (hdata, pointer, ptr_var);
+        if (pointer)
+            return pointer;
     }
 
     return NULL;
@@ -459,23 +506,24 @@ hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
 char
 hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return '\0';
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return (*((char **)(pointer + offset)))[index];
-            }
-            else
-                return *((char *)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return (*((char **)(pointer + var->offset)))[index];
         }
+        else
+            return *((char *)(pointer + var->offset));
     }
 
     return '\0';
@@ -488,23 +536,24 @@ hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 int
 hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return 0;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return ((int *)(pointer + offset))[index];
-            }
-            else
-                return *((int *)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return ((int *)(pointer + var->offset))[index];
         }
+        else
+            return *((int *)(pointer + var->offset));
     }
 
     return 0;
@@ -517,23 +566,24 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 long
 hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return 0;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return ((long *)(pointer + offset))[index];
-            }
-            else
-                return *((long *)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return ((long *)(pointer + var->offset))[index];
         }
+        else
+            return *((long *)(pointer + var->offset));
     }
 
     return 0;
@@ -546,23 +596,24 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 const char *
 hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return NULL;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return (*((char ***)(pointer + offset)))[index];
-            }
-            else
-                return *((char **)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return (*((char ***)(pointer + var->offset)))[index];
         }
+        else
+            return *((char **)(pointer + var->offset));
     }
 
     return NULL;
@@ -575,23 +626,24 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 void *
 hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return NULL;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return (*((void ***)(pointer + offset)))[index];
-            }
-            else
-                return *((void **)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return (*((void ***)(pointer + var->offset)))[index];
         }
+        else
+            return *((void **)(pointer + var->offset));
     }
 
     return NULL;
@@ -604,23 +656,24 @@ hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 time_t
 hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return 0;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return ((time_t *)(pointer + offset))[index];
-            }
-            else
-                return *((time_t *)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return ((time_t *)(pointer + var->offset))[index];
         }
+        else
+            return *((time_t *)(pointer + var->offset));
     }
 
     return 0;
@@ -633,26 +686,162 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 struct t_hashtable *
 hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
 {
-    int offset, index;
+    int index;
     const char *ptr_name;
+    struct t_hdata_var *var;
 
-    if (hdata && pointer && name)
+    if (!hdata || !pointer || !name)
+        return NULL;
+
+    hdata_get_index_and_name (name, &index, &ptr_name);
+    var = hashtable_get (hdata->hash_var, ptr_name);
+    if (var && (var->offset >= 0))
     {
-        hdata_get_index_and_name (name, &index, &ptr_name);
-        offset = hdata_get_var_offset (hdata, ptr_name);
-        if (offset >= 0)
+        if (var->array_size)
         {
-            if (hdata_get_var_array_size_string (hdata, pointer, ptr_name))
-            {
-                if (*((void **)(pointer + offset)))
-                    return (*((struct t_hashtable ***)(pointer + offset)))[index];
-            }
-            else
-                return *((struct t_hashtable **)(pointer + offset));
+            if (*((void **)(pointer + var->offset)))
+                return (*((struct t_hashtable ***)(pointer + var->offset)))[index];
         }
+        else
+            return *((struct t_hashtable **)(pointer + var->offset));
     }
 
     return NULL;
+}
+
+/* hdata_set: set value for a variable in hdata
+ *            WARNING: this is dangerous, and only some variables can be set
+ *                     by this function (this depends on hdata, see API doc
+ *                     for more info) and this function can be called *ONLY*
+ *                     in an "update" callback (in hdata).
+ *            Return 1 if ok (value set), 0 if error (or not allowed)
+ */
+
+int
+hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
+           const char *value)
+{
+    struct t_hdata_var *var;
+    char **ptr_string, *error;
+    long number;
+    long unsigned int ptr;
+    int rc;
+
+    if (!hdata->update_pending)
+        return 0;
+
+    var = hashtable_get (hdata->hash_var, name);
+    if (!var)
+        return 0;
+
+    if (!var->update_allowed)
+        return 0;
+
+    switch (var->type)
+    {
+        case WEECHAT_HDATA_OTHER:
+            break;
+        case WEECHAT_HDATA_CHAR:
+            *((char *)(pointer + var->offset)) = (value) ? value[0] : '\0';
+            return 1;
+            break;
+        case WEECHAT_HDATA_INTEGER:
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+            {
+                *((int *)(pointer + var->offset)) = (int)number;
+                return 1;
+            }
+            break;
+        case WEECHAT_HDATA_LONG:
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+            {
+                *((long *)(pointer + var->offset)) = number;
+                return 1;
+            }
+            break;
+        case WEECHAT_HDATA_STRING:
+            ptr_string = (char **)(pointer + var->offset);
+            if (*ptr_string)
+                free (*ptr_string);
+            *ptr_string = (value) ? strdup (value) : NULL;
+            return 1;
+            break;
+        case WEECHAT_HDATA_POINTER:
+            rc = sscanf (value, "%lx", &ptr);
+            if ((rc != EOF) && (rc != 0))
+            {
+                *((void **)(pointer + var->offset)) = (void *)ptr;
+                return 1;
+            }
+            break;
+        case WEECHAT_HDATA_TIME:
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+            {
+                *((time_t *)(pointer + var->offset)) = (time_t)number;
+                return 1;
+            }
+            break;
+        case WEECHAT_HDATA_HASHTABLE:
+            break;
+    }
+    return 0;
+}
+
+/*
+ * hdata_update: update some data in hdata
+ *               The hashtable contains keys with new values.
+ *               A special key "__delete" can be used to delete the whole
+ *               structure at pointer (if allowed for this hdata).
+ *               WARNING: this is dangerous, and only some data can be updated
+ *                        by this function (this depends on hdata, see API doc
+ *                        for more info)
+ *               Return number of variables updated or 0 if nothing has been
+ *               updated. In case of deletion, return 1 if ok, 0 if error.
+ */
+
+int
+hdata_update (struct t_hdata *hdata, void *pointer,
+              struct t_hashtable *hashtable)
+{
+    const char *value;
+    struct t_hdata_var *var;
+    int rc;
+
+    if (!hdata || !hashtable || !hdata->callback_update)
+        return 0;
+
+    /* check if delete of structure is allowed */
+    if (hashtable_has_key (hashtable, "__delete_allowed"))
+        return (int)hdata->delete_allowed;
+
+    /* check if update of variable is allowed */
+    value = hashtable_get (hashtable, "__update_allowed");
+    if (value)
+    {
+        if (!hdata->callback_update)
+            return 0;
+        var = hashtable_get (hdata->hash_var, value);
+        if (!var)
+            return 0;
+        return (var->update_allowed) ? 1 : 0;
+    }
+
+    if (!pointer)
+        return 0;
+
+    /* update data */
+    hdata->update_pending = 1;
+    rc = (hdata->callback_update) (hdata->callback_update_data,
+                                   hdata, pointer, hashtable);
+    hdata->update_pending = 0;
+
+    return rc;
 }
 
 /*
@@ -662,37 +851,25 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
 const char *
 hdata_get_string (struct t_hdata *hdata, const char *property)
 {
-    if (hdata && property)
-    {
-        if (string_strcasecmp (property, "var_keys") == 0)
-            return hashtable_get_string (hdata->hash_var, "keys");
-        else if (string_strcasecmp (property, "var_values") == 0)
-            return hashtable_get_string (hdata->hash_var, "values");
-        else if (string_strcasecmp (property, "var_keys_values") == 0)
-            return hashtable_get_string (hdata->hash_var, "keys_values");
-        else if (string_strcasecmp (property, "var_prev") == 0)
-            return hdata->var_prev;
-        else if (string_strcasecmp (property, "var_next") == 0)
-            return hdata->var_next;
-        else if (string_strcasecmp (property, "var_array_size_keys") == 0)
-            return hashtable_get_string (hdata->hash_var_array_size, "keys");
-        else if (string_strcasecmp (property, "var_array_size_values") == 0)
-            return hashtable_get_string (hdata->hash_var_array_size, "values");
-        else if (string_strcasecmp (property, "var_array_size_keys_values") == 0)
-            return hashtable_get_string (hdata->hash_var_array_size, "keys_values");
-        else if (string_strcasecmp (property, "var_hdata_keys") == 0)
-            return hashtable_get_string (hdata->hash_var_hdata, "keys");
-        else if (string_strcasecmp (property, "var_hdata_values") == 0)
-            return hashtable_get_string (hdata->hash_var_hdata, "values");
-        else if (string_strcasecmp (property, "var_hdata_keys_values") == 0)
-            return hashtable_get_string (hdata->hash_var_hdata, "keys_values");
-        else if (string_strcasecmp (property, "list_keys") == 0)
-            return hashtable_get_string (hdata->hash_list, "keys");
-        else if (string_strcasecmp (property, "list_values") == 0)
-            return hashtable_get_string (hdata->hash_list, "values");
-        else if (string_strcasecmp (property, "list_keys_values") == 0)
-            return hashtable_get_string (hdata->hash_list, "keys_values");
-    }
+    if (!hdata || !property)
+        return NULL;
+
+    if (string_strcasecmp (property, "var_keys") == 0)
+        return hashtable_get_string (hdata->hash_var, "keys");
+    else if (string_strcasecmp (property, "var_values") == 0)
+        return hashtable_get_string (hdata->hash_var, "values");
+    else if (string_strcasecmp (property, "var_keys_values") == 0)
+        return hashtable_get_string (hdata->hash_var, "keys_values");
+    else if (string_strcasecmp (property, "var_prev") == 0)
+        return hdata->var_prev;
+    else if (string_strcasecmp (property, "var_next") == 0)
+        return hdata->var_next;
+    else if (string_strcasecmp (property, "list_keys") == 0)
+        return hashtable_get_string (hdata->hash_list, "keys");
+    else if (string_strcasecmp (property, "list_values") == 0)
+        return hashtable_get_string (hdata->hash_list, "values");
+    else if (string_strcasecmp (property, "list_keys_values") == 0)
+        return hashtable_get_string (hdata->hash_list, "keys_values");
 
     return NULL;
 }
@@ -710,10 +887,6 @@ hdata_free (struct t_hdata *hdata)
         free (hdata->var_prev);
     if (hdata->var_next)
         free (hdata->var_next);
-    if (hdata->hash_var_array_size)
-        hashtable_free (hdata->hash_var_array_size);
-    if (hdata->hash_var_hdata)
-        hashtable_free (hdata->hash_var_hdata);
     if (hdata->hash_list)
         hashtable_free (hdata->hash_list);
 
@@ -779,6 +952,31 @@ hdata_free_all ()
 }
 
 /*
+ * hdata_print_log_var_map_cb: function called for each variable in hdata
+ */
+
+void
+hdata_print_log_var_map_cb (void *data, struct t_hashtable *hashtable,
+                            const void *key, const void *value)
+{
+    struct t_hdata_var *var;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+
+    var = (struct t_hdata_var *)value;
+
+    log_printf ("");
+    log_printf ("  [hdata var '%s']", (const char *)key);
+    log_printf ("    offset . . . . . . . . : %d",   var->offset);
+    log_printf ("    type . . . . . . . . . : %d ('%s')", var->type, hdata_type_string[(int)var->type]);
+    log_printf ("    update_allowed . . . . : %d",   (int)var->update_allowed);
+    log_printf ("    array_size . . . . . . : '%s'", var->array_size);
+    log_printf ("    hdata_name . . . . . . : '%s'", var->hdata_name);
+}
+
+/*
  * hdata_print_log_map_cb: function called for each hdata in memory
  */
 
@@ -802,15 +1000,14 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
     log_printf ("  hash_var . . . . . . . : 0x%lx (hashtable: '%s')",
                 ptr_hdata->hash_var,
                 hashtable_get_string (ptr_hdata->hash_var, "keys_values"));
-    log_printf ("  hash_var_array_size. . : 0x%lx (hashtable: '%s')",
-                ptr_hdata->hash_var_array_size,
-                hashtable_get_string (ptr_hdata->hash_var_array_size, "keys_values"));
-    log_printf ("  hash_var_hdata . . . . : 0x%lx (hashtable: '%s')",
-                ptr_hdata->hash_var_hdata,
-                hashtable_get_string (ptr_hdata->hash_var_hdata, "keys_values"));
     log_printf ("  hash_list. . . . . . . : 0x%lx (hashtable: '%s')",
                 ptr_hdata->hash_list,
                 hashtable_get_string (ptr_hdata->hash_list, "keys_values"));
+    log_printf ("  delete_allowed . . . . : %d",    (int)ptr_hdata->delete_allowed);
+    log_printf ("  callback_update. . . . : 0x%lx", ptr_hdata->callback_update);
+    log_printf ("  callback_update_data . : 0x%lx", ptr_hdata->callback_update_data);
+    log_printf ("  update_pending . . . . : %d",    (int)ptr_hdata->update_pending);
+    hashtable_map (ptr_hdata->hash_var, &hdata_print_log_var_map_cb, NULL);
 }
 
 /*

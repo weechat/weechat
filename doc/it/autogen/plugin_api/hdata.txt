@@ -1,6 +1,6 @@
-[width="100%",cols="^1,^2,5,5,5",options="header"]
+[width="100%",cols="^1,^2,5,5,5,5",options="header"]
 |========================================
-| Plugin | Nome | Descrizione | Variabili | Liste
+| Plugin | Nome | Descrizione | Variabili | Update allowed | Liste
 
 | guile | guile_script | elenco degli script |
   'filename' (string) +
@@ -14,8 +14,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'guile_script') +
-  'next_script' (pointer, hdata: 'guile_script') |
+  'prev_script' (pointer, hdata: "guile_script") +
+  'next_script' (pointer, hdata: "guile_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -36,22 +37,24 @@
   'pv_remote_nick_color' (string) +
   'hook_autorejoin' (pointer) +
   'nicks_count' (integer) +
-  'nicks' (pointer, hdata: 'irc_nick') +
-  'last_nick' (pointer, hdata: 'irc_nick') +
+  'nicks' (pointer, hdata: "irc_nick") +
+  'last_nick' (pointer, hdata: "irc_nick") +
   'nicks_speaking' (pointer) +
-  'nicks_speaking_time' (pointer, hdata: 'irc_channel_speaking') +
-  'last_nick_speaking_time' (pointer, hdata: 'irc_channel_speaking') +
-  'buffer' (pointer, hdata: 'buffer') +
+  'nicks_speaking_time' (pointer, hdata: "irc_channel_speaking") +
+  'last_nick_speaking_time' (pointer, hdata: "irc_channel_speaking") +
+  'buffer' (pointer, hdata: "buffer") +
   'buffer_as_string' (string) +
-  'prev_channel' (pointer, hdata: 'irc_channel') +
-  'next_channel' (pointer, hdata: 'irc_channel') |
+  'prev_channel' (pointer, hdata: "irc_channel") +
+  'next_channel' (pointer, hdata: "irc_channel") |
+ |
   -
 
 | irc | irc_channel_speaking | channel_speaking irc |
   'nick' (string) +
   'time_last_message' (time) +
-  'prev_nick' (pointer, hdata: 'irc_channel_speaking') +
-  'next_nick' (pointer, hdata: 'irc_channel_speaking') |
+  'prev_nick' (pointer, hdata: "irc_channel_speaking") +
+  'next_nick' (pointer, hdata: "irc_channel_speaking") |
+ |
   -
 
 | irc | irc_ignore | ignore irc |
@@ -60,8 +63,9 @@
   'regex_mask' (pointer) +
   'server' (string) +
   'channel' (string) +
-  'prev_ignore' (pointer, hdata: 'irc_ignore') +
-  'next_ignore' (pointer, hdata: 'irc_ignore') |
+  'prev_ignore' (pointer, hdata: "irc_ignore") +
+  'next_ignore' (pointer, hdata: "irc_ignore") |
+ |
   'irc_ignore_list' +
   'last_irc_ignore'
 
@@ -72,23 +76,25 @@
   'prefix' (string) +
   'away' (integer) +
   'color' (string) +
-  'prev_nick' (pointer, hdata: 'irc_nick') +
-  'next_nick' (pointer, hdata: 'irc_nick') |
+  'prev_nick' (pointer, hdata: "irc_nick") +
+  'next_nick' (pointer, hdata: "irc_nick") |
+ |
   -
 
 | irc | irc_notify | notify irc |
-  'server' (pointer, hdata: 'irc_server') +
+  'server' (pointer, hdata: "irc_server") +
   'nick' (string) +
   'check_away' (integer) +
   'is_on_server' (integer) +
   'away_message' (string) +
   'ison_received' (integer) +
-  'prev_notify' (pointer, hdata: 'irc_notify') +
-  'next_notify' (pointer, hdata: 'irc_notify') |
+  'prev_notify' (pointer, hdata: "irc_notify") +
+  'next_notify' (pointer, hdata: "irc_notify") |
+ |
   -
 
 | irc | irc_redirect | redirezione irc |
-  'server' (pointer, hdata: 'irc_server') +
+  'server' (pointer, hdata: "irc_server") +
   'pattern' (string) +
   'signal' (string) +
   'count' (integer) +
@@ -106,8 +112,9 @@
   'cmd_filter' (hashtable) +
   'output' (string) +
   'output_size' (integer) +
-  'prev_redirect' (pointer, hdata: 'irc_redirect') +
-  'next_redirect' (pointer, hdata: 'irc_redirect') |
+  'prev_redirect' (pointer, hdata: "irc_redirect") +
+  'next_redirect' (pointer, hdata: "irc_redirect") |
+ |
   -
 
 | irc | irc_redirect_pattern | schema per la redirezione irc |
@@ -117,8 +124,9 @@
   'cmd_start' (string) +
   'cmd_stop' (string) +
   'cmd_extra' (string) +
-  'prev_redirect' (pointer, hdata: 'irc_redirect_pattern') +
-  'next_redirect' (pointer, hdata: 'irc_redirect_pattern') |
+  'prev_redirect' (pointer, hdata: "irc_redirect_pattern") +
+  'next_redirect' (pointer, hdata: "irc_redirect_pattern") |
+ |
   'irc_redirect_patterns' +
   'last_irc_redirect_pattern'
 
@@ -129,17 +137,17 @@
   'reloading_from_config' (integer) +
   'reloaded_from_config' (integer) +
   'addresses_count' (integer) +
-  'addresses_array' (string, array_size: 'addresses_count') +
-  'ports_array' (integer, array_size: 'addresses_count') +
+  'addresses_array' (string, array_size: "addresses_count") +
+  'ports_array' (integer, array_size: "addresses_count") +
   'index_current_address' (integer) +
   'current_address' (string) +
   'current_ip' (string) +
   'current_port' (integer) +
   'sock' (integer) +
-  'hook_connect' (pointer, hdata: 'hook') +
-  'hook_fd' (pointer, hdata: 'hook') +
-  'hook_timer_connection' (pointer, hdata: 'hook') +
-  'hook_timer_sasl' (pointer, hdata: 'hook') +
+  'hook_connect' (pointer, hdata: "hook") +
+  'hook_fd' (pointer, hdata: "hook") +
+  'hook_timer_connection' (pointer, hdata: "hook") +
+  'hook_timer_sasl' (pointer, hdata: "hook") +
   'is_connected' (integer) +
   'ssl_connected' (integer) +
   'gnutls_sess' (other) +
@@ -147,7 +155,7 @@
   'tls_cert_key' (other) +
   'unterminated_message' (string) +
   'nicks_count' (integer) +
-  'nicks_array' (string, array_size: 'nicks_count') +
+  'nicks_array' (string, array_size: "nicks_count") +
   'nick_first_tried' (integer) +
   'nick_alternate_number' (integer) +
   'nick' (string) +
@@ -176,17 +184,18 @@
   'last_away_check' (time) +
   'outqueue' (pointer) +
   'last_outqueue' (pointer) +
-  'redirects' (pointer, hdata: 'irc_redirect') +
-  'last_redirect' (pointer, hdata: 'irc_redirect') +
-  'notify_list' (pointer, hdata: 'irc_notify') +
-  'last_notify' (pointer, hdata: 'irc_notify') +
+  'redirects' (pointer, hdata: "irc_redirect") +
+  'last_redirect' (pointer, hdata: "irc_redirect") +
+  'notify_list' (pointer, hdata: "irc_notify") +
+  'last_notify' (pointer, hdata: "irc_notify") +
   'manual_joins' (hashtable) +
-  'buffer' (pointer, hdata: 'buffer') +
+  'buffer' (pointer, hdata: "buffer") +
   'buffer_as_string' (string) +
-  'channels' (pointer, hdata: 'irc_channel') +
-  'last_channel' (pointer, hdata: 'irc_channel') +
-  'prev_server' (pointer, hdata: 'irc_server') +
-  'next_server' (pointer, hdata: 'irc_server') |
+  'channels' (pointer, hdata: "irc_channel") +
+  'last_channel' (pointer, hdata: "irc_channel") +
+  'prev_server' (pointer, hdata: "irc_server") +
+  'next_server' (pointer, hdata: "irc_server") |
+ |
   'irc_servers' +
   'last_irc_server'
 
@@ -202,8 +211,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'lua_script') +
-  'next_script' (pointer, hdata: 'lua_script') |
+  'prev_script' (pointer, hdata: "lua_script") +
+  'next_script' (pointer, hdata: "lua_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -219,8 +229,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'perl_script') +
-  'next_script' (pointer, hdata: 'perl_script') |
+  'prev_script' (pointer, hdata: "perl_script") +
+  'next_script' (pointer, hdata: "perl_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -236,8 +247,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'python_script') +
-  'next_script' (pointer, hdata: 'python_script') |
+  'prev_script' (pointer, hdata: "python_script") +
+  'next_script' (pointer, hdata: "python_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -253,8 +265,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'ruby_script') +
-  'next_script' (pointer, hdata: 'ruby_script') |
+  'prev_script' (pointer, hdata: "ruby_script") +
+  'next_script' (pointer, hdata: "ruby_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -280,8 +293,9 @@
   'version_loaded' (string) +
   'displayed' (integer) +
   'install_order' (integer) +
-  'prev_script' (pointer, hdata: 'script_script') +
-  'next_script' (pointer, hdata: 'script_script') |
+  'prev_script' (pointer, hdata: "script_script") +
+  'next_script' (pointer, hdata: "script_script") |
+ |
   'last_repo_script' +
   'repo_scripts'
 
@@ -297,8 +311,9 @@
   'charset' (string) +
   'callbacks' (pointer) +
   'unloading' (integer) +
-  'prev_script' (pointer, hdata: 'tcl_script') +
-  'next_script' (pointer, hdata: 'tcl_script') |
+  'prev_script' (pointer, hdata: "tcl_script") +
+  'next_script' (pointer, hdata: "tcl_script") |
+ |
   'last_script' +
   'scripts'
 
@@ -306,32 +321,34 @@
   'name' (string) +
   'options' (pointer) +
   'conditions_count' (integer) +
-  'conditions_array' (string, array_size: 'conditions_count') +
+  'conditions_array' (string, array_size: "conditions_count") +
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +
   'items_prefix' (pointer) +
   'items_name' (pointer) +
   'items_suffix' (pointer) +
-  'bar_window' (pointer, hdata: 'bar_window') +
+  'bar_window' (pointer, hdata: "bar_window") +
   'bar_refresh_needed' (integer) +
-  'prev_bar' (pointer, hdata: 'bar') +
-  'next_bar' (pointer, hdata: 'bar') |
+  'prev_bar' (pointer, hdata: "bar") +
+  'next_bar' (pointer, hdata: "bar") |
+ |
   'gui_bars' +
   'last_gui_bar'
 
 | weechat | bar_item | elemento barra |
-  'plugin' (pointer, hdata: 'plugin') +
+  'plugin' (pointer, hdata: "plugin") +
   'name' (string) +
   'build_callback' (pointer) +
   'build_callback_data' (pointer) +
-  'prev_item' (pointer, hdata: 'bar_item') +
-  'next_item' (pointer, hdata: 'bar_item') |
+  'prev_item' (pointer, hdata: "bar_item") +
+  'next_item' (pointer, hdata: "bar_item") |
+ |
   'gui_bar_items' +
   'last_gui_bar_item'
 
 | weechat | bar_window | finestra della barra |
-  'bar' (pointer, hdata: 'bar') +
+  'bar' (pointer, hdata: "bar") +
   'x' (integer) +
   'y' (integer) +
   'width' (integer) +
@@ -350,12 +367,13 @@
   'coords_count' (integer) +
   'coords' (pointer) +
   'gui_objects' (pointer) +
-  'prev_bar_window' (pointer, hdata: 'bar_window') +
-  'next_bar_window' (pointer, hdata: 'bar_window') |
+  'prev_bar_window' (pointer, hdata: "bar_window") +
+  'next_bar_window' (pointer, hdata: "bar_window") |
+ |
   -
 
 | weechat | buffer | buffer |
-  'plugin' (pointer, hdata: 'plugin') +
+  'plugin' (pointer, hdata: "plugin") +
   'plugin_name_for_upgrade' (string) +
   'number' (integer) +
   'layout_number' (integer) +
@@ -371,14 +389,14 @@
   'close_callback' (pointer) +
   'close_callback_data' (pointer) +
   'title' (string) +
-  'own_lines' (pointer, hdata: 'lines') +
-  'mixed_lines' (pointer, hdata: 'lines') +
-  'lines' (pointer, hdata: 'lines') +
+  'own_lines' (pointer, hdata: "lines") +
+  'mixed_lines' (pointer, hdata: "lines") +
+  'lines' (pointer, hdata: "lines") +
   'time_for_each_line' (integer) +
   'chat_refresh_needed' (integer) +
   'nicklist' (integer) +
   'nicklist_case_sensitive' (integer) +
-  'nicklist_root' (pointer, hdata: 'nick_group') +
+  'nicklist_root' (pointer, hdata: "nick_group") +
   'nicklist_max_length' (integer) +
   'nicklist_display_groups' (integer) +
   'nicklist_visible_count' (integer) +
@@ -394,15 +412,15 @@
   'input_buffer_length' (integer) +
   'input_buffer_pos' (integer) +
   'input_buffer_1st_display' (integer) +
-  'input_undo_snap' (pointer, hdata: 'input_undo') +
-  'input_undo' (pointer, hdata: 'input_undo') +
-  'last_input_undo' (pointer, hdata: 'input_undo') +
-  'ptr_input_undo' (pointer, hdata: 'input_undo') +
+  'input_undo_snap' (pointer, hdata: "input_undo") +
+  'input_undo' (pointer, hdata: "input_undo") +
+  'last_input_undo' (pointer, hdata: "input_undo") +
+  'ptr_input_undo' (pointer, hdata: "input_undo") +
   'input_undo_count' (integer) +
-  'completion' (pointer, hdata: 'completion') +
-  'history' (pointer, hdata: 'history') +
-  'last_history' (pointer, hdata: 'history') +
-  'ptr_history' (pointer, hdata: 'history') +
+  'completion' (pointer, hdata: "completion") +
+  'history' (pointer, hdata: "history") +
+  'last_history' (pointer, hdata: "history") +
+  'ptr_history' (pointer, hdata: "history") +
   'num_history' (integer) +
   'text_search' (integer) +
   'text_search_exact' (integer) +
@@ -413,20 +431,21 @@
   'highlight_regex_compiled' (pointer) +
   'highlight_tags' (string) +
   'highlight_tags_count' (integer) +
-  'highlight_tags_array' (string, array_size: 'highlight_tags_count') +
+  'highlight_tags_array' (string, array_size: "highlight_tags_count") +
   'hotlist_max_level_nicks' (hashtable) +
-  'keys' (pointer, hdata: 'key') +
-  'last_key' (pointer, hdata: 'key') +
+  'keys' (pointer, hdata: "key") +
+  'last_key' (pointer, hdata: "key") +
   'keys_count' (integer) +
   'local_variables' (hashtable) +
-  'prev_buffer' (pointer, hdata: 'buffer') +
-  'next_buffer' (pointer, hdata: 'buffer') |
+  'prev_buffer' (pointer, hdata: "buffer") +
+  'next_buffer' (pointer, hdata: "buffer") |
+ |
   'gui_buffer_last_displayed' +
   'gui_buffers' +
   'last_gui_buffer'
 
 | weechat | completion | struttura con completamento |
-  'buffer' (pointer, hdata: 'buffer') +
+  'buffer' (pointer, hdata: "buffer") +
   'context' (integer) +
   'base_command' (string) +
   'base_command_arg_index' (integer) +
@@ -443,38 +462,41 @@
   'position_replace' (integer) +
   'diff_size' (integer) +
   'diff_length' (integer) +
-  'partial_completion_list' (pointer, hdata: 'completion_partial') +
-  'last_partial_completion' (pointer, hdata: 'completion_partial') |
+  'partial_completion_list' (pointer, hdata: "completion_partial") +
+  'last_partial_completion' (pointer, hdata: "completion_partial") |
+ |
   -
 
 | weechat | completion_partial | struttura con completamento parziale |
   'word' (string) +
   'count' (integer) +
-  'prev_item' (pointer, hdata: 'completion_partial') +
-  'next_item' (pointer, hdata: 'completion_partial') |
+  'prev_item' (pointer, hdata: "completion_partial") +
+  'next_item' (pointer, hdata: "completion_partial") |
+ |
   -
 
 | weechat | config_file | file di configurazione |
-  'plugin' (pointer, hdata: 'plugin') +
+  'plugin' (pointer, hdata: "plugin") +
   'name' (string) +
   'filename' (string) +
   'file' (pointer) +
   'callback_reload' (pointer) +
   'callback_reload_data' (pointer) +
-  'sections' (pointer, hdata: 'config_section') +
-  'last_section' (pointer, hdata: 'config_section') +
-  'prev_config' (pointer, hdata: 'config_file') +
-  'next_config' (pointer, hdata: 'config_file') |
+  'sections' (pointer, hdata: "config_section") +
+  'last_section' (pointer, hdata: "config_section") +
+  'prev_config' (pointer, hdata: "config_file") +
+  'next_config' (pointer, hdata: "config_file") |
+ |
   'config_files' +
   'last_config_file'
 
 | weechat | config_option | opzione di configurazione |
-  'config_file' (pointer, hdata: 'config_file') +
-  'section' (pointer, hdata: 'config_section') +
+  'config_file' (pointer, hdata: "config_file") +
+  'section' (pointer, hdata: "config_section") +
   'name' (string) +
   'type' (integer) +
   'description' (string) +
-  'string_values' (string, array_size: '*') +
+  'string_values' (string, array_size: "*") +
   'min' (integer) +
   'max' (integer) +
   'default_value' (pointer) +
@@ -487,12 +509,13 @@
   'callback_delete' (pointer) +
   'callback_delete_data' (pointer) +
   'loaded' (integer) +
-  'prev_option' (pointer, hdata: 'config_option') +
-  'next_option' (pointer, hdata: 'config_option') |
+  'prev_option' (pointer, hdata: "config_option") +
+  'next_option' (pointer, hdata: "config_option") |
+ |
   -
 
 | weechat | config_section | sezione di configurazione |
-  'config_file' (pointer, hdata: 'config_file') +
+  'config_file' (pointer, hdata: "config_file") +
   'name' (string) +
   'user_can_add_options' (integer) +
   'user_can_delete_options' (integer) +
@@ -506,10 +529,11 @@
   'callback_create_option_data' (pointer) +
   'callback_delete_option' (pointer) +
   'callback_delete_option_data' (pointer) +
-  'options' (pointer, hdata: 'config_option') +
-  'last_option' (pointer, hdata: 'config_option') +
-  'prev_section' (pointer, hdata: 'config_section') +
-  'next_section' (pointer, hdata: 'config_section') |
+  'options' (pointer, hdata: "config_option") +
+  'last_option' (pointer, hdata: "config_option") +
+  'prev_section' (pointer, hdata: "config_section") +
+  'next_section' (pointer, hdata: "config_section") |
+ |
   -
 
 | weechat | filter | filtro |
@@ -520,19 +544,21 @@
   'buffers' (pointer) +
   'tags' (string) +
   'tags_count' (integer) +
-  'tags_array' (string, array_size: 'tags_count') +
+  'tags_array' (string, array_size: "tags_count") +
   'regex' (string) +
   'regex_prefix' (pointer) +
   'regex_message' (pointer) +
-  'prev_filter' (pointer, hdata: 'filter') +
-  'next_filter' (pointer, hdata: 'filter') |
+  'prev_filter' (pointer, hdata: "filter") +
+  'next_filter' (pointer, hdata: "filter") |
+ |
   'gui_filters' +
   'last_gui_filter'
 
 | weechat | history | cronologia dei comandi nel buffer |
   'text' (string) +
-  'next_history' (pointer, hdata: 'history') +
-  'prev_history' (pointer, hdata: 'history') |
+  'next_history' (pointer, hdata: "history") +
+  'prev_history' (pointer, hdata: "history") |
+ |
   -
 
 | weechat | hotlist | hotlist |
@@ -540,17 +566,19 @@
   'creation_time.tv_sec' (time) +
   'creation_time.tv_usec' (long) +
   'buffer' (pointer) +
-  'count' (integer, array_size: '4') +
-  'prev_hotlist' (pointer, hdata: 'hotlist') +
-  'next_hotlist' (pointer, hdata: 'hotlist') |
+  'count' (integer, array_size: "4") +
+  'prev_hotlist' (pointer, hdata: "hotlist") +
+  'next_hotlist' (pointer, hdata: "hotlist") |
+ |
   'gui_hotlist' +
   'last_gui_hotlist'
 
 | weechat | input_undo | struttura con "undo"per la riga di input |
   'data' (string) +
   'pos' (integer) +
-  'prev_undo' (pointer, hdata: 'input_undo') +
-  'next_undo' (pointer, hdata: 'input_undo') |
+  'prev_undo' (pointer, hdata: "input_undo") +
+  'next_undo' (pointer, hdata: "input_undo") |
+ |
   -
 
 | weechat | key | un tasto (scorciatoia da tastiera) |
@@ -560,8 +588,9 @@
   'area_key' (string) +
   'command' (string) +
   'score' (integer) +
-  'prev_key' (pointer, hdata: 'key') +
-  'next_key' (pointer, hdata: 'key') |
+  'prev_key' (pointer, hdata: "key") +
+  'next_key' (pointer, hdata: "key") |
+ |
   'gui_default_keys' +
   'gui_default_keys_cursor' +
   'gui_default_keys_mouse' +
@@ -580,47 +609,55 @@
   'last_gui_key_search'
 
 | weechat | line | struttura con una sola riga |
-  'data' (pointer, hdata: 'line_data') +
-  'prev_line' (pointer, hdata: 'line') +
-  'next_line' (pointer, hdata: 'line') |
+  'data' (pointer, hdata: "line_data") +
+  'prev_line' (pointer, hdata: "line") +
+  'next_line' (pointer, hdata: "line") |
+ |
   -
 
 | weechat | line_data | struttura con una riga di dati |
-  'buffer' (pointer, hdata: 'buffer') +
+  'buffer' (pointer, hdata: "buffer") +
   'y' (integer) +
   'date' (time) +
   'date_printed' (time) +
   'str_time' (string) +
   'tags_count' (integer) +
-  'tags_array' (string, array_size: 'tags_count') +
+  'tags_array' (string, array_size: "tags_count") +
   'displayed' (char) +
   'highlight' (char) +
   'refresh_needed' (char) +
   'prefix' (string) +
   'prefix_length' (integer) +
   'message' (string) |
+  'date' (time) +
+  'date_printed' (time) +
+  'tags_array' (string) +
+  'prefix' (string) +
+  'message' (string) |
   -
 
 | weechat | lines | struttura con più righe |
-  'first_line' (pointer, hdata: 'line') +
-  'last_line' (pointer, hdata: 'line') +
-  'last_read_line' (pointer, hdata: 'line') +
+  'first_line' (pointer, hdata: "line") +
+  'last_line' (pointer, hdata: "line") +
+  'last_read_line' (pointer, hdata: "line") +
   'lines_count' (integer) +
   'first_line_not_read' (integer) +
   'lines_hidden' (integer) +
   'buffer_max_length' (integer) +
   'prefix_max_length' (integer) |
+ |
   -
 
 | weechat | nick | nick nella lista nick |
-  'group' (pointer, hdata: 'nick_group') +
+  'group' (pointer, hdata: "nick_group") +
   'name' (string) +
   'color' (string) +
   'prefix' (string) +
   'prefix_color' (string) +
   'visible' (integer) +
-  'prev_nick' (pointer, hdata: 'nick') +
-  'next_nick' (pointer, hdata: 'nick') |
+  'prev_nick' (pointer, hdata: "nick") +
+  'next_nick' (pointer, hdata: "nick") |
+ |
   -
 
 | weechat | nick_group | gruppo nella lista nick |
@@ -628,13 +665,14 @@
   'color' (string) +
   'visible' (integer) +
   'level' (integer) +
-  'parent' (pointer, hdata: 'nick_group') +
-  'children' (pointer, hdata: 'nick_group') +
-  'last_child' (pointer, hdata: 'nick_group') +
-  'nicks' (pointer, hdata: 'nick') +
-  'last_nick' (pointer, hdata: 'nick') +
-  'prev_group' (pointer, hdata: 'nick_group') +
-  'next_group' (pointer, hdata: 'nick_group') |
+  'parent' (pointer, hdata: "nick_group") +
+  'children' (pointer, hdata: "nick_group") +
+  'last_child' (pointer, hdata: "nick_group") +
+  'nicks' (pointer, hdata: "nick") +
+  'last_nick' (pointer, hdata: "nick") +
+  'prev_group' (pointer, hdata: "nick_group") +
+  'next_group' (pointer, hdata: "nick_group") |
+ |
   -
 
 | weechat | plugin | plugin |
@@ -647,8 +685,9 @@
   'license' (string) +
   'charset' (string) +
   'debug' (integer) +
-  'prev_plugin' (pointer, hdata: 'plugin') +
-  'next_plugin' (pointer, hdata: 'plugin') |
+  'prev_plugin' (pointer, hdata: "plugin") +
+  'next_plugin' (pointer, hdata: "plugin") |
+ |
   'last_weechat_plugin' +
   'weechat_plugins'
 
@@ -666,41 +705,44 @@
   'win_chat_height' (integer) +
   'win_chat_cursor_x' (integer) +
   'win_chat_cursor_y' (integer) +
-  'bar_windows' (pointer, hdata: 'bar_window') +
-  'last_bar_window' (pointer, hdata: 'bar_window') +
+  'bar_windows' (pointer, hdata: "bar_window") +
+  'last_bar_window' (pointer, hdata: "bar_window") +
   'refresh_needed' (integer) +
   'gui_objects' (pointer) +
-  'buffer' (pointer, hdata: 'buffer') +
+  'buffer' (pointer, hdata: "buffer") +
   'layout_plugin_name' (string) +
   'layout_buffer_name' (string) +
-  'scroll' (pointer, hdata: 'window_scroll') +
-  'ptr_tree' (pointer, hdata: 'window_tree') +
-  'prev_window' (pointer, hdata: 'window') +
-  'next_window' (pointer, hdata: 'window') |
+  'scroll' (pointer, hdata: "window_scroll") +
+  'ptr_tree' (pointer, hdata: "window_tree") +
+  'prev_window' (pointer, hdata: "window") +
+  'next_window' (pointer, hdata: "window") |
+ |
   'gui_current_window' +
   'gui_windows' +
   'last_gui_window'
 
 | weechat | window_scroll | scorrimento delle info nella finestra |
-  'buffer' (pointer, hdata: 'buffer') +
+  'buffer' (pointer, hdata: "buffer") +
   'first_line_displayed' (integer) +
-  'start_line' (pointer, hdata: 'line') +
+  'start_line' (pointer, hdata: "line") +
   'start_line_pos' (integer) +
   'scrolling' (integer) +
   'start_col' (integer) +
   'lines_after' (integer) +
   'reset_allowed' (integer) +
-  'prev_scroll' (pointer, hdata: 'window_scroll') +
-  'next_scroll' (pointer, hdata: 'window_scroll') |
+  'prev_scroll' (pointer, hdata: "window_scroll") +
+  'next_scroll' (pointer, hdata: "window_scroll") |
+ |
   -
 
 | weechat | window_tree | albero delle finestre |
-  'parent_node' (pointer, hdata: 'window_tree') +
+  'parent_node' (pointer, hdata: "window_tree") +
   'split_pct' (integer) +
   'split_horizontal' (integer) +
-  'child1' (pointer, hdata: 'window_tree') +
-  'child2' (pointer, hdata: 'window_tree') +
-  'window' (pointer, hdata: 'window') |
+  'child1' (pointer, hdata: "window_tree") +
+  'child2' (pointer, hdata: "window_tree") +
+  'window' (pointer, hdata: "window") |
+ |
   'gui_windows_tree'
 
 |========================================

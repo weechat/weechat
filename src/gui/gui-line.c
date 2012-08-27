@@ -1012,8 +1012,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->data->y = -1;
     new_line->data->date = date;
     new_line->data->date_printed = date_printed;
-    new_line->data->str_time = (date == 0) ?
-        NULL : gui_chat_get_time_string (date);
+    new_line->data->str_time = gui_chat_get_time_string (date);
     if (tags)
     {
         new_line->data->tags_array = string_split (tags, ",", 0, 0,
@@ -1355,17 +1354,17 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_lines, first_line, POINTER, NULL, "line");
-        HDATA_VAR(struct t_gui_lines, last_line, POINTER, NULL, "line");
-        HDATA_VAR(struct t_gui_lines, last_read_line, POINTER, NULL, "line");
-        HDATA_VAR(struct t_gui_lines, lines_count, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_lines, first_line_not_read, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_lines, lines_hidden, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_lines, buffer_max_length, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_lines, prefix_max_length, INTEGER, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, first_line, POINTER, 0, NULL, "line");
+        HDATA_VAR(struct t_gui_lines, last_line, POINTER, 0, NULL, "line");
+        HDATA_VAR(struct t_gui_lines, last_read_line, POINTER, 0, NULL, "line");
+        HDATA_VAR(struct t_gui_lines, lines_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, first_line_not_read, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, lines_hidden, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, buffer_max_length, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, prefix_max_length, INTEGER, 0, NULL, NULL);
     }
     return hdata;
 }
@@ -1382,14 +1381,99 @@ gui_line_hdata_line_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line");
+    hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_line, data, POINTER, NULL, "line_data");
-        HDATA_VAR(struct t_gui_line, prev_line, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_line, next_line, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_line, data, POINTER, 0, NULL, "line_data");
+        HDATA_VAR(struct t_gui_line, prev_line, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_line, next_line, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
+}
+
+/*
+ * gui_line_hdata_line_data_update_cb: callback for updating data of a line
+ */
+
+int
+gui_line_hdata_line_data_update_cb (void *data,
+                                    struct t_hdata *hdata,
+                                    void *pointer,
+                                    struct t_hashtable *hashtable)
+{
+    const char *value;
+    struct t_gui_line_data *line_data;
+    int rc;
+
+    /* make C compiler happy */
+    (void) data;
+
+    line_data = (struct t_gui_line_data *)pointer;
+
+    rc = 0;
+
+    if (hashtable_has_key (hashtable, "date"))
+    {
+        value = hashtable_get (hashtable, "date");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "date", value);
+            if (line_data->str_time)
+                free (line_data->str_time);
+            line_data->str_time = gui_chat_get_time_string (line_data->date);
+            rc++;
+        }
+    }
+
+    if (hashtable_has_key (hashtable, "date_printed"))
+    {
+        value = hashtable_get (hashtable, "date_printed");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "date_printed", value);
+            rc++;
+        }
+    }
+
+    if (hashtable_has_key (hashtable, "tags_array"))
+    {
+        value = hashtable_get (hashtable, "tags_array");
+        if (line_data->tags_array)
+            string_free_split (line_data->tags_array);
+        if (value)
+        {
+            line_data->tags_array = string_split (value, ",", 0, 0,
+                                                  &line_data->tags_count);
+        }
+        else
+        {
+            line_data->tags_count = 0;
+            line_data->tags_array = NULL;
+        }
+        rc++;
+    }
+
+    if (hashtable_has_key (hashtable, "prefix"))
+    {
+        value = hashtable_get (hashtable, "prefix");
+        hdata_set (hdata, pointer, "prefix", value);
+        line_data->prefix_length = (line_data->prefix) ?
+            gui_chat_strlen_screen (line_data->prefix) : 0;
+        gui_line_compute_prefix_max_length (line_data->buffer->lines);
+        rc++;
+    }
+
+    if (hashtable_has_key (hashtable, "message"))
+    {
+        value = hashtable_get (hashtable, "message");
+        hdata_set (hdata, pointer, "message", value);
+        rc++;
+    }
+
+    gui_buffer_ask_chat_refresh (line_data->buffer, 1);
+
+    return rc;
 }
 
 /*
@@ -1404,22 +1488,23 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL,
+                       0, &gui_line_hdata_line_data_update_cb, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_line_data, buffer, POINTER, NULL, "buffer");
-        HDATA_VAR(struct t_gui_line_data, y, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, date, TIME, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, date_printed, TIME, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, str_time, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, tags_array, STRING, "tags_count", NULL);
-        HDATA_VAR(struct t_gui_line_data, displayed, CHAR, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, highlight, CHAR, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, refresh_needed, CHAR, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, prefix, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, message, STRING, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, str_time, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_array, STRING, 1, "tags_count", NULL);
+        HDATA_VAR(struct t_gui_line_data, displayed, CHAR, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, highlight, CHAR, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, refresh_needed, CHAR, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, prefix, STRING, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, message, STRING, 1, NULL, NULL);
     }
     return hdata;
 }

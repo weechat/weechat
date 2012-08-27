@@ -1609,33 +1609,34 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window");
+    hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_window, number, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_x, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_y, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_width, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_height, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_width_pct, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_height_pct, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_x, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_y, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_width, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_height, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_cursor_x, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, win_chat_cursor_y, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, bar_windows, POINTER, NULL, "bar_window");
-        HDATA_VAR(struct t_gui_window, last_bar_window, POINTER, NULL, "bar_window");
-        HDATA_VAR(struct t_gui_window, refresh_needed, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, gui_objects, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, buffer, POINTER, NULL, "buffer");
-        HDATA_VAR(struct t_gui_window, layout_plugin_name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, layout_buffer_name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_window, scroll, POINTER, NULL, "window_scroll");
-        HDATA_VAR(struct t_gui_window, ptr_tree, POINTER, NULL, "window_tree");
-        HDATA_VAR(struct t_gui_window, prev_window, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_window, next_window, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window, number, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_x, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_y, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_width, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_height, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_width_pct, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_height_pct, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_x, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_y, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_width, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_height, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_cursor_x, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, win_chat_cursor_y, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, bar_windows, POINTER, 0, NULL, "bar_window");
+        HDATA_VAR(struct t_gui_window, last_bar_window, POINTER, 0, NULL, "bar_window");
+        HDATA_VAR(struct t_gui_window, refresh_needed, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, gui_objects, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_gui_window, layout_plugin_name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, layout_buffer_name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window, scroll, POINTER, 0, NULL, "window_scroll");
+        HDATA_VAR(struct t_gui_window, ptr_tree, POINTER, 0, NULL, "window_tree");
+        HDATA_VAR(struct t_gui_window, prev_window, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window, next_window, POINTER, 0, NULL, hdata_name);
         HDATA_LIST(gui_windows);
         HDATA_LIST(last_gui_window);
         HDATA_LIST(gui_current_window);
@@ -1655,19 +1656,20 @@ gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_scroll", "next_scroll");
+    hdata = hdata_new (NULL, hdata_name, "prev_scroll", "next_scroll",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_window_scroll, buffer, POINTER, NULL, "buffer");
-        HDATA_VAR(struct t_gui_window_scroll, first_line_displayed, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, start_line, POINTER, NULL, "line");
-        HDATA_VAR(struct t_gui_window_scroll, start_line_pos, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, scrolling, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, start_col, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, lines_after, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, reset_allowed, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, prev_scroll, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_window_scroll, next_scroll, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window_scroll, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_gui_window_scroll, first_line_displayed, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, start_line, POINTER, 0, NULL, "line");
+        HDATA_VAR(struct t_gui_window_scroll, start_line_pos, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, scrolling, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, start_col, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, lines_after, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, reset_allowed, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_scroll, prev_scroll, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window_scroll, next_scroll, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }
@@ -1684,15 +1686,15 @@ gui_window_hdata_window_tree_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_window_tree, parent_node, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_window_tree, split_pct, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_tree, split_horizontal, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_tree, child1, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_window_tree, child2, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_window_tree, window, POINTER, NULL, "window");
+        HDATA_VAR(struct t_gui_window_tree, parent_node, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window_tree, split_pct, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_tree, split_horizontal, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_window_tree, child1, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window_tree, child2, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_window_tree, window, POINTER, 0, NULL, "window");
         HDATA_LIST(gui_windows_tree);
     }
     return hdata;

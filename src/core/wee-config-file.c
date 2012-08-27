@@ -2606,19 +2606,20 @@ config_file_hdata_config_file_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_config", "next_config");
+    hdata = hdata_new (NULL, hdata_name, "prev_config", "next_config",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_config_file, plugin, POINTER, NULL, "plugin");
-        HDATA_VAR(struct t_config_file, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_config_file, filename, STRING, NULL, NULL);
-        HDATA_VAR(struct t_config_file, file, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_file, callback_reload, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_file, callback_reload_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_file, sections, POINTER, NULL, "config_section");
-        HDATA_VAR(struct t_config_file, last_section, POINTER, NULL, "config_section");
-        HDATA_VAR(struct t_config_file, prev_config, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_config_file, next_config, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_config_file, plugin, POINTER, 0, NULL, "plugin");
+        HDATA_VAR(struct t_config_file, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, filename, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, file, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, callback_reload, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, callback_reload_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_file, sections, POINTER, 0, NULL, "config_section");
+        HDATA_VAR(struct t_config_file, last_section, POINTER, 0, NULL, "config_section");
+        HDATA_VAR(struct t_config_file, prev_config, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_config_file, next_config, POINTER, 0, NULL, hdata_name);
         HDATA_LIST(config_files);
         HDATA_LIST(last_config_file);
     }
@@ -2637,27 +2638,28 @@ config_file_hdata_config_section_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_section", "next_section");
+    hdata = hdata_new (NULL, hdata_name, "prev_section", "next_section",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_config_section, config_file, POINTER, NULL, "config_file");
-        HDATA_VAR(struct t_config_section, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_config_section, user_can_add_options, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, user_can_delete_options, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_read, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_read_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_write, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_write_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_write_default, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_write_default_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_create_option, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_create_option_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_delete_option, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, callback_delete_option_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_section, options, POINTER, NULL, "config_option");
-        HDATA_VAR(struct t_config_section, last_option, POINTER, NULL, "config_option");
-        HDATA_VAR(struct t_config_section, prev_section, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_config_section, next_section, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_config_section, config_file, POINTER, 0, NULL, "config_file");
+        HDATA_VAR(struct t_config_section, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, user_can_add_options, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, user_can_delete_options, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_read, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_read_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write_default, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_write_default_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_create_option, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_create_option_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_delete_option, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, callback_delete_option_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_section, options, POINTER, 0, NULL, "config_option");
+        HDATA_VAR(struct t_config_section, last_option, POINTER, 0, NULL, "config_option");
+        HDATA_VAR(struct t_config_section, prev_section, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_config_section, next_section, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }
@@ -2674,29 +2676,30 @@ config_file_hdata_config_option_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_option", "next_option");
+    hdata = hdata_new (NULL, hdata_name, "prev_option", "next_option",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_config_option, config_file, POINTER, NULL, "config_file");
-        HDATA_VAR(struct t_config_option, section, POINTER, NULL, "config_section");
-        HDATA_VAR(struct t_config_option, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_config_option, type, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, description, STRING, NULL, NULL);
-        HDATA_VAR(struct t_config_option, string_values, STRING, "*", NULL);
-        HDATA_VAR(struct t_config_option, min, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, max, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, default_value, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, value, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, null_value_allowed, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_check_value, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_check_value_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_change, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_change_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_delete, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, callback_delete_data, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, loaded, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_config_option, prev_option, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_config_option, next_option, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_config_option, config_file, POINTER, 0, NULL, "config_file");
+        HDATA_VAR(struct t_config_option, section, POINTER, 0, NULL, "config_section");
+        HDATA_VAR(struct t_config_option, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, type, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, description, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, string_values, STRING, 0, "*", NULL);
+        HDATA_VAR(struct t_config_option, min, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, max, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, default_value, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, value, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, null_value_allowed, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_check_value, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_check_value_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_change, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_change_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_delete, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, callback_delete_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, loaded, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, prev_option, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_config_option, next_option, POINTER, 0, NULL, hdata_name);
     }
     return hdata;
 }

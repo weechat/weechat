@@ -2243,23 +2243,24 @@ gui_bar_hdata_bar_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_bar", "next_bar");
+    hdata = hdata_new (NULL, hdata_name, "prev_bar", "next_bar",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_bar, name, STRING, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, options, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, conditions_count, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, conditions_array, STRING, "conditions_count", NULL);
-        HDATA_VAR(struct t_gui_bar, items_count, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, items_subcount, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, items_array, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, items_prefix, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, items_name, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, items_suffix, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, bar_window, POINTER, NULL, "bar_window");
-        HDATA_VAR(struct t_gui_bar, bar_refresh_needed, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar, prev_bar, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_bar, next_bar, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_bar, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, options, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, conditions_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, conditions_array, STRING, 0, "conditions_count", NULL);
+        HDATA_VAR(struct t_gui_bar, items_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, items_subcount, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, items_array, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, items_prefix, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, items_name, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, items_suffix, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, bar_window, POINTER, 0, NULL, "bar_window");
+        HDATA_VAR(struct t_gui_bar, bar_refresh_needed, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar, prev_bar, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_bar, next_bar, POINTER, 0, NULL, hdata_name);
         HDATA_LIST(gui_bars);
         HDATA_LIST(last_gui_bar);
     }

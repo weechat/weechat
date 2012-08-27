@@ -474,16 +474,17 @@ gui_hotlist_hdata_hotlist_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, "prev_hotlist", "next_hotlist");
+    hdata = hdata_new (NULL, hdata_name, "prev_hotlist", "next_hotlist",
+                       0, NULL, NULL);
     if (hdata)
     {
-        HDATA_VAR(struct t_gui_hotlist, priority, INTEGER, NULL, NULL);
-        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_sec, TIME, NULL, NULL);
-        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_usec, LONG, NULL, NULL);
-        HDATA_VAR(struct t_gui_hotlist, buffer, POINTER, NULL, NULL);
-        HDATA_VAR(struct t_gui_hotlist, count, INTEGER, GUI_HOTLIST_NUM_PRIORITIES_STR, NULL);
-        HDATA_VAR(struct t_gui_hotlist, prev_hotlist, POINTER, NULL, hdata_name);
-        HDATA_VAR(struct t_gui_hotlist, next_hotlist, POINTER, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_hotlist, priority, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_sec, TIME, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, creation_time.tv_usec, LONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, buffer, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_hotlist, count, INTEGER, 0, GUI_HOTLIST_NUM_PRIORITIES_STR, NULL);
+        HDATA_VAR(struct t_gui_hotlist, prev_hotlist, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_hotlist, next_hotlist, POINTER, 0, NULL, hdata_name);
         HDATA_LIST(gui_hotlist);
         HDATA_LIST(last_gui_hotlist);
     }
