@@ -348,14 +348,14 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
 int
 gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            const char *string,
-                           int max_chars_on_screen, int display,
+                           int max_chars_on_screen, int simulate,
                            int apply_style_inactive,
                            int nick_offline)
 {
     char *next_char, *output, utf_char[16];
     int x, chars_displayed, display_char, size_on_screen;
 
-    if (display)
+    if (!simulate)
     {
         wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
                window->win_chat_cursor_y,
@@ -375,7 +375,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             return chars_displayed;
 
         next_char = utf8_next_char (string);
-        if (display && next_char)
+        if (next_char)
         {
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
@@ -393,11 +393,14 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             }
             if (display_char && (size_on_screen > 0))
             {
-                output = string_iconv_from_internal (NULL, utf_char);
-                wprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
-                         "%s", (output) ? output : utf_char);
-                if (output)
-                    free (output);
+                if (!simulate)
+                {
+                    output = string_iconv_from_internal (NULL, utf_char);
+                    wprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+                             "%s", (output) ? output : utf_char);
+                    if (output)
+                        free (output);
+                }
                 chars_displayed += size_on_screen;
             }
             x += size_on_screen;
@@ -484,21 +487,18 @@ gui_chat_display_word (struct t_gui_window *window,
                     gui_window_save_style ();
                     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  CONFIG_STRING(config_look_prefix_suffix),
-                                                                  0, 1,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
                 }
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              CONFIG_STRING(config_look_prefix_suffix),
+                                                              0, simulate,
+                                                              apply_style_inactive,
+                                                              nick_offline);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix));
-                if (!simulate)
-                {
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  str_space,
-                                                                  0, 1,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
-                }
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              str_space,
+                                                              0, simulate,
+                                                              apply_style_inactive,
+                                                              nick_offline);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 if (!simulate)
                 {
@@ -523,51 +523,45 @@ gui_chat_display_word (struct t_gui_window *window,
         {
             num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
             pos_saved_char = gui_chat_string_real_pos (ptr_data, num_displayed);
-            if (!simulate)
+            saved_char = ptr_data[pos_saved_char];
+            ptr_data[pos_saved_char] = '\0';
+            if ((count == 0) || (*lines_displayed >= num_lines - count))
             {
-                saved_char = ptr_data[pos_saved_char];
-                ptr_data[pos_saved_char] = '\0';
-                if ((count == 0) || (*lines_displayed >= num_lines - count))
-                {
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  ptr_data,
-                                                                  0, 1,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
-                }
-                else
-                {
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  ptr_data,
-                                                                  0, 0,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
-                }
-                ptr_data[pos_saved_char] = saved_char;
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              ptr_data,
+                                                              0, simulate,
+                                                              apply_style_inactive,
+                                                              nick_offline);
             }
+            else
+            {
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              ptr_data,
+                                                              0, 0,
+                                                              apply_style_inactive,
+                                                              nick_offline);
+            }
+            ptr_data[pos_saved_char] = saved_char;
             ptr_data += pos_saved_char;
         }
         else
         {
             num_displayed = chars_to_display;
-            if (!simulate)
+            if ((count == 0) || (*lines_displayed >= num_lines - count))
             {
-                if ((count == 0) || (*lines_displayed >= num_lines - count))
-                {
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  ptr_data,
-                                                                  0, 1,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
-                }
-                else
-                {
-                    chars_displayed += gui_chat_display_word_raw (window, line,
-                                                                  ptr_data,
-                                                                  0, 0,
-                                                                  apply_style_inactive,
-                                                                  nick_offline);
-                }
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              ptr_data,
+                                                              0, simulate,
+                                                              apply_style_inactive,
+                                                              nick_offline);
+            }
+            else
+            {
+                chars_displayed += gui_chat_display_word_raw (window, line,
+                                                              ptr_data,
+                                                              0, 0,
+                                                              apply_style_inactive,
+                                                              nick_offline);
             }
             ptr_data += strlen (ptr_data);
         }
@@ -585,7 +579,7 @@ gui_chat_display_word (struct t_gui_window *window,
         if ((!prefix && (ptr_data >= end_line)) ||
             ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
             ptr_data = NULL;
-    }
+}
 
     free (data);
 
@@ -909,7 +903,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                                      simulate,
                                                      CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                                      nick_offline);
-            if (!simulate && (chars_displayed < length_allowed))
+            if (chars_displayed < length_allowed)
                 extra_spaces = length_allowed - chars_displayed;
         }
         else
@@ -1272,7 +1266,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
 
     if (gui_chat_display_word_raw (window, line, line->data->message,
-                                   window->win_chat_width, 1,
+                                   window->win_chat_width, 0,
                                    CONFIG_BOOLEAN(config_look_color_inactive_message),
                                    0) < window->win_chat_width)
     {
