@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-28 16:10+0200\n"
+"POT-Creation-Date: 2012-08-28 16:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6849,29 +6849,6 @@ msgstr ""
 msgid "Max WeeChat"
 msgstr ""
 
-msgid "popular"
-msgstr ""
-
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
-msgid "installed"
-msgstr ""
-
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
-msgid "autoloaded"
-msgstr ""
-
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
-msgid "held"
-msgstr ""
-
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
-msgid "running"
-msgstr ""
-
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
-msgid "obsolete"
-msgstr ""
-
 msgid "alt+d=back to list"
 msgstr ""
 
@@ -7108,6 +7085,30 @@ msgid ""
 msgstr ""
 
 msgid "scripts from repository"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "popular"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "installed"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "autoloaded"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "held"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "running"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "obsolete"
 msgstr ""
 
 #, c-format

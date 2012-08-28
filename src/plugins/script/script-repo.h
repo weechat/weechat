@@ -67,6 +67,8 @@ extern struct t_repo_script *script_repo_search_by_name_ext (const char *name_wi
 extern const char *script_repo_get_status_for_display (struct t_repo_script *script,
                                                        const char *list,
                                                        int collapse);
+extern const char *script_repo_get_status_desc_for_display (struct t_repo_script *script,
+                                                            const char *list);
 extern void script_repo_remove_all ();
 extern void script_repo_update_status (struct t_repo_script *script);
 extern void script_repo_update_status_all ();

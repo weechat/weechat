@@ -205,6 +205,88 @@ script_repo_get_status_for_display (struct t_repo_script *script,
 }
 
 /*
+ * script_repo_get_status_desc_for_display: get status description for display
+ *                                          (exemple of string returned:
+ *                                          "popular installed autoloaded loaded")
+ */
+
+const char *
+script_repo_get_status_desc_for_display (struct t_repo_script *script,
+                                         const char *list)
+{
+    static char str_status[256];
+    const char *ptr_list;
+
+    str_status[0] = '\0';
+
+    if (!script)
+        return str_status;
+
+    for (ptr_list = list; ptr_list[0]; ptr_list++)
+    {
+        switch (ptr_list[0])
+        {
+            case '*':
+                if (script->popularity > 0)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("popular"));
+                }
+                break;
+            case 'i':
+                if (script->status & SCRIPT_STATUS_INSTALLED)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("installed"));
+                }
+                break;
+            case 'a':
+                if (script->status & SCRIPT_STATUS_AUTOLOADED)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("autoloaded"));
+                }
+                break;
+            case 'H':
+                if (script->status & SCRIPT_STATUS_HELD)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("held"));
+                }
+                break;
+            case 'r':
+                if (script->status & SCRIPT_STATUS_RUNNING)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("running"));
+                }
+                break;
+            case 'N':
+                if (script->status & SCRIPT_STATUS_NEW_VERSION)
+                {
+                    if (str_status[0])
+                        strcat (str_status, " ");
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    strcat (str_status, _("obsolete"));
+                }
+                break;
+        }
+    }
+
+    return str_status;
+}
+
+/*
  * script_repo_alloc: allocate a script structure
  */
 
