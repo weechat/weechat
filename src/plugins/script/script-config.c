@@ -40,6 +40,7 @@ struct t_config_section *script_config_section_scripts = NULL;
 /* script config, look section */
 
 struct t_config_option *script_config_look_columns;
+struct t_config_option *script_config_look_display_source;
 struct t_config_option *script_config_look_quiet_actions;
 struct t_config_option *script_config_look_sort;
 struct t_config_option *script_config_look_translate_description;
@@ -138,21 +139,31 @@ script_config_get_xml_filename ()
  * script_config_get_script_download_filename: get filename for a script to
  *                                             download, for eample:
  *                                             "/home/xxx/.weechat/script/iset.pl"
+ *                                             (if suffix is not NULL, it is
+ *                                             added to filename)
  *                                             Note: result must be freed after
  *                                             use
  */
 
 char *
-script_config_get_script_download_filename (struct t_repo_script *script)
+script_config_get_script_download_filename (struct t_repo_script *script,
+                                            const char *suffix)
 {
     char *path, *filename;
     int length;
 
     path = script_config_get_dir ();
-    length = strlen (path) + 1 + strlen (script->name_with_extension) + 1;
+    length = strlen (path) + 1 + strlen (script->name_with_extension)
+        + ((suffix) ? strlen (suffix) : 0) + 1;
     filename = malloc (length);
     if (filename)
-        snprintf (filename, length, "%s/%s", path, script->name_with_extension);
+    {
+        snprintf (filename, length,
+                  "%s/%s%s",
+                  path,
+                  script->name_with_extension,
+                  (suffix) ? suffix : "");
+    }
     free (path);
     return filename;
 }
@@ -359,6 +370,14 @@ script_config_init ()
            "%W=max_weechat)"),
         NULL, 0, 0, "%s %n %V %v %u | %d | %t", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_look_display_source = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "display_source", "boolean",
+        N_("display source code of script on buffer with detail on a script "
+           "(script is downloaded in a temporary file when detail on script "
+           "is displayed)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_look_quiet_actions = weechat_config_new_option (
         script_config_file, ptr_section,
         "quiet_actions", "boolean",

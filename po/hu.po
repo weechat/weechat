@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-25 19:27+0200\n"
+"POT-Creation-Date: 2012-08-28 16:10+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7707,6 +7707,17 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "%s: script \"%s\" is not held any more"
 msgstr "%s a \"%s\" szerver nem található\n"
 
+#, fuzzy
+msgid "Error: file not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+msgid "Source code:"
+msgstr ""
+
+#, fuzzy
+msgid "Downloading script..."
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
@@ -7720,6 +7731,10 @@ msgstr ""
 
 msgid "Version"
 msgstr ""
+
+#, fuzzy
+msgid "Version loaded"
+msgstr "Betöltött modulok:\n"
 
 msgid "Author"
 msgstr ""
@@ -7893,6 +7908,11 @@ msgid ""
 "%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
 "%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
 "loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid ""
+"display source code of script on buffer with detail on a script (script is "
+"downloaded in a temporary file when detail on script is displayed)"
 msgstr ""
 
 msgid ""

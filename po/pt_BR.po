@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-25 19:27+0200\n"
+"POT-Creation-Date: 2012-08-28 16:10+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7859,6 +7859,17 @@ msgstr "%s%s: script \"%s\" não encontrado"
 msgid "%s: script \"%s\" is not held any more"
 msgstr "%s%s: script \"%s\" não carregado"
 
+#, fuzzy
+msgid "Error: file not found"
+msgstr "%sErro: filtro \"%s\" não encontrado"
+
+msgid "Source code:"
+msgstr ""
+
+#, fuzzy
+msgid "Downloading script..."
+msgstr "%s: descarregando script \"%s\""
+
 #, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
 msgstr ""
@@ -7872,6 +7883,10 @@ msgstr ""
 
 msgid "Version"
 msgstr ""
+
+#, fuzzy
+msgid "Version loaded"
+msgstr "Plugins carregados:"
 
 msgid "Author"
 msgstr ""
@@ -8044,6 +8059,11 @@ msgid ""
 "%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
 "%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
 "loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid ""
+"display source code of script on buffer with detail on a script (script is "
+"downloaded in a temporary file when detail on script is displayed)"
 msgstr ""
 
 msgid ""

@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 #include <libgen.h>
@@ -413,6 +414,7 @@ script_action_installnext_timer_cb (void *data, int remaining_calls)
 
 /*
  * script_action_install_process_cb: callback called when script is downloaded
+ *                                   (for installing it)
  */
 
 int
@@ -446,7 +448,8 @@ script_action_install_process_cb (void *data, const char *command,
             ptr_script = script_repo_search_by_name_ext (pos + 1);
             if (ptr_script)
             {
-                filename = script_config_get_script_download_filename (ptr_script);
+                filename = script_config_get_script_download_filename (ptr_script,
+                                                                       NULL);
                 if (filename)
                 {
                     length = 3 + strlen (filename) + 1;
@@ -506,7 +509,8 @@ script_action_install (int quiet)
 
     if (ptr_script_to_install)
     {
-        filename = script_config_get_script_download_filename (ptr_script_to_install);
+        filename = script_config_get_script_download_filename (ptr_script_to_install,
+                                                               NULL);
         if (filename)
         {
             options = weechat_hashtable_new (8,
@@ -657,6 +661,94 @@ script_action_hold (const char *name, int quiet)
 }
 
 /*
+ * script_action_show_process_cb: callback called when script is downloaded
+ *                                (for showing source code below script detail)
+ */
+
+int
+script_action_show_process_cb (void *data, const char *command,
+                               int return_code, const char *out,
+                               const char *err)
+{
+    char *pos, *filename, line[4096], *ptr_line;
+    struct t_repo_script *ptr_script;
+    FILE *file;
+    int line_y;
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (return_code >= 0)
+    {
+        pos = strrchr (command, '/');
+
+        if ((err && err[0]) || (out && (strncmp (out, "error:", 6) == 0)))
+        {
+            weechat_printf (NULL,
+                            _("%s%s: error downloading script \"%s\": %s"),
+                            weechat_prefix ("error"),
+                            SCRIPT_PLUGIN_NAME,
+                            (pos) ? pos + 1 : "?",
+                            (err && err[0]) ? err : out + 6);
+            return WEECHAT_RC_OK;
+        }
+
+        if (pos)
+        {
+            ptr_script = script_repo_search_by_name_ext (pos + 1);
+            if (ptr_script)
+            {
+                filename = script_config_get_script_download_filename (ptr_script,
+                                                                       ".tmp");
+                if (filename)
+                {
+                    /*
+                     * read file and display content on script buffer
+                     * (only if script buffer is still displaying detail of
+                     * this script)
+                     */
+                    if (script_buffer && script_buffer_detail_script
+                        && (script_buffer_detail_script == ptr_script))
+                    {
+                        line_y = script_buffer_detail_script_line_source + 2;
+                        file = fopen (filename, "r");
+                        if (file)
+                        {
+                            while (!feof (file))
+                            {
+                                ptr_line = fgets (line, sizeof (line) - 1, file);
+                                if (ptr_line)
+                                {
+                                    weechat_printf_y (script_buffer, line_y,
+                                                      "%s", ptr_line);
+                                    line_y++;
+                                }
+                            }
+                            fclose (file);
+                        }
+                        else
+                        {
+                            weechat_printf_y (script_buffer, line_y,
+                                              _("Error: file not found"));
+                            line_y++;
+                        }
+                        weechat_printf_y (script_buffer, line_y,
+                                          "%s----------------------------------------"
+                                          "----------------------------------------",
+                                          weechat_color ("green"));
+                        line_y++;
+                    }
+                    unlink (filename);
+                    free (filename);
+                }
+            }
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * script_action_show: show detailed info on a script
  */
 
@@ -664,6 +756,9 @@ void
 script_action_show (const char *name, int quiet)
 {
     struct t_repo_script *ptr_script;
+    char *filename, *url;
+    int length;
+    struct t_hashtable *options;
 
     if (name)
     {
@@ -671,6 +766,51 @@ script_action_show (const char *name, int quiet)
         if (ptr_script)
         {
             script_buffer_show_detail_script (ptr_script);
+            if (weechat_config_boolean (script_config_look_display_source))
+            {
+                weechat_printf_y (script_buffer,
+                                  script_buffer_detail_script_line_source,
+                                  _("Source code:"));
+                weechat_printf_y (script_buffer,
+                                  script_buffer_detail_script_line_source + 1,
+                                  "%s----------------------------------------"
+                                  "----------------------------------------",
+                                  weechat_color ("green"));
+                weechat_printf_y (script_buffer,
+                                  script_buffer_detail_script_line_source + 2,
+                                  _("Downloading script..."));
+                weechat_printf_y (script_buffer,
+                                  script_buffer_detail_script_line_source + 3,
+                                  "%s----------------------------------------"
+                                  "----------------------------------------",
+                                  weechat_color ("green"));
+                filename = script_config_get_script_download_filename (ptr_script,
+                                                                       ".tmp");
+                if (filename)
+                {
+                    options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+                    if (options)
+                    {
+                        length = 4 + strlen (ptr_script->url) + 1;
+                        url = malloc (length);
+                        if (url)
+                        {
+                            snprintf (url, length, "url:%s", ptr_script->url);
+                            weechat_hashtable_set (options, "file_out", filename);
+                            weechat_hook_process_hashtable (url, options, 30000,
+                                                            &script_action_show_process_cb,
+                                                            NULL);
+                            free (url);
+                        }
+                        weechat_hashtable_free (options);
+                    }
+                    free (filename);
+                }
+            }
         }
         else
         {

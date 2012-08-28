@@ -36,6 +36,7 @@
 struct t_gui_buffer *script_buffer = NULL;
 int script_buffer_selected_line = 0;
 struct t_repo_script *script_buffer_detail_script = NULL;
+int script_buffer_detail_script_line_source = 0;
 
 
 /*
@@ -361,11 +362,12 @@ script_buffer_display_detail_script (struct t_repo_script *script)
 {
     struct tm *tm;
     char str_time[1024];
-    char *labels[] = { N_("Script"), N_("Version"), N_("Author"),
-                       N_("License"), N_("Description"), N_("Tags"),
-                       N_("Status"),  N_("Date added"), N_("Date updated"),
-                       N_("URL"), N_("MD5"), N_("Requires"), N_("Min WeeChat"),
-                       N_("Max WeeChat"), NULL };
+    char *labels[] = { N_("Script"), N_("Version"), N_("Version loaded"),
+                       N_("Author"), N_("License"), N_("Description"),
+                       N_("Tags"), N_("Status"),  N_("Date added"),
+                       N_("Date updated"), N_("URL"), N_("MD5"), N_("Requires"),
+                       N_("Min WeeChat"), N_("Max WeeChat"),
+                       NULL };
     int i, length, max_length, line;
 
     max_length = 0;
@@ -386,9 +388,15 @@ script_buffer_display_detail_script (struct t_repo_script *script)
                       weechat_color (weechat_config_string (script_config_color_text_extension)),
                       script_extension[script->language]);
     line++;
-    weechat_printf_y (script_buffer, line + 1, "%s: %s",
+    weechat_printf_y (script_buffer, line + 1, "%s: %s%s",
                       script_buffer_detail_label (_(labels[line]), max_length),
+                      weechat_color (weechat_config_string (script_config_color_text_version)),
                       script->version);
+    line++;
+    weechat_printf_y (script_buffer, line + 1, "%s: %s%s",
+                      script_buffer_detail_label (_(labels[line]), max_length),
+                      weechat_color (weechat_config_string (script_config_color_text_version_loaded)),
+                      (script->version_loaded) ? script->version_loaded : "-");
     line++;
     weechat_printf_y (script_buffer, line + 1,
                       "%s: %s <%s>",
@@ -481,6 +489,9 @@ script_buffer_display_detail_script (struct t_repo_script *script)
                       "%s: %s",
                       script_buffer_detail_label (_(labels[line]), max_length),
                       (script->max_weechat) ? script->max_weechat : "-");
+    line++;
+
+    script_buffer_detail_script_line_source = line + 2;
 }
 
 /*
@@ -730,24 +741,27 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    /* change sort keys on buffer */
-    if (strncmp (input_data, "s:", 2) == 0)
+    if (!script_buffer_detail_script)
     {
-        if (input_data[2])
-            weechat_config_option_set (script_config_look_sort, input_data + 2, 1);
-        else
-            weechat_config_option_reset (script_config_look_sort, 1);
-        return WEECHAT_RC_OK;
-    }
+        /* change sort keys on buffer */
+        if (strncmp (input_data, "s:", 2) == 0)
+        {
+            if (input_data[2])
+                weechat_config_option_set (script_config_look_sort, input_data + 2, 1);
+            else
+                weechat_config_option_reset (script_config_look_sort, 1);
+            return WEECHAT_RC_OK;
+        }
 
-    /* refresh buffer */
-    if (strcmp (input_data, "$") == 0)
-    {
-        script_get_loaded_scripts ();
-        script_repo_remove_all ();
-        script_repo_file_read (1);
-        script_buffer_refresh (1);
-        return WEECHAT_RC_OK;
+        /* refresh buffer */
+        if (strcmp (input_data, "$") == 0)
+        {
+            script_get_loaded_scripts ();
+            script_repo_remove_all ();
+            script_repo_file_read (1);
+            script_buffer_refresh (1);
+            return WEECHAT_RC_OK;
+        }
     }
 
     /* execute action on a script */
@@ -763,7 +777,8 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     }
 
     /* filter scripts with given text */
-    script_repo_filter_scripts (input_data);
+    if (!script_buffer_detail_script)
+        script_repo_filter_scripts (input_data);
 
     return WEECHAT_RC_OK;
 }

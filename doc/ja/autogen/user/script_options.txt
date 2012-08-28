@@ -133,6 +133,11 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.display_source]] *script.look.display_source*
+** 説明: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** 説明: `quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)`
 ** タイプ: ブール

@@ -133,6 +133,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.display_source]] *script.look.display_source*
+** Beschreibung: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** Beschreibung: `quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)`
 ** Typ: boolesch

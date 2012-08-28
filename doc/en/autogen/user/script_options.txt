@@ -133,6 +133,11 @@
 ** type: string
 ** values: any string (default value: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.display_source]] *script.look.display_source*
+** description: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** description: `quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)`
 ** type: boolean

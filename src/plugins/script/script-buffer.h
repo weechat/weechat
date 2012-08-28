@@ -27,6 +27,7 @@ struct t_repo_script;
 extern struct t_gui_buffer *script_buffer;
 extern int script_buffer_selected_line;
 extern struct t_repo_script *script_buffer_detail_script;
+extern int script_buffer_detail_script_line_source;
 
 extern void script_buffer_refresh (int clear);
 extern void script_buffer_set_current_line (int line);

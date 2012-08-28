@@ -133,6 +133,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.display_source]] *script.look.display_source*
+** description: `afficher le code source du script sur le tampon avec le détail sur le script (le script est téléchargé dans un fichier temporaire lorsque le détail du script est affiché)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
 ** description: `actions silencieuses sur le tampon script: ne pas afficher de messages sur le tampon "core" quand les scripts sont installés/supprimés/chargés/déchargés (seules les erreurs sont affichées)`
 ** type: booléen
