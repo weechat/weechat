@@ -2426,6 +2426,8 @@ COMMAND_CALLBACK(input)
             gui_input_set_unread_current (buffer);
         else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
             gui_input_switch_active_buffer (buffer);
+        else if (string_strcasecmp (argv[1], "zoom_merged_buffer") == 0)
+            gui_input_zoom_merged_buffer (buffer);
         else if (string_strcasecmp (argv[1], "switch_active_buffer_previous") == 0)
             gui_input_switch_active_buffer_previous (buffer);
         else if (string_strcasecmp (argv[1], "insert") == 0)
@@ -5816,6 +5818,7 @@ command_init ()
                      "  switch_active_buffer: switch to next merged buffer\n"
                      "  switch_active_buffer_previous: switch to previous "
                      "merged buffer\n"
+                     "  zoom_merged_buffer: zoom on merged buffer\n"
                      "  insert: insert text in command line\n"
                      "  paste_start: start paste (bracketed paste mode)\n"
                      "  paste_stop: stop paste (bracketed paste mode)\n\n"
@@ -5834,7 +5837,8 @@ command_init ()
                   "jump_next_visited_buffer|hotlist_clear|grab_key|"
                   "grab_key_command|grab_mouse|grab_mouse_area|set_unread|"
                   "set_unread_current_buffer|switch_active_buffer|"
-                  "switch_active_buffer_previous|insert|paste_start|paste_stop",
+                  "switch_active_buffer_previous|zoom_merged_buffer|insert|"
+                  "paste_start|paste_stop",
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),

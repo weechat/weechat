@@ -681,6 +681,7 @@ Touches pour les tampons / fenêtres
 | @k(C-)@k(l)               | Réafficher toute la fenêtre | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | Positionner le marqueur de données non lues sur tous les tampons | /input set_unread
 | @k(C-)@k(x)               | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro | /input switch_active_buffer
+| @k(A-)@k(x)               | Zoomer sur le tampon mélangé (@k(A-)@k(x) de nouveau : afficher tous les tampons mélangés) | /input zoom_merged_buffer
 | @k(PgUp)                  | Monter d'une page dans l'historique du tampon | /window page_up
 | @k(PgDn)                  | Descendre d'une page dans l'historique du tampon | /window page_down
 | @k(A-)@k(PgUp)            | Monter de quelques lignes dans l'historique du tampon | /window scroll_up
@@ -720,7 +721,7 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(w) , @k(A-)@k(→) | Sauter à la fenêtre de droite | /window right
 | @k(A-)@k(w) , @k(A-)@k(b) | Equilibrer la taille de toutes les fenêtres | /window balance
 | @k(A-)@k(w) , @k(A-)@k(s) | Echanger les tampons de deux fenêtres | /window swap
-| @k(A-)@k(z)               | Zoom sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
+| @k(A-)@k(z)               | Zoomer sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
 | @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | /input jump_next_visited_buffer
 | @k(A-)@k(/)               | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | /input jump_last_buffer_displayed

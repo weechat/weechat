@@ -325,6 +325,7 @@ list des actions:
   set_unread_current_buffer: définir le marqueur de données non lues pour le tampon courant
   switch_active_buffer: basculer vers le tampon mélangé suivant
   switch_active_buffer_previous: basculer vers le tampon mélangé précédent
+  zoom_merged_buffer: zoom sur le tampon mélangé
   insert: insérer du texte dans la ligne de commande
   paste_start: début de collage (mode "bracketed paste")
   paste_stop: fin de collage (mode "bracketed paste")

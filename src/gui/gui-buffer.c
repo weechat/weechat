@@ -2297,12 +2297,37 @@ void
 gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_buffer *ptr_buffer;
+    int active;
+
+    active = 1;
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->active)
+        {
+            active = ptr_buffer->active;
+            break;
+        }
+    }
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->number == buffer->number)
-            ptr_buffer->active = (ptr_buffer == buffer) ? 1 : 0;
+        {
+            if (ptr_buffer == buffer)
+            {
+                if (active == 2)
+                    ptr_buffer->lines = ptr_buffer->own_lines;
+                ptr_buffer->active = active;
+            }
+            else
+            {
+                if (ptr_buffer->active == 2)
+                    ptr_buffer->lines = ptr_buffer->mixed_lines;
+                ptr_buffer->active = 0;
+            }
+        }
     }
 }
 

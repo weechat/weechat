@@ -85,9 +85,9 @@ struct t_gui_buffer
                                        /* 2 = highlight + msg               */
                                        /* 3 = highlight + msg + join/part   */
     int num_displayed;                 /* number of windows displaying buf. */
-    int active;                        /* it is 0 only if buffers are       */
-                                       /* merged and that this one is not   */
-                                       /* selected buffer                   */
+    int active;                        /* 0 = buffer merged and not active  */
+                                       /* 1 = active (merged or not)        */
+                                       /* 2 = the only active (merged)      */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
 
     /* close callback */

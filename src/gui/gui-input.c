@@ -1498,6 +1498,49 @@ gui_input_switch_active_buffer_previous (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_input_zoom_merged_buffer: zoom on current active merged buffer,
+ *                               or display all merged buffers if zoom
+ *                               was active
+ *                               (default key: alt-x)
+ */
+
+void
+gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    /* do nothing if current buffer is not merged with another buffer */
+    if (gui_buffer_count_merged_buffers (buffer->number) < 2)
+        return;
+
+    /* first make buffer active if it is not */
+    if (!buffer->active)
+    {
+        gui_buffer_set_active_buffer (buffer);
+        window = gui_window_search_with_buffer (buffer);
+        if (window)
+            gui_window_switch_to_buffer (window, buffer, 1);
+    }
+
+    /*
+     * toggle active flag between 1 and 2
+     * (1 = active with other merged buffers displayed, 2 = the only active)
+     */
+    if (buffer->active == 1)
+    {
+        buffer->active = 2;
+        buffer->lines = buffer->own_lines;
+    }
+    else if (buffer->active == 2)
+    {
+        buffer->active = 1;
+        buffer->lines = buffer->mixed_lines;
+    }
+
+    gui_buffer_ask_chat_refresh (buffer, 2);
+}
+
+/*
  * gui_input_insert: insert a string in command line
  *                   (many default keys are bound to this function)
  */

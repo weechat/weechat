@@ -677,6 +677,8 @@ Tastenbefehle für Buffer / Fenster
 | @k(C-)@k(l)               | Fenster wird neu gezeichnet | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | setzt für alle Buffer die Markierung für ungelesene Nachrichten | /input set_unread
 | @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | /input switch_active_buffer
+// TRANSLATION MISSING
+| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | /input zoom_merged_buffer
 | @k(PgUp)                  | eine Seite im Verlaufsspeicher des Buffers nach oben blättern | /window page_up
 | @k(PgDn)                  | eine Seite im Verlaufsspeicher des Buffer nach unten blättern | /window page_down
 | @k(A-)@k(PgUp)            | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up

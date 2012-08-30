@@ -281,55 +281,56 @@ valore: numero delle voci nella cronologia da mostrare
 ........................................
 /input  <azioni> [<argomenti>]
 
-elenco di azioni:
-  return: simula il tasto "invio"
-  complete_next: completa la parola con il completamento successivo
-  complete_previous: completa la parola con il completamento precedente
-  search_text: cerca testo nel buffer
-  search_switch_case: passa alla ricerca sensibile
-  search_previous: cerca la riga precedente
-  search_next: cerca la riga successiva
-  search_stop: interrompe la ricerca
-  delete_previous_char: elimina carattere precedente
-  delete_next_char: elimina carattere successivo
-  delete_previous_word: elimina parola precedente
-  delete_next_word: elimina parola successiva
-  delete_beginning_of_line: elimina da inizio riga fino al cursore
-  delete_end_of_line: elimina dal cursore fino a fine riga
-  delete_line: elimina intera riga
-  clipboard_paste: incolla dagli appunti
-  transpose_chars: inverti l'ordine di due caratteri
-  undo: annulla l'ultima azione nella riga di comando
-  redo: rifai l'ultima azione nella riga di comando
-  move_beginning_of_line: sposta il cursore ad inizio riga
-  move_end_of_line: sposta il cursore a fine riga
-  move_previous_char: sposta cursore al carattere precedente
-  move_next_char: sposta cursore al carattere successivo
-  move_previous_word: sposta cursore alla parola precedente
-  move_next_word: sposta cursore alla parola successiva
-  history_previous: richiama il comando precedente nella cronologia del buffer corrente
-  history_next: richiama il comando successivo nella cronologia del buffer corrente
-  history_global_previous: richiama il comando precedente nella cronologia globale
-  history_global_next: richiama il comando successivo nella cronologia globale
-  jump_smart: passa al buffer successivo con attività
-  jump_last_buffer: passa all'ultimo buffer
-  jump_last_buffer_displayed: passa all'ultimo buffer mostrato (primadell'ultimo passaggio ad un buffer)
-  jump_previously_visited_buffer: passa al precedente buffer visualizzato
-  jump_next_visited_buffer: passa al successivo buffer visualizzato
-  hotlist_clear: elimina hotlist
-  grab_key: ottiene un tasto
-  grab_key_command: ottiene un tasto con il suo comando associato
-  grab_mouse: cattura il codice dell'evento del mouse
-  grab_mouse_area: cattura il codice dell'evento del mouse con l'area
-  set_unread: imposta il segnalibro non letto per tutti i buffer
-  set_unread_current_buffer: imposta il segnalibro non letto per il buffer corrente
-  switch_active_buffer: passa al successivo buffer incollato
-  switch_active_buffer_previous: passa al precedente buffer incollato
-  insert: inserisci testo nella riga di comando
-  paste_start: inizio testo da incollare (modalità "bracketed paste")
-  paste_stop: fine testo da incollare (modalità "bracketed paste")
+list of actions:
+  return: simulate key "enter"
+  complete_next: complete word with next completion
+  complete_previous: complete word with previous completion
+  search_text: search text in buffer
+  search_switch_case: switch exact case for search
+  search_previous: search previous line
+  search_next: search next line
+  search_stop: stop search
+  delete_previous_char: delete previous char
+  delete_next_char: delete next char
+  delete_previous_word: delete previous word
+  delete_next_word: delete next word
+  delete_beginning_of_line: delete from beginning of line until cursor
+  delete_end_of_line: delete from cursor until end of line
+  delete_line: delete entire line
+  clipboard_paste: paste from clipboard
+  transpose_chars: transpose two chars
+  undo: undo last command line action
+  redo: redo last command line action
+  move_beginning_of_line: move cursor to beginning of line
+  move_end_of_line: move cursor to end of line
+  move_previous_char: move cursor to previous char
+  move_next_char: move cursor to next char
+  move_previous_word: move cursor to previous word
+  move_next_word: move cursor to next word
+  history_previous: recall previous command in current buffer history
+  history_next: recall next command in current buffer history
+  history_global_previous: recall previous command in global history
+  history_global_next: recall next command in global history
+  jump_smart: jump to next buffer with activity
+  jump_last_buffer: jump to last buffer
+  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
+  jump_previously_visited_buffer: jump to previously visited buffer
+  jump_next_visited_buffer: jump to next visited buffer
+  hotlist_clear: clear hotlist
+  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
+  grab_mouse: grab mouse event code
+  grab_mouse_area: grab mouse event code with area
+  set_unread: set unread marker for all buffers
+  set_unread_current_buffer: set unread marker for current buffer
+  switch_active_buffer: switch to next merged buffer
+  switch_active_buffer_previous: switch to previous merged buffer
+  zoom_merged_buffer: zoom on merged buffer
+  insert: insert text in command line
+  paste_start: start paste (bracketed paste mode)
+  paste_stop: stop paste (bracketed paste mode)
 
-Questo comando viene usato dalla combinazioni tasti o dai plugin.
+This command is used by key bindings or plugins.
 ........................................
 
 [[command_weechat_key]]

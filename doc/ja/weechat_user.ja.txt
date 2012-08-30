@@ -646,6 +646,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | @k(C-)@k(l)               | 全ウィンドウを再描画 | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | すべてのバッファに未読マークをセット | /input set_unread
 | @k(C-)@k(x)               | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | /input switch_active_buffer
+// TRANSLATION MISSING
+| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | /input zoom_merged_buffer
 | @k(PgUp)                  | バッファ履歴を 1 ページ分上方向にスクロール | /window page_up
 | @k(PgDn)                  | バッファ履歴を 1 ページ分下方向にスクロール | /window page_down
 | @k(A-)@k(PgUp)            | バッファ履歴を数行分上方向にスクロール | /window scroll_up

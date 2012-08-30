@@ -227,7 +227,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     }
 
     /* length of buffer name (when many buffers are merged) */
-    if (buffer->mixed_lines)
+    if (buffer->mixed_lines && (buffer->active != 2))
     {
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
             && (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))

@@ -96,6 +96,7 @@ gui_key_default_bindings (int context)
         BIND(/* ^D          */ "ctrl-D",             "/input delete_next_char");
         BIND(/* ^W          */ "ctrl-W",             "/input delete_previous_word");
         BIND(/* ^X          */ "ctrl-X",             "/input switch_active_buffer");
+        BIND(/* m-x         */ "meta-x",             "/input zoom_merged_buffer");
         BIND(/* m-d         */ "meta-d",             "/input delete_next_word");
         BIND(/* ^K          */ "ctrl-K",             "/input delete_end_of_line");
         BIND(/* m-r         */ "meta-r",             "/input delete_line");

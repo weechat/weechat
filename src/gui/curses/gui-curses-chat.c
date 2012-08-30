@@ -646,7 +646,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
 
     /* display buffer name (if many buffers are merged) */
     mixed_lines = line->data->buffer->mixed_lines;
-    if (mixed_lines)
+    if (mixed_lines && (line->data->buffer->active != 2))
     {
         if ((CONFIG_INTEGER(config_look_prefix_buffer_align_max) > 0)
             && (CONFIG_INTEGER(config_look_prefix_buffer_align) != CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE))

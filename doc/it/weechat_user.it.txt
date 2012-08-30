@@ -684,6 +684,8 @@ Tasti per buffer / finestre
 | @k(C-)@k(l)               | Ridisegna l'intera finestra | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | /input set_unread
 | @k(C-)@k(x)               | Passa al buffer attivo se i buffer sono collegati con lo stesso numero | /input switch_active_buffer
+// TRANSLATION MISSING
+| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | /input zoom_merged_buffer
 | @k(PgUp)                  | Scorre in alto di una pagina nella cronologia del buffer | /window page_up
 | @k(PgDn)                  | Scorre di una pagina in basso nella cronologia del buffer | /window page_down
 | @k(A-)@k(PgUp)            | Scorre di qualche riga in alto nella cronologia del buffer | /window scroll_up

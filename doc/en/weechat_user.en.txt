@@ -668,6 +668,7 @@ Keys for buffers / windows
 | @k(C-)@k(l)               | Redraw whole window | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | Set unread marker on all buffers | /input set_unread
 | @k(C-)@k(x)               | Switch current buffer if buffers are attached with same number | /input switch_active_buffer
+| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | /input zoom_merged_buffer
 | @k(PgUp)                  | Scroll up one page in buffer history | /window page_up
 | @k(PgDn)                  | Scroll down one page in buffer history | /window page_down
 | @k(A-)@k(PgUp)            | Scroll up a few lines in buffer history | /window scroll_up
