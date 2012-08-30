@@ -89,8 +89,9 @@ script_command_action (struct t_gui_buffer *buffer, const char *action,
     else if (script_buffer && (buffer == script_buffer))
     {
         /* action on current line of script buffer */
-        if ((weechat_strcasecmp (action, "show") == 0)
-            && script_buffer_detail_script)
+        if (script_buffer_detail_script
+            && ((weechat_strcasecmp (action, "show") == 0)
+                || (weechat_strcasecmp (action, "showdiff") == 0)))
         {
             /* if detail on script is displayed, back to list */
             snprintf (str_action, sizeof (str_action),
@@ -183,7 +184,8 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         || (weechat_strcasecmp (argv[1], "remove") == 0)
         || (weechat_strcasecmp (argv[1], "installremove") == 0)
         || (weechat_strcasecmp (argv[1], "hold") == 0)
-        || (weechat_strcasecmp (argv[1], "show") == 0))
+        || (weechat_strcasecmp (argv[1], "show") == 0)
+        || (weechat_strcasecmp (argv[1], "showdiff") == 0))
     {
         script_command_action (buffer,
                                argv[1],
@@ -318,7 +320,8 @@ script_command_init ()
                              "  alt+l  load script\n"
                              "  alt+L  reload script\n"
                              "  alt+u  unload script\n"
-                             "  alt+h  (un)hold script\n\n"
+                             "  alt+h  (un)hold script\n"
+                             "  alt+v  view script\n\n"
                              "Input allowed on script buffer:\n"
                              "  i/r/l/L/u/h  action on script (same as keys above)\n"
                              "  q            close buffer\n"

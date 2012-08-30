@@ -44,6 +44,7 @@ Les touches sur le tampon des scripts:
   alt+L  recharger le script
   alt+u  décharger le script
   alt+h  (dé)figer le script
+  alt+v  voir le script
 
 Entrée autorisée sur le tampon des scripts:
   i/r/l/L/u/h  action sur le script (identique aux touches ci-dessus)

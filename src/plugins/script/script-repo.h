@@ -64,6 +64,7 @@ extern int script_repo_script_valid (struct t_repo_script *script);
 extern struct t_repo_script *script_repo_search_displayed_by_number (int number);
 extern struct t_repo_script *script_repo_search_by_name (const char *name);
 extern struct t_repo_script *script_repo_search_by_name_ext (const char *name_with_extension);
+extern char *script_repo_get_filename_loaded (struct t_repo_script *script);
 extern const char *script_repo_get_status_for_display (struct t_repo_script *script,
                                                        const char *list,
                                                        int collapse);

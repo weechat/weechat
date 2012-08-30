@@ -23,6 +23,7 @@
 
 #define _XOPEN_SOURCE 700
 
+#include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -144,6 +145,61 @@ script_repo_search_by_name_ext (const char *name_with_extension)
 
     /* script not found */
     return NULL;
+}
+
+/*
+ * script_repo_get_filename_loaded: get filename of a loaded script
+ *                                  (it returns name of file and not the link,
+ *                                  if there is a symbolic to file)
+ *                                  Note: result has to be free() after use
+ */
+
+char *
+script_repo_get_filename_loaded (struct t_repo_script *script)
+{
+    const char *weechat_home;
+    char *filename, resolved_path[PATH_MAX];
+    int length;
+    struct stat st;
+
+    weechat_home = weechat_info_get ("weechat_dir", NULL);
+    length = strlen (weechat_home) + strlen (script->name_with_extension) + 64;
+    filename = malloc (length);
+    if (filename)
+    {
+        snprintf (filename, length, "%s/%s/autoload/%s",
+                  weechat_home,
+                  script_language[script->language],
+                  script->name_with_extension);
+        if (stat (filename, &st) != 0)
+        {
+            snprintf (filename, length, "%s/%s/%s",
+                      weechat_home,
+                      script_language[script->language],
+                      script->name_with_extension);
+            if (stat (filename, &st) != 0)
+            {
+                filename[0] = '\0';
+            }
+        }
+    }
+
+    if (!filename[0])
+    {
+        free (filename);
+        return NULL;
+    }
+
+    if (realpath (filename, resolved_path))
+    {
+        if (strcmp (filename, resolved_path) != 0)
+        {
+            free (filename);
+            return strdup (resolved_path);
+        }
+    }
+
+    return filename;
 }
 
 /*

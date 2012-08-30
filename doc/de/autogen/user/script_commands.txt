@@ -44,6 +44,7 @@ Keys on script buffer:
   alt+L  reload script
   alt+u  unload script
   alt+h  (un)hold script
+  alt+v  view script
 
 Input allowed on script buffer:
   i/r/l/L/u/h  action on script (same as keys above)

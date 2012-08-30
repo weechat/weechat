@@ -133,6 +133,16 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.diff_color]] *script.look.diff_color*
+** description: `colorie la sortie du diff`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_script.look.diff_command]] *script.look.diff_command*
+** description: `commande utilisée pour montrer les différences entre le script installé et la nouvelle version dans le repository ("auto" = détecter automatiquement la commande de diff (git ou diff), valeur vide = désactiver le diff, autre chaîne = nom de la commande, par exemple "diff")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"auto"`)
+
 * [[option_script.look.display_source]] *script.look.display_source*
 ** description: `afficher le code source du script sur le tampon avec le détail sur le script (le script est téléchargé dans un fichier temporaire lorsque le détail du script est affiché)`
 ** type: booléen

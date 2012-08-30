@@ -133,6 +133,16 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%s %n %V %v %u | %d | %t"`)
 
+* [[option_script.look.diff_color]] *script.look.diff_color*
+** descrizione: `colorize output of diff`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* [[option_script.look.diff_command]] *script.look.diff_command*
+** descrizione: `command used to show differences between script installed and the new version in repository ("auto" = auto detect diff command (git or diff), empty value = disable diff, other string = name of command, for example "diff")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"auto"`)
+
 * [[option_script.look.display_source]] *script.look.display_source*
 ** descrizione: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
 ** tipo: bool

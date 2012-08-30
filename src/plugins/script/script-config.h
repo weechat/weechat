@@ -25,6 +25,8 @@
 struct t_repo_script;
 
 extern struct t_config_option *script_config_look_columns;
+extern struct t_config_option *script_config_look_diff_color;
+extern struct t_config_option *script_config_look_diff_command;
 extern struct t_config_option *script_config_look_display_source;
 extern struct t_config_option *script_config_look_quiet_actions;
 extern struct t_config_option *script_config_look_sort;
@@ -63,6 +65,7 @@ extern struct t_config_option *script_config_scripts_dir;
 extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_url;
 
+extern const char *script_config_get_diff_command ();
 extern char *script_config_get_dir ();
 extern char *script_config_get_xml_filename ();
 extern char *script_config_get_script_download_filename (struct t_repo_script *script,
