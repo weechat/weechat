@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-rc1, 2012-08-30
+v0.3.9-rc1, 2012-09-03
 
 
 Version 0.3.9 (under dev!)
@@ -65,6 +65,8 @@ Version 0.3.9 (under dev!)
 * fifo: ignore read failing with error EAGAIN (bug #37019)
 * guile: fix crash when unloading a script without pointer to interpreter
 * guile: fix path of guile include dirs in cmake build (patch #7790)
+* irc: fix bug when changing server option "addresses" with less addresses
+  (bug #37215)
 * irc: add network prefix in irc (dis)connection messages
 * irc: generate alternate nicks dynamically when all nicks are already in use
   (task #12209)

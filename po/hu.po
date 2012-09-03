@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-03 09:34+0200\n"
+"POT-Creation-Date: 2012-09-03 10:12+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6389,7 +6389,7 @@ msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unknown address server \"%s\", cannot connect"
+msgid "%s%s: unknown address for server \"%s\", cannot connect"
 msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 
 #, fuzzy, c-format

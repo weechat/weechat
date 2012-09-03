@@ -404,11 +404,10 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
     }
     server->current_port = 0;
 
-    if (index < server->addresses_count)
+    if (server->addresses_count > 0)
     {
+        index %= server->addresses_count;
         server->index_current_address = index;
-        if (server->current_address)
-            free (server->current_address);
         server->current_address = strdup (server->addresses_array[index]);
         server->current_port = server->ports_array[index];
     }
@@ -3593,7 +3592,7 @@ irc_server_connect (struct t_irc_server *server)
     if (!server->current_address)
     {
         weechat_printf (server->buffer,
-                        _("%s%s: unknown address server \"%s\", "
+                        _("%s%s: unknown address for server \"%s\", "
                           "cannot connect"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
                         server->name);

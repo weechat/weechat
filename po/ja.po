@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-03 09:34+0200\n"
+"POT-Creation-Date: 2012-09-03 10:12+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6925,8 +6925,8 @@ msgstr " - クライアント証明書情報 (%s):"
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: 証明書 \"%s\" が読めません"
 
-#, c-format
-msgid "%s%s: unknown address server \"%s\", cannot connect"
+#, fuzzy, c-format
+msgid "%s%s: unknown address for server \"%s\", cannot connect"
 msgstr "%s%s: サーバ \"%s\" のアドレスが不明、接続できません"
 
 #, c-format
