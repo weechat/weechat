@@ -3158,7 +3158,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
-            irc_server_reconnect_schedule (server);
+            irc_server_switch_address (server, 1);
             break;
     }
 
