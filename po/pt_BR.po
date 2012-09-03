@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6279,7 +6279,7 @@ msgstr ""
 "servidor"
 
 #, fuzzy, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr "%s: apelido \"%s\" já está em uso, tentando apelido #%d (\"%s\")"
 
 #, fuzzy, c-format
@@ -6409,8 +6409,8 @@ msgstr "%s: reconectando ao servidor em %d %s, %d %s"
 msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: reconectando ao servidor em %d %s"
 
-#, c-format
-msgid "%s: switching address to %s/%d"
+#, fuzzy, c-format
+msgid "%s%s: switching address to %s/%d"
 msgstr "%s: alterando endereço para %s/%d"
 
 #, fuzzy, c-format
@@ -6482,8 +6482,8 @@ msgstr "%s%s: memória insuficiente"
 msgid "%s%s: timeout"
 msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 
-#, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+#, fuzzy, c-format
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 "gnutls: conectado usando troca de segredo compartilhado Diffie-Hellman de %d "
 "bits"
@@ -6496,7 +6496,8 @@ msgstr "%sgnutls: erro ao verificar certificado do parceiro"
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr "%sgnutls: certificado do parceiro NÃO É confiável"
 
-msgid "gnutls: peer's certificate is trusted"
+#, fuzzy, c-format
+msgid "%sgnutls: peer's certificate is trusted"
 msgstr "gnutls: certificado do parceiro é confiável"
 
 #, c-format
@@ -6507,14 +6508,14 @@ msgstr "%sgnutls: gerador do certificado do parceiro é desconhecido"
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: o certificado foi revogado"
 
-#, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
+#, fuzzy, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "gnutls: recebendo %d certificado"
 msgstr[1] "gnutls: recebendo %d certificados"
 
-#, c-format
-msgid " - certificate[%d] info:"
+#, fuzzy, c-format
+msgid "%s - certificate[%d] info:"
 msgstr " - informações do certificado[%d]:"
 
 #, c-format
@@ -6529,15 +6530,16 @@ msgstr "%sgnutls: certificado ainda não é ativo"
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "%sgnutls: o hostname no certificado NÃO É semelhante a \"%s\""
 
-msgid "gnutls: sending one certificate"
+#, fuzzy, c-format
+msgid "%sgnutls: sending one certificate"
 msgstr "gnutls: enviando um certificado"
 
 #, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "%sgnutls: certificado \"%s\" inválido, erro: %s"
 
-#, c-format
-msgid " - client certificate info (%s):"
+#, fuzzy, c-format
+msgid "%s - client certificate info (%s):"
 msgstr " - informações do certificado do cliente (%s):"
 
 #, c-format

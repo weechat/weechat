@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5343,7 +5343,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 
 #, c-format
@@ -5464,7 +5464,7 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr ""
 
 #, c-format
-msgid "%s: switching address to %s/%d"
+msgid "%s%s: switching address to %s/%d"
 msgstr ""
 
 #, c-format
@@ -5532,7 +5532,7 @@ msgid "%s%s: timeout"
 msgstr ""
 
 #, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 
 #, c-format
@@ -5543,7 +5543,8 @@ msgstr ""
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr ""
 
-msgid "gnutls: peer's certificate is trusted"
+#, c-format
+msgid "%sgnutls: peer's certificate is trusted"
 msgstr ""
 
 #, c-format
@@ -5555,13 +5556,13 @@ msgid "%sgnutls: the certificate has been revoked"
 msgstr ""
 
 #, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
-msgid " - certificate[%d] info:"
+msgid "%s - certificate[%d] info:"
 msgstr ""
 
 #, c-format
@@ -5576,7 +5577,8 @@ msgstr ""
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr ""
 
-msgid "gnutls: sending one certificate"
+#, c-format
+msgid "%sgnutls: sending one certificate"
 msgstr ""
 
 #, c-format
@@ -5584,7 +5586,7 @@ msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr ""
 
 #, c-format
-msgid " - client certificate info (%s):"
+msgid "%s - client certificate info (%s):"
 msgstr ""
 
 #, c-format

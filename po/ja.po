@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6662,7 +6662,7 @@ msgstr ""
 "じています"
 
 #, fuzzy, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
 "%s: ニックネーム \"%s\" は既に使われています、ニックネーム #%d (\"%s\") を試"
 "行しています"
@@ -6792,8 +6792,8 @@ msgstr "%s: サーバに再接続中 %d %s、%d %s"
 msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: サーバに再接続中 %d %s"
 
-#, c-format
-msgid "%s: switching address to %s/%d"
+#, fuzzy, c-format
+msgid "%s%s: switching address to %s/%d"
 msgstr "%s: アドレスの変更中 %s/%d"
 
 #, fuzzy, c-format
@@ -6864,8 +6864,8 @@ msgstr "%s%s: メモリが足りません"
 msgid "%s%s: timeout"
 msgstr "%s%s: タイムアウト"
 
-#, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+#, fuzzy, c-format
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr "gnutls: %d-ビット Diffie-Hellman 共有鍵交換を使って接続中"
 
 #, c-format
@@ -6876,7 +6876,8 @@ msgstr "%sgnutls: ピア証明書の確認中にエラー"
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr "%sgnutls: ピア証明書は信頼できません"
 
-msgid "gnutls: peer's certificate is trusted"
+#, fuzzy, c-format
+msgid "%sgnutls: peer's certificate is trusted"
 msgstr "gnutls: ピア証明書は信頼できます"
 
 #, c-format
@@ -6887,13 +6888,13 @@ msgstr "%sgnutls: ピア証明書に未知の問題"
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: 証明書は破棄されました"
 
-#, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
+#, fuzzy, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "gnutls: %d 個の証明書を受け取りました"
 
-#, c-format
-msgid " - certificate[%d] info:"
+#, fuzzy, c-format
+msgid "%s - certificate[%d] info:"
 msgstr " - 証明書[%d] 情報:"
 
 #, c-format
@@ -6908,15 +6909,16 @@ msgstr "%sgnutls: 証明書はまだ使えません"
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"
 
-msgid "gnutls: sending one certificate"
+#, fuzzy, c-format
+msgid "%sgnutls: sending one certificate"
 msgstr "gnutls: 一通の証明書の送信中"
 
 #, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "%sgnutls: 無効な証明書 \"%s\"、エラー: %s"
 
-#, c-format
-msgid " - client certificate info (%s):"
+#, fuzzy, c-format
+msgid "%s - client certificate info (%s):"
 msgstr " - クライアント証明書情報 (%s):"
 
 #, c-format

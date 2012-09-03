@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
-"PO-Revision-Date: 2012-08-30 10:08+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
+"PO-Revision-Date: 2012-09-03 09:34+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -6904,9 +6904,9 @@ msgstr ""
 "de la connexion avec le serveur"
 
 #, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
-"%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
+"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
 "\"%s\""
 
 #, c-format
@@ -7038,8 +7038,8 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s%s: reconnexion au serveur dans %d %s"
 
 #, c-format
-msgid "%s: switching address to %s/%d"
-msgstr "%s: bascule vers l'adresse %s/%d"
+msgid "%s%s: switching address to %s/%d"
+msgstr "%s%s: bascule vers l'adresse %s/%d"
 
 #, c-format
 msgid "%s%s: connected to %s/%d (%s)"
@@ -7111,9 +7111,9 @@ msgid "%s%s: timeout"
 msgstr "%s%s: délai d'attente dépassé"
 
 #, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
-"gnutls: connecté en utilisant un échange secret Diffie-Hellman de %d bits"
+"%sgnutls: connecté en utilisant un échange secret Diffie-Hellman de %d bits"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -7123,8 +7123,9 @@ msgstr "%sgnutls: erreur de verification du certificat de l'hôte"
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr "%sgnutls: le certificat de l'hôte n'est PAS de confiance"
 
-msgid "gnutls: peer's certificate is trusted"
-msgstr "gnutls: le certificat de l'hôte est de confiance"
+#, c-format
+msgid "%sgnutls: peer's certificate is trusted"
+msgstr "%sgnutls: le certificat de l'hôte est de confiance"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
@@ -7135,14 +7136,14 @@ msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: le certificat a été révoqué"
 
 #, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
-msgstr[0] "gnutls: réception de %d certificat"
-msgstr[1] "gnutls: réception de %d certificats"
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: réception de %d certificat"
+msgstr[1] "%sgnutls: réception de %d certificats"
 
 #, c-format
-msgid " - certificate[%d] info:"
-msgstr " - info certificat[%d]:"
+msgid "%s - certificate[%d] info:"
+msgstr "%s - info certificat[%d]:"
 
 #, c-format
 msgid "%sgnutls: certificate has expired"
@@ -7156,16 +7157,17 @@ msgstr "%sgnutls: le certificat n'a pas encore été activé"
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "%sgnutls: le nom d'hôte du certificat ne correspond PAS à \"%s\""
 
-msgid "gnutls: sending one certificate"
-msgstr "gnutls: envoi d'un certificat"
+#, c-format
+msgid "%sgnutls: sending one certificate"
+msgstr "%sgnutls: envoi d'un certificat"
 
 #, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "%sgnutls: certificat invalide \"%s\", erreur: %s"
 
 #, c-format
-msgid " - client certificate info (%s):"
-msgstr " - info certificat client (%s):"
+msgid "%s - client certificate info (%s):"
+msgstr "%s - info certificat client (%s):"
 
 #, c-format
 msgid "%sgnutls: unable to read certifcate \"%s\""

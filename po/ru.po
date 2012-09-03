@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6163,7 +6163,7 @@ msgid ""
 msgstr "%s: все предложенные ники заняты, отключаюсь от сервера!\n"
 
 #, fuzzy, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
 
 #, fuzzy, c-format
@@ -6285,7 +6285,7 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Повторное подключение к серверу через %d секунд\n"
 
 #, fuzzy, c-format
-msgid "%s: switching address to %s/%d"
+msgid "%s%s: switching address to %s/%d"
 msgstr "%s IP адрес не найден\n"
 
 #, fuzzy, c-format
@@ -6355,7 +6355,7 @@ msgid "%s%s: timeout"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 
 #, c-format
@@ -6366,8 +6366,9 @@ msgstr ""
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr ""
 
-msgid "gnutls: peer's certificate is trusted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sgnutls: peer's certificate is trusted"
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
@@ -6378,14 +6379,14 @@ msgid "%sgnutls: the certificate has been revoked"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "Не могу записать лог-файл \"%s\"\n"
 msgstr[1] "Не могу записать лог-файл \"%s\"\n"
 msgstr[2] "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
-msgid " - certificate[%d] info:"
+msgid "%s - certificate[%d] info:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6400,8 +6401,8 @@ msgstr ""
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
-#, fuzzy
-msgid "gnutls: sending one certificate"
+#, fuzzy, c-format
+msgid "%sgnutls: sending one certificate"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -6409,7 +6410,7 @@ msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
-msgid " - client certificate info (%s):"
+msgid "%s - client certificate info (%s):"
 msgstr ""
 
 #, fuzzy, c-format

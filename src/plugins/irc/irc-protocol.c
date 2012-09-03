@@ -4159,8 +4159,9 @@ IRC_PROTOCOL_CALLBACK(433)
         }
 
         weechat_printf (ptr_buffer,
-                        _("%s: nickname \"%s\" is already in use, "
+                        _("%s%s: nickname \"%s\" is already in use, "
                           "trying nickname \"%s\""),
+                        weechat_prefix ("network"),
                         IRC_PLUGIN_NAME, server->nick, alternate_nick);
 
         irc_server_set_nick (server, alternate_nick);

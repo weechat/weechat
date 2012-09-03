@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-08-30 10:40+0200\n"
+"POT-Creation-Date: 2012-09-03 09:34+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6135,7 +6135,7 @@ msgid ""
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
 #, fuzzy, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 #, fuzzy, c-format
@@ -6257,7 +6257,7 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
 #, fuzzy, c-format
-msgid "%s: switching address to %s/%d"
+msgid "%s%s: switching address to %s/%d"
 msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
@@ -6327,7 +6327,7 @@ msgid "%s%s: timeout"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, c-format
-msgid "gnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 
 #, c-format
@@ -6338,8 +6338,9 @@ msgstr ""
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr ""
 
-msgid "gnutls: peer's certificate is trusted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sgnutls: peer's certificate is trusted"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
@@ -6350,13 +6351,13 @@ msgid "%sgnutls: the certificate has been revoked"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "gnutls: receiving %d certificate"
-msgid_plural "gnutls: receiving %d certificates"
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgstr[1] "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
-msgid " - certificate[%d] info:"
+msgid "%s - certificate[%d] info:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6371,8 +6372,8 @@ msgstr ""
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
-#, fuzzy
-msgid "gnutls: sending one certificate"
+#, fuzzy, c-format
+msgid "%sgnutls: sending one certificate"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
@@ -6380,7 +6381,7 @@ msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
-msgid " - client certificate info (%s):"
+msgid "%s - client certificate info (%s):"
 msgstr ""
 
 #, fuzzy, c-format
