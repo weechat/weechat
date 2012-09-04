@@ -7849,6 +7849,16 @@ Paramètres :
   - |
   une complétion partielle a été faite
 
+| weechat | plugin_loaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne : chemin vers l'extension chargée (exemple: "/usr/lib/weechat/plugins/irc.so") |
+  extension chargée
+
+| weechat | plugin_unloaded +
+  (_nouveau dans la version 0.3.9_) |
+  chaîne : nom de l'extension déchargée (exemple: "irc") |
+  extension déchargée
+
 | weechat | quit |
   chaîne : paramètres pour le /quit |
   la commande `/quit` a été exécutée par l'utilisateur

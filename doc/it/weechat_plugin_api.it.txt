@@ -7803,6 +7803,18 @@ Argomenti:
   - |
   completamento parziale avvenuto
 
+// TRANSLATION MISSING
+| weechat | plugin_loaded +
+  (_new in version 0.3.9_) |
+  string: path to plugin loaded (example: "/usr/lib/weechat/plugins/irc.so") |
+  plugin loaded
+
+// TRANSLATION MISSING
+| weechat | plugin_unloaded +
+  (_new in version 0.3.9_) |
+  string: name of plugin unloaded (example: "irc") |
+  plugin unloaded
+
 | weechat | quit |
   string: argomenti per /quit |
   comando `/quit` digitato dall'utente
