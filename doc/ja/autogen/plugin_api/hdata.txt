@@ -296,8 +296,8 @@
   'prev_script' (pointer, hdata: "script_script") +
   'next_script' (pointer, hdata: "script_script") |
  |
-  'last_repo_script' +
-  'repo_scripts'
+  'last_script_repo' +
+  'scripts_repo'
 
 | tcl | tcl_script | スクリプトのリスト |
   'filename' (string) +
