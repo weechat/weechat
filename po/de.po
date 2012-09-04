@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-04 12:56+0200\n"
+"POT-Creation-Date: 2012-09-04 13:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7020,6 +7020,10 @@ msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
 
 #. TRANSLATORS: "%s" after "on" is a date

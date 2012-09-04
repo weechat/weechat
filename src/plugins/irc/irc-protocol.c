@@ -3340,42 +3340,71 @@ IRC_PROTOCOL_CALLBACK(346)
     /*
      * 346 message looks like:
      *   :server 346 mynick #channel invitemask nick!user@host 1205590879
+     *   or:
+     *   :server 346 mynick #channel invitemask
      */
 
-    IRC_PROTOCOL_MIN_ARGS(6);
+    IRC_PROTOCOL_MIN_ARGS(5);
 
     ptr_channel = irc_channel_search (server, argv[3]);
     ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
         ptr_channel->buffer : server->buffer;
-    invite_nick = irc_message_get_nick_from_host (argv[5]);
-    invite_address = irc_message_get_address_from_host (argv[5]);
-    if (argc >= 7)
+    if (argc >= 6)
     {
-        datetime = (time_t)(atol (argv[6]));
-        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                              command, "invitelist",
-                                                              ptr_buffer),
-                             irc_protocol_tags (command, "irc_numeric", NULL),
-                             /* TRANSLATORS: "%s" after "on" is a date */
-                             _("%s%s[%s%s%s] %s%s%s invited by "
-                               "%s%s %s(%s%s%s)%s on %s"),
-                             weechat_prefix ("network"),
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT_CHANNEL,
-                             argv[3],
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT_HOST,
-                             argv[4],
-                             IRC_COLOR_RESET,
-                             irc_nick_color_for_server_message (server, NULL,
-                                                                invite_nick),
-                             invite_nick,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT_HOST,
-                             invite_address,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_RESET,
-                             weechat_util_get_time_string (&datetime));
+        invite_nick = irc_message_get_nick_from_host (argv[5]);
+        invite_address = irc_message_get_address_from_host (argv[5]);
+        if (argc >= 7)
+        {
+            datetime = (time_t)(atol (argv[6]));
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, "invitelist",
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, "irc_numeric", NULL),
+                                 /* TRANSLATORS: "%s" after "on" is a date */
+                                 _("%s%s[%s%s%s] %s%s%s invited by "
+                                   "%s%s %s(%s%s%s)%s on %s"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[3],
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_HOST,
+                                 argv[4],
+                                 IRC_COLOR_RESET,
+                                 irc_nick_color_for_server_message (server, NULL,
+                                                                    invite_nick),
+                                 invite_nick,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_HOST,
+                                 invite_address,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_RESET,
+                                 weechat_util_get_time_string (&datetime));
+        }
+        else
+        {
+            weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                  command, "invitelist",
+                                                                  ptr_buffer),
+                                 irc_protocol_tags (command, "irc_numeric", NULL),
+                                 _("%s%s[%s%s%s] %s%s%s invited by "
+                                   "%s%s %s(%s%s%s)"),
+                                 weechat_prefix ("network"),
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_CHANNEL,
+                                 argv[3],
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_HOST,
+                                 argv[4],
+                                 IRC_COLOR_RESET,
+                                 irc_nick_color_for_server_message (server, NULL,
+                                                                    invite_nick),
+                                 invite_nick,
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_HOST,
+                                 invite_address,
+                                 IRC_COLOR_CHAT_DELIMITERS);
+        }
     }
     else
     {
@@ -3383,8 +3412,7 @@ IRC_PROTOCOL_CALLBACK(346)
                                                               command, "invitelist",
                                                               ptr_buffer),
                              irc_protocol_tags (command, "irc_numeric", NULL),
-                             _("%s%s[%s%s%s] %s%s%s invited by "
-                               "%s%s %s(%s%s%s)"),
+                             _("%s%s[%s%s%s] %s%s%s invited"),
                              weechat_prefix ("network"),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_CHANNEL,
@@ -3392,14 +3420,7 @@ IRC_PROTOCOL_CALLBACK(346)
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
                              argv[4],
-                             IRC_COLOR_RESET,
-                             irc_nick_color_for_server_message (server, NULL,
-                                                                invite_nick),
-                             invite_nick,
-                             IRC_COLOR_CHAT_DELIMITERS,
-                             IRC_COLOR_CHAT_HOST,
-                             invite_address,
-                             IRC_COLOR_CHAT_DELIMITERS);
+                             IRC_COLOR_RESET);
     }
 
     return WEECHAT_RC_OK;

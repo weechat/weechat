@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-04 12:56+0200\n"
+"POT-Creation-Date: 2012-09-04 13:19+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6583,6 +6583,10 @@ msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s)%s によって %s に招待さ�
 
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって招待されました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって招待されました"
 
 #. TRANSLATORS: "%s" after "on" is a date
