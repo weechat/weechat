@@ -41,14 +41,14 @@ script_completion_scripts_cb (void *data, const char *completion_item,
                               struct t_gui_buffer *buffer,
                               struct t_gui_completion *completion)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         weechat_hook_completion_list_add (completion,
@@ -69,14 +69,14 @@ script_completion_scripts_installed_cb (void *data, const char *completion_item,
                                         struct t_gui_buffer *buffer,
                                         struct t_gui_completion *completion)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
@@ -150,7 +150,7 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
     directory = malloc (length);
     if (directory)
     {
-        for (i = 0; script_language[i]; i++)
+        for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             pointers[0] = completion;
             pointers[1] = script_extension[i];
@@ -183,7 +183,7 @@ script_completion_tags_cb (void *data, const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
     char **list_tags;
     int num_tags, i;
 
@@ -192,7 +192,7 @@ script_completion_tags_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (ptr_script->tags)

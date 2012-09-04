@@ -42,8 +42,8 @@
 #include "script-config.h"
 
 
-struct t_repo_script *repo_scripts = NULL;
-struct t_repo_script *last_repo_script = NULL;
+struct t_script_repo *scripts_repo = NULL;
+struct t_script_repo *last_script_repo = NULL;
 int script_repo_count = 0;
 int script_repo_count_displayed = 0;
 struct t_hashtable *script_repo_max_length_field = NULL;
@@ -57,14 +57,14 @@ char *script_repo_filter = NULL;
  */
 
 int
-script_repo_script_valid (struct t_repo_script *script)
+script_repo_script_valid (struct t_script_repo *script)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     if (!script)
         return 0;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (ptr_script == script)
@@ -80,17 +80,17 @@ script_repo_script_valid (struct t_repo_script *script)
  *                                         (first script displayed is 0)
  */
 
-struct t_repo_script *
+struct t_script_repo *
 script_repo_search_displayed_by_number (int number)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
     int i;
 
     if (number < 0)
         return NULL;
 
     i = 0;
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (ptr_script->displayed)
@@ -110,12 +110,12 @@ script_repo_search_displayed_by_number (int number)
  *                             (example: "iset")
  */
 
-struct t_repo_script *
+struct t_script_repo *
 script_repo_search_by_name (const char *name)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (strcmp (ptr_script->name, name) == 0)
@@ -131,12 +131,12 @@ script_repo_search_by_name (const char *name)
  *                                 (example: "iset.pl")
  */
 
-struct t_repo_script *
+struct t_script_repo *
 script_repo_search_by_name_ext (const char *name_with_extension)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (strcmp (ptr_script->name_with_extension, name_with_extension) == 0)
@@ -155,7 +155,7 @@ script_repo_search_by_name_ext (const char *name_with_extension)
  */
 
 char *
-script_repo_get_filename_loaded (struct t_repo_script *script)
+script_repo_get_filename_loaded (struct t_script_repo *script)
 {
     const char *weechat_home;
     char *filename, resolved_path[PATH_MAX];
@@ -209,7 +209,7 @@ script_repo_get_filename_loaded (struct t_repo_script *script)
  */
 
 const char *
-script_repo_get_status_for_display (struct t_repo_script *script,
+script_repo_get_status_for_display (struct t_script_repo *script,
                                     const char *list,
                                     int collapse)
 {
@@ -267,7 +267,7 @@ script_repo_get_status_for_display (struct t_repo_script *script,
  */
 
 const char *
-script_repo_get_status_desc_for_display (struct t_repo_script *script,
+script_repo_get_status_desc_for_display (struct t_script_repo *script,
                                          const char *list)
 {
     static char str_status[256];
@@ -346,10 +346,10 @@ script_repo_get_status_desc_for_display (struct t_repo_script *script,
  * script_repo_alloc: allocate a script structure
  */
 
-struct t_repo_script *
+struct t_script_repo *
 script_repo_alloc ()
 {
-    struct t_repo_script *new_script;
+    struct t_script_repo *new_script;
 
     new_script = malloc (sizeof (*new_script));
     if (new_script)
@@ -388,8 +388,8 @@ script_repo_alloc ()
  */
 
 int
-script_repo_compare_scripts (struct t_repo_script *script1,
-                             struct t_repo_script *script2)
+script_repo_compare_scripts (struct t_script_repo *script1,
+                             struct t_script_repo *script2)
 {
     const char *ptr_sort;
     int cmp, reverse;
@@ -484,12 +484,12 @@ script_repo_compare_scripts (struct t_repo_script *script1,
  * script_repo_find_pos: find position for script in list
  */
 
-struct t_repo_script *
-script_repo_find_pos (struct t_repo_script *script)
+struct t_script_repo *
+script_repo_find_pos (struct t_script_repo *script)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (script_repo_compare_scripts (ptr_script, script) > 0)
@@ -520,9 +520,9 @@ script_repo_set_max_length_field (const char *field, int length)
  */
 
 void
-script_repo_add (struct t_repo_script *script)
+script_repo_add (struct t_script_repo *script)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     ptr_script = script_repo_find_pos (script);
     if (ptr_script)
@@ -533,19 +533,19 @@ script_repo_add (struct t_repo_script *script)
         if (ptr_script->prev_script)
             (ptr_script->prev_script)->next_script = script;
         else
-            repo_scripts = script;
+            scripts_repo = script;
         ptr_script->prev_script = script;
     }
     else
     {
         /* add script to the end */
-        script->prev_script = last_repo_script;
+        script->prev_script = last_script_repo;
         script->next_script = NULL;
-        if (repo_scripts)
-            last_repo_script->next_script = script;
+        if (scripts_repo)
+            last_script_repo->next_script = script;
         else
-            repo_scripts = script;
-        last_repo_script = script;
+            scripts_repo = script;
+        last_script_repo = script;
     }
 
     /* set max length for fields */
@@ -587,7 +587,7 @@ script_repo_add (struct t_repo_script *script)
  */
 
 void
-script_repo_free (struct t_repo_script *script)
+script_repo_free (struct t_script_repo *script)
 {
     if (script->name)
         free (script->name);
@@ -626,20 +626,20 @@ script_repo_free (struct t_repo_script *script)
  */
 
 void
-script_repo_remove (struct t_repo_script *script)
+script_repo_remove (struct t_script_repo *script)
 {
-    struct t_repo_script *new_repo_scripts;
+    struct t_script_repo *new_scripts_repo;
 
     /* remove script from list */
-    if (last_repo_script == script)
-        last_repo_script = script->prev_script;
+    if (last_script_repo == script)
+        last_script_repo = script->prev_script;
     if (script->prev_script)
     {
         (script->prev_script)->next_script = script->next_script;
-        new_repo_scripts = repo_scripts;
+        new_scripts_repo = scripts_repo;
     }
     else
-        new_repo_scripts = script->next_script;
+        new_scripts_repo = script->next_script;
     if (script->next_script)
         (script->next_script)->prev_script = script->prev_script;
 
@@ -648,7 +648,7 @@ script_repo_remove (struct t_repo_script *script)
         script_repo_count_displayed--;
     script_repo_free (script);
 
-    repo_scripts = new_repo_scripts;
+    scripts_repo = new_scripts_repo;
 
     script_repo_count--;
 
@@ -666,9 +666,9 @@ script_repo_remove (struct t_repo_script *script)
 void
 script_repo_remove_all ()
 {
-    while (repo_scripts)
+    while (scripts_repo)
     {
-        script_repo_remove (repo_scripts);
+        script_repo_remove (scripts_repo);
     }
     if (script_repo_max_length_field)
     {
@@ -682,7 +682,7 @@ script_repo_remove_all ()
  */
 
 int
-script_repo_script_is_held (struct t_repo_script *script)
+script_repo_script_is_held (struct t_script_repo *script)
 {
     const char *hold;
     char *pos;
@@ -764,13 +764,13 @@ script_repo_md5sum_file (const char *filename)
  */
 
 void
-script_repo_update_status (struct t_repo_script *script)
+script_repo_update_status (struct t_script_repo *script)
 {
     const char *weechat_home, *version;
     char *filename, *md5sum;
     struct stat st;
     int length;
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     script->status = 0;
     md5sum = NULL;
@@ -837,7 +837,7 @@ script_repo_update_status (struct t_repo_script *script)
     {
         length = 0;
         weechat_hashtable_set (script_repo_max_length_field, "V", &length);
-        for (ptr_script = repo_scripts; ptr_script;
+        for (ptr_script = scripts_repo; ptr_script;
              ptr_script = ptr_script->next_script)
         {
             if (ptr_script->version_loaded)
@@ -856,9 +856,9 @@ script_repo_update_status (struct t_repo_script *script)
 void
 script_repo_update_status_all ()
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         script_repo_update_status (ptr_script);
@@ -883,7 +883,7 @@ script_repo_set_filter (const char *filter)
  */
 
 int
-script_repo_match_filter (struct t_repo_script *script)
+script_repo_match_filter (struct t_script_repo *script)
 {
     char **words, **tags;
     int num_words, num_tags, has_tag, match, i, j;
@@ -957,13 +957,13 @@ script_repo_match_filter (struct t_repo_script *script)
 void
 script_repo_filter_scripts (const char *search)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     script_repo_set_filter (search);
 
     script_repo_count_displayed = 0;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         ptr_script->displayed = (script_repo_match_filter (ptr_script));
@@ -1066,12 +1066,12 @@ script_repo_file_read (int quiet)
     char *locale, *locale_language;
     const char *version, *ptr_locale, *ptr_desc;
     gzFile file;
-    struct t_repo_script *script;
+    struct t_script_repo *script;
     int version_number, version_ok, script_ok, length;
     struct tm tm_script;
     struct t_hashtable *descriptions;
 
-    script_get_loaded_scripts ();
+    script_get_loaded_plugins_and_scripts ();
 
     script_repo_remove_all ();
 
@@ -1327,7 +1327,7 @@ script_repo_file_read (int quiet)
 
     gzclose (file);
 
-    if (repo_scripts && !quiet)
+    if (scripts_repo && !quiet)
     {
         weechat_printf (NULL,
                         _("%s: %d scripts for WeeChat %s"),
@@ -1335,7 +1335,7 @@ script_repo_file_read (int quiet)
                         weechat_info_get ("version", NULL));
     }
 
-    if (!repo_scripts)
+    if (!scripts_repo)
     {
         weechat_printf (NULL,
                         _("%s%s: list of scripts is empty (repository file "
@@ -1383,7 +1383,7 @@ script_repo_file_update_process_cb (void *data, const char *command,
             return WEECHAT_RC_OK;
         }
 
-        if (script_repo_file_read (quiet) && repo_scripts)
+        if (script_repo_file_read (quiet) && scripts_repo)
         {
             if (!script_action_run ())
                 script_buffer_refresh (1);
@@ -1460,31 +1460,31 @@ script_repo_hdata_script_cb (void *data, const char *hdata_name)
                                0, NULL, NULL);
     if (hdata)
     {
-        WEECHAT_HDATA_VAR(struct t_repo_script, name, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, name_with_extension, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, language, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, author, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, mail, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, version, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, license, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, description, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, tags, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, requirements, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, min_weechat, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, max_weechat, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, md5sum, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, url, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, popularity, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, date_added, TIME, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, date_updated, TIME, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, status, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, version_loaded, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, displayed, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, install_order, INTEGER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_repo_script, prev_script, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_VAR(struct t_repo_script, next_script, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_LIST(repo_scripts);
-        WEECHAT_HDATA_LIST(last_repo_script);
+        WEECHAT_HDATA_VAR(struct t_script_repo, name, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, name_with_extension, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, language, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, author, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, mail, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, version, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, license, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, description, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, tags, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, requirements, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, min_weechat, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, max_weechat, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, md5sum, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, url, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, popularity, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, date_added, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, date_updated, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, status, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, version_loaded, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, displayed, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, install_order, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, prev_script, POINTER, 0, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_script_repo, next_script, POINTER, 0, NULL, hdata_name);
+        WEECHAT_HDATA_LIST(scripts_repo);
+        WEECHAT_HDATA_LIST(last_script_repo);
     }
     return hdata;
 }
@@ -1496,7 +1496,7 @@ script_repo_hdata_script_cb (void *data, const char *hdata_name)
 
 int
 script_repo_add_to_infolist (struct t_infolist *infolist,
-                             struct t_repo_script *script)
+                             struct t_script_repo *script)
 {
     struct t_infolist_item *ptr_item;
 
@@ -1560,9 +1560,9 @@ script_repo_add_to_infolist (struct t_infolist *infolist,
 void
 script_repo_print_log ()
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
-    for (ptr_script = repo_scripts; ptr_script;
+    for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         weechat_log_printf ("");

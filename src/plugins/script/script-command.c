@@ -42,7 +42,7 @@ void
 script_command_action (struct t_gui_buffer *buffer, const char *action,
                        const char *arguments, int need_repository)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
     char str_action[4096];
     long value;
     char *error;
@@ -155,7 +155,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (weechat_strcasecmp (argv[1], "search") == 0)
     {
-        if (repo_scripts)
+        if (scripts_repo)
             script_repo_filter_scripts ((argc > 2) ? argv_eol[2] : NULL);
         else
             script_repo_set_filter ((argc > 2) ? argv_eol[2] : NULL);

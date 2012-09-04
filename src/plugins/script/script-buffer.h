@@ -22,17 +22,17 @@
 
 #define SCRIPT_BUFFER_NAME "scripts"
 
-struct t_repo_script;
+struct t_script_repo;
 
 extern struct t_gui_buffer *script_buffer;
 extern int script_buffer_selected_line;
-extern struct t_repo_script *script_buffer_detail_script;
+extern struct t_script_repo *script_buffer_detail_script;
 extern int script_buffer_detail_script_last_line;
 extern int script_buffer_detail_script_line_diff;
 
 extern void script_buffer_refresh (int clear);
 extern void script_buffer_set_current_line (int line);
-extern void script_buffer_show_detail_script (struct t_repo_script *script);
+extern void script_buffer_show_detail_script (struct t_script_repo *script);
 extern void script_buffer_get_window_info (struct t_gui_window *window,
                                            int *start_line_y, int *chat_height);
 extern void script_buffer_check_line_outside_window ();

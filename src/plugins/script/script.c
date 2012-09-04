@@ -45,9 +45,12 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
 struct t_weechat_plugin *weechat_script_plugin = NULL;
 
-char *script_language[]  = { "guile", "lua", "perl", "python", "ruby", "tcl", NULL };
-char *script_extension[] = { "scm",   "lua", "pl",   "py",     "rb",   "tcl", NULL };
+char *script_language[SCRIPT_NUM_LANGUAGES] =
+{ "guile", "lua", "perl", "python", "ruby", "tcl" };
+char *script_extension[SCRIPT_NUM_LANGUAGES] =
+{ "scm",   "lua", "pl",   "py",     "rb",   "tcl" };
 
+int script_plugin_loaded[SCRIPT_NUM_LANGUAGES];
 struct t_hashtable *script_loaded = NULL;
 struct t_hook *script_timer_refresh = NULL;
 
@@ -62,7 +65,7 @@ script_language_search (const char *language)
 {
     int i;
 
-    for (i = 0; script_language[i]; i++)
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         if (strcmp (script_language[i], language) == 0)
             return i;
@@ -83,7 +86,7 @@ script_language_search_by_extension (const char *extension)
 {
     int i;
 
-    for (i = 0; script_extension[i]; i++)
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         if (strcmp (script_extension[i], extension) == 0)
             return i;
@@ -94,18 +97,37 @@ script_language_search_by_extension (const char *extension)
 }
 
 /*
- * script_get_loaded_scripts: get loaded scripts (in hashtable)
+ * script_get_loaded_plugins_and_scripts: get loaded plugins (in array of
+ *                                        integers) and scripts (in hashtable)
  */
 
 void
-script_get_loaded_scripts ()
+script_get_loaded_plugins_and_scripts ()
 {
-    int i;
+    int i, language;
     char hdata_name[128], *filename, *ptr_base_name;
     const char *ptr_filename;
     struct t_hdata *hdata;
-    void *ptr_script;
+    void *ptr_plugin, *ptr_script;
 
+    /* get loaded plugins */
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        script_plugin_loaded[i] = 0;
+    }
+    hdata = weechat_hdata_get ("plugin");
+    ptr_plugin = weechat_hdata_get_list (hdata, "weechat_plugins");
+    while (ptr_plugin)
+    {
+        language = script_language_search (weechat_hdata_string (hdata,
+                                                                 ptr_plugin,
+                                                                 "name"));
+        if (language >= 0)
+            script_plugin_loaded[language] = 1;
+        ptr_plugin = weechat_hdata_move (hdata, ptr_plugin, 1);
+    }
+
+    /* get loaded scripts */
     if (!script_loaded)
     {
         script_loaded = weechat_hashtable_new (16,
@@ -117,7 +139,7 @@ script_get_loaded_scripts ()
     else
         weechat_hashtable_remove_all (script_loaded);
 
-    for (i = 0; script_language[i]; i++)
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         snprintf (hdata_name, sizeof (hdata_name),
                   "%s_script", script_language[i]);
@@ -184,12 +206,41 @@ script_timer_refresh_cb (void *data, int remaining_calls)
     /* make C compiler happy */
     (void) data;
 
-    script_get_loaded_scripts ();
+    script_get_loaded_plugins_and_scripts ();
     script_repo_update_status_all ();
     script_buffer_refresh (0);
 
     if (remaining_calls == 0)
         script_timer_refresh = NULL;
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * script_signal_plugin_cb: callback for signals "plugin_loaded" and
+ *                          "plugin_unloaded"
+ */
+
+int
+script_signal_plugin_cb (void *data, const char *signal, const char *type_data,
+                         void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) type_data;
+
+    if (weechat_script_plugin->debug >= 2)
+    {
+        weechat_printf (NULL, "%s: signal: %s, data: %s",
+                        SCRIPT_PLUGIN_NAME,
+                        signal, (char *)signal_data);
+    }
+
+    if (!script_timer_refresh)
+    {
+        script_timer_refresh = weechat_hook_timer (50, 0, 1,
+                                                   &script_timer_refresh_cb, NULL);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -205,12 +256,14 @@ script_signal_script_cb (void *data, const char *signal, const char *type_data,
 {
     /* make C compiler happy */
     (void) data;
-    (void) signal;
     (void) type_data;
-    (void) signal_data;
 
     if (weechat_script_plugin->debug >= 2)
-        weechat_printf (NULL, "signal: %s, data: %s", signal, (char *)signal_data);
+    {
+        weechat_printf (NULL, "%s: signal: %s, data: %s",
+                        SCRIPT_PLUGIN_NAME,
+                        signal, (char *)signal_data);
+    }
 
     if (!script_timer_refresh)
     {
@@ -234,7 +287,7 @@ script_focus_chat_cb (void *data, struct t_hashtable *info)
     struct t_gui_buffer *ptr_buffer;
     long x;
     char *error, str_date[64];
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
     struct tm *tm;
 
     /* make C compiler happy */
@@ -305,11 +358,18 @@ script_focus_chat_cb (void *data, struct t_hashtable *info)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int i;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
 
     weechat_plugin = plugin;
+
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        script_plugin_loaded[i] = 0;
+    }
 
     script_buffer_set_callbacks ();
 
@@ -327,6 +387,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_hook_signal ("debug_dump", &script_debug_dump_cb, NULL);
     weechat_hook_signal ("window_scrolled", &script_buffer_window_scrolled_cb, NULL);
+    weechat_hook_signal ("plugin_*", &script_signal_plugin_cb, NULL);
     weechat_hook_signal ("*_script_*", &script_signal_script_cb, NULL);
 
     weechat_hook_focus ("chat", &script_focus_chat_cb, NULL);

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-03 10:12+0200\n"
+"POT-Creation-Date: 2012-09-04 12:56+0200\n"
 "PO-Revision-Date: 2012-08-20 15:20+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8479,6 +8479,10 @@ msgid "%s: unknown language for script \"%s\""
 msgstr "%s: descargando el script \"%s\""
 
 #, fuzzy, c-format
+msgid "%s: plugin \"%s\" is not loaded"
+msgstr "%s%s: el script \"%s\" no está cargado"
+
+#, fuzzy, c-format
 msgid "%s: script \"%s\" is not loaded"
 msgstr "%s%s: el script \"%s\" no está cargado"
 
@@ -8487,8 +8491,18 @@ msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s: descargando el script \"%s\""
 
 #, fuzzy, c-format
+msgid ""
+"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+msgstr ""
+"%sError: función \"%s\" no encontrada en el plugin \"%s\", no se puede cargar"
+
+#, fuzzy, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "%s: descargando el script \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" no encontrado"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is not installed"
@@ -8499,8 +8513,10 @@ msgid "%s: script \"%s\" is held"
 msgstr "%s: script \"%s\" descargado"
 
 #, fuzzy, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" no encontrado"
+msgid ""
+"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+msgstr ""
+"%sError: función \"%s\" no encontrada en el plugin \"%s\", no se puede cargar"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is not held any more"

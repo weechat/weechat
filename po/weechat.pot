@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-03 10:12+0200\n"
+"POT-Creation-Date: 2012-09-04 12:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6763,6 +6763,10 @@ msgid "%s: unknown language for script \"%s\""
 msgstr ""
 
 #, c-format
+msgid "%s: plugin \"%s\" is not loaded"
+msgstr ""
+
+#, c-format
 msgid "%s: script \"%s\" is not loaded"
 msgstr ""
 
@@ -6771,7 +6775,16 @@ msgid "%s%s: error downloading script \"%s\": %s"
 msgstr ""
 
 #, c-format
+msgid ""
+"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+msgstr ""
+
+#, c-format
 msgid "%s: downloading script \"%s\"..."
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -6783,7 +6796,8 @@ msgid "%s: script \"%s\" is held"
 msgstr ""
 
 #, c-format
-msgid "%s: script \"%s\" not found"
+msgid ""
+"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
 msgstr ""
 
 #, c-format

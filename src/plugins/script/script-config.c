@@ -204,7 +204,7 @@ script_config_get_xml_filename ()
  */
 
 char *
-script_config_get_script_download_filename (struct t_repo_script *script,
+script_config_get_script_download_filename (struct t_script_repo *script,
                                             const char *suffix)
 {
     char *path, *filename;
@@ -254,7 +254,7 @@ script_config_reload_scripts_cb (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    if (repo_scripts)
+    if (scripts_repo)
     {
         script_repo_remove_all ();
         script_repo_file_read (1);

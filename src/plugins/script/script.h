@@ -23,15 +23,18 @@
 #define weechat_plugin weechat_script_plugin
 #define SCRIPT_PLUGIN_NAME "script"
 
+#define SCRIPT_NUM_LANGUAGES 6
+
 extern struct t_weechat_plugin *weechat_script_plugin;
 
-extern char *script_language[];
-extern char *script_extension[];
+extern char *script_language[SCRIPT_NUM_LANGUAGES];
+extern char *script_extension[SCRIPT_NUM_LANGUAGES];
+extern int script_plugin_loaded[SCRIPT_NUM_LANGUAGES];
 extern struct t_hashtable *script_loaded;
 
 extern int script_language_search (const char *language);
 extern int script_language_search_by_extension (const char *extension);
 extern void script_actions_add (const char *action);
-extern void script_get_loaded_scripts ();
+extern void script_get_loaded_plugins_and_scripts ();
 
 #endif /* __WEECHAT_SCRIPT_H */

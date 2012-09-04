@@ -39,7 +39,7 @@ script_info_get_infolist_cb (void *data, const char *infolist_name,
                              void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
     (void) data;
@@ -68,7 +68,7 @@ script_info_get_infolist_cb (void *data, const char *infolist_name,
             else
             {
                 /* build list with all scripts matching arguments */
-                for (ptr_script = repo_scripts; ptr_script;
+                for (ptr_script = scripts_repo; ptr_script;
                      ptr_script = ptr_script->next_script)
                 {
                     if (!arguments || !arguments[0]

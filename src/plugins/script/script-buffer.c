@@ -35,7 +35,7 @@
 
 struct t_gui_buffer *script_buffer = NULL;
 int script_buffer_selected_line = 0;
-struct t_repo_script *script_buffer_detail_script = NULL;
+struct t_script_repo *script_buffer_detail_script = NULL;
 int script_buffer_detail_script_last_line = 0;
 int script_buffer_detail_script_line_diff = -1;
 
@@ -45,7 +45,7 @@ int script_buffer_detail_script_line_diff = -1;
  */
 
 void
-script_buffer_display_line_script (int line, struct t_repo_script *script)
+script_buffer_display_line_script (int line, struct t_script_repo *script)
 {
     char str_line[16384], str_item[1024], str_color_name[256], str_color[32];
     char str_format[256], str_date[64], str_key[2], utf_char[16], *tags;
@@ -359,7 +359,7 @@ script_buffer_detail_label (const char *text, int max_length)
  */
 
 void
-script_buffer_display_detail_script (struct t_repo_script *script)
+script_buffer_display_detail_script (struct t_script_repo *script)
 {
     struct tm *tm;
     char str_time[1024];
@@ -487,7 +487,7 @@ script_buffer_display_detail_script (struct t_repo_script *script)
 void
 script_buffer_refresh (int clear)
 {
-    struct t_repo_script *ptr_script;
+    struct t_script_repo *ptr_script;
     int line;
     char str_title[1024];
 
@@ -530,7 +530,7 @@ script_buffer_refresh (int clear)
     {
         /* list of scripts */
         line = 0;
-        for (ptr_script = repo_scripts; ptr_script;
+        for (ptr_script = scripts_repo; ptr_script;
              ptr_script = ptr_script->next_script)
         {
             if (ptr_script->displayed)
@@ -568,7 +568,7 @@ script_buffer_set_current_line (int line)
  */
 
 void
-script_buffer_show_detail_script (struct t_repo_script *script)
+script_buffer_show_detail_script (struct t_script_repo *script)
 {
     if (!script_buffer)
         return;
@@ -743,7 +743,7 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         /* refresh buffer */
         if (strcmp (input_data, "$") == 0)
         {
-            script_get_loaded_scripts ();
+            script_get_loaded_plugins_and_scripts ();
             script_repo_remove_all ();
             script_repo_file_read (1);
             script_buffer_refresh (1);

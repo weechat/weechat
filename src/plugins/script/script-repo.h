@@ -27,7 +27,7 @@
 #define SCRIPT_STATUS_RUNNING     8
 #define SCRIPT_STATUS_NEW_VERSION 16
 
-struct t_repo_script
+struct t_script_repo
 {
     char *name;                          /* script name                     */
     char *name_with_extension;           /* script name with extension      */
@@ -50,28 +50,28 @@ struct t_repo_script
     char *version_loaded;                /* version of script loaded        */
     int displayed;                       /* script displayed?               */
     int install_order;                   /* order for install script (if >0)*/
-    struct t_repo_script *prev_script;   /* link to previous script         */
-    struct t_repo_script *next_script;   /* link to next script             */
+    struct t_script_repo *prev_script;   /* link to previous script         */
+    struct t_script_repo *next_script;   /* link to next script             */
 };
 
-extern struct t_repo_script *repo_scripts;
-extern struct t_repo_script *last_repo_script;
+extern struct t_script_repo *scripts_repo;
+extern struct t_script_repo *last_script_repo;
 extern int script_repo_count, script_repo_count_displayed;
 struct t_hashtable *script_repo_max_length_field;
 extern char *script_repo_filter;
 
-extern int script_repo_script_valid (struct t_repo_script *script);
-extern struct t_repo_script *script_repo_search_displayed_by_number (int number);
-extern struct t_repo_script *script_repo_search_by_name (const char *name);
-extern struct t_repo_script *script_repo_search_by_name_ext (const char *name_with_extension);
-extern char *script_repo_get_filename_loaded (struct t_repo_script *script);
-extern const char *script_repo_get_status_for_display (struct t_repo_script *script,
+extern int script_repo_script_valid (struct t_script_repo *script);
+extern struct t_script_repo *script_repo_search_displayed_by_number (int number);
+extern struct t_script_repo *script_repo_search_by_name (const char *name);
+extern struct t_script_repo *script_repo_search_by_name_ext (const char *name_with_extension);
+extern char *script_repo_get_filename_loaded (struct t_script_repo *script);
+extern const char *script_repo_get_status_for_display (struct t_script_repo *script,
                                                        const char *list,
                                                        int collapse);
-extern const char *script_repo_get_status_desc_for_display (struct t_repo_script *script,
+extern const char *script_repo_get_status_desc_for_display (struct t_script_repo *script,
                                                             const char *list);
 extern void script_repo_remove_all ();
-extern void script_repo_update_status (struct t_repo_script *script);
+extern void script_repo_update_status (struct t_script_repo *script);
 extern void script_repo_update_status_all ();
 extern void script_repo_set_filter (const char *filter);
 extern void script_repo_filter_scripts (const char *search);
@@ -82,7 +82,7 @@ extern void script_repo_file_update (int quiet);
 extern struct t_hdata *script_repo_hdata_script_cb (void *data,
                                                     const char *hdata_name);
 extern int script_repo_add_to_infolist (struct t_infolist *infolist,
-                                        struct t_repo_script *script);
+                                        struct t_script_repo *script);
 extern void script_repo_print_log ();
 
 #endif /* __WEECHAT_SCRIPT_REPO_H */

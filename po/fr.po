@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-03 10:12+0200\n"
-"PO-Revision-Date: 2012-09-03 09:58+0200\n"
+"POT-Creation-Date: 2012-09-04 12:56+0200\n"
+"PO-Revision-Date: 2012-09-04 12:24+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -8557,6 +8557,10 @@ msgid "%s: unknown language for script \"%s\""
 msgstr "%s: langage inconnu pour le script \"%s\""
 
 #, c-format
+msgid "%s: plugin \"%s\" is not loaded"
+msgstr "%s: l'extension \"%s\" n'est pas chargée"
+
+#, c-format
 msgid "%s: script \"%s\" is not loaded"
 msgstr "%s: script \"%s\" non chargé"
 
@@ -8565,8 +8569,19 @@ msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s%s: erreur de téléchargement du script \"%s\": %s"
 
 #, c-format
+msgid ""
+"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+msgstr ""
+"%s: le script \"%s\" ne peut pas être installé car l'extension \"%s\" n'est "
+"pas chargée"
+
+#, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "%s: téléchargement du script \"%s\"..."
+
+#, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: script \"%s\" non trouvé"
 
 #, c-format
 msgid "%s: script \"%s\" is not installed"
@@ -8577,8 +8592,11 @@ msgid "%s: script \"%s\" is held"
 msgstr "%s: le script \"%s\" est figé"
 
 #, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s: script \"%s\" non trouvé"
+msgid ""
+"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+msgstr ""
+"%s: le script \"%s\" ne peut pas être supprimé car l'extension \"%s\" n'est "
+"pas chargée"
 
 #, c-format
 msgid "%s: script \"%s\" is not held any more"
