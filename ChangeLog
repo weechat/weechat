@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9-rc1, 2012-09-04
+v0.3.9-rc1, 2012-09-16
 
 
 Version 0.3.9 (under dev!)
@@ -66,6 +66,7 @@ Version 0.3.9 (under dev!)
 * fifo: ignore read failing with error EAGAIN (bug #37019)
 * guile: fix crash when unloading a script without pointer to interpreter
 * guile: fix path of guile include dirs in cmake build (patch #7790)
+* irc: fix SASL mechanism "external" (bug #37274)
 * irc: fix parsing of message 346 when no nick/time are given (bug #37266)
 * irc: switch to next address after a timeout when connecting to server
   (bug #37216)

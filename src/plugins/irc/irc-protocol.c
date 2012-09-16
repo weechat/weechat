@@ -168,7 +168,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                                                          sasl_password);
                 break;
             case IRC_SASL_MECHANISM_EXTERNAL:
-                answer = strdup ("++");
+                answer = strdup ("+");
                 break;
             case IRC_SASL_MECHANISM_PLAIN:
             default:
