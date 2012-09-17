@@ -54,7 +54,7 @@ Version 0.3.9 (under dev!)
 * core: reallow names beginning with "#" for bars, proxies and filters
 * core: escape special chars (`#[\`) in configuration files for name of options
   (bug #36584)
-* doc: add japanese user's guide (patch #7827)
+* doc: add japanese user's guide (patch #7827) and scripting guide
 * api: allow update for some variables of hdata, add new functions hdata_update
   and hdata_set
 * api: add info "locale" for info_get (locale used to translate messages)
