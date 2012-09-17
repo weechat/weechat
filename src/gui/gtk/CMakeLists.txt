@@ -18,10 +18,6 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
-
 SET(WEECHAT_GTK_SRC
 gui-gtk.h
 gui-gtk-bar-window.c

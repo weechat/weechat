@@ -20,6 +20,9 @@
 #
 
 if(COMMAND cmake_policy)
+  if(POLICY CMP0003)
+    cmake_policy(SET CMP0003 NEW)
+  endif(POLICY CMP0003)
   if(POLICY CMP0017)
     cmake_policy(SET CMP0017 NEW)
   endif(POLICY CMP0017)
