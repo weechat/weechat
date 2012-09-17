@@ -281,56 +281,56 @@ value: 表示する履歴エントリの数
 ........................................
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+アクションリスト:
+  return: "enter" キーをシミュレート
+  complete_next: 次の補完候補で単語を補完
+  complete_previous: 一つ前の補完候補で単語を補完
+  search_text: バッファ内のテキストを検索
+  search_switch_case: 完全一致検索に変更
+  search_previous: 一つ前の行を検索
+  search_next: 次の行を検索
+  search_stop: 検索を終了
+  delete_previous_char: 一つ前の文字を削除
+  delete_next_char: 次の文字を削除
+  delete_previous_word: 一つ前の単語を削除
+  delete_next_word: 次の単語を削除
+  delete_beginning_of_line: 行の最初からカーソル位置までを削除
+  delete_end_of_line: カーソルから行の最後までを削除
+  delete_line: 行を削除
+  clipboard_paste: クリップボードから貼り付け
+  transpose_chars: 2 つの文字を入れ替え
+  undo: 最新のコマンドラインアクションまで元に戻す
+  redo: 最新のコマンドラインアクションまでやり直す
+  move_beginning_of_line: カーソルを行頭に移動
+  move_end_of_line: カーソルを行末まで移動
+  move_previous_char: カーソルを一つ前の文字に移動
+  move_next_char: カーソルを次の文字に移動
+  move_previous_word: カーソルを一つ前の単語に移動
+  move_next_word: カーソルを次の単語に移動
+  history_previous: 現在のバッファ履歴のひとつ前のコマンドを再呼び出し
+  history_next: 現在のバッファ履歴の次のコマンドを再呼び出し
+  history_global_previous: グローバル履歴の一つ前のコマンドを再呼び出し
+  history_global_next: グローバル履歴の次のコマンドを再呼び出し
+  jump_smart: 次のアクティブバッファに飛ぶ
+  jump_last_buffer: 最後のバッファに移動
+  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
+  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
+  jump_next_visited_buffer: 次に訪れたバッファに移動
+  hotlist_clear: ホットリストを消去
+  grab_key: キーを横取りする (オプション引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_key_command: あるコマンドに関連してキーを横取りする (オプション引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_mouse: grab マウスイベントコードを横取り
+  grab_mouse_area: 範囲指定のマウスイベントコードを横取り
+  set_unread: 全てのバッファに対して未読マーカーを設定
+  set_unread_current_buffer: 現在のバッファに対して未読マーカーを設定
+  switch_active_buffer: 次のマージされたバッファに移動
+  switch_active_buffer_previous: 一つ前のマージされたバッファに移動
+  zoom_merged_buffer: マージされたバッファにズーム
+  insert: コマンドラインにテキストを挿入
+  paste_start: ペーストの開始 (括弧付きペーストモード)
+  paste_stop: ペーストの終了 (括弧付きペーストモード)
 
-This command is used by key bindings or plugins.
+これらのコマンドはキーバインドかプラグインで利用できます。
 ........................................
 
 [[command_weechat_key]]

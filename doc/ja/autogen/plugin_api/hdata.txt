@@ -1,6 +1,6 @@
 [width="100%",cols="^1,^2,5,5,5,5",options="header"]
 |========================================
-| プラグイン | 名前 | 説明 | 変数 | Update allowed | リスト
+| プラグイン | 名前 | 説明 | 変数 | アップデート可 | リスト
 
 | guile | guile_script | スクリプトのリスト |
   'filename' (string) +
@@ -271,7 +271,7 @@
   'last_script' +
   'scripts'
 
-| script | script_script | scripts from repository |
+| script | script_script | リポジトリからのスクリプト |
   'name' (string) +
   'name_with_extension' (string) +
   'language' (integer) +

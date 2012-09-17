@@ -239,12 +239,12 @@
 ** 値: off, speakers, speakers_highlights (デフォルト値: `speakers`)
 
 * [[option_irc.look.nick_mode]] *irc.look.nick_mode*
-** 説明: `display nick mode (op, voice, ...) before nick (none = never, prefix = in prefix only (default), action = in action messages only, both = prefix + action messages)`
+** 説明: `ニックネームの前にニックネームモード (オペレータ、voice 権) を表示する (none = 表示しない、prefix = プレフィックスだけに表示 (デフォルト)、action = アクションメッセージだけに表示、both = プレフィックスとアクションメッセージの両方に表示)`
 ** タイプ: 整数
 ** 値: none, prefix, action, both (デフォルト値: `prefix`)
 
 * [[option_irc.look.nick_mode_empty]] *irc.look.nick_mode_empty*
-** 説明: `display a space if nick mode is enabled but nick has no mode (not op, voice, ...)`
+** 説明: `ニックネームモードが有効でニックネームモードを持っていない (オペレータでない、voice 権がない) 場合にはこれを空白で表示する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

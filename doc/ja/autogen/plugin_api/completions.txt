@@ -56,13 +56,13 @@
 
 | ruby | ruby_script | スクリプトのリスト
 
-| script | script_files | files in script directories
+| script | script_files | スクリプトディレクトリ内のファイル
 
-| script | script_scripts | list of scripts in repository
+| script | script_scripts | リポジトリに存在するスクリプトのリスト
 
-| script | script_scripts_installed | list of scripts installed (from repository)
+| script | script_scripts_installed | インストール済みスクリプトのリスト (リポジトリから)
 
-| script | script_tags | tags of scripts in repository
+| script | script_tags | リポジトリに存在するスクリプトに対するタグのリスト
 
 | tcl | tcl_script | スクリプトのリスト
 

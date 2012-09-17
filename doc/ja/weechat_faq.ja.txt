@@ -202,22 +202,20 @@ WeeChat をインストールすることをお勧めします。
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[input_bar_size]]
-How to use command line with more than one line?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== コマンドラインの行数を増やすにはどうすればいいですか。 ===
 
-The option 'size' in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
-set the max size (0 = no limit).
+インプットバーの 'size' オプションには 1 (サイズ固定、デフォルト値)
+以上の値又は動的なサイズの意味で 0 を設定できます。'size_max'
+オプションではサイズの最大値を設定できます (0 = 制限なし)。
 
-Example with dynamic size:
+動的サイズを設定する例:
 
 ----------------------------------------
 /set weechat.bar.input.size 0
 ----------------------------------------
 
-Max size of 2:
+サイズの最大値を 2 に設定:
 
 ----------------------------------------
 /set weechat.bar.input.size_max 2

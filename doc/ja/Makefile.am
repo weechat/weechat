@@ -21,18 +21,24 @@ docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
              weechat_user.ja.txt \
+             weechat_scripting.ja.txt \
              weechat_faq.ja.txt \
              weechat_quickstart.ja.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
 all-local: weechat_user.ja.html \
+		weechat_scripting.ja.html \
 		weechat_faq.ja.html \
 		weechat_quickstart.ja.html
 
 # user's guide
 weechat_user.ja.html: weechat_user.ja.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.ja.html $(abs_top_srcdir)/doc/ja/weechat_user.ja.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.ja.html $(abs_top_srcdir)/doc/ja/weechat_user.ja.txt
+
+# scripting guide
+weechat_scripting.ja.html: weechat_scripting.ja.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.ja.html $(abs_top_srcdir)/doc/ja/weechat_scripting.ja.txt
 
 # FAQ
 weechat_faq.ja.html: weechat_faq.ja.txt
