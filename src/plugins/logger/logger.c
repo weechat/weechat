@@ -966,7 +966,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
                               &tm_line);
                     text_time2 = weechat_iconv_to_internal (NULL, text_time);
                     weechat_printf_tags (buffer,
-                                         "no_highlight,notify_none",
+                                         "no_highlight,notify_none,logger_backlog_date",
                                          _("\t\tDay changed to %s"),
                                          (text_time2) ? text_time2 : text_time);
                     if (text_time2)
@@ -988,7 +988,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
             if (pos_tab)
                 pos_tab[0] = '\0';
             weechat_printf_date_tags (buffer, datetime,
-                                      "no_highlight,notify_none",
+                                      "no_highlight,notify_none,logger_backlog",
                                       "%s%s%s%s%s",
                                       weechat_color (weechat_config_string (logger_config_color_backlog_line)),
                                       message,
@@ -1006,7 +1006,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         logger_tail_free (last_lines);
     if (num_lines > 0)
     {
-        weechat_printf_tags (buffer, "no_highlight,notify_none",
+        weechat_printf_tags (buffer, "no_highlight,notify_none,logger_backlog_end",
                              _("%s===\t%s========== End of backlog (%d lines) =========="),
                              weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                              weechat_color (weechat_config_string (logger_config_color_backlog_end)),
