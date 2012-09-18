@@ -21,7 +21,10 @@
  * logger.c: logger plugin for WeeChat: save buffer lines to disk files
  */
 
+/* this define is needed for strptime() (not on OpenBSD) */
+#if !defined(__OpenBSD__)
 #define _XOPEN_SOURCE 700
+#endif
 
 #include <stdlib.h>
 #include <unistd.h>
