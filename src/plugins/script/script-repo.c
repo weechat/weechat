@@ -1038,6 +1038,13 @@ script_repo_file_is_uptodate ()
         return 0;
     }
 
+    /* file is empty? => NOT up-to-date */
+    if (st.st_size == 0)
+    {
+        free (filename);
+        return 0;
+    }
+
     /* cache never expires? => OK, up-to-date! */
     if (cache_expire < 0)
     {
