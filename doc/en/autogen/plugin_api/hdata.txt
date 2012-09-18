@@ -189,6 +189,7 @@
   'notify_list' (pointer, hdata: "irc_notify") +
   'last_notify' (pointer, hdata: "irc_notify") +
   'manual_joins' (hashtable) +
+  'channel_join_key' (hashtable) +
   'buffer' (pointer, hdata: "buffer") +
   'buffer_as_string' (string) +
   'channels' (pointer, hdata: "irc_channel") +

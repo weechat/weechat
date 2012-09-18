@@ -265,7 +265,16 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->topic = NULL;
     new_channel->modes = NULL;
     new_channel->limit = 0;
-    new_channel->key = NULL;
+    if (weechat_hashtable_has_key (server->channel_join_key, channel_name))
+    {
+        new_channel->key = strdup (weechat_hashtable_get (server->channel_join_key,
+                                                          channel_name));
+        weechat_hashtable_remove (server->channel_join_key, channel_name);
+    }
+    else
+    {
+        new_channel->key = NULL;
+    }
     new_channel->names_received = 0;
     new_channel->checking_away = 0;
     new_channel->away_message = NULL;

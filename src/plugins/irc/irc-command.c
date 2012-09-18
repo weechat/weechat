@@ -1858,8 +1858,8 @@ void
 irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join)
 {
-    char *new_args, **channels, *pos_space;
-    int i, num_channels, length;
+    char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
+    int i, num_channels, num_keys, length;
     int time_now;
     struct t_irc_channel *ptr_channel;
 
@@ -1873,13 +1873,27 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         return;
     }
 
-    /* split channels */
+    /* split channels and keys */
     channels = NULL;
+    num_channels = 0;
+    keys = NULL;
+    num_keys = 0;
     pos_space = strchr (arguments, ' ');
+    pos_keys = NULL;
     if (pos_space)
+    {
         new_args = weechat_strndup (arguments, pos_space - arguments);
+        pos_keys = pos_space + 1;
+        while (pos_keys[0] == ' ')
+        {
+            pos_keys++;
+        }
+        if (pos_keys[0])
+            keys = weechat_string_split (pos_keys, ",", 0, 0, &num_keys);
+    }
     else
         new_args = strdup (arguments);
+
     if (new_args)
     {
         channels = weechat_string_split (new_args, ",", 0, 0,
@@ -1916,6 +1930,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             {
                 if (i > 0)
                     strcat (new_args, ",");
+                pos_channel = new_args + strlen (new_args);
                 if (((num_channels > 1) || (strcmp (channels[i], "0") != 0))
                     && !irc_channel_is_channel (server, channels[i]))
                 {
@@ -1928,6 +1943,21 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     weechat_hashtable_set (server->manual_joins,
                                            channels[i],
                                            &time_now);
+                }
+                if (keys && (i < num_keys))
+                {
+                    ptr_channel = irc_channel_search (server, pos_channel);
+                    if (ptr_channel)
+                    {
+                        if (ptr_channel->key)
+                            free (ptr_channel->key);
+                        ptr_channel->key = strdup (keys[i]);
+                    }
+                    else
+                    {
+                        weechat_hashtable_set (server->channel_join_key,
+                                               pos_channel, keys[i]);
+                    }
                 }
             }
             if (pos_space)

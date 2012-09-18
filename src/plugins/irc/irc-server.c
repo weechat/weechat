@@ -916,6 +916,11 @@ irc_server_alloc (const char *name)
                                                       WEECHAT_HASHTABLE_INTEGER,
                                                       NULL,
                                                       NULL);
+    new_server->channel_join_key = weechat_hashtable_new (4,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
     new_server->buffer = NULL;
     new_server->buffer_as_string = NULL;
     new_server->channels = NULL;
@@ -1363,6 +1368,7 @@ irc_server_free_data (struct t_irc_server *server)
     }
     irc_notify_free_all (server);
     weechat_hashtable_free (server->manual_joins);
+    weechat_hashtable_free (server->channel_join_key);
     irc_redirect_free_all (server);
     if (server->channels)
         irc_channel_free_all (server);
@@ -2816,6 +2822,9 @@ irc_server_close_connection (struct t_irc_server *server)
 
     /* remove all manual joins */
     weechat_hashtable_remove_all (server->manual_joins);
+
+    /* remove all keys for pending joins */
+    weechat_hashtable_remove_all (server->channel_join_key);
 
     /* server is now disconnected */
     server->is_connected = 0;
@@ -4442,6 +4451,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, notify_list, POINTER, 0, NULL, "irc_notify");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_notify, POINTER, 0, NULL, "irc_notify");
         WEECHAT_HDATA_VAR(struct t_irc_server, manual_joins, HASHTABLE, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, channel_join_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_server, buffer_as_string, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, channels, POINTER, 0, NULL, "irc_channel");
@@ -4962,6 +4972,9 @@ irc_server_print_log ()
         weechat_log_printf ("  manual_joins . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->manual_joins,
                             weechat_hashtable_get_string (ptr_server->manual_joins, "keys_values"));
+        weechat_log_printf ("  channel_join_key . . : 0x%lx (hashtable: '%s')",
+                            ptr_server->channel_join_key,
+                            weechat_hashtable_get_string (ptr_server->channel_join_key, "keys_values"));
         weechat_log_printf ("  buffer . . . . . . . : 0x%lx", ptr_server->buffer);
         weechat_log_printf ("  buffer_as_string . . : 0x%lx", ptr_server->buffer_as_string);
         weechat_log_printf ("  channels . . . . . . : 0x%lx", ptr_server->channels);

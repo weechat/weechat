@@ -345,13 +345,20 @@ irc_mode_channel_set (struct t_irc_server *server,
                     if (pos[0] == 'k')
                     {
                         /* channel key */
-                        if (channel->key)
+                        if (set_flag == '-')
                         {
-                            free (channel->key);
-                            channel->key = NULL;
+                            if (channel->key)
+                            {
+                                free (channel->key);
+                                channel->key = NULL;
+                            }
                         }
-                        if ((set_flag == '+') && ptr_arg)
+                        else if ((set_flag == '+')
+                                 && ptr_arg && (strcmp (ptr_arg, "*") != 0))
                         {
+                            /* replace key for +k, but ignore "*" as new key */
+                            if (channel->key)
+                                free (channel->key);
                             channel->key = strdup (ptr_arg);
                         }
                     }
