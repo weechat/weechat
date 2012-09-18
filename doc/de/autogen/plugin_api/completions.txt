@@ -56,13 +56,13 @@
 
 | ruby | ruby_script | Liste der Skripten
 
-| script | script_files | files in script directories
+| script | script_files | Dateien die sich in den Skript-Verzeichnissen befinden
 
-| script | script_scripts | list of scripts in repository
+| script | script_scripts | Liste der Skripten im Repositorium
 
-| script | script_scripts_installed | list of scripts installed (from repository)
+| script | script_scripts_installed | Auflistung der installierten Skripten (vom Repositorium)
 
-| script | script_tags | tags of scripts in repository
+| script | script_tags | Schlagwortliste für Skripten im Repositorium
 
 | tcl | tcl_script | Liste der Skripten
 

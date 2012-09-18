@@ -228,22 +228,23 @@ um die Ausrichtung für Nicks zu entfernen:
 ----------------------------------------
 
 
-// TRANSLATION MISSING
 [[input_bar_size]]
-How to use command line with more than one line?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann man eine mehrzeilige Eingabezeile einstellen?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The option 'size' in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
-set the max size (0 = no limit).
+Mit der Option 'size' kann man angeben aus wie vielen Zeilen die Eingabezeile
+bestehen soll (der Standardwert für die Eingabezeile ist 1), oder man nutzt den
+Wert 0 um die Anzahl der Zeilen, für die Eingabezeile, dynamisch zu verwalten.
+Nutzt man zusätzlich die Option 'size_max' kann man angeben wie viele Zeilen,
+für die Eingabezeile, maximal genutzt werden dürfen (0 = keine Begrenzung)
 
-Example with dynamic size:
+Beispiele um eine dynamische Größe zu nutzen:
 
 ----------------------------------------
 /set weechat.bar.input.size 0
 ----------------------------------------
 
-Max size of 2:
+maximal zwei Zeilen:
 
 ----------------------------------------
 /set weechat.bar.input.size_max 2

@@ -594,7 +594,7 @@
 ** Werte: 1 .. 10000 (Standardwert: `100`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`
+** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", gefolgt von dem einzufügenden Text und einem abschließenden "ESC[201~")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-04 13:19+0200\n"
-"PO-Revision-Date: 2012-08-20 15:20+0200\n"
+"POT-Creation-Date: 2012-09-18 21:14+0200\n"
+"PO-Revision-Date: 2012-09-18 21:14+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -1180,7 +1180,7 @@ msgstr ""
 "Ohne Angabe von Argumenten wird der Cursor-Modus umgeschaltet.\n"
 "\n"
 "Ist die Mausfunktion aktiviert (siehe /help mouse), startet man den Cursor-"
-"Modus mit der mittleren Maustaste und positioniert den Cursor an diesen "
+"Modus mit der mittleren Maustaste und positioniert den Cursor auf diesen "
 "Punkt.\n"
 "\n"
 "Beispiele:\n"
@@ -1409,7 +1409,6 @@ msgstr "Funktionen für die Befehlszeile"
 msgid "<action> [<arguments>]"
 msgstr "<action> [<arguments>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1527,6 +1526,7 @@ msgstr ""
 "  switch_active_buffer: springt zum nächsten zusammengefügten Buffer\n"
 "  switch_active_buffer_previous: springt zum vorherigen zusammengefügten "
 "Buffer\n"
+"  zoom_merged_buffer: zoomt in zusammengefügte Buffer\n"
 "  insert: fügt einen Text in die Eingabezeile ein\n"
 "  paste_start: Einfügen wird gestartet (bracketed paste mode)\n"
 "  paste_stop: Einfügen wird beendet (bracketed paste mode)\n"
@@ -2810,8 +2810,8 @@ msgstr ""
 "aktiviert den \"bracketed paste mode\" des Terminals (wird nicht durch alle "
 "Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von "
 "Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln "
-"ob ein Text eingefügt oder geschrieben wurde (\"ESC[200~\", followed by the "
-"pasted text, followed by \"ESC[201~\")"
+"ob ein Text eingefügt oder geschrieben wurde (\"ESC[200~\", gefolgt von dem "
+"einzufügenden Text und einem abschließenden \"ESC[201~\")"
 
 msgid ""
 "force end of bracketed paste after this delay (in seconds) if the control "
@@ -5126,7 +5126,7 @@ msgstr ""
 "    /list -re #weechat.*"
 
 msgid "get statistics about the size of the IRC network"
-msgstr "Statistik über die Größe dieses IRC-Netzwerks abfragen"
+msgstr "Statistik über die Größe des IRC-Netzwerks abfragen"
 
 msgid "[<mask> [<target>]]"
 msgstr "[<mask> [<target>]]"
@@ -5424,7 +5424,7 @@ msgstr ""
 "-switch: wechselt zur nächsten Server-Adresse"
 
 msgid "tell the server to reload its config file"
-msgstr "Den Server dazu bringen seine Konfigurationsdatei neu zu laden"
+msgstr "Den Server auffordern seine Konfigurationsdatei neu zu laden"
 
 msgid "[<option>]"
 msgstr "[<option>]"
@@ -5732,8 +5732,7 @@ msgid "text: text to send"
 msgstr "text: Text der gesendet werden soll"
 
 msgid "generate a query which returns a list of information"
-msgstr ""
-"Erstellung einer Anfrage die eine Anzahl von Informationen zurück gibt."
+msgstr "Sendet eine Anfrage die eine Anzahl von Informationen zurück gibt."
 
 msgid "[<mask> [o]]"
 msgstr "[<mask> [o]]"
@@ -6144,14 +6143,17 @@ msgid ""
 "prefix only (default), action = in action messages only, both = prefix + "
 "action messages)"
 msgstr ""
+"vor dem Nick wird der entsprechende Nickmodus (op, voice,...) angezeigt "
+"(none = Funktion ist deaktiviert, prefix = wird nur im Präfix angezeigt "
+"(Standardeinstellung), action = wird nur in action Nachrichten angezeigt, "
+"both = im Präfix und in action Nachrichten)"
 
-#, fuzzy
 msgid ""
 "display a space if nick mode is enabled but nick has no mode (not op, "
 "voice, ...)"
 msgstr ""
-"Leerzeichen statt des Nickmode nutzen, wenn kein Nickmode ((half)op/voice [@%"
-"+]) vorhanden ist"
+"es wird ein Leerzeichen anstelle eines Nickmodus verwendet, falls kein "
+"Nickmodus ((half)op/voice [@%+]) vorhanden ist"
 
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
@@ -6234,8 +6236,9 @@ msgid ""
 "hide channel key in channel modes (this will hide all channel modes "
 "arguments if mode +k is set on channel)"
 msgstr ""
-"unterdrückt Channel-Key im Channel Modus (diese Option unterdrückt alle "
-"Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)"
+"der Channel-Schlüssel wird nicht im Channel Modus angezeigt (diese Option "
+"unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt "
+"wurde)"
 
 msgid "display nick modes in \"input_prompt\" bar item"
 msgstr "zeigt Nick-Modi in \"input_prompt\" Bar-Item"
@@ -7022,9 +7025,9 @@ msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
 msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
 msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s invited"
-msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
+msgstr "%s%s[%s%s%s] %s%s%s eingeladen"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -7091,9 +7094,11 @@ msgstr ""
 "%s%s: alle voreingestellten Nicknamen sind bereits in Verwendung oder "
 "ungültig, Verbindung wird getrennt!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
-msgstr "%s%s: der Nickname \"%s\" ist ungültig, versuche Nickname #%d (\"%s\")"
+msgstr ""
+"%s%s: Der Nickname \"%s\" ist ungültig. Es wird nun versucht den Nicknamen "
+"\"%s\" zu nutzen"
 
 #, c-format
 msgid ""
@@ -7103,17 +7108,17 @@ msgstr ""
 "%s%s: alle voreingestellten Nicknamen werden zur Zeit schon genutzt. "
 "Verbindung wird getrennt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
 msgstr ""
-"%s: der Nickname \"%s\" wird bereits verwendet. Versuche nun #%d (\"%s\") "
-"als neuen Nicknamen zu nutzen"
+"%s%s: Der Nickname \"%s\" wird bereits verwendet. Es wird nun versucht den "
+"Nicknamen \"%s\" zu nutzen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
-"%s%s: der Nickname \"%s\" ist nicht verfügbar. Versuche nun den Nicknamen #"
-"%d (\"%s\")"
+"%s%s: Der Nickname \"%s\" ist nicht verfügbar. Es wird nun versucht den "
+"Nicknamen \"%s\" zu nutzen"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -7215,9 +7220,9 @@ msgstr "%s%s: lese Daten von Socket: Fehler %d %s"
 msgid "(connection closed by peer)"
 msgstr "(Verbindung wurde durch Peer getrennt)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: disconnecting from server..."
-msgstr "%s: Trennung vom Server..."
+msgstr "%s%s: Trennung vom Server..."
 
 #, c-format
 msgid "%s%s: connection timeout (message 001 not received)"
@@ -7228,25 +7233,25 @@ msgstr ""
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: lag is high, disconnecting from server..."
-msgstr "%s: Verzögerung ist zu hoch, die Verbindung wird getrennt..."
+msgstr "%s%s: Verzögerung ist zu hoch, die Verbindung wird getrennt..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s: Verbinde erneut zum Server in %d %s, %d %s"
+msgstr "%s%s: Verbinde erneut zum Server in %d %s, %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reconnecting to server in %d %s"
-msgstr "%s: Verbinde erneut zum Server in %d %s"
+msgstr "%s%s: Verbinde erneut zum Server in %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: switching address to %s/%d"
-msgstr "%s: Adresse wechseln zu %s/%d"
+msgstr "%s%s: Adresse wird zu %s/%d gewechselt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connected to %s/%d (%s)"
-msgstr "%s: Verbindung zu %s/%d (%s) hergestellt"
+msgstr "%s%s: Verbindung zu %s/%d (%s) hergestellt"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -7313,10 +7318,10 @@ msgstr "%s%s: nicht genügend Speicher"
 msgid "%s%s: timeout"
 msgstr "%s%s: Zeitüberschreitung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
-"gnutls: Verbindung mittels geheimen %d-Bit Diffie-Hellman Schlüssels "
+"%sgnutls: Verbindung mittels geheimen %d-Bit Diffie-Hellman Schlüssels "
 "hergestellt"
 
 #, c-format
@@ -7327,9 +7332,9 @@ msgstr "%sgnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
 msgid "%sgnutls: peer's certificate is NOT trusted"
 msgstr "%sgnutls: Peer Zertifikat ist NICHT vertrauenswürdig"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: peer's certificate is trusted"
-msgstr "gnutls: Peer Zertifikat ist vertrauenswürdig"
+msgstr "%sgnutls: Peer Zertifikat ist vertrauenswürdig"
 
 #, c-format
 msgid "%sgnutls: peer's certificate issuer is unknown"
@@ -7339,15 +7344,15 @@ msgstr "%sgnutls: Der Aussteller für das Peer-Zertifikat ist unbekannt"
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: Das Zertifikat wurde widerrufen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: receiving %d certificate"
 msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "gnutls: Empfange %d Zertifikat"
-msgstr[1] "gnutls: Empfange %d Zertifikate"
+msgstr[0] "%sgnutls: empfange %d Zertifikat"
+msgstr[1] "%sgnutls: empfange %d Zertifikate"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s - certificate[%d] info:"
-msgstr " - Zertifikat [%d] Information:"
+msgstr "%s - Zertifikat [%d] Information:"
 
 #, c-format
 msgid "%sgnutls: certificate has expired"
@@ -7361,23 +7366,23 @@ msgstr "%sgnutls: Zertifikat ist noch nicht freigeschaltet"
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "%sgnutls: der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: sending one certificate"
-msgstr "gnutls: sende ein Zertifikat"
+msgstr "%sgnutls: sende ein Zertifikat"
 
 #, c-format
 msgid "%sgnutls: invalid certificate \"%s\", error: %s"
 msgstr "%sgnutls: ungültiges Zertifikat \"%s\". Fehler: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s - client certificate info (%s):"
-msgstr " - Client Zertifikate-Information (%s):"
+msgstr "%s - Client Zertifikate-Information (%s):"
 
 #, c-format
 msgid "%sgnutls: unable to read certifcate \"%s\""
 msgstr "%sgnutls: Kann das Zertifikat \"%s\" nicht lesen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unknown address for server \"%s\", cannot connect"
 msgstr ""
 "%s%s: unbekannte Adresse für Server \"%s\". Es kann keine Verbindung "
@@ -7408,9 +7413,9 @@ msgstr ""
 "%s%s SSL-Verbindung nicht möglich da WeeChat nicht mit GNUtls-Support "
 "kompiliert wurde"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "%s: Verbinden zum Server  %s/%d%s%s via %s Proxy %s/%d%s..."
+msgstr "%s%s: Verbinden zum Server  %s/%d%s%s via %s Proxy %s/%d%s..."
 
 #, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
@@ -7432,9 +7437,9 @@ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reconnecting to server..."
-msgstr "%s: Neuverbinden zum Server..."
+msgstr "%s%s: Neuverbinden zum Server..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
@@ -7692,9 +7697,9 @@ msgstr "Terminal Zeichensatz"
 msgid "WeeChat internal charset"
 msgstr "Interner WeeChat Zeichensatz"
 
-#, fuzzy
 msgid "locale used for translating messages"
-msgstr "Präfix für Action-Nachrichten"
+msgstr ""
+"Lokalisation welche für die übersetzten Nachrichten verwendet werden soll"
 
 msgid "keyboard inactivity (seconds)"
 msgstr "Inaktivität der Tastatur (Sekunden)"
@@ -8589,15 +8594,13 @@ msgstr "%s%s: %s kann nicht initialisiert werden"
 msgid "list/load/unload scripts"
 msgstr "auflisten/installieren/deinstallieren von Skripten"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>]"
 msgstr ""
-"list|listfull [<name>] || load <filename> || autoload || reload|unload "
-"[<name>]"
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
 
-#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -8624,6 +8627,7 @@ msgstr ""
 "filename: Skript (Datei) welches geladen werden soll\n"
 "    name: Name eines Skriptes (der Name der in der \"register\" Funktion der "
 "Skript-API genutzt wird)\n"
+"      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben\n"
 "\n"
 "Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten "
 "auf."
@@ -8769,134 +8773,128 @@ msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr "%s%s: Evaluation des internen WeeChat Ruby Codes nicht möglich"
 
 msgid "Scripts manager"
-msgstr ""
+msgstr "Skripten-Manager"
 
-#, fuzzy
 msgid "Scripts loaded:"
-msgstr "Installierte \"%s\" Skripten:"
+msgstr "Installierte Skripten:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: unknown language for script \"%s\""
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr ""
+"%s: Skript \"%s\" liegt in einer nicht unterstützen Programmiersprache vor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: plugin \"%s\" is not loaded"
-msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+msgstr "%s: Erweiterung \"%s\" ist nicht installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" is not loaded"
-msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+msgstr "%s: Das Skript \"%s\" wurde nicht installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr "%s%s: Fehler beim Herunterladen des Skriptes \"%s\": %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
 msgstr ""
-"%sFehler: Funktion \"%s\" nicht in Erweiterung \"%s\" gefunden. Installation "
-"fehlgeschlagen"
+"%s: Das Skript \"%s\" kann nicht geladen werden, da die benötigte "
+"Erweiterung, \"%s\", nicht installiert ist"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: downloading script \"%s\"..."
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr "%s: Lade Skript \"%s\" herunter..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" not found"
-msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
+msgstr "%s: Skript \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" is not installed"
-msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+msgstr "%s: Skript \"%s\" ist nicht installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" is held"
-msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
+msgstr "%s: Skript \"%s\" wird nicht überschrieben"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
 msgstr ""
-"%sFehler: Funktion \"%s\" nicht in Erweiterung \"%s\" gefunden. Installation "
-"fehlgeschlagen"
+"%s: Das Skript \"%s\" kann nicht entfernt werden, da die benötigte "
+"Erweiterung, \"%s\", nicht installiert ist"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" is not held any more"
-msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+msgstr "%s: Das Skript \"%s\" kann wieder überschrieben werden"
 
-#, fuzzy
 msgid "Error: file not found"
-msgstr "%sFehler: Buffer nicht gefunden"
+msgstr "Fehler: Datei nicht gefunden"
 
 msgid "Source code:"
-msgstr ""
+msgstr "Quellcode:"
 
-#, fuzzy
 msgid "Downloading script..."
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr "Skript herunterladen..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: script \"%s\" is already installed and up-to-date"
 msgstr ""
-"%s%s: Das Skript \"%s\" ist schon registriert (eine zweite Registrierung "
-"wurde deshalb abgelehnt)"
+"%s: Skript \"%s\" ist schon installiert und liegt in der aktuellen Version "
+"vor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: all scripts are up-to-date"
-msgstr "%s: Skripten deinstalliert"
+msgstr "%s: alle Skripten sind auf dem neusten Stand"
 
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
-#, fuzzy
 msgid "Version loaded"
-msgstr "Installierte Erweiterungen:"
+msgstr "Version geladen"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
 
 msgid "Description"
 msgstr "Beschreibung"
 
 msgid "Tags"
-msgstr ""
+msgstr "Schlagwörter"
 
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgid "Date added"
-msgstr ""
+msgstr "Hinzugefügt am"
 
-#, fuzzy
 msgid "Date updated"
-msgstr "Infobar \"%s\" aktualisiert"
+msgstr "letztes Update"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 msgid "MD5"
-msgstr ""
+msgstr "MD5"
 
 msgid "Requires"
-msgstr ""
+msgstr "Benötigt"
 
-#, fuzzy
 msgid "Min WeeChat"
-msgstr "WeeChat beenden"
+msgstr "Min WeeChat"
 
-#, fuzzy
 msgid "Max WeeChat"
-msgstr "WeeChat beenden"
+msgstr "Max WeeChat"
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
-msgstr ""
+msgstr "Alt+Taste/Eingabezeile: v=zurück zur Liste d=gehe zu Diff"
 
 #, c-format
 msgid ""
@@ -8905,19 +8903,26 @@ msgid ""
 "s:x,y=sort words=filter *=reset filter | Mouse: left=select right=install/"
 "remove"
 msgstr ""
+"%d/%d Skripten (Filter: %s) | Sortierung: %s | Alt+Taste/Eingabe: "
+"i=installieren r=entfernen l=starten L=erneut starten u=beenden h=halten/"
+"freigeben v=Skript anzeigen | Eingabe: q=beenden $=aktualisieren s:x,y=Art "
+"der Sortierung Text=Filter *=Filter zurücksetzen | Maus: links=Skript "
+"anwählen rechts=installieren/entfernen"
 
 msgid "Scripts"
-msgstr ""
+msgstr "Skripten"
 
-#, fuzzy
 msgid "WeeChat scripts manager"
-msgstr "WeeChat Seite"
+msgstr "WeeChat Skripten-Manager"
 
 msgid ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 msgstr ""
+"list [-o|-i] || search <text> || show <script> || load|unload|reload "
+"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
+"[<script>...] || upgrade || update"
 
 msgid ""
 "         list: list loaded scripts (all languages)\n"
@@ -8984,20 +8989,89 @@ msgid ""
 "  /script reload urlserver\n"
 "  /script upgrade"
 msgstr ""
+"    list: gibt alle geladenen Skripten im Buffer aus (unabhängig der "
+"Programmiersprache)\n"
+"           -o: gibt eine Liste der gestarteten Skripten im Buffer aus\n"
+"           -i: eine Liste der gestarteten Skripten wird in die Eingabezeile "
+"kopiert (um sie dann manuell in einen Buffer zu senden)\n"
+"  search: sucht Skripten nach Schlagwörtern oder beliebigem Text. Das "
+"Ergebnis wird im Skripten-Buffer dargestellt\n"
+"    show: zeigt detailliert Informationen zu einem Skript an\n"
+"    load: startet Skript(en)\n"
+"  unload: beendet Skript(en)\n"
+"  reload: Skript(en) werden neu geladen\n"
+" install: installiert/aktualisiert Skript(en) (physikalisch, auf dem "
+"Datenträger)\n"
+"  remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)\n"
+"installremove: installiert oder deinstalliert Skript(en), abhängig davon "
+"welcher Status vorliegt\n"
+"    hold: halten/freigeben von Skript(en) (ein Skript welches gehalten wird, "
+"kann weder aktualisiert noch entfernt werden)\n"
+"           -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben\n"
+" upgrade: aktualisiert alle installierten Skripten, die obsolet sind (wenn "
+"eine neue Version verfügbar ist)\n"
+"  update: aktualisiert den lokalen Cache für die Skripten\n"
+"\n"
+"Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer in welchem "
+"eine Liste der Skripten dargestellt wird.\n"
+"\n"
+"Im Skript-Buffer, werden folgende Statusangaben zu einem Skript angezeigt:\n"
+"  * i a H r N\n"
+"  | | | | | |\n"
+"  | | | | | obsolete (neue Version verfügbar)\n"
+"  | | | | Skript wird ausgeführt (geladen)\n"
+"  | | | gehalten\n"
+"  | | Skript wird beim Start, von Weechat, automatisch gestartet\n"
+"  | Skript ist installiert (wird aber nicht ausgeführt)\n"
+"  es wird empfohlen dieses Skript zu installieren\n"
+"\n"
+"Tastenbefehle die im Skript-Buffer genutzt werden können:\n"
+"  alt+i  installiert Skript (physikalisch)\n"
+"  alt+r  deinstalliert Skript (physikalisch\n"
+"  alt+l  startet ein Skript (Skript wird ausgeführt)\n"
+"  alt+L  Skript wird neu gestartet\n"
+"  alt+u  beendet ein Skript\n"
+"  alt+h  Skript wird gehalten bzw. freigegeben\n"
+"  alt+v  Skript anzeigen\n"
+"\n"
+"Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden "
+"können:\n"
+"  i/r/l/L/u/h  Aktionen die für ein Skript ausgeführt werden können (siehe "
+"Tastenbefehle, weiter oben)\n"
+"  q            schließt den Buffer\n"
+"  $            Buffer wird aktualisiert\n"
+"  s:x,y        Buffer wird nach den Vorgaben x und y  sortiert (siehe /help "
+"script.look.sort)\n"
+"  s:           die Sortierung des Buffers wird zurückgesetzt (Standardwerte "
+"werden genutzt)\n"
+"  word(s)      Skripten werden gefiltert: sucht nach einem oder mehreren "
+"Wörtern in den Skripten (der Beschreibung, in den Schlagwörtern, ...)\n"
+"  *            Filter wird zurückgesetzt\n"
+"\n"
+"Mausbefehle innerhalb des Skripten-Buffer:\n"
+"  Mausrad            in der Liste scrollen\n"
+"  linker Mausknopf   Skript anwählen\n"
+"  rechter Mausknopf  Skript installieren/entfernen\n"
+"\n"
+"Beispiele:\n"
+"  /script search url\n"
+"  /script install iset.pl buffers.pl\n"
+"  /script remove iset.pl\n"
+"  /script hold urlserver.py\n"
+"  /script reload urlserver\n"
+"  /script upgrade"
 
-#, fuzzy
 msgid "list of scripts in repository"
-msgstr "Liste der Skripten"
+msgstr "Liste der Skripten im Repositorium"
 
 msgid "list of scripts installed (from repository)"
-msgstr ""
+msgstr "Auflistung der installierten Skripten (vom Repositorium)"
 
 msgid "files in script directories"
-msgstr ""
+msgstr "Dateien die sich in den Skript-Verzeichnissen befinden"
 
-#, fuzzy
 msgid "tags of scripts in repository"
-msgstr "Liste der Skripten"
+msgstr "Schlagwortliste für Skripten im Repositorium"
 
 msgid ""
 "format of columns displayed in script buffer: following column identifiers "
@@ -9006,9 +9080,16 @@ msgid ""
 "%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
 "loaded, %w=min_weechat, %W=max_weechat)"
 msgstr ""
+"Format in welchem die Spalten im Skript Buffer dargestellt werden sollen. Es "
+"können folgende Spaltenbezeichnungen genutzt werden: %a=Autor, "
+"%d=Beschreibung, %D=hinzugefügt, %e=Dateierweiterung, %l=Programmiersprache, "
+"%L=Lizenz, %n=Skriptname, mit Dateierweiterung, %N=Skriptname, "
+"%r=Voraussetzungen, %s=Status, %t=Schlagwörter, %u=Datum der letzten "
+"Überarbeitung, %v=Version, %V=installierte Version, %w=min_WeeChat_Version, "
+"%W=max_WeeChat_Version)"
 
 msgid "colorize output of diff"
-msgstr ""
+msgstr "Unterschiede in den zwei Skripten werden farblich hervorgehoben"
 
 msgid ""
 "command used to show differences between script installed and the new "
@@ -9016,16 +9097,27 @@ msgid ""
 "empty value = disable diff, other string = name of command, for example "
 "\"diff\")"
 msgstr ""
+"Befehl der genutzt werden soll um die Unterschiede zwischen dem "
+"installierten Skript und dem Skript, welches im offiziellem Bereich der "
+"Homepage bereitgestellt wird, darzustellen (\"auto\" = automatische "
+"Erkennung des Diff-Befehls (git oder diff), leerer Wert = Diff ist "
+"deaktiviert, externer Befehl = Name des Befehls, zum Beispiel \"diff\")"
 
 msgid ""
 "display source code of script on buffer with detail on a script (script is "
 "downloaded in a temporary file when detail on script is displayed)"
 msgstr ""
+"Zeigt den Quellcode des Skriptes, mit weiteren Informationen zu dem Skript, "
+"im Buffer an (Skript wird dazu temporär in eine Datei gesichert)"
 
 msgid ""
 "quiet actions on script buffer: do not display messages on core buffer when "
 "scripts are installed/removed/loaded/unloaded (only errors are displayed)"
 msgstr ""
+"diese Option stellt einen stummen Modus für den Skripten-Buffer zu "
+"Verfügung: Es werden keine Nachrichten im Core-Buffer ausgegeben, wenn "
+"Skripten installiert/entfernt/gestartet/beendet werden (lediglich Fehler "
+"werden ausgegeben)"
 
 msgid ""
 "default sort keys for scripts: comma-separated list of identifiers: "
@@ -9034,190 +9126,202 @@ msgid ""
 "be used before identifier to reverse order; example: \"i,u\": installed "
 "scripts first, sorted by update date"
 msgstr ""
+"Standardsortierung für Skripten im Skript Buffer: durch Kommata getrennte "
+"Liste von Bezeichnern: a=Autor, A=automatisch geladen, d=Datum wann das "
+"Skript hinzugefügt wurde, e=Dateierweiterung, i=installiert, "
+"l=Programmiersprache, n=Skriptname, o=obsolete, p=empfohlen, r=Skript wird "
+"ausgeführt, u=Datum der letzten Überarbeitung; mittels des Zeichens \"-\", "
+"vor dem entsprechenden Bezeichner, kann die Darstellung umgekehrt  werden; "
+"Beispiel: \"i,u\": installierte Skripten werden zuerst dargestellt, sortiert "
+"nach dem Datum ihrer letzten Überarbeitung"
 
 msgid ""
 "translate description of scripts (if translation is available in your "
 "language, otherwise english version is used)"
 msgstr ""
+"Für die Beschreibung der Skripten wird die Muttersprache verwendet (sollte "
+"keine Übersetzung in der eigenen Sprache verfügbar sein, wird auf die "
+"englische Beschreibung zurückgegriffen)"
 
 msgid ""
 "use keys alt+X in script buffer to do actions on scripts (alt+i = install, "
 "alt+r = remove, ...); if disabled, only the input is allowed: i, r, ..."
 msgstr ""
+"Um Tastenkurzbefehle im Skript-Buffer direkt nutzen zu können (zum Beispiel: "
+"alt+i = installieren, alt+r = entfernen, ...), muss diese Option aktiviert "
+"werden. Andernfalls können Aktionen nur über die Eingabezeile durchgeführt "
+"werden: i,r..."
 
-#, fuzzy
 msgid "color for status \"popular\" (\"*\")"
-msgstr "Textfarbe für die Uhrzeit (Statusbar)"
+msgstr "Farbe in der der Status \"empfohlen\" (\"*\") dargestellt werden soll"
 
 msgid "color for status \"installed\" (\"i\")"
 msgstr ""
+"Farbe in der der Status \"installiert\" (\"i\") dargestellt werden soll"
 
-#, fuzzy
 msgid "color for status \"autoloaded\" (\"a\")"
-msgstr "Textfarbe für die Uhrzeit (Statusbar)"
+msgstr "Farbe in der der Status \"autoloaded\" (\"a\") dargestellt werden soll"
 
 msgid "color for status \"held\" (\"H\")"
-msgstr ""
+msgstr "Farbe in der der Status \"halten\" (\"H\") dargestellt werden soll"
 
 msgid "color for status \"running\" (\"r\")"
-msgstr ""
+msgstr "Farbe in der der Status \"laufend\" (\"r\") dargestellt werden soll"
 
 msgid "color for status \"obsolete\" (\"N\")"
-msgstr ""
+msgstr "Farbe in der der Status \"obsolete\" (\"N\") dargestellt werden soll"
 
 msgid "color for status \"unknown\" (\"?\")"
-msgstr ""
+msgstr "Farbe in der der Status \"unbekannt\" (\"?\") dargestellt werden soll"
 
-#, fuzzy
 msgid "text color in script buffer"
-msgstr "Textfarbe in xfer Buffer"
+msgstr "Textfarbe im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of dates in script buffer"
-msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
+msgstr "Textfarbe für das Datum im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of delimiters in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Textfarbe für das Trennzeichen im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of description in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Textfarbe für die Beschreibung im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of extension in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Textfarbe für die Erweiterung im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of script name in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Textfarbe für den Namen des Skriptes im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of tags in script buffer"
-msgstr "Textfarbe in xfer Buffer"
+msgstr "Textfarbe für die Schlagwörter im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of version in script buffer"
-msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
+msgstr "Textfarbe für die Version im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of version loaded in script buffer"
-msgstr "Farbe des anderen Nicknamens in einem privaten Buffer"
+msgstr "Textfarbe für die geladene Version im Skript-Buffer"
 
-#, fuzzy
 msgid "background color in script buffer"
-msgstr "Hintergrundfarbe des xfer Buffer"
+msgstr "Hintergrundfarbe im Skript-Buffer"
 
-#, fuzzy
 msgid "text color for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Textfarbe für den Auswahlbalken im Skript-Buffer"
 
-#, fuzzy
 msgid "text color of dates for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für das Datum, im Skript Buffer, wenn die Zeile angewählt wird"
 
-#, fuzzy
 msgid "text color of description for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für die Beschreibung des Skriptes, im Skript Buffer, wenn die "
+"Zeile angewählt wird"
 
-#, fuzzy
 msgid "text color of extension for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für die Dateierweiterung, im Skript Buffer, wenn die Zeile "
+"angewählt wird"
 
-#, fuzzy
 msgid "text color of script name for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für den Namen des Skriptes, im Skript Buffer, wenn die Zeile "
+"angewählt wird"
 
-#, fuzzy
 msgid "text color of tags for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für die Schlagwörter, im Skript Buffer, wenn die Zeile angewählt "
+"wird"
 
-#, fuzzy
 msgid "text color of version for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für die Version des Skriptes, im Skript Buffer, wenn die Zeile "
+"angewählt wird"
 
-#, fuzzy
 msgid "text color of version loaded for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr ""
+"Textfarbe für die Versionsanzeige des geladenen Skriptes, im Skript Buffer, "
+"wenn die Zeile angewählt wird"
 
-#, fuzzy
 msgid "background color for selected line in script buffer"
-msgstr "Textfarbe für selektierte Zeile in xfer Buffer"
+msgstr "Hintergrundfarbe"
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
 "expire)"
 msgstr ""
+"Ablaufdatum des lokalen Caches, in Minuten (-1 = ohne Ablaufdatum, 0 = "
+"umgehend)"
 
 msgid "local cache directory for scripts"
-msgstr ""
+msgstr "lokales Cache-Verzeichnis für Skripten"
 
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
+"Skripten welche \"gehalten\" werden sollen. Dies ist eine durch Kommata "
+"getrennte Liste von Skripten die nicht aktualisiert werden und nicht "
+"entfernt werden können. Zum Beispiel: \"buffers.pl,iset.pl\""
 
-#, fuzzy
 msgid "URL for file with list of scripts"
-msgstr "Liste der Skripten"
+msgstr "URL für Datei mit Inhalt der unterstützten Skripten"
 
-#, fuzzy
 msgid ""
 "script name with extension (can start or end with \"*\" as wildcard) "
 "(optional)"
 msgstr ""
-"Name des Skriptes (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
-"(optional)"
+"Name des Skriptes, mit Dateierweiterung (darf mit einem \"*\" als "
+"Platzhalter beginnen oder enden) (optional)"
 
-#, fuzzy
 msgid "scripts from repository"
-msgstr "Liste der Skripten"
+msgstr "Skripten aus dem Repositorium"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "popular"
-msgstr ""
+msgstr "empfohlen"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "installed"
-msgstr ""
+msgstr "installiert"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "autoloaded"
-msgstr ""
+msgstr "automatisch_geladen"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "held"
-msgstr ""
+msgstr "halten"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "running"
-msgstr ""
+msgstr "läuft"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "obsolete"
-msgstr ""
+msgstr "obsolete"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error reading list of scripts"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
+msgstr "%s%s: die Liste der Skripten kann nicht gelesen werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d scripts for WeeChat %s"
-msgstr "%s: Skript entfernt: %s"
+msgstr "%s: %d Skripten für WeeChat %s"
 
 #, c-format
 msgid ""
 "%s%s: list of scripts is empty (repository file is broken, or download has "
 "failed)"
 msgstr ""
+"%s%s: Liste der Skripten ist leer (Repositorium Datei ist defekt oder der "
+"Download ist fehlgeschlagen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error downloading list of scripts: %s"
-msgstr "%s%s: Fehler beim Senden von Daten an den Client: %s"
+msgstr "%s%s: Fehler beim herunterladen der Skriptenliste: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: downloading list of scripts..."
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr "%s: Liste der Skripten herunterladen..."
 
 msgid "Support of tcl scripts"
 msgstr "Unterstützung von tcl-Skripten"
@@ -9634,7 +9738,7 @@ msgid "Variables"
 msgstr "Variablen"
 
 msgid "Update allowed"
-msgstr ""
+msgstr "Update erlaubt"
 
 msgid "Lists"
 msgstr "Listen"
@@ -9648,8 +9752,76 @@ msgstr "Type"
 msgid "Constants"
 msgstr "Konstanten"
 
+#~ msgid "alt+d=back to list"
+#~ msgstr "alt+d=zurück zur Auswahl"
+
 #~ msgid "%s: connecting to server %s/%d%s%s..."
 #~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
 
 #~ msgid "%s: disconnected from server"
 #~ msgstr "%s: Vom Server getrennt!"
+
+#~ msgid "display nick mode ((half)op/voice) before each nick"
+#~ msgstr ""
+#~ "vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) "
+#~ "angezeigt"
+
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: Skript \"%s\" kann nicht überschrieben werden"
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
+#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
+
+#~ msgid "smart completion for nicks (completes first with last speakers)"
+#~ msgstr ""
+#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
+#~ "letzten Nick, mit dem gesprochen wurde)"
+
+#~ msgid "ended on: "
+#~ msgstr "geendet am: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
+
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "Textfarbe"
+
+#~ msgid "background color"
+#~ msgstr "Hintergrundfarbe"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
+
+#~ msgid "%s%s: error sending data to client %d (%s)"
+#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
+
+#~ msgid "display channel modes in \"buffer_name\" bar item"
+#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
+
+#~ msgid "string inserted after nick completion"
+#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
+
+#~ msgid "display '+' if prefix is truncated"
+#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<nick> <channel>"
+
+#~ msgid "mechanism for SASL authentication"
+#~ msgstr "Vorrichtung zur SASL Authentifizierung"

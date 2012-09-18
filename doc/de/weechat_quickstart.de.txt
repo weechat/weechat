@@ -244,9 +244,8 @@ die Dokumentation zum Laden/Entladen von Erweiterungen oder Skripten).
 Viele externe Skripten (der Mitarbeitenden) sind für WeeChat verfügbar, siehe:
 http://www.weechat.org/scripts
 
-// TRANSLATION MISSING
-You can manage scripts in WeeChat with command `/script` (see `/help script`
-for more info).
+Skripten können mit dem Befehl `/script` verwaltet werden (siehe `/help script` für
+weitere Informationen zur Bedienung).
 
 
 [[more_doc]]

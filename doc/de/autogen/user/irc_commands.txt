@@ -287,7 +287,7 @@ Beispiele:
 ........................................
 
 [[command_irc_lusers]]
-[command]*`lusers`* Statistik über die Größe dieses IRC-Netzwerks abfragen::
+[command]*`lusers`* Statistik über die Größe des IRC-Netzwerks abfragen::
 ........................................
 /lusers  [<mask> [<target>]]
 
@@ -487,7 +487,7 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 ........................................
 
 [[command_irc_rehash]]
-[command]*`rehash`* Den Server dazu bringen seine Konfigurationsdatei neu zu laden::
+[command]*`rehash`* Den Server auffordern seine Konfigurationsdatei neu zu laden::
 ........................................
 /rehash  [<option>]
 
@@ -723,7 +723,7 @@ text: Text der gesendet werden soll
 ........................................
 
 [[command_irc_who]]
-[command]*`who`* Erstellung einer Anfrage die eine Anzahl von Informationen zurück gibt.::
+[command]*`who`* Sendet eine Anfrage die eine Anzahl von Informationen zurück gibt.::
 ........................................
 /who  [<mask> [o]]
 

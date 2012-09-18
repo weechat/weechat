@@ -1,190 +1,190 @@
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
-** Beschreibung: `color for status "autoloaded" ("a")`
+** Beschreibung: `Farbe in der der Status "autoloaded" ("a") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * [[option_script.color.status_held]] *script.color.status_held*
-** Beschreibung: `color for status "held" ("H")`
+** Beschreibung: `Farbe in der der Status "halten" ("H") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.status_installed]] *script.color.status_installed*
-** Beschreibung: `color for status "installed" ("i")`
+** Beschreibung: `Farbe in der der Status "installiert" ("i") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightcyan`)
 
 * [[option_script.color.status_obsolete]] *script.color.status_obsolete*
-** Beschreibung: `color for status "obsolete" ("N")`
+** Beschreibung: `Farbe in der der Status "obsolete" ("N") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightmagenta`)
 
 * [[option_script.color.status_popular]] *script.color.status_popular*
-** Beschreibung: `color for status "popular" ("*")`
+** Beschreibung: `Farbe in der der Status "empfohlen" ("*") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_script.color.status_running]] *script.color.status_running*
-** Beschreibung: `color for status "running" ("r")`
+** Beschreibung: `Farbe in der der Status "laufend" ("r") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightgreen`)
 
 * [[option_script.color.status_unknown]] *script.color.status_unknown*
-** Beschreibung: `color for status "unknown" ("?")`
+** Beschreibung: `Farbe in der der Status "unbekannt" ("?") dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
 
 * [[option_script.color.text]] *script.color.text*
-** Beschreibung: `text color in script buffer`
+** Beschreibung: `Textfarbe im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_bg]] *script.color.text_bg*
-** Beschreibung: `background color in script buffer`
+** Beschreibung: `Hintergrundfarbe im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
-** Beschreibung: `background color for selected line in script buffer`
+** Beschreibung: `Hintergrundfarbe`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `red`)
 
 * [[option_script.color.text_date]] *script.color.text_date*
-** Beschreibung: `text color of dates in script buffer`
+** Beschreibung: `Textfarbe für das Datum im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_date_selected]] *script.color.text_date_selected*
-** Beschreibung: `text color of dates for selected line in script buffer`
+** Beschreibung: `Textfarbe für das Datum, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
-** Beschreibung: `text color of delimiters in script buffer`
+** Beschreibung: `Textfarbe für das Trennzeichen im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
 * [[option_script.color.text_description]] *script.color.text_description*
-** Beschreibung: `text color of description in script buffer`
+** Beschreibung: `Textfarbe für die Beschreibung im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_description_selected]] *script.color.text_description_selected*
-** Beschreibung: `text color of description for selected line in script buffer`
+** Beschreibung: `Textfarbe für die Beschreibung des Skriptes, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.text_extension]] *script.color.text_extension*
-** Beschreibung: `text color of extension in script buffer`
+** Beschreibung: `Textfarbe für die Erweiterung im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
-** Beschreibung: `text color of extension for selected line in script buffer`
+** Beschreibung: `Textfarbe für die Dateierweiterung, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.text_name]] *script.color.text_name*
-** Beschreibung: `text color of script name in script buffer`
+** Beschreibung: `Textfarbe für den Namen des Skriptes im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * [[option_script.color.text_name_selected]] *script.color.text_name_selected*
-** Beschreibung: `text color of script name for selected line in script buffer`
+** Beschreibung: `Textfarbe für den Namen des Skriptes, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightcyan`)
 
 * [[option_script.color.text_selected]] *script.color.text_selected*
-** Beschreibung: `text color for selected line in script buffer`
+** Beschreibung: `Textfarbe für den Auswahlbalken im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.text_tags]] *script.color.text_tags*
-** Beschreibung: `text color of tags in script buffer`
+** Beschreibung: `Textfarbe für die Schlagwörter im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `brown`)
 
 * [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
-** Beschreibung: `text color of tags for selected line in script buffer`
+** Beschreibung: `Textfarbe für die Schlagwörter, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_script.color.text_version]] *script.color.text_version*
-** Beschreibung: `text color of version in script buffer`
+** Beschreibung: `Textfarbe für die Version im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `magenta`)
 
 * [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
-** Beschreibung: `text color of version loaded in script buffer`
+** Beschreibung: `Textfarbe für die geladene Version im Skript-Buffer`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 
 * [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
-** Beschreibung: `text color of version loaded for selected line in script buffer`
+** Beschreibung: `Textfarbe für die Versionsanzeige des geladenen Skriptes, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_script.color.text_version_selected]] *script.color.text_version_selected*
-** Beschreibung: `text color of version for selected line in script buffer`
+** Beschreibung: `Textfarbe für die Version des Skriptes, im Skript Buffer, wenn die Zeile angewählt wird`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightmagenta`)
 
 * [[option_script.look.columns]] *script.look.columns*
-** Beschreibung: `format of columns displayed in script buffer: following column identifiers are replaced by their value: %a=author, %d=description, %D=date added, %e=extension, %l=language, %L=license, %n=name with extension, %N=name, %r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version loaded, %w=min_weechat, %W=max_weechat)`
+** Beschreibung: `Format in welchem die Spalten im Skript Buffer dargestellt werden sollen. Es können folgende Spaltenbezeichnungen genutzt werden: %a=Autor, %d=Beschreibung, %D=hinzugefügt, %e=Dateierweiterung, %l=Programmiersprache, %L=Lizenz, %n=Skriptname, mit Dateierweiterung, %N=Skriptname, %r=Voraussetzungen, %s=Status, %t=Schlagwörter, %u=Datum der letzten Überarbeitung, %v=Version, %V=installierte Version, %w=min_WeeChat_Version, %W=max_WeeChat_Version)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%s %n %V %v %u | %d | %t"`)
 
 * [[option_script.look.diff_color]] *script.look.diff_color*
-** Beschreibung: `colorize output of diff`
+** Beschreibung: `Unterschiede in den zwei Skripten werden farblich hervorgehoben`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.diff_command]] *script.look.diff_command*
-** Beschreibung: `command used to show differences between script installed and the new version in repository ("auto" = auto detect diff command (git or diff), empty value = disable diff, other string = name of command, for example "diff")`
+** Beschreibung: `Befehl der genutzt werden soll um die Unterschiede zwischen dem installierten Skript und dem Skript, welches im offiziellem Bereich der Homepage bereitgestellt wird, darzustellen ("auto" = automatische Erkennung des Diff-Befehls (git oder diff), leerer Wert = Diff ist deaktiviert, externer Befehl = Name des Befehls, zum Beispiel "diff")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"auto"`)
 
 * [[option_script.look.display_source]] *script.look.display_source*
-** Beschreibung: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
+** Beschreibung: `Zeigt den Quellcode des Skriptes, mit weiteren Informationen zu dem Skript, im Buffer an (Skript wird dazu temporär in eine Datei gesichert)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.quiet_actions]] *script.look.quiet_actions*
-** Beschreibung: `quiet actions on script buffer: do not display messages on core buffer when scripts are installed/removed/loaded/unloaded (only errors are displayed)`
+** Beschreibung: `diese Option stellt einen stummen Modus für den Skripten-Buffer zu Verfügung: Es werden keine Nachrichten im Core-Buffer ausgegeben, wenn Skripten installiert/entfernt/gestartet/beendet werden (lediglich Fehler werden ausgegeben)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.sort]] *script.look.sort*
-** Beschreibung: `default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date`
+** Beschreibung: `Standardsortierung für Skripten im Skript Buffer: durch Kommata getrennte Liste von Bezeichnern: a=Autor, A=automatisch geladen, d=Datum wann das Skript hinzugefügt wurde, e=Dateierweiterung, i=installiert, l=Programmiersprache, n=Skriptname, o=obsolete, p=empfohlen, r=Skript wird ausgeführt, u=Datum der letzten Überarbeitung; mittels des Zeichens "-", vor dem entsprechenden Bezeichner, kann die Darstellung umgekehrt  werden; Beispiel: "i,u": installierte Skripten werden zuerst dargestellt, sortiert nach dem Datum ihrer letzten Überarbeitung`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"p,n"`)
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
-** Beschreibung: `translate description of scripts (if translation is available in your language, otherwise english version is used)`
+** Beschreibung: `Für die Beschreibung der Skripten wird die Muttersprache verwendet (sollte keine Übersetzung in der eigenen Sprache verfügbar sein, wird auf die englische Beschreibung zurückgegriffen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.use_keys]] *script.look.use_keys*
-** Beschreibung: `use keys alt+X in script buffer to do actions on scripts (alt+i = install, alt+r = remove, ...); if disabled, only the input is allowed: i, r, ...`
+** Beschreibung: `Um Tastenkurzbefehle im Skript-Buffer direkt nutzen zu können (zum Beispiel: alt+i = installieren, alt+r = entfernen, ...), muss diese Option aktiviert werden. Andernfalls können Aktionen nur über die Eingabezeile durchgeführt werden: i,r...`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
-** Beschreibung: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
+** Beschreibung: `Ablaufdatum des lokalen Caches, in Minuten (-1 = ohne Ablaufdatum, 0 = umgehend)`
 ** Typ: integer
 ** Werte: -1 .. 525600 (Standardwert: `60`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
-** Beschreibung: `local cache directory for scripts`
+** Beschreibung: `lokales Cache-Verzeichnis für Skripten`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/script"`)
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
-** Beschreibung: `scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"`
+** Beschreibung: `Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die nicht aktualisiert werden und nicht entfernt werden können. Zum Beispiel: "buffers.pl,iset.pl"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** Beschreibung: `URL for file with list of scripts`
+** Beschreibung: `URL für Datei mit Inhalt der unterstützten Skripten`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"http://www.weechat.org/files/plugins.xml.gz"`)
 

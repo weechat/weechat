@@ -189,7 +189,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** Beschreibung: `unterdrückt Channel-Key im Channel Modus (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
+** Beschreibung: `der Channel-Schlüssel wird nicht im Channel Modus angezeigt (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -239,12 +239,12 @@
 ** Werte: off, speakers, speakers_highlights (Standardwert: `speakers`)
 
 * [[option_irc.look.nick_mode]] *irc.look.nick_mode*
-** Beschreibung: `display nick mode (op, voice, ...) before nick (none = never, prefix = in prefix only (default), action = in action messages only, both = prefix + action messages)`
+** Beschreibung: `vor dem Nick wird der entsprechende Nickmodus (op, voice,...) angezeigt (none = Funktion ist deaktiviert, prefix = wird nur im Präfix angezeigt (Standardeinstellung), action = wird nur in action Nachrichten angezeigt, both = im Präfix und in action Nachrichten)`
 ** Typ: integer
 ** Werte: none, prefix, action, both (Standardwert: `prefix`)
 
 * [[option_irc.look.nick_mode_empty]] *irc.look.nick_mode_empty*
-** Beschreibung: `display a space if nick mode is enabled but nick has no mode (not op, voice, ...)`
+** Beschreibung: `es wird ein Leerzeichen anstelle eines Nickmodus verwendet, falls kein Nickmodus ((half)op/voice [@%+]) vorhanden ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
