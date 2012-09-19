@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-18 21:14+0200\n"
+"POT-Creation-Date: 2012-09-19 14:48+0200\n"
 "PO-Revision-Date: 2012-09-18 21:14+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4176,11 +4176,11 @@ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
 msgid "Charset conversions"
 msgstr "Zeichensatzkonvertierung"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: UTF-8 is not allowed in charset options (it is internal and default "
-"charset: default encode is UTF-8 and decode of UTF-8 is OK even if you "
-"specify another charset to decode)"
+"%s%s: UTF-8 is not allowed in charset decoding options (it is internal and "
+"default charset: decode of UTF-8 is OK even if you specify another charset "
+"to decode)"
 msgstr ""
 "%s%s: UTF-8 ist in den Charset-Optionen nicht erlaubt (dies ist der interne "
 "und Standard-Charset: UTF-8 dient zur Kodierung und zur Dekodierung kann "
@@ -4191,11 +4191,15 @@ msgstr ""
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s%s: Fehler bei der Erstellung des Zeichensatzes \"%s\" => \"%s\""
 
-msgid "global decoding charset"
-msgstr "globaler Zeichensatz zum dekodieren"
+msgid ""
+"global decoding charset: charset used to decode incoming messages (if "
+"decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
 
-msgid "global encoding charset"
-msgstr "globaler Zeichensatz zum kodieren"
+msgid ""
+"global encoding charset: charset used to encode outgoing messages (if empty, "
+"default is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
 
 #, c-format
 msgid "%s: %s, \"%s\": removed"
@@ -9751,6 +9755,12 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "global decoding charset"
+#~ msgstr "globaler Zeichensatz zum dekodieren"
+
+#~ msgid "global encoding charset"
+#~ msgstr "globaler Zeichensatz zum kodieren"
 
 #~ msgid "alt+d=back to list"
 #~ msgstr "alt+d=zurück zur Auswahl"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-04 13:19+0200\n"
+"POT-Creation-Date: 2012-09-19 14:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3026,19 +3026,23 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: UTF-8 is not allowed in charset options (it is internal and default "
-"charset: default encode is UTF-8 and decode of UTF-8 is OK even if you "
-"specify another charset to decode)"
+"%s%s: UTF-8 is not allowed in charset decoding options (it is internal and "
+"default charset: decode of UTF-8 is OK even if you specify another charset "
+"to decode)"
 msgstr ""
 
 #, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr ""
 
-msgid "global decoding charset"
+msgid ""
+"global decoding charset: charset used to decode incoming messages (if "
+"decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)"
 msgstr ""
 
-msgid "global encoding charset"
+msgid ""
+"global encoding charset: charset used to encode outgoing messages (if empty, "
+"default is UTF-8 because it is the WeeChat internal charset)"
 msgstr ""
 
 #, c-format

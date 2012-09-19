@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.9-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-17 13:11+0200\n"
+"POT-Creation-Date: 2012-09-19 14:48+0200\n"
 "PO-Revision-Date: 2012-09-05 01:33+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3893,11 +3893,11 @@ msgstr "%s%s: 新しい speller を作る十分なメモリがありません"
 msgid "Charset conversions"
 msgstr "文字コード変換"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: UTF-8 is not allowed in charset options (it is internal and default "
-"charset: default encode is UTF-8 and decode of UTF-8 is OK even if you "
-"specify another charset to decode)"
+"%s%s: UTF-8 is not allowed in charset decoding options (it is internal and "
+"default charset: decode of UTF-8 is OK even if you specify another charset "
+"to decode)"
 msgstr ""
 "%s%s: UTF-8 を charset オプションに設定することはできません (UTF-8 は内部デ"
 "フォルト文字セットです: その他の文字セットへのデコードを指定したとしても、デ"
@@ -3907,11 +3907,15 @@ msgstr ""
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s%s: 文字集合 \"%s\" => \"%s\" の作成中にエラー"
 
-msgid "global decoding charset"
-msgstr "グローバルデコード文字集合"
+msgid ""
+"global decoding charset: charset used to decode incoming messages (if "
+"decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
 
-msgid "global encoding charset"
-msgstr "グローバルエンコード文字集合"
+msgid ""
+"global encoding charset: charset used to encode outgoing messages (if empty, "
+"default is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
 
 #, c-format
 msgid "%s: %s, \"%s\": removed"
@@ -9189,6 +9193,12 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "global decoding charset"
+#~ msgstr "グローバルデコード文字集合"
+
+#~ msgid "global encoding charset"
+#~ msgstr "グローバルエンコード文字集合"
 
 #~ msgid "alt+d=back to list"
 #~ msgstr "alt+d=リストに戻る"

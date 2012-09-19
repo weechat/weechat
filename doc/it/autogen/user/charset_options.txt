@@ -1,10 +1,10 @@
 * [[option_charset.default.decode]] *charset.default.decode*
-** descrizione: `set di caratteri per la decodifica globale`
+** descrizione: `global decoding charset: charset used to decode incoming messages (if decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"iso-8859-1"`)
 
 * [[option_charset.default.encode]] *charset.default.encode*
-** descrizione: `set di caratter per la codifica globale`
+** descrizione: `global encoding charset: charset used to encode outgoing messages (if empty, default is UTF-8 because it is the WeeChat internal charset)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

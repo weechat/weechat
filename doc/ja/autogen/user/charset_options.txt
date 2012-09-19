@@ -1,10 +1,10 @@
 * [[option_charset.default.decode]] *charset.default.decode*
-** 説明: `グローバルデコード文字集合`
+** 説明: `global decoding charset: charset used to decode incoming messages (if decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"iso-8859-1"`)
 
 * [[option_charset.default.encode]] *charset.default.encode*
-** 説明: `グローバルエンコード文字集合`
+** 説明: `global encoding charset: charset used to encode outgoing messages (if empty, default is UTF-8 because it is the WeeChat internal charset)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
