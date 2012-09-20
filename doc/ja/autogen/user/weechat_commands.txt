@@ -491,7 +491,7 @@ password: パスワード (任意)
   ローカルホストの 8888 番ポートで動いている http プロキシを作成:
     /proxy add local http 127.0.0.1 8888
   IPv6 プロトコルを使う http プロキシを作成:
-    /proxy add local http 127.0.0.1 8888
+    /proxy add local http ::1 8888
     /proxy set local ipv6 on
   ユーザ名とパスワードが必要な socks5 プロキシを作成:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass

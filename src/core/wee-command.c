@@ -6025,7 +6025,7 @@ command_init ()
                      "  create a http proxy, running on local host, port 8888:\n"
                      "    /proxy add local http 127.0.0.1 8888\n"
                      "  create a http proxy using IPv6 protocol:\n"
-                     "    /proxy add local http 127.0.0.1 8888\n"
+                     "    /proxy add local http ::1 8888\n"
                      "    /proxy set local ipv6 on\n"
                      "  create a socks5 proxy with username/password:\n"
                      "    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"

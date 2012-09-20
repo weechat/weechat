@@ -491,7 +491,7 @@ Esempi:
   crea un proxy http, in esecuzione sull'host locale, porta 8888:
     /proxy add local http 127.0.0.1 8888
   crea un proxy http usando il protocollo IPv6:
-    /proxy add local http 127.0.0.1 8888
+    /proxy add local http ::1 8888
     /proxy set local ipv6 on
   crea un proxy socks5 con nomeutente/password:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
