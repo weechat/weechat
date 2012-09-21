@@ -1,0 +1,133 @@
+= WeeChat テスターガイド =
+Sébastien Helleu <flashcode@flashtux.org>
+
+
+[[purpose]]
+== 目的 ==
+
+WeeChat
+開発への協力に興味を持っていただきありがとうございます。開発に協力する最も簡単
+(で最も大変) な方法はテストです!
+
+テストはソフトウェア開発においてとても重要で、疎かにできないものです。
+何か新しい機能が実装されたらその機能はテストされるべきです。
+しかし、機能によっては使用条件が広すぎる条件が特殊ぎるため、
+開発チームが全ての条件をテストできない場合があります。
+
+例: WeeChat 0.2.2 で導入された charset プラグインは悪名高いものでした:
+チャンネル名に各国語を使うユーザー (開発者、貢献者、テスター)
+が開発チームにおらず、0.2.2
+がリリースされると、チームを非難するロシア人ユーザが殺到しました。
+より多くのテスターがいれば、今後そのようなことはおきないでしょう。
+
+開発者は新機能の実装 (と古いバグの修正) に忙しいので、WeeChat
+安定版をテストすることは意味がありません。
+
+
+[[prepare_system]]
+== システムの準備 ==
+
+Linux の 'core' ファイルを有効にすることはとても役に立ちます: WeeChat
+がクラッシュすると、Linux は 'core' と呼ばれるファイルを作ります。このファイルには、WeeChat
+に問題の有る箇所を正確に示す、とても役立つデバッグ情報が含まれています。
+
+'bash' シェルを使っている場合、以下の行を `~/.bashrc` に追記してください:
+
+  ulimit -c unlimited
+
+
+[[download]]
+== 開発版のダウンロード ==
+
+最新のコード (最新のバグと最新の機能も含んでいますが) は GIT リポジトリにあります。
+
+手作業で最新のコードをビルドすることができます (推奨):
+
+* GIT 版は安定版と共存してビルド、インストールできます。
+* root 権限は必要ありません、WeeChat
+  安定版を捨てる必要もありません。
+
+[[get_sources]]
+=== ソースの取得とビルド ===
+
+最初にディレクトリを作ってください、ここでは 'weechat-git':
+
+---------------------
+$ mkdir ~/weechat-git
+$ cd ~/weechat-git
+---------------------
+
+git がインストール済みの場合、git
+リポジトリを clone してください (推奨):
+
+--------------------------------------------
+$ git clone git://git.sv.gnu.org/weechat.git
+$ cd weechat
+--------------------------------------------
+
+注意: clone の後、このディレクトリ内で "`git pull`"
+を実行すれば、最新のアップデートとの差分が更新されます。
+
+他の方法として 'devel' パッケージをダウンロードして展開する方法があります:
+
+-----------------------------------------------------------------
+$ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
+$ tar xvjf weechat-devel.tar.bz2
+$ cd weechat-devel
+-----------------------------------------------------------------
+
+ソースをビルドするには cmake を使うことを推奨します:
+
+--------------------------------------------------------------
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=$HOME/weechat-git -DCMAKE_BUILD_TYPE=Debug
+$ make
+$ make install
+--------------------------------------------------------------
+
+cmake が無い場合は autotools を使うことも可能です:
+
+----------------------------------------------------------
+$ ./autogen.sh       # (git リポジトリから clone した場合のみ)
+$ ./configure --prefix=$HOME/weechat-git
+$ make
+$ make install
+----------------------------------------------------------
+
+[[install_binary_package]]
+=== バイナリパッケージのインストール ===
+
+Linux ディストリビューション別に:
+
+* Debian: http://debian.flashtux.org/
+* Gentoo: http://www.weechat.org/download
+* ArchLinux: http://aur.archlinux.org/ から PKGBUILD
+* その他: 知らないよ!
+
+
+[[run]]
+== WeeChat の実行 ==
+
+`--dir` オプションを使って WeeChat を専用の (安定版とは違う)
+ディレクトリで実行することを推奨します。
+
+コマンド:
+
+  ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
+
+より万全を期すなら、上の方法を使って WeeChat
+の最新バージョンを使っていることを確認するべきです ;)
+
+おかしな (問題を引き起こしたり、クラッシュしたり、あなたを怒らせるような) 挙動を見つけたら
+`irc.freenode.net` の `#weechat` に参加して、開発チームにこの挙動を教えてください。
+
+クラッシュしなかったとしても教えてください。開発チームはあなたからのフィードバックをお待ちしています!
+
+
+[[links]]
+== 便利なリンク ==
+
+* GIT リポジトリ: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+* バグトラッカー: https://savannah.nongnu.org/bugs/?group=weechat
+* RSS フィードによる WeeChat コミット: http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

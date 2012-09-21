@@ -24,13 +24,15 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_scripting.ja.txt \
              weechat_faq.ja.txt \
              weechat_quickstart.ja.txt \
+             weechat_tester.ja.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
 all-local: weechat_user.ja.html \
 		weechat_scripting.ja.html \
 		weechat_faq.ja.html \
-		weechat_quickstart.ja.html
+		weechat_quickstart.ja.html \
+		weechat_tester.ja.html
 
 # user's guide
 weechat_user.ja.html: weechat_user.ja.txt $(wildcard autogen/user/*.txt)
@@ -47,6 +49,10 @@ weechat_faq.ja.html: weechat_faq.ja.txt
 # quickstart
 weechat_quickstart.ja.html: weechat_quickstart.ja.txt
 	$(ASCIIDOC) -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.ja.html $(abs_top_srcdir)/doc/ja/weechat_quickstart.ja.txt
+
+# tester's guide
+weechat_tester.ja.html: weechat_tester.ja.txt
+	$(ASCIIDOC) -a toc -a toc-title='目次' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.ja.html $(abs_top_srcdir)/doc/ja/weechat_tester.ja.txt
 
 # install docs
 
