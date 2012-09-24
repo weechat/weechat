@@ -73,7 +73,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
             {
                 num_read = recv (xfer->sock, (char *) &ack, 4, MSG_PEEK);
                 if ((num_read < 1) &&
-                    ((num_read != -1) || (errno != EAGAIN)))
+                    ((num_read != -1) || ((errno != EAGAIN) && (errno != EWOULDBLOCK))))
                 {
                     xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                              XFER_ERROR_SEND_BLOCK);
@@ -125,7 +125,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                      * socket is temporarily not available (receiver can't
                      * receive amount of data we sent ?!)
                      */
-                    if (errno == EAGAIN)
+                    if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                         usleep (1000);
                     else
                     {
@@ -206,7 +206,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         if (num_read == -1)
         {
             /* socket is temporarily not available (sender is not fast ?!) */
-            if ((errno == EAGAIN) || (errno == EINTR))
+            if ((errno == EAGAIN) || (errno == EWOULDBLOCK) || (errno == EINTR))
                 usleep (1000);
             else
             {
