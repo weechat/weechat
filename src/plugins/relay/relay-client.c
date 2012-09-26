@@ -729,13 +729,13 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             last_relay_client = new_client;
         relay_clients = new_client;
 
-        weechat_printf (NULL,
-                        _("%s: new client on port %d: %s%s%s"),
-                        RELAY_PLUGIN_NAME,
-                        server->port,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        new_client->desc,
-                        RELAY_COLOR_CHAT);
+        weechat_printf_tags (NULL, "relay_client",
+                             _("%s: new client on port %d: %s%s%s"),
+                             RELAY_PLUGIN_NAME,
+                             server->port,
+                             RELAY_COLOR_CHAT_CLIENT,
+                             new_client->desc,
+                             RELAY_COLOR_CHAT);
 
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
@@ -882,12 +882,12 @@ relay_client_set_status (struct t_relay_client *client,
                                 RELAY_COLOR_CHAT);
                 break;
             case RELAY_STATUS_DISCONNECTED:
-                weechat_printf (NULL,
-                                _("%s: disconnected from client %s%s%s"),
-                                RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_CLIENT,
-                                client->desc,
-                                RELAY_COLOR_CHAT);
+                weechat_printf_tags (NULL, "relay_client",
+                                     _("%s: disconnected from client %s%s%s"),
+                                     RELAY_PLUGIN_NAME,
+                                     RELAY_COLOR_CHAT_CLIENT,
+                                     client->desc,
+                                     RELAY_COLOR_CHAT);
                 break;
             default:
                 break;
