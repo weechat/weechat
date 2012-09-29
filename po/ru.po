@@ -19,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.9-dev\n"
+"Project-Id-Version: WeeChat 0.3.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-20 07:54+0200\n"
-"PO-Revision-Date: 2012-08-20 15:20+0200\n"
+"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"PO-Revision-Date: 2012-09-29 09:25+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -3146,6 +3146,13 @@ msgstr[2] "обычные"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
@@ -3176,13 +3183,6 @@ msgstr "Внутренние команды %s:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Недостаточно памяти для новой строчки\n"
-
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
 
 #, fuzzy
 msgid "Alias commands"
@@ -3636,6 +3636,61 @@ msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 
 msgid "name of FIFO pipe"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: loading script \"%s\""
+msgstr "сессия: загружаю сервер \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
+"удалась\n"
+
+#, fuzzy, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "сессия: загружаю сервер \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 msgid "away"
 msgstr ""
@@ -6642,6 +6697,34 @@ msgid "logger pointer (optional)"
 msgstr "Сохраняю конфигурацию\n"
 
 #, fuzzy
+msgid "Support of lua scripts"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy
 msgid "WeeChat version"
 msgstr "слоган WeeChat"
 
@@ -7409,89 +7492,6 @@ msgstr "Сохраняю конфигурацию\n"
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: loading script \"%s\""
-msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
-"удалась\n"
-
-#, fuzzy, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "Plugin \"%s\" выгружен.\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
-
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 msgid "Support of perl scripts"
