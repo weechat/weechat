@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
 Standards-Version: 3.9.3
 Homepage: http://weechat.org/
 Vcs-Git: git://anonscm.debian.org/users/kolter/weechat.git
-Vcs-Browser: http://anonscm.debian.org/git/users/kolter/weechat.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/kolter/weechat.git
 
 Package: weechat
 Architecture: all
