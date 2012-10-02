@@ -1,1 +1,1 @@
-weechat-curses: manpage-has-errors-from-man usr/share/man/man1/weechat-curses.1.gz 61: warning [p 1, 9.0i]: cannot adjust line
+weechat-curses: manpage-has-errors-from-man usr/share/man/man1/weechat-curses.1.gz 65: warning [p 1, 9.7i]: cannot adjust line

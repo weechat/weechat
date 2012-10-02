@@ -1,3 +1,16 @@
+weechat (0.3.9-1) unstable; urgency=low
+
+  * New upstream release
+  * Add the new 'script' plugin and update the long descriptions accordingly
+  * Add new doc-base files:
+    - Testers guide in Japanese
+    - Users guide in Japanese
+    - Scripting guide in Japanese
+  * Fix wrong Vcs-Browser URL (Closes: #689203)
+  * Update lintian override on weechat-curses
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 30 Sep 2012 21:14:22 +0000
+
 weechat (0.3.8-1) unstable; urgency=low
 
   * New upstream release
