@@ -57,7 +57,7 @@ struct t_script_repo
 extern struct t_script_repo *scripts_repo;
 extern struct t_script_repo *last_script_repo;
 extern int script_repo_count, script_repo_count_displayed;
-struct t_hashtable *script_repo_max_length_field;
+extern struct t_hashtable *script_repo_max_length_field;
 extern char *script_repo_filter;
 
 extern int script_repo_script_valid (struct t_script_repo *script);
