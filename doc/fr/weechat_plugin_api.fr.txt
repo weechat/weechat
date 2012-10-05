@@ -5001,6 +5001,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean (option))
 {
     /* la valeur est "vrai" */
@@ -5019,6 +5020,7 @@ Script (Python) :
 value = weechat.config_boolean(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean(option):
     # ...
 ----------------------------------------
@@ -5047,6 +5049,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 if (weechat_config_boolean_default (option))
 {
     /* la valeur est "vrai" */
@@ -5065,6 +5068,7 @@ Script (Python) :
 value = weechat.config_boolean_default(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean_default(option):
     # ...
 ----------------------------------------
@@ -5093,6 +5097,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer (option);
 ----------------------------------------
 
@@ -5104,8 +5109,8 @@ Script (Python) :
 value = weechat.config_integer(option)
 
 # exemple
-if weechat.config_integer(option):
-    # ...
+option = weechat.config_get("plugin.section.option")
+value = weechat.config_integer(option)
 ----------------------------------------
 
 weechat_config_integer_default
@@ -5132,6 +5137,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 int value = weechat_config_integer_default (option);
 ----------------------------------------
 
@@ -5143,8 +5149,8 @@ Script (Python) :
 value = weechat.config_integer_default(option)
 
 # exemple
-if weechat.config_integer_default(option):
-    # ...
+option = weechat.config_get("plugin.section.option")
+value = weechat.config_integer_default(option)
 ----------------------------------------
 
 weechat_config_string
@@ -5171,6 +5177,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string (option);
 ----------------------------------------
 
@@ -5182,6 +5189,7 @@ Script (Python) :
 value = weechat.config_string(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 value = weechat.config_string(option)
 ----------------------------------------
 
@@ -5209,6 +5217,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *value = weechat_config_string_default (option);
 ----------------------------------------
 
@@ -5220,6 +5229,7 @@ Script (Python) :
 value = weechat.config_string_default(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----------------------------------------
 
@@ -5247,6 +5257,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color (option);
 ----------------------------------------
 
@@ -5258,6 +5269,7 @@ Script (Python) :
 value = weechat.config_color(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 value = weechat.config_color(option)
 ----------------------------------------
 
@@ -5286,6 +5298,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
+struct t_config_option *option = weechat_config_get ("plugin.section.option");
 const char *color = weechat_config_color_default (option);
 ----------------------------------------
 
@@ -5297,6 +5310,7 @@ Script (Python) :
 value = weechat.config_color_default(option)
 
 # exemple
+option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
 ----------------------------------------
 
