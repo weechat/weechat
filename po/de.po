@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3810,13 +3810,6 @@ msgstr[1] "normale"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug für Cursor Modus deaktiviert"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug-Modus (%s) für Maus aktiviert"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug für Maus deaktiviert"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 "Fehler: nicht genügend Speicher um den Buffer der Hotlist hinzu zu fügen"
@@ -3846,6 +3839,13 @@ msgstr "führe Befehl \"%s\" aus"
 
 msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für eine neue Zeile"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug-Modus (%s) für Maus aktiviert"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug für Maus deaktiviert"
 
 msgid "Alias commands"
 msgstr "Alias-Befehle"
@@ -4370,64 +4370,6 @@ msgstr "%s%s: Fehler beim öffnen der Datei, schließe Datei wieder"
 
 msgid "name of FIFO pipe"
 msgstr "Name der FIFO-Pipe"
-
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr ""
-"%s%s: Das Skript \"%s\" ist schon registriert (eine zweite Registrierung "
-"wurde deshalb abgelehnt)"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: Skript kann nicht registriert werden. \"%s\" (es existiert schon ein "
-"Skript mit demselben Namen)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: registriertes Skript \"%s\", Version %s (%s)"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr "Unterstützung von Scheme-Skripten (mittels Guile)"
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: Funktion \"%s\" muss einen gültigen Wert zurück geben"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: Fehler in Funktion \"%s\""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: Lade das Skript \"%s\""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s%s: Funktion \"register\" nicht gefunden (oder fehlerhaft) in Datei \"%s\""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: Deinstalliere das Skript \"%s\""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: Unbekannte Option für den \"%s\"-Befehl"
 
 msgid "away"
 msgstr "abwesend"
@@ -7727,33 +7669,6 @@ msgstr "Auflistung der protokollierten Buffer"
 msgid "logger pointer (optional)"
 msgstr "Logger Pointer (optional)"
 
-msgid "Support of lua scripts"
-msgstr "Unterstützung von Lua-Skripten"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: Umlenkung von stdout und stderr nicht möglich"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
-
 msgid "WeeChat version"
 msgstr "WeeChat Version"
 
@@ -8191,8 +8106,8 @@ msgstr "keine Verbindung zum Client für Relay"
 msgid "Listening on ports:"
 msgstr "Lausche an Ports:"
 
-#, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr "  Port %s%d%s, Relay: %s%s%s%s%s, gestartet am: %s"
 
 msgid "No server for relay"
@@ -8566,6 +8481,91 @@ msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 "rmodifier Name (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
 "(optional)"
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr ""
+"%s%s: Das Skript \"%s\" ist schon registriert (eine zweite Registrierung "
+"wurde deshalb abgelehnt)"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: Skript kann nicht registriert werden. \"%s\" (es existiert schon ein "
+"Skript mit demselben Namen)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: registriertes Skript \"%s\", Version %s (%s)"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr "Unterstützung von Scheme-Skripten (mittels Guile)"
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: Funktion \"%s\" muss einen gültigen Wert zurück geben"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: Fehler in Funktion \"%s\""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: Lade das Skript \"%s\""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: Funktion \"register\" nicht gefunden (oder fehlerhaft) in Datei \"%s\""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: Deinstalliere das Skript \"%s\""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s%s: Unbekannte Option für den \"%s\"-Befehl"
+
+msgid "Support of lua scripts"
+msgstr "Unterstützung von Lua-Skripten"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: Skript \"%s\" wurde nicht gefunden"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: Umlenkung von stdout und stderr nicht möglich"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: Kann die Datei \"%s\" nicht laden"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: Die Datei \"%s\" kann nicht ausgeführt werden"
 
 msgid "Support of perl scripts"
 msgstr "Unterstützung von Perl-Skripten"

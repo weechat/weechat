@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3631,13 +3631,6 @@ msgstr[1] "normali"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug disabilitato per la modalità cursore"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Debug abilitato per il mouse (%s)"
-
-msgid "Debug disabled for mouse"
-msgstr "Debug disabilitato per il mouse"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Errore: memoria non sufficiente per aggiungere un buffer alla hotlist"
 
@@ -3666,6 +3659,13 @@ msgstr "Esecuzione comando: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Memoria non sufficiente per una nuova riga"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Debug abilitato per il mouse (%s)"
+
+msgid "Debug disabled for mouse"
+msgstr "Debug disabilitato per il mouse"
 
 #, fuzzy
 msgid "Alias commands"
@@ -4174,61 +4174,6 @@ msgstr "%s%s: errore nella lettura del file, chiusura"
 
 msgid "name of FIFO pipe"
 msgstr "nome della pipe FIFO"
-
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s%s: script \"%s\" già registrato (funzione register ignorata)"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
-"stesso nome)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: script \"%s\" registrato, versione %s (%s)"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: errore nella funzioe \"%s\""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: caricamento dello script \"%s\""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr "%s%s: funzione \"register\" non trovata (o fallita) nel file \"%s\""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: scaricamento dello script \"%s\""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: script \"%s\" scaricato"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: script \"%s\" non caricato"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: opzione sconosciuta per il comando \"%s\""
 
 msgid "away"
 msgstr "assente"
@@ -7420,34 +7365,6 @@ msgstr "elenco dei buffer logger"
 msgid "logger pointer (optional)"
 msgstr "puntatore al logger (opzionale)"
 
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "elenco degli script"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: impossibile eseguire la funzione \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" non trovato"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: impossibile creare un nuovo sub-interprete"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: impossibile reindirizzare verso stdout e stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: impossibile caricare il file \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: impossibile eseguire il file \"%s\""
-
 msgid "WeeChat version"
 msgstr "versione di WeeChat"
 
@@ -7879,8 +7796,8 @@ msgstr "Nessun client connesso per il relay"
 msgid "Listening on ports:"
 msgstr "In ascolto sulle porte:"
 
-#, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr "  porta %s%d%s, relay: %s%s%s%s%s, avviato il: %s"
 
 msgid "No server for relay"
@@ -8244,6 +8161,89 @@ msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 "nome rmodifier (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: script \"%s\" già registrato (funzione register ignorata)"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
+"stesso nome)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: script \"%s\" registrato, versione %s (%s)"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: errore nella funzioe \"%s\""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: caricamento dello script \"%s\""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr "%s%s: funzione \"register\" non trovata (o fallita) nel file \"%s\""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: scaricamento dello script \"%s\""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: script \"%s\" scaricato"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: script \"%s\" non caricato"
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s%s: opzione sconosciuta per il comando \"%s\""
+
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "elenco degli script"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: impossibile eseguire la funzione \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" non trovato"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: impossibile creare un nuovo sub-interprete"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: impossibile reindirizzare verso stdout e stderr"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: impossibile caricare il file \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: impossibile eseguire il file \"%s\""
 
 #, fuzzy
 msgid "Support of perl scripts"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3115,13 +3115,6 @@ msgstr[1] "normál"
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
-
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
@@ -3152,6 +3145,13 @@ msgstr "%s belső parancsok:\n"
 #, fuzzy
 msgid "Not enough memory for new line"
 msgstr "Nincs elég memória az új sorhoz\n"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
 
 #, fuzzy
 msgid "Alias commands"
@@ -3606,61 +3606,6 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 
 msgid "name of FIFO pipe"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s a \"%s\" modul nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s: loading script \"%s\""
-msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
-"betöltés sikertelen\n"
-
-#, fuzzy, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "A \"%s\" modul eltávolítva.\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 msgid "away"
 msgstr ""
@@ -6673,34 +6618,6 @@ msgid "logger pointer (optional)"
 msgstr "Beállítások mentése a lemezre\n"
 
 #, fuzzy
-msgid "Support of lua scripts"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy
 msgid "WeeChat version"
 msgstr "WeeChat szlogen"
 
@@ -7153,7 +7070,7 @@ msgid "Listening on ports:"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr "%s%s%s távol: %s\n"
 
 #, fuzzy
@@ -7469,6 +7386,89 @@ msgstr "Beállítások mentése a lemezre\n"
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s: loading script \"%s\""
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
+"betöltés sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
 msgid "Support of perl scripts"

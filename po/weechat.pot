@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2742,13 +2742,6 @@ msgstr[1] ""
 msgid "Debug disabled for cursor mode"
 msgstr ""
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr ""
-
-msgid "Debug disabled for mouse"
-msgstr ""
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
@@ -2776,6 +2769,13 @@ msgid "Executing command: \"%s\""
 msgstr ""
 
 msgid "Not enough memory for new line"
+msgstr ""
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
 msgstr ""
 
 msgid "Alias commands"
@@ -3191,59 +3191,6 @@ msgid "%s%s: error opening file, closing it"
 msgstr ""
 
 msgid "name of FIFO pipe"
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
 msgstr ""
 
 msgid "away"
@@ -5857,33 +5804,6 @@ msgstr ""
 msgid "logger pointer (optional)"
 msgstr ""
 
-msgid "Support of lua scripts"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr ""
-
 msgid "WeeChat version"
 msgstr ""
 
@@ -6280,7 +6200,7 @@ msgid "Listening on ports:"
 msgstr ""
 
 #, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr ""
 
 msgid "No server for relay"
@@ -6570,6 +6490,86 @@ msgid "rmodifier pointer (optional)"
 msgstr ""
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr ""
+
+msgid "Support of lua scripts"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
 msgstr ""
 
 msgid "Support of perl scripts"

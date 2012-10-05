@@ -149,11 +149,12 @@ relay_command_server_list ()
             }
 
             weechat_printf (NULL,
-                            _("  port %s%d%s, relay: %s%s%s%s%s, started on: %s"),
+                            _("  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"),
                             RELAY_COLOR_CHAT_BUFFER,
                             ptr_server->port,
                             RELAY_COLOR_CHAT,
                             RELAY_COLOR_CHAT_BUFFER,
+                            (ptr_server->ssl) ? "ssl." : "",
                             relay_protocol_string[ptr_server->protocol],
                             (ptr_server->protocol_args) ? "." : "",
                             (ptr_server->protocol_args) ? ptr_server->protocol_args : "",

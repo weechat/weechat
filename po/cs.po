@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3455,14 +3455,6 @@ msgstr[2] "normálních"
 msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
 
-#, fuzzy, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "Ladění vypnuto pro \"%s\""
-
-#, fuzzy
-msgid "Debug disabled for mouse"
-msgstr "Ladění vypnuto pro \"%s\""
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Chyba: nedostatek paměti pro přidáni bufferu do hotlistu"
 
@@ -3492,6 +3484,14 @@ msgstr "výchozí příkaz:"
 
 msgid "Not enough memory for new line"
 msgstr "Nedostatek paměti pro nový řádek"
+
+#, fuzzy, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "Ladění vypnuto pro \"%s\""
+
+#, fuzzy
+msgid "Debug disabled for mouse"
+msgstr "Ladění vypnuto pro \"%s\""
 
 #, fuzzy
 msgid "Alias commands"
@@ -3980,62 +3980,6 @@ msgstr "%s%s: chyba při otevírání souboru, zavírám ho"
 
 msgid "name of FIFO pipe"
 msgstr "jméno FIFO roury"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
-"existuje)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: chyba ve funkci \"%s\""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: načítám skript \"%s\""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s%s: funkce \"register\" nebyla nalezena (nebo selhala) v souboru \"%s\""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: odebírám skript \"%s\""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: skript \"%s\" odebrán"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: skript \"%s\" nenačten"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: neznámá volba pro příkaz \"%s\""
 
 msgid "away"
 msgstr "pryč"
@@ -7165,34 +7109,6 @@ msgstr "seznam logovacích bufferů"
 msgid "logger pointer (optional)"
 msgstr "ukazatel logeru (volitelné)"
 
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "seznam skriptů"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nemůžu spustit funkci \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: skript \"%s\" nenalezen"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: nemohu přesměrovat stdout a stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nemůžu načíst soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
 msgid "WeeChat version"
 msgstr "verze WeeChat"
 
@@ -7636,7 +7552,7 @@ msgid "Listening on ports:"
 msgstr "Poslouchám na portech:"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr "  port %s%d%s, přesměrování: %s%s.%s%s, spuštěno v: %s"
 
 msgid "No server for relay"
@@ -7988,6 +7904,90 @@ msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 "jméno rmodifikátoru (může začínat nebo končit \"*\" jako zástupným znakem) "
 "(volitelné)"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
+"existuje)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: chyba ve funkci \"%s\""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: načítám skript \"%s\""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: funkce \"register\" nebyla nalezena (nebo selhala) v souboru \"%s\""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: odebírám skript \"%s\""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: skript \"%s\" odebrán"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: skript \"%s\" nenačten"
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s%s: neznámá volba pro příkaz \"%s\""
+
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "seznam skriptů"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nemůžu spustit funkci \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: skript \"%s\" nenalezen"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: nemohu přesměrovat stdout a stderr"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: nemůžu spustit soubor \"%s\""
 
 #, fuzzy
 msgid "Support of perl scripts"

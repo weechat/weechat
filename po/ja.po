@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-09-29 09:37+0200\n"
+"POT-Creation-Date: 2012-10-05 15:20+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3549,13 +3549,6 @@ msgstr[0] "通常"
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
 
-#, c-format
-msgid "Debug enabled for mouse (%s)"
-msgstr "マウス (%s) のデバッグを有効化"
-
-msgid "Debug disabled for mouse"
-msgstr "マウスのデバッグを無効化"
-
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "エラー: バッファをホットリストに追加するメモリが足りません"
 
@@ -3584,6 +3577,13 @@ msgstr "コマンド実行中: \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "新しい行に使うメモリが足りません"
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr "マウス (%s) のデバッグを有効化"
+
+msgid "Debug disabled for mouse"
+msgstr "マウスのデバッグを無効化"
 
 msgid "Alias commands"
 msgstr "エイリアスコマンド"
@@ -4082,63 +4082,6 @@ msgstr "%s%s: ファイルを開いている最中にエラー、ファイルを
 
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
-
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s%s: サーバ \"%s\" は既に登録済みです (登録しませんでした)"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
-"す)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されました"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr "scheme スクリプトサポート (Guile を利用)"
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: 標準出力/標準エラー: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: 関数 \"%s\" は有効な値を返さなければいけません"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: 関数 \"%s\" にエラー"
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: スクリプト \"%s\" のロード中"
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s%s: ファイル \"%s\" 内に関数 \"register\" が見つかりません (または失敗しま"
-"した)"
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: スクリプト \"%s\" のアンロード中"
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: スクリプト \"%s\" がアンロードされました"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: スクリプト \"%s\" はロードされていません"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: コマンド \"%s\" のオプションが未定義です"
 
 msgid "away"
 msgstr "離席"
@@ -7256,33 +7199,6 @@ msgstr "logger バッファのリスト"
 msgid "logger pointer (optional)"
 msgstr "logger ポインタ (オプション)"
 
-msgid "Support of lua scripts"
-msgstr "lua スクリプトサポート"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: 関数 \"%s\" を実行できません"
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: スクリプト \"%s\" が見つかりません"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: 新しい sub-interpreter を作成できません"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: ファイル \"%s\" をロードできません"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
-
 msgid "WeeChat version"
 msgstr "WeeChat のバージョン"
 
@@ -7703,8 +7619,8 @@ msgstr "リレーするクライアントはありません"
 msgid "Listening on ports:"
 msgstr "リッスンポート:"
 
-#, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s, started on: %s"
+#, fuzzy, c-format
+msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
 msgstr "  ポート %s%d%s、リレー: %s%s%s%s%s、開始日時: %s"
 
 msgid "No server for relay"
@@ -8061,6 +7977,90 @@ msgstr "rmodifier ポインタ (オプション)"
 
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr "rmodifier 名 (ジョーカーとして \"*\" で始めるか終われる) (オプション)"
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: サーバ \"%s\" は既に登録済みです (登録しませんでした)"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
+"す)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されました"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr "scheme スクリプトサポート (Guile を利用)"
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: 標準出力/標準エラー: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: 関数 \"%s\" は有効な値を返さなければいけません"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: 関数 \"%s\" にエラー"
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: スクリプト \"%s\" のロード中"
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: ファイル \"%s\" 内に関数 \"register\" が見つかりません (または失敗しま"
+"した)"
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: スクリプト \"%s\" がアンロードされました"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: スクリプト \"%s\" はロードされていません"
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s%s: コマンド \"%s\" のオプションが未定義です"
+
+msgid "Support of lua scripts"
+msgstr "lua スクリプトサポート"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: 関数 \"%s\" を実行できません"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: スクリプト \"%s\" が見つかりません"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: 新しい sub-interpreter を作成できません"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: ファイル \"%s\" をロードできません"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を実行できません"
 
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"

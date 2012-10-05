@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-03
+v0.4.0-dev, 2012-10-05
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* relay: add missing "ssl." in output of /relay listrelay
 * script: fix compilation on OS X
 
 Version 0.3.9 (2012-09-29)
