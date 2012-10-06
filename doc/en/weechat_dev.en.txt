@@ -52,7 +52,7 @@ The main WeeChat directories are:
 |    gui/          | Functions for buffers, windows, ... (used by all interfaces)
 |       curses/    | Curses interface
 |       gtk/       | Gtk interface (not working)
-|    plugins/      | Plugin API
+|    plugins/      | Plugin and scripting API
 |       alias/     | Alias plugin
 |       aspell/    | Aspell plugin
 |       charset/   | Charset plugin
@@ -62,6 +62,7 @@ The main WeeChat directories are:
 |       logger/    | Logger plugin (write messages displayed to files)
 |       relay/     | Relay plugin (irc proxy + relay for remote interfaces)
 |       rmodifier/ | Rmodifier plugin (alter modifier strings with regular expressions)
+|       script/    | Scripts manager
 |       python/    | Python scripting API
 |       perl/      | Perl scripting API
 |       ruby/      | Ruby scripting API
@@ -256,6 +257,15 @@ Plugins
 |    ruby/                          | Ruby plugin
 |       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code)
 |       weechat-ruby-api.c          | Ruby scripting API functions
+|    script/                        | Scripts manager
+|       script.c                    | Main functions for scripts manager
+|       script-action.c             | Actions on scripts (load/unload, install/remove, hold, ...)
+|       script-buffer.c             | Buffer for scripts manager
+|       script-command.c            | Commands for scripts manager
+|       script-completion.c         | Completions for scripts manager
+|       script-config.c             | Config options for scripts manager
+|       script-info.c               | Info and infolists from scripts manager plugin
+|       script-repo.c               | Download and read repository file
 |    tcl/                           | Tcl plugin
 |       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code)
 |       weechat-tcl-api.c           | Tcl scripting API functions
