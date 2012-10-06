@@ -3636,21 +3636,31 @@ IRC_PROTOCOL_CALLBACK(352)
      *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
      */
 
-    arg_start = (strcmp (argv[8], "*") == 0) ? 9 : 8;
+    IRC_PROTOCOL_MIN_ARGS(5);
 
-    IRC_PROTOCOL_MIN_ARGS(arg_start + 1);
+    /* silently ignore malformed 352 message (missing infos) */
+    if (argc < 8)
+        return WEECHAT_RC_OK;
 
-    if (argv[arg_start][0] == ':')
+    pos_attr = NULL;
+    pos_hopcount = NULL;
+    pos_realname = NULL;
+
+    if (argc > 8)
     {
-        pos_attr = NULL;
-        pos_hopcount = (argc > arg_start) ? argv[arg_start] + 1 : NULL;
-        pos_realname = (argc > arg_start + 1) ? argv_eol[arg_start + 1] : NULL;
-    }
-    else
-    {
-        pos_attr = argv[arg_start];
-        pos_hopcount = (argc > arg_start + 1) ? argv[arg_start + 1] + 1 : NULL;
-        pos_realname = (argc > arg_start + 2) ? argv_eol[arg_start + 2] : NULL;
+        arg_start = (strcmp (argv[8], "*") == 0) ? 9 : 8;
+        if (argv[arg_start][0] == ':')
+        {
+            pos_attr = NULL;
+            pos_hopcount = (argc > arg_start) ? argv[arg_start] + 1 : NULL;
+            pos_realname = (argc > arg_start + 1) ? argv_eol[arg_start + 1] : NULL;
+        }
+        else
+        {
+            pos_attr = argv[arg_start];
+            pos_hopcount = (argc > arg_start + 1) ? argv[arg_start + 1] + 1 : NULL;
+            pos_realname = (argc > arg_start + 2) ? argv_eol[arg_start + 2] : NULL;
+        }
     }
 
     ptr_channel = irc_channel_search (server, argv[3]);

@@ -8,6 +8,7 @@ Version 0.4.0 (under dev!)
 --------------------------
 
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
+* irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
 * relay: add missing "ssl." in output of /relay listrelay
