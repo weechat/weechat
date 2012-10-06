@@ -150,6 +150,7 @@
   'hook_timer_sasl' (pointer, hdata: "hook") +
   'is_connected' (integer) +
   'ssl_connected' (integer) +
+  'disconnected' (integer) +
   'gnutls_sess' (other) +
   'tls_cert' (other) +
   'tls_cert_key' (other) +
