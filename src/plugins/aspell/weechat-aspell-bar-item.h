@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -18,24 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_ASPELL_H
-#define __WEECHAT_ASPELL_H 1
+#ifndef __WEECHAT_ASPELL_BAR_ITEM_H
+#define __WEECHAT_ASPELL_BAR_ITEM_H 1
 
-#include <aspell.h>
+extern void weechat_aspell_bar_item_init ();
 
-#define weechat_plugin weechat_aspell_plugin
-#define ASPELL_PLUGIN_NAME "aspell"
-
-struct t_aspell_code
-{
-    char *code;
-    char *name;
-};
-
-extern struct t_weechat_plugin *weechat_aspell_plugin;
-extern int aspell_enabled;
-
-extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
-extern const char *weechat_aspell_get_dict (struct t_gui_buffer *buffer);
-
-#endif /* __WEECHAT_ASPELL_H */
+#endif /* __WEECHAT_ASPELL_BAR_ITEM_H */

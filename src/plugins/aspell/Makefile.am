@@ -26,6 +26,8 @@ lib_LTLIBRARIES = aspell.la
 
 aspell_la_SOURCES = weechat-aspell.c \
                     weechat-aspell.h \
+                    weechat-aspell-bar-item.c \
+                    weechat-aspell-bar-item.h \
                     weechat-aspell-config.c \
                     weechat-aspell-config.h \
                     weechat-aspell-speller.c \

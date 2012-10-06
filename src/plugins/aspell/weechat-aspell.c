@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2006-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -31,6 +32,7 @@
 
 #include "../weechat-plugin.h"
 #include "weechat-aspell.h"
+#include "weechat-aspell-bar-item.h"
 #include "weechat-aspell-config.h"
 #include "weechat-aspell-speller.h"
 
@@ -332,26 +334,27 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
     char **argv;
     int argc, i;
 
-    if (buffer)
+    if (!buffer)
+        return;
+
+    dict_list = weechat_aspell_get_dict (buffer);
+    if (!weechat_aspell_spellers_already_ok (dict_list))
     {
-        dict_list = weechat_aspell_get_dict (buffer);
-        if (!weechat_aspell_spellers_already_ok (dict_list))
+        weechat_aspell_speller_free_all ();
+        if (dict_list)
         {
-            weechat_aspell_speller_free_all ();
-            if (dict_list)
+            argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
+            if (argv)
             {
-                argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
-                if (argv)
+                for (i = 0; i < argc; i++)
                 {
-                    for (i = 0; i < argc; i++)
-                    {
-                        weechat_aspell_speller_new (argv[i]);
-                    }
-                    weechat_string_free_split (argv);
+                    weechat_aspell_speller_new (argv[i]);
                 }
+                weechat_string_free_split (argv);
             }
         }
     }
+    weechat_bar_item_update ("aspell_dict");
 }
 
 /*
@@ -1030,6 +1033,46 @@ weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
 }
 
 /*
+ * weechat_aspell_buffer_switch_cb: called on "buffer_switch" signal
+ */
+
+int
+weechat_aspell_buffer_switch_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    /* refresh bar item "aspell_dict" (for root bars) */
+    weechat_bar_item_update ("aspell_dict");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_aspell_window_switch_cb: called on "window_switch" signal
+ */
+
+int
+weechat_aspell_window_switch_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    /* refresh bar item "aspell_dict" (for root bars) */
+    weechat_bar_item_update ("aspell_dict");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init : init aspell plugin
  */
 
@@ -1094,6 +1137,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      */
     weechat_hook_modifier ("500|input_text_display",
                            &weechat_aspell_modifier_cb, NULL);
+
+    weechat_aspell_bar_item_init ();
+
+    weechat_hook_signal ("buffer_switch",
+                         &weechat_aspell_buffer_switch_cb, NULL);
+    weechat_hook_signal ("window_switch",
+                         &weechat_aspell_window_switch_cb, NULL);
 
     return WEECHAT_RC_OK;
 }

@@ -102,6 +102,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/alias/alias-info.h
 ./src/plugins/aspell/weechat-aspell.c
 ./src/plugins/aspell/weechat-aspell.h
+./src/plugins/aspell/weechat-aspell-bar-item.c
+./src/plugins/aspell/weechat-aspell-bar-item.h
 ./src/plugins/aspell/weechat-aspell-config.c
 ./src/plugins/aspell/weechat-aspell-config.h
 ./src/plugins/aspell/weechat-aspell-speller.c
