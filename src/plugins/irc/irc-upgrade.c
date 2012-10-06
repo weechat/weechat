@@ -343,6 +343,7 @@ irc_upgrade_read_cb (void *data,
                     }
                     irc_upgrade_current_server->is_connected = weechat_infolist_integer (infolist, "is_connected");
                     irc_upgrade_current_server->ssl_connected = weechat_infolist_integer (infolist, "ssl_connected");
+                    irc_upgrade_current_server->disconnected = weechat_infolist_integer (infolist, "disconnected");
                     str = weechat_infolist_string (infolist, "unterminated_message");
                     if (str)
                         irc_upgrade_current_server->unterminated_message = strdup (str);

@@ -151,6 +151,7 @@ struct t_irc_server
     struct t_hook *hook_timer_sasl; /* timer for SASL authentication         */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
+    int disconnected;               /* 1 if server has been disconnected     */
 #ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
     gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */

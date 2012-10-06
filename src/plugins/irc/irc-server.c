@@ -871,6 +871,7 @@ irc_server_alloc (const char *name)
     new_server->hook_timer_sasl = NULL;
     new_server->is_connected = 0;
     new_server->ssl_connected = 0;
+    new_server->disconnected = 0;
     new_server->unterminated_message = NULL;
     new_server->nicks_count = 0;
     new_server->nicks_array = NULL;
@@ -3586,6 +3587,8 @@ irc_server_connect (struct t_irc_server *server)
     struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *proxy, *str_proxy_type, *str_proxy_address;
 
+    server->disconnected = 0;
+
     if (!server->buffer)
     {
         if (!irc_server_create_buffer (server))
@@ -3891,6 +3894,10 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
 {
     struct t_irc_channel *ptr_channel;
 
+    /* server already disconnected? */
+    if (server->disconnected)
+        return;
+
     if (server->is_connected)
     {
         /*
@@ -3957,6 +3964,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         irc_server_set_nick (server, NULL);
 
     irc_server_set_buffer_title (server);
+
+    server->disconnected = 1;
 
     /* send signal "irc_server_disconnected" with server name */
     weechat_hook_signal_send ("irc_server_disconnected",
@@ -4410,6 +4419,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_timer_sasl, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, is_connected, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ssl_connected, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, disconnected, INTEGER, 0, NULL, NULL);
 #ifdef HAVE_GNUTLS
         WEECHAT_HDATA_VAR(struct t_irc_server, gnutls_sess, OTHER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, tls_cert, OTHER, 0, NULL, NULL);
@@ -4605,6 +4615,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", server->ssl_connected))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "disconnected", server->disconnected))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", server->unterminated_message))
         return 0;
@@ -4924,6 +4936,7 @@ irc_server_print_log ()
         weechat_log_printf ("  hook_timer_sasl. . . : 0x%lx", ptr_server->hook_timer_sasl);
         weechat_log_printf ("  is_connected . . . . : %d",    ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected. . . . : %d",    ptr_server->ssl_connected);
+        weechat_log_printf ("  disconnected . . . . : %d",    ptr_server->disconnected);
 #ifdef HAVE_GNUTLS
         weechat_log_printf ("  gnutls_sess. . . . . : 0x%lx", ptr_server->gnutls_sess);
 #endif
