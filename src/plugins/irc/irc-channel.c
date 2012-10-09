@@ -152,6 +152,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
     int i, buffer_created, current_buffer_number, buffer_position, manual_join;
+    int noswitch;
     char *buffer_name, str_number[32], str_group[32], *channel_name_lower;
     const char *prefix_modes;
 
@@ -265,11 +266,11 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->topic = NULL;
     new_channel->modes = NULL;
     new_channel->limit = 0;
-    if (weechat_hashtable_has_key (server->channel_join_key, channel_name))
+    if (weechat_hashtable_has_key (server->join_channel_key, channel_name))
     {
-        new_channel->key = strdup (weechat_hashtable_get (server->channel_join_key,
+        new_channel->key = strdup (weechat_hashtable_get (server->join_channel_key,
                                                           channel_name));
-        weechat_hashtable_remove (server->channel_join_key, channel_name);
+        weechat_hashtable_remove (server->join_channel_key, channel_name);
     }
     else
     {
@@ -304,6 +305,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     server->last_channel = new_channel;
 
     manual_join = 0;
+    noswitch = 0;
     channel_name_lower = NULL;
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
@@ -311,8 +313,10 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         if (channel_name_lower)
         {
             weechat_string_tolower (channel_name_lower);
-            manual_join = weechat_hashtable_has_key (server->manual_joins,
+            manual_join = weechat_hashtable_has_key (server->join_manual,
                                                      channel_name_lower);
+            noswitch = weechat_hashtable_has_key (server->join_noswitch,
+                                                  channel_name_lower);
         }
     }
 
@@ -320,7 +324,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     {
         if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            if ((manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_join))
+            if (noswitch
+                || (manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_join))
                 || (!manual_join && !weechat_config_boolean (irc_config_look_buffer_switch_autojoin)))
                 switch_to_channel = 0;
         }
@@ -332,10 +337,12 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         }
     }
 
-    if (manual_join)
-        weechat_hashtable_remove (server->manual_joins, channel_name_lower);
     if (channel_name_lower)
+    {
+        weechat_hashtable_remove (server->join_manual, channel_name_lower);
+        weechat_hashtable_remove (server->join_noswitch, channel_name_lower);
         free (channel_name_lower);
+    }
 
     weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
                               "irc_channel_opened" : "irc_pv_opened",
@@ -720,7 +727,7 @@ irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
               (channel->key) ? " " : "",
               (channel->key) ? channel->key : "");
 
-    irc_command_join_server (server, join_args, 0);
+    irc_command_join_server (server, join_args, 0, 1);
 }
 
 /*

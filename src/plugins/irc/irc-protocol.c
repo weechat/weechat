@@ -1343,14 +1343,14 @@ IRC_PROTOCOL_CALLBACK(part)
                             snprintf (join_string, join_length, "%s %s",
                                       ptr_channel->name,
                                       ptr_channel->key);
-                            irc_command_join_server (server, join_string, 1);
+                            irc_command_join_server (server, join_string, 1, 1);
                             free (join_string);
                         }
                         else
-                            irc_command_join_server (server, ptr_channel->name, 1);
+                            irc_command_join_server (server, ptr_channel->name, 1, 1);
                     }
                     else
-                        irc_command_join_server (server, ptr_channel->name, 1);
+                        irc_command_join_server (server, ptr_channel->name, 1, 1);
                 }
                 else
                 {

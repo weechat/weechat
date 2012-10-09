@@ -189,8 +189,9 @@
   'last_redirect' (pointer, hdata: "irc_redirect") +
   'notify_list' (pointer, hdata: "irc_notify") +
   'last_notify' (pointer, hdata: "irc_notify") +
-  'manual_joins' (hashtable) +
-  'channel_join_key' (hashtable) +
+  'join_manual' (hashtable) +
+  'join_channel_key' (hashtable) +
+  'join_noswitch' (hashtable) +
   'buffer' (pointer, hdata: "buffer") +
   'buffer_as_string' (string) +
   'channels' (pointer, hdata: "irc_channel") +

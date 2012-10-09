@@ -212,16 +212,18 @@ pseudo: pseudo
 [[command_irc_join]]
 [command]*`join`* rejoindre un canal::
 ........................................
-/join  [-server <serveur>] [<canal1>[,<canal2>...]] [<clé1>[,<clé2>...]]
+/join  [-noswitch] [-server <serveur>] [<canal1>[,<canal2>...]] [<clé1>[,<clé2>...]]
 
-serveur: envoyer à ce serveur (nom interne)
-  canal: nom du canal à rejoindre
-    clé: clé pour rejoindre le canal (les canaux avec une clé doivent être les premiers dans la liste)
+-noswitch: ne pas basculer sur le nouveau tampon
+  serveur: envoyer à ce serveur (nom interne)
+    canal: nom du canal à rejoindre
+      clé: clé pour rejoindre le canal (les canaux avec une clé doivent être les premiers dans la liste)
 
 Exemples:
   /join #weechat
   /join #protectedchan,#weechat key
   /join -server freenode #weechat
+  /join -noswitch #weechat
 ........................................
 
 [[command_irc_kick]]

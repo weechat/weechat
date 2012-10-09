@@ -212,16 +212,18 @@ nick: nick
 [[command_irc_join]]
 [command]*`join`* チャンネルに参加::
 ........................................
-/join  [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
+/join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
- server: 送信先サーバ (内部サーバ名)
-channel: 参加するチャンネルの名前
-    key: チャンネルに参加するためのキー (キーが必要なチャンネルは最初に置くこと)
+-noswitch: do not switch to new buffer
+   server: send to this server (internal name)
+  channel: channel name to join
+      key: key to join the channel (channels with a key must be the first in list)
 
-例:
+Examples:
   /join #weechat
   /join #protectedchan,#weechat key
   /join -server freenode #weechat
+  /join -noswitch #weechat
 ........................................
 
 [[command_irc_kick]]

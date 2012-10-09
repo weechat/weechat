@@ -1856,7 +1856,7 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
 
 void
 irc_command_join_server (struct t_irc_server *server, const char *arguments,
-                         int manual_join)
+                         int manual_join, int noswitch)
 {
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
     int i, num_channels, num_keys, length;
@@ -1920,8 +1920,11 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 ptr_channel = irc_channel_search (server, new_args);
                 if (ptr_channel)
                 {
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "display", "1");
+                    if (!noswitch)
+                    {
+                        weechat_buffer_set (ptr_channel->buffer,
+                                            "display", "1");
+                    }
                 }
             }
             new_args[0] = '\0';
@@ -1937,12 +1940,21 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     strcat (new_args, "#");
                 }
                 strcat (new_args, channels[i]);
-                if (manual_join)
+                if (manual_join || noswitch)
                 {
                     weechat_string_tolower (channels[i]);
-                    weechat_hashtable_set (server->manual_joins,
-                                           channels[i],
-                                           &time_now);
+                    if (manual_join)
+                    {
+                        weechat_hashtable_set (server->join_manual,
+                                               channels[i],
+                                               &time_now);
+                    }
+                    if (noswitch)
+                    {
+                        weechat_hashtable_set (server->join_noswitch,
+                                               channels[i],
+                                               &time_now);
+                    }
                 }
                 if (keys && (i < num_keys))
                 {
@@ -1955,7 +1967,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     }
                     else
                     {
-                        weechat_hashtable_set (server->channel_join_key,
+                        weechat_hashtable_set (server->join_channel_key,
                                                pos_channel, keys[i]);
                     }
                 }
@@ -1980,33 +1992,57 @@ int
 irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
+    int i, arg_channels, noswitch;
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
     /* make C compiler happy */
     (void) data;
 
-    if (argc > 1)
+    noswitch = 0;
+    arg_channels = 1;
+
+    for (i = 1; i < argc; i++)
     {
-        if ((argc >= 4) && (weechat_strcasecmp (argv[1], "-server") == 0))
+        if (weechat_strcasecmp (argv[i], "-server") == 0)
         {
-            ptr_server = irc_server_search (argv[2]);
+            if (argc <= i + 1)
+            {
+                IRC_COMMAND_TOO_FEW_ARGUMENTS((ptr_server) ? ptr_server->buffer : NULL,
+                                              "join");
+            }
+            ptr_server = irc_server_search (argv[i + 1]);
             if (!ptr_server)
                 return WEECHAT_RC_ERROR;
-            irc_command_join_server (ptr_server, argv_eol[3], 1);
+            arg_channels = i + 2;
+            i++;
+        }
+        else if (weechat_strcasecmp (argv[i], "-noswitch") == 0)
+        {
+            noswitch = 1;
+            arg_channels = i + 1;
         }
         else
         {
-            IRC_COMMAND_CHECK_SERVER("join", 1);
-            irc_command_join_server (ptr_server, argv_eol[1], 1);
+            arg_channels = i;
+            break;
         }
+    }
+
+    IRC_COMMAND_CHECK_SERVER("join", 1);
+
+    if (arg_channels < argc)
+    {
+        irc_command_join_server (ptr_server, argv_eol[arg_channels],
+                                 1, noswitch);
     }
     else
     {
-        IRC_COMMAND_CHECK_SERVER("join", 1);
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             && !ptr_channel->nicks)
         {
-            irc_command_join_server (ptr_server, ptr_channel->name, 1);
+            irc_command_join_server (ptr_server, ptr_channel->name,
+                                     1, noswitch);
         }
         else
         {
@@ -5121,18 +5157,20 @@ irc_command_init ()
                           "%(nicks)|%*", &irc_command_ison, NULL);
     weechat_hook_command ("join",
                           N_("join a channel"),
-                          N_("[-server <server>] [<channel1>[,<channel2>...]] "
-                             "[<key1>[,<key2>...]]"),
-                          N_(" server: send to this server (internal name)\n"
-                             "channel: channel name to join\n"
-                             "    key: key to join the channel (channels with "
+                          N_("[-noswitch] [-server <server>] "
+                             "[<channel1>[,<channel2>...]] [<key1>[,<key2>...]]"),
+                          N_("-noswitch: do not switch to new buffer\n"
+                             "   server: send to this server (internal name)\n"
+                             "  channel: channel name to join\n"
+                             "      key: key to join the channel (channels with "
                              "a key must be the first in list)\n\n"
                              "Examples:\n"
                              "  /join #weechat\n"
                              "  /join #protectedchan,#weechat key\n"
-                             "  /join -server freenode #weechat"),
-                          "-server %(irc_servers)"
-                          " || %(irc_channels)", &irc_command_join, NULL);
+                             "  /join -server freenode #weechat\n"
+                             "  /join -noswitch #weechat"),
+                          "%(irc_channels)|-noswitch|-server|%(irc_servers)|%*",
+                          &irc_command_join, NULL);
     weechat_hook_command ("kick",
                           N_("forcibly remove a user from a channel"),
                           N_("[<channel>] <nick> [<reason>]"),

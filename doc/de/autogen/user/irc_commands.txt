@@ -212,16 +212,18 @@ nick: Nickname
 [[command_irc_join]]
 [command]*`join`* einen Channel betreten::
 ........................................
-/join  [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
+/join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
- server: Verbindung zu diesem Server (interner Name)
-channel: Name des Channels der betreten werden soll
-    key: Zugriffsschlüssel für einen Channel (Channels die einen Zugriffsschlüssel benötigen müssen zuerst aufgeführt werden)
+-noswitch: do not switch to new buffer
+   server: send to this server (internal name)
+  channel: channel name to join
+      key: key to join the channel (channels with a key must be the first in list)
 
-Beispiele:
+Examples:
   /join #weechat
-  /join #geschützter_Channel,#weechat Zugriffsschlüssel
+  /join #protectedchan,#weechat key
   /join -server freenode #weechat
+  /join -noswitch #weechat
 ........................................
 
 [[command_irc_kick]]
