@@ -264,6 +264,9 @@ gui_chat_string_real_pos (const char *string, int pos)
 
 /*
  * gui_chat_get_word_info: returns info about next word: beginning, end, length
+ *                         Note: the word_{start|end}_offset are in bytes, but
+ *                         word_length(_with_spaces) are in number of chars on
+ *                         screen.
  */
 
 void
@@ -274,7 +277,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
 {
     const char *start_data;
     char *next_char, *next_char2;
-    int leading_spaces, char_size;
+    int leading_spaces, char_size_screen;
 
     *word_start_offset = 0;
     *word_end_offset = 0;
@@ -298,10 +301,10 @@ gui_chat_get_word_info (struct t_gui_window *window,
                     if (leading_spaces)
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
-                    char_size = next_char2 - next_char;
                     *word_end_offset = next_char2 - start_data - 1;
-                    (*word_length_with_spaces) += char_size;
-                    (*word_length) += char_size;
+                    char_size_screen = utf8_char_size_screen (next_char);
+                    (*word_length_with_spaces) += char_size_screen;
+                    (*word_length) += char_size_screen;
                 }
                 else
                 {

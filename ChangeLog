@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-09
+v0.4.0-dev, 2012-10-12
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix wrapping of words with wide chars (the break was made before the
+  correct position)
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
 * irc: add option "-noswitch" for command /join (task #12275)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
