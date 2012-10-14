@@ -151,7 +151,8 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
                     weechat_buffer_close (ptr_channel->buffer);
                     ptr_channel = next_channel;
                 }
-                irc_server_disconnect (ptr_server, 0, 0);
+                if (!ptr_server->disconnected)
+                    irc_server_disconnect (ptr_server, 0, 0);
                 ptr_server->buffer = NULL;
             }
         }

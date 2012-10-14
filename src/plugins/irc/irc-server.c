@@ -3915,10 +3915,6 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
 {
     struct t_irc_channel *ptr_channel;
 
-    /* server already disconnected? */
-    if (server->disconnected)
-        return;
-
     if (server->is_connected)
     {
         /*
